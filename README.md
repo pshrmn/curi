@@ -1,3 +1,3 @@
-# url-conf
+# urI-conf
 
-A set of **experimental** URL routing packages.
+A set of **experimental** URI routing packages.

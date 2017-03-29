@@ -1,5 +1,5 @@
 {
-  "name": "url-conf-monorepo",
+  "name": "uri-conf-monorepo",
   "private": true,
   "scripts": {
     "test": "lerna run test"
@@ -7,9 +7,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pshrmn/url-conf/issues"
+    "url": "https://github.com/pshrmn/uri-conf/issues"
   },
-  "homepage": "https://github.com/pshrmn/url-conf#readme",
+  "homepage": "https://github.com/pshrmn/uri-conf#readme",
   "devDependencies": {
     "lerna": "2.0.0-beta.38"
   }

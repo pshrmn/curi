@@ -1,14 +1,14 @@
 {
-  "name": "url-conf-react",
+  "name": "uri-conf-react",
   "version": "0.1.0",
-  "description": "React support for url-conf routing",
+  "description": "React support for uri-conf routing",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pshrmn/url-conf/tree/master/packages/url-conf-react"
+    "url": "https://github.com/pshrmn/uri-conf/tree/master/packages/uri-conf-react"
   },
   "keywords": [
     "React",

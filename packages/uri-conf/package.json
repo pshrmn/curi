@@ -1,5 +1,5 @@
 {
-  "name": "url-conf",
+  "name": "uri-conf",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pshrmn/url-conf/tree/master/packages/url-conf"
+    "url": "https://github.com/pshrmn/uri-conf/tree/master/packages/uri-conf"
   },
   "keywords": [
     "URL",
@@ -19,5 +19,8 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^19.0.2"
+  },
+  "dependencies": {
+    "path-to-regexp": "^1.7.0"
   }
 }
