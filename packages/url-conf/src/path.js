@@ -11,7 +11,9 @@ const path = (path, options) => {
   const keys = [];
   const mergedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
   const re = pathToRegexp(path, keys, mergedOptions);
-  return { re, keys };
+  const compiled = pathToRegexp.compile(path);
+  const reverse = params => compiled(params, { pretty: true });
+  return { re, keys, reverse };
 };
 
 export default path;
