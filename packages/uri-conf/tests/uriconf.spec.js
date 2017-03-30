@@ -205,5 +205,21 @@ describe('URIConf', () => {
       });
       history.push('exact');
     });
+
+    it('only matches one uri for nested levels', () => {
+      const uris = [
+        uri('Parent', path('parent'), [
+          uri('Exact', path('exact')),
+          uri('Catch All', path(':anything'))
+        ])
+      ];
+
+      const conf = URIConf(history, uris);
+      conf.subscribe(info => {
+        expect(info['Exact']).toBeDefined();
+        expect(info['Catch All']).toBeUndefined();
+      });
+      history.push('parent/exact');
+    })
   });
 });
