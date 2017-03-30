@@ -1,21 +1,7 @@
 import uri from './uri';
 import updateID from './utils/updateID';
+import walk from './utils/walk';
 import DEFAULT_ADDONS from './addons/defaults';
-
-const walk = (tree, fn, extra) => {
-  if (Array.isArray(tree)) {
-    tree.forEach(branch => {
-      walk(branch, fn, extra)
-    });
-  } else {
-    const next = fn(tree, parent);
-    if (tree.children) {
-      tree.children.forEach(child => {
-        walk(child, fn, extra);
-      });
-    }
-  }
-}
 
 const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
   let uris = [];
