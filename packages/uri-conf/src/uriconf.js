@@ -49,8 +49,8 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
       awaiting.push(p);
     };
 
-    uris.forEach(uri => {
-      uri.match(pathname, matches, registerPromise)
+    const hasMatch = uris.some(uri => {
+      return uri.match(pathname, matches, registerPromise)
     });
 
     // track updates

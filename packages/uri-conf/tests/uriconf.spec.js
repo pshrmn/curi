@@ -190,6 +190,20 @@ describe('URIConf', () => {
       });
       history.push('/contact/phone');
       history.push('/contact/mail');
-    })
+    });
+
+    it('will only match the first uri (per level) that matches', () => {
+      const uris = [
+        uri('Exact', path('exact')),
+        uri('Catch All', path(':anything'))
+      ];
+
+      const conf = URIConf(history, uris);
+      conf.subscribe(info => {
+        expect(info['Exact']).toBeDefined();
+        expect(info['Catch All']).toBeUndefined();
+      });
+      history.push('exact');
+    });
   });
 });

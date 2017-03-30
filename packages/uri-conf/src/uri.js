@@ -24,7 +24,7 @@ const uri = (name, path, children, load = {}) => {
     const match = path.re.exec(testPath);
 
     if (!match) {
-      return;
+      return false;
     }
 
     const [ segment, ...parsed ] = match
@@ -60,10 +60,12 @@ const uri = (name, path, children, load = {}) => {
     if (children) {
       // the children should only match against the unmatched portion
       const remainder = testPath.slice(segment.length)
-      children.forEach(c => {
-        c.match(remainder, register, awaiting, uriData);
+      children.some(c => {
+        return c.match(remainder, register, awaiting, uriData);
       });
     }
+
+    return true;
   };
 
   return {

@@ -8,6 +8,22 @@ describe('uri', () => {
   });
   
   describe('match', () => {
+    describe('return value', () => {
+      it('returns true if it matches', () => {
+        const testUri = uri('Test', path('test'));
+        const results = {};
+        const matches = testUri.match('test', results);  
+        expect(matches).toBe(true);
+      });
+
+      it('returns false if it does not', () => {
+        const testUri = uri('Test', path('test'));
+        const results = {};
+        const matches = testUri.match('no-match', results);  
+        expect(matches).toBe(false);
+      });
+    });
+
     it('does not register if the path does not match the pathname', () => {
       const testUri = uri('Test', path('test'));
       const results = {};
