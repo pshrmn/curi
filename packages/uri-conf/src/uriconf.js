@@ -22,8 +22,6 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
     });
   };
 
-  setup(initialUris);
-
   let currentUpdate;
   const update = () => {
     const pathname = history.location.pathname;
@@ -58,7 +56,11 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
   const unlisten = history.listen(update);
 
   const subscribers = [];
+  let lastUpdate;
   const subscribe = (fn) => {
+    if (lastUpdate && fn != null) {
+      fn(lastUpdate);
+    }
     const newLength = subscribers.push(fn);
     return () => {
       subscribers[newLength-1] = null
@@ -66,12 +68,16 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
   };
 
   const emit = (info) => {
+    lastUpdate = info;
     subscribers.forEach(fn => {
       if (fn != null) {
         fn(info);
       }
     });
   };
+
+  setup(initialUris);
+  update();
 
   return {
     refresh: setup,

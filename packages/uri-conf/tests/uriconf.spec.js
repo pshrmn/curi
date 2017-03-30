@@ -120,8 +120,11 @@ describe('URIConf', () => {
     })
   });
 
-  describe('emit', () => {
-    it('notifies subscribers of matching routes when location changes', () => {
+  describe('subscribe', () => {
+    it('passes last match when it subscribes', () => {
+      const history = createMemoryHistory({
+        initialEntries: [ '/contact/phone' ]
+      });
       const uris = [
         uri('Home', path('', { end: true })),
         uri('About', path('about')),
@@ -132,6 +135,26 @@ describe('URIConf', () => {
 
       const conf = URIConf(history, uris);
       conf.subscribe(info => {
+        expect(info['Contact']).toBeDefined();
+        expect(info['How']).toBeDefined();
+      });
+
+    });
+
+    it('notifies subscribers of matching routes when location changes', () => {
+      const uris = [
+        uri('Home', path('', { end: true })),
+        uri('About', path('about')),
+        uri('Contact', path('contact'), [
+          uri('How', path(':method'))
+        ])
+      ];
+
+      const conf = URIConf(history, uris);
+      let calls = 0;
+      conf.subscribe(info => {
+        // ignore the initial call
+        if (calls++ < 1) { return; }
         expect(info['Contact']).toBeDefined();
         expect(info['How']).toBeDefined();
         expect(info['How'].params.method).toBe('mail');
@@ -158,7 +181,10 @@ describe('URIConf', () => {
         ])
       ];
       const conf = URIConf(history, uris);
+      let calls = 0;
       conf.subscribe(info => {
+        // ignore the initial call
+        if (calls++ < 1) { return; }
         expect(promiseResolved).toBe(true);
         done();
       });
@@ -184,7 +210,10 @@ describe('URIConf', () => {
         ])
       ];
       const conf = URIConf(history, uris);
+      let calls = 0;
       conf.subscribe(info => {
+        // ignore the initial call
+        if (calls++ < 1) { return; }
         expect(info['How'].params.method).toBe('mail');
         done();
       });
@@ -199,7 +228,10 @@ describe('URIConf', () => {
       ];
 
       const conf = URIConf(history, uris);
+      let calls = 0;
       conf.subscribe(info => {
+        // ignore the initial call
+        if (calls++ < 1) { return; }
         expect(info['Exact']).toBeDefined();
         expect(info['Catch All']).toBeUndefined();
       });
@@ -215,7 +247,10 @@ describe('URIConf', () => {
       ];
 
       const conf = URIConf(history, uris);
+      let calls = 0;
       conf.subscribe(info => {
+        // ignore the initial call
+        if (calls++ < 1) { return; }
         expect(info['Exact']).toBeDefined();
         expect(info['Catch All']).toBeUndefined();
       });
