@@ -13,14 +13,6 @@ describe('path', () => {
     expect(parsedKeys).toEqual(expect.arrayContaining(['test', 'ing']));
   });
 
-  it('returns a "reverse" function to create a path', () => {
-    const matcher = path(':test/:ing');
-    const { reverse } = matcher;
-    const params = { test: 'one', ing: 'two' };
-    const output = reverse(params);
-    expect(output).toBe('one/two')
-  })
-
   describe('options', () => {
     it('passes options to path-to-regexp', () => {
       const defaultMatcher = path('here/');

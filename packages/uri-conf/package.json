@@ -17,7 +17,11 @@
   ],
   "author": "Paul Sherman",
   "license": "MIT",
+  "peerDependencies": {
+    "history": "^4.6.1"
+  },
   "devDependencies": {
+    "history": "^4.6.1",
     "jest": "^19.0.2"
   },
   "dependencies": {

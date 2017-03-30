@@ -1,7 +1,8 @@
-const withLeadingSlash = (path) => path.charAt(0) === '/' ? path : '/' + path;
-const stripLeadingSlash = (path) => path.charAt(0) === '/' ? path.slice(1) : path;
-const withTrailingSlash = (path) => path.charAt(path.length-1) === '/' ? path : path + '/';
-const join = (beginning, end) => withTrailingSlash(beginning) + end;
+import {
+  join,
+  stripLeadingSlash,
+  withLeadingSlash
+} from './utils/path';
 
 const uri = (name, path, children, load = {}) => {
   const preload = {
@@ -53,7 +54,7 @@ const uri = (name, path, children, load = {}) => {
     }
 
     if (load.load) {
-      awaiting(load.load())
+      awaiting(load.load(uriData))
     }
 
     if (children) {
@@ -65,11 +66,12 @@ const uri = (name, path, children, load = {}) => {
     }
   };
 
-  const reverse = params => path.reverse(params);
-
   return {
     match,
-    reverse
+    name,
+    path: path.path,
+    children,
+    load
   };
 };
 

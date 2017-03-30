@@ -66,6 +66,15 @@ describe('uri', () => {
 
     describe('load', () => {
       describe('preload', () => {
+        it('will register the promise', () => {
+          const loadTest = () => Promise.resolve();
+          const testUri = uri('Test', path('test'), [], { preload: loadTest });
+          const results = {};
+          const spy = jest.fn();
+          testUri.match('test', results, spy);
+          expect(spy.mock.calls.length).toBe(1);
+        });
+
         it('does not register if preload not passed', () => {
           const testUri = uri('Test', path('test'));
           const results = {};
@@ -82,25 +91,31 @@ describe('uri', () => {
           testUri.match('nope', results, spy);
           expect(spy.mock.calls.length).toBe(0);
         });
+      });
 
-        it('will register the promise', () => {
-          const loadTest = () => Promise.resolve();
-          const testUri = uri('Test', path('test'), [], { preload: loadTest });
-          const results = {};
+      describe('load', () => {
+        it('registers itself when it matches', () => {
+          const register = {};
           const spy = jest.fn();
-          testUri.match('test', results, spy);
+          const testUri = uri('Test', path('test'), null, {
+            load: () => Promise.resolve('1234')
+          });
+          testUri.match('test', register, spy);
+          expect(register['Test']).toBeDefined();
           expect(spy.mock.calls.length).toBe(1);
         });
 
+        it('will not be registered when it does not match', () => {
+          const register = {};
+          const spy = jest.fn();
+          const testUri = uri('Test', path('test'), null, {
+            load: () => Promise.resolve('1234')
+          });
+          testUri.match('no-match', register, spy);
+          expect(register['Test']).toBeUndefined();
+          expect(spy.mock.calls.length).toBe(0);
+        });
       });
-    });
-  });
-
-  describe('reverse', () => {
-    it('returns a URI with params filled in', () => {
-      const testUri = uri('Test', path(':test'));
-      const reversed = testUri.reverse({ test: 'hello' });
-      expect(reversed).toBe('hello');
     });
   });
 });
