@@ -1,4 +1,4 @@
-import pathToRegexp from 'path-to-regexp';
+import PathToRegexp from 'path-to-regexp';
 
 const DEFAULT_OPTIONS = {
   sensitive: false,
@@ -10,7 +10,7 @@ const DEFAULT_OPTIONS = {
 const path = (path, options) => {
   const keys = [];
   const mergedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
-  const re = pathToRegexp(path, keys, mergedOptions);
+  const re = PathToRegexp(path, keys, mergedOptions);
 
   return { re, keys, path };
 };
