@@ -26,7 +26,7 @@ describe('pathname addon', () => {
       const childURI = uri('Child', path('child'));
       pathname.register(parentURI);
       pathname.register(childURI, 'Parent');
-      expect(pathname.get('Child')).toBe('parent/child');
+      expect(pathname.get('Child')).toBe('/parent/child');
     });
 
     it('merges when there is a trailing slash', () => {
@@ -34,7 +34,7 @@ describe('pathname addon', () => {
       const childURI = uri('Child', path('child'));
       pathname.register(parentURI);
       pathname.register(childURI, 'Parent');
-      expect(pathname.get('Child')).toBe('parent/child');
+      expect(pathname.get('Child')).toBe('/parent/child');
     });
 
     it('warns when registering the same name', () => {
@@ -59,7 +59,7 @@ describe('pathname addon', () => {
       const playerURI = uri('Player', path('player/:id'));
       pathname.register(playerURI);
       const output = pathname.get('Player', { id: 17 });
-      expect(output).toBe('player/17');
+      expect(output).toBe('/player/17');
     });
 
     it('returns undefined when path not found', () => {
@@ -77,7 +77,7 @@ describe('pathname addon', () => {
       const staticURI = uri('Static', path('this/has/no/params'));
       pathname.register(staticURI);
       const output = pathname.get('Static');
-      expect(output).toBe('this/has/no/params');
+      expect(output).toBe('/this/has/no/params');
     });
   });
 

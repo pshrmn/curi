@@ -1,5 +1,5 @@
 import PathToRegexp from 'path-to-regexp';
-import { join } from '../utils/path';
+import { withLeadingSlash, join } from '../utils/path';
 
 let knownPaths = {};
 let cache = {};
@@ -34,7 +34,7 @@ const pathnameAddon = {
     const compile = cache[name]
       ? cache[name]
       : (cache[name] = PathToRegexp.compile(knownPaths[name]))
-    return compile(params, { pretty: true });
+    return withLeadingSlash(compile(params, { pretty: true }));
   }
 };
 
