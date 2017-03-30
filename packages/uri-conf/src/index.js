@@ -1,3 +1,3 @@
-export default as path from './path';
-export default as uri from './uri';
-export default as URIConf from '/uriconf';
+export path from './path';
+export uri from './uri';
+export URIConf from './uriconf';
