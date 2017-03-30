@@ -1,7 +1,7 @@
 # uri-conf
 
 ```js
-import { uriconf, uri, path } from 'uri-conf';
+import { URIConf, uri, path } from 'uri-conf';
 import { createBrowserHistory } from 'history';
 
 const uris = [
@@ -11,7 +11,7 @@ const uris = [
 ];
 
 const history = createBrowserHistory();
-const conf = uriconf(history, uris);
+const conf = URIConf(history, uris);
 
 conf.subscribe((info) => {
   

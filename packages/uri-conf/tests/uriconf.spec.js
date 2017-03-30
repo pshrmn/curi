@@ -220,6 +220,6 @@ describe('URIConf', () => {
         expect(info['Catch All']).toBeUndefined();
       });
       history.push('parent/exact');
-    })
+    });
   });
 });
