@@ -35,7 +35,23 @@ describe('pathname addon', () => {
       pathname.register(parentURI);
       pathname.register(childURI, 'Parent');
       expect(pathname.get('Child')).toBe('parent/child');
-    })
+    });
+
+    it('warns when registering the same name', () => {
+      const warn = console.warn;
+      console.warn = jest.fn();
+
+      const first = uri('Test', path('first'));
+      const second = uri('Test', path('second'));
+
+      pathname.register(first);
+      expect(console.warn.mock.calls.length).toBe(0);
+
+      pathname.register(second);
+      expect(console.warn.mock.calls.length).toBe(1);
+
+      console.warn = warn;
+    });
   });
 
   describe('get', () => {

@@ -8,6 +8,13 @@ const pathnameAddon = {
   name: 'pathname',
   register: (uri, parent) => {
     const { name, path } = uri;
+    if (knownPaths[name] !== undefined) {
+      console.warn(
+        'A pathname with the name "' + name + '" already exists. Each uri should' +
+        'have a unique name. By registering a pathname with a name that already exists, ' +
+        'you are overwriting the existing pathname. This may break your application.'
+      );
+    }
     let base;
     if (parent && knownPaths[parent]) {
       base = knownPaths[parent];
