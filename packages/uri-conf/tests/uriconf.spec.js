@@ -117,7 +117,7 @@ describe('URIConf', () => {
       spanishNames.forEach(n => {
         expect(pathname.get(n)).toBeDefined();
       });
-    })
+    });
   });
 
   describe('subscribe', () => {
