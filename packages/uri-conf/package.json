@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build:umd": "webpack --define process.env.NODE_ENV=\"'production'\" --output-filename=umd/uri-conf.js"
+    "build": "npm run build:umd && npm run build:min",
+    "build:umd": "webpack --define process.env.NODE_ENV=\"'production'\" --output-filename=umd/uri-conf.js",
+    "build:min": "webpack -p --optimize-minimize --output-filename=umd/uri-conf.min.js"
   },
   "repository": {
     "type": "git",
