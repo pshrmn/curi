@@ -134,9 +134,9 @@ describe('URIConf', () => {
       ];
 
       const conf = URIConf(history, uris);
-      conf.subscribe(info => {
-        expect(info['Contact']).toBeDefined();
-        expect(info['How']).toBeDefined();
+      conf.subscribe(response => {
+        expect(response.name).toBe('How');
+        expect(response.partials[0]).toBe('Contact');
       });
 
     });
@@ -152,12 +152,12 @@ describe('URIConf', () => {
 
       const conf = URIConf(history, uris);
       let calls = 0;
-      conf.subscribe(info => {
+      conf.subscribe(response => {
         // ignore the initial call
         if (calls++ < 1) { return; }
-        expect(info['Contact']).toBeDefined();
-        expect(info['How']).toBeDefined();
-        expect(info['How'].params.method).toBe('mail');
+        expect(response.name).toBe('How');
+        expect(response.partials[0]).toBe('Contact');
+        expect(response.params.method).toBe('mail');
       });
       history.push('/contact/mail');
     });
@@ -182,7 +182,7 @@ describe('URIConf', () => {
       ];
       const conf = URIConf(history, uris);
       let calls = 0;
-      conf.subscribe(info => {
+      conf.subscribe(response => {
         // ignore the initial call
         if (calls++ < 1) { return; }
         expect(promiseResolved).toBe(true);
@@ -211,10 +211,10 @@ describe('URIConf', () => {
       ];
       const conf = URIConf(history, uris);
       let calls = 0;
-      conf.subscribe(info => {
+      conf.subscribe(response => {
         // ignore the initial call
         if (calls++ < 1) { return; }
-        expect(info['How'].params.method).toBe('mail');
+        expect(response.params.method).toBe('mail');
         done();
       });
       history.push('/contact/phone');
@@ -229,11 +229,10 @@ describe('URIConf', () => {
 
       const conf = URIConf(history, uris);
       let calls = 0;
-      conf.subscribe(info => {
+      conf.subscribe(response => {
         // ignore the initial call
         if (calls++ < 1) { return; }
-        expect(info['Exact']).toBeDefined();
-        expect(info['Catch All']).toBeUndefined();
+        expect(response.name).toBe('Exact');
       });
       history.push('exact');
     });
@@ -248,11 +247,10 @@ describe('URIConf', () => {
 
       const conf = URIConf(history, uris);
       let calls = 0;
-      conf.subscribe(info => {
+      conf.subscribe(response => {
         // ignore the initial call
         if (calls++ < 1) { return; }
-        expect(info['Exact']).toBeDefined();
-        expect(info['Catch All']).toBeUndefined();
+        expect(response.name).toBe('Exact');
       });
       history.push('parent/exact');
     });

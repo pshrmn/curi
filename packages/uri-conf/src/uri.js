@@ -13,13 +13,12 @@ const uri = (name, path, children, load = {}) => {
   /*
    * pathname - the location pathname to match against. If a uri matches part of
    *   the pathname, then its children will only match against the unmatched part.
-   * register - an object whose keys are uri names and whose
-   *   values are uriData objects
+   * response - a response object that stores information about the URI when it matches
    * awaiting - a function that takes a promise. Any async loading functions
    *   should register their promise by passing it to awaiting.
-   * parent - the parent uriData object
+   * parentURI - the uri string matched by the parent uri object
    */
-  const match = (pathname, register, awaiting, parent) => {
+  const match = (pathname, response, awaiting, parentURI) => {
     const testPath = stripLeadingSlash(pathname);
     const match = path.re.exec(testPath);
 
@@ -27,19 +26,14 @@ const uri = (name, path, children, load = {}) => {
       return false;
     }
 
-    const [ segment, ...parsed ] = match
-    const params = Object.assign({}, parent && parent.params)
+    const [ segment, ...parsed ] = match;
+    const params = {};
     path.keys.forEach((key, index) => {
-      params[key.name] = parsed[index]
-    })
+      params[key.name] = parsed[index];
+    });
 
-    const uriData = {
-      segment,
-      params,
-      uri: parent ? join(parent.uri, segment) : withLeadingSlash(segment)
-    };
-
-    register[name] = uriData
+    const uri = parentURI ? join(parentURI, segment) : withLeadingSlash(segment);
+    response.add(name, uri, params);
 
     if (load.preload && !preload.complete) {
       // if this is called again before the original promise has resolved,
@@ -54,14 +48,14 @@ const uri = (name, path, children, load = {}) => {
     }
 
     if (load.load) {
-      awaiting(load.load(uriData))
+      awaiting(load.load({ uri, params }));
     }
 
     if (children) {
       // the children should only match against the unmatched portion
       const remainder = testPath.slice(segment.length)
       children.some(c => {
-        return c.match(remainder, register, awaiting, uriData);
+        return c.match(remainder, response, awaiting, uri);
       });
     }
 

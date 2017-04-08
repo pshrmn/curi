@@ -1,5 +1,6 @@
 import uri from '../src/uri';
 import path from '../src/path';
+import Response from '../src/response';
 
 describe('uri', () => {
   it('returns an object with a match function', () => {
@@ -8,41 +9,42 @@ describe('uri', () => {
   });
   
   describe('match', () => {
+
     describe('return value', () => {
       it('returns true if it matches', () => {
+        const resp = new Response();
         const testUri = uri('Test', path('test'));
-        const results = {};
-        const matches = testUri.match('test', results);  
+        const matches = testUri.match('test', resp);  
         expect(matches).toBe(true);
       });
 
       it('returns false if it does not', () => {
+        const resp = new Response();
         const testUri = uri('Test', path('test'));
-        const results = {};
-        const matches = testUri.match('no-match', results);  
+        const matches = testUri.match('no-match', resp);  
         expect(matches).toBe(false);
       });
     });
 
     it('does not register if the path does not match the pathname', () => {
+      const resp = new Response();
       const testUri = uri('Test', path('test'));
-      const results = {};
-      testUri.match('best', results);
-      expect(results['Test']).toBeUndefined();
+      testUri.match('best', resp);
+      expect(resp.name).toBeUndefined();
     });
 
     it('registers if the path matches the pathname', () => {
+      const resp = new Response({ pathname: 'test' });
       const testUri = uri('Test', path('test'));
-      const results = {};
-      testUri.match('test', results);
-      expect(results['Test']).toBeDefined();
+      testUri.match('test', resp);
+      expect(resp.name).toBe('Test');
     });
 
     it('ignores a leading slash on the pathname', () => {
+      const resp = new Response();
       const testUri = uri('Test', path('test'));
-      const results = {};
-      testUri.match('/test', results);
-      expect(results['Test']).toBeDefined();
+      testUri.match('/test', resp);
+      expect(resp.name).toBe('Test');
     })
 
     describe('children', () => {
@@ -51,32 +53,29 @@ describe('uri', () => {
           uri('One', path('one')),
           uri('Two', path('two'))
         ]);
-        const results = {};
-        testUri.match('test/one', results);
-
-        expect(results['Test']).toBeDefined();
-        expect(results['One']).toBeDefined();
+        const resp = new Response();
+        testUri.match('test/one', resp);
+        expect(resp.name).toBe('One');
+        expect(resp.partials[0]).toBe('Test');
       });
 
       it('children inherit parent params', () => {
         const testUri = uri('State', path(':state'), [
           uri('Attractions', path('attractions'))
         ]);
-        const results = {};
-        testUri.match('Wisconsin/attractions', results);
-        expect(results['Attractions']).toBeDefined();
-        const { params } = results['Attractions'];
-        expect(params.state).toBe('Wisconsin');
+        const resp = new Response();
+        testUri.match('Wisconsin/attractions', resp);
+        expect(resp.name).toBe('Attractions');
+        expect(resp.params.state).toBe('Wisconsin');
       });
 
       it('overwrites param name conflicts', () => {
         const testUri = uri('One', path(':id'), [
           uri('Two', path(':id'))
         ]);
-        const results = {};
-        testUri.match('one/two', results);
-        expect(results['One'].params.id).toBe('one');
-        expect(results['Two'].params.id).toBe('two');
+        const resp = new Response();
+        testUri.match('one/two', resp);
+        expect(resp.params.id).toBe('two');
       });
     });
 
@@ -85,50 +84,50 @@ describe('uri', () => {
         it('will register the promise', () => {
           const loadTest = () => Promise.resolve();
           const testUri = uri('Test', path('test'), [], { preload: loadTest });
-          const results = {};
+          const resp = new Response();
           const spy = jest.fn();
-          testUri.match('test', results, spy);
+          testUri.match('test', resp, spy);
           expect(spy.mock.calls.length).toBe(1);
         });
 
         it('does not register if preload not passed', () => {
           const testUri = uri('Test', path('test'));
-          const results = {};
+          const resp = new Response();
           const spy = jest.fn();
-          testUri.match('test', results, spy);
+          testUri.match('test', resp, spy);
           expect(spy.mock.calls.length).toBe(0);
         });
 
         it('does not register if path doesn\'t match', () => {
           const loadTest = () => Promise.resolve();
           const testUri = uri('Test', path('test'), [], { preload: loadTest });
-          const results = {};
+          const resp = new Response();
           const spy = jest.fn();
-          testUri.match('nope', results, spy);
+          testUri.match('nope', resp, spy);
           expect(spy.mock.calls.length).toBe(0);
         });
       });
 
       describe('load', () => {
         it('registers itself when it matches', () => {
-          const register = {};
+          const resp = new Response();
           const spy = jest.fn();
           const testUri = uri('Test', path('test'), null, {
             load: () => Promise.resolve('1234')
           });
-          testUri.match('test', register, spy);
-          expect(register['Test']).toBeDefined();
+          testUri.match('test', resp, spy);
+          expect(resp.name).toBe('Test');
           expect(spy.mock.calls.length).toBe(1);
         });
 
         it('will not be registered when it does not match', () => {
-          const register = {};
+          const resp = new Response();
           const spy = jest.fn();
           const testUri = uri('Test', path('test'), null, {
             load: () => Promise.resolve('1234')
           });
-          testUri.match('no-match', register, spy);
-          expect(register['Test']).toBeUndefined();
+          testUri.match('no-match', resp, spy);
+          expect(resp.name).toBeUndefined();
           expect(spy.mock.calls.length).toBe(0);
         });
       });

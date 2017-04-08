@@ -1,10 +1,12 @@
 import uri from './uri';
-import updateID from './utils/updateID';
 import walk from './utils/walk';
 import DEFAULT_ADDONS from './addons/defaults';
+import Response from './response';
 
 const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
+  // the current uris to match against
   let uris = [];
+  // the addons being used by the uriconf
   const globals = {};
 
   const setup = newUris => {
@@ -15,7 +17,7 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
 
     addons.forEach(addon => {
       globals[addon.name] = addon.get;
-      addon.reset()
+      addon.reset();
       // this could be rewritten to only walk the tree once, but
       // setup should not be run very often, so it wouldn't be a big win
       walk(uris, addon.register);
@@ -24,9 +26,10 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
 
   let currentUpdate;
   const update = () => {
-    const pathname = history.location.pathname;
-    // the matched uris
-    const matches = {};
+    const { pathname, key } = history.location;
+    currentUpdate = key;
+
+    const resp = new Response(history.location)
     // any promises from matched uris
     const awaiting = [];
     const registerPromise = p => {
@@ -34,22 +37,19 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
     };
 
     const hasMatch = uris.some(uri => {
-      return uri.match(pathname, matches, registerPromise)
+      return uri.match(pathname, resp, registerPromise)
     });
-
-    // track updates
-    const thisUpdate = updateID();
-    currentUpdate = thisUpdate;
 
     if (awaiting.length) {
       Promise.all(awaiting).then(() => {
         // skip if there is a newer update
-        if (currentUpdate === thisUpdate) {
-          emit(matches);
+        if (currentUpdate === key) {
+
+          emit(resp);
         }
       });
     } else {
-      emit(matches);
+      emit(resp);
     }
   };
 
@@ -76,13 +76,17 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
     });
   };
 
+  const getMatches = (key) => matches[key]
+
   setup(initialUris);
   update();
 
   return {
     refresh: setup,
     subscribe,
-    addons: globals
+    getMatches,
+    addons: globals,
+    history
   }
 }
 
