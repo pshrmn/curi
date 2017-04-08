@@ -76,15 +76,12 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
     });
   };
 
-  const getMatches = (key) => matches[key]
-
   setup(initialUris);
   update();
 
   return {
     refresh: setup,
     subscribe,
-    getMatches,
     addons: globals,
     history
   }
