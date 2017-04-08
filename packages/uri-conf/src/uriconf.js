@@ -44,7 +44,6 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
       Promise.all(awaiting).then(() => {
         // skip if there is a newer update
         if (currentUpdate === key) {
-
           emit(resp);
         }
       });
@@ -67,11 +66,11 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
     };
   };
 
-  const emit = (info) => {
-    lastUpdate = info;
+  const emit = (response) => {
+    lastUpdate = response;
     subscribers.forEach(fn => {
       if (fn != null) {
-        fn(info);
+        fn(response);
       }
     });
   };
