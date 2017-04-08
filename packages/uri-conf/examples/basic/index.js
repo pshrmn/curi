@@ -75,16 +75,21 @@ links.forEach(n => {
 });
 
 // listen for location changes
-conf.subscribe((routes) => {
+conf.subscribe((response) => {
   let ele;
-  if (routes.User) {
-    ele = User(routes.User.params);
-  } else if (routes.Users) {
+  switch (response.name) {
+  case 'User':
+    ele = User(response.params);
+    break;
+  case 'Users':
     ele = Users();
-  } else if (routes.About) {
+    break;
+  case 'About':
     ele = About();
-  } else if (routes.Home) {
+    break;
+  case 'Home':
     ele = Home();
+    break;
   }
   mount(ele, main);
 });
