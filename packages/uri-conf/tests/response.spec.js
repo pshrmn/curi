@@ -71,10 +71,17 @@ describe('Response', () => {
       const retValue = 'Hakuna Matata';
       const fn = jest.fn(() => retValue);
       const resp = new Response();
-      resp.add(uri('Phrase', fn, path('/hakuna-matata')), {});
+      resp.add(uri('Phrase', fn, path('/hakuna-matata')));
       resp.call();
       expect(fn.mock.calls.length).toBe(1);
       expect(resp.render).toBe(retValue);
+    });
+
+    it('does not call if uri has no fn', () => {
+      const resp = new Response();
+      resp.add(uri('Phrase', null, path('/no-worries')));
+      resp.call();
+      expect(resp.render).toBeUndefined();
     });
   });
 });
