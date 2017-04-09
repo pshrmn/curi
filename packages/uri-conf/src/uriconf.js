@@ -30,23 +30,22 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
     currentUpdate = key;
 
     const resp = new Response(history.location)
-    // any promises from matched uris
-    const awaiting = [];
-    const registerPromise = p => {
-      awaiting.push(p);
-    };
-
-    const hasMatch = uris.some(uri => {
-      return uri.match(pathname, resp, registerPromise)
-    });
-
-    if (awaiting.length) {
-      Promise.all(awaiting).then(() => {
-        // skip if there is a newer update
-        if (currentUpdate === key) {
-          emit(resp);
-        }
-      });
+    uris.some(uri => { return uri.match(pathname, resp); });
+    if (resp.uri) {
+      const { preload, load } = resp.uri;
+      Promise.all([
+        preload ? preload() : null,
+        load ? load() : null
+      ]).then(
+        (args) => {
+          // don't emit if it has been superseded
+          if (currentUpdate === key) {
+            resp.call();
+            emit(resp);
+          }
+        },
+        (err) => { /* not sure what to do here yet */ }
+      );
     } else {
       emit(resp);
     }

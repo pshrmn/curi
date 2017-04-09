@@ -11,8 +11,8 @@ const prefetch = {
         'you are overwriting the existing one. This may break your application.'
       );
     }
-    if (load.load) {
-      loaders[name] = load.load;
+    if (load) {
+      loaders[name] = load;
     }
   },
   reset: () => {

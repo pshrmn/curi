@@ -1,4 +1,6 @@
 import Response from '../src/response';
+import uri from '../src/uri';
+import path from '../src/path';
 
 describe('Response', () => {
   describe('constructor', () => {
@@ -29,28 +31,50 @@ describe('Response', () => {
   describe('add', () => {
     it('sets the name, uri, and params', () => {
       const resp = new Response();
-      const name = 'Food';
-      const uri = '/egg';
+      const match = uri('Foo', () => {}, path('/egg'))
       const params = { food: 'egg' };
-      resp.add(name, uri, params);
-      expect(resp.name).toEqual(name);
-      expect(resp.uri).toEqual(uri);
+      resp.add(match, params);
+      expect(resp.uri).toEqual(match);
       expect(resp.params).toEqual(params);
     });
 
     it('pushes current name to partials when adding new match', () => {
       const resp = new Response();
-      resp.add('State', '/WA', { state: 'WA' });
-      resp.add('City', '/WA/Seattle', { city: 'Seattle' });
+      resp.add(
+        uri('State', () => {}, path('/WA')),
+        { state: 'WA' }
+      );
+      resp.add(
+        uri('City', () => {}, path('/WA/Seattle')),
+        { city: 'Seattle' }
+      );
       expect(resp.partials.length).toBe(1);
       expect(resp.partials[0]).toBe('State');
     });
 
     it('merges params when adding new match', () => {
       const resp = new Response();
-      resp.add('State', '/WA', { state: 'WA' });
-      resp.add('City', '/WA/Seattle', { city: 'Seattle' });
+      resp.add(
+        uri('State', () => {}, path('/WA')),
+        { state: 'WA' }
+      );
+      resp.add(
+        uri('City', () => {}, path('/WA/Seattle')),
+        { city: 'Seattle' }
+      );
       expect(resp.params).toEqual({ state: 'WA', city: 'Seattle' });
+    });
+  });
+
+  describe('call', () => {
+    it('calls the uri\'s fn, setting it as Response.render', () => {
+      const retValue = 'Hakuna Matata';
+      const fn = jest.fn(() => retValue);
+      const resp = new Response();
+      resp.add(uri('Phrase', fn, path('/hakuna-matata')), {});
+      resp.call();
+      expect(fn.mock.calls.length).toBe(1);
+      expect(resp.render).toBe(retValue);
     });
   });
 });

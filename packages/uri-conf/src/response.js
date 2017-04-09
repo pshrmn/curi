@@ -2,23 +2,36 @@ class Response {
   constructor(location) {
     this.location = location;
     this.status = 200;
-    this.name;
-    this.uri; // is this necessary when we are storing location?
+    this.uri;
     this.partials = [];
     this.params = {};
+  }
+
+  notFound() {
+    this.setStatus(404);
+  }
+
+  redirect(code, uri) {
+    this.setStatus(code);
+    this.redirectTo = uri;
   }
 
   setStatus(code) {
     this.status = code;
   }
 
-  add(name, uri, params) {
-    if (this.name != null) {
-      this.partials.push(this.name);
+  add(uri, params) {
+    if (this.uri != null) {
+      this.partials.push(this.uri.name);
     }
-    this.name = name;
     this.uri = uri;
     Object.assign(this.params, params);
+  }
+
+  call() {
+    if (this.uri && this.uri.fn) {
+      this.render = this.uri.fn();
+    }
   }
 }
 
