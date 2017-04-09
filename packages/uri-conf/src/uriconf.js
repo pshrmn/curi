@@ -35,7 +35,7 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
       const { preload, load } = resp.uri;
       Promise.all([
         preload ? preload() : null,
-        load ? load() : null
+        load ? load(resp.params) : null
       ]).then(
         (args) => {
           // don't emit if it has been superseded

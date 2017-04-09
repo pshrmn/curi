@@ -139,7 +139,6 @@ describe('URIConf', () => {
         expect(response.uri).toBe(How);
         expect(response.partials[0]).toBe('Contact');
       });
-
     });
 
     it('notifies subscribers of matching routes when location changes', (done) => {
@@ -167,12 +166,8 @@ describe('URIConf', () => {
         uri('Contact', noop, path('contact'), [
           uri('How', noop, path(':method'), undefined, {
             load: () => {
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  promiseResolved = true;
-                  resolve(true);
-                }, 500);
-              })
+              promiseResolved = true;
+              return Promise.resolve(promiseResolved);
             }
           })
         ])
@@ -186,20 +181,12 @@ describe('URIConf', () => {
     });
 
     it('only emits most recent update if another one occurs before emitting', (done) => {
-      let promiseResolved = false;
       const uris = [
         uri('Home', noop, path('', { end: true })),
         uri('About', noop, path('about')),
         uri('Contact', noop, path('contact'), [
           uri('How', noop, path(':method'), undefined, {
-            preload: () => {
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  promiseResolved = true;
-                  resolve(true);
-                }, 500);
-              })
-            }
+            preload: () => Promise.resolve()
           })
         ])
       ];
@@ -232,10 +219,22 @@ describe('URIConf', () => {
       ];
       const history = createMemoryHistory({ initialEntries: [ '/parent/exact' ]});
       const conf = URIConf(history, uris);
-      let calls = 0;
       conf.subscribe(response => {
         expect(response.uri).toBe(Exact);
       });
+    });
+
+    it('passes matched params to load function', (done) => {
+      const spy = jest.fn((params) => {
+        expect(params.anything).toBe('hello');
+      });
+      const CatchAll = uri('Catch All', noop, path(':anything'), null, {
+        load: spy
+      });
+      const history = createMemoryHistory({ initialEntries: [ '/hello' ]});
+      const conf = URIConf(history, [ CatchAll ]);
+      expect(spy.mock.calls.length).toBe(1);
+      conf.subscribe(done);
     });
   });
 });
