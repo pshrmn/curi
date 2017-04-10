@@ -10,17 +10,17 @@ function createURIs(uris) {
   })
 }
 
-const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
+function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   // the current uris to match against
   let uris = [];
   // the addons being used by the uriconf
   const globals = {};
 
-  const setup = newUris => {
-    if (!Array.isArray(newUris)) {
-      newUris = [ newUris ];
+  const setup = routes => {
+    if (!Array.isArray(routes)) {
+      routes = [ routes ];
     }
-    uris = createURIs(newUris);
+    uris = createURIs(routes);
     addons.forEach(addon => {
       globals[addon.name] = addon.get;
       addon.reset();
@@ -41,7 +41,7 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
       const { preload, load } = resp.uri;
       Promise.all([
         preload ? preload() : null,
-        load ? load(resp.params) : null
+        load ? load(resp) : null
       ]).then(
         (args) => {
           // don't emit if it has been superseded
@@ -80,7 +80,7 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
     });
   };
 
-  setup(initialUris);
+  setup(routes);
   update();
 
   return {
@@ -91,4 +91,4 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
   }
 }
 
-export default URIConf;
+export default createConfig;

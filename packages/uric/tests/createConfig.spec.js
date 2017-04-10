@@ -1,12 +1,13 @@
-import URIConf from '../src/uriconf';
+import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
 import uri from '../src/uri';
 import path from '../src/path';
 import createMemoryHistory from 'history/createMemoryHistory';
+import Response from '../src/response';
 
 const noop = () => {};
 
-describe('URIConf', () => {
+describe('createConfig', () => {
 
   let history;
 
@@ -24,7 +25,7 @@ describe('URIConf', () => {
         { name: 'About', path: path('about') },
         { name: 'Contact', path: path('contact') }
       ];
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       const names = [ 'Home', 'About', 'Contact' ];
       names.forEach(n => {
         expect(pathname.get(n)).toBeDefined();
@@ -45,7 +46,7 @@ describe('URIConf', () => {
         }
       ];
 
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       const names = [ 'Email', 'Phone' ];
       names.forEach(n => {
         expect(pathname.get(n)).toBeDefined();
@@ -62,7 +63,7 @@ describe('URIConf', () => {
         ]
       }
 
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       const names = [ 'Contact', 'Email', 'Phone' ];
       names.forEach(n => {
         expect(pathname.get(n)).toBeDefined();
@@ -79,7 +80,7 @@ describe('URIConf', () => {
         reset: () => {},
         get: () => {}
       };
-      const conf = URIConf(history, uris, [ fakeAddon ]);
+      const conf = createConfig(history, uris, [ fakeAddon ]);
       expect(conf.addons.fake).toBeDefined();
     });
 
@@ -87,7 +88,7 @@ describe('URIConf', () => {
       const uris = [
         { name: 'Home', path: path('', { end: true }) }
       ];
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       expect(conf.addons.pathname).toBeDefined();
     })
   });
@@ -109,7 +110,7 @@ describe('URIConf', () => {
         { name: 'About', path: path('about') },
         { name: 'Contact', path: path('contact') }
       ];
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       
       const spanishURIs = [
         { name: 'Casa', path: path('', { end: true }) },
@@ -131,7 +132,7 @@ describe('URIConf', () => {
   });
 
   describe('subscribe', () => {
-    it('passes last match when it subscribes', () => {
+    it('passes last match when it subscribes', (done) => {
       const history = createMemoryHistory({
         initialEntries: [ '/contact/phone' ]
       });
@@ -146,10 +147,11 @@ describe('URIConf', () => {
         }
       ];
 
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       conf.subscribe(response => {
         expect(response.uri.name).toBe('How');
         expect(response.partials[0]).toBe('Contact');
+        done();
       });
     });
 
@@ -160,7 +162,7 @@ describe('URIConf', () => {
         { name: 'About', path: path('about') },
         { name: 'Contact', path: path('contact'), children: [ How ] }
       ];
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       conf.subscribe(response => {
         expect(response.uri.name).toBe('How');
         expect(response.partials[0]).toBe('Contact');
@@ -190,7 +192,7 @@ describe('URIConf', () => {
           ]
         }
       ];
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       conf.subscribe(response => {
         expect(promiseResolved).toBe(true);
         done();
@@ -214,7 +216,7 @@ describe('URIConf', () => {
           ]
         }
       ];
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       conf.subscribe(response => {
         expect(response.params.method).toBe('mail');
         done();
@@ -228,29 +230,31 @@ describe('URIConf', () => {
       const CatchAll = { name: 'Catch All', path: path(':anything') };
       const uris = [ Exact, CatchAll ];
       const history = createMemoryHistory({ initialEntries: [ '/exact' ] });
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       conf.subscribe(response => {
         expect(response.uri.name).toBe('Exact');
         done();
       });
     });
 
-    it('only matches one uri for nested levels', () => {
+    it('only matches one uri for nested levels', (done) => {
       const Exact = { name: 'Exact', path: path('exact') };
       const CatchAll = { name: 'Catch All', path: path(':anything') };
       const uris = [
         { name: 'Parent', path: path('parent'), children: [ Exact, CatchAll ] }
       ];
       const history = createMemoryHistory({ initialEntries: [ '/parent/exact' ]});
-      const conf = URIConf(history, uris);
+      const conf = createConfig(history, uris);
       conf.subscribe(response => {
         expect(response.uri.name).toBe('Exact');
+        done();
       });
     });
 
-    it('passes matched params to load function', (done) => {
-      const spy = jest.fn((params) => {
-        expect(params.anything).toBe('hello');
+    it('passes response to load function', (done) => {
+      const spy = jest.fn((resp) => {
+        expect(resp).toBeInstanceOf(Response);
+        expect(resp.params.anything).toBe('hello');
       });
       const CatchAll = {
         name: 'Catch All',
@@ -258,7 +262,7 @@ describe('URIConf', () => {
         load: spy
       };
       const history = createMemoryHistory({ initialEntries: [ '/hello' ]});
-      const conf = URIConf(history, [ CatchAll ]);
+      const conf = createConfig(history, [ CatchAll ]);
       expect(spy.mock.calls.length).toBe(1);
       conf.subscribe(done);
     });

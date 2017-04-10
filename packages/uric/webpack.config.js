@@ -5,7 +5,7 @@ module.exports = {
   context: path.join(__dirname, 'src'),
   entry: './index.js',
   output: {
-    library: 'uri_conf',
+    library: 'URIC',
     libraryTarget: 'umd'
   },
   module: {

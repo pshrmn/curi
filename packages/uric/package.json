@@ -1,20 +1,21 @@
 {
-  "name": "uri-conf",
+  "name": "uri",
   "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "build": "npm run build:umd && npm run build:min",
-    "build:umd": "webpack --define process.env.NODE_ENV=\"'production'\" --output-filename=umd/uri-conf.js",
-    "build:min": "webpack -p --optimize-minimize --output-filename=umd/uri-conf.min.js"
+    "build:umd": "webpack --define process.env.NODE_ENV=\"'production'\" --output-filename=umd/uric.js",
+    "build:min": "webpack -p --optimize-minimize --output-filename=umd/uric.min.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pshrmn/uri-conf/tree/master/packages/uri-conf"
+    "url": "https://github.com/pshrmn/uric/tree/master/packages/uric"
   },
   "keywords": [
     "URL",
+    "URI",
     "routing",
     "navigation"
   ],

@@ -1,17 +1,29 @@
-const { URIConf, uri, path } = uri_conf;
+const { createConfig, path } = URIC;
 const { createHashHistory } = History;
 
 // cache the root node
 const root = document.getElementById('root');
 
-// setup URIConf variables
+// views
+const Home = () => div('Welcome home!')
+const About = () => div('It\'s about time!');
+const Users = () => div('Ewe, sir?!');
+const User = (data) => div('Hello, Ms. ' + data.id + '!');
+
+
+// setup
 const hashHistory = createHashHistory();
-const conf = URIConf(hashHistory, [
-  uri('Home', path('', { end: true })),
-  uri('About', path('about')),
-  uri('Users', path('user'), [
-    uri('User', path(':id'))
-  ])
+const conf = createConfig(hashHistory, [
+  { name: 'Home', path: path('', { end: true }), value: Home },
+  { name: 'About', path: path('about'), value: About },
+  { 
+    name: 'Users',
+    path: path('user'),
+    value: Users,
+    children: [
+      { name: 'User', path: path(':id'), value: Users }
+    ]
+  }
 ]);
 
 // some node creating functions
@@ -49,12 +61,6 @@ const createLink = (name, text, params, parent) => {
   return a;
 }
 
-// views
-const Home = () => div('Welcome home!')
-const About = () => div('It\'s about time!');
-const Users = () => div('Ewe, sir?!');
-const User = (data) => div('Hello, Ms. ' + data.id + '!');
-
 // add the nav html
 const nav = add('nav', root);
 const ul = add('ul', nav);
@@ -76,20 +82,13 @@ links.forEach(n => {
 
 // listen for location changes
 conf.subscribe((response) => {
-  let ele;
-  switch (response.name) {
-  case 'User':
-    ele = User(response.params);
-    break;
-  case 'Users':
-    ele = Users();
-    break;
-  case 'About':
-    ele = About();
-    break;
-  case 'Home':
-    ele = Home();
-    break;
+  if (response.status === 301) {
+    conf.history.replace(response.redirectTo);
+  } else if (response.status === 302) {
+    conf.history.push(response.redirectTo);
+  } else if (response.status === 404) {
+    mount(div('Uh oh!'), main);
   }
-  mount(ele, main);
+  mount(response.render(response.params), main)
+
 });

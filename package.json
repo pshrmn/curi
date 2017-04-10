@@ -1,5 +1,5 @@
 {
-  "name": "uri-conf-monorepo",
+  "name": "uric-monorepo",
   "private": true,
   "scripts": {
     "test": "lerna run test"
@@ -7,9 +7,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pshrmn/uri-conf/issues"
+    "url": "https://github.com/pshrmn/uric/issues"
   },
-  "homepage": "https://github.com/pshrmn/uri-conf#readme",
+  "homepage": "https://github.com/pshrmn/uric#readme",
   "devDependencies": {
     "lerna": "2.0.0-beta.38"
   }
