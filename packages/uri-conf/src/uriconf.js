@@ -3,6 +3,13 @@ import walk from './utils/walk';
 import DEFAULT_ADDONS from './addons/defaults';
 import Response from './response';
 
+function createURIs(uris) {
+  return uris.map(obj => {
+    const children = obj.children ? createURIs(obj.children) : [];
+    return uri({ ...obj, children })
+  })
+}
+
 const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
   // the current uris to match against
   let uris = [];
@@ -13,8 +20,7 @@ const URIConf = (history, initialUris, addons = DEFAULT_ADDONS) => {
     if (!Array.isArray(newUris)) {
       newUris = [ newUris ];
     }
-    uris = newUris;
-
+    uris = createURIs(newUris);
     addons.forEach(addon => {
       globals[addon.name] = addon.get;
       addon.reset();

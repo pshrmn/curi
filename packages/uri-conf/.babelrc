@@ -1,6 +1,7 @@
 {
   "presets": [ "es2015" ],
   "plugins": [
-    "transform-export-extensions"
+    "transform-export-extensions",
+    "transform-object-rest-spread"
   ]
 }

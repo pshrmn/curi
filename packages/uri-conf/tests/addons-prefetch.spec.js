@@ -17,7 +17,9 @@ describe('prefetch addon', () => {
   describe('register', () => {
     it('adds the path to the known paths', () => {
       const spy = jest.fn(() => Promise.resolve());
-      const playerURI = uri('Player', path('player'), {
+      const playerURI = uri({
+        name: 'Player',
+        path: path('player'),
         load: () => Promise.resolve()
       });
       prefetch.register(playerURI);
@@ -30,8 +32,10 @@ describe('prefetch addon', () => {
       console.error = jest.fn();
 
       const spy = jest.fn(() => Promise.resolve());
-      const noLoadURI = uri('No load', path('player'));
-      const preloadURI = uri('Preload', path('player'), {
+      const noLoadURI = uri({ name: 'No load', path: path('player') });
+      const preloadURI = uri({
+        name: 'Preload',
+        path: path('player'),
         preload: () => Promise.resolve()
       });
       prefetch.register(noLoadURI);
@@ -46,10 +50,14 @@ describe('prefetch addon', () => {
       const warn = console.warn;
       console.warn = jest.fn();
 
-      const first = uri('Test', path('first'), {
+      const first = uri({
+        name:'Test',
+        path: path('first'),
         load: () => Promise.resolve()
       });
-      const second = uri('Test', path('second'), {
+      const second = uri({
+        name: 'Test',
+        path: path('second'),
         load: () => Promise.resolve()
       });
 
@@ -65,7 +73,9 @@ describe('prefetch addon', () => {
 
   describe('get', () => {
     it('returns a Promise', () => {
-      const playerURI = uri('Player', path('player/:id'), {
+      const playerURI = uri({
+        name: 'Player',
+        path: path('player/:id'),
         load: () => Promise.resolve()
       });
       prefetch.register(playerURI);
@@ -73,7 +83,9 @@ describe('prefetch addon', () => {
     });
 
     it('passes arguments to load function', () => {
-      const playerURI = uri('Player', path('player/:id'), {
+      const playerURI = uri({
+        name: 'Player',
+        path: path('player/:id'),
         load: function(one, two) {
           expect(one).toBe(1);
           expect(two).toBe(2);
@@ -99,7 +111,9 @@ describe('prefetch addon', () => {
     const err = console.error;
     console.error = jest.fn();
 
-    const playerURI = uri('Player', path('player'), {
+    const playerURI = uri({
+      name: 'Player',
+      path: path('player'),
       load: () => Promise.resolve()
     });
     prefetch.register(playerURI);

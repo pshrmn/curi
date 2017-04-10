@@ -33,7 +33,7 @@ describe('Response', () => {
   describe('add', () => {
     it('sets the name, uri, and params', () => {
       const resp = new Response();
-      const match = uri('Foo', path('/egg'))
+      const match = uri({ name: 'Foo', path: path('/egg') });
       const params = { food: 'egg' };
       resp.add(match, params);
       expect(resp.uri).toEqual(match);
@@ -43,11 +43,11 @@ describe('Response', () => {
     it('pushes current name to partials when adding new match', () => {
       const resp = new Response();
       resp.add(
-        uri('State', path('/WA')),
+        uri({ name: 'State', path: path('/WA') }),
         { state: 'WA' }
       );
       resp.add(
-        uri('City', path('/WA/Seattle')),
+        uri({ name: 'City', path: path('/WA/Seattle') }),
         { city: 'Seattle' }
       );
       expect(resp.partials.length).toBe(1);
@@ -57,11 +57,11 @@ describe('Response', () => {
     it('merges params when adding new match', () => {
       const resp = new Response();
       resp.add(
-        uri('State', path('/WA')),
+        uri({ name: 'State', path: path('/WA') }),
         { state: 'WA' }
       );
       resp.add(
-        uri('City', path('/WA/Seattle')),
+        uri({ name: 'City', path: path('/WA/Seattle') }),
         { city: 'Seattle' }
       );
       expect(resp.params).toEqual({ state: 'WA', city: 'Seattle' });
@@ -74,7 +74,7 @@ describe('Response', () => {
       const fn = jest.fn(() => retValue);
       const resp = new Response();
       resp.add(
-        uri('Phrase', path('/hakuna-matata'), { call: fn })
+        uri({ name: 'Phrase', path: path('/hakuna-matata'), call: fn })
       );
       resp.call();
       expect(fn.mock.calls.length).toBe(1);
@@ -83,7 +83,7 @@ describe('Response', () => {
 
     it('is undefined if uri wasn\'t passed a call/value option', () => {
       const resp = new Response();
-      resp.add(uri('Phrase', path('/no-worries')));
+      resp.add(uri({ name: 'Phrase', path: path('/no-worries') }));
       resp.call();
       expect(resp.render).toBeUndefined();
     });

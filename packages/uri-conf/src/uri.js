@@ -19,10 +19,14 @@ function once(fn) {
   }
 }
 
-const uri = (name, path, options) => {
+const uri = (options) => {
   const {
-    value, call, children, preload, load
+    name, path, value, call, children, preload, load
   } = options || {};
+
+  if (name == null || path == null) {
+    throw new Error('A URI must have defined name and path properties');
+  }
 
   return {
     name,
