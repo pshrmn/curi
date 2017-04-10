@@ -13,7 +13,7 @@ const User = (data) => div('Hello, Ms. ' + data.id + '!');
 
 // setup
 const hashHistory = createHashHistory();
-const conf = createConfig(hashHistory, [
+const config = createConfig(hashHistory, [
   { name: 'Home', path: path('', { end: true }), value: Home },
   { name: 'About', path: path('about'), value: About },
   { 
@@ -21,7 +21,7 @@ const conf = createConfig(hashHistory, [
     path: path('user'),
     value: Users,
     children: [
-      { name: 'User', path: path(':id'), value: Users }
+      { name: 'User', path: path(':id'), value: User }
     ]
   }
 ]);
@@ -45,7 +45,7 @@ function div(text) {
 }
 
 const createLink = (name, text, params, parent) => {
-  const pathname = conf.addons.pathname(name, params);
+  const pathname = config.addons.pathname(name, params);
   const href = hashHistory.createHref({ pathname });
   
   const a = document.createElement('a');
@@ -81,14 +81,17 @@ links.forEach(n => {
 });
 
 // listen for location changes
-conf.subscribe((response) => {
-  if (response.status === 301) {
-    conf.history.replace(response.redirectTo);
-  } else if (response.status === 302) {
-    conf.history.push(response.redirectTo);
-  } else if (response.status === 404) {
-    mount(div('Uh oh!'), main);
-  }
-  mount(response.render(response.params), main)
+config.ready()
+  .then(() => {
+    config.subscribe((response) => {
+      if (response.status === 301) {
+        config.history.replace(response.redirectTo);
+      } else if (response.status === 302) {
+        config.history.push(response.redirectTo);
+      } else if (response.status === 404) {
+        mount(div('Uh oh!'), main);
+      }
+      mount(response.render(response.params), main)
 
-});
+    });    
+  });

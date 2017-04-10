@@ -5,7 +5,20 @@ import path from '../src/path';
 import createMemoryHistory from 'history/createMemoryHistory';
 import Response from '../src/response';
 
-const noop = () => {};
+// The subscribe function is called when subscribing  so that the
+// subscriber function is called with the original location. This has
+// the downside that if we want to test navigation changes, we have to
+// ignore the first call of the subscribed function. This does that for us.
+function ignoreFirstCall(fn) {
+  let called = false;
+  return function() {
+    if (!called) {
+      called = true;
+      return;
+    }
+    return fn(...arguments);
+  }
+}
 
 describe('createConfig', () => {
 
@@ -13,7 +26,6 @@ describe('createConfig', () => {
 
   beforeEach(() => {
     history = createMemoryHistory();
-    pathname.reset();
   });
 
   describe('constructor', () => {
@@ -25,10 +37,11 @@ describe('createConfig', () => {
         { name: 'About', path: path('about') },
         { name: 'Contact', path: path('contact') }
       ];
-      const conf = createConfig(history, uris);
+      const config = createConfig(history, uris);
+
       const names = [ 'Home', 'About', 'Contact' ];
       names.forEach(n => {
-        expect(pathname.get(n)).toBeDefined();
+        expect(config.addons.pathname(n)).toBeDefined();
       });
     });
 
@@ -45,11 +58,10 @@ describe('createConfig', () => {
           ]
         }
       ];
-
-      const conf = createConfig(history, uris);
+      const config = createConfig(history, uris);
       const names = [ 'Email', 'Phone' ];
       names.forEach(n => {
-        expect(pathname.get(n)).toBeDefined();
+        expect(config.addons.pathname(n)).toBeDefined();
       });
     });
 
@@ -63,10 +75,10 @@ describe('createConfig', () => {
         ]
       }
 
-      const conf = createConfig(history, uris);
+      const config = createConfig(history, uris);
       const names = [ 'Contact', 'Email', 'Phone' ];
       names.forEach(n => {
-        expect(pathname.get(n)).toBeDefined();
+        expect(config.addons.pathname(n)).toBeDefined();
       });
     });
 
@@ -74,22 +86,22 @@ describe('createConfig', () => {
       const uris = [
         { name: 'Home', path: path('', { end: true }) }
       ];
-      const fakeAddon = {
+      const createFakeAddon = () => ({
         name: 'fake',
         register: () => {},
         reset: () => {},
         get: () => {}
-      };
-      const conf = createConfig(history, uris, [ fakeAddon ]);
-      expect(conf.addons.fake).toBeDefined();
+      });
+      const config = createConfig(history, uris, [ createFakeAddon ]);
+      expect(config.addons.fake).toBeDefined();
     });
 
     it('includes pathname addon by default', () => {
       const uris = [
         { name: 'Home', path: path('', { end: true }) }
       ];
-      const conf = createConfig(history, uris);
-      expect(conf.addons.pathname).toBeDefined();
+      const config = createConfig(history, uris);
+      expect(config.addons.pathname).toBeDefined();
     })
   });
 
@@ -105,39 +117,75 @@ describe('createConfig', () => {
     });
 
     it('resets and replaces registered uris', () => {
-      const uris = [
+      const englishRoutes = [
         { name: 'Home', path: path('', { end: true }) },
         { name: 'About', path: path('about') },
         { name: 'Contact', path: path('contact') }
       ];
-      const conf = createConfig(history, uris);
-      
-      const spanishURIs = [
+      const spanishRoutes = [
         { name: 'Casa', path: path('', { end: true }) },
         { name: 'Acerca De', path: path('acerca-de') },
         { name: 'Contacto', path: path('contacto') }
       ];
-      conf.refresh(spanishURIs);
+
+      const config = createConfig(history, englishRoutes);
+
+      config.refresh(spanishRoutes);
 
       const englishNames = [ 'Home', 'About', 'Contact' ];
       englishNames.forEach(n => {
-        expect(pathname.get(n)).toBeUndefined();
+        expect(config.addons.pathname(n)).toBeUndefined();
       });
 
       const spanishNames = [ 'Casa', 'Acerca De', 'Contacto' ];
       spanishNames.forEach(n => {
-        expect(pathname.get(n)).toBeDefined();
+        expect(config.addons.pathname(n)).toBeDefined();
       });
     });
   });
 
+  describe('ready', () => {
+    it('returns a Promise', () => {
+      const routes = [{
+        name: 'Contact',
+        path: path('contact'),
+        children: [
+          { name: 'Email', path: path('email') },
+          { name: 'Phone', path: path('phone') }
+        ]
+      }];
+
+      const config = createConfig(history, routes);
+      const loaded = config.ready();
+      expect(loaded).toBeInstanceOf(Promise);
+    });
+
+    it('resolves once route that matches initial location has loaded', () => {
+      let loaded = false;
+      const routes = [{
+        name: 'Home',
+        path: path('', { end: true }),
+        load: () => {
+          loaded = true;
+          return Promise.resolve()
+        }
+      }];
+
+      const config = createConfig(history, routes);
+      config.ready()
+        .then(() => {
+          expect(loaded).toBe(true);
+        });
+    });
+  });
+
   describe('subscribe', () => {
-    it('passes last match when it subscribes', (done) => {
+    it('throws an error if a non-function is passed to subsribe', () => {
       const history = createMemoryHistory({
         initialEntries: [ '/contact/phone' ]
       });
       const How = { name: 'How', path: path(':method') };
-      const uris = [
+      const routes = [
         { name: 'Home', path: path('', { end: true }) },
         { name: 'About', path: path('about') },
         {
@@ -147,29 +195,65 @@ describe('createConfig', () => {
         }
       ];
 
-      const conf = createConfig(history, uris);
-      conf.subscribe(response => {
-        expect(response.uri.name).toBe('How');
-        expect(response.partials[0]).toBe('Contact');
-        done();
+      const config = createConfig(history, routes);
+      config.ready()
+        .then(() => {
+          const badArgs = [null, undefined, 1, true, {}, []];
+          badArgs.forEach(arg => {
+            expect(() => {
+              config.subscribe(arg);
+            }).toThrow();
+          });
+        });
+    });
+
+    it('passes response for current location when it subscribes', (done) => {
+      const history = createMemoryHistory({
+        initialEntries: [ '/contact/phone' ]
       });
+      const How = { name: 'How', path: path(':method') };
+      const routes = [
+        { name: 'Home', path: path('', { end: true }) },
+        { name: 'About', path: path('about') },
+        {
+          name: 'Contact',
+          path: path('contact'),
+          children: [ How ]
+        }
+      ];
+
+      const config = createConfig(history, routes);
+      config.ready()
+        .then(() => {
+          config.subscribe(response => {
+            expect(response.uri.name).toBe('How');
+            expect(response.partials[0]).toBe('Contact');
+            done();
+          });
+        });
     });
 
     it('notifies subscribers of matching routes when location changes', (done) => {
       const How = { name: 'How', path: path(':method') };
-      const uris = [
+      const routes = [
         { name: 'Home', path: path('', { end: true }) },
         { name: 'About', path: path('about') },
         { name: 'Contact', path: path('contact'), children: [ How ] }
       ];
-      const conf = createConfig(history, uris);
-      conf.subscribe(response => {
+
+      const check = ignoreFirstCall(response => {
         expect(response.uri.name).toBe('How');
         expect(response.partials[0]).toBe('Contact');
         expect(response.params.method).toBe('mail');
         done();
-      });
-      history.push('/contact/mail');
+      })
+
+      const config = createConfig(history, routes);
+      config.ready()
+        .then(() => {
+          config.subscribe(check);
+          history.push('/contact/mail');
+        });
     });
 
     it('notifies subscribers after promises have resolved', (done) => {
@@ -192,12 +276,18 @@ describe('createConfig', () => {
           ]
         }
       ];
-      const conf = createConfig(history, uris);
-      conf.subscribe(response => {
+
+      const check = ignoreFirstCall(response => {
         expect(promiseResolved).toBe(true);
         done();
-      });
-      history.push('/contact/phone');
+      })
+
+      const config = createConfig(history, uris);
+      config.ready()
+        .then(() => {
+          config.subscribe(check);
+          history.push('/contact/phone');
+        });
     });
 
     it('only emits most recent update if another one occurs before emitting', (done) => {
@@ -216,25 +306,34 @@ describe('createConfig', () => {
           ]
         }
       ];
-      const conf = createConfig(history, uris);
-      conf.subscribe(response => {
+      const check = ignoreFirstCall(response => {
         expect(response.params.method).toBe('mail');
         done();
       });
-      history.push('/contact/phone');
-      history.push('/contact/mail');
+
+      const config = createConfig(history, uris);
+      config.ready()
+        .then(() => {
+          config.subscribe(check)
+          history.push('/contact/phone');
+          history.push('/contact/mail');
+        });
     });
 
     it('will only match the first uri (per level) that matches', (done) => {
       const Exact = { name: 'Exact', path: path('exact') };
       const CatchAll = { name: 'Catch All', path: path(':anything') };
-      const uris = [ Exact, CatchAll ];
+      const routes = [ Exact, CatchAll ];
       const history = createMemoryHistory({ initialEntries: [ '/exact' ] });
-      const conf = createConfig(history, uris);
-      conf.subscribe(response => {
-        expect(response.uri.name).toBe('Exact');
-        done();
-      });
+
+      const config = createConfig(history, routes);
+      config.ready()
+        .then(() => {
+          config.subscribe(response => {
+            expect(response.uri.name).toBe('Exact');
+            done();
+          });
+        });
     });
 
     it('only matches one uri for nested levels', (done) => {
@@ -244,11 +343,14 @@ describe('createConfig', () => {
         { name: 'Parent', path: path('parent'), children: [ Exact, CatchAll ] }
       ];
       const history = createMemoryHistory({ initialEntries: [ '/parent/exact' ]});
-      const conf = createConfig(history, uris);
-      conf.subscribe(response => {
-        expect(response.uri.name).toBe('Exact');
-        done();
-      });
+      const config = createConfig(history, uris);
+      config.ready()
+        .then(() => {
+          config.subscribe(response => {
+            expect(response.uri.name).toBe('Exact');
+            done();
+          });
+        });
     });
 
     it('passes response to load function', (done) => {
@@ -262,9 +364,12 @@ describe('createConfig', () => {
         load: spy
       };
       const history = createMemoryHistory({ initialEntries: [ '/hello' ]});
-      const conf = createConfig(history, [ CatchAll ]);
-      expect(spy.mock.calls.length).toBe(1);
-      conf.subscribe(done);
+      const config = createConfig(history, [ CatchAll ]);
+      config.ready()
+        .then(() => {
+          expect(spy.mock.calls.length).toBe(1);
+          done();
+        });
     });
   });
 });

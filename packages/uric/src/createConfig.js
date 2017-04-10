@@ -21,7 +21,9 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
       routes = [ routes ];
     }
     uris = createURIs(routes);
-    addons.forEach(addon => {
+    addons.forEach(addonFactory => {
+      const addon = addonFactory();
+
       globals[addon.name] = addon.get;
       addon.reset();
       // this could be rewritten to only walk the tree once, but
@@ -31,40 +33,59 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   };
 
   let currentUpdate;
-  const update = () => {
+
+  /*
+   * Build a Response object by iterating over the uris
+   */
+  const respond = () => {
     const { pathname, key } = history.location;
     currentUpdate = key;
-
     const resp = new Response(history.location)
-    uris.some(uri => { return uri.match(pathname, resp); });
-    if (resp.uri) {
-      const { preload, load } = resp.uri;
-      Promise.all([
-        preload ? preload() : null,
-        load ? load(resp) : null
-      ]).then(
-        (args) => {
-          // don't emit if it has been superseded
-          if (currentUpdate === key) {
-            resp.call();
-            emit(resp);
-          }
-        },
-        (err) => { /* not sure what to do here yet */ }
-      );
-    } else {
-      emit(resp);
+    uris.some(uri => uri.match(pathname, resp));
+    return resp;
+  }
+
+  /*
+   * The response should not be emitted until any preload/load promises
+   * have resolved. 
+   */
+  const runURILoadFunctions = (resp) => {
+    if (!resp.uri) {
+      return Promise.resolve(resp);
     }
+    const { preload, load } = resp.uri;
+    return Promise.all([
+      preload ? preload() : null,
+      load ? load(resp) : null
+    ]).then(
+      () => {
+        resp.call();
+        return resp;
+      },
+      (err) => {
+        // not sure what to do here yet
+        return Promise.reject(err);
+      }
+    );
+  }
+
+  let lastUpdate;
+  const onUpdate = () => {
+    const response = respond();
+    return runURILoadFunctions(response)
+      .then(resp => emit(resp));
   };
 
-  const unlisten = history.listen(update);
-
-  const subscribers = [];
-  let lastUpdate;
+  const subscribers = [];  
   const subscribe = (fn) => {
-    if (lastUpdate && fn != null) {
+    if (typeof fn !== 'function') {
+      throw new Error('The argument passed to subscribe must be a function');
+    }
+
+    if (lastUpdate) {
       fn(lastUpdate);
     }
+
     const newLength = subscribers.push(fn);
     return () => {
       subscribers[newLength-1] = null
@@ -72,6 +93,10 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   };
 
   const emit = (response) => {
+    // don't emit old responses
+    if (response.location.key !== currentUpdate) {
+      return;
+    }
     lastUpdate = response;
     subscribers.forEach(fn => {
       if (fn != null) {
@@ -81,14 +106,15 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   };
 
   setup(routes);
-  update();
+  const unlisten = history.listen(onUpdate);
 
   return {
+    ready: onUpdate,
     refresh: setup,
     subscribe,
     addons: globals,
     history
-  }
+  };
 }
 
 export default createConfig;
