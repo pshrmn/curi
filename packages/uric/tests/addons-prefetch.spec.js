@@ -1,11 +1,13 @@
-import prefetch from '../src/addons/prefetch';
+import createPrefetch from '../src/addons/prefetch';
 import uri from '../src/uri';
 import path from '../src/path';
 
 describe('prefetch addon', () => {
 
-  afterEach(() => {
-    prefetch.reset();
+  let prefetch;
+
+  beforeEach(() => {
+    prefetch = createPrefetch();
   });
 
   describe('name', () => {
@@ -108,21 +110,23 @@ describe('prefetch addon', () => {
   });
 
   describe('reset', () => {
-    const err = console.error;
-    console.error = jest.fn();
+    it('resets the addon', () => {
+      const err = console.error;
+      console.error = jest.fn();
 
-    const playerURI = uri({
-      name: 'Player',
-      path: path('player'),
-      load: () => Promise.resolve()
+      const playerURI = uri({
+        name: 'Player',
+        path: path('player'),
+        load: () => Promise.resolve()
+      });
+      prefetch.register(playerURI);
+      expect(prefetch.get('Player')).toBeDefined();
+
+      prefetch.reset();
+      expect(prefetch.get('Player')).toBeUndefined();
+
+      // reset console.error
+      console.error = err;
     });
-    prefetch.register(playerURI);
-    expect(prefetch.get('Player')).toBeDefined();
-
-    prefetch.reset();
-    expect(prefetch.get('Player')).toBeUndefined();
-
-    // reset console.error
-    console.error = err;
   });
 });

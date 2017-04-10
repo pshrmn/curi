@@ -1,11 +1,13 @@
-import pathname from '../src/addons/pathname';
+import createPathname from '../src/addons/pathname';
 import uri from '../src/uri';
 import path from '../src/path';
 
 describe('pathname addon', () => {
 
-  afterEach(() => {
-    pathname.reset();
+  let pathname;
+
+  beforeEach(() => {
+    pathname = createPathname();
   });
 
   describe('name', () => {
@@ -82,17 +84,19 @@ describe('pathname addon', () => {
   });
 
   describe('reset', () => {
-    const err = console.error;
-    console.error = jest.fn();
+    it('resets the addon', () => {
+      const err = console.error;
+      console.error = jest.fn();
 
-    const playerURI = uri({ name: 'Player', path: path('player') });
-    pathname.register(playerURI);
-    expect(pathname.get('Player')).toBeDefined();
+      const playerURI = uri({ name: 'Player', path: path('player') });
+      pathname.register(playerURI);
+      expect(pathname.get('Player')).toBeDefined();
 
-    pathname.reset();
-    expect(pathname.get('Player')).toBeUndefined();
+      pathname.reset();
+      expect(pathname.get('Player')).toBeUndefined();
 
-    // reset console.error
-    console.error = err;
+      // reset console.error
+      console.error = err;
+    })
   });
 });
