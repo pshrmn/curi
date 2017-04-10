@@ -20,9 +20,9 @@ describe('URIConf', () => {
     // is a default addon
     it('registers uris', () => {
       const uris = [
-        uri('Home', noop, path('', { end: true })),
-        uri('About', noop, path('about')),
-        uri('Contact', noop, path('contact'))
+        uri('Home', path('', { end: true })),
+        uri('About', path('about')),
+        uri('Contact', path('contact'))
       ];
       const conf = URIConf(history, uris);
       const names = [ 'Home', 'About', 'Contact' ];
@@ -33,12 +33,15 @@ describe('URIConf', () => {
 
     it('registers nested uris', () => {
       const uris = [
-        uri('Home', noop, path('', { end: true })),
-        uri('About', noop, path('about')),
-        uri('Contact', noop, path('contact'), [
-          uri('Email', noop, path('email')),
-          uri('Phone', noop, path('phone'))
-        ])
+        uri('Home', path('', { end: true })),
+        uri('About', path('about')),
+        uri('Contact', path('contact'), {
+          children: [
+            uri('Email', path('email')),
+            uri('Phone', path('phone'))
+          ]
+
+        })
       ];
 
       const conf = URIConf(history, uris);
@@ -49,10 +52,12 @@ describe('URIConf', () => {
     });
 
     it('works when initialURIs isn\'t an array', () => {
-      const uris = uri('Contact', noop, path('contact'), [
-        uri('Email', noop, path('email')),
-        uri('Phone', noop, path('phone'))
-      ]);
+      const uris = uri('Contact', path('contact'), {
+        children: [
+          uri('Email', path('email')),
+          uri('Phone', path('phone'))
+        ]
+      });
 
       const conf = URIConf(history, uris);
       const names = [ 'Contact', 'Email', 'Phone' ];
@@ -63,7 +68,7 @@ describe('URIConf', () => {
 
     it('makes addons available through return object', () => {
       const uris = [
-        uri('Home', noop, path('', { end: true }))
+        uri('Home', path('', { end: true }))
       ];
       const fakeAddon = {
         name: 'fake',
@@ -77,7 +82,7 @@ describe('URIConf', () => {
 
     it('includes pathname addon by default', () => {
       const uris = [
-        uri('Home', noop, path('', { end: true }))
+        uri('Home', path('', { end: true }))
       ];
       const conf = URIConf(history, uris);
       expect(conf.addons.pathname).toBeDefined();
@@ -97,16 +102,16 @@ describe('URIConf', () => {
 
     it('resets and replaces registered uris', () => {
       const uris = [
-        uri('Home', noop, path('', { end: true })),
-        uri('About', noop, path('about')),
-        uri('Contact', noop, path('contact'))
+        uri('Home', path('', { end: true })),
+        uri('About', path('about')),
+        uri('Contact', path('contact'))
       ];
       const conf = URIConf(history, uris);
       
       const spanishURIs = [
-        uri('Casa', noop, path('', { end: true })),
-        uri('Acerca De', noop, path('acerca-de')),
-        uri('Contacto', noop, path('contacto'))
+        uri('Casa', path('', { end: true })),
+        uri('Acerca De', path('acerca-de')),
+        uri('Contacto', path('contacto'))
       ];
       conf.refresh(spanishURIs);
 
@@ -127,11 +132,11 @@ describe('URIConf', () => {
       const history = createMemoryHistory({
         initialEntries: [ '/contact/phone' ]
       });
-      const How = uri('How', noop, path(':method'));
+      const How = uri('How', path(':method'));
       const uris = [
-        uri('Home', noop, path('', { end: true })),
-        uri('About', noop, path('about')),
-        uri('Contact', noop, path('contact'), [ How ])
+        uri('Home', path('', { end: true })),
+        uri('About', path('about')),
+        uri('Contact', path('contact'), { children: [ How ] })
       ];
 
       const conf = URIConf(history, uris);
@@ -142,11 +147,11 @@ describe('URIConf', () => {
     });
 
     it('notifies subscribers of matching routes when location changes', (done) => {
-      const How = uri('How', noop, path(':method'));
+      const How = uri('How', path(':method'));
       const uris = [
-        uri('Home', noop, path('', { end: true })),
-        uri('About', noop, path('about')),
-        uri('Contact', noop, path('contact'), [ How ])
+        uri('Home', path('', { end: true })),
+        uri('About', path('about')),
+        uri('Contact', path('contact'), { children: [ How ] })
       ];
       const conf = URIConf(history, uris);
       conf.subscribe(response => {
@@ -161,16 +166,18 @@ describe('URIConf', () => {
     it('notifies subscribers after promises have resolved', (done) => {
       let promiseResolved = false;
       const uris = [
-        uri('Home', noop, path('', { end: true })),
-        uri('About', noop, path('about')),
-        uri('Contact', noop, path('contact'), [
-          uri('How', noop, path(':method'), undefined, {
-            load: () => {
-              promiseResolved = true;
-              return Promise.resolve(promiseResolved);
-            }
-          })
-        ])
+        uri('Home', path('', { end: true })),
+        uri('About', path('about')),
+        uri('Contact', path('contact'), {
+          children: [
+            uri('How', path(':method'), {
+              load: () => {
+                promiseResolved = true;
+                return Promise.resolve(promiseResolved);
+              }
+            })
+          ]
+        })
       ];
       const conf = URIConf(history, uris);
       conf.subscribe(response => {
@@ -182,13 +189,15 @@ describe('URIConf', () => {
 
     it('only emits most recent update if another one occurs before emitting', (done) => {
       const uris = [
-        uri('Home', noop, path('', { end: true })),
-        uri('About', noop, path('about')),
-        uri('Contact', noop, path('contact'), [
-          uri('How', noop, path(':method'), undefined, {
-            preload: () => Promise.resolve()
-          })
-        ])
+        uri('Home', path('', { end: true })),
+        uri('About', path('about')),
+        uri('Contact', path('contact'), {
+          children: [
+            uri('How', path(':method'), {
+              preload: () => Promise.resolve()
+            })
+          ]
+        })
       ];
       const conf = URIConf(history, uris);
       conf.subscribe(response => {
@@ -200,8 +209,8 @@ describe('URIConf', () => {
     });
 
     it('will only match the first uri (per level) that matches', (done) => {
-      const Exact = uri('Exact', noop, path('exact'));
-      const CatchAll = uri('Catch All', noop, path(':anything'));
+      const Exact = uri('Exact', path('exact'));
+      const CatchAll = uri('Catch All', path(':anything'));
       const uris = [ Exact, CatchAll ];
       const history = createMemoryHistory({ initialEntries: [ '/exact' ] });
       const conf = URIConf(history, uris);
@@ -212,10 +221,10 @@ describe('URIConf', () => {
     });
 
     it('only matches one uri for nested levels', () => {
-      const Exact = uri('Exact', noop, path('exact'));
-      const CatchAll = uri('Catch All', noop, path(':anything'));
+      const Exact = uri('Exact', path('exact'));
+      const CatchAll = uri('Catch All', path(':anything'));
       const uris = [
-        uri('Parent', noop, path('parent'), [ Exact, CatchAll ])
+        uri('Parent', path('parent'), { children: [ Exact, CatchAll ] })
       ];
       const history = createMemoryHistory({ initialEntries: [ '/parent/exact' ]});
       const conf = URIConf(history, uris);
@@ -228,7 +237,7 @@ describe('URIConf', () => {
       const spy = jest.fn((params) => {
         expect(params.anything).toBe('hello');
       });
-      const CatchAll = uri('Catch All', noop, path(':anything'), null, {
+      const CatchAll = uri('Catch All', path(':anything'), {
         load: spy
       });
       const history = createMemoryHistory({ initialEntries: [ '/hello' ]});

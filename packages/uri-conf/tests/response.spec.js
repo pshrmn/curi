@@ -2,6 +2,8 @@ import Response from '../src/response';
 import uri from '../src/uri';
 import path from '../src/path';
 
+const noop = () => {};
+
 describe('Response', () => {
   describe('constructor', () => {
     it('sets the location', () => {
@@ -31,7 +33,7 @@ describe('Response', () => {
   describe('add', () => {
     it('sets the name, uri, and params', () => {
       const resp = new Response();
-      const match = uri('Foo', () => {}, path('/egg'))
+      const match = uri('Foo', path('/egg'))
       const params = { food: 'egg' };
       resp.add(match, params);
       expect(resp.uri).toEqual(match);
@@ -41,11 +43,11 @@ describe('Response', () => {
     it('pushes current name to partials when adding new match', () => {
       const resp = new Response();
       resp.add(
-        uri('State', () => {}, path('/WA')),
+        uri('State', path('/WA')),
         { state: 'WA' }
       );
       resp.add(
-        uri('City', () => {}, path('/WA/Seattle')),
+        uri('City', path('/WA/Seattle')),
         { city: 'Seattle' }
       );
       expect(resp.partials.length).toBe(1);
@@ -55,11 +57,11 @@ describe('Response', () => {
     it('merges params when adding new match', () => {
       const resp = new Response();
       resp.add(
-        uri('State', () => {}, path('/WA')),
+        uri('State', path('/WA')),
         { state: 'WA' }
       );
       resp.add(
-        uri('City', () => {}, path('/WA/Seattle')),
+        uri('City', path('/WA/Seattle')),
         { city: 'Seattle' }
       );
       expect(resp.params).toEqual({ state: 'WA', city: 'Seattle' });
@@ -67,19 +69,21 @@ describe('Response', () => {
   });
 
   describe('call', () => {
-    it('calls the uri\'s fn, setting it as Response.render', () => {
+    it('calls the uri\'s render function, setting Response.render', () => {
       const retValue = 'Hakuna Matata';
       const fn = jest.fn(() => retValue);
       const resp = new Response();
-      resp.add(uri('Phrase', fn, path('/hakuna-matata')));
+      resp.add(
+        uri('Phrase', path('/hakuna-matata'), { call: fn })
+      );
       resp.call();
       expect(fn.mock.calls.length).toBe(1);
       expect(resp.render).toBe(retValue);
     });
 
-    it('does not call if uri has no fn', () => {
+    it('is undefined if uri wasn\'t passed a call/value option', () => {
       const resp = new Response();
-      resp.add(uri('Phrase', null, path('/no-worries')));
+      resp.add(uri('Phrase', path('/no-worries')));
       resp.call();
       expect(resp.render).toBeUndefined();
     });
