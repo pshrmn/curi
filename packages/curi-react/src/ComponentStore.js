@@ -1,4 +1,4 @@
-const ComponentStore = (defaultComponent = null) => {
+const ComponentStore = (defaultComponent = () => null) => {
   const components = {};
 
   return {
