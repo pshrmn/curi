@@ -87,10 +87,14 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   }
 
   let lastUpdate;
-  const onUpdate = () => {
+  const prepareResponse = () => {
     const response = respond();
     return runURILoadFunctions(response)
-      .then(resp => emit(resp));
+      .then(resp => {
+        // save this for quick ref
+        lastUpdate = resp;
+        return resp;
+      });
   };
 
   const subscribers = [];  
@@ -114,7 +118,6 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
     if (response.location.key !== currentUpdate) {
       return;
     }
-    lastUpdate = response;
     subscribers.forEach(fn => {
       if (fn != null) {
         fn(response);
@@ -123,12 +126,13 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   };
 
   setup(routes);
-  const unlisten = history.listen(onUpdate);
+  const unlisten = history.listen(() => {
+    prepareResponse().then(resp => { emit(resp) });
+  });
 
   return {
-    ready: onUpdate,
+    ready: prepareResponse,
     refresh: setup,
-    last: () => lastUpdate,
     subscribe,
     addons: globals,
     history

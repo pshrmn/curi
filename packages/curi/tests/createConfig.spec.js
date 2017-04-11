@@ -145,7 +145,7 @@ describe('createConfig', () => {
   });
 
   describe('ready', () => {
-    it('returns a Promise', () => {
+    it('returns a Promise with a Response', (done) => {
       const routes = [{
         name: 'Contact',
         path: path('contact'),
@@ -156,11 +156,14 @@ describe('createConfig', () => {
       }];
 
       const config = createConfig(history, routes);
-      const loaded = config.ready();
-      expect(loaded).toBeInstanceOf(Promise);
+      config.ready()
+        .then((arg) => {
+          expect(arg).toBeInstanceOf(Response);
+          done();
+        });
     });
 
-    it('resolves once route that matches initial location has loaded', () => {
+    it('resolves once route that matches initial location has loaded', (done) => {
       let loaded = false;
       const routes = [{
         name: 'Home',
@@ -175,12 +178,13 @@ describe('createConfig', () => {
       config.ready()
         .then(() => {
           expect(loaded).toBe(true);
+          done();
         });
     });
   });
 
   describe('subscribe', () => {
-    it('throws an error if a non-function is passed to subsribe', () => {
+    it('throws an error if a non-function is passed to subscribe', () => {
       const history = createMemoryHistory({
         initialEntries: [ '/contact/phone' ]
       });
@@ -372,29 +376,4 @@ describe('createConfig', () => {
         });
     });
   });
-
-  describe('last', () => {
-    it('returns the most recently created Response', (done) => {
-      // this is useful for server-rendering where we can't actually
-      // subscribe without risking memory leaks
-      const history = createMemoryHistory({ initialEntries: ['/contact/email']});
-      const routes = [{
-        name: 'Contact',
-        path: path('contact'),
-        children: [
-          { name: 'Email', path: path('email') },
-          { name: 'Phone', path: path('phone') }
-        ]
-      }];
-
-      const config = createConfig(history, routes);
-      const loaded = config.ready()
-        .then(() => {
-          const resp = config.last();
-          expect(resp).toBeInstanceOf(Response);
-          expect(resp.uri.name).toBe('Email');
-          done();
-        });
-    })
-  })
 });
