@@ -372,4 +372,29 @@ describe('createConfig', () => {
         });
     });
   });
+
+  describe('last', () => {
+    it('returns the most recently created Response', (done) => {
+      // this is useful for server-rendering where we can't actually
+      // subscribe without risking memory leaks
+      const history = createMemoryHistory({ initialEntries: ['/contact/email']});
+      const routes = [{
+        name: 'Contact',
+        path: path('contact'),
+        children: [
+          { name: 'Email', path: path('email') },
+          { name: 'Phone', path: path('phone') }
+        ]
+      }];
+
+      const config = createConfig(history, routes);
+      const loaded = config.ready()
+        .then(() => {
+          const resp = config.last();
+          expect(resp).toBeInstanceOf(Response);
+          expect(resp.uri.name).toBe('Email');
+          done();
+        });
+    })
+  })
 });

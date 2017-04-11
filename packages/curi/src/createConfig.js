@@ -9,7 +9,6 @@ function createURIs(routes, addons, parentData) {
     const registerData = {};
     addons.forEach(addon => {
       const { name, register } = addon;
-      //console.log('for addon', name, 'using', parentData[name]);
       registerData[name] = register(route, parentData[name]);
     });
 
@@ -68,6 +67,7 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
    */
   const runURILoadFunctions = (resp) => {
     if (!resp.uri) {
+      resp.notFound();
       return Promise.resolve(resp);
     }
     const { preload, load } = resp.uri;
@@ -128,6 +128,7 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   return {
     ready: onUpdate,
     refresh: setup,
+    last: () => lastUpdate,
     subscribe,
     addons: globals,
     history
