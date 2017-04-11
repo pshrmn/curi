@@ -4,7 +4,8 @@ import React, { Component, PropTypes } from 'react';
 class Navigator extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+    response: PropTypes.object
   }
 
   static childContextTypes = {
@@ -17,17 +18,22 @@ class Navigator extends Component {
     }
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {};
+  state = {
+    response: undefined
   }
 
   componentWillMount() {
-    this.unsubscribe = this.props.config.subscribe((response) => {
+    if (this.props.response) {
       this.setState(() => ({
-        response 
-      }));
-    });
+        response: this.props.response
+      }))
+    } else {
+      this.unsubscribe = this.props.config.subscribe((response) => {
+        this.setState(() => ({
+          response 
+        }));
+      });
+    }
   }
 
   componentWillUnmount() {

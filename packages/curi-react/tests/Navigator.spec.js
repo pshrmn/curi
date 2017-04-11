@@ -8,6 +8,7 @@ import Navigator from '../src/Navigator';
 
 describe('<Navigator>', () => {
   it('calls children function when it renders', () => {
+    
     const fakeConfig = { subscribe: () => {} };
     const fn = jest.fn(() => {
       return null;
@@ -72,5 +73,28 @@ describe('<Navigator>', () => {
         );
         history.push('/about');
       });
+  });
+
+  describe('response', () => {
+    it('renders using response if provided', () => {
+
+    });
+
+    it('does not call subscribe when passed a resposne', () => {
+      const fakeConfig = {
+        subscribe: jest.fn()
+      };
+      const resp = new Response({ pathname: '/testing' });      
+      let received;
+      const children = jest.fn((response) => {
+        received = response;
+        return null;
+      });
+      const wrapper = shallow(
+        <Navigator response={resp} config={fakeConfig} children={children} />
+      );
+      expect(fakeConfig.subscribe.mock.calls.length).toBe(0);
+      expect(received).toBe(resp);
+    });
   });
 });
