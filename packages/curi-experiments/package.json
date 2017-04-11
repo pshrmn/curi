@@ -1,0 +1,25 @@
+{
+  "name": "curi-experiments",
+  "private": true,
+  "version": "0.1.0",
+  "description": "curi in action",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/curi-experiments"
+  },
+  "keywords": [
+    "curi",
+    "example",
+    "curi-react"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "dependencies": {
+    "curi": "^0.2.0",
+    "curi-react": "^0.1.0"
+  }
+}

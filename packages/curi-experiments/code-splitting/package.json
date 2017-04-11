@@ -1,0 +1,27 @@
+{
+  "name": "curi-code-splitting",
+  "version": "0.1.0",
+  "description": "Code splitting with curi",
+  "main": "public/js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack"
+  },
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^2.3.3"
+  },
+  "dependencies": {
+    "curi": "^0.2.0",
+    "curi-react": "^0.1.0",
+    "history": "^4.6.1",
+    "react": "^15.5.3",
+    "react-dom": "^15.5.3"
+  }
+}
