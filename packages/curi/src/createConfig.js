@@ -1,5 +1,4 @@
 import uri from './uri';
-import walk from './utils/walk';
 import DEFAULT_ADDONS from './addons/defaults';
 import Response from './response';
 

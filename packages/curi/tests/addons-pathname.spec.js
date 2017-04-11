@@ -18,24 +18,26 @@ describe('pathname addon', () => {
 
   describe('register', () => {
     it('adds the path to the known paths', () => {
-      const playerURI = { name: 'Player', path: path('player') };
-      pathname.register(playerURI);
+      const player = { name: 'Player', path: path('player') };
+      pathname.register(player);
       expect(pathname.get('Player')).toBeDefined();
     });
 
     it('merges path with parent path', () => {
-      const parentURI = { name: 'Parent', path: path('parent') };
-      const childURI = { name: 'Child', path: path('child') };
-      pathname.register(parentURI);
-      pathname.register(childURI, 'Parent');
-      expect(pathname.get('Child')).toBe('/parent/child');
+      const grandparent = { name: 'Grandparent', path: path('grandparent')};
+      const parent = { name: 'Parent', path: path('parent') };
+      const child = { name: 'Child', path: path('child') };
+      pathname.register(grandparent);
+      pathname.register(parent, 'Grandparent');
+      pathname.register(child, 'Parent');
+      expect(pathname.get('Child')).toBe('/grandparent/parent/child');
     });
 
     it('merges when there is a trailing slash', () => {
-      const parentURI = { name: 'Parent', path: path('parent/') };
-      const childURI = { name: 'Child', path: path('child') };
-      pathname.register(parentURI);
-      pathname.register(childURI, 'Parent');
+      const parent = { name: 'Parent', path: path('parent/') };
+      const child = { name: 'Child', path: path('child') };
+      pathname.register(parent);
+      pathname.register(child, 'Parent');
       expect(pathname.get('Child')).toBe('/parent/child');
     });
 
@@ -58,8 +60,8 @@ describe('pathname addon', () => {
 
   describe('get', () => {
     it('returns a pathname using params', () => {
-      const playerURI = { name: 'Player', path: path('player/:id') };
-      pathname.register(playerURI);
+      const player = { name: 'Player', path: path('player/:id') };
+      pathname.register(player);
       const output = pathname.get('Player', { id: 17 });
       expect(output).toBe('/player/17');
     });
@@ -76,8 +78,8 @@ describe('pathname addon', () => {
     });
 
     it('works when paths contain no params', () => { // duh?
-      const staticURI = { name: 'Static', path: path('this/has/no/params') };
-      pathname.register(staticURI);
+      const staticRoute = { name: 'Static', path: path('this/has/no/params') };
+      pathname.register(staticRoute);
       const output = pathname.get('Static');
       expect(output).toBe('/this/has/no/params');
     });

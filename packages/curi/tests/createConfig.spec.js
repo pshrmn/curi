@@ -102,7 +102,66 @@ describe('createConfig', () => {
       ];
       const config = createConfig(history, uris);
       expect(config.addons.pathname).toBeDefined();
-    })
+    });
+
+    it('registers all of routes with all of the addons', () => {
+      // this might be a bit convoluted, but it ensures that the addons
+      // are registered as expected
+      const firstAddonCache = {};
+      const secondAddonCache = {};
+      const createFirstAddon = () => {
+        return {
+          register: (route, extra) => {
+            firstAddonCache[route.name] = route.path.path;
+          }
+        };
+      }
+
+      const createSecondAddon = () => {
+        return {
+          register: (route, extra) => {
+            secondAddonCache[route.name] = `${extra ? extra : 'None'} + ${route.name}`;
+            return route.name;
+          }
+        }
+      };
+
+      const routes = [
+        { name: 'Grandparent', path: path('grandparent'), children: [
+          { name: 'Parent', path: path('parent'), children: [
+            { name: 'Child', path: path('child') }
+          ]}
+        ]},
+        {
+          name: 'Cousin', path: path('cousin')
+        }
+      ]
+
+      const config = createConfig(history, routes, [ createFirstAddon, createSecondAddon ]);
+      const expected = {
+        Grandparent: {
+          first: 'grandparent',
+          second: 'None + Grandparent'
+        },
+        Parent: {
+          first: 'parent',
+          second: 'Grandparent + Parent'
+        },
+        Child: {
+          first: 'child',
+          second: 'Parent + Child'
+        },
+        Cousin: {
+          first: 'cousin',
+          second: 'None + Cousin'
+        }
+      }
+      const keys = ['Grandparent', 'Parent', 'Child', 'Cousin'];
+      keys.forEach(key => {
+        expect(firstAddonCache[key]).toBe(expected[key].first);
+        expect(secondAddonCache[key]).toBe(expected[key].second);
+      })
+    });
   });
 
   describe('refresh', () => {
