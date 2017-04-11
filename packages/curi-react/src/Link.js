@@ -22,6 +22,7 @@ class Link extends Component {
 
   clickHandler = (event) => {
     if (canNavigate(event) && !this.props.target) {
+      event.preventDefault();
       const { curi } = this.context;
       const { pathname } = this.state;
       const { to = {} } = this.props
@@ -52,7 +53,7 @@ class Link extends Component {
     const { pathname } = this.state;
     const href = curi.history.createHref({ ...to, pathname });
     return (
-      <a href={href} {...rest} />
+      <a onClick={this.clickHandler} href={href} {...rest} />
     );
   }
 }
