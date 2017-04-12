@@ -240,6 +240,24 @@ describe('createConfig', () => {
           done();
         });
     });
+
+    it('sets 404 if no routes match', () => {
+      const routes = [{
+        name: 'Contact',
+        path: path('contact'),
+        children: [
+          { name: 'Email', path: path('email') },
+          { name: 'Phone', path: path('phone') }
+        ]
+      }];
+      const history = createMemoryHistory({ initialEntries: ['/other-page']});
+      const config = createConfig(history, routes);
+      config.ready()
+        .then((resp) => {
+          expect(resp.status).toBe(404);
+          done();
+        });
+    });
   });
 
   describe('subscribe', () => {
