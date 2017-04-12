@@ -1,4 +1,4 @@
-import path from 'curi/src/path';
+import path, { parentPath } from 'curi/src/path';
 
 import Home from './components/Home';
 import Contact from './components/Contact';
@@ -12,7 +12,7 @@ export default [
   },
   {
     name: 'Contact',
-    path: path('contact'),
+    path: parentPath('contact'),
     value: Contact,
     children: [
       {

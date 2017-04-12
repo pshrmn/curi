@@ -1,4 +1,4 @@
-import path from 'curi/src/path';
+import path, { parentPath } from 'curi/src/path';
 
 import store from './store';
 
@@ -16,7 +16,7 @@ export default [
   },
   {
     name: 'Contact',
-    path: path('contact'),
+    path: parentPath('contact'),
     preload: () => {
       return import('./components/Contact.js')
         .then(module => {
