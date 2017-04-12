@@ -7,12 +7,16 @@ const DEFAULT_OPTIONS = {
   delimiter: '/'
 };
 
-const path = (path, options) => {
+const path = (pathString, options) => {
   const keys = [];
   const mergedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
-  const re = PathToRegexp(path, keys, mergedOptions);
+  const re = PathToRegexp(pathString, keys, mergedOptions);
 
-  return { re, keys, path };
+  return { re, keys, path: pathString };
+};
+
+export const parentPath = (pathString, options) => {
+  return path(pathString, { ...options, end: false });
 };
 
 export default path;

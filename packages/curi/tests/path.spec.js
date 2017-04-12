@@ -1,4 +1,4 @@
-import path from '../src/path';
+import path, { parentPath } from '../src/path';
 
 describe('path', () => {
   it('returns a regular expression using provided string', () => {
@@ -41,4 +41,18 @@ describe('path', () => {
     });
   });
 
+});
+
+describe('parentPath', () => {
+  it('returns a path with end=false', () => {
+    const matcher = parentPath('test');
+    const match = matcher.re.exec('test/ing');
+    expect(match).not.toBe(null);
+  });
+
+  it('sets end=false even if provided end=true option', () => {
+    const matcher = parentPath('test', { end: true });
+    const match = matcher.re.exec('test/ing');
+    expect(match).not.toBe(null);
+  });
 });

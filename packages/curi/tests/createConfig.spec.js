@@ -1,7 +1,7 @@
 import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
 import uri from '../src/uri';
-import path from '../src/path';
+import path, { parentPath } from '../src/path';
 import createMemoryHistory from 'history/createMemoryHistory';
 import Response from '../src/response';
 
@@ -33,7 +33,7 @@ describe('createConfig', () => {
     // is a default addon
     it('registers uris', () => {
       const uris = [
-        { name: 'Home', path: path('', { end: true }) },
+        { name: 'Home', path: path('') },
         { name: 'About', path: path('about') },
         { name: 'Contact', path: path('contact') }
       ];
@@ -47,7 +47,7 @@ describe('createConfig', () => {
 
     it('registers nested uris', () => {
       const uris = [
-        { name: 'Home', path: path('', { end: true }) },
+        { name: 'Home', path: path('') },
         { name: 'About', path: path('about') },
         {
           name: 'Contact',
@@ -84,7 +84,7 @@ describe('createConfig', () => {
 
     it('makes addons available through return object', () => {
       const uris = [
-        { name: 'Home', path: path('', { end: true }) }
+        { name: 'Home', path: path('') }
       ];
       const createFakeAddon = () => ({
         name: 'fake',
@@ -98,7 +98,7 @@ describe('createConfig', () => {
 
     it('includes pathname addon by default', () => {
       const uris = [
-        { name: 'Home', path: path('', { end: true }) }
+        { name: 'Home', path: path('') }
       ];
       const config = createConfig(history, uris);
       expect(config.addons.pathname).toBeDefined();
@@ -177,12 +177,12 @@ describe('createConfig', () => {
 
     it('resets and replaces registered uris', () => {
       const englishRoutes = [
-        { name: 'Home', path: path('', { end: true }) },
+        { name: 'Home', path: path('') },
         { name: 'About', path: path('about') },
         { name: 'Contact', path: path('contact') }
       ];
       const spanishRoutes = [
-        { name: 'Casa', path: path('', { end: true }) },
+        { name: 'Casa', path: path('') },
         { name: 'Acerca De', path: path('acerca-de') },
         { name: 'Contacto', path: path('contacto') }
       ];
@@ -226,7 +226,7 @@ describe('createConfig', () => {
       let loaded = false;
       const routes = [{
         name: 'Home',
-        path: path('', { end: true }),
+        path: path(''),
         load: () => {
           loaded = true;
           return Promise.resolve()
@@ -267,7 +267,7 @@ describe('createConfig', () => {
       });
       const How = { name: 'How', path: path(':method') };
       const routes = [
-        { name: 'Home', path: path('', { end: true }) },
+        { name: 'Home', path: path('') },
         { name: 'About', path: path('about') },
         {
           name: 'Contact',
@@ -298,7 +298,7 @@ describe('createConfig', () => {
         { name: 'About', path: path('about') },
         {
           name: 'Contact',
-          path: path('contact', { end: false }),
+          path: parentPath('contact'),
           children: [ How ]
         }
       ];
@@ -319,7 +319,7 @@ describe('createConfig', () => {
       const routes = [
         { name: 'Home', path: path('') },
         { name: 'About', path: path('about') },
-        { name: 'Contact', path: path('contact', { end: false }), children: [ How ] }
+        { name: 'Contact', path: parentPath('contact'), children: [ How ] }
       ];
 
       const check = ignoreFirstCall(response => {
@@ -344,7 +344,7 @@ describe('createConfig', () => {
         { name: 'About', path: path('about') },
         {
           name: 'Contact',
-          path: path('contact', { end: false }),
+          path: parentPath('contact'),
           children: [
             {
               name: 'How',
@@ -377,7 +377,7 @@ describe('createConfig', () => {
         { name: 'About', path: path('about') },
         {
           name: 'Contact',
-          path: path('contact', { end: false }),
+          path: parentPath('contact'),
           children: [
             {
               name: 'How',
@@ -421,7 +421,7 @@ describe('createConfig', () => {
       const Exact = { name: 'Exact', path: path('exact') };
       const CatchAll = { name: 'Catch All', path: path(':anything') };
       const uris = [
-        { name: 'Parent', path: path('parent', { end: false }), children: [ Exact, CatchAll ] }
+        { name: 'Parent', path: parentPath('parent'), children: [ Exact, CatchAll ] }
       ];
       const history = createMemoryHistory({ initialEntries: [ '/parent/exact' ]});
       const config = createConfig(history, uris);

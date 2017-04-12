@@ -1,5 +1,5 @@
 import uri from '../src/uri';
-import path from '../src/path';
+import path, { parentPath } from '../src/path';
 import Response from '../src/response';
 
 const noop = () => {};
@@ -186,7 +186,7 @@ describe('uri', () => {
         const Two = uri({ name: 'Two', path: path('two') });
         const testUri = uri({
           name: 'Test',
-          path: path('test', { end: false }),
+          path: parentPath('test'),
           children: [ One, Two ]
         });
         const resp = new Response();
@@ -199,7 +199,7 @@ describe('uri', () => {
         const Attractions = uri({ name: 'Attractions', path: path('attractions') });
         const testUri = uri({
           name: 'State',
-          path: path(':state', { end: false }),
+          path: parentPath(':state'),
           children: [ Attractions ]
         });
         const resp = new Response();
@@ -211,7 +211,7 @@ describe('uri', () => {
       it('overwrites param name conflicts', () => {
         const testUri = uri({
           name: 'One',
-          path: path(':id', { end: false }),
+          path: parentPath(':id'),
           children: [ uri({ name: 'Two', path: path(':id') }) ]
         });
         const resp = new Response();
