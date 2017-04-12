@@ -69,7 +69,7 @@ describe('Response', () => {
   });
 
   describe('call', () => {
-    it('calls the uri\'s render function, setting Response.render', () => {
+    it('calls the uri\'s render function, setting Response.body', () => {
       const retValue = 'Hakuna Matata';
       const fn = jest.fn(() => retValue);
       const resp = new Response();
@@ -78,14 +78,14 @@ describe('Response', () => {
       );
       resp.call();
       expect(fn.mock.calls.length).toBe(1);
-      expect(resp.render).toBe(retValue);
+      expect(resp.body).toBe(retValue);
     });
 
     it('is undefined if uri wasn\'t passed a call/value option', () => {
       const resp = new Response();
       resp.add(uri({ name: 'Phrase', path: path('/no-worries') }));
       resp.call();
-      expect(resp.render).toBeUndefined();
+      expect(resp.body).toBeUndefined();
     });
   });
 });

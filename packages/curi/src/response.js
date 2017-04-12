@@ -30,7 +30,7 @@ class Response {
 
   call() {
     if (this.uri && this.uri.render) {
-      this.render = this.uri.render();
+      this.body = this.uri.render();
     }
   }
 }
