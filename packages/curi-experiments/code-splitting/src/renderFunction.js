@@ -6,7 +6,7 @@ export default function(response) {
   if (response.status !== 200 || !response.uri) {
     element = null;
   } else {
-    element = <response.render />
+    element = <response.body />
   }
   return (
     <div>

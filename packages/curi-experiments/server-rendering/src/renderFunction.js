@@ -12,7 +12,7 @@ export default function(response) {
   } else if (response.status !== 200 || !response.uri) {
     element = null;
   } else {
-    element = <response.render params={response.params} />
+    element = <response.body params={response.params} />
   }
   return (
     <div>

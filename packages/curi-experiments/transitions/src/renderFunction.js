@@ -11,7 +11,7 @@ function render(response) {
         transitionEnterTimeout={500}
         transitionLeaveTimeout={500}
       >
-        <response.render key={location.pathname} params={params} />
+        <response.body key={location.pathname} params={params} />
       </CSSTransitionGroup>
     </div>
   );
