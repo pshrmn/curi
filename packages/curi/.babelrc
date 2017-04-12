@@ -1,5 +1,5 @@
 {
-  "presets": [ "es2015" ],
+  "presets": [ "./buildPresets/es2015" ],
   "plugins": [
     "transform-export-extensions",
     "transform-object-rest-spread"
