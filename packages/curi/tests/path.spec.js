@@ -22,10 +22,22 @@ describe('path', () => {
       expect(strictMatcher.re.exec('here')).toBe(null);
     });
 
-    it('passes the option end=false by default', () => {
+    it('passes the option sensitive=false by default', () => {
+      const matcher = path('One');
+      const match = matcher.re.exec('one');
+      expect(match).not.toBe(null);
+    });
+
+    it('passes the option strict=false by default', () => {
+      const matcher = path('one/');
+      const match = matcher.re.exec('one');
+      expect(match).not.toBe(null);
+    });
+
+    it('passes the option end=true by default', () => {
       const matcher = path('one');
       const match = matcher.re.exec('one/two');
-      expect(match).not.toBe(null);
+      expect(match).toBe(null);
     });
   });
 

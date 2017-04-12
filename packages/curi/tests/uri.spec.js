@@ -186,7 +186,7 @@ describe('uri', () => {
         const Two = uri({ name: 'Two', path: path('two') });
         const testUri = uri({
           name: 'Test',
-          path: path('test'),
+          path: path('test', { end: false }),
           children: [ One, Two ]
         });
         const resp = new Response();
@@ -199,7 +199,7 @@ describe('uri', () => {
         const Attractions = uri({ name: 'Attractions', path: path('attractions') });
         const testUri = uri({
           name: 'State',
-          path: path(':state'),
+          path: path(':state', { end: false }),
           children: [ Attractions ]
         });
         const resp = new Response();
@@ -211,7 +211,7 @@ describe('uri', () => {
       it('overwrites param name conflicts', () => {
         const testUri = uri({
           name: 'One',
-          path: path(':id'),
+          path: path(':id', { end: false }),
           children: [ uri({ name: 'Two', path: path(':id') }) ]
         });
         const resp = new Response();

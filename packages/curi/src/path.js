@@ -3,7 +3,7 @@ import PathToRegexp from 'path-to-regexp';
 const DEFAULT_OPTIONS = {
   sensitive: false,
   strict: false,
-  end: false, // this is different than the default
+  end: true,
   delimiter: '/'
 };
 
