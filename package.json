@@ -11,6 +11,6 @@
   },
   "homepage": "https://github.com/pshrmn/curi#readme",
   "devDependencies": {
-    "lerna": "2.0.0-beta.38"
+    "lerna": "^2.0.0-rc.1"
   }
 }
