@@ -2,7 +2,7 @@
   "name": "curi-monorepo",
   "private": true,
   "scripts": {
-    "test": "lerna run test"
+    "test": "lerna run test --stream"
   },
   "author": "Paul Sherman",
   "license": "MIT",
