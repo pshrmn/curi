@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-//import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Navigator extends Component {
   static propTypes = {
@@ -22,17 +22,15 @@ class Navigator extends Component {
     response: undefined
   }
 
+  setResponse = (response) => {
+    this.setState({ response });
+  }
+
   componentWillMount() {
     if (this.props.response) {
-      this.setState(() => ({
-        response: this.props.response
-      }))
+      this.setResponse(this.props.response);
     } else {
-      this.unsubscribe = this.props.config.subscribe((response) => {
-        this.setState(() => ({
-          response 
-        }));
-      });
+      this.unsubscribe = this.props.config.subscribe(this.setResponse);
     }
   }
 
