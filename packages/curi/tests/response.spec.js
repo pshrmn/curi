@@ -34,15 +34,21 @@ describe('Response', () => {
   describe('redirect', () => {
     it('sets the response\'s status property', () => {
       const resp = new Response();
-      resp.redirect(302, 'http://www.example.com');
+      resp.redirect('http://www.example.com', 302);
       expect(resp.status).toBe(302);
     });
 
     it('sets the response\'s redirectTo property', () => {
       const resp = new Response();
-      resp.redirect(302, 'https://www.example.com');
+      resp.redirect('https://www.example.com', 302);
       expect(resp.redirectTo).toBe('https://www.example.com');
     });
+
+    it('defaults to a 301 response', () => {
+      const resp = new Response();
+      resp.redirect('http://www.example.com');
+      expect(resp.status).toBe(301);
+    })
   });
 
   describe('add', () => {
@@ -126,7 +132,7 @@ describe('Response', () => {
       const location = { pathname: '/park/yosemite' };
       const resp = new Response(location);
       const corporateTakeover = '/park/yosemite-land-brought-to-you-by-disney'
-      resp.redirect(301, corporateTakeover);
+      resp.redirect(corporateTakeover);
       const respObj = resp.asObject();
       expect(respObj.location).toBe(location);
       expect(respObj.status).toBe(301);

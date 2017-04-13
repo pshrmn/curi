@@ -7,9 +7,9 @@ class Response {
     this.params = {};
   }
 
-  redirect(code, uri) {
+  redirect(to, code = 301) {
     this.setStatus(code);
-    this.redirectTo = uri;
+    this.redirectTo = to;
   }
 
   setStatus(code) {
