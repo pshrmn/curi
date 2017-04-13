@@ -1,4 +1,4 @@
-import path from 'curi/src/path';
+import path from 'curi/lib/path';
 
 import store from './store';
 

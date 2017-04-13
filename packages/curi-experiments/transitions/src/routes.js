@@ -1,4 +1,4 @@
-import path, { parentPath } from 'curi/src/path';
+import path, { parentPath } from 'curi/lib/path';
 
 import Home from './components/Home';
 import Contact from './components/Contact';

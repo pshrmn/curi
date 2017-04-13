@@ -7,7 +7,6 @@ import routes from './src/routes';
 import renderFunction from './src/renderFunction';
 
 export default function(req, res) {
-  console.log('handling new request for', req.url);
   const history = createMemoryHistory({ initialEntries: [ req.url ]})
   const config = createConfig(history, routes);
   config.ready()

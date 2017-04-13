@@ -1,3 +1,3 @@
-import ComponentStore from 'curi-react/src/ComponentStore';
+import ComponentStore from 'curi-react/lib/ComponentStore';
 
 export default ComponentStore();

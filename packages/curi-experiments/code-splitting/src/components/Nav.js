@@ -1,4 +1,4 @@
-import Link from 'curi-react/src/Link';
+import Link from 'curi-react/lib/Link';
 
 const Nav = () => (
   <nav>
