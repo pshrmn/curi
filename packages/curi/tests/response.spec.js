@@ -103,4 +103,34 @@ describe('Response', () => {
       expect(resp.body).toBeUndefined();
     });
   });
+
+  describe('asObject', () => {
+    it('returns an object with desired properties', () => {
+      const location = { pathname: '/park/yosemite' };
+      const resp = new Response(location);
+      const value = 'Yosemite National Park';
+      const parkURI = uri({ name: 'Park', path: path('/park/:name'), value });
+      resp.add(parkURI, { name: 'yosemite' });
+      resp.call();
+      const respObj = resp.asObject();
+
+      expect(respObj.location).toBe(location);
+      expect(respObj.status).toBe(200);
+      expect(respObj.body).toBe(value);
+      expect(respObj.name).toBe('Park');
+      expect(respObj.partials).toEqual([]);
+      expect(respObj.params).toEqual({ name: 'yosemite' });
+    });
+
+    it('returns a redirect object when redirectTo is set', () => {
+      const location = { pathname: '/park/yosemite' };
+      const resp = new Response(location);
+      const corporateTakeover = '/park/yosemite-land-brought-to-you-by-disney'
+      resp.redirect(301, corporateTakeover);
+      const respObj = resp.asObject();
+      expect(respObj.location).toBe(location);
+      expect(respObj.status).toBe(301);
+      expect(respObj.redirectTo).toBe(corporateTakeover);
+    });
+  });
 });

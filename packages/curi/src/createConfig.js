@@ -91,8 +91,8 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
     return runURILoadFunctions(response)
       .then(resp => {
         // save this for quick ref
-        lastUpdate = resp;
-        return resp;
+        lastUpdate = resp.asObject();
+        return lastUpdate;
       });
   };
 

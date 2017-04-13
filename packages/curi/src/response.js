@@ -29,6 +29,25 @@ class Response {
       this.body = this.uri.render();
     }
   }
+
+  asObject() {
+    if (this.redirectTo != null) {
+      return {
+        location: this.location,
+        status: this.status,
+        redirectTo: this.redirectTo
+      };
+    }
+
+    return {
+      location: this.location,
+      status: this.status,
+      body: this.body,
+      name: this.uri ? this.uri.name : undefined,
+      partials: this.partials,
+      params: this.params
+    };
+  }
 }
 
 export default Response;
