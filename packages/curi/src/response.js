@@ -7,10 +7,6 @@ class Response {
     this.params = {};
   }
 
-  notFound() {
-    this.setStatus(404);
-  }
-
   redirect(code, uri) {
     this.setStatus(code);
     this.redirectTo = uri;

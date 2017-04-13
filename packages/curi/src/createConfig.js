@@ -66,7 +66,7 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
    */
   const runURILoadFunctions = (resp) => {
     if (!resp.uri) {
-      resp.notFound();
+      resp.setStatus(404);
       return Promise.resolve(resp);
     }
     const { preload, load } = resp.uri;
