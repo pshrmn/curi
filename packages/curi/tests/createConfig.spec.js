@@ -244,7 +244,7 @@ describe('createConfig', () => {
     it('sets 404 if no routes match', (done) => {
       const routes = [{
         name: 'Contact',
-        path: path('contact'),
+        path: parentPath('contact'),
         children: [
           { name: 'Email', path: path('email') },
           { name: 'Phone', path: path('phone') }
@@ -257,6 +257,29 @@ describe('createConfig', () => {
           expect(resp.status).toBe(404);
           done();
         });
+    });
+
+    it('handles route promises that are rejected', (done) => {
+      const routes = [{
+        name: 'Home',
+        path: path(''),
+        load: (resp) => {
+          return Promise.reject('oh no');
+        }
+      }];
+      const config = createConfig(history, routes);
+
+      // Jest 20 will add the ability to check that a promise resolves/rejects
+      // for now, this just verifies that it rejects
+      config.ready()
+        .then(resp => {
+          expect(true).toBe(false);
+          done();
+        })
+        .catch((err) => {
+          expect(true).toBe(true);
+          done();
+        })
     });
   });
 
@@ -452,5 +475,30 @@ describe('createConfig', () => {
           done();
         });
     });
+
+    it('returns a function to unsubscribe', () => {
+      const config = createConfig(history, [{ name: 'Home', path: path('') }])
+      const sub1 = jest.fn();
+      const sub2 = jest.fn();
+
+      const unsub1 = config.subscribe(sub1);
+      const unsub2 = config.subscribe(sub2);
+      history.push({ pathname: '/test' });
+      // this nesting is ugly, but is necessary to ensure that the response
+      // has resolved prior to checking if the subscribers have been called
+      config.ready()
+        .then(() => {
+          expect(sub1.mock.calls.length).toBe(1);
+          expect(sub2.mock.calls.length).toBe(1);
+
+          unsub1();
+          config.ready()
+            .then(() => {
+              history.push({ pathname: '/next' });
+                expect(sub1.mock.calls.length).toBe(1);
+                expect(sub2.mock.calls.length).toBe(2);
+              });
+            });
+        });
   });
 });

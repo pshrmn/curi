@@ -28,6 +28,21 @@ describe('Response', () => {
       resp.setStatus(404);
       expect(resp.status).toBe(404);
     });
+
+  });
+
+  describe('redirect', () => {
+    it('sets the response\'s status property', () => {
+      const resp = new Response();
+      resp.redirect(302, 'http://www.example.com');
+      expect(resp.status).toBe(302);
+    });
+
+    it('sets the response\'s redirectTo property', () => {
+      const resp = new Response();
+      resp.redirect(302, 'https://www.example.com');
+      expect(resp.redirectTo).toBe('https://www.example.com');
+    });
   });
 
   describe('add', () => {
