@@ -7,7 +7,9 @@ class Redirect extends Component {
     to: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object
-    ]).isRequired
+    ]),
+    name: PropTypes.string,
+    params: PropTypes.object
   }
 
   static contextTypes = {
@@ -15,7 +17,13 @@ class Redirect extends Component {
   }
 
   componentDidMount() {
-    this.context.curi.history.replace(this.props.to)
+    const { name, params, to } = this.props;
+    let redirectTo = to;
+    if (name) {
+      const pathname = this.context.curi.addons.pathname(name, params);
+      redirectTo = { pathname, ...to };
+    }
+    this.context.curi.history.replace(redirectTo)
   }
 
   render() {

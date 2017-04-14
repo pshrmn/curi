@@ -17,27 +17,93 @@ describe('<Redirect>', () => {
     expect(fakeHistory.replace.mock.calls[0][0]).toBe(to);
   });
 
-  it('works with to strings', () => {
-    const fakeHistory = { replace: jest.fn() };
-    const fakeConfig = { history: fakeHistory };
-    const to = '/other-place';
-    expect(() => {
-      shallow(
-        <Redirect to={to} />,
-        { context: { curi: fakeConfig }}
-      );
-    }).not.toThrow()
+  describe('to', () => {
+    it('works with to strings', () => {
+      const fakeHistory = { replace: jest.fn() };
+      const fakeConfig = { history: fakeHistory };
+      const to = '/other-place';
+      expect(() => {
+        shallow(
+          <Redirect to={to} />,
+          { context: { curi: fakeConfig }}
+        );
+      }).not.toThrow()
+    });
+
+    it('works with to objects', () => {
+      const fakeHistory = { replace: jest.fn() };
+      const fakeConfig = { history: fakeHistory };
+      const to = { pathname: '/other-place' };
+      expect(() => {
+        shallow(
+          <Redirect to={to} />,
+          { context: { curi: fakeConfig }}
+        );
+      }).not.toThrow()
+    });
   });
 
-  it('works with to objects', () => {
-    const fakeHistory = { replace: jest.fn() };
-    const fakeConfig = { history: fakeHistory };
-    const to = { pathname: '/other-place' };
-    expect(() => {
-      shallow(
-        <Redirect to={to} />,
-        { context: { curi: fakeConfig }}
+  describe('name & params', () => {
+
+    let history;
+
+    beforeEach(() => {
+      history = createMemoryHistory();
+      history.replace = jest.fn();
+    })
+
+    it('generates pathname using the name prop', () => {
+      const config = createConfig(history, [{
+        name: 'Park', path: path('/park')
+      }]);
+      const wrapper = mount(
+        <Redirect name='Park' />,
+        { context: { curi: config } }
       );
-    }).not.toThrow()
+      expect(history.replace.mock.calls.length).toBe(1);
+      const redirectingTo = history.replace.mock.calls[0][0];
+      expect(redirectingTo.pathname).toBe('/park');
+    });
+
+    it('uses params prop to generate pathname', () => {
+      const config = createConfig(history, [{
+        name: 'Park', path: path('/park/:name')
+      }]);
+      const wrapper = mount(
+        <Redirect name='Park' params={{ name: 'Denali' }}/>,
+        { context: { curi: config } }
+      )
+      expect(history.replace.mock.calls.length).toBe(1);
+      const redirectingTo = history.replace.mock.calls[0][0];
+      expect(redirectingTo.pathname).toBe('/park/Denali');
+    });
+
+    it('merges generated pathname with to prop', () => {
+      const config = createConfig(history, [{
+        name: 'Park', path: path('/park')
+      }]);
+      const to = { search: '?camping=true' };
+      const wrapper = mount(
+        <Redirect name='Park' to={to} />,
+        { context: { curi: config } }
+      )
+      expect(history.replace.mock.calls.length).toBe(1);
+      const redirectingTo = history.replace.mock.calls[0][0];
+      expect(redirectingTo.search).toBe(to.search);
+    });
+
+    it('will use to.pathname over generated pathname', () => {
+      const config = createConfig(history, [{
+        name: 'Park', path: path('/park/:name')
+      }]);
+      const to = { pathname: '/park/Canyon+Land' };
+      const wrapper = mount(
+        <Redirect name='Park' params={{ name: 'Everglades' }} to={to} />,
+        { context: { curi: config } }
+      )
+      expect(history.replace.mock.calls.length).toBe(1);
+      const redirectingTo = history.replace.mock.calls[0][0];
+      expect(redirectingTo.pathname).toBe(to.pathname);
+    });
   });
 });
