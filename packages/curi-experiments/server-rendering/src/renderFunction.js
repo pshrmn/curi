@@ -6,18 +6,11 @@ const FourOhFour = () => (
 );
 
 export default function(response) {
-  let element;
-  if (response.status === 404) {
-    element = <FourOhFour />
-  } else if (response.status !== 200 || !response.uri) {
-    element = null;
-  } else {
-    element = <response.body params={response.params} />
-  }
+  const { body:Body, params } = response;
   return (
     <div>
       <Nav />
-      { element }
+      { Body ? <Body params={params} /> : <FourOhFour /> }
     </div>
   );
 }

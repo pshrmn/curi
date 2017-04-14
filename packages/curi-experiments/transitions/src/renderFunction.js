@@ -1,8 +1,11 @@
 import { CSSTransitionGroup } from 'react-transition-group';
 import Nav from './components/Nav';
 
+const FourOhFour = () => <div>404</div>
+
 function render(response) {
-  const { location, params } = response;
+  const { location, params, body } = response;
+  const BodyComponent = body ? body : FourOhFour
   return (
     <div>
       <Nav />
@@ -11,7 +14,7 @@ function render(response) {
         transitionEnterTimeout={500}
         transitionLeaveTimeout={500}
       >
-        <response.body key={location.pathname} params={params} />
+        <BodyComponent key={location.pathname} params={params} />
       </CSSTransitionGroup>
     </div>
   );
