@@ -41,7 +41,7 @@ class Navigator extends Component {
   }
 
   render() {
-    return this.props.children(this.state.response);
+    return this.props.children(this.state.response, this.props.config);
   }
 }
 

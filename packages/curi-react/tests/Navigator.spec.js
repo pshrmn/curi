@@ -51,6 +51,30 @@ describe('<Navigator>', () => {
       });
   });
 
+  it('passes the children function the config object', () => {
+    const history = createMemoryHistory();
+    const routes = [
+      { name: 'Home', path: path('', { end: true })},
+      { name: 'About', path: path('about') }
+    ];
+    const fn = jest.fn(() => {
+      return null;
+    });
+
+    const config = createConfig(history, routes)
+    config.ready()
+      .then((resp) => {
+        const wrapper = shallow(
+          <Navigator config={config}>
+            {fn}
+          </Navigator>
+        );
+
+        expect(fn.mock.calls[0][1]).toBe(config);
+        done();
+      });
+  });
+
   it('updates on location changes', (done) => {
     const history = createMemoryHistory();
     const routes = [
