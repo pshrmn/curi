@@ -25,8 +25,8 @@ class Link extends Component {
       event.preventDefault();
       const { curi } = this.context;
       const { pathname } = this.state;
-      const { to = {} } = this.props
-      curi.history.push({ ...to, pathname })
+      const { to = {} } = this.props;
+      curi.history.push({ pathname, ...to })
     }
   }
 
@@ -51,7 +51,7 @@ class Link extends Component {
     const { name, params, to, ...rest } = this.props;
     const { curi } = this.context;
     const { pathname } = this.state;
-    const href = curi.history.createHref({ ...to, pathname });
+    const href = curi.history.createHref({ pathname, ...to });
     return (
       <a onClick={this.clickHandler} href={href} {...rest} />
     );
