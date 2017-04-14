@@ -51,7 +51,7 @@ describe('<Navigator>', () => {
       });
   });
 
-  it('passes the children function the config object', () => {
+  it('passes the children function the config object', (done) => {
     const history = createMemoryHistory();
     const routes = [
       { name: 'Home', path: path('', { end: true })},
