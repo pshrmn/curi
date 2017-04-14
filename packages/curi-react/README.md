@@ -27,15 +27,15 @@ const routes = [
 ];
 
 const config = createConfig(history, routes);
-// make sure that the initial located has resolved before rendering
+// make sure that the initial location has resolved before rendering
 config.ready().then(() => {
   ReactDOM.render((
     <Navigator config={config}>
-    {(response, config) => (
-      response.body
-        ? <response.body />
-        : <NotFound />
-    )}
+      {(response, config) => (
+        response.body
+          ? <response.body />
+          : <NotFound />
+      )}
     </Navigator>
   ), document.getElementById('root'))
 });
