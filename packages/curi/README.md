@@ -2,6 +2,8 @@
 
 `curi` is a simple route configuration package for creating single page apps. Navigation is powered by [`history`](https://github.com/ReactTraining/history).
 
+## [Documentation](./docs)
+
 ### Routes
 
 Each route is described using an object. Each route **must** have a unique `name` and `path`.
@@ -24,3 +26,16 @@ const history = createBrowserHistory();
 const routes = [...];
 const config = createConfig(history, routes)
 ```
+
+## Responses
+
+Whenever navigation happens, the curi config object will generate a new response. This response will have a number of properties that are useful for (re-)rendering the application.
+
+* `location` - The location object used to generate the response.
+* `status` - The status code for the response. This defaults to `200`, but can be changed if no routes match or a route issues a redirect.
+* `name` - The name of the best matching route.
+* `partials` - The name of ancestor routes that matched part of the location's pathname.
+* `params` - An object containing the values varsed from the pathname by `path-to-regexp`.
+* `body` - This is either the `value` or the result of calling `call` for the (best matched) route. This provides a way to add data to the response that is associated with the route. For instance, with `curi-react` this would generally be the component that should be rendered.
+
+There is also a second, similar response object that is created when a response redirets. That object will have only three properties: `location`, `status`, and `redirectTo` (which is the URI string of the location that should be redirect to).
