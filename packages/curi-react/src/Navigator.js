@@ -6,25 +6,25 @@ class Navigator extends Component {
     config: PropTypes.object.isRequired,
     children: PropTypes.func.isRequired,
     response: PropTypes.object
-  }
+  };
 
   static childContextTypes = {
     curi: PropTypes.object
-  }
+  };
 
   getChildContext() {
     return {
       curi: this.props.config
-    }
+    };
   }
 
   state = {
     response: undefined
-  }
+  };
 
-  setResponse = (response) => {
+  setResponse = response => {
     this.setState({ response });
-  }
+  };
 
   componentWillMount() {
     if (this.props.response) {

@@ -1,5 +1,3 @@
 import pathname from './pathname';
 
-export default [
-  pathname
-];
+export default [pathname];

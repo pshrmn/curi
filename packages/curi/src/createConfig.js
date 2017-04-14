@@ -17,8 +17,8 @@ function createURIs(routes, addons, parentData) {
       : [];
 
     // finally, create the uri
-    return uri({ ...route, children })
-  })
+    return uri({ ...route, children });
+  });
 }
 
 function createConfig(history, routes, addons = DEFAULT_ADDONS) {
@@ -29,12 +29,12 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
 
   const setup = routes => {
     if (!Array.isArray(routes)) {
-      routes = [ routes ];
+      routes = [routes];
     }
 
     const registerFunctions = [];
     // clear out the existing addons
-    for ( let key in globals ) {
+    for (let key in globals) {
       delete globals[key];
     }
     // create the new addons
@@ -55,16 +55,16 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   const respond = () => {
     const { pathname, key } = history.location;
     currentUpdate = key;
-    const resp = new Response(history.location)
+    const resp = new Response(history.location);
     uris.some(uri => uri.match(pathname, resp));
     return resp;
-  }
+  };
 
   /*
    * The response should not be emitted until any preload/load promises
    * have resolved. 
    */
-  const runURILoadFunctions = (resp) => {
+  const runURILoadFunctions = resp => {
     if (!resp.uri) {
       resp.setStatus(404);
       return Promise.resolve(resp);
@@ -78,26 +78,25 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
         resp.call();
         return resp;
       },
-      (err) => {
+      err => {
         // not sure what to do here yet
         return Promise.reject(err);
       }
     );
-  }
+  };
 
   let lastUpdate;
   const prepareResponse = () => {
     const response = respond();
-    return runURILoadFunctions(response)
-      .then(resp => {
-        // save this for quick ref
-        lastUpdate = resp.asObject();
-        return lastUpdate;
-      });
+    return runURILoadFunctions(response).then(resp => {
+      // save this for quick ref
+      lastUpdate = resp.asObject();
+      return lastUpdate;
+    });
   };
 
-  const subscribers = [];  
-  const subscribe = (fn) => {
+  const subscribers = [];
+  const subscribe = fn => {
     if (typeof fn !== 'function') {
       throw new Error('The argument passed to subscribe must be a function');
     }
@@ -108,11 +107,11 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
 
     const newLength = subscribers.push(fn);
     return () => {
-      subscribers[newLength-1] = null
+      subscribers[newLength - 1] = null;
     };
   };
 
-  const emit = (response) => {
+  const emit = response => {
     // don't emit old responses
     if (response.location.key !== currentUpdate) {
       return;
@@ -126,7 +125,9 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
 
   setup(routes);
   const unlisten = history.listen(() => {
-    prepareResponse().then(resp => { emit(resp) });
+    prepareResponse().then(resp => {
+      emit(resp);
+    });
   });
 
   return {

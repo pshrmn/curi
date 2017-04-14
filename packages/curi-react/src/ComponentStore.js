@@ -5,10 +5,10 @@ const ComponentStore = (defaultComponent = () => null) => {
     register: (name, component) => {
       components[name] = component;
     },
-    get: (name) => {
+    get: name => {
       return components[name] ? components[name] : defaultComponent;
     }
-  }
-}
+  };
+};
 
 export default ComponentStore;

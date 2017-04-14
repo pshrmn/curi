@@ -3,7 +3,6 @@ import uri from '../src/uri';
 import path from '../src/path';
 
 describe('pathname addon', () => {
-
   let pathname;
 
   beforeEach(() => {
@@ -24,7 +23,7 @@ describe('pathname addon', () => {
     });
 
     it('merges path with parent path', () => {
-      const grandparent = { name: 'Grandparent', path: path('grandparent')};
+      const grandparent = { name: 'Grandparent', path: path('grandparent') };
       const parent = { name: 'Parent', path: path('parent') };
       const child = { name: 'Child', path: path('child') };
       pathname.register(grandparent);
@@ -77,7 +76,8 @@ describe('pathname addon', () => {
       console.error = error;
     });
 
-    it('works when paths contain no params', () => { // duh?
+    it('works when paths contain no params', () => {
+      // duh?
       const staticRoute = { name: 'Static', path: path('this/has/no/params') };
       pathname.register(staticRoute);
       const output = pathname.get('Static');

@@ -18,7 +18,8 @@
     "build:lib": "cross-env BABEL_ENV=cjs babel ./src -d lib --ignore __tests__",
     "build:umd": "webpack --define process.env.NODE_ENV=\"'production'\" --output-filename=umd/curi.js",
     "build:min": "webpack -p --optimize-minimize --output-filename=umd/curi.min.js",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
     "cross-env": "^4.0.0",
     "history": "^4.6.1",
     "jest": "^19.0.2",
+    "prettier": "^1.1.0",
     "rimraf": "^2.6.1",
     "webpack": "^2.3.2"
   },

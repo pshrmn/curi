@@ -1,8 +1,4 @@
-import {
-  join,
-  stripLeadingSlash,
-  withLeadingSlash
-} from './utils/path';
+import { join, stripLeadingSlash, withLeadingSlash } from './utils/path';
 
 function once(fn) {
   let promise = null;
@@ -13,16 +9,14 @@ function once(fn) {
       return promise;
     }
 
-    promise = fn()
+    promise = fn();
     hasRun = true;
     return promise;
-  }
+  };
 }
 
-const uri = (options) => {
-  const {
-    name, path, value, call, children, preload, load
-  } = options || {};
+const uri = options => {
+  const { name, path, value, call, children, preload, load } = options || {};
 
   if (name == null || path == null) {
     throw new Error('A URI must have defined name and path properties');
@@ -47,17 +41,19 @@ const uri = (options) => {
       if (!match) {
         return false;
       }
-      const [ segment, ...parsed ] = match;
+      const [segment, ...parsed] = match;
       const params = {};
       path.keys.forEach((key, index) => {
         params[key.name] = parsed[index];
       });
-      const uriString = parentURI != null ? join(parentURI, segment) : withLeadingSlash(segment);
+      const uriString = parentURI != null
+        ? join(parentURI, segment)
+        : withLeadingSlash(segment);
       response.add(this, params);
 
       if (children) {
         // the children should only match against the unmatched portion
-        const remainder = testPath.slice(segment.length)
+        const remainder = testPath.slice(segment.length);
         children.some(c => {
           return c.match(remainder, response, uriString);
         });
@@ -66,6 +62,6 @@ const uri = (options) => {
       return true;
     }
   };
-}
+};
 
 export default uri;

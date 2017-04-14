@@ -1,34 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const canNavigate = (event) => {
+const canNavigate = event => {
   return (
     !event.defaultPrevented &&
     event.button === 0 &&
     !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
-  ) 
-}
+  );
+};
 
 class Link extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     params: PropTypes.object,
     to: PropTypes.object
-  }
+  };
 
   static contextTypes = {
     curi: PropTypes.object.isRequired
-  }
+  };
 
-  clickHandler = (event) => {
+  clickHandler = event => {
     if (canNavigate(event) && !this.props.target) {
       event.preventDefault();
       const { curi } = this.context;
       const { pathname } = this.state;
       const { to = {} } = this.props;
-      curi.history.push({ pathname, ...to })
+      curi.history.push({ pathname, ...to });
     }
-  }
+  };
 
   createPathname(props, context) {
     const { name, params } = props;
@@ -52,9 +52,7 @@ class Link extends Component {
     const { curi } = this.context;
     const { pathname } = this.state;
     const href = curi.history.createHref({ pathname, ...to });
-    return (
-      <a onClick={this.clickHandler} href={href} {...rest} />
-    );
+    return <a onClick={this.clickHandler} href={href} {...rest} />;
   }
 }
 

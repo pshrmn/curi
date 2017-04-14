@@ -8,8 +8,8 @@ describe('path', () => {
 
   it('returns a "keys" array for identifying matched values', () => {
     const matcher = path(':test/:ing');
-    const { keys } = matcher
-    const parsedKeys = keys.map(k => k.name)
+    const { keys } = matcher;
+    const parsedKeys = keys.map(k => k.name);
     expect(parsedKeys).toEqual(expect.arrayContaining(['test', 'ing']));
   });
 
@@ -40,7 +40,6 @@ describe('path', () => {
       expect(match).toBe(null);
     });
   });
-
 });
 
 describe('parentPath', () => {

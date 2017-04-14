@@ -3,7 +3,6 @@ import uri from '../src/uri';
 import path from '../src/path';
 
 describe('prefetch addon', () => {
-
   let prefetch;
 
   beforeEach(() => {
@@ -46,14 +45,14 @@ describe('prefetch addon', () => {
       expect(prefetch.get('Preload')).toBeUndefined();
 
       console.error = err;
-    })
+    });
 
     it('warns when registering the same name', () => {
       const warn = console.warn;
       console.warn = jest.fn();
 
       const first = uri({
-        name:'Test',
+        name: 'Test',
         path: path('first'),
         load: () => Promise.resolve()
       });
