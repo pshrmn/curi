@@ -10,6 +10,14 @@ A set of **experimental** configuration-based URI routing packages.
 
 When the subscribed function is called, it will be passed a "response" object. Response objects describe how a location matches up against the config object's routes.
 
+```js
+import { createConfig } from 'curi';
+
+const config = createConfig(history, routes);
+config.ready().then(initialResponse => {
+  // ...
+});
+```
 
 ## curi-react
 
@@ -18,6 +26,20 @@ When the subscribed function is called, it will be passed a "response" object. R
 `curi-react` provides a communication layer between the `curi` configuration object and your application.
 
 `curi-react` provides a `<Navigator>` component that can be used to re-render your application whenever the location changes. It also provides `<Link>` and `<Redirect>` components that can be used to trigger navigation.
+
+```js
+config.ready().then(() => {
+  ReactDOM.render((
+    <Navigator config={config}>
+      {(response, history) => (
+        response.body
+          ? <response.body />
+          : null
+      )}
+    </Navigator>
+  ), document.getElementById('root'));
+});
+```
 
 ## curi-experiments
 

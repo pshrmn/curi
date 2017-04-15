@@ -1,4 +1,4 @@
-# `curi` docs
+## `curi` docs
 
 * API
   * [routes](./API/route.md)
