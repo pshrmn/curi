@@ -59,8 +59,30 @@ An optional array of route objects. Any child routes will be matched relative to
 
 `preload` must return a `Promise`.
 
+```js
+const about = {
+  name: 'About',
+  path: path('about'),
+  preload: () => {
+    return import('./components/About').then(module => AsyncStore.register(module.default));
+  }
+};
+```
+
 #### `load`
 
 `load` should be used for actual data fetching as well as for triggering redirects. The `load` function will be passed the `Response` object that has been generated for the current location.
+
+```js
+const user = {
+  name: 'User',
+  path: path(':id'),
+  load: resp => {
+    return fetch(`/api/users/${resp.params.id}`)
+      .then(data => JSON.parse(data))
+      .catch(err => { resp.setStatus(404); });
+  }
+}
+```
 
 Like `preload`, `load` must return a `Promise`.
