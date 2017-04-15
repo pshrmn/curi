@@ -16,7 +16,7 @@ There are a number of other route properties, which are described in more detail
 
 ### Configs
 
-A configuration object is created using the `history` instance and the routes. You can learn more about it in the [`createConfig` documentation](./docs/creatConfig.md).
+A configuration object is created using the `history` instance and the routes. You can learn more about it in the [`createConfig` documentation](./docs/API/createConfig.md).
 
 ```js
 import { createConfig, path } from 'curi';
