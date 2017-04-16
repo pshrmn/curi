@@ -131,7 +131,9 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   });
 
   return {
-    ready: prepareResponse,
+    ready: () => {
+      return lastUpdate ? Promise.resolve(lastUpdate) : prepareResponse()
+    },
     refresh: setup,
     subscribe,
     addons: globals,

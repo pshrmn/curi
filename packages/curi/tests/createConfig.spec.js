@@ -263,6 +263,32 @@ describe('createConfig', () => {
       });
     });
 
+    it('uses the last response if calling ready after a response has been created', (done) => {
+            const routes = [
+        {
+          name: 'Contact',
+          path: parentPath('contact'),
+          children: [
+            { name: 'Email', path: path('email') },
+            { name: 'Phone', path: path('phone') }
+          ]
+        }
+      ];
+      const history = createMemoryHistory({
+        initialEntries: ['/contact/email']
+      });
+      const config = createConfig(history, routes);
+      config.ready().then(readyOne => {
+        config.ready().then(readyTwo => {
+          expect(readyTwo).toBe(readyOne);
+          done();
+        });
+      });
+    });
+  });
+
+  // not an actual function, but grouping some response related tests here
+  describe('response', () => {
     it('sets 404 if no routes match', done => {
       const routes = [
         {
@@ -307,6 +333,24 @@ describe('createConfig', () => {
           done();
         });
     });
+
+    it('passes response to load function', done => {
+      const spy = jest.fn(resp => {
+        expect(resp).toBeInstanceOf(Response);
+        expect(resp.params.anything).toBe('hello');
+      });
+      const CatchAll = {
+        name: 'Catch All',
+        path: path(':anything'),
+        load: spy
+      };
+      const history = createMemoryHistory({ initialEntries: ['/hello'] });
+      const config = createConfig(history, [CatchAll]);
+      config.ready().then(() => {
+        expect(spy.mock.calls.length).toBe(1);
+        done();
+      });
+    });
   });
 
   describe('subscribe', () => {
@@ -350,15 +394,37 @@ describe('createConfig', () => {
           children: [How]
         }
       ];
-
+      const sub = jest.fn();
       const config = createConfig(history, routes);
       config.ready().then(() => {
-        config.subscribe(response => {
-          expect(response.name).toBe('How');
-          expect(response.partials[0]).toBe('Contact');
-          done();
-        });
+        config.subscribe(sub);
+        expect(sub.mock.calls.length).toBe(1);
+        const arg = sub.mock.calls[0][0];
+        expect(arg.name).toBe('How');
+        expect(arg.partials[0]).toBe('Contact');
+        done();
       });
+    });
+
+    it('does not pass current location\'s response if it has resolved yet', () => {
+      const history = createMemoryHistory({
+        initialEntries: ['/contact/phone']
+      });
+      const How = { name: 'How', path: path(':method') };
+      const routes = [
+        { name: 'Home', path: path('') },
+        { name: 'About', path: path('about') },
+        {
+          name: 'Contact',
+          path: parentPath('contact'),
+          children: [How]
+        }
+      ];
+
+      const config = createConfig(history, routes);
+      const sub = jest.fn();
+      config.subscribe(sub);
+      expect(sub.mock.calls.length).toBe(0);
     });
 
     it('notifies subscribers of matching routes when location changes', done => {
@@ -445,81 +511,28 @@ describe('createConfig', () => {
       });
     });
 
-    it('will only match the first uri (per level) that matches', done => {
-      const Exact = { name: 'Exact', path: path('exact') };
-      const CatchAll = { name: 'Catch All', path: path(':anything') };
-      const routes = [Exact, CatchAll];
-      const history = createMemoryHistory({ initialEntries: ['/exact'] });
-
-      const config = createConfig(history, routes);
-      config.ready().then(() => {
-        config.subscribe(response => {
-          expect(response.name).toBe('Exact');
-          done();
-        });
-      });
-    });
-
-    it('only matches one uri for nested levels', done => {
-      const Exact = { name: 'Exact', path: path('exact') };
-      const CatchAll = { name: 'Catch All', path: path(':anything') };
-      const uris = [
-        {
-          name: 'Parent',
-          path: parentPath('parent'),
-          children: [Exact, CatchAll]
-        }
-      ];
-      const history = createMemoryHistory({
-        initialEntries: ['/parent/exact']
-      });
-      const config = createConfig(history, uris);
-      config.ready().then(() => {
-        config.subscribe(response => {
-          expect(response.name).toBe('Exact');
-          done();
-        });
-      });
-    });
-
-    it('passes response to load function', done => {
-      const spy = jest.fn(resp => {
-        expect(resp).toBeInstanceOf(Response);
-        expect(resp.params.anything).toBe('hello');
-      });
-      const CatchAll = {
-        name: 'Catch All',
-        path: path(':anything'),
-        load: spy
-      };
-      const history = createMemoryHistory({ initialEntries: ['/hello'] });
-      const config = createConfig(history, [CatchAll]);
-      config.ready().then(() => {
-        expect(spy.mock.calls.length).toBe(1);
-        done();
-      });
-    });
-
-    it('returns a function to unsubscribe', () => {
+    it('returns a function to unsubscribe when called', done => {
       const config = createConfig(history, [{ name: 'Home', path: path('') }]);
+ 
       const sub1 = jest.fn();
       const sub2 = jest.fn();
 
-      const unsub1 = config.subscribe(sub1);
-      const unsub2 = config.subscribe(sub2);
-      history.push({ pathname: '/test' });
-      // this nesting is ugly, but is necessary to ensure that the response
-      // has resolved prior to checking if the subscribers have been called
+      // wait for the first response to be generated to ensure that both
+      // subscriber functions are called when subscribing
       config.ready().then(() => {
+        const unsub1 = config.subscribe(sub1);
+        const unsub2 = config.subscribe(sub2);
+
         expect(sub1.mock.calls.length).toBe(1);
         expect(sub2.mock.calls.length).toBe(1);
-
         unsub1();
         history.push({ pathname: '/next' });
 
-        config.ready().then(() => {
+        // need to wait for the subscribers to actually be called
+        process.nextTick(() => {
           expect(sub1.mock.calls.length).toBe(1);
           expect(sub2.mock.calls.length).toBe(2);
+          done();
         });
       });
     });
