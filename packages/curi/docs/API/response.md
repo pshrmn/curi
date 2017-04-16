@@ -26,9 +26,28 @@ A redirect response is created whenever the `Response`'s `redirect` method has b
 
 A regular response has more properties that can be used to render an application.
 
-* `location` - The location object used to generate the response.
-* `status` - The status code for the response. This defaults to `200`, but can be changed if no routes match or a route issues a redirect.
-* `name` - The name of the best matching route.
-* `partials` - The name of ancestor routes that matched part of the location's pathname.
-* `params` - An object containing the values varsed from the pathname by `path-to-regexp`.
-* `body` - This is either the `value` or the result of calling `call` for the (best matched) route. This provides a way to add data to the response that is associated with the route. For instance, with `curi-react` this would generally be the component that should be rendered.
+```js
+const response = {
+  // The location object used to generate the response.
+  location: { ... },
+
+  // The status code for the response. This defaults to `200`, but
+  // can be changed if no routes match or a route issues a redirect.
+  status: 200,
+
+  // The name of the best matching route
+  name: 'Picture',
+
+  // The name of ancestor routes that matched part of the location's pathname
+  partials: ['Album'],
+
+  // An object containing the values varsed from the pathname by `path-to-regexp`.
+  params: { photoId: 12345, albumId: 6789 },
+
+  // This is either the `value` or the result of calling `call` for
+  // the (best matched) route. This provides a way to add data to
+  // the response that is associated with the route. For instance, with
+  // `curi-react` this would generally be the component that should be rendered.
+  body: Picture
+}
+```

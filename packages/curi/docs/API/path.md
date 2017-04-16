@@ -13,3 +13,18 @@ This will return an object with three properties:
 ## `parentPath(path, options)`
 
 The `parentPath` is a special type of `path` that always sets the `end` option to false. This should be used for routes that have children.
+
+```js
+const routes = [
+  {
+    name: 'Parent',
+    path: parentPath('parent'),
+    children: [
+      {
+        name: 'Child',
+        path: path('child')
+      }
+    ]
+  }
+];
+```

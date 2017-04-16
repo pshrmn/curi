@@ -2,9 +2,11 @@
 
 `curi` is a simple route configuration package for creating single page apps. Navigation is powered by [`history`](https://github.com/ReactTraining/history).
 
-## [Documentation](./docs)
+[documentation](./docs)
 
-### Routes
+### Overview
+
+#### Routes
 
 Each route is described using an object. Each route **must** have a unique `name` and `path`.
 
@@ -14,7 +16,7 @@ A route's `path` property is an object created using the `path` function exporte
 
 There are a number of other route properties, which are described in more detail in the [route documentation](./docs/route.md)
 
-### Configs
+#### Configs
 
 A configuration object is created using the `history` instance and the routes. You can learn more about it in the [`createConfig` documentation](./docs/API/createConfig.md).
 
@@ -27,7 +29,7 @@ const routes = [...];
 const config = createConfig(history, routes)
 ```
 
-## Responses
+#### Responses
 
 Whenever navigation happens, the curi config object will generate a new response. This response will have a number of properties that are useful for (re-)rendering the application.
 
