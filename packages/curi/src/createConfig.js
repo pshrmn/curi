@@ -113,6 +113,8 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
 
   const emit = response => {
     // don't emit old responses
+    // TODO: need to figure out a better solution for this because hash history
+    // does not add a location.key (because it can have no state).
     if (response.location.key !== currentUpdate) {
       return;
     }
