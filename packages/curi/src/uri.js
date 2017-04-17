@@ -52,7 +52,7 @@ const uri = options => {
       response.add(this, params);
 
       if (children) {
-        // the children should only match against the unmatched portion
+        // children only need to match against unmatched segments
         const remainder = testPath.slice(segment.length);
         children.some(c => {
           return c.match(remainder, response, uriString);

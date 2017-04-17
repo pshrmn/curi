@@ -3,9 +3,7 @@ import DEFAULT_ADDONS from './addons/defaults';
 import Response from './response';
 
 function createConfig(history, routes, addons = DEFAULT_ADDONS) {
-  // the current uris to match against
   let uris = [];
-  // the addons being used
   const globals = {};
 
   const setup = routes => {
@@ -14,11 +12,10 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
     }
 
     const registerFunctions = [];
-    // clear out the existing addons
     for (let key in globals) {
       delete globals[key];
     }
-    // create the new addons
+
     addons.forEach(addonFactory => {
       const addon = addonFactory();
       globals[addon.name] = addon.get;
@@ -30,9 +27,6 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
 
   let currentUpdate;
 
-  /*
-   * Build a Response object by iterating over the uris
-   */
   const respond = () => {
     const { pathname, key } = history.location;
     currentUpdate = key;
@@ -41,10 +35,6 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
     return resp;
   };
 
-  /*
-   * The response should not be emitted until any preload/load promises
-   * have resolved. 
-   */
   const runURILoadFunctions = resp => {
     if (!resp.uri) {
       resp.setStatus(404);
