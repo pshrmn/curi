@@ -2,6 +2,7 @@
   "name": "curi-monorepo",
   "private": true,
   "scripts": {
+    "postinstall": "lerna bootstrap --concurrency=1",
     "test": "lerna run test --stream"
   },
   "author": "Paul Sherman",
