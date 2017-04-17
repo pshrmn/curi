@@ -11,7 +11,7 @@ const canNavigate = event => {
 
 class Link extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     params: PropTypes.object,
     to: PropTypes.object
   };
@@ -33,7 +33,7 @@ class Link extends Component {
   createPathname(props, context) {
     const { name, params } = props;
     const { curi } = context;
-    const pathname = curi.addons.pathname(name, params);
+    const pathname = name != null ? curi.addons.pathname(name, params) : '/';
     this.setState(() => ({
       pathname
     }));

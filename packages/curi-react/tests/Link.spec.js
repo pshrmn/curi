@@ -26,14 +26,27 @@ describe('<Link>', () => {
     expect(a.exists()).toBe(true);
   });
 
-  it("sets the href attribute using the route's path", () => {
-    const history = createMemoryHistory();
-    const config = createConfig(history, [{ name: 'Test', path: path('') }]);
-    const wrapper = shallow(<Link name="Test">Test</Link>, {
-      context: { curi: config }
+
+  describe('name', () => {
+    it('sets the href attribute using the named route\'s path', () => {
+      const history = createMemoryHistory();
+      const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+      const wrapper = shallow(<Link name="Test">Test</Link>, {
+        context: { curi: config }
+      });
+      const a = wrapper.find('a');
+      expect(a.prop('href')).toBe('/');
     });
-    const a = wrapper.find('a');
-    expect(a.prop('href')).toBe('/');
+
+    it('defaults to pathname="/" if name is not provided', () => {
+      const history = createMemoryHistory();
+      const config = createConfig(history, []);
+      const wrapper = shallow(<Link>Test</Link>, {
+        context: { curi: config }
+      });
+      const a = wrapper.find('a');
+      expect(a.prop('href')).toBe('/');
+    });
   });
 
   describe('params', () => {
