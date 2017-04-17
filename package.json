@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "postinstall": "lerna bootstrap --concurrency=1",
+    "prettier": "lerna run prettier",
     "test": "lerna run test --stream"
   },
   "author": "Paul Sherman",
