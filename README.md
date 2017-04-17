@@ -1,5 +1,8 @@
 # curi
 
+[build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg?style=flat-square
+[build]: https://travis-ci.org/pshrmn/curi
+
 A set of **experimental** configuration-based URI routing packages.
 
 ## curi
