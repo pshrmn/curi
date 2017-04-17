@@ -65,23 +65,6 @@ describe('createConfig', () => {
       });
     });
 
-    it("works when initialURIs isn't an array", () => {
-      const uris = {
-        name: 'Contact',
-        path: path('contact'),
-        children: [
-          { name: 'Email', path: path('email') },
-          { name: 'Phone', path: path('phone') }
-        ]
-      };
-
-      const config = createConfig(history, uris);
-      const names = ['Contact', 'Email', 'Phone'];
-      names.forEach(n => {
-        expect(config.addons.pathname(n)).toBeDefined();
-      });
-    });
-
     it('makes addons available through return object', () => {
       const uris = [{ name: 'Home', path: path('') }];
       const createFakeAddon = () => ({

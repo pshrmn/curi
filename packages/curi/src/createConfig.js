@@ -11,10 +11,6 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   let lastUpdate;
 
   const setup = routes => {
-    if (!Array.isArray(routes)) {
-      routes = [routes];
-    }
-
     const registerFunctions = [];
     for (let key in globals) {
       delete globals[key];
