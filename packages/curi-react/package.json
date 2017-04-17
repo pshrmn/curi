@@ -1,6 +1,6 @@
 {
   "name": "curi-react",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "React support for curi",
   "main": "lib/index.js",
   "files": [
@@ -38,7 +38,7 @@
     "react": "^15"
   },
   "dependencies": {
-    "curi": "^0.2.0",
+    "curi": "^0.3.0",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {

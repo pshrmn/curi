@@ -1,7 +1,6 @@
 {
   "name": "curi-experiments",
   "private": true,
-  "version": "0.1.0",
   "description": "curi in action",
   "main": "index.js",
   "scripts": {},
@@ -17,7 +16,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "curi": "^0.2.0",
-    "curi-react": "^0.1.0"
+    "curi": "^0.3.0",
+    "curi-react": "^0.3.0"
   }
 }
