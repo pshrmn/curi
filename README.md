@@ -1,5 +1,7 @@
 # curi
 
+[![Travis][build-badge]][build]
+
 [build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg?style=flat-square
 [build]: https://travis-ci.org/pshrmn/curi
 
