@@ -10,10 +10,9 @@ export default function(req, res) {
   const history = createMemoryHistory({ initialEntries: [ req.url ]})
   const config = createConfig(history, routes);
   config.ready()
-    .then(() => {
+    .then((response) => {
       const markup = renderToString(
-        //<div>lul</div>
-        <Navigator isServer config={config} children={renderFunction} />
+        <Navigator response={response} config={config} children={renderFunction} />
       );
       res.send(renderFullPage(markup));
     })
@@ -27,6 +26,7 @@ function renderFullPage(html) {
     <!doctype html>
     <html>
       <head>
+        <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
         <title>Curi Server Rendering</title>
       </head>
       <body>
