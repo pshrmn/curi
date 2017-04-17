@@ -28,7 +28,12 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   let currentUpdate;
 
   const respond = () => {
-    const { pathname, key } = history.location;
+    let { pathname, key } = history.location;
+    // hash history quick fix
+    if (key == null) {
+      key = Math.random().toString(36).slice(2, 8);
+      history.location.key = key;
+    }
     currentUpdate = key;
     const resp = new Response(history.location);
     uris.some(uri => uri.match(pathname, resp));
