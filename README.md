@@ -7,6 +7,8 @@
 
 A set of **experimental** configuration-based URI routing packages.
 
+You can test it out by forking this [codepen](https://codepen.io/pshrmn/pen/mmebOK).
+
 ## curi
 
 [package](/packages/curi) + [source](/packages/curi/src) + [documentation](/packages/curi/docs)
