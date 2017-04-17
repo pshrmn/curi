@@ -264,8 +264,8 @@ describe('createConfig', () => {
       });
     });
 
-    it('uses the last response if calling ready after a response has been created', (done) => {
-            const routes = [
+    it('uses the last response if calling ready after a response has been created', done => {
+      const routes = [
         {
           name: 'Contact',
           path: parentPath('contact'),
@@ -353,7 +353,7 @@ describe('createConfig', () => {
       });
     });
 
-    it('will have a key on the location even if it isn\'t natively supported', () => {
+    it("will have a key on the location even if it isn't natively supported", () => {
       const history = createHashHistory();
       const CatchAll = {
         name: 'Catch All',
@@ -363,8 +363,8 @@ describe('createConfig', () => {
       const config = createConfig(history, [CatchAll]);
       config.ready().then(resp => {
         expect(resp.location.key).toBeDefined();
-      })
-    })
+      });
+    });
   });
 
   describe('subscribe', () => {
@@ -420,7 +420,7 @@ describe('createConfig', () => {
       });
     });
 
-    it('does not pass current location\'s response if it has resolved yet', () => {
+    it("does not pass current location's response if it has resolved yet", () => {
       const history = createMemoryHistory({
         initialEntries: ['/contact/phone']
       });
@@ -527,7 +527,7 @@ describe('createConfig', () => {
 
     it('returns a function to unsubscribe when called', done => {
       const config = createConfig(history, [{ name: 'Home', path: path('') }]);
- 
+
       const sub1 = jest.fn();
       const sub2 = jest.fn();
 

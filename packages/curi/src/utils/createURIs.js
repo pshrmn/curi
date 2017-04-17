@@ -15,4 +15,3 @@ export default function createURIs(routes, addons, parentData) {
     return uri({ ...route, children });
   });
 }
-

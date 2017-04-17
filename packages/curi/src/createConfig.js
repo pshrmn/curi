@@ -5,6 +5,10 @@ import Response from './response';
 function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   let uris = [];
   const globals = {};
+  const subscribers = [];
+
+  let currentUpdate;
+  let lastUpdate;
 
   const setup = routes => {
     if (!Array.isArray(routes)) {
@@ -24,8 +28,6 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
 
     uris = createURIs(routes, registerFunctions, {});
   };
-
-  let currentUpdate;
 
   const respond = () => {
     let { pathname, key } = history.location;
@@ -61,7 +63,6 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
     );
   };
 
-  let lastUpdate;
   const prepareResponse = () => {
     const response = respond();
     return runURILoadFunctions(response).then(resp => {
@@ -71,7 +72,6 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
     });
   };
 
-  const subscribers = [];
   const subscribe = fn => {
     if (typeof fn !== 'function') {
       throw new Error('The argument passed to subscribe must be a function');
@@ -101,6 +101,10 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
     });
   };
 
+  const ready = () =>
+    (lastUpdate ? Promise.resolve(lastUpdate) : prepareResponse());
+
+  // now that everything is defined, actually do the setup
   setup(routes);
   const unlisten = history.listen(() => {
     prepareResponse().then(resp => {
@@ -109,9 +113,7 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   });
 
   return {
-    ready: () => {
-      return lastUpdate ? Promise.resolve(lastUpdate) : prepareResponse()
-    },
+    ready,
     refresh: setup,
     subscribe,
     addons: globals,
