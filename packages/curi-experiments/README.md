@@ -6,4 +6,4 @@ Example projects that use `curi` and `curi-react`.
 * [modal](./modal)
 * [code splitting](./code-splitting)
 * [server rendering](./server-rendering)
-* [blocking navigation]('./blocking-navigation')
+* [blocking navigation](./blocking-navigation)
