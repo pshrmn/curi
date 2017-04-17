@@ -7,7 +7,7 @@ const config = createConfig(history, routes);
 config.ready().then(() => {
   ReactDOM.render((
     <Navigator config={config}>
-      {(response, history) => {
+      {(response, config) => {
         return response.body ? <response.body /> : null
       }}
     </Navigator>

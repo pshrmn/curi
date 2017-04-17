@@ -35,10 +35,12 @@ config.ready().then(initialResponse => {
 `curi-react` provides a `<Navigator>` component that can be used to re-render your application whenever the location changes. It also provides `<Link>` and `<Redirect>` components that can be used to trigger navigation.
 
 ```js
+import { Navigator } from 'curi-react';
+
 config.ready().then(() => {
   ReactDOM.render((
     <Navigator config={config}>
-      {(response, history) => (
+      {(response, config) => (
         response.body
           ? <response.body />
           : null
