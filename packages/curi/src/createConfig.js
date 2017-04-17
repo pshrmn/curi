@@ -1,25 +1,6 @@
-import uri from './uri';
+import createURIs from './utils/createURIs';
 import DEFAULT_ADDONS from './addons/defaults';
 import Response from './response';
-
-function createURIs(routes, addons, parentData) {
-  return routes.map(route => {
-    // register the route with each addon
-    const registerData = {};
-    addons.forEach(addon => {
-      const { name, register } = addon;
-      registerData[name] = register(route, parentData[name]);
-    });
-
-    // the children need to be uris
-    const children = route.children
-      ? createURIs(route.children, addons, registerData)
-      : [];
-
-    // finally, create the uri
-    return uri({ ...route, children });
-  });
-}
 
 function createConfig(history, routes, addons = DEFAULT_ADDONS) {
   // the current uris to match against
