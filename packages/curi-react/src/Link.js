@@ -15,7 +15,8 @@ class Link extends Component {
     name: PropTypes.string,
     params: PropTypes.object,
     to: PropTypes.object,
-    prefetch: PropTypes.bool
+    prefetch: PropTypes.bool,
+    onClick: PropTypes.func
   };
 
   static defaultProps = {
@@ -27,6 +28,10 @@ class Link extends Component {
   };
 
   clickHandler = event => {
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
+
     if (canNavigate(event) && !this.props.target) {
       event.preventDefault();
       const { curi } = this.context;
@@ -83,7 +88,7 @@ class Link extends Component {
   }
 
   render() {
-    const { name, params, to, ...rest } = this.props;
+    const { name, params, to, onClick, prefetch, ...rest } = this.props;
     const { curi } = this.context;
     const { pathname } = this.state;
     const href = curi.history.createHref({ pathname, ...to });

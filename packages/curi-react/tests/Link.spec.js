@@ -194,6 +194,58 @@ describe('<Link>', () => {
       expect(history.push.mock.calls.length).toBe(1);
     });
 
+    describe('onClick', () => {
+      it('calls onClick prop func if provided', () => {
+        const history = createMemoryHistory();
+        history.push = jest.fn();
+        const onClick = jest.fn();
+        const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+        const wrapper = shallow(<Link name="Test" onClick={onClick}>Test</Link>, {
+          context: { curi: config }
+        });
+        const leftClickEvent = {
+          defaultPrevented: false,
+          preventDefault() {
+            this.defaultPrevented = true;
+          },
+          metaKey: null,
+          altKey: null,
+          ctrlKey: null,
+          shiftKey: null,
+          button: 0
+        };
+        wrapper.find('a').simulate('click', leftClickEvent);
+        expect(onClick.mock.calls.length).toBe(1);
+        expect(history.push.mock.calls.length).toBe(1);
+      });
+
+      it('does not call history.push if onClick prevents default', () => {
+        const history = createMemoryHistory();
+        history.push = jest.fn();
+        const onClick = jest.fn(event => {
+          event.preventDefault();
+        });
+        const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+        const wrapper = shallow(<Link name="Test" onClick={onClick}>Test</Link>, {
+          context: { curi: config }
+        });
+        const leftClickEvent = {
+          defaultPrevented: false,
+          preventDefault() {
+            this.defaultPrevented = true;
+          },
+          metaKey: null,
+          altKey: null,
+          ctrlKey: null,
+          shiftKey: null,
+          button: 0
+        };
+        wrapper.find('a').simulate('click', leftClickEvent);
+        expect(onClick.mock.calls.length).toBe(1);
+        expect(history.push.mock.calls.length).toBe(0);
+      });
+    });
+
     it("doesn't push for modified clicks", () => {
       const history = createMemoryHistory();
       history.push = jest.fn();
