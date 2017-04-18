@@ -1,7 +1,11 @@
 {
   "presets": [ "es2015", "react" ],
   "plugins": [
-    "syntax-dynamic-import",
-    "dynamic-import-node"
-  ]
+    "syntax-dynamic-import"
+  ],
+  "env": {
+    "server": {
+      "plugins": ["dynamic-import-node"]
+    }
+  }
 }

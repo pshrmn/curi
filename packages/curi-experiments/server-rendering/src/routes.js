@@ -1,6 +1,7 @@
 import path, { parentPath } from 'curi/lib/path';
+import ComponentStore from 'curi-react/lib/ComponentStore';
 
-import store from './store';
+const store = ComponentStore();
 
 export default [
   {

@@ -5,7 +5,7 @@ const config = {
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',
-    publicPath: '/static',
+    publicPath: '/static/js/',
     path: path.resolve(__dirname, 'public', 'js')
   },
   externals: {

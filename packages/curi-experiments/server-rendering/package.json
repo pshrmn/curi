@@ -4,8 +4,9 @@
   "description": "Server rendering with curi",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack && npm start",
-    "webpack": "webpack"
+    "dev": "npm run webpack && npm run startServer",
+    "startServer": "cross-env BABEL_ENV=server npm start",
+    "webpack": "cross-env BABEL_ENV=client webpack"
   },
   "keywords": [
     "curi",
@@ -21,6 +22,7 @@
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "cross-env": "^4.0.0",
     "webpack": "^2.3.3"
   },
   "dependencies": {
