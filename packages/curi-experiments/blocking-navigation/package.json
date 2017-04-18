@@ -16,8 +16,8 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "curi": "^0.3.0",
-    "curi-react": "^0.3.0",
+    "curi": "^0.3.1",
+    "curi-react": "^0.3.1",
     "history": "^4.6.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
