@@ -21,8 +21,8 @@ When the subscribed function is called, it will be passed a "response" object. R
 import { createConfig } from 'curi';
 
 const config = createConfig(history, routes);
-config.ready().then(initialResponse => {
-  // ...
+config.subscribe((response) => {
+  // do something with the response
 });
 ```
 
