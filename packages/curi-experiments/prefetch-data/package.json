@@ -1,0 +1,34 @@
+{
+  "name": "curi-prefetch-data",
+  "version": "0.1.0",
+  "description": "Prefetch data before navigating",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack"
+  },
+  "keywords": [
+    "curi",
+    "prefetch",
+    "data",
+    "loading"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^2.4.1"
+  },
+  "dependencies": {
+    "curi": "^0.3.0",
+    "curi-react": "^0.3.0",
+    "history": "^4.6.1",
+    "nprogress": "^0.2.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  }
+}

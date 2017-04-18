@@ -7,3 +7,4 @@ Example projects that use `curi` and `curi-react`.
 * [code splitting](./code-splitting)
 * [server rendering](./server-rendering)
 * [blocking navigation](./blocking-navigation)
+* [prefetching data](./prefetch-data)
