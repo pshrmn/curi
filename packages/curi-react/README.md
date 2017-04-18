@@ -29,6 +29,9 @@ const routes = [
 const config = createConfig(history, routes);
 // make sure that the initial location has resolved before rendering
 config.ready().then(() => {
+  // The children function passed to the <Navigator> is the most important
+  // thing to note. This is where you render your application based on the
+  // generated response.
   ReactDOM.render((
     <Navigator config={config}>
       {(response, config) => (
