@@ -28,11 +28,7 @@ describe('prefetch addon', () => {
       expect(prefetch.get('Player')).toBeDefined();
     });
 
-    it('does not register if there is no load function', () => {
-      const err = console.error;
-      console.error = jest.fn();
-
-      const spy = jest.fn(() => Promise.resolve());
+    it('does not register if there is no load function', (done) => {
       const noLoadURI = uri({ name: 'No load', path: path('player') });
       const preloadURI = uri({
         name: 'Preload',
@@ -41,10 +37,16 @@ describe('prefetch addon', () => {
       });
       prefetch.register(noLoadURI);
       prefetch.register(preloadURI);
-      expect(prefetch.get('No load')).toBeUndefined();
-      expect(prefetch.get('Preload')).toBeUndefined();
-
-      console.error = err;
+      // This is a bit roundabout, but we verify that the paths did not register
+      // by resolving from catch
+      Promise.all([
+        prefetch.get('No load').catch(() => { return Promise.resolve('No load failed'); }),
+        prefetch.get('Preload').catch(() => { return Promise.resolve('Preload failed'); })
+      ]).then((results) => {
+        expect(results[0]).toBe('No load failed');
+        expect(results[1]).toBe('Preload failed');
+        done();
+      });
     });
 
     it('warns when registering the same name', () => {
@@ -96,15 +98,13 @@ describe('prefetch addon', () => {
       prefetch.get('Player', 1, 2);
     });
 
-    it('returns undefined when path not found', () => {
-      const error = console.error;
-      console.error = jest.fn();
-
+    it('returns rejected Promise when path not found', (done) => {
       const output = prefetch.get('Anonymous', { id: 123 });
-      expect(output).toBe(undefined);
-      expect(console.error.mock.calls.length).toBe(1);
-
-      console.error = error;
+      expect(output).toBeInstanceOf(Promise);
+      output.catch(err => {
+        expect(true).toBe(true);
+        done();
+      })
     });
   });
 });
