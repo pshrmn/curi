@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import invariant from 'invariant';
 
 const canNavigate = event => {
   return (
@@ -13,7 +14,12 @@ class Link extends Component {
   static propTypes = {
     name: PropTypes.string,
     params: PropTypes.object,
-    to: PropTypes.object
+    to: PropTypes.object,
+    prefetch: PropTypes.bool
+  };
+
+  static defaultProps = {
+    prefetch: false
   };
 
   static contextTypes = {
@@ -25,8 +31,26 @@ class Link extends Component {
       event.preventDefault();
       const { curi } = this.context;
       const { pathname } = this.state;
-      const { to = {} } = this.props;
-      curi.history.push({ pathname, ...to });
+      const {
+        name,
+        prefetch,
+        params,
+        to = {}
+      } = this.props;
+      const location = { pathname, ...to };
+
+      if (prefetch) {
+        curi.addons.prefetch(name, { params })
+          .then(() => {
+            curi.history.push(location);
+          })
+          .catch(err => {
+            console.error(err);
+          })
+      } else {
+        curi.history.push(location);
+      }
+
     }
   };
 
@@ -40,6 +64,17 @@ class Link extends Component {
   }
 
   componentWillMount() {
+    invariant(
+      !this.props.name || (this.props.name && this.context.curi.addons.pathname),
+      'You cannot use the "name" prop if your curi configuration does not include the pathname addon'
+    );
+
+
+    invariant(
+      !this.props.prefetch || (this.props.prefetch && this.context.curi.addons.prefetch),
+      'You cannot use the "prefetch" prop if your curi configuration does not include the prefetch addon'
+    );
+
     this.createPathname(this.props, this.context);
   }
 

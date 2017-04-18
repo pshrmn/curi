@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "curi": "^0.3.0",
+    "invariant": "^2.2.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {

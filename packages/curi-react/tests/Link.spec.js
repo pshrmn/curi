@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
+import prefetchAddon from 'curi/lib/addons/prefetch';
+import pathnameAddon from 'curi/lib/addons/pathname';
 import { createConfig, path } from '../../curi/src';
 import Link from '../src/Link';
 
@@ -108,6 +110,63 @@ describe('<Link>', () => {
       );
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/not-a-test');
+    });
+  });
+
+  describe('prefetch', () => {
+    it('errors if using prefetch without prefetch addon', () => {
+      const history = createMemoryHistory();
+      const config = createConfig(history, [
+        { name: 'Test', path: path('test') }
+      ]);
+      expect(() => {
+        const wrapper = shallow(
+          <Link prefetch name="Test" to={{ pathname: '/not-a-test' }}>Test</Link>,
+          { context: { curi: config } }
+        );
+      }).toThrow()
+    });
+
+    it('calls named route\'s load method before navigating', (done) => {
+      const history = createMemoryHistory();
+      let loadHasBeenCalled = false;
+      history.push = jest.fn(() => {
+        // ensure that route.load was called before pushing
+        expect(loadHasBeenCalled).toBe(true);
+        done();
+      });
+      const testRoute = {
+        name: 'Test',
+        path: path('test'),
+        load: jest.fn(() => {
+          loadHasBeenCalled = true;
+          return Promise.resolve();
+        })
+      };
+      const config = createConfig(
+        history,
+        [testRoute],
+        [pathnameAddon, prefetchAddon]
+      );
+
+      const leftClickEvent = {
+        defaultPrevented: false,
+        preventDefault() {
+          this.defaultPrevented = true;
+        },
+        metaKey: null,
+        altKey: null,
+        ctrlKey: null,
+        shiftKey: null,
+        button: 0
+      };
+
+      const wrapper = shallow(
+        <Link prefetch name="Test" to={{ pathname: '/not-a-test' }}>Test</Link>,
+        { context: { curi: config } }
+      );
+
+      wrapper.find('a').simulate('click', leftClickEvent);
     });
   });
 
