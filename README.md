@@ -13,7 +13,25 @@ You can test it out by forking this [codepen](https://codepen.io/pshrmn/pen/mmeb
 
 [package](/packages/curi) + [source](/packages/curi/src) + [documentation](/packages/curi/docs)
 
-`curi` provides the core routing functionality. It is used to create a configuration object using a `history` object and a `routes` array. The configuration object has a `subscribe` method that your application can pass a function to in order to be informed of location changes. Any time the location changes, the subscribed function will be called.
+`curi` provides the core routing functionality. It is used to create a configuration object using a `history` object and a `routes` array.
+
+```js
+const history = createBrowserHistory();
+const routes = [
+  {
+    name: 'Home',
+    path: path(''),
+    value: Home, // this is a function
+  },
+  {
+    name: 'About',
+    path: path('about'),
+    value: About
+  }
+];
+```
+
+The configuration object has a `subscribe` method that your application can pass a function to in order to be informed of location changes. Any time the location changes, the subscribed function will be called.
 
 When the subscribed function is called, it will be passed a "response" object. Response objects describe how a location matches up against the config object's routes.
 
