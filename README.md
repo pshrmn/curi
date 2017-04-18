@@ -22,7 +22,14 @@ import { createConfig } from 'curi';
 
 const config = createConfig(history, routes);
 config.subscribe((response) => {
-  // do something with the response
+  /*
+   * response = {
+   *   status: 200,
+   *   location: { pathname: '/', ... },
+   *   name: 'Home',
+   *   body: function Home() { ... }
+   * }
+   */
 });
 ```
 
