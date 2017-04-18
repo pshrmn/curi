@@ -44,7 +44,8 @@ describe('Block', () => {
     ), { context: fakeContext, lifecycleExperimental: true });
     expect(block.mock.calls.length).toBe(0);
   });
-  it('turns off block if when=false while updating', () => {
+
+  it('turns off block if when goes true->false while updating', () => {
     const wrapper = shallow((
       <Block when={true} message='This is a test' />
     ), { context: fakeContext, lifecycleExperimental: true });
@@ -53,7 +54,7 @@ describe('Block', () => {
     expect(unblock.mock.calls.length).toBe(1);
   });
 
-  it('turns on block if when=true while updating', () => {
+  it('turns on block if when goes false->true while updating', () => {
     const wrapper = shallow((
       <Block when={false} message='This is a test' />
     ), { context: fakeContext, lifecycleExperimental: true });
@@ -62,7 +63,7 @@ describe('Block', () => {
     expect(block.mock.calls.length).toBe(1);
   });
 
-  it('resets on block on updates even when when={true} for both', () => {
+  it('resets on block on updates if message changes', () => {
     const wrapper = shallow((
       <Block when={true} message='This is a test' />
     ), { context: fakeContext, lifecycleExperimental: true });
@@ -71,6 +72,17 @@ describe('Block', () => {
     wrapper.setProps({ when: true, message: 'This is also a test' });
     expect(block.mock.calls.length).toBe(2);
     expect(unblock.mock.calls.length).toBe(1);
+  });
+  
+  it('does not reset block if both when and message stay the same', () => {
+    const wrapper = shallow((
+      <Block when={true} message='This is a test' />
+    ), { context: fakeContext, lifecycleExperimental: true });
+    expect(block.mock.calls.length).toBe(1);
+    expect(unblock.mock.calls.length).toBe(0);
+    wrapper.setProps({ when: true, message: 'This is a test' });
+    expect(block.mock.calls.length).toBe(1);
+    expect(unblock.mock.calls.length).toBe(0);
   });
 
   it('unblocks when unmounting', () => {

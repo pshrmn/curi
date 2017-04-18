@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Block extends React.Component {
+class Block extends Component {
 
   static propTypes = {
     when: PropTypes.bool,
@@ -36,10 +36,10 @@ class Block extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (this.props.when === prevProps.when && this.props.message === prevProps.message) {
+      return;
+    }
     this.off();
     if (this.props.when) {
       this.on();  
