@@ -1,5 +1,3 @@
-import path, { parentPath } from 'curi/lib/path';
-
 import dataStore from './dataStore';
 import fakeAPI from './fakeAPI';
 
@@ -9,12 +7,12 @@ import Album from './components/Album';
 export default [
   {
     name: 'Home',
-    path: path(''),
+    path: '',
     value: Home
   },
   {
     name: 'Album',
-    path: path('a/:id'),
+    path: 'a/:id',
     value: Album,
     load: (resp) => {
       const { id } = resp.params

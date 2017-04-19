@@ -19,7 +19,7 @@ const routes = [
   // ...,
   {
     name: 'User',
-    path: path('user/:id'),
+    path: 'user/:id',
     preload: () => {
       return import('./components/User')
         .then(module => {

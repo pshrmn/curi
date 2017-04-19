@@ -1,5 +1,3 @@
-import path, { parentPath } from 'curi/lib/path';
-
 import Home from './components/Home';
 import Protected from './components/Protected';
 import Login from './components/Login';
@@ -10,12 +8,12 @@ import fakeAuth from './fakeAuth';
 export default [
   {
     name: 'Home',
-    path: path(''),
+    path: '',
     value: Home
   },
   {
     name: 'Protected',
-    path: path('protected'),
+    path: 'protected',
     value: Protected,
     load: (resp) => {
       if (!fakeAuth.authenticated()) {
@@ -25,12 +23,22 @@ export default [
   },
   {
     name: 'Login',
-    path: path('login'),
-    value: Login
+    path: 'login',
+    value: Login,
+    load: (resp) => {
+      if (fakeAuth.authenticated()) {
+        resp.redirect('/');
+      }
+    }
   },
   {
     name: 'Logout',
-    path: path('logout'),
-    value: Logout
+    path: 'logout',
+    value: Logout,
+    load: (resp) => {
+      if (!fakeAuth.authenticated()) {
+        resp.redirect('/');
+      }
+    }
   }
 ]

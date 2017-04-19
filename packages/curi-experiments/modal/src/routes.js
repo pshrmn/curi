@@ -1,5 +1,3 @@
-import path, { parentPath } from 'curi/lib/path';
-
 import Home from './components/Home';
 import Contact from './components/Contact';
 import Method from './components/Method';
@@ -7,17 +5,17 @@ import Method from './components/Method';
 export default [
   {
     name: 'Home',
-    path: path(''),
+    path: '',
     value: Home
   },
   {
     name: 'Contact',
-    path: parentPath('contact'),
+    path: 'contact',
     value: Contact,
     children: [
       {
         name: 'Method',
-        path: path(':method'),
+        path: ':method',
         value: Method
       }
     ]

@@ -9,7 +9,7 @@ const routes = [
   // ...,
   {
     name: 'Protected',
-    path: path('super-secret'),
+    path: 'super-secret',
     load: (resp) => {
       if (!store.userIsAuthenticated) {
         resp.redirect('/login', 302);

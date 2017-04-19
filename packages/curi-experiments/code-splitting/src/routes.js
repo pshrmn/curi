@@ -1,4 +1,3 @@
-import path from 'curi/lib/path';
 import ComponentStore from 'curi-react/lib/ComponentStore';
 
 const store = ComponentStore();
@@ -6,7 +5,7 @@ const store = ComponentStore();
 export default [
   {
     name: 'Home',
-    path: path('', { end: true }),
+    path: '',
     preload: () => {
       return import('./components/Home.js')
         .then(home => {
@@ -17,7 +16,7 @@ export default [
   },
   {
     name: 'Contact',
-    path: path('contact'),
+    path: 'contact',
     preload: () => {
       return import('./components/Contact.js')
         .then(contact => {

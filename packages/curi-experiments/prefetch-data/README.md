@@ -19,7 +19,7 @@ const config = createConfig(history, routes, [prefetchAddon, pathnameAddon]);
 const routes = [
   {
     name: 'Some Page',
-    path: path('some/page/:id')
+    path: 'some/page/:id'
     load: (resp) => {
       const { params } = resp;
       if (cache[params.id]) {

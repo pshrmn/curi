@@ -22,12 +22,12 @@ const history = createBrowserHistory();
 const routes = [
   {
     name: 'Home',
-    path: path(''),
+    path: '',
     value: Home,
   },
   {
     name: 'About',
-    path: path('about'),
+    path: 'about',
     preload: () => {
       return import('./components/About')
         .then(module => { store.register('About', module.default); });
