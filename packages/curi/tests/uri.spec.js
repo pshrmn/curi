@@ -1,5 +1,4 @@
 import uri from '../src/uri';
-import path, { parentPath } from '../src/path';
 import Response from '../src/response';
 
 const noop = () => {};
@@ -7,7 +6,7 @@ const noop = () => {};
 describe('uri', () => {
   describe('constructor', () => {
     it('creates a uri from an object', () => {
-      const testUri = uri({ name: 'Test', path: path('test') });
+      const testUri = uri({ name: 'Test', path: 'test' });
       const expectedProperties = [
         'name',
         'path',
@@ -25,20 +24,20 @@ describe('uri', () => {
     describe('options', () => {
       describe('name', () => {
         it('is set', () => {
-          const testURI = uri({ name: 'Test', path: path('test') });
+          const testURI = uri({ name: 'Test', path: 'test' });
           expect(testURI.name).toBe('Test');
         });
 
         it('throws error if name is not provided', () => {
           expect(() => {
-            const noNameURI = uri({ path: path('no-name') });
+            const noNameURI = uri({ path: 'no-name' });
           }).toThrow();
         });
       });
 
       describe('path', () => {
         it("is the path's path string", () => {
-          const testURI = uri({ name: 'Test', path: path('test') });
+          const testURI = uri({ name: 'Test', path: 'test' });
           expect(testURI.path).toBe('test');
         });
 
@@ -52,7 +51,7 @@ describe('uri', () => {
       describe('value', () => {
         it('sets the value that will be returned by the render function', () => {
           const value = 'Latitude';
-          const testURI = uri({ name: 'Value', path: path('value'), value });
+          const testURI = uri({ name: 'Value', path: 'value', value });
           expect(testURI.render()).toBe(value);
         });
 
@@ -61,7 +60,7 @@ describe('uri', () => {
           const two = 'Two';
           const testURI = uri({
             name: 'Value Over Call',
-            path: path('value'),
+            path: 'value',
             value: one,
             call: () => two
           });
@@ -75,7 +74,7 @@ describe('uri', () => {
           const call = () => value;
           const testURI = uri({
             name: 'Call',
-            path: path('call-me-maybe'),
+            path: 'call-me-maybe',
             call
           });
           expect(testURI.render()).toBe(value);
@@ -84,12 +83,12 @@ describe('uri', () => {
 
       describe('children', () => {
         it('is options.children', () => {
-          const First = uri({ name: 'First', path: path('first') });
-          const Second = uri({ name: 'Second', path: path('second') });
+          const First = uri({ name: 'First', path: 'first' });
+          const Second = uri({ name: 'Second', path: 'second' });
           const children = [First, Second];
           const Parent = uri({
             name: 'Parent',
-            path: path('parent'),
+            path: 'parent',
             children
           });
           expect(Parent.children).toBe(children);
@@ -101,7 +100,7 @@ describe('uri', () => {
           const loadTest = () => Promise.resolve();
           const testUri = uri({
             name: 'Test',
-            path: path('test'),
+            path: 'test',
             preload: loadTest
           });
           expect(typeof testUri.preload).toBe('function');
@@ -112,7 +111,7 @@ describe('uri', () => {
           const loadTest = () => Promise.resolve(callCount++);
           const testUri = uri({
             name: 'Test',
-            path: path('test'),
+            path: 'test',
             preload: loadTest
           });
           testUri.preload();
@@ -123,7 +122,7 @@ describe('uri', () => {
 
         it("will be undefined when preload isn't defined", () => {
           const loadTest = () => Promise.resolve();
-          const testUri = uri({ name: 'Test', path: path('test') });
+          const testUri = uri({ name: 'Test', path: 'test' });
           expect(testUri.preload).toBeUndefined();
         });
       });
@@ -133,14 +132,14 @@ describe('uri', () => {
           const loadTest = () => Promise.resolve();
           const testUri = uri({
             name: 'Test',
-            path: path('test'),
+            path: 'test',
             load: loadTest
           });
           expect(typeof testUri.load).toBe('function');
         });
 
         it("will be undefined when load isn't defined", () => {
-          const testUri = uri({ name: 'Test', path: path('test') });
+          const testUri = uri({ name: 'Test', path: 'test' });
           expect(testUri.load).toBeUndefined();
         });
       });
@@ -151,14 +150,14 @@ describe('uri', () => {
     describe('return value', () => {
       it('returns true if it matches', () => {
         const resp = new Response();
-        const testUri = uri({ name: 'Test', path: path('test') });
+        const testUri = uri({ name: 'Test', path: 'test' });
         const matches = testUri.match('test', resp);
         expect(matches).toBe(true);
       });
 
       it('returns false if it does not', () => {
         const resp = new Response();
-        const testUri = uri({ name: 'Test', path: path('test') });
+        const testUri = uri({ name: 'Test', path: 'test' });
         const matches = testUri.match('no-match', resp);
         expect(matches).toBe(false);
       });
@@ -166,32 +165,32 @@ describe('uri', () => {
 
     it('does not register if the path does not match the pathname', () => {
       const resp = new Response();
-      const testUri = uri({ name: 'Test', path: path('test') });
+      const testUri = uri({ name: 'Test', path: 'test' });
       testUri.match('best', resp);
       expect(resp.uri).toBeUndefined();
     });
 
     it('registers if the path matches the pathname', () => {
       const resp = new Response({ pathname: 'test' });
-      const testUri = uri({ name: 'Test', path: path('test') });
+      const testUri = uri({ name: 'Test', path: 'test' });
       testUri.match('test', resp);
       expect(resp.uri).toBe(testUri);
     });
 
     it('ignores a leading slash on the pathname', () => {
       const resp = new Response();
-      const testUri = uri({ name: 'Test', path: path('test') });
+      const testUri = uri({ name: 'Test', path: 'test' });
       testUri.match('/test', resp);
       expect(resp.uri).toBe(testUri);
     });
 
     describe('children', () => {
       it('tests children if it matches', () => {
-        const One = uri({ name: 'One', path: path('one') });
-        const Two = uri({ name: 'Two', path: path('two') });
+        const One = uri({ name: 'One', path: 'one' });
+        const Two = uri({ name: 'Two', path: 'two' });
         const testUri = uri({
           name: 'Test',
-          path: parentPath('test'),
+          path: 'test',
           children: [One, Two]
         });
         const resp = new Response();
@@ -203,11 +202,11 @@ describe('uri', () => {
       it('children inherit parent params', () => {
         const Attractions = uri({
           name: 'Attractions',
-          path: path('attractions')
+          path: 'attractions'
         });
         const testUri = uri({
           name: 'State',
-          path: parentPath(':state'),
+          path: ':state',
           children: [Attractions]
         });
         const resp = new Response();
@@ -219,8 +218,8 @@ describe('uri', () => {
       it('overwrites param name conflicts', () => {
         const testUri = uri({
           name: 'One',
-          path: parentPath(':id'),
-          children: [uri({ name: 'Two', path: path(':id') })]
+          path: ':id',
+          children: [uri({ name: 'Two', path: ':id' })]
         });
         const resp = new Response();
         testUri.match('one/two', resp);

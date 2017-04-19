@@ -51,7 +51,7 @@ You can access all of the configuration object's addons through the `addons` pro
 For example, if your configuration object uses the `pathname` addon, you can do the following:
 
 ```js
-const config = createConfig(history, [{ name: 'User', path: path('user/:id') }], [ pathname ]);
+const config = createConfig(history, [{ name: 'User', path: 'user/:id' }], [ pathname ]);
 const userPathname = config.addons.pathname('User', { id: '12345' });
 // userPathname = '/user/12345'
 ```

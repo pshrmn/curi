@@ -5,7 +5,7 @@ A route describes a location's `pathname` using the `path` argument. Internally,
 ```js
 const home = {
   name: 'Home',
-  path: path('')
+  path: ''
 };
 ```
 
@@ -17,7 +17,15 @@ A unique identifier. This should be a string or a symbol.
 
 #### `path`
 
-An instance of `curi/path`. This describes the pathname segments that the `uri` should match. More information about this argument can be seen in the [`path` documentation](./path.md).
+A `path-to-regexp` style string. This should **not** have a leading slash. The string will be passed to `path-to-regexp` to generate a regular expression. Any [parameters](https://github.com/pillarjs/path-to-regexp#parameters) will be identified so that they can be parsed out when matching against a location's `pathname`.
+
+**Note:** While `path-to-regexp` supports arrays and RegExps, only string paths are supported here. This is because the path must also be reversible to create a pathname given params.
+
+#### `pathOptions`
+
+If you need to provide different path options that [the defaults](https://github.com/pillarjs/path-to-regexp#usage) used by `path-to-regexp`, you should specify them with a `pathOptions` object.
+
+**Note:** If a route has a 
 
 #### `value`
 
@@ -26,7 +34,7 @@ When the route is the best match for the current location, this value will be as
 ```js
 const contact = {
   name: 'Contact',
-  path: path('contact'),
+  path: 'contact',
   value: Contact
 };
 ```
@@ -40,7 +48,7 @@ This is useful when the value is not available when creating a config. This woul
 ```js
 const about = {
   name: 'About',
-  path: path('about'),
+  path: 'about',
   call: function() {
     return AsyncStore.get('About');
   }
@@ -62,7 +70,7 @@ An optional array of route objects. Any child routes will be matched relative to
 ```js
 const about = {
   name: 'About',
-  path: path('about'),
+  path: 'about',
   preload: () => {
     return import('./components/About').then(module => AsyncStore.register(module.default));
   }
@@ -76,7 +84,7 @@ const about = {
 ```js
 const user = {
   name: 'User',
-  path: path(':id'),
+  path: ':id',
   load: resp => {
     return fetch(`/api/users/${resp.params.id}`)
       .then(data => JSON.parse(data))

@@ -1,6 +1,5 @@
 import createPathname from '../src/addons/pathname';
 import uri from '../src/uri';
-import path from '../src/path';
 
 describe('pathname addon', () => {
   let pathname;
@@ -17,15 +16,15 @@ describe('pathname addon', () => {
 
   describe('register', () => {
     it('adds the path to the known paths', () => {
-      const player = { name: 'Player', path: path('player') };
+      const player = { name: 'Player', path: 'player' };
       pathname.register(player);
       expect(pathname.get('Player')).toBeDefined();
     });
 
     it('merges path with parent path', () => {
-      const grandparent = { name: 'Grandparent', path: path('grandparent') };
-      const parent = { name: 'Parent', path: path('parent') };
-      const child = { name: 'Child', path: path('child') };
+      const grandparent = { name: 'Grandparent', path: 'grandparent' };
+      const parent = { name: 'Parent', path: 'parent' };
+      const child = { name: 'Child', path: 'child' };
       pathname.register(grandparent);
       pathname.register(parent, 'Grandparent');
       pathname.register(child, 'Parent');
@@ -33,8 +32,8 @@ describe('pathname addon', () => {
     });
 
     it('merges when there is a trailing slash', () => {
-      const parent = { name: 'Parent', path: path('parent/') };
-      const child = { name: 'Child', path: path('child') };
+      const parent = { name: 'Parent', path: 'parent/' };
+      const child = { name: 'Child', path: 'child' };
       pathname.register(parent);
       pathname.register(child, 'Parent');
       expect(pathname.get('Child')).toBe('/parent/child');
@@ -44,8 +43,8 @@ describe('pathname addon', () => {
       const warn = console.warn;
       console.warn = jest.fn();
 
-      const first = { name: 'Test', path: path('first') };
-      const second = { name: 'Test', path: path('second') };
+      const first = { name: 'Test', path: 'first' };
+      const second = { name: 'Test', path: 'second' };
 
       pathname.register(first);
       expect(console.warn.mock.calls.length).toBe(0);
@@ -59,7 +58,7 @@ describe('pathname addon', () => {
 
   describe('get', () => {
     it('returns a pathname using params', () => {
-      const player = { name: 'Player', path: path('player/:id') };
+      const player = { name: 'Player', path: 'player/:id' };
       pathname.register(player);
       const output = pathname.get('Player', { id: 17 });
       expect(output).toBe('/player/17');
@@ -78,7 +77,7 @@ describe('pathname addon', () => {
 
     it('works when paths contain no params', () => {
       // duh?
-      const staticRoute = { name: 'Static', path: path('this/has/no/params') };
+      const staticRoute = { name: 'Static', path: 'this/has/no/params' };
       pathname.register(staticRoute);
       const output = pathname.get('Static');
       expect(output).toBe('/this/has/no/params');

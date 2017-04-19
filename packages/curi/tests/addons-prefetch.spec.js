@@ -1,6 +1,5 @@
 import createPrefetch from '../src/addons/prefetch';
 import uri from '../src/uri';
-import path from '../src/path';
 
 describe('prefetch addon', () => {
   let prefetch;
@@ -20,7 +19,7 @@ describe('prefetch addon', () => {
       const spy = jest.fn(() => Promise.resolve());
       const playerURI = uri({
         name: 'Player',
-        path: path('player'),
+        path: 'player',
         load: () => Promise.resolve()
       });
       prefetch.register(playerURI);
@@ -29,10 +28,10 @@ describe('prefetch addon', () => {
     });
 
     it('does not register if there is no load function', (done) => {
-      const noLoadURI = uri({ name: 'No load', path: path('player') });
+      const noLoadURI = uri({ name: 'No load', path: 'player' });
       const preloadURI = uri({
         name: 'Preload',
-        path: path('player'),
+        path: 'player',
         preload: () => Promise.resolve()
       });
       prefetch.register(noLoadURI);
@@ -55,12 +54,12 @@ describe('prefetch addon', () => {
 
       const first = uri({
         name: 'Test',
-        path: path('first'),
+        path: 'first',
         load: () => Promise.resolve()
       });
       const second = uri({
         name: 'Test',
-        path: path('second'),
+        path: 'second',
         load: () => Promise.resolve()
       });
 
@@ -78,7 +77,7 @@ describe('prefetch addon', () => {
     it('returns a Promise', () => {
       const playerURI = uri({
         name: 'Player',
-        path: path('player/:id'),
+        path: 'player/:id',
         load: () => Promise.resolve()
       });
       prefetch.register(playerURI);
@@ -88,7 +87,7 @@ describe('prefetch addon', () => {
     it('passes arguments to load function', () => {
       const playerURI = uri({
         name: 'Player',
-        path: path('player/:id'),
+        path: 'player/:id',
         load: function(one, two) {
           expect(one).toBe(1);
           expect(two).toBe(2);

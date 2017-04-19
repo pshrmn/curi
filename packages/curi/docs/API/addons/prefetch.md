@@ -16,7 +16,7 @@ This addon will only register `uri`s that have a `load` function in their `load`
 
 ```js
 // will register
-uri('User', path('user/:id'), null, {
+uri('User', 'user/:id', null, {
   load: (response, { params }) => {
     // fetch and store the data
     return fetch(`/api/user/${params.id}`)
@@ -28,8 +28,8 @@ uri('User', path('user/:id'), null, {
 })
 
 // will NOT register
-uri('User', path('user/:id'))
-uri('User', path('user/:id'), null, {
+uri('User', 'user/:id')
+uri('User', 'user/:id', null, {
   preload: () => {
     return import('./components/User').then(resp => resp.default)
   }

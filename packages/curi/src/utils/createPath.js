@@ -12,11 +12,7 @@ const path = (pathString, options) => {
   const mergedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
   const re = PathToRegexp(pathString, keys, mergedOptions);
 
-  return { re, keys, path: pathString };
-};
-
-export const parentPath = (pathString, options) => {
-  return path(pathString, { ...options, end: false });
+  return { re, keys };
 };
 
 export default path;

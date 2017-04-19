@@ -44,14 +44,14 @@ Generally speaking, you will not actually interact directly with the `Response`.
 const routes = [
   {
     name: 'Old Profile',
-    path: path('profile/:id'),
+    path: 'profile/:id',
     load: (resp) => {
       resp.redirect(`/user/${resp.params.id}`, 301)
     }
   },
   {
     name: 'Profile',
-    path: path('user/:id')
+    path: 'user/:id'
   }
 ]
 ```

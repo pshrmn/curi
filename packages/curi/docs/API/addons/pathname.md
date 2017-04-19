@@ -28,15 +28,15 @@ const config = createConfig(history, uris, [ pathname, prefetch ]);
 const uris = [
   {
     name: 'Country',
-    path: path(':country'),
+    path: ':country',
     children: [
       {
         name: 'State',
-        path: path(':state'),
+        path: ':state',
         children: [
           {
             name: 'City',
-            path: path(':city')
+            path: ':city'
           }
         ]
       }
@@ -56,15 +56,15 @@ It is important that params have unique names in their hierarchy tree so that wh
 const uris = [
   {
     name: 'Country',
-    path: path(':id'),
+    path: ':id',
     children: [
       {
         name: 'State',
-        path: path(':id'),
+        path: ':id',
         children: [
           {
             name: 'City',
-            path: path(':id')
+            path: ':id'
           }
         ]
       }

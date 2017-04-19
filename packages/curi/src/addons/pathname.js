@@ -8,8 +8,7 @@ function createPathnameAddon() {
   return {
     name: 'pathname',
     register: (route, parent) => {
-      const { name, path: pathObj } = route;
-      const { path } = pathObj;
+      const { name, path } = route;
       if (knownPaths[name] !== undefined) {
         console.warn(
           'A pathname with the name "' +

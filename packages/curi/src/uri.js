@@ -1,30 +1,32 @@
 import { join, stripLeadingSlash, withLeadingSlash } from './utils/path';
-
-function once(fn) {
-  let promise = null;
-  let hasRun = false;
-
-  return function() {
-    if (hasRun) {
-      return promise;
-    }
-
-    promise = fn();
-    hasRun = true;
-    return promise;
-  };
-}
+import once from './utils/once';
+import createPath from './utils/createPath';
 
 const uri = options => {
-  const { name, path, value, call, children, preload, load } = options || {};
+  const {
+    name,
+    path,
+    pathOptions = {},
+    value,
+    call,
+    children,
+    preload,
+    load
+  } = options || {};
 
   if (name == null || path == null) {
     throw new Error('A URI must have defined name and path properties');
   }
 
+  // create the path
+  if (children) {
+    pathOptions.end = false;
+  }
+  const regexPath = createPath(path, pathOptions);
+
   return {
     name,
-    path: path.path,
+    path: path,
     render: function() {
       if (value != null) {
         return value;
@@ -37,13 +39,13 @@ const uri = options => {
     load,
     match: function(pathname, response, parentURI) {
       const testPath = stripLeadingSlash(pathname);
-      const match = path.re.exec(testPath);
+      const match = regexPath.re.exec(testPath);
       if (!match) {
         return false;
       }
       const [segment, ...parsed] = match;
       const params = {};
-      path.keys.forEach((key, index) => {
+      regexPath.keys.forEach((key, index) => {
         params[key.name] = parsed[index];
       });
       const uriString = parentURI != null
