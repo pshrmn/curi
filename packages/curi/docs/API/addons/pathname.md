@@ -2,7 +2,7 @@
 
 The `pathname` addon allows you to generate location pathnames for `uri`s simply by knowing the `uri`'s name. This even works with nested `uri`s by joining their path with their ancestors' paths.
 
-The `pathname` addon is included by default, but if you provide other addons, you will also need to manually include the addon.
+The `pathname` addon is **always** included in the config's addons.
 
 ```js
 // default

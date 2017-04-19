@@ -1,8 +1,14 @@
 import createURIs from './utils/createURIs';
-import DEFAULT_ADDONS from './addons/defaults';
+import pathnameAddon from './addons/pathname';
 import Response from './response';
 
-function createConfig(history, routes, addons = DEFAULT_ADDONS) {
+function createConfig(history, routes, options = {}) {
+  const {
+    addons = []
+  } = options;
+
+  const finalAddons = addons.concat(pathnameAddon);
+
   let uris = [];
   const globals = {};
   const subscribers = [];
@@ -16,7 +22,7 @@ function createConfig(history, routes, addons = DEFAULT_ADDONS) {
       delete globals[key];
     }
 
-    addons.forEach(addonFactory => {
+    finalAddons.forEach(addonFactory => {
       const addon = addonFactory();
       globals[addon.name] = addon.get;
       registerFunctions.push(addon);
