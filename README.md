@@ -9,6 +9,8 @@ A set of **experimental** configuration-based URI routing packages.
 
 You can test it out by forking this [codepen](https://codepen.io/pshrmn/pen/mmebOK).
 
+For a reference on some of the terms used with `curi`, please see the [glossary](./GLOSSARY.md)
+
 ## curi
 
 [package](/packages/curi) + [source](/packages/curi/src) + [documentation](/packages/curi/docs)
