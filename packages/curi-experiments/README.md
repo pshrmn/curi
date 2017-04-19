@@ -8,3 +8,4 @@ Example projects that use `curi` and `curi-react`.
 * [server rendering](./server-rendering)
 * [blocking navigation](./blocking-navigation)
 * [prefetching data](./prefetch-data)
+* [with redux](./redux)

@@ -1,0 +1,21 @@
+import React from 'react';
+import Redirect from 'curi-react/lib/Redirect';
+import Nav from './components/Nav';
+
+function render(response, config) {
+  const { location, params, body:Body, redirectTo } = response;
+  if (redirectTo) {
+    return <Redirect to={redirectTo} />
+  }
+
+  return (
+    <div>
+      <Nav />
+      {
+        Body ? <Body params={params} /> : null
+      }
+    </div>
+  );
+}
+
+export default render;
