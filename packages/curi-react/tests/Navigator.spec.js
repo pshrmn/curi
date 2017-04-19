@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { createConfig, path } from '../../curi/src';
+import { createConfig } from '../../curi/src';
 import Response from '../../curi/src/response';
 import { createMemoryHistory } from 'history';
 import Navigator from '../src/Navigator';
@@ -22,8 +22,8 @@ describe('<Navigator>', () => {
   it('passes the children function a response object', done => {
     const history = createMemoryHistory();
     const routes = [
-      { name: 'Home', path: path('', { end: true }) },
-      { name: 'About', path: path('about') }
+      { name: 'Home', path: '', pathOptions: { end: true } },
+      { name: 'About', path: 'about' }
     ];
     let receivedResponse;
     const fn = jest.fn(response => {
@@ -58,8 +58,8 @@ describe('<Navigator>', () => {
   it('passes the children function the config object', done => {
     const history = createMemoryHistory();
     const routes = [
-      { name: 'Home', path: path('', { end: true }) },
-      { name: 'About', path: path('about') }
+      { name: 'Home', path: '', pathOptions: { end: true } },
+      { name: 'About', path: 'about' }
     ];
     const fn = jest.fn(() => {
       return null;
@@ -81,8 +81,8 @@ describe('<Navigator>', () => {
   it('updates on location changes', done => {
     const history = createMemoryHistory();
     const routes = [
-      { name: 'Home', path: path('', { end: true }) },
-      { name: 'About', path: path('about') }
+      { name: 'Home', path: '', pathOptions: { end: true } },
+      { name: 'About', path: 'about' }
     ];
 
     let first = true;

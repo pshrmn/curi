@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import prefetchAddon from 'curi/lib/addons/prefetch';
 import pathnameAddon from 'curi/lib/addons/pathname';
-import { createConfig, path } from '../../curi/src';
+import { createConfig } from '../../curi/src';
 import Link from '../src/Link';
 
 describe('<Link>', () => {
@@ -20,7 +20,7 @@ describe('<Link>', () => {
 
   it('renders an <a>', () => {
     const history = createMemoryHistory();
-    const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+    const config = createConfig(history, [{ name: 'Test', path: '' }]);
     const wrapper = shallow(<Link name="Test">Test</Link>, {
       context: { curi: config }
     });
@@ -32,7 +32,7 @@ describe('<Link>', () => {
   describe('name', () => {
     it('sets the href attribute using the named route\'s path', () => {
       const history = createMemoryHistory();
-      const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+      const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link name="Test">Test</Link>, {
         context: { curi: config }
       });
@@ -55,7 +55,7 @@ describe('<Link>', () => {
     it('uses params to generate the href', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [
-        { name: 'Park', path: path('/park/:name') }
+        { name: 'Park', path: '/park/:name' }
       ]);
       const params = { name: 'Glacier' };
       const wrapper = shallow(<Link name="Park" params={params}>Test</Link>, {
@@ -68,7 +68,7 @@ describe('<Link>', () => {
     it('updates href when props change', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [
-        { name: 'Park', path: path('/park/:name') }
+        { name: 'Park', path: '/park/:name' }
       ]);
       const params = { name: 'Glacier' };
       const wrapper = shallow(<Link name="Park" params={params}>Test</Link>, {
@@ -87,7 +87,7 @@ describe('<Link>', () => {
     it('merges the to prop with the generated pathname when navigating', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [
-        { name: 'Test', path: path('test') }
+        { name: 'Test', path: 'test' }
       ]);
       const wrapper = shallow(
         <Link name="Test" to={{ search: '?one=two', hash: '#hashtag' }}>
@@ -102,7 +102,7 @@ describe('<Link>', () => {
     it('overwrites the generated pathname if to includes one', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [
-        { name: 'Test', path: path('test') }
+        { name: 'Test', path: 'test' }
       ]);
       const wrapper = shallow(
         <Link name="Test" to={{ pathname: '/not-a-test' }}>Test</Link>,
@@ -117,7 +117,7 @@ describe('<Link>', () => {
     it('errors if using prefetch without prefetch addon', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [
-        { name: 'Test', path: path('test') }
+        { name: 'Test', path: 'test' }
       ]);
       expect(() => {
         const wrapper = shallow(
@@ -137,7 +137,7 @@ describe('<Link>', () => {
       });
       const testRoute = {
         name: 'Test',
-        path: path('test'),
+        path: 'test',
         load: jest.fn(() => {
           loadHasBeenCalled = true;
           return Promise.resolve();
@@ -175,7 +175,7 @@ describe('<Link>', () => {
       const history = createMemoryHistory();
       history.push = jest.fn();
 
-      const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+      const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link name="Test">Test</Link>, {
         context: { curi: config }
       });
@@ -199,7 +199,7 @@ describe('<Link>', () => {
         const history = createMemoryHistory();
         history.push = jest.fn();
         const onClick = jest.fn();
-        const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+        const config = createConfig(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(<Link name="Test" onClick={onClick}>Test</Link>, {
           context: { curi: config }
         });
@@ -225,7 +225,7 @@ describe('<Link>', () => {
         const onClick = jest.fn(event => {
           event.preventDefault();
         });
-        const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+        const config = createConfig(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(<Link name="Test" onClick={onClick}>Test</Link>, {
           context: { curi: config }
         });
@@ -250,7 +250,7 @@ describe('<Link>', () => {
       const history = createMemoryHistory();
       history.push = jest.fn();
 
-      const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+      const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link name="Test">Test</Link>, {
         context: { curi: config }
       });
@@ -278,7 +278,7 @@ describe('<Link>', () => {
       const history = createMemoryHistory();
       history.push = jest.fn();
 
-      const config = createConfig(history, [{ name: 'Test', path: path('') }]);
+      const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link name="Test">Test</Link>, {
         context: { curi: config }
       });

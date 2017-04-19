@@ -11,7 +11,7 @@ const store = ComponentStore();
 const routes = [
   {
     name: 'Home',
-    path: path(''),
+    path: '',
     preload: () => {
       return import('./components/Home').then(module => { store.register('Home', module.default); });
     },

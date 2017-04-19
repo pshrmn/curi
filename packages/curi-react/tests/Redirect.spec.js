@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
-import { createConfig, path } from '../../curi/src';
+import { createConfig } from '../../curi/src';
 import Redirect from '../src/Redirect';
 
 describe('<Redirect>', () => {
@@ -48,7 +48,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: path('/park')
+          path: '/park'
         }
       ]);
       const wrapper = mount(<Redirect name="Park" />, {
@@ -63,7 +63,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: path('/park/:name')
+          path: '/park/:name'
         }
       ]);
       const wrapper = mount(
@@ -79,7 +79,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: path('/park')
+          path: '/park'
         }
       ]);
       const to = { search: '?camping=true' };
@@ -95,7 +95,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: path('/park/:name')
+          path: '/park/:name'
         }
       ]);
       const to = { pathname: '/park/Canyon+Land' };
