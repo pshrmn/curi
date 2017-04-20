@@ -42,7 +42,6 @@ class Cacher extends React.Component {
 
 function render(response) {
   const { location, params, body:Body } = response;
-  console.log('with', response);
   return (
     <div>
       <Nav />

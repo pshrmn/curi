@@ -4,13 +4,12 @@
 
 The only thing that this really does is prevent the URI in the address bar from changing until after the data has been loaded. If that is something that you want, then you will have to do the following things:
 
-1. Include the `prefetch` addon in your configuration object. You will need to also include the `pathname` addon because default addons aren't automatically included if you provide your own addons.
+1. Include the `prefetch` addon in your configuration object.
 
 ```js
-import prefetchAddon from 'curi/lib/addons/prefetch';
-import pathnameAddone from 'curi/lib/addons/pathname';
+import prefetchAddon from 'curi-addon-prefetch';
 
-const config = createConfig(history, routes, [prefetchAddon, pathnameAddon]);
+const config = createConfig(history, routes, { addons: [prefetchAddon] });
 ```
 
 2. In your `load` function, you will need to cache reults. This is because while the config object is creating a response, there isn't anything that actually indicates that the route has been prefetched.

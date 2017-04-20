@@ -1,8 +1,8 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createMemoryHistory } from 'history';
-import { createConfig } from '../../curi/src';
-import Navigator from '../../curi-react/src/Navigator';
+import createConfig from 'curi';
+import Navigator from 'curi-react/lib/Navigator';
 import routes from './src/routes';
 import renderFunction from './src/renderFunction';
 
