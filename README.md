@@ -9,7 +9,7 @@ A set of **experimental** configuration-based URI routing packages.
 
 You can test it out by forking this [codepen](https://codepen.io/pshrmn/pen/mmebOK).
 
-For a reference on some of the terms used with `curi`, please see the [glossary](./docs/GLOSSARY.md)
+For a reference on some of the terms used with Curi, please see the [glossary](./docs/GLOSSARY.md)
 
 ## curi
 
@@ -48,8 +48,7 @@ import createConfig from 'curi';
 
 const config = createConfig(history, routes);
 
-// This line is important. Please see the document linked below this example
-// for more information.
+// This line is important. Please see link below.
 config.ready().then(() => {
   config.subscribe((response) => {
     /*
@@ -95,3 +94,25 @@ config.ready().then(() => {
 [package](/packages/curi-experiments)
 
 This is not a "real" package, but instead it is a collection of small applications that show you what you can do with `curi` and `curi-react`.
+
+## addons
+
+### pathname
+
+[source](/packages/curi/src/addons/pathname.js) + [documentation](/packages/curi/docs/API/addons/pathname.md)
+
+The `pathname` addon is always used, so you do not need to install it separately.
+
+### `curi-addon-prefetch`
+
+[package](/packages/curi-addon-prefetch) + [source](/packages/curi-addon-prefetch/src/index.js) + [documentation](/packages/curi-addon-prefetch/README.md#usage)
+
+The `prefetch` addon allows you to call a route's `load` function outside of navigation. If you use this, your `load` function should have a caching mechanism to prevent duplicate data fetches because the `load` function will be called again during actual navigation.
+
+## middleware
+
+### `curi-middleware-query`
+
+[package](/packages/curi-middleware-query) + [source](/packages/curi-middleware-query/src/index.js) + [documentation](/packages/curi-middleware-query/README.md#usage)
+
+The `query` middleware exports a middleware factory. The factory takes a parse function and returns a middleware function that will parse `response.location.search` and store the parsed object as `response.query`.
