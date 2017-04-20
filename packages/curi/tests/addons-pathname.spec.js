@@ -1,5 +1,5 @@
 import createPathname from '../src/addons/pathname';
-import uri from '../src/uri';
+import uri from '../src/utils/createUri';
 
 describe('pathname addon', () => {
   let pathname;
