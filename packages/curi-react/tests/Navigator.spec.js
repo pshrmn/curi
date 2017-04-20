@@ -40,6 +40,7 @@ describe('<Navigator>', () => {
       );
 
       const properties = [
+        'key',
         'location',
         'status',
         'name',
