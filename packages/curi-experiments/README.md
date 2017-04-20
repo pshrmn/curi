@@ -9,3 +9,4 @@ Example projects that use `curi` and `curi-react`.
 * [blocking navigation](./blocking-navigation)
 * [prefetching data](./prefetch-data)
 * [with redux](./redux)
+* [middleware](./middleware)
