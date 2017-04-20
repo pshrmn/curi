@@ -8,7 +8,7 @@ A configuration object is created using `createConfig`. It takes two arguments: 
 
 For any given location object, the configuration object will walk over the array of routes to determine which route (based on the route's `path` property) matches best. The name of the best matched route will be one of the properties of the [`Response`](./response.md) that is built for the location.
 
-The `createConfig` function can also be passed an `options` object as its third argument. The possible properties of the `options` argument are `addons` and `middleware`. Both of those properties (if you include them) must be arrays.
+The `createConfig` function can also be passed an `options` object as its third argument. The possible properties of the `options` argument are `addons`, `middleware`, and `cache`. Both `addons` and `middleware` (if you include them) must be arrays. `cache` is an object with `get` and `set` function properties.
 
 ## methods
 

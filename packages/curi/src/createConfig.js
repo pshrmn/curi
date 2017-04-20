@@ -5,7 +5,8 @@ import Response from './response';
 function createConfig(history, routes, options = {}) {
   const {
     addons = [],
-    middleware = []
+    middleware = [],
+    cache = false
   } = options;
 
   const finalAddons = addons.concat(pathnameAddon);
@@ -14,7 +15,7 @@ function createConfig(history, routes, options = {}) {
   const globals = {};
   const subscribers = [];
 
-  let currentUpdate;
+  let currentResponse;
   let lastUpdate;
 
   const setup = routes => {
@@ -33,15 +34,8 @@ function createConfig(history, routes, options = {}) {
   };
 
   const respond = () => {
-    let { pathname, key } = history.location;
-    // hash history quick fix
-    if (key == null) {
-      key = Math.random().toString(36).slice(2, 8);
-      history.location.key = key;
-    }
-    currentUpdate = key;
     const resp = new Response(history.location);
-    uris.some(uri => uri.match(pathname, resp));
+    uris.some(uri => uri.match(history.location.pathname, resp));
     return resp;
   };
 
@@ -66,13 +60,35 @@ function createConfig(history, routes, options = {}) {
     );
   };
 
+  const setCurrentResponse = (location) => {
+    let { key } = location;
+    // hash history quick fix
+    if (key == null) {
+      key = Math.random().toString(36).slice(2, 8);
+      location.key = key;
+    }
+    currentResponse = key;
+  }
+
   const prepareResponse = () => {
+    setCurrentResponse(history.location);
+
+    if (cache) {
+      const resp = cache.get(history.location)
+      if (resp != null) {
+        return Promise.resolve(resp);
+      }
+    }
+
     const response = respond();
     return runURILoadFunctions(response).then(resp => {
       const respObject = middleware.length
         ? middleware.reduce((obj, curr) => curr(obj), resp.asObject())
         : resp.asObject();
       // save this for quick ref
+      if (cache) {
+        cache.set(resp);
+      }
       lastUpdate = respObject;
       return respObject;
     });
@@ -95,9 +111,7 @@ function createConfig(history, routes, options = {}) {
 
   const emit = response => {
     // don't emit old responses
-    // TODO: need to figure out a better solution for this because hash history
-    // does not add a location.key (because it can have no state).
-    if (response.location.key !== currentUpdate) {
+    if (response.location.key !== currentResponse) {
       return;
     }
     subscribers.forEach(fn => {

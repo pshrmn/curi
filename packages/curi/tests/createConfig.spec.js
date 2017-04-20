@@ -205,6 +205,84 @@ describe('createConfig', () => {
           });
         });
       });
+
+      describe('cache', () => {
+        it('uses cached response for same key on subsequent calls if cache is provided', (done) => {
+          const loadSpy = jest.fn();
+          const routes = [{ name: 'All', path: '*', load: loadSpy }];
+          const createSimpleCache = () => {
+            const cache = {};
+
+            return {
+              get: location => {
+                const { key } = location;
+                return cache[key];
+              },
+              set: response => {
+                const { key } = response.location;
+                cache[key] = response;
+              }
+            };
+          }
+
+          const config = createConfig(history, routes, { cache: createSimpleCache() });
+
+          let calls = 0;
+          const steps = [
+            () => {
+              expect(loadSpy.mock.calls.length).toBe(1);
+              history.push('/new-location');
+            },
+            () => {
+              expect(loadSpy.mock.calls.length).toBe(2);
+              history.goBack();
+            },
+            () => {
+              expect(loadSpy.mock.calls.length).toBe(2);
+              done();
+            }
+          ];
+
+          function subscriber(response) {
+            steps[calls++]();
+          }
+
+          config.ready().then(response => {
+            config.subscribe(subscriber)
+          });
+        });
+
+        it('uses generates new response for same key on subsequent calls if cache=false', (done) => {
+          const loadSpy = jest.fn();
+          const routes = [{ name: 'All', path: '*', load: loadSpy }];
+          const config = createConfig(history, routes, { cache: false });
+
+          let calls = 0;
+          const steps = [
+            () => {
+              expect(loadSpy.mock.calls.length).toBe(1);
+              history.push('/new-location');
+            },
+            () => {
+              expect(loadSpy.mock.calls.length).toBe(2);
+              history.goBack();
+            },
+            () => {
+              expect(loadSpy.mock.calls.length).toBe(3);
+              done();
+            }
+          ];
+
+          function subscriber(response) {
+            steps[calls++]();
+          }
+
+          config.ready().then(response => {
+            config.subscribe(subscriber)
+          });
+        });
+
+      });
     });
 
   });
