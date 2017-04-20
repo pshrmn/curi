@@ -1,4 +1,4 @@
-# curi
+# Curi
 
 [![Travis][build-badge]][build]
 
@@ -44,7 +44,7 @@ When the subscribed function is called, it will be passed a "response" object. T
 Response objects describe how a location matches up against the config object's routes.
 
 ```js
-import { createConfig } from 'curi';
+import createConfig from 'curi';
 
 const config = createConfig(history, routes);
 
