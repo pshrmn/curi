@@ -1,5 +1,6 @@
 class Response {
-  constructor(location) {
+  constructor(key, location) {
+    this.key = key;
     this.location = location;
     this.status = 200;
     this.uri;
@@ -33,6 +34,7 @@ class Response {
   asObject() {
     if (this.redirectTo != null) {
       return {
+        key: this.key,
         location: this.location,
         status: this.status,
         redirectTo: this.redirectTo
@@ -40,6 +42,7 @@ class Response {
     }
 
     return {
+      key: this.key,
       location: this.location,
       status: this.status,
       body: this.body,

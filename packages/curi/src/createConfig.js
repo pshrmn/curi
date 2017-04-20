@@ -33,8 +33,8 @@ function createConfig(history, routes, options = {}) {
     uris = walkRoutes(routes, registerFunctions, {});
   };
 
-  const respond = () => {
-    const resp = new Response(history.location);
+  const respond = (key) => {
+    const resp = new Response(key, history.location);
     uris.some(uri => uri.match(history.location.pathname, resp));
     return resp;
   };
@@ -65,13 +65,13 @@ function createConfig(history, routes, options = {}) {
     // hash history quick fix
     if (key == null) {
       key = Math.random().toString(36).slice(2, 8);
-      location.key = key;
     }
     currentResponse = key;
+    return key;
   }
 
   const prepareResponse = () => {
-    setCurrentResponse(history.location);
+    const responseKey = setCurrentResponse(history.location);
 
     if (cache) {
       const resp = cache.get(history.location)
@@ -80,7 +80,7 @@ function createConfig(history, routes, options = {}) {
       }
     }
 
-    const response = respond();
+    const response = respond(responseKey);
     return runURILoadFunctions(response).then(resp => {
       const respObject = middleware.length
         ? middleware.reduce((obj, curr) => curr(obj), resp.asObject())

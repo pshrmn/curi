@@ -32,4 +32,4 @@ Alternatively, you might create a cache the can cache response based on the loca
 
 ### With Hash History
 
-If you are using a hash history, you will not be able to use `location.key` for caching responses. That is because hash history locations do not have `key` properties. Curi creates a fake `key`, but that is only actually used for ensuring that "stale" responses are emitted to subscribers.
+If you are using a hash history, you will not be able to use `location.key` for caching responses. That is because hash history locations do not have `key` properties.

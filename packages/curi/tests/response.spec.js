@@ -5,9 +5,17 @@ const noop = () => {};
 
 describe('Response', () => {
   describe('constructor', () => {
-    it('sets the location', () => {
+    it('sets the key', () => {
+      const key = 'greetings';
       const location = { pathname: '/you-are-here' };
-      const resp = new Response(location);
+      const resp = new Response(key, location);
+      expect(resp.key).toEqual(key);
+    })
+
+    it('sets the location', () => {
+      const key = 'greetings';
+      const location = { pathname: '/you-are-here' };
+      const resp = new Response(key, location);
       expect(resp.location).toEqual(location);
     });
 
@@ -100,14 +108,16 @@ describe('Response', () => {
 
   describe('asObject', () => {
     it('returns an object with desired properties', () => {
+      const key = 'greetings';
       const location = { pathname: '/park/yosemite' };
-      const resp = new Response(location);
+      const resp = new Response(key, location);
       const value = 'Yosemite National Park';
       const parkURI = uri({ name: 'Park', path: 'park/:name', value });
       resp.add(parkURI, { name: 'yosemite' });
       resp.call();
       const respObj = resp.asObject();
 
+      expect(respObj.key).toBe(key);
       expect(respObj.location).toBe(location);
       expect(respObj.status).toBe(200);
       expect(respObj.body).toBe(value);
@@ -117,11 +127,14 @@ describe('Response', () => {
     });
 
     it('returns a redirect object when redirectTo is set', () => {
+      const key = 'greetings';
       const location = { pathname: '/park/yosemite' };
-      const resp = new Response(location);
+      const resp = new Response(key, location);
       const corporateTakeover = '/park/yosemite-land-brought-to-you-by-disney';
       resp.redirect(corporateTakeover);
       const respObj = resp.asObject();
+      
+      expect(respObj.key).toBe(key);
       expect(respObj.location).toBe(location);
       expect(respObj.status).toBe(301);
       expect(respObj.redirectTo).toBe(corporateTakeover);

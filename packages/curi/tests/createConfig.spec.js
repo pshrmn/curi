@@ -2,7 +2,6 @@ import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
 import uri from '../src/utils/createUri';
 import createMemoryHistory from 'history/createMemoryHistory';
-import createHashHistory from 'history/createHashHistory';
 import Response from '../src/response';
 
 // The subscribe function is called when subscribing  so that the
@@ -281,7 +280,6 @@ describe('createConfig', () => {
             config.subscribe(subscriber)
           });
         });
-
       });
     });
 
@@ -344,6 +342,7 @@ describe('createConfig', () => {
       const config = createConfig(history, routes);
       config.ready().then(arg => {
         const properties = [
+          'key',
           'location',
           'status',
           'body',
@@ -465,19 +464,6 @@ describe('createConfig', () => {
       config.ready().then(() => {
         expect(spy.mock.calls.length).toBe(1);
         done();
-      });
-    });
-
-    it("will have a key on the location even if it isn't natively supported", () => {
-      const history = createHashHistory();
-      const CatchAll = {
-        name: 'Catch All',
-        path: ':anything'
-      };
-      expect(history.location.key).toBeUndefined();
-      const config = createConfig(history, [CatchAll]);
-      config.ready().then(resp => {
-        expect(resp.location.key).toBeDefined();
       });
     });
   });
