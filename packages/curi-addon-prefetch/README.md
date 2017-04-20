@@ -11,13 +11,13 @@ npm install --save curi-addon-prefetch
 ### Usage
 
 ```js
-import { createConfig } from 'curi';
+import createConfig from 'curi';
 import prefetch from 'curi-addon-prefetch';
 
 const history = ...;
 const routes = [...];
 
-const conf = createConfig(history, routes, [ prefetch ]);
+const conf = createConfig(history, routes, { addons: [prefetch] });
 ```
 
 This addon will only register routess that have a `load` function in their `load` object.

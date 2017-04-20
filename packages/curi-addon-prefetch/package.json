@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "description": "An addon to enable prefetching curi routes",
   "main": "lib/index.js",
+  "files": [
+    "lib",
+    "umd",
+    "es",
+    "LICENSE",
+    "*.md"
+  ],
   "scripts": {
     "test": "jest",
     "prebuild": "rimraf lib umd es",
