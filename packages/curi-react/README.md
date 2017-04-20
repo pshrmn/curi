@@ -12,7 +12,7 @@ Please check out the [experiments](../curi-experiments) for examples of `curi-re
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
-import { createConfig, path } from 'curi';
+import createConfig from 'curi';
 import { Navigator } from 'curi-react';
 
 // some route components

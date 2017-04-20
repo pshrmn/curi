@@ -1,9 +1,8 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
-import prefetchAddon from 'curi/lib/addons/prefetch';
-import pathnameAddon from 'curi/lib/addons/pathname';
-import { createConfig } from '../../curi/src';
+import prefetchAddon from '../../curi-addon-prefetch/src';
+import createConfig from '../../curi/src';
 import Link from '../src/Link';
 
 describe('<Link>', () => {
@@ -146,7 +145,7 @@ describe('<Link>', () => {
       const config = createConfig(
         history,
         [testRoute],
-        [pathnameAddon, prefetchAddon]
+        { addons: [prefetchAddon] }
       );
 
       const leftClickEvent = {

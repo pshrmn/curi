@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
-import { createConfig } from '../../curi/src';
+import createConfig from '../../curi/src';
 import Redirect from '../src/Redirect';
 
 describe('<Redirect>', () => {

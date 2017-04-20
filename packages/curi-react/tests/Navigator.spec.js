@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { createConfig } from '../../curi/src';
+import createConfig from '../../curi/src';
 import Response from '../../curi/src/response';
 import { createMemoryHistory } from 'history';
 import Navigator from '../src/Navigator';
