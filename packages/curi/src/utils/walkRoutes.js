@@ -1,6 +1,6 @@
-import uri from '../uri';
+import uri from './createUri';
 
-export default function createURIs(routes, addons, parentData) {
+export default function walkRoutes(routes, addons, parentData) {
   return routes.map(route => {
     const registerData = {};
     addons.forEach(addon => {
@@ -9,7 +9,7 @@ export default function createURIs(routes, addons, parentData) {
     });
 
     const children = route.children
-      ? createURIs(route.children, addons, registerData)
+      ? walkRoutes(route.children, addons, registerData)
       : [];
 
     return uri({ ...route, children });

@@ -1,4 +1,4 @@
-import createURIs from './utils/createURIs';
+import walkRoutes from './utils/walkRoutes';
 import pathnameAddon from './addons/pathname';
 import Response from './response';
 
@@ -28,7 +28,7 @@ function createConfig(history, routes, options = {}) {
       registerFunctions.push(addon);
     });
 
-    uris = createURIs(routes, registerFunctions, {});
+    uris = walkRoutes(routes, registerFunctions, {});
   };
 
   const respond = () => {

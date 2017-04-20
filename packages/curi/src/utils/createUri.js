@@ -1,6 +1,6 @@
-import { join, stripLeadingSlash, withLeadingSlash } from './utils/path';
-import once from './utils/once';
-import createPath from './utils/createPath';
+import { join, stripLeadingSlash, withLeadingSlash } from './path';
+import once from './once';
+import createPath from './createPath';
 
 const uri = options => {
   const {

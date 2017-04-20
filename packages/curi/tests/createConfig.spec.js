@@ -1,6 +1,6 @@
 import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
-import uri from '../src/uri';
+import uri from '../src/utils/createUri';
 import createMemoryHistory from 'history/createMemoryHistory';
 import createHashHistory from 'history/createHashHistory';
 import Response from '../src/response';

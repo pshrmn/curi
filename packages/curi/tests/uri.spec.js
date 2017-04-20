@@ -1,4 +1,4 @@
-import uri from '../src/uri';
+import uri from '../src/utils/createUri';
 import Response from '../src/response';
 
 const noop = () => {};
