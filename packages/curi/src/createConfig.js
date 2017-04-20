@@ -4,7 +4,8 @@ import Response from './response';
 
 function createConfig(history, routes, options = {}) {
   const {
-    addons = []
+    addons = [],
+    middleware = []
   } = options;
 
   const finalAddons = addons.concat(pathnameAddon);
@@ -68,9 +69,12 @@ function createConfig(history, routes, options = {}) {
   const prepareResponse = () => {
     const response = respond();
     return runURILoadFunctions(response).then(resp => {
+      const respObject = middleware.length
+        ? middleware.reduce((obj, curr) => curr(obj), resp.asObject())
+        : resp.asObject();
       // save this for quick ref
-      lastUpdate = resp.asObject();
-      return lastUpdate;
+      lastUpdate = respObject;
+      return respObject;
     });
   };
 

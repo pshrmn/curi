@@ -167,6 +167,44 @@ describe('createConfig', () => {
           });
         });
       });
+
+      describe('middleware', () => {
+        it('calls middleware functions to modify response object', (done) => {
+          const routes = [{ name: 'All', path: ':all+' }];
+          const fahrenheitMiddleware = resp => {
+            resp.status = 451;
+            return resp;
+          };
+          const config = createConfig(history, routes, {
+            middleware: [fahrenheitMiddleware]
+          });
+
+          config.ready().then(response => {
+            expect(response.status).toBe(451);
+            done();
+          });
+        });
+
+        it('calls middleware in the order that they are defined', (done) => {
+          const routes = [{ name: 'All', path: ':all+' }];
+          const fahrenheitMiddleware = resp => {
+            resp.status = 451;
+            return resp;
+          };
+          const doubleStatus = resp => {
+            resp.status *= 2;
+            return resp;
+          }
+          const config = createConfig(history, routes, {
+            middleware: [fahrenheitMiddleware, doubleStatus]
+          });
+
+          config.ready().then(response => {
+            expect(response.status).toBe(902);
+            done();
+          });
+        });
+      });
     });
 
   });
