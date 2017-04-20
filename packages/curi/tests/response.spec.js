@@ -1,5 +1,5 @@
 import Response from '../src/response';
-import uri from '../src/uri';
+import uri from '../src/utils/createUri';
 
 const noop = () => {};
 
