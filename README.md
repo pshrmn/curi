@@ -97,13 +97,13 @@ This is not a "real" package, but instead it is a collection of small applicatio
 
 ## addons
 
-### pathname
+#### pathname
 
 [source](/packages/curi/src/addons/pathname.js) + [documentation](/packages/curi/docs/API/addons/pathname.md)
 
 The `pathname` addon is always used, so you do not need to install it separately.
 
-### `curi-addon-prefetch`
+#### `curi-addon-prefetch`
 
 [package](/packages/curi-addon-prefetch) + [source](/packages/curi-addon-prefetch/src/index.js) + [documentation](/packages/curi-addon-prefetch/README.md#usage)
 
@@ -111,7 +111,7 @@ The `prefetch` addon allows you to call a route's `load` function outside of nav
 
 ## middleware
 
-### `curi-middleware-query`
+#### `curi-middleware-query`
 
 [package](/packages/curi-middleware-query) + [source](/packages/curi-middleware-query/src/index.js) + [documentation](/packages/curi-middleware-query/README.md#usage)
 
