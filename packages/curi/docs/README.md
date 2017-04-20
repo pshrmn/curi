@@ -6,5 +6,4 @@
   * [response](./API/response.md)
   * [addons](./API/addons)
     * [`pathname` addon](./API/addons/pathname.md)
-    * [`prefetch` addon](./API/addons/prefetch.md)
   * [middleware](./API/middleware.md)
