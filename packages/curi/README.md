@@ -18,10 +18,10 @@ There are a number of other route properties, which are described in more detail
 
 #### Configs
 
-A configuration object is created using the `history` instance and the routes. You can learn more about it in the [`createConfig` documentation](./docs/API/createConfig.md).
+The default export by `curi` is a function that creates a configuration object. The function takes a `history` instance, the routes, and an optional `options` object as its arguments. You can learn more about it in the [`createConfig` documentation](./docs/API/createConfig.md).
 
 ```js
-import { createConfig, path } from 'curi';
+import createConfig from 'curi';
 import { createBrowserHistory } from 'history';
 
 const history = createBrowserHistory();

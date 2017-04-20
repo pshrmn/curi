@@ -1,7 +1,7 @@
 # `createConfig`
 
 ```js
-import { createConfig } from 'curi';
+import createConfig from 'curi';
 ```
 
 A configuration object is created using `createConfig`. It takes two arguments: a `history` instance and an array of [route objects]('./route.md).

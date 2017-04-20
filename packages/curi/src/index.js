@@ -1,2 +1,4 @@
-export createConfig from './createConfig';
-export addons from './addons';
+import createConfig from './createConfig';
+
+export default createConfig;
+export pathname from './addons/pathname';
