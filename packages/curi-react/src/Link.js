@@ -70,14 +70,10 @@ class Link extends Component {
 
   componentWillMount() {
     invariant(
-      !this.props.name || (this.props.name && this.context.curi.addons.pathname),
-      'You cannot use the "name" prop if your curi configuration does not include the pathname addon'
-    );
-
-
-    invariant(
       !this.props.prefetch || (this.props.prefetch && this.context.curi.addons.prefetch),
-      'You cannot use the "prefetch" prop if your curi configuration does not include the prefetch addon'
+      'You cannot use the "prefetch" prop if your curi configuration does not include the prefetch addon. ' +
+      'You should ensure that you have installed the curi-addon-prefetch and that you are passing the ' +
+      'addon to your createConfig call.'
     );
 
     this.createPathname(this.props, this.context);
