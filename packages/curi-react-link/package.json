@@ -1,7 +1,7 @@
 {
-  "name": "curi-react-redirect",
+  "name": "curi-react-link",
   "version": "0.1.0",
-  "description": "A React component that triggers navigation",
+  "description": "A curi config aware React component that renders an <a>",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
@@ -9,20 +9,21 @@
     "build": "npm run build:lib && npm run build:umd && npm run build:min && npm run build:es",
     "build:es": "cross-env BABEL_ENV=es babel ./src -d es --ignore __tests__",
     "build:lib": "cross-env BABEL_ENV=cjs babel ./src -d lib --ignore __tests__",
-    "build:umd": "webpack --define process.env.NODE_ENV=\"'production'\" --output-filename=umd/curi-react-block.js",
-    "build:min": "webpack -p --optimize-minimize --output-filename=umd/curi-react-block.min.js",
+    "build:umd": "webpack --define process.env.NODE_ENV=\"'production'\" --output-filename=umd/curi-react-link.js",
+    "build:min": "webpack -p --optimize-minimize --output-filename=umd/curi-react-link.min.js",
     "prepublish": "npm run build",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
   },
   "repository": {
     "type": "git",
-    "url": "git+git://github.com/pshrmn/curi/tree/master/packages/curi-react-redirect"
+    "url": "git+git://github.com/pshrmn/curi/tree/master/packages/curi-react-link"
   },
   "keywords": [
     "curi",
+    "link",
+    "navigation",
     "react",
-    "redirect",
-    "navigation"
+    "anchor"
   ],
   "author": "Paul Sherman",
   "license": "MIT",
@@ -30,8 +31,9 @@
     "react": "^15"
   },
   "dependencies": {
-    "prop-types": "^15.5.8",
-    "curi": "^0.6.0"
+    "curi": "^0.6.0",
+    "invariant": "^2.2.2",
+    "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
