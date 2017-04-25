@@ -4,6 +4,21 @@
 
 [documentation](./docs)
 
+## Installation
+
+```
+npm install --save curi
+```
+
+### UMD
+
+```html
+<script src="https://unpkg.com/curi@0.6.0/umd/curi.js"></script>
+<!-- there is also a min script: curi.min.js -->
+```
+
+**Note:** If you are using a UMD script, you will have to include the `history` script yourself.
+
 ### Overview
 
 #### Routes

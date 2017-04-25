@@ -16,8 +16,8 @@
     "build": "npm run build:lib && npm run build:umd && npm run build:min && npm run build:es",
     "build:es": "cross-env BABEL_ENV=es babel ./src -d es --ignore __tests__",
     "build:lib": "cross-env BABEL_ENV=cjs babel ./src -d lib --ignore __tests__",
-    "build:umd": "webpack --define process.env.NODE_ENV=\"'production'\" --output-filename=umd/curi.js",
-    "build:min": "webpack -p --optimize-minimize --output-filename=umd/curi.min.js",
+    "build:umd": "cross-env BABEL_ENV=es rollup -c",
+    "build:min": "cross-env BABEL_ENV=es NODE_ENV=production rollup -c -o umd/curi.min.js",
     "prepublish": "npm run build",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
   },
@@ -39,7 +39,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
-    "babel-loader": "^6.4.1",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
@@ -49,7 +49,11 @@
     "jest": "^19.0.2",
     "prettier": "^1.1.0",
     "rimraf": "^2.6.1",
-    "webpack": "^2.3.2"
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^1.0.2"
   },
   "dependencies": {
     "path-to-regexp": "^1.7.0"
