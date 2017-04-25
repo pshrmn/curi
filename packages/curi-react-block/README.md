@@ -6,6 +6,15 @@
 npm install --save curi-react-block
 ```
 
+### UMD
+
+```html
+<script src="https://unpkg.com/curi-react-block@0.1.0/umd/curi-react-block.js"></script>
+<!-- there is also a min script: curi-react-block.min.js -->
+```
+
+**Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
+
 ## `<Block>`
 
 Render a `<Block>` component when you want to have a user confirm navigation.

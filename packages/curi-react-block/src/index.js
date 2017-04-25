@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class Block extends Component {
+class Block extends React.Component {
 
   static propTypes = {
     when: PropTypes.bool,
