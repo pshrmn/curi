@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class Navigator extends Component {
+class Navigator extends React.Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
     children: PropTypes.func.isRequired,

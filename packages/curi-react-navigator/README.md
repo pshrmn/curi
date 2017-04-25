@@ -6,6 +6,15 @@
 npm install --save curi-react-navigator
 ```
 
+### UMD
+
+```html
+<script src="https://unpkg.com/curi-react-navigator@0.1.0/umd/curi-react-navigator.js"></script>
+<!-- there is also a min script: curi-react-navigator.min.js -->
+```
+
+**Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
+
 ## `<Navigator>`
 
 The `<Navigator>` component provides a way to automatically update your application when the location changes. This component gets passed a `curi` config object, which it will subscribe to so that it can re-render when the location changes.
