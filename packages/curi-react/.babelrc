@@ -1,8 +1,6 @@
 {
   "presets": [ "./buildPresets/es2015", "react" ],
   "plugins": [
-    "transform-export-extensions",
-    "transform-class-properties",
-    "transform-object-rest-spread"
+    "transform-export-extensions"
   ]
 }
