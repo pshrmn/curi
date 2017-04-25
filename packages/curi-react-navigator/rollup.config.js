@@ -5,7 +5,7 @@ import uglify from 'rollup-plugin-uglify';
 
 const config = {
   entry: 'src/index.js',
-  format: 'cjs',
+  format: 'umd',
   dest: 'umd/curi-react-navigator.js',
   moduleName: 'CuriReactNavigator',
   external: [
