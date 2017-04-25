@@ -1,12 +1,19 @@
 # curi-middleware-query
 
-### Install
+## Install
 
 ```
 npm install --save curi-middleware-query
 ```
 
-### Usage
+### UMD
+
+```html
+<script src="https://unpkg.com/curi-middleware-query@0.1.0/umd/curi-middleware-query.js"></script>
+<!-- there is also a min script: curi-middleware-query.min.js -->
+```
+
+## Usage
 
 `curi-middleware-query` does not export a middleware function. Instead, it provides you with a factory function that you can use to generate a middleware function.
 
