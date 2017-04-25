@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A component prevents navigation",
   "main": "lib/index.js",
-  "modules": "es",
+  "module": "es/index.js",
   "scripts": {
     "test": "jest",
     "prebuild": "rimraf lib umd es",

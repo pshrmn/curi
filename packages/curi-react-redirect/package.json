@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A React component that triggers navigation",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
     "test": "jest",
     "prebuild": "rimraf lib umd es",

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A component that re-renders on navigation",
   "main": "lib/index.js",
-  "modules": "es",
+  "module": "es/index.js",
   "scripts": {
     "test": "jest",
     "prebuild": "rimraf lib umd es",
@@ -36,7 +36,6 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
