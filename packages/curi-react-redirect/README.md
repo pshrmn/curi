@@ -6,6 +6,15 @@
 npm install --save curi-react-redirect
 ```
 
+### UMD
+
+```html
+<script src="https://unpkg.com/curi-react-redirect@0.1.0/umd/curi-react-redirect.js"></script>
+<!-- there is also a min script: curi-react-redirect.min.js -->
+```
+
+**Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
+
 ## `<Redirect>`
 
 The `<Redirect>` component lets you "render" a redirect. After the `<Redirect>` component has mounted, it will call the appropriate `history` method to navigate to a new URI.

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class Redirect extends Component {
+class Redirect extends React.Component {
   static propTypes = {
     to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     name: PropTypes.string,
