@@ -11,8 +11,8 @@ npm install --save curi-react
 ### UMD
 
 ```html
-<script src="https://unpkg.com/curi-react-block@0.1.0/umd/curi-react-block.js"></script>
-<!-- there is also a min script: curi-react-block.min.js -->
+<script src="https://unpkg.com/curi-react@0.5.0/umd/curi-react.js"></script>
+<!-- there is also a min script: curi-react.min.js -->
 ```
 
 **Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.

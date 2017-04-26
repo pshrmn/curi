@@ -1,7 +1,6 @@
 {
   "presets": [ "./buildPresets/es2015", "react" ],
   "plugins": [
-    "transform-export-extensions",
-    "external-helpers"
+    "transform-export-extensions"
   ]
 }
