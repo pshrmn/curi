@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createHashHistory } from 'history';
 import createConfig from 'curi'
-import Navigator from 'curi-react/lib/Navigator';
+import { Navigator } from 'curi-react';
 import createQueryMiddleware from 'curi-middleware-query';
 import { parse } from 'qs';
 

@@ -1,4 +1,4 @@
-import Link from 'curi-react/lib/Link';
+import { Link } from 'curi-react';
 import NProgress from 'nprogress';
 
 // when the user clicks on one of the prefetch links, start the progress bar

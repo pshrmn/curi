@@ -1,5 +1,5 @@
 import React from 'react';
-import Redirect from 'curi-react/lib/Redirect';
+import { Redirect } from 'curi-react';
 
 import Nav from './components/Nav';
 import NotFound from './components/NotFound';

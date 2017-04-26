@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createHashHistory } from 'history';
-import createConfig from 'curi/lib/createConfig';
-import Navigator from 'curi-react/lib/Navigator';
+import createConfig from 'curi';
+import { Navigator } from 'curi-react';
 
 import routes from './routes';
 import renderFunction from './renderFunction';

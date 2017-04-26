@@ -2,7 +2,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createMemoryHistory } from 'history';
 import createConfig from 'curi';
-import Navigator from 'curi-react/lib/Navigator';
+import { Navigator } from 'curi-react';
 import routes from './src/routes';
 import renderFunction from './src/renderFunction';
 

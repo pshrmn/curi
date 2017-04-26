@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Link from 'curi-react/lib/Link';
+import { Link } from 'curi-react';
 
 const ProductThumbnail = (props) => (
   <div className='thumbnail'>

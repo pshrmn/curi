@@ -1,4 +1,4 @@
-import Link from 'curi-react/lib/Link';
+import { Link } from 'curi-react';
 
 import dataStore from '../dataStore';
 

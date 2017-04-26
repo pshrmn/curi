@@ -1,4 +1,4 @@
-import Link from 'curi-react/lib/Link';
+import { Link } from 'curi-react';
 
 import fakeAuth from '../fakeAuth'
 

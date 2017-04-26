@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createHashHistory } from 'history';
 import createConfig from 'curi'
-import Navigator from 'curi-react/lib/Navigator';
+import { Navigator } from 'curi-react';
 
 import store from './reduxStuff';
 import routes from './routes';

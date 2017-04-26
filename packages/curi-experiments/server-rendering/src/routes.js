@@ -1,6 +1,4 @@
-import ComponentStore from 'curi-react/lib/ComponentStore';
-
-const store = ComponentStore();
+const store = {};
 
 export default [
   {
@@ -9,10 +7,10 @@ export default [
     preload: () => {
       return import('./components/Home.js')
         .then(module => {
-          store.register('Home', module.default)
+          store['Home'] = module.default;
         });
     },
-    call: () => store.get('Home')
+    call: () => store['Home']
   },
   {
     name: 'Contact',
@@ -20,10 +18,10 @@ export default [
     preload: () => {
       return import('./components/Contact.js')
         .then(module => {
-          store.register('Contact', module.default)
+          store['Contact'] = module.default;
         });
     },
-    call: () => store.get('Contact'),
+    call: () => store['Contact'],
     children: [
       {
         name: 'Contact Method',
@@ -31,10 +29,10 @@ export default [
         preload: () => {
           return import('./components/Method.js')
             .then(module => {
-              store.register('Contact Method', module.default)
+              store['Contact Method'] = module.default;
             });
         },
-        call: () => store.get('Contact Method')
+        call: () => store['Contact Method']
       }
     ]
   }
