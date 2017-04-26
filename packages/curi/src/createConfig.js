@@ -111,7 +111,7 @@ function createConfig(history, routes, options = {}) {
 
   const emit = response => {
     // don't emit old responses
-    if (response.location.key !== currentResponse) {
+    if (response.key !== currentResponse) {
       return;
     }
     subscribers.forEach(fn => {
