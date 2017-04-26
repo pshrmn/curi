@@ -94,7 +94,9 @@ describe('createConfig', () => {
           };
 
           const uris = [{ name: 'Home', path: '' }];
-          const config = createConfig(history, uris, { addons: [createFirstAddon] });
+          const config = createConfig(history, uris, {
+            addons: [createFirstAddon]
+          });
           expect(config.addons.pathname).toBeDefined();
         });
 
@@ -140,7 +142,9 @@ describe('createConfig', () => {
             }
           ];
 
-          const config = createConfig(history, routes, { addons: [createFirstAddon, createSecondAddon] });
+          const config = createConfig(history, routes, {
+            addons: [createFirstAddon, createSecondAddon]
+          });
           const expected = {
             Grandparent: {
               first: 'grandparent',
@@ -168,7 +172,7 @@ describe('createConfig', () => {
       });
 
       describe('middleware', () => {
-        it('calls middleware functions to modify response object', (done) => {
+        it('calls middleware functions to modify response object', done => {
           const routes = [{ name: 'All', path: ':all+' }];
           const fahrenheitMiddleware = resp => {
             resp.status = 451;
@@ -184,7 +188,7 @@ describe('createConfig', () => {
           });
         });
 
-        it('calls middleware in the order that they are defined', (done) => {
+        it('calls middleware in the order that they are defined', done => {
           const routes = [{ name: 'All', path: ':all+' }];
           const fahrenheitMiddleware = resp => {
             resp.status = 451;
@@ -193,7 +197,7 @@ describe('createConfig', () => {
           const doubleStatus = resp => {
             resp.status *= 2;
             return resp;
-          }
+          };
           const config = createConfig(history, routes, {
             middleware: [fahrenheitMiddleware, doubleStatus]
           });
@@ -206,7 +210,7 @@ describe('createConfig', () => {
       });
 
       describe('cache', () => {
-        it('uses cached response for same key on subsequent calls if cache is provided', (done) => {
+        it('uses cached response for same key on subsequent calls if cache is provided', done => {
           const loadSpy = jest.fn();
           const routes = [{ name: 'All', path: '*', load: loadSpy }];
           const createSimpleCache = () => {
@@ -222,9 +226,11 @@ describe('createConfig', () => {
                 cache[key] = response;
               }
             };
-          }
+          };
 
-          const config = createConfig(history, routes, { cache: createSimpleCache() });
+          const config = createConfig(history, routes, {
+            cache: createSimpleCache()
+          });
 
           let calls = 0;
           const steps = [
@@ -247,11 +253,11 @@ describe('createConfig', () => {
           }
 
           config.ready().then(response => {
-            config.subscribe(subscriber)
+            config.subscribe(subscriber);
           });
         });
 
-        it('uses generates new response for same key on subsequent calls if cache=false', (done) => {
+        it('uses generates new response for same key on subsequent calls if cache=false', done => {
           const loadSpy = jest.fn();
           const routes = [{ name: 'All', path: '*', load: loadSpy }];
           const config = createConfig(history, routes, { cache: false });
@@ -277,12 +283,11 @@ describe('createConfig', () => {
           }
 
           config.ready().then(response => {
-            config.subscribe(subscriber)
+            config.subscribe(subscriber);
           });
         });
       });
     });
-
   });
 
   describe('refresh', () => {

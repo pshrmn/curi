@@ -10,7 +10,7 @@ describe('Response', () => {
       const location = { pathname: '/you-are-here' };
       const resp = new Response(key, location);
       expect(resp.key).toEqual(key);
-    })
+    });
 
     it('sets the location', () => {
       const key = 'greetings';
@@ -133,7 +133,7 @@ describe('Response', () => {
       const corporateTakeover = '/park/yosemite-land-brought-to-you-by-disney';
       resp.redirect(corporateTakeover);
       const respObj = resp.asObject();
-      
+
       expect(respObj.key).toBe(key);
       expect(respObj.location).toBe(location);
       expect(respObj.status).toBe(301);

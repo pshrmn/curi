@@ -20,7 +20,9 @@ function createPrefetchAddon() {
     },
     get: (name, ...rest) => {
       if (loaders[name] == null) {
-        return Promise.reject(`Could not preload data for ${name} because it is not registered.`);
+        return Promise.reject(
+          `Could not preload data for ${name} because it is not registered.`
+        );
       }
       return loaders[name].apply(null, rest);
     }

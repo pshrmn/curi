@@ -26,7 +26,7 @@ describe('prefetch addon', () => {
       expect(prefetch.get('Player')).toBeDefined();
     });
 
-    it('does not register if there is no load function', (done) => {
+    it('does not register if there is no load function', done => {
       const noLoadURI = { name: 'No load', path: 'player' };
       const preloadURI = {
         name: 'Preload',
@@ -38,9 +38,13 @@ describe('prefetch addon', () => {
       // This is a bit roundabout, but we verify that the paths did not register
       // by resolving from catch
       Promise.all([
-        prefetch.get('No load').catch(() => { return Promise.resolve('No load failed'); }),
-        prefetch.get('Preload').catch(() => { return Promise.resolve('Preload failed'); })
-      ]).then((results) => {
+        prefetch.get('No load').catch(() => {
+          return Promise.resolve('No load failed');
+        }),
+        prefetch.get('Preload').catch(() => {
+          return Promise.resolve('Preload failed');
+        })
+      ]).then(results => {
         expect(results[0]).toBe('No load failed');
         expect(results[1]).toBe('Preload failed');
         done();
@@ -96,13 +100,13 @@ describe('prefetch addon', () => {
       prefetch.get('Player', 1, 2);
     });
 
-    it('returns rejected Promise when path not found', (done) => {
+    it('returns rejected Promise when path not found', done => {
       const output = prefetch.get('Anonymous', { id: 123 });
       expect(output).toBeInstanceOf(Promise);
       output.catch(err => {
         expect(true).toBe(true);
         done();
-      })
+      });
     });
   });
 });

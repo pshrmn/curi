@@ -30,11 +30,7 @@ class Link extends React.Component {
       event.preventDefault();
       const { curi } = this.context;
       const { pathname } = this.state;
-      const {
-        name,
-        params,
-        to = {}
-      } = this.props;
+      const { name, params, to = {} } = this.props;
       const location = { pathname, ...to };
       curi.history.push(location);
     }

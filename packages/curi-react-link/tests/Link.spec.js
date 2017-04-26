@@ -26,9 +26,8 @@ describe('<Link>', () => {
     expect(a.exists()).toBe(true);
   });
 
-
   describe('name', () => {
-    it('sets the href attribute using the named route\'s path', () => {
+    it("sets the href attribute using the named route's path", () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link name="Test">Test</Link>, {
@@ -84,9 +83,7 @@ describe('<Link>', () => {
   describe('to', () => {
     it('merges the to prop with the generated pathname when navigating', () => {
       const history = createMemoryHistory();
-      const config = createConfig(history, [
-        { name: 'Test', path: 'test' }
-      ]);
+      const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
         <Link name="Test" to={{ search: '?one=two', hash: '#hashtag' }}>
           Test
@@ -99,9 +96,7 @@ describe('<Link>', () => {
 
     it('overwrites the generated pathname if to includes one', () => {
       const history = createMemoryHistory();
-      const config = createConfig(history, [
-        { name: 'Test', path: 'test' }
-      ]);
+      const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
         <Link name="Test" to={{ pathname: '/not-a-test' }}>Test</Link>,
         { context: { curi: config } }
@@ -141,9 +136,12 @@ describe('<Link>', () => {
         history.push = jest.fn();
         const onClick = jest.fn();
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
-        const wrapper = shallow(<Link name="Test" onClick={onClick}>Test</Link>, {
-          context: { curi: config }
-        });
+        const wrapper = shallow(
+          <Link name="Test" onClick={onClick}>Test</Link>,
+          {
+            context: { curi: config }
+          }
+        );
         const leftClickEvent = {
           defaultPrevented: false,
           preventDefault() {
@@ -167,9 +165,12 @@ describe('<Link>', () => {
           event.preventDefault();
         });
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
-        const wrapper = shallow(<Link name="Test" onClick={onClick}>Test</Link>, {
-          context: { curi: config }
-        });
+        const wrapper = shallow(
+          <Link name="Test" onClick={onClick}>Test</Link>,
+          {
+            context: { curi: config }
+          }
+        );
         const leftClickEvent = {
           defaultPrevented: false,
           preventDefault() {

@@ -3,11 +3,7 @@ import pathnameAddon from './addons/pathname';
 import Response from './response';
 
 function createConfig(history, routes, options = {}) {
-  const {
-    addons = [],
-    middleware = [],
-    cache = false
-  } = options;
+  const { addons = [], middleware = [], cache = false } = options;
 
   const finalAddons = addons.concat(pathnameAddon);
 
@@ -33,7 +29,7 @@ function createConfig(history, routes, options = {}) {
     uris = walkRoutes(routes, registerFunctions, {});
   };
 
-  const respond = (key) => {
+  const respond = key => {
     const resp = new Response(key, history.location);
     uris.some(uri => uri.match(history.location.pathname, resp));
     return resp;
@@ -60,7 +56,7 @@ function createConfig(history, routes, options = {}) {
     );
   };
 
-  const setCurrentResponse = (location) => {
+  const setCurrentResponse = location => {
     let { key } = location;
     // hash history quick fix
     if (key == null) {
@@ -68,13 +64,13 @@ function createConfig(history, routes, options = {}) {
     }
     currentResponse = key;
     return key;
-  }
+  };
 
   const prepareResponse = () => {
     const responseKey = setCurrentResponse(history.location);
 
     if (cache) {
-      const resp = cache.get(history.location)
+      const resp = cache.get(history.location);
       if (resp != null) {
         return Promise.resolve(resp);
       }

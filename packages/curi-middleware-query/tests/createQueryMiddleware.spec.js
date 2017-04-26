@@ -9,7 +9,7 @@ describe('createQueryMiddleware', () => {
 
   it('returned function adds a query property to response', () => {
     const middleware = createQueryMiddleware(qs.parse);
-    const fakeResponse = { location: { search: '?one=two&three=four' }};
+    const fakeResponse = { location: { search: '?one=two&three=four' } };
 
     const queryResponse = middleware(fakeResponse);
     expect(queryResponse.query).toEqual({ one: 'two', three: 'four' });
@@ -17,7 +17,7 @@ describe('createQueryMiddleware', () => {
 
   it('returned function removes leading question mark', () => {
     const middleware = createQueryMiddleware(qs.parse);
-    const fakeResponse = { location: { search: '?one=two&three=four' }};
+    const fakeResponse = { location: { search: '?one=two&three=four' } };
 
     const queryResponse = middleware(fakeResponse);
     // this would exist if the question mark wasn't stripped
