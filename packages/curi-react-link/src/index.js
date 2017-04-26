@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import invariant from 'invariant';
 
 const canNavigate = event => {
   return (
@@ -10,7 +9,7 @@ const canNavigate = event => {
   );
 };
 
-class Link extends Component {
+class Link extends React.Component {
   static propTypes = {
     name: PropTypes.string,
     params: PropTypes.object,
