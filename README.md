@@ -106,7 +106,7 @@ The `query` middleware exports a middleware factory. The factory takes a parse f
 
 Curi isn't limited to use with React, but it works well with React. These are some "official" Curi packages that help with creating a Curi/React application.
 
-#### curi-react
+#### `curi-react`
 
 [package](/packages/curi-react) + [source](/packages/curi-react/src) + [documentation](/packages/curi-react/docs)
 
@@ -135,7 +135,7 @@ config.ready().then(() => {
 });
 ```
 
-#### curi-react-navigator
+#### `curi-react-navigator`
 
 [package](/packages/curi-react-navigator) + [source](/packages/curi-react-navigator/src)
 
@@ -149,7 +149,7 @@ A component that receives a Curi configuration object as a prop and subscribes t
 </Navigator>
 ```
 
-#### curi-react-link
+#### `curi-react-link`
 
 [package](/packages/curi-react-link) + [source](/packages/curi-react-link/src)
 
@@ -159,13 +159,13 @@ A component that uses route names to create HTML anchors for navigation within a
 <Link name='Home'>Home</Link>
 ```
 
-#### curi-react-block
+#### `curi-react-block`
 
 [package](/packages/curi-react-block) + [source](/packages/curi-react-block/src)
 
 A component that will give the user the opportunity to cancel navigation when some conditions are met.
 
-#### curi-react-redirect
+#### `curi-react-redirect`
 
 [package](/packages/curi-react-redirect) + [source](/packages/curi-react-redirect/src)
 
