@@ -1,9 +1,16 @@
 {
   "name": "curi-react-redirect",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A React component that triggers navigation",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "files": [
+    "lib",
+    "umd",
+    "es",
+    "LICENSE",
+    "*.md"
+  ],
   "scripts": {
     "test": "jest",
     "prebuild": "rimraf lib umd es",
