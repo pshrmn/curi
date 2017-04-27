@@ -38,10 +38,10 @@
     "react": "^15"
   },
   "dependencies": {
-    "curi-react-navigator": "^0.1.0",
-    "curi-react-redirect": "^0.1.0",
-    "curi-react-block": "^0.1.0",
-    "curi-react-link": "^0.1.0"
+    "curi-react-navigator": "^0.1.1",
+    "curi-react-redirect": "^0.1.1",
+    "curi-react-block": "^0.1.1",
+    "curi-react-link": "^0.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
