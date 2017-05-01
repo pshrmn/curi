@@ -13,6 +13,10 @@ class Response {
     this.redirectTo = to;
   }
 
+  fail(err) {
+    this.error = err;
+  }
+
   setStatus(code) {
     this.status = code;
   }
@@ -48,7 +52,8 @@ class Response {
       body: this.body,
       name: this.uri ? this.uri.name : undefined,
       partials: this.partials,
-      params: this.params
+      params: this.params,
+      error: this.error
     };
   }
 }

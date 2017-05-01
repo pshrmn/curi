@@ -57,6 +57,14 @@ describe('Response', () => {
     });
   });
 
+  describe('fail', () => {
+    it('sets the response\'s error property', () => {
+      const resp = new Response();
+      resp.fail('This was a disaster');
+      expect(resp.error).toBe('This was a disaster');
+    });
+  });
+
   describe('add', () => {
     it('sets the name, uri, and params', () => {
       const resp = new Response();

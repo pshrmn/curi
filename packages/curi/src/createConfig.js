@@ -41,19 +41,19 @@ function createConfig(history, routes, options = {}) {
       return Promise.resolve(resp);
     }
     const { preload, load } = resp.uri;
+
     return Promise.all([
       preload ? preload() : null,
       load ? load(resp) : null
-    ]).then(
-      () => {
+    ])
+      .catch(err => {
+        // when either fails, set the error message
+        resp.fail(err);
+      })
+      .then(() => {
         resp.call();
         return resp;
-      },
-      err => {
-        // not sure what to do here yet
-        return Promise.reject(err);
-      }
-    );
+      })
   };
 
   const setCurrentResponse = location => {
