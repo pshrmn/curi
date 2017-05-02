@@ -7,7 +7,7 @@ This directory contains general curi docs. For packages specific documentation, 
   * [`curi-middleware-query`](/packages/curi-middleware-query#usage)
 * React
   * [`curi-react`](/packages/curi-react/docs)
-  * [`<Navigator>`](packages/curi-react-navigator#navigator)
-  * [`<Link>`](packages/curi-react-link#link)
-  * [`<Redirect>`](packages/curi-react-redirect#redirect)
-  * [`<Block>`](packages/curi-react-block#block)
+  * [`<Navigator>`](/packages/curi-react-navigator#navigator)
+  * [`<Link>`](/packages/curi-react-link#link)
+  * [`<Redirect>`](/packages/curi-react-redirect#redirect)
+  * [`<Block>`](/packages/curi-react-block#block)
