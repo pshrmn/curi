@@ -29,6 +29,9 @@
   ],
   "author": "Paul Sherman",
   "license": "MIT",
+  "peerDependencies": {
+    "curi": "^0.6.1"
+  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
