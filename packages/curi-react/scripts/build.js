@@ -8,13 +8,20 @@ if (inInstall()) {
   process.exit(0);
 }
 
+const buildStats = {}
+
 const build = (name, command, extraEnv) => { 
+  const buildStartTime = new Date();
   console.log('\nBuilding', name);
   execSync(command, {
     stdio: 'inherit',
     env: Object.assign({}, process.env, extraEnv)
   });
+  const buildEndTime = new Date();
+  buildStats[name] = buildEndTime - buildStartTime;
 }
+
+const startTime = new Date();
 
 build(
   'ES modules',
@@ -49,13 +56,24 @@ build(
   }
 );
 
+const endTime = new Date();
+const buildTime = endTime - startTime;
+
 const size = fs.statSync('./umd/curi-react.js').size;
 const minSize = gzipSize.sync(
   fs.readFileSync('./umd/curi-react.min.js')
 );
 
+console.log('Build time\n----------');
+Object.keys(buildStats).forEach(key => {
+  console.log('%s: %d seconds', key, buildStats[key]/1000);
+});
+console.log('Total: %d seconds', buildTime/1000);
+
+console.log('\nFile Size\n---------');
 console.log(
-  '\nfull umd: %s\ngzipped umd min: %s',
+  'full umd: %s\n' + 
+  'gzipped umd min: %s',
   prettyBytes(size),
   prettyBytes(minSize)
 );
