@@ -8,6 +8,12 @@ const Modal = (props) => (
   </div>
 );
 
+/*
+ * The <Cacher> is responsible for storing its props.children
+ * value as this.previousChildren when thee location changes.
+ * This allows you to continue rendering the previous children
+ * element(s).
+ */
 class Cacher extends React.Component {
 
   static propTypes = {

@@ -34,6 +34,15 @@ const Nav = () => (
               By Mail
             </Link>
           </li>
+          <li>
+            <Link
+              name='Method'
+              params={{ method: 'something else' }}
+              to={{ state: { modal: true } }}
+            >
+              By Something Else
+            </Link>
+          </li>
         </ol>
       </li>
     </ul>
