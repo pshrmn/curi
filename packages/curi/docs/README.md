@@ -11,3 +11,4 @@
 
 * Guides
   * [Create your own addon](./guides/create-your-own-addon.md)
+  * [Create your own middleware](./guides/create-your-own-middleware.md)
