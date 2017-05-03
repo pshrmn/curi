@@ -5,6 +5,7 @@
 * [history](#history)
 * [load](#load)
 * [location](#location)
+* [middleware](#middleware)
 * [preload](#preload)
 * [response](#response)
 * [route](#route)
@@ -70,6 +71,10 @@ A location is an object that represents a URI. It has three guaranteed propertie
   }
 }
 ```
+
+#### middleware
+
+A middleware is a function that receives a response object as its argument and returns a response object. Middleware functions can be used to modify the object and to perform other tasks using the generated object such as logging.
 
 #### preload
 
