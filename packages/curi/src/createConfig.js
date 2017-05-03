@@ -11,8 +11,8 @@ function createConfig(history, routes, options = {}) {
   const globals = {};
   const subscribers = [];
 
-  let currentResponse;
-  let lastUpdate;
+  let mostRecentKey;
+  let previousResponse;
 
   const setup = routes => {
     const registerFunctions = [];
@@ -56,18 +56,17 @@ function createConfig(history, routes, options = {}) {
       })
   };
 
-  const setCurrentResponse = location => {
+  const setMostRecentKey = location => {
     let { key } = location;
-    // hash history quick fix
     if (key == null) {
       key = Math.random().toString(36).slice(2, 8);
     }
-    currentResponse = key;
+    mostRecentKey = key;
     return key;
   };
 
   const prepareResponse = () => {
-    const responseKey = setCurrentResponse(history.location);
+    const responseKey = setMostRecentKey(history.location);
 
     if (cache) {
       const resp = cache.get(history.location);
@@ -81,11 +80,11 @@ function createConfig(history, routes, options = {}) {
       const respObject = middleware.length
         ? middleware.reduce((obj, curr) => curr(obj), resp.asObject())
         : resp.asObject();
-      // save this for quick ref
+
       if (cache) {
         cache.set(resp);
       }
-      lastUpdate = respObject;
+      previousResponse = respObject;
       return respObject;
     });
   };
@@ -95,8 +94,8 @@ function createConfig(history, routes, options = {}) {
       throw new Error('The argument passed to subscribe must be a function');
     }
 
-    if (lastUpdate) {
-      fn(lastUpdate);
+    if (previousResponse) {
+      fn(previousResponse);
     }
 
     const newLength = subscribers.push(fn);
@@ -107,7 +106,7 @@ function createConfig(history, routes, options = {}) {
 
   const emit = response => {
     // don't emit old responses
-    if (response.key !== currentResponse) {
+    if (response.key !== mostRecentKey) {
       return;
     }
     subscribers.forEach(fn => {
@@ -118,7 +117,7 @@ function createConfig(history, routes, options = {}) {
   };
 
   const ready = () =>
-    (lastUpdate ? Promise.resolve(lastUpdate) : prepareResponse());
+    (previousResponse ? Promise.resolve(previousResponse) : prepareResponse());
 
   // now that everything is defined, actually do the setup
   setup(routes);
