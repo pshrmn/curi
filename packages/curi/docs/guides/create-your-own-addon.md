@@ -46,3 +46,27 @@ Then, you will use the addon's `name` to get information about a route using the
 config.addons.MyFirstAddon('Home'); // true
 config.addons.MyFirstAddon('Elsewhere'); // false
 ```
+
+## Slightly more advanced
+
+You might want to write an addon that uses data from parent routes when register a route. For example, the built-in `pathname` addon joins a route's `path` with it parent path(s).
+
+If you want to provide similar functionality, all you have to do is have the `register` function return the desired data. Then, when any children of that route are registered, they will be passed the return value from their parent as the second argument of the register function.
+
+```js
+function ParentFactory() {
+  const routeTree = {};
+  return {
+    name: 'routeParent',
+    register: (route, parent) => {
+      // parent is the value returned by the route's parent route
+      // and will be undefined when a route does not have a parent
+      routeTree[route.name] = parent;
+      return route.name;
+    },
+    get: (name) => {
+      return routeTree[name];
+    }
+  }
+}
+```
