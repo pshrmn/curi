@@ -10,3 +10,4 @@ Example projects that use `curi` and `curi-react`.
 * [prefetching data](./prefetch-data)
 * [with redux](./redux)
 * [middleware](./middleware)
+* [UMD (vanilla JS with <script> tags)](./umd-example)
