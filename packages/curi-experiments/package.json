@@ -16,8 +16,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "curi": "^0.6.0",
-    "curi-react": "^0.4.0",
+    "curi": "^0.6.2",
+    "curi-react": "^0.5.1",
     "curi-addon-prefetch": "^0.1.0",
     "curi-middleware-query": "^0.1.0"
   }

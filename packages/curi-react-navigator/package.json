@@ -30,7 +30,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi": "^0.6.1",
+    "curi": "^0.6.2",
     "react": "^15"
   },
   "dependencies": {

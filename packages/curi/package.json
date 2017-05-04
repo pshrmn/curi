@@ -1,6 +1,6 @@
 {
   "name": "curi",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "curi is a configuration based routing solution",
   "main": "lib/index.js",
   "files": [
