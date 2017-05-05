@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "curi": "^0.6.2",
-    "curi-react": "^0.5.1",
+    "curi-react": "^0.5.3",
     "curi-addon-prefetch": "^0.1.0",
     "history": "^4.6.1",
     "nprogress": "^0.2.0",

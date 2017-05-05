@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "curi": "^0.6.2",
-    "curi-react": "^0.5.1",
+    "curi-react": "^0.5.3",
     "history": "^4.6.1",
     "qs": "^6.4.0",
     "react": "^15.5.4",

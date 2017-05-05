@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'curi-react';
 
 const Detail = ({ params }) => (
   <div>
     <div style={{
-      width: 200,
-      height: 200,
+      width: '80%',
+      height: '25%',
+      minHeight: 200,
       background: params.color || '#666'
     }}></div>
     <p>

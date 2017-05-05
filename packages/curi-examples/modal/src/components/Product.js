@@ -14,9 +14,9 @@ const Product = ({ params, location }) => (
     Paint color: {location.state.name || 'Unknown'}
     <Preview color={params.color} />
     <Link
-      name='Product Detail'
+      to='Product Detail'
       params={params}
-      to={{ state: { modal: true, name: 'Dark Slate Blue' } }}
+      details={{ state: { modal: true, name: 'Dark Slate Blue' } }}
     >
       Detail View
     </Link>

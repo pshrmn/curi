@@ -4,7 +4,7 @@ import { Link } from 'curi-react';
 const Nav = () => (
   <nav>
     <ul>
-      <li><Link name='Home'>Home</Link></li>
+      <li><Link to='Home'>Home</Link></li>
     </ul>
   </nav>
 );

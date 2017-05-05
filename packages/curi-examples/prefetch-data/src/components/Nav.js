@@ -10,10 +10,10 @@ const onClick = () => {
 const Nav = () => (
   <nav>
     <ul>
-      <li><Link name='Home'>Home</Link></li>
+      <li><Link to='Home'>Home</Link></li>
       <li>
         <Link
-          name='Album'
+          to='Album'
           params={{ id: 1 }}
           onClick={onClick}
         >
@@ -22,7 +22,7 @@ const Nav = () => (
       </li>
       <li>
         <Link
-          name='Album'
+          to='Album'
           params={{ id: 2 }}
           onClick={onClick}
         >
@@ -31,7 +31,7 @@ const Nav = () => (
       </li>
       <li>
         <Link
-          name='Album'
+          to='Album'
           params={{ id: 3 }}
           onClick={onClick}
         >
@@ -40,7 +40,7 @@ const Nav = () => (
       </li>
       <li>
         <Link
-          name='Album'
+          to='Album'
           params={{ id: 4 }}
           onClick={onClick}
         >
@@ -49,7 +49,7 @@ const Nav = () => (
       </li>
       <li>
         <Link
-          name='Album'
+          to='Album'
           params={{ id: 5 }}
           onClick={onClick}
         >

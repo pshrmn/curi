@@ -4,10 +4,10 @@ const Nav = () => (
   React.createElement('nav', null,
     React.createElement('ul', null,
       React.createElement('li', null,
-        React.createElement(CuriReactLink, { name: 'Home' }, 'Home')
+        React.createElement(CuriReactLink, { to: 'Home' }, 'Home')
       ),
       React.createElement('li', null,
-        React.createElement(CuriReactLink, { name: 'About' }, 'About')
+        React.createElement(CuriReactLink, { to: 'About' }, 'About')
       )
     )
   )

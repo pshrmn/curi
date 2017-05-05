@@ -4,33 +4,33 @@ import { Link } from 'curi-react';
 const Nav = () => (
   <nav>
     <ul>
-      <li><Link name='Home'>Home</Link></li>
+      <li><Link to='Home'>Home</Link></li>
       <li>
         Paints
         <ol>
           <li>
             <Link
-              name='Product'
+              to='Product'
               params={{ color: 'DarkSlateBlue' }}
-              to={{ state: { name: 'Dark Slate Blue' } }}
+              details={{ state: { name: 'Dark Slate Blue' } }}
             >
               Dark Slate Blue
             </Link>
           </li>
           <li>
             <Link
-              name='Product'
+              to='Product'
               params={{ color: 'SeaGreen' }}
-              to={{ state: { name: 'Sea Green' } }}
+              details={{ state: { name: 'Sea Green' } }}
             >
               Sea Green
             </Link>
           </li>
           <li>
             <Link
-              name='Product'
+              to='Product'
               params={{ color: 'Indigo' }}
-              to={{ state: { name: 'Indigo' } }}
+              details={{ state: { name: 'Indigo' } }}
             >
               Indigo
             </Link>

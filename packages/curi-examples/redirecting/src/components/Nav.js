@@ -6,12 +6,12 @@ import fakeAuth from '../fakeAuth'
 const Nav = () => (
   <nav>
     <ul>
-      <li><Link name='Home'>Home</Link></li>
-      <li><Link name='Protected'>Protected</Link></li>
+      <li><Link to='Home'>Home</Link></li>
+      <li><Link to='Protected'>Protected</Link></li>
       <li>
         {fakeAuth.authenticated()
-          ? <Link name='Logout'>Logout</Link>
-          : <Link name='Login'>Login</Link>
+          ? <Link to='Logout'>Logout</Link>
+          : <Link to='Login'>Login</Link>
         }
       </li>
     </ul>

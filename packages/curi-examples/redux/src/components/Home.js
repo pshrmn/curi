@@ -4,7 +4,7 @@ import { Link } from 'curi-react';
 
 const ProductThumbnail = (props) => (
   <div className='thumbnail'>
-    <Link name='Product' params={{ id: props.id }}>
+    <Link to='Product' params={{ id: props.id }}>
       { props.name }
     </Link>
   </div>
