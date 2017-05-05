@@ -1,4 +1,4 @@
-# Curi
+# Curi - A Config Router
 
 [![Travis][build-badge]][build]
 
@@ -7,7 +7,9 @@
 
 A set of configuration-based URI routing packages.
 
-You can test it out by forking this [codepen](https://codepen.io/pshrmn/pen/mmebOK).
+You can test it out with these small demos:
+* [CodeSandbox](https://codesandbox.io/embed/gLX5W2gvj)
+* [CodePen](https://codepen.io/pshrmn/pen/mmebOK)
 
 For a reference on some of the terms used with Curi, please see the [glossary](./docs/GLOSSARY.md)
 
