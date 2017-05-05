@@ -15,6 +15,9 @@ npm install --save curi
 ```html
 <script src="https://unpkg.com/curi@0.6.0/umd/curi.js"></script>
 <!-- there is also a min script: curi.min.js -->
+<script type="text/javascript">
+  const createConfig = window.Curi;
+</script>
 ```
 
 **Note:** If you are using a UMD script, you will have to include the `history` script yourself.

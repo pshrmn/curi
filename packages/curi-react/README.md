@@ -13,6 +13,9 @@ npm install --save curi-react
 ```html
 <script src="https://unpkg.com/curi-react@0.5.0/umd/curi-react.js"></script>
 <!-- there is also a min script: curi-react.min.js -->
+<script type="text/javascript">
+  const { Navigator, Link, Block, Redirect} = window.CuriReact;
+</script>
 ```
 
 **Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.

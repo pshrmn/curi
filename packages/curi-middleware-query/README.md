@@ -11,6 +11,9 @@ npm install --save curi-middleware-query
 ```html
 <script src="https://unpkg.com/curi-middleware-query@0.1.0/umd/curi-middleware-query.js"></script>
 <!-- there is also a min script: curi-middleware-query.min.js -->
+<script type="text/javascript">
+  const queryMiddleware = window.CuriMiddlewareQuery;
+</script>
 ```
 
 ## Usage

@@ -4,13 +4,23 @@ The prefetch addon enables you to run a `uri`'s `load` function prior to actuall
 
 **Note:** If you use this addon, then your `load` functions should be caching the data. This is because the route's `load` function is always called when generating a response, effectively making a duplicate call.
 
-### Installation
+## Installation
 
 ```js
 npm install --save curi-addon-prefetch
 ```
 
-### Usage
+### UMD
+
+```html
+<script src="https://unpkg.com/curi-addon-prefetch@0.1.0/umd/curi-addon-prefetch.js"></script>
+<!-- there is also a min script: curi-addon-prefetch.min.js -->
+<script type="text/javascript">
+  const prefetch = window.CuriAddonPrefetch;
+</script>
+```
+
+## Usage
 
 ```js
 import createConfig from 'curi';

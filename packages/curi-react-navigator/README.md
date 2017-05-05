@@ -11,6 +11,9 @@ npm install --save curi-react-navigator
 ```html
 <script src="https://unpkg.com/curi-react-navigator@0.1.0/umd/curi-react-navigator.js"></script>
 <!-- there is also a min script: curi-react-navigator.min.js -->
+<script type="text/javascript">
+  const Navigator = window.CuriReactNavigator;
+</script>
 ```
 
 **Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
