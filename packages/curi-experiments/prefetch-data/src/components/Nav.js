@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'curi-react';
 import NProgress from 'nprogress';
 
@@ -14,7 +15,6 @@ const Nav = () => (
         <Link
           name='Album'
           params={{ id: 1 }}
-          prefetch
           onClick={onClick}
         >
           Album 1
@@ -24,7 +24,6 @@ const Nav = () => (
         <Link
           name='Album'
           params={{ id: 2 }}
-          prefetch
           onClick={onClick}
         >
           Album 2
@@ -34,7 +33,6 @@ const Nav = () => (
         <Link
           name='Album'
           params={{ id: 3 }}
-          prefetch
           onClick={onClick}
         >
           Album 3
@@ -44,7 +42,6 @@ const Nav = () => (
         <Link
           name='Album'
           params={{ id: 4 }}
-          prefetch
           onClick={onClick}
         >
           Album 4
@@ -54,7 +51,6 @@ const Nav = () => (
         <Link
           name='Album'
           params={{ id: 5 }}
-          prefetch
           onClick={onClick}
         >
           Album 5

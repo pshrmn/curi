@@ -1,3 +1,4 @@
+import React from 'react';
 import NProgress from 'nprogress';
 import Nav from './components/Nav';
 

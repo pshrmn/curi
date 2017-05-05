@@ -1,3 +1,4 @@
+import React from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
 import Nav from './components/Nav';
 

@@ -1,5 +1,7 @@
 # Blocking navigation
 
+[CodeSandbox demo](https://codesandbox.io/embed/KOvy6K0KM)
+
 Sometimes, you don't want the user to leave the page. Ideally, this is for their own good, such as when a form is half filled out, and not becacuse you're running a spam site.
 
 When you want to do this, you can use the `<Block>` component from `react-curi` to display a user confirmation that requires user input before navigation will occur.

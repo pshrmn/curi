@@ -1,5 +1,9 @@
 # Prefetching data
 
+**Note:** This is temporarily "out of order" until the `<PrefetchLink>` is fully implemented (which will be available through the `curi-react-prefetch-link` package). The current code functions, but it does not work as intended (data is being loaded while navigating instead of before navigating).
+
+[CodeSandbox demo](https://codesandbox.io/embed/48WlgnyGg)
+
 **You probably don't need this because data is already loaded before navigation occurs.**
 
 The only thing that this really does is prevent the URI in the address bar from changing until after the data has been loaded. If that is something that you want, then you will have to do the following things:
