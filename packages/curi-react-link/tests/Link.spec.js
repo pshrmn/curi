@@ -10,7 +10,7 @@ describe('<Link>', () => {
     console.error = () => {};
 
     expect(() => {
-      shallow(<Link name="Test">Test</Link>);
+      shallow(<Link to="Test">Test</Link>);
     }).toThrow();
 
     console.error = err;
@@ -19,7 +19,7 @@ describe('<Link>', () => {
   it('renders an <a>', () => {
     const history = createMemoryHistory();
     const config = createConfig(history, [{ name: 'Test', path: '' }]);
-    const wrapper = shallow(<Link name="Test">Test</Link>, {
+    const wrapper = shallow(<Link to="Test">Test</Link>, {
       context: { curi: config }
     });
     const a = wrapper.find('a');
@@ -30,14 +30,14 @@ describe('<Link>', () => {
     it("sets the href attribute using the named route's path", () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
-      const wrapper = shallow(<Link name="Test">Test</Link>, {
+      const wrapper = shallow(<Link to="Test">Test</Link>, {
         context: { curi: config }
       });
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/');
     });
 
-    it('defaults to pathname="/" if name is not provided', () => {
+    it('defaults to pathto="/" if name is not provided', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, []);
       const wrapper = shallow(<Link>Test</Link>, {
@@ -55,7 +55,7 @@ describe('<Link>', () => {
         { name: 'Park', path: '/park/:name' }
       ]);
       const params = { name: 'Glacier' };
-      const wrapper = shallow(<Link name="Park" params={params}>Test</Link>, {
+      const wrapper = shallow(<Link to="Park" params={params}>Test</Link>, {
         context: { curi: config }
       });
       const a = wrapper.find('a');
@@ -68,7 +68,7 @@ describe('<Link>', () => {
         { name: 'Park', path: '/park/:name' }
       ]);
       const params = { name: 'Glacier' };
-      const wrapper = shallow(<Link name="Park" params={params}>Test</Link>, {
+      const wrapper = shallow(<Link to="Park" params={params}>Test</Link>, {
         context: { curi: config }
       });
       let a = wrapper.find('a');
@@ -85,7 +85,7 @@ describe('<Link>', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
-        <Link name="Test" to={{ search: '?one=two', hash: '#hashtag' }}>
+        <Link to="Test" details={{ search: '?one=two', hash: '#hashtag' }}>
           Test
         </Link>,
         { context: { curi: config } }
@@ -98,7 +98,7 @@ describe('<Link>', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
-        <Link name="Test" to={{ pathname: '/not-a-test' }}>Test</Link>,
+        <Link to="Test" details={{ pathname: '/not-a-test' }}>Test</Link>,
         { context: { curi: config } }
       );
       const a = wrapper.find('a');
@@ -112,7 +112,7 @@ describe('<Link>', () => {
       history.push = jest.fn();
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
-      const wrapper = shallow(<Link name="Test">Test</Link>, {
+      const wrapper = shallow(<Link to="Test">Test</Link>, {
         context: { curi: config }
       });
       const leftClickEvent = {
@@ -137,7 +137,7 @@ describe('<Link>', () => {
         const onClick = jest.fn();
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(
-          <Link name="Test" onClick={onClick}>Test</Link>,
+          <Link to="Test" onClick={onClick}>Test</Link>,
           {
             context: { curi: config }
           }
@@ -166,7 +166,7 @@ describe('<Link>', () => {
         });
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(
-          <Link name="Test" onClick={onClick}>Test</Link>,
+          <Link to="Test" onClick={onClick}>Test</Link>,
           {
             context: { curi: config }
           }
@@ -193,7 +193,7 @@ describe('<Link>', () => {
       history.push = jest.fn();
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
-      const wrapper = shallow(<Link name="Test">Test</Link>, {
+      const wrapper = shallow(<Link to="Test">Test</Link>, {
         context: { curi: config }
       });
       const modifiedClickEvent = {
@@ -221,7 +221,7 @@ describe('<Link>', () => {
       history.push = jest.fn();
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
-      const wrapper = shallow(<Link name="Test">Test</Link>, {
+      const wrapper = shallow(<Link to="Test">Test</Link>, {
         context: { curi: config }
       });
       const preventedEvent = {

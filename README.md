@@ -156,7 +156,7 @@ A component that receives a Curi configuration object as a prop and subscribes t
 A component that uses route names to create HTML anchors for navigation within an application.
 
 ```js
-<Link name='Home'>Home</Link>
+<Link to='Home'>Home</Link>
 ```
 
 #### `curi-react-block`

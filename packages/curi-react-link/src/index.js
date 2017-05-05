@@ -11,9 +11,9 @@ const canNavigate = event => {
 
 class Link extends React.Component {
   static propTypes = {
-    name: PropTypes.string,
+    to: PropTypes.string,
     params: PropTypes.object,
-    to: PropTypes.object,
+    details: PropTypes.object,
     onClick: PropTypes.func
   };
 
@@ -30,16 +30,16 @@ class Link extends React.Component {
       event.preventDefault();
       const { curi } = this.context;
       const { pathname } = this.state;
-      const { name, params, to = {} } = this.props;
-      const location = { pathname, ...to };
+      const { to, params, details = {} } = this.props;
+      const location = { pathname, ...details };
       curi.history.push(location);
     }
   };
 
   createPathname(props, context) {
-    const { name, params } = props;
+    const { to, params } = props;
     const { curi } = context;
-    const pathname = name != null ? curi.addons.pathname(name, params) : '/';
+    const pathname = to != null ? curi.addons.pathname(to, params) : '/';
     this.setState(() => ({
       pathname
     }));
@@ -54,10 +54,10 @@ class Link extends React.Component {
   }
 
   render() {
-    const { name, params, to, onClick, ...rest } = this.props;
+    const { to, params, details, onClick, ...rest } = this.props;
     const { curi } = this.context;
     const { pathname } = this.state;
-    const href = curi.history.createHref({ pathname, ...to });
+    const href = curi.history.createHref({ pathname, ...details });
     return <a onClick={this.clickHandler} href={href} {...rest} />;
   }
 }
