@@ -6,42 +6,33 @@ const Nav = () => (
     <ul>
       <li><Link name='Home'>Home</Link></li>
       <li>
-        <Link name='Contact'>Contact</Link>
+        Paints
         <ol>
           <li>
             <Link
-              name='Method'
-              params={{ method: 'phone' }}
-              to={{ state: { modal: true } }}
+              name='Product'
+              params={{ color: 'DarkSlateBlue' }}
+              to={{ state: { name: 'Dark Slate Blue' } }}
             >
-              By Phone
+              Dark Slate Blue
             </Link>
           </li>
           <li>
             <Link
-              name='Method'
-              params={{ method: 'email' }}
-              to={{ state: { modal: true } }}
+              name='Product'
+              params={{ color: 'SeaGreen' }}
+              to={{ state: { name: 'Sea Green' } }}
             >
-              By Email
+              Sea Green
             </Link>
           </li>
           <li>
             <Link
-              name='Method'
-              params={{ method: 'mail' }}
-              to={{ state: { modal: true } }}
+              name='Product'
+              params={{ color: 'Indigo' }}
+              to={{ state: { name: 'Indigo' } }}
             >
-              By Mail
-            </Link>
-          </li>
-          <li>
-            <Link
-              name='Method'
-              params={{ method: 'something else' }}
-              to={{ state: { modal: true } }}
-            >
-              By Something Else
+              Indigo
             </Link>
           </li>
         </ol>

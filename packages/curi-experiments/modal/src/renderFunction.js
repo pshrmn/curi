@@ -5,6 +5,15 @@ import Nav from './components/Nav';
 const Modal = (props) => (
   <div className='modal'>
     {props.children}
+    <button
+      type='button'
+      onClick={(e) => {
+        e.preventDefault();
+        props.history.goBack();
+      }}
+    >
+      Close
+    </button>
   </div>
 );
 
@@ -34,25 +43,25 @@ class Cacher extends React.Component {
   }
 
   render() {
-    const { response } = this.props;
+    const { response, history } = this.props;
     const { location } = response;
     const isModal = !!(location.state && location.state.modal && this.previousChildren);
     return (
       <div>
         { isModal ? this.previousChildren : this.props.children }
-        { isModal && <Modal>{this.props.children}</Modal>}
+        { isModal && <Modal history={history}>{this.props.children}</Modal>}
       </div>
     );
   }
 }
 
-function render(response) {
+function render(response, config) {
   const { location, params, body:Body } = response;
   return (
     <div>
       <Nav />
-      <Cacher response={response}>
-        <Body params={params} />
+      <Cacher response={response} history={config.history}>
+        <Body params={params} location={location} />
       </Cacher>
     </div>
   );

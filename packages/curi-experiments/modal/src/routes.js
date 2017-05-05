@@ -1,6 +1,6 @@
 import Home from './components/Home';
-import Contact from './components/Contact';
-import Method from './components/Method';
+import Product from './components/Product';
+import Detail from './components/Detail';
 
 export default [
   {
@@ -9,14 +9,14 @@ export default [
     value: Home
   },
   {
-    name: 'Contact',
-    path: 'contact',
-    value: Contact,
+    name: 'Product',
+    path: 'paint/:color',
+    value: Product,
     children: [
       {
-        name: 'Method',
-        path: ':method',
-        value: Method
+        name: 'Product Detail',
+        path: 'detail',
+        value: Detail
       }
     ]
   }
