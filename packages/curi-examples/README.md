@@ -1,4 +1,4 @@
-## curi experiments
+## Curi Examples
 
 Example projects that use `curi` and `curi-react`.
 

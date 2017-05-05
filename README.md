@@ -5,7 +5,7 @@
 [build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg?style=flat-square
 [build]: https://travis-ci.org/pshrmn/curi
 
-A set of **experimental** configuration-based URI routing packages.
+A set of configuration-based URI routing packages.
 
 You can test it out by forking this [codepen](https://codepen.io/pshrmn/pen/mmebOK).
 
@@ -24,7 +24,7 @@ Packages:
   * [curi-react-link](#curi-react-link)
   * [curi-react-block](#curi-react-block)
   * [curi-react-redirect](#curi-react-redirect)
-* [Experiments](#experiments)
+* [Examples](#examples)
 
 ## curi
 
@@ -172,8 +172,8 @@ A component that will give the user the opportunity to cancel navigation when so
 A component that will automatically cause navigation when it is rendered.
 
 
-## Experiments
+## Examples
 
-[package](/packages/curi-experiments)
+[package](/packages/curi-examples)
 
 This is not a "real" package, but instead it is a collection of small applications that show you what you can do with `curi` and `curi-react`.

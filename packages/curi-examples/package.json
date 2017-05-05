@@ -1,12 +1,12 @@
 {
-  "name": "curi-experiments",
+  "name": "curi-examples",
   "private": true,
   "description": "curi in action",
   "main": "index.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/pshrmn/curi/tree/master/packages/curi-experiments"
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/curi-examples"
   },
   "keywords": [
     "curi",
