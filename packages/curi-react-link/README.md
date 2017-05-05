@@ -43,6 +43,6 @@ If the route that you want to navigate to (or any of its parents) include path p
 
 #### details
 
-While the `pathname` of the location to navigate to will be generated for you, this does not cover over location properties (`search`, `hash`, and `state`). You can provide these values using the `to` prop.
+While the `pathname` of the location to navigate to will be generated for you, this does not cover over location properties (`search`, `hash`, and `state`). You can provide these values using the `details` prop.
 
-**Note:** You can also include a `pathname` property in the `to` object and it will overwrite the over generated from the `name` prop.
+**Note:** You can also include a `pathname` property in the `details` object and it will overwrite the over generated from the `name` prop.
