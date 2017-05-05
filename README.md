@@ -26,6 +26,7 @@ Packages:
   * [curi-react-link](#curi-react-link)
   * [curi-react-block](#curi-react-block)
   * [curi-react-redirect](#curi-react-redirect)
+  * [curi-react-curious](#curi-react-curious)
 * [Examples](#examples)
 
 ## curi
@@ -173,6 +174,25 @@ A component that will give the user the opportunity to cancel navigation when so
 
 A component that will automatically cause navigation when it is rendered.
 
+#### `curi-react-curious`
+
+[package](/packages/curi-react-curious) + [source](/packages/curi-react-curious/src)
+
+A higher-order component to give nested components access to the Curi config object without having to manually pass it as a prop. This allows you to easily access the configuration object's `history`/addons.
+
+```js
+class MyComponent extends React.Component {
+  render() {
+    return (
+      <div>
+        Installed Addons: {Object.keys(this.props.curi.addons).join(', ')}
+      </div>
+    );
+  }
+}
+
+export default curious(MyComponent);
+```
 
 ## Examples
 

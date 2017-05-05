@@ -10,17 +10,45 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-curi-react@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/curi-react/-/curi-react-0.4.0.tgz#05554e357e4bb99524049de26037bfad05129fc1"
+curi-react-block@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/curi-react-block/-/curi-react-block-0.1.1.tgz#5a15aa807af367614eb22648bd69d30f0e480177"
   dependencies:
-    curi "^0.4.0"
-    invariant "^2.2.2"
+    curi "^0.6.0"
     prop-types "^15.5.8"
 
-curi@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/curi/-/curi-0.4.0.tgz#ebd3ae87fe84968b9c3c1e565844be2430b62e5c"
+curi-react-link@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/curi-react-link/-/curi-react-link-0.2.0.tgz#d5e0e4910dfa2ece75c8c7a85674ed5da7d6a6aa"
+  dependencies:
+    prop-types "^15.5.8"
+
+curi-react-navigator@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/curi-react-navigator/-/curi-react-navigator-0.1.1.tgz#10826c1d934c2dab4ec7acac52fa953a8cd267b3"
+  dependencies:
+    curi "^0.6.0"
+    prop-types "^15.5.8"
+
+curi-react-redirect@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/curi-react-redirect/-/curi-react-redirect-0.1.1.tgz#41093b002092cf908ef0e5c87722aac4a96d5e25"
+  dependencies:
+    curi "^0.6.0"
+    prop-types "^15.5.8"
+
+curi-react@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/curi-react/-/curi-react-0.5.3.tgz#8ff37a639458c7c57450491fde0a6a2bd72f5ea2"
+  dependencies:
+    curi-react-block "^0.1.1"
+    curi-react-link "^0.2.0"
+    curi-react-navigator "^0.1.1"
+    curi-react-redirect "^0.1.1"
+
+curi@^0.6.0:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/curi/-/curi-0.6.2.tgz#0b96a1d55b99435e1f4eeda33cd54da2c4ebb052"
   dependencies:
     path-to-regexp "^1.7.0"
 
@@ -45,12 +73,6 @@ fbjs@^0.8.9:
 iconv-lite@~0.4.13:
   version "0.4.16"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.16.tgz#65de3beeb39e2960d67f049f1634ffcbcde9014b"
-
-invariant@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
-  dependencies:
-    loose-envify "^1.0.0"
 
 is-stream@^1.0.1:
   version "1.1.0"

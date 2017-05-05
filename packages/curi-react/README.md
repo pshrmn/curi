@@ -29,6 +29,7 @@ npm install --save curi-react
 * [`<Link>`](../curi-react-link)
 * [`<Redirect>`](../curi-react-redirect)
 * [`<Block>`](../curi-react-block)
+* [`curious()`](../curi-react-curious)
 
 ## Examples
 

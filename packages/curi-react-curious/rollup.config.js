@@ -6,8 +6,8 @@ import uglify from 'rollup-plugin-uglify';
 const config = {
   entry: 'src/index.js',
   format: 'umd',
-  dest: 'umd/curi-react.js',
-  moduleName: 'CuriReact',
+  dest: 'umd/curi-react-curious.js',
+  moduleName: 'CuriReactCurious',
   external: [
     'react',
     'prop-types'
@@ -22,7 +22,7 @@ const config = {
     }),
     resolve(),
     commonjs({
-      include: ['node_modules/**', '../../node_modules/**', '../**/node_modules/**']
+      include: 'node_modules/**'
     }),
   ]
 };
