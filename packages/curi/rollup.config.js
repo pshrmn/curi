@@ -20,7 +20,7 @@ const config = {
     }),
     resolve(),
     commonjs({
-      include: ['node_modules/**', '../../node_modules/**']
+      include: /node_modules/
     }),
   ]
 };

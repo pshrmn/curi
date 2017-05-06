@@ -3,6 +3,8 @@ import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
 
+const r = /test/
+
 const config = {
   entry: 'src/index.js',
   format: 'umd',
@@ -22,7 +24,7 @@ const config = {
     }),
     resolve(),
     commonjs({
-      include: ['node_modules/**', '../../node_modules/**', '../**/node_modules/**']
+      include: /node_modules/
     }),
   ]
 };
