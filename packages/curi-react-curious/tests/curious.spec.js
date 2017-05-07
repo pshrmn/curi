@@ -3,14 +3,26 @@ import { shallow, mount } from 'enzyme';
 import curious from '../src';
 
 describe('curious', () => {
-  it('passes the config object as the curi prop to wrapped component', () => {
+  it('passes the config object as the "curi" prop to wrapped component', () => {
     const fakeConfig = { history: {} };
+    const fakeResponse = { name: 'Home', status: 200 };
     const TestComponent = curious(() => null);
 
     const wrapper = shallow((
       <TestComponent />
-    ), { context: { curi: fakeConfig }});
+    ), { context: { curi: fakeConfig, curiResponse: fakeResponse }});
     expect(wrapper.prop('curi')).toBe(fakeConfig);
+  });
+
+  it('passes the response object as the "response" prop to wrapped component', () => {
+    const fakeConfig = { history: {} };
+    const fakeResponse = { name: 'Home', status: 200 };
+    const TestComponent = curious(() => null);
+
+    const wrapper = shallow((
+      <TestComponent />
+    ), { context: { curi: fakeConfig, curiResponse: fakeResponse }});
+    expect(wrapper.prop('response')).toBe(fakeResponse);
   });
 
   it('hoists wrapped component\'s static properties', () => {
@@ -26,7 +38,7 @@ describe('curious', () => {
 
   it('passes internalRef prop as ref of wrapped component', () => {
     const fakeConfig = { history: {} };
-
+    const fakeResponse = { name: 'Home', status: 200 };
     class TestComponent extends React.Component {
       render() {
         return null;
@@ -37,7 +49,7 @@ describe('curious', () => {
     let ref;
     const wrapper = mount((
       <Wrapped internalRef={node => ref = node} />
-    ), { context: { curi: fakeConfig }});
+    ), { context: { curi: fakeConfig, curiResponse: fakeResponse }});
     expect(ref).toBeInstanceOf(TestComponent);
     const wrappedTest = wrapper.find(TestComponent);
     expect(ref).toBe(wrappedTest.node);

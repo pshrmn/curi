@@ -6,13 +6,19 @@ export default function curious(WrappedComponent) {
   function CuriousComponent(props, context) {
     const { internalRef, ...rest } = props;
     return (
-      <WrappedComponent curi={context.curi} {...rest} ref={internalRef} />
+      <WrappedComponent
+        curi={context.curi}
+        response={context.curiResponse}
+        {...rest}
+        ref={internalRef}
+      />
     );
   }
 
   CuriousComponent.displayName = `curious(${WrappedComponent.displayName || WrappedComponent.name})`;
   CuriousComponent.contextTypes = {
-    curi: PropTypes.object.isRequired
+    curi: PropTypes.object.isRequired,
+    curiResponse: PropTypes.object.isRequired
   };
   CuriousComponent.propTypes = {
     internalRef: PropTypes.func

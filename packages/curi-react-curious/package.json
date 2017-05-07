@@ -1,7 +1,7 @@
 {
   "name": "curi-react-curious",
-  "version": "0.1.0",
-  "description": "A higher-order component that provides access to a curi config through props",
+  "version": "0.2.0",
+  "description": "A higher-order component that provides access to Curi objects through props",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
