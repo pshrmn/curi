@@ -3,6 +3,7 @@
   "version": "0.6.2",
   "description": "curi is a configuration based routing solution",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "files": [
     "lib",
     "umd",

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Add a query property to Curi response objects",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "files": [
     "lib",
     "umd",

@@ -18,7 +18,8 @@ class Link extends React.Component {
   };
 
   static contextTypes = {
-    curi: PropTypes.object.isRequired
+    curi: PropTypes.object.isRequired,
+    curiResponse: PropTypes.object
   };
 
   clickHandler = event => {

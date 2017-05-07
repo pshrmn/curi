@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "An addon to enable prefetching curi routes",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "files": [
     "lib",
     "umd",

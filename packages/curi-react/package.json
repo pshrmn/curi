@@ -3,6 +3,7 @@
   "version": "0.6.1",
   "description": "React web components to use with Curi",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "files": [
     "lib",
     "umd",
@@ -35,9 +36,9 @@
   },
   "dependencies": {
     "curi-react-block": "^0.1.1",
-    "curi-react-curious": "^0.1.0",
+    "curi-react-curious": "^0.2.0",
     "curi-react-link": "^0.2.0",
-    "curi-react-navigator": "^0.1.1",
+    "curi-react-navigator": "^0.2.0",
     "curi-react-redirect": "^0.1.1"
   },
   "devDependencies": {
