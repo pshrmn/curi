@@ -48,6 +48,18 @@ describe('uri', () => {
         });
       });
 
+      describe('keys', () => {
+        it('is the array of param names parsed from the path', () => {
+          const testURI = uri({ name: 'Test', path: ':one/:two/:three' });
+          expect(testURI.keys).toEqual(['one', 'two', 'three']);
+        });
+
+        it('is an empty array when the path has no params', () => {
+          const testURI = uri({ name: 'test', path: 'one/two/three' });
+          expect(testURI.keys).toEqual([]);
+        });
+      });
+
       describe('value', () => {
         it('sets the value that will be returned by the render function', () => {
           const value = 'Latitude';

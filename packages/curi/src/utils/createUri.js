@@ -37,6 +37,7 @@ const uri = options => {
     children,
     preload: preload ? once(preload) : undefined,
     load,
+    keys: regexPath.keys.map(key => key.name),
     match: function(pathname, response, parentURI) {
       const testPath = stripLeadingSlash(pathname);
       const match = regexPath.re.exec(testPath);
