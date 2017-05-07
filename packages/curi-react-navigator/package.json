@@ -1,6 +1,6 @@
 {
   "name": "curi-react-navigator",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A component that re-renders on navigation",
   "main": "lib/index.js",
   "module": "es/index.js",

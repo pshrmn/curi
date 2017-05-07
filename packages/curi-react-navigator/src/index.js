@@ -9,18 +9,20 @@ class Navigator extends React.Component {
   };
 
   static childContextTypes = {
-    curi: PropTypes.object
+    curi: PropTypes.object,
+    curiResponse: PropTypes.object
   };
-
-  getChildContext() {
-    return {
-      curi: this.props.config
-    };
-  }
 
   state = {
     response: undefined
   };
+
+  getChildContext() {
+    return {
+      curi: this.props.config,
+      curiResponse: this.state.response
+    };
+  }
 
   setResponse = response => {
     this.setState({ response });

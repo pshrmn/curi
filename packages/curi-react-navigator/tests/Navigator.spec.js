@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import PropTypes from 'prop-types';
 import createConfig from '../../curi/src';
 import Response from '../../curi/src/response';
 import { createMemoryHistory } from 'history';
@@ -165,6 +166,56 @@ describe('<Navigator>', () => {
       expect(unsub.mock.calls.length).toBe(0);
       wrapper.unmount();
       expect(unsub.mock.calls.length).toBe(1);
+    });
+  });
+
+  describe('context', () => {
+    let receivedContext;
+
+    beforeEach(() => {
+      receivedContext = undefined;
+    });
+
+    const ConfigReporter = (props, context) => {
+      receivedContext = context;
+      return null;
+    };
+
+    ConfigReporter.contextTypes = {
+      curi: PropTypes.object,
+      curiResponse: PropTypes.object
+    };
+
+    it('places the curi config on the context as "context.curi"', () => {
+      const unsub = jest.fn();
+      const sub = jest.fn(fn => {
+        return unsub;
+      });
+      const fakeConfig = {
+        subscribe: sub
+      };
+
+      const wrapper = mount(
+        <Navigator config={fakeConfig} children={() => <ConfigReporter />} />
+      );
+
+      expect(receivedContext.curi).toBe(fakeConfig);
+    });
+
+    it('places the current response on the context as "context.curiResponse"', () => {
+      const unsub = jest.fn();
+      const sub = jest.fn(fn => {
+        return unsub;
+      });
+      const fakeConfig = {
+        subscribe: sub
+      };
+      const response = { name: 'Home' };
+
+      const wrapper = mount(
+        <Navigator config={fakeConfig} response={response} children={() => <ConfigReporter />} />
+      );
+      expect(receivedContext.curiResponse).toBe(response);
     });
   });
 });
