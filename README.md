@@ -18,6 +18,7 @@ Packages:
 * [Addons](#addons)
   * [pathname (built-in)](#pathname)
   * [curi-addon-prefetch](#curi-addon-prefetch)
+  * [curi-addon-active](#curi-addon-active)
 * [Middleware](#middleware)
   * [curi-middleware-query](#curi-middleware-query)
 * [React](#react)
@@ -96,6 +97,12 @@ The `pathname` addon is always used, so you do not need to install it separately
 [package](/packages/curi-addon-prefetch) + [source](/packages/curi-addon-prefetch/src/index.js) + [documentation](/packages/curi-addon-prefetch/README.md#usage)
 
 The `prefetch` addon allows you to call a route's `load` function outside of navigation. If you use this, your `load` function should have a caching mechanism to prevent duplicate data fetches because the `load` function will be called again during actual navigation.
+
+#### `curi-addon-active`
+
+[package](/packages/curi-addon-active) + [source](/packages/curi-addon-active/src/index.js) + [documentation](/packages/curi-addon-active/README.md#usage)
+
+The `active` addon allows you to determine if a route is "active" (its `name`/`params` match the current response's `name`/`params`).. This can be useful for giving an element a specific style when it is "active".
 
 ## middleware
 

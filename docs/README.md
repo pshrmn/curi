@@ -3,6 +3,7 @@ This directory contains general curi docs. For packages specific documentation, 
 * [`curi`](/packages/curi/docs)
 * Addons
   * [`curi-addon-prefetch`](/packages/curi-addon-prefetch#usage)
+  * [`curi-addon-active`](/packages/curi-addon-active#usage)
 * Middleware
   * [`curi-middleware-query`](/packages/curi-middleware-query#usage)
 * React
