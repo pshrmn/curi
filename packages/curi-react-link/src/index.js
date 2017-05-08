@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import invariant from 'invariant'
 
 const canNavigate = event => {
   return (
@@ -48,18 +49,40 @@ class Link extends React.Component {
 
   componentWillMount() {
     this.createPathname(this.props, this.context);
+    if (this.props.active) {
+      this.verifyActiveAddon();
+    }
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     this.createPathname(nextProps, nextContext);
+    if (nextProps.active) {
+      this.verifyActiveAddon();
+    }
+  }
+
+  verifyActiveAddon() {
+    invariant(
+      this.context.curi.addons.active,
+      'You are attempting to use the "active" prop, but have not included the "active" ' +
+        'addon (curi-addon-active) in your Curi configuration object.'
+    );
   }
 
   render() {
-    const { to, params, details, onClick, ...rest } = this.props;
-    const { curi } = this.context;
+    const { to, params, details, onClick, active, ...rest } = this.props;
+    const { curi, curiResponse } = this.context;
+    let anchorProps = rest;
+    if (active) {
+      const { partial, merge } = active;
+      const isActive = curi.addons.active(to, curiResponse, params, partial);
+      if (isActive) {
+        anchorProps = merge(anchorProps);
+      }
+    }
     const { pathname } = this.state;
     const href = curi.history.createHref({ pathname, ...details });
-    return <a onClick={this.clickHandler} href={href} {...rest} />;
+    return <a onClick={this.clickHandler} href={href} {...anchorProps} />;
   }
 }
 

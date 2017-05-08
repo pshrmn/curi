@@ -1,7 +1,8 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import createConfig from '../../curi/src';
+import createActiveAddon from '../../curi-addon-active/src';
 import Link from '../src';
 
 describe('<Link>', () => {
@@ -26,7 +27,7 @@ describe('<Link>', () => {
     expect(a.exists()).toBe(true);
   });
 
-  describe('name', () => {
+  describe('to', () => {
     it("sets the href attribute using the named route's path", () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
@@ -80,8 +81,8 @@ describe('<Link>', () => {
     });
   });
 
-  describe('to', () => {
-    it('merges the to prop with the generated pathname when navigating', () => {
+  describe('details', () => {
+    it('merges the details prop with the generated pathname when navigating', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
@@ -104,6 +105,105 @@ describe('<Link>', () => {
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/not-a-test');
     });
+  });
+
+  describe('active', () => {
+    it('throws if attempting to use when curi-addon-active is not "installed"', () => {
+      const history = createMemoryHistory();
+      const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
+      const fakeResponse = {};
+      function merge(props) {
+        props.className += ' active';
+        return props;
+      }
+
+      expect(() => {
+        const wrapper = shallow(
+          <Link to="Test" active={{ merge }}>Test</Link>,
+          { context: { curi: config, curiResponse: fakeResponse }}
+        );
+      }).toThrow(
+        'You are attempting to use the "active" prop, but have not included the "active" ' +
+          'addon (curi-addon-active) in your Curi configuration object.'
+      );
+    });
+
+    it("does nothing if the <Link>'s props do not match the current response's", () => {
+      const history = createMemoryHistory();
+      const config = createConfig(
+        history,
+        [{ name: 'Test', path: 'test' }],
+        {
+          addons: [createActiveAddon]
+        }
+      );
+      const fakeResponse = { name: 'Other' };
+      function merge(props) {
+        props.className += ' active';
+        return props;
+      }
+
+      const wrapper = shallow(
+        <Link to="Test" className='test' active={{ merge }}>Test</Link>,
+        { context: { curi: config, curiResponse: fakeResponse }}
+      );
+      const link = wrapper.find('a');
+      expect(link.prop('className')).toBe('test');
+    });
+
+    it("calls merge function when <Link>'s props match the current response's", () => {
+      const history = createMemoryHistory();
+      const config = createConfig(
+        history,
+        [{ name: 'Test', path: 'test' }],
+        {
+          addons: [createActiveAddon]
+        }
+      );
+      const fakeResponse = { name: 'Test', params: {} };
+      function merge(props) {
+        props.className += ' active';
+        return props;
+      }
+
+      const wrapper = shallow(
+        <Link to="Test" className='test' active={{ merge }}>Test</Link>,
+        { context: { curi: config, curiResponse: fakeResponse }}
+      );
+      const link = wrapper.find('a')
+      expect(link.prop('className')).toBe('test active');
+    });
+
+    it("works with partial matches", () => {
+      const history = createMemoryHistory();
+      const config = createConfig(
+        history,
+        [
+          {
+            name: 'Test',
+            path: 'test',
+            children: [
+              { name: 'Nested', path: 'nested' }
+            ]
+          }
+        ],
+        {
+          addons: [createActiveAddon]
+        }
+      );
+      const fakeResponse = { name: 'Nested', partials: ['Test'], params: {} };
+      function merge(props) {
+        props.className += ' active';
+        return props;
+      }
+
+      const wrapper = shallow(
+        <Link to="Test" className='test' active={{ partial: true, merge }}>Test</Link>,
+        { context: { curi: config, curiResponse: fakeResponse }}
+      );
+      const link = wrapper.find('a')
+      expect(link.prop('className')).toBe('test active');
+    })
   });
 
   describe('clicking a link', () => {

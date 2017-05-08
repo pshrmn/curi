@@ -46,3 +46,26 @@ If the route that you want to navigate to (or any of its parents) include path p
 While the `pathname` of the location to navigate to will be generated for you, this does not cover over location properties (`search`, `hash`, and `state`). You can provide these values using the `details` prop.
 
 **Note:** You can also include a `pathname` property in the `details` object and it will overwrite the over generated from the `name` prop.
+
+#### active
+
+The `active` prop gives you an opportunity to style the `<a>` rendered by the `<Link>` when it is "active". Being active means that the `<Link>`'s route parameters are the same as the current response's route parameters.
+
+The `active` prop is an object with two properties. The first one, `merge` is required. The `merge` property must be a function. That function will receive the `props` that will be passed to the `<a>` as its argument. The `merge` function can modify these props however it likes and return the resulting props object.
+
+```js
+function mergeActive(props) {
+  props.className = 'active';
+  return props;
+}
+
+<Link to='Home' active={{ merge: mergeActive }}>Home</Link>
+```
+
+The second property of the `active` object is `partial`. By default, only `<Link>`s that match the response object's `name` can be considered "active". However, when `partial` is true, any parent routes can also be "active". This is done using the response object's `partials` array.
+
+```js
+<Link to='Users' active={{ partial: true, merge: mergeActive }}>Users</Link>
+```
+
+**Note:** If you use the `active` prop, you have to include the [`curi-addon-active`](../curi-addon-active) addon in your Curi configuration object. If you do not, an error will be thrown.
