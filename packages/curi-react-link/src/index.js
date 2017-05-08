@@ -15,7 +15,11 @@ class Link extends React.Component {
     to: PropTypes.string,
     params: PropTypes.object,
     details: PropTypes.object,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    active: PropTypes.shape({
+      merge: PropTypes.func.isRequired,
+      partial: PropTypes.bool
+    })
   };
 
   static contextTypes = {
