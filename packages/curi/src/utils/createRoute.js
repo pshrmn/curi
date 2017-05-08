@@ -2,7 +2,7 @@ import { join, stripLeadingSlash, withLeadingSlash } from './path';
 import once from './once';
 import createPath from './createPath';
 
-const uri = options => {
+const createRoute = options => {
   const {
     name,
     path,
@@ -11,11 +11,12 @@ const uri = options => {
     call,
     children,
     preload,
-    load
+    load,
+    ...rest
   } = options || {};
 
   if (name == null || path == null) {
-    throw new Error('A URI must have defined name and path properties');
+    throw new Error('A route must have defined name and path properties');
   }
 
   // create the path
@@ -38,7 +39,7 @@ const uri = options => {
     preload: preload ? once(preload) : undefined,
     load,
     keys: regexPath.keys.map(key => key.name),
-    match: function(pathname, response, parentURI) {
+    match: function(pathname, response, parentPath) {
       const testPath = stripLeadingSlash(pathname);
       const match = regexPath.re.exec(testPath);
       if (!match) {
@@ -49,8 +50,8 @@ const uri = options => {
       regexPath.keys.forEach((key, index) => {
         params[key.name] = parsed[index];
       });
-      const uriString = parentURI != null
-        ? join(parentURI, segment)
+      const uriString = parentPath != null
+        ? join(parentPath, segment)
         : withLeadingSlash(segment);
       response.add(this, params);
 
@@ -63,8 +64,9 @@ const uri = options => {
       }
 
       return true;
-    }
+    },
+    ...rest
   };
 };
 
-export default uri;
+export default createRoute;

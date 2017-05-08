@@ -2,19 +2,19 @@ import walkRoutes from './utils/walkRoutes';
 import pathnameAddon from './addons/pathname';
 import Response from './response';
 
-function createConfig(history, routes, options = {}) {
+function createConfig(history, routeArray, options = {}) {
   const { addons = [], middleware = [], cache = false } = options;
 
   const finalAddons = addons.concat(pathnameAddon);
 
-  let uris = [];
+  let routes = [];
   const globals = {};
   const subscribers = [];
 
   let mostRecentKey;
   let previousResponse;
 
-  const setup = routes => {
+  const setup = routeArray => {
     const registerFunctions = [];
     for (let key in globals) {
       delete globals[key];
@@ -26,12 +26,12 @@ function createConfig(history, routes, options = {}) {
       registerFunctions.push(addon);
     });
 
-    uris = walkRoutes(routes, registerFunctions, {});
+    routes = walkRoutes(routeArray, registerFunctions, {});
   };
 
   const respond = key => {
     const resp = new Response(key, history.location);
-    uris.some(uri => uri.match(history.location.pathname, resp));
+    routes.some(uri => uri.match(history.location.pathname, resp));
     return resp;
   };
 
@@ -120,7 +120,7 @@ function createConfig(history, routes, options = {}) {
     (previousResponse ? Promise.resolve(previousResponse) : prepareResponse());
 
   // now that everything is defined, actually do the setup
-  setup(routes);
+  setup(routeArray);
   const unlisten = history.listen(() => {
     prepareResponse().then(resp => {
       emit(resp);

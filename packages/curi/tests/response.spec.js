@@ -1,5 +1,5 @@
 import Response from '../src/response';
-import uri from '../src/utils/createUri';
+import createRoute from '../src/utils/createRoute';
 
 const noop = () => {};
 
@@ -68,7 +68,7 @@ describe('Response', () => {
   describe('add', () => {
     it('sets the name, uri, and params', () => {
       const resp = new Response();
-      const match = uri({ name: 'Foo', path: 'egg' });
+      const match = createRoute({ name: 'Foo', path: 'egg' });
       const params = { food: 'egg' };
       resp.add(match, params);
       expect(resp.uri).toEqual(match);
@@ -77,8 +77,8 @@ describe('Response', () => {
 
     it('pushes current name to partials when adding new match', () => {
       const resp = new Response();
-      resp.add(uri({ name: 'State', path: 'WA' }), { state: 'WA' });
-      resp.add(uri({ name: 'City', path: 'WA/Seattle' }), {
+      resp.add(createRoute({ name: 'State', path: 'WA' }), { state: 'WA' });
+      resp.add(createRoute({ name: 'City', path: 'WA/Seattle' }), {
         city: 'Seattle'
       });
       expect(resp.partials.length).toBe(1);
@@ -87,8 +87,8 @@ describe('Response', () => {
 
     it('merges params when adding new match', () => {
       const resp = new Response();
-      resp.add(uri({ name: 'State', path: 'WA' }), { state: 'WA' });
-      resp.add(uri({ name: 'City', path: 'WA/Seattle' }), {
+      resp.add(createRoute({ name: 'State', path: 'WA' }), { state: 'WA' });
+      resp.add(createRoute({ name: 'City', path: 'WA/Seattle' }), {
         city: 'Seattle'
       });
       expect(resp.params).toEqual({ state: 'WA', city: 'Seattle' });
@@ -100,7 +100,7 @@ describe('Response', () => {
       const retValue = 'Hakuna Matata';
       const fn = jest.fn(() => retValue);
       const resp = new Response();
-      resp.add(uri({ name: 'Phrase', path: 'hakuna-matata', call: fn }));
+      resp.add(createRoute({ name: 'Phrase', path: 'hakuna-matata', call: fn }));
       resp.call();
       expect(fn.mock.calls.length).toBe(1);
       expect(resp.body).toBe(retValue);
@@ -108,7 +108,7 @@ describe('Response', () => {
 
     it("is undefined if uri wasn't passed a call/value option", () => {
       const resp = new Response();
-      resp.add(uri({ name: 'Phrase', path: 'no-worries' }));
+      resp.add(createRoute({ name: 'Phrase', path: 'no-worries' }));
       resp.call();
       expect(resp.body).toBeUndefined();
     });
@@ -120,7 +120,7 @@ describe('Response', () => {
       const location = { pathname: '/park/yosemite' };
       const resp = new Response(key, location);
       const value = 'Yosemite National Park';
-      const parkURI = uri({ name: 'Park', path: 'park/:name', value });
+      const parkURI = createRoute({ name: 'Park', path: 'park/:name', value });
       resp.add(parkURI, { name: 'yosemite' });
       resp.call();
       const respObj = resp.asObject();

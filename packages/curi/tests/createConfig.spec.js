@@ -1,6 +1,5 @@
 import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
-import uri from '../src/utils/createUri';
 import createMemoryHistory from 'history/createMemoryHistory';
 import Response from '../src/response';
 
@@ -29,13 +28,13 @@ describe('createConfig', () => {
   describe('constructor', () => {
     // these tests rely on the fact that the pathname generator
     // is a default addon
-    it('registers uris', () => {
-      const uris = [
+    it('registers routes', () => {
+      const routes = [
         { name: 'Home', path: '' },
         { name: 'About', path: 'about' },
         { name: 'Contact', path: 'contact' }
       ];
-      const config = createConfig(history, uris);
+      const config = createConfig(history, routes);
 
       const names = ['Home', 'About', 'Contact'];
       names.forEach(n => {
@@ -43,8 +42,8 @@ describe('createConfig', () => {
       });
     });
 
-    it('registers nested uris', () => {
-      const uris = [
+    it('registers nested routes', () => {
+      const routes = [
         { name: 'Home', path: '' },
         { name: 'About', path: 'about' },
         {
@@ -56,7 +55,7 @@ describe('createConfig', () => {
           ]
         }
       ];
-      const config = createConfig(history, uris);
+      const config = createConfig(history, routes);
       const names = ['Email', 'Phone'];
       names.forEach(n => {
         expect(config.addons.pathname(n)).toBeDefined();
@@ -64,22 +63,22 @@ describe('createConfig', () => {
     });
 
     it('makes addons available through return object', () => {
-      const uris = [{ name: 'Home', path: '' }];
+      const routes = [{ name: 'Home', path: '' }];
       const createFakeAddon = () => ({
         name: 'fake',
         register: () => {},
         reset: () => {},
         get: () => {}
       });
-      const config = createConfig(history, uris, { addons: [createFakeAddon] });
+      const config = createConfig(history, routes, { addons: [createFakeAddon] });
       expect(config.addons.fake).toBeDefined();
     });
 
     describe('options', () => {
       describe('addons', () => {
         it('includes pathname addon by default', () => {
-          const uris = [{ name: 'Home', path: '' }];
-          const config = createConfig(history, uris);
+          const routes = [{ name: 'Home', path: '' }];
+          const config = createConfig(history, routes);
           expect(config.addons.pathname).toBeDefined();
         });
 
@@ -93,8 +92,8 @@ describe('createConfig', () => {
             };
           };
 
-          const uris = [{ name: 'Home', path: '' }];
-          const config = createConfig(history, uris, {
+          const routes = [{ name: 'Home', path: '' }];
+          const config = createConfig(history, routes, {
             addons: [createFirstAddon]
           });
           expect(config.addons.pathname).toBeDefined();
@@ -301,7 +300,7 @@ describe('createConfig', () => {
       console.error = err;
     });
 
-    it('resets and replaces registered uris', () => {
+    it('resets and replaces registered routes', () => {
       const englishRoutes = [
         { name: 'Home', path: '' },
         { name: 'About', path: 'about' },
@@ -604,7 +603,7 @@ describe('createConfig', () => {
 
     it('notifies subscribers after promises have resolved', done => {
       let promiseResolved = false;
-      const uris = [
+      const routes = [
         { name: 'Home', path: '' },
         { name: 'About', path: 'about' },
         {
@@ -628,7 +627,7 @@ describe('createConfig', () => {
         done();
       });
 
-      const config = createConfig(history, uris);
+      const config = createConfig(history, routes);
       config.ready().then(() => {
         config.subscribe(check);
         history.push('/contact/phone');
@@ -636,7 +635,7 @@ describe('createConfig', () => {
     });
 
     it('only emits most recent update if another one occurs before emitting', done => {
-      const uris = [
+      const routes = [
         { name: 'Home', path: '' },
         { name: 'About', path: 'about' },
         {
@@ -656,7 +655,7 @@ describe('createConfig', () => {
         done();
       });
 
-      const config = createConfig(history, uris);
+      const config = createConfig(history, routes);
       config.ready().then(() => {
         config.subscribe(check);
         history.push('/contact/phone');
