@@ -11,7 +11,7 @@ npm install --save curi-addon-active
 ### UMD
 
 ```html
-<script src="https://unpkg.com/curi-addon-active@0.1.0/umd/curi-addon-active.js"></script>
+<script src="https://unpkg.com/curi-addon-active@0.1.1/umd/curi-addon-active.js"></script>
 <!-- there is also a min script: curi-addon-active.min.js -->
 <script type="text/javascript">
   const createActiveAddon = window.CuriAddonActive;

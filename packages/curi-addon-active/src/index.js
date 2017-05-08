@@ -14,8 +14,11 @@ function createActiveAddon() {
 	return {
     name: 'active',
     register: (route, parentKeys) => {
-      const { name, keys } = route;
-      const fullKeys = Array.isArray(parentKeys) ? [...parentKeys, ...keys] : keys;
+      let { name, keys } = route;
+      if (keys == null) {
+        keys = [];
+      }
+      const fullKeys = Array.isArray(parentKeys)? [...parentKeys, ...keys] : keys;
       if (routeParams[name] !== undefined) {
         console.warn(
           'A route function with the name "' +

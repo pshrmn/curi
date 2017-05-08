@@ -1,6 +1,6 @@
 {
   "name": "curi-addon-active",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Curi addon to determine if a route is \"active\"",
   "main": "lib/index.js",
   "module": "es/index.js",

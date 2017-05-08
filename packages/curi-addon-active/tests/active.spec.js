@@ -40,6 +40,16 @@ describe('active addon', () => {
       expect(storedKeys).toEqual(['albumId', 'photoId']);
     });
 
+    it("stores empty array when route has no params", () => {
+      const empty = {
+        name: 'Empty',
+        path: 'empty',
+        keys: undefined
+      };
+      const storedKeys = active.register(empty);
+      expect(storedKeys).toEqual([]);
+    });
+
     it('warns when registering the same name', () => {
       const warn = console.warn;
       console.warn = jest.fn();
