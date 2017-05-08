@@ -1,0 +1,32 @@
+{
+  "name": "curi-active-links",
+  "version": "0.1.0",
+  "description": "Style links differently when they are active",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack"
+  },
+  "keywords": [
+    "Curi",
+    "link",
+    "anchor",
+    "active"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^2.5.1"
+  },
+  "dependencies": {
+    "curi": "^0.7.0",
+    "curi-react": "^0.5.3",
+    "curi-addon-active": "^0.1.1",
+    "history": "^4.6.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  }
+}
