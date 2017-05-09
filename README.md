@@ -28,6 +28,7 @@ Packages:
   * [curi-react-block](#curi-react-block)
   * [curi-react-redirect](#curi-react-redirect)
   * [curi-react-curious](#curi-react-curious)
+  * [curi-react-active](#curi-react-active)
 * [Examples](#examples)
 
 ## curi
@@ -199,6 +200,20 @@ class MyComponent extends React.Component {
 }
 
 export default curious(MyComponent);
+```
+
+#### `curi-react-active`
+
+[package](/packages/curi-react-active) + [source](/packages/curi-react-active/src)
+
+A component that modifies its `children` element when its `name` matches the current response's `name`. This component relies on the `curi-addon-active` addon.
+
+```js
+// when the response matches the <Active> component's props, the
+// <div> will have its props modified by the merge function.
+<Active name='Album' params={{ albumId: 7 }} merge={merge}>
+  <div>...</div>
+</Active>
 ```
 
 ## Examples
