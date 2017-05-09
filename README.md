@@ -29,6 +29,7 @@ Packages:
   * [curi-react-redirect](#curi-react-redirect)
   * [curi-react-curious](#curi-react-curious)
   * [curi-react-active](#curi-react-active)
+  * [curi-react-clickable](#curi-react-clickable)
 * [Examples](#examples)
 
 ## curi
@@ -214,6 +215,17 @@ A component that modifies its `children` element when its `name` matches the cur
 <Active name='Album' params={{ albumId: 7 }} merge={merge}>
   <div>...</div>
 </Active>
+```
+
+#### `curi-react-clickable`
+
+[package](/packages/curi-react-clickable) + [source](/packages/curi-react-clickable/src)
+
+A component that lets you make any component navigate by clicking it. **Use with caution for web applications**
+
+```js
+<Clickable component={MyComponent} to='My View'>Go to my view</Clickable>
+// will render <MyComponent onClick={...}>Go to my view</MyComponent>
 ```
 
 ## Examples

@@ -14,3 +14,4 @@ This directory contains general curi docs. For packages specific documentation, 
   * [`<Block>`](/packages/curi-react-block#block)
   * [`curious()`](/packages/curi-react-curious#curious)
   * [`<Active>`](/packages/curi-react-active#active)
+  * [`<Clickable>`](/packages/curi-react-clickable#clickable)
