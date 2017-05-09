@@ -13,7 +13,7 @@ You can test it out with these small demos:
 * [CodeSandbox](https://codesandbox.io/embed/gLX5W2gvj)
 * [CodePen](https://codepen.io/pshrmn/pen/mmebOK)
 
-For a reference on some of the terms used with Curi, please see the [glossary](./docs/GLOSSARY.md)
+For a reference to some of the terms used with Curi, please see the [glossary](./docs/GLOSSARY.md)
 
 Packages:
 * [curi](#curi)
