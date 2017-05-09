@@ -2,7 +2,15 @@
 
 Here, we will setup a basic Curi application by creating a Curi configuration object.
 
-## Import
+## Install
+
+We will need to install `curi` as well as the `history` package.
+
+```sh
+npm install --save history curi
+```
+
+## Creating a configuration object
 
 The default export from the `curi` package is a function that creates a configuration object. You can name it anything you like, but I prefer to use `createConfig`.
 
@@ -94,7 +102,7 @@ config.ready().then(response => {
 })
 ```
 
-## Subscribing
+## Subscribing to the configuration object
 
 As stated above, you can pass a function to the configuration object's `subscribe` method and that function will be called whenever a response object is created.
 
@@ -106,7 +114,7 @@ function renderMyApplication(response) {
 config.subscribe(renderMyApplication);
 ```
 
-## Linking
+## Linking to registered routes
 
 Every Curi configuration object has a `pathname` addon. You can use this to generate links to navigate within your application.
 
@@ -123,7 +131,7 @@ function makeLink(name, params, text) {
 }
 ```
 
-## Rendering
+## Rendering your application
 
 The above subscribing/linking sections demonstrate how to render an application using plain JavaScript. Curi doesn't care how you render your application, it is just concerned with generating responses when the location changes.
 
