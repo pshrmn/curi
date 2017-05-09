@@ -2,6 +2,7 @@
 
 * Tutorials
   * [01 - Curi](./tutorials-01-curi.md)
+  * [02 - Curi and React](./tutorials-02-curi-react.md)
 
 This directory contains general curi docs. For packages specific documentation, please use the links below.
 

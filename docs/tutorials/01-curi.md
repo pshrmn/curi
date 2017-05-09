@@ -122,3 +122,9 @@ function makeLink(name, params, text) {
   return a;
 }
 ```
+
+## Rendering
+
+The above subscribing/linking sections demonstrate how to render an application using plain JavaScript. Curi doesn't care how you render your application, it is just concerned with generating responses when the location changes.
+
+Rendering with plain JavaScript works, but it can be a pain to deal with. Curi also provides packages to use Curi with a React application. Please check out the [Curi/React tutorial](./02-curi-react.md) to learn how to do this.
