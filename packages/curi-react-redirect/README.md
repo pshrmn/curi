@@ -9,12 +9,17 @@ npm install --save curi-react-redirect
 ### UMD
 
 ```html
-<script src="https://unpkg.com/curi-react-redirect@0.1.0/umd/curi-react-redirect.js"></script>
-<!-- there is also a min script: curi-react-redirect.min.js -->
+<script src="https://unpkg.com/curi-react-redirect@0.1.1/umd/curi-react-redirect.js"></script>
 <script type="text/javascript">
   const Redirect = window.CuriReactRedirect;
 </script>
 ```
+
+The version number above may not always be accurate. To ensure that you are using the most
+up to date version of `curi-react-redirect`, open https://unpkg.com/curi-react-redirect/ in your
+browser and manually navigate to the umd/curi-react-redirect.js file. That will provide you
+with the URI of the most recent release. There is also a minimized version of the bundle
+if you change the file name in the URI to "curi-react-redirect.min.js"
 
 **Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
 

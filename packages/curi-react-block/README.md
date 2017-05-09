@@ -10,11 +10,16 @@ npm install --save curi-react-block
 
 ```html
 <script src="https://unpkg.com/curi-react-block@0.1.0/umd/curi-react-block.js"></script>
-<!-- there is also a min script: curi-react-block.min.js -->
 <script type="text/javascript">
   const Block = window.CuriReactBlock;
 </script>
 ```
+
+The version number above may not always be accurate. To ensure that you are using the most
+up to date version of `curi-react-block`, open https://unpkg.com/curi-react-block/ in your
+browser and manually navigate to the umd/curi-react-block.js file. That will provide you
+with the URI of the most recent release. There is also a minimized version of the bundle
+if you change the file name in the URI to "curi-react-block.min.js"
 
 **Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
 

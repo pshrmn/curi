@@ -18,7 +18,7 @@ npm install --save curi-react
 ```
 
 The version number above may not always be accurate. To ensure that you are using the most
-up to date version of curi-react, open https://unpkg.com/curi-react/ in your
+up to date version of `curi-react`, open https://unpkg.com/curi-react/ in your
 browser and manually navigate to the umd/curi-react.js file. That will provide you
 with the URI of the most recent release. There is also a minimized version of the bundle
 if you change the file name in the URI to "curi-react.min.js"

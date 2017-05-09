@@ -10,11 +10,16 @@ npm install --save curi-middleware-query
 
 ```html
 <script src="https://unpkg.com/curi-middleware-query@0.1.0/umd/curi-middleware-query.js"></script>
-<!-- there is also a min script: curi-middleware-query.min.js -->
 <script type="text/javascript">
   const queryMiddleware = window.CuriMiddlewareQuery;
 </script>
 ```
+
+The version number above may not always be accurate. To ensure that you are using the most
+up to date version of `curi-middleware-query`, open https://unpkg.com/curi-middleware-query/ in your
+browser and manually navigate to the umd/curi-middleware-query.js file. That will provide you
+with the URI of the most recent release. There is also a minimized version of the bundle
+if you change the file name in the URI to "curi-middleware-query.min.js"
 
 ## Usage
 
