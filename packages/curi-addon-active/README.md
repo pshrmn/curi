@@ -27,5 +27,12 @@ if you change the file name in the URI to "curi-addon-active.min.js"
 ## Usage
 
 ```js
+import createConfig from 'curi';
+import createActiveAddon from 'curi-addon-active';
 
+const config = createConfig(history, routes, {
+  addons: [createActiveAddon]
+});
+
+const active = config.addons.active('Some Route', response, { id: 10 });
 ```
