@@ -1,6 +1,6 @@
 {
   "name": "curi-react",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "React web components to use with Curi",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -35,6 +35,7 @@
     "react": "^15"
   },
   "dependencies": {
+    "curi-react-active": "^0.1.0",
     "curi-react-block": "^0.1.1",
     "curi-react-curious": "^0.2.0",
     "curi-react-link": "^0.3.0",

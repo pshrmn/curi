@@ -23,7 +23,6 @@ browser and manually navigate to the umd/curi-react-active.js file. That will pr
 with the URI of the most recent release. There is also a minimized version of the bundle
 if you change the file name in the URI to "curi-react-active.min.js"
 
-
 **Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
 
 ## `<Active>`

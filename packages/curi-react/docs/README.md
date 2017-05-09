@@ -8,5 +8,7 @@ The provided components are:
 * [`<Link>`](../../curi-react-link#link)
 * [`<Redirect>`](../../curi-react-redirect#redirect)
 * [`<Block>`](../../curi-react-block#block)
+* [`curious()`](../../curi-react-curious#curious)
+* [`<Active>`](../../curi-react-active#active)
 
 If you are planning on using code splitting with your application (using a route object's `preload` function), you will want to implement some sort of "store" to keep references to the loaded components. Please see the [preloaded component store guide](./ComponentStore.md) for more details on how to do that.

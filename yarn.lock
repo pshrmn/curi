@@ -1230,19 +1230,6 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   dependencies:
     cssom "0.3.x"
 
-curi-react-block@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/curi-react-block/-/curi-react-block-0.1.1.tgz#5a15aa807af367614eb22648bd69d30f0e480177"
-  dependencies:
-    curi "^0.6.0"
-    prop-types "^15.5.8"
-
-curi-react-link@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/curi-react-link/-/curi-react-link-0.2.0.tgz#d5e0e4910dfa2ece75c8c7a85674ed5da7d6a6aa"
-  dependencies:
-    prop-types "^15.5.8"
-
 curi-react-navigator@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/curi-react-navigator/-/curi-react-navigator-0.1.1.tgz#10826c1d934c2dab4ec7acac52fa953a8cd267b3"
@@ -1250,23 +1237,7 @@ curi-react-navigator@^0.1.1:
     curi "^0.6.0"
     prop-types "^15.5.8"
 
-curi-react-redirect@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/curi-react-redirect/-/curi-react-redirect-0.1.1.tgz#41093b002092cf908ef0e5c87722aac4a96d5e25"
-  dependencies:
-    curi "^0.6.0"
-    prop-types "^15.5.8"
-
-curi-react@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/curi-react/-/curi-react-0.5.3.tgz#8ff37a639458c7c57450491fde0a6a2bd72f5ea2"
-  dependencies:
-    curi-react-block "^0.1.1"
-    curi-react-link "^0.2.0"
-    curi-react-navigator "^0.1.1"
-    curi-react-redirect "^0.1.1"
-
-curi@^0.6.0:
+"curi@ ^0.6.1", curi@^0.6.0:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/curi/-/curi-0.6.2.tgz#0b96a1d55b99435e1f4eeda33cd54da2c4ebb052"
   dependencies:
@@ -1995,7 +1966,7 @@ inquirer@^3.0.6:
     strip-ansi "^3.0.0"
     through "^2.3.6"
 
-invariant@^2.2.0, invariant@^2.2.1:
+invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   dependencies:

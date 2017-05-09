@@ -11,12 +11,17 @@ npm install --save curi-react
 ### UMD
 
 ```html
-<script src="https://unpkg.com/curi-react@0.5.0/umd/curi-react.js"></script>
-<!-- there is also a min script: curi-react.min.js -->
+<script src="https://unpkg.com/curi-react@0.6.3/umd/curi-react.js"></script>
 <script type="text/javascript">
   const { Navigator, Link, Block, Redirect} = window.CuriReact;
 </script>
 ```
+
+The version number above may not always be accurate. To ensure that you are using the most
+up to date version of curi-react, open https://unpkg.com/curi-react/ in your
+browser and manually navigate to the umd/curi-react.js file. That will provide you
+with the URI of the most recent release. There is also a minimized version of the bundle
+if you change the file name in the URI to "curi-react.min.js"
 
 **Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
 
@@ -30,6 +35,7 @@ npm install --save curi-react
 * [`<Redirect>`](../curi-react-redirect)
 * [`<Block>`](../curi-react-block)
 * [`curious()`](../curi-react-curious)
+* [`<Active>`](../curi-react-active)
 
 ## Examples
 
