@@ -1,3 +1,8 @@
+# Curi Documentation
+
+* Tutorials
+  * [01 - Curi](./tutorials-01-curi.md)
+
 This directory contains general curi docs. For packages specific documentation, please use the links below.
 
 * [`curi`](/packages/curi/docs)
