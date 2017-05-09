@@ -7,6 +7,8 @@
 
 A set of configuration-based URI routing packages.
 
+Just getting started? Please check out these [Curi tutorials](./docs/tutorials).
+
 You can test it out with these small demos:
 * [CodeSandbox](https://codesandbox.io/embed/gLX5W2gvj)
 * [CodePen](https://codepen.io/pshrmn/pen/mmebOK)

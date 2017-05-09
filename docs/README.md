@@ -1,9 +1,9 @@
 # Curi Documentation
 
 * Tutorials
-  * [01 - Curi](./tutorials/01-curi.md)
-  * [02 - Curi and React](./tutorials/02-curi-react.md)
-  * [03 - Addons](./tutorials/03-curi-addons.md)
+  * [01 - Curi](./tutorials/01-curi.md) - Learn how to setup a Curi configuration object.
+  * [02 - Curi and React](./tutorials/02-curi-react.md) - Render a simple Curi application using React.
+  * [03 - Addons](./tutorials/03-curi-addons.md) - Learn how to use Curi's addons are write your own.
 
 This directory contains general curi docs. For packages specific documentation, please use the links below.
 
