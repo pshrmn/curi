@@ -10,7 +10,7 @@ You can test it out with these small demos:
 * [CodeSandbox](https://codesandbox.io/embed/gLX5W2gvj)
 * [CodePen](https://codepen.io/pshrmn/pen/mmebOK)
 
-There are also a number of examples in the [examples](/packages/curi-examples) "package".
+There are also a number of examples in the [examples](/examples) directory.
 
 For a reference to some of the terms used with Curi, please see the [glossary](./docs/GLOSSARY.md)
 
