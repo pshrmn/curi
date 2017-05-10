@@ -1,6 +1,7 @@
 # curi
 
 [![npm][badge]][npm-link]
+
 [badge]: https://img.shields.io/npm/v/curi.svg
 [npm-link]: https://npmjs.com/package/curi
 

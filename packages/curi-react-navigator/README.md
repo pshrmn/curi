@@ -1,6 +1,7 @@
 # curi-react-navigator
 
 [![npm][badge]][npm-link]
+
 [badge]: https://img.shields.io/npm/v/curi-react-navigator.svg
 [npm-link]: https://npmjs.com/package/curi-react-navigator
 

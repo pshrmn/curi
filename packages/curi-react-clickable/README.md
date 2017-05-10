@@ -1,6 +1,7 @@
 # curi-react-clickable
 
 [![npm][badge]][npm-link]
+
 [badge]: https://img.shields.io/npm/v/curi-react-clickable.svg
 [npm-link]: https://npmjs.com/package/curi-react-clickable
 

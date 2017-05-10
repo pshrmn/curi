@@ -1,6 +1,7 @@
 # curi-react-active
 
 [![npm][badge]][npm-link]
+
 [badge]: https://img.shields.io/npm/v/curi-react-active.svg
 [npm-link]: https://npmjs.com/package/curi-react-active
 

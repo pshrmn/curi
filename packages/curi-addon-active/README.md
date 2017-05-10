@@ -1,6 +1,7 @@
 # curi-addon-active
 
 [![npm][badge]][npm-link]
+
 [badge]: https://img.shields.io/npm/v/curi-addon-active.svg
 [npm-link]: https://npmjs.com/package/curi-addon-active
 

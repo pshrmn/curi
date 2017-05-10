@@ -1,6 +1,7 @@
 # curi-addon-prefetch
 
 [![npm][badge]][npm-link]
+
 [badge]: https://img.shields.io/npm/v/curi-addon-prefetch.svg
 [npm-link]: https://npmjs.com/package/curi-addon-prefetch
 
