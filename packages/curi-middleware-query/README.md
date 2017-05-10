@@ -1,5 +1,11 @@
 # curi-middleware-query
 
+[![npm][badge]][npm-link]
+[badge]: https://img.shields.io/npm/v/curi-middleware-query.svg
+[npm-link]: https://npmjs.com/package/curi-middleware-query
+
+A middleware function that adds a `query` object to response objects.
+
 ## Install
 
 ```

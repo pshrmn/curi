@@ -1,5 +1,9 @@
 # curi-react-active
 
+[![npm][badge]][npm-link]
+[badge]: https://img.shields.io/npm/v/curi-react-active.svg
+[npm-link]: https://npmjs.com/package/curi-react-active
+
 `curi-react-active` exports an `<Active>` component that will update its child element's `props` when it is "active".
 
 ## Installation

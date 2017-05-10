@@ -1,5 +1,9 @@
 # curi-react-redirect
 
+[![npm][badge]][npm-link]
+[badge]: https://img.shields.io/npm/v/curi-react-redirect.svg
+[npm-link]: https://npmjs.com/package/curi-react-redirect
+
 ## Installation
 
 ```

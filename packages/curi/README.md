@@ -1,5 +1,9 @@
 # curi
 
+[![npm][badge]][npm-link]
+[badge]: https://img.shields.io/npm/v/curi.svg
+[npm-link]: https://npmjs.com/package/curi
+
 `curi` is a simple route configuration package for creating single page apps. Navigation is powered by [`history`](https://github.com/ReactTraining/history).
 
 [documentation](./docs)
