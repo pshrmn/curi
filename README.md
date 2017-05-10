@@ -1,6 +1,4 @@
-<p align="center">
-  <img alt="Curi - a config router" src="logo.png" />
-</p>
+<img alt="Curi - a config router" src="logo.png" />
 
 [![Travis][build-badge]][build]
 
