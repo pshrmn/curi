@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "curi": "^0.7.0",
-    "curi-react": "^0.6.3",
-    "curi-addon-active": "^0.1.1",
+    "curi-react": "^0.6.4",
+    "curi-addon-active": "^0.1.2",
     "history": "^4.6.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"

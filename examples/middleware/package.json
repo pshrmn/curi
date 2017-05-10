@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "curi": "^0.7.0",
-    "curi-middleware-query": "^0.1.0",
-    "curi-react": "^0.6.3",
+    "curi-middleware-query": "^0.1.1",
+    "curi-react": "^0.6.4",
     "history": "^4.6.1",
     "qs": "^6.4.0",
     "react": "^15.5.4",
