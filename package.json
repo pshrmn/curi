@@ -4,6 +4,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap --hoist --concurrency=1",
     "prettier": "lerna run prettier",
+    "update-dep-versions": "lerna publish --skip-git --skip-npm",
     "test": "lerna run test --stream"
   },
   "author": "Paul Sherman",

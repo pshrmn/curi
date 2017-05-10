@@ -1,6 +1,6 @@
 {
   "name": "curi-react-curious",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A higher-order component that provides access to Curi objects through props",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -33,7 +33,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi-react-navigator": "^0.1.1",
+    "curi-react-navigator": "^0.2.1",
     "react": "^15"
   },
   "dependencies": {

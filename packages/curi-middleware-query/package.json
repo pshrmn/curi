@@ -1,6 +1,6 @@
 {
   "name": "curi-middleware-query",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Add a query property to Curi response objects",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -31,7 +31,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi": "^0.6.1"
+    "curi": "^0.7.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

@@ -1,6 +1,6 @@
 {
   "name": "curi-react-clickable",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A generic component to make components navigation-friendly in a Curi application",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -32,7 +32,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi-react-navigator": "^0.1.1",
+    "curi-react-navigator": "^0.2.0",
     "react": "^15"
   },
   "dependencies": {
