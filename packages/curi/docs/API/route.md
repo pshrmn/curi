@@ -25,7 +25,7 @@ A `path-to-regexp` style string. This should **not** have a leading slash. The s
 
 If you need to provide different path options that [the defaults](https://github.com/pillarjs/path-to-regexp#usage) used by `path-to-regexp`, you should specify them with a `pathOptions` object.
 
-**Note:** If a route has a 
+**Note:** If a route has a `children` array property, it will **always** have the `end` path option set to `false`.
 
 #### `value`
 
