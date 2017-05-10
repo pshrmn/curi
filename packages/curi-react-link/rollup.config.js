@@ -2,6 +2,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
+import replace from 'rollup-plugin-replace';
 
 const config = {
   entry: 'src/index.js',
@@ -23,12 +24,22 @@ const config = {
     resolve(),
     commonjs({
       include: /node_modules/
-    }),
+    })
   ]
 };
 
 if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(uglify())
+  config.plugins.push(
+    uglify(),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
+  )
+} else {
+  config.plugins.push(
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('development')
+    })
+  )
 }
-
 export default config;
