@@ -1,8 +1,8 @@
-# Preloaded Component Store
+# Code Splitting Components
 
 Code splitting with the `import()` API provided by Webpack allows you to reduce the amount of content needed to download when  your application first loads. `import()` returns a Promise, but React can't render a Promise. What you actually want is the component that is loaded by the import call.
 
-If you are using code splitting with a Curi/React application, what you will want to do is to store references to the exported from component. The most simple solution to this would be to use an object. When the `import()` Promise resolves, you would use the route's name to store the loaded component.
+If you are using code splitting with a Curi/React application, what you will want to do is to store references to the exported from component. The simplest solution to this would be to use an object. When the `import()` Promise resolves, you would use the route's name to store the loaded component.
 
 When you are code splitting, you won't have a direct reference to a route's component, so you will need to also use the `call` property of the route instead of `value.
 

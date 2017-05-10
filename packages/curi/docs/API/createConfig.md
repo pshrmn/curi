@@ -20,7 +20,7 @@ If the best-matched route has either a `preload` and/or `load` loading function,
 
 ```js
 const history = createBrowserHistory();
-const conf = createConfig(history, uris);
+const conf = createConfig(history, routes);
 
 conf.subscribe((response) => {
   // render the application based on the response

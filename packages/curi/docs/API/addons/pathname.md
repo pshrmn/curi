@@ -1,6 +1,6 @@
 # pathname addon
 
-The `pathname` addon allows you to generate location pathnames for `uri`s simply by knowing the `uri`'s name. This even works with nested `uri`s by joining their path with their ancestors' paths.
+The `pathname` addon allows you to generate location pathnames for routes simply by knowing the route's name. This even works with nested routes by joining their path with their ancestors' paths.
 
 The `pathname` addon is **always** included in the config's addons.
 
@@ -9,23 +9,23 @@ The `pathname` addon is **always** included in the config's addons.
 import createConfig from 'curi/createConfig';
 
 const history = ...;
-const uris = [...];
-const config = createConfig(history, uris);
+const routes = [...];
+const config = createConfig(history, routes);
 
 // with other addons
 import { prefetch, pathname } from 'curi/addons';
 import createConfig from 'curi/createConfig';
 
 const history = ...;
-const uris = [...];
-const config = createConfig(history, uris, [ pathname, prefetch ]);
+const routes = [...];
+const config = createConfig(history, routes, { addons: [pathname, prefetch] });
 ```
 
-`path-to-regexp` is used to [compile](https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp) the concatenated `uri` paths so that any params can be properly inserted into the generated pathname.
+`path-to-regexp` is used to [compile](https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp) the concatenated route paths so that any params can be properly inserted into the generated pathname.
 
 
 ```js
-const uris = [
+const routes = [
   {
     name: 'Country',
     path: ':country',
@@ -44,7 +44,7 @@ const uris = [
   }
 ];
 
-const config = createConfig(history, uris);
+const config = createConfig(history, routes);
 const pathname = config.addons.pathname('State', { country: 'Mexico', State, 'Chihuahua' })
 // pathname === '/Mexico/Chihuahua'
 ```
@@ -53,7 +53,7 @@ It is important that params have unique names in their hierarchy tree so that wh
 
 ```js
 // don't do this!
-const uris = [
+const routes = [
   {
     name: 'Country',
     path: ':id',
@@ -71,7 +71,7 @@ const uris = [
     ]
   }
 ];
-const config = createConfig(history, uris);
+const config = createConfig(history, routes);
 const pathname = config.addons.pathname('City', { id: 'Paris' })
 // pathname === '/Paris/Paris/Paris'
 ```
