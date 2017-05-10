@@ -213,7 +213,11 @@ describe('<Navigator>', () => {
       const response = { name: 'Home' };
 
       const wrapper = mount(
-        <Navigator config={fakeConfig} response={response} children={() => <ConfigReporter />} />
+        <Navigator
+          config={fakeConfig}
+          response={response}
+          children={() => <ConfigReporter />}
+        />
       );
       expect(receivedContext.curiResponse).toBe(response);
     });

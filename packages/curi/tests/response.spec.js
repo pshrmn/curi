@@ -58,7 +58,7 @@ describe('Response', () => {
   });
 
   describe('fail', () => {
-    it('sets the response\'s error property', () => {
+    it("sets the response's error property", () => {
       const resp = new Response();
       resp.fail('This was a disaster');
       expect(resp.error).toBe('This was a disaster');
@@ -100,7 +100,9 @@ describe('Response', () => {
       const retValue = 'Hakuna Matata';
       const fn = jest.fn(() => retValue);
       const resp = new Response();
-      resp.add(createRoute({ name: 'Phrase', path: 'hakuna-matata', call: fn }));
+      resp.add(
+        createRoute({ name: 'Phrase', path: 'hakuna-matata', call: fn })
+      );
       resp.call();
       expect(fn.mock.calls.length).toBe(1);
       expect(resp.body).toBe(retValue);

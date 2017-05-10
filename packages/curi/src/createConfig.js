@@ -42,10 +42,7 @@ function createConfig(history, routeArray, options = {}) {
     }
     const { preload, load } = resp.uri;
 
-    return Promise.all([
-      preload ? preload() : null,
-      load ? load(resp) : null
-    ])
+    return Promise.all([preload ? preload() : null, load ? load(resp) : null])
       .catch(err => {
         // when either fails, set the error message
         resp.fail(err);
@@ -53,7 +50,7 @@ function createConfig(history, routeArray, options = {}) {
       .then(() => {
         resp.call();
         return resp;
-      })
+      });
   };
 
   const setMostRecentKey = location => {
@@ -117,7 +114,7 @@ function createConfig(history, routeArray, options = {}) {
   };
 
   const ready = () =>
-    (previousResponse ? Promise.resolve(previousResponse) : prepareResponse());
+    previousResponse ? Promise.resolve(previousResponse) : prepareResponse();
 
   // now that everything is defined, actually do the setup
   setup(routeArray);

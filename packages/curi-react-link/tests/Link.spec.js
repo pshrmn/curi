@@ -120,7 +120,7 @@ describe('<Link>', () => {
       expect(() => {
         const wrapper = shallow(
           <Link to="Test" active={{ merge }}>Test</Link>,
-          { context: { curi: config, curiResponse: fakeResponse }}
+          { context: { curi: config, curiResponse: fakeResponse } }
         );
       }).toThrow(
         'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -130,13 +130,9 @@ describe('<Link>', () => {
 
     it("does nothing if the <Link>'s props do not match the current response's", () => {
       const history = createMemoryHistory();
-      const config = createConfig(
-        history,
-        [{ name: 'Test', path: 'test' }],
-        {
-          addons: [createActiveAddon]
-        }
-      );
+      const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+        addons: [createActiveAddon]
+      });
       const fakeResponse = { name: 'Other' };
       function merge(props) {
         props.className += ' active';
@@ -144,8 +140,8 @@ describe('<Link>', () => {
       }
 
       const wrapper = shallow(
-        <Link to="Test" className='test' active={{ merge }}>Test</Link>,
-        { context: { curi: config, curiResponse: fakeResponse }}
+        <Link to="Test" className="test" active={{ merge }}>Test</Link>,
+        { context: { curi: config, curiResponse: fakeResponse } }
       );
       const link = wrapper.find('a');
       expect(link.prop('className')).toBe('test');
@@ -153,13 +149,9 @@ describe('<Link>', () => {
 
     it("calls merge function when <Link>'s props match the current response's", () => {
       const history = createMemoryHistory();
-      const config = createConfig(
-        history,
-        [{ name: 'Test', path: 'test' }],
-        {
-          addons: [createActiveAddon]
-        }
-      );
+      const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+        addons: [createActiveAddon]
+      });
       const fakeResponse = { name: 'Test', params: {} };
       function merge(props) {
         props.className += ' active';
@@ -167,14 +159,14 @@ describe('<Link>', () => {
       }
 
       const wrapper = shallow(
-        <Link to="Test" className='test' active={{ merge }}>Test</Link>,
-        { context: { curi: config, curiResponse: fakeResponse }}
+        <Link to="Test" className="test" active={{ merge }}>Test</Link>,
+        { context: { curi: config, curiResponse: fakeResponse } }
       );
-      const link = wrapper.find('a')
+      const link = wrapper.find('a');
       expect(link.prop('className')).toBe('test active');
     });
 
-    it("works with partial matches", () => {
+    it('works with partial matches', () => {
       const history = createMemoryHistory();
       const config = createConfig(
         history,
@@ -182,9 +174,7 @@ describe('<Link>', () => {
           {
             name: 'Test',
             path: 'test',
-            children: [
-              { name: 'Nested', path: 'nested' }
-            ]
+            children: [{ name: 'Nested', path: 'nested' }]
           }
         ],
         {
@@ -198,12 +188,14 @@ describe('<Link>', () => {
       }
 
       const wrapper = shallow(
-        <Link to="Test" className='test' active={{ partial: true, merge }}>Test</Link>,
-        { context: { curi: config, curiResponse: fakeResponse }}
+        <Link to="Test" className="test" active={{ partial: true, merge }}>
+          Test
+        </Link>,
+        { context: { curi: config, curiResponse: fakeResponse } }
       );
-      const link = wrapper.find('a')
+      const link = wrapper.find('a');
       expect(link.prop('className')).toBe('test active');
-    })
+    });
   });
 
   describe('clicking a link', () => {
@@ -236,12 +228,9 @@ describe('<Link>', () => {
         history.push = jest.fn();
         const onClick = jest.fn();
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
-        const wrapper = shallow(
-          <Link to="Test" onClick={onClick}>Test</Link>,
-          {
-            context: { curi: config }
-          }
-        );
+        const wrapper = shallow(<Link to="Test" onClick={onClick}>Test</Link>, {
+          context: { curi: config }
+        });
         const leftClickEvent = {
           defaultPrevented: false,
           preventDefault() {
@@ -265,12 +254,9 @@ describe('<Link>', () => {
           event.preventDefault();
         });
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
-        const wrapper = shallow(
-          <Link to="Test" onClick={onClick}>Test</Link>,
-          {
-            context: { curi: config }
-          }
-        );
+        const wrapper = shallow(<Link to="Test" onClick={onClick}>Test</Link>, {
+          context: { curi: config }
+        });
         const leftClickEvent = {
           defaultPrevented: false,
           preventDefault() {

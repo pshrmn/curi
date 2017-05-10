@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import invariant from 'invariant'
+import invariant from 'invariant';
 
 class Clickable extends React.Component {
   static propTypes = {
-    component: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func
-    ]).isRequired,
+    component: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+      .isRequired,
     to: PropTypes.string,
     params: PropTypes.object,
     details: PropTypes.object,
@@ -62,7 +60,15 @@ class Clickable extends React.Component {
   }
 
   render() {
-    const { component:Component, to, params, details, onClick, active, ...rest } = this.props;
+    const {
+      component: Component,
+      to,
+      params,
+      details,
+      onClick,
+      active,
+      ...rest
+    } = this.props;
     const { curi, curiResponse } = this.context;
     let props = rest;
     if (active) {

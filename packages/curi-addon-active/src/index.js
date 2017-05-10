@@ -11,14 +11,16 @@ function acceptableRouteName(name, response, partial) {
 function createActiveAddon() {
   const routeParams = {};
 
-	return {
+  return {
     name: 'active',
     register: (route, parentKeys) => {
       let { name, keys } = route;
       if (keys == null) {
         keys = [];
       }
-      const fullKeys = Array.isArray(parentKeys)? [...parentKeys, ...keys] : keys;
+      const fullKeys = Array.isArray(parentKeys)
+        ? [...parentKeys, ...keys]
+        : keys;
       if (routeParams[name] !== undefined) {
         console.warn(
           'A route function with the name "' +
@@ -39,7 +41,7 @@ function createActiveAddon() {
         return false;
       }
       const routeKeysToCheck = routeParams[name];
-      for (let r=0, length=routeKeysToCheck.length; r<length; r++) {
+      for (let r = 0, length = routeKeysToCheck.length; r < length; r++) {
         const key = routeKeysToCheck[r];
         const param = params[key];
         if (!param || param !== response.params[key]) {

@@ -11,7 +11,7 @@ describe('<Clickable>', () => {
     console.error = () => {};
 
     expect(() => {
-      shallow(<Clickable component='div'to="Test">Test</Clickable>);
+      shallow(<Clickable component="div" to="Test">Test</Clickable>);
     }).toThrow(
       'You are attempting to render a <Clickable> without access to a Curi config. ' +
         'Please ensure that your component has access to a Curi config through its ' +
@@ -26,9 +26,11 @@ describe('<Clickable>', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(
-        <Clickable component='div' to="Test">Test</Clickable>, {
-        context: { curi: config }
-      });
+        <Clickable component="div" to="Test">Test</Clickable>,
+        {
+          context: { curi: config }
+        }
+      );
       expect(wrapper.type()).toBe('div');
     });
 
@@ -37,9 +39,11 @@ describe('<Clickable>', () => {
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const TestComponent = () => null;
       const wrapper = shallow(
-        <Clickable component={TestComponent} to="Test">Test</Clickable>, {
-        context: { curi: config }
-      });
+        <Clickable component={TestComponent} to="Test">Test</Clickable>,
+        {
+          context: { curi: config }
+        }
+      );
       expect(wrapper.type()).toBe(TestComponent);
     });
   });
@@ -126,8 +130,10 @@ describe('<Clickable>', () => {
 
       expect(() => {
         const wrapper = shallow(
-          <Clickable component='div' to="Test" active={{ merge }}>Test</Clickable>,
-          { context: { curi: config, curiResponse: fakeResponse }}
+          <Clickable component="div" to="Test" active={{ merge }}>
+            Test
+          </Clickable>,
+          { context: { curi: config, curiResponse: fakeResponse } }
         );
       }).toThrow(
         'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -137,13 +143,9 @@ describe('<Clickable>', () => {
 
     it("does nothing if the <Clickable>'s props do not match the current response's", () => {
       const history = createMemoryHistory();
-      const config = createConfig(
-        history,
-        [{ name: 'Test', path: 'test' }],
-        {
-          addons: [createActiveAddon]
-        }
-      );
+      const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+        addons: [createActiveAddon]
+      });
       const fakeResponse = { name: 'Other' };
       function merge(props) {
         props.className += ' active';
@@ -152,27 +154,23 @@ describe('<Clickable>', () => {
 
       const wrapper = shallow(
         <Clickable
-          component='div'
+          component="div"
           to="Test"
-          className='test'
+          className="test"
           active={{ merge }}
         >
           Test
         </Clickable>,
-        { context: { curi: config, curiResponse: fakeResponse }}
+        { context: { curi: config, curiResponse: fakeResponse } }
       );
       expect(wrapper.prop('className')).toBe('test');
     });
 
     it("calls merge function when <Clickable>'s props match the current response's", () => {
       const history = createMemoryHistory();
-      const config = createConfig(
-        history,
-        [{ name: 'Test', path: 'test' }],
-        {
-          addons: [createActiveAddon]
-        }
-      );
+      const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+        addons: [createActiveAddon]
+      });
       const fakeResponse = { name: 'Test', params: {} };
       function merge(props) {
         props.className += ' active';
@@ -181,19 +179,19 @@ describe('<Clickable>', () => {
 
       const wrapper = shallow(
         <Clickable
-          component='div'
+          component="div"
           to="Test"
-          className='test'
+          className="test"
           active={{ merge }}
         >
           Test
         </Clickable>,
-        { context: { curi: config, curiResponse: fakeResponse }}
+        { context: { curi: config, curiResponse: fakeResponse } }
       );
       expect(wrapper.prop('className')).toBe('test active');
     });
 
-    it("works with partial matches", () => {
+    it('works with partial matches', () => {
       const history = createMemoryHistory();
       const config = createConfig(
         history,
@@ -201,9 +199,7 @@ describe('<Clickable>', () => {
           {
             name: 'Test',
             path: 'test',
-            children: [
-              { name: 'Nested', path: 'nested' }
-            ]
+            children: [{ name: 'Nested', path: 'nested' }]
           }
         ],
         {
@@ -218,17 +214,17 @@ describe('<Clickable>', () => {
 
       const wrapper = shallow(
         <Clickable
-          component='div'
+          component="div"
           to="Test"
-          className='test'
+          className="test"
           active={{ partial: true, merge }}
         >
           Test
         </Clickable>,
-        { context: { curi: config, curiResponse: fakeResponse }}
+        { context: { curi: config, curiResponse: fakeResponse } }
       );
       expect(wrapper.prop('className')).toBe('test active');
-    })
+    });
   });
 
   describe('clicking a clickable', () => {
@@ -238,9 +234,11 @@ describe('<Clickable>', () => {
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(
-        <Clickable component='div' to="Test">Test</Clickable>, {
-        context: { curi: config }
-      });
+        <Clickable component="div" to="Test">Test</Clickable>,
+        {
+          context: { curi: config }
+        }
+      );
       const leftClickEvent = {
         defaultPrevented: false,
         preventDefault() {
@@ -263,7 +261,9 @@ describe('<Clickable>', () => {
         const onClick = jest.fn();
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(
-          <Clickable component='div' to="Test" onClick={onClick}>Test</Clickable>,
+          <Clickable component="div" to="Test" onClick={onClick}>
+            Test
+          </Clickable>,
           {
             context: { curi: config }
           }
@@ -291,9 +291,11 @@ describe('<Clickable>', () => {
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(
-        <Clickable component='div' to="Test">Test</Clickable>, {
-        context: { curi: config }
-      });
+        <Clickable component="div" to="Test">Test</Clickable>,
+        {
+          context: { curi: config }
+        }
+      );
       const preventedEvent = {
         defaultPrevented: true,
         preventDefault() {

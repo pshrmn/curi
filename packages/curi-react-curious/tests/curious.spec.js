@@ -8,9 +8,9 @@ describe('curious', () => {
     const fakeResponse = { name: 'Home', status: 200 };
     const TestComponent = curious(() => null);
 
-    const wrapper = shallow((
-      <TestComponent />
-    ), { context: { curi: fakeConfig, curiResponse: fakeResponse }});
+    const wrapper = shallow(<TestComponent />, {
+      context: { curi: fakeConfig, curiResponse: fakeResponse }
+    });
     expect(wrapper.prop('curi')).toBe(fakeConfig);
   });
 
@@ -19,13 +19,13 @@ describe('curious', () => {
     const fakeResponse = { name: 'Home', status: 200 };
     const TestComponent = curious(() => null);
 
-    const wrapper = shallow((
-      <TestComponent />
-    ), { context: { curi: fakeConfig, curiResponse: fakeResponse }});
+    const wrapper = shallow(<TestComponent />, {
+      context: { curi: fakeConfig, curiResponse: fakeResponse }
+    });
     expect(wrapper.prop('response')).toBe(fakeResponse);
   });
 
-  it('hoists wrapped component\'s static properties', () => {
+  it("hoists wrapped component's static properties", () => {
     class TestComponent extends React.Component {
       render() {
         return null;
@@ -44,12 +44,12 @@ describe('curious', () => {
         return null;
       }
     }
-    const Wrapped = curious(TestComponent)
+    const Wrapped = curious(TestComponent);
 
     let ref;
-    const wrapper = mount((
-      <Wrapped internalRef={node => ref = node} />
-    ), { context: { curi: fakeConfig, curiResponse: fakeResponse }});
+    const wrapper = mount(<Wrapped internalRef={node => (ref = node)} />, {
+      context: { curi: fakeConfig, curiResponse: fakeResponse }
+    });
     expect(ref).toBeInstanceOf(TestComponent);
     const wrappedTest = wrapper.find(TestComponent);
     expect(ref).toBe(wrappedTest.node);

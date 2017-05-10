@@ -50,12 +50,18 @@ describe('createRoute', () => {
 
       describe('keys', () => {
         it('is the array of param names parsed from the path', () => {
-          const testRoute = createRoute({ name: 'Test', path: ':one/:two/:three' });
+          const testRoute = createRoute({
+            name: 'Test',
+            path: ':one/:two/:three'
+          });
           expect(testRoute.keys).toEqual(['one', 'two', 'three']);
         });
 
         it('is an empty array when the path has no params', () => {
-          const testRoute = createRoute({ name: 'test', path: 'one/two/three' });
+          const testRoute = createRoute({
+            name: 'test',
+            path: 'one/two/three'
+          });
           expect(testRoute.keys).toEqual([]);
         });
       });
@@ -63,7 +69,11 @@ describe('createRoute', () => {
       describe('value', () => {
         it('sets the value that will be returned by the render function', () => {
           const value = 'Latitude';
-          const testRoute = createRoute({ name: 'Value', path: 'value', value });
+          const testRoute = createRoute({
+            name: 'Value',
+            path: 'value',
+            value
+          });
           expect(testRoute.render()).toBe(value);
         });
 

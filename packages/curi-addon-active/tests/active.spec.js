@@ -14,7 +14,7 @@ describe('active addon', () => {
   });
 
   describe('register', () => {
-    it("returns the array of param keys for the route", () => {
+    it('returns the array of param keys for the route', () => {
       const player = {
         name: 'Player',
         path: 'player/:id',
@@ -40,7 +40,7 @@ describe('active addon', () => {
       expect(storedKeys).toEqual(['albumId', 'photoId']);
     });
 
-    it("stores empty array when route has no params", () => {
+    it('stores empty array when route has no params', () => {
       const empty = {
         name: 'Empty',
         path: 'empty',
@@ -83,11 +83,7 @@ describe('active addon', () => {
         keys: ['id']
       };
       active.register(player);
-      const playerIsActive = active.get(
-        'Player',
-        { name: 'Coach' },
-        { id: 6 }
-      );
+      const playerIsActive = active.get('Player', { name: 'Coach' }, { id: 6 });
       expect(playerIsActive).toBe(false);
     });
 
@@ -100,7 +96,7 @@ describe('active addon', () => {
       active.register(player);
       const playerIsActive = active.get(
         'Player',
-        { name: 'Player', params: { id: 7 }},
+        { name: 'Player', params: { id: 7 } },
         { id: 6 }
       );
       expect(playerIsActive).toBe(false);
@@ -115,7 +111,7 @@ describe('active addon', () => {
       active.register(player);
       const playerIsActive = active.get(
         'Player',
-        { name: 'Coach', partials: ['Player'], params: { id: 6 }},
+        { name: 'Coach', partials: ['Player'], params: { id: 6 } },
         { id: 6 }
       );
       expect(playerIsActive).toBe(false);
@@ -130,7 +126,7 @@ describe('active addon', () => {
       active.register(player);
       const playerIsActive = active.get(
         'Player',
-        { name: 'Player', params: { id: 7 }},
+        { name: 'Player', params: { id: 7 } },
         { id: 7 }
       );
       expect(playerIsActive).toBe(true);
@@ -145,7 +141,7 @@ describe('active addon', () => {
       active.register(player);
       const playerIsActive = active.get(
         'Player',
-        { name: 'Coach', partials: ['Player'], params: { id: 6 }},
+        { name: 'Coach', partials: ['Player'], params: { id: 6 } },
         { id: 6 },
         true
       );

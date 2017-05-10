@@ -70,7 +70,9 @@ describe('createConfig', () => {
         reset: () => {},
         get: () => {}
       });
-      const config = createConfig(history, routes, { addons: [createFakeAddon] });
+      const config = createConfig(history, routes, {
+        addons: [createFakeAddon]
+      });
       expect(config.addons.fake).toBeDefined();
     });
 
@@ -377,13 +379,15 @@ describe('createConfig', () => {
       });
 
       it('resolved value has error either load/preload fail', done => {
-        const routes = [{
-          name: 'Contact',
-          path: 'contact',
-          load: () => {
-            return Promise.reject('This is an error');
+        const routes = [
+          {
+            name: 'Contact',
+            path: 'contact',
+            load: () => {
+              return Promise.reject('This is an error');
+            }
           }
-        }];
+        ];
         const history = createMemoryHistory({
           initialEntries: ['/contact']
         });
