@@ -1,5 +1,5 @@
 {
-  "name": "curi-middleware-experiment",
+  "name": "curi-middleware-example",
   "version": "0.1.0",
   "description": "Use middleware in a Curi application",
   "main": "index.js",
@@ -20,9 +20,9 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "curi": "^0.6.2",
+    "curi": "^0.7.0",
     "curi-middleware-query": "^0.1.0",
-    "curi-react": "^0.5.3",
+    "curi-react": "^0.6.3",
     "history": "^4.6.1",
     "qs": "^6.4.0",
     "react": "^15.5.4",

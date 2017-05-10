@@ -1,5 +1,5 @@
 {
-  "name": "curi-server-rendering",
+  "name": "curi-server-rendering-example",
   "version": "0.1.0",
   "description": "Server rendering with curi",
   "main": "index.js",
@@ -26,8 +26,8 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "curi": "^0.6.2",
-    "curi-react": "^0.5.3",
+    "curi": "^0.7.0",
+    "curi-react": "^0.6.3",
     "express": "^4.15.2",
     "history": "^4.6.1",
     "react": "^15.5.4",

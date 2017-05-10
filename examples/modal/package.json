@@ -1,5 +1,5 @@
 {
-  "name": "curi-modal-experiment",
+  "name": "curi-modal-example",
   "version": "0.1.0",
   "description": "Render a modal (pinterest/twitter)",
   "main": "index.js",

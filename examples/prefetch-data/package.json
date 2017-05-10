@@ -1,5 +1,5 @@
 {
-  "name": "curi-prefetch-data",
+  "name": "curi-prefetch-data-example",
   "version": "0.1.0",
   "description": "Prefetch data before navigating",
   "main": "index.js",
@@ -24,8 +24,8 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "curi": "^0.6.2",
-    "curi-react": "^0.5.3",
+    "curi": "^0.7.0",
+    "curi-react": "^0.6.3",
     "curi-addon-prefetch": "^0.1.0",
     "history": "^4.6.1",
     "nprogress": "^0.2.0",

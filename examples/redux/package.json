@@ -1,5 +1,5 @@
 {
-  "name": "curi-redux-experiment",
+  "name": "curi-redux-example",
   "version": "0.1.0",
   "description": "Use redux with curi",
   "main": "index.js",
@@ -16,8 +16,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "curi": "^0.6.2",
-    "curi-react": "^0.5.3",
+    "curi": "^0.7.0",
+    "curi-react": "^0.6.3",
     "history": "^4.6.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

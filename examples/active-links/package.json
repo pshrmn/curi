@@ -1,5 +1,5 @@
 {
-  "name": "curi-active-links",
+  "name": "curi-active-links-example",
   "version": "0.1.0",
   "description": "Style links differently when they are active",
   "main": "index.js",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "curi": "^0.7.0",
-    "curi-react": "^0.5.3",
+    "curi-react": "^0.6.3",
     "curi-addon-active": "^0.1.1",
     "history": "^4.6.1",
     "react": "^15.5.4",
