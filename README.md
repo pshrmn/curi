@@ -34,7 +34,7 @@ Packages:
 
 ## curi
 
-[![npm][curi-version-badge][npm-curi]
+[![npm][curi-version-badge]][npm-curi]
 
 [package](/packages/curi) + [source](/packages/curi/src) + [documentation](/packages/curi/docs)
 
@@ -128,7 +128,7 @@ Curi isn't limited to use with React, but it works well with React. These are so
 
 #### `curi-react`
 
-[![npm][curi-react-version-badge)]][npm-curi-react]
+[![npm][curi-react-version-badge]][npm-curi-react]
 
 [package](/packages/curi-react) + [source](/packages/curi-react/src) + [documentation](/packages/curi-react/docs)
 
@@ -175,7 +175,7 @@ A component that receives a Curi configuration object as a prop and subscribes t
 
 #### `curi-react-link`
 
-[![npm][curi-react-link-version-badge)]][npm-curi-react-link]
+[![npm][curi-react-link-version-badge]][npm-curi-react-link]
 
 [package](/packages/curi-react-link) + [source](/packages/curi-react-link/src)
 
@@ -195,7 +195,7 @@ A component that will give the user the opportunity to cancel navigation when so
 
 #### `curi-react-redirect`
 
-[![npm][curi-react-redirect-version-badge)]][npm-curi-react-redirect]
+[![npm][curi-react-redirect-version-badge]][npm-curi-react-redirect]
 
 [package](/packages/curi-react-redirect) + [source](/packages/curi-react-redirect/src)
 
@@ -225,7 +225,7 @@ export default curious(MyComponent);
 
 #### `curi-react-active`
 
-[![npm][uri-react-active-version-badge]][npm-curi-react-active]
+[![npm][curi-react-active-version-badge]][npm-curi-react-active]
 
 [package](/packages/curi-react-active) + [source](/packages/curi-react-active/src)
 
@@ -263,7 +263,7 @@ A component that lets you make any component navigate by clicking it. **Use with
 [npm-curi-addon-prefetch]: https://npmjs.com/package/curi-addon-prefetch
 
 [curi-addon-active-version-badge]: https://img.shields.io/npm/v/curi-addon-active.svg
-[npm-curi-addon-active-]: https://npmjs.com/package/curi-addon-active
+[npm-curi-addon-active]: https://npmjs.com/package/curi-addon-active
 
 [curi-middleware-query-version-badge]: https://img.shields.io/npm/v/curi-middleware-query.svg
 [npm-curi-middleware-query]: https://npmjs.com/package/curi-middleware-query
@@ -272,7 +272,7 @@ A component that lets you make any component navigate by clicking it. **Use with
 [npm-curi-react]: https://npmjs.com/package/curi-react
 
 [curi-react-navigator-version-badge]: https://img.shields.io/npm/v/curi-react-navigator.svg
-[npm-curi-navigator-react]: https://npmjs.com/package/curi-react-navigator
+[npm-curi-react-navigator]: https://npmjs.com/package/curi-react-navigator
 
 [curi-react-link-version-badge]: https://img.shields.io/npm/v/curi-react-link.svg
 [npm-curi-react-link]: https://npmjs.com/package/curi-react-link
