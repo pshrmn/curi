@@ -34,7 +34,7 @@ Packages:
 
 ## curi
 
-[![npm](curi-version-badge)](npm-curi)
+[![npm][curi-version-badge][npm-curi]
 
 [package](/packages/curi) + [source](/packages/curi/src) + [documentation](/packages/curi/docs)
 
@@ -98,7 +98,7 @@ The `pathname` addon is always used, so you do not need to install it separately
 
 #### `curi-addon-prefetch`
 
-[![npm](curi-addon-prefetch-version-badge)](npm-curi-addon-prefetch)
+[![npm][curi-addon-prefetch-version-badge]][npm-curi-addon-prefetch]
 
 [package](/packages/curi-addon-prefetch) + [source](/packages/curi-addon-prefetch/src/index.js) + [documentation](/packages/curi-addon-prefetch/README.md#usage)
 
@@ -106,7 +106,7 @@ The `prefetch` addon allows you to call a route's `load` function outside of nav
 
 #### `curi-addon-active`
 
-[![npm](curi-addon-active-version-badge)](npm-curi-addon-active)
+[![npm][curi-addon-active-version-badge]][npm-curi-addon-active]
 
 [package](/packages/curi-addon-active) + [source](/packages/curi-addon-active/src/index.js) + [documentation](/packages/curi-addon-active/README.md#usage)
 
@@ -116,7 +116,7 @@ The `active` addon allows you to determine if a route is "active" (its `name`/`p
 
 #### `curi-middleware-query`
 
-[![npm](curi-middleware-query-version-badge)](npm-curi-middleware-query)
+[![npm][curi-middleware-query-version-badge]][npm-curi-middleware-query]
 
 [package](/packages/curi-middleware-query) + [source](/packages/curi-middleware-query/src/index.js) + [documentation](/packages/curi-middleware-query/README.md#usage)
 
@@ -128,7 +128,7 @@ Curi isn't limited to use with React, but it works well with React. These are so
 
 #### `curi-react`
 
-[![npm](curi-react-version-badge)](npm-curi-react)
+[![npm][curi-react-version-badge)]][npm-curi-react]
 
 [package](/packages/curi-react) + [source](/packages/curi-react/src) + [documentation](/packages/curi-react/docs)
 
@@ -159,7 +159,7 @@ config.ready().then(() => {
 
 #### `curi-react-navigator`
 
-[![npm](curi-react-navigator-version-badge)](npm-curi-react-navigator)
+[![npm][curi-react-navigator-version-badge]][npm-curi-react-navigator]
 
 [package](/packages/curi-react-navigator) + [source](/packages/curi-react-navigator/src)
 
@@ -175,7 +175,7 @@ A component that receives a Curi configuration object as a prop and subscribes t
 
 #### `curi-react-link`
 
-[![npm](curi-react-link-version-badge)](npm-curi-react-link)
+[![npm][curi-react-link-version-badge)]][npm-curi-react-link]
 
 [package](/packages/curi-react-link) + [source](/packages/curi-react-link/src)
 
@@ -187,7 +187,7 @@ A component that uses route names to create HTML anchors for navigation within a
 
 #### `curi-react-block`
 
-[![npm](curi-react-block-version-badge)](npm-curi-react-block)
+[![npm][curi-react-block-version-badge]][npm-curi-react-block]
 
 [package](/packages/curi-react-block) + [source](/packages/curi-react-block/src)
 
@@ -195,7 +195,7 @@ A component that will give the user the opportunity to cancel navigation when so
 
 #### `curi-react-redirect`
 
-[![npm](curi-react-redirect-version-badge)](npm-curi-react-redirect)
+[![npm][curi-react-redirect-version-badge)]][npm-curi-react-redirect]
 
 [package](/packages/curi-react-redirect) + [source](/packages/curi-react-redirect/src)
 
@@ -203,7 +203,7 @@ A component that will automatically cause navigation when it is rendered.
 
 #### `curi-react-curious`
 
-[![npm](curi-react-curious-version-badge)](npm-curi-react-curious)
+[![npm][curi-react-curious-version-badge]][npm-curi-react-curious]
 
 [package](/packages/curi-react-curious) + [source](/packages/curi-react-curious/src)
 
@@ -225,7 +225,7 @@ export default curious(MyComponent);
 
 #### `curi-react-active`
 
-[![npm](curi-react-active-version-badge)](npm-curi-react-active)
+[![npm][uri-react-active-version-badge]][npm-curi-react-active]
 
 [package](/packages/curi-react-active) + [source](/packages/curi-react-active/src)
 
@@ -241,7 +241,7 @@ A component that modifies its `children` element when its `name` matches the cur
 
 #### `curi-react-clickable`
 
-[![npm](curi-react-clickable-version-badge)](npm-curi-react-clickable)
+[![npm][curi-react-clickable-version-badge]][npm-curi-react-clickable]
 
 [package](/packages/curi-react-clickable) + [source](/packages/curi-react-clickable/src)
 
@@ -253,7 +253,7 @@ A component that lets you make any component navigate by clicking it. **Use with
 ```
 
 
-[build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg?style=flat-square
+[build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg
 [build]: https://travis-ci.org/pshrmn/curi
 
 [curi-version-badge]: https://img.shields.io/npm/v/curi.svg
