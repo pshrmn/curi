@@ -1,6 +1,6 @@
 # Response
 
-Whenever the location changes, the `curi` config object will create a new `Response` object. The properties of this object are changed while the config object walks over its routes. Once the `Response` has been fully generated, it will create a simple JavaScript object to represent its properties. There are two possible types for this response object: regular and redirect.
+Whenever the location changes, the `curi` config object will create a new `ResponseCreator` object. The properties of this object are changed while the config object walks over its routes. Once the `ResponseCreator` has finished creating a response, it will create a simple JavaScript object to represent its properties. There are two possible types for this response object: regular and redirect.
 
 ```js
 const response = {
@@ -38,24 +38,51 @@ const redirectResponse = {
 }
 ```
 
-Generally speaking, you will not actually interact directly with the `Response`. Most of the properties will be set for you. However, you do have the opportunity to interact with it in a route's `load` property method. This gives you the opportunity redirect or "404" a route (e.g., if the route's data fetch fails).
+## Response creator methods
+
+Generally speaking, you will not actually interact directly with the `ResponseCreator`.
+
+If you are using the `load` function of a route, you will interact with a `ResponseCreator` class instead of a response object. Along with accessing its properties (e.g., `params`), the `ResponseCreator` has a few methods that you might find useful to call.
+
+#### `setData(data)`
+
+The data passed to `setData` will be available on the response object as its `data` property.
+
+This may be used alongside or in lieu of a store like Redux.If you do skip having a store, might still want to cache the results to prevent extra requests to your server.
 
 ```js
-const routes = [
-  {
-    name: 'Old Profile',
-    path: 'profile/:id',
-    load: (resp) => {
-      resp.redirect(`/user/${resp.params.id}`, 301)
-    }
-  },
-  {
-    name: 'Profile',
-    path: 'user/:id'
+{
+  name: 'User',
+  path: 'user/:id',
+  load: (resp) => {
+    return fetch(`/api/user/${resp.params.id}`)
+      .then(r => JSON.parse(r))
+      .then(data => {
+        resp.setData(data);
+      })
+      .catch(e => {
+        // do something when data loading fails
+      });
   }
-]
+}
 ```
 
-## Response creator
+#### `redirect(to, code)`
 
-If you are using the `load` function of a route, you will interact with a `ResponseCreator` class instead of a
+The `redirect` method allows you to specify a URI that we should redirect to. The default code is `301`, so if that is the type of redirect you want, you don't have to pass it.
+
+When `redirect` is called, a the response will be a "redirect response".
+
+```js
+{
+  name: 'Old Profile',
+  path: 'profile/:id',
+  load: (resp) => {
+    resp.redirect(`/user/${resp.params.id}`, 301)
+  }
+}
+```
+
+#### `fail(err)`
+
+The `fail` method can be called to "404" a load function. The `err` will be set on the response object as its `error` property. If you fail to `catch` an error in either your `preload` or `load` functions, this will be automatically called.
