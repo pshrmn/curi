@@ -1,6 +1,6 @@
 import walkRoutes from './utils/walkRoutes';
 import pathnameAddon from './addons/pathname';
-import Response from './response';
+import ResponseCreator from './utils/createResponse';
 
 function createConfig(history, routeArray, options = {}) {
   const { addons = [], middleware = [], cache = false } = options;
@@ -30,7 +30,7 @@ function createConfig(history, routeArray, options = {}) {
   };
 
   const respond = key => {
-    const resp = new Response(key, history.location);
+    const resp = new ResponseCreator(key, history.location);
     routes.some(uri => uri.match(history.location.pathname, resp));
     return resp;
   };

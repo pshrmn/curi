@@ -1,4 +1,4 @@
-class Response {
+class ResponseCreator {
   constructor(key, location) {
     this.key = key;
     this.location = location;
@@ -29,6 +29,10 @@ class Response {
     Object.assign(this.params, params);
   }
 
+  setData(data) {
+    this.data = data;
+  }
+
   call() {
     if (this.uri && this.uri.render) {
       this.body = this.uri.render();
@@ -41,7 +45,8 @@ class Response {
         key: this.key,
         location: this.location,
         status: this.status,
-        redirectTo: this.redirectTo
+        redirectTo: this.redirectTo,
+        data: this.data
       };
     }
 
@@ -53,9 +58,10 @@ class Response {
       name: this.uri ? this.uri.name : undefined,
       partials: this.partials,
       params: this.params,
+      data: this.data,
       error: this.error
     };
   }
 }
 
-export default Response;
+export default ResponseCreator;

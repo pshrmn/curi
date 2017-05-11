@@ -55,3 +55,7 @@ const routes = [
   }
 ]
 ```
+
+## Response creator
+
+If you are using the `load` function of a route, you will interact with a `ResponseCreator` class instead of a

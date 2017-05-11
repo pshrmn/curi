@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import createConfig from '../../curi/src';
-import Response from '../../curi/src/response';
+import ResponseCreator from '../../curi/src/utils/createResponse';
 import { createMemoryHistory } from 'history';
 import Navigator from '../src';
 
@@ -48,7 +48,8 @@ describe('<Navigator>', () => {
         'partials',
         'params',
         'body',
-        'error'
+        'error',
+        'data'
       ];
       expect(Object.keys(receivedResponse).length).toEqual(properties.length);
       properties.forEach(key => {
@@ -116,7 +117,7 @@ describe('<Navigator>', () => {
       const fakeConfig = {
         subscribe: jest.fn()
       };
-      const resp = new Response({ pathname: '/testing' });
+      const resp = new ResponseCreator({ pathname: '/testing' });
       const respObj = resp.asObject();
       let received;
       const children = jest.fn(response => {
@@ -133,7 +134,7 @@ describe('<Navigator>', () => {
       const fakeConfig = {
         subscribe: jest.fn()
       };
-      const resp = new Response({ pathname: '/testing' });
+      const resp = new ResponseCreator({ pathname: '/testing' });
       const respObj = resp.asObject();
       const wrapper = shallow(
         <Navigator

@@ -1,7 +1,7 @@
 import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
 import createMemoryHistory from 'history/createMemoryHistory';
-import Response from '../src/response';
+import ResponseCreator from '../src/utils/createResponse';
 
 // The subscribe function is called when subscribing  so that the
 // subscriber function is called with the original location. This has
@@ -356,7 +356,8 @@ describe('createConfig', () => {
             'name',
             'partials',
             'params',
-            'error'
+            'error',
+            'data'
           ];
           expect(Object.keys(arg).length).toEqual(properties.length);
           properties.forEach(prop => {
@@ -492,7 +493,7 @@ describe('createConfig', () => {
 
     it('passes response to load function', done => {
       const spy = jest.fn(resp => {
-        expect(resp).toBeInstanceOf(Response);
+        expect(resp).toBeInstanceOf(ResponseCreator);
         expect(resp.params.anything).toBe('hello');
       });
       const CatchAll = {
