@@ -23,7 +23,7 @@ Whenever the `Recipe List` route matches, we want to fetch a list of recipes fro
 
 The `load` function will be passed an internal `ResponseCreator` object. The `ResponseCreator` will create the response object that is emitted to subscribers. The `ResponseCreator` has a few methods that you can call in order to modify the response object that will be generated. These are covered in more detail in the [response/ResponseCreator documentation](../../packages/curi/docs/API/response.md). Here, we will cover just one of these methods: `setData`.
 
-First we will add a `load` function to our `Recipe` route. This function will make a request to our (fake) API. Then, we will call `response.
+First we will add a `load` function to our `Recipe` route. This function will make a request to our (fake) API. Then, we will call `response.setData` to attach our loaded data to the response.
 
 ```js
 {
