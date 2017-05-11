@@ -5,3 +5,4 @@
 * [03 - Addons](./03-curi-addons.md) - Learn how to use Curi's addons and write your own.
 * [04 - Middleware](./04-curi-middleware.md) - Learn how to use Curi middleware functions and write your own.
 * [05 - Code splitting](./05-code-splitting.md) - Learn how to enable code splitting to reduce the initial bundle download size of your application
+* [06 - Route loading](./06-route-loading.md) - Learn how to use the route's `load` property
