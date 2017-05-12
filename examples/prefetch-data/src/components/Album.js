@@ -1,15 +1,12 @@
 import React from 'react';
 
-import dataStore from '../dataStore';
-
 const Img = ({ width, height, color }) => {
   return (
     <div style={{ height, width, background: color, margin: 15 }}></div>
   );
 }
 
-const Album = ({ params }) => {
-  const images = dataStore.get(params.id);
+const Album = ({ params, data:images = [] }) => {
   if (!images.length) {
     return (
       <div>No images found :(</div>

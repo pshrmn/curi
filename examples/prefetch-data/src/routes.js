@@ -1,4 +1,4 @@
-import dataStore from './dataStore';
+import dataCache from './dataCache';
 import fakeAPI from './fakeAPI';
 
 import Home from './components/Home';
@@ -17,13 +17,15 @@ export default [
     load: (resp) => {
       const { id } = resp.params
       // don't re-fetch data
-      const existing = dataStore.get(id);
+      const existing = dataCache.get(id);
       if (existing) {
+        resp.setData(existing);
         return Promise.resolve(existing);
       }
       return fakeAPI(id)
         .then(data => {
-          dataStore.set(id, data);
+          resp.setData(data);
+          dataCache.set(id, data);
         })
         .catch(err => {
           resp.setStatus(404);
