@@ -182,7 +182,7 @@ function renderFunction(response) {
 
 #### ReactDOM.render
 
-Now, we are finally ready to render our application. If you recall from part one, we will need to use `config.ready` to ensure that our first response is ready. Other than that, we just render a `<Navigator>` and pass it our render function and our Curi configuration object.
+Now, we are finally ready to render our application. We just render a `<Navigator>` and pass it our render function and our Curi configuration object.
 
 ```js
 config.ready().then(() => {
@@ -193,6 +193,26 @@ config.ready().then(() => {
   ), document.getElementById('root'));
 });
 ```
+
+If you recall from part one, you can use `config.ready` to ensure that our first response is ready before rendering. If you do not, then you will need to modify your render function to handle rendering when the response is `undefined`.
+
+```js
+function renderFunction(response) {
+  if (!response) {
+    return null;
+  }
+  // ...
+}
+
+ReactDOM.render((
+  <Navigator config={config}>
+    {renderFunction}
+  </Navigator>
+), document.getElementById('root'));
+```
+
+Either approach generally works, but if you are using server-side rendering, you will have to use `config.ready` to ensure that the initial output on the client-side matches the output from the server.
+
 
 ## Everything
 

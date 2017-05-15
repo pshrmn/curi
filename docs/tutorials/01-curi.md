@@ -94,7 +94,7 @@ At this point, your application is _almost_ ready to render. The way that Curi w
 
 Curi also allows you to load data for a route using `preload` and `load` properties of the route. Data loading is done using Promises. Promises are asynchronous (other parts of your code will continue running while the Promise is running), so we have to wait for the loading Promises to "resolve" before we can emit the response to any subscribed functions. Even routes that do not contain `preload`/`load` properties are run async.
 
-Alongside generating new responses when the location changes, your Curi configuration object creates an initial response when it is made. Because the response generation is async, we don't want to render anything until we know that the first response is ready. To do this, the configuration object includes a `ready` function. When you call `ready`, it will return a Promise that will not resolve until the initial response has been generated.
+Alongside generating new responses when the location changes, your Curi configuration object creates an initial response when it is made. Because the response generation is async, we don't want to render anything until we know that the first response is ready. To do this, the configuration object includes a `ready` function. When you call `ready`, it will return a Promise that will not resolve until the initial response has been generated. It is not absolutely necessary for you to use `config.ready`, but if you do not, then you will have to handle what to render before the initial response has completed.
 
 ```js
 config.ready().then(response => {
