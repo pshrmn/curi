@@ -3,7 +3,7 @@ import pathname from '../src/addons/pathname';
 import createMemoryHistory from 'history/createMemoryHistory';
 import ResponseCreator from '../src/utils/createResponse';
 
-// The subscribe function is called when subscribing  so that the
+// The subscribe function is called when subscribing so that the
 // subscriber function is called with the original location. This has
 // the downside that if we want to test navigation changes, we have to
 // ignore the first call of the subscribed function. This does that for us.
@@ -537,7 +537,7 @@ describe('createConfig', () => {
       });
     });
 
-    it('passes response for current location when it subscribes', done => {
+    it('calls subscriber function when it subscribes', done => {
       const history = createMemoryHistory({
         initialEntries: ['/contact/phone']
       });
@@ -563,7 +563,7 @@ describe('createConfig', () => {
       });
     });
 
-    it("does not pass current location's response if it has resolved yet", () => {
+    it('calls subscriber function when it subscribes (even if there is no response yet)', () => {
       const history = createMemoryHistory({
         initialEntries: ['/contact/phone']
       });
@@ -577,11 +577,11 @@ describe('createConfig', () => {
           children: [How]
         }
       ];
-
-      const config = createConfig(history, routes);
       const sub = jest.fn();
+      const config = createConfig(history, routes);
       config.subscribe(sub);
-      expect(sub.mock.calls.length).toBe(0);
+      expect(sub.mock.calls.length).toBe(1);
+      expect(sub.mock.calls[0][0]).toBeUndefined();
     });
 
     it('notifies subscribers of matching routes when location changes', done => {

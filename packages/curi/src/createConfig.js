@@ -91,9 +91,9 @@ function createConfig(history, routeArray, options = {}) {
       throw new Error('The argument passed to subscribe must be a function');
     }
 
-    if (previousResponse) {
-      fn(previousResponse);
-    }
+    // Immediately call subscriber function. If the initial response
+    // has not resolved, the subscriber will be passed undefined
+    fn(previousResponse);
 
     const newLength = subscribers.push(fn);
     return () => {
