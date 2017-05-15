@@ -62,7 +62,7 @@ const routes = [
 
 The configuration object has a `subscribe` method that your application can pass a function to in order to be informed of location changes. Any time the location changes, the subscribed function will be called.
 
-When the subscribed function is called, it will be passed a "response" object. The subscribed function will also be called immediately, being passed the most recently created response.
+When the subscribed function is called, it will be passed a "response" object. The subscribed function will also be called immediately, being passed the most recently created response or `undefined` if the initial response has not yet completed.
 
 Response objects describe how a location matches up against the config object's routes.
 
@@ -71,22 +71,44 @@ import createConfig from 'curi';
 
 const config = createConfig(history, routes);
 
-// This line is important. Please see link below.
-config.ready().then(() => {
-  config.subscribe((response) => {
-    /*
-     * response = {
-     *   status: 200,
-     *   location: { pathname: '/', ... },
-     *   name: 'Home',
-     *   body: function Home() { ... }
-     * }
-     */
-  });
+config.subscribe((response) => {
+/*
+ * response = {
+ *   status: 200,
+ *   location: { pathname: '/', ... },
+ *   name: 'Home',
+ *   body: function Home() { ... }
+ * }
+ */
+});
+```
+
+### subscribe/ready
+
+As stated above, when `subscribe` is called before the initial response is complete, then the subscriber function will be called with the argument `undefined`. There are two different approaches that you can take to deal with this:
+
+1. You can setup your application to render something (e.g. a loading screen) when the response is `undefined`.
+2. You can use `config.ready` to guarantee that the initial response has resolved before subscribing.
+
+**Note:** If you are using Curi with a React application that uses server-side rendering, then you will have to use the second approach.
+
+```js
+// 1
+config.subscribe((response) => {
+  if (!response) {
+    // render loading screen or maybe just null
+  }
+  // render actual application when response is not undefined
+});
+
+
+//2
+config.ready().then((response) => {
+  // render the application
 })
 ```
 
-For more information on why `config.ready()` is used please see the note on [Promises](./docs/Promises.md).
+For some more information on this, please see the note on [Promises](./docs/Promises.md).
 
 ## addons
 
@@ -144,17 +166,15 @@ The components that it provides are actually re-exported from other Curi package
 ```js
 import { Navigator } from 'curi-react';
 
-config.ready().then(() => {
-  ReactDOM.render((
-    <Navigator config={config}>
-      {(response, config) => (
-        response.body
-          ? <response.body />
-          : null
-      )}
-    </Navigator>
-  ), document.getElementById('root'));
-});
+ReactDOM.render((
+  <Navigator config={config}>
+    {(response, config) => (
+      response.body
+        ? <response.body />
+        : null
+    )}
+  </Navigator>
+), document.getElementById('root'));
 ```
 
 #### `curi-react-navigator`

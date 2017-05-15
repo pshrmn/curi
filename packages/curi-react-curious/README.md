@@ -59,15 +59,13 @@ In order for `curious` to work, it needs to have an ancestor component that plac
 ```js
 // assuming you have setup your application like this:
 const config = createConfig(history, routes);
-config.ready().then(() => {
-  ReactDOM.render((
-    <Navigator config={config}>
-      {(response, config) => {
-        return <App />;
-      }}
-    </Navigator>
-  ), holder);
-});
+ReactDOM.render((
+  <Navigator config={config}>
+    {(response, config) => {
+      return <App />;
+    }}
+  </Navigator>
+), holder);
 
 // The <MyButton> (from above) rendered by <App> will have a "curi" prop
 // because it is wrapped by the "curious" HOC.

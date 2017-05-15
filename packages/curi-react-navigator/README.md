@@ -34,15 +34,17 @@ The `<Navigator>` component provides a way to automatically update your applicat
 
 ```js
 const config = createConfig(history, routes);
-config.ready().then(() => {
-  ReactDOM.render((
-    <Navigator config={config}>
-      {(response, config) => {
-        return response.body ? <response.body /> : null
-      }}
-    </Navigator>
-  ), holder);
-});
+
+ReactDOM.render((
+  <Navigator config={config}>
+    {(response, config) => {
+      if (!response) {
+        return null;
+      }
+      return response.body ? <response.body /> : null;
+    }}
+  </Navigator>
+), holder);
 ```
 
 ### props
