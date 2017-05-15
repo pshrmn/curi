@@ -253,12 +253,10 @@ describe('createConfig', () => {
             steps[calls++]();
           }
 
-          config.ready().then(response => {
-            config.subscribe(subscriber);
-          });
+          config.subscribe(subscriber);
         });
 
-        it('uses generates new response for same key on subsequent calls if cache=false', done => {
+        it('generates new response for same key on subsequent calls if cache=false', done => {
           const loadSpy = jest.fn();
           const routes = [{ name: 'All', path: '*', load: loadSpy }];
           const config = createConfig(history, routes, { cache: false });
@@ -283,9 +281,7 @@ describe('createConfig', () => {
             steps[calls++]();
           }
 
-          config.ready().then(response => {
-            config.subscribe(subscriber);
-          });
+          config.subscribe(subscriber);
         });
       });
     });
@@ -495,6 +491,7 @@ describe('createConfig', () => {
       const spy = jest.fn(resp => {
         expect(resp).toBeInstanceOf(ResponseCreator);
         expect(resp.params.anything).toBe('hello');
+        done();
       });
       const CatchAll = {
         name: 'Catch All',
@@ -503,10 +500,6 @@ describe('createConfig', () => {
       };
       const history = createMemoryHistory({ initialEntries: ['/hello'] });
       const config = createConfig(history, [CatchAll]);
-      config.ready().then(() => {
-        expect(spy.mock.calls.length).toBe(1);
-        done();
-      });
     });
   });
 
@@ -527,17 +520,15 @@ describe('createConfig', () => {
       ];
 
       const config = createConfig(history, routes);
-      config.ready().then(() => {
-        const badArgs = [null, undefined, 1, true, {}, []];
-        badArgs.forEach(arg => {
-          expect(() => {
-            config.subscribe(arg);
-          }).toThrow();
-        });
+      const badArgs = [null, undefined, 1, true, {}, []];
+      badArgs.forEach(arg => {
+        expect(() => {
+          config.subscribe(arg);
+        }).toThrow('The argument passed to subscribe must be a function');
       });
     });
 
-    it('calls subscriber function when it subscribes', done => {
+    it('calls subscriber function when it subscribes, passing it the response object', done => {
       const history = createMemoryHistory({
         initialEntries: ['/contact/phone']
       });
@@ -600,10 +591,8 @@ describe('createConfig', () => {
       });
 
       const config = createConfig(history, routes);
-      config.ready().then(() => {
-        config.subscribe(check);
-        history.push('/contact/mail');
-      });
+      config.subscribe(check);
+      history.push('/contact/mail');
     });
 
     it('notifies subscribers after promises have resolved', done => {
@@ -633,10 +622,8 @@ describe('createConfig', () => {
       });
 
       const config = createConfig(history, routes);
-      config.ready().then(() => {
-        config.subscribe(check);
-        history.push('/contact/phone');
-      });
+      config.subscribe(check);
+      history.push('/contact/phone');
     });
 
     it('only emits most recent update if another one occurs before emitting', done => {
@@ -661,11 +648,9 @@ describe('createConfig', () => {
       });
 
       const config = createConfig(history, routes);
-      config.ready().then(() => {
-        config.subscribe(check);
-        history.push('/contact/phone');
-        history.push('/contact/mail');
-      });
+      config.subscribe(check);
+      history.push('/contact/phone');
+      history.push('/contact/mail');
     });
 
     it('returns a function to unsubscribe when called', done => {
@@ -676,21 +661,19 @@ describe('createConfig', () => {
 
       // wait for the first response to be generated to ensure that both
       // subscriber functions are called when subscribing
-      config.ready().then(() => {
-        const unsub1 = config.subscribe(sub1);
-        const unsub2 = config.subscribe(sub2);
+      const unsub1 = config.subscribe(sub1);
+      const unsub2 = config.subscribe(sub2);
 
+      expect(sub1.mock.calls.length).toBe(1);
+      expect(sub2.mock.calls.length).toBe(1);
+      unsub1();
+      history.push({ pathname: '/next' });
+
+      // need to wait for the subscribers to actually be called
+      process.nextTick(() => {
         expect(sub1.mock.calls.length).toBe(1);
-        expect(sub2.mock.calls.length).toBe(1);
-        unsub1();
-        history.push({ pathname: '/next' });
-
-        // need to wait for the subscribers to actually be called
-        process.nextTick(() => {
-          expect(sub1.mock.calls.length).toBe(1);
-          expect(sub2.mock.calls.length).toBe(2);
-          done();
-        });
+        expect(sub2.mock.calls.length).toBe(2);
+        done();
       });
     });
   });

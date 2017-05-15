@@ -27,6 +27,7 @@ function createConfig(history, routeArray, options = {}) {
     });
 
     routes = walkRoutes(routeArray, registerFunctions, {});
+    makeResponse();
   };
 
   const respond = key => {
@@ -116,13 +117,17 @@ function createConfig(history, routeArray, options = {}) {
   const ready = () =>
     previousResponse ? Promise.resolve(previousResponse) : prepareResponse();
 
-  // now that everything is defined, actually do the setup
-  setup(routeArray);
-  const unlisten = history.listen(() => {
+  // create a response object using the current location and
+  // emit it to any subscribed functions
+  const makeResponse = () => {
     prepareResponse().then(resp => {
       emit(resp);
     });
-  });
+  }
+
+  // now that everything is defined, actually do the setup
+  setup(routeArray);
+  const unlisten = history.listen(makeResponse);
 
   return {
     ready,
