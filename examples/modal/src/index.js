@@ -13,9 +13,6 @@ const history = createBrowserHistory();
 
 const config = createConfig(history, routes);
 
-config.ready()
-  .then(() => {
-    ReactDOM.render((
-      <Navigator config={config} children={renderFunction} />
-    ), document.getElementById('root'));    
-  });
+ReactDOM.render((
+  <Navigator config={config} children={renderFunction} />
+), document.getElementById('root'));

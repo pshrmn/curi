@@ -15,9 +15,6 @@ const config = createConfig(history, routes, {
   middleware: [queryMiddleware]
 });
 
-config.ready()
-  .then(() => {
-    ReactDOM.render((
-      <Navigator config={config} children={renderFunction} />
-    ), document.getElementById('root'));    
-  });
+ReactDOM.render((
+  <Navigator config={config} children={renderFunction} />
+), document.getElementById('root'));    

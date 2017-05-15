@@ -56,6 +56,9 @@ class Cacher extends React.Component {
 }
 
 function render(response, config) {
+  if (!response) {
+    return null;
+  }
   const { location, params, body:Body } = response;
   return (
     <div>

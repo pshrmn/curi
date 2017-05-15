@@ -5,6 +5,9 @@ import Nav from './components/Nav';
 import NotFound from './components/NotFound';
 
 function render(response, config) {
+  if (!response) {
+    return null;
+  }
   const { location, params } = response;
   if (response.redirectTo) {
     return <Redirect to={response.redirectTo} />

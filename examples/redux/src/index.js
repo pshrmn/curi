@@ -12,11 +12,8 @@ import renderFunction from './renderFunction';
 const history = createHashHistory();
 const config = createConfig(history, routes);
 
-config.ready()
-  .then(() => {
-    ReactDOM.render((
-      <Provider store={store}>
-        <Navigator config={config} children={renderFunction} />
-      </Provider>
-    ), document.getElementById('root'));    
-  });
+ReactDOM.render((
+  <Provider store={store}>
+    <Navigator config={config} children={renderFunction} />
+  </Provider>
+), document.getElementById('root'));
