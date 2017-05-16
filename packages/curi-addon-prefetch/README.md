@@ -42,7 +42,7 @@ const routes = [...];
 const conf = createConfig(history, routes, { addons: [prefetch] });
 
 // call a route's load function manually
-conf.addons.prefetch('User', { params: { id: 2 } })
+conf.addons.prefetch('User', { id: 2 })
   .then(() => {
     // do something once the data is loaded
   })
