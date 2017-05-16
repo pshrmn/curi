@@ -21,7 +21,7 @@ const routes = [
 
 Whenever the `Recipe List` route matches, we want to fetch a list of recipes from the server. When the `Recipe` route matches, we just want one specific recipe (using the `id` param from the path).
 
-The `load` function will be passed an internal `ResponseCreator` object. The `ResponseCreator` will create the response object that is emitted to subscribers. The `ResponseCreator` has a few methods that you can call in order to modify the response object that will be generated. These are covered in more detail in the [response/ResponseCreator documentation](../../packages/curi/docs/API/response.md). Here, we will cover just one of these methods: `setData`.
+The `load` function will be passed two arguments: the `params` object that contains variables parsed from the location's `pathname` an a `ResponseCreator` object. The `ResponseCreator` will create the response object that is emitted to subscribers. The `ResponseCreator` has a few methods that you can call in order to modify the response object that will be generated. These are covered in more detail in the [response/ResponseCreator documentation](../../packages/curi/docs/API/response.md). Here, we will cover two of these methods: `setData` and `redirect`.
 
 First we will add a `load` function to our `Recipe` route. This function will make a request to our (fake) API. Then, we will call `response.setData` to attach our loaded data to the response.
 
@@ -30,8 +30,8 @@ First we will add a `load` function to our `Recipe` route. This function will ma
   name: 'Recipe',
   path: 'recipe/:id',
   value: Recipe,
-  load: (respCreator) => {
-    return fakeAPI.getRecipe(respCreator.params.id)
+  load: (params, respCreator) => {
+    return fakeAPI.getRecipe(params.id)
       .then(data => {
         respCreator.setData(data);
       });
@@ -41,14 +41,14 @@ First we will add a `load` function to our `Recipe` route. This function will ma
 
 Now, when we navigate to `/recipe/chocolate-chip-cookies`, our `load` function will call the fake API function to load the recipe and set the loaded data for the response. That means that the data we load will be available on the generated response object as `response.data`.
 
-One possibly downside to the implementation of `load` above is that we will be making requests to our API every time the route loads. To prevent this, you might want to add a data cache to your application. Using this, you can store the results of previous requests and use that for subsequent requests.
+One possibly downside to the implementation of `load` above is that we will be making requests to our API every time the route loads. To prevent this, you might want to add a data cache to your application. Using this, you can store the results of previous requests and use that for subsequent requests instead of having to request the data from the server again.
 
 ```js
 {
   name: 'Recipe List',
   path: 'recipes',
   value: RecipeList,
-  load: (respCreator) => {
+  load: () => {
     if (cache.has('recipes')) {
       return Promise.resolve(cache.get('recipes'));
     }
@@ -71,8 +71,8 @@ By calling the `ResponseCreator`'s `redirect` method, you can specify the URI th
 {
   name: 'Old Recipe',
   path: 'r/:id',
-  load: (respCreator) => {
-    respCreator.redirectTo(`/recipe/${id}`);
+  load: (params, respCreator) => {
+    respCreator.redirectTo(`/recipe/${params.id}`);
   }
 }
 ```
