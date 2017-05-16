@@ -18,13 +18,13 @@ function createPrefetchAddon() {
         loaders[name] = load;
       }
     },
-    get: (name, ...rest) => {
+    get: (name, params, respCreator) => {
       if (loaders[name] == null) {
         return Promise.reject(
           `Could not preload data for ${name} because it is not registered.`
         );
       }
-      return loaders[name].apply(null, rest);
+      return loaders[name].call(null, params, respCreator);
     }
   };
 }

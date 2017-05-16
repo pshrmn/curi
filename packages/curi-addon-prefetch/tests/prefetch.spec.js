@@ -91,13 +91,16 @@ describe('prefetch addon', () => {
       const playerURI = {
         name: 'Player',
         path: 'player/:id',
-        load: function(one, two) {
-          expect(one).toBe(1);
-          expect(two).toBe(2);
+        load: function(params, responseCreator) {
+          expect(params).toEqual(paramsToPass);
+          expect(responseCreator).toEqual(responseCreatorToPass);
+          return Promise.resolve(true);
         }
       };
+      const paramsToPass = { 'id': 1 };
+      const responseCreatorToPass = {};
       prefetch.register(playerURI);
-      prefetch.get('Player', 1, 2);
+      prefetch.get('Player', paramsToPass, responseCreatorToPass);
     });
 
     it('returns rejected Promise when path not found', done => {

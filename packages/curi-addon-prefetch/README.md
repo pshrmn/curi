@@ -55,8 +55,7 @@ This addon will only register routes that have a `load` function in their `load`
 {
   name: 'User',
   path: 'user/:id',
-  load: (response) => {
-    const { params } = response;
+  load: (params) => {
     if (Store.has(params.id)) {
       return;
     }
