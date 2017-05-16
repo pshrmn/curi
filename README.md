@@ -2,19 +2,25 @@
 
 [![Travis][build-badge]][build]
 
-A set of configuration-based URI routing packages.
+Curi lets you create a simple, configurable routing object to render your single-page application. Curi uses [addons](./docs/tutorials/03-curi-addons.md) and [middleware](./docs/tutorials/04-curi-middleware.md) to customize how you render your application.
+
+Curi is not React specific, but it does come with a number of [React packages](#react) that you can use to integrate Curi into a React application.
+
+### Learn
 
 Just getting started? Please check out these [Curi tutorials](./docs/tutorials). Alternatively, there is a general introduction to Curi that you can read [on Medium](https://medium.com/@pshrmn/route-with-curi-221237ba71d8).
+
+For a reference to some of the terms used with Curi, please see the [glossary](./docs/GLOSSARY.md)
+
+### Examples
 
 You can test Curi out with these small demos:
 * [CodeSandbox](https://codesandbox.io/embed/gLX5W2gvj)
 * [CodePen](https://codepen.io/pshrmn/pen/mmebOK)
 
-There are also a number of examples in the [examples](/examples) directory, many of which provide links to CodeSandbox demos.
+There are also a number of [examples](/examples) that you can learn from. Many of these provide links to CodeSandbox demos so that you can test them in your browser.
 
-For a reference to some of the terms used with Curi, please see the [glossary](./docs/GLOSSARY.md)
-
-Packages:
+### Packages:
 * [curi](#curi)
 * [Addons](#addons)
   * [pathname (built-in)](#pathname)
@@ -59,56 +65,6 @@ const routes = [
   }
 ];
 ```
-
-The configuration object has a `subscribe` method that your application can pass a function to in order to be informed of location changes. Any time the location changes, the subscribed function will be called.
-
-When the subscribed function is called, it will be passed a "response" object. The subscribed function will also be called immediately, being passed the most recently created response or `undefined` if the initial response has not yet completed.
-
-Response objects describe how a location matches up against the config object's routes.
-
-```js
-import createConfig from 'curi';
-
-const config = createConfig(history, routes);
-
-config.subscribe((response) => {
-/*
- * response = {
- *   status: 200,
- *   location: { pathname: '/', ... },
- *   name: 'Home',
- *   body: function Home() { ... }
- * }
- */
-});
-```
-
-### subscribe/ready
-
-As stated above, when `subscribe` is called before the initial response is complete, then the subscriber function will be called with the argument `undefined`. There are two different approaches that you can take to deal with this:
-
-1. You can setup your application to render something (e.g. a loading screen) when the response is `undefined`.
-2. You can use `config.ready` to guarantee that the initial response has resolved before subscribing.
-
-**Note:** If you are using Curi with a React application that uses server-side rendering, then you will have to use the second approach.
-
-```js
-// 1
-config.subscribe((response) => {
-  if (!response) {
-    // render loading screen or maybe just null
-  }
-  // render actual application when response is not undefined
-});
-
-
-//2
-config.ready().then((response) => {
-  // render the application
-})
-```
-
-For some more information on this, please see the note on [Promises](./docs/Promises.md).
 
 ## addons
 
