@@ -24,9 +24,9 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "curi": "^0.7.3",
+    "curi": "^0.7.4",
     "curi-react": "^0.6.4",
-    "curi-addon-prefetch": "^0.1.1",
+    "curi-addon-prefetch": "^0.1.2",
     "history": "^4.6.1",
     "nprogress": "^0.2.0",
     "react": "^15.5.4",

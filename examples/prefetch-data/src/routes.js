@@ -14,21 +14,21 @@ export default [
     name: 'Album',
     path: 'a/:id',
     value: Album,
-    load: (resp) => {
-      const { id } = resp.params
+    load: (params, respCreator) => {
+      const { id } = params
       // don't re-fetch data
       const existing = dataCache.get(id);
       if (existing) {
-        resp.setData(existing);
+        respCreator.setData(existing);
         return Promise.resolve(existing);
       }
       return fakeAPI(id)
         .then(data => {
-          resp.setData(data);
+          respCreator.setData(data);
           dataCache.set(id, data);
         })
         .catch(err => {
-          resp.setStatus(404);
+          respCreator.setStatus(404);
         });
     }
   }

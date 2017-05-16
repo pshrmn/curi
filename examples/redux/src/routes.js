@@ -19,8 +19,8 @@ export default [
     name: 'Product',
     path: 'products/:id',
     value: Product,
-    load: (resp) => {
-      const { id } = resp.params;
+    load: (params, respCreator) => {
+      const { id } = params;
       // "cache"
       const existing = store.getState();
       if (existing[id]) {
@@ -33,7 +33,7 @@ export default [
           loadProduct(product)
         );
       } else {
-        resp.setStatus(404);
+        respCreator.setStatus(404);
       }
     }
   }
