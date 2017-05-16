@@ -4,13 +4,13 @@
 
 A set of configuration-based URI routing packages.
 
-Just getting started? Please check out these [Curi tutorials](./docs/tutorials).
+Just getting started? Please check out these [Curi tutorials](./docs/tutorials). Alternatively, there is a general introduction to Curi that you can read [on Medium](https://medium.com/@pshrmn/route-with-curi-221237ba71d8).
 
-You can test it out with these small demos:
+You can test Curi out with these small demos:
 * [CodeSandbox](https://codesandbox.io/embed/gLX5W2gvj)
 * [CodePen](https://codepen.io/pshrmn/pen/mmebOK)
 
-There are also a number of examples in the [examples](/examples) directory.
+There are also a number of examples in the [examples](/examples) directory, many of which provide links to CodeSandbox demos.
 
 For a reference to some of the terms used with Curi, please see the [glossary](./docs/GLOSSARY.md)
 
@@ -38,7 +38,7 @@ Packages:
 
 [package](/packages/curi) + [source](/packages/curi/src) + [documentation](/packages/curi/docs)
 
-`curi` provides the core routing functionality. It is used to create a configuration object using a `history` object and a `routes` array.
+The `curi` package provides the core routing functionality for the application. It is used to create a configuration object using a `history` object and a `routes` array.
 
 ```js
 const history = createBrowserHistory();
