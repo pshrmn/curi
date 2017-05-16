@@ -487,10 +487,10 @@ describe('createConfig', () => {
         });
     });
 
-    it('passes response to load function', done => {
-      const spy = jest.fn(resp => {
+    it('passes params and response creator to load function', done => {
+      const spy = jest.fn((params, resp) => {
+        expect(params).toEqual({ anything: 'hello' });
         expect(resp).toBeInstanceOf(ResponseCreator);
-        expect(resp.params.anything).toBe('hello');
         done();
       });
       const CatchAll = {

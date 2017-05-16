@@ -70,7 +70,7 @@ describe('Response', () => {
       const resp = new ResponseCreator();
       const data = { one: 1, two: 2 };
       resp.setData(data);
-      expect(resp.data).toBe(data)
+      expect(resp.data).toBe(data);
     });
   });
 
