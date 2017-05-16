@@ -5,7 +5,8 @@ class Redirect extends React.Component {
   static propTypes = {
     to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     name: PropTypes.string,
-    params: PropTypes.object
+    params: PropTypes.object,
+    children: PropTypes.element
   };
 
   static contextTypes = {
@@ -23,7 +24,7 @@ class Redirect extends React.Component {
   }
 
   render() {
-    return null;
+    return this.props.children ? this.props.children : null;
   }
 }
 

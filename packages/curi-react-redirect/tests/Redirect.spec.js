@@ -108,4 +108,28 @@ describe('<Redirect>', () => {
       expect(redirectingTo.pathname).toBe(to.pathname);
     });
   });
+
+  describe('children', () => {
+    it('renders null when it has no children', () => {
+      const fakeConfig = {};
+      const to = { pathname: '/other-place' };
+      const wrapper = shallow(<Redirect to={to} />, {
+        context: { curi: fakeConfig }
+      });
+      expect(wrapper.type()).toBe(null);
+    });
+
+    it('renders its children element', () => {
+      const fakeConfig = {};
+      const to = { pathname: '/other-place' };
+      const wrapper = shallow(
+        <Redirect to={to}>
+          <div>Redirecting...</div>
+        </Redirect>,
+        { context: { curi: fakeConfig }}
+      );
+      expect(wrapper.type()).toBe('div');
+      expect(wrapper.text()).toBe('Redirecting...');
+    });
+  });
 });
