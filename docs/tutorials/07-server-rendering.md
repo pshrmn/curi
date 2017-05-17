@@ -166,12 +166,13 @@ app.listen('8000', () => {
 
 At this point, our server should be able to render our application.
 
+### Code splitting on the server
+
 If you are using code splitting on the server (and babel), you will probably need to add the [`dynamic-import-node`](https://github.com/airbnb/babel-plugin-dynamic-import-node) plugin to your `.babelrc` and set `BABEL_ENV` to `server` when you start your server. This will allow you to use `import()` on the server.
 
 
 ```json
 {
-  ...,
   "env": {
     "server": {
       "plugins": ["dynamic-import-node"]
