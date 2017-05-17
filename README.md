@@ -6,6 +6,8 @@ Curi lets you create a simple, configurable routing object to render your single
 
 Curi is not React specific, but it does come with a number of [React packages](#react) that you can use to integrate Curi into a React application.
 
+You can read more about the design goals of Curi [here](DESIGN_GOALS.md).
+
 ### Learn
 
 Just getting started? Please check out these [Curi tutorials](./docs/tutorials). Alternatively, there is a general introduction to Curi that you can read [on Medium](https://medium.com/@pshrmn/route-with-curi-221237ba71d8).
