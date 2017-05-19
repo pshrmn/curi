@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/pshrmn/curi/tree/master/packages/curi-middleware-query.git"
+    "url": "git://github.com/pshrmn/curi/tree/master/packages/curi-middleware-query"
   },
   "keywords": [
     "Curi",
