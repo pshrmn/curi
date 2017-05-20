@@ -1,6 +1,4 @@
-<img alt="Curi - a config router" src="static/logo.png" />
-
-[![Travis][build-badge]][build]
+# Curi [![Travis][build-badge]][build]
 
 Curi lets you create a simple, configurable routing object to render your single-page application. Curi uses [addons](./docs/tutorials/03-curi-addons.md) and [middleware](./docs/tutorials/04-curi-middleware.md) to customize how you render your application.
 
