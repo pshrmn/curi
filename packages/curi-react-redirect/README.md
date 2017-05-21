@@ -14,7 +14,7 @@ npm install --save curi-react-redirect
 ### UMD
 
 ```html
-<script src="https://unpkg.com/curi-react-redirect@0.2.0/umd/curi-react-redirect.js"></script>
+<script src="https://unpkg.com/curi-react-redirect@0.3.0/umd/curi-react-redirect.js"></script>
 <script type="text/javascript">
   const Redirect = window.CuriReactRedirect;
 </script>

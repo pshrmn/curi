@@ -1,6 +1,6 @@
 {
   "name": "curi-react-redirect",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A React component that triggers navigation",
   "main": "lib/index.js",
   "module": "es/index.js",
