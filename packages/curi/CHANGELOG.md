@@ -1,3 +1,7 @@
+## 0.7.5
+
+* Fixed route matching for routes with children when no child routes match.
+
 ## 0.7.3
 
 * The configuration object begins making a response object when its `setup` method is called.

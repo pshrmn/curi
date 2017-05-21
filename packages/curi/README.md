@@ -18,7 +18,7 @@ npm install --save curi
 ### UMD
 
 ```html
-<script src="https://unpkg.com/curi@0.7.0/umd/curi.js"></script>
+<script src="https://unpkg.com/curi@0.7.5/umd/curi.js"></script>
 <!-- there is also a min script: curi.min.js -->
 <script type="text/javascript">
   const createConfig = window.Curi;
