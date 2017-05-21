@@ -32,17 +32,17 @@ function createConfig(history, routeArray, options = {}) {
 
   const respond = key => {
     const resp = new ResponseCreator(key, history.location);
-    routes.some(uri => uri.match(history.location.pathname, resp));
+    routes.some(route => route.match(history.location.pathname, resp));
+    resp.freeze();
     return resp;
   };
 
   const runURILoadFunctions = resp => {
-    if (!resp.uri) {
+    if (!resp.route) {
       resp.setStatus(404);
       return Promise.resolve(resp);
     }
-    const { preload, load } = resp.uri;
-
+    const { preload, load } = resp.route;
     return Promise.all([
       preload ? preload() : null,
       load ? load(resp.params, resp) : null
@@ -52,7 +52,6 @@ function createConfig(history, routeArray, options = {}) {
         resp.fail(err);
       })
       .then(() => {
-        resp.call();
         return resp;
       });
   };

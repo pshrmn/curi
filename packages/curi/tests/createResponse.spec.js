@@ -74,54 +74,97 @@ describe('Response', () => {
     });
   });
 
-  describe('add', () => {
-    it('sets the name, uri, and params', () => {
+  describe('push', () => {
+    it('adds the route and params to matches array', () => {
       const resp = new ResponseCreator();
-      const match = createRoute({ name: 'Foo', path: 'egg' });
+      const route = createRoute({ name: 'Foo', path: 'egg' });
       const params = { food: 'egg' };
-      resp.add(match, params);
-      expect(resp.uri).toEqual(match);
-      expect(resp.params).toEqual(params);
+      resp.push(route, params);
+      const { matches } = resp;
+      expect(matches[0].route).toBe(route);
+      expect(matches[0].params).toBe(params);
     });
 
-    it('pushes current name to partials when adding new match', () => {
+    it('adds additional routes/params to end of matches array', () => {
       const resp = new ResponseCreator();
-      resp.add(createRoute({ name: 'State', path: 'WA' }), { state: 'WA' });
-      resp.add(createRoute({ name: 'City', path: 'WA/Seattle' }), {
-        city: 'Seattle'
-      });
-      expect(resp.partials.length).toBe(1);
-      expect(resp.partials[0]).toBe('State');
-    });
-
-    it('merges params when adding new match', () => {
-      const resp = new ResponseCreator();
-      resp.add(createRoute({ name: 'State', path: 'WA' }), { state: 'WA' });
-      resp.add(createRoute({ name: 'City', path: 'WA/Seattle' }), {
-        city: 'Seattle'
-      });
-      expect(resp.params).toEqual({ state: 'WA', city: 'Seattle' });
+      const stateRoute = createRoute({ name: 'State', path: ':state' });
+      const stateParams = { state: 'WA' };
+      const cityRoute = createRoute({ name: 'City', path: ':city' });
+      const cityParams = { city: 'Seattle' };
+      resp.push(stateRoute, stateParams);
+      resp.push(cityRoute, cityParams);
+      const { matches } = resp;
+      const [first, second] = matches;
+      expect(first.route).toBe(stateRoute);
+      expect(first.params).toBe(stateParams);
+      expect(second.route).toBe(cityRoute);
+      expect(second.params).toBe(cityParams);
     });
   });
 
-  describe('call', () => {
-    it("calls the uri's render function, setting Response.body", () => {
-      const retValue = 'Hakuna Matata';
-      const fn = jest.fn(() => retValue);
+  describe('pop', () => {
+    it('removes the last match from the matches array', () => {
       const resp = new ResponseCreator();
-      resp.add(
-        createRoute({ name: 'Phrase', path: 'hakuna-matata', call: fn })
-      );
-      resp.call();
-      expect(fn.mock.calls.length).toBe(1);
-      expect(resp.body).toBe(retValue);
+      const stateRoute = createRoute({ name: 'State', path: ':state' });
+      const stateParams = { state: 'WA' };
+      const cityRoute = createRoute({ name: 'City', path: ':city' });
+      const cityParams = { city: 'Seattle' };
+      resp.push(stateRoute, stateParams);
+      expect(resp.matches.length).toBe(1);
+      resp.push(cityRoute, cityParams);
+      expect(resp.matches.length).toBe(2);
+      resp.pop();
+      expect(resp.matches.length).toBe(1);
+      expect(resp.matches[0].route).toBe(stateRoute);
+    });
+  });
+
+  describe('freeze', () => {
+    it("sets the route using the most best response's match'", () => {
+      const resp = new ResponseCreator();
+      const stateRoute = createRoute({ name: 'State', path: ':state' });
+      const stateParams = { state: 'OR' };
+      const cityRoute = createRoute({ name: 'City', path: ':city' });
+      const cityParams = { city: 'Portland' };
+      resp.push(stateRoute, stateParams);
+      resp.push(cityRoute, cityParams);
+      resp.freeze();
+      expect(resp.route).toBe(cityRoute);
+      
     });
 
-    it("is undefined if uri wasn't passed a call/value option", () => {
+    it('sets the partials using the names of all other matching routes', () => {
       const resp = new ResponseCreator();
-      resp.add(createRoute({ name: 'Phrase', path: 'no-worries' }));
-      resp.call();
-      expect(resp.body).toBeUndefined();
+      const stateRoute = createRoute({ name: 'State', path: ':state' });
+      const stateParams = { state: 'TX' };
+      const cityRoute = createRoute({ name: 'City', path: ':city' });
+      const cityParams = { city: 'Austin' };
+      resp.push(stateRoute, stateParams);
+      resp.push(cityRoute, cityParams);
+      resp.freeze();
+      expect(resp.partials).toEqual(['State']);
+    });
+
+    it("sets the params by merging all of the matched routes' params", () => {
+      const resp = new ResponseCreator();
+      const stateRoute = createRoute({ name: 'State', path: ':state' });
+      const stateParams = { state: 'MT' };
+      const cityRoute = createRoute({ name: 'City', path: ':city' });
+      const cityParams = { city: 'Bozeman' };
+      resp.push(stateRoute, stateParams);
+      resp.push(cityRoute, cityParams);
+      resp.freeze();
+      expect(resp.params).toEqual({
+        state: 'MT',
+        city: 'Bozeman'
+      });
+    });
+
+    it("calls the matching route's render function to set the body value", () => {
+      const resp = new ResponseCreator();
+      resp.push({ name: 'Country', path: ':country', render: () => 'Egypt' });
+      resp.freeze();
+      expect(resp.body).toEqual('Egypt');
     });
   });
 
@@ -132,9 +175,9 @@ describe('Response', () => {
       const resp = new ResponseCreator(key, location);
       const value = 'Yosemite National Park';
       const parkURI = createRoute({ name: 'Park', path: 'park/:name', value });
-      resp.add(parkURI, { name: 'yosemite' });
+      resp.push(parkURI, { name: 'yosemite' });
       resp.setData({ open: true });
-      resp.call();
+      resp.freeze();
       const respObj = resp.asObject();
 
       expect(respObj.key).toBe(key);

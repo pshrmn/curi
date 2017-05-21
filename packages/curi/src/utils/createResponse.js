@@ -3,9 +3,13 @@ class ResponseCreator {
     this.key = key;
     this.location = location;
     this.status = 200;
-    this.uri;
+    this.matches = [];
+    // properties to be set once we have
+    // finished walking over the routes
+    this.route;
     this.partials = [];
     this.params = {};
+    this.body;
   }
 
   redirect(to, code = 301) {
@@ -21,21 +25,33 @@ class ResponseCreator {
     this.status = code;
   }
 
-  add(uri, params) {
-    if (this.uri != null) {
-      this.partials.push(this.uri.name);
-    }
-    this.uri = uri;
-    Object.assign(this.params, params);
+  push(route, params) {
+    this.matches.push({ route, params });
+  }
+
+  pop() {
+    this.matches.pop()
   }
 
   setData(data) {
     this.data = data;
   }
 
-  call() {
-    if (this.uri && this.uri.render) {
-      this.body = this.uri.render();
+  freeze() {
+    // first, we set our route/partials/params properties
+    if (this.matches.length) {
+      const bestMatch = this.matches.pop();
+      this.matches.forEach(m => {
+        this.partials.push(m.route.name);
+        Object.assign(this.params, m.params);
+      });
+
+      this.route = bestMatch.route;
+      Object.assign(this.params, bestMatch.params);
+    }
+    // then, using our matched route, we set the response's body
+    if (this.route && this.route.render) {
+      this.body = this.route.render();
     }
   }
 
@@ -55,7 +71,7 @@ class ResponseCreator {
       location: this.location,
       status: this.status,
       body: this.body,
-      name: this.uri ? this.uri.name : undefined,
+      name: this.route ? this.route.name : undefined,
       partials: this.partials,
       params: this.params,
       data: this.data,

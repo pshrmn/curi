@@ -1,5 +1,5 @@
 import createRoute from '../src/utils/createRoute';
-import Response from '../src/response';
+import ResponseCreator from '../src/utils/createResponse';
 
 const noop = () => {};
 
@@ -171,39 +171,114 @@ describe('createRoute', () => {
   describe('match', () => {
     describe('return value', () => {
       it('returns true if it matches', () => {
-        const resp = new Response();
+        const resp = new ResponseCreator();
         const testRoute = createRoute({ name: 'Test', path: 'test' });
         const matches = testRoute.match('test', resp);
         expect(matches).toBe(true);
       });
 
       it('returns false if it does not', () => {
-        const resp = new Response();
+        const resp = new ResponseCreator();
         const testRoute = createRoute({ name: 'Test', path: 'test' });
         const matches = testRoute.match('no-match', resp);
         expect(matches).toBe(false);
       });
+
+    });
+
+    describe('with children', () => {
+      describe('when children match', () => {
+        it('also matches', () => {
+          const resp = new ResponseCreator();
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test',
+            children: [
+              createRoute({
+                name: 'Child',
+                path: 'child'
+              })
+            ]
+          });
+          const matches = testRoute.match('test/child', resp);
+          expect(matches).toBe(true);
+        });
+      });
+
+      describe('when children do not match', () => {
+        it('matches if the route matches exactly', () => {
+          const resp = new ResponseCreator();
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test',
+            children: [
+              createRoute({
+                name: 'Child',
+                path: 'child'
+              })
+            ]
+          });
+          const matches = testRoute.match('test', resp);
+          expect(matches).toBe(true);
+        });
+
+        it('matches if pathOptions.end=false', () => {
+          const resp = new ResponseCreator();
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test',
+            pathOptions: { end: false },
+            children: [
+              createRoute({
+                name: 'Child',
+                path: 'child'
+              })
+            ]
+          });
+          const matches = testRoute.match('test', resp);
+          expect(matches).toBe(true);
+        });
+
+        it('does not match if pathOptions.end != false', () => {
+          const resp = new ResponseCreator();
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test',
+            children: [
+              createRoute({
+                name: 'Child',
+                path: 'child'
+              })
+            ]
+          });
+          const matches = testRoute.match('test', resp);
+          expect(matches).toBe(true);
+        });
+      });
     });
 
     it('does not register if the path does not match the pathname', () => {
-      const resp = new Response();
+      const resp = new ResponseCreator();
       const testRoute = createRoute({ name: 'Test', path: 'test' });
       testRoute.match('best', resp);
-      expect(resp.uri).toBeUndefined();
+      resp.freeze()
+      expect(resp.route).toBeUndefined();
     });
 
     it('registers if the path matches the pathname', () => {
-      const resp = new Response({ pathname: 'test' });
+      const resp = new ResponseCreator({ pathname: 'test' });
       const testRoute = createRoute({ name: 'Test', path: 'test' });
       testRoute.match('test', resp);
-      expect(resp.uri).toBe(testRoute);
+      resp.freeze()
+      expect(resp.route).toBe(testRoute);
     });
 
     it('ignores a leading slash on the pathname', () => {
-      const resp = new Response();
+      const resp = new ResponseCreator();
       const testRoute = createRoute({ name: 'Test', path: 'test' });
       testRoute.match('/test', resp);
-      expect(resp.uri).toBe(testRoute);
+      resp.freeze()
+      expect(resp.route).toBe(testRoute);
     });
 
     describe('children', () => {
@@ -215,9 +290,10 @@ describe('createRoute', () => {
           path: 'test',
           children: [One, Two]
         });
-        const resp = new Response();
+        const resp = new ResponseCreator();
         testRoute.match('test/one', resp);
-        expect(resp.uri).toBe(One);
+        resp.freeze()
+        expect(resp.route).toBe(One);
         expect(resp.partials[0]).toBe('Test');
       });
 
@@ -231,9 +307,10 @@ describe('createRoute', () => {
           path: ':state',
           children: [Attractions]
         });
-        const resp = new Response();
+        const resp = new ResponseCreator();
         testRoute.match('Wisconsin/attractions', resp);
-        expect(resp.uri).toBe(Attractions);
+        resp.freeze();
+        expect(resp.route).toBe(Attractions);
         expect(resp.params.state).toBe('Wisconsin');
       });
 
@@ -243,8 +320,9 @@ describe('createRoute', () => {
           path: ':id',
           children: [createRoute({ name: 'Two', path: ':id' })]
         });
-        const resp = new Response();
+        const resp = new ResponseCreator();
         testRoute.match('one/two', resp);
+        resp.freeze();
         expect(resp.params.id).toBe('two');
       });
     });

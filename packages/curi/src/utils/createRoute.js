@@ -19,13 +19,16 @@ const createRoute = options => {
     throw new Error('A route must have defined name and path properties');
   }
 
-  // create the path
+  // end defaults to true, so end has to be hardcoded for it to be false
+  const expectedExact = pathOptions.end == null || pathOptions.end;
+  // when we have child routes, we need to perform non-end matching
   if (children) {
     pathOptions.end = false;
   }
   const regexPath = createPath(path, pathOptions);
 
   return {
+    ...rest,
     name,
     path: path,
     render: function() {
@@ -53,19 +56,24 @@ const createRoute = options => {
       const uriString = parentPath != null
         ? join(parentPath, segment)
         : withLeadingSlash(segment);
-      response.add(this, params);
 
-      if (children) {
-        // children only need to match against unmatched segments
-        const remainder = testPath.slice(segment.length);
-        children.some(c => {
-          return c.match(remainder, response, uriString);
-        });
+      response.push(this, params);
+      // if there are no children, then we accept the match
+      if (!children || !children.length) {
+        return true;
       }
-
-      return true;
-    },
-    ...rest
+      // children only need to match against unmatched segments
+      const remainder = testPath.slice(segment.length);
+      const notExact = !!remainder.length;
+      const hasChildMatch = children.some(c => c.match(remainder, response, uriString));
+      // if the route has children, but none of them match, remove the match unless it
+      // is exact
+      if (expectedExact && notExact && !hasChildMatch) {
+        response.pop();
+        return false;
+      }
+      return true;      
+    }
   };
 };
 
