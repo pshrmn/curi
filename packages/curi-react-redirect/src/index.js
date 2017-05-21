@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 class Redirect extends React.Component {
   static propTypes = {
-    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    name: PropTypes.string,
+    to: PropTypes.string,
     params: PropTypes.object,
+    details: PropTypes.object,
     children: PropTypes.element
   };
 
@@ -14,11 +14,11 @@ class Redirect extends React.Component {
   };
 
   componentDidMount() {
-    const { name, params, to } = this.props;
-    let redirectTo = to;
-    if (name) {
-      const pathname = this.context.curi.addons.pathname(name, params);
-      redirectTo = { pathname, ...to };
+    const { to, params, details } = this.props;
+    let redirectTo = details;
+    if (to) {
+      const pathname = this.context.curi.addons.pathname(to, params);
+      redirectTo = { pathname, ...details };
     }
     this.context.curi.history.replace(redirectTo);
   }
