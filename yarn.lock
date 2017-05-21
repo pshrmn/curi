@@ -1237,7 +1237,7 @@ curi-react-navigator@^0.1.1:
     curi "^0.6.0"
     prop-types "^15.5.8"
 
-"curi@ ^0.6.1", curi@^0.6.0:
+curi@^0.6.0:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/curi/-/curi-0.6.2.tgz#0b96a1d55b99435e1f4eeda33cd54da2c4ebb052"
   dependencies:
@@ -3960,6 +3960,10 @@ verror@1.3.6:
 vlq@^0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/vlq/-/vlq-0.2.2.tgz#e316d5257b40b86bb43cb8d5fea5d7f54d6b0ca1"
+
+vue@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.3.3.tgz#d1eaa8fde5240735a4563e74f2c7fead9cbb064c"
 
 walker@~1.0.5:
   version "1.0.7"
