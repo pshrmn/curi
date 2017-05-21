@@ -10,7 +10,7 @@ function render(response, config) {
   }
   const { location, params } = response;
   if (response.redirectTo) {
-    return <Redirect to={response.redirectTo} />
+    return <Redirect details={response.redirectTo} />
   }
 
   return (
