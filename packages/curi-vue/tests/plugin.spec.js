@@ -9,8 +9,11 @@ describe('CuriPlugin', () => {
   const config = createConfig(history, routes);
   Vue.use(CuriPlugin, { config });
 
-  it('Adds the config as a Vue global called Curi', () => {
-    expect(Vue.$curi).toBe(config);
+  it('Adds a mixin that sets $curi for all components', () => {
+    const FakeComponent = { render: function(h) { return h('div'); } };
+    const fakeConsructor = Vue.extend(FakeComponent)
+    const vm = new fakeConsructor().$mount();
+    expect(vm.$curi).toBe(config);
   });
 
   it('Adds the Link component as <curi-link>', () => {

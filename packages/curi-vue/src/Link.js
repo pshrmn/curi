@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 const Link = {
   name: 'curi-link',
 
@@ -7,25 +5,27 @@ const Link = {
 
   computed: {
     location: function() {
-      const pathname = Vue.$curi.addons.pathname(this.to, this.params);
+      const pathname = this.$curi.addons.pathname(this.to, this.params);
       return { pathname, ...this.details };
     },
     href: function() {
-      return Vue.$curi.history.createHref(this.location);
+      return this.$curi.history.createHref(this.location);
     }
   },
 
   methods: {
     click: function(event) {
       event.preventDefault();
-      Vue.$curi.history.push(this.location);
+      this.$curi.history.push(this.location);
     }
   },
 
   render: function(h) {
     return h('a', {
         href: this.href,
-        click: this.click
+        on: {
+          click: this.click
+        }
       },
       this.$slots.default
     );

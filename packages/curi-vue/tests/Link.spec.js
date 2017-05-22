@@ -1,29 +1,27 @@
 import Vue from 'vue';
 import { createMemoryHistory } from 'history';
 import createConfig from 'curi';
-
+import CuriPlugin from '../src/plugin';
 import Link from '../src/Link';
 
 describe('Link component', () => {
   let LinkConstructor;
-  let history;
-  let config;
+  const history = createMemoryHistory();
+  history.push = jest.fn();
+
+  const routes = [
+    { name: 'Place', path: '/place/:name' }
+  ];
+  const config = createConfig(history, routes);
+
   beforeEach(() => {
     LinkConstructor = Vue.extend(Link);
-    history = createMemoryHistory();
-    jest.spyOn(history, 'push')
-    const routes = [
-      { name: 'Place', path: '/place/:name' }
-    ];
-    config = createConfig(history, routes);
-    LinkConstructor.Curi = config;
-    LinkConstructor.component(Link.name, Link);
-    Vue.$curi = config;
+    LinkConstructor.use(CuriPlugin, { config });
   });
 
   afterEach(() => {
-    history.push.mockRestore();
-  })
+    history.push.mockReset();
+  });
 
   it('registers with the name curi-link', () => {
     expect(LinkConstructor.options.components['curi-link']).toBeDefined();
@@ -34,8 +32,7 @@ describe('Link component', () => {
       propsData: {
         to: 'Place',
         params: { name: 'Aruba' }
-      },
-      curi: config
+      }
     }).$mount();
     const element = vm.$el;
     expect(element.tagName).toBe('A');
@@ -78,13 +75,13 @@ describe('Link component', () => {
         params: { name: 'Key+Largo' },
       }
     }).$mount();
-    expect(history.push.mock.calls.length).toBe(0);
     const mockClick = {
       defaultPrevented: false,
       preventDefault() {
         this.defaultPrevented = true;
       }
     };
+    expect(history.push.mock.calls.length).toBe(0);
     vm.click(mockClick);
     expect(history.push.mock.calls.length).toBe(1);
   });
