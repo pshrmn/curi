@@ -7,18 +7,18 @@ const Link = {
 
   computed: {
     location: function() {
-      const pathname = Vue.Curi.addons.pathname(this.to, this.params);
+      const pathname = Vue.$curi.addons.pathname(this.to, this.params);
       return { pathname, ...this.details };
     },
     href: function() {
-      return Vue.Curi.history.createHref(this.location);
+      return Vue.$curi.history.createHref(this.location);
     }
   },
 
   methods: {
     click: function(event) {
       event.preventDefault();
-      Vue.Curi.history.push(this.location);
+      Vue.$curi.history.push(this.location);
     }
   },
 

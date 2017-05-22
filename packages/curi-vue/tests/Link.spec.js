@@ -5,20 +5,20 @@ import createConfig from 'curi';
 import Link from '../src/Link';
 
 describe('Link component', () => {
-  let VueConstructor;
+  let LinkConstructor;
   let history;
+  let config;
   beforeEach(() => {
-    VueConstructor = Vue.extend(Link);
+    LinkConstructor = Vue.extend(Link);
     history = createMemoryHistory();
     jest.spyOn(history, 'push')
     const routes = [
       { name: 'Place', path: '/place/:name' }
     ];
-    const config = createConfig(history, routes);
-    VueConstructor.Curi = config;
-    VueConstructor.component(Link.name, Link);
-
-    Vue.Curi = config;
+    config = createConfig(history, routes);
+    LinkConstructor.Curi = config;
+    LinkConstructor.component(Link.name, Link);
+    Vue.$curi = config;
   });
 
   afterEach(() => {
@@ -26,22 +26,23 @@ describe('Link component', () => {
   })
 
   it('registers with the name curi-link', () => {
-    expect(VueConstructor.options.components['curi-link']).toBeDefined();
+    expect(LinkConstructor.options.components['curi-link']).toBeDefined();
   });
 
   it('renders an anchor element', () => {
-    const vm = new VueConstructor({
+    const vm = new LinkConstructor({
       propsData: {
         to: 'Place',
         params: { name: 'Aruba' }
-      }
+      },
+      curi: config
     }).$mount();
     const element = vm.$el;
     expect(element.tagName).toBe('A');
   });
 
   it('computes the expected href using the props', () => {
-    const vm = new VueConstructor({
+    const vm = new LinkConstructor({
       propsData: {
         to: 'Place',
         params: { name: 'Aruba' }
@@ -52,7 +53,7 @@ describe('Link component', () => {
   });
 
   it('computes the expected location using the props', () => {
-    const vm = new VueConstructor({
+    const vm = new LinkConstructor({
       propsData: {
         to: 'Place',
         params: { name: 'Jamaica' },
@@ -71,14 +72,10 @@ describe('Link component', () => {
   });
 
   it('navigates when clicked', () => {
-    const vm = new VueConstructor({
+    const vm = new LinkConstructor({
       propsData: {
         to: 'Place',
-        params: { name: 'Jamaica' },
-        details: {
-          search: '?to[]=bermuda&to[]=bahamas',
-          hash: '#beach-boys'
-        }
+        params: { name: 'Key+Largo' },
       }
     }).$mount();
     expect(history.push.mock.calls.length).toBe(0);

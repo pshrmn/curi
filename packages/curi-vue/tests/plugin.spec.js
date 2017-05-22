@@ -10,7 +10,7 @@ describe('CuriPlugin', () => {
   Vue.use(CuriPlugin, { config });
 
   it('Adds the config as a Vue global called Curi', () => {
-    expect(Vue.Curi).toBe(config);
+    expect(Vue.$curi).toBe(config);
   });
 
   it('Adds the Link component as <curi-link>', () => {
