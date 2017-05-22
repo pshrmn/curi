@@ -22,7 +22,14 @@ const Link = {
     }
   },
 
-  template: '<a :href="href" @click="this.click"><slot></slot></a>'
+  render: function(h) {
+    return h('a', {
+        href: this.href,
+        click: this.click
+      },
+      this.$slots.default
+    );
+  }
 };
 
 export default Link;
