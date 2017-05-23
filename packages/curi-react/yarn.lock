@@ -272,12 +272,6 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-external-helpers@^6.22.0:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-external-helpers/-/babel-plugin-external-helpers-6.22.0.tgz#2285f48b02bd5dede85175caf8c62e86adccefa1"
-  dependencies:
-    babel-runtime "^6.22.0"
-
 babel-plugin-syntax-export-extensions@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-export-extensions/-/babel-plugin-syntax-export-extensions-6.13.0.tgz#70a1484f0f9089a4e84ad44bac353c95b9b12721"
@@ -838,15 +832,15 @@ curi-react-navigator@^0.2.1:
   dependencies:
     prop-types "^15.5.8"
 
-curi-react-redirect@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/curi-react-redirect/-/curi-react-redirect-0.1.2.tgz#6a39a47d71155e212e86307e407124307ebd053e"
+curi-react-redirect@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/curi-react-redirect/-/curi-react-redirect-0.3.0.tgz#44f7dbdedb5417a27833acfbabce0f0644988fab"
   dependencies:
     prop-types "^15.5.8"
 
-curi@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/curi/-/curi-0.7.3.tgz#5d0bd495dd901448afcb73877e93a4d9d33e4e68"
+curi@^0.7.5:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/curi/-/curi-0.7.5.tgz#0050327020043a1f22aeb6681f8d43d01ad61f8a"
   dependencies:
     path-to-regexp "^1.7.0"
 
