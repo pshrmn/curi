@@ -21,8 +21,12 @@ const Link = {
   },
 
   render: function(h) {
-    return h('a', {
-        href: this.href,
+    return h(
+      'a',
+      {
+        attrs: {
+          href: this.href
+        },
         on: {
           click: this.click
         }
