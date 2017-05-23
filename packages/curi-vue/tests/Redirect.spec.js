@@ -7,20 +7,18 @@ import Redirect from '../src/Redirect';
 describe('Redirect component', () => {
   const history = createMemoryHistory();
   history.replace = jest.fn();
-  const routes = [
-    { name: 'Place', path: '/place/:name' }
-  ];
+  const routes = [{ name: 'Place', path: '/place/:name' }];
   const config = createConfig(history, routes);
   Vue.use(CuriPlugin, { config });
 
   afterEach(() => {
     history.replace.mockReset();
-  })
+  });
 
   it('registers with the name curi-redirect', () => {
     expect(Vue.options.components['curi-redirect']).toBeDefined();
   });
-  
+
   it('redirects to expected location after mounting', () => {
     expect(history.replace.mock.calls.length).toBe(0);
     const vm = new Vue({
@@ -40,7 +38,7 @@ describe('Redirect component', () => {
       pathname: '/place/Jamaica',
       search: '?to[]=bermuda&to[]=bahamas',
       hash: '#beach-boys'
-    })
+    });
   });
 
   it('renders nothing when not given slots', () => {
@@ -57,7 +55,7 @@ describe('Redirect component', () => {
     }).$mount();
 
     expect(vm.$el.textContent).toEqual('');
-  })
+  });
 
   it('renders provided content', () => {
     const vm = new Vue({
@@ -77,7 +75,6 @@ describe('Redirect component', () => {
     expect(vm.$el.textContent.trim()).toEqual('Loading...');
   });
 
-  
   it('warns when multiple slots are provided', () => {
     const warn = console.warn;
     console.warn = jest.fn();
@@ -103,5 +100,4 @@ describe('Redirect component', () => {
     // restore
     console.warn = warn;
   });
-
 });

@@ -10,8 +10,12 @@ describe('CuriPlugin', () => {
   Vue.use(CuriPlugin, { config });
 
   it('Adds a mixin that sets $curi for all components', () => {
-    const FakeComponent = { render: function(h) { return h('div'); } };
-    const fakeConsructor = Vue.extend(FakeComponent)
+    const FakeComponent = {
+      render: function(h) {
+        return h('div');
+      }
+    };
+    const fakeConsructor = Vue.extend(FakeComponent);
     const vm = new fakeConsructor().$mount();
     expect(vm.$curi).toBe(config);
   });

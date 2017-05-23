@@ -17,19 +17,18 @@ const Redirect = {
     if (this.$slots.default && this.$slots.default.length > 1) {
       console.warn(
         'A <curi-redirect> should only render one slot, but was given ' +
-        this.$slots.default.length
-      )
+          this.$slots.default.length
+      );
     }
   },
 
   mounted: function() {
-    this.$curi.history.replace(this.location);  
+    this.$curi.history.replace(this.location);
   },
 
   render: function(h) {
     return this.$slots.default && this.$slots.default[0];
   }
-
 };
 
 export default Redirect;

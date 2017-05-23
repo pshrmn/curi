@@ -2,7 +2,6 @@ import Link from './Link';
 import Redirect from './Redirect';
 
 const CuriPlugin = {
-
   install: function(_Vue, options) {
     _Vue.component(Link.name, Link);
     _Vue.component(Redirect.name, Redirect);
