@@ -65,14 +65,16 @@ const createRoute = options => {
       // children only need to match against unmatched segments
       const remainder = testPath.slice(segment.length);
       const notExact = !!remainder.length;
-      const hasChildMatch = children.some(c => c.match(remainder, response, uriString));
+      const hasChildMatch = children.some(c =>
+        c.match(remainder, response, uriString)
+      );
       // if the route has children, but none of them match, remove the match unless it
       // is exact
       if (expectedExact && notExact && !hasChildMatch) {
         response.pop();
         return false;
       }
-      return true;      
+      return true;
     }
   };
 };

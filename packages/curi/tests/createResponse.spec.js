@@ -130,7 +130,6 @@ describe('Response', () => {
       resp.push(cityRoute, cityParams);
       resp.freeze();
       expect(resp.route).toBe(cityRoute);
-      
     });
 
     it('sets the partials using the names of all other matching routes', () => {

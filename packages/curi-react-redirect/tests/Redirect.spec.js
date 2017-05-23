@@ -101,7 +101,7 @@ describe('<Redirect>', () => {
       ]);
       const loc = { search: '?yes=no', hash: '#never' };
       mount(
-        <Redirect to='Park' params={{ name: 'Yosemite' }} details={loc} />,
+        <Redirect to="Park" params={{ name: 'Yosemite' }} details={loc} />,
         { context: { curi: config } }
       );
       const redirectedTo = history.replace.mock.calls[0][0];
@@ -142,7 +142,7 @@ describe('<Redirect>', () => {
         <Redirect details={loc}>
           <div>Redirecting...</div>
         </Redirect>,
-        { context: { curi: fakeConfig }}
+        { context: { curi: fakeConfig } }
       );
       expect(wrapper.type()).toBe('div');
       expect(wrapper.text()).toBe('Redirecting...');

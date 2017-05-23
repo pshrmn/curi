@@ -30,7 +30,7 @@ class ResponseCreator {
   }
 
   pop() {
-    this.matches.pop()
+    this.matches.pop();
   }
 
   setData(data) {

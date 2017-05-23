@@ -97,7 +97,7 @@ describe('prefetch addon', () => {
           return Promise.resolve(true);
         }
       };
-      const paramsToPass = { 'id': 1 };
+      const paramsToPass = { id: 1 };
       const responseCreatorToPass = {};
       prefetch.register(playerURI);
       prefetch.get('Player', paramsToPass, responseCreatorToPass);

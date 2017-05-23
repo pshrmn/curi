@@ -183,7 +183,6 @@ describe('createRoute', () => {
         const matches = testRoute.match('no-match', resp);
         expect(matches).toBe(false);
       });
-
     });
 
     describe('with children', () => {
@@ -261,7 +260,7 @@ describe('createRoute', () => {
       const resp = new ResponseCreator();
       const testRoute = createRoute({ name: 'Test', path: 'test' });
       testRoute.match('best', resp);
-      resp.freeze()
+      resp.freeze();
       expect(resp.route).toBeUndefined();
     });
 
@@ -269,7 +268,7 @@ describe('createRoute', () => {
       const resp = new ResponseCreator({ pathname: 'test' });
       const testRoute = createRoute({ name: 'Test', path: 'test' });
       testRoute.match('test', resp);
-      resp.freeze()
+      resp.freeze();
       expect(resp.route).toBe(testRoute);
     });
 
@@ -277,7 +276,7 @@ describe('createRoute', () => {
       const resp = new ResponseCreator();
       const testRoute = createRoute({ name: 'Test', path: 'test' });
       testRoute.match('/test', resp);
-      resp.freeze()
+      resp.freeze();
       expect(resp.route).toBe(testRoute);
     });
 
@@ -292,7 +291,7 @@ describe('createRoute', () => {
         });
         const resp = new ResponseCreator();
         testRoute.match('test/one', resp);
-        resp.freeze()
+        resp.freeze();
         expect(resp.route).toBe(One);
         expect(resp.partials[0]).toBe('Test');
       });
