@@ -10,6 +10,9 @@ const config = {
   externals: {
     vue: 'Vue'
   },
+  resolve: {
+    extensions: ['.js', '.vue']
+  },
   module: {
     rules: [
       {
@@ -18,6 +21,14 @@ const config = {
         use: [
           {
             loader: 'babel-loader'
+          }
+        ]
+      },
+      {
+        test: /\.vue$/,
+        use: [
+          {
+            loader: 'vue-loader'
           }
         ]
       }

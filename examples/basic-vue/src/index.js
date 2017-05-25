@@ -4,7 +4,6 @@ import CuriPlugin from 'curi-vue';
 import { createHashHistory } from 'history';
 import routes from './routes';
 import renderFunction from './renderFunction';
-import './registerComponents';
 
 const history = createHashHistory();
 const config = createConfig(history, routes);

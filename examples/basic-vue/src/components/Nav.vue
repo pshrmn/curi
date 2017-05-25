@@ -1,15 +1,5 @@
-export default {
-  name: 'app-nav',
-  data: function() {
-    return {
-      methods: [
-        { method: 'Phone' },
-        { method: 'Email' },
-        { method: 'Fax' }
-      ]
-    }
-  },
-  template: `<nav>
+<template>
+  <nav>
     <ul>
       <li>
         <curi-link to="Home">Home</curi-link>
@@ -23,5 +13,20 @@ export default {
         </ul>
       </li>
     </ul>
-  </nav>`
-};
+  </nav>
+</template>
+
+<script>
+  export default {
+    name: 'app-nav',
+    data: function() {
+      return {
+        methods: [
+          { method: 'Phone' },
+          { method: 'Email' },
+          { method: 'Fax' }
+        ]
+      }
+    }
+  };
+</script>

@@ -1,6 +1,10 @@
+import Home from './components/Home';
+import Contact from './components/Contact';
+import Method from './components/Method';
+
 export default [
-  { name: 'Home', path: '', value: 'home'},
-  { name: 'Contact', path: 'contact', value: 'contact', children: [
-    { name: 'Method', path: ':method', value: 'contact-method' }
+  { name: 'Home', path: '', value: Home},
+  { name: 'Contact', path: 'contact', value: Contact, children: [
+    { name: 'Method', path: ':method', value: Method }
   ]}
 ];
