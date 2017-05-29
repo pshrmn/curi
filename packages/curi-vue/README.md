@@ -8,9 +8,26 @@ Vue has its own official routing solution, but `curi-vue` offers an alternative 
 npm install --save curi-vue
 ```
 
+### UMD
+
+```html
+<script src="https://unpkg.com/curi-vue@0.1.0/umd/curi-vue.js"></script>
+<script type="text/javascript">
+  const CuriPlugin = window.CuriVue;
+</script>
+```
+
+The version number above may not always be accurate. To ensure that you are using the most
+up to date version of the `curi` UMD build, open https://unpkg.com/curi-vue/umd in your
+browser and copy the link address for the `curi-vue.js` file. That will provide you
+with the URI of the most recent release. There is also a minimized version of the bundle
+if you change the file name in the URI to `curi-vue.min.js`.
+
+**Note:** If you are using a UMD script, you will have to include the `vue` script yourself.
+
 ## Usage
 
-`curi-view` exports a Vue plugin that you can use to add Curi support to a Vue application. The plugin is passed to Vue using the `use` method. Along with the plugin, you will need to pass your Curi configuration object.
+`curi-vue` exports a Vue plugin that you can use to add Curi support to a Vue application. The plugin is passed to Vue using the `use` method. Along with the plugin, you will need to pass your Curi configuration object.
 
 ```js
 import CuriPlugin from 'curi-vue';
