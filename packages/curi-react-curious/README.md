@@ -21,10 +21,10 @@ npm install --save curi-react-curious
 ```
 
 The version number above may not always be accurate. To ensure that you are using the most
-up to date version of `curi-react-curious`, open https://unpkg.com/curi-react-curious/ in your
-browser and manually navigate to the umd/curi-react-curious.js file. That will provide you
+up to date version of the `curi` UMD build, open https://unpkg.com/curi-react-curious/umd in your
+browser and copy the link address for the `curi-react-curious.js` file. That will provide you
 with the URI of the most recent release. There is also a minimized version of the bundle
-if you change the file name in the URI to "curi-react-curious.min.js"
+if you change the file name in the URI to `curi-react-curious.min.js`.
 
 **Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
 

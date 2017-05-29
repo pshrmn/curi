@@ -26,10 +26,10 @@ npm install --save curi
 ```
 
 The version number above may not always be accurate. To ensure that you are using the most
-up to date version of `curi`, open https://unpkg.com/curi/ in your
-browser and manually navigate to the umd/curi.js file. That will provide you
+up to date version of the `curi` UMD build, open https://unpkg.com/curi/umd in your
+browser and copy the link address for the `curi.js` file. That will provide you
 with the URI of the most recent release. There is also a minimized version of the bundle
-if you change the file name in the URI to "curi.min.js"
+if you change the file name in the URI to `curi.min.js`.
 
 **Note:** If you are using a UMD script, you will have to include the `history` script yourself.
 

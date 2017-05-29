@@ -25,10 +25,10 @@ npm install --save curi-addon-prefetch
 ```
 
 The version number above may not always be accurate. To ensure that you are using the most
-up to date version of `curi-addon-prefetch`, open https://unpkg.com/curi-addon-prefetch/ in your
-browser and manually navigate to the umd/curi-addon-prefetch.js file. That will provide you
+up to date version of the `curi` UMD build, open https://unpkg.com/curi-addon-prefetch/umd in your
+browser and copy the link address for the `curi-addon-prefetch.js` file. That will provide you
 with the URI of the most recent release. There is also a minimized version of the bundle
-if you change the file name in the URI to "curi-addon-prefetch.min.js"
+if you change the file name in the URI to `curi-addon-prefetch.min.js`.
 
 ## Usage
 
