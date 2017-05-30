@@ -36,7 +36,6 @@ There are also a number of [examples](/examples) that you can learn from. Many o
   * [curi-react-redirect](#curi-react-redirect)
   * [curi-react-curious](#curi-react-curious)
   * [curi-react-active](#curi-react-active)
-  * [curi-react-clickable](#curi-react-clickable)
 
 ## curi
 
@@ -214,20 +213,6 @@ A component that modifies its `children` element when its `name` matches the cur
   <div>...</div>
 </Active>
 ```
-
-#### `curi-react-clickable`
-
-[![npm][curi-react-clickable-version-badge]][npm-curi-react-clickable]
-
-[package](/packages/curi-react-clickable) + [source](/packages/curi-react-clickable/src)
-
-A component that lets you make any component navigate by clicking it. **Use with caution for web applications**
-
-```js
-<Clickable component={MyComponent} to='My View'>Go to my view</Clickable>
-// will render <MyComponent onClick={...}>Go to my view</MyComponent>
-```
-
 
 [build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg
 [build]: https://travis-ci.org/pshrmn/curi
