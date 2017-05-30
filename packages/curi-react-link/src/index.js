@@ -74,7 +74,15 @@ class Link extends React.Component {
   }
 
   render() {
-    const { to, params, details, onClick, active, ...rest } = this.props;
+    const {
+      to,
+      params,
+      details,
+      onClick,
+      active,
+      component:Component = 'a',
+      ...rest
+    } = this.props;
     const { curi, curiResponse } = this.context;
     let anchorProps = rest;
     if (active) {
@@ -86,7 +94,7 @@ class Link extends React.Component {
     }
     const { pathname } = this.state;
     const href = curi.history.createHref({ pathname, ...details });
-    return <a onClick={this.clickHandler} href={href} {...anchorProps} />;
+    return <Component onClick={this.clickHandler} href={href} {...anchorProps} />;
   }
 }
 

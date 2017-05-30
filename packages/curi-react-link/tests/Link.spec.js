@@ -17,14 +17,28 @@ describe('<Link>', () => {
     console.error = err;
   });
 
-  it('renders an <a>', () => {
-    const history = createMemoryHistory();
-    const config = createConfig(history, [{ name: 'Test', path: '' }]);
-    const wrapper = shallow(<Link to="Test">Test</Link>, {
-      context: { curi: config }
+  describe('component', () => {
+    it('renders an <a> by default', () => {
+      const history = createMemoryHistory();
+      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const wrapper = shallow(<Link to="Test">Test</Link>, {
+        context: { curi: config }
+      });
+      const a = wrapper.find('a');
+      expect(a.exists()).toBe(true);
     });
-    const a = wrapper.find('a');
-    expect(a.exists()).toBe(true);
+
+    it('when provided, it renders the component instead of an anchor', () => {
+      const history = createMemoryHistory();
+      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const wrapper = shallow(<Link component='button' to="Test">Test</Link>, {
+        context: { curi: config }
+      });
+      const a = wrapper.find('a');
+      const button = wrapper.find('button');
+      expect(a.exists()).toBe(false);
+      expect(button.exists()).toBe(true);
+    });
   });
 
   describe('to', () => {
@@ -38,7 +52,7 @@ describe('<Link>', () => {
       expect(a.prop('href')).toBe('/');
     });
 
-    it('defaults to pathto="/" if name is not provided', () => {
+    it('defaults to path="/" if name is not provided', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, []);
       const wrapper = shallow(<Link>Test</Link>, {

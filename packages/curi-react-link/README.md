@@ -30,7 +30,9 @@ if you change the file name in the URI to `curi-react-link.min.js`.
 
 ## `<Link>`
 
-A `<Link>` allows you to navigate within your application. A `<Link>` will render an anchor element (`<a>`). However, when it is clicked, instead of reloading the page it will use your configuration object's `history` object to navigate.
+A `<Link>` allows you to navigate within your application. A default `<Link>` will render an anchor element (`<a>`). You can provide an alternative component to render instead, but for accessibility reasons, you should probably just stick with the default.
+
+When the rendered element is clicked, instead of reloading the page it will use your configuration object's `history` object to navigate.
 
 Instead of providing a pathname, you just need to specify the name of the route you want to link to. Then, the pathname of the URI you want the component to link to will be automatically generated for you.
 
@@ -56,6 +58,12 @@ If the route that you want to navigate to (or any of its parents) include path p
 While the `pathname` of the location to navigate to will be generated for you, this does not cover over location properties (`search`, `hash`, and `state`). You can provide these values using the `details` prop.
 
 **Note:** You can also include a `pathname` property in the `details` object and it will overwrite the over generated from the `name` prop.
+
+#### component
+
+By default, when you render a `<Link>`, an anchor element will be rendered (`React.createElement('a', ...)`). However, you can provide your own component to be rendered instead. This can be useful for using styled components or using `<button>`s to navigate.
+
+**Warning:** You can provide any component that you want, but you should stick with an anchor (or a component that renders an anchor). There are accessibility issues that can occur when you use other DOM elements as links.
 
 #### active
 
