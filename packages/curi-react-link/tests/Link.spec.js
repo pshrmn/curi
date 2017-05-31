@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import createConfig from '../../curi/src';
 import createActiveAddon from '../../curi-addon-active/src';
@@ -17,7 +17,7 @@ describe('<Link>', () => {
     console.error = err;
   });
 
-  describe('component', () => {
+  describe('anchor', () => {
     it('renders an <a> by default', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
@@ -31,50 +31,16 @@ describe('<Link>', () => {
     it('when provided, it renders the component instead of an anchor', () => {
       const history = createMemoryHistory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
-      const wrapper = shallow(<Link component='button' to="Test">Test</Link>, {
+      const StyledAnchor = props => (
+        <a style={{ color: 'orange' }} {...props} />
+      );
+      // need to mount here so that the styled anchor also renders
+      const wrapper = mount(<Link anchor={StyledAnchor} to="Test">Test</Link>, {
         context: { curi: config }
       });
       const a = wrapper.find('a');
-      const button = wrapper.find('button');
-      expect(a.exists()).toBe(false);
-      expect(button.exists()).toBe(true);
-    });
-  });
-
-  describe('noHref', () => {
-    it('does not add the href attribute when noHref is true', () => {
-      const history = createMemoryHistory();
-      const config = createConfig(history, [{ name: 'Test', path: '' }]);
-      const wrapper = shallow(
-        <Link
-          to="Test"
-          component='div'
-          noHref
-        >
-          Test
-        </Link>,
-        { context: { curi: config }}
-      );
-      const div = wrapper.find('div');
-      expect(div.exists()).toBe(true);
-      expect(div.prop('href')).toBeUndefined();
-    });
-
-    it('is false by default (so it includes the href attribute)', () => {
-      const history = createMemoryHistory();
-      const config = createConfig(history, [{ name: 'Test', path: '' }]);
-      const wrapper = shallow(
-        <Link
-          to="Test"
-          component='div'
-        >
-          Test
-        </Link>,
-        { context: { curi: config }}
-      );
-      const div = wrapper.find('div');
-      expect(div.exists()).toBe(true);
-      expect(div.prop('href')).toBeDefined();
+      expect(a.exists()).toBe(true);
+      expect(a.prop('style')).toEqual({ color: 'orange' });
     });
   });
 

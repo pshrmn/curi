@@ -20,16 +20,7 @@ class Link extends React.Component {
       merge: PropTypes.func.isRequired,
       partial: PropTypes.bool
     }),
-    component: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func
-    ]),
-    noHref: PropTypes.bool
-  };
-
-  static defaultProps = {
-    component: 'a',
-    noHref: false
+    anchor: PropTypes.func
   };
 
   static contextTypes = {
@@ -90,8 +81,7 @@ class Link extends React.Component {
       details,
       onClick,
       active,
-      component:Component,
-      noHref,
+      anchor: Anchor = 'a',
       ...rest
     } = this.props;
     const { curi, curiResponse } = this.context;
@@ -105,17 +95,10 @@ class Link extends React.Component {
       }
     }
 
-    const props = {
-      onClick: this.clickHandler,
-      ...anchorProps
-    };
+    const { pathname } = this.state;
+    const href = curi.history.createHref({ pathname, ...details });
 
-    if (!noHref) {
-      const { pathname } = this.state;
-      const href = curi.history.createHref({ pathname, ...details });
-      props.href = href;
-    }
-    return <Component {...props} />;
+    return <Anchor {...anchorProps} onClick={this.clickHandler} href={href} />;
   }
 }
 
