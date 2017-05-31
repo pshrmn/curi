@@ -65,6 +65,10 @@ By default, when you render a `<Link>`, an anchor element will be rendered (`Rea
 
 **Warning:** You can provide any component that you want, but you should stick with an anchor (or a component that renders an anchor). There are accessibility issues that can occur when you use other DOM elements as links.
 
+#### noHref
+
+For anchor links, you want the rendered DOM node to have an `href` attribute. However, if you are rendering a node other than an anchor (which you should be very careful with doing because you may be running into accessibility issues), then that node should not have an `href` attribute. This is not done automatically when the `component` prop is used because the `component` might actually render an anchor (in which case we would want it to be given an `href` attribute).
+
 #### active
 
 The `active` prop gives you an opportunity to style the `<a>` rendered by the `<Link>` when it is "active". Being active means that the `<Link>`'s route parameters are the same as the current response's route parameters.

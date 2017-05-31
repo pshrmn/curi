@@ -41,6 +41,43 @@ describe('<Link>', () => {
     });
   });
 
+  describe('noHref', () => {
+    it('does not add the href attribute when noHref is true', () => {
+      const history = createMemoryHistory();
+      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const wrapper = shallow(
+        <Link
+          to="Test"
+          component='div'
+          noHref
+        >
+          Test
+        </Link>,
+        { context: { curi: config }}
+      );
+      const div = wrapper.find('div');
+      expect(div.exists()).toBe(true);
+      expect(div.prop('href')).toBeUndefined();
+    });
+
+    it('is false by default (so it includes the href attribute)', () => {
+      const history = createMemoryHistory();
+      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const wrapper = shallow(
+        <Link
+          to="Test"
+          component='div'
+        >
+          Test
+        </Link>,
+        { context: { curi: config }}
+      );
+      const div = wrapper.find('div');
+      expect(div.exists()).toBe(true);
+      expect(div.prop('href')).toBeDefined();
+    });
+  });
+
   describe('to', () => {
     it("sets the href attribute using the named route's path", () => {
       const history = createMemoryHistory();

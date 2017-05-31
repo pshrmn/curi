@@ -19,7 +19,17 @@ class Link extends React.Component {
     active: PropTypes.shape({
       merge: PropTypes.func.isRequired,
       partial: PropTypes.bool
-    })
+    }),
+    component: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func
+    ]),
+    noHref: PropTypes.bool
+  };
+
+  static defaultProps = {
+    component: 'a',
+    noHref: false
   };
 
   static contextTypes = {
@@ -80,11 +90,13 @@ class Link extends React.Component {
       details,
       onClick,
       active,
-      component:Component = 'a',
+      component:Component,
+      noHref,
       ...rest
     } = this.props;
     const { curi, curiResponse } = this.context;
     let anchorProps = rest;
+
     if (active) {
       const { partial, merge } = active;
       const isActive = curi.addons.active(to, curiResponse, params, partial);
@@ -92,9 +104,18 @@ class Link extends React.Component {
         anchorProps = merge(anchorProps);
       }
     }
-    const { pathname } = this.state;
-    const href = curi.history.createHref({ pathname, ...details });
-    return <Component onClick={this.clickHandler} href={href} {...anchorProps} />;
+
+    const props = {
+      onClick: this.clickHandler,
+      ...anchorProps
+    };
+
+    if (!noHref) {
+      const { pathname } = this.state;
+      const href = curi.history.createHref({ pathname, ...details });
+      props.href = href;
+    }
+    return <Component {...props} />;
   }
 }
 
