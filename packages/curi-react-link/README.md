@@ -14,7 +14,7 @@ npm install --save curi-react-link
 ### UMD
 
 ```html
-<script src="https://unpkg.com/curi-react-link@0.3.0/umd/curi-react-link.js"></script>
+<script src="https://unpkg.com/curi-react-link@0.4.1/umd/curi-react-link.js"></script>
 <script type="text/javascript">
   const Link = window.CuriReactLink;
 </script>
