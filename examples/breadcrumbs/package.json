@@ -1,0 +1,33 @@
+{
+  "name": "curi-breadcrumbs-example",
+  "version": "0.1.0",
+  "description": "Render breadcrumb links",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack"
+  },
+  "keywords": [
+    "Curi",
+    "link",
+    "breacrumbs",
+    "addon"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^2.5.1"
+  },
+  "dependencies": {
+    "curi": "^0.8.1",
+    "curi-react": "^0.6.10",
+    "curi-addon-ancestors": "^0.1.0",
+    "history": "^4.6.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  }
+}
