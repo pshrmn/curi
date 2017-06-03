@@ -63,3 +63,19 @@ const config = createConfig(
 const parent = config.addons.ancestors('Child', 1);
 // parent === 'Parent'
 ```
+
+If the level value is `undefined` (or `null`), then you will receive the array of all ancestors. This can be used to build breadcrumbs for a given route.
+
+```js
+const Breadcrumbs = ({ name, curi }) => {
+  return (
+    <li>
+      {
+        curi.addons.ancestors(name).map(n => (
+          <Link to={n}>{n}</Link>
+        ))
+      }
+    </li>
+  )
+}
+```

@@ -23,6 +23,9 @@ function createAncestorsAddon() {
     },
     get: (name, level) => {
       const ancestors = routeAncestors[name];
+      if (level == null) {
+        return ancestors;
+      }
       if (!isPositiveInteger(level) || !ancestors[level-1]) {
         return;
       }

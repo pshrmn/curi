@@ -44,10 +44,17 @@ describe('ancestors addon', () => {
   });
 
   describe('get', () => {
+    it('returns all ancestors when level is undefined (or null)', () => {
+      const player = { name: 'Player' };
+      ancestors.register(player, ['Team', 'League']);
+      expect(ancestors.get('Player')).toEqual(['Team', 'League']);
+      expect(ancestors.get('Player', null)).toEqual(['Team', 'League']);
+    });
+
     it('returns undefined when level is not a postive integer', () => {
       const player = { name: 'Player' };
       ancestors.register(player, ['Team']);
-      const badArgs = [undefined, 'no', 0];
+      const badArgs = ['no', 0];
       badArgs.forEach(arg => {
         expect(ancestors.get('Player', arg)).toBeUndefined();
       });
@@ -64,6 +71,6 @@ describe('ancestors addon', () => {
       ancestors.register(player, ['Team', 'League']);
       expect(ancestors.get('Player', 1)).toBe('Team');
       expect(ancestors.get('Player', 2)).toBe('League');
-    });    
+    });
   });
 });
