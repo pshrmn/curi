@@ -24,28 +24,24 @@ The components are quite simple. The one thing to note is that the `<ContactMeth
 
 ## Route Components
 
-We will need to modify our routes so that they know what to render when they match a location. To do this, we can either use the `value` or `call` property of a route object.
-
-The `call` property is a function that will be called whenever the route matches. Its return value will be set as the `body` property of the response object. This is mostly useful when we do not have access to the actual value when we are defining are routes (for example, if you are using code splitting).
-
-The `value` property is a value that will be set as the `body` property of the response object. This should be used when you have access to the actual value when defining routes. This is what we will be using for our application.
+We will need to modify our routes so that they know what to render when they match a location. To do this, we will use the `body` property of a route. The `body` property is a function that returns the value to be set as the `response` object's `body` property.
 
 ```js
 const routes = [
   {
     name: 'Home',
     path: '',
-    value: Home
+    body: () => Home
   },
   {
     name: 'Contact',
     path: 'contact',
-    value: Contact,
+    body: () => Contact,
     children: [
       {
         name: 'Contact Method',
         path: ':method',
-        value: ContactMethod
+        body: () => ContactMethod
       }
     ]
   }
@@ -263,17 +259,17 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    value: Home
+    body: () => Home
   },
   {
     name: 'Contact',
     path: 'contact',
-    value: Contact,
+    body: () => Contact,
     children: [
       {
         name: 'Contact Method',
         path: ':method',
-        value: ContactMethod
+        body: () => ContactMethod
       }
     ]
   }

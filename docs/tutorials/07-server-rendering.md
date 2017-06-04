@@ -12,8 +12,8 @@ import Home from './components/Home.js';
 import About from './components/About.js';
 
 export default [
-  { name: 'Home', path: '', value: Home },
-  { name: 'About', path: 'about', value: About }
+  { name: 'Home', path: '', body: () => Home },
+  { name: 'About', path: 'about', body: () => About }
 ];
 ```
 

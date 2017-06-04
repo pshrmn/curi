@@ -9,12 +9,12 @@ const routes = [
   {
     name: 'Recipe List',
     path: 'recipes',
-    value: RecipeList
+    body: () => RecipeList
   },
   {
     name: 'Recipe',
     path: 'recipe/:id',
-    value: Recipe
+    body: () => Recipe
   }
 ];
 ```
@@ -29,7 +29,7 @@ First we will add a `load` function to our `Recipe` route. This function will ma
 {
   name: 'Recipe',
   path: 'recipe/:id',
-  value: Recipe,
+  body: () => Recipe,
   load: (params, respCreator) => {
     return fakeAPI.getRecipe(params.id)
       .then(data => {
@@ -47,7 +47,7 @@ One possibly downside to the implementation of `load` above is that we will be m
 {
   name: 'Recipe List',
   path: 'recipes',
-  value: RecipeList,
+  body: () => RecipeList,
   load: () => {
     if (cache.has('recipes')) {
       return Promise.resolve(cache.get('recipes'));

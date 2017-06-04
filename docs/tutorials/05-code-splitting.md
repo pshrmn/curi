@@ -15,47 +15,17 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    value: Home
+    body: () => Home
   },
   {
     name: 'Contact',
     path: 'contact',
-    value: Contact,
+    body: () => Contact,
     children: [
       {
         name: 'Contact Method',
         path: ':method',
-        value: ContactMethod
-      }
-    ]
-  }
-];
-```
-
-In the above routes, we use the `value` property for our route objects. This is because we have imported the components up above, so we have access to the values while creating our routes.
-
-Let's start by switching our `value` properties to `call` functions. A `call` function returns the value, so we will just return the components. I am using arrow functions here to make the code cleaner, but you can also use regular `function`s. The routes defined below will work exactly like the ones defined above.
-
-```js
-import Home from './components/Home';
-import Contact from './components/Contact';
-import ContactMethod from './components/ContactMethod';
-
-const routes = [
-  {
-    name: 'Home',
-    path: '',
-    call: () => Home
-  },
-  {
-    name: 'Contact',
-    path: 'contact',
-    call: () => Contact,
-    children: [
-      {
-        name: 'Contact Method',
-        path: ':method',
-        call: () => ContactMethod
+        body: () => ContactMethod
       }
     ]
   }
@@ -69,24 +39,24 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    call: () => Home
+    body: () => Home
   },
   {
     name: 'Contact',
     path: 'contact',
-    call: () => Contact,
+    body: () => Contact,
     children: [
       {
         name: 'Contact Method',
         path: ':method',
-        call: () => ContactMethod
+        body: () => ContactMethod
       }
     ]
   }
 ];
 ```
 
-Now, `Home`, `Contact`, and `ContactMethod` are all `undefined`, so if we tried to render our application we would get errors. We need to actually import our components so that our `call` functions actually have something to return. We will import our components using the `preload` property of routes. This function will only be called the first time that its route matches, so we don't have to worry about making extra requests to our server.
+Now, `Home`, `Contact`, and `ContactMethod` are all `undefined`, so if we tried to render our application we would get errors. We need to actually import our components so that our `body` functions actually have something to return. We will import our components using the `preload` property of routes. This function will only be called the first time that its route matches, so we don't have to worry about making extra requests to our server.
 
 `preload` should be a function that returns a Promise. Here, we will call `import()`, which conveniently returns a Promise.
 
@@ -96,19 +66,19 @@ const routes = [
     name: 'Home',
     path: '',
     preload: () => import('./components/Home'),
-    call: () => Home
+    body: () => Home
   },
   {
     name: 'Contact',
     path: 'contact',
     preload: () => import('./components/Contact'),
-    call: () => Contact,
+    body: () => Contact,
     children: [
       {
         name: 'Contact Method',
         path: ':method',
         preload: () => import('./components/ContactMethod'),
-        call: () => ContactMethod
+        body: () => ContactMethod
       }
     ]
   }
@@ -131,7 +101,7 @@ const routes = [
         Home = module.default;
       })
     ),
-    call: () => Home
+    body: () => Home
   },
   {
     name: 'Contact',
@@ -141,7 +111,7 @@ const routes = [
         Contact = module.default;
       })
     ),
-    call: () => Contact,
+    body: () => Contact,
     children: [
       {
         name: 'Contact Method',
@@ -151,7 +121,7 @@ const routes = [
             ContactMethod = module.default;
           })
         ),
-        call: () => ContactMethod
+        body: () => ContactMethod
       }
     ]
   }
@@ -172,7 +142,7 @@ const routes = [
         store['Home'] = module.default;
       })
     ),
-    call: () => store['Home']
+    body: () => store['Home']
   },
   {
     name: 'Contact',
@@ -182,7 +152,7 @@ const routes = [
         store['Contact'] = module.default;
       })
     ),
-    call: () => store['Contact'],
+    body: () => store['Contact'],
     children: [
       {
         name: 'Contact Method',
@@ -192,7 +162,7 @@ const routes = [
             store['ContactMethod'] = module.default;
           })
         ),
-        call: () => store['ContactMethod']
+        body: () => store['ContactMethod']
       }
     ]
   }
@@ -226,6 +196,6 @@ const store = {
         store.set('Something', defaultComponent);
       })
   ),
-  call: () => store.get('Something')
+  body: () => store.get('Something')
 }
 ```

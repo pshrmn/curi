@@ -20,10 +20,10 @@ const response = {
   // An object containing the values varsed from the pathname by `path-to-regexp`.
   params: { photoId: 12345, albumId: 6789 },
 
-  // This is either the `value` or the result of calling `call` for
-  // the (best matched) route. This provides a way to add data to
-  // the response that is associated with the route. For instance, with
-  // `curi-react` this would generally be the component that should be rendered.
+  // This is the result of calling the route's body function. This provides a way
+  // to add information to the response that is associated with the route.
+  // For instance, with `curi-react` this would generally be the component
+  // that should be rendered.
   body: Picture
 };
 
