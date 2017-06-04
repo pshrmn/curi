@@ -1,6 +1,11 @@
+## 0.8.1
+
+* Fixed bug with setting `response.body` too early, which broke async body loading.
+* Fixed bug with the cache returning a `ResponseCreator` and not a `response`.
+
 ## 0.8.0
 
-Drop the route's `value`/`call` properties in favor of just one: `body`. This **must** be a function (whose return value will be set as a response's `body` property).
+* Drop the route's `value`/`call` properties in favor of just one: `body`. This **must** be a function (whose return value will be set as a response's `body` property).
 
 ## 0.7.5
 
