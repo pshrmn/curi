@@ -50,8 +50,8 @@ class ResponseCreator {
       Object.assign(this.params, bestMatch.params);
     }
     // then, using our matched route, we set the response's body
-    if (this.route && this.route.render) {
-      this.body = this.route.render();
+    if (this.route && this.route.getBody) {
+      this.body = this.route.getBody();
     }
   }
 

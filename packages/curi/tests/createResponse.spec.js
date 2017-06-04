@@ -159,9 +159,9 @@ describe('Response', () => {
       });
     });
 
-    it("calls the matching route's render function to set the body value", () => {
+    it("calls the matching route's getBody function to set the body value", () => {
       const resp = new ResponseCreator();
-      resp.push({ name: 'Country', path: ':country', render: () => 'Egypt' });
+      resp.push({ name: 'Country', path: ':country', getBody: () => 'Egypt' });
       resp.freeze();
       expect(resp.body).toEqual('Egypt');
     });
@@ -172,8 +172,8 @@ describe('Response', () => {
       const key = 'greetings';
       const location = { pathname: '/park/yosemite' };
       const resp = new ResponseCreator(key, location);
-      const value = 'Yosemite National Park';
-      const parkURI = createRoute({ name: 'Park', path: 'park/:name', value });
+      const body = () => 'Yosemite National Park';
+      const parkURI = createRoute({ name: 'Park', path: 'park/:name', body });
       resp.push(parkURI, { name: 'yosemite' });
       resp.setData({ open: true });
       resp.freeze();
@@ -182,7 +182,7 @@ describe('Response', () => {
       expect(respObj.key).toBe(key);
       expect(respObj.location).toBe(location);
       expect(respObj.status).toBe(200);
-      expect(respObj.body).toBe(value);
+      expect(respObj.body).toBe('Yosemite National Park');
       expect(respObj.name).toBe('Park');
       expect(respObj.partials).toEqual([]);
       expect(respObj.params).toEqual({ name: 'yosemite' });

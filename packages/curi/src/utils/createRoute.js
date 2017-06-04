@@ -7,8 +7,7 @@ const createRoute = options => {
     name,
     path,
     pathOptions = {},
-    value,
-    call,
+    body,
     children,
     preload,
     load,
@@ -31,12 +30,9 @@ const createRoute = options => {
     ...rest,
     name,
     path: path,
-    render: function() {
-      if (value != null) {
-        return value;
-      } else if (call != null) {
-        return call();
-      }
+    body,
+    getBody: function() {
+      return this.body && this.body();
     },
     children,
     preload: preload ? once(preload) : undefined,

@@ -10,7 +10,7 @@ describe('createRoute', () => {
       const expectedProperties = [
         'name',
         'path',
-        'render',
+        'getBody',
         'children',
         'preload',
         'load',
@@ -66,40 +66,15 @@ describe('createRoute', () => {
         });
       });
 
-      describe('value', () => {
-        it('sets the value that will be returned by the render function', () => {
-          const value = 'Latitude';
-          const testRoute = createRoute({
-            name: 'Value',
-            path: 'value',
-            value
-          });
-          expect(testRoute.render()).toBe(value);
-        });
-
-        it('is preferred over the call option', () => {
-          const one = 'One';
-          const two = 'Two';
-          const testRoute = createRoute({
-            name: 'Value Over Call',
-            path: 'value',
-            value: one,
-            call: () => two
-          });
-          expect(testRoute.render()).toBe(one);
-        });
-      });
-
-      describe('call', () => {
-        it('sets the function that will be called by the render function', () => {
-          const value = 'Longitude';
-          const call = () => value;
+      describe('body', () => {
+        it('calls the function to', () => {
+          const body = () => 'Longitude';
           const testRoute = createRoute({
             name: 'Call',
             path: 'call-me-maybe',
-            call
+            body
           });
-          expect(testRoute.render()).toBe(value);
+          expect(testRoute.getBody()).toBe('Longitude');
         });
       });
 

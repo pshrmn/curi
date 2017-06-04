@@ -27,31 +27,17 @@ If you need to provide different path options that [the defaults](https://github
 
 **Note:** If a route has a `children` array property, it will **always** have the `end` path option set to `false`.
 
-#### `value`
+#### `body`
 
-When the route is the best match for the current location, this value will be assigned to the response's `render` property. The `value` property` is preferred over the `call` property.
+The `body` property gives you the opportunity to attach the `body` property of a response for a given route. This must be a function and its return value will be what is set as the response object's `body` property.
 
 ```js
+// when the user visits /contact, the response object's body
+// property will be the Contact value
 const contact = {
   name: 'Contact',
   path: 'contact',
-  value: Contact
-};
-```
-
-#### `call`
-
-This is a function that will be called when the route is the best match for the current location. The value returned by the function will be assigned to the response's `render` property.
-
-This is useful when the value is not available when creating a config. This would most likely happen when you are using asynchronous module loading (probably in tandem with the `preload` route property).
-
-```js
-const about = {
-  name: 'About',
-  path: 'about',
-  call: function() {
-    return AsyncStore.get('About');
-  }
+  body: () => Contact
 };
 ```
 
