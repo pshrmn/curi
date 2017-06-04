@@ -6,17 +6,17 @@ export default [
   {
     name: 'Home',
     path: '',
-    value: Home
+    body: () => Home
   },
   {
     name: 'Product',
     path: 'paint/:color',
-    value: Product,
+    body: () => Product,
     children: [
       {
         name: 'Product Detail',
         path: 'detail',
-        value: Detail
+        body: () => Detail
       }
     ]
   }

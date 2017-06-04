@@ -9,12 +9,12 @@ export default [
   {
     name: 'Home',
     path: '',
-    value: Home
+    body: () => Home
   },
   {
     name: 'Protected',
     path: 'protected',
-    value: Protected,
+    body: () => Protected,
     load: (params, respCreator) => {
       if (!fakeAuth.authenticated()) {
         respCreator.redirect('/login?next=/protected', 302);
@@ -24,7 +24,7 @@ export default [
   {
     name: 'Login',
     path: 'login',
-    value: Login,
+    body: () => Login,
     load: (params, respCreator) => {
       if (fakeAuth.authenticated()) {
         respCreator.redirect('/');
@@ -34,7 +34,7 @@ export default [
   {
     name: 'Logout',
     path: 'logout',
-    value: Logout,
+    body: () => Logout,
     load: (params, respCreator) => {
       if (!fakeAuth.authenticated()) {
         respCreator.redirect('/');

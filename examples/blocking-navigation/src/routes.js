@@ -5,11 +5,11 @@ export default [
   {
     name: 'Home',
     path: '',
-    value: Home
+    body: () => Home
   },
   {
     name: 'Contact',
     path: 'contact',
-    value: Contact
+    body: () => Contact
   }
 ];

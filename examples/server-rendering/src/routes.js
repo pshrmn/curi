@@ -10,7 +10,7 @@ export default [
           store['Home'] = module.default;
         });
     },
-    call: () => store['Home']
+    body: () => store['Home']
   },
   {
     name: 'Contact',
@@ -21,7 +21,7 @@ export default [
           store['Contact'] = module.default;
         });
     },
-    call: () => store['Contact'],
+    body: () => store['Contact'],
     children: [
       {
         name: 'Contact Method',
@@ -32,7 +32,7 @@ export default [
               store['Contact Method'] = module.default;
             });
         },
-        call: () => store['Contact Method']
+        body: () => store['Contact Method']
       }
     ]
   }

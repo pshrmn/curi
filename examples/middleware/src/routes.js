@@ -4,6 +4,6 @@ export default [
   {
     name: 'All',
     path: ':all*',
-    value: All
+    body: () => All
   }
 ]

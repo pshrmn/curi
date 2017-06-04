@@ -8,12 +8,12 @@ export default [
   {
     name: 'Home',
     path: '',
-    value: Home
+    body: () => Home
   },
   {
     name: 'Album',
     path: 'a/:id',
-    value: Album,
+    body: () => Album,
     load: (params, respCreator) => {
       const { id } = params
       // don't re-fetch data

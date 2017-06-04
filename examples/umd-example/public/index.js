@@ -19,12 +19,12 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    value: Home
+    body: () => Home
   },
   {
     name: 'About',
     path: 'about',
-    value: About
+    body: () => About
   }
 ];
 

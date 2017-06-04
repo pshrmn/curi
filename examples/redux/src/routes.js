@@ -8,7 +8,7 @@ export default [
   {
     name: 'Home',
     path: '',
-    value: Home,
+    body: () => Home,
     load: () => {
       store.dispatch(
         loadProducts(fakeData)
@@ -18,7 +18,7 @@ export default [
   {
     name: 'Product',
     path: 'products/:id',
-    value: Product,
+    body: () => Product,
     load: (params, respCreator) => {
       const { id } = params;
       // "cache"
