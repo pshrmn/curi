@@ -23,8 +23,8 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "curi": "^0.7.5",
-    "curi-react": "^0.6.4",
+    "curi": "^0.8.1",
+    "curi-react": "^0.6.10",
     "express": "^4.15.2",
     "history": "^4.6.1",
     "prop-types": "^15.5.8",

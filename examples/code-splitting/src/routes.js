@@ -10,7 +10,9 @@ export default [
           store['Home'] = home.default;
         });
     },
-    body: () => store['Home']
+    body: () => {
+      return store['Home'];
+    }
   },
   {
     name: 'Contact',
@@ -21,6 +23,8 @@ export default [
           store['Contact'] = contact.default;
         });
     },
-    body: () => store['Contact']
+    body: () => {
+      return store['Contact'];
+    }
   }
 ];

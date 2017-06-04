@@ -21,8 +21,8 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "curi": "^0.7.5",
-    "curi-react": "^0.6.7",
+    "curi": "^0.8.1",
+    "curi-react": "^0.6.10",
     "history": "^4.6.1",
     "qs": "^6.4.0",
     "react": "^15.5.4",

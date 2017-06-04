@@ -16,8 +16,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "curi": "^0.7.5",
-    "curi-react": "^0.6.4",
+    "curi": "^0.8.1",
+    "curi-react": "^0.6.10",
     "history": "^4.6.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
