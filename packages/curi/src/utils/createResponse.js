@@ -49,10 +49,6 @@ class ResponseCreator {
       this.route = bestMatch.route;
       Object.assign(this.params, bestMatch.params);
     }
-    // then, using our matched route, we set the response's body
-    if (this.route && this.route.getBody) {
-      this.body = this.route.getBody();
-    }
   }
 
   asObject() {
@@ -70,7 +66,7 @@ class ResponseCreator {
       key: this.key,
       location: this.location,
       status: this.status,
-      body: this.body,
+      body: this.route && this.route.getBody(),
       name: this.route ? this.route.name : undefined,
       partials: this.partials,
       params: this.params,

@@ -82,7 +82,7 @@ function createConfig(history, routeArray, options = {}) {
         : resp.asObject();
 
       if (cache) {
-        cache.set(resp);
+        cache.set(respObject);
       }
       previousResponse = respObject;
       return respObject;

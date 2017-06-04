@@ -211,9 +211,14 @@ describe('createConfig', () => {
       });
 
       describe('cache', () => {
-        it('uses cached response for same key on subsequent calls if cache is provided', done => {
-          const loadSpy = jest.fn();
-          const routes = [{ name: 'All', path: '*', load: loadSpy }];
+        it('returns cached response for same key on subsequent calls if cache is provided', (done) => {
+          const routes = [{
+            name: 'All',
+            path: '*',
+            load: (params, resp) => {
+              resp.setData(Math.random());
+            }
+          }];
           const createSimpleCache = () => {
             const cache = {};
 
@@ -233,55 +238,65 @@ describe('createConfig', () => {
             cache: createSimpleCache()
           });
 
+
           let calls = 0;
+          let randomValue;
           const steps = [
-            () => {
-              expect(loadSpy.mock.calls.length).toBe(1);
+            (r) => {
+              randomValue = r.data;
               history.push('/new-location');
             },
-            () => {
-              expect(loadSpy.mock.calls.length).toBe(2);
+            (r) => {
+              expect(r.data).not.toEqual(randomValue);
               history.goBack();
             },
-            () => {
-              expect(loadSpy.mock.calls.length).toBe(2);
+            (r) => {
+              expect(r.data).toEqual(randomValue);
               done();
             }
           ];
 
           function subscriber(response) {
-            steps[calls++]();
+            steps[calls++](response);
           }
-
-          config.subscribe(subscriber);
+          config.ready().then(() => {
+            config.subscribe(subscriber);
+          });
         });
 
         it('generates new response for same key on subsequent calls if cache=false', done => {
-          const loadSpy = jest.fn();
-          const routes = [{ name: 'All', path: '*', load: loadSpy }];
+          const routes = [{
+            name: 'All',
+            path: '*',
+            load: (params, resp) => {
+              resp.setData(Math.random());
+            }
+          }];
           const config = createConfig(history, routes, { cache: false });
 
           let calls = 0;
+          let randomValue;
           const steps = [
-            () => {
-              expect(loadSpy.mock.calls.length).toBe(1);
+            (r) => {
+              randomValue = r.data;
               history.push('/new-location');
             },
-            () => {
-              expect(loadSpy.mock.calls.length).toBe(2);
+            (r) => {
+              expect(r.data).not.toEqual(randomValue);
               history.goBack();
             },
-            () => {
-              expect(loadSpy.mock.calls.length).toBe(3);
+            (r) => {
+              expect(r.data).not.toEqual(randomValue);
               done();
             }
           ];
 
           function subscriber(response) {
-            steps[calls++]();
+            steps[calls++](response);
           }
-
-          config.subscribe(subscriber);
+          config.ready().then(() => {
+            config.subscribe(subscriber);
+          });
         });
       });
     });
@@ -500,6 +515,24 @@ describe('createConfig', () => {
       };
       const history = createMemoryHistory({ initialEntries: ['/hello'] });
       const config = createConfig(history, [CatchAll]);
+    });
+
+    it('does not set body until after load/preload have resolved', (done) => {
+      let bodyValue;
+      const Route = {
+        name: 'A Route',
+        path: 'a-route',
+        load: () => {
+          bodyValue = 'testing';
+        },
+        body: () => bodyValue
+      };
+      const history = createMemoryHistory({ initialEntries: ['/a-route'] });
+      const config = createConfig(history, [Route]);
+      config.ready().then(response => {
+        expect(response.body).toBe('testing');
+        done();
+      });
     });
   });
 

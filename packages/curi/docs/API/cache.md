@@ -28,7 +28,7 @@ const config = createConfig(history, routes, { cache: myCache });
 
 The above cache uses a location's `key` property to store values. This is really only useful for dealing with reusing responses when the user uses the browser's forward/back buttons.
 
-Alternatively, you might create a cache the can cache response based on the location's `pathname` or possibly by concatenating the `pathname`, `search`, and `hash` strings. What you choose is really up to you.
+Alternatively, you might create a `cache` that can cache responses based on the location's `pathname` or possibly by concatenating the `pathname`, `search`, and `hash` strings. What you choose is really up to you.
 
 ### With Hash History
 

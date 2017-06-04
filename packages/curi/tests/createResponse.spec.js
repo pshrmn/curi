@@ -158,13 +158,6 @@ describe('Response', () => {
         city: 'Bozeman'
       });
     });
-
-    it("calls the matching route's getBody function to set the body value", () => {
-      const resp = new ResponseCreator();
-      resp.push({ name: 'Country', path: ':country', getBody: () => 'Egypt' });
-      resp.freeze();
-      expect(resp.body).toEqual('Egypt');
-    });
   });
 
   describe('asObject', () => {
