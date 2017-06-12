@@ -51,7 +51,7 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    value: Home,
+    body: () => Home,
   },
   {
     name: 'About',
@@ -60,7 +60,7 @@ const routes = [
       return import('./components/About')
         .then(module => { store.register('About', module.default); });
     }
-    call: () => store.get('About')
+    body: () => store.get('About')
   }
 ];
 ```
