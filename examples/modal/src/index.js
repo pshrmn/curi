@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createBrowserHistory } from 'tmp-history';
+import { createBrowserHistory } from 'history';
 import createConfig from 'curi'
 import { Navigator } from 'curi-react';
 

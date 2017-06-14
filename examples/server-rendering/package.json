@@ -29,7 +29,7 @@
     "curi": "^0.8.1",
     "curi-react": "^0.6.10",
     "express": "^4.15.2",
-    "history": "^4.6.1",
+    "history": "^4.6.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.3"
   }

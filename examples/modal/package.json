@@ -26,10 +26,9 @@
     "curi": "^0.8.1",
     "curi-react": "^0.6.10",
     "express": "^4.15.2",
-    "history": "^4.6.1",
+    "history": "^4.6.2",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "tmp-history": "^4.7.0"
+    "react-dom": "^15.5.4"
   }
 }

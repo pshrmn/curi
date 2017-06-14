@@ -23,7 +23,7 @@
     "curi": "^0.8.1",
     "curi-middleware-query": "^0.1.1",
     "curi-react": "^0.6.10",
-    "history": "^4.6.1",
+    "history": "^4.6.2",
     "qs": "^6.4.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
