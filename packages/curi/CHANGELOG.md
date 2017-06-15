@@ -1,3 +1,11 @@
+## 0.8.3
+
+* Change `config.ready` function to always return the `Promise` that is generating (or generated) the most recent response.
+
+## 0.8.2
+
+* Updated to `history@4.6.2` (no more automatic `pathname` encoding).
+
 ## 0.8.1
 
 * Fixed bug with setting `response.body` too early, which broke async body loading.
