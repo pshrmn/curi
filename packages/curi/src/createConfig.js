@@ -3,93 +3,98 @@ import pathnameAddon from './addons/pathname';
 import ResponseCreator from './utils/createResponse';
 
 function createConfig(history, routeArray, options = {}) {
-  const { addons = [], middleware = [], cache = false } = options;
+  const {
+    addons: addonFactories = [],
+    middleware = [],
+    cache = false
+  } = options;
 
-  const finalAddons = addons.concat(pathnameAddon);
-
+  // add the pathname addon to the provided addons
+  const finalAddons = addonFactories.concat(pathnameAddon);
   let routes = [];
-  const globals = {};
+  const registeredAddons = {};
   const subscribers = [];
 
   let mostRecentKey;
   let previousResponse;
 
-  const setup = routeArray => {
-    const registerFunctions = [];
-    for (let key in globals) {
-      delete globals[key];
+  function setup(routeArray) {
+    const addonFunctions = [];
+    // clear out any existing addons
+    for (let key in registeredAddons) {
+      delete registeredAddons[key];
     }
 
     finalAddons.forEach(addonFactory => {
       const addon = addonFactory();
-      globals[addon.name] = addon.get;
-      registerFunctions.push(addon);
+      registeredAddons[addon.name] = addon.get;
+      addonFunctions.push(addon);
     });
 
-    routes = walkRoutes(routeArray, registerFunctions, {});
+    routes = walkRoutes(routeArray, addonFunctions, {});
     makeResponse();
   };
 
-  const respond = key => {
-    const resp = new ResponseCreator(key, history.location);
-    routes.some(route => route.match(history.location.pathname, resp));
-    resp.freeze();
-    return resp;
+  function matchRoute(rc) {
+    routes.some(route => (route.match(history.location.pathname, rc)));
+    // once we have matched the route, we freeze the responseCreator to
+    // set its route/params/partials properties
+    rc.freeze();
+    return Promise.resolve(rc);
   };
 
-  const runURILoadFunctions = resp => {
-    if (!resp.route) {
-      resp.setStatus(404);
-      return Promise.resolve(resp);
+  function loadRoute(rc) {
+    if (!rc.route) {
+      rc.setStatus(404);
+      return Promise.resolve(rc);
     }
-    const { preload, load } = resp.route;
+
+    const { preload, load } = rc.route;
+
     return Promise.all([
       preload ? preload() : null,
-      load ? load(resp.params, resp) : null
+      load ? load(rc.params, rc) : null
     ])
-      .catch(err => {
-        // when either fails, set the error message
-        resp.fail(err);
-      })
-      .then(() => {
-        return resp;
-      });
+      .catch(err => { rc.fail(err); })
+      // ALWAYS return the response
+      .then(() => rc);
   };
 
-  const setMostRecentKey = location => {
-    let { key } = location;
-    if (key == null) {
-      key = Math.random().toString(36).slice(2, 8);
-    }
-    mostRecentKey = key;
-    return key;
-  };
-
-  const prepareResponse = () => {
-    const responseKey = setMostRecentKey(history.location);
+  function finalizeResponse(rc) {
+    const respObject = middleware.length
+      ? middleware.reduce(
+          (obj, curr) => curr(obj),
+          rc.asObject()
+        )
+      : rc.asObject();
 
     if (cache) {
-      const resp = cache.get(history.location);
-      if (resp != null) {
-        return Promise.resolve(resp);
+      cache.set(respObject);
+    }
+
+    previousResponse = respObject;
+    return respObject;
+  };
+
+  function prepareResponse() {
+    // generate a random key when none is provided (hash history)
+    const key = history.location.key || Math.random().toString(36).slice(2, 8);
+    mostRecentKey = key;
+
+    if (cache) {
+      const cachedResponse = cache.get(history.location);
+      if (cachedResponse != null) {
+        return Promise.resolve(cachedResponse);
       }
     }
 
-    const response = respond(responseKey);
-    return runURILoadFunctions(response).then(resp => {
-      const respObject = middleware.length
-        ? middleware.reduce((obj, curr) => curr(obj), resp.asObject())
-        : resp.asObject();
-
-      if (cache) {
-        cache.set(respObject);
-      }
-      previousResponse = respObject;
-      return respObject;
-    });
+    const rc = new ResponseCreator(key, history.location);
+    return matchRoute(rc)
+      .then(loadRoute)
+      .then(finalizeResponse);
   };
 
-  const subscribe = fn => {
+  function subscribe(fn) {
     if (typeof fn !== 'function') {
       throw new Error('The argument passed to subscribe must be a function');
     }
@@ -104,7 +109,7 @@ function createConfig(history, routeArray, options = {}) {
     };
   };
 
-  const emit = response => {
+  function emit(response) {
     // don't emit old responses
     if (response.key !== mostRecentKey) {
       return;
@@ -116,12 +121,13 @@ function createConfig(history, routeArray, options = {}) {
     });
   };
 
-  const ready = () =>
-    previousResponse ? Promise.resolve(previousResponse) : prepareResponse();
+  function ready() {
+    return previousResponse ? Promise.resolve(previousResponse) : prepareResponse();
+  }
 
   // create a response object using the current location and
   // emit it to any subscribed functions
-  const makeResponse = () => {
+  function makeResponse() {
     prepareResponse().then(resp => {
       emit(resp);
     });
@@ -135,7 +141,7 @@ function createConfig(history, routeArray, options = {}) {
     ready,
     refresh: setup,
     subscribe,
-    addons: globals,
+    addons: registeredAddons,
     history
   };
 }

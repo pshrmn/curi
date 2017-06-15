@@ -38,7 +38,6 @@ class ResponseCreator {
   }
 
   freeze() {
-    // first, we set our route/partials/params properties
     if (this.matches.length) {
       const bestMatch = this.matches.pop();
       this.matches.forEach(m => {
