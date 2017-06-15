@@ -17,8 +17,9 @@ function createConfig(history, routeArray, options = {}) {
 
   let mostRecentKey;
   let previousResponse;
+  let responseInProgress;
 
-  function setup(routeArray) {
+  function setupRoutesAndAddons(routeArray) {
     const addonFunctions = [];
     // clear out any existing addons
     for (let key in registeredAddons) {
@@ -89,6 +90,7 @@ function createConfig(history, routeArray, options = {}) {
     }
 
     const rc = new ResponseCreator(key, history.location);
+
     return matchRoute(rc)
       .then(loadRoute)
       .then(finalizeResponse);
@@ -121,25 +123,22 @@ function createConfig(history, routeArray, options = {}) {
     });
   };
 
-  function ready() {
-    return previousResponse ? Promise.resolve(previousResponse) : prepareResponse();
-  }
-
   // create a response object using the current location and
   // emit it to any subscribed functions
   function makeResponse() {
-    prepareResponse().then(resp => {
-      emit(resp);
+    responseInProgress = prepareResponse().then(response => {
+      emit(response);
+      return response;
     });
   };
 
   // now that everything is defined, actually do the setup
-  setup(routeArray);
+  setupRoutesAndAddons(routeArray);
   const unlisten = history.listen(makeResponse);
 
   return {
-    ready,
-    refresh: setup,
+    ready: () => responseInProgress,
+    refresh: setupRoutesAndAddons,
     subscribe,
     addons: registeredAddons,
     history

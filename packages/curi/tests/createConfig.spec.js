@@ -179,6 +179,7 @@ describe('createConfig', () => {
             resp.status = 451;
             return resp;
           };
+
           const config = createConfig(history, routes, {
             middleware: [fahrenheitMiddleware]
           });
@@ -195,10 +196,12 @@ describe('createConfig', () => {
             resp.status = 451;
             return resp;
           };
+
           const doubleStatus = resp => {
             resp.status *= 2;
             return resp;
           };
+
           const config = createConfig(history, routes, {
             middleware: [fahrenheitMiddleware, doubleStatus]
           });
@@ -259,6 +262,7 @@ describe('createConfig', () => {
           function subscriber(response) {
             steps[calls++](response);
           }
+
           config.ready().then(() => {
             config.subscribe(subscriber);
           });
@@ -490,8 +494,7 @@ describe('createConfig', () => {
 
       // Jest 20 will add the ability to check that a promise resolves/rejects
       // for now, this just verifies that it rejects
-      config
-        .ready()
+      config.ready()
         .then(resp => {
           expect(true).toBe(false);
           done();
