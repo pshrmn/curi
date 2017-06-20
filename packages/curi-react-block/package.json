@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "description": "A component prevents navigation",
   "main": "dist/curi-react-block.common.js",
-  "module": "es/curi-react-block.es.js",
+  "module": "dist/curi-react-block.es.js",
   "files": [
     "dist",
     "LICENSE",
@@ -13,7 +13,7 @@
     "test": "jest",
     "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
-    "prepublish": "in-publish && npm run build",
+    "prepublish": "in-publish && npm run build || not-in-publish",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
   },
   "repository": {
