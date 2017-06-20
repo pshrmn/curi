@@ -4,7 +4,6 @@
   "description": "Code splitting with curi",
   "main": "public/js/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack"
   },
   "author": "Paul Sherman",
@@ -18,10 +17,10 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "curi": "^0.8.1",
-    "curi-react": "^0.6.10",
-    "history": "^4.6.2",
-    "react": "^15.5.3",
-    "react-dom": "^15.5.3"
+    "curi": "^0.9.0",
+    "curi-react": "^0.7.0",
+    "history": "^4.6.3",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }

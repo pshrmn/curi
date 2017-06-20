@@ -9,12 +9,12 @@ export default [
   {
     name: 'Home',
     path: '',
-    value: Home
+    body: () => Home
   },
   {
     name: 'Products',
     path: 'products',
-    value: Products,
+    body: () => Products,
     load: (params, resp) => {
       resp.setData(api.categories());
     },
@@ -22,7 +22,7 @@ export default [
       {
         name: 'Category',
         path: ':category',
-        value: Category,
+        body: () => Category,
         load: (params, resp) => {
           const products = api.category(params.category);
           if (products == null) {
@@ -35,7 +35,7 @@ export default [
           {
             name: 'Product',
             path: ':productID',
-            value: Product,
+            body: () => Product,
             load: (params, resp) => {
               const product = api.product(params.productID);
               if (!product) {

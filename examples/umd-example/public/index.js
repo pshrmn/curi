@@ -34,14 +34,17 @@ ReactDOM.render((
   React.createElement(CuriReactNavigator, {
     config: config,
     children: function(response) {
-      if (!response) {
-        return null;
+      console.log(response);
+      if (!response || response.status === 404) {
+        return React.createElement('div', null,
+          'The page you were looking for does not exist'
+        );
       }
       const Body = response.body ? response.body : null
       return React.createElement('div', null,
         React.createElement(Nav),
         React.createElement(Body)
-      )
+      );
     }
   })
 ), document.getElementById('root'));

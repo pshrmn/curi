@@ -24,12 +24,12 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "curi": "^0.8.1",
-    "curi-addon-prefetch": "^0.1.2",
-    "curi-react": "^0.6.10",
-    "history": "^4.6.2",
+    "curi": "^0.9.0",
+    "curi-addon-prefetch": "^0.2.0",
+    "curi-react": "^0.7.0",
+    "history": "^4.6.3",
     "nprogress": "^0.2.0",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }

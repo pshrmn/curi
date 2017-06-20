@@ -5,6 +5,7 @@ function render(response) {
     return null;
   }
   const { body:Body, params, data } = response;
+
   return <Body params={params} data={data} />
 }
 

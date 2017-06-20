@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
-import createConfig from 'curi/lib/createConfig';
+import createConfig from 'curi';
 import { Navigator } from 'curi-react';
 
 import routes from './routes';
@@ -11,7 +11,7 @@ const history = createBrowserHistory();
 const config = createConfig(history, routes);
 
 config.ready()
-  .then(() => {
+  .then((response) => {
     ReactDOM.render((
       <Navigator config={config} children={renderFunction} />
     ), document.getElementById('root'));
