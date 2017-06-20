@@ -5,17 +5,15 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
-    "lib",
-    "umd",
-    "es",
+    "dist",
     "LICENSE",
     "*.md"
   ],
   "scripts": {
     "test": "jest",
-    "prebuild": "rimraf lib umd es",
+    "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
-    "prepublish": "npm run build",
+    "prepublish": "in-publish && npm run build || not-in-publish",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
   },
   "repository": {
