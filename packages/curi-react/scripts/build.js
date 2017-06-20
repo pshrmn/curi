@@ -1,12 +1,7 @@
 const fs = require('fs');
 const execSync = require('child_process').execSync;
-const inInstall = require('in-publish').inInstall;
 const prettyBytes = require('pretty-bytes');
 const gzipSize = require('gzip-size');
-
-if (inInstall()) {
-  process.exit(0);
-}
 
 const buildStats = {}
 
@@ -23,45 +18,58 @@ const build = (name, command, extraEnv) => {
 
 const startTime = new Date();
 
+// don't bundle dependencies for es/cjs builds
+const pkg = require('../package.json')
+const deps = Object.keys(pkg.dependencies).map(key => key);
+
 build(
-  'ES modules',
-  'babel ./src -d es',
+  'ES',
+  'rollup -c ' +
+    '-f es ' +
+    '-o dist/curi-react.es.js ' +
+    '-e ' + deps.join(','),
   {
-    BABEL_ENV: 'es'
+    NODE_ENV: 'development',
+    BABEL_ENV: 'build'
   }
 );
 
 build(
-  'CommonJS modules',
-  'babel ./src -d lib',
+  'CommonJS',
+  'rollup -c ' +
+    '-f cjs ' +
+    '-o dist/curi-react.common.js ' +
+    '-e ' + deps.join(','),
   {
-    BABEL_ENV: 'cjs'
+    NODE_ENV: 'development',
+    BABEL_ENV: 'build'
   }
 );
 
 build(
-  'UMD file',
-  'rollup -c',
+  '<script> file',
+  'rollup -c -f iife -o dist/curi-react.js',
   {
-    BABEL_ENV: 'es'
+    NODE_ENV: 'development',
+    BABEL_ENV: 'build'
   }
 );
 
 build(
-  'UMD min file',
-  'rollup -c -o umd/curi-react.min.js',
+  '<script> min file',
+  'rollup -c -f iife -o dist/curi-react.min.js',
   {
-    BABEL_ENV: 'es',
-    NODE_ENV: 'production'
+    NODE_ENV: 'production',
+    BABEL_ENV: 'build'
   }
 );
 
 const endTime = new Date();
 const buildTime = endTime - startTime;
 
-const size = fs.statSync('./umd/curi-react.js').size;
+const size = fs.statSync('./dist/curi-react.js').size;
 const minSize = gzipSize.sync(
-  fs.readFileSync('./umd/curi-react.min.js')
+  fs.readFileSync('./dist/curi-react.min.js')
 );
 
 console.log('Build time\n----------');
