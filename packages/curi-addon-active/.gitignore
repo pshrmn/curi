@@ -1,6 +1,6 @@
 node_modules
 *.log
-umd
-es
-lib
+
+dist
+
 coverage

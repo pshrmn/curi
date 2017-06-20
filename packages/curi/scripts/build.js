@@ -37,7 +37,7 @@ build(
 );
 
 build(
-  'UMD file',
+  '<script> file',,
   'rollup -c -f iife -o dist/curi.js',
   {
     NODE_ENV: 'development',
@@ -46,7 +46,7 @@ build(
 );
 
 build(
-  'UMD min file',
+  '<script> min file',,
   'rollup -c -f iife -o dist/curi.min.js',
   {
     NODE_ENV: 'production',

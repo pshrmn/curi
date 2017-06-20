@@ -1,12 +1,7 @@
 const fs = require('fs');
 const execSync = require('child_process').execSync;
-const inInstall = require('in-publish').inInstall;
 const prettyBytes = require('pretty-bytes');
 const gzipSize = require('gzip-size');
-
-if (inInstall()) {
-  process.exit(0);
-}
 
 const buildStats = {}
 
@@ -24,44 +19,47 @@ const build = (name, command, extraEnv) => {
 const startTime = new Date();
 
 build(
-  'ES modules',
-  'babel ./src -d es',
+  'ES',
+  'rollup -c -f es -o dist/curi-addon-active.es.js',
   {
-    BABEL_ENV: 'es'
+    NODE_ENV: 'development',
+    BABEL_ENV: 'build'
   }
 );
 
 build(
-  'CommonJS modules',
-  'babel ./src -d lib',
+  'CommonJS',
+  'rollup -c -f cjs -o dist/curi-addon-active.common.js',
   {
-    BABEL_ENV: 'cjs'
+    NODE_ENV: 'development',
+    BABEL_ENV: 'build'
   }
 );
 
 build(
-  'UMD file',
-  'rollup -c',
+  '<script> file',
+  'rollup -c -f iife -o dist/curi-addon-active.js',
   {
-    BABEL_ENV: 'es'
+    NODE_ENV: 'development',
+    BABEL_ENV: 'build'
   }
 );
 
 build(
-  'UMD min file',
-  'rollup -c -o umd/curi-addon-active.min.js',
+  '<script> min file',
+  'rollup -c -f iife -o dist/curi-addon-active.min.js',
   {
-    BABEL_ENV: 'es',
-    NODE_ENV: 'production'
+    NODE_ENV: 'production',
+    BABEL_ENV: 'build'
   }
 );
 
 const endTime = new Date();
 const buildTime = endTime - startTime;
 
-const size = fs.statSync('./umd/curi-addon-active.js').size;
+const size = fs.statSync('./dist/curi-addon-active.js').size;
 const minSize = gzipSize.sync(
-  fs.readFileSync('./umd/curi-addon-active.min.js')
+  fs.readFileSync('./dist/curi-addon-active.min.js')
 );
 
 console.log('Build time\n----------');

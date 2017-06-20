@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "test": "BABEL_ENV=test jest",
-    "prebuild": "rimraf lib umd es",
+    "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
     "prepublish": "in-publish && npm run build",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
