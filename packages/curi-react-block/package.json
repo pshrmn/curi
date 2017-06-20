@@ -33,14 +33,14 @@
     "react": "^15"
   },
   "dependencies": {
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.5.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "curi": "^0.7.5",
     "enzyme": "^2.8.2",
