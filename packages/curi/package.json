@@ -13,7 +13,7 @@
     "test": "BABEL_ENV=test jest",
     "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
-    "prepublish": "in-publish && npm run build",
+    "prepublish": "in-publish && npm run build || not-in-publish",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
   },
   "repository": {
