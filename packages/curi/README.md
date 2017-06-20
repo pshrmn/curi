@@ -15,23 +15,21 @@
 npm install --save curi
 ```
 
-### UMD
+### Script
+
+If you wish to use `curi` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi@0.8.0/umd/curi.js"></script>
+<script src="https://unpkg.com/curi@0.8.0/dist/curi.js"></script>
 <!-- there is also a min script: curi.min.js -->
 <script type="text/javascript">
   const createConfig = window.Curi;
 </script>
 ```
 
-The version number above may not always be accurate. To ensure that you are using the most
-up to date version of the `curi` UMD build, open https://unpkg.com/curi/umd in your
-browser and copy the link address for the `curi.js` file. That will provide you
-with the URI of the most recent release. There is also a minimized version of the bundle
-if you change the file name in the URI to `curi.min.js`.
+The version number above may not always be accurate. To ensure that you are using the most up to date version of the `curi` script build, open https://unpkg.com/curi/dist in your browser and copy the link address for the `curi.js` file. That will provide you with the URI of the most recent release.
 
-**Note:** If you are using a UMD script, you will have to include the `history` script yourself.
+**Note:** If you are using the above script, you will have to include the `history` script yourself.
 
 ### Overview
 

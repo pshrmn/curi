@@ -13,21 +13,19 @@ This package exports a Curi addon that can be used to determine if a route is "a
 npm install --save curi-addon-active
 ```
 
-### UMD
+### Script
+
+If you wish to use `curi-addon-active` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-addon-active@0.1.1/umd/curi-addon-active.js"></script>
+<script src="https://unpkg.com/curi-addon-active@0.1.1/dist/curi-addon-active.js"></script>
 <!-- there is also a min script: curi-addon-active.min.js -->
 <script type="text/javascript">
   const createActiveAddon = window.CuriAddonActive;
 </script>
 ```
 
-The version number above may not always be accurate. To ensure that you are using the most
-up to date version of the `curi` UMD build, open https://unpkg.com/curi-addon-active/umd in your
-browser and copy the link address for the `curi-addon-active.js` file.. That will provide you
-with the URI of the most recent release. There is also a minimized version of the bundle
-if you change the file name in the URI to `curi-addon-active.min.js`.
+The version number above may not always be accurate. To ensure that you are using the most up to date version of the `curi-addon-active` script build, open https://unpkg.com/curi-addon-active/dist in your browser and copy the link address for the `curi-addon-active.js` file. That will provide you with the URI of the most recent release.
 
 ## Usage
 

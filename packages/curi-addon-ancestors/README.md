@@ -13,21 +13,19 @@ This package exports a Curi addon that can be used to get the name of a route's 
 npm install --save curi-addon-ancestors
 ```
 
-### UMD
+### Script
+
+If you wish to use `curi-addon-ancestors` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-addon-ancestors@0.1.0/umd/curi-addon-ancestors.js"></script>
+<script src="https://unpkg.com/curi-addon-ancestors@0.1.0/dist/curi-addon-ancestors.js"></script>
 <!-- there is also a min script: curi-addon-ancestors.min.js -->
 <script type="text/javascript">
   const createAncestorsAddon = window.CuriAddonAncestors;
 </script>
 ```
 
-The version number above may not always be accurate. To ensure that you are using the most
-up to date version of the `curi` UMD build, open https://unpkg.com/curi-addon-ancestors/umd in your
-browser and copy the link address for the `curi-addon-ancestors.js` file.. That will provide you
-with the URI of the most recent release. There is also a minimized version of the bundle
-if you change the file name in the URI to `curi-addon-ancestors.min.js`.
+The version number above may not always be accurate. To ensure that you are using the most up to date version of the `curi-addon-ancestors` script build, open https://unpkg.com/curi-addon-ancestors/dist in your browser and copy the link address for the `curi-addon-ancestors.js` file. That will provide you with the URI of the most recent release.
 
 ## Usage
 

@@ -11,22 +11,20 @@
 npm install --save curi-react-curious
 ```
 
-### UMD
+### Script
+
+If you wish to use `curi-react-curious` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-react-curious@0.2.0/umd/curi-react-curious.js"></script>
+<script src="https://unpkg.com/curi-react-curious@0.2.0/dist/curi-react-curious.js"></script>
 <script type="text/javascript">
   const curious = window.CuriReactCurious;
 </script>
 ```
 
-The version number above may not always be accurate. To ensure that you are using the most
-up to date version of the `curi` UMD build, open https://unpkg.com/curi-react-curious/umd in your
-browser and copy the link address for the `curi-react-curious.js` file. That will provide you
-with the URI of the most recent release. There is also a minimized version of the bundle
-if you change the file name in the URI to `curi-react-curious.min.js`.
+The version number above may not always be accurate. To ensure that you are using the most up to date version of the `curi-react-curious` script build, open https://unpkg.com/curi-react-curious/dist in your browser and copy the link address for the `curi-react-curious.js` file. That will provide you with the URI of the most recent release.
 
-**Note:** If you are using a UMD script, you will have to include `react` and `prop-types` scripts yourself.
+**Note:** If you are using the above script, you will have to include `react` and `prop-types` scripts yourself.
 
 ## `curious()`
 
