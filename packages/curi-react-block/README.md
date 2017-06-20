@@ -16,7 +16,7 @@ npm install --save curi-react-block
 If you wish to use `curi-react-block` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-react-block@0.1.0/dist/curi-react-block.js"></script>
+<script src="https://unpkg.com/curi-react-block@0.2.0/dist/curi-react-block.js"></script>
 <script type="text/javascript">
   const Block = window.CuriReactBlock;
 </script>

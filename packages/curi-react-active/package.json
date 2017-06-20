@@ -1,6 +1,6 @@
 {
   "name": "curi-react-active",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A component that can detect when it is \"active\"",
   "main": "dist/curi-react-active.common.js",
   "module": "dist/curi-react-active.es.js",
@@ -28,8 +28,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi-addon-active": "^0.1.2",
-    "curi-react-navigator": "^0.2.1",
+    "curi": "^0.9.0",
+    "curi-addon-active": "^0.2.0",
+    "curi-react-navigator": "^0.3.0",
     "react": "^15"
   },
   "dependencies": {

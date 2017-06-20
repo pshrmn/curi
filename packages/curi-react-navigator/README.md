@@ -16,7 +16,7 @@ npm install --save curi-react-navigator
 If you wish to use `curi-react-navigator` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-react-navigator@0.2.0/dist/curi-react-navigator.js"></script>
+<script src="https://unpkg.com/curi-react-navigator@0.3.0/dist/curi-react-navigator.js"></script>
 <script type="text/javascript">
   const Navigator = window.CuriReactNavigator;
 </script>

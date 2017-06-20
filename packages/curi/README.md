@@ -20,7 +20,7 @@ npm install --save curi
 If you wish to use `curi` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi@0.8.0/dist/curi.js"></script>
+<script src="https://unpkg.com/curi@0.9.0/dist/curi.js"></script>
 <!-- there is also a min script: curi.min.js -->
 <script type="text/javascript">
   const createConfig = window.Curi;

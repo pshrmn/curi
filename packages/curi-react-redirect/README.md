@@ -16,7 +16,7 @@ npm install --save curi-react-redirect
 If you wish to use `curi-react-redirect` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-react-redirect@0.3.0/umd/curi-react-redirect.js"></script>
+<script src="https://unpkg.com/curi-react-redirect@0.4.0/umd/curi-react-redirect.js"></script>
 <script type="text/javascript">
   const Redirect = window.CuriReactRedirect;
 </script>

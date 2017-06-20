@@ -16,7 +16,7 @@ npm install --save curi-react-link
 If you wish to use `curi-react-link` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-react-link@0.4.1/dist/curi-react-link.js"></script>
+<script src="https://unpkg.com/curi-react-link@0.5.0/dist/curi-react-link.js"></script>
 <script type="text/javascript">
   const Link = window.CuriReactLink;
 </script>

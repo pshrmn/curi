@@ -16,7 +16,7 @@ npm install --save curi-react-curious
 If you wish to use `curi-react-curious` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-react-curious@0.2.0/dist/curi-react-curious.js"></script>
+<script src="https://unpkg.com/curi-react-curious@0.3.0/dist/curi-react-curious.js"></script>
 <script type="text/javascript">
   const curious = window.CuriReactCurious;
 </script>

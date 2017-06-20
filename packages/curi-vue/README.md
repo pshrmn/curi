@@ -13,7 +13,7 @@ npm install --save curi-vue
 If you wish to use `curi-vue` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-vue@0.1.0/dist/curi-vue.js"></script>
+<script src="https://unpkg.com/curi-vue@0.2.0/dist/curi-vue.js"></script>
 <script type="text/javascript">
   const CuriPlugin = window.CuriVue;
 </script>

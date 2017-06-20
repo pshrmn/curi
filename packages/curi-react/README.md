@@ -18,7 +18,7 @@ npm install --save curi-react
 If you wish to use `curi-react` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-react@0.6.3/dist/curi-react.js"></script>
+<script src="https://unpkg.com/curi-react@0.7.0/dist/curi-react.js"></script>
 <script type="text/javascript">
   const { Navigator, Link, Block, Redirect} = window.CuriReact;
 </script>

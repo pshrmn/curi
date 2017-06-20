@@ -20,7 +20,7 @@ npm install --save curi-addon-prefetch
 If you wish to use `curi-addon-prefetch` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-addon-prefetch@0.1.0/dist/curi-addon-prefetch.js"></script>
+<script src="https://unpkg.com/curi-addon-prefetch@0.2.0/dist/curi-addon-prefetch.js"></script>
 <script type="text/javascript">
   const prefetch = window.CuriAddonPrefetch;
 </script>

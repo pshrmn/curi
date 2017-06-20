@@ -1,6 +1,6 @@
 {
   "name": "curi-addon-active",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A Curi addon to determine if a route is \"active\"",
   "main": "dist/curi-addon-active.common.js",
   "module": "dist/curi-addon-active.es.js",
@@ -29,7 +29,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi": "^0.7.5"
+    "curi": "^0.9.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

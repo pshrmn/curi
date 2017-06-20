@@ -18,7 +18,7 @@ npm install --save curi-addon-active
 If you wish to use `curi-addon-active` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-addon-active@0.1.1/dist/curi-addon-active.js"></script>
+<script src="https://unpkg.com/curi-addon-active@0.2.0/dist/curi-addon-active.js"></script>
 <!-- there is also a min script: curi-addon-active.min.js -->
 <script type="text/javascript">
   const createActiveAddon = window.CuriAddonActive;

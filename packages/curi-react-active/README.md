@@ -18,7 +18,7 @@ npm install --save curi-react-active
 If you wish to use `curi-react-active` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-react-active@0.1.0/dist/curi-react-active.js"></script>
+<script src="https://unpkg.com/curi-react-active@0.2.0/dist/curi-react-active.js"></script>
 <script type="text/javascript">
   const Active = window.CuriReactActive;
 </script>

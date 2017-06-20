@@ -1,3 +1,7 @@
+## 0.9.0
+
+* New build (uses Rollup to output a single file for each build type).
+
 ## 0.8.3
 
 * Change `config.ready` function to always return the `Promise` that is generating (or generated) the most recent response.
@@ -23,3 +27,8 @@
 
 * The configuration object begins making a response object when its `setup` method is called.
 * When a subscriber function subscribes, it is always called immediately. If the initial response object has not resolved, the subscriber function will be passed `undefined`.
+
+## 0.7.1
+
+* Renamed `Response` to `ResponseCreator` (makes it easier to differentiate it from response objects).
+* Add `ResponseCreator.setData`, which will set the `data` property on the response object it creates.

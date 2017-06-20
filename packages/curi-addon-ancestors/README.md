@@ -18,7 +18,7 @@ npm install --save curi-addon-ancestors
 If you wish to use `curi-addon-ancestors` through a `<script>` tag, there is a version available through unpkg.com.
 
 ```html
-<script src="https://unpkg.com/curi-addon-ancestors@0.1.0/dist/curi-addon-ancestors.js"></script>
+<script src="https://unpkg.com/curi-addon-ancestors@0.2.0/dist/curi-addon-ancestors.js"></script>
 <!-- there is also a min script: curi-addon-ancestors.min.js -->
 <script type="text/javascript">
   const createAncestorsAddon = window.CuriAddonAncestors;
