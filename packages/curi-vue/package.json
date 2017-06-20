@@ -2,8 +2,8 @@
   "name": "curi-vue",
   "version": "0.1.0",
   "description": "Curi plugins and components for Vue.js",
-  "main": "lib/index.js",
-  "module": "es/index.js",
+  "main": "dist/curi-vue.common.js",
+  "module": "dist/curi-vue.es.js",
   "files": [
     "dist",
     "LICENSE",
