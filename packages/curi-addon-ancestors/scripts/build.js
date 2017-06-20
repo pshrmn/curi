@@ -1,12 +1,7 @@
 const fs = require('fs');
 const execSync = require('child_process').execSync;
-const inInstall = require('in-publish').inInstall;
 const prettyBytes = require('pretty-bytes');
 const gzipSize = require('gzip-size');
-
-if (inInstall()) {
-  process.exit(0);
-}
 
 const buildStats = {}
 
@@ -24,44 +19,47 @@ const build = (name, command, extraEnv) => {
 const startTime = new Date();
 
 build(
-  'ES modules',
-  'babel ./src -d es',
+  'ES',
+  'rollup -c -f es -o dist/curi-addon-ancestors.es.js',
   {
-    BABEL_ENV: 'es'
+    NODE_ENV: 'development',
+    BABEL_ENV: 'build'
   }
 );
 
 build(
-  'CommonJS modules',
-  'babel ./src -d lib',
+  'CommonJS',
+  'rollup -c -f cjs -o dist/curi-addon-ancestors.common.js',
   {
-    BABEL_ENV: 'cjs'
+    NODE_ENV: 'development',
+    BABEL_ENV: 'build'
   }
 );
 
 build(
-  'UMD file',
-  'rollup -c',
+  '<script> file',
+  'rollup -c -f iife -o dist/curi-addon-ancestors.js',
   {
-    BABEL_ENV: 'es'
+    NODE_ENV: 'development',
+    BABEL_ENV: 'build'
   }
 );
 
 build(
-  'UMD min file',
-  'rollup -c -o umd/curi-addon-ancestors.min.js',
+  '<script> min file',
+  'rollup -c -f iife -o dist/curi-addon-ancestors.min.js',
   {
-    BABEL_ENV: 'es',
-    NODE_ENV: 'production'
+    NODE_ENV: 'production',
+    BABEL_ENV: 'build'
   }
 );
 
 const endTime = new Date();
 const buildTime = endTime - startTime;
 
-const size = fs.statSync('./umd/curi-addon-ancestors.js').size;
+const size = fs.statSync('./dist/curi-addon-ancestors.js').size;
 const minSize = gzipSize.sync(
-  fs.readFileSync('./umd/curi-addon-ancestors.min.js')
+  fs.readFileSync('./dist/curi-addon-ancestors.min.js')
 );
 
 console.log('Build time\n----------');

@@ -3,18 +3,18 @@ import uglify from 'rollup-plugin-uglify';
 
 const config = {
   entry: 'src/index.js',
-  format: 'umd',
-  dest: 'umd/curi-addon-ancestors.js',
   moduleName: 'CuriAddonAncestors',
+  sourceMap: true,
   plugins: [
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      runtimeHelpers: true
     })
   ]
 };
 
 if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(uglify())
+  config.plugins.push(uglify());
 }
 
 export default config;
