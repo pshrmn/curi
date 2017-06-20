@@ -1,13 +1,13 @@
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
+import replace from 'rollup-plugin-replace';
+import commonjs from 'rollup-plugin-commonjs';
+import resolve from 'rollup-plugin-node-resolve';
 
 const config = {
   entry: 'src/index.js',
-  format: 'umd',
-  dest: 'umd/curi-react-navigator.js',
   moduleName: 'CuriReactNavigator',
+  sourceMap: true,
   external: [
     'react',
     'prop-types'
@@ -20,15 +20,18 @@ const config = {
     babel({
       exclude: 'node_modules/**'
     }),
+    replace({
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+    }),
     resolve(),
     commonjs({
       include: /node_modules/
-    }),
+    })
   ]
 };
 
 if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(uglify())
+  config.plugins.push(uglify());
 }
 
 export default config;
