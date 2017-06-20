@@ -10,8 +10,7 @@ const config = {
   sourceMap: true,
   plugins: [
     babel({
-      exclude: 'node_modules/**',
-      runtimeHelpers: true
+      exclude: 'node_modules/**'
     }),
     replace({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)

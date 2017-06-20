@@ -1,5 +1,3 @@
-const envPreset = require('babel-preset-env').default;
-
 const building = process.env.BABEL_ENV === 'build';
 
 const plugins = [
