@@ -1009,9 +1009,9 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   dependencies:
     cssom "0.3.x"
 
-"curi@ ^0.7.1":
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/curi/-/curi-0.7.5.tgz#0050327020043a1f22aeb6681f8d43d01ad61f8a"
+"curi@ ^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/curi/-/curi-0.9.0.tgz#7381d5568dae96f97f16b6d2238a56c4959f8d40"
   dependencies:
     path-to-regexp "^1.7.0"
 
