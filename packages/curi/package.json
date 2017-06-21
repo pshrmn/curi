@@ -10,7 +10,7 @@
     "*.md"
   ],
   "scripts": {
-    "test": "BABEL_ENV=test jest",
+    "test": "jest",
     "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
     "prepublish": "in-publish && npm run build || not-in-publish",

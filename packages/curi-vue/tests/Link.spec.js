@@ -1,6 +1,6 @@
 import Vue from 'vue/dist/vue.common.js';
 import { createMemoryHistory } from 'history';
-import createConfig from 'curi';
+import createConfig from '../../curi/src';
 import CuriPlugin from '../src/plugin';
 import Link from '../src/Link';
 

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import CuriPlugin from '../src/plugin';
-import createConfig from 'curi';
+import createConfig from '../../curi/src';
 import { createMemoryHistory } from 'history';
 
 describe('CuriPlugin', () => {
