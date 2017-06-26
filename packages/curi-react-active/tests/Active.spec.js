@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { createMemoryHistory } from 'history';
+import { InMemory } from 'hickory';
 import createConfig from '../../curi/src';
 import createActiveAddon from '../../curi-addon-active/src';
 import Active from '../src';
@@ -18,7 +18,7 @@ describe('<Active>', () => {
   ];
 
   beforeEach(() => {
-    history = createMemoryHistory();
+    history = InMemory();
     config = createConfig(history, routes, {
       addons: [createActiveAddon]
     });
