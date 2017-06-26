@@ -24,7 +24,7 @@ function createAncestorsAddon() {
     get: (name, level) => {
       const ancestors = routeAncestors[name];
       if (level == null) {
-        return ancestors;
+        return ancestors.slice();
       }
       if (!isPositiveInteger(level) || !ancestors[level-1]) {
         return;

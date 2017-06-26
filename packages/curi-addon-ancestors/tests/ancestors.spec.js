@@ -51,6 +51,15 @@ describe('ancestors addon', () => {
       expect(ancestors.get('Player', null)).toEqual(['Team', 'League']);
     });
 
+    it('returns a copy of the ancestors array, not the original', () => {
+      const player = { name: 'Player' };
+      ancestors.register(player, ['Team', 'League']);
+      const older = ancestors.get('Player');
+      older.reverse();
+      const older2 = ancestors.get('Player');
+      expect(older).not.toEqual(older2);
+    });
+
     it('returns undefined when level is not a postive integer', () => {
       const player = { name: 'Player' };
       ancestors.register(player, ['Team']);
