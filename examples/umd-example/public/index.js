@@ -14,7 +14,7 @@ const Nav = () => (
 );
 
 
-const hashHistory = History.createHashHistory();
+const hashHistory = Hickory.Hash();
 const routes = [
   {
     name: 'Home',

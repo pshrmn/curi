@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import createConfig from 'curi';
 import CuriPlugin from 'curi-vue';
-import { createHashHistory } from 'history';
+import { Hash } from 'hickory';
 import routes from './routes';
 import renderFunction from './renderFunction';
 
-const history = createHashHistory();
+const history = Hash();
 const config = createConfig(history, routes);
 
 Vue.use(CuriPlugin, { config });

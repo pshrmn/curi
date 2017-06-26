@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createHashHistory } from 'history';
+import { Hash } from 'hickory';
 import createConfig from 'curi';
 import { Navigator } from 'curi-react';
 import createActiveAddon from 'curi-addon-active';
@@ -8,7 +8,7 @@ import createActiveAddon from 'curi-addon-active';
 import routes from './routes';
 import renderFunction from './renderFunction';
 
-const history = createHashHistory();
+const history = Hash();
 
 const config = createConfig(history, routes, {
   addons: [createActiveAddon]

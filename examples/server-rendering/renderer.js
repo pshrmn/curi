@@ -1,13 +1,13 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { createMemoryHistory } from 'history';
+import { InMemory } from 'hickory';
 import createConfig from 'curi';
 import { Navigator } from 'curi-react';
 import routes from './src/routes';
 import renderFunction from './src/renderFunction';
 
 export default function(req, res) {
-  const history = createMemoryHistory({ initialEntries: [ req.url ]})
+  const history = InMemory({ locations: [ req.url ]})
   const config = createConfig(history, routes);
   config.ready()
     .then((response) => {

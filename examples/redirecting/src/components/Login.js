@@ -1,5 +1,4 @@
 import React from 'react';
-import qs from 'qs';
 
 import fakeAuth from '../fakeAuth';
 
@@ -9,7 +8,7 @@ const Login = (props) => (
       type='button'
       onClick={(e) => {
         fakeAuth.login();
-        const query = qs.parse(props.location.search.slice(1));
+        const { query } = props.location;
         props.history.replace(query.next || '/');
       }}
     >

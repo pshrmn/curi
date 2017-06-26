@@ -1,6 +1,15 @@
 import React from 'react';
 import { Block } from 'curi-react';
 
+function confirm(location, action, success, failure) {
+  const resp = window.confirm('Are you sure you want to navigate? The form has not been submitted');
+  if (resp) {
+    success();
+  } else {
+    failure();
+  }
+}
+
 class Form extends React.Component {
 
   constructor(props) {
@@ -50,7 +59,7 @@ class Form extends React.Component {
       <form>
         <Block
           when={dirty}
-          message='Are you sure you want to navigate? The form has not been submitted'
+          confirm={confirm}
         />
         <p>
           <label>

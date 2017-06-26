@@ -25,9 +25,9 @@
     "webpack": "^2.5.1"
   },
   "dependencies": {
-    "curi": "^0.9.0",
-    "curi-vue": "^0.2.0",
-    "history": "^4.6.3",
+    "curi": "^0.10.0",
+    "curi-vue": "^0.3.0",
+    "hickory": "^0.4.0",
     "vue": "^2.3.4"
   }
 }

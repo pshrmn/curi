@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createBrowserHistory } from 'history';
+import { Browser } from 'hickory';
 import createConfig from 'curi'
 import { Navigator } from 'curi-react';
 
@@ -9,7 +9,7 @@ import renderFunction from './renderFunction';
 
 // this example is using a browser history because hash histories do not
 // maintain state when navigating.
-const history = createBrowserHistory();
+const history = Browser();
 
 const config = createConfig(history, routes);
 
