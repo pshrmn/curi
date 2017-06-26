@@ -1,3 +1,8 @@
+## 0.10.0
+
+* Switch to the [`hickory`](https://github.com/pshrmn/hickory) package for history.
+* Remove `path-to-regexp` from the ES/CommonJS builds.
+
 ## 0.9.0
 
 * New build (uses Rollup to output a single file for each build type).
