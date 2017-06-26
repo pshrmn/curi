@@ -39,7 +39,7 @@ class Link extends React.Component {
       const { pathname } = this.state;
       const { to, params, details = {} } = this.props;
       const location = { pathname, ...details };
-      curi.history.push(location);
+      curi.history.update(location);
     }
   };
 
@@ -96,7 +96,7 @@ class Link extends React.Component {
     }
 
     const { pathname } = this.state;
-    const href = curi.history.createHref({ pathname, ...details });
+    const href = curi.history.toHref({ pathname, ...details });
 
     return <Anchor {...anchorProps} onClick={this.clickHandler} href={href} />;
   }

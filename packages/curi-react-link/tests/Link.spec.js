@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { createMemoryHistory } from 'history';
+import { InMemory } from 'hickory';
 import createConfig from '../../curi/src';
 import createActiveAddon from '../../curi-addon-active/src';
 import Link from '../src';
@@ -19,7 +19,7 @@ describe('<Link>', () => {
 
   describe('anchor', () => {
     it('renders an <a> by default', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
         context: { curi: config }
@@ -29,7 +29,7 @@ describe('<Link>', () => {
     });
 
     it('when provided, it renders the component instead of an anchor', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const StyledAnchor = props => (
         <a style={{ color: 'orange' }} {...props} />
@@ -46,7 +46,7 @@ describe('<Link>', () => {
 
   describe('to', () => {
     it("sets the href attribute using the named route's path", () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
         context: { curi: config }
@@ -56,7 +56,7 @@ describe('<Link>', () => {
     });
 
     it('defaults to path="/" if name is not provided', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, []);
       const wrapper = shallow(<Link>Test</Link>, {
         context: { curi: config }
@@ -68,7 +68,7 @@ describe('<Link>', () => {
 
   describe('params', () => {
     it('uses params to generate the href', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [
         { name: 'Park', path: '/park/:name' }
       ]);
@@ -81,7 +81,7 @@ describe('<Link>', () => {
     });
 
     it('updates href when props change', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [
         { name: 'Park', path: '/park/:name' }
       ]);
@@ -100,10 +100,10 @@ describe('<Link>', () => {
 
   describe('details', () => {
     it('merges the details prop with the generated pathname when navigating', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
-        <Link to="Test" details={{ search: '?one=two', hash: '#hashtag' }}>
+        <Link to="Test" details={{ query: 'one=two', hash: '#hashtag' }}>
           Test
         </Link>,
         { context: { curi: config } }
@@ -113,7 +113,7 @@ describe('<Link>', () => {
     });
 
     it('overwrites the generated pathname if to includes one', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
         <Link to="Test" details={{ pathname: '/not-a-test' }}>Test</Link>,
@@ -126,7 +126,7 @@ describe('<Link>', () => {
 
   describe('active', () => {
     it('throws if attempting to use when curi-addon-active is not "installed"', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const fakeResponse = {};
       function merge(props) {
@@ -146,7 +146,7 @@ describe('<Link>', () => {
     });
 
     it("does nothing if the <Link>'s props do not match the current response's", () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
         addons: [createActiveAddon]
       });
@@ -165,7 +165,7 @@ describe('<Link>', () => {
     });
 
     it("calls merge function when <Link>'s props match the current response's", () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
         addons: [createActiveAddon]
       });
@@ -184,7 +184,7 @@ describe('<Link>', () => {
     });
 
     it('works with partial matches', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       const config = createConfig(
         history,
         [
@@ -216,9 +216,9 @@ describe('<Link>', () => {
   });
 
   describe('clicking a link', () => {
-    it('calls history.push', () => {
-      const history = createMemoryHistory();
-      history.push = jest.fn();
+    it('calls history.update', () => {
+      const history = InMemory();
+      history.update = jest.fn();
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
@@ -236,13 +236,13 @@ describe('<Link>', () => {
         button: 0
       };
       wrapper.find('a').simulate('click', leftClickEvent);
-      expect(history.push.mock.calls.length).toBe(1);
+      expect(history.update.mock.calls.length).toBe(1);
     });
 
     describe('onClick', () => {
       it('calls onClick prop func if provided', () => {
-        const history = createMemoryHistory();
-        history.push = jest.fn();
+        const history = InMemory();
+        history.update = jest.fn();
         const onClick = jest.fn();
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(<Link to="Test" onClick={onClick}>Test</Link>, {
@@ -261,11 +261,11 @@ describe('<Link>', () => {
         };
         wrapper.find('a').simulate('click', leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
-        expect(history.push.mock.calls.length).toBe(1);
+        expect(history.update.mock.calls.length).toBe(1);
       });
 
       it('does not call history.push if onClick prevents default', () => {
-        const history = createMemoryHistory();
+        const history = InMemory();
         history.push = jest.fn();
         const onClick = jest.fn(event => {
           event.preventDefault();
@@ -292,7 +292,7 @@ describe('<Link>', () => {
     });
 
     it("doesn't push for modified clicks", () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       history.push = jest.fn();
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
@@ -320,7 +320,7 @@ describe('<Link>', () => {
     });
 
     it("doesn't push if event.preventDefault has been called", () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       history.push = jest.fn();
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
