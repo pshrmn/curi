@@ -9,14 +9,14 @@ const Link = {
       return { pathname, ...this.details };
     },
     href: function() {
-      return this.$curi.history.createHref(this.location);
+      return this.$curi.history.toHref(this.location);
     }
   },
 
   methods: {
     click: function(event) {
       event.preventDefault();
-      this.$curi.history.push(this.location);
+      this.$curi.history.update(this.location);
     }
   },
 

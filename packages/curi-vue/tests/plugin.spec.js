@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import CuriPlugin from '../src/plugin';
 import createConfig from '../../curi/src';
-import { createMemoryHistory } from 'history';
+import { InMemory } from 'hickory';
 
 describe('CuriPlugin', () => {
-  const history = createMemoryHistory();
+  const history = InMemory();
   const routes = [];
   const config = createConfig(history, routes);
   Vue.use(CuriPlugin, { config });

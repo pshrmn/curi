@@ -1,11 +1,11 @@
 import Vue from 'vue/dist/vue.common.js';
-import { createMemoryHistory } from 'history';
+import { InMemory } from 'hickory';
 import createConfig from '../../curi/src';
 import CuriPlugin from '../src/plugin';
 import Redirect from '../src/Redirect';
 
 describe('Redirect component', () => {
-  const history = createMemoryHistory();
+  const history = InMemory();
   history.replace = jest.fn();
   const routes = [{ name: 'Place', path: '/place/:name' }];
   const config = createConfig(history, routes);

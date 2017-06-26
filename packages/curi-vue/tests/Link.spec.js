@@ -1,12 +1,12 @@
 import Vue from 'vue/dist/vue.common.js';
-import { createMemoryHistory } from 'history';
+import { InMemory } from 'hickory';
 import createConfig from '../../curi/src';
 import CuriPlugin from '../src/plugin';
 import Link from '../src/Link';
 
 describe('Link component', () => {
   let LinkConstructor;
-  const history = createMemoryHistory();
+  const history = InMemory();
   history.push = jest.fn();
 
   const routes = [{ name: 'Place', path: '/place/:name' }];
