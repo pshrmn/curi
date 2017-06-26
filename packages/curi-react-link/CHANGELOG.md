@@ -1,3 +1,7 @@
+## 0.6.0
+
+* Switch to the [`hickory`](https://github.com/pshrmn/hickory) package for history. With this change, the `<Link>` component now uses `history.update` instead of `history.push` to better mimic anchor behavior in the browser.
+
 ## 0.5.0
 
 * New build (uses Rollup to output a single file for each build type).

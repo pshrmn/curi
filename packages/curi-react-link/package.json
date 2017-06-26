@@ -1,6 +1,6 @@
 {
   "name": "curi-react-link",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A curi config aware React component that renders an <a>",
   "main": "dist/curi-react-link.common.js",
   "module": "dist/curi-react-link.es.js",
@@ -30,7 +30,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi": "^0.9.0",
+    "curi": "^0.10.0",
     "curi-react-navigator": "^0.3.0",
     "react": "^15"
   },
@@ -46,7 +46,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
-    "curi": "^0.9.0",
+    "curi": "^0.10.0",
     "enzyme": "^2.8.2",
     "gzip-size": "^3.0.0",
     "hickory": "^0.4.0",
