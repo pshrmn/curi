@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import createConfig from '../../curi/src';
 import ResponseCreator from '../../curi/src/utils/createResponse';
-import { createMemoryHistory } from 'history';
+import { InMemory } from 'hickory';
 import Navigator from '../src';
 
 describe('<Navigator>', () => {
@@ -21,7 +21,7 @@ describe('<Navigator>', () => {
   });
 
   it('passes the children function a response object', done => {
-    const history = createMemoryHistory();
+    const history = InMemory();
     const routes = [
       { name: 'Home', path: '', pathOptions: { end: true } },
       { name: 'About', path: 'about' }
@@ -60,7 +60,7 @@ describe('<Navigator>', () => {
   });
 
   it('passes the children function the config object', done => {
-    const history = createMemoryHistory();
+    const history = InMemory();
     const routes = [
       { name: 'Home', path: '', pathOptions: { end: true } },
       { name: 'About', path: 'about' }
@@ -83,7 +83,7 @@ describe('<Navigator>', () => {
   });
 
   it('updates on location changes', done => {
-    const history = createMemoryHistory();
+    const history = InMemory();
     const routes = [
       { name: 'Home', path: '', pathOptions: { end: true } },
       { name: 'About', path: 'about' }
