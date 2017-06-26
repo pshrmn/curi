@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { createMemoryHistory } from 'history';
+import { InMemory } from 'hickory';
 import createConfig from '../../curi/src';
 import Redirect from '../src';
 
@@ -20,7 +20,7 @@ describe('<Redirect>', () => {
     let history;
 
     beforeEach(() => {
-      history = createMemoryHistory();
+      history = InMemory();
       history.replace = jest.fn();
     });
 
@@ -91,7 +91,7 @@ describe('<Redirect>', () => {
 
   describe('details', () => {
     it('sets non-pathname location props using the details', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       history.replace = jest.fn();
       const config = createConfig(history, [
         {
@@ -110,7 +110,7 @@ describe('<Redirect>', () => {
     });
 
     it('overwrites pathname from to if details object includes one', () => {
-      const history = createMemoryHistory();
+      const history = InMemory();
       history.replace = jest.fn();
       const config = createConfig(history, [
         {
