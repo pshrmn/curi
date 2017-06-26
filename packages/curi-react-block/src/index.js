@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class Block extends React.Component {
   static propTypes = {
     when: PropTypes.bool,
-    message: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired
+    confirm: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -16,14 +16,11 @@ class Block extends React.Component {
   };
 
   on() {
-    this.unblock = this.context.curi.history.block(this.props.message);
+    this.context.curi.history.confirmWith(this.props.confirm);
   }
 
   off() {
-    if (this.unblock) {
-      this.unblock();
-      this.unblock = null;
-    }
+    this.context.curi.history.removeConfirmation();
   }
 
   componentDidMount() {
@@ -35,7 +32,7 @@ class Block extends React.Component {
   componentDidUpdate(prevProps) {
     if (
       this.props.when === prevProps.when &&
-      this.props.message === prevProps.message
+      this.props.confirm === prevProps.confirm
     ) {
       return;
     }

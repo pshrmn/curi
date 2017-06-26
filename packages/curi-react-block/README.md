@@ -30,12 +30,12 @@ The version number above may not always be accurate. To ensure that you are usin
 
 Render a `<Block>` component when you want to have a user confirm navigation.
 
-When navigation occurs (and the `when` prop is `true`), your `history` object's `getUserConfirmation` function will be called (this is just `window.prompt` by default). The `history` instance will use the result of the `getUserConfirmation` function to determine if the navigation should occur.
+When navigation occurs (and the `when` prop is `true`), the `confirm` prop will be called and navigation will only happen if that function calls its `success` function that it is passed.
 
 **Note:** Navigation done using the browser's forward/back buttons is not caught until _after_ the navigation occurs. This means that the URI in the address bar will be the next location, but if the user cancels navigation, the URI will revert to the current location.
 
 ```js
-<Block message='Are you sure you want to leave?' />
+<Block confirm={confirmFunction} />
 ```
 
 ### props
@@ -44,20 +44,27 @@ When navigation occurs (and the `when` prop is `true`), your `history` object's 
 
 A boolean, which is `true` by default. When it is `true`, the navigation block is active. When `when` is `false`, navigation will not be blocked.
 
-#### `message`
-
-This is either a string or a function that returns a string.
-
-When it is a string, the string will be the message passed to the `getUserConfirmation` function.
-
 ```js
-<Block message='Shall we?' />
+// will block navigation
+<Block when={true} confirm={confirm} />
+
+// will not block navigation
+<Block when={false} confirm={confirm} />
 ```
 
-When it is a function, the function will be passed the new `location` object and the `action` string (`POP`, `PUSH`, `REPLACE`). These values can be used to help generate the confirmation message.
+#### `confirm`
+
+The `confirm` prop is a function that will be called whenever there is navigation. The function will receive four arguments: `location`, `action`, `success`, and `failure`. The `location` and `action` values are the location object that is being navigated to and the type of navigation. The `success` and `failure` arguments are functions that you should call depending on whether or not you want to let the navigation happen. When the navigation should occur, the `confirm` function should call the `success` function. When the navigation should be cancelled, the `failure` function should be called.
 
 ```js
-<Block message={(location, action) => {
-  return `Are you sure you want to go to ${location.pathname}?`;
-}} />
+<Block
+  confirm={(location, action, success, failure) => {
+    const response = window.confirm("Shall we?");
+    if (response) {
+      success();
+    } else {
+      failure();
+    }
+  }}
+/>
 ```
