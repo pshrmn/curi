@@ -17,7 +17,10 @@ export default [
     body: () => Protected,
     load: (params, respCreator) => {
       if (!fakeAuth.authenticated()) {
-        respCreator.redirect('/login?next=/protected', 302);
+        respCreator.redirect({
+          pathname: '/login',
+          query: { next: '/protected' }
+        }, 302);
       }
     }
   },
