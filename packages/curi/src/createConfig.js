@@ -134,7 +134,7 @@ function createConfig(history, routeArray, options = {}) {
 
   // now that everything is defined, actually do the setup
   setupRoutesAndAddons(routeArray);
-  const unlisten = history.listen(makeResponse);
+  const unlisten = history.subscribe(makeResponse);
 
   return {
     ready: () => responseInProgress,

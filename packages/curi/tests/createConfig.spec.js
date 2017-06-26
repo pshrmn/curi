@@ -1,6 +1,6 @@
 import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
-import createMemoryHistory from 'history/createMemoryHistory';
+import { InMemory } from 'hickory';
 import ResponseCreator from '../src/utils/createResponse';
 
 // The subscribe function is called when subscribing so that the
@@ -22,7 +22,7 @@ describe('createConfig', () => {
   let history;
 
   beforeEach(() => {
-    history = createMemoryHistory();
+    history = InMemory();
   });
 
   describe('constructor', () => {
@@ -251,7 +251,7 @@ describe('createConfig', () => {
             },
             (r) => {
               expect(r.data).not.toEqual(randomValue);
-              history.goBack();
+              history.go(-1);
             },
             (r) => {
               expect(r.data).toEqual(randomValue);
@@ -287,7 +287,7 @@ describe('createConfig', () => {
             },
             (r) => {
               expect(r.data).not.toEqual(randomValue);
-              history.goBack();
+              history.go(-1);
             },
             (r) => {
               expect(r.data).not.toEqual(randomValue);
@@ -358,8 +358,8 @@ describe('createConfig', () => {
             ]
           }
         ];
-        const history = createMemoryHistory({
-          initialEntries: ['/contact/email']
+        const history = InMemory({
+          locations: ['/contact/email']
         });
         const config = createConfig(history, routes);
         config.ready().then(arg => {
@@ -384,8 +384,8 @@ describe('createConfig', () => {
 
       it('resolved value has undefined error for good responses', done => {
         const routes = [{ name: 'Contact', path: 'contact' }];
-        const history = createMemoryHistory({
-          initialEntries: ['/contact']
+        const history = InMemory({
+          locations: ['/contact']
         });
         const config = createConfig(history, routes);
         config.ready().then(arg => {
@@ -404,8 +404,8 @@ describe('createConfig', () => {
             }
           }
         ];
-        const history = createMemoryHistory({
-          initialEntries: ['/contact']
+        const history = InMemory({
+          locations: ['/contact']
         });
         const config = createConfig(history, routes);
         config.ready().then(arg => {
@@ -446,8 +446,8 @@ describe('createConfig', () => {
           ]
         }
       ];
-      const history = createMemoryHistory({
-        initialEntries: ['/contact/email']
+      const history = InMemory({
+        locations: ['/contact/email']
       });
       const config = createConfig(history, routes);
       config.ready().then(readyOne => {
@@ -472,7 +472,7 @@ describe('createConfig', () => {
           ]
         }
       ];
-      const history = createMemoryHistory({ initialEntries: ['/other-page'] });
+      const history = InMemory({ locations: ['/other-page'] });
       const config = createConfig(history, routes);
       config.ready().then(resp => {
         expect(resp.status).toBe(404);
@@ -516,7 +516,7 @@ describe('createConfig', () => {
         path: ':anything',
         load: spy
       };
-      const history = createMemoryHistory({ initialEntries: ['/hello'] });
+      const history = InMemory({ locations: ['/hello'] });
       const config = createConfig(history, [CatchAll]);
     });
 
@@ -530,7 +530,7 @@ describe('createConfig', () => {
         },
         body: () => bodyValue
       };
-      const history = createMemoryHistory({ initialEntries: ['/a-route'] });
+      const history = InMemory({ locations: ['/a-route'] });
       const config = createConfig(history, [Route]);
       config.ready().then(response => {
         expect(response.body).toBe('testing');
@@ -541,8 +541,8 @@ describe('createConfig', () => {
 
   describe('subscribe', () => {
     it('throws an error if a non-function is passed to subscribe', () => {
-      const history = createMemoryHistory({
-        initialEntries: ['/contact/phone']
+      const history = InMemory({
+        locations: ['/contact/phone']
       });
       const How = { name: 'How', path: ':method' };
       const routes = [
@@ -565,8 +565,8 @@ describe('createConfig', () => {
     });
 
     it('calls subscriber function when it subscribes, passing it the response object', done => {
-      const history = createMemoryHistory({
-        initialEntries: ['/contact/phone']
+      const history = InMemory({
+        locations: ['/contact/phone']
       });
       const How = { name: 'How', path: ':method' };
       const routes = [
@@ -591,8 +591,8 @@ describe('createConfig', () => {
     });
 
     it('calls subscriber function when it subscribes (even if there is no response yet)', () => {
-      const history = createMemoryHistory({
-        initialEntries: ['/contact/phone']
+      const history = InMemory({
+        locations: ['/contact/phone']
       });
       const How = { name: 'How', path: ':method' };
       const routes = [

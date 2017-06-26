@@ -5,7 +5,7 @@
 [badge]: https://img.shields.io/npm/v/curi.svg
 [npm-link]: https://npmjs.com/package/curi
 
-`curi` is a simple route configuration package for creating single page apps. Navigation is powered by [`history`](https://github.com/ReactTraining/history).
+`curi` is a simple route configuration package for creating single page apps. Navigation is powered by [`hickory`](https://github.com/pshrmn/hickory).
 
 [documentation](./docs)
 
@@ -29,7 +29,7 @@ If you wish to use `curi` through a `<script>` tag, there is a version available
 
 The version number above may not always be accurate. To ensure that you are using the most up to date version of the `curi` script build, open https://unpkg.com/curi/dist in your browser and copy the link address for the `curi.js` file. That will provide you with the URI of the most recent release.
 
-**Note:** If you are using the above script, you will have to include the `history` script yourself.
+**Note:** If you are using the above script, you will have to include the `hickory` script yourself.
 
 ### Overview
 
@@ -49,9 +49,9 @@ The default export by `curi` is a function that creates a configuration object. 
 
 ```js
 import createConfig from 'curi';
-import { createBrowserHistory } from 'history';
+import { Browser } from 'hickory';
 
-const history = createBrowserHistory();
+const history = Browser();
 const routes = [...];
 const config = createConfig(history, routes)
 ```
