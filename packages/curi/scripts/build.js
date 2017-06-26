@@ -18,9 +18,16 @@ const build = (name, command, extraEnv) => {
 
 const startTime = new Date();
 
+// don't bundle dependencies for es/cjs builds
+const pkg = require('../package.json')
+const deps = Object.keys(pkg.dependencies).map(key => key);
+
 build(
   'ES',
-  'rollup -c -f es -o dist/curi.es.js',
+  'rollup -c ' +
+    '-f es ' +
+    '-o dist/curi.es.js ' +
+    '-e ' + deps.join(','),
   {
     NODE_ENV: 'development',
     BABEL_ENV: 'build'
@@ -29,7 +36,10 @@ build(
 
 build(
   'CommonJS',
-  'rollup -c -f cjs -o dist/curi.common.js',
+  'rollup -c ' +
+    '-f cjs ' +
+    '-o dist/curi.common.js ' +
+    '-e ' + deps.join(','),
   {
     NODE_ENV: 'development',
     BABEL_ENV: 'build'
