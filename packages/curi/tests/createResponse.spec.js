@@ -158,6 +158,55 @@ describe('Response', () => {
         city: 'Bozeman'
       });
     });
+
+    describe('title', () => {
+      it('is an empty string when there is no matched route', () => {
+        const resp = new ResponseCreator();
+        resp.freeze();
+
+        const respObject = resp.asObject();
+        expect(respObject.title).toBe('');
+      });
+
+      it('is an empty string if the matched route does not have a title property', () => {
+        const resp = new ResponseCreator();
+        const stateRoute = createRoute({ name: 'State', path: ':state' });
+        const stateParams = { state: 'ID' };
+        resp.push(stateRoute, stateParams);
+        resp.freeze();
+
+        const respObject = resp.asObject();
+        expect(respObject.title).toBe('');
+      });
+
+      it('is the route.title value route.title is a string', () => {
+        const resp = new ResponseCreator();
+        const stateRoute = createRoute({ name: 'State', path: ':state', title: 'A State' });
+        const stateParams = { state: 'VA' };
+        resp.push(stateRoute, stateParams);
+        resp.freeze();
+
+        const respObject = resp.asObject();
+        expect(respObject.title).toBe('A State');
+      });
+
+      it('calls route.title passing it the params and data when it is a function', () => {
+        const resp = new ResponseCreator();
+        const stateRoute = createRoute({
+          name: 'State',
+          path: ':state',
+          title: (params, data) => {
+            return `${params.state} (aka ${data.full})`;
+          } });
+        const stateParams = { state: 'WV' };
+        resp.push(stateRoute, stateParams);
+        resp.freeze();
+        resp.setData({ full: 'West Virginia' });
+
+        const respObject = resp.asObject();
+        expect(respObject.title).toBe('WV (aka West Virginia)');
+      });
+    });
   });
 
   describe('asObject', () => {

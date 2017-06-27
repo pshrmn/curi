@@ -372,7 +372,8 @@ describe('createConfig', () => {
             'partials',
             'params',
             'error',
-            'data'
+            'data',
+            'title'
           ];
           expect(Object.keys(arg).length).toEqual(properties.length);
           properties.forEach(prop => {

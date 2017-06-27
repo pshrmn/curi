@@ -50,27 +50,38 @@ class ResponseCreator {
     }
   }
 
+  generateTitle() {
+    if (!this.route || !this.route.title) {
+      return '';
+    }
+    return typeof this.route.title === 'function'
+      ? this.route.title(this.params, this.data)
+      : this.route.title;
+  }
+
   asObject() {
+    const sharedResponse = {
+      key: this.key,
+      location: this.location,
+      status: this.status,
+      data: this.data,
+      title: this.generateTitle()
+    };
+
     if (this.redirectTo != null) {
       return {
-        key: this.key,
-        location: this.location,
-        status: this.status,
+        ...sharedResponse,
         redirectTo: this.redirectTo,
-        data: this.data
       };
     }
 
     return {
-      key: this.key,
-      location: this.location,
-      status: this.status,
+      ...sharedResponse,
       body: this.route && this.route.getBody(),
       name: this.route ? this.route.name : undefined,
       partials: this.partials,
       params: this.params,
-      data: this.data,
-      error: this.error
+      error: this.error,
     };
   }
 }

@@ -1,3 +1,7 @@
+## 0.10.1
+
+* Add support for `route.title` (either a string or a function).
+
 ## 0.10.0
 
 * Switch to the [`hickory`](https://github.com/pshrmn/hickory) package for history.
