@@ -1,0 +1,44 @@
+{
+  "name": "curi-middleware-title",
+  "version": "0.1.0",
+  "description": "Curi middleware to set the page title when loading a route",
+  "main": "dist/curi-middleware-title.common.js",
+  "scripts": {
+    "test": "jest",
+    "prebuild": "rimraf dist",
+    "build": "node ./scripts/build",
+    "prepublish": "in-publish && npm run build || not-in-publish",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/curi-middleware-title"
+  },
+  "keywords": [
+    "Curi",
+    "middleware",
+    "title"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "peerDependencies": {
+    "curi": "^0.10.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.5.2",
+    "gzip-size": "^3.0.0",
+    "in-publish": "^2.0.0",
+    "jest": "^20.0.4",
+    "prettier": "^1.5.2",
+    "pretty-byte": "^1.0.1",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.43.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1"
+  }
+}
