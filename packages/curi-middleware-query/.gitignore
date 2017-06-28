@@ -1,6 +1,0 @@
-node_modules
-*.log
-umd
-es
-lib
-coverage
