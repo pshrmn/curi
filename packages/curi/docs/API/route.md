@@ -41,6 +41,28 @@ const contact = {
 };
 ```
 
+#### `title`
+
+You can use the `title` property of a route to specify a title that should be set on the response when that route matches. This can either be a string or a function. If it is a string, then the `response.title` will be set to the value of `route.title`. If it is a function, it will be called (and passed the `response.params` and `response.data` values) to generate the title string.
+
+If a route does not have a `title` property, then when it matches, the response's `title` property will be an empty string.
+
+```js
+// as a string
+{
+  name: 'Contact',
+  path: 'contact',
+  title: 'How to contact us'
+}
+
+// as a function
+{
+  name: 'Contact Method',
+  path: ':method',
+  title: (params, data) => `Contact via ${params.method}`
+}
+```
+
 #### `children`
 
 An optional array of route objects. Any child routes will be matched relative to their parent route's `path`. This means that if a parent route's path string is `'one'` and a child route's path string is `'two'`, the child will match when the pathname is `one/two`.
