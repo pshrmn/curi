@@ -49,7 +49,8 @@ describe('<Navigator>', () => {
         'params',
         'body',
         'error',
-        'data'
+        'data',
+        'title'
       ];
       expect(Object.keys(receivedResponse).length).toEqual(properties.length);
       properties.forEach(key => {
