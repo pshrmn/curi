@@ -33,20 +33,15 @@ A middleware function does not need to modify the response. You could also use m
 
 ## "Official" middleware
 
-`curi-middleware-query` is an "official" middleware package for Curi. It exports a middleware factory function that takes a query string parsing function and returns a middleware function. When it runs, the middleware will parse a response's `location.search` string and set the resulting object as `response.query`.
+`curi-middleware-title` is an "official" middleware package for Curi. It exports a middleware factory function that sets `document.title` when you render a response. This is a "side effect" middleware. It does not modify the response, just uses its values to alter the page.
 
 ```js
-import { parse } from 'qs';
-import createQueryMiddleware from 'curi-middleware-query';
+import createTitleMiddleware from 'curi-middleware-title';
 
-const queryMiddleware = createQueryMiddleware(parse);
-const config = createConfig(
-  history,
-  routes,
-  {
-    middleware: [queryMiddleware]
-  }
-);
+const setTitle = createQueryMiddleware(createTitleMiddleware);
+const config = createConfig(history, routes, {
+  middleware: [setTitle]
+});
 ```
 
 ## Creating middleware

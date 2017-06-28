@@ -27,7 +27,6 @@ There are also a number of [examples](/examples) that you can learn from. Many o
   * [curi-addon-prefetch](#curi-addon-prefetch)
   * [curi-addon-active](#curi-addon-active)
 * [Middleware](#middleware)
-  * [curi-middleware-query](#curi-middleware-query)
   * [curi-middleware-title](#curi-middleware-title)
 * [React](#react)
   * [curi-react](#curi-react)
@@ -91,14 +90,6 @@ The `prefetch` addon allows you to call a route's `load` function outside of nav
 The `active` addon allows you to determine if a route is "active" (its `name`/`params` match the current response's `name`/`params`).. This can be useful for giving an element a specific style when it is "active".
 
 ## middleware
-
-#### `curi-middleware-query`
-
-[![npm][curi-middleware-query-version-badge]][npm-curi-middleware-query]
-
-[package](/packages/curi-middleware-query) + [source](/packages/curi-middleware-query/src/index.js) + [documentation](/packages/curi-middleware-query/README.md#usage)
-
-The `query` middleware exports a middleware factory. The factory takes a parse function and returns a middleware function that will parse `response.location.search` and store the parsed object as `response.query`.
 
 #### `curi-middleware-title`
 
@@ -235,8 +226,8 @@ A component that modifies its `children` element when its `name` matches the cur
 [curi-addon-active-version-badge]: https://img.shields.io/npm/v/curi-addon-active.svg
 [npm-curi-addon-active]: https://npmjs.com/package/curi-addon-active
 
-[curi-middleware-query-version-badge]: https://img.shields.io/npm/v/curi-middleware-query.svg
-[npm-curi-middleware-query]: https://npmjs.com/package/curi-middleware-query
+[curi-middleware-title-version-badge]: https://img.shields.io/npm/v/curi-middleware-title.svg
+[npm-curi-middleware-title]: https://npmjs.com/package/curi-middleware-title
 
 [curi-react-version-badge]: https://img.shields.io/npm/v/curi-react.svg
 [npm-curi-react]: https://npmjs.com/package/curi-react
