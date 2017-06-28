@@ -28,6 +28,7 @@ There are also a number of [examples](/examples) that you can learn from. Many o
   * [curi-addon-active](#curi-addon-active)
 * [Middleware](#middleware)
   * [curi-middleware-query](#curi-middleware-query)
+  * [curi-middleware-title](#curi-middleware-title)
 * [React](#react)
   * [curi-react](#curi-react)
   * [curi-react-navigator](#curi-react-navigator)
@@ -98,6 +99,14 @@ The `active` addon allows you to determine if a route is "active" (its `name`/`p
 [package](/packages/curi-middleware-query) + [source](/packages/curi-middleware-query/src/index.js) + [documentation](/packages/curi-middleware-query/README.md#usage)
 
 The `query` middleware exports a middleware factory. The factory takes a parse function and returns a middleware function that will parse `response.location.search` and store the parsed object as `response.query`.
+
+#### `curi-middleware-title`
+
+[![npm][curi-middleware-title-version-badge]][npm-curi-middleware-title]
+
+[package](/packages/curi-middleware-title) + [source](/packages/curi-middleware-title/src/index.js) + [documentation](/packages/curi-middleware-title/README.md#usage)
+
+The `title` middleware exports a middleware factory. The factory returns a function that will use a response object's `title` property to set `document.title`.
 
 ## React
 
