@@ -30,4 +30,14 @@ describe('createTitleMiddleware', () => {
     const queryResponse = middleware(fakeResponse);
     expect(document.title).toBe('Test Title; Please Ignore | My Site');
   });
+
+  it('returns the response', () => {
+    const middleware = createTitleMiddleware();
+    const fakeResponse = {
+      title: 'Test Title; Please Ignore'
+    };
+
+    const queryResponse = middleware(fakeResponse);
+    expect(queryResponse).toMatchObject(fakeResponse);
+  });
 });

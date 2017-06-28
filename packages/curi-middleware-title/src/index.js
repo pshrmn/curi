@@ -3,6 +3,7 @@ function createTitleMiddleware(options) {
 
   return function(response) {
     document.title = [prefix, response.title, suffix].join(' ');
+    return response;
   };
 }
 
