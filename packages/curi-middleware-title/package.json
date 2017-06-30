@@ -1,6 +1,6 @@
 {
   "name": "curi-middleware-title",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Curi middleware to set the page title when loading a route",
   "main": "dist/curi-middleware-title.common.js",
   "module": "dist/curi-middleware-title.es.js",
