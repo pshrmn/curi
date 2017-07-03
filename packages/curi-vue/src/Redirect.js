@@ -7,9 +7,6 @@ const Redirect = {
     location: function() {
       const pathname = this.$curi.addons.pathname(this.to, this.params);
       return { pathname, ...this.details };
-    },
-    href: function() {
-      return this.$curi.history.createHref(this.location);
     }
   },
 
