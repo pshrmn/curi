@@ -2,6 +2,7 @@
   "name": "curi-monorepo",
   "private": true,
   "scripts": {
+    "build": "lerna run build",
     "clean": "lerna clean",
     "postinstall": "lerna bootstrap --hoist --concurrency=1",
     "prettier": "lerna run prettier",
@@ -17,6 +18,11 @@
   "devDependencies": {
     "gzip-size": "^3.0.0",
     "lerna": "^2.0.0-rc.3",
-    "pretty-bytes": "^4.0.2"
+    "pretty-bytes": "^4.0.2",
+    "rollup": "^0.43.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1"
   }
 }

@@ -1,19 +1,5 @@
-import babel from 'rollup-plugin-babel';
-import uglify from 'rollup-plugin-uglify';
+import config from '../../rollup.config.js';
 
-const config = {
-  entry: 'src/index.js',
-  moduleName: 'CuriAddonAncestors',
-  sourceMap: true,
-  plugins: [
-    babel({
-      exclude: 'node_modules/**'
-    })
-  ]
-};
-
-if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(uglify());
-}
-
-export default config;
+export default Object.assign({}, config, {
+  moduleName: 'CuriAddonAncestors'
+});
