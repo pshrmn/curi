@@ -15,6 +15,8 @@
   },
   "homepage": "https://github.com/pshrmn/curi#readme",
   "devDependencies": {
-    "lerna": "^2.0.0-rc.3"
+    "gzip-size": "^3.0.0",
+    "lerna": "^2.0.0-rc.3",
+    "pretty-bytes": "^4.0.2"
   }
 }
