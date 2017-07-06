@@ -17,7 +17,7 @@
   "homepage": "https://github.com/pshrmn/curi#readme",
   "devDependencies": {
     "gzip-size": "^3.0.0",
-    "lerna": "^2.0.0-rc.3",
+    "lerna": "^2.0.0",
     "pretty-bytes": "^4.0.2",
     "rollup": "^0.43.0",
     "rollup-plugin-babel": "^2.7.1",
