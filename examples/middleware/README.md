@@ -1,7 +1,5 @@
 # Middleware
 
-**Note** Now that `curi` uses `hickory`, the `curi-middleware-query` middleware is obsolete. This needs to be updated to use a middleware that is more useful.
-
 [CodeSandbox demo](https://codesandbox.io/embed/Mjpv0E9qQ)
 
 Middleware is pretty straightforward. Once a response has completed (any `preload` and `load` functions have resolved), the `Response`'s properties are used to create a JavaScript object. Then, any subscribed functions are called and passed that JavaScript object as their argument. Between those two steps, you can modify the JavaScript object using middleware functions.
