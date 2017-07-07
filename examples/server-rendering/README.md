@@ -5,7 +5,7 @@ Server rendering with `curi` is fairly straightforward. You should have a catch 
 ```js
 function catchAll(req, res) {
   // 1. Create a memory history using the requested location
-  const history = createMemoryHistory({ initialEntries: [req.url]});
+  const history = InMemory({ locations: [req.url]});
 
   // 2. Create a config
   const config = createConfig(history, routes);
