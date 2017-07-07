@@ -1,4 +1,4 @@
-import config from '../../rollup.config.js';
+import config from '../../config/rollup.config.js';
 
 export default Object.assign({}, config, {
   moduleName: 'CuriReactLink',

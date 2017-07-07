@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+git://github.com/pshrmn/curi/tree/master/packages/curi-react-block"
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/curi-react-block"
   },
   "keywords": [
     "curi",
