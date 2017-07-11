@@ -172,42 +172,19 @@ describe('createConfig', () => {
         });
       });
 
-      describe('middleware', () => {
-        it('calls middleware functions to modify response object', done => {
+      describe('sideEffects', () => {
+        it('calls side effect methods after a response is generated, passing them response and action', done => {
           const routes = [{ name: 'All', path: ':all+' }];
-          const fahrenheitMiddleware = resp => {
-            resp.status = 451;
-            return resp;
-          };
+          const sideEffect = jest.fn();
 
           const config = createConfig(history, routes, {
-            middleware: [fahrenheitMiddleware]
+            sideEffects: [sideEffect]
           });
 
           config.ready().then(response => {
-            expect(response.status).toBe(451);
-            done();
-          });
-        });
-
-        it('calls middleware in the order that they are defined', done => {
-          const routes = [{ name: 'All', path: ':all+' }];
-          const fahrenheitMiddleware = resp => {
-            resp.status = 451;
-            return resp;
-          };
-
-          const doubleStatus = resp => {
-            resp.status *= 2;
-            return resp;
-          };
-
-          const config = createConfig(history, routes, {
-            middleware: [fahrenheitMiddleware, doubleStatus]
-          });
-
-          config.ready().then(response => {
-            expect(response.status).toBe(902);
+            expect(sideEffect.mock.calls.length).toBe(1);
+            expect(sideEffect.mock.calls[0][0]).toBe(response);
+            expect(sideEffect.mock.calls[0][1]).toBe('POP');
             done();
           });
         });

@@ -5,7 +5,7 @@ import ResponseCreator from './utils/createResponse';
 function createConfig(history, routeArray, options = {}) {
   const {
     addons: addonFactories = [],
-    middleware = [],
+    sideEffects = [],
     cache = false
   } = options;
 
@@ -62,12 +62,7 @@ function createConfig(history, routeArray, options = {}) {
   };
 
   function finalizeResponse(rc) {
-    const respObject = middleware.length
-      ? middleware.reduce(
-          (obj, curr) => curr(obj),
-          rc.asObject()
-        )
-      : rc.asObject();
+    const respObject = rc.asObject();
 
     if (cache) {
       cache.set(respObject);
@@ -111,11 +106,16 @@ function createConfig(history, routeArray, options = {}) {
     };
   };
 
-  function emit(response) {
+  function emit(response, action) {
     // don't emit old responses
     if (response.key !== mostRecentKey) {
       return;
     }
+
+    sideEffects.forEach(fn => {
+      fn(response, action);
+    })
+
     subscribers.forEach(fn => {
       if (fn != null) {
         fn(response);
@@ -125,9 +125,9 @@ function createConfig(history, routeArray, options = {}) {
 
   // create a response object using the current location and
   // emit it to any subscribed functions
-  function makeResponse() {
-    responseInProgress = prepareResponse().then(response => {
-      emit(response);
+  function makeResponse(location, action) {
+    responseInProgress = prepareResponse(location).then(response => {
+      emit(response, action);
       return response;
     });
   };
