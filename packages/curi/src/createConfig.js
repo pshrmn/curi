@@ -33,7 +33,7 @@ function createConfig(history, routeArray, options = {}) {
     });
 
     routes = walkRoutes(routeArray, addonFunctions, {});
-    makeResponse();
+    makeResponse(history.location, history.action);
   };
 
   function matchRoute(rc) {
@@ -52,9 +52,20 @@ function createConfig(history, routeArray, options = {}) {
 
     const { preload, load } = rc.route;
 
+    // just want to pass a subset of the ResponseCreator's methods
+    // to the user
+    const modifiers = load
+      ? {
+          fail: rc.fail.bind(rc),
+          redirect: rc.redirect.bind(rc),
+          setData: rc.setData.bind(rc),
+          setStatus: rc.setStatus.bind(rc)
+        }
+      : undefined;
+
     return Promise.all([
       preload ? preload() : null,
-      load ? load(rc.params, rc) : null
+      load ? load(rc.params, modifiers) : null
     ])
       .catch(err => { rc.fail(err); })
       // ALWAYS return the response
@@ -72,19 +83,19 @@ function createConfig(history, routeArray, options = {}) {
     return respObject;
   };
 
-  function prepareResponse() {
-    // generate a random key when none is provided (hash history)
-    const key = history.location.key || Math.random().toString(36).slice(2, 8);
+  function prepareResponse(location) {
+    // generate a random key when none is provided (old browsers, maybe unecessary?)
+    const key = location.key || Math.random().toString(36).slice(2, 8);
     mostRecentKey = key;
 
     if (cache) {
-      const cachedResponse = cache.get(history.location);
+      const cachedResponse = cache.get(location);
       if (cachedResponse != null) {
         return Promise.resolve(cachedResponse);
       }
     }
 
-    const rc = new ResponseCreator(key, history.location);
+    const rc = new ResponseCreator(key, location);
 
     return matchRoute(rc)
       .then(loadRoute)

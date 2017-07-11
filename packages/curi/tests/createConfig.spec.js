@@ -195,8 +195,8 @@ describe('createConfig', () => {
           const routes = [{
             name: 'All',
             path: '*',
-            load: (params, resp) => {
-              resp.setData(Math.random());
+            load: (params, mods) => {
+              mods.setData(Math.random());
             }
           }];
           const createSimpleCache = () => {
@@ -249,8 +249,8 @@ describe('createConfig', () => {
           const routes = [{
             name: 'All',
             path: '*',
-            load: (params, resp) => {
-              resp.setData(Math.random());
+            load: (params, mods) => {
+              mods.setData(Math.random());
             }
           }];
           const config = createConfig(history, routes, { cache: false });
@@ -483,17 +483,24 @@ describe('createConfig', () => {
         });
     });
 
-    it('passes params and response creator to load function', done => {
-      const spy = jest.fn((params, resp) => {
+    it('passes params and some response creator methods to load function', done => {
+      const spy = jest.fn((params, modifiers) => {
         expect(params).toEqual({ anything: 'hello' });
-        expect(resp).toBeInstanceOf(ResponseCreator);
+        expect(modifiers).toMatchObject(expect.objectContaining({
+          fail: expect.any(Function),
+          redirect: expect.any(Function),
+          setData: expect.any(Function),
+          setStatus: expect.any(Function)
+        }));
         done();
       });
+
       const CatchAll = {
         name: 'Catch All',
         path: ':anything',
         load: spy
       };
+
       const history = InMemory({ locations: ['/hello'] });
       const config = createConfig(history, [CatchAll]);
     });
