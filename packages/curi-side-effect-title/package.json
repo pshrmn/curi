@@ -1,9 +1,9 @@
 {
-  "name": "curi-middleware-title",
+  "name": "curi-side-effect-title",
   "version": "0.1.2",
-  "description": "Curi middleware to set the page title when loading a route",
-  "main": "dist/curi-middleware-title.common.js",
-  "module": "dist/curi-middleware-title.es.js",
+  "description": "Curi side effecft to set the page title when loading a route",
+  "main": "dist/curi-side-effect-title.common.js",
+  "module": "dist/curi-side-effect-title.es.js",
   "files": [
     "dist",
     "LICENSE",
@@ -18,12 +18,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pshrmn/curi/tree/master/packages/curi-middleware-title"
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/curi-side-effect-title"
   },
   "keywords": [
     "Curi",
-    "middleware",
-    "title"
+    "side effect",
+    "title",
+    "document.title"
   ],
   "author": "Paul Sherman",
   "license": "MIT",
