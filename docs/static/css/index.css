@@ -1,0 +1,160 @@
+body {
+  font-family: 'Zilla Slab', serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 20px;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+  margin: 3px 0;
+}
+
+p {
+  margin: 3px 0 7px;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.3em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+h5 {
+  font-size: 1.1em;
+}
+
+.banner {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.banner h1 {
+  font-size: 2.5em;
+}
+
+.banner p {
+  font-size: 1.3em;
+}
+
+header nav {
+  background: #222233;
+  color: #efefef;
+  padding: 10px 5%;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+header nav a {
+  color: #efefef;
+  font-size: 1.2em;
+  text-decoration: none;
+}
+
+main {
+  padding: 0px 5% 0;
+}
+
+.home-link {
+  font-size: 1.5em;
+  color: orange;
+}
+
+.active {
+  font-weight: bold;
+}
+
+main a {
+  color: #222233;
+}
+
+.sidebar ul {
+  margin: 3px 0;
+  padding-left: 0px;
+  list-style: none;
+}
+
+.sidebar li {
+  margin: 3px 0;
+}
+
+.sidebar a {
+  text-decoration: none;
+}
+
+.section, .subsection {
+  margin-top: 15px;
+}
+
+.note, .warning {
+  padding: 10px 5px;
+}
+
+.note {
+  background: #eee;
+  border: 1px solid #c7c7c7;
+}
+
+.warning {
+  background: #ffe8bf;
+  border: 1px solid orange;
+}
+
+@media only screen and (min-width: 750px) {
+  main {
+    max-width: 60%;
+    padding: 0px 20% 0;
+  }
+
+  header nav {
+    padding: 10px 20%;
+  }
+
+  header nav ul {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+  }
+  
+  header nav ul li {
+    margin-right: 20px;
+  }
+
+  .guide, .package {
+    padding-top: 15px;
+    display: flex;
+    flex-flow: row-nowrap;
+  }
+
+  .sidebar {
+    max-width: 160px;
+    min-width: 100px;
+    margin-right: 15px;
+    order: 1;
+  }
+
+  .sidebar h3 {
+    font-size: 1.1em;
+  }
+
+  .content {
+    order: 2;
+    max-width: 750px;
+  }
+
+}

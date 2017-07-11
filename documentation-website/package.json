@@ -1,0 +1,42 @@
+{
+  "name": "curi-documentation-website",
+  "version": "1.0.0",
+  "description": "The documentation website for the Curi router",
+  "scripts": {
+    "build": "npm run webpack:build && npm run generate",
+    "predev": "npm run webpack:dev",
+    "dev": "node ./src/server",
+    "generate": "node ./scripts/build",
+    "webpack:dev": "webpack",
+    "webpack:build": "webpack --optimize-minimize"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/gh-pages"
+  },
+  "author": "Paul Sherman",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "babel-core": "^6.25.0",
+    "curi": "^0.11.0",
+    "curi-addon-active": "^0.2.0",
+    "curi-react": "^0.8.0",
+    "curi-side-effect-scroll": "^0.1.0",
+    "curi-side-effect-title": "^0.1.2",
+    "express": "^4.15.3",
+    "hickory": "^0.5.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-prism": "^4.3.0",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "path-to-regexp": "^1.7.0",
+    "request-promise-native": "^1.0.4",
+    "source-map-loader": "^0.2.1",
+    "webpack": "^3.1.0"
+  }
+}

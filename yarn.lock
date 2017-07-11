@@ -1330,6 +1330,12 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   dependencies:
     cssom "0.3.x"
 
+curi@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/curi/-/curi-0.10.1.tgz#272ae274aa359066b66ca82e6c7fbb9f25f435ae"
+  dependencies:
+    path-to-regexp "^1.7.0"
+
 currently-unhandled@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/currently-unhandled/-/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"

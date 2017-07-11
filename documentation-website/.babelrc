@@ -1,0 +1,14 @@
+{
+  "presets": [
+    "react",
+    [
+      "env",
+      {
+        "modules": "commonjs",
+        "targets": {
+          "browsers": ["> 1%"]
+        }
+      }
+    ]
+  ]
+}
