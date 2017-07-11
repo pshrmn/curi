@@ -5,7 +5,7 @@ import { Link } from 'curi-react';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-side-effect-title';
-const version = '0.1.2';
+const version = require('./versions').default[name];
 const type = 'side-effect';
 
 const CuriSideEffectTitle = () => (

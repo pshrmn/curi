@@ -4,8 +4,10 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-vue';
-const version = '0.3.0';
+const version = require('./versions').default[name];
 const type = 'vue';
+
+
 
 const CuriVue = () => (
   <BasePackage name={name} version={version}>

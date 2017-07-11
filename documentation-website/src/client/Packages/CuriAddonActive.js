@@ -4,7 +4,7 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-addon-active';
-const version = '0.2.0';
+const version = require('./versions').default[name];
 const type = 'addon';
 
 const CuriAddonActive = () => (

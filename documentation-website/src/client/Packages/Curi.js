@@ -4,7 +4,7 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi';
-const version = '0.10.1';
+const version = require('./versions').default[name];
 const type = 'base';
 
 const Curi = () => (

@@ -5,7 +5,7 @@ import { Link } from 'curi-react';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-side-effect-scroll';
-const version = '0.1.0';
+const version = require('./versions').default[name];
 const type = 'side-effect';
 
 const CuriSideEffectScroll = () => (

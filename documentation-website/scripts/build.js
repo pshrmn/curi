@@ -1,6 +1,7 @@
 require('babel-core/register');
 
 const generateStaticFiles = require('./generateStaticFiles');
+const updatePackageVersions = require('./updatePackageVersions');
 
 const createApp = require('../src/server/app');
 const routes = require('../src/client/routes').default;
@@ -9,6 +10,8 @@ const guides = require('../src/client/Guides').default;
 
 const packageNames = packages.map(p => ({ package: p.name }));
 const guideNames = guides.map(p => ({ slug: p.slug }));
+
+updatePackageVersions();
 
 let server;
 const app = createApp('/curi');

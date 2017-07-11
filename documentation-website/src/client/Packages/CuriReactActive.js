@@ -5,7 +5,7 @@ import APIBlock from '../components/APIBlock';
 import { Link } from 'curi-react';
 
 const name = 'curi-react-active';
-const version = '0.2.0';
+const version = require('./versions').default[name];
 const type = 'react';
 
 const CuriReactActive = () => (

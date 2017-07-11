@@ -5,7 +5,7 @@ import Note from '../components/Note';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-addon-prefetch';
-const version = '0.2.0';
+const version = require('./versions').default[name];
 const type = 'addon';
 
 const CuriAddonPrefetch = () => (

@@ -4,7 +4,7 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-react-block';
-const version = '0.3.0';
+const version = require('./versions').default[name];
 const type = 'react';
 
 const CuriReactBlock = () => (

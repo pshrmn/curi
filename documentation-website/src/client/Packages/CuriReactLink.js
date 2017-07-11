@@ -7,7 +7,7 @@ import Warning from '../components/Warning';
 import { Link } from 'curi-react';
 
 const name = 'curi-react-link';
-const version = '0.6.0';
+const version = require('./versions').default[name];
 const type = 'react';
 
 const CuriReactLink = () => (
