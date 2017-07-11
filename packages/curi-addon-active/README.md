@@ -13,29 +13,4 @@ This package exports a Curi addon that can be used to determine if a route is "a
 npm install --save curi-addon-active
 ```
 
-### Script
-
-If you wish to use `curi-addon-active` through a `<script>` tag, there is a version available through unpkg.com.
-
-```html
-<script src="https://unpkg.com/curi-addon-active@0.2.0/dist/curi-addon-active.js"></script>
-<!-- there is also a min script: curi-addon-active.min.js -->
-<script type="text/javascript">
-  const createActiveAddon = window.CuriAddonActive;
-</script>
-```
-
-The version number above may not always be accurate. To ensure that you are using the most up to date version of the `curi-addon-active` script build, open https://unpkg.com/curi-addon-active/dist in your browser and copy the link address for the `curi-addon-active.js` file. That will provide you with the URI of the most recent release.
-
-## Usage
-
-```js
-import createConfig from 'curi';
-import createActiveAddon from 'curi-addon-active';
-
-const config = createConfig(history, routes, {
-  addons: [createActiveAddon]
-});
-
-const active = config.addons.active('Some Route', response, { id: 10 });
-```
+For more information, please check out the [`curi-addon-active`](https://pshrmn.github.io/curi/packages/curi-addon-active) page on the documentation website.
