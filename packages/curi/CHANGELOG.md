@@ -1,3 +1,11 @@
+## 0.11.0
+
+* Drop `middleware`, add `sideEffects`. The main reason for middleware was because history doesn't
+support query parsing, but now that Curi uses Hickory, it is unnecessary. Most of the remaining use
+cases seemed to be side effects, so just making that explicit. If there is a need for modifying the response, then that can be looked at, but for the time being there doesn't appear to be a good reason to add this.
+
+* Only pass a subset of the `ResponseCreator` methods to route `load` functions. These are the only ones that a developer should be using, so only pass these. The other ones could break the response, so don't give access to those.
+
 ## 0.10.1
 
 * Add support for `route.title` (either a string or a function).
