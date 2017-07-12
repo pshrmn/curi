@@ -1,6 +1,6 @@
 {
   "name": "curi-vue",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Curi plugins and components for Vue.js",
   "main": "dist/curi-vue.common.js",
   "module": "dist/curi-vue.es.js",
@@ -29,7 +29,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi": "^0.10.1",
+    "curi": "^1.0.0-beta.2",
     "vue": "^2.3.3"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "babel-core": "^6.25.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
-    "curi": "^0.10.1",
+    "curi": "^1.0.0-beta.2",
     "hickory": "^0.4.0",
     "in-publish": "^2.0.0",
     "jest": "^20.0.4",

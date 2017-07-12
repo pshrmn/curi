@@ -1,6 +1,6 @@
 {
   "name": "curi-addon-prefetch",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "An addon to enable prefetching curi routes",
   "main": "dist/curi-addon-prefetch.common.js",
   "module": "dist/curi-addon-prefetch.es.js",
@@ -29,7 +29,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi": "^0.10.1"
+    "curi": "^1.0.0-beta.2"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

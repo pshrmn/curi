@@ -1,6 +1,6 @@
 {
   "name": "curi-react-navigator",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "A component that re-renders on navigation",
   "main": "dist/curi-react-navigator.common.js",
   "module": "dist/curi-react-navigator.es.js",
@@ -28,7 +28,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "curi": "^0.10.1",
+    "curi": "^1.0.0-beta.2",
     "react": "^15"
   },
   "dependencies": {
@@ -41,7 +41,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
-    "curi": "^0.10.1",
+    "curi": "^1.0.0-beta.2",
     "enzyme": "^2.8.2",
     "hickory": "^0.4.0",
     "in-publish": "^2.0.0",
