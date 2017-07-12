@@ -12,7 +12,6 @@ const GroupPackages = ({ packages }) => (
           <Link
             to='Package'
             params={{ package: p.name }}
-            details={{ hash: 'API' }}
             active={{ merge: styleActive }}
           >
             {p.name}
