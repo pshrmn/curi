@@ -1,6 +1,6 @@
 {
   "name": "curi-react-block",
-  "version": "0.3.0",
+  "version": "1.0.0-beta.1",
   "description": "A component prevents navigation",
   "main": "dist/curi-react-block.common.js",
   "module": "dist/curi-react-block.es.js",

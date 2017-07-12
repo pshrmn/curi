@@ -1,6 +1,6 @@
 {
   "name": "curi-addon-prefetch",
-  "version": "0.2.0",
+  "version": "1.0.0-beta.1",
   "description": "An addon to enable prefetching curi routes",
   "main": "dist/curi-addon-prefetch.common.js",
   "module": "dist/curi-addon-prefetch.es.js",

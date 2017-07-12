@@ -1,6 +1,6 @@
 {
   "name": "curi-react-navigator",
-  "version": "0.3.0",
+  "version": "1.0.0-beta.1",
   "description": "A component that re-renders on navigation",
   "main": "dist/curi-react-navigator.common.js",
   "module": "dist/curi-react-navigator.es.js",

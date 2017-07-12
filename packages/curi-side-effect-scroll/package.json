@@ -1,6 +1,6 @@
 {
   "name": "curi-side-effect-scroll",
-  "version": "0.2.0",
+  "version": "1.0.0-beta.1",
   "description": "Curi side effect to scroll when navigating to new locations",
   "main": "dist/curi-side-effect-scroll.common.js",
   "module": "dist/curi-side-effect-scroll.es.js",
@@ -14,8 +14,7 @@
     "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
     "prepublish": "in-publish && npm run build || not-in-publish",
-    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
-    "test": "jest"
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -43,6 +42,5 @@
     "pretty-byte": "^1.0.1",
     "rimraf": "^2.6.1",
     "rollup": "^0.43.0"
-  },
-  "dependencies": {}
+  }
 }

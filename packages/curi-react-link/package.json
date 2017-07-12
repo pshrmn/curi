@@ -1,6 +1,6 @@
 {
   "name": "curi-react-link",
-  "version": "0.7.0",
+  "version": "1.0.0-beta.1",
   "description": "A curi config aware React component that renders an <a>",
   "main": "dist/curi-react-link.common.js",
   "module": "dist/curi-react-link.es.js",

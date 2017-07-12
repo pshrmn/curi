@@ -1,6 +1,6 @@
 {
   "name": "curi-addon-ancestors",
-  "version": "0.2.1",
+  "version": "1.0.0-beta.1",
   "description": "Get a Curi route's ancestor routes",
   "main": "dist/curi-addon-ancestors.common.js",
   "module": "dist/curi-addon-ancestors.es.js",
@@ -42,6 +42,5 @@
     "prettier": "^1.5.2",
     "rimraf": "^2.6.1",
     "rollup": "^0.43.0"
-  },
-  "dependencies": {}
+  }
 }
