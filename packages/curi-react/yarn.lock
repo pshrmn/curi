@@ -796,48 +796,53 @@ cryptiles@2.x.x:
   dependencies:
     boom "2.x.x"
 
-curi-react-active@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/curi-react-active/-/curi-react-active-0.2.0.tgz#f5dcecf93316f420bb9cd641c79699fd93bb6ba2"
+curi-addon-active@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/curi-addon-active/-/curi-addon-active-1.0.0-beta.2.tgz#acd765ba4a3401688d13cc48f11366213642a094"
+
+curi-react-active@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/curi-react-active/-/curi-react-active-1.0.0-beta.2.tgz#81cdcfba639c0f0713fcb1ff604b5742c7eb3ac7"
   dependencies:
+    curi-addon-active "^1.0.0-beta.2"
     invariant "^2.2.2"
     prop-types "^15.5.8"
 
-curi-react-block@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/curi-react-block/-/curi-react-block-0.3.0.tgz#67f4db1b4a118fac21f650d715da678646962bab"
+curi-react-block@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/curi-react-block/-/curi-react-block-1.0.0-beta.2.tgz#6d60bf7a3a8ab6ca9955ea28afbdf4113fb3815b"
   dependencies:
     prop-types "^15.5.8"
 
-curi-react-curious@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/curi-react-curious/-/curi-react-curious-0.3.0.tgz#e4f957151678898905159ccfa872ba0610667855"
+curi-react-curious@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/curi-react-curious/-/curi-react-curious-1.0.0-beta.2.tgz#2bdb9593ed42ba6b07650eabb37d0793270559f8"
   dependencies:
     hoist-non-react-statics "^1.2.0"
     prop-types "^15.5.8"
 
-curi-react-link@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/curi-react-link/-/curi-react-link-0.6.0.tgz#7433db0e31b58efcb17252d71f398056550bf99e"
+curi-react-link@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/curi-react-link/-/curi-react-link-1.0.0-beta.2.tgz#f3944874ca69c5f80ed51aae73c0834564bfc219"
   dependencies:
     invariant "^2.2.2"
     prop-types "^15.5.8"
 
-curi-react-navigator@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/curi-react-navigator/-/curi-react-navigator-0.3.0.tgz#d2df15d3c1d619884e330046287a2bbede11adc5"
+curi-react-navigator@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/curi-react-navigator/-/curi-react-navigator-1.0.0-beta.2.tgz#4720cfc80240f687f15ede427c96d1a2934247ec"
   dependencies:
     prop-types "^15.5.8"
 
-curi-react-redirect@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/curi-react-redirect/-/curi-react-redirect-0.4.0.tgz#5fad31e36fd00ca74229acb03226cb9838f74075"
+curi-react-redirect@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/curi-react-redirect/-/curi-react-redirect-1.0.0-beta.2.tgz#a4659c56e50b011af6b4237154f18dc942bb48b2"
   dependencies:
     prop-types "^15.5.8"
 
-curi@^0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/curi/-/curi-0.10.1.tgz#272ae274aa359066b66ca82e6c7fbb9f25f435ae"
+curi@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/curi/-/curi-1.0.0-beta.2.tgz#8009e3011d7fb9ca23fe398c40d49af6c79b0f14"
   dependencies:
     path-to-regexp "^1.7.0"
 
