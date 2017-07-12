@@ -55,14 +55,16 @@ describe('<Link>', () => {
       expect(a.prop('href')).toBe('/');
     });
 
-    it('defaults to path="/" if name is not provided', () => {
-      const history = InMemory();
+    it('uses the current location\'s pathname if not provided', () => {
+      const history = InMemory({
+        locations: ['/the-initial-location']
+      });
       const config = createConfig(history, []);
       const wrapper = shallow(<Link>Test</Link>, {
         context: { curi: config }
       });
       const a = wrapper.find('a');
-      expect(a.prop('href')).toBe('/');
+      expect(a.prop('href')).toBe('/the-initial-location');
     });
   });
 

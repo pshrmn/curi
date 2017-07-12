@@ -46,7 +46,9 @@ class Link extends React.Component {
   createPathname(props, context) {
     const { to, params } = props;
     const { curi } = context;
-    const pathname = to != null ? curi.addons.pathname(to, params) : '/';
+    const pathname = to != null
+      ? curi.addons.pathname(to, params)
+      : curi.history.location.pathname;
     this.setState(() => ({
       pathname
     }));
