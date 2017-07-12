@@ -10,6 +10,7 @@ const type = 'react';
 const CuriReactCurious = () => (
   <BasePackage name={name} version={version}>
     <APIBlock>
+    <h3>&lt;curious()&gt;</h3>
       <PrismBlock lang='javascript'>
         {
 `import curious from 'curi-react-curious';`
@@ -36,10 +37,10 @@ export default curious(MyComponent);`
       </PrismBlock>
 
 
-      <div>
+      <div className='section'>
         <h3>props</h3>
 
-        <div>
+        <div className='subsection'>
           <h4>internalRef</h4>
           <p>
             A ref function that you can use to access the wrapped component.
@@ -53,7 +54,7 @@ export default curious(MyComponent);`
           </PrismBlock>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h4>Other props</h4>
           <p>
             Any other props that you pass to the wrapped component will be available to the

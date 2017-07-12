@@ -35,7 +35,7 @@ const Unpkg = ({ name, version }) => (
 );
 
 export default ({ name, version }) => (
-  <div id="installation">
+  <div id='installation' className='section'>
     <h2>Installation</h2>
     <NPM name={name} />
     <Unpkg name={name} version={version} />

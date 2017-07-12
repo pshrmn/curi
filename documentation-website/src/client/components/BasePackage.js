@@ -2,13 +2,18 @@ import React from 'react';
 
 import Installation from './Installation';
 import GitHubLink from './GitHubLink';
+import NPMLink from './NPMLink';
 import PackageLinks from './PackageLinks';
 
 const BasePackage = ({ name, version, children }) => (
   <div className='package'>
     <div className='content'>
       <h1>{name}</h1>
-      <GitHubLink name={name} />
+      <div className='package-info'>
+        <div>v{version}</div>
+        <GitHubLink name={name} />
+        <NPMLink name={name} />
+      </div>
       <Installation name={name} version={version} />
       {children || null}
     </div>

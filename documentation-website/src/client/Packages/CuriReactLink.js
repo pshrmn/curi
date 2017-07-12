@@ -12,6 +12,7 @@ const type = 'react';
 const CuriReactLink = () => (
   <BasePackage name={name} version={version}>
     <APIBlock>
+    <h3>&lt;Link&gt;</h3>
       <PrismBlock lang='javascript'>
         {
 `import Link from 'curi-react-link';`
@@ -37,17 +38,17 @@ const CuriReactLink = () => (
         }
       </PrismBlock>
 
-      <div>
+      <div className='section'>
         <h3>props</h3>
 
-        <div>
+        <div className='subsection'>
           <h4>to</h4>
           <p>
             The name of the route that you want to navigate to.
           </p>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h4>params</h4>
           <p>
             If the route that you want to navigate to (or any of its parents) include path parameters,
@@ -61,7 +62,7 @@ const CuriReactLink = () => (
           </PrismBlock>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h4>details</h4>
           <p>
             While the pathname of the location to navigate to will be generated for you, this does not
@@ -85,7 +86,7 @@ const CuriReactLink = () => (
           </Note>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h4>anchor</h4>
           <p>
             By default, when you render a <InlineJS>&lt;Link&gt;</InlineJS>, an anchor element will be
@@ -101,7 +102,7 @@ const CuriReactLink = () => (
           </Warning>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h4>active</h4>
           <p>
             The active prop gives you an opportunity to style the element rendered by the{' '}

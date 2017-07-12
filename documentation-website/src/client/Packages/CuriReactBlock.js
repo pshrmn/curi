@@ -10,6 +10,7 @@ const type = 'react';
 const CuriReactBlock = () => (
   <BasePackage name={name} version={version}>
     <APIBlock>
+    <h3>&lt;Block&gt;</h3>
       <PrismBlock lang='javascript'>
         {
 `import Block from 'curi-react-block';`
@@ -23,10 +24,10 @@ const CuriReactBlock = () => (
         to another site, it only works for navigation within the application.
       </p>
 
-      <div>
+      <div className='section'>
         <h3>props</h3>
 
-        <div>
+        <div className='subsection'>
           <h4>when</h4>
           <p>
             A boolean, which is true by default. When it is true, the navigation block is active. When
@@ -43,7 +44,7 @@ const CuriReactBlock = () => (
           </PrismBlock>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h4>confirm</h4>
           <p>
             The confirm prop is a function that will be called whenever there is navigation. The

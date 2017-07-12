@@ -27,20 +27,20 @@ const config = createConfig(history, routes, options);`
         }
       </PrismBlock>
 
-      <div>
+      <div className='section'>
         <h4>Arguments</h4>
 
-        <div>
+        <div className='subsection'>
           <h5>history</h5>
           <p>A Hickory history object</p>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h5>routes</h5>
           <p>An array of route objects</p>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h5>options</h5>
           <p>
             An optional object with additional properties that can be passed to your configuration object.
@@ -65,14 +65,14 @@ const config = createConfig(history, routes, options);`
       </div>
 
 
-      <div>
+      <div className='section'>
         <h4>Configuration Object Properties</h4>
         <p>
           The configuration object has a number of properties for you to use when rendering
           your application.
         </p>
 
-        <div>
+        <div className='subsection'>
           <h5>subscribe(fn)</h5>
           <p>
             The returned object provides a subscribe method that allows your application to be informed of
@@ -92,7 +92,7 @@ const config = createConfig(history, routes, options);`
           </PrismBlock>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h5>ready()</h5>
           <p>
             When you create a new configuration object, an initial response will be created for the current
@@ -119,7 +119,7 @@ const config = createConfig(history, routes, options);`
           </PrismBlock>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h5>addons</h5>
           <p>
             You can access all of the configuration object's addons through the addons property. This allows
@@ -137,7 +137,7 @@ const userPathname = config.addons.pathname('User', { id: '12345' });
           </PrismBlock>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h5>history</h5>
           <p>
             You can access the history object that you passed to <InlineJS>createConfig</InlineJS> through the

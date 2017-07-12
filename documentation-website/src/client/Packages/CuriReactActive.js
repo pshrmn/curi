@@ -11,6 +11,7 @@ const type = 'react';
 const CuriReactActive = () => (
   <BasePackage name={name} version={version}>
     <APIBlock>
+      <h3>&lt;Active&gt;</h3>
       <PrismBlock lang='javascript'>
         {
 `import Active from 'curi-react-active';`
@@ -23,42 +24,42 @@ const CuriReactActive = () => (
         the component is "active".
       </p>
 
-      <div>
-        <h3>props</h3>
+      <div className='section'>
+        <h4>props</h4>
 
-        <div>
-          <h4>name</h4>
+        <div className='subsection'>
+          <h5>name</h5>
           <p>
             The name of the route to compare against the response object.
           </p>
         </div>
 
-        <div>
-          <h4>params</h4>
+        <div className='subsection'>
+          <h5>params</h5>
           <p>
             An object containing route parameters. These will be compared against the route params of the
             response object.
           </p>
         </div>
 
-        <div>
-          <h4>children</h4>
+        <div className='subsection'>
+          <h5>children</h5>
           <p>
             A React element that will have its props updated when the <InlineJS>&lt;Active&gt;</InlineJS>
             {' '}component is "active".
           </p>
         </div>
 
-        <div>
-          <h4>merge</h4>
+        <div className='subsection'>
+          <h5>merge</h5>
           <p>
             A function that will modify the children element's props. It receives a props object as its
             argument and must return a props object.
           </p>
         </div>
 
-        <div>
-          <h4>partial</h4>
+        <div className='subsection'>
+          <h5>partial</h5>
           <p>
             A boolean that defaults to false. When it is true, the "active" check will check the response's partials
             array in addition to its name. This allows you to style ancestor routes of the actually "active" route.
@@ -67,7 +68,7 @@ const CuriReactActive = () => (
       </div>
     </APIBlock>
 
-    <div>
+    <div className='section'>
       <h2>Usage</h2>
 
       <PrismBlock lang='jsx'>

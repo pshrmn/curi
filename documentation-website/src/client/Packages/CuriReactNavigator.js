@@ -10,6 +10,7 @@ const type = 'react';
 const CuriReactNavigator = () => (
   <BasePackage name={name} version={version}>
     <APIBlock>
+    <h3>&lt;Navigator&gt;</h3>
       <PrismBlock lang='javascript'>
         {
 `import Navigator from 'curi-react-navigator';`
@@ -39,17 +40,17 @@ ReactDOM.render((
         }
       </PrismBlock>
 
-      <div>
+      <div className='section'>
         <h3>props</h3>
 
-        <div>
+        <div className='subsection'>
           <h4>config</h4>
           <p>
             A configuration object (created by calling curi's createConfig function).
           </p>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h4>children</h4>
           <p>
             A render function. This will be called whenever the <InlineJS>&lt;Navigator&gt;</InlineJS>
@@ -58,7 +59,7 @@ ReactDOM.render((
           </p>
         </div>
 
-        <div>
+        <div className='subsection'>
           <h4>response</h4>
           <p>
             A response object. You can pass your <InlineJS>&lt;Navigator&gt;</InlineJS> a response object and
