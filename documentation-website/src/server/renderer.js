@@ -7,14 +7,7 @@ import createActiveAddon from 'curi-addon-active';
 import routes from '../client/routes';
 import renderFunction from '../client/render';
 
-let STATIC_BASE = "";
-
-export default function createHandler(staticSegment) {
-
-  if (staticSegment) {
-    STATIC_BASE = staticSegment;
-  }
-
+export default function createHandler() {
   return function(req, res) {
     const history = InMemory({
       baseSegment: '/curi',
@@ -46,16 +39,16 @@ function renderFullPage(html, title) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${title} | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
-    <link href="${STATIC_BASE}/static/css/prism.css" rel="stylesheet">
-    <link href="${STATIC_BASE}/static/css/index.css" rel="stylesheet">
+    <link href="/curi/static/css/prism.css" rel="stylesheet">
+    <link href="/curi/static/css/index.css" rel="stylesheet">
   </head>
   <body>
     <div id="root">${html}</div>
     <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js"></script>
-    <script src="${STATIC_BASE}/static/js/prism.js"></script>
-    <script src="${STATIC_BASE}/static/js/vendor.js"></script>
-    <script src="${STATIC_BASE}/static/js/bundle.js"></script>
+    <script src="/curi/static/js/prism.js"></script>
+    <script src="/curi/static/js/vendor.js"></script>
+    <script src="/curi/static/js/bundle.js"></script>
   </body>
 </html>
 `;
