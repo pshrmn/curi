@@ -4,13 +4,14 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-react-curious';
+const globalName = 'CuriReactCurious';
 const version = require('./versions').default[name];
 const type = 'react';
 
 const CuriReactCurious = () => (
-  <BasePackage name={name} version={version}>
+  <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
-    <h3>&lt;curious()&gt;</h3>
+    <h3>curious()</h3>
       <PrismBlock lang='javascript'>
         {
 `import curious from 'curi-react-curious';`

@@ -6,11 +6,12 @@ import { Note, Warning } from '../components/Messages';
 import { Link } from 'curi-react';
 
 const name = 'curi-react-link';
+const globalName = 'CuriReactLink';
 const version = require('./versions').default[name];
 const type = 'react';
 
 const CuriReactLink = () => (
-  <BasePackage name={name} version={version}>
+  <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
     <h3>&lt;Link&gt;</h3>
       <PrismBlock lang='javascript'>

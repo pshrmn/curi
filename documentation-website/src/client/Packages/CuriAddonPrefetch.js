@@ -5,11 +5,12 @@ import { Note } from '../components/Messages';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-addon-prefetch';
+const globalName = 'CuriAddonPrefetch';
 const version = require('./versions').default[name];
 const type = 'addon';
 
 const CuriAddonPrefetch = () => (
-  <BasePackage name={name} version={version}>
+  <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
 
       <h3>createPrefetchAddon</h3>

@@ -1,6 +1,11 @@
+@import './variables.scss';
+
 .banner {
   text-align: center;
   margin-top: 15px;
+  color: $purple;
+  max-width: 800px;
+  margin: 0 auto;
   
   h1 {
     font-size: 2.5em;

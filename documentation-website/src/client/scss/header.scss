@@ -1,10 +1,11 @@
 @import './variables.scss';
 
 header { 
+  background: $purple;
+
   nav {
-    background: $purple;
     color: $light-gray;
-    padding: 10px 5%;
+    padding: 10px;
 
     ul {
       list-style: none;
@@ -29,7 +30,9 @@ header {
  
   header {
     nav {
-      padding: 10px 20%;
+      padding: 10px 0 10px 10px;
+      width: $largeScreen;
+      margin: 0 auto;
 
       ul {
         display: flex;

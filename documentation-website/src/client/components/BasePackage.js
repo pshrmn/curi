@@ -5,7 +5,7 @@ import GitHubLink from './GitHubLink';
 import NPMLink from './NPMLink';
 import PackageLinks from './PackageLinks';
 
-const BasePackage = ({ name, version, children }) => (
+const BasePackage = ({ name, version, globalName, children }) => (
   <div className='package'>
     <div className='content'>
       <h1>{name}</h1>
@@ -14,7 +14,7 @@ const BasePackage = ({ name, version, children }) => (
         <GitHubLink name={name} />
         <NPMLink name={name} />
       </div>
-      <Installation name={name} version={version} />
+      <Installation name={name} version={version} globalName={globalName} />
       {children || null}
     </div>
     <div className='sidebar'>

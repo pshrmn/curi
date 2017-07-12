@@ -4,11 +4,12 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-react-redirect';
+const globalName = 'CuriReactRedirect';
 const version = require('./versions').default[name];
 const type = 'react';
 
 const CuriReactRedirect = () => (
-  <BasePackage name={name} version={version}>
+  <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <h3>&lt;Redirect&gt;</h3>
       <PrismBlock lang='javascript'>

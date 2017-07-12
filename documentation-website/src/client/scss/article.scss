@@ -14,6 +14,10 @@
   a {
     text-decoration: none;
   }
+
+  h3 {
+    text-decoration: underline;
+  }
 }
 .section, .subsection {
   margin-top: 15px;
@@ -27,8 +31,8 @@
   }
 
   .sidebar {
-    max-width: 160px;
-    min-width: 100px;
+    max-width: 200px;
+    min-width: 150px;
     margin-right: 15px;
     order: 1;
 
@@ -39,6 +43,7 @@
 
   .content {
     order: 2;
-    max-width: 750px;
+    position: relative;
+    max-width: 800px;
   }
 }

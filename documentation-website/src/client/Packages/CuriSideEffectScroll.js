@@ -5,11 +5,12 @@ import { Link } from 'curi-react';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-side-effect-scroll';
+const globalName = 'CuriSideEffectScroll';
 const version = require('./versions').default[name];
 const type = 'side-effect';
 
 const CuriSideEffectScroll = () => (
-  <BasePackage name={name} version={version}>
+  <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
 
       <h3>createScrollSideEffect</h3>

@@ -4,11 +4,12 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-addon-ancestors';
+const globalName = 'CuriAddonAncestors';
 const version = require('./versions').default[name];
 const type = 'addon';
 
 const CuriAddonAncestors = () => (
-  <BasePackage name={name} version={version}>
+  <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <h3>createAncestorsAddon</h3>
 

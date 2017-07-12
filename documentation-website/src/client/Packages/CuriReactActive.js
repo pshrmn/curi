@@ -5,11 +5,12 @@ import APIBlock from '../components/APIBlock';
 import { Link } from 'curi-react';
 
 const name = 'curi-react-active';
+const globalName = 'CuriReactActive';
 const version = require('./versions').default[name];
 const type = 'react';
 
 const CuriReactActive = () => (
-  <BasePackage name={name} version={version}>
+  <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <h3>&lt;Active&gt;</h3>
       <PrismBlock lang='javascript'>

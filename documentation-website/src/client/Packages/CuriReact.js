@@ -5,6 +5,7 @@ import APIBlock from '../components/APIBlock';
 import { Link } from 'curi-react';
 
 const name = 'curi-react';
+const globalName = 'CuriReact';
 const version = require('./versions').default[name];
 const type = 'react';
 
@@ -18,7 +19,7 @@ const reexports = [
 ];
 
 const CuriReact = () => (
-  <BasePackage name={name} version={version}>
+  <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <PrismBlock lang='javascript'>
         {

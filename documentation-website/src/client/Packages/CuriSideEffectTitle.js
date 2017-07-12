@@ -5,11 +5,12 @@ import { Link } from 'curi-react';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-side-effect-title';
+const globalName = 'CuriSideEffectTitle';
 const version = require('./versions').default[name];
 const type = 'side-effect';
 
 const CuriSideEffectTitle = () => (
-  <BasePackage name={name} version={version}>
+  <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
 
       <h3>createTitleSideEffect</h3>
