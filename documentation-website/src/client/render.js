@@ -1,5 +1,5 @@
 import React from 'react';
-import Nav from './components/Nav';
+import Header from './components/Header';
 
 export default function render(response, config) {
   if (!response || !response.body) {
@@ -8,9 +8,7 @@ export default function render(response, config) {
     const { body: Body, params, data } = response;
     return (
       <div>
-        <header>
-          <Nav />
-        </header>
+        <Header />
         <main>
           <Body params={params} data={data} />
         </main>

@@ -17,8 +17,6 @@ const BasePackage = ({ name, version, children }) => (
       <PackageLinks />
     </div>
   </div>
-
-  
 );
 
 export default BasePackage;

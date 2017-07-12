@@ -1,0 +1,16 @@
+@import './variables.scss';
+
+main {
+  padding: 0px 5% 0;
+
+  a {
+    color: $purple;
+  }
+}
+
+@media only screen and (min-width: $largeScreen) {
+  main {
+    max-width: 60%;
+    padding: 0px 20% 0;
+  }
+}

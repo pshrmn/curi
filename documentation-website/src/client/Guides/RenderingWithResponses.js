@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
-import Note from '../components/Note';
+import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
 
 const name = 'Rendering with Responses';

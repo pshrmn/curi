@@ -1,7 +1,7 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
-import Note from '../components/Note';
+import { Note } from '../components/Messages';
 import APIBlock from '../components/APIBlock';
 
 const name = 'curi-addon-prefetch';

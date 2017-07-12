@@ -2,8 +2,7 @@ import React from 'react';
 import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
-import Note from '../components/Note';
-import Warning from '../components/Warning';
+import { Note, Warning } from '../components/Messages';
 import { Link } from 'curi-react';
 
 const name = 'curi-react-link';

@@ -1,10 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
   context: path.join(__dirname, 'src', 'client'),
   entry: {
-    index: './index.js',
+    index: ['./scss/index.scss', './index.js'],
     vendor: [
       'curi',
       'curi-react',
@@ -35,6 +36,17 @@ const config = {
             loader: 'babel-loader'
           }
         ]
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'postcss-loader',
+            'sass-loader'
+          ]
+        })
       }
     ]
   },
@@ -43,7 +55,8 @@ const config = {
       name: 'vendor',
       filename: 'js/vendor.js',
       minChunks: Infinity
-    })
+    }),
+    new ExtractTextPlugin('css/index.css')
   ]
 };
 

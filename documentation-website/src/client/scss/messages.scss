@@ -1,0 +1,15 @@
+@import './variables.scss';
+
+.note, .warning {
+  padding: 10px 5px;
+}
+
+.note {
+  background: $gray;
+  border: 1px solid $border-gray;
+}
+
+.warning {
+  background: $border-orange;
+  border: 1px solid $orange;
+}
