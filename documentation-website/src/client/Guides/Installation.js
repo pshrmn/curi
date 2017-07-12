@@ -2,6 +2,7 @@ import React from 'react';
 import BaseGuide from '../components/BaseGuide';
 import { PrismBlock } from '../components/PrismBlocks';
 import { Link } from 'curi-react';
+import { Section, Subsection } from '../components/Sections';
 
 const name = 'Installation';
 const slug = 'installation';
@@ -34,18 +35,22 @@ const Installation = () => (
       }
     </PrismBlock>
 
-    <h2>Promises</h2>
-    <p>
-      Curi uses Promises, so you may need to include a polyfill to add Promise support for
-      older browsers (including IE 11).
-    </p>
-    <p>
-      If you need a general ES2015 polyfill, you can check
-      out the one provided by Babel's{' '}
-      <a href="https://babeljs.io/docs/usage/polyfill/#usage-in-browser">babel-polyfill</a> package.
-      If you only need a Promise polyfill, then you should check out the{' '}
-      <a href="https://github.com/stefanpenner/es6-promise">es6-promise</a> package.
-    </p>
+    <Section
+      title='Promises'
+      id='promises'
+    >
+      <p>
+        Curi uses Promises, so you may need to include a polyfill to add Promise support for
+        older browsers (including IE 11).
+      </p>
+      <p>
+        If you need a general ES2015 polyfill, you can check
+        out the one provided by Babel's{' '}
+        <a href="https://babeljs.io/docs/usage/polyfill/#usage-in-browser">babel-polyfill</a> package.
+        If you only need a Promise polyfill, then you should check out the{' '}
+        <a href="https://github.com/stefanpenner/es6-promise">es6-promise</a> package.
+      </p>
+    </Section>
 
     <h2>Next</h2>
     <p>

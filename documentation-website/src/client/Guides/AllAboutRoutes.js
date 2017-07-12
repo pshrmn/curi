@@ -3,6 +3,7 @@ import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
+import { Section, Subsection } from '../components/Sections';
 
 const slug = 'routes';
 const name = 'All About Routes';
@@ -25,8 +26,10 @@ const AllAboutRoutes = () => (
       }
     </PrismBlock>
 
-    <div className='section'>
-      <h2>Matching routes</h2>
+    <Section
+      title='Matching Routes'
+      id='matching-routes'
+    >
       <p>
         First, we should cover how route matching works. Curi takes an array of route objects. Whenever Curi
         receives a new location, it will walk over the route objects in the order that they are defined in
@@ -97,20 +100,26 @@ const AllAboutRoutes = () => (
         will always match. You may want to still manually set the status to "404" for the wildcard route, but
         it is not required.
       </p>
-    </div>
+    </Section>
 
-    <div className='section'>
-      <h2>Route properties</h2>
+    <Section
+      title='Route properties'
+      id='route-properties'
+    >
 
-      <div className='subsection'>
-        <h3>name</h3>
+      <Subsection
+        title='name'
+        id='name'
+      >
         <p>
           A unique identifier. This should be a string or a symbol.
         </p>
-      </div>
+      </Subsection>
 
-      <div className='subsection'>
-        <h3>path</h3>
+      <Subsection
+        title='path'
+        id='path'
+      >
         <p>
           A path-to-regexp style string. This should <strong>not</strong> have a leading slash. The string
           will be passed to path-to-regexp to generate a regular expression. Any{' '}
@@ -121,10 +130,12 @@ const AllAboutRoutes = () => (
           While path-to-regexp supports arrays and RegExps, only string paths are supported here. This is
           because the path must also be reversible to create a pathname given params.
         </Note>
-      </div>
+      </Subsection>
 
-      <div className='subsection'>
-        <h3>pathOptions</h3>
+      <Subsection
+        title='pathOptions'
+        id='pathOptions'
+      >
         <p>
           If you need to provide different path options than{' '}
           <a href="https://github.com/pillarjs/path-to-regexp#usage">the defaults</a> used by path-to-regexp,
@@ -134,10 +145,12 @@ const AllAboutRoutes = () => (
           If a route has a children array property, it will <strong>always</strong> have the <InlineJS>end</InlineJS>
           {' '} path option set to false.
         </Note>
-      </div>
+      </Subsection>
 
-      <div className='subsection'>
-        <h3>body</h3>
+      <Subsection
+        title='body'
+        id='body'
+      >
         <p>
           The body property gives you the opportunity to set the body property of a response for a given
           route. This must be a function and its return value will be what is set as the response object's
@@ -154,10 +167,12 @@ const contact = {
 };`
           }
         </PrismBlock>
-      </div>
+      </Subsection>
 
-      <div className='subsection'>
-        <h3>title</h3>
+      <Subsection
+        title='title'
+        id='title'
+      >
         <p>
           You can use the title property of a route to specify a title string that should be set on the response
           when that route matches. This can either be a string or a function. If it is a string, then
@@ -186,19 +201,23 @@ const contact = {
 }`
           }
         </PrismBlock>
-      </div>
+      </Subsection>
 
-      <div className='subsection'>
-        <h3>children</h3>
-      </div>
-      <p>
-        An optional array of route objects. Any child routes will be matched relative to their parent route's path.
-        This means that if a parent route's path string is 'one' and a child route's path string is 'two',
-        the child will match when the pathname is 'one/two'.
-      </p>
+      <Subsection
+        title='children'
+        id='children'
+      >
+        <p>
+          An optional array of route objects. Any child routes will be matched relative to their parent route's path.
+          This means that if a parent route's path string is 'one' and a child route's path string is 'two',
+          the child will match when the pathname is 'one/two'.
+        </p>
+      </Subsection>
 
-      <div className='subsection'>
-        <h3>preload</h3>
+      <Subsection
+        title='preload'
+        id='preload'
+      >
         <p>
           A function that will only be called the first time that a route matches. This should only be
           used for loading resources that are required for the route to display properly. For example,
@@ -220,10 +239,12 @@ const contact = {
 };`
           }
         </PrismBlock>
-      </div>
+      </Subsection>
       
-      <div className='subsection'>
-        <h3>load</h3>
+      <Subsection
+        title='load'
+        id='load'
+      >
         <p>
           A function that can be used for data fetching as well as for triggering redirects.
           The load function will be passed the params object that is parsed from the location's
@@ -278,8 +299,8 @@ const contact = {
             response's data property.
           </li>
         </ul>
-      </div>
-    </div>
+      </Subsection>
+    </Section>
 
     <div>
       <h2>Next</h2>

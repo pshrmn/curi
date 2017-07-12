@@ -8,10 +8,10 @@ export default {
   "curi-react-active": "0.2.0",
   "curi-react-block": "0.3.0",
   "curi-react-curious": "0.3.0",
-  "curi-react-link": "0.6.0",
+  "curi-react-link": "0.7.0",
   "curi-react-navigator": "0.3.0",
   "curi-react-redirect": "0.4.0",
-  "curi-side-effect-scroll": "0.1.0",
+  "curi-side-effect-scroll": "0.2.0",
   "curi-side-effect-title": "0.1.2",
   "curi-vue": "0.3.0"
 };

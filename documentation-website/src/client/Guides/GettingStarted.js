@@ -2,6 +2,7 @@ import React from 'react';
 import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from 'curi-react';
+import { Section, Subsection } from '../components/Sections';
 
 const slug = 'getting-started';
 const name = 'Getting Started';
@@ -18,8 +19,10 @@ const GettingStarted = () => (
       first response to be generated and you're ready to render.
     </p>
 
-    <div className='section'>
-      <h2>The History Object</h2>
+    <Section
+      title='The History Object'
+      id='history-object'
+    >
       <p>
         Curi's navigation is powered by the <a href='https://github.com/pshrmn/hickory'>Hickory</a>
         {' '}package. You just need to pick which type of Hickory history object is right
@@ -70,10 +73,12 @@ browserHistory.update({ pathname: '/guides/getting-started' });
 `
         }
       </PrismBlock>
-    </div>
+    </Section>
 
-    <div className='section'>
-      <h2>The Routes Array</h2>
+    <Section
+      title='The Routes Array'
+      id='routes-array'
+    >
       <p>
         Routes are objects with two required properties: name and path.
       </p>
@@ -104,10 +109,12 @@ browserHistory.update({ pathname: '/guides/getting-started' });
         How route matching works and the other route properties are explained more in-depth in
         the <Link to='Guide' params={{ slug: 'routes' }}>All About Routes</Link> guide.
       </p>
-    </div>
+    </Section>
 
-    <div className='section'>
-      <h2>The Configuration Object</h2>
+    <Section
+      title='The Configuration Object'
+      id='configuration-object'
+    >
       <p>
         Once you have your Hickory history object and your routes array, you just need to
         pass them to the default export from the Curi package (which we will name{' '}
@@ -125,8 +132,10 @@ const config = createConfig(history, routes);
         }
       </PrismBlock>
 
-      <div className='subsection'>
-        <h3>Other configuration options</h3>
+      <Subsection
+        title='Other configuration options'
+        id='other-configuration-options'
+      >
         <p>
           The <InlineJS>createConfig</InlineJS> function
           can also take an optional third argument, which is an options object. You can use this
@@ -143,11 +152,12 @@ const config = createConfig(history, routes);
 });`
           }
         </PrismBlock>
-      </div>
-    </div>
+      </Subsection>
+    </Section>
 
-    <div className='section'>
-      <h2>Responses</h2>
+    <Section
+      title='Responses'
+    >
       <p>
         Whenever navigation happens, a new location object is created by Hickory. Curi uses
         that location object's pathname property to match against all of your routes. When
@@ -238,7 +248,7 @@ const routes = [
 }`
        }
       </PrismBlock>
-    </div>
+    </Section>
 
     <h2>Next</h2>
     <p>

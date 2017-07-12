@@ -3,6 +3,7 @@ import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
+import { Section, Subsection } from '../components/Sections';
 
 const slug = 'side-effects';
 const name = 'Using Side Effects';
@@ -32,9 +33,10 @@ const UsingSideEffects = () => (
       }
     </PrismBlock>
 
-    <div className='section'>      
-      <h2>Adding Side Effects</h2>
-
+    <Section
+      title='Adding Side Effects'
+      id='adding'
+    >
       <p>
         You add side effect functions to your configuration object by adding a{' '}
         <InlineJS>sideEffects</InlineJS> array to the options object (the third agument)
@@ -49,8 +51,10 @@ const UsingSideEffects = () => (
         }
       </PrismBlock>
 
-      <div className='subsection'>
-        <h3>Official Side Effects</h3>
+      <Subsection
+        title='Official Side Effects'
+        id='official'
+      >
         <p>
           Curi has two "official" side effect packages:
         </p>
@@ -62,11 +66,13 @@ const UsingSideEffects = () => (
             <Link to='Package' params={{ package: 'curi-side-effect-scroll' }}>curi-side-effect-scroll</Link>
           </li>
         </ul>
-      </div>
-    </div>
+      </Subsection>
+    </Section>
 
-    <div className='section'>
-      <h2>Creating Side Effects</h2>
+    <Section
+      title='Creating Side Effects'
+      id='creating'
+    >
 
       <p>
         Side effects are just simple functions that receive a response object and an action
@@ -112,7 +118,7 @@ const config = createConfig(history, routes, {
         to review the <Link to='Guide' params={{ slug: 'responses' }}>response</Link> properties to know
         which properties you should expect a response to have, but other than that they are pretty simple.
       </p>
-    </div>
+    </Section>
 
     <div>
       <h2>Next</h2>

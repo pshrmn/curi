@@ -3,7 +3,7 @@ import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
-
+import { Section, Subsection } from '../components/Sections';
 const slug = 'response-caching';
 const name = 'Response Caching';
 

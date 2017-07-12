@@ -21,6 +21,12 @@
 }
 .section, .subsection {
   margin-top: 15px;
+
+  .header-link {
+    margin-left: 10px;
+    text-decoration: none;
+    color: $dark-gray;
+  }
 }
 
 @media only screen and (min-width: $largeScreen) {

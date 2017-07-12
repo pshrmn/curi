@@ -3,6 +3,7 @@ import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
+import { Section, Subsection } from '../components/Sections';
 
 const slug = 'addons';
 const name = 'Using Addons';
@@ -54,8 +55,10 @@ const UsingAddons = () => (
       }
     </PrismBlock>
 
-    <div className='section'>
-      <h2>Adding addons</h2>
+    <Section
+      title='Adding addons'
+      id='adding'
+    >
       <p>
         As stated above, whenever you include addons in your configuration object, you do not pass
         the actual addon object. Instead, you pass a factory function that will return the addon
@@ -86,10 +89,12 @@ const UsingAddons = () => (
 `const myValue = config.addons.myAddon('Some Route', ...);`
         }
       </PrismBlock>
-    </div>
+    </Section>
 
-    <div className='section'>
-      <h2>Creating Addons</h2>
+    <Section
+      title='Creating Addons'
+      id='creating'
+    >
 
       <p>
         You may find yourself wanting to add a custom addon to your application. There are just a few
@@ -155,8 +160,10 @@ config.addons.MyFirstAddon('Elsewhere'); // false`
         }
       </PrismBlock>
 
-      <div className='subsection'>
-        <h3>Slightly more advanced</h3>
+      <Subsection
+        title='Slightly more advanced'
+        id='Slightly-more-advanced'
+      >
 
         <p>
           You might want to write an addon that uses data from parent routes when registering a route.
@@ -188,8 +195,8 @@ config.addons.MyFirstAddon('Elsewhere'); // false`
 }`
           }
         </PrismBlock>
-      </div>
-    </div>
+      </Subsection>
+    </Section>
 
     <div>
       <h2>Next</h2>

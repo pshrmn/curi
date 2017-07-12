@@ -3,6 +3,7 @@ import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
+import { Section, Subsection } from '../components/Sections';
 
 const name = 'Rendering with Responses';
 const slug = 'responses';
@@ -18,8 +19,10 @@ const RenderingWithResponses = () => (
       property and a render function.
     </p>
     
-    <div className='section'>
-      <h2>The Properties of a Response Object</h2>
+    <Section
+      title='The Properties of a Response Object'
+      id='properties'
+    >
 
       <PrismBlock lang='javascript'>
       {
@@ -65,8 +68,10 @@ const RenderingWithResponses = () => (
        }
       </PrismBlock>
 
-      <div className='subsection'>
-        <h3>Redirect Response</h3>
+      <Subsection
+        title='Redirect Response'
+        id='redirect-properties'
+      >
         <p>
           When you redirect, a slightly different response object will be created. You are in
           charge of actually redirecting, Curi just generates a response that lets you know
@@ -91,11 +96,13 @@ const RenderingWithResponses = () => (
 }`
           }
         </PrismBlock>
-      </div>
-    </div>
+      </Subsection>
+    </Section>
 
-    <div className='section'>
-      <h2>The Body Property</h2>
+    <Section
+      title='The Body Property'
+      id='body-property'
+    >
       <p>
         The body property of a response is the value returned by the matched route's body property.
         This value can be anything you want it to be, but it should usually be a function/component.
@@ -138,10 +145,12 @@ const RenderingWithResponses = () => (
 }`
         }
       </PrismBlock>
-    </div>
+    </Section>
 
-    <div className='section'>
-      <h2>The Render Function</h2>
+    <Section
+      title='The Render Function'
+      id='render-function'
+    >
       <p>
         A render function is simply a function that receives a response object as its argument
         and manipulates the DOM (or its equivalent for non-browser environments) using the response.
@@ -149,8 +158,10 @@ const RenderingWithResponses = () => (
         vanilla JavaScript, a render function would manually update the DOM.
       </p>
 
-      <div className='subsection'>
-        <h3>Rendering Redirects</h3>
+      <Subsection
+        title='Rendering Redirects'
+        id='rendering-redirects'
+      >
         <p>
           The first thing you should do in your render function is to check if the response has a{' '}
           <InlineJS>redirectTo</InlineJS> property. If it does, then you should redirect to the new
@@ -171,10 +182,12 @@ const RenderingWithResponses = () => (
 }`
           }
         </PrismBlock>
-      </div>
+      </Subsection>
 
-      <div className='subsection'>
-        <h3>Rendering HTML</h3>
+      <Subsection
+        title='Rendering HTML'
+        id='rendering-HTML'
+      >
         <p>
           Once we have verified that we don't have to redirect, we are ready to render the content
           using the response. There is still one thing to verify: that our response actually has a
@@ -230,9 +243,9 @@ function render(response) {
 }`
         }
         </PrismBlock>
-      </div>
+      </Subsection>
 
-    </div>
+    </Section>
 
     <div>
       <h2>Next</h2>

@@ -21,6 +21,7 @@
     "babel-core": "^6.25.0",
     "curi-addon-active": "^0.2.0",
     "curi-react": "^0.8.0",
+    "curi-react-link": "^0.7.0",
     "curi-side-effect-scroll": "^0.2.0",
     "curi-side-effect-title": "^0.1.2",
     "express": "^4.15.3",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "babel-loader": "^7.1.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
