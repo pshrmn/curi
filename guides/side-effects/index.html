@@ -3,34 +3,16 @@
   <head>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Using Side Effects Guide | Curi Documentation</title>
+    <title> | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
-    <link href="/curi/static/css/index.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot="" data-reactid="1" data-react-checksum="-107961664"><header data-reactid="2"><nav data-reactid="3"><ul data-reactid="4"><li data-reactid="5"><a class="home-link" href="/curi/" data-reactid="6">Curi</a></li><li data-reactid="7"><a href="/curi/packages/" data-reactid="8">Packages</a></li><li data-reactid="9"><a href="/curi/guides/getting-started/" data-reactid="10">Guides</a></li><li data-reactid="11"><a href="/curi/examples/" data-reactid="12">Examples</a></li><li data-reactid="13"><a href="https://github.com/pshrmn/curi" data-reactid="14">GitHub</a></li></ul></nav></header><main data-reactid="15"><div class="guide" data-reactid="16"><div class="content" data-reactid="17"><h1 data-reactid="18">Using Side Effects</h1><p data-reactid="19">Curi side effects are essentially permament subscribers to your configuration object. They can be considered slightly more convenient than subscribers since you don&#x27;t have to subscribe to your configuration object to set them up. However, you also cannot unsubscribe them.</p><p data-reactid="20">Whenever a new response is generated, all of the side effect functions will be called. They will be given two arguments: the new response object and the action that was used to trigger the navigation (POP, PUSH, or REPLACE).</p><pre class="language-javascript" data-reactid="21">function logResponse(response) {
-  // call your logging API to record the response
-}</pre><div class="section" data-reactid="22"><h2 id="adding" data-reactid="23"><!-- react-text: 24 -->Adding Side Effects<!-- /react-text --><a class="header-link" href="/curi/guides/side-effects/#adding" data-reactid="25">#</a></h2><p data-reactid="26"><!-- react-text: 27 -->You add side effect functions to your configuration object by adding a<!-- /react-text --><!-- react-text: 28 --> <!-- /react-text --><code class="language-javascript" data-reactid="29">sideEffects</code><!-- react-text: 30 --> array to the options object (the third agument) of <!-- /react-text --><code class="language-javascript" data-reactid="31">createConfig</code><!-- react-text: 32 -->.<!-- /react-text --></p><pre class="language-javascript" data-reactid="33">const config = createConfig(history, routes, {
-  sideEffects: [logResponse]
-});</pre><div class="subsection" data-reactid="34"><h3 id="official" data-reactid="35"><!-- react-text: 36 -->Official Side Effects<!-- /react-text --><a class="header-link" href="/curi/guides/side-effects/#official" data-reactid="37">#</a></h3><p data-reactid="38">Curi has two &quot;official&quot; side effect packages:</p><ul data-reactid="39"><li data-reactid="40"><a href="/curi/packages/curi-side-effect-title/" data-reactid="41">curi-side-effect-title</a></li><li data-reactid="42"><a href="/curi/packages/curi-side-effect-scroll/" data-reactid="43">curi-side-effect-scroll</a></li></ul></div></div><div class="section" data-reactid="44"><h2 id="creating" data-reactid="45"><!-- react-text: 46 -->Creating Side Effects<!-- /react-text --><a class="header-link" href="/curi/guides/side-effects/#creating" data-reactid="47">#</a></h2><p data-reactid="48">Side effects are just simple functions that receive a response object and an action string and do something with them. One thing that they should not do, however, is to modify the response.</p><p data-reactid="49">Below is a side effect function that sets a modified property on the object.</p><pre class="language-javascript" data-reactid="50">function mySideEffect(response, action) {
-  console.log(&#x27;Navigating to&#x27;, response.location);
-}
-
-const config = createConfig(history, routes, {
-  sideEffects: [mySideEffect]
-});</pre><p data-reactid="51">You can write a side effect factory if you need to create a more customizable side effect.</p><pre class="language-javascript" data-reactid="52">function AnalyticsLogger(options) {
-  // do some setup with the provided options
-  const logger = setupMyLogger(options);
-
-  // and return the actual side effect function
-  return sideEffect(response, action) {
-    logger(response);
-  }
-}</pre><p data-reactid="53"><!-- react-text: 54 -->That really is all there is required to know in order to write your own side effects. You may want to review the <!-- /react-text --><a href="/curi/guides/responses/" data-reactid="55">response</a><!-- react-text: 56 --> properties to know which properties you should expect a response to have, but other than that they are pretty simple.<!-- /react-text --></p></div><div data-reactid="57"><h2 data-reactid="58">Next</h2><p data-reactid="59"><code class="language-javascript" data-reactid="60">createConfig</code><!-- react-text: 61 -->&#x27;s options object has three arguments. We have covered the first two, so finally we will cover the cache option in the<!-- /react-text --><!-- react-text: 62 --> <!-- /react-text --><a href="/curi/guides/response-caching/" data-reactid="63">response caching</a><!-- react-text: 64 --> guide.<!-- /react-text --></p></div></div><div class="sidebar" data-reactid="65"><h2 data-reactid="66">Guides</h2><ul data-reactid="67"><li data-reactid="68"><a href="/curi/guides/installation/" data-reactid="69">Installation</a></li><li data-reactid="70"><a href="/curi/guides/getting-started/" data-reactid="71">Getting Started</a></li><li data-reactid="72"><a href="/curi/guides/routes/" data-reactid="73">All About Routes</a></li><li data-reactid="74"><a href="/curi/guides/responses/" data-reactid="75">Rendering with Responses</a></li><li data-reactid="76"><a href="/curi/guides/addons/" data-reactid="77">Using Addons</a></li><li data-reactid="78"><a class="active" href="/curi/guides/side-effects/" data-reactid="79">Using Side Effects</a></li><li data-reactid="80"><a href="/curi/guides/response-caching/" data-reactid="81">Response Caching</a></li></ul></div></div></main></div></div>
+    <div id="root"><!-- react-empty: 1 --></div>
     <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js"></script>
-    <script src="/curi/static/js/prism.js"></script>
-    <script src="/curi/static/js/vendor.js"></script>
-    <script src="/curi/static/js/bundle.js"></script>
+    <script src="//static/js/prism.js"></script>
+    <script src="//static/js/vendor.js"></script>
+    <script src="/static/js/bundle.js"></script>
   </body>
 </html>
