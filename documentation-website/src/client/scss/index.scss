@@ -9,6 +9,7 @@ body {
   box-sizing: border-box;
 }
 
+@import './prism.scss';
 @import './baseElements.scss';
 @import './header.scss';
 @import './main.scss';
