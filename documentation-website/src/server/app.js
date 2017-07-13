@@ -7,9 +7,9 @@ module.exports = function createApp() {
   const app = express();
 
   const STATIC_DIR = path.join(__dirname, '..', '..', 'gh-pages', 'static')
-  app.use('/curi/static', express.static(STATIC_DIR));
+  app.use('/static', express.static(STATIC_DIR));
 
   const renderer = createRenderer();
-  app.get('/curi/*', renderer);
+  app.get('*', renderer);
   return app;
 }

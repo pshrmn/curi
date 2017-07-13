@@ -12,9 +12,7 @@ import renderFunction from './render';
 const setTitle = createTitleSideEffect({ suffix: '| Curi Documentation' });
 const scrollTo = createScrollSideEffect();
 
-const history = Browser({
-  baseSegment: '/curi'
-});
+const history = Browser();
 
 const config = createConfig(history, routes, {
   addons: [createActiveAddon],
