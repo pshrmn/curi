@@ -4,7 +4,7 @@ const request = require('request-promise-native');
 const fs = require('fs');
 const join = require('path').join;
 
-const BASE_DIR = join(__dirname, '..', '..', 'docs');
+const BASE_DIR = join(__dirname, '..', 'gh-pages');
 
 function generatePaths(routes, params, parent) {
   if (!parent) {
@@ -41,15 +41,28 @@ function compilePath(path, params) {
   return params.map(compiler);
 }
 
+function makeDirs(base, dirPath) {
+  // save an extra attempt at making the root folder
+  if (dirPath.charAt(0) === '/') {
+    dirPath = dirPath.slice(1);
+  }
+  const segments = dirPath.split('/');
+  let current = base;
+  segments.forEach(segment => {
+    current = join(current, segment);
+    if (!fs.existsSync(current)) {
+      fs.mkdirSync(current);
+    }
+  });
+  return current;
+}
+
 module.exports = function generateStaticFiles(routes, params) {
   return Promise.all(
     generatePaths(routes, params).map(p => (
       request(localURI(p))
         .then(html => {
-          const outputDir = join(BASE_DIR, p)
-          if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir);
-          }
+          const outputDir = makeDirs(BASE_DIR, p);
           fs.writeFile(
             join(outputDir, 'index.html'),
             html,

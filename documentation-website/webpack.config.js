@@ -14,7 +14,7 @@ const config = {
     ]
   },
   output: {
-    path: path.join(__dirname, '..', 'docs', 'static'),
+    path: path.join(__dirname, 'gh-pages', 'static'),
     filename: 'js/bundle.js'
   },
   externals: {
