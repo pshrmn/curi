@@ -44,8 +44,8 @@ function renderFullPage(html, title) {
     <div id="root">${html}</div>
     <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js"></script>
-    <script src="//static/js/prism.js"></script>
-    <script src="//static/js/vendor.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/vendor.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>
 </html>

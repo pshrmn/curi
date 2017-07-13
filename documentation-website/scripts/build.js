@@ -14,7 +14,7 @@ const guideNames = guides.map(p => ({ slug: p.slug }));
 updatePackageVersions();
 
 let server;
-const app = createApp('/curi');
+const app = createApp();
 server = app.listen('8000', () => {
   generateStaticFiles(
     routes,
