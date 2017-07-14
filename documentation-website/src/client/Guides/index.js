@@ -5,6 +5,8 @@ import RenderingWithResponses from './RenderingWithResponses';
 import UsingAddons from './UsingAddons';
 import UsingSideEffects from './UsingSideEffects';
 import ResponseCaching from './ResponseCaching';
+import CodeSplitting from './CodeSplitting';
+import Load from './Load';
 
 const guides = [
   Installation,
@@ -13,7 +15,9 @@ const guides = [
   RenderingWithResponses,
   UsingAddons,
   UsingSideEffects,
-  ResponseCaching
+  ResponseCaching,
+  CodeSplitting,
+  Load
 ];
 
 export const byName = guides.reduce((acc, curr) => {
