@@ -7,9 +7,11 @@ const createApp = require('../src/server/app');
 const routes = require('../src/client/routes').default;
 const packages = require('../src/client/Packages').default;
 const guides = require('../src/client/Guides').default;
+const examples = require('../src/client/Examples').default;
 
 const packageNames = packages.map(p => ({ package: p.name }));
 const guideNames = guides.map(p => ({ slug: p.slug }));
+const exampleNames = examples.map(p => ({ slug: p.slug }));
 
 updatePackageVersions();
 
@@ -28,6 +30,13 @@ server = app.listen('8000', () => {
       },
       'Guide': {
         params: guideNames
+      },
+      'Examples': {
+        children: {
+          'Example': {
+            params: exampleNames
+          }
+        }
       }
     }
   )
