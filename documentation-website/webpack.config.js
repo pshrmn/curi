@@ -6,12 +6,6 @@ const config = {
   context: path.join(__dirname, 'src', 'client'),
   entry: {
     index: ['./scss/index.scss', './index.js'],
-    vendor: [
-      'curi',
-      'curi-react',
-      'hickory',
-      'react-prism'
-    ]
   },
   output: {
     path: path.join(__dirname, 'gh-pages', 'static'),
@@ -51,11 +45,6 @@ const config = {
     ]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'js/vendor.js',
-      minChunks: Infinity
-    }),
     new ExtractTextPlugin('css/index.css')
   ]
 };
