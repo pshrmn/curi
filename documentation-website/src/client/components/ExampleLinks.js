@@ -1,22 +1,22 @@
 import React from 'react';
 import { Link } from 'curi-react';
 
-import guides from '../Guides';
+import examples from '../Examples';
 import styleActive from '../utils/styleActive';
 
 export default () => (
   <ul>
     {
-      Object.keys(guides)
-      .map(key => guides[key])
-      .map(guide => (
-        <li key={guide.slug}>
+      Object.keys(examples)
+      .map(key => examples[key])
+      .map(example => (
+        <li key={example.slug}>
           <Link
-            to='Guide'
-            params={{ slug: guide.slug }}
+            to='Example'
+            params={{ slug: example.slug }}
             active={{ merge: styleActive }}
           >
-            {guide.name}
+            {example.name}
           </Link>
         </li>
       ))

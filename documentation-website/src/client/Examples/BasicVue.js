@@ -1,0 +1,51 @@
+import React from 'react';
+import BaseExample from '../components/BaseExample';
+import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { Note } from '../components/Messages';
+import { Link } from 'curi-react';
+import { Section, Subsection } from '../components/Sections';
+import CodeSandboxDemo from '../components/CodeSandboxDemo';
+
+const slug = 'basic-vue';
+const name = 'Basic Vue';
+
+const BasicVue = () => (
+  <BaseExample>
+    <h1>{name}</h1>
+    <Section
+      title='Explanation'
+      id='explanation'
+    >
+      <p>
+        While Vue does have an official router, this project shows how you could use Curi as
+        the router for a Vue project instead. It uses <InlineJS>&lt;curi-link&gt;</InlineJS>
+        {' '}component provided by the the curi-vue package. Unlike the React examples, which
+        use a <InlineJS>&lt;Navigator&gt;</InlineJS> component to automatically subscribe, here
+        we are manually subscribing to navigation changes. We keep a reactive response object
+        on our view model in order to automatically re-render when a new response is generated.
+      </p>
+    </Section>
+
+    <Section
+      title='On GitHub'
+      id='source'
+    >
+      <p>
+        If you want to run this code locally, the source code is available on GitHub{' '}
+        <a href='https://github.com/pshrmn/curi/tree/master/examples/basic-vue'>here</a>.
+      </p>
+      <Note>
+        If you are experienced with Vue, you will probably notice that the layout of this
+        application is not optimal. That is a just testament to my lack of familiarity with Vue.
+        Hopefully will be fixed as I learn the best practices. Please feel free to point out any
+        issues and I will update this example.
+      </Note>
+    </Section>
+  </BaseExample>
+);
+
+export default {
+  name,
+  slug,
+  component: BasicVue
+};

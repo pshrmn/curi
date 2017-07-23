@@ -30,7 +30,7 @@
 }
 
 @media only screen and (min-width: $largeScreen) {
-  .guide, .package {
+  .guide, .package, .example{
     padding-top: 15px;
     display: flex;
     flex-flow: row-nowrap;

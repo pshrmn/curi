@@ -2,11 +2,11 @@
 import Home from './Home';
 import Guide from './Guide';
 import PackageList from './PackageList';
-import Examples from './Examples';
+import ExampleList from './ExampleList';
 
 export default [
   Home,
   Guide,
   PackageList,
-  Examples
+  ExampleList
 ];
