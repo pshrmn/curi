@@ -3,31 +3,16 @@
   <head>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Curi | Curi Documentation</title>
+    <title>Data Loading Example | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot="" data-reactid="1" data-react-checksum="-2060970875"><header data-reactid="2"><nav data-reactid="3"><ul data-reactid="4"><li data-reactid="5"><a class="home-link" href="/" data-reactid="6">Curi</a></li><li data-reactid="7"><a href="/packages/" data-reactid="8">Packages</a></li><li data-reactid="9"><a href="/guides/getting-started/" data-reactid="10">Guides</a></li><li data-reactid="11"><a href="/examples/" data-reactid="12">Examples</a></li><li data-reactid="13"><a href="https://github.com/pshrmn/curi" data-reactid="14">GitHub</a></li></ul></nav></header><main data-reactid="15"><div data-reactid="16"><div class="banner" data-reactid="17"><h1 data-reactid="18">Curi</h1><p data-reactid="19">A single page application router for any JavaScript rendering library.</p><pre class="language-javascript" data-reactid="20">import { Browser } from &#x27;hickory&#x27;;
-import createConfig from &#x27;curi&#x27;;
-
-// create your history object
-const history = Browser();
-
-// define your routes
-const routes = [
-  { name: &#x27;Home&#x27;, path: &#x27;&#x27;, ... },
-  { name: &#x27;User&#x27;, path: &#x27;u/:userID&#x27;, ... },
-  ...
-];
-
-// create your Curi configuration object
-const config = createConfig(history, routes);
-
-// wait for the first response to be generated
-config.ready().then((response) =&gt; {
-  // and now, you&#x27;re ready to render
-});</pre><p data-reactid="21"><!-- react-text: 22 -->Ready to learn more? Check out the<!-- /react-text --><!-- react-text: 23 --> <!-- /react-text --><a href="/guides/getting-started/" data-reactid="24">getting started</a><!-- react-text: 25 --> guide.<!-- /react-text --></p></div></div></main></div></div>
+    <div id="root"><div data-reactroot="" data-reactid="1" data-react-checksum="-286289399"><header data-reactid="2"><nav data-reactid="3"><ul data-reactid="4"><li data-reactid="5"><a class="home-link" href="/" data-reactid="6">Curi</a></li><li data-reactid="7"><a href="/packages/" data-reactid="8">Packages</a></li><li data-reactid="9"><a href="/guides/getting-started/" data-reactid="10">Guides</a></li><li data-reactid="11"><a href="/examples/" data-reactid="12">Examples</a></li><li data-reactid="13"><a href="https://github.com/pshrmn/curi" data-reactid="14">GitHub</a></li></ul></nav></header><main data-reactid="15"><div class="example" data-reactid="16"><div class="content" data-reactid="17"><h1 data-reactid="18">Data Loading</h1><div class="section" data-reactid="19"><h2 id="explanation" data-reactid="20"><!-- react-text: 21 -->Explanation<!-- /react-text --><a class="header-link" href="/examples/data-loading/#explanation" data-reactid="22">#</a></h2><p data-reactid="23">When a user navigates to one of your routes, the re-rendering will not be triggered until a response has been created. If the route that matches has a `load` function that has to make a request to the server, the re-render will be delayed, possibly giving the user the impression that nothing is happening. One way that you can attempt to show that something is happening is by adding a loading bar to your page that will demonstrate to the user that their request is going through.</p><p data-reactid="24">The `nprogress` package allows you to render a loading bar that will run across the top of your page. There are many possible solutions, but this one is very easy to use, so it works well for our example. The basis of what we will do is to tell `nprogress` to start when the user clicks a link, and then when we re-render, we tell `nprogres` that we are done loading.</p><pre class="language-javascript" data-reactid="25">// when the user clicks a &lt;Link&gt;
+nprogress.start();
+// when we are re-rendering
+nprogress.done();
+</pre><p data-reactid="26"><!-- react-text: 27 -->The example implementation can definitely be improved. Currently we are calling<!-- /react-text --><!-- react-text: 28 --> <!-- /react-text --><code class="language-javascript" data-reactid="29">nprogress.done()</code><!-- react-text: 30 --> as a side-effect of our render function. This is not ideal, but again, this is just a minimum viable example. In your own application, you could add a subscriber or use a Curi side-effect.<!-- /react-text --></p></div><div class="section" data-reactid="31"><h2 id="demo" data-reactid="32"><!-- react-text: 33 -->Live Demo<!-- /react-text --><a class="header-link" href="/examples/data-loading/#demo" data-reactid="34">#</a></h2><div class="demo" data-reactid="35"><iframe src="https://codesandbox.io/embed/48WlgnyGg" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin" data-reactid="36"></iframe><p data-reactid="37">Use the blue and tan buttons to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div></div><div class="section" data-reactid="38"><h2 id="source" data-reactid="39"><!-- react-text: 40 -->On GitHub<!-- /react-text --><a class="header-link" href="/examples/data-loading/#source" data-reactid="41">#</a></h2><!-- react-text: 42 -->If you want to run this code locally, the source code is available on GitHub<!-- /react-text --><!-- react-text: 43 --> <!-- /react-text --><a href="https://github.com/pshrmn/curi/tree/master/examples/prefetch-data" data-reactid="44">here</a><!-- react-text: 45 -->.<!-- /react-text --></div></div><div class="sidebar" data-reactid="46"><h2 data-reactid="47">Examples</h2><ul data-reactid="48"><li data-reactid="49"><a href="/examples/active-links/" data-reactid="50">Active Links</a></li><li data-reactid="51"><a href="/examples/basic-vue/" data-reactid="52">Basic Vue</a></li><li data-reactid="53"><a href="/examples/blocking-navigation/" data-reactid="54">Blocking Navigation</a></li><li data-reactid="55"><a href="/examples/breadcrumbs/" data-reactid="56">Breadcrumbs</a></li><li data-reactid="57"><a href="/examples/code-splitting/" data-reactid="58">Code Splitting</a></li><li data-reactid="59"><a class="active" href="/examples/data-loading/" data-reactid="60">Data Loading</a></li><li data-reactid="61"><a href="/examples/modal/" data-reactid="62">Modal</a></li><li data-reactid="63"><a href="/examples/redirecting/" data-reactid="64">Redirecting</a></li><li data-reactid="65"><a href="/examples/redux/" data-reactid="66">Redux</a></li><li data-reactid="67"><a href="/examples/script-tags/" data-reactid="68">Script Tags</a></li><li data-reactid="69"><a href="/examples/server-rendering/" data-reactid="70">Server Rendering</a></li><li data-reactid="71"><a href="/examples/side-effect/" data-reactid="72">Side Effect</a></li><li data-reactid="73"><a href="/examples/transitions/" data-reactid="74">Transitions</a></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js"></script>
     <script src="/static/js/prism.js"></script>

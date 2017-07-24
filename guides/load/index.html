@@ -3,31 +3,59 @@
   <head>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Curi | Curi Documentation</title>
+    <title>The Load Property Guide | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot="" data-reactid="1" data-react-checksum="-2060970875"><header data-reactid="2"><nav data-reactid="3"><ul data-reactid="4"><li data-reactid="5"><a class="home-link" href="/" data-reactid="6">Curi</a></li><li data-reactid="7"><a href="/packages/" data-reactid="8">Packages</a></li><li data-reactid="9"><a href="/guides/getting-started/" data-reactid="10">Guides</a></li><li data-reactid="11"><a href="/examples/" data-reactid="12">Examples</a></li><li data-reactid="13"><a href="https://github.com/pshrmn/curi" data-reactid="14">GitHub</a></li></ul></nav></header><main data-reactid="15"><div data-reactid="16"><div class="banner" data-reactid="17"><h1 data-reactid="18">Curi</h1><p data-reactid="19">A single page application router for any JavaScript rendering library.</p><pre class="language-javascript" data-reactid="20">import { Browser } from &#x27;hickory&#x27;;
-import createConfig from &#x27;curi&#x27;;
+    <div id="root"><div data-reactroot="" data-reactid="1" data-react-checksum="-1298470810"><header data-reactid="2"><nav data-reactid="3"><ul data-reactid="4"><li data-reactid="5"><a class="home-link" href="/" data-reactid="6">Curi</a></li><li data-reactid="7"><a href="/packages/" data-reactid="8">Packages</a></li><li data-reactid="9"><a href="/guides/getting-started/" data-reactid="10">Guides</a></li><li data-reactid="11"><a href="/examples/" data-reactid="12">Examples</a></li><li data-reactid="13"><a href="https://github.com/pshrmn/curi" data-reactid="14">GitHub</a></li></ul></nav></header><main data-reactid="15"><div class="guide" data-reactid="16"><div class="content" data-reactid="17"><h1 data-reactid="18">The Load Property</h1><p data-reactid="19">In the code splitting guide, we used the preload property of routes. Routes also have a load property. The biggest difference between the two is that load is called every time a route matches, whereas preload is only called the first time a route matches.</p><p data-reactid="20">load is where you should perform any data loading for the route. We&#x27;ll start a new application here, which is a basic recipe site. We want to have a route for a recipe list page as well as a route for specific recipes.</p><pre class="language-javascript" data-reactid="21">const routes = [
+  {
+    name: &#x27;Recipe List&#x27;,
+    path: &#x27;recipes&#x27;,
+    body: () =&gt; RecipeList
+  },
+  {
+    name: &#x27;Recipe&#x27;,
+    path: &#x27;recipe/:id&#x27;,
+    body: () =&gt; Recipe
+  }
+];</pre><p data-reactid="22">Whenever the Recipe List route matches, we want to fetch a list of recipes from the server. When the Recipe route matches, we just want one specific recipe (using the id param from the path).</p><p data-reactid="23"><!-- react-text: 24 -->The load function will be passed two arguments: the params object that contains variables parsed from the location&#x27;s pathname and a modifiers object. The modifiers object has a few methods that you can call in order to modify the response object that will be generated. They are fail, setStatus, setData and redirect. They are explained in more detail in the<!-- /react-text --><!-- react-text: 25 --> <!-- /react-text --><a href="/guides/routes/#load" data-reactid="26">all about routes</a><!-- react-text: 27 --> <!-- /react-text --><!-- react-text: 28 -->guide. Here, we will use the last two: setData and redirect.<!-- /react-text --></p><p data-reactid="29">First we will add a load function to our Recipe route. This function will make a request to our (fake) API. Then, we will call response.setData to attach our loaded data to the response.</p><pre class="language-javascript" data-reactid="30">{
+  name: &#x27;Recipe&#x27;,
+  path: &#x27;recipe/:id&#x27;,
+  body: () =&gt; Recipe,
+  load: (params, modifiers) =&gt; {
+    return fakeAPI.getRecipe(params.id)
+      .then(data =&gt; {
+        modifiers.setData(data);
+      });
+  }
+}</pre><p data-reactid="31">Now, when we navigate to /recipe/chocolate-chip-cookies, our load function will call the fake API function to load the recipe and set the loaded data for the response. That means that the data we load will be available on the generated response object as response.data.</p><p data-reactid="32">One possible downside to the implementation of load above is that we will be making requests to our API every time the route loads. To prevent this, you might want to add a data cache to your application. Using this, you can store the results of previous requests and use that for subsequent requests instead of having to request the data from the server again.</p><pre class="language-javascript" data-reactid="33">{
+  name: &#x27;Recipe List&#x27;,
+  path: &#x27;recipes&#x27;,
+  body: () =&gt; RecipeList,
+  load: () =&gt; {
+    if (cache.has(&#x27;recipes&#x27;)) {
+      return Promise.resolve(cache.get(&#x27;recipes&#x27;));
+    }
 
-// create your history object
-const history = Browser();
-
-// define your routes
-const routes = [
-  { name: &#x27;Home&#x27;, path: &#x27;&#x27;, ... },
-  { name: &#x27;User&#x27;, path: &#x27;u/:userID&#x27;, ... },
-  ...
-];
-
-// create your Curi configuration object
-const config = createConfig(history, routes);
-
-// wait for the first response to be generated
-config.ready().then((response) =&gt; {
-  // and now, you&#x27;re ready to render
-});</pre><p data-reactid="21"><!-- react-text: 22 -->Ready to learn more? Check out the<!-- /react-text --><!-- react-text: 23 --> <!-- /react-text --><a href="/guides/getting-started/" data-reactid="24">getting started</a><!-- react-text: 25 --> guide.<!-- /react-text --></p></div></div></main></div></div>
+    return fakeAPI.getRecipes()
+      .then(data =&gt; {
+        cache.set(&#x27;recipes&#x27;, data);
+        return data;
+      });
+  }
+}</pre><p data-reactid="34">If at some point in time we decide that we want to change our URI pathname structure, we can also use the load function to redirect.</p><p data-reactid="35">By calling the modifier&#x27;s redirect method, you can specify the URI that we should redirect to.</p><pre class="language-javascript" data-reactid="36">{
+  name: &#x27;Old Recipe&#x27;,
+  path: &#x27;r/:id&#x27;,
+  load: (params, modifiers) =&gt; {
+    modifiers.redirectTo(`/recipe/${params.id}`);
+  }
+}</pre><p data-reactid="37"><!-- react-text: 38 -->Please note that this does not actually perform a redirect. Instead, it will make it so that the emitted response is a &quot;redirect&quot; response, with a redirectTo property you can use to redirect manually. Below is an example of a render function (passed to a<!-- /react-text --><!-- react-text: 39 --> <!-- /react-text --><code class="language-javascript" data-reactid="40">&lt;Navigator&gt;</code><!-- react-text: 41 -->) that renders a <!-- /react-text --><code class="language-javascript" data-reactid="42">&lt;Redirect&gt;</code><!-- react-text: 43 --> <!-- /react-text --><!-- react-text: 44 -->when the response contains a redirectTo value.<!-- /react-text --></p><pre class="language-javascript" data-reactid="45">function renderFunction(response) {
+  if (response.redirectTo) {
+    return &lt;Redirect to={response.redirectTo} /&gt;
+  }
+  // ...
+}</pre><p data-reactid="46">load is a great place to do any route setup prior to actually rendering the route. Please remember, however, that your application will not be re-rendering until after the load function has resolved. If you have a long running load function, you may wish to implement some sort of loading display. The prefetching data example shows one approach to how to do this.</p></div><div class="sidebar" data-reactid="47"><h2 data-reactid="48">Guides</h2><ul data-reactid="49"><li data-reactid="50"><a href="/guides/installation/" data-reactid="51">Installation</a></li><li data-reactid="52"><a href="/guides/getting-started/" data-reactid="53">Getting Started</a></li><li data-reactid="54"><a href="/guides/routes/" data-reactid="55">All About Routes</a></li><li data-reactid="56"><a href="/guides/responses/" data-reactid="57">Rendering with Responses</a></li><li data-reactid="58"><a href="/guides/addons/" data-reactid="59">Using Addons</a></li><li data-reactid="60"><a href="/guides/side-effects/" data-reactid="61">Using Side Effects</a></li><li data-reactid="62"><a href="/guides/response-caching/" data-reactid="63">Response Caching</a></li><li data-reactid="64"><a href="/guides/code-splitting/" data-reactid="65">Code Splitting with the Preload Property</a></li><li data-reactid="66"><a class="active" href="/guides/load/" data-reactid="67">The Load Property</a></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js"></script>
     <script src="/static/js/prism.js"></script>

@@ -3,31 +3,170 @@
   <head>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Curi | Curi Documentation</title>
+    <title>Code Splitting with the Preload Property Guide | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot="" data-reactid="1" data-react-checksum="-2060970875"><header data-reactid="2"><nav data-reactid="3"><ul data-reactid="4"><li data-reactid="5"><a class="home-link" href="/" data-reactid="6">Curi</a></li><li data-reactid="7"><a href="/packages/" data-reactid="8">Packages</a></li><li data-reactid="9"><a href="/guides/getting-started/" data-reactid="10">Guides</a></li><li data-reactid="11"><a href="/examples/" data-reactid="12">Examples</a></li><li data-reactid="13"><a href="https://github.com/pshrmn/curi" data-reactid="14">GitHub</a></li></ul></nav></header><main data-reactid="15"><div data-reactid="16"><div class="banner" data-reactid="17"><h1 data-reactid="18">Curi</h1><p data-reactid="19">A single page application router for any JavaScript rendering library.</p><pre class="language-javascript" data-reactid="20">import { Browser } from &#x27;hickory&#x27;;
-import createConfig from &#x27;curi&#x27;;
+    <div id="root"><div data-reactroot="" data-reactid="1" data-react-checksum="2100355426"><header data-reactid="2"><nav data-reactid="3"><ul data-reactid="4"><li data-reactid="5"><a class="home-link" href="/" data-reactid="6">Curi</a></li><li data-reactid="7"><a href="/packages/" data-reactid="8">Packages</a></li><li data-reactid="9"><a href="/guides/getting-started/" data-reactid="10">Guides</a></li><li data-reactid="11"><a href="/examples/" data-reactid="12">Examples</a></li><li data-reactid="13"><a href="https://github.com/pshrmn/curi" data-reactid="14">GitHub</a></li></ul></nav></header><main data-reactid="15"><div class="guide" data-reactid="16"><div class="content" data-reactid="17"><h1 data-reactid="18">Code Splitting with the Preload Property</h1><p data-reactid="19">If you are bundling an application with a lot of routes, users of your application may be downloading a lot of unnecessary content just to render the initial page. Using code splitting, you can reduce the initial download size for your application by splitting code that is conditionally loaded into a separate bundle that is only downloaded when it is needed.</p><div class="note" data-reactid="20"><strong data-reactid="21">Note:</strong><!-- react-text: 22 --> <!-- /react-text --><!-- react-text: 23 -->This guide assumes that you are using Webpack 2+ to bundle your application.<!-- /react-text --></div><div class="section" data-reactid="24"><h2 id="no-split" data-reactid="25"><!-- react-text: 26 -->An app without code splitting<!-- /react-text --><a class="header-link" href="/guides/code-splitting/#no-split" data-reactid="27">#</a></h2><p data-reactid="28">Let&#x27;s start out by describing our application&#x27;s routes without code splitting. We will import each route&#x27;s component from the files where they are defined.</p><pre class="language-javascript" data-reactid="29">import Home from &#x27;./components/Home&#x27;;
+import Contact from &#x27;./components/Contact&#x27;;
+import ContactMethod from &#x27;./components/ContactMethod&#x27;;
 
-// create your history object
-const history = Browser();
-
-// define your routes
 const routes = [
-  { name: &#x27;Home&#x27;, path: &#x27;&#x27;, ... },
-  { name: &#x27;User&#x27;, path: &#x27;u/:userID&#x27;, ... },
-  ...
-];
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+    body: () =&gt; Home
+  },
+  {
+    name: &#x27;Contact&#x27;,
+    path: &#x27;contact&#x27;,
+    body: () =&gt; Contact,
+    children: [
+      {
+        name: &#x27;Contact Method&#x27;,
+        path: &#x27;:method&#x27;,
+        body: () =&gt; ContactMethod
+      }
+    ]
+  }
+];</pre></div><div class="section" data-reactid="30"><h2 id="no-static-imports" data-reactid="31"><!-- react-text: 32 -->Removing static imports<!-- /react-text --><a class="header-link" href="/guides/code-splitting/#no-static-imports" data-reactid="33">#</a></h2><p data-reactid="34">With code splitting, we don&#x27;t want to have access to the component values when creating our routes because that means we have to download all of them before our application can render. We should remove our import calls so that that doesn&#x27;t happen.</p><pre class="language-javascript" data-reactid="35">const routes = [
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+    body: () =&gt; Home
+  },
+  {
+    name: &#x27;Contact&#x27;,
+    path: &#x27;contact&#x27;,
+    body: () =&gt; Contact,
+    children: [
+      {
+        name: &#x27;Contact Method&#x27;,
+        path: &#x27;:method&#x27;,
+        body: () =&gt; ContactMethod
+      }
+    ]
+  }
+];</pre></div><div class="section" data-reactid="36"><h2 id="preload" data-reactid="37"><!-- react-text: 38 -->Importing in preload<!-- /react-text --><a class="header-link" href="/guides/code-splitting/#preload" data-reactid="39">#</a></h2><p data-reactid="40"><!-- react-text: 41 -->Now, <!-- /react-text --><code class="language-javascript" data-reactid="42">Home</code><!-- react-text: 43 -->, <!-- /react-text --><code class="language-javascript" data-reactid="44">Contact</code><!-- react-text: 45 -->, and<!-- /react-text --><!-- react-text: 46 --> <!-- /react-text --><code class="language-javascript" data-reactid="47">ContactMethod</code><!-- react-text: 48 --> are all undefined, so if we tried to render our application we would get errors. We need to actually import our components so that our body functions actually have something to return.<!-- /react-text --></p><p data-reactid="49">We will import our components using the preload property of routes. This function will only be called the first time that its route matches, so we don&#x27;t have to worry about making extra requests to our server.</p><p data-reactid="50"><code class="language-javascript" data-reactid="51">preload</code><!-- react-text: 52 --> should be a function that returns a Promise. Here, we will call<!-- /react-text --><code class="language-javascript" data-reactid="53">import()</code><!-- react-text: 54 -->, which conveniently returns a Promise.<!-- /react-text --></p><pre class="language-javascript" data-reactid="55">const routes = [
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+    preload: () =&gt; import(&#x27;./components/Home&#x27;),
+    body: () =&gt; Home
+  },
+  {
+    name: &#x27;Contact&#x27;,
+    path: &#x27;contact&#x27;,
+    preload: () =&gt; import(&#x27;./components/Contact&#x27;),
+    body: () =&gt; Contact,
+    children: [
+      {
+        name: &#x27;Contact Method&#x27;,
+        path: &#x27;:method&#x27;,
+        preload: () =&gt; import(&#x27;./components/ContactMethod&#x27;),
+        body: () =&gt; ContactMethod
+      }
+    ]
+  }
+];</pre></div><div class="section" data-reactid="56"><h2 id="saving" data-reactid="57"><!-- react-text: 58 -->Saving our imports<!-- /react-text --><a class="header-link" href="/guides/code-splitting/#saving" data-reactid="59">#</a></h2><p data-reactid="60"><!-- react-text: 61 -->That will load our components when their route matches, but we still don&#x27;t have access to the component functions that we need in order to render. We will need to use a<!-- /react-text --><!-- react-text: 62 --> <!-- /react-text --><code class="language-javascript" data-reactid="63">then</code><!-- react-text: 64 --> call to our <!-- /react-text --><code class="language-javascript" data-reactid="65">import()</code><!-- react-text: 66 --> Promises in order to access the component functions.<!-- /react-text --></p><pre class="language-javascript" data-reactid="67">let Home;
+let Contact;
+let ContactMethod;
 
-// create your Curi configuration object
-const config = createConfig(history, routes);
+const routes = [
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+    preload: () =&gt; (
+      import(&#x27;./components/Home&#x27;).then(module =&gt; {
+        Home = module.default;
+      })
+    ),
+    body: () =&gt; Home
+  },
+  {
+    name: &#x27;Contact&#x27;,
+    path: &#x27;contact&#x27;,
+    preload: () =&gt; (
+      import(&#x27;./components/Contact&#x27;).then(module =&gt; {
+        Contact = module.default;
+      })
+    ),
+    body: () =&gt; Contact,
+    children: [
+      {
+        name: &#x27;Contact Method&#x27;,
+        path: &#x27;:method&#x27;,
+        preload: () =&gt; (
+          import(&#x27;./components/ContactMethod&#x27;).then(module =&gt; {
+            ContactMethod = module.default;
+          })
+        ),
+        body: () =&gt; ContactMethod
+      }
+    ]
+  }
+];</pre></div><div class="section" data-reactid="68"><h2 id="storing" data-reactid="69"><!-- react-text: 70 -->Storing our imports<!-- /react-text --><a class="header-link" href="/guides/code-splitting/#storing" data-reactid="71">#</a></h2><p data-reactid="72">Our application will now only load components when they are needed and will correctly render. However, it is a bit ugly and error prone to define variables for all of our routes. Instead we can create a &quot;store&quot; where we can store references to each route&#x27;s component. The simplest store is an object, so we will start with that.</p><pre class="language-javascript" data-reactid="73">const store = {}
 
-// wait for the first response to be generated
-config.ready().then((response) =&gt; {
-  // and now, you&#x27;re ready to render
-});</pre><p data-reactid="21"><!-- react-text: 22 -->Ready to learn more? Check out the<!-- /react-text --><!-- react-text: 23 --> <!-- /react-text --><a href="/guides/getting-started/" data-reactid="24">getting started</a><!-- react-text: 25 --> guide.<!-- /react-text --></p></div></div></main></div></div>
+const routes = [
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+    preload: () =&gt; (
+      import(&#x27;./components/Home&#x27;).then(module =&gt; {
+        store[&#x27;Home&#x27;] = module.default;
+      })
+    ),
+    body: () =&gt; store[&#x27;Home&#x27;]
+  },
+  {
+    name: &#x27;Contact&#x27;,
+    path: &#x27;contact&#x27;,
+    preload: () =&gt; (
+      import(&#x27;./components/Contact&#x27;).then(module =&gt; {
+        store[&#x27;Contact&#x27;] = module.default;
+      })
+    ),
+    body: () =&gt; store[&#x27;Contact&#x27;],
+    children: [
+      {
+        name: &#x27;Contact Method&#x27;,
+        path: &#x27;:method&#x27;,
+        preload: () =&gt; (
+          import(&#x27;./components/ContactMethod&#x27;).then(module =&gt; {
+            store[&#x27;ContactMethod&#x27;] = module.default;
+          })
+        ),
+        body: () =&gt; store[&#x27;ContactMethod&#x27;]
+      }
+    ]
+  }
+];</pre><div class="subsection" data-reactid="74"><h3 id="better-store" data-reactid="75"><!-- react-text: 76 -->A better store<!-- /react-text --><a class="header-link" href="/guides/code-splitting/#better-store" data-reactid="77">#</a></h3><p data-reactid="78">That should be sufficient, although it is not an error proof approach. Our preload functions currently do nothing when there are errors in importing the components. What you do when that happens is up to you, but you would most likely want to have a default component that you display when the error occurs.</p><pre class="language-jsx" data-reactid="79">const defaultComponent = () =&gt; &lt;div&gt;Uh oh, something must have gone wrong&lt;/div&gt;;
+const store = {
+  stored: {},
+  set: function(name, value) {
+    this.stored[name] = value;
+  },
+  get: function(name) {
+    return this.stored[name] || defaultComponent;
+  }
+}
+
+// usage
+{
+  ...,
+  preload: () =&gt; (
+    import(&#x27;./components/Something&#x27;)
+      .then(module =&gt; {
+        store.set(&#x27;Something&#x27;, module.default);
+      })
+      .catch(err =&gt; {
+        console.error(err);
+        store.set(&#x27;Something&#x27;, defaultComponent);
+      })
+  ),
+  body: () =&gt; store.get(&#x27;Something&#x27;)
+}</pre></div></div><div class="section" data-reactid="80"><h2 id="next" data-reactid="81"><!-- react-text: 82 -->Next<!-- /react-text --><a class="header-link" href="/guides/code-splitting/#next" data-reactid="83">#</a></h2><p data-reactid="84">The approaches taken here are not the only way to do code splitting. You may choose to skip the preload method and do code splitting at other points in your application. You may also create a more full-fledged solution for storing loaded imports. Whatever path you decide to go, hopefully this has shown you that setting up code splitting with the preload property is fairly simple to do. If you are using Webpack and want to reduce your initial bundle size, preload is a great way to accomplish this.</p><p data-reactid="85"><!-- react-text: 86 -->Next, we will take a look at a related route property:<!-- /react-text --><!-- react-text: 87 --> <!-- /react-text --><a href="/guides/load/" data-reactid="88">load</a><!-- react-text: 89 -->.<!-- /react-text --></p></div></div><div class="sidebar" data-reactid="90"><h2 data-reactid="91">Guides</h2><ul data-reactid="92"><li data-reactid="93"><a href="/guides/installation/" data-reactid="94">Installation</a></li><li data-reactid="95"><a href="/guides/getting-started/" data-reactid="96">Getting Started</a></li><li data-reactid="97"><a href="/guides/routes/" data-reactid="98">All About Routes</a></li><li data-reactid="99"><a href="/guides/responses/" data-reactid="100">Rendering with Responses</a></li><li data-reactid="101"><a href="/guides/addons/" data-reactid="102">Using Addons</a></li><li data-reactid="103"><a href="/guides/side-effects/" data-reactid="104">Using Side Effects</a></li><li data-reactid="105"><a href="/guides/response-caching/" data-reactid="106">Response Caching</a></li><li data-reactid="107"><a class="active" href="/guides/code-splitting/" data-reactid="108">Code Splitting with the Preload Property</a></li><li data-reactid="109"><a href="/guides/load/" data-reactid="110">The Load Property</a></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js"></script>
     <script src="/static/js/prism.js"></script>
