@@ -1,10 +1,15 @@
 import React from 'react';
 
+import ExampleComponents from '../Examples';
+
 export default ({ params, data }) => {
-  const Component = data && data.component;
-  return Component
-    ? <Component />
-    : <div>
+  if (!data) {
+    return (
+      <div>
         The requested example could not be found.
-      </div>;
+      </div>
+    );
+  }
+  const Component = ExampleComponents[params.slug];
+  return <Component name={data.name} />
 };

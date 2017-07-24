@@ -1,15 +1,13 @@
 import React from 'react';
 import BaseExample from '../components/BaseExample';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Link } from 'curi-react';
-import { Section, Subsection } from '../components/Sections';
+import { InlineJS } from '../components/PrismBlocks';
+import { Section } from '../components/Sections';
 import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
 const slug = 'modal';
 const name = 'Modal';
 
-const ActiveLinks = () => (
+export default ({ name }) => (
   <BaseExample>
     <h1>{name}</h1>
     <Section
@@ -66,9 +64,3 @@ const ActiveLinks = () => (
     </Section>
   </BaseExample>
 );
-
-export default {
-  name,
-  slug,
-  component: ActiveLinks
-};

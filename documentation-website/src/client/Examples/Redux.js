@@ -1,15 +1,10 @@
 import React from 'react';
 import BaseExample from '../components/BaseExample';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Link } from 'curi-react';
-import { Section, Subsection } from '../components/Sections';
+import { PrismBlock } from '../components/PrismBlocks';
+import { Section } from '../components/Sections';
 import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
-const slug = 'redux';
-const name = 'Redux';
-
-const ActiveLinks = () => (
+export default ({ name }) => (
   <BaseExample>
     <h1>{name}</h1>
     <Section
@@ -67,9 +62,3 @@ const routes = [
     </Section>
   </BaseExample>
 );
-
-export default {
-  name,
-  slug,
-  component: ActiveLinks
-};

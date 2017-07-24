@@ -12,25 +12,18 @@ import ServerRendering from './ServerRendering';
 import SideEffect from './SideEffect';
 import Transitions from './Transitions';
 
-const examples = [
-  ActiveLinks,
-  BasicVue,
-  BlockingNavigation,
-  Breadcrumbs,
-  CodeSplitting,
-  DataLoading,
-  Modal,
-  Redirecting,
-  Redux,
-  ScriptTags,
-  ServerRendering,
-  SideEffect,
-  Transitions
-];
-
-export const byName = examples.reduce((acc, curr) => {
-  acc[curr.slug] = curr;
-  return acc;
-}, {});
-
-export default examples;
+export default {
+  'active-links': ActiveLinks,
+  'basic-vue': BasicVue,
+  'blocking-navigation': BlockingNavigation,
+  'breadcrumbs': Breadcrumbs,
+  'code-splitting': CodeSplitting,
+  'data-loading': DataLoading,
+  'modal': Modal,
+  'redirecting': Redirecting,
+  'redux': Redux,
+  'script-tags': ScriptTags,
+  'server-rendering': ServerRendering,
+  'side-effect': SideEffect,
+  'transitions': Transitions
+}

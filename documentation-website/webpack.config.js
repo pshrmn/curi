@@ -9,7 +9,9 @@ const config = {
   },
   output: {
     path: path.join(__dirname, 'gh-pages', 'static'),
-    filename: 'js/bundle.js'
+    filename: 'js/bundle.js',
+    chunkFilename: 'js/[name].bundle.js',
+    publicPath: '/static/'
   },
   externals: {
     react: 'React',

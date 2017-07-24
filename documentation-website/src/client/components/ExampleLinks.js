@@ -1,16 +1,14 @@
 import React from 'react';
 import { Link } from 'curi-react';
 
-import examples from '../Examples';
+import examples from '../constants/examples';
 import styleActive from '../utils/styleActive';
 
-export default () => (
-  <ul>
+export default ({ withDescription = false }) => (
+  <ul className='link-list'>
     {
-      Object.keys(examples)
-      .map(key => examples[key])
-      .map(example => (
-        <li key={example.slug}>
+      examples.map(example => (
+        <li key={example.slug} className={withDescription ? 'with' : 'solo'}>
           <Link
             to='Example'
             params={{ slug: example.slug }}
@@ -18,6 +16,7 @@ export default () => (
           >
             {example.name}
           </Link>
+          { withDescription && <p>{example.description}</p> }
         </li>
       ))
     }

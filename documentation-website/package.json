@@ -6,10 +6,10 @@
     "prebuild": "npm run webpack:build",
     "build": "npm run generate",
     "predev": "npm run webpack:dev",
-    "dev": "node ./src/server",
+    "dev": "cross-env BABEL_ENV=serve node ./src/server",
     "generate": "node ./scripts/build",
-    "webpack:dev": "webpack",
-    "webpack:build": "webpack --optimize-minimize"
+    "webpack:dev": "cross-env BABEL_ENV=build webpack",
+    "webpack:build": "cross-env BABEL_ENV=build webpack --optimize-minimize"
   },
   "repository": {
     "type": "git",
@@ -34,9 +34,12 @@
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "babel-loader": "^7.1.1",
+    "babel-plugin-dynamic-import-node": "^1.0.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
     "css-mqpacker": "^6.0.1",
     "extract-text-webpack-plugin": "^3.0.0",

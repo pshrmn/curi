@@ -11,7 +11,7 @@ export default () => (
       them, but some do not. Each example includes source code available through the Curi
       package <a href="https://github.com/pshrmn/curi/tree/master/examples">on GitHub</a>.
     </p>
-    <ExampleLinks />
+    <ExampleLinks withDescription/>
     <p>
       You can see the source code for all of the examples on{' '}
       <a href="https://github.com/pshrmn/curi/tree/master/examples">GitHub</a>.
