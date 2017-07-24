@@ -4,10 +4,7 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from 'curi-react';
 import { Section, Subsection } from '../components/Sections';
 
-const slug = 'getting-started';
-const name = 'Getting Started';
-
-const GettingStarted = () => (
+export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
 
@@ -257,9 +254,3 @@ const routes = [
     </p>
   </BaseGuide>
 );
-
-export default {
-  name,
-  slug,
-  component: GettingStarted
-};

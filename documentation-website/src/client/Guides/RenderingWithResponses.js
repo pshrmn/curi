@@ -5,10 +5,7 @@ import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
 import { Section, Subsection } from '../components/Sections';
 
-const name = 'Rendering with Responses';
-const slug = 'responses';
-
-const RenderingWithResponses = () => (
+export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
     <p>
@@ -257,10 +254,3 @@ function render(response) {
     </div>
   </BaseGuide>
 );
-
-
-export default {
-  name,
-  slug,
-  component: RenderingWithResponses
-};

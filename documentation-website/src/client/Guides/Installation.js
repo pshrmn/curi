@@ -2,16 +2,10 @@ import React from 'react';
 import BaseGuide from '../components/BaseGuide';
 import { PrismBlock } from '../components/PrismBlocks';
 import { Link } from 'curi-react';
-import { Section, Subsection } from '../components/Sections';
+import { Section } from '../components/Sections';
 
-const name = 'Installation';
-const slug = 'installation';
 
-export const InstallationLink = ({ children }) => (
-  <Link to='Guide' params={{ slug }}>{children || name}</Link>
-);
-
-const Installation = () => (
+export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
 
@@ -58,9 +52,3 @@ const Installation = () => (
     </p>
   </BaseGuide>
 );
-
-export default {
-  name,
-  slug,
-  component: Installation
-};

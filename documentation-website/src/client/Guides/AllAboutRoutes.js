@@ -5,10 +5,7 @@ import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
 import { Section, Subsection } from '../components/Sections';
 
-const slug = 'routes';
-const name = 'All About Routes';
-
-const AllAboutRoutes = () => (
+export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
 
@@ -313,9 +310,3 @@ const contact = {
     </div>
   </BaseGuide>
 );
-
-export default {
-  name,
-  slug,
-  component: AllAboutRoutes 
-};

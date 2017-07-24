@@ -3,12 +3,9 @@ import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
-import { Section, Subsection } from '../components/Sections';
+import { Section } from '../components/Sections';
 
-const slug = 'load';
-const name = 'The Load Property';
-
-const Load = () => (
+export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
 
@@ -134,13 +131,13 @@ const Load = () => (
         }
       </PrismBlock>
 
-      <p>
-        Please note that this does not actually perform a redirect. Instead, it will make it so
+      <Note>
+        This does not actually perform a redirect. Instead, it will make it so
         that the emitted response is a "redirect" response, with a redirectTo property you can use
         to redirect manually. Below is an example of a render function (passed to a{' '}
         <InlineJS>&lt;Navigator&gt;</InlineJS>) that renders a <InlineJS>&lt;Redirect&gt;</InlineJS>
         {' '}when the response contains a redirectTo value.
-      </p>
+      </Note>
 
       <PrismBlock lang='javascript'>
         {
@@ -162,9 +159,3 @@ const Load = () => (
       </p>
   </BaseGuide>
 );
-
-export default {
-  name,
-  slug,
-  component: Load
-};

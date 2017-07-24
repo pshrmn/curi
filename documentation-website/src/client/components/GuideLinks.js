@@ -1,16 +1,14 @@
 import React from 'react';
 import { Link } from 'curi-react';
 
-import guides from '../Guides';
+import guides from '../constants/guides';
 import styleActive from '../utils/styleActive';
 
-export default () => (
-  <ul>
+export default ({ withDescription = false }) => (
+  <ul className='link-list'>
     {
-      Object.keys(guides)
-      .map(key => guides[key])
-      .map(guide => (
-        <li key={guide.slug}>
+      guides.map(guide => (
+        <li key={guide.slug} className={withDescription ? 'with' : 'solo'}>
           <Link
             to='Guide'
             params={{ slug: guide.slug }}
@@ -18,6 +16,7 @@ export default () => (
           >
             {guide.name}
           </Link>
+          {withDescription && guide.description}
         </li>
       ))
     }

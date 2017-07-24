@@ -8,21 +8,14 @@ import ResponseCaching from './ResponseCaching';
 import CodeSplitting from './CodeSplitting';
 import Load from './Load';
 
-const guides = [
-  Installation,
-  GettingStarted,
-  AllAboutRoutes,
-  RenderingWithResponses,
-  UsingAddons,
-  UsingSideEffects,
-  ResponseCaching,
-  CodeSplitting,
-  Load
-];
-
-export const byName = guides.reduce((acc, curr) => {
-  acc[curr.slug] = curr;
-  return acc;
-}, {});
-
-export default guides;
+export default {
+  'installation': Installation,
+  'getting-started': GettingStarted,
+  'routes': AllAboutRoutes,
+  'responses': RenderingWithResponses,
+  'addons': UsingAddons,
+  'side-effects': UsingSideEffects,
+  'response-caching': ResponseCaching,
+  'code-splitting': CodeSplitting,
+  'load': Load
+};

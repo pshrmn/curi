@@ -5,10 +5,7 @@ import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
 import { Section, Subsection } from '../components/Sections';
 
-const slug = 'code-splitting';
-const name = 'Code Splitting with the Preload Property';
-
-const CodeSplitting = () => (
+export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
     <p>
@@ -316,9 +313,3 @@ const store = {
     </Section>
   </BaseGuide>
 )
-
-export default {
-  name,
-  slug,
-  component: CodeSplitting
-};

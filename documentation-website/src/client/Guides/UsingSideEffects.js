@@ -1,14 +1,10 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
 import { Link } from 'curi-react';
 import { Section, Subsection } from '../components/Sections';
 
-const slug = 'side-effects';
-const name = 'Using Side Effects';
-
-const UsingSideEffects = () => (
+export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
 
@@ -130,9 +126,3 @@ const config = createConfig(history, routes, {
     </div>
   </BaseGuide>
 );
-
-export default {
-  name,
-  slug,
-  component: UsingSideEffects
-};
