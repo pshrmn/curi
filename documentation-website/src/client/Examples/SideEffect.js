@@ -50,7 +50,7 @@ const config = createConfig(history, routes, {
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo src='https://codesandbox.io/embed/Mjpv0E9qQ' />
+      <CodeSandboxDemo id='Mjpv0E9qQ' />
     </Section>
 
     <Section

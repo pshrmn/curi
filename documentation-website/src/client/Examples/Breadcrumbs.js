@@ -28,7 +28,7 @@ const Breadcrumbs = () => (
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo src='https://codesandbox.io/embed/B0kKDO5o' />
+      <CodeSandboxDemo id='B0kKDO5o' />
     </Section>
 
     <Section

@@ -32,7 +32,7 @@ const BlockingNavigation = () => (
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo src='https://codesandbox.io/embed/KOvy6K0KM' />
+      <CodeSandboxDemo id='KOvy6K0KM' />
     </Section>
 
     <Section

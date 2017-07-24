@@ -56,7 +56,7 @@ nprogress.done();
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo src='https://codesandbox.io/embed/48WlgnyGg' />
+      <CodeSandboxDemo id='48WlgnyGg' />
     </Section>
 
     <Section

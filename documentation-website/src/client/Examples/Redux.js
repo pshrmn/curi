@@ -55,7 +55,7 @@ const routes = [
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo src='https://codesandbox.io/embed/58xm6O7yX' />
+      <CodeSandboxDemo id='58xm6O7yX' />
     </Section>
 
     <Section

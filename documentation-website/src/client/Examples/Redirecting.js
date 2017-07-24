@@ -67,7 +67,7 @@ const ActiveLinks = () => (
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo src='https://codesandbox.io/embed/v20oL7yJm' />
+      <CodeSandboxDemo id='v20oL7yJm' />
     </Section>
 
     <Section
