@@ -2,7 +2,7 @@ const join = require('path').join;
 const fs = require('fs');
 
 const BASE_PATH = join(__dirname, '..', '..', 'packages');
-const OUTPUT_FILE = join(__dirname, '..', 'src', 'client', 'Packages', 'versions.js');
+const OUTPUT_FILE = join(__dirname, '..', 'src', 'client', 'constants', 'versions.js');
 module.exports = function updatePackageVersions() {
   const mappedVersions = fs.readdirSync(BASE_PATH)
     .reduce((acc, file) => {

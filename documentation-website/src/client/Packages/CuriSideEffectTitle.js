@@ -4,12 +4,7 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from 'curi-react';
 import APIBlock from '../components/APIBlock';
 
-const name = 'curi-side-effect-title';
-const globalName = 'CuriSideEffectTitle';
-const version = require('./versions').default[name];
-const type = 'side-effect';
-
-const CuriSideEffectTitle = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
 
@@ -51,10 +46,3 @@ const suffixedTitle = createTitleSideEffect({ suffix: '| After'});
     </APIBlock>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: CuriSideEffectTitle
-};

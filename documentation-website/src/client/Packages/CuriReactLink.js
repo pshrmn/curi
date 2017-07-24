@@ -5,12 +5,7 @@ import APIBlock from '../components/APIBlock';
 import { Note, Warning } from '../components/Messages';
 import { Link } from 'curi-react';
 
-const name = 'curi-react-link';
-const globalName = 'CuriReactLink';
-const version = require('./versions').default[name];
-const type = 'react';
-
-const CuriReactLink = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
     <h3>&lt;Link&gt;</h3>
@@ -149,10 +144,3 @@ const CuriReactLink = () => (
     </APIBlock>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: CuriReactLink
-};

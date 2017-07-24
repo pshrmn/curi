@@ -3,12 +3,7 @@ import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
-const name = 'curi-react-curious';
-const globalName = 'CuriReactCurious';
-const version = require('./versions').default[name];
-const type = 'react';
-
-const CuriReactCurious = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
     <h3>curious()</h3>
@@ -75,10 +70,3 @@ export default curious(MyComponent);`
     </APIBlock>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: CuriReactCurious
-};

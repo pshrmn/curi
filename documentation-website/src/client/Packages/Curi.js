@@ -3,12 +3,7 @@ import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
-const name = 'curi';
-const globalName = 'Curi';
-const version = require('./versions').default[name];
-const type = 'base';
-
-const Curi = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <h3>createConfig</h3>
@@ -150,10 +145,3 @@ const userPathname = config.addons.pathname('User', { id: '12345' });
     </APIBlock>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: Curi
-};

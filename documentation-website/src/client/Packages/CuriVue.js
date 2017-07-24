@@ -3,12 +3,7 @@ import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
-const name = 'curi-vue';
-const globalName = 'CuriVue';
-const version = require('./versions').default[name];
-const type = 'vue';
-
-const CuriVue = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <h3>CuriPlugin</h3>
@@ -76,10 +71,3 @@ config.ready().then(resp => {
     </div>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: CuriVue
-};

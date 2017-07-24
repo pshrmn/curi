@@ -3,12 +3,7 @@ import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
-const name = 'curi-react-block';
-const globalName = 'CuriReactBlock';
-const version = require('./versions').default[name];
-const type = 'react';
-
-const CuriReactBlock = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
     <h3>&lt;Block&gt;</h3>
@@ -75,10 +70,3 @@ const CuriReactBlock = () => (
     </APIBlock>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: CuriReactBlock
-};

@@ -3,12 +3,7 @@ import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
-const name = 'curi-addon-ancestors';
-const globalName = 'CuriAddonAncestors';
-const version = require('./versions').default[name];
-const type = 'addon';
-
-const CuriAddonAncestors = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <h3>createAncestorsAddon</h3>
@@ -63,10 +58,3 @@ const config = createConfig(history,routes, {
     </APIBlock>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: CuriAddonAncestors
-};

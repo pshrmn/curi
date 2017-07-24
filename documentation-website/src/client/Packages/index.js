@@ -13,35 +13,19 @@ import CuriReactCurious from './CuriReactCurious';
 import CuriReactActive from './CuriReactActive';
 import CuriVue from './CuriVue';
 
-const packages = [
-  Curi,
-  CuriAddonActive,
-  CuriAddonAncestors,
-  CuriAddonPrefetch,
-  CuriSideEffectTitle,
-  CuriSideEffectScroll,
-  CuriReact,
-  CuriReactNavigator,
-  CuriReactLink,
-  CuriReactRedirect,
-  CuriReactBlock,
-  CuriReactCurious,
-  CuriReactActive,
-  CuriVue
-];
-
-export const groupedPackages = packages.reduce((acc, curr) => {
-  if (!acc[curr.type]) {
-    acc[curr.type] = [curr];
-  } else {
-    acc[curr.type].push(curr);
-  }
-  return acc;
-}, {});
-
-export const byName = packages.reduce((acc, curr) => {
-  acc[curr.name] = curr;
-  return acc;
-}, {});
-
-export default packages;
+export default {
+  'curi': Curi,
+  'curi-addon-active': CuriAddonActive,
+  'curi-addon-ancestors': CuriAddonAncestors,
+  'curi-addon-prefetch': CuriAddonPrefetch,
+  'curi-side-effect-title': CuriSideEffectTitle,
+  'curi-side-effect-scroll': CuriSideEffectScroll,
+  'curi-react': CuriReact,
+  'curi-react-navigator': CuriReactNavigator,
+  'curi-react-link': CuriReactLink,
+  'curi-react-redirect': CuriReactRedirect,
+  'curi-react-block': CuriReactBlock,
+  'curi-react-curious': CuriReactCurious,
+  'curi-react-active': CuriReactActive,
+  'curi-vue': CuriVue
+};

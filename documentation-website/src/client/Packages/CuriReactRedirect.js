@@ -3,12 +3,7 @@ import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
-const name = 'curi-react-redirect';
-const globalName = 'CuriReactRedirect';
-const version = require('./versions').default[name];
-const type = 'react';
-
-const CuriReactRedirect = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <h3>&lt;Redirect&gt;</h3>
@@ -72,10 +67,3 @@ const CuriReactRedirect = () => (
     </APIBlock>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: CuriReactRedirect
-};

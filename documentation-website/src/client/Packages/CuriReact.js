@@ -4,11 +4,6 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 import { Link } from 'curi-react';
 
-const name = 'curi-react';
-const globalName = 'CuriReact';
-const version = require('./versions').default[name];
-const type = 'react';
-
 const reexports = [
   'curi-react-navigator',
   'curi-react-link',
@@ -18,7 +13,7 @@ const reexports = [
   'curi-react-curious'
 ];
 
-const CuriReact = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <PrismBlock lang='javascript'>
@@ -51,10 +46,3 @@ const CuriReact = () => (
     </APIBlock>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: CuriReact
-};

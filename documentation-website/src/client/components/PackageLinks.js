@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'curi-react';
 
-import { groupedPackages } from '../Packages';
+import { groupedPackages } from '../constants/packages';
 import styleActive from '../utils/styleActive';
 
-const GroupPackages = ({ packages }) => (
-  <ul>
+const GroupPackages = ({ packages, withDescription }) => (
+  <ul className='link-list'>
     {
       packages.map(p => (
-        <li key={p.name}>
+        <li key={p.name} className={withDescription ? 'with' : 'solo'}>
           <Link
             to='Package'
             params={{ package: p.name }}
@@ -22,13 +22,16 @@ const GroupPackages = ({ packages }) => (
   </ul>
 )
 
-export default () => (
+export default ({ withDescription = false }) => (
   <ul>
     {
       Object.keys(groupedPackages).map(name => (
         <li key={name}>
           <h3>{name}</h3>
-          <GroupPackages packages={groupedPackages[name]} />
+          <GroupPackages
+            packages={groupedPackages[name]}
+            withDescription={withDescription}
+          />
         </li>
       ))
     }

@@ -4,12 +4,7 @@ import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 import { Link } from 'curi-react';
 
-const name = 'curi-react-active';
-const globalName = 'CuriReactActive';
-const version = require('./versions').default[name];
-const type = 'react';
-
-const CuriReactActive = () => (
+export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
     <APIBlock>
       <h3>&lt;Active&gt;</h3>
@@ -122,10 +117,3 @@ const config = createConfig(history, routes, {
     </div>
   </BasePackage>
 );
-
-export default {
-  name,
-  version,
-  type,
-  component: CuriReactActive
-};
