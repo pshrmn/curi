@@ -10,4 +10,4 @@
 ```js
 npm install --save curi-react-block
 ```
-For more information, please check out the [`curi-react-block`](https://pshrmn.github.io/curi/packages/curi-react-block) page on the documentation website.
+For more information, please check out the [`curi-react-block`](https://curi.js.org/curi/packages/curi-react-block) page on the documentation website.

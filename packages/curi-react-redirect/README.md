@@ -11,4 +11,4 @@
 npm install --save curi-react-redirect
 ```
 
-For more information, please check out the [`curi-react-redirect`](https://pshrmn.github.io/curi/packages/curi-react-redirect) page on the documentation website.
+For more information, please check out the [`curi-react-redirect`](https://curi.js.org/curi/packages/curi-react-redirect) page on the documentation website.

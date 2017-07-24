@@ -13,4 +13,4 @@
 npm install --save curi-react-active
 ```
 
-For more information, please check out the [`curi-react-active`](https://pshrmn.github.io/curi/packages/curi-react-active) page on the documentation website.
+For more information, please check out the [`curi-react-active`](https://curi.js.org/curi/packages/curi-react-active) page on the documentation website.

@@ -11,4 +11,4 @@
 npm install --save curi-react-curious
 ```
 
-For more information, please check out the [`curi-react-curious`](https://pshrmn.github.io/curi/packages/curi-react-curious) page on the documentation website.
+For more information, please check out the [`curi-react-curious`](https://curi.js.org/curi/packages/curi-react-curious) page on the documentation website.

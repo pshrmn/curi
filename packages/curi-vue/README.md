@@ -8,4 +8,4 @@ Vue has its own official routing solution, but `curi-vue` offers an alternative 
 npm install --save curi-vue
 ```
 
-For more information, please check out the [`curi-vue`](https://pshrmn.github.io/curi/packages/curi-vue) page on the documentation website.
+For more information, please check out the [`curi-vue`](https://curi.js.org/curi/packages/curi-vue) page on the documentation website.

@@ -11,4 +11,4 @@
 npm install --save curi-react-link
 ```
 
-For more information, please check out the [`curi-react-link`](https://pshrmn.github.io/curi/packages/curi-react-link) page on the documentation website.
+For more information, please check out the [`curi-react-link`](https://curi.js.org/curi/packages/curi-react-link) page on the documentation website.

@@ -13,4 +13,4 @@ A side effect function that sets `document.title` using the response's `title` p
 npm install --save curi-side-effect-title
 ```
 
-For more information, please check out the [`curi-side-effect-title`](https://pshrmn.github.io/curi/packages/curi-side-effect-title) page on the documentation website.
+For more information, please check out the [`curi-side-effect-title`](https://curi.js.org/curi/packages/curi-side-effect-title) page on the documentation website.

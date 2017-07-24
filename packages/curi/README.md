@@ -15,4 +15,4 @@
 npm install --save curi
 ```
 
-For more information, please check out the [`curi`](https://pshrmn.github.io/curi/packages/curi) page on the documentation website.
+For more information, please check out the [`curi`](https://curi.js.org/packages/curi) page on the documentation website.
