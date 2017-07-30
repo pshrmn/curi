@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class Navigator extends React.Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
-    children: PropTypes.func.isRequired,
+    render: PropTypes.func.isRequired,
     response: PropTypes.object
   };
 
@@ -43,7 +43,7 @@ class Navigator extends React.Component {
   }
 
   render() {
-    return this.props.children(this.state.response, this.props.config);
+    return this.props.render(this.state.response, this.props.config);
   }
 }
 

@@ -7,20 +7,18 @@ import InMemory from '@hickory/in-memory';
 import Navigator from '../src';
 
 describe('<Navigator>', () => {
-  it('calls children function when it renders', () => {
+  it('calls render function when it renders', () => {
     const fakeConfig = { subscribe: () => {} };
     const fn = jest.fn(() => {
       return null;
     });
     const wrapper = shallow(
-      <Navigator config={fakeConfig}>
-        {fn}
-      </Navigator>
+      <Navigator config={fakeConfig} render={fn} />
     );
     expect(fn.mock.calls.length).toBe(1);
   });
 
-  it('passes the children function a response object', done => {
+  it('passes the render function a response object', done => {
     const history = InMemory();
     const routes = [
       { name: 'Home', path: '', pathOptions: { end: true } },
@@ -35,9 +33,7 @@ describe('<Navigator>', () => {
     const config = createConfig(history, routes);
     config.ready().then(resp => {
       const wrapper = shallow(
-        <Navigator config={config}>
-          {fn}
-        </Navigator>
+        <Navigator config={config} render={fn} />
       );
 
       const properties = [
@@ -60,7 +56,7 @@ describe('<Navigator>', () => {
     });
   });
 
-  it('passes the children function the config object', done => {
+  it('passes the render function the config object', done => {
     const history = InMemory();
     const routes = [
       { name: 'Home', path: '', pathOptions: { end: true } },
@@ -73,9 +69,7 @@ describe('<Navigator>', () => {
     const config = createConfig(history, routes);
     config.ready().then(resp => {
       const wrapper = shallow(
-        <Navigator config={config}>
-          {fn}
-        </Navigator>
+        <Navigator config={config} render={fn} />
       );
 
       expect(fn.mock.calls[0][1]).toBe(config);
@@ -104,9 +98,7 @@ describe('<Navigator>', () => {
     const config = createConfig(history, routes);
     config.ready().then(() => {
       const wrapper = shallow(
-        <Navigator config={config}>
-          {fn}
-        </Navigator>
+        <Navigator config={config} render={fn} />
       );
       history.push('/about');
       done();
@@ -121,12 +113,12 @@ describe('<Navigator>', () => {
       const resp = new ResponseCreator({ pathname: '/testing' });
       const respObj = resp.asObject();
       let received;
-      const children = jest.fn(response => {
+      const fn = jest.fn(response => {
         received = response;
         return null;
       });
       const wrapper = shallow(
-        <Navigator response={respObj} config={fakeConfig} children={children} />
+        <Navigator response={respObj} config={fakeConfig} render={fn} />
       );
       expect(received).toBe(respObj);
     });
@@ -141,7 +133,7 @@ describe('<Navigator>', () => {
         <Navigator
           response={respObj}
           config={fakeConfig}
-          children={() => null}
+          render={() => null}
         />
       );
       expect(fakeConfig.subscribe.mock.calls.length).toBe(0);
@@ -162,7 +154,7 @@ describe('<Navigator>', () => {
       expect(sub.mock.calls.length).toBe(0);
 
       const wrapper = shallow(
-        <Navigator config={fakeConfig} children={() => null} />
+        <Navigator config={fakeConfig} render={() => null} />
       );
       expect(sub.mock.calls.length).toBe(1);
       expect(unsub.mock.calls.length).toBe(0);
@@ -198,7 +190,7 @@ describe('<Navigator>', () => {
       };
 
       const wrapper = mount(
-        <Navigator config={fakeConfig} children={() => <ConfigReporter />} />
+        <Navigator config={fakeConfig} render={() => <ConfigReporter />} />
       );
 
       expect(receivedContext.curi).toBe(fakeConfig);
@@ -218,7 +210,7 @@ describe('<Navigator>', () => {
         <Navigator
           config={fakeConfig}
           response={response}
-          children={() => <ConfigReporter />}
+          render={() => <ConfigReporter />}
         />
       );
       expect(receivedContext.curiResponse).toBe(response);
