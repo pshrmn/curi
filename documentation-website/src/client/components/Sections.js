@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 
 const Sectional = ({ title, id, children, tag:Tag, type = 'section'}) => (
   <div className={type}>

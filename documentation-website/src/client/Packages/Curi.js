@@ -17,7 +17,7 @@ export default ({ name, version, globalName }) => (
 
       <PrismBlock lang='javascript'>
         {
-`import createConfig from 'curi';
+`import createConfig from '@curi/core';
 
 const config = createConfig(history, routes, options);`
         }

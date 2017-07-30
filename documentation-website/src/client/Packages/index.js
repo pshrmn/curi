@@ -14,18 +14,18 @@ import CuriReactActive from './CuriReactActive';
 import CuriVue from './CuriVue';
 
 export default {
-  'curi': Curi,
-  'curi-addon-active': CuriAddonActive,
-  'curi-addon-ancestors': CuriAddonAncestors,
-  'curi-addon-prefetch': CuriAddonPrefetch,
-  'curi-side-effect-title': CuriSideEffectTitle,
-  'curi-side-effect-scroll': CuriSideEffectScroll,
-  'curi-react': CuriReact,
-  'curi-react-navigator': CuriReactNavigator,
-  'curi-react-link': CuriReactLink,
-  'curi-react-redirect': CuriReactRedirect,
-  'curi-react-block': CuriReactBlock,
-  'curi-react-curious': CuriReactCurious,
-  'curi-react-active': CuriReactActive,
-  'curi-vue': CuriVue
+  'core': Curi,
+  'addon-active': CuriAddonActive,
+  'addon-ancestors': CuriAddonAncestors,
+  'addon-prefetch': CuriAddonPrefetch,
+  'side-effect-title': CuriSideEffectTitle,
+  'side-effect-scroll': CuriSideEffectScroll,
+  'react': CuriReact,
+  'react-navigator': CuriReactNavigator,
+  'react-link': CuriReactLink,
+  'react-redirect': CuriReactRedirect,
+  'react-block': CuriReactBlock,
+  'react-curious': CuriReactCurious,
+  'react-active': CuriReactActive,
+  'vue': CuriVue
 };

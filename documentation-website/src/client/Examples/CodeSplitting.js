@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseExample from '../components/BaseExample';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 import { Section } from '../components/Sections';
 
 export default ({ name }) => (

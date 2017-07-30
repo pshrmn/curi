@@ -2,7 +2,7 @@ import React from 'react';
 import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 
 export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
@@ -10,7 +10,7 @@ export default ({ name, version, globalName }) => (
       <h3>&lt;Active&gt;</h3>
       <PrismBlock lang='javascript'>
         {
-`import Active from 'curi-react-active';`
+`import Active from '@curi/react-active';`
         }
       </PrismBlock>
 
@@ -98,7 +98,7 @@ const Users = (props) => (
 
       <PrismBlock lang='javascript'>
         {
-`import createActiveAddon from 'curi-active-addon';
+`import createActiveAddon from '@curi/active-addon';
 
 const config = createConfig(history, routes, {
   addons: [createActiveAddon]

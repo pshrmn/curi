@@ -5,7 +5,7 @@ let Package;
 
 export default {
   name: 'Package',
-  path: ':package/',
+  path: '@curi/:package/',
   preload: () => {
     return import(/* webpackChunkName: 'package' */'../route-components/Package')
       .then(module => {
@@ -23,5 +23,5 @@ export default {
     return Promise.resolve();
   },
   body: () => Package,
-  title: (params) => params.package
+  title: (params) => `@curi/${params.package}`
 };

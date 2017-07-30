@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 
 import { groupedPackages } from '../constants/packages';
 import styleActive from '../utils/styleActive';

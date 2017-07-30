@@ -14,7 +14,7 @@ export default ({ name, version, globalName }) => (
       </p>
       <PrismBlock lang='javascript'>
         {
-`import CuriPlugin from 'curi-vue';
+`import CuriPlugin from '@curi/vue';
 
 const config = createConfig(history, routes);
 Vue.use(CuriPlugin, { config });`

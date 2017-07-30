@@ -18,8 +18,8 @@ export default ({ name, version, globalName }) => (
 
       <PrismBlock lang='javascript'>
         {
-`import createConfig from 'curi';
-import prefetch from 'curi-addon-prefetch';
+`import createConfig from '@curi/core';
+import prefetch from '@curi/addon-prefetch';
 
 const config = createConfig(history, routes, { addons: [prefetch] });
 `

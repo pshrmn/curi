@@ -9,7 +9,7 @@ export default ({ name, version, globalName }) => (
     <h3>&lt;Block&gt;</h3>
       <PrismBlock lang='javascript'>
         {
-`import Block from 'curi-react-block';`
+`import Block from '@curi/react-block';`
         }
       </PrismBlock>
 
@@ -54,7 +54,7 @@ export default ({ name, version, globalName }) => (
           <PrismBlock lang='jsx'>
             {
 `<Block
-  confirm={(location, action, success, failure) => {
+  confirm={({ location, action }, success, failure) => {
     const response = window.confirm("Shall we?");
     if (response) {
       success();

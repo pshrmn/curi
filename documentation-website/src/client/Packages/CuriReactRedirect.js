@@ -9,7 +9,7 @@ export default ({ name, version, globalName }) => (
       <h3>&lt;Redirect&gt;</h3>
       <PrismBlock lang='javascript'>
         {
-`import Redirect from 'curi-react-redirect';`
+`import Redirect from '@curi/react-redirect';`
         }
       </PrismBlock>
 

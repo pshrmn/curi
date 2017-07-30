@@ -3,7 +3,7 @@ import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 import { Note, Warning } from '../components/Messages';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 
 export default ({ name, version, globalName }) => (
   <BasePackage name={name} version={version} globalName={globalName}>
@@ -11,7 +11,7 @@ export default ({ name, version, globalName }) => (
     <h3>&lt;Link&gt;</h3>
       <PrismBlock lang='javascript'>
         {
-`import Link from 'curi-react-link';`
+`import Link from '@curi/react-link';`
         }
       </PrismBlock>
 

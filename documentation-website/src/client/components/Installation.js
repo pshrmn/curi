@@ -7,7 +7,7 @@ const NPM = ({ name }) => (
       You can install the {name} package from NPM.
     </p>
     <PrismBlock lang='bash'>
-      npm install {name}
+      {`npm install @curi/${name}`}
     </PrismBlock>
   </div>
 );
@@ -20,7 +20,7 @@ const Unpkg = ({ name, version, globalName }) => (
     </p>
     <PrismBlock lang='markup'>
       {
-`<script src="https://unpkg.com/${name}@${version}/dist/${name}.js" />`
+`<script src="https://unpkg.com/@curi/${name}@${version}/dist/curi-${name}.js" />`
       }
     </PrismBlock>
     <p>

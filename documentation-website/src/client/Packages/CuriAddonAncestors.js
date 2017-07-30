@@ -16,8 +16,8 @@ export default ({ name, version, globalName }) => (
 
       <PrismBlock lang='javascript'>
         {
-`import createConfig from 'curi';
-import createAncestorsAddon from 'curi-addon-ancestors';
+`import createConfig from '@curi/core';
+import createAncestorsAddon from '@curi/addon-ancestors';
 
 const routes = [
   {

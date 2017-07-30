@@ -8,7 +8,7 @@ import PackageLinks from './PackageLinks';
 const BasePackage = ({ name, version, globalName, children }) => (
   <div className='package'>
     <div className='content'>
-      <h1>{name}</h1>
+      <h1>@curi/{name}</h1>
       <div className='package-info'>
         <div>v{version}</div>
         <GitHubLink name={name} />

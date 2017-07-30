@@ -2,7 +2,7 @@ import React from 'react';
 import BaseGuide from '../components/BaseGuide';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 import { Section, Subsection } from '../components/Sections';
 
 export default ({ name }) => (

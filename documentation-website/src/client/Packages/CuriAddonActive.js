@@ -15,8 +15,8 @@ export default ({ name, version, globalName }) => (
       </p>
       <PrismBlock lang='javascript'>
         {
-`import createConfig from 'curi';
-import createActiveAddon from 'curi-addon-active';
+`import createConfig from '@curi/core';
+import createActiveAddon from '@curi/addon-active';
 
 const config = createConfig(history, routes, {
   addons: [createActiveAddon]

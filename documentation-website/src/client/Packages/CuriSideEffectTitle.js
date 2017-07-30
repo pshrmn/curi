@@ -1,7 +1,7 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
@@ -11,8 +11,8 @@ export default ({ name, version, globalName }) => (
       <h3>createTitleSideEffect</h3>
       <PrismBlock lang='javascript'>      
         {
-`import createConfig from 'curi';
-import createTitleSideEffect from 'curi-side-effect-title';
+`import createConfig from '@curi/core';
+import createTitleSideEffect from '@curi/side-effect-title';
 
 const setTitle = createTitleSideEffect({ suffix: '| My Site' });
 

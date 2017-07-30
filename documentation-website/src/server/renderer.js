@@ -1,9 +1,9 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import InMemory from '@hickory/in-memory';
-import createConfig from 'curi';
-import { Navigator } from 'curi-react';
-import createActiveAddon from 'curi-addon-active';
+import createConfig from '@curi/core';
+import { Navigator } from '@curi/react';
+import createActiveAddon from '@curi/addon-active';
 import routes from '../client/routes';
 import renderFunction from '../client/render';
 
@@ -20,7 +20,7 @@ export default function createHandler() {
     config.ready()
       .then((response) => {
         const markup = renderToString(
-          <Navigator response={response} config={config} children={renderFunction} />
+          <Navigator response={response} config={config} render={renderFunction} />
         );
         res.send(renderFullPage(markup, response.title));
       })
@@ -42,8 +42,8 @@ function renderFullPage(html, title) {
   </head>
   <body>
     <div id="root">${html}</div>
-    <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
-    <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js"></script>
+    <script src="https://unpkg.com/react@15.6.1/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

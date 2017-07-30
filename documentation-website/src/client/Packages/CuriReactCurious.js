@@ -9,7 +9,7 @@ export default ({ name, version, globalName }) => (
     <h3>curious()</h3>
       <PrismBlock lang='javascript'>
         {
-`import curious from 'curi-react-curious';`
+`import curious from '@curi/react-curious';`
         }
       </PrismBlock>
       <p>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {PrismCode} from 'react-prism';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 
 export default () => (
   <div>

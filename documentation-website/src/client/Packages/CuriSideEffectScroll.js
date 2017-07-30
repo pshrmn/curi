@@ -1,7 +1,7 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
 import { InlineJS, PrismBlock } from '../components/PrismBlocks';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
@@ -11,8 +11,8 @@ export default ({ name, version, globalName }) => (
       <h3>createScrollSideEffect</h3>
       <PrismBlock lang='javascript'>      
         {
-`import createConfig from 'curi';
-import createScrollSideEffect from 'curi-side-effect-scroll';
+`import createConfig from '@curi/core';
+import createScrollSideEffect from '@curi/side-effect-scroll';
 
 const scrollTo = createScrollSideEffect();
 

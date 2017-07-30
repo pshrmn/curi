@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Browser from '@hickory/browser';
-import createConfig from 'curi';
-import { Navigator } from 'curi-react';
-import createTitleSideEffect from 'curi-side-effect-title';
-import createScrollSideEffect from 'curi-side-effect-scroll';
-import createActiveAddon from 'curi-addon-active';
+import createConfig from '@curi/core';
+import { Navigator } from '@curi/react';
+import createTitleSideEffect from '@curi/side-effect-title';
+import createScrollSideEffect from '@curi/side-effect-scroll';
+import createActiveAddon from '@curi/addon-active';
 import routes from './routes';
 import renderFunction from './render';
 
@@ -21,6 +21,6 @@ const config = createConfig(history, routes, {
 
 config.ready().then(() => { 
   ReactDOM.render((
-    <Navigator config={config} children={renderFunction} />
+    <Navigator config={config} render={renderFunction} />
   ), document.getElementById('root'));
 });

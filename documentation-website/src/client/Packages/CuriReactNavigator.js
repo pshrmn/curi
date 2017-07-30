@@ -9,7 +9,7 @@ export default ({ name, version, globalName }) => (
     <h3>&lt;Navigator&gt;</h3>
       <PrismBlock lang='javascript'>
         {
-`import Navigator from 'curi-react-navigator';`
+`import Navigator from '@curi/react-navigator';`
         }
       </PrismBlock>
 
