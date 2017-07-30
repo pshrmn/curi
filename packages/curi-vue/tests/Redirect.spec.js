@@ -1,5 +1,5 @@
 import Vue from 'vue/dist/vue.common.js';
-import { InMemory } from 'hickory';
+import InMemory from '@hickory/in-memory';
 import createConfig from '../../curi/src';
 import CuriPlugin from '../src/plugin';
 import Redirect from '../src/Redirect';

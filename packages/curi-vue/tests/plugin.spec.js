@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import CuriPlugin from '../src/plugin';
 import createConfig from '../../curi/src';
-import { InMemory } from 'hickory';
+import InMemory from '@hickory/in-memory';
 
 describe('CuriPlugin', () => {
   const history = InMemory();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { InMemory } from 'hickory';
+import InMemory from '@hickory/in-memory';
 import createConfig from '../../curi/src';
 import createActiveAddon from '../../curi-addon-active/src';
 import Active from '../src';

@@ -1,6 +1,6 @@
 import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
-import { InMemory } from 'hickory';
+import InMemory from '@hickory/in-memory';
 import ResponseCreator from '../src/utils/createResponse';
 
 // The subscribe function is called when subscribing so that the
@@ -184,7 +184,7 @@ describe('createConfig', () => {
           config.ready().then(response => {
             expect(sideEffect.mock.calls.length).toBe(1);
             expect(sideEffect.mock.calls[0][0]).toBe(response);
-            expect(sideEffect.mock.calls[0][1]).toBe('POP');
+            expect(sideEffect.mock.calls[0][1]).toBe('PUSH');
             done();
           });
         });

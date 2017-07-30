@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import createConfig from '../../curi/src';
 import ResponseCreator from '../../curi/src/utils/createResponse';
-import { InMemory } from 'hickory';
+import InMemory from '@hickory/in-memory';
 import Navigator from '../src';
 
 describe('<Navigator>', () => {

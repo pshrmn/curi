@@ -28,20 +28,17 @@
   ],
   "author": "Paul Sherman",
   "license": "MIT",
-  "peerDependencies": {
-    "hickory": "^0.6.0"
-  },
   "dependencies": {
     "path-to-regexp": "^1.7.0"
   },
   "devDependencies": {
+    "@hickory/in-memory": "^1.0.0-beta.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.5.2",
-    "hickory": "^0.4.0",
     "in-publish": "^2.0.0",
     "jest": "^20.0.4",
     "prettier": "^1.5.2",
