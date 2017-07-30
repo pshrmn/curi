@@ -16,8 +16,10 @@
   }
 
   h3 {
-    text-decoration: underline;
+    border-bottom: 1px solid $dark-gray;
   }
+
+  @import './list.scss';
 }
 .section, .subsection {
   margin-top: 15px;

@@ -20,13 +20,13 @@ const GroupPackages = ({ packages, withDescription }) => (
       ))
     }
   </ul>
-)
+);
 
 export default ({ withDescription = false }) => (
   <ul>
     {
       Object.keys(groupedPackages).map(name => (
-        <li key={name}>
+        <li className='link-group' key={name}>
           <h3>{name}</h3>
           <GroupPackages
             packages={groupedPackages[name]}
@@ -36,4 +36,4 @@ export default ({ withDescription = false }) => (
       ))
     }
   </ul>
-)
+);
