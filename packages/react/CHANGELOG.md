@@ -1,4 +1,8 @@
-## 1.0.0-beta.3
+## 1.0.0-beta.5
+
+* Fixed build
+
+## 1.0.0-beta.4
 
 * Switched to scoped package: `@curi/react`.
 
