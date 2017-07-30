@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Browser } from 'hickory';
-import createConfig from 'curi';
-import { Navigator } from 'curi-react';
+import Browser from '@hickory/browser';
+import createConfig from '@curi/core';
+import { Navigator } from '@curi/react';
 
 import routes from './routes';
 import renderFunction from './renderFunction';
@@ -13,6 +13,6 @@ const config = createConfig(history, routes);
 config.ready()
   .then((response) => {
     ReactDOM.render((
-      <Navigator config={config} children={renderFunction} />
+      <Navigator config={config} render={renderFunction} />
     ), document.getElementById('root'));
   });

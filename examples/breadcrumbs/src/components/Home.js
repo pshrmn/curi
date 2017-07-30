@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'curi-react';
+import { Redirect } from '@curi/react';
 
 const Home = () => <Redirect to='Products' />;
 

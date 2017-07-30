@@ -23,10 +23,10 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "curi": "^0.10.0",
-    "curi-react": "^0.8.0",
+    "@curi/core": "^1.0.0-beta.3",
+    "@curi/react": "^1.0.0-beta.5",
+    "@hickory/browser": "^1.0.0-beta.0",
     "express": "^4.15.3",
-    "hickory": "^0.4.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"

@@ -1,8 +1,8 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { InMemory } from 'hickory';
-import createConfig from 'curi';
-import { Navigator } from 'curi-react';
+import InMemory from '@hickory/in-memory';
+import createConfig from '@curi/core';
+import { Navigator } from '@curi/react';
 import routes from './src/routes';
 import renderFunction from './src/renderFunction';
 
@@ -12,7 +12,7 @@ export default function(req, res) {
   config.ready()
     .then((response) => {
       const markup = renderToString(
-        <Navigator response={response} config={config} children={renderFunction} />
+        <Navigator response={response} config={config} render={renderFunction} />
       );
       res.send(renderFullPage(markup));
     })

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Block } from 'curi-react';
+import { Block } from '@curi/react';
 
-function confirm(location, action, success, failure) {
+function confirm(info, success, failure) {
   const resp = window.confirm('Are you sure you want to navigate? The form has not been submitted');
   if (resp) {
     success();

@@ -14,7 +14,7 @@ const Nav = () => (
 );
 
 
-const hashHistory = Hickory.Hash();
+const hashHistory = HickoryHash();
 const routes = [
   {
     name: 'Home',
@@ -33,8 +33,7 @@ const config = Curi(hashHistory, routes);
 ReactDOM.render((
   React.createElement(CuriReactNavigator, {
     config: config,
-    children: function(response) {
-      console.log(response);
+    render: function(response) {
       if (!response || response.status === 404) {
         return React.createElement('div', null,
           'The page you were looking for does not exist'

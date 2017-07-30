@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'curi-react';
+import { Link } from '@curi/react';
 
 const merge = (props) => {
   props.className = 'active';

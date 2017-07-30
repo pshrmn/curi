@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Hash } from 'hickory';
-import createConfig from 'curi'
-import { Navigator } from 'curi-react';
-import createTitleSideEffect from 'curi-side-effect-title';
+import Hash from '@hickory/hash';
+import createConfig from '@curi/core'
+import { Navigator } from '@curi/react';
+import createTitleSideEffect from '@curi/side-effect-title';
 
 import routes from './routes';
 import renderFunction from './renderFunction';
@@ -15,5 +15,5 @@ const config = createConfig(history, routes, {
 });
 
 ReactDOM.render((
-  <Navigator config={config} children={renderFunction} />
+  <Navigator config={config} render={renderFunction} />
 ), document.getElementById('root'));    

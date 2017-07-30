@@ -23,10 +23,10 @@
     "webpack": "^2.5.1"
   },
   "dependencies": {
-    "curi": "^0.10.0",
-    "curi-addon-ancestors": "^0.2.1",
-    "curi-react": "^0.8.0",
-    "hickory": "^0.4.0",
+    "@curi/addon-ancestors": "^1.0.0-beta.3",
+    "@curi/core": "^1.0.0-beta.3",
+    "@curi/react": "^1.0.0-beta.5",
+    "@hickory/hash": "^1.0.0-beta.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }

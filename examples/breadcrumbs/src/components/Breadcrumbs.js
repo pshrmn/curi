@@ -1,5 +1,5 @@
 import React from 'react';
-import { curious, Link } from 'curi-react';
+import { curious, Link } from '@curi/react';
 
 const Breadcrumbs = ({ name, params, curi }) => (
   <ul className='breadcrumbs'>

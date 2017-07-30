@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, curious } from 'curi-react';
+import { Link, curious } from '@curi/react';
 import Breadcrumbs from './Breadcrumbs';
 
 const Category = ({ params, data:products, curi }) => (

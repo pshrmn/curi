@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'curi-react';
+import { Redirect } from '@curi/react';
 import Nav from './components/Nav';
 
 function render(response, config) {

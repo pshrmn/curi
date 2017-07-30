@@ -1,5 +1,5 @@
 {
-  "name": "curi-prefetch-data-example",
+  "name": "curi-data-loading-example",
   "version": "0.1.0",
   "description": "Prefetch data before navigating",
   "main": "index.js",
@@ -24,10 +24,9 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "curi": "^0.10.0",
-    "curi-addon-prefetch": "^0.2.0",
-    "curi-react": "^0.8.0",
-    "hickory": "^0.4.0",
+    "@curi/core": "^1.0.0-beta.3",
+    "@curi/react": "^1.0.0-beta.5",
+    "@hickory/hash": "^1.0.0-beta.0",
     "nprogress": "^0.2.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
