@@ -15,6 +15,9 @@
     "url": "https://github.com/pshrmn/curi/issues"
   },
   "homepage": "https://github.com/pshrmn/curi#readme",
+  "engines": {
+    "npm": "^5.0.0"
+  },
   "devDependencies": {
     "gzip-size": "^3.0.0",
     "lerna": "^2.0.0",
