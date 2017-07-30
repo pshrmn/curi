@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { InMemory } from 'hickory';
+import InMemory from '@hickory/in-memory';
 import createConfig from 'curi';
 import { Navigator } from 'curi-react';
 import createActiveAddon from 'curi-addon-active';

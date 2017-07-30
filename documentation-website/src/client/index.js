@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Browser } from 'hickory';
+import Browser from '@hickory/browser';
 import createConfig from 'curi';
 import { Navigator } from 'curi-react';
 import createTitleSideEffect from 'curi-side-effect-title';

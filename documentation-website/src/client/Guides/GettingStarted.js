@@ -27,7 +27,9 @@ export default ({ name }) => (
       </p>
       <PrismBlock lang='javascript'>
       {
-`import { Browser, Hash, InMemory } from 'hickory';
+`import Browser from '@hickory/browser';
+import Hash from '@hickory/hash';
+import InMemory from '@hickory/in-memory';
 
 // Use Browser when your website has a dynamic server
 const browserHistory = Browser();
@@ -120,7 +122,7 @@ browserHistory.update({ pathname: '/guides/getting-started' });
       <PrismBlock lang='javascript'>
         {
 `import createConfig from 'curi';
-import { Browser } from 'hickory';
+import Browser from '@hickory/browser';
 import routes from './routes';
 
 const history = Browser();
