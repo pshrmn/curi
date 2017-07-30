@@ -10,12 +10,12 @@
     "*.md"
   ],
   "scripts": {
-    "test": "jest",
     "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
-    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
