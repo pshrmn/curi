@@ -13,7 +13,7 @@
     "test": "jest",
     "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
-    "prepublish": "in-publish && npm run build || not-in-publish",
+    "prepare": "npm run build",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
   },
   "repository": {
@@ -47,7 +47,6 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.8.2",
-    "in-publish": "^2.0.0",
     "jest": "^20.0.4",
     "prettier": "^1.5.2",
     "react": "^15.5.4",

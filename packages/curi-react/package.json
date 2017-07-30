@@ -12,7 +12,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
-    "prepublish": "in-publish && npm run build || not-in-publish",
+    "prepare": "npm run build",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\""
   },
   "repository": {
@@ -49,7 +49,6 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "curi": "^1.0.0-beta.2",
-    "in-publish": "^2.0.0",
     "prettier": "^1.5.2",
     "react": "^15.5.4",
     "react-addons-test-utils": "^15.5.1",
