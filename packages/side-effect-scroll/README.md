@@ -13,4 +13,4 @@ A side effect function that scrolls to the top of the page when navigating to ne
 npm install --save @curi/side-effect-scroll
 ```
 
-For more information, please check out the [`@curi/side-effect-scroll`](https://curi.js.org/curi/packages/@curi/side-effect-scroll) page on the documentation website.
+For more information, please check out the [`@curi/side-effect-scroll`](https://curi.js.org/packages/@curi/side-effect-scroll) page on the documentation website.

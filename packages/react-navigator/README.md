@@ -11,4 +11,4 @@
 npm install --save @curi/react-navigator
 ```
 
-For more information, please check out the [`@curi/react-navigator`](https://curi.js.org/curi/packages/@curi/react-navigator) page on the documentation website.
+For more information, please check out the [`@curi/react-navigator`](https://curi.js.org/packages/@curi/react-navigator) page on the documentation website.

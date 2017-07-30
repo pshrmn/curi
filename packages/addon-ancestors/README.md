@@ -13,4 +13,4 @@ This package exports a Curi addon that can be used to get the name of a route's 
 npm install --save @curi/addon-ancestors
 ```
 
-For more information, please check out the [`@curi/addon-ancestors`](https://curi.js.org/curi/packages/@curi/addon-ancestors) page on the documentation website.
+For more information, please check out the [`@curi/addon-ancestors`](https://curi.js.org/packages/@curi/addon-ancestors) page on the documentation website.

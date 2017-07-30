@@ -15,4 +15,4 @@ The prefetch addon enables you to run a `uri`'s `load` function prior to actuall
 npm install --save @curi/addon-prefetch
 ```
 
-For more information, please check out the [`@curi/addon-prefetch`](https://curi.js.org/curi/packages/@curi/addon-prefetch) page on the documentation website.
+For more information, please check out the [`@curi/addon-prefetch`](https://curi.js.org/packages/@curi/addon-prefetch) page on the documentation website.

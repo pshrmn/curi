@@ -13,4 +13,4 @@
 npm install --save @curi/react
 ```
 
-For more information, please check out the [`@curi/react`](https://curi.js.org/curi/packages/@curi/react) page on the documentation website.
+For more information, please check out the [`@curi/react`](https://curi.js.org/packages/@curi/react) page on the documentation website.

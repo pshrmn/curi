@@ -13,4 +13,4 @@ This package exports a Curi addon that can be used to determine if a route is "a
 npm install --save @curi/addon-active
 ```
 
-For more information, please check out the [`@curi/addon-active`](https://curi.js.org/curi/packages/@curi/addon-active) page on the documentation website.
+For more information, please check out the [`@curi/addon-active`](https://curi.js.org/packages/@curi/addon-active) page on the documentation website.
