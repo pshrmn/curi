@@ -80,6 +80,7 @@ const Users = (props) => (
       <Active
         key={u.id}
         name='User'
+        merge={merge}
         params={u}
       >
         <User {...u} />

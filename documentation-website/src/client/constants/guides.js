@@ -52,6 +52,12 @@ const guides = [
     slug: 'load',
     description: 'Learn how to use a route\'s load function to modify responses',
     type: 'advanced'
+  },
+  {
+    name: 'React Basics',
+    slug: 'react',
+    description: 'Learn the basics of how to use Curi with a React application',
+    type: 'advanced'
   }
 ];
 

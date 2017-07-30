@@ -7,6 +7,7 @@ import UsingSideEffects from './UsingSideEffects';
 import ResponseCaching from './ResponseCaching';
 import CodeSplitting from './CodeSplitting';
 import Load from './Load';
+import ReactBasics from './ReactBasics';
 
 export default {
   'installation': Installation,
@@ -17,5 +18,6 @@ export default {
   'side-effects': UsingSideEffects,
   'response-caching': ResponseCaching,
   'code-splitting': CodeSplitting,
-  'load': Load
+  'load': Load,
+  'react': ReactBasics
 };

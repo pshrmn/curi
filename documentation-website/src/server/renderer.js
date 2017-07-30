@@ -7,7 +7,7 @@ import createActiveAddon from '@curi/addon-active';
 import routes from '../client/routes';
 import renderFunction from '../client/render';
 
-export default function createHandler() {
+export default function createHandler(debug=false) {
   return function(req, res) {
     const history = InMemory({
       locations: [ req.url ]
@@ -22,7 +22,7 @@ export default function createHandler() {
         const markup = renderToString(
           <Navigator response={response} config={config} render={renderFunction} />
         );
-        res.send(renderFullPage(markup, response.title));
+        res.send(renderFullPage(markup, response.title, debug));
       })
       .catch(err => {
         console.log('uh oh', err);
@@ -30,7 +30,7 @@ export default function createHandler() {
   }
 }
 
-function renderFullPage(html, title) {
+function renderFullPage(html, title, debug) {
   return `<!doctype html>
 <html>
   <head>
@@ -42,8 +42,8 @@ function renderFullPage(html, title) {
   </head>
   <body>
     <div id="root">${html}</div>
-    <script src="https://unpkg.com/react@15.6.1/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/react@15.6.1/dist/react${debug ? '' : '.min'}.js"></script>
+    <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom${debug ? '' : '.min'}.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>
