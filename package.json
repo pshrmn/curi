@@ -2,9 +2,11 @@
   "name": "curi-monorepo",
   "private": true,
   "scripts": {
+    "bootstrap": "lerna bootstrap --hoist --concurrency=1",
+    "postbootstrap": "lerna run prepare",
     "build": "lerna run build",
     "clean": "lerna clean",
-    "postinstall": "lerna bootstrap --hoist --concurrency=1",
+    "postinstall": "npm run bootstrap",
     "prettier": "lerna run prettier",
     "update-dep-versions": "lerna publish --skip-git --skip-npm",
     "test": "lerna run test"

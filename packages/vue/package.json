@@ -1,0 +1,50 @@
+{
+  "name": "@curi/vue",
+  "version": "1.0.0-beta.3",
+  "description": "Curi plugins and components for Vue.js",
+  "main": "dist/curi-vue.common.js",
+  "module": "dist/curi-vue.es.js",
+  "files": [
+    "dist",
+    "LICENSE",
+    "*.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "node ./scripts/build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/vue"
+  },
+  "keywords": [
+    "Curi",
+    "Vue",
+    "navigation",
+    "router"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "peerDependencies": {
+    "@curi/core": "^1.0.0-beta.3",
+    "vue": "^2.3.3"
+  },
+  "devDependencies": {
+    "@curi/core": "^1.0.0-beta.3",
+    "@hickory/in-memory": "^1.0.0-beta.0",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "@curi/core": "^1.0.0-beta.3",
+    "jest": "^20.0.4",
+    "prettier": "^1.5.2",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.43.0",
+    "vue": "^2.3.3"
+  }
+}
