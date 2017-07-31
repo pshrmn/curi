@@ -1,31 +1,31 @@
-import Curi from './Curi'
-import CuriAddonActive from './CuriAddonActive';
-import CuriAddonAncestors from './CuriAddonAncestors';
-import CuriAddonPrefetch from './CuriAddonPrefetch';
-import CuriSideEffectTitle from './CuriSideEffectTitle';
-import CuriSideEffectScroll from './CuriSideEffectScroll'
-import CuriReact from './CuriReact';
-import CuriReactNavigator from './CuriReactNavigator';
-import CuriReactLink from './CuriReactLink';
-import CuriReactRedirect from './CuriReactRedirect';
-import CuriReactBlock from './CuriReactBlock';
-import CuriReactCurious from './CuriReactCurious';
-import CuriReactActive from './CuriReactActive';
-import CuriVue from './CuriVue';
+import Core from './Core'
+import AddonActive from './AddonActive';
+import AddonAncestors from './AddonAncestors';
+import AddonPrefetch from './AddonPrefetch';
+import SideEffectTitle from './SideEffectTitle';
+import SideEffectScroll from './SideEffectScroll'
+import ReactPkg from './ReactPkg';
+import ReactNavigator from './ReactNavigator';
+import ReactLink from './ReactLink';
+import ReactRedirect from './ReactRedirect';
+import ReactBlock from './ReactBlock';
+import ReactCurious from './ReactCurious';
+import ReactActive from './ReactActive';
+import Vue from './Vue';
 
 export default {
-  'core': Curi,
-  'addon-active': CuriAddonActive,
-  'addon-ancestors': CuriAddonAncestors,
-  'addon-prefetch': CuriAddonPrefetch,
-  'side-effect-title': CuriSideEffectTitle,
-  'side-effect-scroll': CuriSideEffectScroll,
-  'react': CuriReact,
-  'react-navigator': CuriReactNavigator,
-  'react-link': CuriReactLink,
-  'react-redirect': CuriReactRedirect,
-  'react-block': CuriReactBlock,
-  'react-curious': CuriReactCurious,
-  'react-active': CuriReactActive,
-  'vue': CuriVue
+  'core': Core,
+  'addon-active': AddonActive,
+  'addon-ancestors': AddonAncestors,
+  'addon-prefetch': AddonPrefetch,
+  'side-effect-title': SideEffectTitle,
+  'side-effect-scroll': SideEffectScroll,
+  'react': ReactPkg,
+  'react-navigator': ReactNavigator,
+  'react-link': ReactLink,
+  'react-redirect': ReactRedirect,
+  'react-block': ReactBlock,
+  'react-curious': ReactCurious,
+  'react-active': ReactActive,
+  'vue': Vue
 };

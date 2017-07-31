@@ -5,7 +5,7 @@ const packages = [
     name: 'core',
     version: versions['core'],
     globalName: 'Curi',
-    type: 'base'
+    type: 'core'
   },
   {
     name: 'addon-active',
