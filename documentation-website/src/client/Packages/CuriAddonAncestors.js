@@ -1,6 +1,6 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
@@ -11,7 +11,7 @@ export default ({ name, version, globalName }) => (
       <p>
         curi-addon-ancestors has one, default export function (so you can import it with
         whatever name you want to. It is an addon factory that will add an{' '}
-        <InlineJS>ancestors</InlineJS> function to your configuration object's addon property.
+        <IJS>ancestors</IJS> function to your configuration object's addon property.
       </p>
 
       <PrismBlock lang='javascript'>

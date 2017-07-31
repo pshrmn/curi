@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
 import { Section } from '../components/Sections';
 
@@ -8,7 +8,7 @@ export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
     <p>
-      The cache option passed to <InlineJS>createConfig</InlineJS> allows you to save response objects.
+      The cache option passed to <IJS>createConfig</IJS> allows you to save response objects.
       The actual caching mechanism is left up to you. It only has two requirements:
     </p>
     <ul>

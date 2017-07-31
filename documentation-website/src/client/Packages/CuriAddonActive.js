@@ -1,6 +1,6 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
@@ -11,7 +11,7 @@ export default ({ name, version, globalName }) => (
       <p>
         curi-addon-active has one, default export function (so you can import it with
         whatever name you want to. It is an addon factory that will add an{' '}
-        <InlineJS>active</InlineJS> function to your configuration object's addon property.
+        <IJS>active</IJS> function to your configuration object's addon property.
       </p>
       <PrismBlock lang='javascript'>
         {
@@ -24,7 +24,7 @@ const config = createConfig(history, routes, {
         }
       </PrismBlock>
       <p>
-        The <InlineJS>active</InlineJS> addon function takes four arguments: the name of the
+        The <IJS>active</IJS> addon function takes four arguments: the name of the
         route you want to check, the current response object, any params of the route that
         you want to check, and whether to consider partial matches as active. A partial match
         would occur when you check an ancestor route of the current route.

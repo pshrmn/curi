@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
 import { Section, Subsection } from '../components/Sections';
 
@@ -35,8 +35,8 @@ export default ({ name }) => (
     >
       <p>
         You add side effect functions to your configuration object by adding a{' '}
-        <InlineJS>sideEffects</InlineJS> array to the options object (the third agument)
-        of <InlineJS>createConfig</InlineJS>.
+        <IJS>sideEffects</IJS> array to the options object (the third agument)
+        of <IJS>createConfig</IJS>.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -119,7 +119,7 @@ const config = createConfig(history, routes, {
     <div>
       <h2>Next</h2>
       <p>
-        <InlineJS>createConfig</InlineJS>'s options object has three arguments. We have covered the first
+        <IJS>createConfig</IJS>'s options object has three arguments. We have covered the first
         two, so finally we will cover the cache option in the{' '}
         <Link to='Guide' params={{ slug: 'response-caching' }}>response caching</Link> guide.
       </p>

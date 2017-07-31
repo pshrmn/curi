@@ -1,6 +1,10 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 import { Note, Warning } from '../components/Messages';
 import { Link } from '@curi/react';
@@ -16,7 +20,7 @@ export default ({ name, version, globalName }) => (
       </PrismBlock>
 
       <p>
-        A <InlineJS>&lt;Link&gt;</InlineJS> allows you to navigate within your application using an anchor
+        A <Cmp>Link</Cmp> allows you to navigate within your application using an anchor
         element (&lt;a&gtl;). When the rendered element is clicked, instead of reloading the page it will
         use your configuration object's history object to navigate.
       </p>
@@ -85,8 +89,8 @@ export default ({ name, version, globalName }) => (
         <div className='subsection'>
           <h4>anchor</h4>
           <p>
-            By default, when you render a <InlineJS>&lt;Link&gt;</InlineJS>, an anchor element will be
-            rendered (<InlineJS>React.createElement('a', ...)</InlineJS>). However, you can provide your
+            By default, when you render a <Cmp>Link</Cmp>, an anchor element will be
+            rendered (<IJS>React.createElement('a', ...)</IJS>). However, you can provide your
             own component to be rendered instead. This can be useful for using styled components to
             navigate.
           </p>
@@ -102,15 +106,15 @@ export default ({ name, version, globalName }) => (
           <h4>active</h4>
           <p>
             The active prop gives you an opportunity to style the element rendered by the{' '}
-            <InlineJS>&lt;Link&gt;</InlineJS> when it is "active". Being active means that the{' '}
-            <InlineJS>&lt;Link&gt;</InlineJS>'s route parameters are the same as the current response's
+            <Cmp>Link</Cmp> when it is "active". Being active means that the{' '}
+            <Cmp>Link</Cmp>'s route parameters are the same as the current response's
             route parameters. This <strong>does not</strong> take into account any query parameters or
             the hash.
           </p>
           <p>
             The active prop is an object with two properties. The first one, merge is required. The merge
             property must be a function. That function's argument is the props object that will be passed
-            used to render the element rendered by the <InlineJS>&lt;Link&gt;</InlineJS>. The merge
+            used to render the element rendered by the <Cmp>Link</Cmp>. The merge
             function can modify these props however it likes. It must return the resulting props object.
           </p>
           <PrismBlock lang='javascript'>
@@ -125,7 +129,7 @@ export default ({ name, version, globalName }) => (
           </PrismBlock>
           <p>
             The second property of the active object is partial. By default, only{' '}
-            <InlineJS>&lt;Link&gt;</InlineJS>s that match the response object's name can be considered
+            <Cmp>Link</Cmp>s that match the response object's name can be considered
             "active". However, when partial is true, any parent routes can also be "active". This is
             done using the response object's partials property.
           </p>

@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from '@curi/react';
 import { Section, Subsection } from '../components/Sections';
@@ -71,8 +71,8 @@ export default ({ name }) => (
         }
       </PrismBlock>
       <p>
-        Another possibility happens when you use the <InlineJS>pathOptions</InlineJS> object to set{' '}
-        <InlineJS>end: false</InlineJS>. When you do that, then a route the partially matches will consider
+        Another possibility happens when you use the <IJS>pathOptions</IJS> object to set{' '}
+        <IJS>end: false</IJS>. When you do that, then a route the partially matches will consider
         itself matched.
       </p>
       <PrismBlock lang='javascript'>
@@ -91,9 +91,9 @@ export default ({ name }) => (
       </PrismBlock>
       <p>
         If none of your routes match a pathname, then Curi will set a "404" status on the response object.
-        The body property of the response will also be <InlineJS>undefined</InlineJS>, so it is important
+        The body property of the response will also be <IJS>undefined</IJS>, so it is important
         that your application checks the response's status when it goes to render a response. You can also
-        add a wildcard route (<InlineJS>path: '*'</InlineJS>) to the end of your routes array, and that route
+        add a wildcard route (<IJS>path: '*'</IJS>) to the end of your routes array, and that route
         will always match. You may want to still manually set the status to "404" for the wildcard route, but
         it is not required.
       </p>
@@ -136,10 +136,10 @@ export default ({ name }) => (
         <p>
           If you need to provide different path options than{' '}
           <a href="https://github.com/pillarjs/path-to-regexp#usage">the defaults</a> used by path-to-regexp,
-          you should specify them with a <InlineJS>pathOptions</InlineJS> object.
+          you should specify them with a <IJS>pathOptions</IJS> object.
         </p>
         <Note>
-          If a route has a children array property, it will <strong>always</strong> have the <InlineJS>end</InlineJS>
+          If a route has a children array property, it will <strong>always</strong> have the <IJS>end</IJS>
           {' '} path option set to false.
         </Note>
       </Subsection>
@@ -173,9 +173,9 @@ const contact = {
         <p>
           You can use the title property of a route to specify a title string that should be set on the response
           when that route matches. This can either be a string or a function. If it is a string, then
-          <InlineJS>response.title</InlineJS> will be set to the value of <InlineJS>route.title</InlineJS>. If
-          it is a function, it will be called (and passed the <InlineJS>response.params</InlineJS> and{' '}
-          <InlineJS>response.data</InlineJS> values) to generate the title string.
+          <IJS>response.title</IJS> will be set to the value of <IJS>route.title</IJS>. If
+          it is a function, it will be called (and passed the <IJS>response.params</IJS> and{' '}
+          <IJS>response.data</IJS> values) to generate the title string.
         </p>
         <p>
           If a route does not have a title property, when it matches, the response's title property will be an
@@ -218,7 +218,7 @@ const contact = {
         <p>
           A function that will only be called the first time that a route matches. This should only be
           used for loading resources that are required for the route to display properly. For example,
-          if you are doing code splitting with Webpack using <InlineJS>import()</InlineJS>, you would
+          if you are doing code splitting with Webpack using <IJS>import()</IJS>, you would
           load the modules in preload.
         </p>
         <p>
@@ -272,27 +272,27 @@ const contact = {
         <p>
           What is that modifiers object that gets passed to the load function?
           It contains a number of functions that you can use to modify the response. These
-          functions are <InlineJS>redirect</InlineJS>, <InlineJS>fail</InlineJS>,{' '}
-          <InlineJS>setStatus</InlineJS>, and <InlineJS>setData</InlineJS>.
+          functions are <IJS>redirect</IJS>, <IJS>fail</IJS>,{' '}
+          <IJS>setStatus</IJS>, and <IJS>setData</IJS>.
         </p>
         <ul>
           <li>
-            <InlineJS>redirect(to, code)</InlineJS> - This allows you to turn the response into a
+            <IJS>redirect(to, code)</IJS> - This allows you to turn the response into a
             redirect response. When you application receives a redirect response, it should redirect
             to the new location (using your history object) instead of re-rendering. If you do not
-            provide a code, then 301 will be used. The <InlineJS>to</InlineJS> argument can be whatever
+            provide a code, then 301 will be used. The <IJS>to</IJS> argument can be whatever
             you want it to be, you will just need to know how to deal with it in your render function.
           </li>
           <li>
-            <InlineJS>fail(error)</InlineJS> - A method to call when something goes wrong. This will
+            <IJS>fail(error)</IJS> - A method to call when something goes wrong. This will
             add an error property to the response.
           </li>
           <li>
-            <InlineJS>setStatus(code)</InlineJS> - This method will set a new status for the response
+            <IJS>setStatus(code)</IJS> - This method will set a new status for the response
             (the default status is 200 when a route matches and 404 when no routes match).
           </li>
           <li>
-            <InlineJS>setData(data)</InlineJS> - The value passed to this method will be set as the
+            <IJS>setData(data)</IJS> - The value passed to this method will be set as the
             response's data property.
           </li>
         </ul>

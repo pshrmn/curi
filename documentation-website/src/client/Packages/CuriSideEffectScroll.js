@@ -1,6 +1,6 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
 import APIBlock from '../components/APIBlock';
 
@@ -23,8 +23,8 @@ const config = createConfig(history, routes, {
       </PrismBlock>
 
       <p>
-        Hickory, the history package that Curi uses, uses the <InlineJS>pushState</InlineJS>
-        {' '}and <InlineJS>replaceState</InlineJS> methods for navigation. Unfortunately, these
+        Hickory, the history package that Curi uses, uses the <IJS>pushState</IJS>
+        {' '}and <IJS>replaceState</IJS> methods for navigation. Unfortunately, these
         do not trigger scrolling to the top of the page when you navigate. This package provides
         a side effect function that will scroll to the top of the page whenever those functions
         are used for navigation.

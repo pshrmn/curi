@@ -1,6 +1,10 @@
 import React from 'react';
 import BaseExample from '../components/BaseExample';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from '../components/PrismBlocks';
 import { Section } from '../components/Sections';
 import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
@@ -38,9 +42,9 @@ export default ({ name }) => (
       </PrismBlock>
 
       <p>
-        Then, in your render function (the <InlineJS>&lt;Navigator&gt;</InlineJS>'s children prop), you would check the
-        if the response's <InlineJS>redirectTo</InlineJS> property is set. If it is, you could manually redirect using{' '}
-        <InlineJS>config.history</InlineJS> or just render a <InlineJS>&lt;Redirect&gt;</InlineJS> and that will be handled
+        Then, in your render function (the <Cmp>Navigator</Cmp>'s children prop), you would check the
+        if the response's <IJS>redirectTo</IJS> property is set. If it is, you could manually redirect using{' '}
+        <IJS>config.history</IJS> or just render a <Cmp>Redirect</Cmp> and that will be handled
         for you.
       </p>
 

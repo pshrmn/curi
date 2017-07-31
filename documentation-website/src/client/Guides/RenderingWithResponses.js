@@ -1,6 +1,10 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from '@curi/react';
 import { Section, Subsection } from '../components/Sections';
@@ -75,7 +79,7 @@ export default ({ name }) => (
           that you should redirect. You can redirect by using your history object's
           replace (or push) methods, or if you are using one of the library specific Curi packages,
           there might be a built-in way for you to redirect (e.g. curi-react provides the{' '}
-          <InlineJS>&lt;Redirect&gt;</InlineJS> component).
+          <Cmp>Redirect</Cmp> component).
         </p>
         <PrismBlock lang='javascript'>
           {
@@ -161,7 +165,7 @@ export default ({ name }) => (
       >
         <p>
           The first thing you should do in your render function is to check if the response has a{' '}
-          <InlineJS>redirectTo</InlineJS> property. If it does, then you should redirect to the new
+          <IJS>redirectTo</IJS> property. If it does, then you should redirect to the new
           location instead of rendering.
         </p>
         <p>
@@ -216,7 +220,7 @@ function render(response) {
         <p>
           Now that we have our body function, we just need to call it. The exact behavior will vary
           based on how you are rendering your application. For a React application, we would just
-          pass the body function to React's <InlineJS>createElement</InlineJS> function (or use JSX).
+          pass the body function to React's <IJS>createElement</IJS> function (or use JSX).
           For vanilla JavaScript, our body function probably returns an HTML string, so we would assign
           the returned value to the DOM node that holds our application.
         </p>

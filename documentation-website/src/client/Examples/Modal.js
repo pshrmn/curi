@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseExample from '../components/BaseExample';
-import { InlineJS } from '../components/PrismBlocks';
+import { InlineJS as IJS } from '../components/PrismBlocks';
 import { Section } from '../components/Sections';
 import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
@@ -32,7 +32,7 @@ export default ({ name }) => (
 
       <p>
         The first is how to know whether to render a modal window or a full page. The easiest way to do 
-        his is to use <InlineJS>location.state</InlineJS> to attach a value to the location that indicates that
+        his is to use <IJS>location.state</IJS> to attach a value to the location that indicates that
         you want to render a modal. State is persistent across refreshes and the user clicking the browser's
         forward/back buttons, so you will also have to take that into consideration.
       </p>
@@ -40,7 +40,7 @@ export default ({ name }) => (
       <p>
         Second, you will also have to implement some mechanism to render the base layer (under the modal) using
         the previous location. In a React application, you can do this by storing the previous{' '}
-        <InlineJS>props.children</InlineJS>.
+        <IJS>props.children</IJS>.
       </p>
 
       <p>

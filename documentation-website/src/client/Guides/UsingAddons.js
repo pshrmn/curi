@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
 import { Section, Subsection } from '../components/Sections';
 
@@ -63,8 +63,8 @@ export default ({ name }) => (
       </p>
 
       <p>
-        Addons are provided to the <InlineJS>createConfig</InlineJS> call as an array using the addons
-        property of the options object (the third argument to <InlineJS>createConfig</InlineJS>).
+        Addons are provided to the <IJS>createConfig</IJS> call as an array using the addons
+        property of the options object (the third argument to <IJS>createConfig</IJS>).
       </p>
 
       <PrismBlock lang='javascript'>

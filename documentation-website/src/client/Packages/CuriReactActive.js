@@ -1,6 +1,10 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 import { Link } from '@curi/react';
 
@@ -15,7 +19,7 @@ export default ({ name, version, globalName }) => (
       </PrismBlock>
 
       <p>
-        The <InlineJS>&lt;Active&gt;</InlineJS> component lets you modify its children element's props.
+        The <Cmp>Active</Cmp> component lets you modify its children element's props.
         It takes a merge function as a prop, which you can use to modify the child element's props when
         the component is "active".
       </p>
@@ -41,7 +45,7 @@ export default ({ name, version, globalName }) => (
         <div className='subsection'>
           <h5>children</h5>
           <p>
-            A React element that will have its props updated when the <InlineJS>&lt;Active&gt;</InlineJS>
+            A React element that will have its props updated when the <Cmp>Active</Cmp>
             {' '}component is "active".
           </p>
         </div>
@@ -108,11 +112,11 @@ const config = createConfig(history, routes, {
       </PrismBlock>
 
       <p>
-        While not strictly a requirement, the <InlineJS>&lt;Active&gt;</InlineJS> relies on the{' '}
-        <InlineJS>curi</InlineJS> and <InlineJS>curiResponse</InlineJS> context variables existing,
-        so your application should have a <InlineJS>&lt;Navigator&gt;</InlineJS> (from{' '}
+        While not strictly a requirement, the <Cmp>Active</Cmp> relies on the{' '}
+        <IJS>curi</IJS> and <IJS>curiResponse</IJS> context variables existing,
+        so your application should have a <Cmp>Navigator</Cmp> (from{' '}
         <Link to='Package' params={{ package: 'curi-react-navigator'}}>curi-react-navigator</Link>)
-        as an ancestor of your <InlineJS>&lt;Active&gt;</InlineJS> components in order to ensure that those
+        as an ancestor of your <Cmp>Active</Cmp> components in order to ensure that those
         exist.
       </p>
     </div>

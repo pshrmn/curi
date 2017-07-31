@@ -1,6 +1,6 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
@@ -10,7 +10,7 @@ export default ({ name, version, globalName }) => (
       <p>
         curi-vue exports a Vue plugin that you can use to add Curi support to a Vue application.
         The plugin is passed to Vue using the use method. Along with the plugin, you will need to
-        pass your Curi configuration object to <InlineJS>Vue.use</InlineJS>.
+        pass your Curi configuration object to <IJS>Vue.use</IJS>.
       </p>
       <PrismBlock lang='javascript'>
         {
@@ -21,9 +21,9 @@ Vue.use(CuriPlugin, { config });`
         }
       </PrismBlock>
       <p>
-        This will do two things. First, it will register a <InlineJS>curi-link</InlineJS> component
+        This will do two things. First, it will register a <IJS>curi-link</IJS> component
         with Vue. You can use that component to navigate within your application. Second, it makes
-        your configuration a global Vue property, which you can then access as <InlineJS>Vue.Curi</InlineJS>.
+        your configuration a global Vue property, which you can then access as <IJS>Vue.Curi</IJS>.
       </p>
     </APIBlock>
 

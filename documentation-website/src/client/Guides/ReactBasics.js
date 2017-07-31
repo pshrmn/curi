@@ -1,6 +1,10 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from '@curi/react';
 import { Section } from '../components/Sections';
@@ -17,7 +21,7 @@ export default ({ name }) => (
       Curi provides a number of React components. Each one is
       individually packaged, but they are all also grouped in the{' '}
       <IJS>@curi/react</IJS> package. To get started, there are only two components that
-      you need to be aware of: <IJS>&lt;Navigator&gt;</IJS> and <IJS>&lt;Link&gt;</IJS>.
+      you need to be aware of: <Cmp>Navigator</Cmp> and <Cmp>Link</Cmp>.
     </p>
 
     <Note>
@@ -173,7 +177,7 @@ const routes = [
       <p>
         A single page application isn't very useful if you cannot navigate between locations.
         The <Link to='Package' params={{ package: 'react-link' }}>Link</Link> component provides
-        you with an easy way to do this by rendering anchor (<IJS>&lt;a&gt;</IJS>) elements.
+        you with an easy way to do this by rendering anchor (<Cmp>a</Cmp>) elements.
       </p>
 
       <PrismBlock lang='javascript'>

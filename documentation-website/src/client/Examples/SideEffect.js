@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseExample from '../components/BaseExample';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Section } from '../components/Sections';
 import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
@@ -25,8 +25,8 @@ export default ({ name }) => (
       </p>
 
       <p>
-        You pass any side effect functions that you want to use to the <InlineJS>createConfig</InlineJS> call,
-        using the <InlineJS>sideEffects</InlineJS> property of the options object.
+        You pass any side effect functions that you want to use to the <IJS>createConfig</IJS> call,
+        using the <IJS>sideEffects</IJS> property of the options object.
       </p>
 
       <PrismBlock lang='javascript'>

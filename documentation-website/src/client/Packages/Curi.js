@@ -1,6 +1,6 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
@@ -11,7 +11,7 @@ export default ({ name, version, globalName }) => (
       <p>
         The Curi package has one export, which is a function that returns a Curi configuration object.
         It is a default export, so you can name it whatever you like when importing it. Throughout the
-        documentation, it is imported as{' '} <InlineJS>createConfig</InlineJS> for consistency and
+        documentation, it is imported as{' '} <IJS>createConfig</IJS> for consistency and
         because that is what the function does.
       </p>
 
@@ -92,7 +92,7 @@ const config = createConfig(history, routes, options);`
           <h5>ready()</h5>
           <p>
             When you create a new configuration object, an initial response will be created for the current
-            location (<InlineJS>history.location</InlineJS>). One thing to note, though, is that route matching
+            location (<IJS>history.location</IJS>). One thing to note, though, is that route matching
             is an asynchronous process. This allows for behavior like code splitting for bundles and ensuring
             that data is loaded prior to rendering. However, this means that we can not rely on the response
             being fully prepared right after the configuration object is created.
@@ -136,7 +136,7 @@ const userPathname = config.addons.pathname('User', { id: '12345' });
         <div className='subsection'>
           <h5>history</h5>
           <p>
-            You can access the history object that you passed to <InlineJS>createConfig</InlineJS> through the
+            You can access the history object that you passed to <IJS>createConfig</IJS> through the
             configuration object's history property. This allows you to just pass the configuration object
             throughout your project instead of both that and the history object.
           </p>

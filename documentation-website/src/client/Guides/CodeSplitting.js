@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from '@curi/react';
 import { Section, Subsection } from '../components/Sections';
@@ -98,8 +98,8 @@ const routes = [
       id='preload'
     >
       <p>
-        Now, <InlineJS>Home</InlineJS>, <InlineJS>Contact</InlineJS>, and{' '}
-        <InlineJS>ContactMethod</InlineJS> are all undefined, so if we tried to render
+        Now, <IJS>Home</IJS>, <IJS>Contact</IJS>, and{' '}
+        <IJS>ContactMethod</IJS> are all undefined, so if we tried to render
         our application we would get errors. We need to actually import our components so that
         our body functions actually have something to return.
       </p>
@@ -110,8 +110,8 @@ const routes = [
       </p>
 
       <p>
-        <InlineJS>preload</InlineJS> should be a function that returns a Promise. Here, we will call
-        <InlineJS>import()</InlineJS>, which conveniently returns a Promise.
+        <IJS>preload</IJS> should be a function that returns a Promise. Here, we will call
+        <IJS>import()</IJS>, which conveniently returns a Promise.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -149,7 +149,7 @@ const routes = [
       <p>
         That will load our components when their route matches, but we still don't have access to
         the component functions that we need in order to render. We will need to use a{' '}
-        <InlineJS>then</InlineJS> call to our <InlineJS>import()</InlineJS> Promises in order
+        <IJS>then</IJS> call to our <IJS>import()</IJS> Promises in order
         to access the component functions.
       </p>
 

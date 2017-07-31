@@ -1,6 +1,9 @@
 import React from 'react';
 import BaseExample from '../components/BaseExample';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS
+} from '../components/PrismBlocks';
 import { Section } from '../components/Sections';
 import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
@@ -40,7 +43,7 @@ nprogress.done();
 
       <p>
         The example implementation can definitely be improved. Currently we are calling{' '}
-        <InlineJS>nprogress.done()</InlineJS> as a side-effect of our render function. This is
+        <IJS>nprogress.done()</IJS> as a side-effect of our render function. This is
         not ideal, but again, this is just a minimum viable example. In your own application, you
         could add a subscriber or use a Curi side-effect.
       </p>

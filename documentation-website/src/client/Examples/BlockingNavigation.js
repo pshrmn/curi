@@ -1,6 +1,9 @@
 import React from 'react';
 import BaseExample from '../components/BaseExample';
-import { InlineJS } from '../components/PrismBlocks';
+import {
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from '../components/PrismBlocks';
 import { Section } from '../components/Sections';
 import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
@@ -17,7 +20,7 @@ export default ({ name }) => (
         site.
       </p>
       <p>
-        When you want to do this, you can use the <InlineJS>&lt;Block&gt;</InlineJS> component
+        When you want to do this, you can use the <Cmp>Block</Cmp> component
         from react-curi to display a user confirmation that requires user input before navigation
         will occur.
       </p>

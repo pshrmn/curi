@@ -1,6 +1,6 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
 import APIBlock from '../components/APIBlock';
 
@@ -24,7 +24,7 @@ const config = createConfig(history, routes, {
 
       <p>
         In order for this to work, you will need to set title properties on your routes. You can
-        learn more about <InlineJS>route.title</InlineJS> in the{' '}
+        learn more about <IJS>route.title</IJS> in the{' '}
         <Link to='Guide' params={{ slug: 'routes' }}>all about routes</Link> guide.
       </p>
 

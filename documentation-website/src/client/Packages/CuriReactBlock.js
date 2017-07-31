@@ -1,6 +1,10 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
@@ -14,7 +18,7 @@ export default ({ name, version, globalName }) => (
       </PrismBlock>
 
       <p>
-        The <InlineJS>&lt;Block&gt;</InlineJS> component lets you prevent navigation until a user
+        The <Cmp>Block</Cmp> component lets you prevent navigation until a user
         has confirmed that they want to navigate. This can be useful when the user attempts to navigate
         away from a partially filled form. This <strong>will not</strong> prevent the user from navigating
         to another site, it only works for navigation within the application.

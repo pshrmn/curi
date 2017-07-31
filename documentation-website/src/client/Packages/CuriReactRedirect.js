@@ -1,6 +1,10 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
@@ -14,14 +18,14 @@ export default ({ name, version, globalName }) => (
       </PrismBlock>
 
       <p>
-        The <InlineJS>&lt;Redirect&gt;</InlineJS> component lets you "render" a redirect. After
-        the <InlineJS>&lt;Redirect&gt;</InlineJS> component has mounted, it will call the appropriate
+        The <Cmp>Redirect</Cmp> component lets you "render" a redirect. After
+        the <Cmp>Redirect</Cmp> component has mounted, it will call the appropriate
         history method to navigate to a new location.
       </p>
 
       <p>
-        <InlineJS>&lt;Redirect&gt;</InlineJS> works very similarly to a <InlineJS>&lt;Link&gt;</InlineJS>,
-        except instead of having navigation triggered by a click, with a <InlineJS>&lt;Redirect&gt;</InlineJS>
+        <Cmp>Redirect</Cmp> works very similarly to a <Cmp>Link</Cmp>,
+        except instead of having navigation triggered by a click, with a <Cmp>Redirect</Cmp>
         {' '}the navigation will happen automatically just by rendering the component.
       </p>
       <PrismBlock lang='jsx'>

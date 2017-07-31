@@ -1,6 +1,6 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import APIBlock from '../components/APIBlock';
 
@@ -13,7 +13,7 @@ export default ({ name, version, globalName }) => (
       <p>
         curi-addon-prefetch has one, default export function (so you can import it with
         whatever name you want to. It is an addon factory that will add an{' '}
-        <InlineJS>prefetch</InlineJS> function to your configuration object's addon property.
+        <IJS>prefetch</IJS> function to your configuration object's addon property.
       </p>
 
       <PrismBlock lang='javascript'>

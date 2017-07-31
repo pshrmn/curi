@@ -1,6 +1,10 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Link } from '@curi/react';
 import { Section } from '../components/Sections';
@@ -135,7 +139,7 @@ export default ({ name }) => (
         This does not actually perform a redirect. Instead, it will make it so
         that the emitted response is a "redirect" response, with a redirectTo property you can use
         to redirect manually. Below is an example of a render function (passed to a{' '}
-        <InlineJS>&lt;Navigator&gt;</InlineJS>) that renders a <InlineJS>&lt;Redirect&gt;</InlineJS>
+        <Cmp>Navigator</Cmp>) that renders a <Cmp>Redirect</Cmp>
         {' '}when the response contains a redirectTo value.
       </Note>
 

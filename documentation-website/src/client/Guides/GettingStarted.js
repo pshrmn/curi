@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseGuide from '../components/BaseGuide';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
 import { Section, Subsection } from '../components/Sections';
 
@@ -11,8 +11,8 @@ export default ({ name }) => (
     <p>
       Curi aims to be easy to setup. To get started, you just need to create a Hickory
       history object and an array of route objects. Pass those as arguments to the{' '}
-      <InlineJS>createConfig</InlineJS> function to create your configuration object. Then,
-      use the Promise returned by <InlineJS>config.ready()</InlineJS> to wait for your
+      <IJS>createConfig</IJS> function to create your configuration object. Then,
+      use the Promise returned by <IJS>config.ready()</IJS> to wait for your
       first response to be generated and you're ready to render.
     </p>
 
@@ -84,8 +84,8 @@ browserHistory.update({ pathname: '/guides/getting-started' });
       <p>
         Paths can be any valid <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a>
         {' '}string. It is just important that you do not begin the string with a forward slash (/).
-        Forward slashes are fine anywhere else in the path. (<InlineJS>this/is/fine</InlineJS>, but {' '}
-        <InlineJS>/this/is/not</InlineJS>).
+        Forward slashes are fine anywhere else in the path. (<IJS>this/is/fine</IJS>, but {' '}
+        <IJS>/this/is/not</IJS>).
       </p>
       <p>
         The names are used to generate URIs for you. With Curi, you never have to write a
@@ -117,7 +117,7 @@ browserHistory.update({ pathname: '/guides/getting-started' });
       <p>
         Once you have your Hickory history object and your routes array, you just need to
         pass them to the default export from the Curi package (which we will name{' '}
-        <InlineJS>createConfig</InlineJS> here).
+        <IJS>createConfig</IJS> here).
       </p>
       <PrismBlock lang='javascript'>
         {
@@ -136,7 +136,7 @@ const config = createConfig(history, routes);
         id='other-configuration-options'
       >
         <p>
-          The <InlineJS>createConfig</InlineJS> function
+          The <IJS>createConfig</IJS> function
           can also take an optional third argument, which is an options object. You can use this
           to pass <Link to='Guide' params={{ slug: 'addons' }}>addons</Link>,{' '}
           <Link to='Guide' params={{ slug: 'side-effects' }}>side effects</Link>, and a{' '}
@@ -178,7 +178,7 @@ config.subscribe(response => {
 
       <p>
         Responses are generated asynchronously. A Curi configuration object has a{' '}
-        <InlineJS>ready</InlineJS> function that returns a Promise and will resolve once
+        <IJS>ready</IJS> function that returns a Promise and will resolve once
         the initial response has been generated. You do not have to use this, but it allows
         you to delay rendering until after the first response has been generated. If you want
         to render immediately, then you will need to handle how to render when there is no

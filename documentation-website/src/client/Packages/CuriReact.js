@@ -1,6 +1,6 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { InlineJS, PrismBlock } from '../components/PrismBlocks';
+import { PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 import { Link } from '@curi/react';
 
