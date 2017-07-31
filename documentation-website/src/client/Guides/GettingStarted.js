@@ -27,17 +27,16 @@ export default ({ name }) => (
       </p>
       <PrismBlock lang='javascript'>
       {
-`import Browser from '@hickory/browser';
-import Hash from '@hickory/hash';
-import InMemory from '@hickory/in-memory';
-
-// Use Browser when your website has a dynamic server
+`// Use Browser when your website has a dynamic server
+import Browser from '@hickory/browser';
 const browserHistory = Browser();
 
 // Use Hash when your website uses a static file server
+import Hash from '@hickory/hash';
 const hashHistory = Hash();
 
 // Use InMemory when your application doesn't run in a browser
+import InMemory from '@hickory/in-memory';
 const memoryHistory = InMemory();`
       }
       </PrismBlock>
