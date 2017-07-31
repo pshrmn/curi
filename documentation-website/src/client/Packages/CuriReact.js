@@ -5,12 +5,12 @@ import APIBlock from '../components/APIBlock';
 import { Link } from '@curi/react';
 
 const reexports = [
-  '@curi/react-navigator',
-  '@curi/react-link',
-  '@curi/react-redirect',
-  '@curi/react-block',
-  '@curi/react-active',
-  '@curi/react-curious'
+  'react-navigator',
+  'react-link',
+  'react-redirect',
+  'react-block',
+  'react-active',
+  'react-curious'
 ];
 
 export default ({ name, version, globalName }) => (
