@@ -16,23 +16,21 @@ export default ({ name }) => (
     <p>
       Curi provides a number of React components. Each one is
       individually packaged, but they are all also grouped in the{' '}
-      <IJS>@curi/react</IJS> package.
+      <IJS>@curi/react</IJS> package. To get started, there are only two components that
+      you need to be aware of: <IJS>&lt;Navigator&gt;</IJS> and <IJS>&lt;Link&gt;</IJS>.
     </p>
 
     <Note>
-      Should you choose to install the individual packages or just @curi/react?
-      The react package is convenient, but the unfortunate side-effect of using{' '}
-      <IJS>React.Component</IJS> is that components cannot be tree-shaken.
-      If you are looking to minimize your bundle size, you should import directly
-      from the relevant package instead of from @curi/react (
-      <IJS>import Link from '@curi/react-link';</IJS> instead of{' '}
+      Should you choose to install the individual packages or the grouped react package?
+      The react package is convenient, but is not ideal if you want to minimize the size
+      of your bundle. That is because each of the components is compiled from ES6 classes
+      to ES5 by Babel. When classes are transformed into ES5, they can no longer be safely
+      tree-shaken. This means that Even if you only use one or two components from the
+      grouped package, your bundle will include all of them.  To minimize your bundle size,
+      you should import directly from the relevant package instead of from{' '}
+      <IJS>@curi/react</IJS> ( <IJS>import Link from '@curi/react-link';</IJS> instead of{' '}
       <IJS>import { Link } from '@curi/react';</IJS>).
     </Note>
-
-    <p>
-      To get started, there are only two components that you need to
-      be aware of: <IJS>&lt;Navigator&gt;</IJS> and <IJS>&lt;Link&gt;</IJS>.
-    </p>
 
     <Section
       title='The Navigator'
