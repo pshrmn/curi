@@ -14,8 +14,8 @@ export default () => (
         component='pre'
       >
       {
-`import \{ Browser \} from 'hickory';
-import createConfig from 'curi';
+`import Browser from '@hickory/browser';
+import createConfig from '@curi/core';
 
 // create your history object
 const history = Browser();
