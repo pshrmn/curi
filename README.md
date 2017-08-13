@@ -2,6 +2,29 @@
 
 Curi lets you create a simple, configurable routing object to render your single-page application. Please check out the [documentation website](https://curi.js.org/) for more information.
 
+```js
+import Browser from '@hickory/browser';
+import createConfig from '@curi/core';
+
+// create your history object
+const history = Browser();
+
+// define your routes
+const routes = [
+  { name: 'Home', path: '', ... },
+  { name: 'User', path: 'u/:userID', ... },
+  ...
+];
+
+// create your Curi configuration object
+const config = createConfig(history, routes);
+
+// wait for the first response to be generated
+config.ready().then((response) => {
+  // and now, you're ready to render
+});
+```
+
 Curi is not React specific, but it does come with a number of [React packages](#react) that you can use to integrate Curi into a React application.
 
 You can read more about the design goals of Curi [here](DESIGN_GOALS.md).
