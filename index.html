@@ -8,7 +8,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot="" data-reactid="1" data-react-checksum="746461400"><header data-reactid="2"><nav data-reactid="3"><ul data-reactid="4"><li data-reactid="5"><a class="home-link" href="/" data-reactid="6">Curi</a></li><li data-reactid="7"><a href="/packages/" data-reactid="8">Packages</a></li><li data-reactid="9"><a href="/guides/getting-started/" data-reactid="10">Guides</a></li><li data-reactid="11"><a href="/examples/" data-reactid="12">Examples</a></li><li data-reactid="13"><a href="https://github.com/pshrmn/curi" data-reactid="14">GitHub</a></li></ul></nav></header><main data-reactid="15"><div data-reactid="16"><div class="banner" data-reactid="17"><h1 data-reactid="18">Curi</h1><p data-reactid="19">A single page application router for any JavaScript rendering library.</p><pre class="language-javascript" data-reactid="20">import Browser from &#x27;@hickory/browser&#x27;;
+    <div id="root"><div data-reactroot="" data-reactid="1" data-react-checksum="799397113"><header data-reactid="2"><nav data-reactid="3"><ul data-reactid="4"><li data-reactid="5"><a class="home-link" href="/" data-reactid="6">Curi</a></li><li data-reactid="7"><a href="/packages/" data-reactid="8">Packages</a></li><li data-reactid="9"><a href="/guides/getting-started/" data-reactid="10">Guides</a></li><li data-reactid="11"><a href="/examples/" data-reactid="12">Examples</a></li><li data-reactid="13"><a href="https://github.com/pshrmn/curi" data-reactid="14">GitHub</a></li></ul></nav></header><main data-reactid="15"><div data-reactid="16"><div class="banner" data-reactid="17"><h1 data-reactid="18">Curi</h1><p data-reactid="19">A single page application router for any JavaScript rendering library.</p><pre class="language-javascript" data-reactid="20">import Browser from &#x27;@hickory/browser&#x27;;
 import createConfig from &#x27;@curi/core&#x27;;
 
 // create your history object
@@ -25,9 +25,69 @@ const routes = [
 const config = createConfig(history, routes);
 
 // wait for the first response to be generated
-config.ready().then((response) =&gt; {
+config.ready().then(response =&gt; {
   // and now, you&#x27;re ready to render
-});</pre><p data-reactid="21"><!-- react-text: 22 -->Ready to learn more? Check out the<!-- /react-text --><!-- react-text: 23 --> <!-- /react-text --><a href="/guides/getting-started/" data-reactid="24">getting started</a><!-- react-text: 25 --> guide.<!-- /react-text --></p></div></div></main></div></div>
+});</pre><p data-reactid="21"><!-- react-text: 22 -->Ready to learn more? Check out the<!-- /react-text --><!-- react-text: 23 --> <!-- /react-text --><a href="/guides/getting-started/" data-reactid="24">getting started</a><!-- react-text: 25 --> guide.<!-- /react-text --></p></div><div class="features" data-reactid="26"><h2 data-reactid="27">Features</h2><div class="feature" data-reactid="28"><h3 data-reactid="29">Easy React Integration</h3><p data-reactid="30">Curi is not just a React router, but React is the most supported rendering library.</p><div class="code" data-reactid="31"><div class="description" data-reactid="32"><p data-reactid="33"><!-- react-text: 34 -->Use the <!-- /react-text --><code class="language-javascript" data-reactid="35">body</code><!-- react-text: 36 --> property of routes to specify each route&#x27;s component:<!-- /react-text --></p></div><pre class="language-jsx" data-reactid="37">const Home = () =&gt; &lt;div&gt;Home&lt;/div&gt;;
+const User = props =&gt; &lt;div&gt;User {props.params.userID}&lt;/div&gt;;
+const NotFound = () =&gt; &lt;div&gt;Page not found...&lt;/div&gt;;
+
+const routes = [
+  { name: &#x27;Home&#x27;, path: &#x27;&#x27;, body: () =&gt; Home },
+  { name: &#x27;User&#x27;, path: &#x27;u/:userID&#x27;, body: () =&gt; User },
+  { name: &#x27;Not Found&#x27;, path: &#x27;*&#x27;, body: () =&gt; NotFound }
+];</pre></div><div class="code" data-reactid="38"><div class="description" data-reactid="39"><p data-reactid="40"><code class="language-jsx" data-reactid="41"><!-- react-text: 42 -->&lt;<!-- /react-text --><!-- react-text: 43 -->Link<!-- /react-text --><!-- react-text: 44 -->&gt;<!-- /react-text --></code><!-- react-text: 45 -->s are used for navigating between locations within an application.<!-- /react-text --></p></div><pre class="language-jsx" data-reactid="46">import Link from &#x27;@curi/react-link&#x27;;
+
+const Nav = () =&gt; (
+  &lt;div&gt;
+    &lt;Link to=&#x27;Home&#x27;&gt;Home&lt;/Link&gt;
+    &lt;Link to=&#x27;User&#x27; params={{ userID: 4 }}&gt;User Four&lt;/Link&gt;
+  &lt;/div&gt;
+);</pre></div><div class="code" data-reactid="47"><div class="description" data-reactid="48"><p data-reactid="49"><!-- react-text: 50 -->The <!-- /react-text --><code class="language-jsx" data-reactid="51"><!-- react-text: 52 -->&lt;<!-- /react-text --><!-- react-text: 53 -->Navigator<!-- /react-text --><!-- react-text: 54 -->&gt;<!-- /react-text --></code><!-- react-text: 55 --> is responsible for re-rendering the application every time the location changes, using the <!-- /react-text --><code class="language-javascript" data-reactid="56">render</code><!-- react-text: 57 --> function.<!-- /react-text --></p></div><pre class="language-jsx" data-reactid="58">import Navigator from &#x27;@curi/react-navigator&#x27;;
+
+ReactDOM.render((
+  &lt;Navigator config={config} render={(response) =&gt; {
+    const { body:Body } = response;
+    return (
+      &lt;div&gt;
+        &lt;Nav /&gt;
+        &lt;Body /&gt;
+      &lt;/div&gt;
+    );
+  }}
+));</pre></div><p data-reactid="59"><!-- react-text: 60 -->There are a number of other Curi + React components, but <!-- /react-text --><code class="language-jsx" data-reactid="61"><!-- react-text: 62 -->&lt;<!-- /react-text --><!-- react-text: 63 -->Navigator<!-- /react-text --><!-- react-text: 64 -->&gt;<!-- /react-text --></code><!-- react-text: 65 --> and<!-- /react-text --><!-- react-text: 66 --> <!-- /react-text --><code class="language-jsx" data-reactid="67"><!-- react-text: 68 -->&lt;<!-- /react-text --><!-- react-text: 69 -->Link<!-- /react-text --><!-- react-text: 70 -->&gt;<!-- /react-text --></code><!-- react-text: 71 --> are the only ones that you&#x27;ll need to be familiar with while getting started.. You can see the others via the<!-- /react-text --><!-- react-text: 72 --> <!-- /react-text --><a href="/packages/@curi/react/" data-reactid="73"><code class="language-javascript" data-reactid="74">@curi/react</code></a><!-- react-text: 75 --> page.<!-- /react-text --></p></div><div class="feature reverse" data-reactid="76"><h3 data-reactid="77">Simple Code Splitting</h3><div class="code" data-reactid="78"><div class="description" data-reactid="79"><p data-reactid="80"><!-- react-text: 81 -->Use the <!-- /react-text --><code class="language-javascript" data-reactid="82">preload</code><!-- react-text: 83 --> and <!-- /react-text --><code class="language-javascript" data-reactid="84">body</code><!-- react-text: 85 --> properties to add code splitting at your routes.<!-- /react-text --></p><p data-reactid="86"><strong data-reactid="87">Note:</strong><!-- react-text: 88 --> This relies on a bundler like Webpack.<!-- /react-text --></p></div><pre class="language-javascript" data-reactid="89">const store = {};
+
+const routes = [
+  {
+    name: &#x27;User&#x27;,
+    path: &#x27;users/:userID&#x27;,
+    preload: () =&gt; import(&#x27;./components/User&#x27;)
+      .then(module =&gt; { store[&#x27;User&#x27;] = module.default; }),
+    body: () =&gt; store[&#x27;User&#x27;]
+  }
+  ...,
+]</pre></div></div><div class="feature" data-reactid="90"><h3 data-reactid="91">Straightforward Server Side Rendering</h3><div class="code" data-reactid="92"><div class="description" data-reactid="93"><p data-reactid="94">Server side rendering is pretty much the same as client side rendering. The main difference is that you will use an in-memory history instead of a browser history.</p><p data-reactid="95"><!-- react-text: 96 -->Use <!-- /react-text --><code class="language-javascript" data-reactid="97">config.ready</code><!-- react-text: 98 --> to wait for the response object to be created, then render using the response object that that resolves with.<!-- /react-text --></p></div><pre class="language-javascript" data-reactid="99">import InMemory from &#x27;@hickory/in-memory&#x27;;
+
+function requestHandler(req, resp) {
+  // create a history using the requested location
+  const history = InMemory({ locations: [req.url] });
+  const config = createConfig(history, routes);
+
+  config.ready().then(response =&gt; {
+    // render the markup. This will vary based on your
+    // rendering library, but here we&#x27;ll use React
+    const markup = renderToString(
+      &lt;Navigator
+        config={config}
+        response={response}
+        render={render}
+      /&gt;
+    );
+
+    // insert the generated HTML into the full HTML of the
+    // page and send the response
+    res.send(fullPageHtml(markup));
+  });
+}</pre></div></div></div></div></main></div></div>
     <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js"></script>
     <script src="/static/js/prism.js"></script>
