@@ -33,7 +33,7 @@
     }
   }
 
-  .feature.reverse {
+  .feature:nth-child(odd) {
     .code {
       flex-direction: row-reverse;
     }

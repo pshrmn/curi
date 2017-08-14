@@ -51,7 +51,8 @@ config.ready().then(response => {
         <h3>Easy React Integration</h3>
 
         <p>
-          Curi is not just a React router, but React is the most supported rendering library.
+          Curi is not just a React router, but React is currently the best supported rendering library
+          for Curi.
         </p>  
 
         <div className='code'>
@@ -80,6 +81,8 @@ const routes = [
           <div className='description'>
             <p>
               <Cmp>Link</Cmp>s are used for navigating between locations within an application.
+              URI formatting is handled for you, all you have to do is know the name (and parameters)
+              of the route that you want to link to.
             </p>
           </div>
           <PrismBlock lang='jsx'>
@@ -130,7 +133,132 @@ ReactDOM.render((
         </p>
       </div>
 
-      <div className='feature reverse'>
+      <div className='feature'>
+        <h3>Response Objects</h3>
+        <p>
+          Whenever the location changes (and on initial load), Curi will generate a response
+          object with data on the matching route. The properties of this object are what you
+          use to render your application.
+        </p>
+        <div className='code'>
+          <div className='description'>
+            <p>
+              There isn't one "right" way to render using the response object, but it is
+              useful for <IJS>body</IJS> to be a function that will render the content for the
+              route. (The body property of a response is the value returned by calling the body
+              property of a route.)
+            </p>
+          </div>
+          <PrismBlock lang='javascript'>
+            {
+`{
+  key: '123',
+  location: { pathname: '/u/456', ... },
+  status: 200,
+  name: 'User',
+  body: function() { return ... },
+  params: { userID: '456' },
+  data: {...},
+  ...
+}`
+            }
+          </PrismBlock>
+        </div>
+      </div>
+
+      <div className='feature'>
+        <h3>Powerful Route Matching with <IJS>path-to-regexp</IJS></h3>
+        <p>
+          Curi uses <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a>
+          {' '}to define route paths. This allows you to define route parameters that will
+          be parsed from the URI and added to the response object (when the route matches).
+        </p>
+        <div className='code'>
+          <div className='description'>
+            <p>
+              In the accompanying example code, when the <IJS>User</IJS> route matches, the
+              response object's <IJS>params</IJS> object will have an <IJS>id</IJS> property
+              whose value is parsed from the URI.
+            </p>
+            <p>
+              <IJS>path-to-regexp</IJS> offers a number of matching options, which you can 
+              learn more about from its documentation.
+            </p>
+          </div>
+          <PrismBlock lang='javascript'>
+            {
+`const routes = [
+  {
+    name: 'User',
+    // when the User route matches, the "id"
+    // value will be parsed from the pathname
+    // and placed in the "params" property of
+    // the response
+    path: 'u/:id'
+  }
+];`
+            }
+          </PrismBlock>
+        </div>
+      </div>
+
+      <div className='feature'>
+        <h3>No Hassle Nested Routes</h3>
+        <div className='code'>
+          <div className='description'>
+            <p>
+              For nested routes, you only have to define the additional URI segments. Those will
+              automatically be joined with any ancestor routes for you. If any ancestor
+              routes have path parameters, those will be included in the response's{' '}
+              <IJS>params</IJS> object.
+            </p>
+          </div>
+          <PrismBlock lang='javascript'>
+            {
+`const routes = [
+  {
+    name: 'Album',
+    path: 'a/:albumID',
+    body: () => Album,
+    children: [
+      {
+        name: 'Song',
+        path: ':songID',
+        body: () => Song
+      }
+    ]
+  }
+]`
+            }
+          </PrismBlock>
+        </div>
+
+        <div className='code'>
+          <div className='description'>
+            <p>
+              Given the above example routes, when a user visits the URI{' '}
+              <IJS>/a/4815/162342</IJS>, we will get the following response object. The{' '}
+              <IJS>partials</IJS> array contains the ancestor route <IJS>"Song"</IJS>, which
+              makes it easy to identify "active" ancestor routes.
+            </p>
+          </div>
+          <PrismBlock lang='javascript'>
+            {
+`// pathname = '/a/4815/162342'
+{
+  body: Song,
+  params: { albumID: '4815', songID: '162342' },
+  name: 'Song',
+  partials: ['Album'],
+  ...
+}
+`
+            }
+          </PrismBlock>
+        </div>
+      </div>
+
+      <div className='feature'>
         <h3>Simple Code Splitting</h3>
         <div className='code'>
           <div className='description'>
