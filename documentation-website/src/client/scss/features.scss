@@ -1,0 +1,41 @@
+@import './variables.scss';
+
+.features {
+  max-width: 800px;
+  margin: 25px auto 0;
+  border-top: 1px dashed $purple;
+  padding-top: 15px;
+
+  h2 {
+    text-align: center;
+    font-size: 1.5em;
+  }
+}
+
+.feature {
+  background: $gray;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+@media only screen and (min-width: $largeScreen) {
+  .code {
+    display: flex;
+    flex-flow: row nowrap;
+
+    pre {
+      width: 500px;
+      min-width: 500px;
+    }
+
+    .description {
+      margin: 0 10px;
+    }
+  }
+
+  .feature.reverse {
+    .code {
+      flex-direction: row-reverse;
+    }
+  }
+}
