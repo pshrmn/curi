@@ -18,6 +18,6 @@ const Home = (props) => (
 
 export default connect(
   store => ({
-    products: Object.keys(store).map(key => store[key])
+    products: Object.keys(store.products).map(key => store.products[key])
   })
 )(Home);

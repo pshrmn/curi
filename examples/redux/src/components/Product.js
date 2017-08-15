@@ -11,7 +11,7 @@ export default connect(
   (store, ownProps) => {
     const productId = ownProps.params.id;
     return {
-      product: store[productId]
+      product: store.products[productId]
     };
   }
 )(Product);

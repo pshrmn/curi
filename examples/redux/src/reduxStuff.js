@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
+import { responseReducer } from '@curi/redux';
 
 function productReducer(state = {}, action) {
   switch (action.type) {
@@ -23,4 +24,9 @@ export const loadProduct = (product) => ({
   product
 });
 
-export default createStore(productReducer, {});
+const reducer = combineReducers({
+  products: productReducer,
+  response: responseReducer
+});
+
+export default createStore(reducer, {});
