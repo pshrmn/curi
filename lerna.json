@@ -1,7 +1,10 @@
 {
   "lerna": "2.0.0",
   "packages": [
-    "packages/*"
+    "packages/*",
+    "packages/react/*",
+    "packages/addons/*",
+    "packages/side-effects/*"
   ],
   "version": "independent"
 }

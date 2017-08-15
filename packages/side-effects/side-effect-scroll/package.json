@@ -1,0 +1,46 @@
+{
+  "name": "@curi/side-effect-scroll",
+  "version": "1.0.0-beta.3",
+  "description": "Curi side effect to scroll when navigating to new locations",
+  "main": "dist/curi-side-effect-scroll.common.js",
+  "module": "dist/curi-side-effect-scroll.es.js",
+  "files": [
+    "dist",
+    "LICENSE",
+    "*.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "node ./scripts/build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/side-effects/side-effect-scroll"
+  },
+  "keywords": [
+    "Curi",
+    "side",
+    "effect",
+    "scroll"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "peerDependencies": {
+    "@curi/core": "^1.0.0-beta.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.5.2",
+    "jest": "^20.0.4",
+    "prettier": "^1.5.2",
+    "pretty-byte": "^1.0.1",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.43.0"
+  }
+}
