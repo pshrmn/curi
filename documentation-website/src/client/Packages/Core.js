@@ -4,7 +4,18 @@ import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        The core Curi package provides the function that creates Curi configuration objects.
+        While you can pick and choose between the other Curi packages, every application that
+        uses Curi for its routing/navigation <em>must</em> use <IJS>@curi/core</IJS>.
+      </p>
+    )}
+  >
     <APIBlock>
       <h3>createConfig</h3>
       

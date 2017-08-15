@@ -1,6 +1,9 @@
 import React from 'react';
 import BasePackage from '../components/BasePackage';
-import { PrismBlock } from '../components/PrismBlocks';
+import {
+  PrismBlock,
+  InlineJS as IJS
+} from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 import { Link } from '@curi/react';
 
@@ -14,7 +17,32 @@ const reexports = [
 ];
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <div>
+        <p>
+          The <IJS>@curi/react</IJS> package just re-exports a number of React specific
+          Curi packages. You can read the documentation for each one on their respective pages.
+        </p>
+        <ul>
+          {
+            reexports.map(p => (
+              <li key={p}>
+                <Link to='Package' params={{ package: p }}>{p}</Link>
+              </li>
+            ))
+          }
+        </ul>
+        <p>
+          This is convenient, but if you want to minimize your application's bundle size (through
+          tree shaking), but should import from the actual packages that these components come from.
+        </p>
+      </div>
+    )}
+  >
     <APIBlock>
       <PrismBlock lang='javascript'>
         {
@@ -28,21 +56,6 @@ export default ({ name, version, globalName }) => (
 } from '@curi/react';`
         }
       </PrismBlock>
-
-      <p>
-        The @curi/react package re-exports a number of React specific Curi packages. You
-        can read the documentation for each one on their respective pages.
-      </p>
-
-      <ul>
-        {
-          reexports.map(p => (
-            <li key={p}>
-              <Link to='Package' params={{ package: p }}>{p}</Link>
-            </li>
-          ))
-        }
-      </ul>
     </APIBlock>
   </BasePackage>
 );

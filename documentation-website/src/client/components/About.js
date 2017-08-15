@@ -1,11 +1,11 @@
 import React from 'react';
 import { Section } from './Sections';
 
-export default ({ children }) => (
+export default ({ about }) => (
   <Section
-    title='API'
-    id='API'
+    title='About'
+    id='about'
   >
-    {children}
+    {about}
   </Section>
 );

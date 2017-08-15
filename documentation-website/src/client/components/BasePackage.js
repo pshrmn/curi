@@ -1,11 +1,12 @@
 import React from 'react';
 
 import Installation from './Installation';
+import About from './About';
 import GitHubLink from './GitHubLink';
 import NPMLink from './NPMLink';
 import PackageLinks from './PackageLinks';
 
-const BasePackage = ({ name, version, globalName, children }) => (
+const BasePackage = ({ name, version, globalName, children, about }) => (
   <div className='package'>
     <div className='content'>
       <h1>@curi/{name}</h1>
@@ -14,6 +15,7 @@ const BasePackage = ({ name, version, globalName, children }) => (
         <GitHubLink name={name} />
         <NPMLink name={name} />
       </div>
+      <About about={about} />
       <Installation name={name} version={version} globalName={globalName} />
       {children || null}
     </div>

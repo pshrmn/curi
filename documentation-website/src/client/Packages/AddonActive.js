@@ -4,7 +4,19 @@ import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        The curi-addon-active package compares a location object's pathname to the current
+        location in order to determine if the location object is "active". This can be
+        restricted to complete matches or allow partial matches so that locations that represent
+        an ancestor of the current location are also considered "active".
+      </p>
+    )}
+  >
     <APIBlock>
       <h3>createActiveAddon</h3>
 

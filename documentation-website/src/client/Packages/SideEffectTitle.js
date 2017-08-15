@@ -5,7 +5,17 @@ import { Link } from '@curi/react';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        This package allows you to set <IJS>title</IJS> properties on your routes
+        and will automatically set the page's title whenever the location changes.
+      </p>
+    )}
+  >
     <APIBlock>
 
       <h3>createTitleSideEffect</h3>

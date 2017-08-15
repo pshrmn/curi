@@ -4,7 +4,17 @@ import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        This package enables you to use Curi alongside VueJS. This is more of a proof of concept
+        than a fleshed out routing solutionand only provides bare routing functionality.
+      </p>
+    )}
+  >
     <APIBlock>
       <h3>CuriPlugin</h3>
       <p>

@@ -4,7 +4,17 @@ import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        This addon allows you to get the names of ancestor routes. This can be useful
+        for generating breadcrumb links.
+      </p>
+    )}
+  >
     <APIBlock>
       <h3>createAncestorsAddon</h3>
 

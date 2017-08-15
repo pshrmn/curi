@@ -8,7 +8,19 @@ import {
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        The <Cmp>Navigator</Cmp> component provides a way to automatically re-render
+        your application when the location changes. This component gets passed a curi
+        configuration object, which it will subscribe to so that it can re-render when
+        the location changes.
+      </p>
+    )}
+  >
     <APIBlock>
     <h3>&lt;Navigator&gt;</h3>
       <PrismBlock lang='javascript'>
@@ -18,9 +30,7 @@ export default ({ name, version, globalName }) => (
       </PrismBlock>
 
       <p>
-        The <Cmp>Navigator</Cmp> component provides a way to automatically re-render
-        your application when the location changes. This component gets passed a curi configuration object,
-        which it will subscribe to so that it can re-render when the location changes.
+        
       </p>
 
       <PrismBlock lang='jsx'>

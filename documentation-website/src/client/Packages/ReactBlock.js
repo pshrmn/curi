@@ -8,7 +8,19 @@ import {
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        The <Cmp>Block</Cmp> component lets you prevent navigation until a user
+        has confirmed that they want to navigate. This can be useful when the user attempts to navigate
+        away from a partially filled form. This <strong>will not</strong> prevent the user from navigating
+        to another site, it only works for navigation within the application.
+      </p>
+    )}
+  >
     <APIBlock>
     <h3>&lt;Block&gt;</h3>
       <PrismBlock lang='javascript'>
@@ -16,13 +28,6 @@ export default ({ name, version, globalName }) => (
 `import Block from '@curi/react-block';`
         }
       </PrismBlock>
-
-      <p>
-        The <Cmp>Block</Cmp> component lets you prevent navigation until a user
-        has confirmed that they want to navigate. This can be useful when the user attempts to navigate
-        away from a partially filled form. This <strong>will not</strong> prevent the user from navigating
-        to another site, it only works for navigation within the application.
-      </p>
 
       <div className='section'>
         <h3>props</h3>

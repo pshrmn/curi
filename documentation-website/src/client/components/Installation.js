@@ -3,6 +3,7 @@ import {
   PrismBlock,
   InlineJS as IJS
 } from './PrismBlocks';
+import { Section } from './Sections';
 
 const NPM = ({ name }) => (
   <div>
@@ -35,9 +36,11 @@ const Unpkg = ({ name, version, globalName }) => (
 );
 
 export default ({ name, version, globalName }) => (
-  <div id='installation' className='section'>
-    <h2>Installation</h2>
+  <Section
+    title='Installation'
+    id='installation'
+  >
     <NPM name={name} />
     <Unpkg name={name} version={version} globalName={globalName} />
-  </div>
+  </Section>
 );

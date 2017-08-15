@@ -5,7 +5,19 @@ import { Note } from '../components/Messages';
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        The prefetch addon can be used to make data fetching calls prior to navigation by
+        calling a route's <IJS>load</IJS> function. This is different than calling the load
+        function while generating the response because this is done without actually changing
+        locations.
+      </p>
+    )}
+  >
     <APIBlock>
 
       <h3>createPrefetchAddon</h3>

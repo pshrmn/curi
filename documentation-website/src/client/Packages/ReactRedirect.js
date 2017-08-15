@@ -8,7 +8,18 @@ import {
 import APIBlock from '../components/APIBlock';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        The <Cmp>Redirect</Cmp> component lets you "render" a redirect. After
+        the <Cmp>Redirect</Cmp> component has mounted, it will call the appropriate
+        history method to navigate to a new location.
+      </p>
+    )}
+  >
     <APIBlock>
       <h3>&lt;Redirect&gt;</h3>
       <PrismBlock lang='javascript'>
@@ -16,12 +27,6 @@ export default ({ name, version, globalName }) => (
 `import Redirect from '@curi/react-redirect';`
         }
       </PrismBlock>
-
-      <p>
-        The <Cmp>Redirect</Cmp> component lets you "render" a redirect. After
-        the <Cmp>Redirect</Cmp> component has mounted, it will call the appropriate
-        history method to navigate to a new location.
-      </p>
 
       <p>
         <Cmp>Redirect</Cmp> works very similarly to a <Cmp>Link</Cmp>,

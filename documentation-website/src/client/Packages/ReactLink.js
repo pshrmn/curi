@@ -10,7 +10,18 @@ import { Note, Warning } from '../components/Messages';
 import { Link } from '@curi/react';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        A <Cmp>Link</Cmp> allows you to navigate within your application using an anchor
+        element (&lt;a&gtl;). When the rendered element is clicked, instead of reloading the page it will
+        use your configuration object's history object to navigate.
+      </p>
+    )}
+  >
     <APIBlock>
     <h3>&lt;Link&gt;</h3>
       <PrismBlock lang='javascript'>
@@ -20,15 +31,9 @@ export default ({ name, version, globalName }) => (
       </PrismBlock>
 
       <p>
-        A <Cmp>Link</Cmp> allows you to navigate within your application using an anchor
-        element (&lt;a&gtl;). When the rendered element is clicked, instead of reloading the page it will
-        use your configuration object's history object to navigate.
-      </p>
-
-      <p>
-        Instead of providing a URI to navigate to, you just need to specify the name of the route you want
-        to link to. Then, the pathname of the URI you want the component to link to will be automatically
-        generated for you.
+        With the <Cmp>Link</Cmp>, instead of providing a URI to navigate to, you just need to specify
+        the name of the route you want to link to. Then, the pathname of the URI you want the
+        component to link to will be automatically generated for you.
       </p>
 
       <PrismBlock lang='javascript'>

@@ -9,7 +9,17 @@ import APIBlock from '../components/APIBlock';
 import { Link } from '@curi/react';
 
 export default ({ name, version, globalName }) => (
-  <BasePackage name={name} version={version} globalName={globalName}>
+  <BasePackage
+    name={name}
+    version={version}
+    globalName={globalName}
+    about={(
+      <p>
+        The <Cmp>Active</Cmp> component allows you to style its child component as "active" when
+        the location that <Cmp>Active</Cmp> describe matches the current location.
+      </p>
+    )}
+  >
     <APIBlock>
       <h3>&lt;Active&gt;</h3>
       <PrismBlock lang='javascript'>
