@@ -134,11 +134,12 @@ ReactDOM.render((
       </div>
 
       <div className='feature'>
-        <h3>Response Objects</h3>
+        <h3>Information Rich Response Objects</h3>
         <p>
           Whenever the location changes (and on initial load), Curi will generate a response
           object with data on the matching route. The properties of this object are what you
-          use to render your application.
+          can use to render your application. You can learn more about these in the{' '}
+          <Link to='Guide' params={{ slug: 'responses' }}>rendering with responses</Link> guide.
         </p>
         <div className='code'>
           <div className='description'>
@@ -148,6 +149,7 @@ ReactDOM.render((
               route. (The body property of a response is the value returned by calling the body
               property of a route.)
             </p>
+
           </div>
           <PrismBlock lang='javascript'>
             {
@@ -158,8 +160,30 @@ ReactDOM.render((
   name: 'User',
   body: function() { return ... },
   params: { userID: '456' },
-  data: {...},
   ...
+}`
+            }
+          </PrismBlock>
+        </div>
+
+        <div className='code'>
+          <div className='description'>
+            <p>
+              The <IJS>data</IJS> property of the response can contain data that you load using
+              a route's <IJS>load</IJS> function. The response won't be be generated until after
+              the data has fully loaded, so if you use this property, you don't have to render a
+              bunch of loading spinners or empty content while waiting for the data to be loaded.
+            </p>
+          </div>
+          <PrismBlock lang='javascript'>
+            {
+`{
+  ...,
+  data: {
+    username: 'curi',
+    id: '234235',
+    color: '#222233'
+  }
 }`
             }
           </PrismBlock>
@@ -259,6 +283,74 @@ ReactDOM.render((
       </div>
 
       <div className='feature'>
+        <h3>Navigation Powered by <IJS>hickory</IJS></h3>
+        <p>
+          Curi integrates with the{' '}
+          <a href='https://github.com/pshrmn/hickory'><IJS>hickory</IJS></a> package to
+          make navigation within your application very easy.
+        </p>
+        <div className='code'>
+          <div className='description'>
+            <p>
+              Choose between the <IJS>browser</IJS>, <IJS>hash</IJS>, and <IJS>in-memory</IJS>
+              {' '}history types (depending on your environment).
+            </p>
+          </div>
+          <PrismBlock lang='javascript'>
+            {
+`import Browser from '@hickory/browser';
+import Hash from '@hickory/hash';
+import InMemory form '@hickory/in-memory';`
+            }
+          </PrismBlock>
+        </div>
+
+        <div className='code'>
+          <div className='description'>
+            <p>
+              Navigate to new locations using <IJS>push</IJS>, <IJS>replace</IJS>, and{' '}
+              <IJS>update</IJS> (a combination of push and replace that duplicates how anchors
+              work).
+            </p>
+          </div>
+          <PrismBlock lang='javascript'>
+            {
+`const history = Browser();
+history.push({ pathname: '/login' });
+history.replace({ pathname: '/profile' });
+history.update({ pathname: '/album/934' });`
+            }
+          </PrismBlock>
+        </div>
+
+        <div className='code'>
+          <div className='description'>
+            <p>
+              Of course, you never have to actually generate pathnames yourself. Instead, you
+              should use Curi's built-in <IJS>pathname</IJS> addon to create them for you.
+            </p>
+            <p>
+              The <Cmp>Link</Cmp>s from <IJS>@curi/react-link</IJS> and{' '}
+              <IJS>@curi/vue</IJS> use the <IJS>pathname</IJS> addon internally to generate
+              the <IJS>href</IJS> attribute of the anchor elements that they render.
+            </p>
+          </div>
+          <PrismBlock lang='javascript'>
+            {
+`const routes = [
+  { name: 'Album', path: 'a/:albumID' }
+];
+const config = createConfig(history, routes);
+const pathname = config.addons.pathname(
+  'Album',
+  { albumID: '3490' }
+);`
+            }
+          </PrismBlock>
+        </div>
+      </div>
+
+      <div className='feature'>
         <h3>Simple Code Splitting</h3>
         <div className='code'>
           <div className='description'>
@@ -268,6 +360,10 @@ ReactDOM.render((
             </p>
             <p>
               <strong>Note:</strong> This relies on a bundler like Webpack.
+            </p>
+            <p>
+              You can learn more about this with the{' '}
+              <Link to='Guide' params={{ slug: 'code-splitting' }}>code splitting</Link> guide.
             </p>
           </div>
           <PrismBlock lang='javascript'>
