@@ -11,6 +11,7 @@ import ReactRedirect from './ReactRedirect';
 import ReactBlock from './ReactBlock';
 import ReactCurious from './ReactCurious';
 import ReactActive from './ReactActive';
+import Redux from './Redux';
 import Vue from './Vue';
 
 export default {
@@ -27,5 +28,6 @@ export default {
   'react-block': ReactBlock,
   'react-curious': ReactCurious,
   'react-active': ReactActive,
+  'redux': Redux,
   'vue': Vue
 };

@@ -80,6 +80,12 @@ const packages = [
     type: 'react'
   },
   {
+    name: 'redux',
+    version: versions['redux'],
+    globalName: 'CuriRedux',
+    type: 'redux'
+  },
+  {
     name: 'vue',
     version: versions['vue'],
     globalName: 'CuriVue',
