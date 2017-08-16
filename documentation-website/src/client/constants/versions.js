@@ -10,6 +10,7 @@ export default {
   "react-curious": "1.0.0-beta.3",
   "react-link": "1.0.0-beta.3",
   "react-navigator": "1.0.0-beta.3",
+  "react-provider": "1.0.0-alpha.0",
   "react-redirect": "1.0.0-beta.3",
   "redux": "1.0.0-alpha.0",
   "side-effect-scroll": "1.0.0-beta.3",
