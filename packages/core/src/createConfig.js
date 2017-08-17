@@ -65,7 +65,7 @@ function createConfig(history, routeArray, options = {}) {
 
     return Promise.all([
       preload ? preload() : null,
-      load ? load(rc.params, modifiers) : null
+      load ? load(rc.params, rc.location, modifiers) : null
     ])
       .catch(err => { rc.fail(err); })
       // ALWAYS return the response

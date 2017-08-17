@@ -195,7 +195,7 @@ describe('createConfig', () => {
           const routes = [{
             name: 'All',
             path: '*',
-            load: (params, mods) => {
+            load: (params, location, mods) => {
               mods.setData(Math.random());
             }
           }];
@@ -249,7 +249,7 @@ describe('createConfig', () => {
           const routes = [{
             name: 'All',
             path: '*',
-            load: (params, mods) => {
+            load: (params, location, mods) => {
               mods.setData(Math.random());
             }
           }];
@@ -463,7 +463,7 @@ describe('createConfig', () => {
         {
           name: 'Home',
           path: '',
-          load: resp => {
+          load: () => {
             return Promise.reject('oh no');
           }
         }
@@ -484,8 +484,12 @@ describe('createConfig', () => {
     });
 
     it('passes params and some response creator methods to load function', done => {
-      const spy = jest.fn((params, modifiers) => {
-        expect(params).toEqual({ anything: 'hello' });
+      const spy = jest.fn((params, location, modifiers) => {
+        expect(params).toMatchObject({ anything: 'hello' });
+        expect(location).toMatchObject({
+          pathname: '/hello',
+          query: 'one=two'
+        })
         expect(modifiers).toMatchObject(expect.objectContaining({
           fail: expect.any(Function),
           redirect: expect.any(Function),
@@ -501,7 +505,7 @@ describe('createConfig', () => {
         load: spy
       };
 
-      const history = InMemory({ locations: ['/hello'] });
+      const history = InMemory({ locations: ['/hello?one=two'] });
       const config = createConfig(history, [CatchAll]);
     });
 
