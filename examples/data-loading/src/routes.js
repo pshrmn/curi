@@ -14,7 +14,7 @@ export default [
     name: 'Album',
     path: 'a/:id',
     body: () => Album,
-    load: (params, respCreator) => {
+    load: (params, location, respCreator) => {
       const { id } = params
       // don't re-fetch data
       const existing = dataCache.get(id);

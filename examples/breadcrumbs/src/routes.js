@@ -15,7 +15,7 @@ export default [
     name: 'Products',
     path: 'products',
     body: () => Products,
-    load: (params, resp) => {
+    load: (params, location, resp) => {
       resp.setData(api.categories());
     },
     children: [
@@ -23,7 +23,7 @@ export default [
         name: 'Category',
         path: ':category',
         body: () => Category,
-        load: (params, resp) => {
+        load: (params, location, resp) => {
           const products = api.category(params.category);
           if (products == null) {
             return Promise.reject('Category does not exist');
@@ -36,7 +36,7 @@ export default [
             name: 'Product',
             path: ':productID',
             body: () => Product,
-            load: (params, resp) => {
+            load: (params, location, resp) => {
               const product = api.product(params.productID);
               if (!product) {
                 return Promise.reject('Product does not exist');

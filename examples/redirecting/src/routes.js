@@ -15,7 +15,7 @@ export default [
     name: 'Protected',
     path: 'protected',
     body: () => Protected,
-    load: (params, respCreator) => {
+    load: (params, location, respCreator) => {
       if (!fakeAuth.authenticated()) {
         respCreator.redirect({
           pathname: '/login',
@@ -28,7 +28,7 @@ export default [
     name: 'Login',
     path: 'login',
     body: () => Login,
-    load: (params, respCreator) => {
+    load: (params, location, respCreator) => {
       if (fakeAuth.authenticated()) {
         respCreator.redirect('/');
       }
@@ -38,7 +38,7 @@ export default [
     name: 'Logout',
     path: 'logout',
     body: () => Logout,
-    load: (params, respCreator) => {
+    load: (params, location, respCreator) => {
       if (!fakeAuth.authenticated()) {
         respCreator.redirect('/');
       }
