@@ -1,7 +1,7 @@
 import config from '../../../config/rollup.config.js';
 
 export default Object.assign({}, config, {
-  moduleName: 'CuriReactNavigator',
+  name: 'CuriReactNavigator',
   external: [
     'react',
     'prop-types'

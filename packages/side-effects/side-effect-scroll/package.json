@@ -41,6 +41,6 @@
     "prettier": "^1.5.2",
     "pretty-byte": "^1.0.1",
     "rimraf": "^2.6.1",
-    "rollup": "^0.43.0"
+    "rollup": "^0.48.2"
   }
 }

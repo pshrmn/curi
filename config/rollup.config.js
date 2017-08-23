@@ -5,7 +5,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 
 const config = {
-  entry: 'src/index.js',
+  input: 'src/index.js',
   sourceMap: true,
   plugins: [
     babel({

@@ -54,6 +54,6 @@
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1",
-    "rollup": "^0.43.0"
+    "rollup": "^0.48.2"
   }
 }

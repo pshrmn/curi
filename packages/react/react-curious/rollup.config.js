@@ -1,7 +1,7 @@
 import config from '../../../config/rollup.config.js';
 
 export default Object.assign({}, config, {
-  moduleName: 'CuriReactCurious',
+  name: 'CuriReactCurious',
   external: [
     'react',
     'prop-types'
