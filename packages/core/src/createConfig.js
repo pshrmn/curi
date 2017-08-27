@@ -16,7 +16,7 @@ function createConfig(history, routeArray, options = {}) {
   const subscribers = [];
 
   let mostRecentKey;
-  let previousResponse;
+  let previous = [];
   let responseInProgress;
 
   function setupRoutesAndAddons(routeArray) {
@@ -79,7 +79,6 @@ function createConfig(history, routeArray, options = {}) {
       cache.set(respObject);
     }
 
-    previousResponse = respObject;
     return respObject;
   };
 
@@ -107,9 +106,11 @@ function createConfig(history, routeArray, options = {}) {
       throw new Error('The argument passed to subscribe must be a function');
     }
 
-    // Immediately call subscriber function. If the initial response
-    // has not resolved, the subscriber will be passed undefined
-    fn(previousResponse);
+    // Immediately call subscriber function. If this is called before the
+    // initial response has resolved, both params will be undefined. If called
+    // after init resp has resolved, first param is the most recent response and
+    // action is last history.action.
+    fn.apply(null, previous);
 
     const newLength = subscribers.push(fn);
     return () => {
@@ -120,25 +121,31 @@ function createConfig(history, routeArray, options = {}) {
   function emit(response, action) {
     // don't emit old responses
     if (response.key !== mostRecentKey) {
-      return;
+      return false;
     }
 
     sideEffects.forEach(fn => {
       fn(response, action);
-    })
+    });
 
     subscribers.forEach(fn => {
       if (fn != null) {
-        fn(response);
+        fn(response, action);
       }
     });
+
+    return true;
   };
 
   // create a response object using the current location and
   // emit it to any subscribed functions
   function makeResponse(location, action) {
     responseInProgress = prepareResponse(location).then(response => {
-      emit(response, action);
+      const emitted = emit(response, action);
+      // only store these after we have emitted.
+      if (emitted) {
+        previous = [response, action];
+      }
       return response;
     });
   };

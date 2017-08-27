@@ -1,3 +1,7 @@
+## Next
+
+* Pass the last `action` type as second argument to subscriber function calls. This makes it so that subscribers and side effects both receive the same arguments.
+
 ## 1.0.0-beta.4
 
 * Pass the `location` object to `route.load` calls. This allows us to use the `query` and `hash` (or any other location properties) in our load function.

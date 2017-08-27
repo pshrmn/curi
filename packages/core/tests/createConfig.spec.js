@@ -553,54 +553,59 @@ describe('createConfig', () => {
       });
     });
 
-    it('calls subscriber function when it subscribes, passing it the response object', done => {
-      const history = InMemory({
-        locations: ['/contact/phone']
+    describe('when subscribing', () => {
+      it('calls subscriber function, passing it the response object and last action', done => {
+        const history = InMemory({
+          locations: ['/contact/phone']
+        });
+        const How = { name: 'How', path: ':method' };
+        const routes = [
+          { name: 'Home', path: '' },
+          { name: 'About', path: 'about' },
+          {
+            name: 'Contact',
+            path: 'contact',
+            children: [How]
+          }
+        ];
+        const sub = jest.fn();
+        const config = createConfig(history, routes);
+        config.ready().then(() => {
+          config.subscribe(sub);
+          expect(sub.mock.calls.length).toBe(1);
+          const [ resp, action ] = sub.mock.calls[0];
+          expect(resp.name).toBe('How');
+          expect(resp.partials[0]).toBe('Contact');
+          expect(action).toBe('PUSH');
+          done();
+        });
       });
-      const How = { name: 'How', path: ':method' };
-      const routes = [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' },
-        {
-          name: 'Contact',
-          path: 'contact',
-          children: [How]
-        }
-      ];
-      const sub = jest.fn();
-      const config = createConfig(history, routes);
-      config.ready().then(() => {
+
+      it('calls subscriber function with undefined params when no response has resolved', () => {
+        const history = InMemory({
+          locations: ['/contact/phone']
+        });
+        const How = { name: 'How', path: ':method' };
+        const routes = [
+          { name: 'Home', path: '' },
+          { name: 'About', path: 'about' },
+          {
+            name: 'Contact',
+            path: 'contact',
+            children: [How]
+          }
+        ];
+        const sub = jest.fn();
+        const config = createConfig(history, routes);
         config.subscribe(sub);
         expect(sub.mock.calls.length).toBe(1);
-        const arg = sub.mock.calls[0][0];
-        expect(arg.name).toBe('How');
-        expect(arg.partials[0]).toBe('Contact');
-        done();
-      });
+        const [ resp, action ] = sub.mock.calls[0];
+        expect(resp).toBeUndefined();
+        expect(action).toBeUndefined();
+      });      
     });
 
-    it('calls subscriber function when it subscribes (even if there is no response yet)', () => {
-      const history = InMemory({
-        locations: ['/contact/phone']
-      });
-      const How = { name: 'How', path: ':method' };
-      const routes = [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' },
-        {
-          name: 'Contact',
-          path: 'contact',
-          children: [How]
-        }
-      ];
-      const sub = jest.fn();
-      const config = createConfig(history, routes);
-      config.subscribe(sub);
-      expect(sub.mock.calls.length).toBe(1);
-      expect(sub.mock.calls[0][0]).toBeUndefined();
-    });
-
-    it('notifies subscribers of matching routes when location changes', done => {
+    it('notifies subscribers of new response and action when location changes', done => {
       const How = { name: 'How', path: ':method' };
       const routes = [
         { name: 'Home', path: '' },
@@ -608,10 +613,11 @@ describe('createConfig', () => {
         { name: 'Contact', path: 'contact', children: [How] }
       ];
 
-      const check = ignoreFirstCall(response => {
+      const check = ignoreFirstCall((response, action) => {
         expect(response.name).toBe('How');
         expect(response.partials[0]).toBe('Contact');
         expect(response.params.method).toBe('mail');
+        expect(action).toBe('PUSH');
         done();
       });
 
