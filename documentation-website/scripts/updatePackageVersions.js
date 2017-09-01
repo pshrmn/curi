@@ -8,7 +8,6 @@ function getPackagesFromDir(dir) {
 
   return fs.readdirSync(dir).reduce((acc, name) => {
     const path = join(dir, name);
-    console.log('at path', path);
 
     if (!fs.lstatSync(path).isDirectory(1)) {
       return acc;

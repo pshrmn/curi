@@ -3,7 +3,7 @@ export default {
   "addon-active": "1.0.0-beta.3",
   "addon-ancestors": "1.0.0-beta.3",
   "addon-prefetch": "1.0.0-beta.3",
-  "core": "1.0.0-beta.3",
+  "core": "1.0.0-beta.4",
   "react": "1.0.0-beta.5",
   "react-active": "1.0.0-beta.3",
   "react-block": "1.0.0-beta.3",
