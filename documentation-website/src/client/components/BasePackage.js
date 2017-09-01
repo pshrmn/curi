@@ -6,13 +6,25 @@ import GitHubLink from './GitHubLink';
 import NPMLink from './NPMLink';
 import PackageLinks from './PackageLinks';
 
+function getDir(name) {
+  if (name.indexOf('addon-') === 0) {
+    return 'addons';
+  } else if (name.indexOf('side-effect-') === 0) {
+    return 'side-effects';
+  } else if (name.indexOf('react') === 0) {
+    return 'react';
+  } else {
+    return;
+  }
+}
+
 const BasePackage = ({ name, version, globalName, children, about }) => (
   <div className='package'>
     <div className='content'>
       <h1>@curi/{name}</h1>
       <div className='package-info'>
         <div>v{version}</div>
-        <GitHubLink name={name} />
+        <GitHubLink name={name} dir={getDir(name)} />
         <NPMLink name={name} />
       </div>
       <About about={about} />
