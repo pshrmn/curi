@@ -49,10 +49,11 @@ export default ({ name }) => (
     </p>
 
     <p>
-      The load function will be passed two arguments: the params object that contains variables
-      parsed from the location's pathname and a modifiers object. The modifiers object has a few
-      methods that you can call in order to modify the response object that will be generated.
-      They are fail, setStatus, setData and redirect. They are explained in more detail in the{' '}
+      The load function will be passed three arguments: the params object that contains variables
+      parsed from the location's pathname, the location object used to match the route, 
+      and a modifiers object. The modifiers object has a few methods that you can call in order to
+      modify the response object that will be generated. They are fail, setStatus, setData and
+      redirect. They are explained in more detail in the{' '}
       <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'load'}}>all about routes</Link>
       {' '}guide. Here, we will use the last two: setData and redirect.
     </p>
@@ -69,7 +70,7 @@ export default ({ name }) => (
   name: 'Recipe',
   path: 'recipe/:id',
   body: () => Recipe,
-  load: (params, modifiers) => {
+  load: (params, location, modifiers) => {
     return fakeAPI.getRecipe(params.id)
       .then(data => {
         modifiers.setData(data);
@@ -128,7 +129,7 @@ export default ({ name }) => (
 `{
   name: 'Old Recipe',
   path: 'r/:id',
-  load: (params, modifiers) => {
+  load: (params, location, modifiers) => {
     modifiers.redirectTo(\`/recipe/$\{params.id\}\`);
   }
 }`
