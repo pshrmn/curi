@@ -31,7 +31,7 @@ export default ({ name, version, globalName }) => (
   syncResponses,
   responseReducer,
   configReducer
-} from '@curi/react-block';`
+} from '@curi/redux';`
         }
       </PrismBlock>
 
