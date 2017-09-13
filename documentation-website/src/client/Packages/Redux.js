@@ -42,7 +42,7 @@ export default ({ name, version, globalName }) => (
         <p>
           <IJS>syncResponses</IJS> is responsible for linking your Redux store with your Curi
           configuration object. It subscribes to your configuration object with a function that
-          will dispatched a "location changed" event to the Redux store.
+          will dispatch a "location changed" event to the Redux store.
         </p>
         <Note>
           <p>
