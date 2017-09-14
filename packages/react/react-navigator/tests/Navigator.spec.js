@@ -17,7 +17,7 @@ describe('<Navigator>', () => {
     expect(fn.mock.calls.length).toBe(1);
   });
 
-  it('passes the render function a response object', done => {
+  it('passes the render function a response object', () => {
     const history = InMemory();
     const routes = [
       { name: 'Home', path: '', pathOptions: { end: true } },
@@ -30,32 +30,32 @@ describe('<Navigator>', () => {
     });
 
     const config = createConfig(history, routes);
-    config.ready().then(resp => {
+    const properties = [
+      'key',
+      'location',
+      'status',
+      'name',
+      'partials',
+      'params',
+      'body',
+      'error',
+      'data',
+      'title'
+    ];
+    expect.assertions(properties.length + 1);
+    return config.ready().then(resp => {
       const wrapper = shallow(
         <Navigator config={config} render={fn} />
       );
 
-      const properties = [
-        'key',
-        'location',
-        'status',
-        'name',
-        'partials',
-        'params',
-        'body',
-        'error',
-        'data',
-        'title'
-      ];
       expect(Object.keys(receivedResponse).length).toEqual(properties.length);
       properties.forEach(key => {
         expect(receivedResponse.hasOwnProperty(key)).toBe(true);
       });
-      done();
     });
   });
 
-  it('passes the render function the config object', done => {
+  it('passes the render function the config object', () => {
     const history = InMemory();
     const routes = [
       { name: 'Home', path: '', pathOptions: { end: true } },
@@ -66,13 +66,12 @@ describe('<Navigator>', () => {
     });
 
     const config = createConfig(history, routes);
-    config.ready().then(resp => {
+    expect.assertions(1);
+    return config.ready().then(resp => {
       const wrapper = shallow(
         <Navigator config={config} render={fn} />
       );
-
       expect(fn.mock.calls[0][1]).toBe(config);
-      done();
     });
   });
 
