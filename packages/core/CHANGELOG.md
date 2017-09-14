@@ -1,5 +1,6 @@
-## Next
+## 1.0.0-beta.5
 
+* Update to `path-to-regexp` v2. The changes can be seen [here](https://github.com/pillarjs/path-to-regexp/blob/master/History.md#200--2017-08-23). Most significantly, instead of using `*` as a wildcard, you now need to use `(.*)`.
 * Pass the last `action` type as second argument to subscriber function calls. This makes it so that subscribers and side effects both receive the same arguments.
 
 ## 1.0.0-beta.4

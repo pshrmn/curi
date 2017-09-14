@@ -30,7 +30,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "@curi/core": "^1.0.0-beta.3",
+    "@curi/core": "^1.0.0-beta.5",
     "@curi/react-navigator": "^1.0.0-beta.3",
     "react": "^15"
   },
@@ -38,7 +38,7 @@
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "@curi/core": "^1.0.0-beta.3",
+    "@curi/core": "^1.0.0-beta.5",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-plugin-external-helpers": "^6.22.0",

@@ -30,11 +30,11 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "@curi/core": "^1.0.0-beta.3",
+    "@curi/core": "^1.0.0-beta.5",
     "vue": "^2.3.3"
   },
   "devDependencies": {
-    "@curi/core": "^1.0.0-beta.3",
+    "@curi/core": "^1.0.0-beta.5",
     "@hickory/in-memory": "^1.0.0-beta.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
