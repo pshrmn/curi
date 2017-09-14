@@ -194,7 +194,7 @@ describe('createConfig', () => {
         it('returns cached response for same key on subsequent calls if cache is provided', (done) => {
           const routes = [{
             name: 'All',
-            path: '*',
+            path: '(.*)',
             load: (params, location, mods) => {
               mods.setData(Math.random());
             }
@@ -203,10 +203,7 @@ describe('createConfig', () => {
             const cache = {};
 
             return {
-              get: location => {
-                const { key } = location;
-                return cache[key];
-              },
+              get: ({ key }) => cache[key],
               set: response => {
                 const { key } = response.location;
                 cache[key] = response;
@@ -217,7 +214,6 @@ describe('createConfig', () => {
           const config = createConfig(history, routes, {
             cache: createSimpleCache()
           });
-
 
           let calls = 0;
           let randomValue;
@@ -248,7 +244,7 @@ describe('createConfig', () => {
         it('generates new response for same key on subsequent calls if cache=false', done => {
           const routes = [{
             name: 'All',
-            path: '*',
+            path: '(.*)',
             load: (params, location, mods) => {
               mods.setData(Math.random());
             }
@@ -507,6 +503,83 @@ describe('createConfig', () => {
 
       const history = InMemory({ locations: ['/hello?one=two'] });
       const config = createConfig(history, [CatchAll]);
+    });
+
+    it('has data set if load calls setData', (done) => {
+      const routes = [
+        {
+          name: 'A Route',
+          path: '',
+          load: (params, location, mods) => {
+            mods.setData({ test: 'value' });
+            return Promise.resolve();
+          }
+        }
+      ];
+
+      const config = createConfig(history, routes);
+      config.ready().then(response => {
+        expect(response.data).toMatchObject({ test: 'value' });
+        done();
+      });
+    });
+
+    it('has status set if load calls setStatus', (done) => {
+      const routes = [
+        {
+          name: 'A Route',
+          path: '',
+          load: (params, location, mods) => {
+            mods.setStatus(451);
+            return Promise.resolve();
+          }
+        }
+      ];
+
+      const config = createConfig(history, routes);
+      config.ready().then(response => {
+        expect(response.status).toBe(451);
+        done();
+      });
+    });
+
+    it('has error set if load calls fail', (done) => {
+      const routes = [
+        {
+          name: 'A Route',
+          path: '',
+          load: (params, location, mods) => {
+            mods.fail('woops');
+            return Promise.resolve();
+          }
+        }
+      ];
+
+      const config = createConfig(history, routes);
+      config.ready().then(response => {
+        expect(response.error).toBe('woops');
+        done();
+      });
+    });
+
+    it('has redirectTo (and status) set if load calls redirect', (done) => {
+      const routes = [
+        {
+          name: 'A Route',
+          path: '',
+          load: (params, location, mods) => {
+            mods.redirect('/somewhere');
+            return Promise.resolve();
+          }
+        }
+      ];
+
+      const config = createConfig(history, routes);
+      config.ready().then(response => {
+        expect(response.status).toBe(301);
+        expect(response.redirectTo).toBe('/somewhere');
+        done();
+      });
     });
 
     it('does not set body until after load/preload have resolved', (done) => {

@@ -20,7 +20,8 @@ describe('Response', () => {
     });
 
     it('sets default values', () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       expect(resp.status).toBe(200);
       expect(resp.name).toBeUndefined();
       expect(resp.uri).toBeUndefined();
@@ -31,7 +32,8 @@ describe('Response', () => {
 
   describe('setStatus', () => {
     it('sets the status property', () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       resp.setStatus(404);
       expect(resp.status).toBe(404);
     });
@@ -39,19 +41,22 @@ describe('Response', () => {
 
   describe('redirect', () => {
     it("sets the response's status property", () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       resp.redirect('http://www.example.com', 302);
       expect(resp.status).toBe(302);
     });
 
     it("sets the response's redirectTo property", () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       resp.redirect('https://www.example.com', 302);
       expect(resp.redirectTo).toBe('https://www.example.com');
     });
 
     it('defaults to a 301 response', () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       resp.redirect('http://www.example.com');
       expect(resp.status).toBe(301);
     });
@@ -59,15 +64,17 @@ describe('Response', () => {
 
   describe('fail', () => {
     it("sets the response's error property", () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       resp.fail('This was a disaster');
       expect(resp.error).toBe('This was a disaster');
     });
   });
 
   describe('setData', () => {
-    it("setes the response's data property", () => {
-      const resp = new ResponseCreator();
+    it("sets the response's data property", () => {
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       const data = { one: 1, two: 2 };
       resp.setData(data);
       expect(resp.data).toBe(data);
@@ -76,7 +83,8 @@ describe('Response', () => {
 
   describe('push', () => {
     it('adds the route and params to matches array', () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       const route = createRoute({ name: 'Foo', path: 'egg' });
       const params = { food: 'egg' };
       resp.push(route, params);
@@ -86,7 +94,8 @@ describe('Response', () => {
     });
 
     it('adds additional routes/params to end of matches array', () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       const stateRoute = createRoute({ name: 'State', path: ':state' });
       const stateParams = { state: 'WA' };
       const cityRoute = createRoute({ name: 'City', path: ':city' });
@@ -104,7 +113,8 @@ describe('Response', () => {
 
   describe('pop', () => {
     it('removes the last match from the matches array', () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       const stateRoute = createRoute({ name: 'State', path: ':state' });
       const stateParams = { state: 'WA' };
       const cityRoute = createRoute({ name: 'City', path: ':city' });
@@ -121,7 +131,8 @@ describe('Response', () => {
 
   describe('freeze', () => {
     it("sets the route using the most best response's match'", () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       const stateRoute = createRoute({ name: 'State', path: ':state' });
       const stateParams = { state: 'OR' };
       const cityRoute = createRoute({ name: 'City', path: ':city' });
@@ -133,7 +144,8 @@ describe('Response', () => {
     });
 
     it('sets the partials using the names of all other matching routes', () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       const stateRoute = createRoute({ name: 'State', path: ':state' });
       const stateParams = { state: 'TX' };
       const cityRoute = createRoute({ name: 'City', path: ':city' });
@@ -145,7 +157,8 @@ describe('Response', () => {
     });
 
     it("sets the params by merging all of the matched routes' params", () => {
-      const resp = new ResponseCreator();
+      const location = { key: '123', pathname: '/abc' };
+      const resp = new ResponseCreator(location.key, location);
       const stateRoute = createRoute({ name: 'State', path: ':state' });
       const stateParams = { state: 'MT' };
       const cityRoute = createRoute({ name: 'City', path: ':city' });
@@ -161,7 +174,8 @@ describe('Response', () => {
 
     describe('title', () => {
       it('is an empty string when there is no matched route', () => {
-        const resp = new ResponseCreator();
+        const location = { key: '123', pathname: '/abc' };
+        const resp = new ResponseCreator(location.key, location);
         resp.freeze();
 
         const respObject = resp.asObject();
@@ -169,7 +183,8 @@ describe('Response', () => {
       });
 
       it('is an empty string if the matched route does not have a title property', () => {
-        const resp = new ResponseCreator();
+        const location = { key: '123', pathname: '/abc' };
+        const resp = new ResponseCreator(location.key, location);
         const stateRoute = createRoute({ name: 'State', path: ':state' });
         const stateParams = { state: 'ID' };
         resp.push(stateRoute, stateParams);
@@ -180,7 +195,8 @@ describe('Response', () => {
       });
 
       it('is the route.title value route.title is a string', () => {
-        const resp = new ResponseCreator();
+        const location = { key: '123', pathname: '/abc' };
+        const resp = new ResponseCreator(location.key, location);
         const stateRoute = createRoute({ name: 'State', path: ':state', title: 'A State' });
         const stateParams = { state: 'VA' };
         resp.push(stateRoute, stateParams);
@@ -191,7 +207,8 @@ describe('Response', () => {
       });
 
       it('calls route.title passing it the params and data when it is a function', () => {
-        const resp = new ResponseCreator();
+        const location = { key: '123', pathname: '/abc' };
+        const resp = new ResponseCreator(location.key, location);
         const stateRoute = createRoute({
           name: 'State',
           path: ':state',

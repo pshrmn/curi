@@ -15,11 +15,11 @@ describe('path', () => {
 
   describe('options', () => {
     it('passes options to path-to-regexp', () => {
-      const defaultMatcher = createPath('here/');
-      const strictMatcher = createPath('here/', { strict: true });
-
-      expect(defaultMatcher.re.exec('here')).not.toBe(null);
-      expect(strictMatcher.re.exec('here')).toBe(null);
+      const defaultMatcher = createPath('here');
+      const strictMatcher = createPath('here', { sensitive: true });
+      const CapitalizedPath = 'Here';
+      expect(defaultMatcher.re.exec(CapitalizedPath)).not.toBe(null);
+      expect(strictMatcher.re.exec(CapitalizedPath)).toBe(null);
     });
 
     it('passes the option sensitive=false by default', () => {
@@ -29,8 +29,8 @@ describe('path', () => {
     });
 
     it('passes the option strict=false by default', () => {
-      const matcher = createPath('one/');
-      const match = matcher.re.exec('one');
+      const matcher = createPath('one');
+      const match = matcher.re.exec('one/');
       expect(match).not.toBe(null);
     });
 
