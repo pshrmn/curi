@@ -1,3 +1,7 @@
+## 1.0.0-beta.6
+
+* Merge the `@curi/react-___` packages back into `@curi/react`. Instead, rely on Babel 7's `#__PURE__` comments to remove unused components.
+
 ## 1.0.0-beta.5
 
 * Fixed build
