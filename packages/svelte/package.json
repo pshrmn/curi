@@ -1,0 +1,48 @@
+{
+  "name": "@curi/svelte",
+  "version": "1.0.0-alpha.0",
+  "description": "Curi integration with Svelte",
+  "main": "dist/curi-svelte.common.js",
+  "module": "dist/curi-react-link.es.js",
+  "files": [
+    "dist",
+    "LICENSE",
+    "*.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "node ./scripts/build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/svelte"
+  },
+  "keywords": [
+    "curi",
+    "svelte",
+    "router"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "peerDependencies": {
+    "@curi/core": "^1.0.0-beta.5"
+  },
+  "devDependencies": {
+    "@curi/core": "^1.0.0-beta.5",
+    "@hickory/in-memory": "^1.0.0-beta.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "jest": "^21.1.0",
+    "prettier": "^1.7.0",
+    "rollup": "^0.49.3",
+    "rollup-plugin-svelte": "^3.1.0",
+    "svelte-cli": "^1.4.0"
+  }
+}

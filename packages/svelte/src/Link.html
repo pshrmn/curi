@@ -1,0 +1,36 @@
+<a href="{{href}}" on:click="handleClick(event)">
+	<slot></slot>
+</a>
+
+<script>
+	import { getConfig } from './config';
+	export default {
+		data() {
+			return {
+				to: '',
+				params: {},
+				details: {}
+			};
+		},
+		computed: {
+			location: (to, params, details) => {
+				const config = getConfig();
+				return Object.assign({},
+					{ pathname: config.addons.pathname(to, params) },
+					details
+				);
+			},
+			href: (location) => {
+				const config = getConfig();
+				return config.history.toHref(location);
+			}
+		},
+		methods: {
+			handleClick(event) {
+				event.preventDefault();
+				const config = getConfig();
+				config.history.update()
+			}
+		}
+	};
+</script>
