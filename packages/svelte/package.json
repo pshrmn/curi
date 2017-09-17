@@ -1,9 +1,9 @@
 {
   "name": "@curi/svelte",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Curi integration with Svelte",
   "main": "dist/curi-svelte.common.js",
-  "module": "dist/curi-react-link.es.js",
+  "module": "dist/curi-svelte.es.js",
   "files": [
     "dist",
     "LICENSE",
