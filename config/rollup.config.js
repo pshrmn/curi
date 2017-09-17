@@ -6,7 +6,7 @@ import resolve from 'rollup-plugin-node-resolve';
 
 const config = {
   input: 'src/index.js',
-  sourceMap: true,
+  sourcemap: true,
   plugins: [
     babel({
       exclude: 'node_modules/**'

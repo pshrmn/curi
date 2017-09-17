@@ -42,18 +42,17 @@
     "@curi/react-redirect": "^1.0.0-beta.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.25.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-export-extensions": "^6.22.0",
-    "babel-preset-env": "^1.5.2",
-    "babel-preset-react": "^6.24.1",
+    "babel-core": "^7.0.0-beta.0",
+    "babel-plugin-external-helpers": "^7.0.0-beta.0",
+    "babel-plugin-transform-export-default": "^7.0.0-beta.0",
+    "babel-preset-env": "^2.0.0-beta.0",
+    "babel-preset-react": "^7.0.0-beta.0",
     "prettier": "^1.5.2",
     "react": "^15.5.4",
     "react-addons-test-utils": "^15.5.1",
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1",
-    "rollup": "^0.48.2"
+    "rollup": "^0.50.0"
   }
 }

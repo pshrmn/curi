@@ -1,7 +1,7 @@
 const building = process.env.BABEL_ENV === 'build';
 
 const plugins = [
-  'transform-export-extensions'
+  'transform-export-default'
 ];
 
 if (building) {

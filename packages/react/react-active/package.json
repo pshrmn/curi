@@ -42,20 +42,19 @@
     "@curi/addon-active": "^1.0.0-beta.3",
     "@curi/core": "^1.0.0-beta.5",
     "@hickory/in-memory": "^1.0.0-beta.0",
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.25.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-env": "^1.5.2",
-    "babel-preset-react": "^6.24.1",
+    "babel-core": "^7.0.0-beta.0",
+    "babel-plugin-external-helpers": "^7.0.0-beta.0",
+    "babel-plugin-transform-class-properties": "^7.0.0-beta.0",
+    "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.0",
+    "babel-preset-env": "^2.0.0-beta.0",
+    "babel-preset-react": "^7.0.0-beta.0",
     "enzyme": "^2.8.2",
-    "jest": "^20.0.4",
+    "jest": "^21.1.0",
     "prettier": "^1.5.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1",
-    "rollup": "^0.48.2"
+    "rollup": "^0.50.0"
   }
 }
