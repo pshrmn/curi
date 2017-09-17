@@ -56,10 +56,10 @@ export default ({ name }) => (
         </p>
         <ul>
           <li>
-            <Link to='Package' params={{ package: 'curi-side-effect-title' }}>curi-side-effect-title</Link>
+            <Link to='Package' params={{ package: 'side-effect-title' }}>@curi/side-effect-title</Link>
           </li>
           <li>
-            <Link to='Package' params={{ package: 'curi-side-effect-scroll' }}>curi-side-effect-scroll</Link>
+            <Link to='Package' params={{ package: 'side-effect-scroll' }}>@curi/side-effect-scroll</Link>
           </li>
         </ul>
       </Subsection>

@@ -57,8 +57,7 @@ const config = getConfig();`
 
       <PrismBlock lang='javascript'>
         {
-`
-import { setConfig } from '@curi/svelte';
+`import { setConfig } from '@curi/svelte';
 const config = createConfig(history, routes);
 setConfig(config);
 

@@ -18,42 +18,34 @@ export default ({ name }) => (
     </Note>
 
     <p>
-      Curi provides a number of React components. Each one is
-      individually packaged, but they are all also grouped in the{' '}
-      <IJS>@curi/react</IJS> package. To get started, there are only two components that
-      you need to be aware of: <Cmp>Navigator</Cmp> and <Cmp>Link</Cmp>.
+      Curi provides a number of React components through the{' '}
+      <Link to='Package' params={{ package: 'react' }}><IJS>@curi/react</IJS></Link> package.
+      To get started, there are only two components that you need to be aware of:{' '}
+      <Cmp>Navigator</Cmp> and <Cmp>Link</Cmp>.
     </p>
-
-    <Note>
-      Should you choose to install the individual packages or the grouped react package?
-      The react package is convenient, but is not ideal if you want to minimize the size
-      of your bundle. That is because each of the components is compiled from ES6 classes
-      to ES5 by Babel. When classes are transformed into ES5, they can no longer be safely
-      tree-shaken. This means that Even if you only use one or two components from the
-      grouped package, your bundle will include all of them.  To minimize your bundle size,
-      you should import directly from the relevant package instead of from{' '}
-      <IJS>@curi/react</IJS> ( <IJS>import Link from '@curi/react-link';</IJS> instead of{' '}
-      <IJS>import { Link } from '@curi/react';</IJS>).
-    </Note>
 
     <Section
       title='The Navigator'
       id='navigator'
     >
       <PrismBlock lang='bash'>
-        {`npm install @curi/react-navigator`}
+        {`npm install @curi/react`}
       </PrismBlock>
       <p>
-        The <Link to='Package' params={{ package: 'react-navigator' }}>Navigator</Link>
-        {' '}component is responsible for re-rendering your application whenever the
-        location changes. To do this, you pass it a Curi configuration object. When the
+        The{' '}
+        <Link
+          to='Package'
+          params={{ package: 'react' }}
+          details={{ hash: 'Navigator' }}
+        >Navigator</Link> component is responsible for re-rendering your application whenever
+        the location changes. To do this, you pass it a Curi configuration object. When the
         Navigator is mounted, it will subscribe to your configuration object with a function
         that will trigger the Navigator to re-render whenever the location changes.
       </p>
 
       <PrismBlock lang='javascript'>
         {
-`import Navigator from '@curi/react-navigator';
+`import { Navigator } from '@curi/react';
 
 const config = createConfig(history, routes);
 ReactDOM.render((
@@ -161,8 +153,11 @@ const routes = [
 
       <Note>
         This does not cover all of the Link props. Please check out the{' '}
-        <Link to='Package' params={{ package: 'react-navigator' }}>Navigator</Link> API docs
-        to learn more about the other props.
+        <Link
+          to='Package'
+          params={{ package: 'react' }}
+          details={{ hash: 'Navigator' }}
+        >Navigator</Link> API docs to learn more about the other props.
       </Note>
     </Section>
 
@@ -171,18 +166,23 @@ const routes = [
       id='link'
     >
       <PrismBlock lang='bash'>
-        {`npm install @curi/react-link`}
+        {`npm install @curi/react`}
       </PrismBlock>
 
       <p>
         A single page application isn't very useful if you cannot navigate between locations.
-        The <Link to='Package' params={{ package: 'react-link' }}>Link</Link> component provides
+        The{' '}
+        <Link
+          to='Package'
+          params={{ package: 'react' }}
+          details={{ hash: 'Link' }}
+        >Link</Link> component provides
         you with an easy way to do this by rendering anchor (<Cmp>a</Cmp>) elements.
       </p>
 
       <PrismBlock lang='javascript'>
         {
-`import Link from '@curi/react-link'
+`import { Link } from '@curi/react'
 <Link to='Home'>Home</Link>`
         }
       </PrismBlock>
@@ -292,8 +292,11 @@ const routes = [
 
       <Note>
         This does not cover all of the Link props. Please check out the{' '}
-        <Link to='Package' params={{ package: 'react-link' }}>Link</Link> API docs to
-        learn more about the other props.
+        <Link
+          to='Package'
+          params={{ package: 'react' }}
+          details={{ hash: 'Link' }}
+        >Link</Link> API docs to learn more about the other props.
       </Note>
     </Section>
   </BaseGuide>

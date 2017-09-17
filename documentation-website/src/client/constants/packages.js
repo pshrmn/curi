@@ -41,43 +41,7 @@ const packages = [
     name: 'react',
     version: versions['react'],
     globalName: 'CuriReact',
-    type: 'react'
-  },
-  {
-    name: 'react-navigator',
-    version: versions['react-navigator'],
-    globalName: 'CuriReactNavigator',
-    type: 'react'
-  },
-  {
-    name: 'react-link',
-    version: versions['react-link'],
-    globalName: 'CuriReactLink',
-    type: 'react'
-  },
-  {
-    name: 'react-redirect',
-    version: versions['react-redirect'],
-    globalName: 'CuriReactRedirect',
-    type: 'react'
-  },
-  {
-    name: 'react-block',
-    version: versions['react-block'],
-    globalName: 'CuriReactBlock',
-    type: 'react'
-  },
-  {
-    name: 'react-curious',
-    version: versions['react-curious'],
-    globalName: 'CuriReactCurious',
-    type: 'react'
-  },
-  {
-    name: 'react-active',
-    version: versions['react-active'],
-    globalName: 'CuriReactActive',
-    type: 'react'
+    type: 'renderer'
   },
   {
     name: 'redux',
@@ -86,10 +50,16 @@ const packages = [
     type: 'redux'
   },
   {
+    name: 'svelte',
+    version: versions['svelte'],
+    globalName: 'CuriSvelte',
+    type: 'renderer'
+  },
+  {
     name: 'vue',
     version: versions['vue'],
     globalName: 'CuriVue',
-    type: 'vue'
+    type: 'renderer'
   }
 ];
 
