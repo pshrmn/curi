@@ -1,4 +1,4 @@
-<a href="{{href}}" on:click="handleClick(event)">
+<a href="{{href}}" on:click="handleClick(event, location)">
 	<slot></slot>
 </a>
 
@@ -26,10 +26,10 @@
 			}
 		},
 		methods: {
-			handleClick(event) {
+			handleClick(event, location) {
 				event.preventDefault();
 				const config = getConfig();
-				config.history.update()
+				config.history.update(location)
 			}
 		}
 	};
