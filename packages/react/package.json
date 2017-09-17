@@ -1,0 +1,61 @@
+{
+  "name": "@curi/react",
+  "version": "1.0.0-beta.5",
+  "description": "React web components to use with Curi",
+  "main": "dist/curi-react.common.js",
+  "module": "dist/curi-react.es.js",
+  "files": [
+    "dist",
+    "LICENSE",
+    "*.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "node ./scripts/build",
+    "prepare": "npm run build",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/react/react"
+  },
+  "keywords": [
+    "React",
+    "URL",
+    "URI",
+    "Curi",
+    "routing",
+    "navigation"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "peerDependencies": {
+    "@curi/core": "^1.0.0-beta.3",
+    "react": "^15"
+  },
+  "dependencies": {
+    "@curi/addon-active": "^1.0.0-beta.3",
+    "invariant": "^2.2.2",
+    "hoist-non-react-statics": "^1.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "babel-core": "^7.0.0-beta.0",
+    "babel-jest": "^21.0.2",
+    "babel-plugin-external-helpers": "^7.0.0-beta.0",
+    "babel-plugin-transform-class-properties": "^7.0.0-beta.0",
+    "babel-plugin-transform-export-default": "^7.0.0-beta.0",
+    "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.0",
+    "babel-preset-env": "^2.0.0-beta.0",
+    "babel-preset-react": "^7.0.0-beta.0",
+    "enzyme": "^2.8.2",
+    "jest": "^21.1.0",
+    "prettier": "^1.5.2",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.50.0"
+  }
+}
