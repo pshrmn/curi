@@ -11,7 +11,7 @@ export default ({ name, version, globalName }) => (
     about={(
       <p>
         This package enables you to use Curi alongside VueJS. This is more of a proof of concept
-        than a fleshed out routing solutionand only provides bare routing functionality.
+        than a fleshed out routing solution and only provides bare routing functionality.
       </p>
     )}
   >
