@@ -35,18 +35,9 @@
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
-    "babel-core": "^7.0.0-beta.0",
-    "babel-plugin-external-helpers": "^7.0.0-beta.0",
-    "babel-plugin-transform-class-properties": "^7.0.0-beta.0",
-    "babel-preset-env": "^2.0.0-beta.0",
     "babel-preset-react": "^7.0.0-beta.0",
-    "enzyme": "^2.9.1",
-    "jest": "^21.1.0",
-    "prettier": "^1.5.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-test-renderer": "^15.6.1",
-    "rimraf": "^2.6.1",
-    "rollup": "^0.50.0"
+    "react-test-renderer": "^15.6.1"
   }
 }

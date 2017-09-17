@@ -21,17 +21,30 @@
     "npm": "^5.0.0"
   },
   "devDependencies": {
+    "@curi/core": "^1.0.0-beta.5",
+    "@curi/addon-active": "^1.0.0-beta.3",
+    "@curi/react-navigator": "^1.0.0-beta.3",
+    "@hickory/in-memory": "^1.0.0-beta.0",
+    "babel-core": "^7.0.0-beta.0",
+    "babel-jest": "^21.0.2",
+    "babel-plugin-external-helpers": "^7.0.0-beta.0",
+    "babel-plugin-transform-class-properties": "^7.0.0-beta.0",
+    "babel-plugin-transform-export-default": "^7.0.0-beta.0",
+    "babel-plugin-transform-object-assign": "^7.0.0-beta.0",
+    "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.0",
+    "babel-preset-env": "^2.0.0-beta.0",
+    "enzyme": "^2.8.2",
     "gzip-size": "^3.0.0",
+    "jest": "^21.1.0",
     "lerna": "^2.0.0",
+    "prettier": "^1.5.2",
     "pretty-bytes": "^4.0.2",
+    "rimraf": "^2.6.1",
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^2.0.1"
-  },
-  "dependencies": {
-    "babel-core": "^7.0.0-beta.0"
   }
 }

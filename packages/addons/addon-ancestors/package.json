@@ -32,15 +32,5 @@
   "license": "MIT",
   "peerDependencies": {
     "@curi/core": "^1.0.0-beta.3"
-  },
-  "devDependencies": {
-    "babel-core": "^7.0.0-beta.0",
-    "babel-jest": "^21.0.2",
-    "babel-plugin-external-helpers": "^7.0.0-beta.0",
-    "babel-preset-env": "^2.0.0-beta.0",
-    "jest": "^21.1.0",
-    "prettier": "^1.5.2",
-    "rimraf": "^2.6.1",
-    "rollup": "^0.50.0"
   }
 }

@@ -32,16 +32,6 @@
     "@curi/core": "^1.0.0-beta.5"
   },
   "devDependencies": {
-    "@curi/core": "^1.0.0-beta.5",
-    "@hickory/in-memory": "^1.0.0-beta.0",
-    "babel-cli": "^7.0.0-beta.0",
-    "babel-core": "^7.0.0-beta.0",
-    "babel-plugin-external-helpers": "^7.0.0-beta.0",
-    "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.0",
-    "babel-preset-env": "^2.0.0-beta.0",
-    "jest": "^21.1.0",
-    "prettier": "^1.7.0",
-    "rollup": "^0.50.0",
     "rollup-plugin-svelte": "^3.1.0",
     "svelte-cli": "^1.4.0"
   }
