@@ -4,6 +4,15 @@
 
 <script>
 	import { getConfig } from './config';
+
+	const canNavigate = event => {
+		return (
+			!event.defaultPrevented &&
+			event.button === 0 &&
+			!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
+		);
+	};
+
 	export default {
 		data() {
 			return {
@@ -27,9 +36,12 @@
 		},
 		methods: {
 			handleClick(event, location) {
-				event.preventDefault();
-				const config = getConfig();
-				config.history.update(location)
+				const can = canNavigate(event);
+				if (can) {
+					event.preventDefault();
+					const config = getConfig();
+					config.history.update(location);
+				}
 			}
 		}
 	};

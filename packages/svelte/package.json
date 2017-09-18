@@ -44,6 +44,7 @@
     "rimraf": "^2.6.1",
     "rollup": "^0.50.0",
     "rollup-plugin-svelte": "^3.1.0",
+    "simulant": "^0.2.2",
     "svelte-cli": "^1.4.0"
   }
 }
