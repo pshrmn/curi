@@ -55,6 +55,7 @@ There are also a number of [examples](/examples) that you can learn from. Many o
   * [@curi/side-effect-scroll](#curiside-effect-scroll)
 * [Renderers](#renderers)
   * [React](#curireact)
+  * [Redux](#curiredux)
   * [Vue](#curivue)
   * [Svelte](#curisvelte)
 
