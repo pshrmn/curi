@@ -41,6 +41,9 @@
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
+    "@curi/addon-active": "^1.0.0-beta.3",
+    "@curi/core": "^1.0.0-beta.5",
+    "@hickory/in-memory": "^1.0.0-beta.0",
     "babel-core": "^7.0.0-beta.0",
     "babel-jest": "^21.0.2",
     "babel-plugin-external-helpers": "^7.0.0-beta.0",
