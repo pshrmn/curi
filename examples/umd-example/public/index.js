@@ -4,10 +4,10 @@ const Nav = () => (
   React.createElement('nav', null,
     React.createElement('ul', null,
       React.createElement('li', null,
-        React.createElement(CuriReactLink, { to: 'Home' }, 'Home')
+        React.createElement(CuriReact.Link, { to: 'Home' }, 'Home')
       ),
       React.createElement('li', null,
-        React.createElement(CuriReactLink, { to: 'About' }, 'About')
+        React.createElement(CuriReact.Link, { to: 'About' }, 'About')
       )
     )
   )
@@ -31,7 +31,7 @@ const routes = [
 const config = Curi(hashHistory, routes);
 
 ReactDOM.render((
-  React.createElement(CuriReactNavigator, {
+  React.createElement(CuriReact.Navigator, {
     config: config,
     render: function(response) {
       if (!response || response.status === 404) {

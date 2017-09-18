@@ -24,9 +24,9 @@
   },
   "dependencies": {
     "@curi/addon-ancestors": "^1.0.0-beta.3",
-    "@curi/core": "^1.0.0-beta.3",
-    "@curi/react": "^1.0.0-beta.5",
-    "@hickory/hash": "^1.0.0-beta.0",
+    "@curi/core": "^1.0.0-beta.5",
+    "@curi/react": "^1.0.0-beta.6",
+    "@hickory/hash": "^1.0.0-beta.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }
