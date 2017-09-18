@@ -25,7 +25,7 @@ config.ready().then((response) => {
 });
 ```
 
-Curi is not React specific, but it does come with a number of [React packages](#react) that you can use to integrate Curi into a React application.
+Curi is not React specific, but it currently has the best support for React with the [`@curi/react` package](#react).
 
 You can read more about the design goals of Curi [here](DESIGN_GOALS.md).
 
@@ -53,15 +53,10 @@ There are also a number of [examples](/examples) that you can learn from. Many o
 * [Side Effects](#side-effects)
   * [@curi/side-effect-title](#curiside-effect-title)
   * [@curi/side-effect-scroll](#curiside-effect-scroll)
-* [React](#react)
-  * [@curi/react](#curireact)
-  * [@curi/react-navigator](#curireact-navigator)
-  * [@curi/react-link](#curireact-link)
-  * [@curi/react-block](#curireact-block)
-  * [@curi/react-redirect](#curireact-redirect)
-  * [@curi/react-curious](#curireact-curious)
-  * [@curi/react-active](#curireact-active)
-* [Vue](#curivue)
+* [Renderers](#renderers)
+  * [React](#curireact)
+  * [Vue](#curivue)
+  * [Svelte](#curisvelte)
 
 ## @curi/core
 
@@ -103,7 +98,7 @@ The `pathname` addon is always used, so you do not need to install it separately
 
 [![npm][@curi/addon-prefetch-version-badge]][npm-@curi/addon-prefetch]
 
-[package](/packages/addon-prefetch) + [source](/packages/addon-prefetch/src/index.js) + [documentation](https://curi.js.org/packages/@curi/addon-prefetch/)
+[package](/packages/addons/addon-prefetch) + [source](/packages/addons/addon-prefetch/src/index.js) + [documentation](https://curi.js.org/packages/@curi/addon-prefetch/)
 
 The `prefetch` addon allows you to call a route's `load` function outside of navigation. If you use this, your `load` function should have a caching mechanism to prevent duplicate data fetches because the `load` function will be called again during actual navigation.
 
@@ -111,7 +106,7 @@ The `prefetch` addon allows you to call a route's `load` function outside of nav
 
 [![npm][@curi/addon-active-version-badge]][npm-@curi/addon-active]
 
-[package](/packages/addon-active) + [source](/packages/addon-active/src/index.js) + [documentation](https://curi.js.org/packages/@curi/addon-active/)
+[package](/packages/addons/addon-active) + [source](/packages/addons/addon-active/src/index.js) + [documentation](https://curi.js.org/packages/@curi/addon-active/)
 
 The `active` addon allows you to determine if a route is "active" (its `name`/`params` match the current response's `name`/`params`).. This can be useful for giving an element a specific style when it is "active".
 
@@ -119,7 +114,7 @@ The `active` addon allows you to determine if a route is "active" (its `name`/`p
 
 [![npm][@curi/addon-ancestors-version-badge]][npm-@curi/addon-ancestors]
 
-[package](/packages/addon-ancestors) + [source](/packages/addon-ancestors/src/index.js) + [documentation](https://curi.js.org/packages/@curi/addon-ancestors/)
+[package](/packages/addons/addon-ancestors) + [source](/packages/addons/addon-ancestors/src/index.js) + [documentation](https://curi.js.org/packages/@curi/addon-ancestors/)
 
 The `ancestors` addon allows you to get the names of ancestor routes for a particular route. You can either get the ancestor at a specific level (the parent route is 1 level up, the gradnparent route is 2, etc.) or you can get a list of all ancestor routes (the list is ordered from furthest to closest).
 
@@ -129,7 +124,7 @@ The `ancestors` addon allows you to get the names of ancestor routes for a parti
 
 [![npm][@curi/side-effect-title-version-badge]][npm-@curi/side-effect-title]
 
-[package](/packages/side-effect-title) + [source](/packages/side-effect-title/src/index.js) + [documentation](https://curi.js.org/packages/@curi/side-effect-title/)
+[package](/packages/side-effects/side-effect-title) + [source](/packages/side-effects/side-effect-title/src/index.js) + [documentation](https://curi.js.org/packages/@curi/side-effect-title/)
 
 The `title` side effect exports a side effect factory. The factory returns a function that will use a response object's `title` property to set `document.title`.
 
@@ -137,13 +132,13 @@ The `title` side effect exports a side effect factory. The factory returns a fun
 
 [![npm][@curi/side-effect-scroll-version-badge]][npm-@curi/side-effect-scroll]
 
-[package](/packages/side-effect-scroll) + [source](/packages/side-effect-scroll/src/index.js) + [documentation](https://curi.js.org/packages/@curi/side-effect-scroll/)
+[package](/packages/side-effects/side-effect-scroll) + [source](/packages/side-effects/side-effect-scroll/src/index.js) + [documentation](https://curi.js.org/packages/@curi/side-effect-scroll/)
 
 The `scroll` side effect exports a side effect factory. The factory returns a function that will scroll to the top of the page when you push/replace a location, but will let the browser restore the scroll location when popping (forward/back buttons) to a location.
 
-## React
+## Renderers
 
-Curi isn't limited to use with React, but it works well with React. These are some "official" Curi packages that help with creating a Curi/React application.
+While you can use vanilla JavaScript to render your application, most modern apps use a rendering library. Currently, there are Curi integrations for React, Vue, and Svelte, but Curi is rendered agnostic and should work with most rendering libraries.
 
 #### `@curi/react`
 
@@ -151,118 +146,22 @@ Curi isn't limited to use with React, but it works well with React. These are so
 
 [package](/packages/react) + [source](/packages/react/src) + [documentation](https://curi.js.org/packages/@curi/react/)
 
-`@curi/react` provides a communication layer between the `curi` configuration object and your application. It is intended to be used with React web applications.
+`@curi/react` provides a communication layer between the `curi` configuration object and your React application.
 
-The components that it provides are actually re-exported from other Curi packages. These are:
-
-* [`<Navigator>` from `@curi/react-navigator`](#curi-react-navigator)
-* [`<Link>` from `@curi/react-link`](#curi-react-link)
-* [`<Block>` from `@curi/react-block`](#curi-react-block)
-* [`<Redirect>` from `@curi/react-redirect`](#curi-react-redirect)
-
-```js
-import { Navigator } from '@curi/react';
-
-ReactDOM.render((
-  <Navigator config={config}>
-    {(response, config) => (
-      response.body
-        ? <response.body />
-        : null
-    )}
-  </Navigator>
-), document.getElementById('root'));
-```
-
-#### `@curi/react-navigator`
-
-[![npm][@curi/react-navigator-version-badge]][npm-@curi/react-navigator]
-
-[package](/packages/react-navigator) + [source](/packages/react-navigator/src) + [documentation](https://curi.js.org/packages/@curi/react-navigator/)
-
-A component that receives a Curi configuration object as a prop and subscribes to location changes.
-
-```js
-<Navigator config={config}>
-  {(response) => {
-    return response.body ? <response.body /> : null;
-  }}
-</Navigator>
-```
-
-#### `@curi/react-link`
-
-[![npm][@curi/react-link-version-badge]][npm-@curi/react-link]
-
-[package](/packages/react-link) + [source](/packages/react-link/src) + [documentation](https://curi.js.org/packages/@curi/react-link/)
-
-A component that uses route names to create HTML anchors for navigation within an application.
-
-```js
-<Link to='Home'>Home</Link>
-```
-
-#### `@curi/react-block`
-
-[![npm][@curi/react-block-version-badge]][npm-@curi/react-block]
-
-[package](/packages/react-block) + [source](/packages/react-block/src) + [documentation](https://curi.js.org/packages/@curi/react-block/)
-
-A component that will give the user the opportunity to cancel navigation when some conditions are met.
-
-#### `@curi/react-redirect`
-
-[![npm][@curi/react-redirect-version-badge]][npm-@curi/react-redirect]
-
-[package](/packages/react-redirect) + [source](/packages/react-redirect/src) + [documentation](https://curi.js.org/packages/@curi/react-redirect/)
-
-A component that will automatically cause navigation when it is rendered.
-
-#### `@curi/react-curious`
-
-[![npm][@curi/react-curious-version-badge]][npm-@curi/react-curious]
-
-[package](/packages/react-curious) + [source](/packages/react-curious/src) + [documentation](https://curi.js.org/packages/@curi/react-curious/)
-
-A higher-order component to give nested components access to the Curi config object without having to manually pass it as a prop. This allows you to easily access the configuration object's `history`/addons.
-
-```js
-class MyComponent extends React.Component {
-  render() {
-    return (
-      <div>
-        Installed Addons: {Object.keys(this.props.curi.addons).join(', ')}
-      </div>
-    );
-  }
-}
-
-export default curious(MyComponent);
-```
-
-#### `@curi/react-active`
-
-[![npm][@curi/react-active-version-badge]][npm-@curi/react-active]
-
-[package](/packages/react-active) + [source](/packages/react-active/src) + [documentation](https://curi.js.org/packages/@curi/react-active/)
-
-A component that modifies its `children` element when its `name` matches the current response's `name`. This component relies on the `@curi/addon-active` addon.
-
-```js
-// when the response matches the <Active> component's props, the
-// <div> will have its props modified by the merge function.
-<Active name='Album' params={{ albumId: 7 }} merge={merge}>
-  <div>...</div>
-</Active>
-```
-
-## `@curi/vue`
+#### `@curi/vue`
 
 [![npm][@curi/vue-version-badge]][npm-@curi/vue]
 
 [package](/packages/vue) + [source](/packages/vue/src) + [documentation](https://curi.js.org/packages/@curi/vue/)
 
 A Vue plugin that adds Curi routing support to a Vue application. This is currently experimental and in addition to the plugin, just adds `<Link>` and `<Redirect>` components. So far it seems to work well, but is missing a lot of the functionality that the React packages provide.
+
+#### `@curi/svelte`
+
+[![npm][@curi/svelte-version-badge]][npm-@curi/svelte]
+
+[package](/packages/svelte) + [source](/packages/svelte/src) + [documentation](https://curi.js.org/packages/@curi/svelte/)
+
 
 [build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg
 [build]: https://travis-ci.org/pshrmn/curi
@@ -288,26 +187,8 @@ A Vue plugin that adds Curi routing support to a Vue application. This is curren
 [@curi/react-version-badge]: https://img.shields.io/npm/v/@curi/react.svg
 [npm-@curi/react]: https://npmjs.com/package/@curi/react
 
-[@curi/react-navigator-version-badge]: https://img.shields.io/npm/v/@curi/react-navigator.svg
-[npm-@curi/react-navigator]: https://npmjs.com/package/@curi/react-navigator
-
-[@curi/react-link-version-badge]: https://img.shields.io/npm/v/@curi/react-link.svg
-[npm-@curi/react-link]: https://npmjs.com/package/@curi/react-link
-
-[@curi/react-block-version-badge]: https://img.shields.io/npm/v/@curi/react-block.svg
-[npm-@curi/react-block]: https://npmjs.com/package/@curi/react-block
-
-[@curi/react-redirect-version-badge]: https://img.shields.io/npm/v/@curi/react-redirect.svg
-[npm-@curi/react-redirect]: https://npmjs.com/package/@curi/react-redirect
-
-[@curi/react-curious-version-badge]: https://img.shields.io/npm/v/@curi/react-curious.svg
-[npm-@curi/react-curious]: https://npmjs.com/package/@curi/react-curious
-
-[@curi/react-active-version-badge]: https://img.shields.io/npm/v/@curi/react-active.svg
-[npm-@curi/react-active]: https://npmjs.com/package/@curi/react-active
-
-[@curi/react-clickable-version-badge]: https://img.shields.io/npm/v/@curi/react-clickable.svg
-[npm-@curi/react-clickable]: https://npmjs.com/package/@curi/react-clickable
-
 [@curi/vue-version-badge]: https://img.shields.io/npm/v/@curi/vue.svg
 [npm-@curi/vue]: https://npmjs.com/package/@curi/vue
+
+[@curi/svelte-version-badge]: https://img.shields.io/npm/v/@curi/svelte.svg
+[npm-@curi/svelte]: https://npmjs.com/package/@curi/svelte

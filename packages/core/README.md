@@ -7,8 +7,6 @@
 
 `@curi/core` is a simple route configuration package for creating single page apps. Navigation is powered by [`hickory`](https://github.com/pshrmn/hickory).
 
-[documentation](./docs)
-
 ## Installation
 
 ```
