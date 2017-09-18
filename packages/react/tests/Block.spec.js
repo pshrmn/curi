@@ -21,9 +21,9 @@ describe('Block', () => {
     removeConfirmation.mockClear();
   });
 
-  it('if when=true when mounting, adds block', () => {
+  it('if active=true when mounting, adds block', () => {
     const confirm = jest.fn();
-    const wrapper = shallow(<Block when={true} confirm={confirm} />, {
+    const wrapper = shallow(<Block active={true} confirm={confirm} />, {
       context: fakeContext,
       lifecycleExperimental: true
     });
@@ -31,7 +31,7 @@ describe('Block', () => {
     expect(confirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
-  it('defaults to when=true', () => {
+  it('defaults to active=true', () => {
     const confirm = jest.fn();
     const wrapper = shallow(<Block confirm={confirm} />, {
       context: fakeContext,
@@ -41,67 +41,67 @@ describe('Block', () => {
     expect(confirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
-  it('if when=false when mounting, does not add block', () => {
+  it('if active=false when mounting, does not add block', () => {
     const confirm = jest.fn();
-    const wrapper = shallow(<Block when={false} confirm={confirm} />, {
+    const wrapper = shallow(<Block active={false} confirm={confirm} />, {
       context: fakeContext,
       lifecycleExperimental: true
     });
     expect(confirmWith.mock.calls.length).toBe(0);
   });
 
-  it('removes block if when goes true->false while updating', () => {
+  it('removes block if active goes true->false while updating', () => {
     const confirm = jest.fn();
-    const wrapper = shallow(<Block when={true} confirm={confirm} />, {
+    const wrapper = shallow(<Block active={true} confirm={confirm} />, {
       context: fakeContext,
       lifecycleExperimental: true
     });
     expect(removeConfirmation.mock.calls.length).toBe(0);
-    wrapper.setProps({ when: false });
+    wrapper.setProps({ active: false });
     expect(removeConfirmation.mock.calls.length).toBe(1);
   });
 
-  it('adds block if when goes false->true while updating', () => {
+  it('adds block if active goes false->true while updating', () => {
     const confirm = jest.fn();
-    const wrapper = shallow(<Block when={false} confirm={confirm} />, {
+    const wrapper = shallow(<Block active={false} confirm={confirm} />, {
       context: fakeContext,
       lifecycleExperimental: true
     });
     expect(confirmWith.mock.calls.length).toBe(0);
-    wrapper.setProps({ when: true });
+    wrapper.setProps({ active: true });
     expect(confirmWith.mock.calls.length).toBe(1);
   });
 
   it('resets on block on updates if confirm function', () => {
     const confirm = jest.fn();
     const confirm2 = jest.fn();
-    const wrapper = shallow(<Block when={true} confirm={confirm} />, {
+    const wrapper = shallow(<Block active={true} confirm={confirm} />, {
       context: fakeContext,
       lifecycleExperimental: true
     });
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
-    wrapper.setProps({ when: true, confirm: confirm2 });
+    wrapper.setProps({ active: true, confirm: confirm2 });
     expect(confirmWith.mock.calls.length).toBe(2);
     expect(removeConfirmation.mock.calls.length).toBe(1);
   });
 
-  it('does not reset block if both when and message stay the same', () => {
+  it('does not reset block if both active and message stay the same', () => {
     const confirm = jest.fn();
-    const wrapper = shallow(<Block when={true} confirm={confirm} />, {
+    const wrapper = shallow(<Block active={true} confirm={confirm} />, {
       context: fakeContext,
       lifecycleExperimental: true
     });
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
-    wrapper.setProps({ when: true, message: 'This is a test' });
+    wrapper.setProps({ active: true, message: 'This is a test' });
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
   });
 
   it('unblocks when unmounting', () => {
     const confirm = jest.fn();
-    const wrapper = shallow(<Block when={true} confirm={confirm} />, {
+    const wrapper = shallow(<Block active={true} confirm={confirm} />, {
       context: fakeContext,
       lifecycleExperimental: true
     });

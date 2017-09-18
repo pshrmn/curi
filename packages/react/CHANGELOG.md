@@ -1,6 +1,10 @@
+## Next
+
+* Rename `<Block>`'s `when` prop to `active`.
+
 ## 1.0.0-beta.6
 
-* Merge the `@curi/react-___` packages back into `@curi/react`. Instead, rely on Babel 7's `#__PURE__` comments to remove unused components.
+* Merge the `@curi/react-___` packages back into `@curi/react`. Instead, rely on Babel 7's `#__PURE__` comments to remove unused components. **Update**: This still does not actually work due to static properties being places outside of the closure that Babel creates. This _should_ be fixed sometime soon, but for the time being, tree-shaking will not actually work here.
 
 ## 1.0.0-beta.5
 

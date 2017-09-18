@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Block extends React.Component {
   static propTypes = {
-    when: PropTypes.bool,
+    active: PropTypes.bool,
     confirm: PropTypes.func.isRequired
   };
 
@@ -12,7 +12,7 @@ class Block extends React.Component {
   };
 
   static defaultProps = {
-    when: true
+    active: true
   };
 
   on() {
@@ -24,20 +24,20 @@ class Block extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.when) {
+    if (this.props.active) {
       this.on();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (
-      this.props.when === prevProps.when &&
+      this.props.active === prevProps.active &&
       this.props.confirm === prevProps.confirm
     ) {
       return;
     }
     this.off();
-    if (this.props.when) {
+    if (this.props.active) {
       this.on();
     }
   }

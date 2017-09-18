@@ -435,7 +435,7 @@ const config = createConfig(history, routes, {
           <h3>props</h3>
 
           <div className='subsection'>
-            <h4>when</h4>
+            <h4>active</h4>
             <p>
               A boolean, which is true by default. When it is true, the navigation block is active. When
               it is false, navigation will not be blocked.
@@ -443,10 +443,10 @@ const config = createConfig(history, routes, {
             <PrismBlock lang='jsx'>
               {
 `// will block navigation
-<Block when={true} confirm={confirm} />
+<Block active={true} confirm={confirm} />
 
 // will not block navigation
-<Block when={false} confirm={confirm} />`
+<Block active={false} confirm={confirm} />`
               }
             </PrismBlock>
           </div>
