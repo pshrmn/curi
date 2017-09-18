@@ -148,6 +148,14 @@ While you can use vanilla JavaScript to render your application, most modern app
 
 `@curi/react` provides a communication layer between the `curi` configuration object and your React application.
 
+#### `@curi/redux`
+
+[![npm][@curi/redux-version-badge]][npm-@curi/redux]
+
+[package](/packages/redux) + [source](/packages/redux/src) + [documentation](https://curi.js.org/packages/@curi/redux/)
+
+A complement to `@curi/react`, `@curi/redux` can be used to have Redux pass response/location information to your components
+
 #### `@curi/vue`
 
 [![npm][@curi/vue-version-badge]][npm-@curi/vue]
@@ -186,6 +194,9 @@ A Vue plugin that adds Curi routing support to a Vue application. This is curren
 
 [@curi/react-version-badge]: https://img.shields.io/npm/v/@curi/react.svg
 [npm-@curi/react]: https://npmjs.com/package/@curi/react
+
+[@curi/redux-version-badge]: https://img.shields.io/npm/v/@curi/redux.svg
+[npm-@curi/redux]: https://npmjs.com/package/@curi/redux
 
 [@curi/vue-version-badge]: https://img.shields.io/npm/v/@curi/vue.svg
 [npm-@curi/vue]: https://npmjs.com/package/@curi/vue
