@@ -294,9 +294,9 @@ describe('<Link>', () => {
         expect(history.update.mock.calls.length).toBe(1);
       });
 
-      it('does not call history.push if onClick prevents default', () => {
+      it('does not call history.update if onClick prevents default', () => {
         const history = InMemory();
-        history.push = jest.fn();
+        history.update = jest.fn();
         const onClick = jest.fn(event => {
           event.preventDefault();
         });
@@ -322,13 +322,13 @@ describe('<Link>', () => {
         };
         wrapper.find('a').simulate('click', leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
-        expect(history.push.mock.calls.length).toBe(0);
+        expect(history.update.mock.calls.length).toBe(0);
       });
     });
 
-    it("doesn't push for modified clicks", () => {
+    it("doesn't call update for modified clicks", () => {
       const history = InMemory();
-      history.push = jest.fn();
+      history.update = jest.fn();
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
@@ -350,13 +350,13 @@ describe('<Link>', () => {
         const eventCopy = Object.assign({}, modifiedClickEvent);
         eventCopy[m] = true;
         wrapper.find('a').simulate('click', eventCopy);
-        expect(history.push.mock.calls.length).toBe(0);
+        expect(history.update.mock.calls.length).toBe(0);
       });
     });
 
-    it("doesn't push if event.preventDefault has been called", () => {
+    it("doesn't call update if event.preventDefault has been called", () => {
       const history = InMemory();
-      history.push = jest.fn();
+      history.update = jest.fn();
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
@@ -374,7 +374,7 @@ describe('<Link>', () => {
         button: 0
       };
       wrapper.find('a').simulate('click', preventedEvent);
-      expect(history.push.mock.calls.length).toBe(0);
+      expect(history.update.mock.calls.length).toBe(0);
     });
   });
 });
