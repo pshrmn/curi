@@ -5,7 +5,6 @@ import CuriPlugin from '../src/plugin';
 import Link from '../src/Link';
 
 describe('Link component', () => {
-  let LinkConstructor;
   const history = InMemory();
   history.push = jest.fn();
 
@@ -45,34 +44,86 @@ describe('Link component', () => {
     expect(vm.$el.href).toBe('/place/Jamaica');
   });
 
-  it('navigates to expected location when clicked', () => {
-    const vm = new Vue({
-      template: `<curi-link :to="to" :params="params" :details="details">{{text}}</curi-link>`,
-      data: {
-        to: 'Place',
-        params: { name: 'Bermuda' },
-        details: {
-          search: '?to=bahamas',
-          hash: '#beach-boys'
-        },
-        text: 'Kokomo'
-      }
-    }).$mount();
-
-    const mockClick = {
-      defaultPrevented: false,
-      preventDefault() {
-        this.defaultPrevented = true;
-      }
-    };
-    expect(history.push.mock.calls.length).toBe(0);
-    vm.$el.click(mockClick);
-    expect(history.push.mock.calls.length).toBe(1);
-    expect(history.push.mock.calls[0][0]).toEqual({
-      pathname: '/place/Bermuda',
-      search: '?to=bahamas',
-      hash: '#beach-boys'
+  describe('clicking a <curi-link>', () => {
+    it('navigates to expected location when clicked', () => {
+      const vm = new Vue({
+        template: `<curi-link :to="to" :params="params" :details="details">{{text}}</curi-link>`,
+        data: {
+          to: 'Place',
+          params: { name: 'Bermuda' },
+          details: {
+            query: 'to=Bermuda',
+            hash: 'beach-boys'
+          },
+          text: 'Bermuda'
+        }
+      }).$mount();
+  
+      const mockClick = new MouseEvent('click');
+      expect(history.push.mock.calls.length).toBe(0);
+      vm.$el.dispatchEvent(mockClick);
+      expect(history.push.mock.calls.length).toBe(1);
+      expect(history.push.mock.calls[0][0]).toEqual({
+        pathname: '/place/Bermuda',
+        query: 'to=Bermuda',
+        hash: 'beach-boys'
+      });
     });
+
+    it('does not navigate if event.defaultPrevented is true', () => {
+      const vm = new Vue({
+        template: `<curi-link :to="to" :params="params">{{text}}</curi-link>`,
+        data: {
+          to: 'Place',
+          params: { name: 'Bahamas' },
+          text: 'Bahamas'
+        }
+      }).$mount();
+  
+      const mockClick = new MouseEvent('click');
+      mockClick.preventDefault();
+      expect(history.push.mock.calls.length).toBe(0);
+      vm.$el.click(mockClick);
+      expect(history.push.mock.calls.length).toBe(0);
+    });
+
+    it('does not navigate if a modifier key is held while clicking', () => {
+      const vm = new Vue({
+        template: `<curi-link :to="to" :params="params">{{text}}</curi-link>`,
+        data: {
+          to: 'Place',
+          params: { name: 'Key Largo' },
+          text: 'Key Largo'
+        }
+      }).$mount();
+  
+      expect(history.push.mock.calls.length).toBe(0);
+      const modifiers = ['metaKey', 'altKey', 'ctrlKey', 'shiftKey'];
+      modifiers.forEach(m => {
+        const mockClick = new MouseEvent('click', {
+          [m]: true
+        });
+        vm.$el.click(mockClick);
+        expect(history.push.mock.calls.length).toBe(0);
+      })
+    });
+
+    it('does not navigate for non left mouse button clicks', () => {
+      const vm = new Vue({
+        template: `<curi-link :to="to" :params="params">{{text}}</curi-link>`,
+        data: {
+          to: 'Place',
+          params: { name: 'Montego' },
+          text: 'Montego'
+        }
+      }).$mount();
+  
+      const mockClick = new MouseEvent('click', { button: 1 });
+      expect(history.push.mock.calls.length).toBe(0);
+      vm.$el.click(mockClick);
+      expect(history.push.mock.calls.length).toBe(0);
+    });
+
   });
 
   it("sets the slots as the link's text", () => {
@@ -80,10 +131,10 @@ describe('Link component', () => {
       template: `<curi-link :to="to" :params="params">{{text}}</curi-link>`,
       data: {
         to: 'Place',
-        params: { name: 'Key+Largo' },
-        text: 'Montego'
+        params: { name: 'Kokomo' },
+        text: 'Kokomo'
       }
     }).$mount();
-    expect(vm.$el.textContent).toBe('Montego');
+    expect(vm.$el.textContent).toBe('Kokomo');
   });
 });

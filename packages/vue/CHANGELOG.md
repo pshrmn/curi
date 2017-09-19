@@ -1,6 +1,7 @@
 ## Next
 
 * Add `<curi-block>` component for declaratively blocking navigation (until the user confirms).
+* Add cases when clicking a `<curi-link>` should not navigate using `hickory`.
 
 ## 1.0.0-beta.3
 

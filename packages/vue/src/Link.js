@@ -1,3 +1,11 @@
+const canNavigate = event => {
+  return (
+    !event.defaultPrevented &&
+    event.button === 0 &&
+    !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
+  );
+};
+
 const Link = {
   name: 'curi-link',
 
@@ -15,8 +23,10 @@ const Link = {
 
   methods: {
     click: function(event) {
-      event.preventDefault();
-      this.$curi.history.update(this.location);
+      if (canNavigate(event)) {
+        event.preventDefault();
+        this.$curi.history.update(this.location);
+      }
     }
   },
 
