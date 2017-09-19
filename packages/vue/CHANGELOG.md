@@ -1,3 +1,7 @@
+## Next
+
+* Add `<curi-block>` component for declaratively blocking navigation (until the user confirms).
+
 ## 1.0.0-beta.3
 
 * Switched to scoped package: `@curi/vue`.
