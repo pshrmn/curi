@@ -114,7 +114,7 @@ describe('<Link>', () => {
       });
     });
 
-    it('will ignore click if event.preventDefault is true', () => {
+    it('will ignore click if event.defaultPrevented is true', () => {
       const history = InMemory();
       history.update = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
