@@ -10,6 +10,11 @@ const examples = [
     description: 'A simple Curi app rendered using VueJS'
   },
   {
+    name: 'Basic Svelte',
+    slug: 'basic-svelte',
+    description: 'A simple Curi app rendered using Svelte'
+  },
+  {
     name: 'Blocking Navigation',
     slug: 'blocking-navigation',
     description: 'Prevent navigation away from a half-filled form'

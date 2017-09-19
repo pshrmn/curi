@@ -1,5 +1,6 @@
 import ActiveLinks from './ActiveLinks';
 import BasicVue from './BasicVue';
+import BasicSvelte from './BasicSvelte';
 import BlockingNavigation from './BlockingNavigation';
 import Breadcrumbs from './Breadcrumbs';
 import CodeSplitting from './CodeSplitting';
@@ -15,6 +16,7 @@ import Transitions from './Transitions';
 export default {
   'active-links': ActiveLinks,
   'basic-vue': BasicVue,
+  'basic-svelte': BasicSvelte,
   'blocking-navigation': BlockingNavigation,
   'breadcrumbs': Breadcrumbs,
   'code-splitting': CodeSplitting,
