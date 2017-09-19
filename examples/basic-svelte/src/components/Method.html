@@ -1,0 +1,19 @@
+<Nav />
+<p>Please do not contact us by {{response.params.method}}!</p>
+
+<script>
+	import Nav from './Nav.html';
+
+  export default {
+    data() {
+      return {
+        response: {
+          params: {
+            method: 'Unknown'
+          }
+        }
+      }
+    },
+	  components: { Nav }
+  }
+</script>

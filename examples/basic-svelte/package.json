@@ -1,0 +1,31 @@
+{
+  "name": "curi-basic-svelte-example",
+  "version": "0.1.0",
+  "description": "Add Curi routing to a Svelte application",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack"
+  },
+  "keywords": [
+    "Curi",
+    "Svelte",
+    "router"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "svelte-cli": "^1.4.0",
+    "svelte-loader": "^2.1.0",
+    "webpack": "^2.5.1"
+  },
+  "dependencies": {
+    "@curi/core": "^1.0.0-beta.5",
+    "@curi/svelte": "^1.0.0-alpha.3",
+    "@hickory/browser": "^1.0.0-beta.2"
+  }
+}
