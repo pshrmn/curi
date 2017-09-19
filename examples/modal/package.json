@@ -25,8 +25,7 @@
   "dependencies": {
     "@curi/core": "^1.0.0-beta.5",
     "@curi/react": "^1.0.0-beta.6",
-    "@hickory/hash": "^1.0.0-beta.2",
-    "express": "^4.15.3",
+    "@hickory/browser": "^1.0.0-beta.2",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"

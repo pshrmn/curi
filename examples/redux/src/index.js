@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import Hash from '@hickory/hash';
+import Browser from '@hickory/browser';
 import createConfig from '@curi/core'
 import { syncResponses } from '@curi/redux';
 
@@ -10,7 +10,7 @@ import store from './reduxStuff';
 import routes from './routes';
 import App from './components/App';
 
-const history = Hash();
+const history = Browser();
 const config = createConfig(history, routes);
 
 config.ready().then(() => {
