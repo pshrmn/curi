@@ -8,6 +8,6 @@ export default {
   "redux": "1.0.0-alpha.0",
   "side-effect-scroll": "1.0.0-beta.3",
   "side-effect-title": "1.0.0-beta.3",
-  "svelte": "1.0.0-alpha.2",
-  "vue": "1.0.0-beta.3"
+  "svelte": "1.0.0-alpha.3",
+  "vue": "1.0.0-beta.4"
 };
