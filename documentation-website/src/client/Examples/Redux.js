@@ -50,7 +50,7 @@ const routes = [
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo id='58xm6O7yX' />
+      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/redux' />
     </Section>
 
     <Section

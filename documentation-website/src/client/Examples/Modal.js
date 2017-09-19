@@ -52,7 +52,7 @@ export default ({ name }) => (
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo id='lO25PD24J' />
+      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/modal' />
     </Section>
 
     <Section

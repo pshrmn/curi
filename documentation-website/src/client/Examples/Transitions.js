@@ -43,7 +43,7 @@ export default ({ name }) => (
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo id='jkJkBKWl' />
+      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/transitions' />
     </Section>
 
     <Section

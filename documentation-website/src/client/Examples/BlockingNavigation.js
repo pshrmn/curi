@@ -30,7 +30,7 @@ export default ({ name }) => (
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo id='KOvy6K0KM' />
+      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/blocking-navigation' />
     </Section>
 
     <Section

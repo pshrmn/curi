@@ -45,7 +45,7 @@ const config = createConfig(history, routes, {
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo id='Mjpv0E9qQ' />
+      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/side-effect' />
     </Section>
 
     <Section

@@ -1,5 +1,6 @@
 import React from 'react';
 import BaseExample from '../components/BaseExample';
+import CodeSandboxDemo from '../components/CodeSandboxDemo';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
@@ -22,6 +23,13 @@ export default ({ name }) => (
         we are manually subscribing to navigation changes. We keep a reactive response object
         on our view model in order to automatically re-render when a new response is generated.
       </p>
+    </Section>
+
+    <Section
+      title='Live Demo'
+      id='demo'
+    >
+      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/basic-vue' />
     </Section>
 
     <Section

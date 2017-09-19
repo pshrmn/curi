@@ -66,7 +66,7 @@ export default ({ name }) => (
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo id='v20oL7yJm' />
+      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/redirecting' />
     </Section>
 
     <Section

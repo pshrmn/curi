@@ -54,7 +54,7 @@ nprogress.done();
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo id='48WlgnyGg' />
+      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/data-loading' />
     </Section>
 
     <Section
