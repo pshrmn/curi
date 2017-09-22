@@ -1,4 +1,6 @@
+import 'jest';
 import createScrollSideEffect from '../src';
+import { AnyResponse } from '@curi/core';
 
 jest.useFakeTimers();
 
@@ -21,7 +23,7 @@ describe('createScrollSideEffect', () => {
 
   it('does not scroll after POP', () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect({ location: {}}, 'POP');
+    sideEffect(<AnyResponse>{ location: {}}, 'POP');
 
     jest.runAllTimers();
     expect(window.scrollTo.mock.calls.length).toBe(0);
@@ -29,7 +31,7 @@ describe('createScrollSideEffect', () => {
 
   it('scrolls to 0 after PUSH', () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect({ location: {}}, 'PUSH');
+    sideEffect({ location: {}} as AnyResponse, 'PUSH');
 
     jest.runAllTimers();
     expect(window.scrollTo.mock.calls.length).toBe(1);

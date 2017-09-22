@@ -1,6 +1,8 @@
-function createScrollSideEffect() {
+import { SideEffect, AnyResponse } from '@curi/core';
 
-  return function(response, action) {
+function createScrollSideEffect(): SideEffect {
+
+  return function(response: AnyResponse, action: string): void {
     if (action === 'POP' ) {
       return;
     }
@@ -20,7 +22,7 @@ function createScrollSideEffect() {
       // or the browser doesn't support, we will just scroll
       // to the top of the page
       window.scrollTo(0, 0);
-    });
+    }, 0);
 
   };
 }
