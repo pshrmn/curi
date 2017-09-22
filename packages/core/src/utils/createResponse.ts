@@ -1,5 +1,47 @@
+import { HickoryLocation } from '@hickory/root';
+import { Route } from './createRoute';
+
+export interface BaseResponse {
+  key: string,
+  location: HickoryLocation,
+  status: number,
+  data: any,
+  title: string
+}
+
+export interface Response extends BaseResponse {
+  body: any;
+  name: string;
+  partials: Array<string>;
+  params: Params;
+  error: any;
+}
+
+export interface RedirectResponse extends BaseResponse {
+  redirectTo: any;
+}
+
+export type AnyResponse = Response | RedirectResponse;
+export type Params = {[key: string]: string};
+export interface Match {
+  route: Route;
+  params: Params;
+}
+
 class ResponseCreator {
-  constructor(key, location) {
+  key: string;
+  location: HickoryLocation;
+  status: number;
+  matches: Array<Match>;
+  route: Route;
+  partials: Array<string>;
+  params: Params;
+  body: any;
+  data: any;
+  redirectTo: any;
+  error: any;
+
+  constructor(key: string, location: HickoryLocation) {
     this.key = key;
     this.location = location;
     this.status = 200;
@@ -12,34 +54,34 @@ class ResponseCreator {
     this.body;
   }
 
-  redirect(to, code = 301) {
+  redirect(to: any, code: number = 301): void {
     this.setStatus(code);
     this.redirectTo = to;
   }
 
-  fail(err) {
+  fail(err: any): void {
     this.error = err;
   }
 
-  setStatus(code) {
+  setStatus(code: number): void {
     this.status = code;
   }
 
-  push(route, params) {
+  push(route: Route, params: Params): void {
     this.matches.push({ route, params });
   }
 
-  pop() {
+  pop(): void {
     this.matches.pop();
   }
 
-  setData(data) {
+  setData(data: any): void {
     this.data = data;
   }
 
-  freeze() {
+  freeze(): void {
     if (this.matches.length) {
-      const bestMatch = this.matches.pop();
+      const bestMatch: Match = this.matches.pop();
       this.matches.forEach(m => {
         this.partials.push(m.route.name);
         Object.assign(this.params, m.params);
@@ -50,7 +92,7 @@ class ResponseCreator {
     }
   }
 
-  generateTitle() {
+  generateTitle(): string {
     if (!this.route || !this.route.title) {
       return '';
     }
@@ -59,8 +101,8 @@ class ResponseCreator {
       : this.route.title;
   }
 
-  asObject() {
-    const sharedResponse = {
+  asObject(): AnyResponse {
+    const sharedResponse: BaseResponse = {
       key: this.key,
       location: this.location,
       status: this.status,
@@ -71,8 +113,8 @@ class ResponseCreator {
     if (this.redirectTo != null) {
       return {
         ...sharedResponse,
-        redirectTo: this.redirectTo,
-      };
+        redirectTo: this.redirectTo
+      } as RedirectResponse;
     }
 
     return {
@@ -81,8 +123,8 @@ class ResponseCreator {
       name: this.route ? this.route.name : undefined,
       partials: this.partials,
       params: this.params,
-      error: this.error,
-    };
+      error: this.error
+    } as Response;
   }
 }
 
