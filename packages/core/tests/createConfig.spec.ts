@@ -1,7 +1,10 @@
+import 'jest';
 import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
 import InMemory from '@hickory/in-memory';
 import ResponseCreator from '../src/utils/createResponse';
+import { Addon, AddonFactory } from '../src/interface';
+import { Response, RedirectResponse } from '../src/utils/createResponse';
 
 // The subscribe function is called when subscribing so that the
 // subscriber function is called with the original location. This has
@@ -86,12 +89,12 @@ describe('createConfig', () => {
 
         it('includes pathname addon even when other addons are provided', () => {
           const firstAddonCache = {};
-          const createFirstAddon = () => {
+          const createFirstAddon: AddonFactory = () => {
             return {
               register: (route, extra) => {
                 firstAddonCache[route.name] = route.path;
               }
-            };
+            } as Addon;
           };
 
           const routes = [{ name: 'Home', path: '' }];
@@ -106,15 +109,15 @@ describe('createConfig', () => {
           // are registered as expected
           const firstAddonCache = {};
           const secondAddonCache = {};
-          const createFirstAddon = () => {
+          const createFirstAddon: AddonFactory = () => {
             return {
               register: (route, extra) => {
                 firstAddonCache[route.name] = route.path;
               }
-            };
+            } as Addon;
           };
 
-          const createSecondAddon = () => {
+          const createSecondAddon: AddonFactory = () => {
             return {
               register: (route, extra) => {
                 secondAddonCache[
@@ -122,7 +125,7 @@ describe('createConfig', () => {
                 ] = `${extra ? extra : 'None'} + ${route.name}`;
                 return route.name;
               }
-            };
+            } as Addon;
           };
 
           const routes = [
@@ -196,6 +199,7 @@ describe('createConfig', () => {
             path: '(.*)',
             load: (params, location, mods) => {
               mods.setData(Math.random());
+              return Promise.resolve(true);
             }
           }];
           const createSimpleCache = () => {
@@ -240,15 +244,16 @@ describe('createConfig', () => {
           });
         });
 
-        it('generates new response for same key on subsequent calls if cache=false', done => {
+        it('generates new response for same key on subsequent calls if cache is not provided', done => {
           const routes = [{
             name: 'All',
             path: '(.*)',
             load: (params, location, mods) => {
               mods.setData(Math.random());
+              return Promise.resolve(true);
             }
           }];
-          const config = createConfig(history, routes, { cache: false });
+          const config = createConfig(history, routes);
 
           let calls = 0;
           let randomValue;
@@ -363,7 +368,7 @@ describe('createConfig', () => {
         const config = createConfig(history, routes);
         expect.assertions(1);
         return config.ready().then(arg => {
-          expect(arg.error).toBeUndefined();
+          expect((<Response>arg).error).toBeUndefined();
         });
       });
 
@@ -383,7 +388,7 @@ describe('createConfig', () => {
         const config = createConfig(history, routes);
         expect.assertions(1);
         return config.ready().then(arg => {
-          expect(arg.error).toBe('This is an error');
+          expect((<Response>arg).error).toBe('This is an error');
         });
       });
     });
@@ -467,7 +472,7 @@ describe('createConfig', () => {
 
       return config.ready()
         .then(resp => {
-          expect(resp.error).toBe('oh no');
+          expect((<Response>resp).error).toBe('oh no');
         });
     });
 
@@ -551,7 +556,7 @@ describe('createConfig', () => {
       const config = createConfig(history, routes);
       expect.assertions(1);
       return config.ready().then(response => {
-        expect(response.error).toBe('woops');
+        expect((<Response>response).error).toBe('woops');
       });
     });
 
@@ -571,7 +576,7 @@ describe('createConfig', () => {
       expect.assertions(2);
       return config.ready().then(response => {
         expect(response.status).toBe(301);
-        expect(response.redirectTo).toBe('/somewhere');
+        expect((<RedirectResponse>response).redirectTo).toBe('/somewhere');
       });
     });
 
@@ -582,6 +587,7 @@ describe('createConfig', () => {
         path: 'a-route',
         load: () => {
           bodyValue = 'testing';
+          return Promise.resolve(true);
         },
         body: () => bodyValue
       };
@@ -589,36 +595,12 @@ describe('createConfig', () => {
       const config = createConfig(history, [Route]);
       expect.assertions(1);
       return config.ready().then(response => {
-        expect(response.body).toBe('testing');
+        expect((<Response>response).body).toBe('testing');
       });
     });
   });
 
   describe('subscribe', () => {
-    it('throws an error if a non-function is passed to subscribe', () => {
-      const history = InMemory({
-        locations: ['/contact/phone']
-      });
-      const How = { name: 'How', path: ':method' };
-      const routes = [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' },
-        {
-          name: 'Contact',
-          path: 'contact',
-          children: [How]
-        }
-      ];
-
-      const config = createConfig(history, routes);
-      const badArgs = [null, undefined, 1, true, {}, []];
-      badArgs.forEach(arg => {
-        expect(() => {
-          config.subscribe(arg);
-        }).toThrow('The argument passed to subscribe must be a function');
-      });
-    });
-
     describe('when subscribing', () => {
       it('calls subscriber function, passing it the response object and last action', () => {
         const history = InMemory({

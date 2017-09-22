@@ -1,3 +1,4 @@
+import 'jest';
 import createPathname from '../src/addons/pathname';
 
 describe('pathname addon', () => {

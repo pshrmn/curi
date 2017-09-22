@@ -2,25 +2,52 @@ import walkRoutes from './utils/walkRoutes';
 import pathnameAddon from './addons/pathname';
 import ResponseCreator from './utils/createResponse';
 
-function createConfig(history, routeArray, options = {}) {
+import { History, HickoryLocation } from '@hickory/root';
+import { RouteDescriptor, Route, LoadModifiers } from './utils/createRoute';
+import { AnyResponse } from './utils/createResponse';
+import {
+  Addon,
+  AddonFactory,
+  AddonGet,
+  SideEffect,
+  Subscriber,
+  UnsubscribeFn,
+  Cache
+} from './interface';
+
+export interface ConfigOptions {
+  addons?: Array<AddonFactory>;
+  sideEffects?: Array<SideEffect>;
+  cache?: Cache
+}
+
+export interface CuriConfig {
+  ready: () => Promise<AnyResponse>;
+  refresh: (routeArray: Array<RouteDescriptor>) => void;
+  subscribe: (fn: Subscriber) => UnsubscribeFn;
+  addons: {[key: string]: AddonGet };
+  history: History
+}
+
+function createConfig(history: History, routeArray: Array<RouteDescriptor>, options: ConfigOptions = {}): CuriConfig {
   const {
     addons: addonFactories = [],
     sideEffects = [],
-    cache = false
-  } = options;
+    cache
+  } = options as ConfigOptions;
 
   // add the pathname addon to the provided addons
   const finalAddons = addonFactories.concat(pathnameAddon);
-  let routes = [];
-  const registeredAddons = {};
-  const subscribers = [];
+  let routes: Array<Route> = [];
+  const registeredAddons: {[key: string]: AddonGet } = {};
+  const subscribers: Array<Subscriber> = [];
 
-  let mostRecentKey;
-  let previous = [];
-  let responseInProgress;
+  let mostRecentKey: string;
+  let previous: [AnyResponse, string] = [] as [AnyResponse, string];
+  let responseInProgress: Promise<AnyResponse>;
 
-  function setupRoutesAndAddons(routeArray) {
-    const addonFunctions = [];
+  function setupRoutesAndAddons(routeArray: Array<RouteDescriptor>): void {
+    const addonFunctions: Array<Addon> = [];
     // clear out any existing addons
     for (let key in registeredAddons) {
       delete registeredAddons[key];
@@ -32,11 +59,11 @@ function createConfig(history, routeArray, options = {}) {
       addonFunctions.push(addon);
     });
 
-    routes = walkRoutes(routeArray, addonFunctions, {});
+    routes = walkRoutes(routeArray, addonFunctions);
     makeResponse(history.location, history.action);
   };
 
-  function matchRoute(rc) {
+  function matchRoute(rc: ResponseCreator): Promise<ResponseCreator> {
     routes.some(route => (route.match(history.location.pathname, rc)));
     // once we have matched the route, we freeze the responseCreator to
     // set its route/params/partials properties
@@ -44,7 +71,7 @@ function createConfig(history, routeArray, options = {}) {
     return Promise.resolve(rc);
   };
 
-  function loadRoute(rc) {
+  function loadRoute(rc: ResponseCreator): Promise<ResponseCreator> {
     if (!rc.route) {
       rc.setStatus(404);
       return Promise.resolve(rc);
@@ -54,7 +81,7 @@ function createConfig(history, routeArray, options = {}) {
 
     // just want to pass a subset of the ResponseCreator's methods
     // to the user
-    const modifiers = load
+    const modifiers: LoadModifiers = load
       ? {
           fail: rc.fail.bind(rc),
           redirect: rc.redirect.bind(rc),
@@ -72,8 +99,8 @@ function createConfig(history, routeArray, options = {}) {
       .then(() => rc);
   };
 
-  function finalizeResponse(rc) {
-    const respObject = rc.asObject();
+  function finalizeResponse(rc: ResponseCreator): AnyResponse {
+    const respObject: AnyResponse = rc.asObject();
 
     if (cache) {
       cache.set(respObject);
@@ -82,7 +109,7 @@ function createConfig(history, routeArray, options = {}) {
     return respObject;
   };
 
-  function prepareResponse(location) {
+  function prepareResponse(location: HickoryLocation): Promise<AnyResponse> {
     // generate a random key when none is provided (old browsers, maybe unecessary?)
     const key = location.key || Math.random().toString(36).slice(2, 8);
     mostRecentKey = key;
@@ -101,7 +128,7 @@ function createConfig(history, routeArray, options = {}) {
       .then(finalizeResponse);
   };
 
-  function subscribe(fn) {
+  function subscribe(fn: Subscriber): UnsubscribeFn {
     if (typeof fn !== 'function') {
       throw new Error('The argument passed to subscribe must be a function');
     }
@@ -118,7 +145,7 @@ function createConfig(history, routeArray, options = {}) {
     };
   };
 
-  function emit(response, action) {
+  function emit(response: AnyResponse, action: string): boolean {
     // don't emit old responses
     if (response.key !== mostRecentKey) {
       return false;
@@ -139,7 +166,7 @@ function createConfig(history, routeArray, options = {}) {
 
   // create a response object using the current location and
   // emit it to any subscribed functions
-  function makeResponse(location, action) {
+  function makeResponse(location: HickoryLocation, action: string): void {
     responseInProgress = prepareResponse(location).then(response => {
       const emitted = emit(response, action);
       // only store these after we have emitted.

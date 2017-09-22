@@ -1,13 +1,15 @@
-import PathToRegexp from 'path-to-regexp';
+import PathToRegexp, { PathFunction } from 'path-to-regexp';
 import { withLeadingSlash, join } from '../utils/path';
+import { Addon } from '../interface';
+import { Route } from '../utils/createRoute';
 
-function createPathnameAddon() {
-  let knownPaths = {};
-  let cache = {};
+function createPathnameAddon(): Addon {
+  let knownPaths: {[key: string]: string} = {};
+  let cache: {[key: string]: PathFunction } = {};
 
   return {
     name: 'pathname',
-    register: (route, parent) => {
+    register: (route: Route, parent: string): string => {
       const { name, path } = route;
       if (knownPaths[name] !== undefined) {
         console.warn(
@@ -26,7 +28,7 @@ function createPathnameAddon() {
       knownPaths[name] = base ? join(base, path) : path;
       return name;
     },
-    get: (name, params) => {
+    get: (name: string, params: object): string => {
       if (knownPaths[name] == null) {
         console.error(
           `Could not generate pathname for ${name} because it is not registered.`
@@ -36,7 +38,7 @@ function createPathnameAddon() {
       const compile = cache[name]
         ? cache[name]
         : (cache[name] = PathToRegexp.compile(knownPaths[name]));
-      return withLeadingSlash(compile(params, { pretty: true }));
+      return withLeadingSlash(compile(params));
     }
   };
 }

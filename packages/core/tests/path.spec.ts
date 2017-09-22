@@ -1,3 +1,4 @@
+import 'jest';
 import createPath from '../src/utils/createPath';
 
 describe('path', () => {
