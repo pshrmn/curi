@@ -9,6 +9,8 @@ The prefetch addon enables you to run a `uri`'s `load` function prior to actuall
 
 **Note:** If you use this addon, then your `load` functions should be caching the data. This is because the route's `load` function is always called when generating a response, effectively making a duplicate call.
 
+**Another Note:** This package is experimental and I'm still not convinced that it is necessary. This might be highly modified or even removed in the future.
+
 ## Installation
 
 ```js
