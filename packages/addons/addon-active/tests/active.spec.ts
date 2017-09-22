@@ -1,3 +1,4 @@
+import 'jest';
 import createActive from '../src';
 
 describe('active addon', () => {
