@@ -1,13 +1,24 @@
-function isPositiveInteger(value) {
-  return value === parseInt(value, 10) && value > 0;
-}
+import { Route, Addon } from '@curi/core';
 
-function createAncestorsAddon() {
-  const routeAncestors = {};
+function createAncestorsAddon(): Addon {
+  const routeAncestors: {[key: string]: Array<string>} = {};
+
+  function get(name: string, level: number): string;
+  function get(name: string): Array<string>;
+  function get(name: string, level?: number) {
+    const ancestors = routeAncestors[name];
+    if (level == null) {
+      return ancestors.slice();
+    }
+    if (level <= 0) {
+      return;
+    }
+    return ancestors[level-1];
+  }
 
   return {
     name: 'ancestors',
-    register: (route, parentRoutes = []) => {
+    register: (route: Route, parentRoutes: Array<string> = []): Array<string> => {
       let { name } = route;
       if (routeAncestors[name] !== undefined) {
         console.warn(
@@ -21,16 +32,7 @@ function createAncestorsAddon() {
       routeAncestors[name] = parentRoutes;
       return [name, ...parentRoutes];
     },
-    get: (name, level) => {
-      const ancestors = routeAncestors[name];
-      if (level == null) {
-        return ancestors.slice();
-      }
-      if (!isPositiveInteger(level) || !ancestors[level-1]) {
-        return;
-      }
-      return ancestors[level - 1];
-    }
+    get
   };
 }
 

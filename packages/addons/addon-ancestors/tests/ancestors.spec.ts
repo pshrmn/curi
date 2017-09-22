@@ -1,3 +1,4 @@
+import 'jest';
 import createAncestors from '../src';
 
 describe('ancestors addon', () => {
