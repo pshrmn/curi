@@ -1,4 +1,7 @@
+import 'jest';
 import createPrefetch from '../src';
+import { HickoryLocation } from '@hickory/root';
+import { LoadModifiers } from '@curi/core';
 
 describe('prefetch addon', () => {
   let prefetch;
@@ -91,16 +94,18 @@ describe('prefetch addon', () => {
       const playerURI = {
         name: 'Player',
         path: 'player/:id',
-        load: function(params, responseCreator) {
+        load: function(params, location, modifiers) {
           expect(params).toEqual(paramsToPass);
-          expect(responseCreator).toEqual(responseCreatorToPass);
+          expect(location).toEqual(locationToPass);
+          expect(modifiers).toEqual(modifiersToPass);
           return Promise.resolve(true);
         }
       };
       const paramsToPass = { id: 1 };
-      const responseCreatorToPass = {};
+      const locationToPass = {} as HickoryLocation;
+      const modifiersToPass = {} as LoadModifiers;
       prefetch.register(playerURI);
-      prefetch.get('Player', paramsToPass, responseCreatorToPass);
+      prefetch.get('Player', paramsToPass, locationToPass, modifiersToPass);
     });
 
     it('returns rejected Promise when path not found', () => {

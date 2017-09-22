@@ -4,13 +4,15 @@
   "description": "An addon to enable prefetching curi routes",
   "main": "dist/curi-addon-prefetch.common.js",
   "module": "dist/curi-addon-prefetch.es.js",
+  "typse": "types/index.d.ts",
   "files": [
     "dist",
+    "types",
     "LICENSE",
     "*.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist & rimraf types",
     "build": "node ./scripts/build",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
@@ -29,18 +31,36 @@
   ],
   "author": "Paul Sherman",
   "license": "MIT",
-  "peerDependencies": {
-    "@curi/core": "^1.0.0-beta.3"
+  "dependencies": {
+    "@curi/core": "^1.0.0-beta.3",
+    "@hickory/root": "^1.0.0-beta.3"
   },
   "devDependencies": {
-    "babel-core": "^7.0.0-beta.0",
-    "babel-jest": "^21.0.2",
-    "babel-plugin-external-helpers": "^7.0.0-beta.0",
-    "babel-preset-env": "^2.0.0-beta.0",
+    "@types/jest": "^21.1.0",
+    "@types/node": "^8.0.29",
     "jest": "^21.1.0",
     "prettier": "^1.7.0",
     "pretty-bytes": "^4.0.2",
     "rimraf": "^2.6.1",
-    "rollup": "^0.50.0"
+    "rollup": "^0.50.0",
+    "ts-jest": "^21.0.1",
+    "typescript": "^2.5.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testMatch": [
+      "**/tests/**/*.spec.ts"
+    ],
+    "transform": {
+      "\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "globals": {
+      "ts-jest": {
+        "module": "es6"
+      }
+    }
   }
 }
