@@ -1,15 +1,15 @@
-import babel from 'rollup-plugin-babel';
+import typescript from 'rollup-plugin-typescript2';
 import uglify from 'rollup-plugin-uglify';
 import replace from 'rollup-plugin-replace';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 
 const config = {
-  input: 'src/index.js',
+  input: 'src/index.ts',
   sourcemap: true,
   plugins: [
-    babel({
-      exclude: 'node_modules/**'
+    typescript({
+      useTsconfigDeclarationDir: true
     }),
     replace({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
