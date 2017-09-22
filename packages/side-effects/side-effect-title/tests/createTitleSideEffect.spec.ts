@@ -1,11 +1,13 @@
+import 'jest';
 import createTitleSideEffect from '../src';
+import { AnyResponse } from '@curi/core';
 
 describe('createTitleSideEffect', () => {
   it('returned function sets document.title using response.title', () => {
     const sideEffect = createTitleSideEffect();
     const fakeResponse = {
       title: 'Test Title; Please Ignore'
-    };
+    } as AnyResponse;
 
     const queryResponse = sideEffect(fakeResponse);
     expect(document.title).toBe('Test Title; Please Ignore');
@@ -15,7 +17,7 @@ describe('createTitleSideEffect', () => {
     const sideEffect = createTitleSideEffect({ prefix: 'My Site |' });
     const fakeResponse = {
       title: 'Test Title; Please Ignore'
-    };
+    } as AnyResponse;
 
     const queryResponse = sideEffect(fakeResponse);
     expect(document.title).toBe('My Site | Test Title; Please Ignore');
@@ -25,7 +27,7 @@ describe('createTitleSideEffect', () => {
     const sideEffect = createTitleSideEffect({ suffix: '| My Site' });
     const fakeResponse = {
       title: 'Test Title; Please Ignore'
-    };
+    } as AnyResponse;
 
     const queryResponse = sideEffect(fakeResponse);
     expect(document.title).toBe('Test Title; Please Ignore | My Site');
