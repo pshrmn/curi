@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ConfirmationFunction } from '@hickory/root';
 
-class Block extends React.Component {
-  static propTypes = {
-    active: PropTypes.bool,
-    confirm: PropTypes.func.isRequired
-  };
+export interface BlockProps {
+  active?: boolean;
+  confirm: ConfirmationFunction;
+}
 
+class Block extends React.Component<BlockProps> {
   static contextTypes = {
     curi: PropTypes.object.isRequired
   };
@@ -29,7 +30,7 @@ class Block extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: BlockProps) {
     if (
       this.props.active === prevProps.active &&
       this.props.confirm === prevProps.confirm
@@ -46,7 +47,7 @@ class Block extends React.Component {
     this.off();
   }
 
-  render() {
+  render(): null {
     return null;
   }
 }

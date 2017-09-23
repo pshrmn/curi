@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Redirect extends React.Component {
-  static propTypes = {
-    to: PropTypes.string,
-    params: PropTypes.object,
-    details: PropTypes.object,
-    children: PropTypes.element
-  };
+export interface RedirectProps {
+  to?: string,
+  params?: object;
+  details?: object;
+  children?: any;
+}
 
+class Redirect extends React.Component<RedirectProps, {}> {
   static contextTypes = {
     curi: PropTypes.object.isRequired
   };

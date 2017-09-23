@@ -1,7 +1,9 @@
+import 'jest';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import Provider from '../src/Provider';
+import { CuriConfig } from '@curi/core';
 
 describe('<Provider>', () => {
   let receivedContext;
@@ -10,7 +12,7 @@ describe('<Provider>', () => {
     receivedContext = undefined;
   });
 
-  const ConfigReporter = (props, context) => {
+  const ConfigReporter: React.StatelessComponent = (props, context) => {
     receivedContext = context;
     return null;
   };
@@ -20,7 +22,7 @@ describe('<Provider>', () => {
   };
 
   it('places the curi config on the context as "context.curi"', () => {
-    const fakeConfig = {};
+    const fakeConfig = {} as CuriConfig;;
     const wrapper = mount(
       <Provider curi={fakeConfig}>
         <ConfigReporter />
@@ -30,7 +32,7 @@ describe('<Provider>', () => {
   });
 
   it('renders its children property', () => {
-    const fakeConfig = {};
+    const fakeConfig = {} as CuriConfig;
     const wrapper = mount(
       <Provider curi={fakeConfig}>
         <div>Test</div>
