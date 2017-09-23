@@ -4,13 +4,15 @@
   "description": "React web components to use with Curi",
   "main": "dist/curi-react.common.js",
   "module": "dist/curi-react.es.js",
+  "types": "types/index.d.ts",
   "files": [
     "dist",
+    "types",
     "LICENSE",
     "*.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist & rimraf types",
     "build": "node ./scripts/build",
     "prepare": "npm run build",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
@@ -31,27 +33,25 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "@curi/core": "^1.0.0-beta.3",
     "react": "^15"
   },
   "dependencies": {
     "@curi/addon-active": "^1.0.0-beta.3",
+    "@curi/core": "^1.0.0-beta.3",
+    "@hickory/root": "^1.0.0-beta.3",
+    "hoist-non-react-statics": "^2.3.1",
     "invariant": "^2.2.2",
-    "hoist-non-react-statics": "^1.2.0",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "@curi/addon-active": "^1.0.0-beta.3",
     "@curi/core": "^1.0.0-beta.5",
     "@hickory/in-memory": "^1.0.0-beta.0",
-    "babel-core": "^7.0.0-beta.0",
-    "babel-jest": "^21.0.2",
-    "babel-plugin-external-helpers": "^7.0.0-beta.0",
-    "babel-plugin-transform-class-properties": "^7.0.0-beta.0",
-    "babel-plugin-transform-export-default": "^7.0.0-beta.0",
-    "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.0",
-    "babel-preset-env": "^2.0.0-beta.0",
-    "babel-preset-react": "^7.0.0-beta.0",
+    "@types/invariant": "^2.2.29",
+    "@types/jest": "^21.1.0",
+    "@types/node": "^8.0.30",
+    "@types/prop-types": "^15.5.1",
+    "@types/react": "^16.0.5",
     "enzyme": "^2.8.2",
     "jest": "^21.1.0",
     "prettier": "^1.5.2",
@@ -59,6 +59,27 @@
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1",
-    "rollup": "^0.50.0"
+    "rollup": "^0.50.0",
+    "ts-jest": "^21.0.1",
+    "typescript": "^2.5.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "testMatch": [
+      "**/tests/**/*.spec.tsx"
+    ],
+    "transform": {
+      "\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "globals": {
+      "ts-jest": {
+        "module": "es6"
+      }
+    }
   }
 }

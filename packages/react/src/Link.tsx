@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'invariant';
+import { CuriContext } from './interface';
 
-const canNavigate = event => {
+const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   return (
     !event.defaultPrevented &&
     event.button === 0 &&
@@ -10,25 +11,32 @@ const canNavigate = event => {
   );
 };
 
-class Link extends React.Component {
-  static propTypes = {
-    to: PropTypes.string,
-    params: PropTypes.object,
-    details: PropTypes.object,
-    onClick: PropTypes.func,
-    active: PropTypes.shape({
-      merge: PropTypes.func.isRequired,
-      partial: PropTypes.bool
-    }),
-    anchor: PropTypes.func
-  };
+export interface ActiveLink {
+  merge: (props: object) => object;
+  partial?: boolean;
+}
 
+export interface LinkProps {
+  to: string;
+  params?: object;
+  details?: object;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  active?: ActiveLink;
+  anchor?: React.ComponentClass | React.StatelessComponent;
+  target?: string;
+}
+
+export interface LinkState {
+  pathname: string;
+}
+
+class Link extends React.Component<LinkProps, LinkState> {
   static contextTypes = {
     curi: PropTypes.object.isRequired,
     curiResponse: PropTypes.object
   };
 
-  clickHandler = event => {
+  clickHandler = (event: React.MouseEvent<HTMLElement>) => {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
@@ -43,7 +51,7 @@ class Link extends React.Component {
     }
   };
 
-  createPathname(props, context) {
+  createPathname(props: LinkProps, context: CuriContext) {
     const { to, params } = props;
     const { curi } = context;
     const pathname =
@@ -62,7 +70,7 @@ class Link extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps(nextProps: LinkProps, nextContext: CuriContext) {
     this.createPathname(nextProps, nextContext);
     if (nextProps.active) {
       this.verifyActiveAddon();
@@ -77,19 +85,19 @@ class Link extends React.Component {
     );
   }
 
-  render() {
+  render(): React.ReactElement<any> {
     const {
       to,
       params,
       details,
       onClick,
       active,
-      anchor: Anchor = 'a',
+      anchor,
       ...rest
     } = this.props;
     const { curi, curiResponse } = this.context;
     let anchorProps = rest;
-
+    const Anchor: React.ComponentClass | React.StatelessComponent | string = anchor ? anchor : 'a';
     if (active) {
       const { partial, merge } = active;
       const isActive = curi.addons.active(to, curiResponse, params, partial);
@@ -99,7 +107,7 @@ class Link extends React.Component {
     }
 
     const { pathname } = this.state;
-    const href = curi.history.toHref({ pathname, ...details });
+    const href: string = curi.history.toHref({ pathname, ...details });
 
     return <Anchor {...anchorProps} onClick={this.clickHandler} href={href} />;
   }

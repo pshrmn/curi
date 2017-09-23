@@ -1,9 +1,11 @@
+import 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import createConfig from '@curi/core';
 import InMemory from '@hickory/in-memory';
 import Navigator from '../src/Navigator';
+import { AnyResponse } from '@curi/core';
 
 describe('<Navigator>', () => {
   it('calls render function when it renders', () => {
@@ -97,53 +99,74 @@ describe('<Navigator>', () => {
 
   describe('response', () => {
     it('renders using response if provided', () => {
-      const fakeConfig = {
-        subscribe: jest.fn()
-      };
-      const respObj = { location: { pathname: '/testing' } };
+      const history = InMemory();
+      const routes = [
+        { name: 'Home', path: '', pathOptions: { end: true } },
+        { name: 'About', path: 'about' }
+      ];
+      const config = createConfig(history, routes);
+
       let received;
       const fn = jest.fn(response => {
         received = response;
         return null;
       });
-      const wrapper = shallow(
-        <Navigator response={respObj} config={fakeConfig} render={fn} />
-      );
-      expect(received).toBe(respObj);
+
+      return config.ready().then(response => {
+        const wrapper = shallow(
+          <Navigator response={response} config={config} render={fn} />
+        );
+        expect(received).toBe(response);
+      });
     });
 
     it('does not call subscribe when passed a response', () => {
-      const fakeConfig = {
-        subscribe: jest.fn()
-      };
-      const respObj = { location: { pathname: '/testing' } };
-      const wrapper = shallow(
-        <Navigator response={respObj} config={fakeConfig} render={() => null} />
-      );
-      expect(fakeConfig.subscribe.mock.calls.length).toBe(0);
+      const history = InMemory();
+      const routes = [
+        { name: 'Home', path: '', pathOptions: { end: true } },
+        { name: 'About', path: 'about' }
+      ];
+      const config = createConfig(history, routes);
+      config.subscribe = jest.fn(config.subscribe);
+
+      return config.ready().then(response => {
+        const wrapper = shallow(
+          <Navigator response={response} config={config} render={(r) => null} />
+        );
+        expect(config.subscribe.mock.calls.length).toBe(0);
+      });
     });
   });
 
   describe('unmount', () => {
     it('unsubscribes from the config', () => {
+      const history = InMemory();
+      const routes = [
+        { name: 'Home', path: '', pathOptions: { end: true } },
+        { name: 'About', path: 'about' }
+      ];
+      const config = createConfig(history, routes);
       const unsub = jest.fn();
-      const sub = jest.fn(fn => {
-        return unsub;
+      config.subscribe = jest.fn(fn => unsub);
+
+      let received;
+      const fn = jest.fn(response => {
+        received = response;
+        return null;
       });
-      const fakeConfig = {
-        subscribe: sub
-      };
 
       expect(unsub.mock.calls.length).toBe(0);
-      expect(sub.mock.calls.length).toBe(0);
+      expect(config.subscribe.mock.calls.length).toBe(0);
 
-      const wrapper = shallow(
-        <Navigator config={fakeConfig} render={() => null} />
-      );
-      expect(sub.mock.calls.length).toBe(1);
-      expect(unsub.mock.calls.length).toBe(0);
-      wrapper.unmount();
-      expect(unsub.mock.calls.length).toBe(1);
+      return config.ready().then(response => {
+        const wrapper = shallow(
+          <Navigator config={config} render={fn} />
+        );
+        expect(config.subscribe.mock.calls.length).toBe(1);
+        expect(unsub.mock.calls.length).toBe(0);
+        wrapper.unmount();
+        expect(unsub.mock.calls.length).toBe(1);  
+      });
     });
   });
 
@@ -154,7 +177,7 @@ describe('<Navigator>', () => {
       receivedContext = undefined;
     });
 
-    const ConfigReporter = (props, context) => {
+    const ConfigReporter: React.StatelessComponent = (props, context) => {
       receivedContext = context;
       return null;
     };
@@ -165,39 +188,39 @@ describe('<Navigator>', () => {
     };
 
     it('places the curi config on the context as "context.curi"', () => {
-      const unsub = jest.fn();
-      const sub = jest.fn(fn => {
-        return unsub;
-      });
-      const fakeConfig = {
-        subscribe: sub
-      };
+      const history = InMemory();
+      const routes = [
+        { name: 'Home', path: '', pathOptions: { end: true } },
+        { name: 'About', path: 'about' }
+      ];
+      const config = createConfig(history, routes);
 
       const wrapper = mount(
-        <Navigator config={fakeConfig} render={() => <ConfigReporter />} />
+        <Navigator config={config} render={(response) => <ConfigReporter />} />
       );
 
-      expect(receivedContext.curi).toBe(fakeConfig);
+      expect(receivedContext.curi).toBe(config);
     });
 
     it('places the current response on the context as "context.curiResponse"', () => {
-      const unsub = jest.fn();
-      const sub = jest.fn(fn => {
-        return unsub;
-      });
-      const fakeConfig = {
-        subscribe: sub
-      };
-      const response = { name: 'Home' };
+      const history = InMemory();
+      const routes = [
+        { name: 'Home', path: '', pathOptions: { end: true } },
+        { name: 'About', path: 'about' }
+      ];
+      const config = createConfig(history, routes);
 
-      const wrapper = mount(
-        <Navigator
-          config={fakeConfig}
-          response={response}
-          render={() => <ConfigReporter />}
-        />
-      );
-      expect(receivedContext.curiResponse).toBe(response);
+      return config.ready().then(resp => {
+        const wrapper = mount(
+          <Navigator
+            config={config}
+            response={resp}
+            render={() => <ConfigReporter />}
+          />
+        );
+        expect(receivedContext.curiResponse).toBe(resp);
+      });
+
     });
   });
 });

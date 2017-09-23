@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'invariant';
 
-class Active extends React.Component {
-  static propTypes = {
-    children: PropTypes.element.isRequired,
-    name: PropTypes.string.isRequired,
-    params: PropTypes.object,
-    partial: PropTypes.bool,
-    merge: PropTypes.func.isRequired
-  };
+export interface ActiveProps {
+  children: any;
+  name: string;
+  params?: object;
+  partial?: boolean;
+  merge: (props: object) => object;
+}
 
+class Active extends React.Component<ActiveProps, {}> {
   static contextTypes = {
     curi: PropTypes.object.isRequired,
     curiResponse: PropTypes.object

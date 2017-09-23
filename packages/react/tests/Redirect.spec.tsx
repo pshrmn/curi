@@ -1,3 +1,4 @@
+import 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import InMemory from '@hickory/in-memory';
