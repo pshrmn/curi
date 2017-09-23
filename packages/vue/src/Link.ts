@@ -1,4 +1,16 @@
-const canNavigate = event => {
+import Vue, { CreateElement, ComponentOptions } from 'vue';
+import { HickoryLocation } from '@hickory/root';
+
+export interface LinkComponent extends Vue {
+  to: string;
+  params?: object;
+  details?: object;
+  location: HickoryLocation;
+  href: string;
+  click(e: MouseEvent): void;
+}
+
+const canNavigate = (event: MouseEvent) => {
   return (
     !event.defaultPrevented &&
     event.button === 0 &&
@@ -6,7 +18,7 @@ const canNavigate = event => {
   );
 };
 
-const Link = {
+const Link: ComponentOptions<LinkComponent> = {
   name: 'curi-link',
 
   props: ['to', 'params', 'details'],
@@ -22,7 +34,7 @@ const Link = {
   },
 
   methods: {
-    click: function(event) {
+    click: function(event: MouseEvent) {
       if (canNavigate(event)) {
         event.preventDefault();
         this.$curi.history.update(this.location);
@@ -30,7 +42,7 @@ const Link = {
     }
   },
 
-  render: function(h) {
+  render: function(h: CreateElement) {
     return h(
       'a',
       {

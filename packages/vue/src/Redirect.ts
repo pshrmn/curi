@@ -1,4 +1,14 @@
-const Redirect = {
+import Vue, { CreateElement, ComponentOptions } from 'vue';
+import { HickoryLocation } from '@hickory/root';
+
+export interface RedirectComponent extends Vue {
+  to: string;
+  params?: object;
+  details?: object;
+  location: HickoryLocation;
+}
+
+const Redirect: ComponentOptions<RedirectComponent> = {
   name: 'curi-redirect',
 
   props: ['to', 'params', 'details'],
@@ -23,7 +33,7 @@ const Redirect = {
     this.$curi.history.replace(this.location);
   },
 
-  render: function(h) {
+  render: function(h: CreateElement) {
     return this.$slots.default && this.$slots.default[0];
   }
 };

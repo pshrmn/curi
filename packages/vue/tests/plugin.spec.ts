@@ -1,4 +1,5 @@
-import Vue from 'vue';
+import 'jest';
+import Vue from 'vue/dist/vue.common.js';
 import CuriPlugin from '../src/plugin';
 import createConfig from '@curi/core';
 import InMemory from '@hickory/in-memory';

@@ -1,3 +1,4 @@
+import 'jest';
 import Vue from 'vue/dist/vue.common.js';
 import InMemory from '@hickory/in-memory';
 import createConfig from '@curi/core';

@@ -1,3 +1,4 @@
+import 'jest';
 import Vue from 'vue/dist/vue.common.js';
 import InMemory from '@hickory/in-memory';
 import createConfig from '@curi/core';
@@ -115,6 +116,7 @@ describe('Block component', () => {
   it('re-adds block if either prop changes', done => {
     const confirm1 = jest.fn();
     const confirm2 = jest.fn();
+    
     const vm = new Vue({
       template: `
         <curi-block :active="active" :confirm="confirm">
@@ -134,10 +136,10 @@ describe('Block component', () => {
     });
   });
 
-  it('unblocks when before destroying', () => {
+  it('unblocks before destroying', () => {
     const confirm = jest.fn();
     const vm = new Vue({
-      template: '<curi-block :active="active"  :confirm="confirm" />',
+      template: '<curi-block :active="active" :confirm="confirm">test</curi-block>',
       data: {
         active: true,
         confirm
