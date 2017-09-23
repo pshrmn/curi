@@ -1,3 +1,4 @@
+import 'jest';
 import Vue from 'vue/dist/vue.common.js';
 import InMemory from '@hickory/in-memory';
 import createConfig from '@curi/core';
@@ -41,7 +42,7 @@ describe('Link component', () => {
         text: 'Jamaica'
       }
     }).$mount();
-    expect(vm.$el.href).toBe('/place/Jamaica');
+    expect((vm.$el as HTMLAnchorElement).href).toBe('/place/Jamaica');
   });
 
   describe('clicking a <curi-link>', () => {

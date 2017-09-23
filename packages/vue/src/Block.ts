@@ -1,4 +1,14 @@
-const Block = {
+import Vue, { CreateElement, ComponentOptions } from 'vue';
+import { ConfirmationFunction } from '@hickory/root';
+
+export interface BlockComponent extends Vue {
+  active?: boolean;
+  confirm: ConfirmationFunction;
+  on(): void;
+  off(): void;
+}
+
+const Block: ComponentOptions<BlockComponent> = {
   name: 'curi-block',
 
   props: {
@@ -38,7 +48,7 @@ const Block = {
     this.off()
   },
 
-  render: function(h) {
+  render: function(h: CreateElement) {
     return h('span');
   }
 };
