@@ -4,13 +4,15 @@
   "description": "Redux integration for Curi",
   "main": "dist/curi-redux.common.js",
   "module": "dist/curi-redux.es.js",
+  "types": "types/index.d.ts",
   "files": [
     "dist",
+    "types",
     "LICENSE",
     "*.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist & rimraf types",
     "build": "node ./scripts/build",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
@@ -30,15 +32,31 @@
   "devDependencies": {
     "@curi/core": "^1.0.0-beta.5",
     "@hickory/in-memory": "^1.0.0-beta.0",
-    "babel-core": "^7.0.0-beta.0",
-    "babel-jest": "^21.0.2",
-    "babel-plugin-external-helpers": "^7.0.0-beta.0",
-    "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.0",
-    "babel-preset-env": "^2.0.0-beta.0",
+    "@types/jest": "^21.1.0",
+    "@types/node": "^8.0.30",
     "jest": "^21.1.0",
     "prettier": "^1.7.0",
     "redux": "^3.7.2",
     "rimraf": "^2.6.1",
-    "rollup": "^0.50.0"
+    "rollup": "^0.50.0",
+    "ts-jest": "^21.0.1",
+    "typescript": "^2.5.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testMatch": [
+      "**/tests/**/*.spec.ts"
+    ],
+    "transform": {
+      "\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "globals": {
+      "ts-jest": {
+        "module": "es6"
+      }
+    }
   }
 }
