@@ -1,3 +1,7 @@
+## 1.0.0-beta.5
+
+* Switch to TypeScript
+
 ## 1.0.0-beta.4
 
 * Add `<curi-block>` component for declaratively blocking navigation (until the user confirms).
