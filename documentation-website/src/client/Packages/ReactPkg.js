@@ -8,6 +8,7 @@ import {
 import { Note, Warning } from '../components/Messages';
 import APIBlock from '../components/APIBlock';
 import { Link } from '@curi/react';
+import { Section, Subsection } from '../components/Sections';
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -24,11 +25,10 @@ export default ({ name, version, globalName }) => (
     )}
   >
     <APIBlock>
-      <div id='Navigator'>
-        <h2>
-          <Cmp>Navigator</Cmp>
-          <Link className='header-link' details={{ hash: 'Navigator' }}>#</Link>
-        </h2>
+      <Section
+        title={<Cmp>Navigator</Cmp>}
+        id='Navigator'
+      >
         <p>
           The <Cmp>Navigator</Cmp> component provides a way to automatically re-render your
           application when the location changes. This component gets passed a Curi configuration
@@ -61,41 +61,52 @@ ReactDOM.render((
           }
         </PrismBlock>
 
-        <div className='section'>
-          <h3>props</h3>
+        <Section
+          tag='h3'
+          title='Props'
+          id='Navigator-props'
+        >
 
-          <div className='subsection'>
-            <h4>config</h4>
+          <Subsection
+            tag='h4'
+            title='config'
+            id='Navigator-config'
+          >
             <p>
               A configuration object (created by calling curi's createConfig function).
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>children</h4>
+          <Subsection
+            tag='h4'
+            title='render'
+            id='Navigator-render'
+          >
             <p>
               A render function. This will be called whenever the <Cmp>Navigator</Cmp>
               {' '}renders. The function will be passed the current response object and the config object it
               was passed as a prop. The function must return a React element.
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>response</h4>
+          <Subsection
+            tag='h4'
+            title='response'
+            id='Navigator-response'
+          >
             <p>
               A response object. You can pass your <Cmp>Navigator</Cmp> a response object and
               it will use that instead of subscribing to the configuration object. This is ideal for server-side
               rendering.
             </p>
-          </div>
-        </div>
-      </div>
+          </Subsection>
+        </Section>
+      </Section>
 
-      <div id='Link'>
-        <h2>
-          <Cmp>Link</Cmp>
-          <Link className='header-link' details={{ hash: 'Link' }}>#</Link>
-        </h2>
+      <Section
+        title={<Cmp>Link</Cmp>}
+        id='Link'
+      >
         <p>
           A <Cmp>Link</Cmp> allows you to navigate within your application using an anchor
           element (<Cmp>a</Cmp>). When the rendered element is clicked, instead of reloading the page it will
@@ -120,18 +131,27 @@ ReactDOM.render((
           }
         </PrismBlock>
 
-        <div className='section'>
-          <h3>props</h3>
+        <Section
+          tag='h3'
+          title='Props'
+          id='Link-props'
+        >
 
-          <div className='subsection'>
-            <h4>to</h4>
+          <Subsection
+            tag='h4'
+            title='to'
+            id='Link-to'
+          >
             <p>
               The name of the route that you want to navigate to.
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>params</h4>
+          <Subsection
+            tag='h4'
+            title='params'
+            id='Link-params'
+          >
             <p>
               If the route that you want to navigate to (or any of its parents) include path parameters,
               you can specify them using the params prop.
@@ -142,10 +162,13 @@ ReactDOM.render((
 <Link to='User' params={{ id: 16 }}>User 16</Link>`
               }
             </PrismBlock>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>details</h4>
+          <Subsection
+            tag='h4'
+            title='details'
+            id='Link-details'
+          >
             <p>
               While the pathname of the location to navigate to will be generated for you, this does not
               cover over location properties (query, hash, and state). You can provide these values using
@@ -166,10 +189,13 @@ ReactDOM.render((
               You can also include a pathname property in the details object and it will overwrite the one
               generated from the to prop. This isn't recommended, but does work.
             </Note>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>anchor</h4>
+          <Subsection
+            tag='h4'
+            title='anchor'
+            id='Link-anchor'
+          >
             <p>
               By default, when you render a <Cmp>Link</Cmp>, an anchor element will be
               rendered (<IJS>React.createElement('a', ...)</IJS>). However, you can provide your
@@ -182,10 +208,13 @@ ReactDOM.render((
               you use other DOM elements as links. The component's prop type is func in an attempt to
               discourage you from making your link render a button, div, span, etc.
             </Warning>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>active</h4>
+          <Subsection
+            tag='h4'
+            title='active'
+            id='Link-active'
+          >
             <p>
               The active prop gives you an opportunity to style the element rendered by the{' '}
               <Cmp>Link</Cmp> when it is "active". Being active means that the{' '}
@@ -225,15 +254,14 @@ ReactDOM.render((
               <Link to='Package' params={{ package: 'addon-active' }}>@curi/addon-active</Link> addon
               in your Curi configuration object. If you do not, an error will be thrown.
             </Note>
-          </div>
-        </div>
-      </div>
+          </Subsection>
+        </Section>
+      </Section>
 
-      <div id='Redirect'>
-        <h2>
-          <Cmp>Redirect</Cmp>
-          <Link className='header-link' details={{ hash: 'Redirect' }}>#</Link>
-        </h2>
+      <Section
+        title={<Cmp>Redirect</Cmp>}
+        id='Redirect'
+      >    
         <p>
           The <Cmp>Redirect</Cmp> component lets you "render" a redirect. After
           the <Cmp>Redirect</Cmp> component has mounted, it will call the appropriate
@@ -256,47 +284,61 @@ ReactDOM.render((
           }
         </PrismBlock>
 
-        <div className='section'>
-          <h3>props</h3>
+        <Section
+          tag='h3'
+          title='Props'
+          id='Redirect-props'
+        >
 
-          <div className='subsection'>
-            <h4>to</h4>
+          <Subsection
+            tag='h4'
+            title='to'
+            id='Redirect-to'
+          >
             <p>
               The name of the route that should be used to generate the pathname of the location to navigate to.
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>params</h4>
+          <Subsection
+            tag='h4'
+            title='params'
+            id='Redirect-params'
+          >
             <p>
               Any path params of the route specified with the to prop (or the params for any of its ancestor
               routes).
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>details</h4>
+          <Subsection
+            tag='h4'
+            title='details'
+            id='Redirect-details'
+          >
             <p>
               Additional location properties to include when generating the URI to redirect to (search, hash, state).
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>children</h4>
+          <Subsection
+            tag='h4'
+            title='children'
+            id='Redirect-children'
+          >
             <p>
               You can provide a children element that will be rendered until the response generated by the redirect
               has resolved. This allows you to render some sort of "loading" message, which can be useful if the
               redirect takes a bit of time and you don't want to just render a blank page.
             </p>
-          </div>
-        </div>
-      </div>
+          </Subsection>
+        </Section>
+      </Section>
 
-      <div id='Active'>
-        <h2>
-          <Cmp>Active</Cmp>
-          <Link className='header-link' details={{ hash: 'Active' }}>#</Link>
-        </h2>
+      <Section
+        title={<Cmp>Active</Cmp>}
+        id='Active'
+      >
         <p>
           The <Cmp>Active</Cmp> component allows you to style its child component as "active" when
           the location that <Cmp>Active</Cmp> describe matches the current location.
@@ -313,51 +355,72 @@ ReactDOM.render((
           the component is "active".
         </p>
 
-        <div className='section'>
-          <h4>props</h4>
+        <Section
+          tag='h3'
+          title='Props'
+          id='Active-props'
+        >
 
-          <div className='subsection'>
-            <h5>name</h5>
+          <Subsection
+            tag='h4'
+            title='name'
+            id='Active-name'
+          >
             <p>
               The name of the route to compare against the response object.
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h5>params</h5>
+          <Subsection
+            tag='h4'
+            title='params'
+            id='Active-params'
+          >  
             <p>
               An object containing route parameters. These will be compared against the route params of the
               response object.
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h5>children</h5>
+          <Subsection
+            tag='h4'
+            title='children'
+            id='Active-children'
+          >
             <p>
               A React element that will have its props updated when the <Cmp>Active</Cmp>
               {' '}component is "active".
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h5>merge</h5>
+          <Subsection
+            tag='h4'
+            title='merge'
+            id='Active-merge'
+          >
             <p>
               A function that will modify the children element's props. It receives a props object as its
               argument and must return a props object.
             </p>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h5>partial</h5>
+          <Subsection
+            tag='h4'
+            title='partial'
+            id='Active-partial'
+          >
             <p>
               A boolean that defaults to false. When it is true, the "active" check will check the response's partials
               array in addition to its name. This allows you to style ancestor routes of the actually "active" route.
             </p>
-          </div>
-        </div>
+          </Subsection>
+        </Section>
 
-        <div className='section'>
-          <h3>Usage</h3>
+        <Section
+          tag='h3'
+          title='Usage'
+          id='Active-usage'
+        >
 
           <PrismBlock lang='jsx'>
             {
@@ -410,15 +473,13 @@ const config = createConfig(history, routes, {
             ><Cmp>Navigator</Cmp></Link> as an ancestor of your <Cmp>Active</Cmp>
             components in order to ensure that those exist.
           </p>
-        </div>
+        </Section>
+      </Section>
 
-      </div>
-
-      <div id='Block'>
-        <h2>
-          <Cmp>Block</Cmp>
-          <Link className='header-link' details={{ hash: 'Block' }}>#</Link>
-        </h2>
+      <Section
+        title={<Cmp>Block</Cmp>}
+        id='Block'
+      >
         <p>
           The <Cmp>Block</Cmp> component lets you prevent navigation until a user
           has confirmed that they want to navigate. This can be useful when the user attempts to navigate
@@ -431,11 +492,17 @@ const config = createConfig(history, routes, {
           }
         </PrismBlock>
 
-        <div className='section'>
-          <h3>props</h3>
+        <Section
+          tag='h3'
+          title='Props'
+          id='Block-props'
+        >
 
-          <div className='subsection'>
-            <h4>active</h4>
+          <Subsection
+            tag='h4'
+            title='active'
+            id='Block-active'
+          >
             <p>
               A boolean, which is true by default. When it is true, the navigation block is active. When
               it is false, navigation will not be blocked.
@@ -449,10 +516,13 @@ const config = createConfig(history, routes, {
 <Block active={false} confirm={confirm} />`
               }
             </PrismBlock>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>confirm</h4>
+          <Subsection
+            tag='h4'
+            title='confirm'
+            id='Block-confirm'
+          >
             <p>
               The confirm prop is a function that will be called whenever there is navigation. The
               function will receive four arguments: location, action, success, and failure. The location
@@ -476,15 +546,14 @@ const config = createConfig(history, routes, {
 />`
               }
             </PrismBlock>
-          </div>
-        </div>
-      </div>
+          </Subsection>
+        </Section>
+      </Section>
 
-      <div id='curious'>
-        <h2>
-          <IJS>curious()</IJS>
-          <Link className='header-link' details={{ hash: 'curious' }}>#</Link>
-        </h2>
+      <Section
+        title={<IJS>curious()</IJS>}
+        id='curious'
+      >
         <PrismBlock lang='javascript'>
           {
 `import { curious } from '@curi/react';`
@@ -506,11 +575,17 @@ export default curious(MyComponent);`
         </PrismBlock>
 
 
-        <div className='section'>
-          <h3>props</h3>
+        <Section
+          tag='h3'
+          title='Props'
+          id='curious-props'
+        >
 
-          <div className='subsection'>
-            <h4>internalRef</h4>
+          <Subsection
+            tag='h4'
+            title='internalRef'
+            id='curious-internalRef'
+          >
             <p>
               A ref function that you can use to access the wrapped component.
             </p>
@@ -521,10 +596,13 @@ export default curious(MyComponent);`
 <WrappedComponent internalRef={node => ref = node} />`
               }
             </PrismBlock>
-          </div>
+          </Subsection>
 
-          <div className='subsection'>
-            <h4>Other props</h4>
+          <Subsection
+            tag='h4'
+            title='Other Props'
+            id='curious-other-props'
+          >
             <p>
               Any other props that you pass to the wrapped component will be available to the
               base component.
@@ -538,10 +616,9 @@ export default curious(MyComponent);`
 // MyComponent's props: { curi: {...}, response: {...}, one: 'two', red: 'blue' }`
               }
             </PrismBlock>
-          </div>
-        </div>
-      </div>
-
+          </Subsection>
+        </Section>
+      </Section>
     </APIBlock>
   </BasePackage>
 );

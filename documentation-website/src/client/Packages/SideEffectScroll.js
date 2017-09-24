@@ -3,6 +3,7 @@ import BasePackage from '../components/BasePackage';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
 import APIBlock from '../components/APIBlock';
+import { Section } from '../components/Sections';
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -26,10 +27,13 @@ export default ({ name, version, globalName }) => (
     )}
   >
     <APIBlock>
-
-      <h3>createScrollSideEffect</h3>
-      <PrismBlock lang='javascript'>      
-        {
+      <Section
+        tag='h3'
+        title='createScrollSideEffect'
+        id='createScrollSideEffect'
+      >
+        <PrismBlock lang='javascript'>      
+          {
 `import createConfig from '@curi/core';
 import createScrollSideEffect from '@curi/side-effect-scroll';
 
@@ -38,8 +42,9 @@ const scrollTo = createScrollSideEffect();
 const config = createConfig(history, routes, {
   sideEffects: [scrollTo]
 });`
-        }
-      </PrismBlock>
+          }
+        </PrismBlock>
+      </Section>
     </APIBlock>
   </BasePackage>
 );

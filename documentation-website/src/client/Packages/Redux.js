@@ -32,6 +32,7 @@ export default ({ name, version, globalName }) => (
       </PrismBlock>
 
       <Section
+        tag='h3'
         title='syncResponses'
         id='syncResponses'
       >
@@ -60,6 +61,7 @@ config.ready().then(() => {
       </Section>
 
       <Section
+        tag='h3'
         title='responseReducer'
         id='responseReducer'
       >
