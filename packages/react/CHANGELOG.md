@@ -1,5 +1,6 @@
-## Next
+## 1.0.0-beta.7
 
+* Switch to TypeScript
 * Rename `<Block>`'s `when` prop to `active`.
 
 ## 1.0.0-beta.6

@@ -1,3 +1,7 @@
+## 1.0.0-beta.4
+
+* Switch to TypeScript
+
 ## 1.0.0-beta.3
 
 * Switched to scoped package: `@curi/side-effect-title`.
