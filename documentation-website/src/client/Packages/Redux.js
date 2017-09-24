@@ -27,11 +27,7 @@ export default ({ name, version, globalName }) => (
     <APIBlock>
       <PrismBlock lang='javascript'>
         {
-`import {
-  syncResponses,
-  responseReducer,
-  configReducer
-} from '@curi/redux';`
+`import { syncResponses, responseReducer } from '@curi/redux';`
         }
       </PrismBlock>
 
@@ -41,8 +37,8 @@ export default ({ name, version, globalName }) => (
       >
         <p>
           <IJS>syncResponses</IJS> is responsible for linking your Redux store with your Curi
-          configuration object. It subscribes to your configuration object with a function that
-          will dispatch a "location changed" event to the Redux store.
+          configuration object. It subscribes to location changes emitted from your configuration
+          object with a function that will dispatch a "location changed" event to the Redux store.
         </p>
         <Note>
           <p>
@@ -68,7 +64,7 @@ config.ready().then(() => {
         id='responseReducer'
       >
         <p>
-          You can use the <IJS>responseReducer</IJS> to automatically store the latest response
+          Use the <IJS>responseReducer</IJS> to automatically store the latest response
           object in your Redux store.
         </p>
         <PrismBlock lang='javascript'>
@@ -81,26 +77,6 @@ const store = createStore(reducer);`
           }
         </PrismBlock>
       </Section>
-
-      <Section
-        title='configReducer'
-        id='configReducer'
-      >
-        <p>
-          The <IJS>configReducer</IJS> can be used to store your Curi configuration object in
-          your Redux store. This isn't really necessary, but can be convenient.
-        </p>
-        <PrismBlock lang='javascript'>
-          {
-`const reducer = combineReducers({
-  curi: configReducer,
-  ...
-});
-const store = createStore(reducer);`
-          }
-        </PrismBlock>
-      </Section>
-
     </APIBlock>
   </BasePackage>
 );
