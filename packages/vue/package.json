@@ -46,22 +46,5 @@
     "@curi/core": "^1.0.0-beta.6",
     "@hickory/root": "^1.0.0-beta.3",
     "vue": "^2.3.3"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "testMatch": [
-      "**/tests/**/*.spec.ts"
-    ],
-    "transform": {
-      "\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "globals": {
-      "ts-jest": {
-        "module": "es6"
-      }
-    }
   }
 }
