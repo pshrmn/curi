@@ -15,8 +15,7 @@ module.exports = {
       targets: {
         browsers: ['> 1%']
       }
-    }],
-    'react'
+    }]
   ],
   plugins: plugins
 };
