@@ -83,6 +83,37 @@ describe('createRoute', () => {
           });
           expect(Parent.children).toBe(children);
         });
+
+        it('forces path match end=false when route has children', () => {
+          const First = createRoute({ name: 'First', path: 'first', children: [] });
+          const Parent = createRoute({
+            name: 'Parent',
+            path: 'parent',
+            pathOptions: { end: true },
+            children: [First]
+          });
+          const location = {
+            pathname: '/parent/first'
+          } as HickoryLocation;
+          const rc = new ResponseCreator(location.key, location);
+          const matches = Parent.match(location.pathname, rc);
+          expect(matches).toBe(true);
+        });
+
+        it('does not affect path match end value when route has no children', () => {
+          const Parent = createRoute({
+            name: 'Parent',
+            path: 'parent',
+            pathOptions: { end: true },
+            children: []
+          });
+          const location = {
+            pathname: '/parent/first'
+          } as HickoryLocation;
+          const rc = new ResponseCreator(location.key, location);
+          const matches = Parent.match(location.pathname, rc);
+          expect(matches).toBe(false);
+        });
       });
 
       describe('preload', () => {

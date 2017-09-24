@@ -1,3 +1,7 @@
+## Next
+
+* Fix bug where route with no children and path option `end=false` would match non-exact paths.
+
 ## 1.0.0-beta.6
 
 * Switch to TypeScript

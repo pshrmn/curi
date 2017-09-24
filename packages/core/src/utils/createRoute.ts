@@ -65,7 +65,7 @@ const createRoute = (options: RouteMidCreation): Route => {
   // end defaults to true, so end has to be hardcoded for it to be false
   const expectedExact = pathOptions.end == null || pathOptions.end;
   // when we have child routes, we need to perform non-end matching
-  if (children) {
+  if (children.length) {
     pathOptions.end = false;
   }
   const regexPath: Path = createPath(path, pathOptions);
@@ -83,7 +83,7 @@ const createRoute = (options: RouteMidCreation): Route => {
     keys: regexPath.keys.map(key => key.name),
     title,
     extra,
-    match: function(pathname: string, rc: ResponseCreator, parentPath: string): boolean {
+    match: function(pathname: string, rc: ResponseCreator, parentPath?: string): boolean {
       const testPath: string = stripLeadingSlash(pathname);
       const match: RegExpMatchArray = regexPath.re.exec(testPath);
       if (!match) {
