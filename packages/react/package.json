@@ -39,6 +39,9 @@
     "@curi/addon-active": "^1.0.0-beta.3",
     "@curi/core": "^1.0.0-beta.3",
     "@hickory/root": "^1.0.0-beta.3",
+    "@types/invariant": "^2.2.29",
+    "@types/prop-types": "^15.5.1",
+    "@types/react": "^16.0.5",
     "hoist-non-react-statics": "^2.3.1",
     "invariant": "^2.2.2",
     "prop-types": "^15.5.8"
@@ -46,12 +49,9 @@
   "devDependencies": {
     "@curi/addon-active": "^1.0.0-beta.3",
     "@curi/core": "^1.0.0-beta.5",
-    "@hickory/in-memory": "^1.0.0-beta.0",
-    "@types/invariant": "^2.2.29",
+    "@hickory/in-memory": "^1.0.0-beta.1",
     "@types/jest": "^21.1.0",
     "@types/node": "^8.0.30",
-    "@types/prop-types": "^15.5.1",
-    "@types/react": "^16.0.5",
     "enzyme": "^2.8.2",
     "jest": "^21.1.0",
     "prettier": "^1.5.2",
