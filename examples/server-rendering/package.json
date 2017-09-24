@@ -27,10 +27,10 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.5",
-    "@curi/react": "^1.0.0-beta.6",
-    "@hickory/hash": "^1.0.0-beta.2",
-    "@hickory/in-memory": "^1.0.0-beta.0",
+    "@curi/core": "^1.0.0-beta.6",
+    "@curi/react": "^1.0.0-beta.7",
+    "@hickory/browser": "^1.0.0-beta.3",
+    "@hickory/in-memory": "^1.0.0-beta.1",
     "express": "^4.15.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"

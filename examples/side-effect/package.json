@@ -20,10 +20,10 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.5",
-    "@curi/react": "^1.0.0-beta.6",
-    "@curi/side-effect-title": "^1.0.0-beta.3",
-    "@hickory/browser": "^1.0.0-beta.2",
+    "@curi/core": "^1.0.0-beta.6",
+    "@curi/react": "^1.0.0-beta.7",
+    "@curi/side-effect-title": "^1.0.0-beta.5",
+    "@hickory/browser": "^1.0.0-beta.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }
