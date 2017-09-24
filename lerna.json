@@ -1,9 +1,15 @@
 {
   "lerna": "2.0.0",
+  "version": "independent",
   "packages": [
     "packages/*", 
     "packages/addons/*",
     "packages/side-effects/*"
   ],
-  "version": "independent"
+  "commands": {
+    "bootstrap": {
+      "hoist": "**",
+      "nohoist": "ts-jest"
+    }
+  }
 }

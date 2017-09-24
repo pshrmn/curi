@@ -45,22 +45,5 @@
     "rollup": "^0.50.0",
     "ts-jest": "^21.0.1",
     "typescript": "^2.5.2"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "testMatch": [
-      "**/tests/**/*.spec.ts"
-    ],
-    "transform": {
-      "\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "globals": {
-      "ts-jest": {
-        "module": "es6"
-      }
-    }
   }
 }
