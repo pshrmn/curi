@@ -297,6 +297,43 @@ const contact = {
           </li>
         </ul>
       </Subsection>
+
+      <Subsection
+        title='extra'
+        id='extra'
+      >
+        <p>
+          If you have any additional properties that you want attached to a route, use the <IJS>extra</IJS> property. You will be
+          able to use <IJS>route.extra</IJS> in any custom addons or when a route matches via <IJS>response.route.extra</IJS>.
+        </p>
+
+        <p>
+          You can attach anything you want to <IJS>extra</IJS> or you may never find yourself needing to use this. One possible
+          use case for <IJS>extra</IJS> is that you could specify entrance/exit animation types. One route might want to fade in,
+          while another might slide in.
+        </p>
+
+        <PrismBlock lang='javascript'>
+          {
+`const routes = [
+  {
+    name: 'A Route',
+    path: 'a-route',
+    extra: {
+      transition: 'fade'
+    }
+  },
+  {
+    name: 'B Route',
+    path: 'b-route',
+    extra: {
+      enter: 'slide-right'
+    }
+  }
+];`
+          }
+        </PrismBlock>
+      </Subsection>
     </Section>
 
     <div>
