@@ -16,9 +16,9 @@ export default {
         Package = <div>Sorry, something went wrong...</div>;
       })
   },
-  load: (params, rc) => {
+  load: (params, location, mods) => {
     if (byName[params.package]) {
-      rc.setData(byName[params.package]);
+      mods.setData(byName[params.package]);
     }
     return Promise.resolve();
   },

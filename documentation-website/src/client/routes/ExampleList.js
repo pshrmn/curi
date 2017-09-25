@@ -3,7 +3,7 @@ import exampleRoute from './Example';
 
 export default {
   name: 'Examples',
-  path: 'examples/',
+  path: 'examples',
   body: () => ExampleList,
   title: 'Examples',
   children: [exampleRoute]
