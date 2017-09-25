@@ -16,7 +16,8 @@ describe('createRoute', () => {
         'children',
         'preload',
         'load',
-        'match'
+        'match',
+        'extra'
       ];
       expectedProperties.forEach(key => {
         expect(testRoute.hasOwnProperty(key)).toBe(true);
@@ -165,6 +166,24 @@ describe('createRoute', () => {
         it("will be undefined when load isn't defined", () => {
           const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
           expect(testRoute.load).toBeUndefined();
+        });
+      });
+
+      describe('extra', () => {
+        it('can be used to attach extra key-value pairs to the route', () => {
+          const loadTest = () => Promise.resolve();
+          const extra = {
+            unofficial: true,
+            another: 1
+          };
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test',
+            load: loadTest,
+            children: [],
+            extra
+          });
+          expect(testRoute.extra).toBe(extra);
         });
       });
     });
