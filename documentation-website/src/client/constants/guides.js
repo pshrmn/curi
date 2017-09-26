@@ -58,6 +58,12 @@ const guides = [
     slug: 'react',
     description: 'Learn the basics of how to use Curi with a React application',
     type: 'advanced'
+  },
+  {
+    name: 'Migrate from React Router v2/3',
+    slug: 'migrate-rrv3',
+    descriptioni: 'Learn how to migrate an application from React Router v2 or v3 to Curi',
+    type: 'migration'
   }
 ];
 

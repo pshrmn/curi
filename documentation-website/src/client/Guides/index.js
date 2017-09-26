@@ -8,6 +8,7 @@ import ResponseCaching from './ResponseCaching';
 import CodeSplitting from './CodeSplitting';
 import Load from './Load';
 import ReactBasics from './ReactBasics';
+import MigrateReactRouterv3 from './MigrateReactRouterv3';
 
 export default {
   'installation': Installation,
@@ -19,5 +20,6 @@ export default {
   'response-caching': ResponseCaching,
   'code-splitting': CodeSplitting,
   'load': Load,
-  'react': ReactBasics
+  'react': ReactBasics,
+  'migrate-rrv3': MigrateReactRouterv3
 };
