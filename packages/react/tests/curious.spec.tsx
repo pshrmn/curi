@@ -53,6 +53,7 @@ describe('curious', () => {
     });
     expect(ref).toBeInstanceOf(TestComponent);
     const wrappedTest = wrapper.find(TestComponent);
-    expect(ref).toBe(wrappedTest.node);
+    const node = wrappedTest.instance();
+    expect(ref).toBe(node);
   });
 });

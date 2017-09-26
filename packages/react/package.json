@@ -33,7 +33,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^15"
+    "react": ">=15"
   },
   "dependencies": {
     "@curi/addon-active": "^1.0.0-beta.4",
@@ -50,14 +50,16 @@
     "@curi/addon-active": "^1.0.0-beta.4",
     "@curi/core": "^1.0.0-beta.6",
     "@hickory/in-memory": "^1.0.0-beta.1",
+    "@types/enzyme": "^2.8.8",
     "@types/jest": "^21.1.0",
     "@types/node": "^8.0.30",
-    "enzyme": "^2.8.2",
+    "enzyme": "^3.0.0",
+    "enzyme-adapter-react-16": "^1.0.0",
     "jest": "^21.1.0",
     "prettier": "^1.5.2",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-test-renderer": "^15.5.4",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-test-renderer": "^16.0.0",
     "rimraf": "^2.6.1",
     "rollup": "^0.50.0",
     "ts-jest": "^21.0.1",

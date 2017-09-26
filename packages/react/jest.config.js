@@ -15,5 +15,6 @@ module.exports = {
     "ts-jest": {
       "module": "es6"
     }
-  }
+  },
+  "setupFiles": ["<rootDir>/tests/setup/rAF.js", "<rootDir>/tests/setup/enzyme.js"]
 };

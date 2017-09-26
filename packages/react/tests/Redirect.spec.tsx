@@ -29,7 +29,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: '/park'
+          path: 'park'
         }
       ]);
       const wrapper = mount(<Redirect to="Park" />, {
@@ -44,7 +44,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: '/park/:name'
+          path: 'park/:name'
         }
       ]);
       const wrapper = mount(
@@ -60,7 +60,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: '/park'
+          path: 'park'
         }
       ]);
       const loc = { search: '?camping=true' };
@@ -76,7 +76,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: '/park/:name'
+          path: 'park/:name'
         }
       ]);
       const loc = { pathname: '/park/Canyon+Land' };
@@ -97,7 +97,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: '/park/:name'
+          path: 'park/:name'
         }
       ]);
       const loc = { search: '?yes=no', hash: '#never' };
@@ -116,7 +116,7 @@ describe('<Redirect>', () => {
       const config = createConfig(history, [
         {
           name: 'Park',
-          path: '/park/:name'
+          path: 'park/:name'
         }
       ]);
       const loc = { pathname: '/other-place' };
@@ -128,22 +128,30 @@ describe('<Redirect>', () => {
 
   describe('children', () => {
     it('renders null when it has no children', () => {
-      const fakeConfig = {};
+      const history = InMemory();
+      history.replace = jest.fn();
+      const config = createConfig(history, [
+        { name: 'Home', path: '' }
+      ]);
       const loc = { pathname: '/other-place' };
       const wrapper = shallow(<Redirect details={loc} />, {
-        context: { curi: fakeConfig }
+        context: { curi: config }
       });
       expect(wrapper.type()).toBe(null);
     });
 
     it('renders its children element', () => {
-      const fakeConfig = {};
+      const history = InMemory();
+      history.replace = jest.fn();
+      const config = createConfig(history, [
+        { name: 'Home', path: '' }
+      ]);
       const loc = { pathname: '/other-place' };
       const wrapper = shallow(
         <Redirect details={loc}>
           <div>Redirecting...</div>
         </Redirect>,
-        { context: { curi: fakeConfig } }
+        { context: { curi: config } }
       );
       expect(wrapper.type()).toBe('div');
       expect(wrapper.text()).toBe('Redirecting...');
