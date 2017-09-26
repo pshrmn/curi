@@ -1,3 +1,7 @@
+## 1.0.0-beta.8
+
+* Update React peer dependency to allow React 16.
+
 ## 1.0.0-beta.7
 
 * Switch to TypeScript
