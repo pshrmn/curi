@@ -1,4 +1,5 @@
 import 'jest';
+import { Spy } from 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import InMemory from '@hickory/in-memory';
@@ -61,12 +62,12 @@ describe('<Link>', () => {
       expect(a.prop('href')).toBe('/');
     });
 
-    it("uses the current location's pathname if not provided", () => {
+    it("uses the current location's pathname if 'to' is not provided", () => {
       const history = InMemory({
         locations: ['/the-initial-location']
       });
       const config = createConfig(history, []);
-      const wrapper = shallow(<Link>Test</Link>, {
+      const wrapper = shallow(<Link to={null}>Test</Link>, {
         context: { curi: config }
       });
       const a = wrapper.find('a');
@@ -262,7 +263,7 @@ describe('<Link>', () => {
         button: 0
       };
       wrapper.find('a').simulate('click', leftClickEvent);
-      expect(history.update.mock.calls.length).toBe(1);
+      expect((history.update as Spy).mock.calls.length).toBe(1);
     });
 
     describe('onClick', () => {
@@ -292,7 +293,7 @@ describe('<Link>', () => {
         };
         wrapper.find('a').simulate('click', leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
-        expect(history.update.mock.calls.length).toBe(1);
+        expect((history.update as Spy).mock.calls.length).toBe(1);
       });
 
       it('does not call history.update if onClick prevents default', () => {
@@ -323,7 +324,7 @@ describe('<Link>', () => {
         };
         wrapper.find('a').simulate('click', leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
-        expect(history.update.mock.calls.length).toBe(0);
+        expect((history.update as Spy).mock.calls.length).toBe(0);
       });
     });
 
@@ -351,7 +352,7 @@ describe('<Link>', () => {
         const eventCopy = Object.assign({}, modifiedClickEvent);
         eventCopy[m] = true;
         wrapper.find('a').simulate('click', eventCopy);
-        expect(history.update.mock.calls.length).toBe(0);
+        expect((history.update as Spy).mock.calls.length).toBe(0);
       });
     });
 
@@ -375,7 +376,7 @@ describe('<Link>', () => {
         button: 0
       };
       wrapper.find('a').simulate('click', preventedEvent);
-      expect(history.update.mock.calls.length).toBe(0);
+      expect((history.update as Spy).mock.calls.length).toBe(0);
     });
   });
 });

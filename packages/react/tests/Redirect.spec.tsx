@@ -1,4 +1,5 @@
 import 'jest';
+import { Spy } from 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import InMemory from '@hickory/in-memory';
@@ -105,7 +106,7 @@ describe('<Redirect>', () => {
         <Redirect to="Park" params={{ name: 'Yosemite' }} details={loc} />,
         { context: { curi: config } }
       );
-      const redirectedTo = history.replace.mock.calls[0][0];
+      const redirectedTo = (history.replace as Spy).mock.calls[0][0];
       expect(redirectedTo.search).toEqual(loc.search);
       expect(redirectedTo.hash).toEqual(loc.hash);
     });
@@ -121,7 +122,7 @@ describe('<Redirect>', () => {
       ]);
       const loc = { pathname: '/other-place' };
       mount(<Redirect details={loc} />, { context: { curi: config } });
-      const redirectedTo = history.replace.mock.calls[0][0];
+      const redirectedTo = (history.replace as Spy).mock.calls[0][0];
       expect(redirectedTo.pathname).toEqual('/other-place');
     });
   });
