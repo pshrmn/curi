@@ -1,3 +1,7 @@
+## Next
+
+* Pass `action` to `<Navigator>`'s `render` function. New signature is `function(response, action, config) {}`.
+
 ## 1.0.0-beta.8
 
 * Update React peer dependency to allow React 16.

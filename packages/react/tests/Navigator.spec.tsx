@@ -1,4 +1,5 @@
 import 'jest';
+import { Spy } from 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import PropTypes from 'prop-types';
@@ -9,11 +10,13 @@ import { AnyResponse } from '@curi/core';
 
 describe('<Navigator>', () => {
   it('calls render function when it renders', () => {
+    const history = InMemory();
+    const config = createConfig(history, []);
     const fakeConfig = { subscribe: () => {} };
     const fn = jest.fn(() => {
       return null;
     });
-    const wrapper = shallow(<Navigator config={fakeConfig} render={fn} />);
+    const wrapper = shallow(<Navigator config={config} render={fn} />);
     expect(fn.mock.calls.length).toBe(1);
   });
 
@@ -53,6 +56,45 @@ describe('<Navigator>', () => {
     });
   });
 
+  it('passes the render function the action string "PUSH" as default', () => {
+    const history = InMemory();
+    const routes = [
+      { name: 'Home', path: '', pathOptions: { end: true } },
+      { name: 'About', path: 'about' }
+    ];
+    const fn = jest.fn(() => {
+      return null;
+    });
+
+    const config = createConfig(history, routes);
+    expect.assertions(1);
+    return config.ready().then(() => {
+      const wrapper = shallow(<Navigator config={config} render={fn} />);
+      expect(fn.mock.calls[0][1]).toBe('PUSH');
+    });
+  });
+
+  it('passes the render function the action string', () => {
+    const history = InMemory();
+    const routes = [
+      { name: 'Home', path: '', pathOptions: { end: true } },
+      { name: 'About', path: 'about' }
+    ];
+    const fn = jest.fn(() => {
+      return null;
+    });
+
+    const config = createConfig(history, routes);
+    // by calling this before config.ready, we know that config.ready
+    // will resolve with this response instead of initial one
+    config.history.replace({ pathname: '/about' })
+    expect.assertions(1);
+    return config.ready().then((resp) => {
+      const wrapper = shallow(<Navigator config={config} render={fn} />);
+      expect(fn.mock.calls[0][1]).toBe('REPLACE');
+    });
+  });
+
   it('passes the render function the config object', () => {
     const history = InMemory();
     const routes = [
@@ -67,7 +109,7 @@ describe('<Navigator>', () => {
     expect.assertions(1);
     return config.ready().then(resp => {
       const wrapper = shallow(<Navigator config={config} render={fn} />);
-      expect(fn.mock.calls[0][1]).toBe(config);
+      expect(fn.mock.calls[0][2]).toBe(config);
     });
   });
 
@@ -133,7 +175,7 @@ describe('<Navigator>', () => {
         const wrapper = shallow(
           <Navigator response={response} config={config} render={(r) => null} />
         );
-        expect(config.subscribe.mock.calls.length).toBe(0);
+        expect((config.subscribe as Spy).mock.calls.length).toBe(0);
       });
     });
   });
@@ -156,13 +198,13 @@ describe('<Navigator>', () => {
       });
 
       expect(unsub.mock.calls.length).toBe(0);
-      expect(config.subscribe.mock.calls.length).toBe(0);
+      expect((config.subscribe as Spy).mock.calls.length).toBe(0);
 
       return config.ready().then(response => {
         const wrapper = shallow(
           <Navigator config={config} render={fn} />
         );
-        expect(config.subscribe.mock.calls.length).toBe(1);
+        expect((config.subscribe as Spy).mock.calls.length).toBe(1);
         expect(unsub.mock.calls.length).toBe(0);
         wrapper.unmount();
         expect(unsub.mock.calls.length).toBe(1);  

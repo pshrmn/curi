@@ -5,12 +5,13 @@ import { CuriContext } from './interface';
 
 export interface NavigatorProps {
   config: CuriConfig;
-  render: (r: AnyResponse, c?: CuriConfig) => React.ReactElement<any>;
+  render: (r: AnyResponse, action: string, c?: CuriConfig) => React.ReactElement<any>;
   response?: AnyResponse;
 }
 
 export interface NavigatorState {
   response: AnyResponse;
+  action: string;
 }
 
 class Navigator extends React.Component<NavigatorProps, NavigatorState> {
@@ -22,7 +23,8 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
   };
 
   state: NavigatorState = {
-    response: undefined
+    response: undefined,
+    action: 'PUSH'
   };
 
   getChildContext(): CuriContext {
@@ -32,13 +34,13 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
     };
   }
 
-  setResponse = (response: AnyResponse) => {
-    this.setState({ response });
+  setResponse = (response: AnyResponse, action: string) => {
+    this.setState({ response, action });
   };
 
   componentWillMount() {
     if (this.props.response) {
-      this.setResponse(this.props.response);
+      this.setResponse(this.props.response, 'PUSH');
     } else {
       this.unsubscribe = this.props.config.subscribe(this.setResponse);
     }
@@ -51,7 +53,7 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
   }
 
   render(): React.ReactElement<any> {
-    return this.props.render(this.state.response, this.props.config);
+    return this.props.render(this.state.response, this.state.action, this.props.config);
   }
 }
 
