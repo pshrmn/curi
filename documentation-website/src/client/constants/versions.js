@@ -4,7 +4,7 @@ export default {
   "addon-ancestors": "1.0.0-beta.4",
   "addon-prefetch": "1.0.0-beta.4",
   "core": "1.0.0-beta.6",
-  "react": "1.0.0-beta.7",
+  "react": "1.0.0-beta.8",
   "redux": "1.0.0-alpha.1",
   "side-effect-scroll": "1.0.0-beta.4",
   "side-effect-title": "1.0.0-beta.4",

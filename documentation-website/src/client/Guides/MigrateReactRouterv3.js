@@ -14,20 +14,11 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      The Curi router is somewhat similar to React Router versions 2 and 3, so migration is fairly easy.
+      The Curi router is somewhat similar to React Router versions 2 and 3, so migration is fairly easy. For
+      instance, both use a centralized route configuration. Both configurations are made up of route objects
+      (although with React Router some of these are disguised as JSX with <Cmp>Route</Cmp> components). With
+      both, routes can be nested, allowing child routes to build off of the paths from their parent routes.
     </p>
-    <ol>
-      <li>
-        Both use a centralized route configuration.
-      </li>
-      <li>
-        Both configurations are made up of a route objects (sometimes disguised as JSX with <Cmp>Route</Cmp> objects
-        in React Router)
-      </li>
-      <li>
-        Both allow you to nest routes.
-      </li>
-    </ol>
     <p>
       Migration from React Router v2/3 to Curi should not require a complete reworking of your application,
       but there are some key differences.
@@ -37,8 +28,9 @@ export default ({ name }) => (
         The routing is handled entirely outside of React. With Curi, there are no <Cmp>Route</Cmp> components.
       </li>
       <li>
-        When a nested route matches, only that route renders. Any ancestor routes that also (partially)
-        match are not rendered with Curi.
+        With Curi, when a nested route matches, only that route renders. Any ancestor routes that also (partially)
+        match are not rendered. This is different from React Router, where ancestors of the best matched route
+        also render.
       </li>
     </ol>
 
@@ -109,12 +101,12 @@ export default ({ name }) => (
         <p>
           Routes in Curi are always JavaScript objects. Like React Router, each route object has a path property that
           describes the path segments that the route matches. React Router v2/3 uses a custom path matcher, but Curi
-          uses <a href="https://github.com/pillarjs/path-to-regexp"><IJS>path-to-regexp</IJS></a>. You can read learn
-          how to format paths from the <IJS>path-to-regexp</IJS> repo. 
+          uses <IJS>path-to-regexp</IJS>. You can read learn how to format paths from the{' '}
+          <a href="https://github.com/pillarjs/path-to-regexp"><IJS>path-to-regexp</IJS> repo</a>. 
         </p>
 
         <p>
-          First, we will just define our routes the paths.
+          First, we will just define the paths for our routes.
         </p>
         <PrismBlock lang='javascript'>
           {
@@ -135,9 +127,9 @@ export default ({ name }) => (
         </PrismBlock>
 
         <p>
-          The only real difference between the Curi paths and the React Router paths is that the root path for Curi
-          is <IJS>''</IJS> while the root path for React Router is <IJS>'/'</IJS>. With Curi, you never include the leading
-          forward slash.
+          The biggest difference between the Curi paths and the React Router paths is that with Curi, you never include a forward
+          slash at the beginning of the path. This means that while the root path for React Router is <IJS>'/'</IJS>, the root path
+          for Curi is <IJS>''</IJS>.
         </p>
         <p>
           Next, we should add our components to each route. We will ignore the <Cmp>App</Cmp> component that is used in the
@@ -147,6 +139,12 @@ export default ({ name }) => (
           With Curi routes, we have a <IJS>body</IJS> property. This is a function that will be called whenever the route matches.
           Its return value will be added to the response object that Curi creates (more on that later). For this React application,
           we want our <IJS>body</IJS> functions to return the React component associated with each route.
+        </p>
+        <p>
+          <IJS>body</IJS> is a function and not a value because we might not always have access to the body value when the application
+          loads. For example, with code splitting, we might not load the module until the user navigates to the route. Then, we would
+          store the component in a cache and have the <IJS>body</IJS> function return the component from the cache. You can read the{' '}
+          <Link to='Guide' params={{ slug: 'code-splitting' }}>code splitting guide</Link> for more information on how to do that.
         </p>
         <PrismBlock lang='javascript'>
           {
@@ -171,8 +169,8 @@ export default ({ name }) => (
         <p>
           We are close to replicating our React Router routes, we just have to implement the <IJS>on___</IJS> methods for
           our <IJS>:message</IJS> route. With Curi, routes have two possible loading function properties: <IJS>preload</IJS>
-          {' '}and <IJS>load</IJS>. <IJS>preload</IJS> is useful for tasks that only need to be run once per route, like
-          code splitting. <IJS>load</IJS>, on the other hand, will be called every time that a route matches.
+          {' '}and <IJS>load</IJS>. <IJS>preload</IJS> is useful for tasks that only need to be run once per route, like the
+          code splitting mentioned above. <IJS>load</IJS>, on the other hand, will be called every time that a route matches.
         </p>
         <p>
           With React Router, <IJS>onEnter</IJS> is called when the route first matches, while <IJS>onChange</IJS> is called when
@@ -211,7 +209,8 @@ export default ({ name }) => (
         <p>
           <IJS>params</IJS> is an object of parsed path parameters, <IJS>location</IJS> is the current location object, and <IJS>mods</IJS>
           {' '}is an object with functions to modify the response. For example, <IJS>mods.setData</IJS> allows you to attach loaded data to
-          the response object.
+          the response object. The <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'load' }}>routes guide</Link> covers all of
+          the functions provided by the <IJS>mods</IJS> object.
         </p>
         <p>
           We now have the equivalent routes implemented in Curi, but we have one last step. With Curi, each route has to have a unique name.
@@ -242,7 +241,8 @@ export default ({ name }) => (
         </PrismBlock>
         <p>
           Curi uses route names to allow you to interact with routes. For example, you can navigate to the “Inbox” route just by knowing its
-          name instead of its URI. With Curi, you never have to generate a URI yourself!
+          name instead of its URI. This can be especially handy when dealing with complicated pathnames or if you need to change the URI structure
+          of your website. With Curi, you never have to write a URI yourself!
         </p>
       </Subsection>
       <p>
@@ -269,7 +269,10 @@ ReactDOM.render((
         }
       </PrismBlock>
       <p>
-        With Curi, the configuration object is created prior to rendering. It takes a Hickory history object, your routes array, and possibly an options object. 
+        With Curi, the configuration object is created prior to rendering. It takes a Hickory history object, your routes array, and possibly
+        an options object. <a href='https://github.com/pshrmn/hickory'>Hickory</a> is similar to the <IJS>history</IJS> package used by
+        React Router, but has a slight modified API (easier navigation blocking and navigation that imitates how anchors work) and more convenient
+        location objects (you can use a <IJS>query</IJS> object instead of having to manually create a <IJS>search</IJS> string).
       </p>
       <PrismBlock lang='javascript'>
         {
@@ -277,7 +280,7 @@ ReactDOM.render((
 import Browser from '@hickory/browser';
 const history = Browser();
 const routes = [...];
-const config = creatConfig(history, routes);`
+const config = create1Config(history, routes);`
         }
       </PrismBlock>
     </Section>
@@ -288,13 +291,14 @@ const config = creatConfig(history, routes);`
     >
       <p>
         At this point, our Curi configuration object isn’t actually quite ready to render. Curi creates response objects asynchronously,
-        so if we render right away, we might not have a response object to render with. We can work around this by rendering nothing at
-        first, but instead we should just wait for our initial response to be ready.
+        so if we render right away, we might not have a response object to render with. We can work around this by rendering nothing
+        (<IJS>null</IJS>) at first, but instead we should usually just wait for our initial response to be ready.
       </p>
       <PrismBlock lang='javascript'>
         {
 `config.ready().then(() => {
-  // now we can render
+  // now our first response has resolved, so we
+  // know that we will render with an actual response
 });`
         }
       </PrismBlock>
@@ -476,7 +480,7 @@ function render(response) {
         </li>
         <li>
           <p>
-            Active detection with Curi is a little more involved than with React Router, but also more powerful. With Curi, you provide a{' '}
+            Active detection with Curi is more complicated than with React Router, but also more powerful. With Curi, you provide a{' '}
             <IJS>merge</IJS> function that receives the props that will used to render the <Cmp>a</Cmp> and allows you to modify/add props.
             You can also pass <IJS>partial: true</IJS> to allow for partial matches to be considered active (the opposite of React Router's{' '}
             <IJS>onlyActiveOnIndex</IJS>).
@@ -495,6 +499,9 @@ import createActiveAddon from '@curi/addon-active';
 const config = createConfig(history, routes, {
   createActiveAddon
 });
+
+// pass the merge function to your <Link>. The props it returns
+// will be passed to the anchor rendered by the <Link>
 function merge(props) {
   props.className = 'active';
   return props;
@@ -527,5 +534,10 @@ export default curious(SomeComponent);`
         <IJS>curious</IJS> will inject the Curi configuration object and the current response object into the wrapped component.
       </p>
     </Section>
+
+    <p>
+      At this point, hopefully you are comfortable with migrating from React Router v2/3 to Curi. If there are any concepts not covered
+      here that you think should be, please feel free to open up an issue <a href="https://github.com/pshrmn/curi/issues">on GitHub</a>.
+    </p>
   </BaseGuide>
 );

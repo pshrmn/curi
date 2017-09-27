@@ -52,8 +52,8 @@ export default ({ name }) => (
       The load function will be passed three arguments: the params object that contains variables
       parsed from the location's pathname, the location object used to match the route, 
       and a modifiers object. The modifiers object has a few methods that you can call in order to
-      modify the response object that will be generated. They are fail, setStatus, setData and
-      redirect. They are explained in more detail in the{' '}
+      modify the response object that will be generated. They are <IJS>fail</IJS>, <IJS>setStatus</IJS>,
+      <IJS>setData</IJS> and <IJS>redirect</IJS>. They are explained in more detail in the{' '}
       <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'load'}}>all about routes</Link>
       {' '}guide. Here, we will use the last two: setData and redirect.
     </p>
