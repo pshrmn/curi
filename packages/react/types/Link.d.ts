@@ -6,7 +6,7 @@ export interface ActiveLink {
     merge: (props: object) => object;
     partial?: boolean;
 }
-export interface LinkProps {
+export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     to: string;
     params?: object;
     details?: object;
