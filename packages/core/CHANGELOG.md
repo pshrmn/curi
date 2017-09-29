@@ -1,5 +1,6 @@
 ## Next
 
+* Don't emit response when there is an error generating a response. The error will be logged (using `console.error`). It is up to the user to make sure that their `load`/`preload` functions catch any errors.
 * Fix bug where route with no children and path option `end=false` would match non-exact paths.
 
 ## 1.0.0-beta.6

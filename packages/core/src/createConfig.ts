@@ -97,10 +97,7 @@ function createConfig(
     return Promise.all([
       preload ? preload() : null,
       load ? load(rc.params, rc.location, modifiers) : null
-    ])
-      .catch(err => { rc.fail(err); })
-      // ALWAYS return the response
-      .then(() => rc);
+    ]).then(() => rc);
   };
 
   function finalizeResponse(rc: ResponseCreator): AnyResponse {
@@ -171,14 +168,20 @@ function createConfig(
   // create a response object using the current location and
   // emit it to any subscribed functions
   function makeResponse(location: HickoryLocation, action: string): void {
-    responseInProgress = prepareResponse(location).then(response => {
-      const emitted = emit(response, action);
-      // only store these after we have emitted.
-      if (emitted) {
-        previous = [response, action];
+    responseInProgress = prepareResponse(location).then(
+      response => {
+        const emitted = emit(response, action);
+        // only store these after we have emitted.
+        if (emitted) {
+          previous = [response, action];
+        }
+        return response;
+      },
+      err => {
+        console.error(err);
+        return null;
       }
-      return response;
-    });
+    );
   };
 
   // now that everything is defined, actually do the setup

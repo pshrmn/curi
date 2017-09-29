@@ -283,6 +283,206 @@ describe('createConfig', () => {
     });
   });
 
+  describe('route matching', () => {
+    describe('response', () => {
+      it('is null if either load or preload fail (and error is logged)', () => {
+        const err = console.error;
+        console.error = jest.fn();
+        const routes = [
+          {
+            name: 'Contact',
+            path: 'contact',
+            load: () => {
+              return Promise.reject('This is an error');
+            }
+          }
+        ];
+        const history = InMemory({
+          locations: ['/contact']
+        });
+        const config = createConfig(history, routes);
+        expect.assertions(3);
+        return config.ready().then(arg => {
+          expect(arg).toBe(null);
+          expect(console.error.mock.calls.length).toBe(1);
+          expect(console.error.mock.calls[0][0]).toBe('This is an error');
+          console.error = err;
+        });
+      });
+
+      describe('error', () => {
+        it('is undefined for good responses', () => {
+          const routes = [{ name: 'Contact', path: 'contact' }];
+          const history = InMemory({
+            locations: ['/contact']
+          });
+          const config = createConfig(history, routes);
+          expect.assertions(1);
+          return config.ready().then(arg => {
+            expect((<Response>arg).error).toBeUndefined();
+          });
+        });
+    
+      });
+
+      describe('status', () => {
+        it('is 404 if no routes match', () => {
+          const routes = [
+            {
+              name: 'Contact',
+              path: 'contact',
+              children: [
+                { name: 'Email', path: 'email' },
+                { name: 'Phone', path: 'phone' }
+              ]
+            }
+          ];
+          const history = InMemory({ locations: ['/other-page'] });
+          const config = createConfig(history, routes);
+          expect.assertions(1);
+          config.ready().then(resp => {
+            expect(resp.status).toBe(404);
+          });
+        });
+      });
+
+      describe('body', () => {
+        it('is set after load/preload have resolved', () => {
+          let bodyValue;
+          const Route = {
+            name: 'A Route',
+            path: 'a-route',
+            load: () => {
+              bodyValue = 'testing';
+              return Promise.resolve(true);
+            },
+            body: () => bodyValue
+          };
+          const history = InMemory({ locations: ['/a-route'] });
+          const config = createConfig(history, [Route]);
+          expect.assertions(1);
+          return config.ready().then(response => {
+            expect((<Response>response).body).toBe('testing');
+          });
+        });
+      });
+    });
+
+    describe('load', () => {
+      it('passes params, location, and modifier methods to load function', () => {
+        const spy = jest.fn((params, location, modifiers) => {
+          expect(params).toMatchObject({ anything: 'hello' });
+          expect(location).toMatchObject({
+            pathname: '/hello',
+            query: 'one=two'
+          })
+          expect(modifiers).toMatchObject(expect.objectContaining({
+            fail: expect.any(Function),
+            redirect: expect.any(Function),
+            setData: expect.any(Function),
+            setStatus: expect.any(Function)
+          }));
+        });
+  
+        const CatchAll = {
+          name: 'Catch All',
+          path: ':anything',
+          load: spy
+        };
+  
+        const history = InMemory({ locations: ['/hello?one=two'] });
+        const config = createConfig(history, [CatchAll]);
+        expect.assertions(3);
+        return config.ready();
+      });
+
+      describe('setData', () => {
+        it('sets response.data', () => {
+          const routes = [
+            {
+              name: 'A Route',
+              path: '',
+              load: (params, location, mods) => {
+                mods.setData({ test: 'value' });
+                return Promise.resolve();
+              }
+            }
+          ];
+    
+          const config = createConfig(history, routes);
+          expect.assertions(1);
+          return config.ready().then(response => {
+            expect(response.data).toMatchObject({ test: 'value' });
+          });
+        });
+      });
+  
+      describe('setStatus', () => {
+        it('sets response.status', () => {
+          const routes = [
+            {
+              name: 'A Route',
+              path: '',
+              load: (params, location, mods) => {
+                mods.setStatus(451);
+                return Promise.resolve();
+              }
+            }
+          ];
+          
+          const config = createConfig(history, routes);
+          expect.assertions(1);
+          return config.ready().then(response => {
+            expect(response.status).toBe(451);
+          });
+        });
+      });
+
+      describe('fail', () => {
+        it('sets response.error', () => {
+          const routes = [
+            {
+              name: 'A Route',
+              path: '',
+              load: (params, location, mods) => {
+                mods.fail('woops');
+                return Promise.resolve();
+              }
+            }
+          ];
+    
+          const config = createConfig(history, routes);
+          expect.assertions(1);
+          return config.ready().then(response => {
+            expect((<Response>response).error).toBe('woops');
+          });
+        });
+      });
+  
+      describe('redirect', () => {
+        it('sets response.redirectTo and response.status', () => {
+          const routes = [
+            {
+              name: 'A Route',
+              path: '',
+              load: (params, location, mods) => {
+                mods.redirect('/somewhere');
+                return Promise.resolve();
+              }
+            }
+          ];
+    
+          const config = createConfig(history, routes);
+          expect.assertions(2);
+          return config.ready().then(response => {
+            expect(response.status).toBe(301);
+            expect((<RedirectResponse>response).redirectTo).toBe('/somewhere');
+          });
+        });
+      });
+    });
+  });
+
   describe('refresh', () => {
     const err = console.error;
 
@@ -323,72 +523,38 @@ describe('createConfig', () => {
   });
 
   describe('ready', () => {
-    describe('resolve value', () => {
-      it('returns a Promise with an object generated by a Response', () => {
-        const routes = [
-          {
-            name: 'Contact',
-            path: 'contact',
-            children: [
-              { name: 'Email', path: 'email' },
-              { name: 'Phone', path: 'phone' }
-            ]
-          }
-        ];
-        const history = InMemory({
-          locations: ['/contact/email']
-        });
-        const config = createConfig(history, routes);
-        const properties = [
-          'key',
-          'location',
-          'status',
-          'body',
-          'name',
-          'partials',
-          'params',
-          'error',
-          'data',
-          'title'
-        ];
-        expect.assertions(properties.length + 1);
-        return config.ready().then(arg => {
-          expect(Object.keys(arg).length).toEqual(properties.length);
-          properties.forEach(prop => {
-            expect(arg.hasOwnProperty(prop)).toBe(true);
-          });
-        });
+    it('returns a Promise that resolves with a response object', () => {
+      const routes = [
+        {
+          name: 'Contact',
+          path: 'contact',
+          children: [
+            { name: 'Email', path: 'email' },
+            { name: 'Phone', path: 'phone' }
+          ]
+        }
+      ];
+      const history = InMemory({
+        locations: ['/contact/email']
       });
-
-      it('resolved value has undefined error for good responses', () => {
-        const routes = [{ name: 'Contact', path: 'contact' }];
-        const history = InMemory({
-          locations: ['/contact']
-        });
-        const config = createConfig(history, routes);
-        expect.assertions(1);
-        return config.ready().then(arg => {
-          expect((<Response>arg).error).toBeUndefined();
-        });
-      });
-
-      it('resolved value has error either load/preload fail', () => {
-        const routes = [
-          {
-            name: 'Contact',
-            path: 'contact',
-            load: () => {
-              return Promise.reject('This is an error');
-            }
-          }
-        ];
-        const history = InMemory({
-          locations: ['/contact']
-        });
-        const config = createConfig(history, routes);
-        expect.assertions(1);
-        return config.ready().then(arg => {
-          expect((<Response>arg).error).toBe('This is an error');
+      const config = createConfig(history, routes);
+      const properties = [
+        'key',
+        'location',
+        'status',
+        'body',
+        'name',
+        'partials',
+        'params',
+        'error',
+        'data',
+        'title'
+      ];
+      expect.assertions(properties.length + 1);
+      return config.ready().then(arg => {
+        expect(Object.keys(arg).length).toEqual(properties.length);
+        properties.forEach(prop => {
+          expect(arg.hasOwnProperty(prop)).toBe(true);
         });
       });
     });
@@ -413,7 +579,7 @@ describe('createConfig', () => {
       });
     });
 
-    it('uses the last response if calling ready after a response has been created', () => {
+    it('will resolve with the last response if calling ready after a response has been created', () => {
       const routes = [
         {
           name: 'Contact',
@@ -433,169 +599,6 @@ describe('createConfig', () => {
         config.ready().then(readyTwo => {
           expect(readyTwo).toBe(readyOne);
         });
-      });
-    });
-  });
-
-  // not an actual function, but grouping some response related tests here
-  describe('response', () => {
-    it('sets 404 if no routes match', () => {
-      const routes = [
-        {
-          name: 'Contact',
-          path: 'contact',
-          children: [
-            { name: 'Email', path: 'email' },
-            { name: 'Phone', path: 'phone' }
-          ]
-        }
-      ];
-      const history = InMemory({ locations: ['/other-page'] });
-      const config = createConfig(history, routes);
-      expect.assertions(1);
-      config.ready().then(resp => {
-        expect(resp.status).toBe(404);
-      });
-    });
-
-    it('handles route promises that are rejected', () => {
-      const routes = [
-        {
-          name: 'Home',
-          path: '',
-          load: () => {
-            return Promise.reject('oh no');
-          }
-        }
-      ];
-      const config = createConfig(history, routes);
-
-      return config.ready()
-        .then(resp => {
-          expect((<Response>resp).error).toBe('oh no');
-        });
-    });
-
-    it('passes params and some response creator methods to load function', () => {
-      const spy = jest.fn((params, location, modifiers) => {
-        expect(params).toMatchObject({ anything: 'hello' });
-        expect(location).toMatchObject({
-          pathname: '/hello',
-          query: 'one=two'
-        })
-        expect(modifiers).toMatchObject(expect.objectContaining({
-          fail: expect.any(Function),
-          redirect: expect.any(Function),
-          setData: expect.any(Function),
-          setStatus: expect.any(Function)
-        }));
-      });
-
-      const CatchAll = {
-        name: 'Catch All',
-        path: ':anything',
-        load: spy
-      };
-
-      const history = InMemory({ locations: ['/hello?one=two'] });
-      const config = createConfig(history, [CatchAll]);
-      expect.assertions(3);
-      return config.ready();
-    });
-
-    it('has data set if load calls setData', () => {
-      const routes = [
-        {
-          name: 'A Route',
-          path: '',
-          load: (params, location, mods) => {
-            mods.setData({ test: 'value' });
-            return Promise.resolve();
-          }
-        }
-      ];
-
-      const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
-        expect(response.data).toMatchObject({ test: 'value' });
-      });
-    });
-
-    it('has status set if load calls setStatus', () => {
-      const routes = [
-        {
-          name: 'A Route',
-          path: '',
-          load: (params, location, mods) => {
-            mods.setStatus(451);
-            return Promise.resolve();
-          }
-        }
-      ];
-
-      const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
-        expect(response.status).toBe(451);
-      });
-    });
-
-    it('has error set if load calls fail', () => {
-      const routes = [
-        {
-          name: 'A Route',
-          path: '',
-          load: (params, location, mods) => {
-            mods.fail('woops');
-            return Promise.resolve();
-          }
-        }
-      ];
-
-      const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
-        expect((<Response>response).error).toBe('woops');
-      });
-    });
-
-    it('has redirectTo (and status) set if load calls redirect', () => {
-      const routes = [
-        {
-          name: 'A Route',
-          path: '',
-          load: (params, location, mods) => {
-            mods.redirect('/somewhere');
-            return Promise.resolve();
-          }
-        }
-      ];
-
-      const config = createConfig(history, routes);
-      expect.assertions(2);
-      return config.ready().then(response => {
-        expect(response.status).toBe(301);
-        expect((<RedirectResponse>response).redirectTo).toBe('/somewhere');
-      });
-    });
-
-    it('does not set body until after load/preload have resolved', () => {
-      let bodyValue;
-      const Route = {
-        name: 'A Route',
-        path: 'a-route',
-        load: () => {
-          bodyValue = 'testing';
-          return Promise.resolve(true);
-        },
-        body: () => bodyValue
-      };
-      const history = InMemory({ locations: ['/a-route'] });
-      const config = createConfig(history, [Route]);
-      expect.assertions(1);
-      return config.ready().then(response => {
-        expect((<Response>response).body).toBe('testing');
       });
     });
   });
