@@ -5,10 +5,11 @@ export interface Path {
   keys: Array<Key>
 }
 
-const path = (pathString: string, options?: RegExpOptions): Path => {
+export default function path(
+  pathString: string,
+  options?: RegExpOptions
+): Path {
   const keys: Array<Key> = [];
   const re = PathToRegexp(pathString, keys, options);
   return { re, keys };
 };
-
-export default path;

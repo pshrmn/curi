@@ -83,7 +83,11 @@ const createRoute = (options: RouteMidCreation): Route => {
     keys: regexPath.keys.map(key => key.name),
     title,
     extra,
-    match: function(pathname: string, rc: ResponseCreator, parentPath?: string): boolean {
+    match: function(
+      pathname: string,
+      rc: ResponseCreator,
+      parentPath?: string
+    ): boolean {
       const testPath: string = stripLeadingSlash(pathname);
       const match: RegExpMatchArray = regexPath.re.exec(testPath);
       if (!match) {

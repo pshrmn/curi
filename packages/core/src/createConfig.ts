@@ -29,7 +29,11 @@ export interface CuriConfig {
   history: History
 }
 
-function createConfig(history: History, routeArray: Array<RouteDescriptor>, options: ConfigOptions = {}): CuriConfig {
+function createConfig(
+  history: History,
+  routeArray: Array<RouteDescriptor>,
+  options: ConfigOptions = {}
+): CuriConfig {
   const {
     addons: addonFactories = [],
     sideEffects = [],
