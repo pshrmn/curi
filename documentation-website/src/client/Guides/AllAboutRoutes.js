@@ -164,6 +164,34 @@ const contact = {
 };`
           }
         </PrismBlock>
+        <p>
+          While the above example returns a single value, you might have multiple page values that you want to
+          associate with a route. In that case, you can return an object with a property for each one. Then, when
+          you render the application, you would access the values using <IJS>response.body.&lt;property-name&gt;</IJS>.
+          {' '}If you take this approach, each route's <IJS>body</IJS> function should return an object with the same
+          properties.
+        </p>
+        <PrismBlock lang='javascript'>
+          {
+`const routes = [
+  {
+    name: 'Home',
+    path: '',
+    body: () => ({ main: Home, nav: HomeNav })
+  },
+  {
+    name: 'Contact',
+    path: 'contact',
+    body: () => ({ main: Contact, nav: ContactNav })
+  }
+];
+
+function render(response) {
+  const { main, nav } = response.body
+  ...
+}`
+          }
+        </PrismBlock>
       </Subsection>
 
       <Subsection
