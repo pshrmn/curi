@@ -1,6 +1,6 @@
 # Prefetching data
 
-[CodeSandbox demo](https://codesandbox.io/github/pshrmn/curi/tree/master/examples/data-loading)
+[CodeSandbox demo](https://codesandbox.io/s/github/pshrmn/curi/tree/master/examples/data-loading)
 
 **You probably don't need this because data is already loaded before navigation occurs.**
 

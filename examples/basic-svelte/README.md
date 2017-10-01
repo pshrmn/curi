@@ -1,6 +1,6 @@
 # Basic Curi + Svelte Example
 
-[CodeSandbox demo](https://codesandbox.io/github/pshrmn/curi/tree/master/examples/basic-svelte)
+[CodeSandbox demo](https://codesandbox.io/s/github/pshrmn/curi/tree/master/examples/basic-svelte)
 
 A simple Svelte site, this application uses `config.subscribe` to remove the current view and render a new one whenever the location changes.
 

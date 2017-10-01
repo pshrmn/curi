@@ -1,6 +1,6 @@
 # Modal experiment
 
-[CodeSandbox demo](https://codesandbox.io/github/pshrmn/curi/tree/master/examples/modal)
+[CodeSandbox demo](https://codesandbox.io/s/github/pshrmn/curi/tree/master/examples/modal)
 
 This is largely a clone of the React Router v3 [Pinterest example](https://github.com/ReactTraining/react-router/blob/v3/examples/pinterest/app.js).
 
