@@ -1,6 +1,6 @@
 # Redux
 
-[CodeSandbox demo](https://codesandbox.io/embed/58xm6O7yX)
+[CodeSandbox demo](https://codesandbox.io/github/pshrmn/curi/tree/master/examples/redux)
 
 Redux is straightforward to integrate with a `curi` project.
 

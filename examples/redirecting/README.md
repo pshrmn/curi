@@ -1,6 +1,6 @@
 # Redirecting
 
-[CodeSandbox demo](https://codesandbox.io/embed/v20oL7yJm)
+[CodeSandbox demo](https://codesandbox.io/github/pshrmn/curi/tree/master/examples/redirecting)
 
 Sometimes you will want to redirect based on the results of your `load` function. For instance, you might see that a user is not authenticated and shouldn't be able to view a page.
 

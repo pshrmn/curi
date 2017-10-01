@@ -1,6 +1,6 @@
 # Blocking navigation
 
-[CodeSandbox demo](https://codesandbox.io/embed/KOvy6K0KM)
+[CodeSandbox demo](https://codesandbox.io/github/pshrmn/curi/tree/master/examples/blocking-navigation)
 
 Sometimes, you don't want the user to leave the page. Ideally, this is for their own good, such as when a form is half filled out, and not becacuse you're running a spam site.
 

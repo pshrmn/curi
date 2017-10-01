@@ -1,6 +1,6 @@
 # Transitions
 
-[CodeSandbox demo](https://codesandbox.io/embed/jkJkBKWl)
+[CodeSandbox demo](https://codesandbox.io/github/pshrmn/curi/tree/master/examples/transitions)
 
 This experiment uses `react-transition-group` to animate navigation transitions, but it should be relatively straightforward to adapt this for other animation packages (e.g. `react-motion`).
 

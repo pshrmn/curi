@@ -1,6 +1,6 @@
 # Active links
 
-[CodeSandbox demo](https://codesandbox.io/embed/J9x3n3k2)
+[CodeSandbox demo](https://codesandbox.io/github/pshrmn/curi/tree/master/examples/active-links)
 
 You may want to style a link differently when it is "active" (based on the current response object). You can do so using the `active` prop of `<Link>`.
 
