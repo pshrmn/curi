@@ -12,6 +12,7 @@ Example projects that use `curi` and `curi-react`.
 * [with redux](./redux)
 * [middleware](./middleware)
 * [UMD (vanilla JS with <script> tags)](./umd-example)
+* [updating routes](./updating-routes)
 
 For any example that you want to run locally, you need to install its dependencies and build the bundle.
 

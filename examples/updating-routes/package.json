@@ -1,0 +1,26 @@
+{
+  "name": "curi-updating-routes-example",
+  "version": "0.1.0",
+  "description": "Update the known routes of a Curi application",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack",
+    "webpack:prod": "webpack"
+  },
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^7.0.0-beta.2",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^2.0.0-beta.2",
+    "babel-preset-react": "^7.0.0-beta.2",
+    "webpack": "^3.6.0"
+  },
+  "dependencies": {
+    "@curi/core": "^1.0.0-beta.6",
+    "@curi/react": "^1.0.0-beta.8",
+    "@hickory/browser": "^1.0.0-beta.3",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  }
+}
