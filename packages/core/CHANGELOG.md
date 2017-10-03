@@ -1,5 +1,16 @@
 ## Next
 
+* Rewrite `SideEffect` as an interface with two properties: `fn` which is a subscriber function and `after` which is a boolean. When `after` is `false`, the subscriber function will be run before any functions subscribed with `config.subscribe`. When `after` is `true`, the function will be called after any `config.subscribe` functions.
+```js
+createConfig(history, routes, {
+  sideEffects: [
+    // run before any subscribers
+    { fn: PreSideEffect },
+    // run after any subscribers
+    { fn: PostSideEffect, after: true}
+  ]
+})
+```
 * Don't emit response when there is an error generating a response. The error will be logged (using `console.error`). It is up to the user to make sure that their `load`/`preload` functions catch any errors.
 * Fix bug where route with no children and path option `end=false` would match non-exact paths.
 

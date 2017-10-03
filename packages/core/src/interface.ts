@@ -14,8 +14,11 @@ export interface Addon {
 export type AddonFactory = (...args: Array<any>) => Addon;
 
 export type Subscriber = (response: AnyResponse, action?: string) => void;
+export interface SideEffect {
+  fn: Subscriber;
+  after?: boolean;
+}
 export type UnsubscribeFn = () => void;
-export type SideEffect = (response: AnyResponse, action?: string) => void;
 
 export interface Cache {
   set: (response: AnyResponse) => void;

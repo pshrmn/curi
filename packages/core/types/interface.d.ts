@@ -10,8 +10,11 @@ export interface Addon {
 }
 export declare type AddonFactory = (...args: Array<any>) => Addon;
 export declare type Subscriber = (response: AnyResponse, action?: string) => void;
+export interface SideEffect {
+    fn: Subscriber;
+    after?: boolean;
+}
 export declare type UnsubscribeFn = () => void;
-export declare type SideEffect = (response: AnyResponse, action?: string) => void;
 export interface Cache {
     set: (response: AnyResponse) => void;
     get: (location: HickoryLocation) => AnyResponse;

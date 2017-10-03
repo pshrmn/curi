@@ -181,7 +181,7 @@ describe('createConfig', () => {
           const sideEffect = jest.fn();
 
           const config = createConfig(history, routes, {
-            sideEffects: [sideEffect]
+            sideEffects: [{ fn: sideEffect }]
           });
           expect.assertions(3);
           return config.ready().then(response => {
@@ -189,6 +189,49 @@ describe('createConfig', () => {
             expect(sideEffect.mock.calls[0][0]).toBe(response);
             expect(sideEffect.mock.calls[0][1]).toBe('PUSH');
           });
+        });
+
+        it('calls side effects WITHOUT "after: true" property before subscribers', () => {
+          const routes = [{ name: 'All', path: ':all+' }];
+
+          let subscriberValue = undefined;
+          const subscriber = ignoreFirstCall(function(loc) {
+            subscriberValue = Math.random();
+          });
+          const sideEffect1 = function() {
+            expect(subscriberValue).toBeUndefined();
+          }
+          const sideEffect2 = function() {
+            expect(subscriberValue).toBeUndefined();
+          }
+
+          const config = createConfig(history, routes, {
+            sideEffects: [{ fn: sideEffect1, after: false }, { fn: sideEffect2 }]
+          });
+          config.subscribe(subscriber);
+
+          expect.assertions(2);
+          return config.ready();
+        });
+
+        it('calls side effects WITH "after: true" property after subscribers', () => {
+          const routes = [{ name: 'All', path: ':all+' }];
+
+          let subscriberValue = undefined;
+          const subscriber = ignoreFirstCall(function(loc) {
+            subscriberValue = Math.random();
+          });
+          const sideEffect = function() {
+            expect(subscriberValue).not.toBeUndefined();
+          }
+
+          const config = createConfig(history, routes, {
+            sideEffects: [{ fn: sideEffect, after: true }]
+          });
+          config.subscribe(subscriber);
+
+          expect.assertions(1);
+          return config.ready();
         });
       });
 

@@ -40,6 +40,16 @@ function createConfig(
     cache
   } = options as ConfigOptions;
 
+  const beforeSideEffects: Array<Subscriber> = [];
+  const afterSideEffects: Array<Subscriber> = [];
+  sideEffects.forEach(se => {
+    if (se.after) {
+      afterSideEffects.push(se.fn);
+    } else {
+      beforeSideEffects.push(se.fn);
+    }
+  });
+
   // add the pathname addon to the provided addons
   const finalAddons = addonFactories.concat(pathnameAddon);
   let routes: Array<Route> = [];
@@ -152,7 +162,7 @@ function createConfig(
       return false;
     }
 
-    sideEffects.forEach(fn => {
+    beforeSideEffects.forEach(fn => {
       fn(response, action);
     });
 
@@ -160,6 +170,10 @@ function createConfig(
       if (fn != null) {
         fn(response, action);
       }
+    });
+
+    afterSideEffects.forEach(fn => {
+      fn(response, action);
     });
 
     return true;
