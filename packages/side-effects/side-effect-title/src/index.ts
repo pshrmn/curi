@@ -1,11 +1,11 @@
-import { SideEffect, AnyResponse } from '@curi/core';
+import { Subscriber, AnyResponse } from '@curi/core';
 
 export interface TitleOptions {
   prefix?: string;
   suffix?: string;
 }
 
-function createTitleSideEffect(options?: TitleOptions): SideEffect {
+function createTitleSideEffect(options?: TitleOptions): Subscriber {
   const { prefix = '', suffix = '' } = options || {};
 
   return function(response: AnyResponse) {
