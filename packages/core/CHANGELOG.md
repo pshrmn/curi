@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.8
 
 * Undo the `route.redirect` in favor of keeping everything in `load`. However, `load` now receives a fourth argument: `addons`. `addons` can be used to use any of your addons, but for redirects `addons.pathname` is particularly useful.
 

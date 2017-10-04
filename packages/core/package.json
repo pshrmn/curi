@@ -1,6 +1,6 @@
 {
   "name": "@curi/core",
-  "version": "1.0.0-beta.7",
+  "version": "1.0.0-beta.8",
   "description": "A JavaScript router you can use with anywhere",
   "main": "dist/curi.common.js",
   "module": "dist/curi.es.js",
