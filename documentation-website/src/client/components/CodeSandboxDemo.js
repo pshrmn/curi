@@ -9,8 +9,8 @@ const CodeSandboxDemo = ({ id }) => (
       sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
     ></iframe>
     <p>
-      Use the blue and tan buttons to toggle view modes. Clicking the menu button in the top left
-      corner opens a menu that allows you to switch between files.
+      Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu
+      button in the top left corner opens a menu that allows you to switch between files.
     </p>
   </div>
 )
