@@ -5,13 +5,10 @@ import Nav from './components/Nav';
 import NotFound from './components/NotFound';
 
 function render(response, config) {
-  if (!response) {
+  if (!response || response.redirectTo) {
     return null;
   }
   const { location, params } = response;
-  if (response.redirectTo) {
-    return <Redirect details={response.redirectTo} />
-  }
 
   return (
     <div>

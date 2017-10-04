@@ -15,10 +15,10 @@ export default [
     name: 'Protected',
     path: 'protected',
     body: () => Protected,
-    load: (params, location, respCreator) => {
+    load: (params, location, mods, addons) => {
       if (!fakeAuth.authenticated()) {
-        respCreator.redirect({
-          pathname: '/login',
+        mods.redirect({
+          pathname: addons.pathname('Login'),
           query: { next: '/protected' }
         }, 302);
       }
@@ -28,9 +28,11 @@ export default [
     name: 'Login',
     path: 'login',
     body: () => Login,
-    load: (params, location, respCreator) => {
+    load: (params, location, mods) => {
       if (fakeAuth.authenticated()) {
-        respCreator.redirect('/');
+        mods.redirect({
+          pathname: addons.pathname('Home')
+        });
       }
     }
   },
@@ -38,9 +40,11 @@ export default [
     name: 'Logout',
     path: 'logout',
     body: () => Logout,
-    load: (params, location, respCreator) => {
+    load: (params, location, mods) => {
       if (!fakeAuth.authenticated()) {
-        respCreator.redirect('/');
+        mods.redirect({
+          pathname: addons.pathname('Home')
+        });
       }
     }
   }
