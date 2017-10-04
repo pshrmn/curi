@@ -1,4 +1,4 @@
-export { Addon, Subscriber, SideEffect } from './interface';
+export { Addon, Subscriber, SideEffect, Params } from './interface';
 export {
   Route,
   RouteDescriptor,
@@ -7,8 +7,7 @@ export {
 export {
   Response,
   RedirectResponse,
-  AnyResponse,
-  Params
+  AnyResponse
 } from './utils/createResponse';
 export { CuriConfig, ConfigOptions } from './createConfig';
 
