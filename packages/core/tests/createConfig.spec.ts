@@ -480,8 +480,30 @@ describe('createConfig', () => {
             expect((<RedirectResponse>response).redirectTo).toBe('/somewhere');
           });
         });
+
+        it('can use addons.pathname to create pathname to redirect to', () => {
+          const routes = [
+            {
+              name: 'Old',
+              path: 'old/:id',
+              load: (params, location, modifiers, addons) => {
+                const pathname = addons.pathname('New', params);
+                return modifiers.redirect(pathname);
+              }
+            },
+            {
+              name: 'New',
+              path: 'new/:id'
+            }
+          ];
+          const history = InMemory({ locations: ['/old/1' ]});
+          const config = createConfig(history, routes);
+          expect.assertions(1);
+          return config.ready().then(response => {
+            expect((<RedirectResponse>response).redirectTo).toBe('/new/1');
+          });
+        });
       });
-  
 
       describe('setStatus', () => {
         it('sets response.status', () => {
