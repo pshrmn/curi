@@ -1,6 +1,10 @@
+## Next
+
+* Undo the `route.redirect` in favor of keeping everything in `load`. However, `load` now receives a fourth argument: `addons`. `addons` can be used to use any of your addons, but for redirects `addons.pathname` is particularly useful.
+
 ## 1.0.0-beta.7
 
-* Rework how replace works. Routes can now have a `redirect` function. This function should return an object with two properties: `to` which is the string/location object to redirect to and `status` (optional) which is the status code number for the redirect type. `redirect` has been removed from the `LoadModifiers` so that redirecting is only done with `route.redirect`. When a `RedirectResponse` is created, Curi will automatically call `history.replace` with the string/location returned by calling `route.redirect`. Subscribers will still be called, so render functions should detect when the response has a `redirectTo` property and respond properly. Redirect responses now support the `body` property, so while a redirect render should be very short, you _can_ render a redirect.
+* Rework how redirect works. <del>Routes can now have a `redirect` function. This function should return an object with two properties: `to` which is the string/location object to redirect to and `status` (optional) which is the status code number for the redirect type. `redirect` has been removed from the `LoadModifiers` so that redirecting is only done with `route.redirect`.</del> When a `RedirectResponse` is created, Curi will automatically call `history.replace` with the string/location returned by calling `route.redirect`. Subscribers will still be called, so render functions should detect when the response has a `redirectTo` property and respond properly. Redirect responses now support the `body` property, so while a redirect render should be very short, you _can_ render a redirect.
 * Rewrite `SideEffect` as an interface with two properties: `fn` which is a subscriber function and `after` which is a boolean. When `after` is `false`, the subscriber function will be run before any functions subscribed with `config.subscribe`. When `after` is `true`, the function will be called after any `config.subscribe` functions.
 ```js
 createConfig(history, routes, {

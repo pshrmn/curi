@@ -389,31 +389,6 @@ describe('createConfig', () => {
         });
       });
 
-      describe('redirect', () => {
-        it('calls route\'s redirect function to generate string/location to redirect to and redirect status', () => {
-          const routes = [
-            {
-              name: 'Old',
-              path: 'old',
-              redirect: (params, location, addons) => {
-                return { to: addons.pathname('New'), status: 3000 };
-              }
-            },
-            {
-              name: 'New',
-              path: 'new'
-            }
-          ];
-          const history = InMemory({ locations: ['/old'] });
-          const config = createConfig(history, routes);
-          expect.assertions(2);
-          return config.ready().then(resp => {
-            expect((resp as RedirectResponse).redirectTo).toBe('/new');
-            expect(resp.status).toBe(3000);
-          });
-        });
-      });
-
       describe('body', () => {
         it('is set after load/preload have resolved', () => {
           let bodyValue;
@@ -437,8 +412,8 @@ describe('createConfig', () => {
     });
 
     describe('load', () => {
-      it('passes params, location, and modifier methods to load function', () => {
-        const spy = jest.fn((params, location, modifiers) => {
+      it('passes params, location, modifier methods, and addons to load function', () => {
+        const spy = jest.fn((params, location, modifiers, addons) => {
           expect(params).toMatchObject({ anything: 'hello' });
           expect(location).toMatchObject({
             pathname: '/hello',
@@ -449,6 +424,8 @@ describe('createConfig', () => {
             setData: expect.any(Function),
             setStatus: expect.any(Function)
           }));
+
+          expect(typeof addons.pathname).toBe('function');
         });
   
         const CatchAll = {
@@ -459,7 +436,7 @@ describe('createConfig', () => {
   
         const history = InMemory({ locations: ['/hello?one=two'] });
         const config = createConfig(history, [CatchAll]);
-        expect.assertions(3);
+        expect.assertions(4);
         return config.ready();
       });
 
@@ -484,6 +461,28 @@ describe('createConfig', () => {
         });
       });
   
+      describe('redirect', () => {
+        it('sets response.redirectTo and response.status', () => {
+          const routes = [
+            {
+              name: 'A Route',
+              path: '',
+              load: (params, location, modifiers) => {
+                return modifiers.redirect('/somewhere', 301);
+              }
+            }
+          ];
+    
+          const config = createConfig(history, routes);
+          expect.assertions(2);
+          return config.ready().then(response => {
+            expect(response.status).toBe(301);
+            expect((<RedirectResponse>response).redirectTo).toBe('/somewhere');
+          });
+        });
+      });
+  
+
       describe('setStatus', () => {
         it('sets response.status', () => {
           const routes = [
@@ -528,32 +527,16 @@ describe('createConfig', () => {
   
     });
 
-    describe('redirect', () => {
-      it('sets response.redirectTo and response.status', () => {
-        const routes = [
-          {
-            name: 'A Route',
-            path: '',
-            redirect: (params, location, addons) => {
-              return { to: '/somewhere', status: 301 };
-            }
-          }
-        ];
-  
-        const config = createConfig(history, routes);
-        expect.assertions(2);
-        return config.ready().then(response => {
-          expect(response.status).toBe(301);
-          expect((<RedirectResponse>response).redirectTo).toBe('/somewhere');
-        });
-      });
-
+    describe('response.redirectTo', () => {
       it('triggers a history.replace call', () => {
         const routes = [
           {
             name: 'A Route',
             path: '',
-            redirect: (params, location, addons) => ({ to: '/somewhere', status: 301 })
+            load: (params, location, mods, addons) => {
+              mods.redirect('/somewhere-else', 301);
+              return Promise.resolve(true);
+            }
           }
         ];
         history.replace = jest.fn();

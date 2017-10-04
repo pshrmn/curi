@@ -10,11 +10,12 @@ import { Params, AddonGet } from '../interface';
 
 export type Title = string | ((params?: object, data?: any) => string);
 
-export interface Redirect {
-  to: ToArgument;
-  status?: number;
-}
-export type RedirectFn = (params: Params, location: HickoryLocation, addons: {[key: string]: AddonGet}) => Redirect;
+export type LoadFn = (
+  params?: object,
+  location?: HickoryLocation,
+  modifiers?: LoadModifiers,
+  addons?: {[key: string]: AddonGet}
+) => Promise<any>;
 
 export interface RouteDescriptor {
   name: string;
@@ -22,9 +23,8 @@ export interface RouteDescriptor {
   pathOptions?: RegExpOptions;
   body?: () => any;
   children?: Array<RouteDescriptor>;
-  redirect?: RedirectFn,
   preload?: () => Promise<any>;
-  load?: (params?: object, location?: HickoryLocation, modifiers?: LoadModifiers) => Promise<any>;
+  load?: LoadFn;
   title?: Title;
   extra?: {[key: string]: any};
 }
@@ -42,9 +42,8 @@ export interface Route {
   body: () => any;
   getBody: () => any;
   children: Array<Route>;
-  redirect: RedirectFn,
   preload: () => Promise<any>;
-  load: (params?: object, location?: HickoryLocation, modifiers?: LoadModifiers) => Promise<any>;
+  load: LoadFn;
   keys: Array<string|number>;
   match: (pathname: string, rc: ResponseCreator, parentPath?: string) => boolean;
   title: Title;
@@ -53,6 +52,7 @@ export interface Route {
 
 export interface LoadModifiers {
   fail: (err: any) => void;
+  redirect: (to: any, status?: number) => void;
   setData: (data: any) => void;
   setStatus: (status: number) => void;
 }
@@ -67,8 +67,7 @@ const createRoute = (options: RouteMidCreation): Route => {
     preload,
     load,
     title,
-    extra,
-    redirect
+    extra
   } = options || <RouteMidCreation>{};
 
   // end defaults to true, so end has to be hardcoded for it to be false
@@ -86,7 +85,6 @@ const createRoute = (options: RouteMidCreation): Route => {
     getBody: function() {
       return this.body && this.body();
     },
-    redirect,
     children,
     preload: preload ? once(preload) : undefined,
     load,

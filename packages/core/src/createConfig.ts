@@ -91,17 +91,13 @@ function createConfig(
       rc.setStatus(404);
       return Promise.resolve(rc);
     }
-    
-    if (route.redirect) {
-      const redirectTo = route.redirect(rc.params, rc.location, registeredAddons);
-      rc.redirect(redirectTo.to, redirectTo.status);
-    }
 
     // just want to pass a subset of the ResponseCreator's methods
     // to the user
     const modifiers: LoadModifiers = route.load
       ? {
           fail: rc.fail.bind(rc),
+          redirect: rc.redirect.bind(rc),
           setData: rc.setData.bind(rc),
           setStatus: rc.setStatus.bind(rc)
         }
@@ -109,7 +105,7 @@ function createConfig(
 
     return Promise.all([
       route.preload ? route.preload() : null,
-      route.load ? route.load(rc.params, rc.location, modifiers) : null
+      route.load ? route.load(rc.params, rc.location, modifiers, registeredAddons) : null
     ]).then(() => rc);
   };
 
