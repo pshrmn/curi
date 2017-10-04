@@ -5,8 +5,7 @@
   "scripts": {
     "prebuild": "npm run webpack:build",
     "build": "npm run generate",
-    "predev": "npm run webpack:dev",
-    "dev": "cross-env BABEL_ENV=serve node ./src/server",
+    "dev": "npm run webpack:dev -- --watch & cross-env BABEL_ENV=serve node ./src/server",
     "generate": "cross-env BABEL_ENV=serve node ./scripts/build",
     "webpack:dev": "cross-env BABEL_ENV=build webpack",
     "webpack:build": "cross-env BABEL_ENV=build webpack --optimize-minimize"
