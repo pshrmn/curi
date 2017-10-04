@@ -1,24 +1,19 @@
-import { HickoryLocation, ToArgument } from '@hickory/root';
+import { HickoryLocation } from '@hickory/root';
 import { RegExpOptions } from 'path-to-regexp';
 import ResponseCreator from './createResponse';
-import { Params, AddonGet } from '../interface';
+import { AddonGet } from '../interface';
 export declare type Title = string | ((params?: object, data?: any) => string);
-export interface Redirect {
-    to: ToArgument;
-    status?: number;
-}
-export declare type RedirectFn = (params: Params, location: HickoryLocation, addons: {
+export declare type LoadFn = (params?: object, location?: HickoryLocation, modifiers?: LoadModifiers, addons?: {
     [key: string]: AddonGet;
-}) => Redirect;
+}) => Promise<any>;
 export interface RouteDescriptor {
     name: string;
     path: string;
     pathOptions?: RegExpOptions;
     body?: () => any;
     children?: Array<RouteDescriptor>;
-    redirect?: RedirectFn;
     preload?: () => Promise<any>;
-    load?: (params?: object, location?: HickoryLocation, modifiers?: LoadModifiers) => Promise<any>;
+    load?: LoadFn;
     title?: Title;
     extra?: {
         [key: string]: any;
@@ -33,9 +28,8 @@ export interface Route {
     body: () => any;
     getBody: () => any;
     children: Array<Route>;
-    redirect: RedirectFn;
     preload: () => Promise<any>;
-    load: (params?: object, location?: HickoryLocation, modifiers?: LoadModifiers) => Promise<any>;
+    load: LoadFn;
     keys: Array<string | number>;
     match: (pathname: string, rc: ResponseCreator, parentPath?: string) => boolean;
     title: Title;
@@ -45,6 +39,7 @@ export interface Route {
 }
 export interface LoadModifiers {
     fail: (err: any) => void;
+    redirect: (to: any, status?: number) => void;
     setData: (data: any) => void;
     setStatus: (status: number) => void;
 }

@@ -1,4 +1,4 @@
-import { HickoryLocation } from '@hickory/root';
+import { HickoryLocation, ToArgument } from '@hickory/root';
 import { Route } from './createRoute';
 import { Params } from '../interface';
 export interface BaseResponse {
@@ -36,7 +36,7 @@ declare class ResponseCreator {
     redirectTo: any;
     error: any;
     constructor(key: string, location: HickoryLocation);
-    redirect(to: any, code?: number): void;
+    redirect(to: ToArgument, code?: number): void;
     fail(err: any): void;
     setStatus(code: number): void;
     push(route: Route, params: Params): void;
