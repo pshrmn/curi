@@ -49,11 +49,12 @@ export default ({ name }) => (
     </p>
 
     <p>
-      The load function will be passed three arguments: the params object that contains variables
+      The load function will be passed four arguments: the params object that contains variables
       parsed from the location's pathname, the location object used to match the route, 
-      and a modifiers object. The modifiers object has a few methods that you can call in order to
-      modify the response object that will be generated. They are <IJS>fail</IJS>, <IJS>setStatus</IJS>,
-      <IJS>setData</IJS> and <IJS>redirect</IJS>. They are explained in more detail in the{' '}
+      a modifiers object, and the object containing all of your Curi addons. The modifiers object has a
+      few methods that you can call in order to modify the response object that will be generated. They
+      are <IJS>fail</IJS>, <IJS>setStatus</IJS>, <IJS>setData</IJS> and <IJS>redirect</IJS>. Each is
+      explained in more detail in the{' '}
       <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'load'}}>all about routes</Link>
       {' '}guide. Here, we will use the last two: setData and redirect.
     </p>
@@ -121,7 +122,8 @@ export default ({ name }) => (
 
       <p>
         By calling the modifier's redirect method, you can specify the URI that we should redirect
-        to.
+        to. As always, with Curi you aren't expected to have to manually generate pathnames. Instead,
+        you can use <IJS>addons.pathname</IJS>.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -129,8 +131,11 @@ export default ({ name }) => (
 `{
   name: 'Old Recipe',
   path: 'r/:id',
-  load: (params, location, modifiers) => {
-    modifiers.redirectTo(\`/recipe/$\{params.id\}\`);
+  load: (params, location, modifiers, addons) => {
+    const pathname = addons.pathname('Recipe', params);
+    // destructure the current location to preserve
+    // query/hash values
+    modifiers.redirect({ ...location, pathname });
   }
 }`
         }

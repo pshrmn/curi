@@ -273,8 +273,9 @@ function render(response) {
         <p>
           A function that can be used for data fetching as well as for triggering redirects.
           The load function will be passed the params object that is parsed from the location's
-          pathname (using the route and its ancestor's paths) and the modifiers object
-          that can be used to modify the response object that will be created.
+          pathname (using the route and its ancestor's paths), the current location, a modifiers object
+          that can be used to modify the response object that will be created, and an object containing
+          all of the registered Curi addons (the <IJS>pathname</IJS> addon being particularly useful).
         </p>
         <p>
           Like preload, load must return a Promise.
@@ -282,10 +283,11 @@ function render(response) {
         <PrismBlock lang='javascript'>
           {
 
-`const user = {
+`// set response data
+const user = {
   name: 'User',
   path: ':id',
-  load: (params, mod) => {
+  load: (params, location, mod, addons) => {
     return fetch(\`/api/users/$\{params.id\}\`)
       .then(resp => JSON.parse(resp))
       .then(data => mod.setData(data);)
@@ -294,7 +296,24 @@ function render(response) {
         mod.setStatus(404);
       });
   }
-}`
+}
+
+// set a permanent redirect
+const routes = [
+  {
+    name: 'Photo',
+    path: 'p/:id'
+  },
+  {
+    name: 'Old Photo',
+    path: 'photo/:id',
+    load: (params, location, mod, addons) => {
+      const pathname = addons.pathname('Photo', params);
+      mod.redirect({ ...location, pathname }, 301);
+    }
+  }
+]
+// navigating to /photo/123 will automatically redirect to /p/123`
           }
         </PrismBlock>
         <p>
@@ -308,8 +327,10 @@ function render(response) {
             <IJS>redirect(to, code)</IJS> - This allows you to turn the response into a
             redirect response. When you application receives a redirect response, it should redirect
             to the new location (using your history object) instead of re-rendering. If you do not
-            provide a code, then 301 will be used. The <IJS>to</IJS> argument can be whatever
-            you want it to be, you will just need to know how to deal with it in your render function.
+            provide a code, then 301 will be used. Setting the status code is mostly important for
+            rendering on the server. The <IJS>to</IJS> argument should be a string or a location
+            object. Once the response has been created, Curi will automatically redirect
+            to the <IJS>to</IJS> location.
           </li>
           <li>
             <IJS>fail(error)</IJS> - A method to call when something goes wrong. This will
