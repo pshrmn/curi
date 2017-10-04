@@ -1,4 +1,4 @@
-import { HickoryLocation } from '@hickory/root';
+import { HickoryLocation, ToArgument } from '@hickory/root';
 import { Route } from './createRoute';
 import { Params } from '../interface';
 
@@ -55,7 +55,7 @@ class ResponseCreator {
     this.body;
   }
 
-  redirect(to: any, code: number = 301): void {
+  redirect(to: ToArgument, code: number = 301): void {
     this.setStatus(code);
     this.redirectTo = to;
   }
