@@ -383,8 +383,33 @@ describe('createConfig', () => {
           const history = InMemory({ locations: ['/other-page'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
-          config.ready().then(resp => {
+          return config.ready().then(resp => {
             expect(resp.status).toBe(404);
+          });
+        });
+      });
+
+      describe('redirect', () => {
+        it('calls route\'s redirect function to generate string/location to redirect to and redirect status', () => {
+          const routes = [
+            {
+              name: 'Old',
+              path: 'old',
+              redirect: (params, location, addons) => {
+                return { to: addons.pathname('New'), status: 3000 };
+              }
+            },
+            {
+              name: 'New',
+              path: 'new'
+            }
+          ];
+          const history = InMemory({ locations: ['/old'] });
+          const config = createConfig(history, routes);
+          expect.assertions(2);
+          return config.ready().then(resp => {
+            expect((resp as RedirectResponse).redirectTo).toBe('/new');
+            expect(resp.status).toBe(3000);
           });
         });
       });
@@ -421,7 +446,6 @@ describe('createConfig', () => {
           })
           expect(modifiers).toMatchObject(expect.objectContaining({
             fail: expect.any(Function),
-            redirect: expect.any(Function),
             setData: expect.any(Function),
             setStatus: expect.any(Function)
           }));
@@ -502,25 +526,43 @@ describe('createConfig', () => {
         });
       });
   
-      describe('redirect', () => {
-        it('sets response.redirectTo and response.status', () => {
-          const routes = [
-            {
-              name: 'A Route',
-              path: '',
-              load: (params, location, mods) => {
-                mods.redirect('/somewhere');
-                return Promise.resolve();
-              }
+    });
+
+    describe('redirect', () => {
+      it('sets response.redirectTo and response.status', () => {
+        const routes = [
+          {
+            name: 'A Route',
+            path: '',
+            redirect: (params, location, addons) => {
+              return { to: '/somewhere', status: 301 };
             }
-          ];
-    
-          const config = createConfig(history, routes);
-          expect.assertions(2);
-          return config.ready().then(response => {
-            expect(response.status).toBe(301);
-            expect((<RedirectResponse>response).redirectTo).toBe('/somewhere');
-          });
+          }
+        ];
+  
+        const config = createConfig(history, routes);
+        expect.assertions(2);
+        return config.ready().then(response => {
+          expect(response.status).toBe(301);
+          expect((<RedirectResponse>response).redirectTo).toBe('/somewhere');
+        });
+      });
+
+      it('triggers a history.replace call', () => {
+        const routes = [
+          {
+            name: 'A Route',
+            path: '',
+            redirect: (params, location, addons) => ({ to: '/somewhere', status: 301 })
+          }
+        ];
+        history.replace = jest.fn();
+        const config = createConfig(history, routes);
+        
+        expect.assertions(2);
+        expect(history.replace.mock.calls.length).toBe(0);
+        return config.ready().then(response => {
+          expect(history.replace.mock.calls.length).toBe(1);
         });
       });
     });

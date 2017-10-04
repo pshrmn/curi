@@ -4,7 +4,7 @@ import ResponseCreator from './utils/createResponse';
 
 import { History, HickoryLocation } from '@hickory/root';
 import { RouteDescriptor, Route, LoadModifiers } from './utils/createRoute';
-import { AnyResponse } from './utils/createResponse';
+import { AnyResponse, RedirectResponse } from './utils/createResponse';
 import {
   Addon,
   AddonFactory,
@@ -86,27 +86,30 @@ function createConfig(
   };
 
   function loadRoute(rc: ResponseCreator): Promise<ResponseCreator> {
-    if (!rc.route) {
+    const { route } = rc;
+    if (!route) {
       rc.setStatus(404);
       return Promise.resolve(rc);
     }
-
-    const { preload, load } = rc.route;
+    
+    if (route.redirect) {
+      const redirectTo = route.redirect(rc.params, rc.location, registeredAddons);
+      rc.redirect(redirectTo.to, redirectTo.status);
+    }
 
     // just want to pass a subset of the ResponseCreator's methods
     // to the user
-    const modifiers: LoadModifiers = load
+    const modifiers: LoadModifiers = route.load
       ? {
           fail: rc.fail.bind(rc),
-          redirect: rc.redirect.bind(rc),
           setData: rc.setData.bind(rc),
           setStatus: rc.setStatus.bind(rc)
         }
       : undefined;
 
     return Promise.all([
-      preload ? preload() : null,
-      load ? load(rc.params, rc.location, modifiers) : null
+      route.preload ? route.preload() : null,
+      route.load ? route.load(rc.params, rc.location, modifiers) : null
     ]).then(() => rc);
   };
 
@@ -184,6 +187,10 @@ function createConfig(
   function makeResponse(location: HickoryLocation, action: string): void {
     responseInProgress = prepareResponse(location).then(
       response => {
+        // 
+        if ((response as RedirectResponse).redirectTo) {
+          history.replace((response as RedirectResponse).redirectTo)
+        }
         const emitted = emit(response, action);
         // only store these after we have emitted.
         if (emitted) {

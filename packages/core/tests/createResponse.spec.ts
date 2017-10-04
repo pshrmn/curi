@@ -244,14 +244,16 @@ describe('Response', () => {
       resp.freeze();
       const respObj = resp.asObject() as Response;
 
-      expect(respObj.key).toBe(key);
-      expect(respObj.location).toBe(location);
-      expect(respObj.status).toBe(200);
-      expect(respObj.body).toBe('Yosemite National Park');
-      expect(respObj.name).toBe('Park');
-      expect(respObj.partials).toEqual([]);
-      expect(respObj.params).toEqual({ name: 'yosemite' });
-      expect(respObj.data).toEqual({ open: true });
+      expect(respObj).toMatchObject({
+        key,
+        location,
+        status: 200,
+        body: 'Yosemite National Park',
+        name: 'Park',
+        partials: [],
+        params: { name: 'yosemite' },
+        data: { open: true }
+      });
     });
 
     it('returns a redirect object when redirectTo is set', () => {
@@ -262,11 +264,12 @@ describe('Response', () => {
       resp.redirect(corporateTakeover);
       const respObj = resp.asObject() as RedirectResponse;
 
-      expect(respObj.key).toBe(key);
-      expect(respObj.location).toBe(location);
-      expect(respObj.status).toBe(301);
-      expect(respObj.redirectTo).toBe(corporateTakeover);
-      expect(respObj.data).toBeUndefined();
+      expect(respObj).toMatchObject({
+        key,
+        location,
+        status: 301,
+        redirectTo: corporateTakeover
+      });
     });
   });
 });

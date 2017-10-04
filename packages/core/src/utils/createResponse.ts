@@ -1,16 +1,17 @@
 import { HickoryLocation } from '@hickory/root';
 import { Route } from './createRoute';
+import { Params } from '../interface';
 
 export interface BaseResponse {
-  key: string,
-  location: HickoryLocation,
-  status: number,
-  data: any,
-  title: string
+  key: string;
+  location: HickoryLocation;
+  status: number;
+  data: any;
+  title: string;
+  body: any;
 }
 
 export interface Response extends BaseResponse {
-  body: any;
   name: string;
   partials: Array<string>;
   params: Params;
@@ -22,7 +23,7 @@ export interface RedirectResponse extends BaseResponse {
 }
 
 export type AnyResponse = Response | RedirectResponse;
-export type Params = {[key: string]: string};
+
 export interface Match {
   route: Route;
   params: Params;
@@ -107,7 +108,8 @@ class ResponseCreator {
       location: this.location,
       status: this.status,
       data: this.data,
-      title: this.generateTitle()
+      title: this.generateTitle(),
+      body: this.route && this.route.getBody()
     };
 
     if (this.redirectTo != null) {
@@ -119,7 +121,6 @@ class ResponseCreator {
 
     return {
       ...sharedResponse,
-      body: this.route && this.route.getBody(),
       name: this.route ? this.route.name : undefined,
       partials: this.partials,
       params: this.params,

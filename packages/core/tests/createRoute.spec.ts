@@ -117,6 +117,19 @@ describe('createRoute', () => {
         });
       });
 
+      describe('redirect', () => {
+        it('sets the value to redirect to on the route', () => {
+          const body = () => 'Longitude';
+          const testRoute = createRoute({
+            name: 'Call',
+            path: 'call-me-maybe',
+            redirect: '/some-other-page',
+            children: []
+          });
+          expect(testRoute.redirect).toBe('/some-other-page');
+        });
+      });
+
       describe('preload', () => {
         it('will attach a preload fn to returned object', () => {
           const loadTest = () => Promise.resolve();

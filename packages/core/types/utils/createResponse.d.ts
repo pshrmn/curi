@@ -1,14 +1,15 @@
 import { HickoryLocation } from '@hickory/root';
 import { Route } from './createRoute';
+import { Params } from '../interface';
 export interface BaseResponse {
     key: string;
     location: HickoryLocation;
     status: number;
     data: any;
     title: string;
+    body: any;
 }
 export interface Response extends BaseResponse {
-    body: any;
     name: string;
     partials: Array<string>;
     params: Params;
@@ -18,9 +19,6 @@ export interface RedirectResponse extends BaseResponse {
     redirectTo: any;
 }
 export declare type AnyResponse = Response | RedirectResponse;
-export declare type Params = {
-    [key: string]: string;
-};
 export interface Match {
     route: Route;
     params: Params;
