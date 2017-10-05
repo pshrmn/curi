@@ -20,8 +20,13 @@ const examples = [
     description: 'Prevent navigation away from a half-filled form'
   },
   {
-    name: 'Breadcrumbs',
+    name: 'Breadcrumbs (React)',
     slug: 'breadcrumbs',
+    description: 'Render breadcrumb links to ancestor routes'
+  },
+  {
+    name: 'Breadcrumbs (Vue)',
+    slug: 'breadcrumbs-vue',
     description: 'Render breadcrumb links to ancestor routes'
   },
   {

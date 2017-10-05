@@ -3,6 +3,7 @@ import BasicVue from './BasicVue';
 import BasicSvelte from './BasicSvelte';
 import BlockingNavigation from './BlockingNavigation';
 import Breadcrumbs from './Breadcrumbs';
+import BreadcrumbsVue from './BreadcrumbsVue';
 import CodeSplitting from './CodeSplitting';
 import DataLoading from './DataLoading';
 import Modal from './Modal';
@@ -19,6 +20,7 @@ export default {
   'basic-svelte': BasicSvelte,
   'blocking-navigation': BlockingNavigation,
   'breadcrumbs': Breadcrumbs,
+  'breadcrumbs-vue': BreadcrumbsVue,
   'code-splitting': CodeSplitting,
   'data-loading': DataLoading,
   'modal': Modal,
@@ -29,3 +31,4 @@ export default {
   'side-effect': SideEffect,
   'transitions': Transitions
 }
+
