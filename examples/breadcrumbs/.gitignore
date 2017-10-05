@@ -1,4 +1,2 @@
 node_modules
 public/js
-# temp ignore the lock file
-package-lock.json
