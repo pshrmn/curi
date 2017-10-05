@@ -48,7 +48,48 @@ Vue.use(CuriPlugin, { config });`
       id='usage'
     >
       <p>
-        The following is one way to setup rendering for a Curi + Vue application.
+        You can either use a Vue component or a render function to render Curi responses.
+      </p>
+
+      <PrismBlock lang='html'>
+        {
+`<!-- App.vue -->
+<template>
+  <div>
+    <Nav />
+    <component :is="response.body" :params="response.params" :data="response.data" />
+  </div>
+</template>
+
+<script>
+  import Nav from './Nav';
+  export default {
+    name: 'app',
+    props: ['response'],
+    components: { Nav }
+  }
+</script>
+`
+        }
+      </PrismBlock>
+
+      <PrismBlock lang='javascript'>
+        {
+`// renderFunction.js
+import Nav from './Nav';
+export default function renderFunction(h, resp) {
+  return h('div', [
+    h(Nav),
+    h(resp.body, { props: { params: resp.params, data: resp.data } })
+  ]);
+}`
+        }
+      </PrismBlock>
+
+      <p>
+        To actually render the application, you will want to make <IJS>response</IJS> an observed property
+        of your application. Then, you can use <IJS>config.subscribe</IJS> to update that object whenever
+        a new response is emitted.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -62,22 +103,25 @@ config.ready().then(resp => {
     data: {
       response: resp
     },
-    // 4. Add a rendering function to the methods. This will be in charge
-    //    of rendering your application using the response.
+
+    // 4. either use a template or a render function
+    // 4a. TEMPLATE
+    template: '<app :response="response" />',
+    components: { app: App },
+
+    // 4b. RENDER FUNCTION
     methods: {
       render: function(h, resp) {
         const { body } = resp;
         return h(body, { params: resp.params });
       }
     },
-    // 5. Add a render function to your Vue. This will call the rendering
-    //    function that you defined above.
     render: function(h) {
       return this.render(h, this.response);
     }
   });
 
-  // 6. Subscribe to the config and update vm.response whenever
+  // 5. Subscribe to the config and update vm.response whenever
   //    a new response is generated.
   config.subscribe(resp => {
     vm.response = resp;
