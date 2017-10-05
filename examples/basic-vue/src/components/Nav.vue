@@ -7,7 +7,7 @@
       <li>
         <curi-link to="Contact">Contact</curi-link>
         <ul>
-          <li v-for="m in methods">
+          <li v-for="m in methods" :key="m.method">
             <curi-link to="Method" :params="m">{{m.method}}</curi-link>
           </li>
         </ul>
