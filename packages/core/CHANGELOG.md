@@ -1,3 +1,7 @@
+## Next
+
+* Automatically redirect after emitting response.
+
 ## 1.0.0-beta.9
 
 * Fix `Params` type.

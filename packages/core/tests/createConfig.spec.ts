@@ -550,7 +550,8 @@ describe('createConfig', () => {
     });
 
     describe('response.redirectTo', () => {
-      it('triggers a history.replace call', () => {
+      it('triggers a history.replace call AFTER emitting response', () => {
+        let callPosition = 0;
         const routes = [
           {
             name: 'A Route',
@@ -561,13 +562,25 @@ describe('createConfig', () => {
             }
           }
         ];
-        history.replace = jest.fn();
+        let replacePosition;
+        history.replace = jest.fn(() => {
+          replacePosition = callPosition++;
+        });
+        
         const config = createConfig(history, routes);
         
-        expect.assertions(2);
+        let subscribePosition;
+        const subscriber = ignoreFirstCall(() => {
+          subscribePosition = callPosition++;
+        });
+        config.subscribe(subscriber);
+
+        expect.assertions(4);
         expect(history.replace.mock.calls.length).toBe(0);
         return config.ready().then(response => {
           expect(history.replace.mock.calls.length).toBe(1);
+          expect(subscribePosition).toBe(0);
+          expect(replacePosition).toBe(1);
         });
       });
     });

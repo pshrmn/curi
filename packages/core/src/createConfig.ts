@@ -183,14 +183,14 @@ function createConfig(
   function makeResponse(location: HickoryLocation, action: string): void {
     responseInProgress = prepareResponse(location).then(
       response => {
-        // 
-        if ((response as RedirectResponse).redirectTo) {
-          history.replace((response as RedirectResponse).redirectTo)
-        }
         const emitted = emit(response, action);
         // only store these after we have emitted.
         if (emitted) {
           previous = [response, action];
+        }
+
+        if ((response as RedirectResponse).redirectTo) {
+          history.replace((response as RedirectResponse).redirectTo)
         }
         return response;
       },
