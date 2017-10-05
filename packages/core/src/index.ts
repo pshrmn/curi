@@ -2,7 +2,9 @@ export { Addon, Subscriber, SideEffect, Params } from './interface';
 export {
   Route,
   RouteDescriptor,
-  LoadModifiers
+  LoadModifiers,
+  LoadFn,
+  PreloadFn
 } from './utils/createRoute';
 export {
   Response,

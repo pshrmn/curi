@@ -16,6 +16,7 @@ export type LoadFn = (
   modifiers?: LoadModifiers,
   addons?: {[key: string]: AddonGet}
 ) => Promise<any>;
+export type PreloadFn = () => Promise<any>;
 
 export interface RouteDescriptor {
   name: string;
@@ -23,7 +24,7 @@ export interface RouteDescriptor {
   pathOptions?: RegExpOptions;
   body?: () => any;
   children?: Array<RouteDescriptor>;
-  preload?: () => Promise<any>;
+  preload?: PreloadFn;
   load?: LoadFn;
   title?: Title;
   extra?: {[key: string]: any};
@@ -42,7 +43,7 @@ export interface Route {
   body: () => any;
   getBody: () => any;
   children: Array<Route>;
-  preload: () => Promise<any>;
+  preload: PreloadFn;
   load: LoadFn;
   keys: Array<string|number>;
   match: (pathname: string, rc: ResponseCreator, parentPath?: string) => boolean;
