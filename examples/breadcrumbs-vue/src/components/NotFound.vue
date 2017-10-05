@@ -1,5 +1,8 @@
 <template>
-  <div>Sorry, but the requested page was not found</div>
+  <div>
+    <p>Sorry, but the requested page was not found</p>
+    <curi-link to='Products'>Home</curi-link>
+  </div>
 </template>
 
 <script>

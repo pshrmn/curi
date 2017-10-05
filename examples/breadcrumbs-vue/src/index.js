@@ -4,8 +4,8 @@ import CuriPlugin from '@curi/vue';
 import Browser from '@hickory/browser';
 import createAncestorsAddon from '@curi/addon-ancestors';
 
+import App from './components/App';
 import routes from './routes';
-import renderFunction from './renderFunction';
 
 /*
  * A simple addon that will enable adding a dynamic title
@@ -44,12 +44,8 @@ config.ready().then(response => {
     data: {
       response
     },
-    methods: {
-      render: renderFunction
-    },
-    render: function(h) {
-      return this.render(h, this.response);
-    }
+    template: '<app :response="response" />',
+    components: { app: App }
   });
 
   config.subscribe(resp => {

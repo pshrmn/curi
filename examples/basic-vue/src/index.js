@@ -2,8 +2,9 @@ import Vue from 'vue';
 import createConfig from '@curi/core';
 import CuriPlugin from '@curi/vue';
 import Browser from '@hickory/browser';
+
 import routes from './routes';
-import renderFunction from './renderFunction';
+import App from './components/App';
 
 const history = Browser();
 const config = createConfig(history, routes);
@@ -16,12 +17,8 @@ config.ready().then(response => {
     data: {
       response
     },
-    methods: {
-      render: renderFunction
-    },
-    render: function(h) {
-      return this.render(h, this.response);
-    }
+    template: '<app :response="response" />',
+    components: { app: App }
   });
 
   config.subscribe(resp => {
