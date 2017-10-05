@@ -15,8 +15,13 @@ const examples = [
     description: 'A simple Curi app rendered using Svelte'
   },
   {
-    name: 'Blocking Navigation',
+    name: 'Blocking Navigation (React)',
     slug: 'blocking-navigation',
+    description: 'Prevent navigation away from a half-filled form'
+  },
+  {
+    name: 'Blocking Navigation (Vue)',
+    slug: 'blocking-navigation-vue',
     description: 'Prevent navigation away from a half-filled form'
   },
   {

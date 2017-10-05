@@ -2,6 +2,7 @@ import ActiveLinks from './ActiveLinks';
 import BasicVue from './BasicVue';
 import BasicSvelte from './BasicSvelte';
 import BlockingNavigation from './BlockingNavigation';
+import BlockingNavigationVue from './BlockingNavigationVue';
 import Breadcrumbs from './Breadcrumbs';
 import BreadcrumbsVue from './BreadcrumbsVue';
 import CodeSplitting from './CodeSplitting';
@@ -19,6 +20,7 @@ export default {
   'basic-vue': BasicVue,
   'basic-svelte': BasicSvelte,
   'blocking-navigation': BlockingNavigation,
+  'blocking-navigation-vue': BlockingNavigationVue,
   'breadcrumbs': Breadcrumbs,
   'breadcrumbs-vue': BreadcrumbsVue,
   'code-splitting': CodeSplitting,
