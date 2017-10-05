@@ -32,7 +32,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.9"
+    "@curi/core": "^1.0.0-beta.10"
   },
   "devDependencies": {
     "@types/jest": "^20.0.8",

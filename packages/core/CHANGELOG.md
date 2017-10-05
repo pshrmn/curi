@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.10
 
 * Export `PreloadFn` and `LoadFn` types.
 * Automatically redirect after emitting response.
