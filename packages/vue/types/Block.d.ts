@@ -5,6 +5,7 @@ export interface BlockComponent extends Vue {
     confirm: ConfirmationFunction;
     on(): void;
     off(): void;
+    update(): void;
 }
 declare const Block: ComponentOptions<BlockComponent>;
 export default Block;

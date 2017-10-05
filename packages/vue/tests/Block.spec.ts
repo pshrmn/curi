@@ -23,7 +23,7 @@ describe('Block component', () => {
     expect(Vue.options.components['curi-block']).toBeDefined();
   });
   
-  it('renders an empty span', () => {
+  it('renders undefined', () => {
     const vm = new Vue({
       template: '<curi-block :active="active" :confirm="confirm" />',
       data: {
@@ -31,7 +31,7 @@ describe('Block component', () => {
         confirm: (data, s, f) => { s(); }
       }
     }).$mount();
-    expect(vm.$el.tagName).toBe('SPAN');
+    expect(vm.$el.tagName).toBeUndefined();
   });
 
   it('if active=true when mounting, adds block', () => {
@@ -75,9 +75,7 @@ describe('Block component', () => {
     const confirm = jest.fn();
     const vm = new Vue({
       template: `
-        <curi-block :active="active"  :confirm="confirm">
-          <span />
-        </curi-block>
+        <curi-block :active="active"  :confirm="confirm" />
       `,
       data: {
         active: true,
@@ -96,9 +94,7 @@ describe('Block component', () => {
     const confirm = jest.fn();
     const vm = new Vue({
       template: `
-        <curi-block :active="active" :confirm="confirm">
-          test
-        </curi-block>
+        <curi-block :active="active" :confirm="confirm" />
       `,
       data: {
         active: false,
@@ -119,9 +115,7 @@ describe('Block component', () => {
     
     const vm = new Vue({
       template: `
-        <curi-block :active="active" :confirm="confirm">
-          test
-        </curi-block>
+        <curi-block :active="active" :confirm="confirm" />
       `,
       data: {
         active: true,
@@ -139,7 +133,7 @@ describe('Block component', () => {
   it('unblocks before destroying', () => {
     const confirm = jest.fn();
     const vm = new Vue({
-      template: '<curi-block :active="active" :confirm="confirm">test</curi-block>',
+      template: '<curi-block :active="active" :confirm="confirm" />',
       data: {
         active: true,
         confirm

@@ -6,6 +6,7 @@ export interface BlockComponent extends Vue {
   confirm: ConfirmationFunction;
   on(): void;
   off(): void;
+  update(): void;
 }
 
 const Block: ComponentOptions<BlockComponent> = {
@@ -28,6 +29,12 @@ const Block: ComponentOptions<BlockComponent> = {
     },
     off: function() {
       this.$curi.history.removeConfirmation();
+    },
+    update: function() {
+      this.off();
+      if (this.active) {
+        this.on();
+      }
     }
   },
 
@@ -37,10 +44,12 @@ const Block: ComponentOptions<BlockComponent> = {
     }
   },
 
-  beforeUpdate: function() {
-    this.off();
-    if (this.active) {
-      this.on();
+  watch: {
+    active() {
+      this.update();
+    },
+    confirm() {
+      this.update();
     }
   },
 
@@ -49,7 +58,7 @@ const Block: ComponentOptions<BlockComponent> = {
   },
 
   render: function(h: CreateElement) {
-    return h('span');
+    return null;
   }
 };
 

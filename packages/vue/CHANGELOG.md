@@ -1,3 +1,7 @@
+## Next
+
+* Update `<curi-block>` to used watchers instead of `beforeUpdate`. This way, it does not rely on the `<curi-block>` having children to ensure an update.
+
 ## 1.0.0-beta.5
 
 * Switch to TypeScript
