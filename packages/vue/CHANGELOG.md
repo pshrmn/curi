@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.6
 
 * Update `<curi-block>` to used watchers instead of `beforeUpdate`. This way, it does not rely on the `<curi-block>` having children to ensure an update.
 
