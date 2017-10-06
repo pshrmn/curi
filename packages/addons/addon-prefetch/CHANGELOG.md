@@ -1,3 +1,7 @@
+## Next
+
+* Add `reset` property.
+
 ## 1.0.0-beta.4
 
 * Switch to TypeScript

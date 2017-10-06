@@ -28,6 +28,9 @@ function createPrefetchAddon(): Addon {
         );
       }
       return loaders[name].call(null, params, location, modifiers);
+    },
+    reset() {
+      loaders = {};
     }
   };
 }

@@ -117,4 +117,21 @@ describe('prefetch addon', () => {
       });
     });
   });
+
+  describe('reset', () => {
+    it('resets the registered routes', () => {
+      const playerURI = {
+        name: 'Player',
+        path: 'player/:id',
+        load: () => Promise.resolve()
+      };
+      prefetch.register(playerURI);
+      expect(prefetch.get('Player').then).toBeDefined();
+      prefetch.reset();
+      expect.assertions(2);
+      return prefetch.get('Player').catch(err => {
+        expect(err).toBe(`Could not preload data for Player because it is not registered.`)
+      })
+    });
+  });
 });
