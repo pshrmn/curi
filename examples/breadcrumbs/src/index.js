@@ -16,7 +16,7 @@ import renderFunction from './renderFunction';
  * an object containing any values that you want.
  */
 function createTitleAddon() {
-  const routes = {};
+  let routes = {};
   return {
     name: 'title',
     register: (route) => {
@@ -26,6 +26,9 @@ function createTitleAddon() {
     get: (name, params) => {
       const titleFn = routes[name];
       return titleFn ? titleFn(params) : name;
+    },
+    reset: () => {
+      routes = {};
     }
   }
 }
@@ -33,7 +36,7 @@ function createTitleAddon() {
 const history = Browser();
 
 const config = createConfig(history, routes, {
-  addons: [createAncestorsAddon, createTitleAddon]
+  addons: [createAncestorsAddon(), createTitleAddon()]
 });
 
 ReactDOM.render((

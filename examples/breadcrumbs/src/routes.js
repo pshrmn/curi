@@ -9,26 +9,30 @@ export default [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    body: () => Home,
+    load: (params, location, mods, addons) => {
+      const pathname = addons.pathname('Products');
+      mods.redirect(pathname);
+    }
   },
   {
     name: 'Products',
     path: 'products',
     body: () => Products,
-    load: (params, location, resp) => {
-      resp.setData(api.categories());
+    load: (params, location, mods) => {
+      mods.setData(api.categories());
     },
     children: [
       {
         name: 'Category',
         path: ':category',
         body: () => Category,
-        load: (params, location, resp) => {
+        load: (params, location, mods) => {
           const products = api.category(params.category);
           if (products == null) {
             return Promise.reject('Category does not exist');
           }
-          resp.setData(products);
+          mods.setData(products);
         },
         title: (params) => `${params.category || 'Category'}`,
         children: [
@@ -36,12 +40,12 @@ export default [
             name: 'Product',
             path: ':productID',
             body: () => Product,
-            load: (params, location, resp) => {
+            load: (params, location, mods) => {
               const product = api.product(params.productID);
               if (!product) {
                 return Promise.reject('Product does not exist');
               }
-              resp.setData(product);
+              mods.setData(product);
             },
             title: (params) => `${params.name || 'Product'}`
           }

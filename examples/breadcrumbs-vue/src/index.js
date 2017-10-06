@@ -17,7 +17,7 @@ import routes from './routes';
  * you want.
  */
 function createTitleTextAddon() {
-  const routes = {};
+  let routes = {};
   return {
     name: 'title',
     register: (route) => {
@@ -27,13 +27,16 @@ function createTitleTextAddon() {
     get: (name, params) => {
       const titleFn = routes[name];
       return titleFn ? titleFn(params) : name;
+    },
+    reset: () => {
+      routes = {};
     }
   }
 }
 
 const history = Browser();
 const config = createConfig(history, routes, {
-  addons: [createAncestorsAddon, createTitleTextAddon]
+  addons: [createAncestorsAddon(), createTitleTextAddon()]
 });
 
 Vue.use(CuriPlugin, { config });
