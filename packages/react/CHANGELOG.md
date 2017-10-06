@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.9
 
 * Remove `<Redirect>`. This was inspired by React Router, but it doesn't really serve a point. Redirects should either be known pre-render, in which case they can be made in `route.load` or can be manually performed using `curi.history.replace`.
 * Pass `action` to `<Navigator>`'s `render` function. New signature is `function(response, action, config) {}`.
