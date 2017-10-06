@@ -149,4 +149,28 @@ describe('active addon', () => {
       expect(playerIsActive).toBe(true);
     });
   });
+
+  describe('reset', () => {
+    it('removes the registered routes', () => {
+      const player = {
+        name: 'Player',
+        path: 'player/:id',
+        keys: ['id']
+      };
+      active.register(player);
+      const playerIsActive = active.get(
+        'Player',
+        { name: 'Player', params: { id: 7 } },
+        { id: 7 }
+      );
+      expect(playerIsActive).toBe(true);
+      active.reset();
+      const playerIsActiveAfterReset = active.get(
+        'Player',
+        { name: 'Player', params: { id: 7 } },
+        { id: 7 }
+      );
+      expect(playerIsActiveAfterReset).toBe(false);
+    });
+  });
 });

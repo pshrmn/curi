@@ -5,7 +5,7 @@ function acceptableRouteName(name: string, response: Response, partial?: boolean
 }
 
 function createActiveAddon(): Addon {
-  const routeParams: {[key: string]: Array<string>} = {};
+  let routeParams: {[key: string]: Array<string>} = {};
 
   return {
     name: 'active',
@@ -42,6 +42,9 @@ function createActiveAddon(): Addon {
         }
       }
       return true;
+    },
+    reset() {
+      routeParams = {};
     }
   };
 }
