@@ -138,15 +138,19 @@ const config = createConfig(history, routes);
           The <IJS>createConfig</IJS> function
           can also take an optional third argument, which is an options object. You can use this
           to pass <Link to='Guide' params={{ slug: 'addons' }}>addons</Link>,{' '}
-          <Link to='Guide' params={{ slug: 'side-effects' }}>side effects</Link>, and a{' '}
-          <Link to='Guide' params={{ slug: 'response-caching' }}>cache</Link> to your configuration object.
+          <Link to='Guide' params={{ slug: 'side-effects' }}>side effects</Link>, a{' '}
+          <Link to='Guide' params={{ slug: 'response-caching' }}>cache</Link>, and a{' '}
+          <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp">
+            <IJS>pathnameOptions</IJS>
+          </a> object to your configuration object.
         </p>
         <PrismBlock lang='javascript'>
           {
 `const config = createConfig(history, routes, {
   addons: [...],
   sideEffects: [...],
-  cache: cacheObject
+  cache: cacheObject,
+  pathnameOptions: { encode: x => x }
 });`
           }
         </PrismBlock>

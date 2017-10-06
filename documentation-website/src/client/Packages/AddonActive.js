@@ -35,7 +35,7 @@ export default ({ name, version, globalName }) => (
 import createActiveAddon from '@curi/addon-active';
 
 const config = createConfig(history, routes, {
-  addons: [createActiveAddon]
+  addons: [createActiveAddon()]
 });`
           }
         </PrismBlock>

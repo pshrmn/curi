@@ -33,14 +33,15 @@ export default ({ name }) => (
   // config object's addons property. For example, with
   // this addon, the get function will be called when
   // you call config.addons.MyAddon('...')
-  get: function(route) {...}
+  get: function(route) {...},
+  reset: function() {...}
 }`
       }
     </PrismBlock>
 
     <p>
-      However, when you import them, you are actually importing an addon factory. Curi will create
-      the actual addon while creating your configuration object.
+      However, when you import them, you are actually importing an addon factory function. You need to
+      call the function to create the addon that you will pass to your Curi configuration
     </p>
 
     <PrismBlock lang='javascript'>
@@ -57,9 +58,8 @@ export default ({ name }) => (
     >
       <p>
         As stated above, whenever you include addons in your configuration object, you do not pass
-        the actual addon object. Instead, you pass a factory function that will return the addon
-        object. This allows addons to be instanced (multiple configuration objects would each
-        have their own instance of the addon), which can be useful for server-side rendering.
+        the actual addon object. Instead, you pass an addon instance (multiple configuration objects
+        would each have their own instance of the addon), which can be useful for server-side rendering.
       </p>
 
       <p>
@@ -70,7 +70,7 @@ export default ({ name }) => (
       <PrismBlock lang='javascript'>
         {
 `const config = createConfig(history, routes, {
-  addons: [createMyAddon]
+  addons: [createMyAddon()]
 });`
         }
       </PrismBlock>
@@ -111,16 +111,17 @@ export default ({ name }) => (
       </PrismBlock>
 
       <p>
-        The function should return an object with three properties: name, register, and get. name is a
-        unique identifier for the addon, register is a function that will be used for your addon to store
-        information about each route, and get is a function that will receive a route's name and perform
-        some task using the related route.
+        The function should return an object with four properties: <IJS>name</IJS>, <IJS>register</IJS>,{' '}
+        <IJS>get</IJS>, and <IJS>reset</IJS>. name is a unique identifier for the addon, register is a function
+        that will be used for your addon to store information about each route, get is a function that will receive
+        a route's name (and possibly other arguments) and perform some task using the related route, and reset
+        is a function that will reset the addon's internal state (this is used if you call <IJS>config.refresh</IJS>).
       </p>
 
       <PrismBlock lang='javascript'>
         {
 `export default function myAddonFactory() {
-  const knownRoutes = {};
+  let knownRoutes = {};
   return {
     name: 'MyFirstAddon',
     register: route => {
@@ -128,6 +129,9 @@ export default ({ name }) => (
     },
     get: (name) => {
       return knownRoutes[name] != null
+    },
+    reset: () => {
+      knownRoutes = {};
     }
   };
 }`
@@ -148,7 +152,7 @@ import myAddonFactory from './myAddon'
 const routes = [{ name: 'Home', path: '' }];
 
 const config = createConfig(history, routes, {
-  addons: [myAddonFactory]
+  addons: [myAddonFactory()]
 });
 
 config.addons.MyFirstAddon('Home'); // true
@@ -175,7 +179,7 @@ config.addons.MyFirstAddon('Elsewhere'); // false`
         <PrismBlock lang='javascript'>
           {
 `function ParentFactory() {
-  const routeTree = {};
+  let routeTree = {};
   return {
     name: 'routeParent',
     register: (route, parent) => {
@@ -186,6 +190,9 @@ config.addons.MyFirstAddon('Elsewhere'); // false`
     },
     get: (name) => {
       return routeTree[name];
+    },
+    reset: () => {
+      routeTree = {};
     }
   }
 }`

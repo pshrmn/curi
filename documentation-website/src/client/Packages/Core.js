@@ -71,7 +71,7 @@ const config = createConfig(history, routes, options);`
             </p>
             <ul>
               <li>
-                addons - An array of addon functions. The pathname addon is included by
+                addons - An array of addon instances. The pathname addon is included by
                 default, but any other addons that you wish to use should be provided in this array.
               </li>
               <li>
@@ -83,6 +83,10 @@ const config = createConfig(history, routes, options);`
                 cache - An object with get/set properties. This allows you to cache old
                 responses, preventing any load functions from being re-called when navigating to an
                 already-visited location.
+              </li>
+              <li>
+                pathnameOptions - An object with an <IJS>encode</IJS> function that will be used to encode the
+                string created when generating a pathname from a route and its params.
               </li>
             </ul>
           </Subsection>

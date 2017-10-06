@@ -37,7 +37,7 @@ export default ({ name, version, globalName }) => (
 `import createConfig from '@curi/core';
 import prefetch from '@curi/addon-prefetch';
 
-const config = createConfig(history, routes, { addons: [prefetch] });
+const config = createConfig(history, routes, { addons: [prefetch()] });
 `
           }
         </PrismBlock>

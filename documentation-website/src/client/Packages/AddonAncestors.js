@@ -47,7 +47,7 @@ const routes = [
 ];
 
 const config = createConfig(history,routes, {
-  addons: [createAncestorsAddon]
+  addons: [createAncestorsAddon()]
 });`
           }
         </PrismBlock>
