@@ -82,5 +82,20 @@ describe('ancestors addon', () => {
       expect(ancestors.get('Player', 1)).toBe('Team');
       expect(ancestors.get('Player', 2)).toBe('League');
     });
+
+    it('returns undefined if route does not exist', () => {
+      expect(ancestors.get('This route does not exist')).toBeUndefined();
+    });
+  });
+
+  describe('reset', () => {
+    it('resets registered routes', () => {
+      const player = { name: 'Player' };
+      ancestors.register(player, ['Team', 'League']);
+      expect(ancestors.get('Player')).toEqual(['Team', 'League']);
+      expect(ancestors.get('Player', null)).toEqual(['Team', 'League']);
+      ancestors.reset();
+      expect(ancestors.get('Player')).toBeUndefined();
+    });
   });
 });

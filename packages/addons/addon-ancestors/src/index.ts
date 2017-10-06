@@ -1,12 +1,15 @@
 import { Route, Addon } from '@curi/core';
 
 function createAncestorsAddon(): Addon {
-  const routeAncestors: {[key: string]: Array<string>} = {};
+  let routeAncestors: {[key: string]: Array<string>} = {};
 
   function get(name: string, level: number): string;
   function get(name: string): Array<string>;
   function get(name: string, level?: number) {
     const ancestors = routeAncestors[name];
+    if (!ancestors) {
+      return;
+    }
     if (level == null) {
       return ancestors.slice();
     }
@@ -32,7 +35,10 @@ function createAncestorsAddon(): Addon {
       routeAncestors[name] = parentRoutes;
       return [name, ...parentRoutes];
     },
-    get
+    get,
+    reset() {
+      routeAncestors = {};
+    }
   };
 }
 

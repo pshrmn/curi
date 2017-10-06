@@ -1,3 +1,8 @@
+## Next
+
+* Add `reset` property.
+* Return `undefined` if requested route is not registered.
+
 ## 1.0.0-beta.4
 
 * Switch to TypeScript
