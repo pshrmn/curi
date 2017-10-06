@@ -71,12 +71,14 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export blankObject */
 /* unused harmony export destroy */
 /* unused harmony export destroyDev */
 /* unused harmony export differs */
 /* unused harmony export dispatchObservers */
-/* unused harmony export get */
 /* unused harmony export fire */
+/* unused harmony export get */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return init; });
 /* unused harmony export observe */
 /* unused harmony export observeDev */
 /* unused harmony export on */
@@ -89,9 +91,9 @@
 /* unused harmony export _unmount */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return proto; });
 /* unused harmony export protoDev */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return appendNode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return appendNode; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return insertNode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return detachNode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return detachNode; });
 /* unused harmony export detachBetween */
 /* unused harmony export detachBefore */
 /* unused harmony export detachAfter */
@@ -99,7 +101,7 @@
 /* unused harmony export reinsertChildren */
 /* unused harmony export reinsertAfter */
 /* unused harmony export reinsertBefore */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return destroyEach; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return destroyEach; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return createFragment; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createElement; });
 /* unused harmony export createSvgElement */
@@ -122,7 +124,7 @@
 /* unused harmony export hash */
 /* unused harmony export wrapTransition */
 /* unused harmony export transitionManager */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return noop; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return noop; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return assign; });
 function noop() {}
 
@@ -188,10 +190,9 @@ function reinsertBefore(after, target) {
 	while (parent.firstChild !== after) target.appendChild(parent.firstChild);
 }
 
-// TODO this is out of date
-function destroyEach(iterations, detach, start) {
-	for (var i = start; i < iterations.length; i += 1) {
-		if (iterations[i]) iterations[i].destroy(detach);
+function destroyEach(iterations) {
+	for (var i = 0; i < iterations.length; i += 1) {
+		if (iterations[i]) iterations[i].d();
 	}
 }
 
@@ -497,13 +498,17 @@ var transitionManager = {
 	}
 };
 
+function blankObject() {
+	return Object.create(null);
+}
+
 function destroy(detach) {
 	this.destroy = noop;
 	this.fire('destroy');
 	this.set = this.get = noop;
 
-	if (detach !== false) this._fragment.unmount();
-	this._fragment.destroy();
+	if (detach !== false) this._fragment.u();
+	this._fragment.d();
 	this._fragment = this._state = null;
 }
 
@@ -539,10 +544,6 @@ function dispatchObservers(component, group, changed, newState, oldState) {
 	}
 }
 
-function get(key) {
-	return key ? this._state[key] : this._state;
-}
-
 function fire(eventName, data) {
 	var handlers =
 		eventName in this._handlers && this._handlers[eventName].slice();
@@ -551,6 +552,20 @@ function fire(eventName, data) {
 	for (var i = 0; i < handlers.length; i += 1) {
 		handlers[i].call(this, data);
 	}
+}
+
+function get(key) {
+	return key ? this._state[key] : this._state;
+}
+
+function init(component, options) {
+	component.options = options;
+
+	component._observers = { pre: blankObject(), post: blankObject() };
+	component._handlers = blankObject();
+	component._root = options._root || component;
+	component._yield = options._yield;
+	component._bind = options._bind;
 }
 
 function observe(key, callback, options) {
@@ -634,10 +649,10 @@ function _set(newState) {
 	if (!dirty) return;
 
 	this._state = assign({}, oldState, newState);
-	this._recompute(changed, this._state, oldState, false);
+	this._recompute(changed, this._state);
 	if (this._bind) this._bind(changed, this._state);
 	dispatchObservers(this, this._observers.pre, changed, this._state, oldState);
-	this._fragment.update(changed, this._state);
+	this._fragment.p(changed, this._state);
 	dispatchObservers(this, this._observers.post, changed, this._state, oldState);
 }
 
@@ -657,11 +672,11 @@ function callAll(fns) {
 }
 
 function _mount(target, anchor) {
-	this._fragment.mount(target, anchor);
+	this._fragment.m(target, anchor);
 }
 
 function _unmount() {
-	this._fragment.unmount();
+	this._fragment.u();
 }
 
 var proto = {
@@ -700,153 +715,142 @@ var protoDev = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__curi_svelte__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__curi_svelte__ = __webpack_require__(2);
+/* src/components/Nav.html generated by Svelte v1.40.2 */
 
 
 
-
-var template = (function() {
+function data() {
   return {
-    data() {
-      return {
-        methods: ['email', 'phone']
-      }
-    }
+    methods: ['email', 'phone']
   }
-}());
+};
 
 function create_main_fragment(state, component) {
 	var nav, ul, li, text, li_1, text_2, text_3, ul_1;
 
-	var link = new __WEBPACK_IMPORTED_MODULE_0__curi_svelte__["Link"]({
+	var link = new __WEBPACK_IMPORTED_MODULE_1__curi_svelte__["Link"]({
 		_root: component._root,
-		slots: { default: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["j" /* createFragment */])() },
+		slots: { default: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["j" /* createFragment */])() },
 		data: { to: "Home" }
 	});
 
-	var link_1 = new __WEBPACK_IMPORTED_MODULE_0__curi_svelte__["Link"]({
+	var link_1 = new __WEBPACK_IMPORTED_MODULE_1__curi_svelte__["Link"]({
 		_root: component._root,
-		slots: { default: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["j" /* createFragment */])() },
+		slots: { default: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["j" /* createFragment */])() },
 		data: { to: "Contact" }
 	});
 
-	var each_block_value = state.methods;
+	var methods = state.methods;
 
-	var each_block_iterations = [];
+	var each_blocks = [];
 
-	for (var i = 0; i < each_block_value.length; i += 1) {
-		each_block_iterations[i] = create_each_block(state, each_block_value, each_block_value[i], i, component);
+	for (var i = 0; i < methods.length; i += 1) {
+		each_blocks[i] = create_each_block(state, methods, methods[i], i, component);
 	}
 
 	return {
-		create: function() {
-			nav = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("nav");
-			ul = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("ul");
-			li = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("li");
-			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("Home");
-			link._fragment.create();
-			li_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("li");
-			text_2 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("Contact Us");
-			link_1._fragment.create();
-			text_3 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n    ");
-			ul_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("ul");
+		c: function create() {
+			nav = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("nav");
+			ul = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("ul");
+			li = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("li");
+			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("Home");
+			link._fragment.c();
+			li_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("li");
+			text_2 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("Contact Us");
+			link_1._fragment.c();
+			text_3 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n    ");
+			ul_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("ul");
 
-			for (var i = 0; i < each_block_iterations.length; i += 1) {
-				each_block_iterations[i].create();
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
 			}
 		},
 
-		mount: function(target, anchor) {
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(nav, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(ul, nav);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(li, ul);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text, link._slotted.default);
+		m: function mount(target, anchor) {
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(nav, target, anchor);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(ul, nav);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(li, ul);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(text, link._slotted.default);
 			link._mount(li, null);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(li_1, ul);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text_2, link_1._slotted.default);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(li_1, ul);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(text_2, link_1._slotted.default);
 			link_1._mount(li_1, null);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text_3, li_1);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(ul_1, li_1);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(text_3, li_1);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(ul_1, li_1);
 
-			for (var i = 0; i < each_block_iterations.length; i += 1) {
-				each_block_iterations[i].mount(ul_1, null);
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(ul_1, null);
 			}
 		},
 
-		update: function(changed, state) {
-			var link_changes = {};
-
-			link._set( link_changes );
-
-			var link_1_changes = {};
-
-			link_1._set( link_1_changes );
-
-			var each_block_value = state.methods;
+		p: function update(changed, state) {
+			var methods = state.methods;
 
 			if (changed.methods) {
-				for (var i = 0; i < each_block_value.length; i += 1) {
-					if (each_block_iterations[i]) {
-						each_block_iterations[i].update(changed, state, each_block_value, each_block_value[i], i);
+				for (var i = 0; i < methods.length; i += 1) {
+					if (each_blocks[i]) {
+						each_blocks[i].p(changed, state, methods, methods[i], i);
 					} else {
-						each_block_iterations[i] = create_each_block(state, each_block_value, each_block_value[i], i, component);
-						each_block_iterations[i].create();
-						each_block_iterations[i].mount(ul_1, null);
+						each_blocks[i] = create_each_block(state, methods, methods[i], i, component);
+						each_blocks[i].c();
+						each_blocks[i].m(ul_1, null);
 					}
 				}
 
-				for (; i < each_block_iterations.length; i += 1) {
-					each_block_iterations[i].unmount();
-					each_block_iterations[i].destroy();
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].u();
+					each_blocks[i].d();
 				}
-				each_block_iterations.length = each_block_value.length;
+				each_blocks.length = methods.length;
 			}
 		},
 
-		unmount: function() {
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(nav);
+		u: function unmount() {
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(nav);
 
-			for (var i = 0; i < each_block_iterations.length; i += 1) {
-				each_block_iterations[i].unmount();
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].u();
 			}
 		},
 
-		destroy: function() {
+		d: function destroy() {
 			link.destroy(false);
 			link_1.destroy(false);
 
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* destroyEach */])(each_block_iterations, false, 0);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["l" /* destroyEach */])(each_blocks);
 		}
 	};
 }
 
-function create_each_block(state, each_block_value, method, method_index, component) {
+// (9:6) {{#each methods as method}}
+function create_each_block(state, methods, method, method_index, component) {
 	var li, text, text_1_value = method, text_1;
 
-	var link = new __WEBPACK_IMPORTED_MODULE_0__curi_svelte__["Link"]({
+	var link = new __WEBPACK_IMPORTED_MODULE_1__curi_svelte__["Link"]({
 		_root: component._root,
-		slots: { default: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["j" /* createFragment */])() },
+		slots: { default: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["j" /* createFragment */])() },
 		data: { to: "Method", params: { method } }
 	});
 
 	return {
-		create: function() {
-			li = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("li");
-			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("By ");
-			text_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])(text_1_value);
-			link._fragment.create();
+		c: function create() {
+			li = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("li");
+			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("By ");
+			text_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])(text_1_value);
+			link._fragment.c();
 		},
 
-		mount: function(target, anchor) {
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(li, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text, link._slotted.default);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text_1, link._slotted.default);
+		m: function mount(target, anchor) {
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(li, target, anchor);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(text, link._slotted.default);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(text_1, link._slotted.default);
 			link._mount(li, null);
 		},
 
-		update: function(changed, state, each_block_value, method, method_index) {
-			if ( (changed.methods) && text_1_value !== (text_1_value = method) ) {
+		p: function update(changed, state, methods, method, method_index) {
+			if ((changed.methods) && text_1_value !== (text_1_value = method)) {
 				text_1.data = text_1_value;
 			}
 
@@ -855,30 +859,19 @@ function create_each_block(state, each_block_value, method, method_index, compon
 			link._set( link_changes );
 		},
 
-		unmount: function() {
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(li);
+		u: function unmount() {
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(li);
 		},
 
-		destroy: function() {
+		d: function destroy() {
 			link.destroy(false);
 		}
 	};
 }
 
 function Nav(options) {
-	this.options = options;
-	this._state = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(template.data(), options.data);
-
-	this._observers = {
-		pre: Object.create(null),
-		post: Object.create(null)
-	};
-
-	this._handlers = Object.create(null);
-
-	this._root = options._root || this;
-	this._yield = options._yield;
-	this._bind = options._bind;
+	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* init */])(this, options);
+	this._state = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(data(), options.data);
 
 	if (!options._root) {
 		this._oncreate = [];
@@ -889,19 +882,18 @@ function Nav(options) {
 	this._fragment = create_main_fragment(this._state, this);
 
 	if (options.target) {
-		this._fragment.create();
-		this._fragment.mount(options.target, options.anchor || null);
+		this._fragment.c();
+		this._fragment.m(options.target, options.anchor || null);
 
 		this._lock = true;
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
 		this._lock = false;
 	}
 }
 
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(Nav.prototype, __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
-
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(Nav.prototype, __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
 /* harmony default export */ __webpack_exports__["a"] = (Nav);
 
 /***/ }),
@@ -913,6 +905,203 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return Link; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getConfig", function() { return getConfig; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setConfig", function() { return setConfig; });
+function noop() {}
+
+function assign(target) {
+  var k,
+      source,
+      i = 1,
+      len = arguments.length;
+
+  for (; i < len; i++) {
+    source = arguments[i];
+
+    for (k in source) target[k] = source[k];
+  }
+
+  return target;
+}
+
+function appendNode(node, target) {
+  target.appendChild(node);
+}
+
+function insertNode(node, target, anchor) {
+  target.insertBefore(node, anchor);
+}
+
+function detachNode(node) {
+  node.parentNode.removeChild(node);
+}
+
+function reinsertChildren(parent, target) {
+  while (parent.firstChild) target.appendChild(parent.firstChild);
+}
+
+function createElement(name) {
+  return document.createElement(name);
+}
+
+function addListener(node, event, handler) {
+  node.addEventListener(event, handler, false);
+}
+
+function removeListener(node, event, handler) {
+  node.removeEventListener(event, handler, false);
+}
+
+function blankObject() {
+  return Object.create(null);
+}
+
+function destroy(detach) {
+  this.destroy = noop;
+  this.fire('destroy');
+  this.set = this.get = noop;
+  if (detach !== false) this._fragment.u();
+
+  this._fragment.d();
+
+  this._fragment = this._state = null;
+}
+
+function differs(a, b) {
+  return a !== b || a && typeof a === 'object' || typeof a === 'function';
+}
+
+function dispatchObservers(component, group, changed, newState, oldState) {
+  for (var key in group) {
+    if (!changed[key]) continue;
+    var newValue = newState[key];
+    var oldValue = oldState[key];
+    var callbacks = group[key];
+    if (!callbacks) continue;
+
+    for (var i = 0; i < callbacks.length; i += 1) {
+      var callback = callbacks[i];
+      if (callback.__calling) continue;
+      callback.__calling = true;
+      callback.call(component, newValue, oldValue);
+      callback.__calling = false;
+    }
+  }
+}
+
+function fire(eventName, data) {
+  var handlers = eventName in this._handlers && this._handlers[eventName].slice();
+
+  if (!handlers) return;
+
+  for (var i = 0; i < handlers.length; i += 1) {
+    handlers[i].call(this, data);
+  }
+}
+
+function get(key) {
+  return key ? this._state[key] : this._state;
+}
+
+function init(component, options) {
+  component.options = options;
+  component._observers = {
+    pre: blankObject(),
+    post: blankObject()
+  };
+  component._handlers = blankObject();
+  component._root = options._root || component;
+  component._yield = options._yield;
+  component._bind = options._bind;
+}
+
+function observe(key, callback, options) {
+  var group = options && options.defer ? this._observers.post : this._observers.pre;
+  (group[key] || (group[key] = [])).push(callback);
+
+  if (!options || options.init !== false) {
+    callback.__calling = true;
+    callback.call(this, this._state[key]);
+    callback.__calling = false;
+  }
+
+  return {
+    cancel: function () {
+      var index = group[key].indexOf(callback);
+      if (~index) group[key].splice(index, 1);
+    }
+  };
+}
+
+function on(eventName, handler) {
+  if (eventName === 'teardown') return this.on('destroy', handler);
+  var handlers = this._handlers[eventName] || (this._handlers[eventName] = []);
+  handlers.push(handler);
+  return {
+    cancel: function () {
+      var index = handlers.indexOf(handler);
+      if (~index) handlers.splice(index, 1);
+    }
+  };
+}
+
+function set(newState) {
+  this._set(assign({}, newState));
+
+  if (this._root._lock) return;
+  this._root._lock = true;
+  callAll(this._root._beforecreate);
+  callAll(this._root._oncreate);
+  callAll(this._root._aftercreate);
+  this._root._lock = false;
+}
+
+function _set(newState) {
+  var oldState = this._state,
+      changed = {},
+      dirty = false;
+
+  for (var key in newState) {
+    if (differs(newState[key], oldState[key])) changed[key] = dirty = true;
+  }
+
+  if (!dirty) return;
+  this._state = assign({}, oldState, newState);
+
+  this._recompute(changed, this._state);
+
+  if (this._bind) this._bind(changed, this._state);
+  dispatchObservers(this, this._observers.pre, changed, this._state, oldState);
+
+  this._fragment.p(changed, this._state);
+
+  dispatchObservers(this, this._observers.post, changed, this._state, oldState);
+}
+
+function callAll(fns) {
+  while (fns && fns.length) fns.pop()();
+}
+
+function _mount(target, anchor) {
+  this._fragment.m(target, anchor);
+}
+
+function _unmount() {
+  this._fragment.u();
+}
+
+var proto = {
+  destroy: destroy,
+  get: get,
+  fire: fire,
+  observe: observe,
+  on: on,
+  set: set,
+  teardown: destroy,
+  _recompute: noop,
+  _set: _set,
+  _mount: _mount,
+  _unmount: _unmount
+};
+
 var config = void 0;
 function setConfig(c) {
   config = c;
@@ -921,225 +1110,43 @@ function getConfig() {
   return config;
 }
 
-function noop() {}
-
-function assign(target) {
-	var k,
-		source,
-		i = 1,
-		len = arguments.length;
-	for (; i < len; i++) {
-		source = arguments[i];
-		for (k in source) target[k] = source[k];
-	}
-
-	return target;
-}
-
-function appendNode(node, target) {
-	target.appendChild(node);
-}
-
-function insertNode(node, target, anchor) {
-	target.insertBefore(node, anchor);
-}
-
-function detachNode(node) {
-	node.parentNode.removeChild(node);
-}
-
-function reinsertChildren(parent, target) {
-	while (parent.firstChild) target.appendChild(parent.firstChild);
-}
-
-function createElement(name) {
-	return document.createElement(name);
-}
-
-function addListener(node, event, handler) {
-	node.addEventListener(event, handler, false);
-}
-
-function removeListener(node, event, handler) {
-	node.removeEventListener(event, handler, false);
-}
-
-function destroy(detach) {
-	this.destroy = noop;
-	this.fire('destroy');
-	this.set = this.get = noop;
-
-	if (detach !== false) this._fragment.unmount();
-	this._fragment.destroy();
-	this._fragment = this._state = null;
-}
-
-function differs(a, b) {
-	return a !== b || ((a && typeof a === 'object') || typeof a === 'function');
-}
-
-function dispatchObservers(component, group, changed, newState, oldState) {
-	for (var key in group) {
-		if (!changed[key]) continue;
-
-		var newValue = newState[key];
-		var oldValue = oldState[key];
-
-		var callbacks = group[key];
-		if (!callbacks) continue;
-
-		for (var i = 0; i < callbacks.length; i += 1) {
-			var callback = callbacks[i];
-			if (callback.__calling) continue;
-
-			callback.__calling = true;
-			callback.call(component, newValue, oldValue);
-			callback.__calling = false;
-		}
-	}
-}
-
-function get(key) {
-	return key ? this._state[key] : this._state;
-}
-
-function fire(eventName, data) {
-	var handlers =
-		eventName in this._handlers && this._handlers[eventName].slice();
-	if (!handlers) return;
-
-	for (var i = 0; i < handlers.length; i += 1) {
-		handlers[i].call(this, data);
-	}
-}
-
-function observe(key, callback, options) {
-	var group = options && options.defer
-		? this._observers.post
-		: this._observers.pre;
-
-	(group[key] || (group[key] = [])).push(callback);
-
-	if (!options || options.init !== false) {
-		callback.__calling = true;
-		callback.call(this, this._state[key]);
-		callback.__calling = false;
-	}
-
-	return {
-		cancel: function() {
-			var index = group[key].indexOf(callback);
-			if (~index) group[key].splice(index, 1);
-		}
-	};
-}
-
-function on(eventName, handler) {
-	if (eventName === 'teardown') return this.on('destroy', handler);
-
-	var handlers = this._handlers[eventName] || (this._handlers[eventName] = []);
-	handlers.push(handler);
-
-	return {
-		cancel: function() {
-			var index = handlers.indexOf(handler);
-			if (~index) handlers.splice(index, 1);
-		}
-	};
-}
-
-function set(newState) {
-	this._set(assign({}, newState));
-	if (this._root._lock) return;
-	this._root._lock = true;
-	callAll(this._root._beforecreate);
-	callAll(this._root._oncreate);
-	callAll(this._root._aftercreate);
-	this._root._lock = false;
-}
-
-function _set(newState) {
-	var oldState = this._state,
-		changed = {},
-		dirty = false;
-
-	for (var key in newState) {
-		if (differs(newState[key], oldState[key])) changed[key] = dirty = true;
-	}
-	if (!dirty) return;
-
-	this._state = assign({}, oldState, newState);
-	this._recompute(changed, this._state, oldState, false);
-	if (this._bind) this._bind(changed, this._state);
-	dispatchObservers(this, this._observers.pre, changed, this._state, oldState);
-	this._fragment.update(changed, this._state);
-	dispatchObservers(this, this._observers.post, changed, this._state, oldState);
-}
-
-function callAll(fns) {
-	while (fns && fns.length) fns.pop()();
-}
-
-function _mount(target, anchor) {
-	this._fragment.mount(target, anchor);
-}
-
-function _unmount() {
-	this._fragment.unmount();
-}
-
-var proto = {
-	destroy: destroy,
-	get: get,
-	fire: fire,
-	observe: observe,
-	on: on,
-	set: set,
-	teardown: destroy,
-	_recompute: noop,
-	_set: _set,
-	_mount: _mount,
-	_unmount: _unmount
+/* src/Link.html generated by Svelte v1.40.1 */
+var canNavigate = function canNavigate(event) {
+  return !event.defaultPrevented && event.button === 0 && !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 };
 
-var template = function () {
-  var canNavigate = function canNavigate(event) {
-    return !event.defaultPrevented && event.button === 0 && !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
-  };
+function location(to, params, details) {
+  var config = getConfig();
+  return Object.assign({}, {
+    pathname: config.addons.pathname(to, params)
+  }, details);
+}
 
+function href(location) {
+  var config = getConfig();
+  return config.history.toHref(location);
+}
+
+function data() {
   return {
-    data: function data() {
-      return {
-        to: '',
-        params: {},
-        details: {}
-      };
-    },
-    computed: {
-      location: function location(to, params, details) {
-        var config = getConfig();
-        return Object.assign({}, {
-          pathname: config.addons.pathname(to, params)
-        }, details);
-      },
-      href: function href(location) {
-        var config = getConfig();
-        return config.history.toHref(location);
-      }
-    },
-    methods: {
-      handleClick: function handleClick(event, location) {
-        var can = canNavigate(event);
-
-        if (can) {
-          event.preventDefault();
-          var config = getConfig();
-          config.history.update(location);
-        }
-      }
-    }
+    to: '',
+    params: {},
+    details: {}
   };
-}();
+}
+
+
+var methods = {
+  handleClick: function handleClick(event, location) {
+    var can = canNavigate(event);
+
+    if (can) {
+      event.preventDefault();
+      var config = getConfig();
+      config.history.update(location);
+    }
+  }
+};
 
 function create_main_fragment(state, component) {
   var a,
@@ -1151,73 +1158,70 @@ function create_main_fragment(state, component) {
   }
 
   return {
-    create: function create() {
+    c: function create() {
       a = createElement("a");
-      this.hydrate();
+      this.h();
     },
-    hydrate: function hydrate(nodes) {
+    h: function hydrate() {
       a.href = state.href;
       addListener(a, "click", click_handler);
     },
-    mount: function mount(target, anchor) {
+    m: function mount(target, anchor) {
       insertNode(a, target, anchor);
 
       if (slot_content_default) {
         appendNode(slot_content_default, a);
       }
     },
-    update: function update(changed, state) {
+    p: function update(changed, state) {
       if (changed.href) {
         a.href = state.href;
       }
     },
-    unmount: function unmount() {
+    u: function unmount() {
       detachNode(a);
 
       if (slot_content_default) {
         reinsertChildren(a, slot_content_default);
       }
     },
-    destroy: function destroy$$1() {
+    d: function destroy$$1() {
       removeListener(a, "click", click_handler);
     }
   };
 }
 
 function Link(options) {
-  this.options = options;
-  this._state = assign(template.data(), options.data);
+  init(this, options);
+  this._state = assign(data(), options.data);
 
-  this._recompute({}, this._state, {}, true);
+  this._recompute({
+    to: 1,
+    params: 1,
+    details: 1,
+    location: 1
+  }, this._state);
 
-  this._observers = {
-    pre: Object.create(null),
-    post: Object.create(null)
-  };
-  this._handlers = Object.create(null);
-  this._root = options._root || this;
-  this._yield = options._yield;
-  this._bind = options._bind;
   this._slotted = options.slots || {};
   this.slots = {};
   this._fragment = create_main_fragment(this._state, this);
 
   if (options.target) {
-    this._fragment.create();
+    this._fragment.c();
 
-    this._fragment.mount(options.target, options.anchor || null);
+    this._fragment.m(options.target, options.anchor || null);
   }
 }
 
-assign(Link.prototype, template.methods, proto);
+assign(Link.prototype, methods, proto);
 
-Link.prototype._recompute = function _recompute(changed, state, oldState, isInitial) {
-  if (isInitial || changed.to || changed.params || changed.details) {
-    if (differs(state.location = template.computed.location(state.to, state.params, state.details), oldState.location)) changed.location = true;
+Link.prototype._recompute = function _recompute(changed, state) {
+  if (changed.to || changed.params || changed.details) {
+    if (differs(state.location, state.location = location(state.to, state.params, state.details))) changed.location = true;
   }
 
-  if (isInitial || changed.location) {
-    if (differs(state.href = template.computed.href(state.location), oldState.href)) changed.href = true;
+  if (changed.location) {
+    if (differs(state.href, state.href = href(state.location))) changed.href = true;
   }
 };
 
@@ -1235,547 +1239,410 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_path_to_regexp__);
 
 
-var withLeadingSlash = function withLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path : '/' + path;
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+
+
+var __assign = Object.assign || function __assign(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+    return t;
 };
 
-var stripLeadingSlash = function stripLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path.slice(1) : path;
+var withLeadingSlash = function (path) {
+    return path.charAt(0) === '/' ? path : '/' + path;
 };
-
-var withTrailingSlash = function withTrailingSlash(path) {
-  return path.charAt(path.length - 1) === '/' ? path : path + '/';
+var stripLeadingSlash = function (path) {
+    return path.charAt(0) === '/' ? path.slice(1) : path;
 };
-
-var join = function join(beginning, end) {
-  return withTrailingSlash(beginning) + end;
+var withTrailingSlash = function (path) {
+    return path.charAt(path.length - 1) === '/' ? path : path + '/';
+};
+var join = function (beginning, end) {
+    return withTrailingSlash(beginning) + end;
 };
 
 function once(fn) {
-  var promise = null;
-  var hasRun = false;
-
-  return function () {
-    if (hasRun) {
-      return promise;
-    }
-
-    promise = fn();
-    hasRun = true;
-    return promise;
-  };
+    var promise = null;
+    var hasRun = false;
+    return function () {
+        if (hasRun) {
+            return promise;
+        }
+        promise = fn();
+        hasRun = true;
+        return promise;
+    };
 }
 
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
+function path(pathString, options) {
+    var keys = [];
+    var re = __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default()(pathString, keys, options);
+    return { re: re, keys: keys };
+}
 
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
+var createRoute = function (options) {
+    var _a = options || {}, name = _a.name, path$$1 = _a.path, _b = _a.pathOptions, pathOptions = _b === void 0 ? {} : _b, body = _a.body, children = _a.children, preload = _a.preload, load = _a.load, title = _a.title, extra = _a.extra;
+    // end defaults to true, so end has to be hardcoded for it to be false
+    var expectedExact = pathOptions.end == null || pathOptions.end;
+    // when we have child routes, we need to perform non-end matching
+    if (children.length) {
+        pathOptions.end = false;
     }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-
-
-
-
-
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-var objectWithoutProperties = function (obj, keys) {
-  var target = {};
-
-  for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;
-    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-    target[i] = obj[i];
-  }
-
-  return target;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var toArray = function (arr) {
-  return Array.isArray(arr) ? arr : Array.from(arr);
-};
-
-var DEFAULT_OPTIONS = {
-  sensitive: false,
-  strict: false,
-  end: true,
-  delimiter: '/'
-};
-
-var path = function path(pathString, options) {
-  var keys = [];
-  var mergedOptions = _extends({}, DEFAULT_OPTIONS, options);
-  var re = __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default()(pathString, keys, mergedOptions);
-
-  return { re: re, keys: keys };
-};
-
-var createRoute = function createRoute(options) {
-  var _ref = options || {},
-      name = _ref.name,
-      path$$1 = _ref.path,
-      _ref$pathOptions = _ref.pathOptions,
-      pathOptions = _ref$pathOptions === undefined ? {} : _ref$pathOptions,
-      body = _ref.body,
-      children = _ref.children,
-      preload = _ref.preload,
-      load = _ref.load,
-      rest = objectWithoutProperties(_ref, ['name', 'path', 'pathOptions', 'body', 'children', 'preload', 'load']);
-
-  if (name == null || path$$1 == null) {
-    throw new Error('A route must have defined name and path properties');
-  }
-
-  // end defaults to true, so end has to be hardcoded for it to be false
-  var expectedExact = pathOptions.end == null || pathOptions.end;
-  // when we have child routes, we need to perform non-end matching
-  if (children) {
-    pathOptions.end = false;
-  }
-  var regexPath = path(path$$1, pathOptions);
-
-  return _extends({}, rest, {
-    name: name,
-    path: path$$1,
-    body: body,
-    getBody: function getBody() {
-      return this.body && this.body();
-    },
-    children: children,
-    preload: preload ? once(preload) : undefined,
-    load: load,
-    keys: regexPath.keys.map(function (key) {
-      return key.name;
-    }),
-    match: function match(pathname, response, parentPath) {
-      var testPath = stripLeadingSlash(pathname);
-      var match = regexPath.re.exec(testPath);
-      if (!match) {
-        return false;
-      }
-
-      var _match = toArray(match),
-          segment = _match[0],
-          parsed = _match.slice(1);
-
-      var params = {};
-      regexPath.keys.forEach(function (key, index) {
-        params[key.name] = parsed[index];
-      });
-      var uriString = parentPath != null ? join(parentPath, segment) : withLeadingSlash(segment);
-
-      response.push(this, params);
-      // if there are no children, then we accept the match
-      if (!children || !children.length) {
-        return true;
-      }
-      // children only need to match against unmatched segments
-      var remainder = testPath.slice(segment.length);
-      var notExact = !!remainder.length;
-      var hasChildMatch = children.some(function (c) {
-        return c.match(remainder, response, uriString);
-      });
-      // if the route has children, but none of them match, remove the match unless it
-      // is exact
-      if (expectedExact && notExact && !hasChildMatch) {
-        response.pop();
-        return false;
-      }
-      return true;
-    }
-  });
+    var regexPath = path(path$$1, pathOptions);
+    return {
+        name: name,
+        path: path$$1,
+        body: body,
+        getBody: function () {
+            return this.body && this.body();
+        },
+        children: children,
+        preload: preload ? once(preload) : undefined,
+        load: load,
+        keys: regexPath.keys.map(function (key) { return key.name; }),
+        title: title,
+        extra: extra,
+        match: function (pathname, rc, parentPath) {
+            var testPath = stripLeadingSlash(pathname);
+            var match = regexPath.re.exec(testPath);
+            if (!match) {
+                return false;
+            }
+            var segment = match[0], parsed = match.slice(1);
+            var params = {};
+            regexPath.keys.forEach(function (key, index) {
+                params[key.name] = parsed[index];
+            });
+            var uriString = parentPath != null
+                ? join(parentPath, segment)
+                : withLeadingSlash(segment);
+            rc.push(this, params);
+            // if there are no children, then we accept the match
+            if (!children || !children.length) {
+                return true;
+            }
+            // children only need to match against unmatched segments
+            var remainder = testPath.slice(segment.length);
+            var notExact = !!remainder.length;
+            var hasChildMatch = children.some(function (c) {
+                return c.match(remainder, rc, uriString);
+            });
+            // if the route has children, but none of them match, remove the match unless it
+            // is exact
+            if (expectedExact && notExact && !hasChildMatch) {
+                rc.pop();
+                return false;
+            }
+            return true;
+        }
+    };
 };
 
 function walkRoutes(routeArray, addons) {
-  var routes = createRoutes(routeArray);
-  registerAddons(addons, routes);
-  return routes;
+    var routes = createRoutes(routeArray);
+    registerAddons(addons, routes);
+    return routes;
 }
-
 function createRoutes(routeArray) {
-  return routeArray.map(function (routeObject) {
-    var children = routeObject.children ? createRoutes(routeObject.children) : [];
-
-    var route = createRoute(_extends({}, routeObject, { children: children }));
-    return route;
-  });
+    return routeArray.map(function (routeObject) {
+        var children = routeObject.children
+            ? createRoutes(routeObject.children)
+            : [];
+        return createRoute(__assign({}, routeObject, { children: children }));
+    });
 }
-
 function registerAddons(addons, routes) {
-  addons.forEach(function (addon) {
-    registerRoutes(routes, addon);
-  });
+    addons.forEach(function (addon) {
+        registerRoutes(routes, addon);
+    });
 }
-
 function registerRoutes(routes, addon, parentData) {
-  routes.forEach(function (route) {
-    var data = addon.register(route, parentData);
-    if (route.children) {
-      registerRoutes(route.children, addon, data);
-    }
-  });
+    routes.forEach(function (route) {
+        var data = addon.register(route, parentData);
+        if (route.children) {
+            registerRoutes(route.children, addon, data);
+        }
+    });
 }
 
-function createPathnameAddon() {
-  var knownPaths = {};
-  var cache = {};
-
-  return {
-    name: 'pathname',
-    register: function register(route, parent) {
-      var name = route.name,
-          path = route.path;
-
-      if (knownPaths[name] !== undefined) {
-        console.warn('A pathname with the name "' + name + '" already exists. Each route should' + 'have a unique name. By registering a pathname with a name that already exists, ' + 'you are overwriting the existing pathname. This may break your application.');
-      }
-
-      var base = void 0;
-      if (parent && knownPaths[parent]) {
-        base = knownPaths[parent];
-      }
-      knownPaths[name] = base ? join(base, path) : path;
-      return name;
-    },
-    get: function get(name, params) {
-      if (knownPaths[name] == null) {
-        console.error('Could not generate pathname for ' + name + ' because it is not registered.');
-        return;
-      }
-      var compile = cache[name] ? cache[name] : cache[name] = __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default.a.compile(knownPaths[name]);
-      return withLeadingSlash(compile(params, { pretty: true }));
-    }
-  };
-}
-
-var ResponseCreator = function () {
-  function ResponseCreator(key, location) {
-    classCallCheck(this, ResponseCreator);
-
-    this.key = key;
-    this.location = location;
-    this.status = 200;
-    this.matches = [];
-    // properties to be set once we have
-    // finished walking over the routes
-    this.route;
-    this.partials = [];
-    this.params = {};
-    this.body;
-  }
-
-  createClass(ResponseCreator, [{
-    key: 'redirect',
-    value: function redirect(to) {
-      var code = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 301;
-
-      this.setStatus(code);
-      this.redirectTo = to;
-    }
-  }, {
-    key: 'fail',
-    value: function fail(err) {
-      this.error = err;
-    }
-  }, {
-    key: 'setStatus',
-    value: function setStatus(code) {
-      this.status = code;
-    }
-  }, {
-    key: 'push',
-    value: function push(route, params) {
-      this.matches.push({ route: route, params: params });
-    }
-  }, {
-    key: 'pop',
-    value: function pop() {
-      this.matches.pop();
-    }
-  }, {
-    key: 'setData',
-    value: function setData(data) {
-      this.data = data;
-    }
-  }, {
-    key: 'freeze',
-    value: function freeze() {
-      var _this = this;
-
-      if (this.matches.length) {
-        var bestMatch = this.matches.pop();
-        this.matches.forEach(function (m) {
-          _this.partials.push(m.route.name);
-          _extends(_this.params, m.params);
-        });
-
-        this.route = bestMatch.route;
-        _extends(this.params, bestMatch.params);
-      }
-    }
-  }, {
-    key: 'generateTitle',
-    value: function generateTitle() {
-      if (!this.route || !this.route.title) {
-        return '';
-      }
-      return typeof this.route.title === 'function' ? this.route.title(this.params, this.data) : this.route.title;
-    }
-  }, {
-    key: 'asObject',
-    value: function asObject() {
-      var sharedResponse = {
-        key: this.key,
-        location: this.location,
-        status: this.status,
-        data: this.data,
-        title: this.generateTitle()
-      };
-
-      if (this.redirectTo != null) {
-        return _extends({}, sharedResponse, {
-          redirectTo: this.redirectTo
-        });
-      }
-
-      return _extends({}, sharedResponse, {
-        body: this.route && this.route.getBody(),
-        name: this.route ? this.route.name : undefined,
-        partials: this.partials,
-        params: this.params,
-        error: this.error
-      });
-    }
-  }]);
-  return ResponseCreator;
-}();
-
-function createConfig$1(history, routeArray) {
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var _options$addons = options.addons,
-      addonFactories = _options$addons === undefined ? [] : _options$addons,
-      _options$sideEffects = options.sideEffects,
-      sideEffects = _options$sideEffects === undefined ? [] : _options$sideEffects,
-      _options$cache = options.cache,
-      cache = _options$cache === undefined ? false : _options$cache;
-
-  // add the pathname addon to the provided addons
-
-  var finalAddons = addonFactories.concat(createPathnameAddon);
-  var routes = [];
-  var registeredAddons = {};
-  var subscribers = [];
-
-  var mostRecentKey = void 0;
-  var previous = [];
-  var responseInProgress = void 0;
-
-  function setupRoutesAndAddons(routeArray) {
-    var addonFunctions = [];
-    // clear out any existing addons
-    for (var key in registeredAddons) {
-      delete registeredAddons[key];
-    }
-
-    finalAddons.forEach(function (addonFactory) {
-      var addon = addonFactory();
-      registeredAddons[addon.name] = addon.get;
-      addonFunctions.push(addon);
-    });
-
-    routes = walkRoutes(routeArray, addonFunctions, {});
-    makeResponse(history.location, history.action);
-  }
-
-  function matchRoute(rc) {
-    routes.some(function (route) {
-      return route.match(history.location.pathname, rc);
-    });
-    // once we have matched the route, we freeze the responseCreator to
-    // set its route/params/partials properties
-    rc.freeze();
-    return Promise.resolve(rc);
-  }
-
-  function loadRoute(rc) {
-    if (!rc.route) {
-      rc.setStatus(404);
-      return Promise.resolve(rc);
-    }
-
-    var _rc$route = rc.route,
-        preload = _rc$route.preload,
-        load = _rc$route.load;
-
-    // just want to pass a subset of the ResponseCreator's methods
-    // to the user
-
-    var modifiers = load ? {
-      fail: rc.fail.bind(rc),
-      redirect: rc.redirect.bind(rc),
-      setData: rc.setData.bind(rc),
-      setStatus: rc.setStatus.bind(rc)
-    } : undefined;
-
-    return Promise.all([preload ? preload() : null, load ? load(rc.params, rc.location, modifiers) : null]).catch(function (err) {
-      rc.fail(err);
-    })
-    // ALWAYS return the response
-    .then(function () {
-      return rc;
-    });
-  }
-
-  function finalizeResponse(rc) {
-    var respObject = rc.asObject();
-
-    if (cache) {
-      cache.set(respObject);
-    }
-
-    return respObject;
-  }
-
-  function prepareResponse(location) {
-    // generate a random key when none is provided (old browsers, maybe unecessary?)
-    var key = location.key || Math.random().toString(36).slice(2, 8);
-    mostRecentKey = key;
-
-    if (cache) {
-      var cachedResponse = cache.get(location);
-      if (cachedResponse != null) {
-        return Promise.resolve(cachedResponse);
-      }
-    }
-
-    var rc = new ResponseCreator(key, location);
-
-    return matchRoute(rc).then(loadRoute).then(finalizeResponse);
-  }
-
-  function subscribe(fn) {
-    if (typeof fn !== 'function') {
-      throw new Error('The argument passed to subscribe must be a function');
-    }
-
-    // Immediately call subscriber function. If this is called before the
-    // initial response has resolved, both params will be undefined. If called
-    // after init resp has resolved, first param is the most recent response and
-    // action is last history.action.
-    fn.apply(null, previous);
-
-    var newLength = subscribers.push(fn);
-    return function () {
-      subscribers[newLength - 1] = null;
+function createPathnameAddon(options) {
+    var knownPaths = {};
+    var cache = {};
+    return {
+        name: 'pathname',
+        register: function (route, parent) {
+            var name = route.name, path = route.path;
+            if (knownPaths[name] !== undefined) {
+                console.warn('A pathname with the name "' +
+                    name +
+                    '" already exists. Each route should' +
+                    'have a unique name. By registering a pathname with a name that already exists, ' +
+                    'you are overwriting the existing pathname. This may break your application.');
+            }
+            var base;
+            if (parent && knownPaths[parent]) {
+                base = knownPaths[parent];
+            }
+            knownPaths[name] = base ? join(base, path) : path;
+            return name;
+        },
+        get: function (name, params) {
+            if (knownPaths[name] == null) {
+                console.error("Could not generate pathname for " + name + " because it is not registered.");
+                return;
+            }
+            var compile = cache[name]
+                ? cache[name]
+                : (cache[name] = __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default.a.compile(knownPaths[name]));
+            return withLeadingSlash(compile(params, options));
+        },
+        reset: function () {
+            knownPaths = {};
+            cache = {};
+        }
     };
-  }
+}
 
-  function emit(response, action) {
-    // don't emit old responses
-    if (response.key !== mostRecentKey) {
-      return false;
+var ResponseCreator = /** #__PURE__ */ (function () {
+    function ResponseCreator(key, location) {
+        this.key = key;
+        this.location = location;
+        this.status = 200;
+        this.matches = [];
+        // properties to be set once we have
+        // finished walking over the routes
+        this.route;
+        this.partials = [];
+        this.params = {};
+        this.body;
     }
+    ResponseCreator.prototype.redirect = function (to, code) {
+        if (code === void 0) { code = 301; }
+        this.setStatus(code);
+        this.redirectTo = to;
+    };
+    ResponseCreator.prototype.fail = function (err) {
+        this.error = err;
+    };
+    ResponseCreator.prototype.setStatus = function (code) {
+        this.status = code;
+    };
+    ResponseCreator.prototype.push = function (route, params) {
+        this.matches.push({ route: route, params: params });
+    };
+    ResponseCreator.prototype.pop = function () {
+        this.matches.pop();
+    };
+    ResponseCreator.prototype.setData = function (data) {
+        this.data = data;
+    };
+    ResponseCreator.prototype.freeze = function () {
+        var _this = this;
+        if (this.matches.length) {
+            var bestMatch = this.matches.pop();
+            this.matches.forEach(function (m) {
+                _this.partials.push(m.route.name);
+                Object.assign(_this.params, m.params);
+            });
+            this.route = bestMatch.route;
+            Object.assign(this.params, bestMatch.params);
+        }
+    };
+    ResponseCreator.prototype.generateTitle = function () {
+        if (!this.route || !this.route.title) {
+            return '';
+        }
+        return typeof this.route.title === 'function'
+            ? this.route.title(this.params, this.data)
+            : this.route.title;
+    };
+    ResponseCreator.prototype.asObject = function () {
+        var sharedResponse = {
+            key: this.key,
+            location: this.location,
+            status: this.status,
+            data: this.data,
+            title: this.generateTitle(),
+            body: this.route && this.route.getBody()
+        };
+        if (this.redirectTo != null) {
+            return __assign({}, sharedResponse, { redirectTo: this.redirectTo });
+        }
+        return __assign({}, sharedResponse, { name: this.route ? this.route.name : undefined, partials: this.partials, params: this.params, error: this.error });
+    };
+    return ResponseCreator;
+}());
 
-    sideEffects.forEach(function (fn) {
-      fn(response, action);
+function createConfig$1(history, routeArray, options) {
+    if (options === void 0) { options = {}; }
+    var _a = options, _b = _a.addons, userAddons = _b === void 0 ? [] : _b, _c = _a.sideEffects, sideEffects = _c === void 0 ? [] : _c, cache = _a.cache, pathnameOptions = _a.pathnameOptions;
+    var beforeSideEffects = [];
+    var afterSideEffects = [];
+    sideEffects.forEach(function (se) {
+        if (se.after) {
+            afterSideEffects.push(se.fn);
+        }
+        else {
+            beforeSideEffects.push(se.fn);
+        }
     });
-
-    subscribers.forEach(function (fn) {
-      if (fn != null) {
-        fn(response, action);
-      }
-    });
-
-    return true;
-  }
-
-  // create a response object using the current location and
-  // emit it to any subscribed functions
-  function makeResponse(location, action) {
-    responseInProgress = prepareResponse(location).then(function (response) {
-      var emitted = emit(response, action);
-      // only store these after we have emitted.
-      if (emitted) {
-        previous = [response, action];
-      }
-      return response;
-    });
-  }
-
-  // now that everything is defined, actually do the setup
-  setupRoutesAndAddons(routeArray);
-  var unlisten = history.subscribe(makeResponse);
-
-  return {
-    ready: function ready() {
-      return responseInProgress;
-    },
-    refresh: setupRoutesAndAddons,
-    subscribe: subscribe,
-    addons: registeredAddons,
-    history: history
-  };
+    // add the pathname addon to the provided addons
+    var finalAddons = userAddons.concat(createPathnameAddon(pathnameOptions));
+    var routes = [];
+    var registeredAddons = {};
+    var subscribers = [];
+    var mostRecentKey;
+    var previous = [];
+    var responseInProgress;
+    function setupRoutesAndAddons(routeArray) {
+        var addonFunctions = [];
+        // clear out any existing addons
+        for (var key in registeredAddons) {
+            delete registeredAddons[key];
+        }
+        finalAddons.forEach(function (addon) {
+            addon.reset();
+            registeredAddons[addon.name] = addon.get;
+            addonFunctions.push(addon);
+        });
+        routes = walkRoutes(routeArray, addonFunctions);
+        makeResponse(history.location, history.action);
+    }
+    
+    function matchRoute(rc) {
+        routes.some(function (route) { return (route.match(history.location.pathname, rc)); });
+        // once we have matched the route, we freeze the responseCreator to
+        // set its route/params/partials properties
+        rc.freeze();
+        return Promise.resolve(rc);
+    }
+    
+    function loadRoute(rc) {
+        var route = rc.route;
+        if (!route) {
+            rc.setStatus(404);
+            return Promise.resolve(rc);
+        }
+        // just want to pass a subset of the ResponseCreator's methods
+        // to the user
+        var modifiers = route.load
+            ? {
+                fail: rc.fail.bind(rc),
+                redirect: rc.redirect.bind(rc),
+                setData: rc.setData.bind(rc),
+                setStatus: rc.setStatus.bind(rc)
+            }
+            : undefined;
+        return Promise.all([
+            route.preload ? route.preload() : null,
+            route.load ? route.load(rc.params, rc.location, modifiers, registeredAddons) : null
+        ]).then(function () { return rc; });
+    }
+    
+    function finalizeResponse(rc) {
+        var respObject = rc.asObject();
+        if (cache) {
+            cache.set(respObject);
+        }
+        return respObject;
+    }
+    
+    function prepareResponse(location) {
+        // generate a random key when none is provided (old browsers, maybe unecessary?)
+        var key = location.key || Math.random().toString(36).slice(2, 8);
+        mostRecentKey = key;
+        if (cache) {
+            var cachedResponse = cache.get(location);
+            if (cachedResponse != null) {
+                return Promise.resolve(cachedResponse);
+            }
+        }
+        var rc = new ResponseCreator(key, location);
+        return matchRoute(rc)
+            .then(loadRoute)
+            .then(finalizeResponse);
+    }
+    
+    function subscribe(fn) {
+        if (typeof fn !== 'function') {
+            throw new Error('The argument passed to subscribe must be a function');
+        }
+        // Immediately call subscriber function. If this is called before the
+        // initial response has resolved, both params will be undefined. If called
+        // after init resp has resolved, first param is the most recent response and
+        // action is last history.action.
+        fn.apply(null, previous);
+        var newLength = subscribers.push(fn);
+        return function () {
+            subscribers[newLength - 1] = null;
+        };
+    }
+    
+    function emit(response, action) {
+        // don't emit old responses
+        if (response.key !== mostRecentKey) {
+            return false;
+        }
+        beforeSideEffects.forEach(function (fn) {
+            fn(response, action);
+        });
+        subscribers.forEach(function (fn) {
+            if (fn != null) {
+                fn(response, action);
+            }
+        });
+        afterSideEffects.forEach(function (fn) {
+            fn(response, action);
+        });
+        return true;
+    }
+    
+    // create a response object using the current location and
+    // emit it to any subscribed functions
+    function makeResponse(location, action) {
+        responseInProgress = prepareResponse(location).then(function (response) {
+            var emitted = emit(response, action);
+            // only store these after we have emitted.
+            if (emitted) {
+                previous = [response, action];
+            }
+            if (response.redirectTo) {
+                history.replace(response.redirectTo);
+            }
+            return response;
+        }, function (err) {
+            console.error(err);
+            return null;
+        });
+    }
+    
+    // now that everything is defined, actually do the setup
+    setupRoutesAndAddons(routeArray);
+    var unlisten = history.subscribe(makeResponse);
+    return {
+        ready: function () { return responseInProgress; },
+        refresh: setupRoutesAndAddons,
+        subscribe: subscribe,
+        addons: registeredAddons,
+        history: history
+    };
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (createConfig$1);
@@ -1793,173 +1660,135 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-function Browser() {
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  if (!__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["a" /* domExists */])()) {
-    return;
-  }
-
-  if (!options.raw) {
-    options.raw = __WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["b" /* ensureEncodedPathname */];
-  }
-
-  var _createCommonHistory = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_root__["a" /* default */])(options),
-      subscribe = _createCommonHistory.subscribe,
-      emit = _createCommonHistory.emit,
-      removeAllSubscribers = _createCommonHistory.removeAllSubscribers,
-      createLocation = _createCommonHistory.createLocation,
-      createPath = _createCommonHistory.createPath,
-      confirmNavigation = _createCommonHistory.confirmNavigation,
-      confirmWith = _createCommonHistory.confirmWith,
-      removeConfirmation = _createCommonHistory.removeConfirmation,
-      keygen = _createCommonHistory.keygen;
-
-  var beforeDestroy = [removeAllSubscribers];
-
-  // when true, pop will run without attempting to get user confirmation
-  var reverting = false;
-
-  function locationFromBrowser(providedState) {
-    var _window$location = window.location,
-        pathname = _window$location.pathname,
-        search = _window$location.search,
-        hash = _window$location.hash;
-
-    var path = pathname + search + hash;
-
-    var _ref = providedState || __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["c" /* getStateFromHistory */])(),
-        key = _ref.key,
-        state = _ref.state;
-
-    if (!key) {
-      key = keygen.major();
-      window.history.replaceState({ key: key, state: state }, '', path);
-    }
-    return createLocation(path, key, state);
-  }
-
-  function toHref(location) {
-    return createPath(location);
-  }
-
-  var initialAction = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["c" /* getStateFromHistory */])().key !== undefined ? 'POP' : 'PUSH';
-
-  var browserHistory = {
-    // location
-    location: locationFromBrowser(),
-    action: initialAction,
-    // convenience
-    toHref: toHref,
-    subscribe: subscribe,
-    confirmWith: confirmWith,
-    removeConfirmation: removeConfirmation,
-    destroy: function destroy() {
-      beforeDestroy.forEach(function (fn) {
-        fn();
-      });
-    }
-  };
-
-  browserHistory.update = function update(to) {
-    var location = createLocation(to, null);
-    var path = createPath(location);
-    var currentPath = createPath(browserHistory.location);
-
-    if (path === currentPath) {
-      browserHistory.replace(to);
-    } else {
-      browserHistory.push(to);
-    }
-  };
-
-  browserHistory.push = function push(to) {
-    // the major version should be the current key + 1
-    var key = keygen.major(browserHistory.location.key);
-    var location = createLocation(to, key);
-    confirmNavigation({
-      to: location,
-      from: browserHistory.location,
-      action: 'PUSH'
-    }, function () {
-      var path = toHref(location);
-      var key = location.key,
-          state = location.state;
-
-      window.history.pushState({ key: key, state: state }, '', path);
-      browserHistory.location = location;
-      browserHistory.action = 'PUSH';
-      emit(browserHistory.location, 'PUSH');
-    });
-  };
-
-  browserHistory.replace = function replace(to) {
-    // pass the current key to just increment the minor portion
-    var key = keygen.minor(browserHistory.location.key);
-    var location = createLocation(to, key);
-    confirmNavigation({
-      to: location,
-      from: browserHistory.location,
-      action: 'REPLACE'
-    }, function () {
-      var path = toHref(location);
-      var key = location.key,
-          state = location.state;
-
-      window.history.replaceState({ key: key, state: state }, '', path);
-      browserHistory.location = location;
-      browserHistory.action = 'REPLACE';
-      emit(browserHistory.location, 'REPLACE');
-    });
-  };
-
-  browserHistory.go = function go(num) {
-    // calling window.history.go with no value reloads the page, but
-    // we will just re-emit instead
-    if (!num) {
-      browserHistory.action = 'POP';
-      emit(browserHistory.location, 'POP');
-    } else {
-      window.history.go(num);
-    }
-  };
-
-  function pop(state) {
-    // when we are reverting a pop (the user did not confirm navigation), we
-    // just need to reset the boolean and return. The browser has already taken
-    // care of updating the address bar and we never touched our internal values.
-    if (reverting) {
-      reverting = false;
-      return;
-    }
-    var location = locationFromBrowser(state);
-    var currentKey = browserHistory.location.key;
-    var diff = keygen.diff(currentKey, location.key);
-    confirmNavigation({
-      to: location,
-      from: browserHistory.location,
-      action: 'POP'
-    }, function () {
-      browserHistory.location = location;
-      browserHistory.action = 'POP';
-      emit(browserHistory.location, 'POP');
-    }, function () {
-      reverting = true;
-      window.history.go(-1 * diff);
-    });
-  }
-
-  // need to listen for browser navigation events
-  beforeDestroy.push(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["d" /* createEventCoordinator */])({
-    popstate: function popstate(event) {
-      if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["e" /* ignorablePopstateEvent */])(event)) {
+function Browser(options) {
+    if (options === void 0) { options = {}; }
+    if (!__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["a" /* domExists */])()) {
         return;
-      }
-      pop(event.state);
     }
-  }));
-
-  return browserHistory;
+    if (!options.raw) {
+        options.raw = __WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["b" /* ensureEncodedPathname */];
+    }
+    var _a = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_root__["a" /* default */])(options), subscribe = _a.subscribe, emit = _a.emit, removeAllSubscribers = _a.removeAllSubscribers, createLocation = _a.createLocation, createPath = _a.createPath, confirmNavigation = _a.confirmNavigation, confirmWith = _a.confirmWith, removeConfirmation = _a.removeConfirmation, keygen = _a.keygen;
+    var beforeDestroy = [removeAllSubscribers];
+    // when true, pop will run without attempting to get user confirmation
+    var reverting = false;
+    function locationFromBrowser(providedState) {
+        var _a = window.location, pathname = _a.pathname, search = _a.search, hash = _a.hash;
+        var path = pathname + search + hash;
+        var _b = providedState || __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["c" /* getStateFromHistory */])(), key = _b.key, state = _b.state;
+        if (!key) {
+            key = keygen.major();
+            window.history.replaceState({ key: key, state: state }, '', path);
+        }
+        return createLocation(path, key, state);
+    }
+    function toHref(location) {
+        return createPath(location);
+    }
+    var initialAction = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["c" /* getStateFromHistory */])().key !== undefined ? 'POP' : 'PUSH';
+    var browserHistory = {
+        // location
+        location: locationFromBrowser(),
+        action: initialAction,
+        // convenience
+        toHref: toHref,
+        subscribe: subscribe,
+        confirmWith: confirmWith,
+        removeConfirmation: removeConfirmation,
+        destroy: function destroy() {
+            beforeDestroy.forEach(function (fn) { fn(); });
+        },
+        update: function update(to) {
+            var location = createLocation(to, null);
+            var path = createPath(location);
+            var currentPath = createPath(browserHistory.location);
+            if (path === currentPath) {
+                browserHistory.replace(to);
+            }
+            else {
+                browserHistory.push(to);
+            }
+        },
+        push: function push(to) {
+            // the major version should be the current key + 1
+            var key = keygen.major(browserHistory.location.key);
+            var location = createLocation(to, key);
+            confirmNavigation({
+                to: location,
+                from: browserHistory.location,
+                action: 'PUSH'
+            }, function () {
+                var path = toHref(location);
+                var key = location.key, state = location.state;
+                window.history.pushState({ key: key, state: state }, '', path);
+                browserHistory.location = location;
+                browserHistory.action = 'PUSH';
+                emit(browserHistory.location, 'PUSH');
+            });
+        },
+        replace: function replace(to) {
+            // pass the current key to just increment the minor portion
+            var key = keygen.minor(browserHistory.location.key);
+            var location = createLocation(to, key);
+            confirmNavigation({
+                to: location,
+                from: browserHistory.location,
+                action: 'REPLACE'
+            }, function () {
+                var path = toHref(location);
+                var key = location.key, state = location.state;
+                window.history.replaceState({ key: key, state: state }, '', path);
+                browserHistory.location = location;
+                browserHistory.action = 'REPLACE';
+                emit(browserHistory.location, 'REPLACE');
+            });
+        },
+        go: function go(num) {
+            // calling window.history.go with no value reloads the page, but
+            // we will just re-emit instead
+            if (!num) {
+                browserHistory.action = 'POP';
+                emit(browserHistory.location, 'POP');
+            }
+            else {
+                window.history.go(num);
+            }
+        }
+    };
+    function pop(state) {
+        // when we are reverting a pop (the user did not confirm navigation), we
+        // just need to reset the boolean and return. The browser has already taken
+        // care of updating the address bar and we never touched our internal values.
+        if (reverting) {
+            reverting = false;
+            return;
+        }
+        var location = locationFromBrowser(state);
+        var currentKey = browserHistory.location.key;
+        var diff = keygen.diff(currentKey, location.key);
+        confirmNavigation({
+            to: location,
+            from: browserHistory.location,
+            action: 'POP'
+        }, function () {
+            browserHistory.location = location;
+            browserHistory.action = 'POP';
+            emit(browserHistory.location, 'POP');
+        }, function () {
+            reverting = true;
+            window.history.go(-1 * diff);
+        });
+    }
+    // need to listen for browser navigation events
+    beforeDestroy.push(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["d" /* createEventCoordinator */])({
+        popstate: function (event) {
+            if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["e" /* ignorablePopstateEvent */])(event)) {
+                return;
+            }
+            pop(event.state);
+        }
+    }));
+    return browserHistory;
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Browser);
@@ -2035,15 +1864,13 @@ exports.default = routes;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getStateFromHistory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return createEventCoordinator; });
 function ensureEncodedPathname(pathname) {
-  var a = document.createElement('a');
-  a.setAttribute('href', pathname);
-  return a.pathname;
+    var a = document.createElement('a');
+    a.setAttribute('href', pathname);
+    return a.pathname;
 }
-
 function domExists() {
-  return window && window.location;
+    return !!(window && window.location);
 }
-
 /*
  * Ignore popstate events that don't define event.state
  * unless they come from Chrome on iOS (because it emits
@@ -2051,36 +1878,31 @@ function domExists() {
  * the back button)
  */
 function ignorablePopstateEvent(event) {
-  return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
+    return (event.state === undefined &&
+        navigator.userAgent.indexOf('CriOS') === -1);
 }
-
 /*
  * IE 11 might throw, so just catch and return empty object when that happens
  */
 function getStateFromHistory() {
-  try {
-    return window.history.state || {};
-  } catch (e) {
-    return {};
-  }
+    try {
+        return window.history.state || {};
+    }
+    catch (e) {
+        return {};
+    }
 }
-
 function createEventCoordinator(events) {
-  for (var event in events) {
-    var fn = events[event];
-    if (fn) {
-      window.addEventListener(event, fn, false);
+    for (var event_1 in events) {
+        var fn = events[event_1];
+        window.addEventListener(event_1, fn, false);
     }
-  }
-
-  return function destroyEvents() {
-    for (var _event in events) {
-      var _fn = events[_event];
-      if (_fn) {
-        window.removeEventListener(_event, _fn, false);
-      }
-    }
-  };
+    return function destroyEvents() {
+        for (var event_2 in events) {
+            var fn = events[event_2];
+            window.removeEventListener(event_2, fn, false);
+        }
+    };
 }
 
 
@@ -2099,34 +1921,30 @@ function createEventCoordinator(events) {
 /* unused harmony export stripPrefix */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return stripBaseSegment; });
 function ensureBeginsWith(str, prefix) {
-  if (!str) {
-    return '';
-  }
-  return str.indexOf(prefix) === 0 ? str : prefix + str;
+    if (!str) {
+        return '';
+    }
+    return str.indexOf(prefix) === 0 ? str : prefix + str;
 }
-
 function completePathname(pathname) {
-  return ensureBeginsWith(pathname, '/');
+    return ensureBeginsWith(pathname, '/');
 }
-
 function completeHash(hash) {
-  return ensureBeginsWith(hash, '#');
+    return ensureBeginsWith(hash, '#');
 }
-
 function completeQuery(query) {
-  return ensureBeginsWith(query, '?');
+    return ensureBeginsWith(query, '?');
 }
-
 function stripPrefix(str, prefix) {
-  return str.indexOf(prefix) === 0 ? str.slice(prefix.length) : str;
+    return str.indexOf(prefix) === 0
+        ? str.slice(prefix.length)
+        : str;
 }
-
 function hasBaseSegment(path, prefix) {
-  return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
+    return (new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i')).test(path);
 }
-
 function stripBaseSegment(path, prefix) {
-  return hasBaseSegment(path, prefix) ? path.substr(prefix.length) : path;
+    return hasBaseSegment(path, prefix) ? path.substr(prefix.length) : path;
 }
 
 
@@ -2141,333 +1959,228 @@ function stripBaseSegment(path, prefix) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__ = __webpack_require__(7);
 
 
-function subscriptionCoordinator() {
-  var subscribers = [];
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
 
-  function subscribe(fn) {
-    if (typeof fn !== 'function') {
-      throw new Error('The argument passed to subscribe must be a function');
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+
+
+var __assign = Object.assign || function __assign(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
     }
-    // 
-    var index = subscribers.push(fn) - 1;
-    return function () {
-      subscribers[index] = null;
-    };
-  }
-
-  function emit(location, action) {
-    subscribers.forEach(function (fn) {
-      if (fn !== null) {
-        fn(location, action);
-      }
-    });
-  }
-
-  function removeAllSubscribers() {
-    subscribers = [];
-  }
-
-  return {
-    subscribe: subscribe,
-    emit: emit,
-    removeAllSubscribers: removeAllSubscribers
-  };
-}
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
+    return t;
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var slicedToArray = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
+function subscriptionCoordinator() {
+    var subscribers = [];
+    function subscribe(fn) {
+        var index = subscribers.push(fn) - 1;
+        return function () {
+            subscribers[index] = null;
+        };
     }
-
-    return _arr;
-  }
-
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if (Symbol.iterator in Object(arr)) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    function emit(location, action) {
+        subscribers.forEach(function (fn) {
+            if (fn !== null) {
+                fn(location, action);
+            }
+        });
     }
-  };
-}();
+    function removeAllSubscribers() {
+        subscribers = [];
+    }
+    return {
+        subscribe: subscribe,
+        emit: emit,
+        removeAllSubscribers: removeAllSubscribers
+    };
+}
 
 function defaultParseQuery(query) {
-  return query ? query : '';
+    return query ? query : '';
 }
-
 function defaultStringifyQuery(query) {
-  return query ? query : '';
+    return query ? query : '';
 }
-
 function isValidBase(baseSegment) {
-  return typeof baseSegment === 'string' && baseSegment.charAt(0) === '/' && baseSegment.charAt(baseSegment.length - 1) !== '/';
+    return (typeof baseSegment === 'string' &&
+        baseSegment.charAt(0) === '/' &&
+        baseSegment.charAt(baseSegment.length - 1) !== '/');
 }
-
 function validateQueryOption(query) {
-  var parse = void 0,
-      stringify = void 0;
-  if (!query) {
-    parse = defaultParseQuery;
-    stringify = defaultStringifyQuery;
-  } else {
-    var _completeQuery = true;
-    if (typeof query.parse !== 'function') {
-      console.warn('The query option must contain a parse function property');
-      _completeQuery = false;
+    var parse, stringify;
+    return query
+        ? query
+        : {
+            parse: defaultParseQuery,
+            stringify: defaultStringifyQuery
+        };
+}
+function locationFactory(options) {
+    if (options === void 0) { options = {}; }
+    var query = options.query, _a = options.decode, decode = _a === void 0 ? true : _a, _b = options.baseSegment, baseSegment = _b === void 0 ? '' : _b, _c = options.raw, raw = _c === void 0 ? function (p) { return p; } : _c;
+    var _d = validateQueryOption(query), parse = _d.parse, stringify = _d.stringify;
+    if (baseSegment !== '' && !isValidBase(baseSegment)) {
+        throw new Error('The baseSegment "' + baseSegment + '" is not valid.' +
+            ' The baseSegment must begin with a forward slash and end with a' +
+            ' non-forward slash character.');
     }
-    if (typeof query.stringify !== 'function') {
-      console.warn('The query option must contain a stringify function property');
-      _completeQuery = false;
+    function parsePath(value) {
+        var location = {};
+        // hash is always after query, so split it off first
+        var hashIndex = value.indexOf('#');
+        if (hashIndex !== -1) {
+            location.hash = value.substring(hashIndex + 1);
+            value = value.substring(0, hashIndex);
+        }
+        else {
+            location.hash = '';
+        }
+        var queryIndex = value.indexOf('?');
+        if (queryIndex !== -1) {
+            location.query = parse(value.substring(queryIndex + 1));
+            value = value.substring(0, queryIndex);
+        }
+        else {
+            location.query = parse();
+        }
+        location.pathname = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["a" /* stripBaseSegment */])(value, baseSegment);
+        return location;
     }
-
-    if (_completeQuery) {
-      parse = query.parse;
-      stringify = query.stringify;
-    } else {
-      // when either property is invalid, we use the defaults for both
-      parse = defaultParseQuery;
-      stringify = defaultStringifyQuery;
+    function createLocation(value, key, state) {
+        if (state === void 0) { state = null; }
+        var partial;
+        if (typeof value === 'string') {
+            partial = parsePath(value);
+        }
+        else {
+            partial = __assign({}, value);
+            if (partial.hash == null) {
+                partial.hash = '';
+            }
+            if (partial.query == null) {
+                partial.query = parse();
+            }
+            if (partial.pathname == null) {
+                partial.pathname = '/';
+            }
+        }
+        // don't set state if it already exists
+        if (state && !partial.state) {
+            partial.state = state;
+        }
+        var location = __assign({}, partial, { key: key, rawPathname: raw(partial.pathname) });
+        location.key = key;
+        location.rawPathname = raw(location.pathname);
+        // it can be more convenient to interact with the decoded pathname,
+        // but leave the option for using the encoded value
+        if (decode) {
+            try {
+                location.pathname = decodeURI(location.pathname);
+            }
+            catch (e) {
+                throw e instanceof URIError
+                    ? new URIError('Pathname "' + location.pathname + '" could not be decoded. ' +
+                        'This is most likely due to a bad percent-encoding. For more information, ' +
+                        'see the third paragraph here https://tools.ietf.org/html/rfc3986#section-2.4')
+                    : e;
+            }
+        }
+        return location;
     }
-  }
-
-  return {
-    parse: parse,
-    stringify: stringify
-  };
+    function createPath(location) {
+        // ensure that pathname begins with a forward slash, query begins
+        // with a question mark, and hash begins with a pound sign
+        return (baseSegment +
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["b" /* completePathname */])(location.rawPathname ||
+                location.pathname ||
+                '') +
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["c" /* completeQuery */])(stringify(location.query)) +
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["d" /* completeHash */])(location.hash));
+    }
+    return {
+        createLocation: createLocation,
+        createPath: createPath
+    };
 }
 
-function locationFactory() {
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var query = options.query,
-      _options$decode = options.decode,
-      decode = _options$decode === undefined ? true : _options$decode,
-      _options$baseSegment = options.baseSegment,
-      baseSegment = _options$baseSegment === undefined ? '' : _options$baseSegment,
-      _options$raw = options.raw,
-      raw = _options$raw === undefined ? function (p) {
-    return p;
-  } : _options$raw;
-
-  var _validateQueryOption = validateQueryOption(query),
-      parse = _validateQueryOption.parse,
-      stringify = _validateQueryOption.stringify;
-
-  if (baseSegment !== '' && !isValidBase(baseSegment)) {
-    throw new Error('The baseSegment "' + baseSegment + '" is not valid.' + ' The baseSegment must begin with a forward slash and end with a' + ' non-forward slash character.');
-  }
-
-  function parsePath(value) {
-    var location = {};
-
-    // hash is always after query, so split it off first
-    var hashIndex = value.indexOf('#');
-    if (hashIndex !== -1) {
-      location.hash = value.substring(hashIndex + 1);
-      value = value.substring(0, hashIndex);
-    } else {
-      location.hash = '';
+function noop() { }
+function createNavigationConfirmation() {
+    var confirmFunction;
+    function confirmNavigation(info, confirm, prevent) {
+        if (!confirmFunction) {
+            confirm();
+        }
+        else {
+            confirmFunction(info, confirm, prevent || noop);
+        }
     }
-
-    var queryIndex = value.indexOf('?');
-    if (queryIndex !== -1) {
-      location.query = parse(value.substring(queryIndex + 1));
-      value = value.substring(0, queryIndex);
-    } else {
-      location.query = parse();
+    function confirmWith(fn) {
+        if (typeof fn !== 'function') {
+            return;
+        }
+        confirmFunction = fn;
     }
-
-    location.pathname = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["a" /* stripBaseSegment */])(value, baseSegment);
-
-    return location;
-  }
-
-  function createLocation(value, key) {
-    var state = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-    var location = void 0;
-    if (typeof value === 'string') {
-      location = parsePath(value);
-    } else {
-      location = _extends({}, value);
-      if (location.hash == null) {
-        location.hash = '';
-      }
-      if (location.query == null) {
-        location.query = parse();
-      }
-      if (location.pathname == null) {
-        location.pathname = '/';
-      }
+    
+    function removeConfirmation() {
+        confirmFunction = null;
     }
-    location.key = key;
-    // don't set state if it already exists
-    if (state && !location.state) {
-      location.state = state;
-    }
-
-    location.rawPathname = raw(location.pathname);
-
-    // it can be more convenient to interact with the decoded pathname,
-    // but leave the option for using the encoded value
-    if (decode) {
-      try {
-        location.pathname = decodeURI(location.pathname);
-      } catch (e) {
-        throw e instanceof URIError ? new URIError('Pathname "' + location.pathname + '" could not be decoded. ' + 'This is most likely due to a bad percent-encoding. For more information, ' + 'see the third paragraph here https://tools.ietf.org/html/rfc3986#section-2.4') : e;
-      }
-    }
-    return location;
-  }
-
-  function createPath(location) {
-    // ensure that pathname begins with a forward slash, query begins
-    // with a question mark, and hash begins with a pound sign
-    return baseSegment + __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["b" /* completePathname */])(location.rawPathname || location.pathname || '') + __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["c" /* completeQuery */])(stringify(location.query)) + __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["d" /* completeHash */])(location.hash);
-  }
-
-  return {
-    createLocation: createLocation,
-    createPath: createPath
-  };
+    
+    return {
+        confirmNavigation: confirmNavigation,
+        confirmWith: confirmWith,
+        removeConfirmation: removeConfirmation
+    };
 }
 
 function createKeyGenerator(initial) {
-  var id = initial || 0;
-  var current = void 0;
-
-  function parse(key) {
-    return key.split('.').map(function (value) {
-      return parseInt(value, 10);
-    });
-  }
-
-  return {
-    major: function major(previous) {
-      if (previous) {
-        var _parse = parse(previous),
-            _parse2 = slicedToArray(_parse, 1),
-            major = _parse2[0];
-
-        id = major + 1;
-      }
-      return id++ + '.0';
-    },
-    minor: function minor(current) {
-      var _parse3 = parse(current),
-          _parse4 = slicedToArray(_parse3, 2),
-          major = _parse4[0],
-          minor = _parse4[1];
-
-      return major + '.' + (minor + 1);
-    },
-    diff: function diff(first, second) {
-      var _parse5 = parse(first),
-          _parse6 = slicedToArray(_parse5, 1),
-          firstMajor = _parse6[0];
-
-      var _parse7 = parse(second),
-          _parse8 = slicedToArray(_parse7, 1),
-          secondMajor = _parse8[0];
-
-      return secondMajor - firstMajor;
+    var id = initial || 0;
+    function parse(key) {
+        return key
+            .split('.')
+            .map(function (value) { return parseInt(value, 10); });
     }
-  };
+    return {
+        keygen: {
+            major: function (previous) {
+                if (previous) {
+                    var major = parse(previous)[0];
+                    id = major + 1;
+                }
+                return id++ + ".0";
+            },
+            minor: function (current) {
+                var _a = parse(current), major = _a[0], minor = _a[1];
+                return major + "." + (minor + 1);
+            },
+            diff: function (first, second) {
+                var firstMajor = parse(first)[0];
+                var secondMajor = parse(second)[0];
+                return secondMajor - firstMajor;
+            }
+        }
+    };
 }
 
-function noop() {}
-
-function createNavigationConfirmation() {
-
-  var confirmFunction = void 0;
-
-  function confirmNavigation(info, confirm) {
-    var prevent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop;
-
-    if (!confirmFunction) {
-      confirm();
-    } else {
-      confirmFunction(info, confirm, prevent);
-    }
-  }
-
-  function confirmWith(fn) {
-    if (typeof fn !== 'function') {
-      return;
-    }
-    confirmFunction = fn;
-  }
-
-  function removeConfirmation() {
-    confirmFunction = null;
-  }
-
-  return {
-    confirmNavigation: confirmNavigation,
-    confirmWith: confirmWith,
-    removeConfirmation: removeConfirmation
-  };
+function Common$1(options) {
+    return __assign({}, subscriptionCoordinator(), locationFactory(options), createNavigationConfirmation(), createKeyGenerator());
 }
 
-function Common(options) {
-  return _extends({}, subscriptionCoordinator(), locationFactory(options), createNavigationConfirmation(), { keygen: createKeyGenerator() });
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Common);
+/* harmony default export */ __webpack_exports__["a"] = (Common$1);
 //# sourceMappingURL=hickory-root.es.js.map
 
 
@@ -2911,62 +2624,52 @@ function pathToRegexp (path, keys, options) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Nav_html__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Nav_html__ = __webpack_require__(1);
+/* src/components/Contact.html generated by Svelte v1.40.2 */
+
 
 
 
 
 function create_main_fragment(state, component) {
-	var text, p, text_1;
+	var text, p;
 
-	var nav = new __WEBPACK_IMPORTED_MODULE_0__Nav_html__["a" /* default */]({
+	var nav = new __WEBPACK_IMPORTED_MODULE_1__Nav_html__["a" /* default */]({
 		_root: component._root
 	});
 
 	return {
-		create: function() {
-			nav._fragment.create();
-			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n");
-			p = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("p");
-			text_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("Please do not contact us!");
+		c: function create() {
+			nav._fragment.c();
+			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n");
+			p = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("p");
+			p.textContent = "Please do not contact us!";
 		},
 
-		mount: function(target, anchor) {
+		m: function mount(target, anchor) {
 			nav._mount(target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(text, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(p, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text_1, p);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(text, target, anchor);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(p, target, anchor);
 		},
 
-		update: __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* noop */],
+		p: __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* noop */],
 
-		unmount: function() {
+		u: function unmount() {
 			nav._unmount();
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(text);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(p);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(text);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(p);
 		},
 
-		destroy: function() {
+		d: function destroy() {
 			nav.destroy(false);
 		}
 	};
 }
 
 function Contact(options) {
-	this.options = options;
+	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* init */])(this, options);
 	this._state = options.data || {};
-
-	this._observers = {
-		pre: Object.create(null),
-		post: Object.create(null)
-	};
-
-	this._handlers = Object.create(null);
-
-	this._root = options._root || this;
-	this._yield = options._yield;
-	this._bind = options._bind;
 
 	if (!options._root) {
 		this._oncreate = [];
@@ -2977,19 +2680,18 @@ function Contact(options) {
 	this._fragment = create_main_fragment(this._state, this);
 
 	if (options.target) {
-		this._fragment.create();
-		this._fragment.mount(options.target, options.anchor || null);
+		this._fragment.c();
+		this._fragment.m(options.target, options.anchor || null);
 
 		this._lock = true;
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
 		this._lock = false;
 	}
 }
 
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(Contact.prototype, __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
-
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(Contact.prototype, __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
 /* harmony default export */ __webpack_exports__["default"] = (Contact);
 
 /***/ }),
@@ -2998,62 +2700,52 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examp
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Nav_html__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Nav_html__ = __webpack_require__(1);
+/* src/components/Home.html generated by Svelte v1.40.2 */
+
 
 
 
 
 function create_main_fragment(state, component) {
-	var text, h1, text_1;
+	var text, h1;
 
-	var nav = new __WEBPACK_IMPORTED_MODULE_0__Nav_html__["a" /* default */]({
+	var nav = new __WEBPACK_IMPORTED_MODULE_1__Nav_html__["a" /* default */]({
 		_root: component._root
 	});
 
 	return {
-		create: function() {
-			nav._fragment.create();
-			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n");
-			h1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("h1");
-			text_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("Home Page");
+		c: function create() {
+			nav._fragment.c();
+			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n");
+			h1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("h1");
+			h1.textContent = "Home Page";
 		},
 
-		mount: function(target, anchor) {
+		m: function mount(target, anchor) {
 			nav._mount(target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(text, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(h1, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text_1, h1);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(text, target, anchor);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(h1, target, anchor);
 		},
 
-		update: __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* noop */],
+		p: __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* noop */],
 
-		unmount: function() {
+		u: function unmount() {
 			nav._unmount();
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(text);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(h1);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(text);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(h1);
 		},
 
-		destroy: function() {
+		d: function destroy() {
 			nav.destroy(false);
 		}
 	};
 }
 
 function Home(options) {
-	this.options = options;
+	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* init */])(this, options);
 	this._state = options.data || {};
-
-	this._observers = {
-		pre: Object.create(null),
-		post: Object.create(null)
-	};
-
-	this._handlers = Object.create(null);
-
-	this._root = options._root || this;
-	this._yield = options._yield;
-	this._bind = options._bind;
 
 	if (!options._root) {
 		this._oncreate = [];
@@ -3064,19 +2756,18 @@ function Home(options) {
 	this._fragment = create_main_fragment(this._state, this);
 
 	if (options.target) {
-		this._fragment.create();
-		this._fragment.mount(options.target, options.anchor || null);
+		this._fragment.c();
+		this._fragment.m(options.target, options.anchor || null);
 
 		this._lock = true;
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
 		this._lock = false;
 	}
 }
 
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(Home.prototype, __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
-
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(Home.prototype, __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
 /* harmony default export */ __webpack_exports__["default"] = (Home);
 
 /***/ }),
@@ -3085,84 +2776,69 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examp
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Nav_html__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Nav_html__ = __webpack_require__(1);
+/* src/components/Method.html generated by Svelte v1.40.2 */
 
 
 
-
-var template = (function() {
-	return {
-    data() {
-      return {
-        response: {
-          params: {
-            method: 'Unknown'
-          }
-        }
+function data() {
+  return {
+    response: {
+      params: {
+        method: 'Unknown'
       }
     }
   }
-}());
+};
 
 function create_main_fragment(state, component) {
 	var text, p, text_1, text_2_value = state.response.params.method, text_2, text_3;
 
-	var nav = new __WEBPACK_IMPORTED_MODULE_0__Nav_html__["a" /* default */]({
+	var nav = new __WEBPACK_IMPORTED_MODULE_1__Nav_html__["a" /* default */]({
 		_root: component._root
 	});
 
 	return {
-		create: function() {
-			nav._fragment.create();
-			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n");
-			p = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("p");
-			text_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("Please do not contact us by ");
-			text_2 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])(text_2_value);
-			text_3 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("!");
+		c: function create() {
+			nav._fragment.c();
+			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n");
+			p = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("p");
+			text_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("Please do not contact us by ");
+			text_2 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])(text_2_value);
+			text_3 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("!");
 		},
 
-		mount: function(target, anchor) {
+		m: function mount(target, anchor) {
 			nav._mount(target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(text, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(p, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text_1, p);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text_2, p);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text_3, p);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(text, target, anchor);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(p, target, anchor);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(text_1, p);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(text_2, p);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["k" /* appendNode */])(text_3, p);
 		},
 
-		update: function(changed, state) {
-			if ( (changed.response) && text_2_value !== (text_2_value = state.response.params.method) ) {
+		p: function update(changed, state) {
+			if ((changed.response) && text_2_value !== (text_2_value = state.response.params.method)) {
 				text_2.data = text_2_value;
 			}
 		},
 
-		unmount: function() {
+		u: function unmount() {
 			nav._unmount();
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(text);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(p);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(text);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(p);
 		},
 
-		destroy: function() {
+		d: function destroy() {
 			nav.destroy(false);
 		}
 	};
 }
 
 function Method(options) {
-	this.options = options;
-	this._state = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(template.data(), options.data);
-
-	this._observers = {
-		pre: Object.create(null),
-		post: Object.create(null)
-	};
-
-	this._handlers = Object.create(null);
-
-	this._root = options._root || this;
-	this._yield = options._yield;
-	this._bind = options._bind;
+	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* init */])(this, options);
+	this._state = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(data(), options.data);
 
 	if (!options._root) {
 		this._oncreate = [];
@@ -3173,19 +2849,18 @@ function Method(options) {
 	this._fragment = create_main_fragment(this._state, this);
 
 	if (options.target) {
-		this._fragment.create();
-		this._fragment.mount(options.target, options.anchor || null);
+		this._fragment.c();
+		this._fragment.m(options.target, options.anchor || null);
 
 		this._lock = true;
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
 		this._lock = false;
 	}
 }
 
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(Method.prototype, __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
-
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(Method.prototype, __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
 /* harmony default export */ __webpack_exports__["default"] = (Method);
 
 /***/ }),
@@ -3194,62 +2869,52 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examp
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Nav_html__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Nav_html__ = __webpack_require__(1);
+/* src/components/NotFound.html generated by Svelte v1.40.2 */
+
 
 
 
 
 function create_main_fragment(state, component) {
-	var text, h1, text_1;
+	var text, h1;
 
-	var nav = new __WEBPACK_IMPORTED_MODULE_0__Nav_html__["a" /* default */]({
+	var nav = new __WEBPACK_IMPORTED_MODULE_1__Nav_html__["a" /* default */]({
 		_root: component._root
 	});
 
 	return {
-		create: function() {
-			nav._fragment.create();
-			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n");
-			h1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("h1");
-			text_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("The page you requested could not be found.");
+		c: function create() {
+			nav._fragment.c();
+			text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["a" /* createText */])("\n");
+			h1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["b" /* createElement */])("h1");
+			h1.textContent = "The page you requested could not be found.";
 		},
 
-		mount: function(target, anchor) {
+		m: function mount(target, anchor) {
 			nav._mount(target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(text, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(h1, target, anchor);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* appendNode */])(text_1, h1);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(text, target, anchor);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["c" /* insertNode */])(h1, target, anchor);
 		},
 
-		update: __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* noop */],
+		p: __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["d" /* noop */],
 
-		unmount: function() {
+		u: function unmount() {
 			nav._unmount();
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(text);
-			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* detachNode */])(h1);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(text);
+			__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["e" /* detachNode */])(h1);
 		},
 
-		destroy: function() {
+		d: function destroy() {
 			nav.destroy(false);
 		}
 	};
 }
 
 function NotFound(options) {
-	this.options = options;
+	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["f" /* init */])(this, options);
 	this._state = options.data || {};
-
-	this._observers = {
-		pre: Object.create(null),
-		post: Object.create(null)
-	};
-
-	this._handlers = Object.create(null);
-
-	this._root = options._root || this;
-	this._yield = options._yield;
-	this._bind = options._bind;
 
 	if (!options._root) {
 		this._oncreate = [];
@@ -3260,19 +2925,18 @@ function NotFound(options) {
 	this._fragment = create_main_fragment(this._state, this);
 
 	if (options.target) {
-		this._fragment.create();
-		this._fragment.mount(options.target, options.anchor || null);
+		this._fragment.c();
+		this._fragment.m(options.target, options.anchor || null);
 
 		this._lock = true;
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._beforecreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._oncreate);
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["g" /* callAll */])(this._aftercreate);
 		this._lock = false;
 	}
 }
 
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(NotFound.prototype, __WEBPACK_IMPORTED_MODULE_1__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
-
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["h" /* assign */])(NotFound.prototype, __WEBPACK_IMPORTED_MODULE_0__home_paul_Code_npm_curi_examples_basic_svelte_node_modules_svelte_shared_js__["i" /* proto */]);
 /* harmony default export */ __webpack_exports__["default"] = (NotFound);
 
 /***/ })

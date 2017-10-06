@@ -11,7 +11,7 @@ import renderFunction from './renderFunction';
 const setTitle = createTitleSideEffect({ suffix: '| Middleware Example' });
 const history = Browser();
 const config = createConfig(history, routes, {
-  sideEffects: [setTitle]
+  sideEffects: [{ fn: setTitle }]
 });
 
 ReactDOM.render((

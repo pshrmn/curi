@@ -11,7 +11,7 @@ import renderFunction from './renderFunction';
 const history = Browser();
 
 const config = createConfig(history, routes, {
-  addons: [createActiveAddon]
+  addons: [createActiveAddon()]
 });
 
 ReactDOM.render((

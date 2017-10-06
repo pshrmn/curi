@@ -6,7 +6,7 @@ const config = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public', 'js'),
-    publicPath: 'js/'
+    publicPath: 'static/js/'
   },
   externals: {
     react: 'React',

@@ -4,7 +4,7 @@ import { Redirect } from '@curi/react';
 import Nav from './components/Nav';
 import NotFound from './components/NotFound';
 
-function render(response, config) {
+function render(response, action, config) {
   if (!response || response.redirectTo) {
     return null;
   }

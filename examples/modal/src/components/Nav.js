@@ -29,10 +29,10 @@ const Nav = () => (
           <li>
             <Link
               to='Product'
-              params={{ color: 'Indigo' }}
-              details={{ state: { name: 'Indigo' } }}
+              params={{ color: 'Crimson' }}
+              details={{ state: { name: 'Crimson' } }}
             >
-              Indigo
+              Crimson
             </Link>
           </li>
         </ol>

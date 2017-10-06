@@ -24,9 +24,9 @@
     "webpack": "^2.5.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.6",
+    "@curi/core": "^1.0.0-beta.11",
     "@curi/svelte": "^1.0.0-alpha.4",
     "@hickory/browser": "^1.0.0-beta.3",
-    "svelte": "^1.39.4"
+    "svelte": "^1.40.2"
   }
 }

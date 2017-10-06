@@ -31,8 +31,8 @@ function renderFullPage(html) {
       </head>
       <body>
         <div id="root">${html}</div>
-        <script src="https://unpkg.com/react@15.5.3/dist/react.min.js"></script>
-        <script src="https://unpkg.com/react-dom@15.5.3/dist/react-dom.min.js"></script>
+        <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
         <script src="/static/js/bundle.js"></script>
       </body>
     </html>

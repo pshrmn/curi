@@ -1,5 +1,5 @@
 import React from 'react';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Nav from './components/Nav';
 
 const FourOhFour = () => <div>404</div>
@@ -13,13 +13,15 @@ function render(response) {
   return (
     <div>
       <Nav />
-      <CSSTransitionGroup
-        transitionName='fade'
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={500}
-      >
-        <BodyComponent key={location.pathname} params={params} />
-      </CSSTransitionGroup>
+      <TransitionGroup>
+        <CSSTransition
+          key={location.pathname}
+          classNames='fade'
+          timeout={500}
+        >
+          <BodyComponent key={location.pathname} params={params} />
+        </CSSTransition>
+      </TransitionGroup>
     </div>
   );
 }

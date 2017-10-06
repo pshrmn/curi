@@ -2,7 +2,7 @@ import React from 'react';
 import Nav from './components/Nav';
 import Cacher from './components/Cacher';
 
-function render(response, config) {
+function render(response, action, config) {
   if (!response) {
     return null;
   }
