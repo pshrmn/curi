@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.7
 
 * Remove `<curi-redirect>`. This was inspired by React Router, but it doesn't really serve a point. Redirects should either be known pre-render, in which case they can be made in `route.load` or can be manually performed using `curi.history.replace`.
 
