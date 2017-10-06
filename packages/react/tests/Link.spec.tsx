@@ -171,7 +171,7 @@ describe('<Link>', () => {
     it("does nothing if the <Link>'s props do not match the current response's", () => {
       const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
-        addons: [createActiveAddon]
+        addons: [createActiveAddon()]
       });
       const fakeResponse = { name: 'Other' };
       function merge(props) {
@@ -192,7 +192,7 @@ describe('<Link>', () => {
     it("calls merge function when <Link>'s props match the current response's", () => {
       const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
-        addons: [createActiveAddon]
+        addons: [createActiveAddon()]
       });
       const fakeResponse = { name: 'Test', params: {} };
       function merge(props) {
@@ -222,7 +222,7 @@ describe('<Link>', () => {
           }
         ],
         {
-          addons: [createActiveAddon]
+          addons: [createActiveAddon()]
         }
       );
       const fakeResponse = { name: 'Nested', partials: ['Test'], params: {} };

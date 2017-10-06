@@ -21,7 +21,7 @@ describe('<Active>', () => {
   beforeEach(() => {
     history = InMemory();
     config = createConfig(history, routes, {
-      addons: [createActiveAddon]
+      addons: [createActiveAddon()]
     });
   });
 
