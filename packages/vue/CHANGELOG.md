@@ -1,3 +1,7 @@
+## Next
+
+* Remove `<curi-redirect>`. This was inspired by React Router, but it doesn't really serve a point. Redirects should either be known pre-render, in which case they can be made in `route.load` or can be manually performed using `curi.history.replace`.
+
 ## 1.0.0-beta.6
 
 * Update `<curi-block>` to used watchers instead of `beforeUpdate`. This way, it does not rely on the `<curi-block>` having children to ensure an update.
