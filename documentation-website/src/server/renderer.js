@@ -14,7 +14,7 @@ export default function createHandler(debug=false) {
     });
 
     const config = createConfig(history, routes, {
-      addons: [createActiveAddon]
+      addons: [createActiveAddon()]
     });
 
     config.ready()
@@ -42,8 +42,8 @@ function renderFullPage(html, title, debug) {
   </head>
   <body>
     <div id="root">${html}</div>
-    <script src="https://unpkg.com/react@15.6.1/dist/react${debug ? '' : '.min'}.js"></script>
-    <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom${debug ? '' : '.min'}.js"></script>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.${debug ? 'development' : 'production.min'}.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.${debug ? 'development' : 'production.min'}.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

@@ -15,8 +15,8 @@ const scrollTo = createScrollSideEffect();
 const history = Browser();
 
 const config = createConfig(history, routes, {
-  addons: [createActiveAddon],
-  sideEffects: [setTitle, scrollTo]
+  addons: [createActiveAddon()],
+  sideEffects: [{ fn: setTitle }, { fn: scrollTo }]
 });
 
 config.ready().then(() => { 
