@@ -20,7 +20,7 @@ export default ({ name }) => (
         site.
       </p>
       <p>
-        When you want to do this, you can use the <Cmp>Block</Cmp> component
+        When you want to do this, you can use the <Cmp>curi-block</Cmp> component
         from react-curi to display a user confirmation that requires user input before navigation
         will occur.
       </p>
