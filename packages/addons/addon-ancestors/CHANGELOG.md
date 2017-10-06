@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.5
 
 * Add `reset` property.
 * Return `undefined` if requested route is not registered.
