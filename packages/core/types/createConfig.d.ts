@@ -1,11 +1,13 @@
 import { History } from '@hickory/root';
+import { PathFunctionOptions } from 'path-to-regexp';
 import { RouteDescriptor } from './utils/createRoute';
 import { AnyResponse } from './utils/createResponse';
-import { AddonFactory, AddonGet, SideEffect, Subscriber, UnsubscribeFn, Cache } from './interface';
+import { Addon, AddonGet, SideEffect, Subscriber, UnsubscribeFn, Cache } from './interface';
 export interface ConfigOptions {
-    addons?: Array<AddonFactory>;
+    addons?: Array<Addon>;
     sideEffects?: Array<SideEffect>;
     cache?: Cache;
+    pathnameOptions?: PathFunctionOptions;
 }
 export interface CuriConfig {
     ready: () => Promise<AnyResponse>;

@@ -1,3 +1,7 @@
+## Next
+
+* Pass addons to `createConfig` instead of addon factories. This allows addons to be configurable.  The `options` passed to `createConfig` can now accept a `pathnameOptions` object. This can be used to change how the `pathname` addon encodes the generated pathname. If this is not provided, the default function (`encodeURIComponent`) will be used to encode pathnames. Addons now also expect a `reset` property, which is a function that should reset the addon to its initial state.
+
 ## 1.0.0-beta.10
 
 * Export `PreloadFn` and `LoadFn` types.

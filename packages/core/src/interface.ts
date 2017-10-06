@@ -9,6 +9,7 @@ export interface Addon {
   name: string;
   register: AddonRegister;
   get: AddonGet;
+  reset(): void;
 }
 
 export type AddonFactory = (...args: Array<any>) => Addon;

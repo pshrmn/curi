@@ -7,6 +7,7 @@ export interface Addon {
     name: string;
     register: AddonRegister;
     get: AddonGet;
+    reset(): void;
 }
 export declare type AddonFactory = (...args: Array<any>) => Addon;
 export declare type Subscriber = (response: AnyResponse, action?: string) => void;

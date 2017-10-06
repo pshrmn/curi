@@ -74,7 +74,7 @@ describe('createConfig', () => {
         get: () => {}
       });
       const config = createConfig(history, routes, {
-        addons: [createFakeAddon]
+        addons: [createFakeAddon()]
       });
       expect(config.addons.fake).toBeDefined();
     });
@@ -91,15 +91,18 @@ describe('createConfig', () => {
           const firstAddonCache = {};
           const createFirstAddon: AddonFactory = () => {
             return {
+              name: 'first',
               register: (route, extra) => {
                 firstAddonCache[route.name] = route.path;
-              }
-            } as Addon;
+              },
+              get(route) {},
+              reset() {}
+            };
           };
 
           const routes = [{ name: 'Home', path: '' }];
           const config = createConfig(history, routes, {
-            addons: [createFirstAddon]
+            addons: [createFirstAddon()]
           });
           expect(config.addons.pathname).toBeDefined();
         });
@@ -111,21 +114,27 @@ describe('createConfig', () => {
           const secondAddonCache = {};
           const createFirstAddon: AddonFactory = () => {
             return {
+              name: 'first',
               register: (route, extra) => {
                 firstAddonCache[route.name] = route.path;
-              }
-            } as Addon;
+              },
+              get(route) {},
+              reset() {}
+            };
           };
 
           const createSecondAddon: AddonFactory = () => {
             return {
+              name: 'second',
               register: (route, extra) => {
                 secondAddonCache[
                   route.name
                 ] = `${extra ? extra : 'None'} + ${route.name}`;
                 return route.name;
-              }
-            } as Addon;
+              },
+              get(route) {},
+              reset() {}
+            };
           };
 
           const routes = [
@@ -147,7 +156,7 @@ describe('createConfig', () => {
           ];
 
           const config = createConfig(history, routes, {
-            addons: [createFirstAddon, createSecondAddon]
+            addons: [createFirstAddon(), createSecondAddon()]
           });
           const expected = {
             Grandparent: {

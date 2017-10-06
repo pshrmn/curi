@@ -3,11 +3,11 @@ import pathnameAddon from './addons/pathname';
 import ResponseCreator from './utils/createResponse';
 
 import { History, HickoryLocation } from '@hickory/root';
+import { PathFunctionOptions } from 'path-to-regexp';
 import { RouteDescriptor, Route, LoadModifiers } from './utils/createRoute';
 import { AnyResponse, RedirectResponse } from './utils/createResponse';
 import {
   Addon,
-  AddonFactory,
   AddonGet,
   SideEffect,
   Subscriber,
@@ -16,9 +16,10 @@ import {
 } from './interface';
 
 export interface ConfigOptions {
-  addons?: Array<AddonFactory>;
+  addons?: Array<Addon>;
   sideEffects?: Array<SideEffect>;
-  cache?: Cache
+  cache?: Cache,
+  pathnameOptions?: PathFunctionOptions
 }
 
 export interface CuriConfig {
@@ -35,9 +36,10 @@ function createConfig(
   options: ConfigOptions = {}
 ): CuriConfig {
   const {
-    addons: addonFactories = [],
+    addons: userAddons = [],
     sideEffects = [],
-    cache
+    cache,
+    pathnameOptions
   } = options as ConfigOptions;
 
   const beforeSideEffects: Array<Subscriber> = [];
@@ -51,7 +53,7 @@ function createConfig(
   });
 
   // add the pathname addon to the provided addons
-  const finalAddons = addonFactories.concat(pathnameAddon);
+  const finalAddons = userAddons.concat(pathnameAddon(pathnameOptions));
   let routes: Array<Route> = [];
   const registeredAddons: {[key: string]: AddonGet } = {};
   const subscribers: Array<Subscriber> = [];
@@ -67,8 +69,8 @@ function createConfig(
       delete registeredAddons[key];
     }
 
-    finalAddons.forEach(addonFactory => {
-      const addon = addonFactory();
+    finalAddons.forEach(addon => {
+      addon.reset();
       registeredAddons[addon.name] = addon.get;
       addonFunctions.push(addon);
     });
