@@ -11,8 +11,6 @@ function getDir(name) {
     return 'addons';
   } else if (name.indexOf('side-effect-') === 0) {
     return 'side-effects';
-  } else if (name.indexOf('react') === 0) {
-    return 'react';
   } else {
     return;
   }
