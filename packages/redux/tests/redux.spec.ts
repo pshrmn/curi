@@ -6,7 +6,9 @@ import { createStore, combineReducers } from 'redux';
 import {
   syncResponses,
   responseReducer,
-  LOCATION_CHANGE
+  curiReducer,
+  LOCATION_CHANGE,
+  ADD_CURI
 } from '../src';
 import { AnyResponse } from '@curi/core';
 import { Action } from 'redux';
@@ -22,7 +24,8 @@ describe('syncResponses', () => {
     ]);
 
     const reducer = combineReducers({
-      response: responseReducer
+      response: responseReducer,
+      curi: curiReducer
     });
 
     store = createStore(reducer);
@@ -41,6 +44,18 @@ describe('syncResponses', () => {
       history.push({ pathname: '/one' });
     });
   });
+
+  it('makes the curi config object available from the store', () => {
+    expect.assertions(2);
+    return config.ready().then(() => {
+      const { curi:before } = store.getState();
+      expect(before).toBe(null);
+      syncResponses(store, config);
+
+      const { curi:after } = store.getState();
+      expect(after).toBe(config);
+    });
+  });
 });
 
 describe('responseReducer', () => {
@@ -54,5 +69,46 @@ describe('responseReducer', () => {
       } as Action
     );
     expect(output).toBe(response);
+  });
+
+  it('returns current response for non-location change actions', () => {
+    const response = { key: 'test' } as AnyResponse;
+    const output = responseReducer(response, { type: 'UNKNOWN' });
+    expect(output).toBe(response);
+  });
+
+  it('returns null for non-location change actions if store.response is undefined', () => {
+    const output = responseReducer(undefined, { type: 'UNKNOWN' });
+    expect(output).toBe(null);
+  });
+});
+
+describe('curiReducer', () => {
+  let history, config;
+  
+  beforeEach(() => {
+    history = InMemory({ locations: ['/'] });
+    config = createConfig(history, [
+      { name: 'Home', path: '' },
+      { name: 'One', path: 'one' }
+    ]);
+  });
+  
+  it('returns the provided curi config for ADD_CURI actions', () => {
+    const output = curiReducer(undefined, {
+      type: ADD_CURI,
+      curi: config 
+    } as Action);
+    expect(output).toBe(config);
+  });
+
+  it('returns the curi config object saved in the store', () => {
+    const output = curiReducer(config, { type: 'UNKNOWN '});
+    expect(output).toBe(config);
+  });
+
+  it('returns null for non-add curi actions if store.curi is undefined', () => {
+    const output = curiReducer(undefined, { type: 'UNKNOWN' });
+    expect(output).toBe(null);
   });
 });
