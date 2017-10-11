@@ -27,7 +27,7 @@ export default ({ name, version, globalName }) => (
     <APIBlock>
       <PrismBlock lang='javascript'>
         {
-`import { syncResponses, responseReducer } from '@curi/redux';`
+`import { syncResponses, responseReducer, curiReducer } from '@curi/redux';`
         }
       </PrismBlock>
 
@@ -40,6 +40,8 @@ export default ({ name, version, globalName }) => (
           <IJS>syncResponses</IJS> is responsible for linking your Redux store with your Curi
           configuration object. It subscribes to location changes emitted from your configuration
           object with a function that will dispatch a "location changed" event to the Redux store.
+          It will also add your Curi configuration object to the store. You can get the object
+          from the store using the <IJS>curi</IJS> property identifier.
         </p>
         <Note>
           <p>
@@ -62,12 +64,38 @@ config.ready().then(() => {
 
       <Section
         tag='h3'
+        title='curiReducer'
+        id='curiReducer'
+      >
+        <p>
+          Use the <IJS>curiReducer</IJS> to keep your Curi configuration object in the store. When
+          you call <IJS>syncResponses</IJS>, your configuration object will be added to the store.
+        </p>
+        <PrismBlock lang='javascript'>
+          {
+`const config = createConfig(history, routes);
+const reducer = combineReducers({
+  curi: config,
+  ...
+});
+const store = createStore(reducer);
+syncResponses(store, config);
+const { curi } = store.getState();
+// curi === config`
+          }
+        </PrismBlock>
+      </Section>
+
+
+      <Section
+        tag='h3'
         title='responseReducer'
         id='responseReducer'
       >
         <p>
-          Use the <IJS>responseReducer</IJS> to automatically store the latest response
-          object in your Redux store.
+          Use the <IJS>responseReducer</IJS> to store the latest response object in your Redux store.
+          If you use <IJS>syncResponses</IJS>, this will automatically be done for you (by subscribing to
+          your Curi configuration object's <IJS>history</IJS>).
         </p>
         <PrismBlock lang='javascript'>
           {
