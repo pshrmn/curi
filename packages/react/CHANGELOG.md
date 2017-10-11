@@ -1,5 +1,6 @@
 ## Next
 
+* Allow `<Active>`, `<Block>`, and `<Link>` to accept `curi`/`response` props (only `curi` for the `<Block>`). This should generally be unnecessary, but makes it so that we can `connect` them (using `react-redux`).
 * Remove `<Provider>`. It was only adding half of the necessary `context` values (did not provide the `response`). The `<Navigator>` should be used instead.
 
 ## 1.0.0-beta.9

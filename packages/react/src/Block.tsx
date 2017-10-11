@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ConfirmationFunction } from '@hickory/root';
+import { CuriConfig } from '@curi/core';
 
 export interface BlockProps {
   active?: boolean;
   confirm: ConfirmationFunction;
+  curi?: CuriConfig;
 }
 
 class Block extends React.Component<BlockProps> {
   static contextTypes = {
-    curi: PropTypes.object.isRequired
+    curi: PropTypes.object
   };
 
   static defaultProps = {
@@ -17,11 +19,13 @@ class Block extends React.Component<BlockProps> {
   };
 
   on() {
-    this.context.curi.history.confirmWith(this.props.confirm);
+    const curi = this.props.curi || this.context.curi;
+    curi.history.confirmWith(this.props.confirm);
   }
 
   off() {
-    this.context.curi.history.removeConfirmation();
+    const curi = this.props.curi || this.context.curi;
+    curi.history.removeConfirmation();
   }
 
   componentDidMount() {

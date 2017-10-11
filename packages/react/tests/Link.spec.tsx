@@ -3,20 +3,86 @@ import { Spy } from 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import InMemory from '@hickory/in-memory';
-import createConfig from '@curi/core';
+import createConfig, { AnyResponse } from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
 import Link from '../src/Link';
 
 describe('<Link>', () => {
-  it('errors if it cannot access a curi config', () => {
-    const err = console.error;
-    console.error = () => {};
+  describe('curi and response', () => {
+    it('can get them from the props', () => {
+      const history = InMemory();
+      const config = createConfig(history, [{ name: 'Test', path: '' }], {
+        addons: [createActiveAddon()]
+      });
+      const fakeResponse = { name: 'Test', params: {} } as AnyResponse;
+      const wrapper = shallow(
+        <Link
+          to="Test"
+          curi={config}
+          active={{ merge: props => ({ ...props, className: 'active' }) }}
+          response={fakeResponse}
+        >
+          Test
+        </Link>
+      );
+      const a = wrapper.find('a');
+      expect(a.prop('href')).toBe('/');
+      expect(a.prop('className')).toBe('active');
+    });
 
-    expect(() => {
-      shallow(<Link to="Test">Test</Link>);
-    }).toThrow();
+    it('can get them from the context', () => {
+      const history = InMemory();
+      const config = createConfig(history, [{ name: 'Test', path: '' }], {
+        addons: [createActiveAddon()]
+      });
+      const fakeResponse = { name: 'Test', params: {} } as AnyResponse;
+      const wrapper = shallow(
+        <Link
+          to="Test"
+          active={{ merge: props => ({ ...props, className: 'active' }) }}
+        >
+          Test
+        </Link>,
+        { context: { curi: config, curiResponse: fakeResponse } }
+      );
+      const a = wrapper.find('a');
+      expect(a.prop('href')).toBe('/');
+      expect(a.prop('className')).toBe('active');
+    });
 
-    console.error = err;
+    it('prefers props over context', () => {
+      const history = InMemory();
+      const config = createConfig(history, [{ name: 'Test', path: '' }], {
+        addons: [createActiveAddon()]
+      });
+      const propResponse = { name: 'Test', params: {} } as AnyResponse;
+      const contextResponse = { name: 'Not a Test', params: {} } as AnyResponse;
+      const wrapper = shallow(
+        <Link
+          to="Test"
+          curi={config}
+          active={{ merge: props => ({ ...props, className: 'active' }) }}
+          response={propResponse}
+        >
+          Test
+        </Link>,
+        { context: { curi: config, curiResponse: contextResponse } }
+      );
+      const a = wrapper.find('a');
+      expect(a.prop('href')).toBe('/');
+      expect(a.prop('className')).toBe('active');
+    });
+
+    it('errors if it cannot access a curi config', () => {
+      const err = console.error;
+      console.error = () => {};
+
+      expect(() => {
+        shallow(<Link to="Test">Test</Link>);
+      }).toThrow();
+
+      console.error = err;
+    });
   });
 
   describe('anchor', () => {

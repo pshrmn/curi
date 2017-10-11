@@ -2,7 +2,7 @@ import 'jest';
 import React from 'react';
 import { shallow } from 'enzyme';
 import InMemory from '@hickory/in-memory';
-import createConfig from '@curi/core';
+import createConfig, { Response, AnyResponse } from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
 import Active from '../src/Active';
 
@@ -22,6 +22,83 @@ describe('<Active>', () => {
     history = InMemory();
     config = createConfig(history, routes, {
       addons: [createActiveAddon()]
+    });
+  });
+
+  describe('curi and response', () => {
+    function merge(props) {
+      return { ...props, className: 'not-a-test' };
+    }
+    const Test = () => null;
+
+    it('can get the values from props', () => {
+      const fakeResponse = {
+        name: 'Home',
+        params: {},
+        partials: []
+      } as AnyResponse;
+
+      const wrapper = shallow(
+        <Active name="Home" merge={merge} curi={config} response={fakeResponse}>
+          <Test />
+        </Active>
+      );
+      expect(wrapper.type()).toBe(Test);
+      expect(wrapper.prop('className')).toBe('not-a-test');
+    });
+
+    it('can get the values from context', () => {
+      const fakeResponse = {
+        name: 'Home',
+        params: {},
+        partials: []
+      } as AnyResponse;
+
+      const wrapper = shallow(
+        <Active name="Home" merge={merge}>
+          <Test />
+        </Active>,
+        { context: { curi: config, curiResponse: fakeResponse } }
+      );
+      expect(wrapper.type()).toBe(Test);
+      expect(wrapper.prop('className')).toBe('not-a-test');
+    });
+
+    it('prefers props over context', () => {
+      const propResponse = {
+        name: 'Home',
+        params: {},
+        partials: []
+      } as AnyResponse;
+      const contextResponse = {
+        name: 'House',
+        params: {},
+        partials: []
+      } as AnyResponse;
+
+      const wrapper = shallow(
+        <Active name="Home" merge={merge} curi={config} response={propResponse}>
+          <Test />
+        </Active>,
+        { context: { curi: config, curiResponse: contextResponse } }
+      );
+      expect(wrapper.type()).toBe(Test);
+      expect(wrapper.prop('className')).toBe('not-a-test');
+    });
+
+    it('errors if it cannot access a curi config', () => {
+      const err = console.error;
+      console.error = () => {};
+
+      expect(() => {
+        const wrapper = shallow(
+          <Active name="Home" merge={merge}>
+            <Test />
+          </Active>
+        );
+      }).toThrow();
+
+      console.error = err;
     });
   });
 

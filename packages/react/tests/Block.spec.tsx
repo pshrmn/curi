@@ -2,6 +2,8 @@ import 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Block from '../src/Block';
+import createConfig, { CuriConfig } from '@curi/core';
+import InMemory from '@hickory/in-memory';
 
 describe('Block', () => {
   let confirmationFunction;
@@ -10,16 +12,75 @@ describe('Block', () => {
   });
   const removeConfirmation = jest.fn();
 
-  const fakeHistory = { confirmWith, removeConfirmation };
+  const history = InMemory();
+  // overwrite with jest
+  history.confirmWith = confirmWith;
+  history.removeConfirmation = removeConfirmation;
+  const config = createConfig(history, []);
   const fakeContext = {
-    curi: {
-      history: fakeHistory
-    }
+    curi: config
   };
 
   afterEach(() => {
     confirmWith.mockClear();
     removeConfirmation.mockClear();
+  });
+
+  describe('curi', () => {
+    it('can use curi from props', () => {
+      const confirm = jest.fn();
+      const wrapper = shallow(
+        <Block active={true} confirm={confirm} curi={config} />,
+        { lifecycleExperimental: true }
+      );
+      expect(confirmWith.mock.calls.length).toBe(1);
+      expect(confirmWith.mock.calls[0][0]).toBe(confirm);
+    });
+
+    it('can use curi from context', () => {
+      const confirm = jest.fn();
+      const wrapper = shallow(<Block active={true} confirm={confirm} />, {
+        context: fakeContext,
+        lifecycleExperimental: true
+      });
+      expect(confirmWith.mock.calls.length).toBe(1);
+      expect(confirmWith.mock.calls[0][0]).toBe(confirm);
+    });
+
+    it('prefers props over context', () => {
+      const confirm = jest.fn();
+      // a second config object to be passed through the context
+      const secondHistory = InMemory();
+      const secondConfirmWith = jest.fn();
+      secondHistory.confirmWith = secondConfirmWith;
+      const secondConfig = createConfig(secondHistory, []);
+      const fakeContext = {
+        curi: secondConfig
+      };
+
+      const wrapper = shallow(
+        <Block active={true} confirm={confirm} curi={config} />,
+        {
+          context: fakeContext,
+          lifecycleExperimental: true
+        }
+      );
+      expect(confirmWith.mock.calls.length).toBe(1);
+      expect(secondConfirmWith.mock.calls.length).toBe(0);
+      expect(confirmWith.mock.calls[0][0]).toBe(confirm);
+    });
+
+    it('errors if it cannot access a curi config', () => {
+      const err = console.error;
+      console.error = () => {};
+
+      expect(() => {
+        const confirm = jest.fn();
+        const wrapper = shallow(<Block active={true} confirm={confirm} />);
+      }).toThrow();
+
+      console.error = err;
+    });
   });
 
   it('if active=true when mounting, adds block', () => {
