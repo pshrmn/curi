@@ -4,10 +4,4 @@ import curious from './curious';
 import Link from './Link';
 import Navigator from './Navigator';
 
-export {
-  Active,
-  Block,
-  curious,
-  Link,
-  Navigator
-};
+export { Active, Block, curious, Link, Navigator };

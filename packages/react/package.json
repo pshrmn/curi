@@ -15,7 +15,7 @@
     "prebuild": "rimraf dist & rimraf types",
     "build": "node ./scripts/build",
     "prepare": "npm run build",
-    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.{ts,tsx}\"",
     "test": "jest"
   },
   "repository": {

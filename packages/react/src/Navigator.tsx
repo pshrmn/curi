@@ -5,7 +5,11 @@ import { CuriContext } from './interface';
 
 export interface NavigatorProps {
   config: CuriConfig;
-  render: (r: AnyResponse, action: string, c?: CuriConfig) => React.ReactElement<any>;
+  render: (
+    r: AnyResponse,
+    action: string,
+    c?: CuriConfig
+  ) => React.ReactElement<any>;
   response?: AnyResponse;
 }
 
@@ -53,7 +57,11 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
   }
 
   render(): React.ReactElement<any> {
-    return this.props.render(this.state.response, this.state.action, this.props.config);
+    return this.props.render(
+      this.state.response,
+      this.state.action,
+      this.props.config
+    );
   }
 }
 

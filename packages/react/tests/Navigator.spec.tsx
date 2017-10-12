@@ -87,9 +87,9 @@ describe('<Navigator>', () => {
     const config = createConfig(history, routes);
     // by calling this before config.ready, we know that config.ready
     // will resolve with this response instead of initial one
-    config.history.replace({ pathname: '/about' })
+    config.history.replace({ pathname: '/about' });
     expect.assertions(1);
-    return config.ready().then((resp) => {
+    return config.ready().then(resp => {
       const wrapper = shallow(<Navigator config={config} render={fn} />);
       expect(fn.mock.calls[0][1]).toBe('REPLACE');
     });
@@ -173,7 +173,7 @@ describe('<Navigator>', () => {
 
       return config.ready().then(response => {
         const wrapper = shallow(
-          <Navigator response={response} config={config} render={(r) => null} />
+          <Navigator response={response} config={config} render={r => null} />
         );
         expect((config.subscribe as Spy).mock.calls.length).toBe(0);
       });
@@ -201,13 +201,11 @@ describe('<Navigator>', () => {
       expect((config.subscribe as Spy).mock.calls.length).toBe(0);
 
       return config.ready().then(response => {
-        const wrapper = shallow(
-          <Navigator config={config} render={fn} />
-        );
+        const wrapper = shallow(<Navigator config={config} render={fn} />);
         expect((config.subscribe as Spy).mock.calls.length).toBe(1);
         expect(unsub.mock.calls.length).toBe(0);
         wrapper.unmount();
-        expect(unsub.mock.calls.length).toBe(1);  
+        expect(unsub.mock.calls.length).toBe(1);
       });
     });
   });
@@ -238,7 +236,7 @@ describe('<Navigator>', () => {
       const config = createConfig(history, routes);
 
       const wrapper = mount(
-        <Navigator config={config} render={(response) => <ConfigReporter />} />
+        <Navigator config={config} render={response => <ConfigReporter />} />
       );
 
       expect(receivedContext.curi).toBe(config);
@@ -262,7 +260,6 @@ describe('<Navigator>', () => {
         );
         expect(receivedContext.curiResponse).toBe(resp);
       });
-
     });
   });
 });

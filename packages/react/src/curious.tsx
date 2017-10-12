@@ -15,8 +15,13 @@ export interface CuriousComponent {
   ref?: (node: any) => void;
 }
 
-export default function curious(WrappedComponent: React.ComponentType<CuriousComponent>) {
-  const CuriousComponent: React.StatelessComponent = (props: CuriousProps, context: CuriContext) => {
+export default function curious(
+  WrappedComponent: React.ComponentType<CuriousComponent>
+) {
+  const CuriousComponent: React.StatelessComponent = (
+    props: CuriousProps,
+    context: CuriContext
+  ) => {
     const { internalRef, ...rest } = props;
     return (
       <WrappedComponent
@@ -26,10 +31,11 @@ export default function curious(WrappedComponent: React.ComponentType<CuriousCom
         ref={internalRef}
       />
     );
-  }
+  };
 
   CuriousComponent.displayName = `curious(${WrappedComponent.displayName ||
     WrappedComponent.name})`;
+
   CuriousComponent.contextTypes = {
     curi: PropTypes.object.isRequired,
     curiResponse: PropTypes.object.isRequired
