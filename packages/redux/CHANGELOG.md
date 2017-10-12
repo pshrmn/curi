@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-alpha.2
 
 * Re-add Curi config reducer and syncing in `syncResponses`. This will allow the user to grab everything from their store instead of having to use `curious` to get the values off of React's `context`.
 
