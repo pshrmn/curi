@@ -20,6 +20,9 @@ export interface Cache {
     set: (response: AnyResponse) => void;
     get: (location: HickoryLocation) => AnyResponse;
 }
-export declare type Params = {
+export declare type RawParams = {
     [key: string]: string;
+};
+export declare type Params = {
+    [key: string]: any;
 };

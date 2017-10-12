@@ -1,6 +1,6 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
 import { Route } from './createRoute';
-import { Params } from '../interface';
+import { RawParams, Params } from '../interface';
 export interface BaseResponse {
     key: string;
     location: HickoryLocation;
@@ -39,10 +39,10 @@ declare class ResponseCreator {
     redirect(to: ToArgument, code?: number): void;
     fail(err: any): void;
     setStatus(code: number): void;
-    push(route: Route, params: Params): void;
+    push(route: Route, params: RawParams): void;
     pop(): void;
     setData(data: any): void;
-    freeze(): void;
+    freezeMatch(): void;
     generateTitle(): string;
     asObject(): AnyResponse;
 }

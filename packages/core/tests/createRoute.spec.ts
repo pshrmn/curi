@@ -201,6 +201,21 @@ describe('createRoute', () => {
         });
       });
 
+      describe('params', () => {
+        it('will attach the object to the route as "paramParsers"', () => {
+          const params = {
+            id: input => parseInt(input, 10)
+          };
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test/:id',
+            children: [],
+            params
+          });
+          expect(testRoute.paramParsers).toBe(params);
+        });
+      });
+
       describe('extra', () => {
         it('can be used to attach extra key-value pairs to the route', () => {
           const loadTest = () => Promise.resolve();
@@ -257,7 +272,7 @@ describe('createRoute', () => {
         children: []
       });
       testRoute.match(location.pathname, resp);
-      resp.freeze();
+      resp.freezeMatch();
       expect(resp.route).toBe(testRoute);
     });
 
@@ -349,7 +364,7 @@ describe('createRoute', () => {
         children: []
       });
       testRoute.match(location.pathname, resp);
-      resp.freeze();
+      resp.freezeMatch();
       expect(resp.route).toBeUndefined();
     });
 
@@ -362,7 +377,7 @@ describe('createRoute', () => {
         children: []
       });
       testRoute.match(location.pathname, resp);
-      resp.freeze();
+      resp.freezeMatch();
       expect(resp.route).toBe(testRoute);
     });
 
@@ -378,7 +393,7 @@ describe('createRoute', () => {
         const location = { pathname: '/test/one' } as HickoryLocation;
         const resp = new ResponseCreator('890', location);
         testRoute.match(location.pathname, resp);
-        resp.freeze();
+        resp.freezeMatch();
         expect(resp.route).toBe(One);
         expect(resp.partials[0]).toBe('Test');
       });
@@ -399,7 +414,7 @@ describe('createRoute', () => {
         } as HickoryLocation;
         const resp = new ResponseCreator('123', location);
         testRoute.match(location.pathname, resp);
-        resp.freeze();
+        resp.freezeMatch();
         expect(resp.route).toBe(Attractions);
         expect(resp.params['state']).toBe('Wisconsin');
       });
@@ -413,7 +428,7 @@ describe('createRoute', () => {
         const location = { pathname: '/one/two' } as HickoryLocation;
         const resp = new ResponseCreator('456', location);
         testRoute.match(location.pathname, resp);
-        resp.freeze();
+        resp.freezeMatch();
         expect(resp.params['id']).toBe('two');
       });
     });

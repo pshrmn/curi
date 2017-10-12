@@ -6,7 +6,7 @@ import { HickoryLocation, ToArgument } from '@hickory/root';
 import { RegExpOptions } from 'path-to-regexp';
 import { Path } from './createPath';
 import ResponseCreator from './createResponse';
-import { Params, AddonGet } from '../interface';
+import { RawParams, Params, AddonGet } from '../interface';
 
 export type Title = string | ((params?: object, data?: any) => string);
 
@@ -18,10 +18,16 @@ export type LoadFn = (
 ) => Promise<any>;
 export type PreloadFn = () => Promise<any>;
 
+export type ParamParser = (input: string) => any;
+export interface ParamParsers {
+  [key: string]: ParamParser;
+}
+
 export interface RouteDescriptor {
   name: string;
   path: string;
   pathOptions?: RegExpOptions;
+  params?: ParamParsers;
   body?: () => any;
   children?: Array<RouteDescriptor>;
   preload?: PreloadFn;
@@ -52,6 +58,7 @@ export interface Route {
     parentPath?: string
   ) => boolean;
   title: Title;
+  paramParsers: ParamParsers;
   extra: { [key: string]: any };
 }
 
@@ -72,7 +79,8 @@ const createRoute = (options: RouteMidCreation): Route => {
     preload,
     load,
     title,
-    extra
+    extra,
+    params: paramParsers
   } =
     options || <RouteMidCreation>{};
 
@@ -97,6 +105,7 @@ const createRoute = (options: RouteMidCreation): Route => {
     keys: regexPath.keys.map(key => key.name),
     title,
     extra,
+    paramParsers,
     match: function(
       pathname: string,
       rc: ResponseCreator,
@@ -108,7 +117,7 @@ const createRoute = (options: RouteMidCreation): Route => {
         return false;
       }
       const [segment, ...parsed] = match;
-      const params: { [key: string]: string } = {};
+      const params: RawParams = {};
       regexPath.keys.forEach((key, index) => {
         params[key.name] = parsed[index];
       });

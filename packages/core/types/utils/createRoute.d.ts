@@ -7,10 +7,15 @@ export declare type LoadFn = (params?: object, location?: HickoryLocation, modif
     [key: string]: AddonGet;
 }) => Promise<any>;
 export declare type PreloadFn = () => Promise<any>;
+export declare type ParamParser = (input: string) => any;
+export interface ParamParsers {
+    [key: string]: ParamParser;
+}
 export interface RouteDescriptor {
     name: string;
     path: string;
     pathOptions?: RegExpOptions;
+    params?: ParamParsers;
     body?: () => any;
     children?: Array<RouteDescriptor>;
     preload?: PreloadFn;
@@ -34,6 +39,7 @@ export interface Route {
     keys: Array<string | number>;
     match: (pathname: string, rc: ResponseCreator, parentPath?: string) => boolean;
     title: Title;
+    paramParsers: ParamParsers;
     extra: {
         [key: string]: any;
     };

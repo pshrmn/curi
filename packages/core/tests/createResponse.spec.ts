@@ -148,7 +148,7 @@ describe('Response', () => {
     });
   });
 
-  describe('freeze', () => {
+  describe('freezeMatch', () => {
     it("sets the route using the most best response's match'", () => {
       const location = { key: '123', pathname: '/abc' } as HickoryLocation;
       const resp = new ResponseCreator(location.key, location);
@@ -166,7 +166,7 @@ describe('Response', () => {
       const cityParams = { city: 'Portland' };
       resp.push(stateRoute, stateParams);
       resp.push(cityRoute, cityParams);
-      resp.freeze();
+      resp.freezeMatch();
       expect(resp.route).toBe(cityRoute);
     });
 
@@ -187,7 +187,7 @@ describe('Response', () => {
       const cityParams = { city: 'Austin' };
       resp.push(stateRoute, stateParams);
       resp.push(cityRoute, cityParams);
-      resp.freeze();
+      resp.freezeMatch();
       expect(resp.partials).toEqual(['State']);
     });
 
@@ -208,75 +208,185 @@ describe('Response', () => {
       const cityParams = { city: 'Bozeman' };
       resp.push(stateRoute, stateParams);
       resp.push(cityRoute, cityParams);
-      resp.freeze();
+      resp.freezeMatch();
       expect(resp.params).toEqual({
         state: 'MT',
         city: 'Bozeman'
       });
     });
 
-    describe('title', () => {
-      it('is an empty string when there is no matched route', () => {
-        const location = { key: '123', pathname: '/abc' } as HickoryLocation;
+    describe('param parsing', () => {
+      it('uses route.paramParsers to parse params', () => {
+        const location = { key: '123', pathname: '/123' } as HickoryLocation;
         const resp = new ResponseCreator(location.key, location);
-        resp.freeze();
-
-        const respObject = resp.asObject();
-        expect(respObject.title).toBe('');
-      });
-
-      it('is an empty string if the matched route does not have a title property', () => {
-        const location = { key: '123', pathname: '/abc' } as HickoryLocation;
-        const resp = new ResponseCreator(location.key, location);
-        const stateRoute = createRoute({
-          name: 'State',
-          path: ':state',
-          children: []
-        });
-        const stateParams = { state: 'ID' };
-        resp.push(stateRoute, stateParams);
-        resp.freeze();
-
-        const respObject = resp.asObject();
-        expect(respObject.title).toBe('');
-      });
-
-      it('is the route.title value route.title is a string', () => {
-        const location = { key: '123', pathname: '/abc' } as HickoryLocation;
-        const resp = new ResponseCreator(location.key, location);
-        const stateRoute = createRoute({
-          name: 'State',
-          path: ':state',
+        const numRoute = createRoute({
+          name: 'number',
+          path: ':num',
           children: [],
-          title: 'A State'
-        });
-        const stateParams = { state: 'VA' };
-        resp.push(stateRoute, stateParams);
-        resp.freeze();
-
-        const respObject = resp.asObject();
-        expect(respObject.title).toBe('A State');
-      });
-
-      it('calls route.title passing it the params and data when it is a function', () => {
-        const location = { key: '123', pathname: '/abc' } as HickoryLocation;
-        const resp = new ResponseCreator(location.key, location);
-        const stateRoute = createRoute({
-          name: 'State',
-          path: ':state',
-          children: [],
-          title: (params, data) => {
-            return `${params['state']} (aka ${data.full})`;
+          params: {
+            num: n => parseInt(n, 10)
           }
         });
-        const stateParams = { state: 'WV' };
-        resp.push(stateRoute, stateParams);
-        resp.freeze();
-        resp.setData({ full: 'West Virginia' });
+        const numParams = { num: '123' };
 
-        const respObject = resp.asObject();
-        expect(respObject.title).toBe('WV (aka West Virginia)');
+        resp.push(numRoute, numParams);
+        resp.freezeMatch();
+        expect(resp.params).toEqual({
+          num: 123
+        });
       });
+
+      it('parsers params from parent routes', () => {
+        const location = {
+          key: '123',
+          pathname: '/123/456'
+        } as HickoryLocation;
+        const resp = new ResponseCreator(location.key, location);
+        const firstRoute = createRoute({
+          name: 'first',
+          path: ':first',
+          children: [],
+          params: {
+            first: n => parseInt(n, 10)
+          }
+        });
+        const secondRoute = createRoute({
+          name: 'second',
+          path: ':second',
+          children: [],
+          params: {
+            second: n => parseInt(n, 10)
+          }
+        });
+
+        const firstParams = { first: '123' };
+        const secondParams = { second: '456' };
+
+        resp.push(firstRoute, firstParams);
+        resp.push(secondRoute, secondParams);
+        resp.freezeMatch();
+        expect(resp.params).toEqual({
+          first: 123,
+          second: 456
+        });
+      });
+
+      it('uses string for any params not in route.paramParsers', () => {
+        const location = {
+          key: '123',
+          pathname: '/123/456'
+        } as HickoryLocation;
+        const resp = new ResponseCreator(location.key, location);
+        const comboRoute = createRoute({
+          name: 'combo',
+          path: ':first/:second',
+          children: [],
+          params: {
+            first: n => parseInt(n, 10)
+          }
+        });
+        const comboParams = { first: '123', second: '456' };
+
+        resp.push(comboRoute, comboParams);
+        resp.freezeMatch();
+        expect(resp.params).toEqual({
+          first: 123,
+          second: '456'
+        });
+      });
+
+      it('falls back to string value if param parser throws', () => {
+        const originalError = console.error;
+        const errorMock = jest.fn();
+        console.error = errorMock;
+        const location = { key: '123', pathname: '/123' } as HickoryLocation;
+        const resp = new ResponseCreator(location.key, location);
+        const numRoute = createRoute({
+          name: 'number',
+          path: ':num',
+          children: [],
+          params: {
+            num: n => {
+              throw new Error('This will fail.');
+            }
+          }
+        });
+        const numParams = { num: '123' };
+
+        resp.push(numRoute, numParams);
+        resp.freezeMatch();
+        expect(resp.params).toEqual({
+          num: '123'
+        });
+        expect(errorMock.mock.calls.length).toBe(1);
+        expect(errorMock.mock.calls[0][0].message).toBe('This will fail.');
+
+        console.error = originalError;
+      });
+    });
+  });
+
+  describe('title', () => {
+    it('is an empty string when there is no matched route', () => {
+      const location = { key: '123', pathname: '/abc' } as HickoryLocation;
+      const resp = new ResponseCreator(location.key, location);
+      resp.freezeMatch();
+
+      const respObject = resp.asObject();
+      expect(respObject.title).toBe('');
+    });
+
+    it('is an empty string if the matched route does not have a title property', () => {
+      const location = { key: '123', pathname: '/abc' } as HickoryLocation;
+      const resp = new ResponseCreator(location.key, location);
+      const stateRoute = createRoute({
+        name: 'State',
+        path: ':state',
+        children: []
+      });
+      const stateParams = { state: 'ID' };
+      resp.push(stateRoute, stateParams);
+      resp.freezeMatch();
+
+      const respObject = resp.asObject();
+      expect(respObject.title).toBe('');
+    });
+
+    it('is the route.title value route.title is a string', () => {
+      const location = { key: '123', pathname: '/abc' } as HickoryLocation;
+      const resp = new ResponseCreator(location.key, location);
+      const stateRoute = createRoute({
+        name: 'State',
+        path: ':state',
+        children: [],
+        title: 'A State'
+      });
+      const stateParams = { state: 'VA' };
+      resp.push(stateRoute, stateParams);
+      resp.freezeMatch();
+
+      const respObject = resp.asObject();
+      expect(respObject.title).toBe('A State');
+    });
+
+    it('calls route.title passing it the params and data when it is a function', () => {
+      const location = { key: '123', pathname: '/abc' } as HickoryLocation;
+      const resp = new ResponseCreator(location.key, location);
+      const stateRoute = createRoute({
+        name: 'State',
+        path: ':state',
+        children: [],
+        title: (params, data) => {
+          return `${params['state']} (aka ${data.full})`;
+        }
+      });
+      const stateParams = { state: 'WV' };
+      resp.push(stateRoute, stateParams);
+      resp.freezeMatch();
+      resp.setData({ full: 'West Virginia' });
+
+      const respObject = resp.asObject();
+      expect(respObject.title).toBe('WV (aka West Virginia)');
     });
   });
 
@@ -294,7 +404,7 @@ describe('Response', () => {
       });
       resp.push(parkURI, { name: 'yosemite' });
       resp.setData({ open: true });
-      resp.freeze();
+      resp.freezeMatch();
       const respObj = resp.asObject() as Response;
 
       expect(respObj).toMatchObject({

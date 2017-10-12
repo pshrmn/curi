@@ -1,6 +1,6 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import { Route } from './createRoute';
-import { Params } from '../interface';
+import { Route, ParamParsers } from './createRoute';
+import { RawParams, Params } from '../interface';
 
 export interface BaseResponse {
   key: string;
@@ -27,6 +27,29 @@ export type AnyResponse = Response | RedirectResponse;
 export interface Match {
   route: Route;
   params: Params;
+}
+
+function parseParams(params: RawParams, fns: ParamParsers): Params {
+  if (!fns) {
+    return params;
+  }
+  const output: Params = {};
+  // For each param, attempt to parse it. However, if that
+  // fails, fall back to the string value.
+  for (let key in params) {
+    let value = params[key];
+    let fn = fns[key];
+    if (fn) {
+      try {
+        value = fn(value);
+      } catch (e) {
+        console.error(e);
+        value = params[key];
+      }
+    }
+    output[key] = value;
+  }
+  return output;
 }
 
 class ResponseCreator {
@@ -68,7 +91,7 @@ class ResponseCreator {
     this.status = code;
   }
 
-  push(route: Route, params: Params): void {
+  push(route: Route, params: RawParams): void {
     this.matches.push({ route, params });
   }
 
@@ -80,16 +103,21 @@ class ResponseCreator {
     this.data = data;
   }
 
-  freeze(): void {
+  freezeMatch(): void {
     if (this.matches.length) {
+      const parsers: ParamParsers = {};
       const bestMatch: Match = this.matches.pop();
       this.matches.forEach(m => {
         this.partials.push(m.route.name);
-        Object.assign(this.params, m.params);
+
+        Object.assign(this.params, parseParams(m.params, m.route.paramParsers));
       });
 
       this.route = bestMatch.route;
-      Object.assign(this.params, bestMatch.params);
+      Object.assign(
+        this.params,
+        parseParams(bestMatch.params, bestMatch.route.paramParsers)
+      );
     }
   }
 

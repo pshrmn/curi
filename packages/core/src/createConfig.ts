@@ -83,7 +83,7 @@ function createConfig(
     routes.some(route => route.match(history.location.pathname, rc));
     // once we have matched the route, we freeze the responseCreator to
     // set its route/params/partials properties
-    rc.freeze();
+    rc.freezeMatch();
     return Promise.resolve(rc);
   }
 

@@ -1,3 +1,7 @@
+## Next
+
+* Routes can have a `params` object, which is an object whose keys are params (from the `path`) and whose values are functions that will parse the parsed value. This can be used if any of the parsed values should not be strings. Any params that are not included in the `params` object will be kept as strings. Likewise, any params whose parsing function throws an error will be kept as strings.
+
 ## 1.0.0-beta.11
 
 * Pass addons to `createConfig` instead of addon factories. This allows addons to be configurable.  The `options` passed to `createConfig` can now accept a `pathnameOptions` object. This can be used to change how the `pathname` addon encodes the generated pathname. If this is not provided, the default function (`encodeURIComponent`) will be used to encode pathnames. Addons now also expect a `reset` property, which is a function that should reset the addon to its initial state.
