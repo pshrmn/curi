@@ -1,7 +1,7 @@
 import { Route, Addon } from '@curi/core';
 
 function createAncestorsAddon(): Addon {
-  let routeAncestors: {[key: string]: Array<string>} = {};
+  let routeAncestors: { [key: string]: Array<string> } = {};
 
   function get(name: string, level: number): string;
   function get(name: string): Array<string>;
@@ -16,12 +16,15 @@ function createAncestorsAddon(): Addon {
     if (level <= 0) {
       return;
     }
-    return ancestors[level-1];
+    return ancestors[level - 1];
   }
 
   return {
     name: 'ancestors',
-    register: (route: Route, parentRoutes: Array<string> = []): Array<string> => {
+    register: (
+      route: Route,
+      parentRoutes: Array<string> = []
+    ): Array<string> => {
       let { name } = route;
       if (routeAncestors[name] !== undefined) {
         console.warn(

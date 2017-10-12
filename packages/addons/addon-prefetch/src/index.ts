@@ -2,7 +2,7 @@ import { Addon, Route, Params, LoadModifiers } from '@curi/core';
 import { HickoryLocation } from '@hickory/root';
 
 function createPrefetchAddon(): Addon {
-  let loaders: {[key: string]: Function} = {};
+  let loaders: { [key: string]: Function } = {};
 
   return {
     name: 'prefetch',
@@ -21,7 +21,12 @@ function createPrefetchAddon(): Addon {
         loaders[name] = load;
       }
     },
-    get: (name: string, params: Params, location: HickoryLocation, modifiers: LoadModifiers) => {
+    get: (
+      name: string,
+      params: Params,
+      location: HickoryLocation,
+      modifiers: LoadModifiers
+    ) => {
       if (loaders[name] == null) {
         return Promise.reject(
           `Could not preload data for ${name} because it is not registered.`

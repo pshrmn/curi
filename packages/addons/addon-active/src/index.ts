@@ -1,11 +1,18 @@
 import { Route, Response, Addon } from '@curi/core';
 
-function acceptableRouteName(name: string, response: Response, partial?: boolean): boolean {
-  return name === response.name || !!(partial && response.partials.some((n: string) => name === n));
+function acceptableRouteName(
+  name: string,
+  response: Response,
+  partial?: boolean
+): boolean {
+  return (
+    name === response.name ||
+    !!(partial && response.partials.some((n: string) => name === n))
+  );
 }
 
 function createActiveAddon(): Addon {
-  let routeParams: {[key: string]: Array<string>} = {};
+  let routeParams: { [key: string]: Array<string> } = {};
 
   return {
     name: 'active',
@@ -29,8 +36,16 @@ function createActiveAddon(): Addon {
       routeParams[name] = fullKeys;
       return fullKeys;
     },
-    get: (name: string, response: Response, params: {[key: string]: string}, partial: boolean): boolean => {
-      if (routeParams[name] == null || !acceptableRouteName(name, response, partial)) {
+    get: (
+      name: string,
+      response: Response,
+      params: { [key: string]: string },
+      partial: boolean
+    ): boolean => {
+      if (
+        routeParams[name] == null ||
+        !acceptableRouteName(name, response, partial)
+      ) {
         return false;
       }
       const routeKeysToCheck = routeParams[name];

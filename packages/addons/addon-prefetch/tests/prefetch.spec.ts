@@ -130,8 +130,10 @@ describe('prefetch addon', () => {
       prefetch.reset();
       expect.assertions(2);
       return prefetch.get('Player').catch(err => {
-        expect(err).toBe(`Could not preload data for Player because it is not registered.`)
-      })
+        expect(err).toBe(
+          `Could not preload data for Player because it is not registered.`
+        );
+      });
     });
   });
 });

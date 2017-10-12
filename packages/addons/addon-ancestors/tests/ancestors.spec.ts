@@ -15,7 +15,7 @@ describe('ancestors addon', () => {
   });
 
   describe('register', () => {
-    it('returns an array with the route\'s name when there are no ancestors', () => {
+    it("returns an array with the route's name when there are no ancestors", () => {
       const player = { name: 'Player' };
       const older = ancestors.register(player);
       expect(older).toEqual(['Player']);
