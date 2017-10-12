@@ -48,11 +48,11 @@ describe('syncResponses', () => {
   it('makes the curi config object available from the store', () => {
     expect.assertions(2);
     return config.ready().then(() => {
-      const { curi:before } = store.getState();
+      const { curi: before } = store.getState();
       expect(before).toBe(null);
       syncResponses(store, config);
 
-      const { curi:after } = store.getState();
+      const { curi: after } = store.getState();
       expect(after).toBe(config);
     });
   });
@@ -85,7 +85,7 @@ describe('responseReducer', () => {
 
 describe('curiReducer', () => {
   let history, config;
-  
+
   beforeEach(() => {
     history = InMemory({ locations: ['/'] });
     config = createConfig(history, [
@@ -93,17 +93,17 @@ describe('curiReducer', () => {
       { name: 'One', path: 'one' }
     ]);
   });
-  
+
   it('returns the provided curi config for ADD_CURI actions', () => {
     const output = curiReducer(undefined, {
       type: ADD_CURI,
-      curi: config 
+      curi: config
     } as Action);
     expect(output).toBe(config);
   });
 
   it('returns the curi config object saved in the store', () => {
-    const output = curiReducer(config, { type: 'UNKNOWN '});
+    const output = curiReducer(config, { type: 'UNKNOWN' });
     expect(output).toBe(config);
   });
 
