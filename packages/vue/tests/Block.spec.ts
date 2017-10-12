@@ -22,13 +22,15 @@ describe('Block component', () => {
   it('registers with the name curi-block', () => {
     expect(Vue.options.components['curi-block']).toBeDefined();
   });
-  
+
   it('renders undefined', () => {
     const vm = new Vue({
       template: '<curi-block :active="active" :confirm="confirm" />',
       data: {
         active: true,
-        confirm: (data, s, f) => { s(); }
+        confirm: (data, s, f) => {
+          s();
+        }
       }
     }).$mount();
     expect(vm.$el.tagName).toBeUndefined();
@@ -112,7 +114,7 @@ describe('Block component', () => {
   it('re-adds block if either prop changes', done => {
     const confirm1 = jest.fn();
     const confirm2 = jest.fn();
-    
+
     const vm = new Vue({
       template: `
         <curi-block :active="active" :confirm="confirm" />

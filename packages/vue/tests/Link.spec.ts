@@ -59,7 +59,7 @@ describe('Link component', () => {
           text: 'Bermuda'
         }
       }).$mount();
-  
+
       const mockClick = new MouseEvent('click');
       expect(history.push.mock.calls.length).toBe(0);
       vm.$el.dispatchEvent(mockClick);
@@ -80,7 +80,7 @@ describe('Link component', () => {
           text: 'Bahamas'
         }
       }).$mount();
-  
+
       const mockClick = new MouseEvent('click');
       mockClick.preventDefault();
       expect(history.push.mock.calls.length).toBe(0);
@@ -97,7 +97,7 @@ describe('Link component', () => {
           text: 'Key Largo'
         }
       }).$mount();
-  
+
       expect(history.push.mock.calls.length).toBe(0);
       const modifiers = ['metaKey', 'altKey', 'ctrlKey', 'shiftKey'];
       modifiers.forEach(m => {
@@ -106,7 +106,7 @@ describe('Link component', () => {
         });
         vm.$el.click(mockClick);
         expect(history.push.mock.calls.length).toBe(0);
-      })
+      });
     });
 
     it('does not navigate for non left mouse button clicks', () => {
@@ -118,13 +118,12 @@ describe('Link component', () => {
           text: 'Montego'
         }
       }).$mount();
-  
+
       const mockClick = new MouseEvent('click', { button: 1 });
       expect(history.push.mock.calls.length).toBe(0);
       vm.$el.click(mockClick);
       expect(history.push.mock.calls.length).toBe(0);
     });
-
   });
 
   it("sets the slots as the link's text", () => {

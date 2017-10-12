@@ -25,7 +25,7 @@ const Block: ComponentOptions<BlockComponent> = {
 
   methods: {
     on: function() {
-      this.$curi.history.confirmWith(this.confirm);  
+      this.$curi.history.confirmWith(this.confirm);
     },
     off: function() {
       this.$curi.history.removeConfirmation();
@@ -54,7 +54,7 @@ const Block: ComponentOptions<BlockComponent> = {
   },
 
   beforeDestroy: function() {
-    this.off()
+    this.off();
   },
 
   render: function(h: CreateElement) {

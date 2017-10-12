@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { CuriConfig }  from '@curi/core';
+import { CuriConfig } from '@curi/core';
 
 declare module 'vue/types/vue' {
   interface Vue {
