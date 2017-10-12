@@ -1,7 +1,22 @@
-export { Addon, Subscriber, SideEffect, Params } from './interface';
+export {
+  AddonRegister,
+  AddonGet,
+  Addon,
+  AddonFactory,
+  Subscriber,
+  SideEffect,
+  UnsubscribeFn,
+  Cache,
+  RawParams,
+  Params
+} from './interface';
+export { Path } from './utils/createPath';
 export {
   Route,
   RouteDescriptor,
+  Title,
+  ParamParser,
+  ParamParsers,
   LoadModifiers,
   LoadFn,
   PreloadFn
