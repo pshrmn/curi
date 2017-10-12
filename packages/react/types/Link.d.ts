@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CuriContext } from './interface';
+import { CuriConfig, AnyResponse } from '@curi/core';
 export interface ActiveLink {
     merge: (props: object) => object;
     partial?: boolean;
@@ -14,13 +15,15 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
     active?: ActiveLink;
     anchor?: React.ComponentClass | React.StatelessComponent;
     target?: string;
+    curi?: CuriConfig;
+    response?: AnyResponse;
 }
 export interface LinkState {
     pathname: string;
 }
 declare class Link extends React.Component<LinkProps, LinkState> {
     static contextTypes: {
-        curi: PropTypes.Validator<any>;
+        curi: PropTypes.Requireable<any>;
         curiResponse: PropTypes.Requireable<any>;
     };
     clickHandler: (event: React.MouseEvent<HTMLElement>) => void;
