@@ -7,7 +7,6 @@ jest.useFakeTimers();
 const mockScroll = jest.fn();
 
 describe('createScrollSideEffect', () => {
-
   let realScrollTo = window.scrollTo;
   let realScrollIntoView = Element.prototype.scrollIntoView;
 
@@ -23,7 +22,7 @@ describe('createScrollSideEffect', () => {
 
   it('does not scroll after POP', () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect(<AnyResponse>{ location: {}}, 'POP');
+    sideEffect(<AnyResponse>{ location: {} }, 'POP');
 
     jest.runAllTimers();
     expect(window.scrollTo.mock.calls.length).toBe(0);
@@ -31,7 +30,7 @@ describe('createScrollSideEffect', () => {
 
   it('scrolls to 0 after PUSH', () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect({ location: {}} as AnyResponse, 'PUSH');
+    sideEffect({ location: {} } as AnyResponse, 'PUSH');
 
     jest.runAllTimers();
     expect(window.scrollTo.mock.calls.length).toBe(1);
@@ -39,7 +38,7 @@ describe('createScrollSideEffect', () => {
 
   it('scrolls to 0 after REPLACE', () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect({ location: {}}, 'REPLACE');
+    sideEffect({ location: {} }, 'REPLACE');
 
     jest.runAllTimers();
     expect(window.scrollTo.mock.calls.length).toBe(1);
@@ -51,7 +50,7 @@ describe('createScrollSideEffect', () => {
     document.body.appendChild(div);
 
     const sideEffect = createScrollSideEffect();
-    sideEffect({ location: { hash: 'test' }}, 'REPLACE');
+    sideEffect({ location: { hash: 'test' } }, 'REPLACE');
 
     jest.runAllTimers();
     expect(window.scrollTo.mock.calls.length).toBe(0);
@@ -62,7 +61,7 @@ describe('createScrollSideEffect', () => {
 
   it('scrolls to top if there is location.hash but no matching element', () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect({ location: { hash: 'test' }}, 'REPLACE');
+    sideEffect({ location: { hash: 'test' } }, 'REPLACE');
 
     jest.runAllTimers();
     expect(window.scrollTo.mock.calls.length).toBe(1);

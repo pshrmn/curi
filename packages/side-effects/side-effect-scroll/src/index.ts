@@ -1,16 +1,15 @@
 import { Subscriber, AnyResponse } from '@curi/core';
 
 function createScrollSideEffect(): Subscriber {
-
   return function(response: AnyResponse, action: string): void {
-    if (action === 'POP' ) {
+    if (action === 'POP') {
       return;
     }
 
     // we want to wait to scroll until after the re-render,
     // so we use setTimeout to push this onto the event loop
     setTimeout(() => {
-      const { hash } = response.location
+      const { hash } = response.location;
       if (hash !== '') {
         const element = document.getElementById(hash);
         if (element && element.scrollIntoView) {
@@ -23,7 +22,6 @@ function createScrollSideEffect(): Subscriber {
       // to the top of the page
       window.scrollTo(0, 0);
     }, 0);
-
   };
 }
 
