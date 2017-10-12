@@ -348,6 +348,33 @@ const routes = [
       </Subsection>
 
       <Subsection
+        title='params'
+        id='params'
+      >
+        <p>
+          When <IJS>path-to-regexp</IJS> matches your paths, all parameters are extracted as strings. However, you might have
+          some route params to be other types. You can provide functions to transform params using the <IJS>route.params</IJS>
+          {' '}object. To transform a param, its name should be the string value from the path. The paired value should be a
+          function that takes a string (the value from the pathname) and returns a new value (transformed however you want).
+        </p>
+        <PrismBlock lang='javascript'>
+          {
+`const routes = [
+  {
+    name: 'Number',
+    path: 'number/:num',
+    params: {
+      num: n => parseInt(n, 10)
+    }
+  }
+]
+// when the user visits /number/1,
+// response.params will be { num: 1 } instead of { num: "1" }`
+          }
+        </PrismBlock>
+      </Subsection>
+
+      <Subsection
         title='extra'
         id='extra'
       >
