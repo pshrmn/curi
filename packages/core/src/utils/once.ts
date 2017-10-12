@@ -1,6 +1,4 @@
-export default function once(
-  fn: () => Promise<any>
-): () => Promise<any> {
+export default function once(fn: () => Promise<any>): () => Promise<any> {
   let promise: Promise<any> = null;
   let hasRun: boolean = false;
 

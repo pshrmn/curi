@@ -26,4 +26,4 @@ export interface Cache {
   get: (location: HickoryLocation) => AnyResponse;
 }
 
-export type Params = {[key: string]: string};
+export type Params = { [key: string]: string };

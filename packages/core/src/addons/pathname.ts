@@ -1,11 +1,14 @@
-import PathToRegexp, { PathFunction, PathFunctionOptions } from 'path-to-regexp';
+import PathToRegexp, {
+  PathFunction,
+  PathFunctionOptions
+} from 'path-to-regexp';
 import { withLeadingSlash, join } from '../utils/path';
 import { Addon } from '../interface';
 import { Route } from '../utils/createRoute';
 
 function createPathnameAddon(options?: PathFunctionOptions): Addon {
-  let knownPaths: {[key: string]: string} = {};
-  let cache: {[key: string]: PathFunction } = {};
+  let knownPaths: { [key: string]: string } = {};
+  let cache: { [key: string]: PathFunction } = {};
 
   return {
     name: 'pathname',

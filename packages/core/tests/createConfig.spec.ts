@@ -127,9 +127,9 @@ describe('createConfig', () => {
             return {
               name: 'second',
               register: (route, extra) => {
-                secondAddonCache[
-                  route.name
-                ] = `${extra ? extra : 'None'} + ${route.name}`;
+                secondAddonCache[route.name] = `${extra
+                  ? extra
+                  : 'None'} + ${route.name}`;
                 return route.name;
               },
               get(route) {},
@@ -209,13 +209,16 @@ describe('createConfig', () => {
           });
           const sideEffect1 = function() {
             expect(subscriberValue).toBeUndefined();
-          }
+          };
           const sideEffect2 = function() {
             expect(subscriberValue).toBeUndefined();
-          }
+          };
 
           const config = createConfig(history, routes, {
-            sideEffects: [{ fn: sideEffect1, after: false }, { fn: sideEffect2 }]
+            sideEffects: [
+              { fn: sideEffect1, after: false },
+              { fn: sideEffect2 }
+            ]
           });
           config.subscribe(subscriber);
 
@@ -232,7 +235,7 @@ describe('createConfig', () => {
           });
           const sideEffect = function() {
             expect(subscriberValue).not.toBeUndefined();
-          }
+          };
 
           const config = createConfig(history, routes, {
             sideEffects: [{ fn: sideEffect, after: true }]
@@ -245,15 +248,17 @@ describe('createConfig', () => {
       });
 
       describe('cache', () => {
-        it('returns cached response for same key on subsequent calls if cache is provided', (done) => {
-          const routes = [{
-            name: 'All',
-            path: '(.*)',
-            load: (params, location, mods) => {
-              mods.setData(Math.random());
-              return Promise.resolve(true);
+        it('returns cached response for same key on subsequent calls if cache is provided', done => {
+          const routes = [
+            {
+              name: 'All',
+              path: '(.*)',
+              load: (params, location, mods) => {
+                mods.setData(Math.random());
+                return Promise.resolve(true);
+              }
             }
-          }];
+          ];
           const createSimpleCache = () => {
             const cache = {};
 
@@ -273,15 +278,15 @@ describe('createConfig', () => {
           let calls = 0;
           let randomValue;
           const steps = [
-            (r) => {
+            r => {
               randomValue = r.data;
               history.push('/new-location');
             },
-            (r) => {
+            r => {
               expect(r.data).not.toEqual(randomValue);
               history.go(-1);
             },
-            (r) => {
+            r => {
               expect(r.data).toEqual(randomValue);
               done();
             }
@@ -297,28 +302,30 @@ describe('createConfig', () => {
         });
 
         it('generates new response for same key on subsequent calls if cache is not provided', done => {
-          const routes = [{
-            name: 'All',
-            path: '(.*)',
-            load: (params, location, mods) => {
-              mods.setData(Math.random());
-              return Promise.resolve(true);
+          const routes = [
+            {
+              name: 'All',
+              path: '(.*)',
+              load: (params, location, mods) => {
+                mods.setData(Math.random());
+                return Promise.resolve(true);
+              }
             }
-          }];
+          ];
           const config = createConfig(history, routes);
 
           let calls = 0;
           let randomValue;
           const steps = [
-            (r) => {
+            r => {
               randomValue = r.data;
               history.push('/new-location');
             },
-            (r) => {
+            r => {
               expect(r.data).not.toEqual(randomValue);
               history.go(-1);
             },
-            (r) => {
+            r => {
               expect(r.data).not.toEqual(randomValue);
               done();
             }
@@ -374,7 +381,6 @@ describe('createConfig', () => {
             expect((<Response>arg).error).toBeUndefined();
           });
         });
-    
       });
 
       describe('status', () => {
@@ -427,22 +433,24 @@ describe('createConfig', () => {
           expect(location).toMatchObject({
             pathname: '/hello',
             query: 'one=two'
-          })
-          expect(modifiers).toMatchObject(expect.objectContaining({
-            fail: expect.any(Function),
-            setData: expect.any(Function),
-            setStatus: expect.any(Function)
-          }));
+          });
+          expect(modifiers).toMatchObject(
+            expect.objectContaining({
+              fail: expect.any(Function),
+              setData: expect.any(Function),
+              setStatus: expect.any(Function)
+            })
+          );
 
           expect(typeof addons.pathname).toBe('function');
         });
-  
+
         const CatchAll = {
           name: 'Catch All',
           path: ':anything',
           load: spy
         };
-  
+
         const history = InMemory({ locations: ['/hello?one=two'] });
         const config = createConfig(history, [CatchAll]);
         expect.assertions(4);
@@ -461,7 +469,7 @@ describe('createConfig', () => {
               }
             }
           ];
-    
+
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -469,7 +477,7 @@ describe('createConfig', () => {
           });
         });
       });
-  
+
       describe('redirect', () => {
         it('sets response.redirectTo and response.status', () => {
           const routes = [
@@ -481,7 +489,7 @@ describe('createConfig', () => {
               }
             }
           ];
-    
+
           const config = createConfig(history, routes);
           expect.assertions(2);
           return config.ready().then(response => {
@@ -505,7 +513,7 @@ describe('createConfig', () => {
               path: 'new/:id'
             }
           ];
-          const history = InMemory({ locations: ['/old/1' ]});
+          const history = InMemory({ locations: ['/old/1'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -526,7 +534,7 @@ describe('createConfig', () => {
               }
             }
           ];
-          
+
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -547,7 +555,7 @@ describe('createConfig', () => {
               }
             }
           ];
-    
+
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -555,7 +563,6 @@ describe('createConfig', () => {
           });
         });
       });
-  
     });
 
     describe('response.redirectTo', () => {
@@ -575,9 +582,9 @@ describe('createConfig', () => {
         history.replace = jest.fn(() => {
           replacePosition = callPosition++;
         });
-        
+
         const config = createConfig(history, routes);
-        
+
         let subscribePosition;
         const subscriber = ignoreFirstCall(() => {
           subscribePosition = callPosition++;
@@ -737,7 +744,7 @@ describe('createConfig', () => {
         return config.ready().then(() => {
           config.subscribe(sub);
           expect(sub.mock.calls.length).toBe(1);
-          const [ resp, action ] = sub.mock.calls[0];
+          const [resp, action] = sub.mock.calls[0];
           expect(resp.name).toBe('How');
           expect(resp.partials[0]).toBe('Contact');
           expect(action).toBe('PUSH');
@@ -762,10 +769,10 @@ describe('createConfig', () => {
         const config = createConfig(history, routes);
         config.subscribe(sub);
         expect(sub.mock.calls.length).toBe(1);
-        const [ resp, action ] = sub.mock.calls[0];
+        const [resp, action] = sub.mock.calls[0];
         expect(resp).toBeUndefined();
         expect(action).toBeUndefined();
-      });      
+      });
     });
 
     it('notifies subscribers of new response and action when location changes', done => {

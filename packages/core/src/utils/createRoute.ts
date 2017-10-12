@@ -14,7 +14,7 @@ export type LoadFn = (
   params?: object,
   location?: HickoryLocation,
   modifiers?: LoadModifiers,
-  addons?: {[key: string]: AddonGet}
+  addons?: { [key: string]: AddonGet }
 ) => Promise<any>;
 export type PreloadFn = () => Promise<any>;
 
@@ -27,14 +27,14 @@ export interface RouteDescriptor {
   preload?: PreloadFn;
   load?: LoadFn;
   title?: Title;
-  extra?: {[key: string]: any};
+  extra?: { [key: string]: any };
 }
 
 // this is a terrible name, but describes an object whose children
 // is already created Routes (instead of RouteDescriptors). This should
-// never be used externally since 
+// never be used externally since
 export interface RouteMidCreation extends RouteDescriptor {
-  children: Array<Route>
+  children: Array<Route>;
 }
 
 export interface Route {
@@ -45,10 +45,14 @@ export interface Route {
   children: Array<Route>;
   preload: PreloadFn;
   load: LoadFn;
-  keys: Array<string|number>;
-  match: (pathname: string, rc: ResponseCreator, parentPath?: string) => boolean;
+  keys: Array<string | number>;
+  match: (
+    pathname: string,
+    rc: ResponseCreator,
+    parentPath?: string
+  ) => boolean;
   title: Title;
-  extra: {[key: string]: any};
+  extra: { [key: string]: any };
 }
 
 export interface LoadModifiers {
@@ -69,7 +73,8 @@ const createRoute = (options: RouteMidCreation): Route => {
     load,
     title,
     extra
-  } = options || <RouteMidCreation>{};
+  } =
+    options || <RouteMidCreation>{};
 
   // end defaults to true, so end has to be hardcoded for it to be false
   const expectedExact = pathOptions.end == null || pathOptions.end;
@@ -103,13 +108,14 @@ const createRoute = (options: RouteMidCreation): Route => {
         return false;
       }
       const [segment, ...parsed] = match;
-      const params: {[key: string]: string} = {};
+      const params: { [key: string]: string } = {};
       regexPath.keys.forEach((key, index) => {
         params[key.name] = parsed[index];
       });
-      const uriString = parentPath != null
-        ? join(parentPath, segment)
-        : withLeadingSlash(segment);
+      const uriString =
+        parentPath != null
+          ? join(parentPath, segment)
+          : withLeadingSlash(segment);
 
       rc.push(this, params);
       // if there are no children, then we accept the match

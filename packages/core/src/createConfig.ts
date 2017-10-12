@@ -18,16 +18,16 @@ import {
 export interface ConfigOptions {
   addons?: Array<Addon>;
   sideEffects?: Array<SideEffect>;
-  cache?: Cache,
-  pathnameOptions?: PathFunctionOptions
+  cache?: Cache;
+  pathnameOptions?: PathFunctionOptions;
 }
 
 export interface CuriConfig {
   ready: () => Promise<AnyResponse>;
   refresh: (routeArray: Array<RouteDescriptor>) => void;
   subscribe: (fn: Subscriber) => UnsubscribeFn;
-  addons: {[key: string]: AddonGet };
-  history: History
+  addons: { [key: string]: AddonGet };
+  history: History;
 }
 
 function createConfig(
@@ -55,7 +55,7 @@ function createConfig(
   // add the pathname addon to the provided addons
   const finalAddons = userAddons.concat(pathnameAddon(pathnameOptions));
   let routes: Array<Route> = [];
-  const registeredAddons: {[key: string]: AddonGet } = {};
+  const registeredAddons: { [key: string]: AddonGet } = {};
   const subscribers: Array<Subscriber> = [];
 
   let mostRecentKey: string;
@@ -77,15 +77,15 @@ function createConfig(
 
     routes = walkRoutes(routeArray, addonFunctions);
     makeResponse(history.location, history.action);
-  };
+  }
 
   function matchRoute(rc: ResponseCreator): Promise<ResponseCreator> {
-    routes.some(route => (route.match(history.location.pathname, rc)));
+    routes.some(route => route.match(history.location.pathname, rc));
     // once we have matched the route, we freeze the responseCreator to
     // set its route/params/partials properties
     rc.freeze();
     return Promise.resolve(rc);
-  };
+  }
 
   function loadRoute(rc: ResponseCreator): Promise<ResponseCreator> {
     const { route } = rc;
@@ -107,9 +107,11 @@ function createConfig(
 
     return Promise.all([
       route.preload ? route.preload() : null,
-      route.load ? route.load(rc.params, rc.location, modifiers, registeredAddons) : null
+      route.load
+        ? route.load(rc.params, rc.location, modifiers, registeredAddons)
+        : null
     ]).then(() => rc);
-  };
+  }
 
   function finalizeResponse(rc: ResponseCreator): AnyResponse {
     const respObject: AnyResponse = rc.asObject();
@@ -119,11 +121,15 @@ function createConfig(
     }
 
     return respObject;
-  };
+  }
 
   function prepareResponse(location: HickoryLocation): Promise<AnyResponse> {
     // generate a random key when none is provided (old browsers, maybe unecessary?)
-    const key = location.key || Math.random().toString(36).slice(2, 8);
+    const key =
+      location.key ||
+      Math.random()
+        .toString(36)
+        .slice(2, 8);
     mostRecentKey = key;
 
     if (cache) {
@@ -138,7 +144,7 @@ function createConfig(
     return matchRoute(rc)
       .then(loadRoute)
       .then(finalizeResponse);
-  };
+  }
 
   function subscribe(fn: Subscriber): UnsubscribeFn {
     if (typeof fn !== 'function') {
@@ -155,7 +161,7 @@ function createConfig(
     return () => {
       subscribers[newLength - 1] = null;
     };
-  };
+  }
 
   function emit(response: AnyResponse, action: string): boolean {
     // don't emit old responses
@@ -178,7 +184,7 @@ function createConfig(
     });
 
     return true;
-  };
+  }
 
   // create a response object using the current location and
   // emit it to any subscribed functions
@@ -192,7 +198,7 @@ function createConfig(
         }
 
         if ((response as RedirectResponse).redirectTo) {
-          history.replace((response as RedirectResponse).redirectTo)
+          history.replace((response as RedirectResponse).redirectTo);
         }
         return response;
       },
@@ -201,7 +207,7 @@ function createConfig(
         return null;
       }
     );
-  };
+  }
 
   // now that everything is defined, actually do the setup
   setupRoutesAndAddons(routeArray);

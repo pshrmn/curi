@@ -8,7 +8,11 @@ const noop = () => {};
 describe('createRoute', () => {
   describe('constructor', () => {
     it('creates a route from an object', () => {
-      const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+      const testRoute = createRoute({
+        name: 'Test',
+        path: 'test',
+        children: []
+      });
       const expectedProperties = [
         'name',
         'path',
@@ -27,14 +31,22 @@ describe('createRoute', () => {
     describe('options', () => {
       describe('name', () => {
         it('is set', () => {
-          const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test',
+            children: []
+          });
           expect(testRoute.name).toBe('Test');
         });
       });
 
       describe('path', () => {
         it("is the path's path string", () => {
-          const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test',
+            children: []
+          });
           expect(testRoute.path).toBe('test');
         });
       });
@@ -74,8 +86,16 @@ describe('createRoute', () => {
 
       describe('children', () => {
         it('is options.children', () => {
-          const First = createRoute({ name: 'First', path: 'first', children: [] });
-          const Second = createRoute({ name: 'Second', path: 'second', children: [] });
+          const First = createRoute({
+            name: 'First',
+            path: 'first',
+            children: []
+          });
+          const Second = createRoute({
+            name: 'Second',
+            path: 'second',
+            children: []
+          });
           const children = [First, Second];
           const Parent = createRoute({
             name: 'Parent',
@@ -86,7 +106,11 @@ describe('createRoute', () => {
         });
 
         it('forces path match end=false when route has children', () => {
-          const First = createRoute({ name: 'First', path: 'first', children: [] });
+          const First = createRoute({
+            name: 'First',
+            path: 'first',
+            children: []
+          });
           const Parent = createRoute({
             name: 'Parent',
             path: 'parent',
@@ -146,7 +170,11 @@ describe('createRoute', () => {
 
         it("will be undefined when preload isn't defined", () => {
           const loadTest = () => Promise.resolve();
-          const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test',
+            children: []
+          });
           expect(testRoute.preload).toBeUndefined();
         });
       });
@@ -164,7 +192,11 @@ describe('createRoute', () => {
         });
 
         it("will be undefined when load isn't defined", () => {
-          const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+          const testRoute = createRoute({
+            name: 'Test',
+            path: 'test',
+            children: []
+          });
           expect(testRoute.load).toBeUndefined();
         });
       });
@@ -194,7 +226,11 @@ describe('createRoute', () => {
       it('returns true if it matches', () => {
         const location = { pathname: '/test' } as HickoryLocation;
         const resp = new ResponseCreator('123', location);
-        const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+        const testRoute = createRoute({
+          name: 'Test',
+          path: 'test',
+          children: []
+        });
         const matches = testRoute.match(location.pathname, resp);
         expect(matches).toBe(true);
       });
@@ -202,7 +238,11 @@ describe('createRoute', () => {
       it('returns false if it does not', () => {
         const location = { pathname: '/no-match' } as HickoryLocation;
         const resp = new ResponseCreator('456', location);
-        const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+        const testRoute = createRoute({
+          name: 'Test',
+          path: 'test',
+          children: []
+        });
         const matches = testRoute.match(location.pathname, resp);
         expect(matches).toBe(false);
       });
@@ -211,7 +251,11 @@ describe('createRoute', () => {
     it('ignores a leading slash on the pathname', () => {
       const location = { pathname: '/test' } as HickoryLocation;
       const resp = new ResponseCreator('789', location);
-      const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+      const testRoute = createRoute({
+        name: 'Test',
+        path: 'test',
+        children: []
+      });
       testRoute.match(location.pathname, resp);
       resp.freeze();
       expect(resp.route).toBe(testRoute);
@@ -299,7 +343,11 @@ describe('createRoute', () => {
     it('does not register if the path does not match the pathname', () => {
       const location = { pathname: '/best' } as HickoryLocation;
       const resp = new ResponseCreator('234', location);
-      const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+      const testRoute = createRoute({
+        name: 'Test',
+        path: 'test',
+        children: []
+      });
       testRoute.match(location.pathname, resp);
       resp.freeze();
       expect(resp.route).toBeUndefined();
@@ -308,7 +356,11 @@ describe('createRoute', () => {
     it('registers if the path matches the pathname', () => {
       const location = { pathname: '/test' } as HickoryLocation;
       const resp = new ResponseCreator('567', location);
-      const testRoute = createRoute({ name: 'Test', path: 'test', children: [] });
+      const testRoute = createRoute({
+        name: 'Test',
+        path: 'test',
+        children: []
+      });
       testRoute.match(location.pathname, resp);
       resp.freeze();
       expect(resp.route).toBe(testRoute);
@@ -342,7 +394,9 @@ describe('createRoute', () => {
           path: ':state',
           children: [Attractions]
         });
-        const location = { pathname: '/Wisconsin/attractions' } as HickoryLocation;
+        const location = {
+          pathname: '/Wisconsin/attractions'
+        } as HickoryLocation;
         const resp = new ResponseCreator('123', location);
         testRoute.match(location.pathname, resp);
         resp.freeze();

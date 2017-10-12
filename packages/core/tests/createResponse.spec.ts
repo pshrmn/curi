@@ -1,7 +1,10 @@
 import 'jest';
 import createRoute from '../src/utils/createRoute';
 import { HickoryLocation } from '@hickory/root';
-import ResponseCreator, { Response, RedirectResponse } from '../src/utils/createResponse';
+import ResponseCreator, {
+  Response,
+  RedirectResponse
+} from '../src/utils/createResponse';
 
 const noop = () => {};
 
@@ -96,9 +99,17 @@ describe('Response', () => {
     it('adds additional routes/params to end of matches array', () => {
       const location = { key: '123', pathname: '/abc' } as HickoryLocation;
       const resp = new ResponseCreator(location.key, location);
-      const stateRoute = createRoute({ name: 'State', path: ':state', children: [] });
+      const stateRoute = createRoute({
+        name: 'State',
+        path: ':state',
+        children: []
+      });
       const stateParams = { state: 'WA' };
-      const cityRoute = createRoute({ name: 'City', path: ':city', children: [] });
+      const cityRoute = createRoute({
+        name: 'City',
+        path: ':city',
+        children: []
+      });
       const cityParams = { city: 'Seattle' };
       resp.push(stateRoute, stateParams);
       resp.push(cityRoute, cityParams);
@@ -115,9 +126,17 @@ describe('Response', () => {
     it('removes the last match from the matches array', () => {
       const location = { key: '123', pathname: '/abc' } as HickoryLocation;
       const resp = new ResponseCreator(location.key, location);
-      const stateRoute = createRoute({ name: 'State', path: ':state', children: [] });
+      const stateRoute = createRoute({
+        name: 'State',
+        path: ':state',
+        children: []
+      });
       const stateParams = { state: 'WA' };
-      const cityRoute = createRoute({ name: 'City', path: ':city', children: [] });
+      const cityRoute = createRoute({
+        name: 'City',
+        path: ':city',
+        children: []
+      });
       const cityParams = { city: 'Seattle' };
       resp.push(stateRoute, stateParams);
       expect(resp.matches.length).toBe(1);
@@ -133,9 +152,17 @@ describe('Response', () => {
     it("sets the route using the most best response's match'", () => {
       const location = { key: '123', pathname: '/abc' } as HickoryLocation;
       const resp = new ResponseCreator(location.key, location);
-      const stateRoute = createRoute({ name: 'State', path: ':state', children: [] });
+      const stateRoute = createRoute({
+        name: 'State',
+        path: ':state',
+        children: []
+      });
       const stateParams = { state: 'OR' };
-      const cityRoute = createRoute({ name: 'City', path: ':city', children: [] });
+      const cityRoute = createRoute({
+        name: 'City',
+        path: ':city',
+        children: []
+      });
       const cityParams = { city: 'Portland' };
       resp.push(stateRoute, stateParams);
       resp.push(cityRoute, cityParams);
@@ -146,9 +173,17 @@ describe('Response', () => {
     it('sets the partials using the names of all other matching routes', () => {
       const location = { key: '123', pathname: '/abc' } as HickoryLocation;
       const resp = new ResponseCreator(location.key, location);
-      const stateRoute = createRoute({ name: 'State', path: ':state', children: [] });
+      const stateRoute = createRoute({
+        name: 'State',
+        path: ':state',
+        children: []
+      });
       const stateParams = { state: 'TX' };
-      const cityRoute = createRoute({ name: 'City', path: ':city', children: [] });
+      const cityRoute = createRoute({
+        name: 'City',
+        path: ':city',
+        children: []
+      });
       const cityParams = { city: 'Austin' };
       resp.push(stateRoute, stateParams);
       resp.push(cityRoute, cityParams);
@@ -159,9 +194,17 @@ describe('Response', () => {
     it("sets the params by merging all of the matched routes' params", () => {
       const location = { key: '123', pathname: '/abc' } as HickoryLocation;
       const resp = new ResponseCreator(location.key, location);
-      const stateRoute = createRoute({ name: 'State', path: ':state', children: [] });
+      const stateRoute = createRoute({
+        name: 'State',
+        path: ':state',
+        children: []
+      });
       const stateParams = { state: 'MT' };
-      const cityRoute = createRoute({ name: 'City', path: ':city', children: [] });
+      const cityRoute = createRoute({
+        name: 'City',
+        path: ':city',
+        children: []
+      });
       const cityParams = { city: 'Bozeman' };
       resp.push(stateRoute, stateParams);
       resp.push(cityRoute, cityParams);
@@ -185,7 +228,11 @@ describe('Response', () => {
       it('is an empty string if the matched route does not have a title property', () => {
         const location = { key: '123', pathname: '/abc' } as HickoryLocation;
         const resp = new ResponseCreator(location.key, location);
-        const stateRoute = createRoute({ name: 'State', path: ':state', children: [] });
+        const stateRoute = createRoute({
+          name: 'State',
+          path: ':state',
+          children: []
+        });
         const stateParams = { state: 'ID' };
         resp.push(stateRoute, stateParams);
         resp.freeze();
@@ -220,7 +267,8 @@ describe('Response', () => {
           children: [],
           title: (params, data) => {
             return `${params['state']} (aka ${data.full})`;
-          } });
+          }
+        });
         const stateParams = { state: 'WV' };
         resp.push(stateRoute, stateParams);
         resp.freeze();
@@ -238,7 +286,12 @@ describe('Response', () => {
       const location = { pathname: '/park/yosemite' } as HickoryLocation;
       const resp = new ResponseCreator(key, location);
       const body = () => 'Yosemite National Park';
-      const parkURI = createRoute({ name: 'Park', path: 'park/:name', children: [], body });
+      const parkURI = createRoute({
+        name: 'Park',
+        path: 'park/:name',
+        children: [],
+        body
+      });
       resp.push(parkURI, { name: 'yosemite' });
       resp.setData({ open: true });
       resp.freeze();
