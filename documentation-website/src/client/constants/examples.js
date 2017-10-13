@@ -5,6 +5,11 @@ const examples = [
     description: 'Style links when they match the current location'
   },
   {
+    name: 'Authentication',
+    slug: 'authentication',
+    description: 'Automatically redirect to a login page when attempting to access private content'
+  },
+  {
     name: 'Basic Vue',
     slug: 'basic-vue',
     description: 'A simple Curi app rendered using VueJS'
@@ -48,11 +53,6 @@ const examples = [
     name: 'Modal Routes',
     slug: 'modal',
     description: 'Load a route in a modal (the Pinterest model)'
-  },
-  {
-    name: 'Redirecting',
-    slug: 'redirecting',
-    description: 'Automatically redirect to a login page when attempting to access private content'
   },
   {
     name: 'Redux',

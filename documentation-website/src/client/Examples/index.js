@@ -1,4 +1,5 @@
 import ActiveLinks from './ActiveLinks';
+import Authentication from './Authentication';
 import BasicVue from './BasicVue';
 import BasicSvelte from './BasicSvelte';
 import BlockingNavigation from './BlockingNavigation';
@@ -8,7 +9,6 @@ import BreadcrumbsVue from './BreadcrumbsVue';
 import CodeSplitting from './CodeSplitting';
 import DataLoading from './DataLoading';
 import Modal from './Modal';
-import Redirecting from './Redirecting';
 import Redux from './Redux';
 import ScriptTags from './ScriptTags';
 import ServerRendering from './ServerRendering';
@@ -17,6 +17,7 @@ import Transitions from './Transitions';
 
 export default {
   'active-links': ActiveLinks,
+  'authentication': Authentication,
   'basic-vue': BasicVue,
   'basic-svelte': BasicSvelte,
   'blocking-navigation': BlockingNavigation,
@@ -26,7 +27,6 @@ export default {
   'code-splitting': CodeSplitting,
   'data-loading': DataLoading,
   'modal': Modal,
-  'redirecting': Redirecting,
   'redux': Redux,
   'script-tags': ScriptTags,
   'server-rendering': ServerRendering,
