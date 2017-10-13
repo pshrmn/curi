@@ -1,5 +1,4 @@
 import 'jest';
-import { Spy } from 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import PropTypes from 'prop-types';
@@ -169,13 +168,14 @@ describe('<Navigator>', () => {
         { name: 'About', path: 'about' }
       ];
       const config = createConfig(history, routes);
-      config.subscribe = jest.fn(config.subscribe);
+      const mockSubscribe = jest.fn(config.subscribe);
+      config.subscribe = mockSubscribe;
 
       return config.ready().then(response => {
         const wrapper = shallow(
           <Navigator response={response} config={config} render={r => null} />
         );
-        expect((config.subscribe as Spy).mock.calls.length).toBe(0);
+        expect(mockSubscribe.mock.calls.length).toBe(0);
       });
     });
   });
@@ -189,7 +189,8 @@ describe('<Navigator>', () => {
       ];
       const config = createConfig(history, routes);
       const unsub = jest.fn();
-      config.subscribe = jest.fn(fn => unsub);
+      const mockSubscribe = jest.fn(fn => unsub);
+      config.subscribe = mockSubscribe;
 
       let received;
       const fn = jest.fn(response => {
@@ -198,11 +199,11 @@ describe('<Navigator>', () => {
       });
 
       expect(unsub.mock.calls.length).toBe(0);
-      expect((config.subscribe as Spy).mock.calls.length).toBe(0);
+      expect(mockSubscribe.mock.calls.length).toBe(0);
 
       return config.ready().then(response => {
         const wrapper = shallow(<Navigator config={config} render={fn} />);
-        expect((config.subscribe as Spy).mock.calls.length).toBe(1);
+        expect(mockSubscribe.mock.calls.length).toBe(1);
         expect(unsub.mock.calls.length).toBe(0);
         wrapper.unmount();
         expect(unsub.mock.calls.length).toBe(1);

@@ -29,16 +29,17 @@ describe('ancestors addon', () => {
 
     it('warns when registering the same name', () => {
       const warn = console.warn;
-      console.warn = jest.fn();
+      const mockWarn = jest.fn();
+      console.warn = mockWarn;
 
       const first = { name: 'Test' };
       const second = { name: 'Test' };
 
       ancestors.register(first);
-      expect(console.warn.mock.calls.length).toBe(0);
+      expect(mockWarn.mock.calls.length).toBe(0);
 
       ancestors.register(second);
-      expect(console.warn.mock.calls.length).toBe(1);
+      expect(mockWarn.mock.calls.length).toBe(1);
 
       console.warn = warn;
     });

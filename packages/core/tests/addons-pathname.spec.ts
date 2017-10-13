@@ -41,16 +41,17 @@ describe('pathname addon', () => {
 
     it('warns when registering the same name', () => {
       const warn = console.warn;
-      console.warn = jest.fn();
-
+      const mockWarn = jest.fn();
+      console.warn = mockWarn;
+      
       const first = { name: 'Test', path: 'first' };
       const second = { name: 'Test', path: 'second' };
 
       pathname.register(first);
-      expect(console.warn.mock.calls.length).toBe(0);
+      expect(mockWarn.mock.calls.length).toBe(0);
 
       pathname.register(second);
-      expect(console.warn.mock.calls.length).toBe(1);
+      expect(mockWarn.mock.calls.length).toBe(1);
 
       console.warn = warn;
     });
@@ -66,11 +67,12 @@ describe('pathname addon', () => {
 
     it('returns undefined when path not found', () => {
       const error = console.error;
-      console.error = jest.fn();
+      const mockError = jest.fn();
+      console.error = mockError;
 
       const output = pathname.get('Anonymous', { id: 123 });
       expect(output).toBe(undefined);
-      expect(console.error.mock.calls.length).toBe(1);
+      expect(mockError.mock.calls.length).toBe(1);
 
       console.error = error;
     });

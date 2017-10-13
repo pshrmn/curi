@@ -7,16 +7,18 @@ import Block from '../src/Block';
 
 describe('Block component', () => {
   const history = InMemory();
-  history.confirmWith = jest.fn();
-  history.removeConfirmation = jest.fn();
+  const mockConfirmWith = jest.fn();
+  const mockRemoveConfirmation = jest.fn();
+  history.confirmWith = mockConfirmWith;
+  history.removeConfirmation = mockRemoveConfirmation;
 
   const routes = [{ name: 'Place', path: '/place/:name' }];
   const config = createConfig(history, routes);
   Vue.use(CuriPlugin, { config });
 
   afterEach(() => {
-    history.confirmWith.mockReset();
-    history.removeConfirmation.mockReset();
+    mockConfirmWith.mockReset();
+    mockRemoveConfirmation.mockReset();
   });
 
   it('registers with the name curi-block', () => {
@@ -45,8 +47,8 @@ describe('Block component', () => {
         confirm
       }
     }).$mount();
-    expect(history.confirmWith.mock.calls.length).toBe(1);
-    expect(history.confirmWith.mock.calls[0][0]).toBe(confirm);
+    expect(mockConfirmWith.mock.calls.length).toBe(1);
+    expect(mockConfirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
   it('defaults to active=true', () => {
@@ -57,8 +59,8 @@ describe('Block component', () => {
         confirm
       }
     }).$mount();
-    expect(history.confirmWith.mock.calls.length).toBe(1);
-    expect(history.confirmWith.mock.calls[0][0]).toBe(confirm);
+    expect(mockConfirmWith.mock.calls.length).toBe(1);
+    expect(mockConfirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
   it('if active=false when mounting, does not add block', () => {
@@ -70,7 +72,7 @@ describe('Block component', () => {
         confirm
       }
     }).$mount();
-    expect(history.confirmWith.mock.calls.length).toBe(0);
+    expect(mockConfirmWith.mock.calls.length).toBe(0);
   });
 
   it('removes block if active goes true->false while updating', done => {
@@ -84,10 +86,10 @@ describe('Block component', () => {
         confirm
       }
     }).$mount();
-    expect(history.removeConfirmation.mock.calls.length).toBe(0);
+    expect(mockRemoveConfirmation.mock.calls.length).toBe(0);
     vm.active = false;
     Vue.nextTick(() => {
-      expect(history.removeConfirmation.mock.calls.length).toBe(1);
+      expect(mockRemoveConfirmation.mock.calls.length).toBe(1);
       done();
     });
   });
@@ -103,10 +105,10 @@ describe('Block component', () => {
         confirm
       }
     }).$mount();
-    expect(history.confirmWith.mock.calls.length).toBe(0);
+    expect(mockConfirmWith.mock.calls.length).toBe(0);
     vm.active = true;
     Vue.nextTick(() => {
-      expect(history.confirmWith.mock.calls.length).toBe(1);
+      expect(mockConfirmWith.mock.calls.length).toBe(1);
       done();
     });
   });
@@ -124,10 +126,10 @@ describe('Block component', () => {
         confirm: confirm1
       }
     }).$mount();
-    expect(history.confirmWith.mock.calls.length).toBe(1);
+    expect(mockConfirmWith.mock.calls.length).toBe(1);
     vm.confirm = confirm2;
     Vue.nextTick(() => {
-      expect(history.confirmWith.mock.calls.length).toBe(2);
+      expect(mockConfirmWith.mock.calls.length).toBe(2);
       done();
     });
   });
@@ -141,8 +143,8 @@ describe('Block component', () => {
         confirm
       }
     }).$mount();
-    expect(history.removeConfirmation.mock.calls.length).toBe(0);
+    expect(mockRemoveConfirmation.mock.calls.length).toBe(0);
     vm.$destroy();
-    expect(history.removeConfirmation.mock.calls.length).toBe(1);
+    expect(mockRemoveConfirmation.mock.calls.length).toBe(1);
   });
 });

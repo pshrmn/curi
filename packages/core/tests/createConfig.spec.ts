@@ -346,7 +346,8 @@ describe('createConfig', () => {
     describe('response', () => {
       it('is null if either load or preload fail (and error is logged)', () => {
         const err = console.error;
-        console.error = jest.fn();
+        const mockError = jest.fn();
+        console.error = mockError;
         const routes = [
           {
             name: 'Contact',
@@ -363,8 +364,8 @@ describe('createConfig', () => {
         expect.assertions(3);
         return config.ready().then(arg => {
           expect(arg).toBe(null);
-          expect(console.error.mock.calls.length).toBe(1);
-          expect(console.error.mock.calls[0][0]).toBe('This is an error');
+          expect(mockError.mock.calls.length).toBe(1);
+          expect(mockError.mock.calls[0][0]).toBe('This is an error');
           console.error = err;
         });
       });

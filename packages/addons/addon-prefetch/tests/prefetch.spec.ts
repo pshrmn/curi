@@ -56,7 +56,8 @@ describe('prefetch addon', () => {
 
     it('warns when registering the same name', () => {
       const warn = console.warn;
-      console.warn = jest.fn();
+      const mockWarn = jest.fn();
+      console.warn = mockWarn;
 
       const first = {
         name: 'Test',
@@ -70,10 +71,10 @@ describe('prefetch addon', () => {
       };
 
       prefetch.register(first);
-      expect(console.warn.mock.calls.length).toBe(0);
+      expect(mockWarn.mock.calls.length).toBe(0);
 
       prefetch.register(second);
-      expect(console.warn.mock.calls.length).toBe(1);
+      expect(mockWarn.mock.calls.length).toBe(1);
 
       console.warn = warn;
     });

@@ -10,9 +10,15 @@ describe('createScrollSideEffect', () => {
   let realScrollTo = window.scrollTo;
   let realScrollIntoView = Element.prototype.scrollIntoView;
 
+  let mockScroll;
+  let mockElementScroll;
+
   beforeEach(() => {
-    window.scrollTo = jest.fn();
-    Element.prototype.scrollIntoView = jest.fn();
+    mockScroll = jest.fn();
+    mockElementScroll = jest.fn();
+
+    window.scrollTo = mockScroll;
+    Element.prototype.scrollIntoView = mockElementScroll;
   });
 
   afterEach(() => {
@@ -25,7 +31,7 @@ describe('createScrollSideEffect', () => {
     sideEffect(<AnyResponse>{ location: {} }, 'POP');
 
     jest.runAllTimers();
-    expect(window.scrollTo.mock.calls.length).toBe(0);
+    expect(mockScroll.mock.calls.length).toBe(0);
   });
 
   it('scrolls to 0 after PUSH', () => {
@@ -33,15 +39,15 @@ describe('createScrollSideEffect', () => {
     sideEffect({ location: {} } as AnyResponse, 'PUSH');
 
     jest.runAllTimers();
-    expect(window.scrollTo.mock.calls.length).toBe(1);
+    expect(mockScroll.mock.calls.length).toBe(1);
   });
 
   it('scrolls to 0 after REPLACE', () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect({ location: {} }, 'REPLACE');
+    sideEffect({ location: {} } as AnyResponse, 'REPLACE');
 
     jest.runAllTimers();
-    expect(window.scrollTo.mock.calls.length).toBe(1);
+    expect(mockScroll.mock.calls.length).toBe(1);
   });
 
   it('scrolls to matching element if there is a location.hash', () => {
@@ -50,21 +56,21 @@ describe('createScrollSideEffect', () => {
     document.body.appendChild(div);
 
     const sideEffect = createScrollSideEffect();
-    sideEffect({ location: { hash: 'test' } }, 'REPLACE');
+    sideEffect({ location: { hash: 'test' } } as AnyResponse, 'REPLACE');
 
     jest.runAllTimers();
-    expect(window.scrollTo.mock.calls.length).toBe(0);
-    expect(Element.prototype.scrollIntoView.mock.calls.length).toBe(1);
+    expect(mockScroll.mock.calls.length).toBe(0);
+    expect(mockElementScroll.mock.calls.length).toBe(1);
 
     document.body.removeChild(div);
   });
 
   it('scrolls to top if there is location.hash but no matching element', () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect({ location: { hash: 'test' } }, 'REPLACE');
+    sideEffect({ location: { hash: 'test' } } as AnyResponse, 'REPLACE');
 
     jest.runAllTimers();
-    expect(window.scrollTo.mock.calls.length).toBe(1);
-    expect(Element.prototype.scrollIntoView.mock.calls.length).toBe(0);
+    expect(mockScroll.mock.calls.length).toBe(1);
+    expect(mockElementScroll.mock.calls.length).toBe(0);
   });
 });

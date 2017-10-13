@@ -1,5 +1,4 @@
 import 'jest';
-import { Spy } from 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import InMemory from '@hickory/in-memory';
@@ -311,7 +310,8 @@ describe('<Link>', () => {
   describe('clicking a link', () => {
     it('calls history.update', () => {
       const history = InMemory();
-      history.update = jest.fn();
+      const mockUpdate = jest.fn();
+      history.update = mockUpdate;
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
@@ -329,13 +329,14 @@ describe('<Link>', () => {
         button: 0
       };
       wrapper.find('a').simulate('click', leftClickEvent);
-      expect((history.update as Spy).mock.calls.length).toBe(1);
+      expect(mockUpdate.mock.calls.length).toBe(1);
     });
 
     describe('onClick', () => {
       it('calls onClick prop func if provided', () => {
         const history = InMemory();
-        history.update = jest.fn();
+        const mockUpdate = jest.fn();
+        history.update = mockUpdate;
         const onClick = jest.fn();
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(
@@ -359,12 +360,13 @@ describe('<Link>', () => {
         };
         wrapper.find('a').simulate('click', leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
-        expect((history.update as Spy).mock.calls.length).toBe(1);
+        expect(mockUpdate.mock.calls.length).toBe(1);
       });
 
       it('does not call history.update if onClick prevents default', () => {
         const history = InMemory();
-        history.update = jest.fn();
+        const mockUpdate = jest.fn();
+        history.update = mockUpdate;
         const onClick = jest.fn(event => {
           event.preventDefault();
         });
@@ -390,13 +392,14 @@ describe('<Link>', () => {
         };
         wrapper.find('a').simulate('click', leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
-        expect((history.update as Spy).mock.calls.length).toBe(0);
+        expect(mockUpdate.mock.calls.length).toBe(0);
       });
     });
 
     it("doesn't call update for modified clicks", () => {
       const history = InMemory();
-      history.update = jest.fn();
+      const mockUpdate = jest.fn();
+      history.update = mockUpdate;
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
@@ -418,13 +421,14 @@ describe('<Link>', () => {
         const eventCopy = Object.assign({}, modifiedClickEvent);
         eventCopy[m] = true;
         wrapper.find('a').simulate('click', eventCopy);
-        expect((history.update as Spy).mock.calls.length).toBe(0);
+        expect(mockUpdate.mock.calls.length).toBe(0);
       });
     });
 
     it("doesn't call update if event.preventDefault has been called", () => {
       const history = InMemory();
-      history.update = jest.fn();
+      const mockUpdate = jest.fn();
+      history.update = mockUpdate;
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
@@ -442,7 +446,7 @@ describe('<Link>', () => {
         button: 0
       };
       wrapper.find('a').simulate('click', preventedEvent);
-      expect((history.update as Spy).mock.calls.length).toBe(0);
+      expect(mockUpdate.mock.calls.length).toBe(0);
     });
   });
 });
