@@ -1,13 +1,14 @@
 {
-  "name": "curi-redirect-example",
+  "name": "curi-authentication-example",
   "version": "0.1.0",
-  "description": "Curi routes that redirect",
+  "description": "Curi routes that redirect when not authenticated",
   "main": "index.js",
   "scripts": {
     "webpack": "webpack"
   },
   "keywords": [
     "curi",
+    "authentication",
     "redirect"
   ],
   "author": "Paul Sherman",
