@@ -1,18 +1,27 @@
 ## Curi Examples
 
-Example projects that use `curi` and `curi-react`.
-
-* [transitions](./transitions)
-* [modal](./modal)
+#### React Examples
 * [active links](./active-links)
-* [code splitting](./code-splitting)
-* [server rendering](./server-rendering)
+* [authentication](./authentication)
 * [blocking navigation](./blocking-navigation)
-* [prefetching data](./prefetch-data)
+* [breadcrumbs](./breadcrumbs)
+* [code splitting](./code-splitting)
+* [data loading](./data-loading)
+* [modal](./modal)
 * [with redux](./redux)
-* [middleware](./middleware)
+* [server rendering](./server-rendering)
+* [side effects](./side-effect)
+* [transitions](./transitions)
 * [UMD (vanilla JS with <script> tags)](./umd-example)
 * [updating routes](./updating-routes)
+
+#### Vue Examples
+* [basic](./basic-vue)
+* [blocking navigation](./blocking-navigation-vue)
+* [breadcrumbs](./breadcrumbs-vue)
+
+#### Svelte Examples
+* [basic](./basic-svelte)
 
 For any example that you want to run locally, you need to install its dependencies and build the bundle.
 
