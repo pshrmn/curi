@@ -32,7 +32,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.11",
+    "@curi/core": "^1.0.0-beta.12",
     "@hickory/root": "^1.0.0-beta.3"
   },
   "devDependencies": {
