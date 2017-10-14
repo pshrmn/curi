@@ -1,7 +1,7 @@
 import Link from './Link';
 import Block from './Block';
 import { CuriConfig } from '@curi/core';
-import Vue, { PluginObject, PluginFunction } from 'vue';
+import { PluginObject, PluginFunction } from 'vue';
 
 export interface CuriPluginOptions {
   config: CuriConfig;

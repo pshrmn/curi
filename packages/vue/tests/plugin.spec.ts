@@ -1,5 +1,5 @@
 import 'jest';
-import Vue from 'vue/dist/vue.common.js';
+import { createLocalVue } from 'vue-test-utils';
 import CuriPlugin from '../src/plugin';
 import createConfig from '@curi/core';
 import InMemory from '@hickory/in-memory';
@@ -8,6 +8,7 @@ describe('CuriPlugin', () => {
   const history = InMemory();
   const routes = [];
   const config = createConfig(history, routes);
+  const Vue = createLocalVue();
   Vue.use(CuriPlugin, { config });
 
   it('Adds a mixin that sets $curi for all components', () => {

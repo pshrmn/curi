@@ -29,6 +29,9 @@
   ],
   "author": "Paul Sherman",
   "license": "MIT",
+  "peerDependencies": {
+    "vue": "^2.5.2"
+  },
   "devDependencies": {
     "@curi/core": "^1.0.0-beta.13",
     "@hickory/in-memory": "^1.0.0-beta.1",
@@ -40,11 +43,12 @@
     "rollup": "^0.50.0",
     "ts-jest": "^21.0.1",
     "typescript": "^2.5.2",
-    "vue": "^2.3.3"
+    "vue": "^2.5.2",
+    "vue-template-compiler": "^2.5.2",
+    "vue-test-utils": "^1.0.0-beta.3"
   },
   "dependencies": {
     "@curi/core": "^1.0.0-beta.13",
-    "@hickory/root": "^1.0.0-beta.3",
-    "vue": "^2.3.3"
+    "@hickory/root": "^1.0.0-beta.3"
   }
 }

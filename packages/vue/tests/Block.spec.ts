@@ -1,5 +1,5 @@
 import 'jest';
-import Vue from 'vue/dist/vue.common.js';
+import { createLocalVue, shallow } from 'vue-test-utils';
 import InMemory from '@hickory/in-memory';
 import createConfig from '@curi/core';
 import CuriPlugin from '../src/plugin';
@@ -14,6 +14,9 @@ describe('Block component', () => {
 
   const routes = [{ name: 'Place', path: '/place/:name' }];
   const config = createConfig(history, routes);
+
+  const Vue = createLocalVue();
+
   Vue.use(CuriPlugin, { config });
 
   afterEach(() => {
@@ -26,68 +29,67 @@ describe('Block component', () => {
   });
 
   it('renders undefined', () => {
-    const vm = new Vue({
-      template: '<curi-block :active="active" :confirm="confirm" />',
-      data: {
+    const wrapper = shallow(Block, {
+      localVue: Vue,
+      propsData: {
         active: true,
         confirm: (data, s, f) => {
           s();
         }
       }
-    }).$mount();
-    expect(vm.$el.tagName).toBeUndefined();
+    });
+    expect(wrapper.isEmpty()).toBe(true);
   });
-
+  
   it('if active=true when mounting, adds block', () => {
     const confirm = jest.fn();
-    const vm = new Vue({
-      template: '<curi-block :active="active"  :confirm="confirm" />',
-      data: {
+    const wrapper = shallow(Block, {
+      localVue: Vue,
+      propsData: {
         active: true,
         confirm
       }
-    }).$mount();
+    });
+    
     expect(mockConfirmWith.mock.calls.length).toBe(1);
     expect(mockConfirmWith.mock.calls[0][0]).toBe(confirm);
   });
-
+  
   it('defaults to active=true', () => {
     const confirm = jest.fn();
-    const vm = new Vue({
-      template: '<curi-block :confirm="confirm" />',
-      data: {
+    const wrapper = shallow(Block, {
+      localVue: Vue,
+      propsData: {
         confirm
       }
-    }).$mount();
+    });
     expect(mockConfirmWith.mock.calls.length).toBe(1);
     expect(mockConfirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
   it('if active=false when mounting, does not add block', () => {
     const confirm = jest.fn();
-    const vm = new Vue({
-      template: '<curi-block :active="active"  :confirm="confirm" />',
-      data: {
+    const wrapper = shallow(Block, {
+      localVue: Vue,
+      propsData: {
         active: false,
         confirm
       }
-    }).$mount();
+    });
     expect(mockConfirmWith.mock.calls.length).toBe(0);
   });
 
   it('removes block if active goes true->false while updating', done => {
     const confirm = jest.fn();
-    const vm = new Vue({
-      template: `
-        <curi-block :active="active"  :confirm="confirm" />
-      `,
-      data: {
+    const wrapper = shallow(Block, {
+      localVue: Vue,
+      propsData: {
         active: true,
         confirm
       }
-    }).$mount();
+    });
     expect(mockRemoveConfirmation.mock.calls.length).toBe(0);
-    vm.active = false;
+    wrapper.vm.active = false;
     Vue.nextTick(() => {
       expect(mockRemoveConfirmation.mock.calls.length).toBe(1);
       done();
@@ -96,17 +98,15 @@ describe('Block component', () => {
 
   it('adds block if active goes false->true while updating', done => {
     const confirm = jest.fn();
-    const vm = new Vue({
-      template: `
-        <curi-block :active="active" :confirm="confirm" />
-      `,
-      data: {
+    const wrapper = shallow(Block, {
+      localVue: Vue,
+      propsData: {
         active: false,
         confirm
       }
-    }).$mount();
+    });
     expect(mockConfirmWith.mock.calls.length).toBe(0);
-    vm.active = true;
+    wrapper.vm.active = true;
     Vue.nextTick(() => {
       expect(mockConfirmWith.mock.calls.length).toBe(1);
       done();
@@ -117,17 +117,15 @@ describe('Block component', () => {
     const confirm1 = jest.fn();
     const confirm2 = jest.fn();
 
-    const vm = new Vue({
-      template: `
-        <curi-block :active="active" :confirm="confirm" />
-      `,
-      data: {
+    const wrapper = shallow(Block, {
+      localVue: Vue,
+      propsData: {
         active: true,
-        confirm: confirm1
+        confirm1
       }
-    }).$mount();
+    });
     expect(mockConfirmWith.mock.calls.length).toBe(1);
-    vm.confirm = confirm2;
+    wrapper.vm.confirm = confirm2;
     Vue.nextTick(() => {
       expect(mockConfirmWith.mock.calls.length).toBe(2);
       done();
@@ -136,15 +134,15 @@ describe('Block component', () => {
 
   it('unblocks before destroying', () => {
     const confirm = jest.fn();
-    const vm = new Vue({
-      template: '<curi-block :active="active" :confirm="confirm" />',
-      data: {
+    const wrapper = shallow(Block, {
+      localVue: Vue,
+      propsData: {
         active: true,
         confirm
       }
-    }).$mount();
+    });
     expect(mockRemoveConfirmation.mock.calls.length).toBe(0);
-    vm.$destroy();
+    wrapper.vm.$destroy();
     expect(mockRemoveConfirmation.mock.calls.length).toBe(1);
   });
 });
