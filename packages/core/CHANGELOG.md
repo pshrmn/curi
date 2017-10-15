@@ -1,3 +1,7 @@
+## Next
+
+* Remove `AddonFactory` type.
+
 ## 1.0.0-beta.12
 
 * Routes can have a `params` object, which is an object whose keys are params (from the `path`) and whose values are functions that will parse the parsed value. This can be used if any of the parsed values should not be strings. Any params that are not included in the `params` object will be kept as strings. Likewise, any params whose parsing function throws an error will be kept as strings.

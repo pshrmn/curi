@@ -12,8 +12,6 @@ export interface Addon {
   reset(): void;
 }
 
-export type AddonFactory = (...args: Array<any>) => Addon;
-
 export type Subscriber = (response: AnyResponse, action?: string) => void;
 export interface SideEffect {
   fn: Subscriber;

@@ -2,7 +2,6 @@ export {
   AddonRegister,
   AddonGet,
   Addon,
-  AddonFactory,
   Subscriber,
   SideEffect,
   UnsubscribeFn,
