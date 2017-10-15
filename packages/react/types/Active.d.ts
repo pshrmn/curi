@@ -1,9 +1,10 @@
 /// <reference types="react" />
 import React from 'react';
+import { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import { CuriConfig, AnyResponse } from '@curi/core';
 export interface ActiveProps {
-    children: any;
+    children: ReactElement<any>;
     name: string;
     params?: object;
     partial?: boolean;
@@ -16,11 +17,8 @@ declare class Active extends React.Component<ActiveProps, {}> {
         curi: PropTypes.Requireable<any>;
         curiResponse: PropTypes.Requireable<any>;
     };
-    static defaultProps: {
-        partial: boolean;
-    };
     componentWillMount(): void;
     verifyActiveAddon(): void;
-    render(): React.DetailedReactHTMLElement<any, HTMLElement>;
+    render(): React.ReactElement<any>;
 }
 export default Active;

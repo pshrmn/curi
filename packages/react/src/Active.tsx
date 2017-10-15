@@ -1,10 +1,11 @@
 import React from 'react';
+import { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'invariant';
 import { CuriConfig, AnyResponse } from '@curi/core';
 
 export interface ActiveProps {
-  children: any;
+  children: ReactElement<any>;
   name: string;
   params?: object;
   partial?: boolean;
@@ -17,10 +18,6 @@ class Active extends React.Component<ActiveProps, {}> {
   static contextTypes = {
     curi: PropTypes.object,
     curiResponse: PropTypes.object
-  };
-
-  static defaultProps = {
-    partial: false
   };
 
   componentWillMount() {
@@ -39,16 +36,10 @@ class Active extends React.Component<ActiveProps, {}> {
   render() {
     const curi = this.props.curi || this.context.curi;
     const response = this.props.response || this.context.curiResponse;
-    const { merge, partial, name, params, children } = this.props;
-
-    // need to make a copy
-    let childProps = { ...children.props };
-    const isActive = curi.addons.active(name, response, params, partial);
-    if (isActive) {
-      childProps = merge(childProps);
-    }
-
-    return React.cloneElement(children, { ...childProps });
+    const { merge, partial = false, name, params, children } = this.props;
+    return curi.addons.active(name, response, params, partial)
+      ? React.cloneElement(children, merge({ ...children.props }))
+      : children;
   }
 }
 
