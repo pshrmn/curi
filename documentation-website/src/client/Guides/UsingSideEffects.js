@@ -36,13 +36,30 @@ export default ({ name }) => (
       <p>
         You add side effect functions to your configuration object by adding a{' '}
         <IJS>sideEffects</IJS> array to the options object (the third agument)
-        of <IJS>createConfig</IJS>.
+        of <IJS>createConfig</IJS>. A side effect is an object with an <IJS>fn</IJS> property
+        whose values is a subscriber function.
       </p>
 
       <PrismBlock lang='javascript'>
         {
 `const config = createConfig(history, routes, {
-  sideEffects: [logResponse]
+  sideEffects: [{ fn: logResponse }]
+});`
+        }
+      </PrismBlock>
+
+      <p>
+        Side effects can also have an <IJS>after</IJS> property. By default, side effect functions
+        will be called before any subscriber functions (the ones added with <IJS>config.subscribe</IJS>).
+        However, you might prefer for a side effect to be run after the subscribers. To do that, you
+        just need to include <IJS>after: true</IJS> in your side effect object. If you do no provide
+        this property, this will default to <IJS>false</IJS>.
+      </p>
+
+      <PrismBlock lang='javascript'>
+        {
+`const config = createConfig(history, routes, {
+  sideEffects: [{ fn: logResponse, after: true }]
 });`
         }
       </PrismBlock>
@@ -86,7 +103,7 @@ export default ({ name }) => (
 }
 
 const config = createConfig(history, routes, {
-  sideEffects: [mySideEffect]
+  sideEffects: [{ fn: mySideEffect }]
 });`
         }
       </PrismBlock>
