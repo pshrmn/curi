@@ -16,16 +16,17 @@
       width: 200px;
       height: 200px;
       box-sizing: border-box;
-      padding: 10px;
+      padding: 5px 10px;
     }
   }
 
   h2 {
     color: $orange;
+    margin: 0;
   }
 
   p.description {
     color: $light-gray;
-
+    line-height: 24px;
   }
 }
