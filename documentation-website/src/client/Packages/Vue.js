@@ -1,11 +1,11 @@
 import React from 'react';
-import BasePackage from '../components/BasePackage';
+import BasePackage from './base/BasePackage';
+import APIBlock from './base/APIBlock';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
   PrismBlock
 } from '../components/PrismBlocks';
-import APIBlock from '../components/APIBlock';
 import { Section, Subsection } from '../components/Sections';
 
 export default ({ name, version, globalName }) => (

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from '@curi/react';
 
-import { groupedPackages } from '../constants/packages';
-import styleActive from '../utils/styleActive';
+import { groupedPackages } from '../../constants/packages';
+import styleActive from '../../utils/styleActive';
 
 const GroupPackages = ({ packages, withDescription }) => (
   <ul className='link-list'>

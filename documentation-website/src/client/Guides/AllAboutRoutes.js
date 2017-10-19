@@ -1,8 +1,9 @@
 import React from 'react';
-import BaseGuide from '../components/BaseGuide';
+import { Link } from '@curi/react';
+
+import BaseGuide from './base/BaseGuide';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
-import { Link } from '@curi/react';
 import { Section, Subsection } from '../components/Sections';
 
 export default ({ name }) => (

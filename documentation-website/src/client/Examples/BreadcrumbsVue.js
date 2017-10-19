@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseExample from '../components/BaseExample';
+import BaseExample from './base/BaseExample';
 import { Section } from '../components/Sections';
 import CodeSandboxDemo from '../components/CodeSandboxDemo';
 

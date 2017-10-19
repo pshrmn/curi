@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from '@curi/react';
 
-import examples from '../constants/examples';
-import styleActive from '../utils/styleActive';
+import examples from '../../constants/examples';
+import styleActive from '../../utils/styleActive';
 
 export default ({ withDescription = false }) => (
   <ul className='link-list'>

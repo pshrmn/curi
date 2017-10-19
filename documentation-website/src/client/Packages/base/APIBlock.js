@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section } from './Sections';
+import { Section } from '../../components/Sections';
 
 export default ({ children }) => (
   <Section

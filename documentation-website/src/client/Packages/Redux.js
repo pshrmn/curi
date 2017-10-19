@@ -1,14 +1,15 @@
 import React from 'react';
-import BasePackage from '../components/BasePackage';
+import { Link } from '@curi/react';
+
+import BasePackage from './base/BasePackage';
+import APIBlock from './base/APIBlock';
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
 } from '../components/PrismBlocks';
-import APIBlock from '../components/APIBlock';
 import { Section } from '../components/Sections';
 import { Note } from '../components/Messages';
-import { Link } from '@curi/react';
 
 export default ({ name, version, globalName }) => (
   <BasePackage

@@ -1,8 +1,8 @@
 import React from 'react';
-import BasePackage from '../components/BasePackage';
+import BasePackage from './base/BasePackage';
+import APIBlock from './base/APIBlock';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
-import APIBlock from '../components/APIBlock';
 import { Section } from '../components/Sections';
 
 export default ({ name, version, globalName }) => (

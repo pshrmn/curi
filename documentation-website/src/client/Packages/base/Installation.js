@@ -2,8 +2,8 @@ import React from 'react';
 import {
   PrismBlock,
   InlineJS as IJS
-} from './PrismBlocks';
-import { Section } from './Sections';
+} from '../../components/PrismBlocks';
+import { Section } from '../../components/Sections';
 
 const NPM = ({ name }) => (
   <div>

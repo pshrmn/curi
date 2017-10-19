@@ -1,7 +1,8 @@
 import React from 'react';
-import BaseGuide from '../components/BaseGuide';
-import { PrismBlock } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
+
+import BaseGuide from './base/BaseGuide';
+import { PrismBlock } from '../components/PrismBlocks';
 import { Section } from '../components/Sections';
 
 

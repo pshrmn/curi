@@ -1,8 +1,9 @@
 import React from 'react';
-import BasePackage from '../components/BasePackage';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
-import APIBlock from '../components/APIBlock';
+
+import BasePackage from './base/BasePackage';
+import APIBlock from './base/APIBlock';
+import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Section } from '../components/Sections';
 
 export default ({ name, version, globalName }) => (
