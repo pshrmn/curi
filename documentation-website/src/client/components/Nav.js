@@ -11,6 +11,9 @@ export default () => (
         <Link to='Packages'>Packages</Link>
       </li>
       <li>
+        <Link to='Tutorial' params={{ name: '01-introduction' }}>Tutorial</Link>
+      </li>
+      <li>
         <Link to='Guide' params={{ slug: 'getting-started' }}>Guides</Link>
       </li>
       <li>

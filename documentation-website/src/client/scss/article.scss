@@ -31,8 +31,21 @@
   }
 }
 
+.aside {
+  padding: 5px 10px;
+  border-left: 2px solid $border-gray;
+  background: $light-gray;
+  margin-top: 15px;
+
+  .header-link {
+    margin-left: 10px;
+    text-decoration: none;
+    color: $dark-gray;
+  }
+}
+
 @media only screen and (min-width: $largeScreen) {
-  .guide, .package, .example{
+  .guide, .package, .example, .tutorial {
     padding-top: 15px;
     display: flex;
     flex-flow: row-nowrap;
