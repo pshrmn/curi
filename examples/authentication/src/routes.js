@@ -15,7 +15,7 @@ export default [
     name: 'Protected',
     path: 'protected',
     body: () => Protected,
-    load: (params, location, mods, addons) => {
+    load: (route, mods, addons) => {
       if (!fakeAuth.authenticated()) {
         mods.redirect({
           pathname: addons.pathname('Login'),
@@ -28,7 +28,7 @@ export default [
     name: 'Login',
     path: 'login',
     body: () => Login,
-    load: (params, location, mods) => {
+    load: (route, mods) => {
       if (fakeAuth.authenticated()) {
         mods.redirect({
           pathname: addons.pathname('Home')
@@ -40,7 +40,7 @@ export default [
     name: 'Logout',
     path: 'logout',
     body: () => Logout,
-    load: (params, location, mods) => {
+    load: (route, mods) => {
       if (!fakeAuth.authenticated()) {
         mods.redirect({
           pathname: addons.pathname('Home')

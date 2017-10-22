@@ -10,7 +10,7 @@ export default [
     name: 'Home',
     path: '',
     body: () => Home,
-    load: (params, location, mods, addons) => {
+    load: (route, mods, addons) => {
       const pathname = addons.pathname('Products');
       mods.redirect(pathname);
     }
@@ -19,7 +19,7 @@ export default [
     name: 'Products',
     path: 'products',
     body: () => Products,
-    load: (params, location, mods) => {
+    load: (route, mods) => {
       mods.setData(api.categories());
     },
     children: [
@@ -27,7 +27,7 @@ export default [
         name: 'Category',
         path: ':category',
         body: () => Category,
-        load: (params, location, mods) => {
+        load: ({ params }, mods) => {
           const products = api.category(params.category);
           if (products == null) {
             return Promise.reject('Category does not exist');
@@ -40,7 +40,7 @@ export default [
             name: 'Product',
             path: ':productID',
             body: () => Product,
-            load: (params, location, mods) => {
+            load: ({ params }, mods) => {
               const product = api.product(params.productID);
               if (!product) {
                 return Promise.reject('Product does not exist');

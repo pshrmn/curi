@@ -14,21 +14,21 @@ export default [
     name: 'Album',
     path: 'a/:id',
     body: () => Album,
-    load: (params, location, respCreator) => {
+    load: ({ params }, mods) => {
       const { id } = params
       // don't re-fetch data
       const existing = dataCache.get(id);
       if (existing) {
-        respCreator.setData(existing);
+        mods.setData(existing);
         return Promise.resolve(existing);
       }
       return fakeAPI(id)
         .then(data => {
-          respCreator.setData(data);
+          mods.setData(data);
           dataCache.set(id, data);
         })
         .catch(err => {
-          respCreator.setStatus(404);
+          mods.setStatus(404);
         });
     }
   }
