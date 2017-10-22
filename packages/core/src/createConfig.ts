@@ -4,7 +4,12 @@ import ResponseCreator from './utils/createResponse';
 
 import { History, HickoryLocation } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
-import { RouteDescriptor, Route, LoadModifiers } from './utils/createRoute';
+import {
+  RouteDescriptor,
+  Route,
+  LoadModifiers,
+  LoadRoute
+} from './utils/createRoute';
 import { AnyResponse, RedirectResponse } from './utils/createResponse';
 import {
   Addon,
@@ -94,6 +99,11 @@ function createConfig(
       return Promise.resolve(rc);
     }
 
+    const routeData: LoadRoute = {
+      params: rc.params,
+      location: rc.location,
+      name: rc.route.name
+    };
     // just want to pass a subset of the ResponseCreator's methods
     // to the user
     const modifiers: LoadModifiers = route.load
@@ -107,9 +117,7 @@ function createConfig(
 
     return Promise.all([
       route.preload ? route.preload() : null,
-      route.load
-        ? route.load(rc.params, rc.location, modifiers, registeredAddons)
-        : null
+      route.load ? route.load(routeData, modifiers, registeredAddons) : null
     ]).then(() => rc);
   }
 

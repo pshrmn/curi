@@ -16,6 +16,7 @@ export {
   Title,
   ParamParser,
   ParamParsers,
+  LoadRoute,
   LoadModifiers,
   LoadFn,
   PreloadFn

@@ -43,7 +43,7 @@ describe('pathname addon', () => {
       const warn = console.warn;
       const mockWarn = jest.fn();
       console.warn = mockWarn;
-      
+
       const first = { name: 'Test', path: 'first' };
       const second = { name: 'Test', path: 'second' };
 

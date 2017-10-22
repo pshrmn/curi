@@ -9,10 +9,13 @@ import ResponseCreator from './createResponse';
 import { RawParams, Params, AddonGet } from '../interface';
 
 export type Title = string | ((params?: object, data?: any) => string);
-
+export interface LoadRoute {
+  params: object;
+  location: object;
+  name: string;
+}
 export type LoadFn = (
-  params?: object,
-  location?: HickoryLocation,
+  route?: LoadRoute,
   modifiers?: LoadModifiers,
   addons?: { [key: string]: AddonGet }
 ) => Promise<any>;

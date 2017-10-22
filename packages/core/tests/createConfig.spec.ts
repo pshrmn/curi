@@ -253,7 +253,7 @@ describe('createConfig', () => {
             {
               name: 'All',
               path: '(.*)',
-              load: (params, location, mods) => {
+              load: (route, mods) => {
                 mods.setData(Math.random());
                 return Promise.resolve(true);
               }
@@ -306,7 +306,7 @@ describe('createConfig', () => {
             {
               name: 'All',
               path: '(.*)',
-              load: (params, location, mods) => {
+              load: (route, mods) => {
                 mods.setData(Math.random());
                 return Promise.resolve(true);
               }
@@ -429,11 +429,13 @@ describe('createConfig', () => {
 
     describe('load', () => {
       it('passes params, location, modifier methods, and addons to load function', () => {
-        const spy = jest.fn((params, location, modifiers, addons) => {
-          expect(params).toMatchObject({ anything: 'hello' });
-          expect(location).toMatchObject({
-            pathname: '/hello',
-            query: 'one=two'
+        const spy = jest.fn((route, modifiers, addons) => {
+          expect(route).toMatchObject({
+            params: { anything: 'hello' },
+            location: {
+              pathname: '/hello',
+              query: 'one=two'
+            }
           });
           expect(modifiers).toMatchObject(
             expect.objectContaining({
@@ -454,7 +456,7 @@ describe('createConfig', () => {
 
         const history = InMemory({ locations: ['/hello?one=two'] });
         const config = createConfig(history, [CatchAll]);
-        expect.assertions(4);
+        expect.assertions(3);
         return config.ready();
       });
 
@@ -464,7 +466,7 @@ describe('createConfig', () => {
             {
               name: 'A Route',
               path: '',
-              load: (params, location, mods) => {
+              load: (route, mods) => {
                 mods.setData({ test: 'value' });
                 return Promise.resolve();
               }
@@ -485,7 +487,7 @@ describe('createConfig', () => {
             {
               name: 'A Route',
               path: '',
-              load: (params, location, modifiers) => {
+              load: (route, modifiers) => {
                 return modifiers.redirect('/somewhere', 301);
               }
             }
@@ -504,8 +506,8 @@ describe('createConfig', () => {
             {
               name: 'Old',
               path: 'old/:id',
-              load: (params, location, modifiers, addons) => {
-                const pathname = addons.pathname('New', params);
+              load: (route, modifiers, addons) => {
+                const pathname = addons.pathname('New', route.params);
                 return modifiers.redirect(pathname);
               }
             },
@@ -529,7 +531,7 @@ describe('createConfig', () => {
             {
               name: 'A Route',
               path: '',
-              load: (params, location, mods) => {
+              load: (route, mods) => {
                 mods.setStatus(451);
                 return Promise.resolve();
               }
@@ -550,7 +552,7 @@ describe('createConfig', () => {
             {
               name: 'A Route',
               path: '',
-              load: (params, location, mods) => {
+              load: (route, mods) => {
                 mods.fail('woops');
                 return Promise.resolve();
               }
@@ -573,7 +575,7 @@ describe('createConfig', () => {
           {
             name: 'A Route',
             path: '',
-            load: (params, location, mods, addons) => {
+            load: (route, mods, addons) => {
               mods.redirect('/somewhere-else', 301);
               return Promise.resolve(true);
             }

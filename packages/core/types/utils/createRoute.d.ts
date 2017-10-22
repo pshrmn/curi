@@ -1,9 +1,13 @@
-import { HickoryLocation } from '@hickory/root';
 import { RegExpOptions } from 'path-to-regexp';
 import ResponseCreator from './createResponse';
 import { AddonGet } from '../interface';
 export declare type Title = string | ((params?: object, data?: any) => string);
-export declare type LoadFn = (params?: object, location?: HickoryLocation, modifiers?: LoadModifiers, addons?: {
+export interface LoadRoute {
+    params: object;
+    location: object;
+    name: string;
+}
+export declare type LoadFn = (route?: LoadRoute, modifiers?: LoadModifiers, addons?: {
     [key: string]: AddonGet;
 }) => Promise<any>;
 export declare type PreloadFn = () => Promise<any>;
