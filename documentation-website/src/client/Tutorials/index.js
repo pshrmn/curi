@@ -5,6 +5,7 @@ import Hickory from './Hickory';
 import Config from './ConfigObject';
 import ReactViews from './ReactViews';
 import VueViews from './VueViews';
+import LoadFunction from './LoadFunction';
 
 export default {
   '01-introduction': Introduction,
@@ -13,5 +14,6 @@ export default {
   '04-hickory': Hickory,
   '05-config': Config,
   '06-views-react': ReactViews,
-  '06-views-vue': VueViews
+  '06-views-vue': VueViews,
+  '07-load': LoadFunction
 };

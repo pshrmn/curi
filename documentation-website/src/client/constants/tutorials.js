@@ -26,6 +26,10 @@ const tutorials = [
   {
     name: '06-views-vue',
     displayName: 'Part 6: Rendering Views (Vue)'
+  },
+  {
+    name: '07-load',
+    displayName: 'Part 7: The Load Function'
   }
 ];
 

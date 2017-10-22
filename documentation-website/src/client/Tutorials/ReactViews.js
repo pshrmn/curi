@@ -523,10 +523,16 @@ const Book = ({ response }) => (
         }
       </PrismBlock>
     </Section>
-    <p>
-      At this point, we have a website with a number of pages. It isn't particularly useful yet,
-      but at least we can navigate between pages. Next we will take a step back from React and
-      look at how we can implement data loading with our router.
-    </p>
+    <Section
+      title='Next'
+      id='next'
+    >
+      <p>
+        At this point, we have a website with a number of pages. It isn't particularly useful yet,
+        but at least we can navigate between pages. Next we will take a step back from React and
+        look at how we can implement data loading with{' '}
+        <Link to='Tutorial' params={{ name: '07-load' }}>Part 7: The Load Function</Link>.
+      </p>
+    </Section>
   </BaseTutorial>
 );
