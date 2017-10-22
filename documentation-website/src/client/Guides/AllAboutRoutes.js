@@ -273,10 +273,12 @@ function render(response) {
       >
         <p>
           A function that can be used for data fetching as well as for triggering redirects.
-          The load function will be passed the params object that is parsed from the location's
-          pathname (using the route and its ancestor's paths), the current location, a modifiers object
-          that can be used to modify the response object that will be created, and an object containing
-          all of the registered Curi addons (the <IJS>pathname</IJS> addon being particularly useful).
+          The load function will be passed the a "route" object containing the params object
+          that is parsed from the location's pathname (using the route and its ancestor's paths),
+          the current location, and then name of the matched route. Additionally, it will be passed
+          a modifiers object that can be used to modify the response object that will be created
+          and an object containing all of the registered Curi addons (the <IJS>pathname</IJS> addon
+          being particularly useful).
         </p>
         <p>
           Like preload, load must return a Promise.
@@ -288,7 +290,7 @@ function render(response) {
 const user = {
   name: 'User',
   path: ':id',
-  load: (params, location, mod, addons) => {
+  load: ({ params, location }, mod, addons) => {
     return fetch(\`/api/users/$\{params.id\}\`)
       .then(resp => JSON.parse(resp))
       .then(data => mod.setData(data);)
@@ -308,7 +310,7 @@ const routes = [
   {
     name: 'Old Photo',
     path: 'photo/:id',
-    load: (params, location, mod, addons) => {
+    load: ({ params, location }, mod, addons) => {
       const pathname = addons.pathname('Photo', params);
       mod.redirect({ ...location, pathname }, 301);
     }
