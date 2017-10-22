@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@curi/addon-active": "^1.0.0-beta.5",
-    "@curi/core": "^1.0.0-beta.12",
+    "@curi/core": "^1.0.0-beta.13",
     "@hickory/root": "^1.0.0-beta.3",
     "@types/invariant": "^2.2.29",
     "@types/prop-types": "^15.5.1",
@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@curi/addon-active": "^1.0.0-beta.5",
-    "@curi/core": "^1.0.0-beta.12",
+    "@curi/core": "^1.0.0-beta.13",
     "@hickory/in-memory": "^1.0.0-beta.1",
     "@types/enzyme": "^2.8.8",
     "@types/jest": "^21.1.0",

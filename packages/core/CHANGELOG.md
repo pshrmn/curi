@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.13
 
 * Modify the `route.load` params. The new signature is `load(route, mods, addons)` where `route` contains `params`, `location`, and `name` properties.
 * Remove `AddonFactory` type.

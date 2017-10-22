@@ -30,7 +30,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.12"
+    "@curi/core": "^1.0.0-beta.13"
   },
   "devDependencies": {
     "@hickory/in-memory": "^1.0.0-beta.1",
