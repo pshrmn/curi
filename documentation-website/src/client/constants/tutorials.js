@@ -30,6 +30,14 @@ const tutorials = [
   {
     name: '07-load',
     displayName: 'Part 7: The Load Function'
+  },
+  {
+    name: '08-render-data-react',
+    displayName: 'Part 8: Rendering Data with React'
+  },
+  {
+    name: '08-render-data-vue',
+    displayName: 'Part 8: Rendering Data with Vue'
   }
 ];
 
