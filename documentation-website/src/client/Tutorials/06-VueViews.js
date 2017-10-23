@@ -46,7 +46,7 @@ export default () => (
         </p>
         <PrismBlock lang='bash'>
           {
-`npm install @curi/vue`
+`npm install @curi/vue vue`
           }
         </PrismBlock>
       </Subsection>
@@ -62,7 +62,8 @@ export default () => (
         </p>
         <PrismBlock lang='javascript'>
           {
-`import CuriPlugin from '@curi/vue';
+`// index.js
+import CuriPlugin from '@curi/vue';
 
 const config = createConfig(history, routes);
 Vue.use(CuriPlugin, { config });`
@@ -144,7 +145,8 @@ Vue.use(CuriPlugin, { config });`
 
       <PrismBlock lang='javascript'>
         {
-`config.ready().then(response => {
+`// index.js
+config.ready().then(response => {
   // ...
 });`
         }
@@ -157,7 +159,10 @@ Vue.use(CuriPlugin, { config });`
 
       <PrismBlock lang='javascript'>
         {
-`config.ready().then(response => {
+`// index.js
+import app from './components/App';
+
+config.ready().then(response => {
   const vm = new Vue({
     el: '#root',
     data: {
@@ -187,7 +192,8 @@ Vue.use(CuriPlugin, { config });`
 
       <PrismBlock lang='javascript'>
         {
-`config.ready().then(response => {
+`// index.js
+config.ready().then(response => {
   const vm = new Vue({
     el: '#root',
     data: {
@@ -234,7 +240,7 @@ Vue.use(CuriPlugin, { config });`
 
       <PrismBlock lang='html'>
         {
-`<!-- components/app.vue -->
+`<!-- components/App.vue -->
 <template>
 </template>
 
@@ -310,7 +316,7 @@ Vue.use(CuriPlugin, { config });`
       </p>
       <PrismBlock lang='html'>
         {
-`<!-- components/app.vue -->
+`<!-- components/App.vue -->
 <template>
   <component :is="response.body" />
 </template>
@@ -444,7 +450,9 @@ const routes = [
     path: '(.*)',
     body: () => NotFound
   }
-];`
+];
+
+export default routes;`
         }
       </PrismBlock>
       <p>
@@ -471,7 +479,7 @@ const routes = [
       </p>
       <PrismBlock lang='html'>
         {
-`<!-- components/Nav.vue -->
+`<!-- components/NavLinks.vue -->
 <template>
   <nav>
     <ul>
@@ -497,11 +505,11 @@ const routes = [
       </p>
       <PrismBlock lang='html'>
         {
-`<!-- components/app.vue -->
+`<!-- components/App.vue -->
 <template>
   <div>
     <header>
-      <Nav />
+      <NavLinks />
     </header>
     <main>
       <component :is="response.body" />
@@ -510,11 +518,11 @@ const routes = [
 </template>
 
 <script>
-  import Nav from './nav';
+  import NavLinks from './NavLinks';
   export default {
     name: 'app',
     props: ['response'],
-    components: { Nav }
+    components: { NavLinks }
   };
 </script>`
         }
@@ -557,8 +565,8 @@ export default books;`
     <h1>Available Books</h1>
     <div class='books'>
       <div v-for="book in books" :key="book.id" class='book-item'>
-        <curi-link to='Book' params={{ id: book.id }}>
-          Book {b.id}
+        <curi-link to='Book' :params="{ id: book.id }">
+          Book {book.id}
         </curi-link>
       </div>
     </div>
@@ -594,11 +602,11 @@ export default books;`
       </p>
       <PrismBlock lang='html'>
       {
-`<!-- components/app.vue -->
+`<!-- components/App.vue -->
 <template>
   <div>
     <header>
-      <Nav />
+      <NavLinks />
     </header>
     <main>
       <component
@@ -610,9 +618,12 @@ export default books;`
 </template>
 
 <script>
+  import NavLinks from './NavLinks';
+
   export default {
     name: 'app',
-    props: ['response']
+    props: ['response'],
+    components: { NavLinks }
   };
 </script>`
       }

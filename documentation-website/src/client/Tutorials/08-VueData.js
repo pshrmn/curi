@@ -37,7 +37,7 @@ export default () => (
     <h1>Available Books</h1>
     <div class='books'>
       <div v-for="book in response.data.books" :key="book.id" class='book-item'>
-        <curi-link to='Book' params={{ id: book.id }}>
+        <curi-link to='Book' :params="{ id: book.id }">
           {{book.title}}
         </curi-link>
       </div>
