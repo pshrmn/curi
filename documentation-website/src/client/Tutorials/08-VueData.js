@@ -33,12 +33,14 @@ export default () => (
         {
 `<!-- components/BookList.vue -->
 <template>
-  <div>
+  <div class='book-list'>
     <h1>Available Books</h1>
-    <div v-for="book in response.data.books" :key="book.id">
-      <curi-link to='Book' params={{ id: book.id }}>
-        {{book.title}}
-      </curi-link>
+    <div class='books'>
+      <div v-for="book in response.data.books" :key="book.id" class='book-item'>
+        <curi-link to='Book' params={{ id: book.id }}>
+          {{book.title}}
+        </curi-link>
+      </div>
     </div>
   </div>
 </template>
@@ -74,13 +76,13 @@ export default {
         {
 `<!-- components/Book.vue -->
 <template>
-  <div v-if="book">
+  <div v-if="book" class='book'>
     <h2>{{book.title}}</h2>
     <p>By {{book.author}}</p>
     <p>Published in {{book.published}}</p>
     <p>This book is {{book.pages}} pages</p>
   </div>
-  <div v-else>
+  <div v-else class='book'>
     The requested book does not exist
   </div>
 </template>

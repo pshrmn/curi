@@ -243,7 +243,9 @@ export default () => (
     name: 'Not Found',
     path: '(.*)'
   }
-];`
+];
+// don't forget to export the routes
+export default routes;`
           }
         </PrismBlock>
       </Subsection>

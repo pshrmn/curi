@@ -50,13 +50,13 @@ touch src/api/books.js`
         {
 `// api/books.js
 export function fetchAllBooks() {
-  return new Promse((resolve, reject) => {
+  return new Promise((resolve, reject) => {
 
   });
 }
 
 export function fetchBook(id) {
-  return new Promse((resolve, reject) => {
+  return new Promise((resolve, reject) => {
   
   });
 }`
@@ -159,13 +159,13 @@ const books = [
 const books = [...];
 
 export function fetchAllBooks() {
-  return new Promse((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     resolve(books);
   });
 }
 
 export function fetchBook(id) {
-  return new Promse((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const book = books.find(book => book.id === id);
     if (book) {
       resolve(book);

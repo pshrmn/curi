@@ -33,17 +33,15 @@ export default () => (
         {
 `// components/BookList.js
 const BookList = ({ response }) => (
-  <div>
+  <div className='book-list'>
     <h1>Available Books</h1>
-    <div>
+    <div className='books'>
       { response.data.books.map(b => (
-        <Link
-          key={b.id}
-          to='Book'
-          params={{ id: b.id }}
-        >
-          {b.title}
-        </Link>
+        <div className='book-item' key={b.id}>
+          <Link to='Book' params={{ id: b.id }}>
+            {b.title}
+          </Link>
+        </div>
       )) }
     </div>
   </div>
@@ -79,14 +77,14 @@ const BookList = ({ response }) => (
       <PrismBlock lang='jsx'>
         {
 `// components/Book.js
-const Book = (props) => 
+const Book = (props) => {
   const { data } = props.response;
   if (!data) {
-    return <div>The requested book does not exist</div>;
+    return <div className='book'>The requested book does not exist</div>;
   }
   const { book } = data;
   return (
-    <div>
+    <div className='book'>
       <h2>{book.title}</h2>
       <p>By {book.author}</p>
       <p>Published in {book.published}</p>

@@ -304,8 +304,9 @@ Vue.use(CuriPlugin, { config });`
       </PrismBlock>
       <p>
         Now, instead of returning a string, what if our <IJS>route.body</IJS> properties
-        were functions that returned Vue components? Then, our render function can
-        use <IJS>response.body</IJS> to render our website.
+        were functions that returned Vue components? We can use the <Cmp>component</Cmp>
+        {' '}component to dynamically set the component that Vue should render. Then, our
+        render function can use <IJS>response.body</IJS> to render our website. 
       </p>
       <PrismBlock lang='html'>
         {
@@ -340,7 +341,9 @@ export default {
         {
 `<!-- components/Home.vue -->
 <template>
-  <div>Home Page</div>
+  <div class='home'>
+    Home Page
+  </div>
 </template>`
         }
       </PrismBlock>
@@ -348,7 +351,9 @@ export default {
         {
 `<!-- components/Contact.vue -->
 <template>
-  <div>Contact</div>
+  <div class='contact'>
+    Contact
+  </div>
 </template>`
         }
       </PrismBlock>
@@ -356,7 +361,9 @@ export default {
         {
 `<!-- components/BookList.vue -->
 <template>
-  <div>Available Books</div>
+  <div class='book-list'>
+    Available Books
+  </div>
 </template>`
         }
       </PrismBlock>
@@ -364,7 +371,9 @@ export default {
         {
 `<!-- components/Book.vue -->
 <template>
-  <div>Book</div>
+  <div class='book'>
+    Book
+  </div>
 </template>`
         }
       </PrismBlock>
@@ -372,7 +381,9 @@ export default {
         {
 `<!-- components/Checkout.vue -->
 <template>
-  <div>Checkout</div>
+  <div class='checkout'>
+    Checkout
+  </div>
 </template>`
         }
       </PrismBlock>
@@ -380,7 +391,9 @@ export default {
         {
 `<!-- components/NotFound.vue -->
 <template>
-  <div>Page not found</div>
+  <div class='not-found'>
+    Page not found
+  </div>
 </template>`
         }
       </PrismBlock>
@@ -487,8 +500,12 @@ const routes = [
 `<!-- components/app.vue -->
 <template>
   <div>
-    <Nav />
-    <component :is="response.body" />
+    <header>
+      <Nav />
+    </header>
+    <main>
+      <component :is="response.body" />
+    </main>
   </div>
 </template>
 
@@ -536,12 +553,14 @@ export default books;`
         {
 `<!-- components/BookList.vue -->
 <template>
-  <div>
+  <div class='book-list'>
     <h1>Available Books</h1>
-    <div v-for="book in books" :key="book.id">
-      <curi-link to='Book' params={{ id: book.id }}>
-        Book {b.id}
-      </curi-link>
+    <div class='books'>
+      <div v-for="book in books" :key="book.id" class='book-item'>
+        <curi-link to='Book' params={{ id: book.id }}>
+          Book {b.id}
+        </curi-link>
+      </div>
     </div>
   </div>
 </template>
@@ -577,10 +596,17 @@ export default books;`
       {
 `<!-- components/app.vue -->
 <template>
-  <component
-    :is="response.body"
-    :response="response"
-  />
+  <div>
+    <header>
+      <Nav />
+    </header>
+    <main>
+      <component
+        :is="response.body"
+        :response="response"
+      />
+    </main>
+  </div>
 </template>
 
 <script>
@@ -608,7 +634,9 @@ export default books;`
         {
 `<!-- components/Book.vue -->
 <template>
-  <div>Book {{response.params.id}}</div>
+  <div class='book'>
+    Book {{response.params.id}}
+  </div>
 </template>
 
 <script>

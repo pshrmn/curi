@@ -42,11 +42,13 @@ export default () => (
         id='installation'
       >
         <p>
-          Let's start by installing the <IJS>@curi/react</IJS> package.
+          Let's start by installing the <IJS>@curi/react</IJS> package. If you haven't
+          already, you should also install the <IJS>react</IJS> and{' '}
+          <IJS>react-dom</IJS> packages.
         </p>
         <PrismBlock lang='bash'>
           {
-`npm install @curi/react`
+`npm install @curi/react react react-dom`
           }
         </PrismBlock>
       </Subsection>
@@ -54,6 +56,11 @@ export default () => (
         title={<span>The <Cmp>Navigator</Cmp> Component</span>}
         id='Navigator'
       >
+        <PrismBlock lang='javascript'>
+          {
+`import { Navigator } from '@curi/react';`
+          }
+        </PrismBlock>
         <p>
           The <Cmp>Navigator</Cmp> is responsible for re-rendering the website whenever the
           location changes. It has two props that we have to pass it: <IJS>config</IJS>
@@ -74,11 +81,20 @@ export default () => (
         </ol>
         <PrismBlock lang='jsx'>
           {
-`ReactDOM.render((
-  <Navigator config={config} render={(response, action, config) => {
-    return null;
-  }} />
-), holder);`
+`// index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Navigator } from '@curi/react';
+
+// ...
+
+config.ready().then(() => {
+  ReactDOM.render((
+    <Navigator config={config} render={(response, action, config) => {
+      return null;
+    }} />
+  ), document.getElementById('root'));
+});`
           }
         </PrismBlock>
         <p>
@@ -99,6 +115,11 @@ export default () => (
         title={<span>The <Cmp>Link</Cmp> Component</span>}
         id='Link'
       >
+        <PrismBlock lang='javascript'>
+          {
+`import { Link } from '@curi/react';`
+          }
+        </PrismBlock>
         <p>
           The <Cmp>Link</Cmp> component renders anchor (<Cmp>a</Cmp>) elements. However,
           unlike an anchor, we don't actually have to write the URI that we want to navigate
@@ -160,7 +181,7 @@ export default () => (
     console.log('response:', response);
     return null;
   }} />
-), holder);
+), document.getElementById('root'));
 /*
 response: {
  body: undefined,
@@ -223,7 +244,7 @@ response: {
     const { body: Body } = response;
     return <Body />;
   }} />
-), holder);`
+), document.getElementById('root'));`
         }
       </PrismBlock>
       <p>
@@ -252,49 +273,71 @@ response: {
       <PrismBlock lang='jsx'>
         {
 `// components/Home.js
+import React from 'react';
 const Home = () => (
-  <div>Home Page</div>
-);`
+  <div className='home'>
+    Home Page
+  </div>
+);
+export default Home;`
         }
       </PrismBlock>
       <PrismBlock lang='jsx'>
         {
 `// components/Contact.js
+import React from 'react';
 const Contact = () => (
-  <div>Contact</div>
-);`
+  <div className='contact'>
+    Contact
+  </div>
+);
+export default Contact;`
         }
       </PrismBlock>
       <PrismBlock lang='jsx'>
         {
 `// components/BookList.js
+import React from 'react';
 const BookList = () => (
-  <div>Available Books</div>
-);`
+  <div className='book-list'>Available Books</div>
+);
+export default BookList;`
         }
       </PrismBlock>
       <PrismBlock lang='jsx'>
         {
 `// components/Book.js
+import React from 'react';
 const Book = () => (
-  <div>Book</div>
-);`
+  <div className='book'>
+    Book
+  </div>
+);
+export default Book;`
         }
       </PrismBlock>
       <PrismBlock lang='jsx'>
         {
 `// components/Checkout.js
+import React from 'react';
 const Checkout = () => (
-  <div>Checkout</div>
-);`
+  <div className='checkout'>
+    Checkout
+  </div>
+);
+export default Checkout;`
         }
       </PrismBlock>
       <PrismBlock lang='jsx'>
         {
 `// components/NotFound.js
+import React from 'react';
 const NotFound = () => (
-  <div>Page not found</div>
-);`
+  <div className='not-found'>
+    Page not found
+  </div>
+);
+export default NotFound;`
         }
       </PrismBlock>
       <p>
@@ -372,6 +415,7 @@ const routes = [
       <PrismBlock lang='jsx'>
         {
 `// components/Nav.js
+import React from 'react';
 const Nav = () => (
   <nav>
     <ul>
@@ -389,7 +433,8 @@ const Nav = () => (
       </li>
     </ul>
   </nav>
-);`
+);
+export default Nav;`
         }
       </PrismBlock>
       <p>
@@ -404,17 +449,22 @@ const Nav = () => (
       </p>
       <PrismBlock lang='jsx'>
         {
-`ReactDOM.render((
+`// index.js
+ReactDOM.render((
   <Navigator config={config} render={(response, action, config) => {
     const { body: Body } = response;
     return (
       <div>
-        <Nav />
-        <Body />
+        <header>
+          <Nav />
+        </header>
+        <main>
+          <Body />
+        </main>
       </div>
     );
   }} />
-), holder);`
+), document.getElementById('root'));`
         }
       </PrismBlock>
       <p>
@@ -453,17 +503,15 @@ export default books;`
 import books from '../books';
 
 const BookList = () => (
-  <div>
+  <div className='book-list'>
     <h1>Available Books</h1>
-    <div>
+    <div className='books'>
       { books.map(b => (
-        <Link
-          key={b.id}
-          to='Book'
-          params={{ id: b.id }}
-        >
-          Book {b.id}
-        </Link>
+        <div className='book-item' key={b.id}>
+          <Link to='Book' params={{ id: b.id }}>
+            Book {b.id}
+          </Link>
+        </div>
       )) }
     </div>
   </div>
@@ -488,17 +536,22 @@ const BookList = () => (
       </p>
       <PrismBlock lang='jsx'>
         {
-`ReactDOM.render((
+`// index.js
+ReactDOM.render((
   <Navigator config={config} render={(response, action, config) => {
     const { body: Body } = response;
     return (
       <div>
-        <Nav />
-        <Body response={response} />
+        <header>
+          <Nav />
+        </header>
+        <main>
+          <Body response={response} />
+        </main>
       </div>
     );
   }} />
-), holder);`
+), document.getElementById('root'));`
         }
       </PrismBlock>
       <Note>
@@ -518,7 +571,9 @@ const BookList = () => (
         {
 `// components/Book.js
 const Book = ({ response }) => (
-  <div>Book {response.params.id}</div>
+  <div className='book'>
+    Book {response.params.id}
+  </div>
 );`
         }
       </PrismBlock>

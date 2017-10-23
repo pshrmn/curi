@@ -110,6 +110,8 @@ const path = require('path');
 const STATIC_DIR = path.join(__dirname, 'public');
 const INDEX_HTML = path.join(STATIC_DIR, 'index.html');
 
+const app = express();
+
 // respond to requests for files that begin with /static
 // with the corresponding file in the /public directory
 app.use('/static', express.static(STATIC_DIR));
