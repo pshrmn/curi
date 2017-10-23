@@ -339,37 +339,49 @@ export default {
       <PrismBlock lang='html'>
         {
 `<!-- components/Home.vue -->
-<div>Home Page</div>`
+<template>
+  <div>Home Page</div>
+</template>`
         }
       </PrismBlock>
       <PrismBlock lang='html'>
         {
 `<!-- components/Contact.vue -->
-<div>Contact</div>`
+<template>
+  <div>Contact</div>
+</template>`
         }
       </PrismBlock>
       <PrismBlock lang='html'>
         {
 `<!-- components/BookList.vue -->
-<div>Available Books</div>`
+<template>
+  <div>Available Books</div>
+</template>`
         }
       </PrismBlock>
       <PrismBlock lang='html'>
         {
 `<!-- components/Book.vue -->
-<div>Book</div>`
+<template>
+  <div>Book</div>
+</template>`
         }
       </PrismBlock>
       <PrismBlock lang='html'>
         {
 `<!-- components/Checkout.vue -->
-<div>Checkout</div>`
+<template>
+  <div>Checkout</div>
+</template>`
         }
       </PrismBlock>
       <PrismBlock lang='html'>
         {
 `<!-- components/NotFound.vue -->
-<div>Page not found</div>`
+<template>
+  <div>Page not found</div>
+</template>`
         }
       </PrismBlock>
       <p>
@@ -447,22 +459,24 @@ const routes = [
       <PrismBlock lang='html'>
         {
 `<!-- components/Nav.vue -->
-<nav>
-  <ul>
-    <li>
-      <curi-link to='Home'>Home</curi-link>
-    </li>
-    <li>
-      <curi-link to='Contact'>Contact Us</curi-link>
-    </li>
-    <li>
-      <curi-link to='Book List'>Books for Sale</curi-link>
-    </li>
-    <li>
-      <curi-link to='Checkout'>Checkout</curi-link>
-    </li>
-  </ul>
-</nav>`
+<template>
+  <nav>
+    <ul>
+      <li>
+        <curi-link to='Home'>Home</curi-link>
+      </li>
+      <li>
+        <curi-link to='Contact'>Contact Us</curi-link>
+      </li>
+      <li>
+        <curi-link to='Book List'>Books for Sale</curi-link>
+      </li>
+      <li>
+        <curi-link to='Checkout'>Checkout</curi-link>
+      </li>
+    </ul>
+  </nav>
+</template>`
         }
       </PrismBlock>
       <p>
@@ -513,22 +527,24 @@ const books = [
   { id: 3 }
 ];
 export default books;`
-          }
-        </PrismBlock>
-        <p>
-          Then, in <Cmp>BookList</Cmp> we can iterate over this list to generate links to our books.
-        </p>
-        <PrismBlock lang='html'>
+        }
+      </PrismBlock>
+      <p>
+        Then, in <Cmp>BookList</Cmp> we can iterate over this list to generate links to our books.
+      </p>
+      <PrismBlock lang='html'>
         {
 `<!-- components/BookList.vue -->
-<div>
-  <h1>Available Books</h1>
-  <div v-for="book in books" :key="book.id">
-    <curi-link to='Book' params={{ id: book.id }}>
-      Book {b.id}
-    </curi-link>
+<template>
+  <div>
+    <h1>Available Books</h1>
+    <div v-for="book in books" :key="book.id">
+      <curi-link to='Book' params={{ id: book.id }}>
+        Book {b.id}
+      </curi-link>
+    </div>
   </div>
-</div>
+</template>
 
 <script>
   import books from '../books';
@@ -591,7 +607,9 @@ export default books;`
       <PrismBlock lang='html'>
         {
 `<!-- components/Book.vue -->
-<div>Book {{response.params.id}}</div>
+<template>
+  <div>Book {{response.params.id}}</div>
+</template>
 
 <script>
   export default {
