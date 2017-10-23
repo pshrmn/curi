@@ -3,7 +3,7 @@ export default {
   "addon-active": "1.0.0-beta.5",
   "addon-ancestors": "1.0.0-beta.5",
   "addon-prefetch": "1.0.0-beta.5",
-  "core": "1.0.0-beta.12",
+  "core": "1.0.0-beta.13",
   "react": "1.0.0-beta.10",
   "redux": "1.0.0-alpha.2",
   "side-effect-scroll": "1.0.0-beta.5",

@@ -44,6 +44,25 @@
   }
 }
 
+.tutorial {
+  .link-list {
+    li {
+
+      &.solo {
+        border-bottom: 1px solid $light-gray;
+      }
+
+      ul {
+        display: flex;
+        margin: 0;
+        li {
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (min-width: $largeScreen) {
   .guide, .package, .example, .tutorial {
     padding-top: 15px;
