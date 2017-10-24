@@ -32,6 +32,15 @@ const tutorials = [
     name: '08-render-data',
     displayName: 'Part 8: Rendering Data',
     frameworks: ['react', 'vue']
+  },
+  {
+    name: '09-nav',
+    displayName: 'Part 9: Programmatic Navigation',
+    frameworks: ['react', 'vue']
+  },
+  {
+    name: '10-now-what',
+    displayName: 'Part 10: Now What?'
   }
 ];
 

@@ -12,12 +12,7 @@ import { Section, Subsection } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 9: Curi & Forms</h1>
+    <h1>Part 10: Now What?</h1>
     <p>Coming soon...</p>
-    <Section
-      title='Next'
-      id='next'
-    >
-    </Section>
   </BaseTutorial>
 );

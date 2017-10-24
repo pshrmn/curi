@@ -8,8 +8,9 @@ import VueViews from './06-VueViews';
 import LoadFunction from './07-LoadFunction';
 import ReactData from './08-ReactData';
 import VueData from './08-VueData';
-import ReactForms from './09-ReactForms';
-import VueForms from './09-VueForms';
+import ReactNav from './09-ReactNav';
+import VueNav from './09-VueNav';
+import NowWhat from './10-NowWhat';
 
 export default {
   '01-introduction': Introduction,
@@ -22,6 +23,7 @@ export default {
   '07-load': LoadFunction,
   '08-render-data-react': ReactData,
   '08-render-data-vue': VueData,
-  '09-forms-react': ReactForms,
-  '09-forms-vue': VueForms
+  '09-nav-react': ReactNav,
+  '09-nav-vue': VueNav,
+  '10-now-what': NowWhat
 };
