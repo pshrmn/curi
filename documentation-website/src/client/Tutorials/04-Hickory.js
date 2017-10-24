@@ -16,6 +16,19 @@ export default () => (
       <a href='https://github.com/pshrmn/hickory'>Hickory</a>, which will interact with the
       History API for us.
     </p>
+    <div>
+      <p>
+        In this tutorial, we will be doing the following:
+      </p>
+      <ul>
+        <li>
+          Learning about the Hickory package and location objects.
+        </li>
+        <li>
+          Creating the Hickory history object for our website.
+        </li>
+      </ul>
+    </div>
     <Section
       title='Choose your own Hickory'
       id='choose'

@@ -17,6 +17,31 @@ export default () => (
       Since this tutorial is starting from scratch, we're going to start
       in the terminal.
     </p>
+    <div>
+      <p>
+        In this tutorial, we will be doing the following:
+      </p>
+      <ul>
+        <li>
+          Initializing our project and installing the packages (from NPM)
+          that are necessary to get started.
+        </li>
+        <li>
+          Creating directories for our source and public files, as well
+          as adding some empty files for future use.
+        </li>
+        <li>
+          Setting up a simple Express server to serve our website
+          contents.
+        </li>
+      </ul>
+      <Note>
+        We aren't going to cover getting build steps setup. The accompanying Git repo
+        includes the necessary files for building the application. Alternatively,
+        you can use build helper packages like <IJS>create-react-app</IJS> or{' '}
+        <IJS>vue-cli</IJS> to have this automatically setup for you.
+      </Note>
+    </div>
     <Section
       title='The Basics'
       id='basics'
@@ -76,12 +101,6 @@ touch public/index.html`
 +- package.json`
         }
       </PrismBlock>
-      <Note>
-        We aren't going to cover getting build steps setup. The accompanying Git repo
-        includes the necessary files for building the application. Alternatively,
-        you can use build helper packages like <IJS>create-react-app</IJS> or{' '}
-        <IJS>vue-cli</IJS> to have this automatically setup for you.
-      </Note>
     </Section>
     <Section
       title='A Simple Server'

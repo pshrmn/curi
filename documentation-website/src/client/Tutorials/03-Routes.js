@@ -20,6 +20,22 @@ export default () => (
       the time being, all we care about are the pathnames. These pathnames are mapped
       to pages using routes.
     </p>
+    <div>
+      <p>
+        In this tutorial, we will be doing the following:
+      </p>
+      <ul>
+        <li>
+          Deciding what pages our website will contain.
+        </li>
+        <li>
+          Learning about basic route properties.
+        </li>
+        <li>
+          Creating route objects for each of our website's pages.
+        </li>
+      </ul>
+    </div>
     <Section
       title='Pages'
       id='pages'

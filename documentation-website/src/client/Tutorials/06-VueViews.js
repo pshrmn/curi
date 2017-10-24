@@ -20,7 +20,28 @@ export default () => (
       rendering our website using React. If you prefer to use React, you should check out the{' '}
       <Link to='Tutorial' params={{ name: '06-views-react' }}>Part 6: React Views</Link> tutorial.
     </p>
-
+    <div>
+      <p>
+        In this tutorial, we will be doing the following:
+      </p>
+      <ul>
+        <li>
+          Installing the <IJS>@curi/vue</IJS> package, learning about
+          the plugin and one of the components it provides (<Cmp>curi-link</Cmp>).
+        </li>
+        <li>
+          Using the response object emitted by Curi to render
+          our website.
+        </li>
+        <li>
+          Defining page components for each of the routes.
+        </li>
+        <li>
+          Adding links so that users can navigate between locations
+          in the website.
+        </li>
+      </ul>
+    </div>
     <Section
       title={<span>The <IJS>@curi/vue</IJS> Package</span>}
       id='package'

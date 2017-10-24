@@ -16,6 +16,21 @@ export default () => (
       use that route to generate a response object. This response contains a bunch of properties
       that are useful for rendering your application. 
     </p>
+    <div>
+      <p>
+        In this tutorial, we will be doing the following:
+      </p>
+      <ul>
+        <li>
+          Creating a Curi configuration object using our routes and
+          history object.
+        </li>
+        <li>
+          Learning about some of the properties of the configuration
+          object.
+        </li>
+      </ul>
+    </div>
     <Section
       title='Installation'
       id='installation'

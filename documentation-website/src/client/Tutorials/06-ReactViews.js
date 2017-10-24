@@ -19,7 +19,29 @@ export default () => (
       rendering our website using React. If you prefer to use Vue, you should check out the{' '}
       <Link to='Tutorial' params={{ name: '06-views-vue' }}>Part 6: Vue Views</Link> tutorial.
     </p>
-
+    <div>
+      <p>
+        In this tutorial, we will be doing the following:
+      </p>
+      <ul>
+        <li>
+          Installing the <IJS>@curi/react</IJS> package and learning about
+          some of the components it provides (<Cmp>Navigator</Cmp> and{' '}
+          <Cmp>Link</Cmp>).
+        </li>
+        <li>
+          Defining the <IJS>render</IJS> function that will render
+          the contents of the website. 
+        </li>
+        <li>
+          Creating page components for each of the routes.
+        </li>
+        <li>
+          Adding links so that users can navigate between locations
+          in the website.
+        </li>
+      </ul>
+    </div>
     <Section
       title={<span>The <IJS>@curi/react</IJS> Package</span>}
       id='package'

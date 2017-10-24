@@ -16,18 +16,32 @@ export default () => (
     <p>
       In this tutorial, we are going to be using another property of our
       Curi configuration object: <IJS>history</IJS>. This property is the
-      Hickory history instance. We will use it to perform navigate
+      Hickory history instance. We will use it to perform navigation
       between pages in our website.
     </p>
-
-    <p>
-      Our "Book" page isn't quite complete yet. We need to give the
-      user the ability to "buy" a book. To do this we'll set up a
-      (fake) API using <IJS>localStorage</IJS> to add books to a shopping
-      cart. Then, we'll add the ability to purchase a book to our "Book"
-      page. Finally, we'll implement our "Checkout" page to display the
-      books in the shopping cart let the user "purchase" them.
-    </p>
+    <div>
+      <p>
+        In this tutorial, we will be doing the following:
+      </p>
+      <ul>
+        <li>
+          Creating another fake API, this time for getting/setting items
+          in our shopping cart.
+        </li>
+        <li>
+          Adding the ability to add books to the shopping cart from
+          the "Book" page.
+        </li>
+        <li>
+          Displaying books in the shopping cart from the "Checkout" page
+          and allowing users to "purchase" their selected books.
+        </li>
+        <li>
+          Performing programmatic navigation to automatically navigate
+          to another location.
+        </li>
+      </ul>
+    </div>
     
     <Section
       title='The (Fake) API'

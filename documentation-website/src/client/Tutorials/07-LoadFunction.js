@@ -16,10 +16,20 @@ export default () => (
       request to our server which would return our data (possibly after
       running a database query).
     </p>
-    <p>
-      Let's start out by writing another fake, but more realistic, way to access our
-      data. Then, we'll introduce another property of route objects: <IJS>load</IJS>.
-    </p>
+    <div>
+      <p>
+        In this tutorial, we will be doing the following:
+      </p>
+      <ul>
+        <li>
+          Writing a fake API to simulate data requests.
+        </li>
+        <li>
+          Adding <IJS>load</IJS> functions to our "Book List" and "Book"
+          routes.
+        </li>
+      </ul>
+    </div>
     <Section
       title='Fake API'
       id='api'

@@ -19,6 +19,17 @@ export default () => (
       that. Accessing the <IJS>data</IJS> is really easy because it
       is a property of our <IJS>response</IJS> object.
     </p>
+    <div>
+      <p>
+        In this tutorial, we will be doing the following:
+      </p>
+      <ul>
+        <li>
+          Updating our <Cmp>BookList</Cmp> and <Cmp>Book</Cmp>
+          {' '}components to render using <IJS>response.data</IJS>.
+        </li>
+      </ul>
+    </div>
     <Section
       title='Book List'
       id='book-list'
