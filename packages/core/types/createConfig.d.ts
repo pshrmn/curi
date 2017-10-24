@@ -1,7 +1,7 @@
 import { History } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
-import { RouteDescriptor } from './utils/createRoute';
-import { AnyResponse } from './utils/createResponse';
+import { RouteDescriptor } from './createRoute';
+import { AnyResponse } from './createResponse';
 import { Addon, AddonGet, SideEffect, Subscriber, UnsubscribeFn, Cache } from './interface';
 export interface ConfigOptions {
     addons?: Array<Addon>;

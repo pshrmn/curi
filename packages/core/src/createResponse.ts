@@ -1,6 +1,6 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
 import { Route, ParamParsers } from './createRoute';
-import { RawParams, Params } from '../interface';
+import { RawParams, Params } from './interface';
 
 export interface BaseResponse {
   key: string;

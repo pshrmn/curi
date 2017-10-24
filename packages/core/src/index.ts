@@ -9,7 +9,7 @@ export {
   RawParams,
   Params
 } from './interface';
-export { Path } from './utils/createPath';
+export { Path } from './createPath';
 export {
   Route,
   RouteDescriptor,
@@ -20,12 +20,12 @@ export {
   LoadModifiers,
   LoadFn,
   PreloadFn
-} from './utils/createRoute';
+} from './createRoute';
 export {
   Response,
   RedirectResponse,
   AnyResponse
-} from './utils/createResponse';
+} from './createResponse';
 export { CuriConfig, ConfigOptions } from './createConfig';
 
 import createConfig from './createConfig';

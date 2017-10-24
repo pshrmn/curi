@@ -2,9 +2,9 @@ import 'jest';
 import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
 import InMemory from '@hickory/in-memory';
-import ResponseCreator from '../src/utils/createResponse';
-import { Addon, AddonFactory } from '../src/interface';
-import { Response, RedirectResponse } from '../src/utils/createResponse';
+import ResponseCreator from '../src/createResponse';
+import { Addon } from '../src/interface';
+import { Response, RedirectResponse } from '../src/createResponse';
 
 // The subscribe function is called when subscribing so that the
 // subscriber function is called with the original location. This has
@@ -89,7 +89,7 @@ describe('createConfig', () => {
 
         it('includes pathname addon even when other addons are provided', () => {
           const firstAddonCache = {};
-          const createFirstAddon: AddonFactory = () => {
+          const createFirstAddon = () => {
             return {
               name: 'first',
               register: (route, extra) => {
@@ -112,7 +112,7 @@ describe('createConfig', () => {
           // are registered as expected
           const firstAddonCache = {};
           const secondAddonCache = {};
-          const createFirstAddon: AddonFactory = () => {
+          const createFirstAddon = () => {
             return {
               name: 'first',
               register: (route, extra) => {
@@ -123,7 +123,7 @@ describe('createConfig', () => {
             };
           };
 
-          const createSecondAddon: AddonFactory = () => {
+          const createSecondAddon = () => {
             return {
               name: 'second',
               register: (route, extra) => {

@@ -1,5 +1,5 @@
-import createRoute from './createRoute';
-import { RouteDescriptor, Route, RouteMidCreation } from './createRoute';
+import createRoute from '../createRoute';
+import { RouteDescriptor, Route, RouteMidCreation } from '../createRoute';
 import { Addon } from '../interface';
 
 export default function walkRoutes(

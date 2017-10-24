@@ -1,10 +1,10 @@
 import 'jest';
-import createRoute from '../src/utils/createRoute';
+import createRoute from '../src/createRoute';
 import { HickoryLocation } from '@hickory/root';
 import ResponseCreator, {
   Response,
   RedirectResponse
-} from '../src/utils/createResponse';
+} from '../src/createResponse';
 
 const noop = () => {};
 

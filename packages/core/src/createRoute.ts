@@ -1,12 +1,12 @@
-import { join, stripLeadingSlash, withLeadingSlash } from './path';
-import once from './once';
+import { join, stripLeadingSlash, withLeadingSlash } from './utils/path';
+import once from './utils/once';
 import createPath from './createPath';
 
 import { HickoryLocation, ToArgument } from '@hickory/root';
 import { RegExpOptions } from 'path-to-regexp';
 import { Path } from './createPath';
 import ResponseCreator from './createResponse';
-import { RawParams, Params, AddonGet } from '../interface';
+import { RawParams, Params, AddonGet } from './interface';
 
 export type Title = string | ((params?: object, data?: any) => string);
 export interface LoadRoute {
