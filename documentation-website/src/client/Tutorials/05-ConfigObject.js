@@ -27,7 +27,7 @@ export default () => (
         </li>
         <li>
           Learning about some of the properties of the configuration
-          object.
+          object and how Curi works.
         </li>
       </ul>
     </div>
@@ -109,10 +109,15 @@ const config = createConfig(history, routes);`
     >
       <p>
         In order to let your application know about location changes, Curi uses a subscriber model.
-        You can give your configuration object functions to call whenever there is a location change
-        (via the <IJS>config.subscribe</IJS> method) and Curi will call the subscribed function, passing
-        it the new <IJS>response</IJS> object and the <IJS>action</IJS>type from the navigation
-        (<IJS>'PUSH'</IJS>, <IJS>'POP'</IJS>, and <IJS>'REPLACE'</IJS>).
+        Whenever a location change happens, Curi will create a new response and then emit this
+        response to all of its subscribed methods. Using <IJS>config.subscribe</IJS>, we can give
+        Curi a subscriber method to call when a new response has been created.
+      </p>
+      <p>
+        What does a subscriber function look like? It can take two arguments. The first will be
+        the <IJS>response</IJS> object generated for the new location. The second is the{' '}
+        <IJS>action</IJS>type from the navigation (<IJS>'PUSH'</IJS>, <IJS>'POP'</IJS>, and{' '}
+        <IJS>'REPLACE'</IJS>).
       </p>
       <PrismBlock lang='javascript'>
         {
