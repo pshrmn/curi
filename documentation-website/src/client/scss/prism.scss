@@ -43,6 +43,19 @@ pre[class*="language-"] {
   background: $purple;
 }
 
+.note {
+  &:not(pre) > code[class*="language-"] {
+    background: $white;
+  }
+}
+
+.aside {
+  :not(pre) > code[class*="language-"] {
+    background: $white;
+  }
+}
+
+
 /* Inline code */
 :not(pre) > code[class*="language-"] {
   padding: .1em;
@@ -51,6 +64,7 @@ pre[class*="language-"] {
   background: $light-gray;
   color: $purple;
   text-shadow: none;
+  white-space: nowrap;
 }
 
 :not(pre) > code[class*="language-"] .token {

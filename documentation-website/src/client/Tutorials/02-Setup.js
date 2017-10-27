@@ -14,8 +14,7 @@ export default () => (
   <BaseTutorial>
     <h1>Part 2: Setting up Curi</h1>
     <p>
-      Since this tutorial is starting from scratch, we're going to start
-      in the terminal.
+      Setup is never exciting, but a little bit of it is necessary.
     </p>
     <div>
       <p>
@@ -37,9 +36,8 @@ export default () => (
       </ul>
       <Note>
         We aren't going to cover getting build steps setup. The accompanying Git repo
-        includes the necessary files for building the application. Alternatively,
-        you can use build helper packages like <IJS>create-react-app</IJS> or{' '}
-        <IJS>vue-cli</IJS> to have this automatically setup for you.
+        includes the necessary files for building the application (using Babel and
+        Webpack).
       </Note>
     </div>
     <Section
@@ -53,7 +51,8 @@ export default () => (
       </p>
       <PrismBlock lang='bash'>
         {
-`mkdir curi-bookstore && cd curi-bookstore`
+`mkdir curi-bookstore
+cd curi-bookstore`
         }
       </PrismBlock>
       <p>
@@ -75,8 +74,8 @@ npm install @curi/core @hickory/browser`
     >
       <p>
         We should also get some of the directories/files for our website setup.
-        There is no "right" way to layout your files, but the approach used in
-        this project works well.
+        You can restructure your application however you want, but the approach
+        used in this project can serve as a good starting point.
       </p>
       <PrismBlock lang='bash'>
         {
@@ -87,7 +86,7 @@ touch public/index.html`
         }
       </PrismBlock>
       <p>
-        That will leave us with the following project structure:
+        The above commands will leave us with the following project structure:
       </p>
       <PrismBlock>
         {
@@ -108,18 +107,19 @@ touch public/index.html`
     >
       <p>
         Our website needs a server that can respond to dynamic requests. For this, we
-        will use <a href="https://www.npmjs.com/package/express">express</a>. We'll
-        just create a simple server that serves our static files (JS, CSS, etc.) and
-        for all other requests, responds with our <IJS>public/index.html</IJS> file.
+        will use <a href="https://www.npmjs.com/package/express">express</a>.
       </p>
       <PrismBlock lang='bash'>
         {
-`npm install express
+`npm install --save-dev express
 touch server.js`
         }
       </PrismBlock>
       <p>
-        You can just copy the following code into <IJS>server.js</IJS>.
+        Our server isn't very fancy. For static file requests, it serves files
+        from the <IJS>/public</IJS> directory. For everything else, it will serve
+        the <IJS>/public/index.html</IJS> file. You can just copy the following
+        code into <IJS>server.js</IJS>.
       </p>
       <PrismBlock lang='javascript'>
         {

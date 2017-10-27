@@ -31,7 +31,7 @@ export default () => (
       </ul>
     </div>
     <Section
-      title='Book List'
+      title='Using Data with the Book List'
       id='book-list'
     >
       <p>
@@ -47,7 +47,11 @@ export default () => (
   <div class='book-list'>
     <h1>Available Books</h1>
     <div class='books'>
-      <div v-for="book in response.data.books" :key="book.id" class='book-item'>
+      <div
+        v-for="book in response.data.books"
+        :key="book.id"
+        class='book-item'
+      >
         <curi-link to='Book' :params="{ id: book.id }">
           {{book.title}}
         </curi-link>
@@ -66,7 +70,7 @@ export default {
       </PrismBlock>
     </Section>
     <Section
-      title='Book'
+      title='Using Data with the Book'
       id='book'
     >
       <p>
@@ -111,6 +115,16 @@ export default {
         }
       </PrismBlock>
     </Section>
+    <p>
+      Now that we are using <IJS>response.data</IJS> in both the{' '}
+      <Cmp>BookList</Cmp> and <Cmp>Book</Cmp> components, we can remove
+      the <IJS>books.js</IJS> file.
+    </p>
+    <PrismBlock lang='bash'>
+      {
+`git rm src/books.js`
+      }
+    </PrismBlock>
     <Section
       title='Next'
       id='next'
@@ -118,7 +132,7 @@ export default {
       <p>
         Our book component still isn't complete. We are building a book store after all,
         so we should really provide the user a way to actually "buy" a book. In{' '}
-        <Link to='Tutorial' params={{ name: '09-forms-vue' }}>Part 9: Curi & Forms</Link>,
+        <Link to='Tutorial' params={{ name: '09-nav-vue' }}>Part 9: Forms & Navigation</Link>,
         we will add the ability to add books to a shopping cart and "purchase"
         them from our "Checkout" route.
       </p>

@@ -13,12 +13,13 @@ import { Section, Subsection } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 6: Vue Views</h1>
+    <h1>Part 6: Vue Pages</h1>
     <p>
-      Now that we have our routes setup, our history object created, and our configuration object
-      ready to go, we can think about what our pages should look like. This tutorial will be
-      rendering our website using React. If you prefer to use React, you should check out the{' '}
-      <Link to='Tutorial' params={{ name: '06-views-react' }}>Part 6: React Views</Link> tutorial.
+      Now that we have our configuration object ready to go, we can think
+      about what our pages should look like. This tutorial will be rendering
+      our website using React. If you prefer to use React, you should check
+      out the <Link to='Tutorial' params={{ name: '06-pages-react' }}>
+      Part 6: React Pages</Link> tutorial.
     </p>
     <div>
       <p>
@@ -27,7 +28,8 @@ export default () => (
       <ul>
         <li>
           Installing the <IJS>@curi/vue</IJS> package, learning about
-          the plugin and one of the components it provides (<Cmp>curi-link</Cmp>).
+          the <IJS>CuriPlugin</IJS> and one of the components it
+          provides (<Cmp>curi-link</Cmp>).
         </li>
         <li>
           Using the response object emitted by Curi to render
@@ -47,9 +49,10 @@ export default () => (
       id='package'
     >
       <p>
-        The <IJS>@curi/react</IJS> package provides a Vue plugin and components that know how
-        to interact with Curi. For this tutorial, we will only be using one: <Cmp>curi-link</Cmp>.
-        You can read the full documentation for the package with the{' '}
+        The <IJS>@curi/vue</IJS> package exports a Vue plugin, which provides
+        components that know how to interact with Curi. For this tutorial,
+        we will only be using one: <Cmp>curi-link</Cmp>. You can read more about
+        the package in the{' '}
         <Link
           to='Package'
           params={{ package: 'vue' }}
@@ -63,7 +66,8 @@ export default () => (
         id='installation'
       >
         <p>
-          Let's start by installing the <IJS>@curi/vue</IJS> package.
+          Let's start by installing the <IJS>@curi/vue</IJS> package as well
+          as Vue.
         </p>
         <PrismBlock lang='bash'>
           {
@@ -76,14 +80,16 @@ export default () => (
         id='plugin'
       >
         <p>
-          <IJS>@curi/vue</IJS> provides a plugin, <IJS>CuriPlugin</IJS>, that adds Curi
-          support to your application. When registering it (via <IJS>Vue.use</IJS>), you
-          should pass a second argument: an object with a <IJS>config</IJS> property whose
-          value is your Curi configuration object.
+          The <IJS>CuriPlugin</IJS> exported by <IJS>@curi/vue</IJS>, should
+          be registered with Vue after the Curi configuration object has been
+          created. When registering it (via <IJS>Vue.use</IJS>), you should
+          pass a second argument: an object with a <IJS>config</IJS> property
+          whose value is your Curi configuration object.
         </p>
         <PrismBlock lang='javascript'>
           {
 `// index.js
+import Vue from 'vue';
 import CuriPlugin from '@curi/vue';
 
 const config = createConfig(history, routes);
@@ -92,10 +98,11 @@ Vue.use(CuriPlugin, { config });`
         </PrismBlock>
 
         <p>
-          This plugins does a couple things. First, it will make your Curi configuration
-          object available to all components, through <IJS>this.$curi</IJS>. Second, it
-          will register Curi specific components. For this tutorial, the only component
-          that we care about is <Cmp>curi-link</Cmp>.
+          This plugins does a couple things. First, it will make your Curi
+          configuration object accessible to every component as{' '}
+          <IJS>this.$curi</IJS>. Second, it will register Curi specific
+          components. For this tutorial, the only component that we care
+          about is <Cmp>curi-link</Cmp>.
         </p>
       </Subsection>
 
@@ -104,9 +111,10 @@ Vue.use(CuriPlugin, { config });`
         id='Link'
       >
         <p>
-          The <Cmp>curi-link</Cmp> component renders anchor (<Cmp>a</Cmp>) elements. However,
-          unlike an anchor, we don't actually have to write the URI that we want to navigate
-          to. Instead, you use the <IJS>to</IJS> prop to pass the name of the route that
+          The <Cmp>curi-link</Cmp> component renders anchor (<Cmp>a</Cmp>)
+          elements. However, unlike an anchor, we don't actually have to write
+          the URI that we want to navigate to (the <IJS>href</IJS>). Instead,
+          you use the <IJS>to</IJS> prop to pass the name of the route that
           you want to navigate to.
         </p>
         <PrismBlock lang='jsx'>
@@ -116,8 +124,8 @@ Vue.use(CuriPlugin, { config });`
           }
         </PrismBlock>
         <p>
-          If the route that you are navigating to has any params, you pass them using
-          the <IJS>params</IJS> prop.
+          If the route that you are navigating to has any params, you pass
+          them using the <IJS>params</IJS> prop.
         </p>
         <PrismBlock lang='jsx'>
           {
@@ -130,8 +138,9 @@ Vue.use(CuriPlugin, { config });`
           }
         </PrismBlock>
         <p>
-          If you need to pass any other location properties (<IJS>query</IJS> or <IJS>hash</IJS>),
-          you can provide them using the <IJS>details</IJS> prop.
+          If you need to pass any other location properties (<IJS>query</IJS>,
+          <IJS>hash</IJS>, or <IJS>state</IJS>), you can provide them using
+          the <IJS>details</IJS> prop.
         </p>
         <PrismBlock lang='jsx'>
           {
@@ -142,7 +151,16 @@ Vue.use(CuriPlugin, { config });`
           }
         </PrismBlock>
         <Note>
-          If you want to navigate outside of the application, use an anchor not a <Cmp>curi-link</Cmp>.
+          If you want to navigate outside of the application, use an anchor not
+          a <Cmp>curi-link</Cmp>.
+          <PrismBlock lang='jsx'>
+            {
+`// interal
+<curi-link to='Contact'>Contact</curi-link>
+// external
+<a href="https://github.com">GitHub</a>`
+            }
+          </PrismBlock>
         </Note>
       </Subsection>
     </Section>
@@ -161,7 +179,9 @@ Vue.use(CuriPlugin, { config });`
       </p>
 
       <p>
-        First, we need to use <IJS>config.ready</IJS> to wait for our initial response object.
+        First, we need to use <IJS>config.ready</IJS> to wait for our initial
+        response object. If we don't do this, we would have to handle rendering
+        when our <IJS>response</IJS> is <IJS>undefined</IJS>.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -174,8 +194,11 @@ config.ready().then(response => {
       </PrismBlock>
 
       <p>
-        Inside of the <IJS>then</IJS> function, we should create our Vue instance. The
-        response object should be passed as a data property to the instance.
+        Inside of the <IJS>then</IJS> function, we should create our Vue instance.
+        The response object should be passed as a data property to the instance.
+        We will have our Vue instance render an <Cmp>app</Cmp> component, which
+        we will define next. The <Cmp>app</Cmp> is passed the <IJS>response</IJS>
+        {' '}object as a prop, which it will use to determine what to render.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -198,17 +221,18 @@ config.ready().then(response => {
       </PrismBlock>
 
       <p>
-        With the above code, we pass the initial response to an <Cmp>app</Cmp> component.
-        That is great for our initial response, but what happens when the user navigates
+        Passing the <IJS>response</IJS> that <IJS>config.ready()</IJS> resolved
+         is great for our initial response, but what happens when the user navigates
         to a new location? We need a way to update this value. This is where{' '}
         <IJS>config.subscribe</IJS> comes into play.
       </p>
       <p>
-        We can pass a function to <IJS>config.subscribe</IJS> that will be called whenever
-        a new response is emitted. The first argument that that function will receive is
-        the new response object. That means that we can write a subscriber function that
-        sets <IJS>vm.response</IJS> to the new response and Vue will re-render using
-        the new response.
+        We can pass a function to <IJS>config.subscribe</IJS> that will be
+        called whenever a new response is emitted. The first argument that
+        that function will receive is the new response object. That means
+        that we can write a subscriber function that sets <IJS>vm.response</IJS>
+        {' '}using the new response and Vue will re-render using the new
+        response.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -237,15 +261,16 @@ config.ready().then(response => {
       id='app'
     >
       <p>
-        At this point we have the ability to access our configuration object throughout
-        our components and we are passing response objects to some <Cmp>app</Cmp> component
-        that we haven't actually written yet. We should do that now.
+        At this point we have the ability to access our configuration
+        object throughout our components and we are passing response
+        objects to some <Cmp>app</Cmp> component that we haven't actually
+        written yet. We should do that now.
       </p>
 
       <p>
-        Our <Cmp>app</Cmp> component will be responsible for rendering our website based
-        on the response object. To start, let's add a <IJS>components</IJS> directory
-        to our <IJS>src</IJS> directory.
+        Our <Cmp>app</Cmp> component will be responsible for rendering
+        our website based on the response object. To start, let's add
+        a <IJS>components</IJS> directory to our <IJS>src</IJS> directory.
       </p>
 
       <PrismBlock lang='bash'>
@@ -295,20 +320,26 @@ config.ready().then(response => {
       </PrismBlock>
       <Note>
         The <Link to='Guide' params={{ slug: 'responses' }} details={{ hash: 'properties' }}>
-        Rendering with Responses</Link> guide goes into more detail about each of the properties
-        of a response object.
+        Rendering with Responses</Link> guide goes into more detail about
+        each of the properties of a response object.
       </Note>
 
       <p>
-        Your first thought about how to use a response to render might be to use{' '}
-        <IJS>response.name</IJS>. You could setup a <IJS>switch</IJS> to render different
-        content based on <IJS>response.name</IJS>. However, that would grow increasingly complex
-        as you add more routes to your application.
+        Your first thought about how to use a response to render might
+        be to use <IJS>response.name</IJS>. You could use a template full of
+        if/else attributes and render a different component based on the{' '}
+        <IJS>response.name</IJS>. In the same vein, you could add a computed
+        property that returns a component for each possible <IJS>name</IJS>
+        {' '}value and use <Cmp>component :is</Cmp> to render the computed
+        property. Neither of those sounds very convenient, especially as your
+        application gets more complex, although <Cmp>component :is</Cmp> is
+        something we will want to use.
       </p>
       <p>
-        Instead, we are going to use one of the <IJS>undefined</IJS> properties of the above response:{' '}
-        <IJS>body</IJS>. What is this property? The <IJS>body</IJS> property of a response is set by
-        calling the <IJS>body</IJS> function property of a matched route.
+        Instead, we are going to use one of the <IJS>undefined</IJS> properties
+        from the above response: <IJS>body</IJS>. What is this property? The{' '}
+        <IJS>body</IJS> property of a response is set by calling the <IJS>body</IJS>
+        {' '}function property of a matched route.
       </p>
       <PrismBlock lang='jsx'>
         {
@@ -330,10 +361,11 @@ config.ready().then(response => {
         }
       </PrismBlock>
       <p>
-        Now, instead of returning a string, what if our <IJS>route.body</IJS> properties
-        were functions that returned Vue components? We can use the <Cmp>component</Cmp>
-        {' '}component to dynamically set the component that Vue should render. Then, our
-        render function can use <IJS>response.body</IJS> to render our website. 
+        Now, instead of returning a string, what if our <IJS>route.body</IJS>
+        {' '}properties were functions that returned Vue components? We can use{' '}
+        <Cmp>component :is</Cmp> to dynamically set the component that Vue should
+        render. Then, our render function can use <IJS>response.body</IJS> to
+        render our website. 
       </p>
       <PrismBlock lang='html'>
         {
@@ -359,9 +391,10 @@ export default {
       id='route-components'
     >
       <p>
-        To refresh your memory, we have "Home", "Contact", "Book List", "Book", "Checkout", and
-        "Not Found" pages that we will need to create components for. We can write some barebones
-        components and add some more content later on.
+        To refresh your memory, we have "Home", "Contact", "Book List", "Book",
+        "Checkout", and "Not Found" pages that we will need to create components
+        for. We can write some barebones components and add some more content
+        later on.
       </p>
 
       <PrismBlock lang='html'>
@@ -369,7 +402,7 @@ export default {
 `<!-- components/Home.vue -->
 <template>
   <div class='home'>
-    Home Page
+    Welcome to our book store!
   </div>
 </template>`
         }
@@ -379,7 +412,7 @@ export default {
 `<!-- components/Contact.vue -->
 <template>
   <div class='contact'>
-    Contact
+    You can contact us by fax at 1-206-555-0123.
   </div>
 </template>`
         }
@@ -477,9 +510,9 @@ export default routes;`
         }
       </PrismBlock>
       <p>
-        Now, if we load up our application, we will render our home page. Unfortunately,
-        there is no way to navigate to any of our other pages. We will need to add some{' '}
-        <Cmp>curi-link</Cmp>s to our application.
+        Now, if we load up our application, we will render our home page.
+        Unfortunately, there is no way to navigate to any of our other pages.
+        We will need to add some <Cmp>curi-link</Cmp>s to our application.
       </p>
     </Section>
 
@@ -488,15 +521,16 @@ export default routes;`
       id='nav-menu'
     >
       <p>
-        We can write a simple <Cmp>Nav</Cmp> menu component to add navigation to our application.
-        From this menu, we only need to be able to navigate to our "Home", "Contact", "Book List",
-        and "Checkout" routes. Navigation to individual books will be done from the book list
+        We can write a simple <Cmp>NavLinks</Cmp> menu component to add
+        navigation to our application. From this menu, we only need to be
+        able to navigate to our "Home", "Contact", "Book List", and "Checkout"
+        routes. Navigation to individual books will be done from the book list
         page.
       </p>
       <p>
-        We will use a <Cmp>nav</Cmp> element as the parent for our <Cmp>Nav</Cmp> (note the lowercase/uppercase
-        difference). Inside of that is a <Cmp>ul</Cmp> and then each of our routes will be <Cmp>Link</Cmp>s
-        wrapped in <Cmp>li</Cmp>s.
+        We will use a <Cmp>nav</Cmp> element as the parent for our{' '}
+        <Cmp>NavLinks</Cmp>. Inside of that is a <Cmp>ul</Cmp> and then each of
+        our routes will be <Cmp>Link</Cmp>s wrapped in <Cmp>li</Cmp>s.
       </p>
       <PrismBlock lang='html'>
         {
@@ -522,7 +556,9 @@ export default routes;`
         }
       </PrismBlock>
       <p>
-        Let's import and render that component in our <Cmp>app</Cmp>.
+        Let's import and render that the <Cmp>NavLinks</Cmp> in
+        our <Cmp>app</Cmp>. We'll also add some wrapper elements
+        to keep our content organized.
       </p>
       <PrismBlock lang='html'>
         {

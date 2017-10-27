@@ -12,10 +12,10 @@ import { Section, Subsection } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 9: Programmatic Navigation</h1>
+    <h1>Part 9: Forms & Programmatic Navigation</h1>
     <p>
       In this tutorial, we are going to be using another property of our
-      Curi configuration object: <IJS>history</IJS>. This property is the
+      Curi configuration object: <IJS>history</IJS>. This property is our
       Hickory history instance. We will use it to perform navigation
       between pages in our website.
     </p>
@@ -68,7 +68,7 @@ function saveCart(cart) {
 // read from localStorage and parse the value
 export function getCart() {
   let cart = JSON.parse(localStorage.getItem('cart'));
-  /* initialize cart if it doesn't already exist */
+  // initialize cart if it doesn't already exist
   if (cart == null) {
     cart = {};
     saveCart(cart);
@@ -101,7 +101,7 @@ export function resetCart() {
       <p>
         We will need to access this API in two places. Our "Book" pages need
         to use <IJS>updateCart</IJS> in order to add books to the shopping cart.
-        The "Checkout" page need to know which books (and how many of each) have
+        The "Checkout" page need to know which books (and how many of each)
         are currently in the shopping cart. The page should also clear the cart
         out after a user has "purchased" the book in their shopping cart.
       </p>
@@ -117,9 +117,10 @@ export function resetCart() {
       </p>
       <p>
         We can start by creating a component with renders a <Cmp>select</Cmp>.
-        Users can buy 1-4 copies of a book, so we need an <Cmp>option</Cmp> for
-        each possible value. We should also add an <IJS>onChange</IJS> handler
-        to update the <Cmp>select</Cmp> when the user changes the value.
+        Users can buy 1-4 copies of a book (an arbitrary restriction), so we
+        need an <Cmp>option</Cmp> for each possible value. We should also add
+        an <IJS>onChange</IJS> handler to update the <Cmp>select</Cmp> when
+        the user changes the value.
       </p>
       <PrismBlock lang='jsx'>
         {
@@ -151,8 +152,9 @@ class AddToCart extends React.Component {
       <p>
         Next, we need to add a button to add the book to the shopping
         cart. We're actually going to add two buttons. The first will just
-        add the book(s) to the shopping cart. The second will add the book(s)
-        to the shopping cart and then redirect to the "Checkout" page.
+        add the book/count to the shopping cart. The second will add the
+        book/count to the shopping cart and then redirect to the "Checkout"
+        page.
       </p>
       <p>
         How will we redirect? So far, all navigation within the website
@@ -163,7 +165,8 @@ class AddToCart extends React.Component {
         {' '}methods that we can call to trigger navigation. You can read
         about each of these in the{' '}
         <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#methods">
-        Hickory documentation</a>; for this component, we will use <IJS>push</IJS>.
+        Hickory documentation</a>. For this tutorial, we will be using{' '}
+        <IJS>push</IJS>.
       </p>
       <p>
         In order to access the configuration object from within our component
@@ -175,8 +178,8 @@ class AddToCart extends React.Component {
       </p>
       <p>
         We can also access all of our Curi <IJS>addons</IJS> from our configuration
-        object, so we will use that to generate the pathname for the location
-        that we wan to redirect to.
+        object, so we will use <IJS>curi.addons.pathname</IJS> to generate the
+        pathname for the location that we wan to redirect to.
       </p>
       <p>
         When the user clicks either of the buttons, we will want to use the{' '}
@@ -253,7 +256,11 @@ import AddToCart from './AddToCart';
 const Book = (props) => {
   const { data } = props.response;
   if (!data) {
-    return <div className='book'>The requested book does not exist</div>;
+    return (
+      <div className='book'>
+        The requested book does not exist
+      </div>
+    );
   }
   const { book } = data;
   return (
@@ -345,8 +352,8 @@ const routes = [
       </PrismBlock>
       <p>
         Before we update our <Cmp>Checkout</Cmp> component, let's write
-        the <Cmp>CheckoutComplete</Cmp>. This should just be a simple component
-        thanking the user for their purchase.
+        the <Cmp>CheckoutComplete</Cmp> component. This should just be a
+        simple component thanking the user for their purchase.
       </p>
       <PrismBlock lang='jsx'>
         {

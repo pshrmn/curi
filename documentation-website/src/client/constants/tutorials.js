@@ -20,8 +20,8 @@ const tutorials = [
     displayName: 'Part 5: The Curi Configuration Object'
   },
   {
-    name: '06-views',
-    displayName: 'Part 6: Rendering Views',
+    name: '06-pages',
+    displayName: 'Part 6: Rendering Pages',
     frameworks: ['react', 'vue']
   },
   {
@@ -35,7 +35,7 @@ const tutorials = [
   },
   {
     name: '09-nav',
-    displayName: 'Part 9: Programmatic Navigation',
+    displayName: 'Part 9: Forms & Programmatic Navigation',
     frameworks: ['react', 'vue']
   },
   {

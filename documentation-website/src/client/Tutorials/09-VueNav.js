@@ -12,7 +12,7 @@ import { Section, Subsection } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 9: Programmatic Navigation</h1>
+    <h1>Part 9: Forms & Programmatic Navigation</h1>
     <p>
       In this tutorial, we are going to be using another property of our
       Curi configuration object: <IJS>history</IJS>. This property is the
@@ -68,7 +68,7 @@ function saveCart(cart) {
 // read from localStorage and parse the value
 export function getCart() {
   let cart = JSON.parse(localStorage.getItem('cart'));
-  /* initialize cart if it doesn't already exist */
+  // initialize cart if it doesn't already exist
   if (cart == null) {
     cart = {};
     saveCart(cart);
@@ -101,7 +101,7 @@ export function resetCart() {
       <p>
         We will need to access this API in two places. Our "Book" pages need
         to use <IJS>updateCart</IJS> in order to add books to the shopping cart.
-        The "Checkout" page need to know which books (and how many of each) have
+        The "Checkout" page need to know which books (and how many of each)
         are currently in the shopping cart. The page should also clear the cart
         out after a user has "purchased" the book in their shopping cart.
       </p>
@@ -117,12 +117,12 @@ export function resetCart() {
       </p>
       <p>
         We can start by creating a component with renders a <Cmp>select</Cmp>.
-        Users can buy 1-4 copies of a book, so we need an <Cmp>option</Cmp> for
-        each possible value.
+        Users can buy 1-4 copies of a book (an arbitrary restriction), so we need
+        an <Cmp>option</Cmp> for each possible value.
       </p>
       <PrismBlock lang='html'>
         {
-`// components/AddToCart.vue
+`<!-- components/AddToCart.vue -->
 <template>
   <form>
     <select v-model="count">
@@ -149,8 +149,9 @@ export default {
       <p>
         Next, we need to add a button to add the book to the shopping
         cart. We're actually going to add two buttons. The first will just
-        add the book(s) to the shopping cart. The second will add the book(s)
-        to the shopping cart and then redirect to the "Checkout" page.
+        add the book/count to the shopping cart. The second will add the
+        book/count to the shopping cart and then redirect to the "Checkout"
+        page.
       </p>
       <p>
         How will we redirect? So far, all navigation within the website
@@ -161,7 +162,8 @@ export default {
         {' '}methods that we can call to trigger navigation. You can read
         about each of these in the{' '}
         <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#methods">
-        Hickory documentation</a>; for this component, we will use <IJS>push</IJS>.
+        Hickory documentation</a>. For this tutorial, we will be using{' '}
+        <IJS>push</IJS>.
       </p>
       <p>
         The <IJS>CuriPlugin</IJS> makes our configuration object available to
@@ -171,8 +173,8 @@ export default {
       </p>
       <p>
         We can also access all of our Curi <IJS>addons</IJS> from our configuration
-        object, so we will use that to generate the pathname for the location
-        that we wan to redirect to.
+        object, so we will use <IJS>curi.addons.pathname</IJS> to generate the
+        pathname for the location that we wan to redirect to.
       </p>
       <p>
         When the user clicks either of the buttons, we will want to use the{' '}
@@ -183,7 +185,7 @@ export default {
       </p>
       <PrismBlock lang='html'>
         {
-`// components/AddToCart.vue
+`<!-- components/AddToCart.vue -->
 <template>
   <form>
     <select v-model="count">
@@ -232,7 +234,7 @@ export default {
       </p>
       <PrismBlock lang='html'>
         {
-`// components/Book.vue
+`<!-- components/Book.vue -->
 <template>
   <div v-if="book" class='book'>
     <h2>{{book.title}}</h2>
@@ -336,12 +338,12 @@ const routes = [
       </PrismBlock>
       <p>
         Before we update our <Cmp>Checkout</Cmp> component, let's write
-        the <Cmp>CheckoutComplete</Cmp>. This should just be a simple component
-        thanking the user for their purchase.
+        the <Cmp>CheckoutComplete</Cmp> component. This should just be a
+        simple component thanking the user for their purchase.
       </p>
       <PrismBlock lang='html'>
         {
-`// components/CheckoutComplete.vue
+`<!-- components/CheckoutComplete.vue -->
 <template>
   <div className='checkout-complete'>
     Thanks for your purchase!
@@ -360,7 +362,7 @@ const routes = [
       </p>
       <PrismBlock lang='html'>
         {
-`// components/Checkout.vue
+`<!-- components/Checkout.vue -->
 <template>
   <div class='checkout'>
     <h1>Checkout</h1>
@@ -413,7 +415,7 @@ export default {
       </p>
       <PrismBlock lang='html'>
         {
-`// component/Checkout.vue
+`<!-- component/Checkout.vue -->
 <template>
   <div class='checkout'>
     <h1>Checkout</h1>

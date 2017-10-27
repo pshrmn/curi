@@ -75,8 +75,8 @@ export default () => (
       </li>
       <li>
         We only had ten books in our data, but what if there were hundreds? You could
-        implement pagination on the "Book List" page. You could add query strings to
-        the location and only display certain books. If you're feeling adventurous,
+        implement pagination on the "Book List" page. Query params could be included in
+        the location to only display certain books. If you're feeling adventurous,
         you could pass a{' '}
         <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
           <IJS>query</IJS> object

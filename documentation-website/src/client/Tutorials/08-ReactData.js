@@ -31,7 +31,7 @@ export default () => (
       </ul>
     </div>
     <Section
-      title='Book List'
+      title='Using Data with the Book List'
       id='book-list'
     >
       <p>
@@ -48,7 +48,7 @@ const BookList = ({ response }) => (
     <h1>Available Books</h1>
     <div className='books'>
       { response.data.books.map(b => (
-        <div className='book-item' key={b.id}>
+        <div key={b.id} className='book-item'>
           <Link to='Book' params={{ id: b.id }}>
             {b.title}
           </Link>
@@ -60,7 +60,7 @@ const BookList = ({ response }) => (
         }
       </PrismBlock>
       <Note>
-        If our <IJS>render</IJS> function (pass to the <Cmp>Navigator</Cmp>)
+        If our <IJS>render</IJS> function (passed to the <Cmp>Navigator</Cmp>)
         had just passed the <IJS>params</IJS> instead of the whole{' '}
         <IJS>response</IJS>, we would have to modify that function to also
         pass along the <IJS>data</IJS>. Since we pass the entire{' '}
@@ -68,7 +68,7 @@ const BookList = ({ response }) => (
       </Note>
     </Section>
     <Section
-      title='Book'
+      title='Using Data with the Book'
       id='book'
     >
       <p>
@@ -82,8 +82,9 @@ const BookList = ({ response }) => (
         when there is no matching book? In the sample data, we have books with ids
         that range from 0-9. What if the user navigates to <IJS>/books/123</IJS>?
         Our <IJS>fetchBook</IJS> call will reject and <IJS>response.data</IJS>
-        {' '}will be <IJS>undefined</IJS>. For now, we should detect that and render
-        a simple message stating that the requested book does not exist.
+        {' '}will be <IJS>undefined</IJS>. For now, we can just detect when{' '}
+        <IJS>response.data</IJS> is <IJS>undefined</IJS> and render a simple
+        message stating that the requested book does not exist.
       </p>
       <PrismBlock lang='jsx'>
         {
@@ -91,7 +92,11 @@ const BookList = ({ response }) => (
 const Book = (props) => {
   const { data } = props.response;
   if (!data) {
-    return <div className='book'>The requested book does not exist</div>;
+    return (
+      <div className='book'>
+        The requested book does not exist
+      </div>
+    );
   }
   const { book } = data;
   return (
@@ -106,6 +111,16 @@ const Book = (props) => {
         }
       </PrismBlock>
     </Section>
+    <p>
+      Now that we are using <IJS>response.data</IJS> in both the{' '}
+      <Cmp>BookList</Cmp> and <Cmp>Book</Cmp> components, we can remove
+      the <IJS>books.js</IJS> file.
+    </p>
+    <PrismBlock lang='bash'>
+      {
+`git rm src/books.js`
+      }
+    </PrismBlock>
     <Section
       title='Next'
       id='next'
@@ -113,7 +128,7 @@ const Book = (props) => {
       <p>
         Our book component still isn't complete. We are building a book store after all,
         so we should really provide the user a way to actually "buy" a book. In{' '}
-        <Link to='Tutorial' params={{ name: '09-forms-react' }}>Part 9: Curi & Forms</Link>,
+        <Link to='Tutorial' params={{ name: '09-nav-react' }}>Part 9: Forms & Navigation</Link>,
         we will add the ability to add books to a shopping cart and "purchase"
         them from our "Checkout" route.
       </p>

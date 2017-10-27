@@ -11,9 +11,8 @@ const TutorialList = () => (
     <h1>Part 1: Introduction to Curi</h1>
     <p>
       In this set of tutorials, we will be building a single page application from
-      scratch using Curi. This application will be a website for a book store. Users
-      of the website will be able to browse through books and "purchase" ones that
-      they want.
+      scratch using Curi. The application will be a website for a book store.
+      Users will be able to browse through books and "purchase" ones that they want.
     </p>
     <Note>
       We will only be building the front end. Any time that we would need to add back
@@ -43,11 +42,16 @@ const TutorialList = () => (
           </ol>
         </li>
         <li>
+          Curi is response based. Whenever navigation happens, Curi will create a new
+          response object by matching itsroutes to the new location. The response will
+          then be emitted so that the application can re-render using the new response.
+        </li>
+        <li>
           Curi is not framework specific. It does not matter to Curi how you render your
           application; Curi is only concerned with navigation and route matching. That said,
           there are a couple official framework specific packages (e.g. <IJS>@curi/react</IJS>
-          {' '}and <IJS>@curi/vue</IJS>) to help you, but these are not required for you to be
-          able to use Curi.
+          {' '}and <IJS>@curi/vue</IJS>) that provide integration with Curi, but these are not
+          required for you to be able to use Curi.
         </li>
       </ol>
     </Section>
@@ -57,9 +61,9 @@ const TutorialList = () => (
       id='prereqs'
     >
       <p>
-        There are not a lot of prerequisites you need to be able to easily follow
-        along with this tutorial. However, there are a couple things you should
-        keep in mind.
+        These tutorials aim to be quite easy to pick up without a lot of prior
+        knowledge required. However, there are a couple things you should keep
+        in mind.
       </p>
       <ol>
         <li>

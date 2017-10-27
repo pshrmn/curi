@@ -10,11 +10,11 @@ export default () => (
   <BaseTutorial>
     <h1>Part 7: The Load Function</h1>
     <p>
-      In the previous tutorial, we wrote a quick <IJS>books.js</IJS> file to
-      have some data to load, but it wasn't very realistic. We just imported
-      an array, whereas in a "real" website, we would most likely make a
-      request to our server which would return our data (possibly after
-      running a database query).
+      In the previous tutorial, we wrote mocked book data in <IJS>books.js</IJS>
+      {' '} to have some data to load, but it was just filler data. We just
+      imported the data as an array, whereas in a "real" website, we would most
+      likely make a request to our server which would return our data (possibly
+      after running a database query).
     </p>
     <div>
       <p>
@@ -193,15 +193,14 @@ export function fetchBook(id) {
       id='load'
     >
       <p>
-        Do you remember before when we said that Curi is an{' '}
-        <strong>asynchronous</strong> router? Now is the time that we
-        will see why.
+        Do you remember before when we said that Curi is an asynchronous
+        router? Now is the time that we finally will see why.
       </p>
       <p>
         Each route can have a <IJS>load</IJS> property. This is a function
         that can perform data loading related to a route prior to emitting
-        a response. In fact, we can use the <IJS>load</IJS> function
-        to modify the response.
+        a response. We can use the <IJS>load</IJS> function to modify the
+        response or to update some other code like a global data store.
       </p>
       <PrismBlock lang='javascript'>
         {
@@ -227,7 +226,7 @@ export function fetchBook(id) {
           {
   `{
     name: 'Book',
-    load: (route, mods, addons) {
+    load: (route, mods, addons) => {
       const { params, location, name } = route;
       const { setData, redirect, fail, setStatus } = mods;
       const { pathname, ...rest } = addons;   
@@ -237,7 +236,7 @@ export function fetchBook(id) {
         </PrismBlock>
         <p>
           The first argument that will be passed to your load function is an object
-          whose properties are related to the matched route. The are <IJS>params</IJS>,
+          with properties related to the matched route. These are <IJS>params</IJS>,
           which is the object of path params parsed from the location's pathname,{' '}
           <IJS>location</IJS>, which is the location object used to match the route,
           and <IJS>name</IJS>, which is the name of the matched route.
@@ -259,7 +258,7 @@ export function fetchBook(id) {
           an object containing all of the Curi addons that are registered with your
           Curi configuration object. This includes the <IJS>pathname</IJS> addon, which
           you may find useful for generating pathnames in your <IJS>load</IJS> (particularly
-          if you plan to use the <IJS>redirect</IJS> function).
+          if you plan to use the <IJS>redirect</IJS> function mentioned above).
         </p>
       </Subsection>
       <Subsection
@@ -276,7 +275,7 @@ export function fetchBook(id) {
         <PrismBlock lang='javascript'>
           {
 `{
-  load: (route, mods, addons) {
+  load: (route, mods, addons) => {
     return fetch(\`/api/book/\${route.params.id}\`)
       .then(resp => {...});
   }
@@ -320,10 +319,11 @@ const routes = [
         }
       </PrismBlock>
       <Note>
-        In the above "Book" route, we introduce <IJS>route.params</IJS>. This
-        is an object whose keys are path param names and whose value is a
-        function that will parse the param string. For example, the above function
-        takes the input string and returns that string parsed as an integer.
+        In the above "Book" route, we introduce the <IJS>route.params</IJS>
+        {' '}property. This is an object whose keys are path param names and
+        whose values are functions that will parse the param string to return
+        a new value. For example, the above function takes the input string
+        and returns that string parsed as an integer.
       </Note>
       <p>
         If the only thing that our <IJS>load</IJS> functions do is
@@ -332,7 +332,7 @@ const routes = [
         <IJS>setData</IJS> function that is provided by the second argument
         to our load function. <IJS>setData</IJS> takes an object and will add
         that object to the response object as its <IJS>data</IJS> property. Let's
-        add <IJS>then</IJS> functions to our fetches to do this.
+        add <IJS>then</IJS> callback functions to our fetches to do this.
       </p>
       <PrismBlock lang='javascript'>
         {
@@ -388,9 +388,9 @@ const routes = [
 `{
   name: 'Book List',
   data: {
-    books: [...]
+    books: [/*...*/]
   },
-  ...
+  // ...
 }`
         }
       </PrismBlock>
@@ -404,9 +404,9 @@ const routes = [
   name: 'Book',
   params: { id: 0 }
   data: {
-    book: { title: '...', ... }
+    book: { title: '...', /*...*/ }
   },
-  ...
+  // ...
 }`
         }
       </PrismBlock>
@@ -424,12 +424,12 @@ const routes = [
       <p>
         If you are using React, continue with{' '}
         <Link to='Tutorial' params={{ name: '08-render-data-react' }}>Part 8: Rendering
-        Data (React)</Link>.
+        Data with React</Link>.
       </p>
       <p>
         If you are using Vue, continue with{' '}
         <Link to='Tutorial' params={{ name: '08-render-data-vue' }}>Part 8: Rendering
-        Data (Vue)</Link>.
+        Data with Vue</Link>.
       </p>
     </Section>
   </BaseTutorial>
