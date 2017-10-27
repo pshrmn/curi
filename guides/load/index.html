@@ -8,7 +8,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>The Load Property</h1><p>In the code splitting guide, we used the preload property of routes. Routes also have a load property. The biggest difference between the two is that load is called every time a route matches, whereas preload is only called the first time a route matches.</p><p>load is where you should perform any data loading for the route. We&#x27;ll start a new application here, which is a basic recipe site. We want to have a route for a recipe list page as well as a route for specific recipes.</p><pre class="language-javascript">const routes = [
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>The Load Property</h1><p>In the code splitting guide, we used the preload property of routes. Routes also have a load property. The biggest difference between the two is that load is called every time a route matches, whereas preload is only called the first time a route matches.</p><p>load is where you should perform any data loading for the route. We&#x27;ll start a new application here, which is a basic recipe site. We want to have a route for a recipe list page as well as a route for specific recipes.</p><pre class="language-javascript">const routes = [
   {
     name: &#x27;Recipe List&#x27;,
     path: &#x27;recipes&#x27;,
@@ -19,12 +19,12 @@
     path: &#x27;recipe/:id&#x27;,
     body: () =&gt; Recipe
   }
-];</pre><p>Whenever the Recipe List route matches, we want to fetch a list of recipes from the server. When the Recipe route matches, we just want one specific recipe (using the id param from the path).</p><p>The load function will be passed four arguments: the params object that contains variables parsed from the location&#x27;s pathname, the location object used to match the route, a modifiers object, and the object containing all of your Curi addons. The modifiers object has a few methods that you can call in order to modify the response object that will be generated. They are <code class="language-javascript">fail</code>, <code class="language-javascript">setStatus</code>, <code class="language-javascript">setData</code> and <code class="language-javascript">redirect</code>. Each is explained in more detail in the<!-- --> <a href="/guides/routes/#load">all about routes</a> <!-- -->guide. Here, we will use the last two: setData and redirect.</p><p>First we will add a load function to our Recipe route. This function will make a request to our (fake) API. Then, we will call response.setData to attach our loaded data to the response.</p><pre class="language-javascript">{
+];</pre><p>Whenever the Recipe List route matches, we want to fetch a list of recipes from the server. When the Recipe route matches, we just want one specific recipe (using the id param from the path).</p><p>The load function will be passed three arguments: a &quot;route&quot; object that contains <code class="language-javascript">params</code>, <code class="language-javascript">location</code> and <code class="language-javascript">name</code> properties, a modifiers object, and the object containing all of your Curi addons. The modifiers object has a few methods that you can call in order to modify the response object that will be generated. They are <code class="language-javascript">fail</code>, <code class="language-javascript">setStatus</code>,<!-- --> <code class="language-javascript">setData</code> and <code class="language-javascript">redirect</code>. Each is explained in more detail in the<!-- --> <a href="/guides/routes/#load">all about routes</a> <!-- -->guide. Here, we will use the last two: setData and redirect.</p><p>First we will add a load function to our Recipe route. This function will make a request to our (fake) API. Then, we will call response.setData to attach our loaded data to the response.</p><pre class="language-javascript">{
   name: &#x27;Recipe&#x27;,
   path: &#x27;recipe/:id&#x27;,
   body: () =&gt; Recipe,
-  load: (params, location, modifiers) =&gt; {
-    return fakeAPI.getRecipe(params.id)
+  load: (route, modifiers) =&gt; {
+    return fakeAPI.getRecipe(route.params.id)
       .then(data =&gt; {
         modifiers.setData(data);
       });
@@ -47,7 +47,7 @@
 }</pre><p>If at some point in time we decide that we want to change our URI pathname structure, we can also use the load function to redirect.</p><p>By calling the modifier&#x27;s redirect method, you can specify the URI that we should redirect to. As always, with Curi you aren&#x27;t expected to have to manually generate pathnames. Instead, you can use <code class="language-javascript">addons.pathname</code>.</p><pre class="language-javascript">{
   name: &#x27;Old Recipe&#x27;,
   path: &#x27;r/:id&#x27;,
-  load: (params, location, modifiers, addons) =&gt; {
+  load: ({ params, location }, modifiers, addons) =&gt; {
     const pathname = addons.pathname(&#x27;Recipe&#x27;, params);
     // destructure the current location to preserve
     // query/hash values

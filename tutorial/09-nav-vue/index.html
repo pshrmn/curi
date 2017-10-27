@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial Part 9: Forms & Programmatic Navigation | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="tutorial"><div class="content"><h1>Part 9: Forms &amp; Programmatic Navigation</h1><p>In this tutorial, we are going to be using another property of our Curi configuration object: <code class="language-javascript">history</code>. This property is the Hickory history instance. We will use it to perform navigation between pages in our website.</p><div><p>In this tutorial, we will be doing the following:</p><ul><li>Creating another fake API, this time for getting/setting items in our shopping cart.</li><li>Adding the ability to add books to the shopping cart from the &quot;Book&quot; page.</li><li>Displaying books in the shopping cart from the &quot;Checkout&quot; page and allowing users to &quot;purchase&quot; their selected books.</li><li>Performing programmatic navigation to automatically navigate to another location.</li></ul></div><div class="section"><h2 id="API">The (Fake) API<a class="header-link" href="/tutorial/09-nav-vue#API">#</a></h2><p>Since we do not have a backend to store the books that a user wants to purchase, we will simulate this using <code class="language-javascript">localStorage</code>. This will be done by maintaining an object whose keys are book <code class="language-javascript">id</code>s and whose values is how many of that book should be purchased.</p><p>Our API should export three methods: the first will get the current state of the shopping cart, the second will update the shopping cart, and the third will reset the shopping cart.</p><pre class="language-javascript">// api/shoppingCart.js
+function saveCart(cart) {
+  localStorage.setItem(&#x27;cart&#x27;, JSON.stringify(cart));
+}
+
+// read from localStorage and parse the value
+export function getCart() {
+  let cart = JSON.parse(localStorage.getItem(&#x27;cart&#x27;));
+  // initialize cart if it doesn&#x27;t already exist
+  if (cart == null) {
+    cart = {};
+    saveCart(cart);
+  }
+  return Promise.resolve(cart);
+}
+
+// add the book and count to the cart
+export function updateCart(bookID, count) {
+  return getCart()
+    .then(cart =&gt; {
+      cart[bookID] = count;
+      saveCart(cart);
+      return cart;
+    });
+}
+
+// reset the cart to an empty object
+export function resetCart() {
+  const cart = {};
+  saveCart(cart);
+}</pre><div class="note"><strong>Note:</strong> <!-- -->We are using <code class="language-javascript">localStorage</code>, which is synchronous, but our API functions return Promises to simulate having to make these requests to the server.</div><p>We will need to access this API in two places. Our &quot;Book&quot; pages need to use <code class="language-javascript">updateCart</code> in order to add books to the shopping cart. The &quot;Checkout&quot; page need to know which books (and how many of each) are currently in the shopping cart. The page should also clear the cart out after a user has &quot;purchased&quot; the book in their shopping cart.</p></div><div class="section"><h2 id="add-books">Adding Books to the Shopping Cart<a class="header-link" href="/tutorial/09-nav-vue#add-books">#</a></h2><p>On the &quot;Book&quot; page, users should be able to specify how many copies of a book they want to purchase and add those to their shopping cart. We will do this by adding a new component, <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code>.</p><p>We can start by creating a component with renders a <code class="language-jsx"><!-- -->&lt;<!-- -->select<!-- -->&gt;</code>. Users can buy 1-4 copies of a book (an arbitrary restriction), so we need an <code class="language-jsx"><!-- -->&lt;<!-- -->option<!-- -->&gt;</code> for each possible value.</p><pre class="language-html">&lt;!-- components/AddToCart.vue --&gt;
+&lt;template&gt;
+  &lt;form&gt;
+    &lt;select v-model=&quot;count&quot;&gt;
+      &lt;option value=&quot;1&quot;&gt;1&lt;/option&gt;
+      &lt;option value=&quot;2&quot;&gt;2&lt;/option&gt;
+      &lt;option value=&quot;3&quot;&gt;3&lt;/option&gt;
+      &lt;option value=&quot;4&quot;&gt;4&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/form&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data: function() {
+    return {
+      count: &#x27;1&#x27;
+    };
+  }
+};
+&lt;/script&gt;
+</pre><p>Next, we need to add a button to add the book to the shopping cart. We&#x27;re actually going to add two buttons. The first will just add the book/count to the shopping cart. The second will add the book/count to the shopping cart and then redirect to the &quot;Checkout&quot; page.</p><p>How will we redirect? So far, all navigation within the website has been performed using <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s. However, sometimes you might want to navigate programmatically. To do this, we can take advantage of our Hickory history object. The history object has <code class="language-javascript">push</code>, <code class="language-javascript">replace</code>, and <code class="language-javascript">update</code> <!-- -->methods that we can call to trigger navigation. You can read about each of these in the<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#methods">Hickory documentation</a>. For this tutorial, we will be using<!-- --> <code class="language-javascript">push</code>.</p><p>The <code class="language-javascript">CuriPlugin</code> makes our configuration object available to all of our components as <code class="language-javascript">this.$curi</code>. That means that we can call <code class="language-javascript">this.$curi.history.push</code> (a bit of a mouthful) to automatically redirect to another page.</p><p>We can also access all of our Curi <code class="language-javascript">addons</code> from our configuration object, so we will use <code class="language-javascript">curi.addons.pathname</code> to generate the pathname for the location that we wan to redirect to.</p><p>When the user clicks either of the buttons, we will want to use the<!-- --> <code class="language-javascript">updateCart</code> API method to add the book to the shopping cart. The <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code> component doesn&#x27;t inherently know which book it is for, so we will need to pass it the <code class="language-javascript">id</code> of the book as a prop when we render it.</p><pre class="language-html">&lt;!-- components/AddToCart.vue --&gt;
+&lt;template&gt;
+  &lt;form&gt;
+    &lt;select v-model=&quot;count&quot;&gt;
+      &lt;option value=&quot;1&quot;&gt;1&lt;/option&gt;
+      &lt;option value=&quot;2&quot;&gt;2&lt;/option&gt;
+      &lt;option value=&quot;3&quot;&gt;3&lt;/option&gt;
+      &lt;option value=&quot;4&quot;&gt;4&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;button type=&quot;button&quot; v-on:click=&quot;addToCart&quot;&gt;Add To Cart&lt;/button&gt;
+    &lt;button type=&quot;button&quot; v-on:click=&quot;addAndCheckout&quot;&gt;Add To Cart and Checkout&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import { updateCart } from &#x27;../api/shoppingCart&#x27;;
+
+  export default {
+    props: [&#x27;book&#x27;],
+    data: function() {
+      return {
+        count: &#x27;1&#x27;
+      };
+    },
+    methods: {
+      addToCart(event) {
+        updateCart(this.book, parseInt(this.count));
+      },
+      addAndCheckout(event) {
+        updateCart(this.book, parseInt(this.count))
+          .then(() =&gt; {
+            const pathname = this.$curi.addons.pathname(&#x27;Checkout&#x27;);
+            this.$curi.history.push({ pathname });
+          });
+      }
+    }
+  };
+&lt;/script&gt;
+</pre><p>Now, we can modify our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component to render the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code> component. Remember that we need to pass it a<!-- --> <code class="language-javascript">bookID</code> prop so that we can know which book to add to the shopping cart.</p><pre class="language-html">&lt;!-- components/Book.vue --&gt;
+&lt;template&gt;
+  &lt;div v-if=&quot;book&quot; class=&#x27;book&#x27;&gt;
+    &lt;h2&gt;{{book.title}}&lt;/h2&gt;
+    &lt;p&gt;By {{book.author}}&lt;/p&gt;
+    &lt;p&gt;Published in {{book.published}}&lt;/p&gt;
+    &lt;p&gt;This book is {{book.pages}} pages&lt;/p&gt;
+    &lt;AddToCart :bookID=&quot;book.id&quot; /&gt;
+  &lt;/div&gt;
+  &lt;div v-else class=&#x27;book&#x27;&gt;
+    The requested book does not exist
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import AddToCart from &#x27;./AddToCart&#x27;;
+
+  export default {
+    props: [&#x27;response&#x27;],
+    computed: {
+      book: function() {
+        return this.response.data &amp;&amp; this.response.data.book;
+      }
+    },
+    components: { AddToCart }
+  };
+&lt;/script&gt;</pre></div><div class="section"><h2 id="checkout">The Checkout Page<a class="header-link" href="/tutorial/09-nav-vue#checkout">#</a></h2><p>Now that we can add books to our shopping cart, we also should give the user the ability to buy them. Of course, this isn&#x27;t a real store website that we are building, so instead of asking for payment and shipping information, we will just redirect the user once they &quot;purchase&quot; their books.</p><p>Let&#x27;s start out in our <code class="language-javascript">routes.js</code> file. We want our &quot;Checkout&quot; page to know which books are in the shopping cart. We can use the<!-- --> <code class="language-javascript">load</code> function of the &quot;Checkout&quot; route to load all of the books and our shopping cart. We can merge the two together to create an array of items in the cart.</p><p>While we&#x27;re at it, we should also add one more route to our website. This will be a &quot;Checkout Complete&quot; route that we redirect to after a user has &quot;purchased&quot; their books.</p><pre class="language-javascript">// routes.js
+import CheckoutComplete from &#x27;./components/CheckoutComplete&#x27;;
+
+import { getCart } from &#x27;./api/shoppingCart&#x27;;
+
+const routes = [
+  // ...
+  {
+    name: &#x27;Checkout&#x27;,
+    path: &#x27;checkout&#x27;,
+    body: () =&gt; Checkout,
+    load: (route, response, addons) =&gt; {
+      return Promise.all([
+        fetchAllBooks(),
+        getCart()
+      ]).then(([ books, cart ]) =&gt; {
+        /*
+         * We will iterate over all of the items in
+         * our shopping cart and find the matching
+         * book. Then, we combine the book and the
+         * number being purchased into one object.
+         *
+         * We then assign that array of objects as
+         * the &quot;items&quot; property of our response&#x27;s
+         * data object.
+         */ 
+        const items = Object.keys(cart).map(key =&gt; {
+          const id = parseInt(key, 10);
+          const count = cart[key];
+          const book = books.find(b =&gt; b.id === id);
+          return Object.assign({}, book, { count });
+        });
+        response.setData({ items });
+      });
+    },
+    children: [
+      {
+        name: &#x27;Checkout Complete&#x27;,
+        path: &#x27;complete&#x27;,
+        body: () =&gt; CheckoutComplete
+      }
+    ]
+  }
+  // ...
+];</pre><p>Before we update our <code class="language-jsx"><!-- -->&lt;<!-- -->Checkout<!-- -->&gt;</code> component, let&#x27;s write the <code class="language-jsx"><!-- -->&lt;<!-- -->CheckoutComplete<!-- -->&gt;</code> component. This should just be a simple component thanking the user for their purchase.</p><pre class="language-html">&lt;!-- components/CheckoutComplete.vue --&gt;
+&lt;template&gt;
+  &lt;div className=&#x27;checkout-complete&#x27;&gt;
+    Thanks for your purchase!
+  &lt;/div&gt;
+&lt;/template&gt;</pre><p>We aren&#x27;t going to get too fancy with displaying the items in our shopping cart. We can just place them all in a <code class="language-jsx"><!-- -->&lt;<!-- -->table<!-- -->&gt;</code> so that they are neatly organized. Then, we will just need to add a button to &quot;purchase&quot; the books.</p><p>We will once again be taking advantage of <code class="language-javascript">this.$curi</code> to access our Curi configuration object from within a component.</p><pre class="language-html">&lt;!-- components/Checkout.vue --&gt;
+&lt;template&gt;
+  &lt;div class=&#x27;checkout&#x27;&gt;
+    &lt;h1&gt;Checkout&lt;/h1&gt;
+    &lt;div&gt;
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;td&gt;Book&lt;/td&gt;
+            &lt;td&gt;Quantity&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;tr v-for=&quot;book in response.data.items&quot; :key=&quot;book.id&quot;&gt;
+            &lt;td&gt;{{book.title}}&lt;/td&gt;
+            &lt;td&gt;{{book.count}}&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+      &lt;button type=&#x27;button&#x27; v-on:click=&quot;purchase&quot;&gt;
+        Purchase Books
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { resetCart } from &#x27;../api/shoppingCart&#x27;;
+
+export default {
+  props: [&#x27;response&#x27;],
+  methods: {
+    purchase: function(event) {
+      // when the user &quot;purchases&quot; their books, we just
+      // reset the cart and redirect to the &quot;Checkout Complete&quot; page
+      resetCart();
+      const pathname = this.$curi.addons.pathname(&#x27;Checkout Complete&#x27;);
+      this.$curi.history.push({ pathname });
+    }
+  }
+};
+&lt;/script&gt;</pre><p>One last thing to consider about our <code class="language-jsx"><!-- -->&lt;<!-- -->Checkout<!-- -->&gt;</code> <!-- -->component is what we should display when there are no items in the shopping cart. We can just check our<!-- --> <code class="language-javascript">response.data.items</code> array and display a message stating that the cart is empty when the list&#x27;s length is zero.</p><pre class="language-html">&lt;!-- component/Checkout.vue --&gt;
+&lt;template&gt;
+  &lt;div class=&#x27;checkout&#x27;&gt;
+    &lt;h1&gt;Checkout&lt;/h1&gt;
+    &lt;div v-if=&quot;response.data.items.length&quot;&gt;
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;td&gt;Book&lt;/td&gt;
+            &lt;td&gt;Quantity&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;tr v-for=&quot;book in response.data.items&quot; :key=&quot;book.id&quot;&gt;
+            &lt;td&gt;{{book.title}}&lt;/td&gt;
+            &lt;td&gt;{{book.count}}&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+      &lt;button type=&#x27;button&#x27; v-on:click=&quot;purchase&quot;&gt;
+        Purchase Books
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div v-else&gt;
+      You have not added any items to your shopping cart!
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</pre></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/09-nav-vue#next">#</a></h2><p>With that, we have considered pretty much everything you need to know to get started building your website with Curi. We have one last part,<!-- --> <a href="/tutorial/10-now-what">Part 10: Now What?</a>, that gives some suggestions on what you can do with your new knowledge.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-load">Part 7: The Load Function</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a class="active" href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
