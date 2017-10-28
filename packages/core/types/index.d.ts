@@ -1,7 +1,7 @@
-export { AddonRegister, AddonGet, Addon, Subscriber, SideEffect, UnsubscribeFn, Cache, RawParams, Params } from './interface';
-export { Path } from './createPath';
-export { Route, RouteDescriptor, Title, ParamParser, ParamParsers, LoadRoute, LoadModifiers, LoadFn, PreloadFn } from './createRoute';
-export { Response, RedirectResponse, AnyResponse } from './createResponse';
-export { CuriConfig, ConfigOptions } from './createConfig';
-import createConfig from './createConfig';
+export { AddonRegister, AddonGet, Addon, Addons, Subscriber, SideEffect, UnsubscribeFn, Cache, RawParams, Params } from './interface';
+export { Path } from './path';
+export { Route, RouteDescriptor, Title, ParamParser, ParamParsers, LoadRoute, LoadModifiers, LoadFn, PreloadFn } from './route';
+export { Response } from './response';
+export { CuriConfig, ConfigOptions } from './curi';
+import createConfig from './curi';
 export default createConfig;
