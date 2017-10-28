@@ -48,7 +48,7 @@ export interface Route {
 }
 
 export interface InternalMatch {
-  exact: boolean;
+  mustBeExact: boolean;
   path: Path;
 }
 
@@ -83,7 +83,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     options || <RouteDescriptor>{};
 
   // end defaults to true, so end has to be hardcoded for it to be false
-  const expectedExact = pathOptions.end == null || pathOptions.end;
+  const mustBeExact = pathOptions.end == null || pathOptions.end;
 
   let children: Array<InternalRoute> = [];
   // when we have child routes, we need to perform non-end matching and
@@ -106,7 +106,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     },
     match: {
       path: regexPath,
-      exact: expectedExact
+      mustBeExact
     },
     children,
     paramParsers,

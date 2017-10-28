@@ -14,7 +14,7 @@ export default function matchRoute(
   parentPath?: string
 ): boolean {
   const testPath: string = stripLeadingSlash(pathname);
-  const { path, exact } = route.match;
+  const { path, mustBeExact } = route.match;
   const { children } = route;
   const match: RegExpMatchArray = path.re.exec(testPath);
   if (!match) {
@@ -41,7 +41,7 @@ export default function matchRoute(
   );
   // if the route has children, but none of them match, remove the match unless it
   // is exact
-  if (exact && notExact && !hasChildMatch) {
+  if (mustBeExact && notExact && !hasChildMatch) {
     matches.pop();
     return false;
   }

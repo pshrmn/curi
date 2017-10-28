@@ -38,7 +38,7 @@ export interface Route {
     };
 }
 export interface InternalMatch {
-    exact: boolean;
+    mustBeExact: boolean;
     path: Path;
 }
 export interface InternalRoute {
