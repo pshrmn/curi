@@ -1,6 +1,6 @@
 {
   "name": "@curi/redux",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "Redux integration for Curi",
   "main": "dist/curi-redux.common.js",
   "module": "dist/curi-redux.es.js",

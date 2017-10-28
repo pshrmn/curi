@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-alpha.3
 
 * `Response` type replaces `AnyResponse`.
 
