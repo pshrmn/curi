@@ -9,18 +9,18 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.24.1",
+    "babel-core": "^6.26.0",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-preset-es2015": "^6.24.1",
-    "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.4.4",
+    "vue-loader": "^13.3.0",
+    "vue-template-compiler": "^2.5.2",
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.13",
+    "@curi/core": "^1.0.0-beta.14",
     "@curi/vue": "^1.0.0-beta.7",
     "@hickory/browser": "^1.0.0-beta.3",
-    "vue": "^2.4.4"
+    "vue": "^2.5.2"
   }
 }
