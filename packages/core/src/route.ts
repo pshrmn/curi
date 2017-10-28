@@ -113,7 +113,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     responseProps: function(props: ResponseProps): RouteProps {
       return {
         name,
-        body: body && body(),
+        body: this.public.body && this.public.body(),
         title: generateTitle(title, props)
       };
     }
