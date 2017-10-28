@@ -1,15 +1,15 @@
 /// <reference types="react" />
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CuriConfig, AnyResponse } from '@curi/core';
+import { CuriConfig, Response } from '@curi/core';
 import { CuriContext } from './interface';
 export interface NavigatorProps {
     config: CuriConfig;
-    render: (r: AnyResponse, action: string, c?: CuriConfig) => React.ReactElement<any>;
-    response?: AnyResponse;
+    render: (r: Response, action: string, c?: CuriConfig) => React.ReactElement<any>;
+    response?: Response;
 }
 export interface NavigatorState {
-    response: AnyResponse;
+    response: Response;
     action: string;
 }
 declare class Navigator extends React.Component<NavigatorProps, NavigatorState> {
@@ -20,7 +20,7 @@ declare class Navigator extends React.Component<NavigatorProps, NavigatorState> 
     };
     state: NavigatorState;
     getChildContext(): CuriContext;
-    setResponse: (response: AnyResponse, action: string) => void;
+    setResponse: (response: Response, action: string) => void;
     componentWillMount(): void;
     componentWillUnmount(): void;
     render(): React.ReactElement<any>;

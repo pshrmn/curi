@@ -1,5 +1,5 @@
-import { CuriConfig, AnyResponse } from '@curi/core';
+import { CuriConfig, Response } from '@curi/core';
 export interface CuriContext {
     curi: CuriConfig;
-    curiResponse: AnyResponse;
+    curiResponse: Response;
 }

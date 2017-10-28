@@ -2,7 +2,7 @@
 import React from 'react';
 import { ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import { CuriConfig, AnyResponse } from '@curi/core';
+import { CuriConfig, Response } from '@curi/core';
 export interface ActiveProps {
     children: ReactElement<any>;
     name: string;
@@ -10,7 +10,7 @@ export interface ActiveProps {
     partial?: boolean;
     merge: (props: object) => object;
     curi?: CuriConfig;
-    response?: AnyResponse;
+    response?: Response;
 }
 declare class Active extends React.Component<ActiveProps, {}> {
     static contextTypes: {

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CuriContext } from './interface';
-import { CuriConfig, AnyResponse } from '@curi/core';
+import { CuriConfig, Response } from '@curi/core';
 export interface ActiveLink {
     merge: (props: object) => object;
     partial?: boolean;
@@ -16,7 +16,7 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
     anchor?: React.ComponentClass | React.StatelessComponent;
     target?: string;
     curi?: CuriConfig;
-    response?: AnyResponse;
+    response?: Response;
 }
 export interface LinkState {
     pathname: string;

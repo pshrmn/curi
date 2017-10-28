@@ -1,3 +1,7 @@
+## Next
+
+* Update types to expect `Response` instead of `AnyResponse` from `@curi/core`.
+
 ## 1.0.0-beta.10
 
 * Allow `<Active>`, `<Block>`, and `<Link>` to accept `curi`/`response` props (only `curi` for the `<Block>`). This should generally be unnecessary, but makes it so that we can `connect` them (using `react-redux`).

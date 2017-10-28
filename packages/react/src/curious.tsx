@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import hoist from 'hoist-non-react-statics';
 import { CuriContext } from './interface';
-import { CuriConfig, AnyResponse } from '@curi/core';
+import { CuriConfig, Response } from '@curi/core';
 
 export interface CuriousProps {
   internalRef?: (node: any) => void;
@@ -11,7 +11,7 @@ export interface CuriousProps {
 
 export interface CuriousComponent {
   curi?: CuriConfig;
-  response?: AnyResponse;
+  response?: Response;
   ref?: (node: any) => void;
 }
 

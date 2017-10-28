@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'invariant';
 import { CuriContext } from './interface';
-import { CuriConfig, AnyResponse } from '@curi/core';
+import { CuriConfig, Response } from '@curi/core';
 
 const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   return (
@@ -27,7 +27,7 @@ export interface LinkProps
   anchor?: React.ComponentClass | React.StatelessComponent;
   target?: string;
   curi?: CuriConfig;
-  response?: AnyResponse;
+  response?: Response;
 }
 
 export interface LinkState {

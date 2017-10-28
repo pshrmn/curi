@@ -40,7 +40,6 @@ describe('<Navigator>', () => {
       'partials',
       'params',
       'body',
-      'error',
       'data',
       'title'
     ];

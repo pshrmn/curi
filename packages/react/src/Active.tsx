@@ -2,7 +2,7 @@ import React from 'react';
 import { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'invariant';
-import { CuriConfig, AnyResponse } from '@curi/core';
+import { CuriConfig, Response } from '@curi/core';
 
 export interface ActiveProps {
   children: ReactElement<any>;
@@ -11,7 +11,7 @@ export interface ActiveProps {
   partial?: boolean;
   merge: (props: object) => object;
   curi?: CuriConfig;
-  response?: AnyResponse;
+  response?: Response;
 }
 
 class Active extends React.Component<ActiveProps, {}> {

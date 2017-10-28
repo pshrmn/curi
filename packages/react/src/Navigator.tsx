@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CuriConfig, AnyResponse } from '@curi/core';
+import { CuriConfig, Response } from '@curi/core';
 import { CuriContext } from './interface';
 
 export interface NavigatorProps {
   config: CuriConfig;
   render: (
-    r: AnyResponse,
+    r: Response,
     action: string,
     c?: CuriConfig
   ) => React.ReactElement<any>;
-  response?: AnyResponse;
+  response?: Response;
 }
 
 export interface NavigatorState {
-  response: AnyResponse;
+  response: Response;
   action: string;
 }
 
@@ -38,7 +38,7 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
     };
   }
 
-  setResponse = (response: AnyResponse, action: string) => {
+  setResponse = (response: Response, action: string) => {
     this.setState({ response, action });
   };
 
