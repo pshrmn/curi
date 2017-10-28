@@ -76,7 +76,7 @@ function createResponse(
     const bestMatch: Match = matches.pop();
 
     matches.forEach(m => {
-      partials.push(m.route.name);
+      partials.push(m.route.public.name);
       Object.assign(params, parseParams(m.params, m.route.paramParsers));
     });
 
@@ -109,9 +109,9 @@ function loadRoute(
     return Promise.resolve(props);
   }
   return Promise.all([
-    route.preload ? route.preload() : null,
-    route.load
-      ? route.load(
+    route.public.preload ? route.public.preload() : null,
+    route.public.load
+      ? route.public.load(
           routeProperties(route, props),
           responseModifiers(props),
           addons
@@ -145,7 +145,7 @@ function routeProperties(route: Route, props: ResponseProps) {
   return {
     params: props.params,
     location: props.location,
-    name: route.name
+    name: route.public.name
   };
 }
 
@@ -155,7 +155,7 @@ function freezeResponse(route: Route, props: ResponseProps): Promise<Response> {
     key: props.location.key,
     body: route && route.getBody(),
     title: generateTitle(route, props),
-    name: route && route.name
+    name: route && route.public.name
   };
 
   return Promise.resolve(response);

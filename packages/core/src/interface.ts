@@ -1,8 +1,8 @@
 import { HickoryLocation } from '@hickory/root';
-import { Route } from './route';
+import { PublicRoute } from './route';
 import { Response } from './response';
 
-export type AddonRegister = (route: Route, parent?: any) => any;
+export type AddonRegister = (route: PublicRoute, parent?: any) => any;
 export type AddonGet = (name: string, ...rest: Array<any>) => any;
 
 export interface Addon {

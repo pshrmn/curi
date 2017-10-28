@@ -38,11 +38,11 @@ describe('createResponse', () => {
         name: 'State',
         path: ':state',
         children: [
-          createRoute({
+          {
             name: 'City',
             path: ':city',
             children: []
-          })
+          }
         ]
       });
 
@@ -62,11 +62,11 @@ describe('createResponse', () => {
         name: 'State',
         path: ':state',
         children: [
-          createRoute({
+          {
             name: 'City',
             path: ':city',
             children: []
-          })
+          }
         ]
       });
 
@@ -89,11 +89,11 @@ describe('createResponse', () => {
         name: 'State',
         path: ':state',
         children: [
-          createRoute({
+          {
             name: 'Wat',
             path: 'wat',
             children: []
-          })
+          }
         ]
       });
 
@@ -296,14 +296,14 @@ describe('createResponse', () => {
         name: 'first',
         path: ':first',
         children: [
-          createRoute({
+          {
             name: 'second',
             path: ':second',
             children: [],
             params: {
               second: n => parseInt(n, 10)
             }
-          })
+          }
         ],
         params: {
           first: n => parseInt(n, 10)

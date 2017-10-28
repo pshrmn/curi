@@ -1,6 +1,7 @@
-import walkRoutes from './utils/walkRoutes';
+import registerRoutes from './utils/registerRoutes';
 import pathnameAddon from './addons/pathname';
 import createResponse from './response';
+import createRoute from './route';
 
 import { History, HickoryLocation } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
@@ -68,19 +69,19 @@ function createConfig(
   let responseInProgress: Promise<Response>;
 
   function setupRoutesAndAddons(routeArray: Array<RouteDescriptor>): void {
-    const addonFunctions: Array<Addon> = [];
     // clear out any existing addons
     for (let key in registeredAddons) {
       delete registeredAddons[key];
     }
 
+    routes = routeArray.map(createRoute);
+
     finalAddons.forEach(addon => {
       addon.reset();
       registeredAddons[addon.name] = addon.get;
-      addonFunctions.push(addon);
+      registerRoutes(routes, addon);
     });
 
-    routes = walkRoutes(routeArray, addonFunctions);
     makeResponse(history.location, history.action);
   }
 

@@ -43,30 +43,31 @@ export interface RouteDescriptor {
   extra?: { [key: string]: any };
 }
 
-// this is a terrible name, but describes an object whose children
-// is already created Routes (instead of RouteDescriptors). This should
-// never be used externally since
-export interface RouteMidCreation extends RouteDescriptor {
-  children: Array<Route>;
-}
-
-export interface Route {
+/*
+ * These are the route properties that will be available
+ * to addons
+ */
+export interface PublicRoute {
   name: string;
   path: string;
   body: () => any;
-  getBody: () => any;
-  children: Array<Route>;
   preload: PreloadFn;
   load: LoadFn;
+  extra: { [key: string]: any };
+}
+
+export interface Route {
+  public: PublicRoute;
+  title: Title;
+  children: Array<Route>;
+  getBody: () => any;
   keys: Array<string | number>;
   match: (
     pathname: string,
     matches: Array<Match>,
     parentPath?: string
   ) => boolean;
-  title: Title;
   paramParsers: ParamParsers;
-  extra: { [key: string]: any };
 }
 
 export interface LoadModifiers {
@@ -76,42 +77,49 @@ export interface LoadModifiers {
   setStatus: (status: number) => void;
 }
 
-const createRoute = (options: RouteMidCreation): Route => {
+const createRoute = (options: RouteDescriptor): Route => {
   const {
     name,
     path,
     pathOptions = {},
     body,
-    children,
+    children: descriptorChildren = [],
     preload,
     load,
     title,
     extra,
     params: paramParsers
   } =
-    options || <RouteMidCreation>{};
+    options || <RouteDescriptor>{};
 
   // end defaults to true, so end has to be hardcoded for it to be false
   const expectedExact = pathOptions.end == null || pathOptions.end;
-  // when we have child routes, we need to perform non-end matching
-  if (children.length) {
+
+  let children: Array<Route> = [];
+  // when we have child routes, we need to perform non-end matching and
+  // create route objects for each child
+  if (descriptorChildren.length) {
     pathOptions.end = false;
+    children = descriptorChildren.map(createRoute);
   }
   const regexPath: Path = createPath(path, pathOptions);
 
   return {
-    name,
-    path: path,
-    body,
-    getBody: function() {
-      return this.body && this.body();
+    public: {
+      name,
+      path: path,
+      body,
+      preload: preload ? once(preload) : undefined,
+      load,
+      extra,
+      
     },
     children,
-    preload: preload ? once(preload) : undefined,
-    load,
-    keys: regexPath.keys.map(key => key.name),
     title,
-    extra,
+    getBody: function() {
+      return this.public.body && this.public.body();
+    },
+    keys: regexPath.keys.map(key => key.name),
     paramParsers,
     match: function(
       pathname: string,

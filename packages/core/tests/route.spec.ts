@@ -12,41 +12,43 @@ describe('createRoute', () => {
         path: 'test',
         children: []
       });
-      const expectedProperties = [
-        'name',
-        'path',
-        'getBody',
+      const publicProperties = [ 'name', 'path', 'preload', 'load', 'extra', 'body' ];
+      const privateProperties = [
+        'title',
         'children',
-        'preload',
-        'load',
+        'getBody',
+        'keys',
         'match',
-        'extra'
+        'paramParsers'
       ];
-      expectedProperties.forEach(key => {
+      publicProperties.forEach(key => {
+        expect(testRoute.public.hasOwnProperty(key)).toBe(true);
+      });
+      privateProperties.forEach(key => {
         expect(testRoute.hasOwnProperty(key)).toBe(true);
       });
     });
 
     describe('options', () => {
       describe('name', () => {
-        it('is set', () => {
+        it('is set as a public property', () => {
           const testRoute = createRoute({
             name: 'Test',
             path: 'test',
             children: []
           });
-          expect(testRoute.name).toBe('Test');
+          expect(testRoute.public.name).toBe('Test');
         });
       });
 
       describe('path', () => {
-        it("is the path's path string", () => {
+        it("is the path's path string and set as public property", () => {
           const testRoute = createRoute({
             name: 'Test',
             path: 'test',
             children: []
           });
-          expect(testRoute.path).toBe('test');
+          expect(testRoute.public.path).toBe('test');
         });
       });
 
@@ -71,7 +73,7 @@ describe('createRoute', () => {
       });
 
       describe('body', () => {
-        it('calls the function to', () => {
+        it('is called by route.getBody', () => {
           const body = () => 'Longitude';
           const testRoute = createRoute({
             name: 'Call',
@@ -85,36 +87,39 @@ describe('createRoute', () => {
 
       describe('children', () => {
         it('is options.children', () => {
-          const First = createRoute({
-            name: 'First',
-            path: 'first',
-            children: []
-          });
-          const Second = createRoute({
-            name: 'Second',
-            path: 'second',
-            children: []
-          });
-          const children = [First, Second];
           const Parent = createRoute({
             name: 'Parent',
             path: 'parent',
-            children
+            children: [
+              {
+                name: 'First',
+                path: 'first',
+                children: []
+              },
+              {
+                name: 'Second',
+                path: 'second',
+                children: []
+              }
+            ]
           });
-          expect(Parent.children).toBe(children);
+          const { children } = Parent;
+          const childRoutes = children.map(c => c.public.name);
+          expect(childRoutes).toEqual(['First', 'Second']);
         });
 
         it('forces path match end=false when route has children', () => {
-          const First = createRoute({
-            name: 'First',
-            path: 'first',
-            children: []
-          });
           const Parent = createRoute({
             name: 'Parent',
             path: 'parent',
             pathOptions: { end: true },
-            children: [First]
+            children: [
+              {
+                name: 'First',
+                path: 'first',
+                children: []
+              }
+            ]
           });
           const location = {
             pathname: '/parent/first'
@@ -149,7 +154,7 @@ describe('createRoute', () => {
             preload: loadTest,
             children: []
           });
-          expect(typeof testRoute.preload).toBe('function');
+          expect(typeof testRoute.public.preload).toBe('function');
         });
 
         it('will only call promise once', () => {
@@ -161,9 +166,9 @@ describe('createRoute', () => {
             preload: loadTest,
             children: []
           });
-          testRoute.preload();
+          testRoute.public.preload();
           expect(callCount).toBe(1);
-          testRoute.preload();
+          testRoute.public.preload();
           expect(callCount).toBe(1);
         });
 
@@ -174,7 +179,7 @@ describe('createRoute', () => {
             path: 'test',
             children: []
           });
-          expect(testRoute.preload).toBeUndefined();
+          expect(testRoute.public.preload).toBeUndefined();
         });
       });
 
@@ -187,7 +192,7 @@ describe('createRoute', () => {
             load: loadTest,
             children: []
           });
-          expect(typeof testRoute.load).toBe('function');
+          expect(typeof testRoute.public.load).toBe('function');
         });
 
         it("will be undefined when load isn't defined", () => {
@@ -196,7 +201,7 @@ describe('createRoute', () => {
             path: 'test',
             children: []
           });
-          expect(testRoute.load).toBeUndefined();
+          expect(testRoute.public.load).toBeUndefined();
         });
       });
 
@@ -229,7 +234,7 @@ describe('createRoute', () => {
             children: [],
             extra
           });
-          expect(testRoute.extra).toBe(extra);
+          expect(testRoute.public.extra).toBe(extra);
         });
       });
     });
@@ -282,11 +287,11 @@ describe('createRoute', () => {
             name: 'Test',
             path: 'test',
             children: [
-              createRoute({
+              {
                 name: 'Child',
                 path: 'child',
                 children: []
-              })
+              }
             ]
           });
           const matches = testRoute.match(location.pathname, []);
@@ -301,11 +306,11 @@ describe('createRoute', () => {
             name: 'Test',
             path: 'test',
             children: [
-              createRoute({
+              {
                 name: 'Child',
                 path: 'child',
                 children: []
-              })
+              }
             ]
           });
           const matches = testRoute.match(location.pathname, []);
@@ -319,11 +324,11 @@ describe('createRoute', () => {
             path: 'test',
             pathOptions: { end: false },
             children: [
-              createRoute({
+              {
                 name: 'Child',
                 path: 'child',
                 children: []
-              })
+              }
             ]
           });
           const matches = testRoute.match(location.pathname, []);
@@ -336,11 +341,11 @@ describe('createRoute', () => {
             name: 'Test',
             path: 'test',
             children: [
-              createRoute({
+              {
                 name: 'Child',
                 path: 'child',
                 children: []
-              })
+              }
             ]
           });
           const matches = testRoute.match(location.pathname, []);
@@ -377,12 +382,13 @@ describe('createRoute', () => {
 
     describe('children', () => {
       it('tests children if it matches', () => {
-        const One = createRoute({ name: 'One', path: 'one', children: [] });
-        const Two = createRoute({ name: 'Two', path: 'two', children: [] });
         const testRoute = createRoute({
           name: 'Test',
           path: 'test',
-          children: [One, Two]
+          children: [
+            { name: 'One', path: 'one', children: [] },
+            { name: 'Two', path: 'two', children: [] }
+          ]
         });
         const location = { pathname: '/test/one' } as HickoryLocation;
         const matches = [];
@@ -391,21 +397,22 @@ describe('createRoute', () => {
         matches.reverse();
         let [best, ...partials] = matches;
         partials.reverse();
-        expect(best.route).toBe(One);
-        expect(partials[0].route.name).toBe('Test');
+        expect(best.route.public.name).toBe('One');
+        expect(partials[0].route.public.name).toBe('Test');
       });
 
       it.skip('children inherit parent params', () => {
         // test this elsewhere?
-        const Attractions = createRoute({
-          name: 'Attractions',
-          path: 'attractions',
-          children: []
-        });
         const testRoute = createRoute({
           name: 'State',
           path: ':state',
-          children: [Attractions]
+          children: [
+            {
+              name: 'Attractions',
+              path: 'attractions',
+              children: []
+            }
+          ]
         });
         const location = {
           pathname: '/Wisconsin/attractions'
@@ -413,7 +420,7 @@ describe('createRoute', () => {
         const matches = [];
         testRoute.match(location.pathname, matches);
         const { route, params } = matches[matches.length - 1];
-        expect(route).toBe(Attractions);
+        expect(route.name).toBe('Attractions');
         expect(params['state']).toBe('Wisconsin');
       });
 
@@ -421,7 +428,9 @@ describe('createRoute', () => {
         const testRoute = createRoute({
           name: 'One',
           path: ':id',
-          children: [createRoute({ name: 'Two', path: ':id', children: [] })]
+          children: [
+            { name: 'Two', path: ':id', children: [] }
+          ]
         });
         const location = { pathname: '/one/two' } as HickoryLocation;
         const matches = [];
