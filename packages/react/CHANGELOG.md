@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.11
 
 * Update types to expect `Response` instead of `AnyResponse` from `@curi/core`.
 
