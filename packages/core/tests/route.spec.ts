@@ -1,138 +1,211 @@
 import 'jest';
-import { HickoryLocation } from '@hickory/root';
-import createRoute from '../src/route';
+import createRoute, { Route } from '../src/route';
+import { Addon } from '../src/interface';
+import createConfig from '../src/curi';
+import InMemory from '@hickory/in-memory';
+
+function PropertyReporter(): Addon {
+  let knownRoutes = {};
+  return {
+    name: 'properties',
+    register: (route: Route): void => {
+      const { name, path } = route;
+      knownRoutes[name] = route;
+    },
+    get: (name: string): Route => {
+      if (knownRoutes[name] == null) {
+        console.error(
+          `Could not generate pathname for ${name} because it is not registered.`
+        );
+        return;
+      }
+      return knownRoutes[name];
+    },
+    reset: () => {
+      knownRoutes = {};
+    }
+  };
+}
 
 describe('public route properties', () => {
   describe('name', () => {
-    it('is set as a public property', () => {
-      const testRoute = createRoute({
-        name: 'Test',
-        path: 'test',
-        children: []
+    it('is the provided value', () => {
+      const history = InMemory({ locations: ['/test'] });
+      const routes = [
+        {
+          name: 'Test',
+          path: 'test'
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      expect(testRoute.public.name).toBe('Test');
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.name).toBe('Test');
     });
   });
 
   describe('path', () => {
-    it("is the path's path string and set as public property", () => {
-      const testRoute = createRoute({
-        name: 'Test',
-        path: 'test',
-        children: []
+    it('is the provided value', () => {
+      const history = InMemory({ locations: ['/test'] });
+      const routes = [
+        {
+          name: 'Test',
+          path: 'test'
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      expect(testRoute.public.path).toBe('test');
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.path).toBe('test');
     });
   });
 
   describe('keys', () => {
     it('is the array of param names parsed from the path', () => {
-      const testRoute = createRoute({
-        name: 'Test',
-        path: ':one/:two/:three',
-        children: []
+      const history = InMemory({ locations: ['/test'] });
+      const routes = [
+        {
+          name: 'Test',
+          path: ':one/:two/:three'
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      expect(testRoute.public.keys).toEqual(['one', 'two', 'three']);
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.keys).toEqual(['one', 'two', 'three']);
     });
 
     it('is an empty array when the path has no params', () => {
-      const testRoute = createRoute({
-        name: 'test',
-        path: 'one/two/three',
-        children: []
+      const history = InMemory({ locations: ['/test'] });
+      const routes = [
+        {
+          name: 'Test',
+          path: 'one/two/three'
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      expect(testRoute.public.keys).toEqual([]);
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.keys).toEqual([]);
     });
   });
 
   describe('body', () => {
-    it('is called by route.getBody', () => {
+    it('is the provided value', () => {
+      const history = InMemory({ locations: ['/test'] });
       const body = () => 'Longitude';
-      const testRoute = createRoute({
-        name: 'Call',
-        path: 'call-me-maybe',
-        body,
-        children: []
+      const routes = [
+        {
+          name: 'Test',
+          path: 'test',
+          body
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      expect(testRoute.getBody()).toBe('Longitude');
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.body).toBe(body);
     });
   });
 
   describe('preload', () => {
-    it('will attach a preload fn to returned object', () => {
+    it('will be defined when a preload function is provided', () => {
       const loadTest = () => Promise.resolve();
-      const testRoute = createRoute({
-        name: 'Test',
-        path: 'test',
-        preload: loadTest,
-        children: []
-      });
-      expect(typeof testRoute.public.preload).toBe('function');
-    });
 
-    it('will only call promise once', () => {
-      let callCount = 0;
-      const loadTest = () => Promise.resolve(callCount++);
-      const testRoute = createRoute({
-        name: 'Test',
-        path: 'test',
-        preload: loadTest,
-        children: []
+      const history = InMemory({ locations: ['/test'] });
+      const body = () => 'Longitude';
+      const routes = [
+        {
+          name: 'Test',
+          path: 'test',
+          preload: loadTest
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      testRoute.public.preload();
-      expect(callCount).toBe(1);
-      testRoute.public.preload();
-      expect(callCount).toBe(1);
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.preload).toBeDefined();
     });
 
     it("will be undefined when preload isn't defined", () => {
-      const loadTest = () => Promise.resolve();
-      const testRoute = createRoute({
-        name: 'Test',
-        path: 'test',
-        children: []
+      const history = InMemory({ locations: ['/test'] });
+      const body = () => 'Longitude';
+      const routes = [
+        {
+          name: 'Test',
+          path: 'test'
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      expect(testRoute.public.preload).toBeUndefined();
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.preload).toBeUndefined();
     });
   });
 
   describe('load', () => {
-    it('will attach a load fn to returned object', () => {
+    it('will be the provided load function', () => {
       const loadTest = () => Promise.resolve();
-      const testRoute = createRoute({
-        name: 'Test',
-        path: 'test',
-        load: loadTest,
-        children: []
+
+      const history = InMemory({ locations: ['/test'] });
+      const body = () => 'Longitude';
+      const routes = [
+        {
+          name: 'Test',
+          path: 'test',
+          load: loadTest
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      expect(typeof testRoute.public.load).toBe('function');
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.load).toBe(loadTest);
     });
 
     it("will be undefined when load isn't defined", () => {
-      const testRoute = createRoute({
-        name: 'Test',
-        path: 'test',
-        children: []
+      const history = InMemory({ locations: ['/test'] });
+      const body = () => 'Longitude';
+      const routes = [
+        {
+          name: 'Test',
+          path: 'test'
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      expect(testRoute.public.load).toBeUndefined();
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.load).toBeUndefined();
     });
   });
 
   describe('extra', () => {
-    it('can be used to attach extra key-value pairs to the route', () => {
-      const loadTest = () => Promise.resolve();
+    it('is the provided value', () => {
+      const history = InMemory({ locations: ['/test'] });
       const extra = {
         unofficial: true,
         another: 1
       };
-      const testRoute = createRoute({
-        name: 'Test',
-        path: 'test',
-        load: loadTest,
-        children: [],
-        extra
+      const routes = [
+        {
+          name: 'Test',
+          path: 'test',
+          extra
+        }
+      ];
+      const config = createConfig(history, routes, {
+        addons: [PropertyReporter()]
       });
-      expect(testRoute.public.extra).toBe(extra);
+      const routeProperties = config.addons.properties('Test');
+      expect(routeProperties.extra).toBe(extra);
     });
   });
 });

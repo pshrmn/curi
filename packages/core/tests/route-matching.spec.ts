@@ -1,23 +1,15 @@
 import 'jest';
 import createConfig from '../src/curi';
-import pathname from '../src/addons/pathname';
 import InMemory from '@hickory/in-memory';
 
 describe('route matching/response generation', () => {
-  let history;
-
-  beforeEach(() => {
-    history = InMemory();
-  });
-
   describe('route matching', () => {
     it('ignores leading slash on the pathname', () => {
       const history = InMemory({ locations: ['/test'] });
       const routes = [
         {
           name: 'Test',
-          path: 'test',
-          children: []
+          path: 'test'
         }
       ];
       const config = createConfig(history, routes);
@@ -32,8 +24,7 @@ describe('route matching/response generation', () => {
       const routes = [
         {
           name: 'Test',
-          path: 'test',
-          children: []
+          path: 'test'
         },
         {
           name: 'Not Found',
@@ -47,7 +38,7 @@ describe('route matching/response generation', () => {
       });
     });
 
-    describe('nested routes', () => {   
+    describe('nested routes', () => {
       it('includes parent if partials if a child matches', () => {
         const history = InMemory({ locations: ['/ND/Fargo'] });
         const routes = [
@@ -57,8 +48,7 @@ describe('route matching/response generation', () => {
             children: [
               {
                 name: 'City',
-                path: ':city',
-                children: []
+                path: ':city'
               }
             ]
           }
@@ -81,8 +71,7 @@ describe('route matching/response generation', () => {
             children: [
               {
                 name: 'City',
-                path: ':city',
-                children: []
+                path: ':city'
               }
             ]
           }
@@ -104,8 +93,7 @@ describe('route matching/response generation', () => {
             children: [
               {
                 name: 'Wat',
-                path: 'wat',
-                children: []
+                path: 'wat'
               }
             ]
           },
@@ -129,8 +117,7 @@ describe('route matching/response generation', () => {
         {
           name: 'State',
           path: ':state',
-          pathOptions: { end: false },
-          children: []
+          pathOptions: { end: false }
         },
         {
           name: 'Not Found',
@@ -247,7 +234,7 @@ describe('route matching/response generation', () => {
               }
             }
           ];
-  
+          const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -265,7 +252,7 @@ describe('route matching/response generation', () => {
               }
             }
           ];
-
+          const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -283,7 +270,7 @@ describe('route matching/response generation', () => {
               }
             }
           ];
-
+          const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -300,7 +287,7 @@ describe('route matching/response generation', () => {
               path: ''
             }
           ];
-
+          const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -319,7 +306,7 @@ describe('route matching/response generation', () => {
               }
             }
           ];
-
+          const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -333,8 +320,7 @@ describe('route matching/response generation', () => {
           const routes = [
             {
               name: 'State',
-              path: ':state',
-              children: []
+              path: ':state'
             }
           ];
           const history = InMemory({ locations: ['/'] });
@@ -350,8 +336,7 @@ describe('route matching/response generation', () => {
           const routes = [
             {
               name: 'State',
-              path: ':state',
-              children: []
+              path: ':state'
             }
           ];
           const history = InMemory({ locations: ['/AZ'] });
@@ -368,7 +353,6 @@ describe('route matching/response generation', () => {
             {
               name: 'State',
               path: ':state',
-              children: [],
               title: 'A State'
             }
           ];
@@ -386,7 +370,6 @@ describe('route matching/response generation', () => {
             {
               name: 'State',
               path: ':state',
-              children: [],
               load: (route, mods): any => {
                 mods.setData({ full: 'West Virginia' });
               },
@@ -477,8 +460,7 @@ describe('route matching/response generation', () => {
               children: [
                 {
                   name: 'City',
-                  path: ':city',
-                  children: []
+                  path: ':city'
                 }
               ]
             }
@@ -501,8 +483,7 @@ describe('route matching/response generation', () => {
               children: [
                 {
                   name: 'City',
-                  path: ':city',
-                  children: []
+                  path: ':city'
                 }
               ]
             }
@@ -523,7 +504,7 @@ describe('route matching/response generation', () => {
             {
               name: 'One',
               path: ':id',
-              children: [{ name: 'Two', path: ':id', children: [] }]
+              children: [{ name: 'Two', path: ':id' }]
             }
           ];
           const config = createConfig(history, routes);
@@ -539,7 +520,6 @@ describe('route matching/response generation', () => {
             {
               name: 'number',
               path: ':num',
-              children: [],
               params: {
                 num: n => parseInt(n, 10)
               }
@@ -562,7 +542,6 @@ describe('route matching/response generation', () => {
                 {
                   name: 'second',
                   path: ':second',
-                  children: [],
                   params: {
                     second: n => parseInt(n, 10)
                   }
@@ -589,7 +568,6 @@ describe('route matching/response generation', () => {
             {
               name: 'combo',
               path: ':first/:second',
-              children: [],
               params: {
                 first: n => parseInt(n, 10)
               }
@@ -615,7 +593,6 @@ describe('route matching/response generation', () => {
             {
               name: 'number',
               path: ':num',
-              children: [],
               params: {
                 num: n => {
                   throw new Error('This will fail.');
@@ -660,7 +637,7 @@ describe('route matching/response generation', () => {
               }
             }
           ];
-
+          const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -680,7 +657,7 @@ describe('route matching/response generation', () => {
               }
             }
           ];
-  
+          const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
@@ -709,22 +686,22 @@ describe('route matching/response generation', () => {
               setStatus: expect.any(Function)
             })
           );
-  
+
           expect(typeof addons.pathname).toBe('function');
         });
-  
+
         const CatchAll = {
           name: 'Catch All',
           path: ':anything',
           load: spy
         };
-  
+
         const history = InMemory({ locations: ['/hello?one=two'] });
         const config = createConfig(history, [CatchAll]);
         expect.assertions(3);
         return config.ready();
       });
-  
+
       it('can use registered addons', () => {
         const routes = [
           {
@@ -746,6 +723,42 @@ describe('route matching/response generation', () => {
         return config.ready().then(response => {
           expect(response.redirectTo).toBe('/new/1');
         });
+      });
+    });
+
+    describe('calling the preload function', () => {
+      it('will only call promise once', done => {
+        /*
+         * This test is a bit odd to read, but it verifies that the
+         * preload function is only called once (while the load function
+         * is called on every match).
+         */
+        let callCount = 0;
+        let loadCount = 0;
+        const preload = () => Promise.resolve(callCount++);
+        const load = () => Promise.resolve(loadCount++);
+        const history = InMemory({ locations: ['/test'] });
+        const routes = [
+          {
+            name: 'Test',
+            path: ':test',
+            preload,
+            load
+          }
+        ];
+        const config = createConfig(history, routes);
+        const expectedValues = [[1, 1], [1, 2]];
+        let subscriberIndex = 0;
+        config.subscribe(() => {
+          const [cc, lc] = expectedValues[subscriberIndex++];
+          expect(callCount).toBe(1);
+          expect(callCount).toBe(1);
+          if (subscriberIndex === 2) {
+            done();
+          }
+        });
+
+        history.push('/another-one');
       });
     });
   });

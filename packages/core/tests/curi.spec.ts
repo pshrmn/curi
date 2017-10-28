@@ -1,6 +1,5 @@
 import 'jest';
 import createConfig from '../src/curi';
-import pathname from '../src/addons/pathname';
 import InMemory from '@hickory/in-memory';
 import { Addon } from '../src/interface';
 import { Response } from '../src/response';
