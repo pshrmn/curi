@@ -51,6 +51,7 @@ export interface PublicRoute {
   name: string;
   path: string;
   body: () => any;
+  keys: Array<string | number>;
   preload: PreloadFn;
   load: LoadFn;
   extra: { [key: string]: any };
@@ -61,7 +62,6 @@ export interface Route {
   title: Title;
   children: Array<Route>;
   getBody: () => any;
-  keys: Array<string | number>;
   match: (
     pathname: string,
     matches: Array<Match>,
@@ -109,17 +109,16 @@ const createRoute = (options: RouteDescriptor): Route => {
       name,
       path: path,
       body,
+      keys: regexPath.keys.map(key => key.name),
       preload: preload ? once(preload) : undefined,
       load,
-      extra,
-      
+      extra
     },
     children,
     title,
     getBody: function() {
       return this.public.body && this.public.body();
     },
-    keys: regexPath.keys.map(key => key.name),
     paramParsers,
     match: function(
       pathname: string,

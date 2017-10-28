@@ -36,6 +36,7 @@ export interface PublicRoute {
     name: string;
     path: string;
     body: () => any;
+    keys: Array<string | number>;
     preload: PreloadFn;
     load: LoadFn;
     extra: {
@@ -47,7 +48,6 @@ export interface Route {
     title: Title;
     children: Array<Route>;
     getBody: () => any;
-    keys: Array<string | number>;
     match: (pathname: string, matches: Array<Match>, parentPath?: string) => boolean;
     paramParsers: ParamParsers;
 }
