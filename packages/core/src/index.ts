@@ -7,8 +7,11 @@ export {
   SideEffect,
   UnsubscribeFn,
   Cache,
-  RawParams,
-  Params
+  Params,
+  LoadRoute,
+  LoadModifiers,
+  LoadFn,
+  PreloadFn
 } from './interface';
 export { Path } from './path';
 export {
@@ -16,11 +19,7 @@ export {
   RouteDescriptor,
   Title,
   ParamParser,
-  ParamParsers,
-  LoadRoute,
-  LoadModifiers,
-  LoadFn,
-  PreloadFn
+  ParamParsers
 } from './route';
 export { Response } from './response';
 export { CuriConfig, ConfigOptions } from './curi';

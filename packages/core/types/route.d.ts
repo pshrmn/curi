@@ -1,22 +1,16 @@
 import { RegExpOptions } from 'path-to-regexp';
-import { Params, AddonGet } from './interface';
+import { Path } from './path';
+import { LoadFn, PreloadFn } from './interface';
+import { ResponseProps } from './response';
 export declare type Title = string | ((params?: object, data?: any) => string);
-export interface LoadRoute {
-    params: object;
-    location: object;
-    name: string;
-}
-export declare type LoadFn = (route?: LoadRoute, modifiers?: LoadModifiers, addons?: {
-    [key: string]: AddonGet;
-}) => Promise<any>;
-export declare type PreloadFn = () => Promise<any>;
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
     [key: string]: ParamParser;
 }
-export interface Match {
-    route: InternalRoute;
-    params: Params;
+export interface RouteProps {
+    body: any;
+    title: string;
+    name?: string;
 }
 export interface RouteDescriptor {
     name: string;
@@ -43,19 +37,16 @@ export interface Route {
         [key: string]: any;
     };
 }
+export interface InternalMatch {
+    exact: boolean;
+    path: Path;
+}
 export interface InternalRoute {
     public: Route;
-    title: Title;
     children: Array<InternalRoute>;
-    getBody: () => any;
-    match: (pathname: string, matches: Array<Match>, parentPath?: string) => boolean;
+    match: InternalMatch;
     paramParsers: ParamParsers;
-}
-export interface LoadModifiers {
-    fail: (err: any) => void;
-    redirect: (to: any, status?: number) => void;
-    setData: (data: any) => void;
-    setStatus: (status: number) => void;
+    responseProps: (props: ResponseProps) => RouteProps;
 }
 declare const createRoute: (options: RouteDescriptor) => InternalRoute;
 export default createRoute;

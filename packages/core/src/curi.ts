@@ -5,12 +5,7 @@ import createRoute from './route';
 
 import { History, HickoryLocation } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
-import {
-  RouteDescriptor,
-  InternalRoute,
-  LoadModifiers,
-  LoadRoute
-} from './route';
+import { RouteDescriptor, InternalRoute } from './route';
 import { Response } from './response';
 import {
   Addon,
@@ -58,8 +53,6 @@ function createConfig(
     }
   });
 
-  // add the pathname addon to the provided addons
-  const finalAddons = userAddons.concat(pathnameAddon(pathnameOptions));
   let routes: Array<InternalRoute> = [];
   const registeredAddons: Addons = {};
   const subscribers: Array<Subscriber> = [];
@@ -67,6 +60,9 @@ function createConfig(
   let mostRecentKey: string;
   let previous: [Response, string] = [] as [Response, string];
   let responseInProgress: Promise<Response>;
+
+  // add the pathname addon to the provided addons
+  const allAddons = userAddons.concat(pathnameAddon(pathnameOptions));
 
   function setupRoutesAndAddons(routeArray: Array<RouteDescriptor>): void {
     // clear out any existing addons
@@ -76,7 +72,7 @@ function createConfig(
 
     routes = routeArray.map(createRoute);
 
-    finalAddons.forEach(addon => {
+    allAddons.forEach(addon => {
       addon.reset();
       registeredAddons[addon.name] = addon.get;
       registerRoutes(routes, addon);

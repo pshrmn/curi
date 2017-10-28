@@ -1,5 +1,6 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import { InternalRoute, ParamParsers, Match } from './route';
+import { InternalRoute, ParamParsers, RouteProps } from './route';
+import matchRoute, { Match } from './utils/match';
 import { RawParams, Params, Addons } from './interface';
 
 export interface ResponseProps {
@@ -25,15 +26,6 @@ export interface Response {
   params?: Params;
   error?: any;
   redirectTo?: any;
-}
-
-function generateTitle(route: InternalRoute, props: ResponseProps): string {
-  if (!route || !route.title) {
-    return '';
-  }
-  return typeof route.title === 'function'
-    ? route.title(props.params, props.data)
-    : route.title;
 }
 
 function parseParams(params: RawParams, fns: ParamParsers): Params {
@@ -71,7 +63,7 @@ function createResponse(
 
   // determine which route(s) match, then use the exact match
   // as the matched route and the rest as partial routes
-  routes.some(route => route.match(location.pathname, matches));
+  routes.some(route => matchRoute(route, location.pathname, matches));
   if (matches.length) {
     const bestMatch: Match = matches.pop();
 
@@ -149,17 +141,23 @@ function routeProperties(route: InternalRoute, props: ResponseProps) {
   };
 }
 
+function missProps(): RouteProps {
+  return {
+    body: undefined,
+    title: ''
+  };
+}
+
 function freezeResponse(
   route: InternalRoute,
   props: ResponseProps
 ): Promise<Response> {
-  const response: Response = {
-    ...props,
-    key: props.location.key,
-    body: route && route.getBody(),
-    title: generateTitle(route, props),
-    name: route && route.public.name
-  };
+  const response: Response = Object.assign(
+    {},
+    props,
+    { key: props.location.key },
+    route ? route.responseProps(props) : missProps()
+  );
 
   return Promise.resolve(response);
 }

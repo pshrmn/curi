@@ -28,3 +28,16 @@ export declare type RawParams = {
 export declare type Params = {
     [key: string]: any;
 };
+export interface LoadRoute {
+    params: object;
+    location: object;
+    name: string;
+}
+export interface LoadModifiers {
+    fail: (err: any) => void;
+    redirect: (to: any, status?: number) => void;
+    setData: (data: any) => void;
+    setStatus: (status: number) => void;
+}
+export declare type LoadFn = (route?: LoadRoute, modifiers?: LoadModifiers, addons?: Addons) => Promise<any>;
+export declare type PreloadFn = () => Promise<any>;

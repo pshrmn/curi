@@ -1,33 +1,23 @@
-import { join, stripLeadingSlash, withLeadingSlash } from './utils/path';
 import once from './utils/once';
 import createPath from './path';
 
 import { HickoryLocation, ToArgument } from '@hickory/root';
 import { RegExpOptions } from 'path-to-regexp';
 import { Path } from './path';
-import { RawParams, Params, AddonGet } from './interface';
+import { LoadFn, PreloadFn } from './interface';
+import { ResponseProps } from './response';
 
 export type Title = string | ((params?: object, data?: any) => string);
-export interface LoadRoute {
-  params: object;
-  location: object;
-  name: string;
-}
-export type LoadFn = (
-  route?: LoadRoute,
-  modifiers?: LoadModifiers,
-  addons?: { [key: string]: AddonGet }
-) => Promise<any>;
-export type PreloadFn = () => Promise<any>;
 
 export type ParamParser = (input: string) => any;
 export interface ParamParsers {
   [key: string]: ParamParser;
 }
 
-export interface Match {
-  route: InternalRoute;
-  params: Params;
+export interface RouteProps {
+  body: any;
+  title: string;
+  name?: string;
 }
 
 export interface RouteDescriptor {
@@ -57,24 +47,24 @@ export interface Route {
   extra: { [key: string]: any };
 }
 
-export interface InternalRoute {
-  public: Route;
-  title: Title;
-  children: Array<InternalRoute>;
-  getBody: () => any;
-  match: (
-    pathname: string,
-    matches: Array<Match>,
-    parentPath?: string
-  ) => boolean;
-  paramParsers: ParamParsers;
+export interface InternalMatch {
+  exact: boolean;
+  path: Path;
 }
 
-export interface LoadModifiers {
-  fail: (err: any) => void;
-  redirect: (to: any, status?: number) => void;
-  setData: (data: any) => void;
-  setStatus: (status: number) => void;
+export interface InternalRoute {
+  public: Route;
+  children: Array<InternalRoute>;
+  match: InternalMatch;
+  paramParsers: ParamParsers;
+  responseProps: (props: ResponseProps) => RouteProps;
+}
+
+function generateTitle(title: Title, props: ResponseProps): string {
+  if (!title) {
+    return '';
+  }
+  return typeof title === 'function' ? title(props.params, props.data) : title;
 }
 
 const createRoute = (options: RouteDescriptor): InternalRoute => {
@@ -110,54 +100,22 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       path: path,
       body,
       keys: regexPath.keys.map(key => key.name),
-      preload: preload ? once(preload) : undefined,
+      preload: preload && once(preload),
       load,
       extra
     },
-    children,
-    title,
-    getBody: function() {
-      return this.public.body && this.public.body();
+    match: {
+      path: regexPath,
+      exact: expectedExact
     },
+    children,
     paramParsers,
-    match: function(
-      pathname: string,
-      matches: Array<Match>,
-      parentPath?: string
-    ): boolean {
-      const testPath: string = stripLeadingSlash(pathname);
-      const match: RegExpMatchArray = regexPath.re.exec(testPath);
-      if (!match) {
-        return false;
-      }
-      const [segment, ...parsed] = match;
-      const params: RawParams = {};
-      regexPath.keys.forEach((key, index) => {
-        params[key.name] = parsed[index];
-      });
-      const uriString =
-        parentPath != null
-          ? join(parentPath, segment)
-          : withLeadingSlash(segment);
-
-      matches.push({ route: this, params });
-      // if there are no children, then we accept the match
-      if (!children || !children.length) {
-        return true;
-      }
-      // children only need to match against unmatched segments
-      const remainder = testPath.slice(segment.length);
-      const notExact = !!remainder.length;
-      const hasChildMatch = children.some(c =>
-        c.match(remainder, matches, uriString)
-      );
-      // if the route has children, but none of them match, remove the match unless it
-      // is exact
-      if (expectedExact && notExact && !hasChildMatch) {
-        matches.pop();
-        return false;
-      }
-      return true;
+    responseProps: function(props: ResponseProps): RouteProps {
+      return {
+        name,
+        body: body && body(),
+        title: generateTitle(title, props)
+      };
     }
   };
 };
