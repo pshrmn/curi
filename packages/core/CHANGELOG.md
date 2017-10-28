@@ -1,3 +1,7 @@
+## Next
+
+* Only export a single `Response` type for TypeScript instead of `AnyResponse`, `Response`, and `RedirectResponse`.
+
 ## 1.0.0-beta.13
 
 * Modify the `route.load` params. The new signature is `load(route, mods, addons)` where `route` contains `params`, `location`, and `name` properties.

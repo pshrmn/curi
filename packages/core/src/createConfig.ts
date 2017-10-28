@@ -1,6 +1,6 @@
 import walkRoutes from './utils/walkRoutes';
 import pathnameAddon from './addons/pathname';
-import ResponseCreator from './createResponse';
+import createResponse from './createResponse';
 
 import { History, HickoryLocation } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
@@ -10,10 +10,10 @@ import {
   LoadModifiers,
   LoadRoute
 } from './createRoute';
-import { AnyResponse, RedirectResponse } from './createResponse';
+import { Response, ResponseProps } from './createResponse';
 import {
   Addon,
-  AddonGet,
+  Addons,
   SideEffect,
   Subscriber,
   UnsubscribeFn,
@@ -28,10 +28,10 @@ export interface ConfigOptions {
 }
 
 export interface CuriConfig {
-  ready: () => Promise<AnyResponse>;
+  ready: () => Promise<Response>;
   refresh: (routeArray: Array<RouteDescriptor>) => void;
   subscribe: (fn: Subscriber) => UnsubscribeFn;
-  addons: { [key: string]: AddonGet };
+  addons: Addons;
   history: History;
 }
 
@@ -60,12 +60,12 @@ function createConfig(
   // add the pathname addon to the provided addons
   const finalAddons = userAddons.concat(pathnameAddon(pathnameOptions));
   let routes: Array<Route> = [];
-  const registeredAddons: { [key: string]: AddonGet } = {};
+  const registeredAddons: Addons = {};
   const subscribers: Array<Subscriber> = [];
 
   let mostRecentKey: string;
-  let previous: [AnyResponse, string] = [] as [AnyResponse, string];
-  let responseInProgress: Promise<AnyResponse>;
+  let previous: [Response, string] = [] as [Response, string];
+  let responseInProgress: Promise<Response>;
 
   function setupRoutesAndAddons(routeArray: Array<RouteDescriptor>): void {
     const addonFunctions: Array<Addon> = [];
@@ -84,61 +84,8 @@ function createConfig(
     makeResponse(history.location, history.action);
   }
 
-  function matchRoute(rc: ResponseCreator): Promise<ResponseCreator> {
-    routes.some(route => route.match(history.location.pathname, rc));
-    // once we have matched the route, we freeze the responseCreator to
-    // set its route/params/partials properties
-    rc.freezeMatch();
-    return Promise.resolve(rc);
-  }
-
-  function loadRoute(rc: ResponseCreator): Promise<ResponseCreator> {
-    const { route } = rc;
-    if (!route) {
-      rc.setStatus(404);
-      return Promise.resolve(rc);
-    }
-
-    const routeData: LoadRoute = {
-      params: rc.params,
-      location: rc.location,
-      name: rc.route.name
-    };
-    // just want to pass a subset of the ResponseCreator's methods
-    // to the user
-    const modifiers: LoadModifiers = route.load
-      ? {
-          fail: rc.fail.bind(rc),
-          redirect: rc.redirect.bind(rc),
-          setData: rc.setData.bind(rc),
-          setStatus: rc.setStatus.bind(rc)
-        }
-      : undefined;
-
-    return Promise.all([
-      route.preload ? route.preload() : null,
-      route.load ? route.load(routeData, modifiers, registeredAddons) : null
-    ]).then(() => rc);
-  }
-
-  function finalizeResponse(rc: ResponseCreator): AnyResponse {
-    const respObject: AnyResponse = rc.asObject();
-
-    if (cache) {
-      cache.set(respObject);
-    }
-
-    return respObject;
-  }
-
-  function prepareResponse(location: HickoryLocation): Promise<AnyResponse> {
-    // generate a random key when none is provided (old browsers, maybe unecessary?)
-    const key =
-      location.key ||
-      Math.random()
-        .toString(36)
-        .slice(2, 8);
-    mostRecentKey = key;
+  function prepareResponse(location: HickoryLocation): Promise<Response> {
+    mostRecentKey = location.key;
 
     if (cache) {
       const cachedResponse = cache.get(location);
@@ -147,11 +94,12 @@ function createConfig(
       }
     }
 
-    const rc = new ResponseCreator(key, location);
-
-    return matchRoute(rc)
-      .then(loadRoute)
-      .then(finalizeResponse);
+    return createResponse(location, routes, registeredAddons).then(response => {
+      if (cache) {
+        cache.set(response);
+      }
+      return response;
+    });
   }
 
   function subscribe(fn: Subscriber): UnsubscribeFn {
@@ -171,7 +119,7 @@ function createConfig(
     };
   }
 
-  function emit(response: AnyResponse, action: string): boolean {
+  function emit(response: Response, action: string): boolean {
     // don't emit old responses
     if (response.key !== mostRecentKey) {
       return false;
@@ -205,8 +153,8 @@ function createConfig(
           previous = [response, action];
         }
 
-        if ((response as RedirectResponse).redirectTo) {
-          history.replace((response as RedirectResponse).redirectTo);
+        if (response.redirectTo) {
+          history.replace(response.redirectTo);
         }
         return response;
       },

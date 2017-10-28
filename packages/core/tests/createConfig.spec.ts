@@ -2,9 +2,8 @@ import 'jest';
 import createConfig from '../src/createConfig';
 import pathname from '../src/addons/pathname';
 import InMemory from '@hickory/in-memory';
-import ResponseCreator from '../src/createResponse';
 import { Addon } from '../src/interface';
-import { Response, RedirectResponse } from '../src/createResponse';
+import { Response } from '../src/createResponse';
 
 // The subscribe function is called when subscribing so that the
 // subscriber function is called with the original location. This has
@@ -497,7 +496,7 @@ describe('createConfig', () => {
           expect.assertions(2);
           return config.ready().then(response => {
             expect(response.status).toBe(301);
-            expect((<RedirectResponse>response).redirectTo).toBe('/somewhere');
+            expect(response.redirectTo).toBe('/somewhere');
           });
         });
 
@@ -520,7 +519,7 @@ describe('createConfig', () => {
           const config = createConfig(history, routes);
           expect.assertions(1);
           return config.ready().then(response => {
-            expect((<RedirectResponse>response).redirectTo).toBe('/new/1');
+            expect(response.redirectTo).toBe('/new/1');
           });
         });
       });
@@ -668,7 +667,6 @@ describe('createConfig', () => {
         'name',
         'partials',
         'params',
-        'error',
         'data',
         'title'
       ];
@@ -787,9 +785,13 @@ describe('createConfig', () => {
       ];
 
       const check = ignoreFirstCall((response, action) => {
-        expect(response.name).toBe('How');
-        expect(response.partials[0]).toBe('Contact');
-        expect(response.params.method).toBe('mail');
+        expect(response).toMatchObject({
+          name: 'How',
+          partials: ['Contact'],
+          params: {
+            method: 'mail'
+          }
+        });
         expect(action).toBe('PUSH');
         done();
       });

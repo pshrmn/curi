@@ -5,7 +5,6 @@ import createPath from './createPath';
 import { HickoryLocation, ToArgument } from '@hickory/root';
 import { RegExpOptions } from 'path-to-regexp';
 import { Path } from './createPath';
-import ResponseCreator from './createResponse';
 import { RawParams, Params, AddonGet } from './interface';
 
 export type Title = string | ((params?: object, data?: any) => string);
@@ -24,6 +23,11 @@ export type PreloadFn = () => Promise<any>;
 export type ParamParser = (input: string) => any;
 export interface ParamParsers {
   [key: string]: ParamParser;
+}
+
+export interface Match {
+  route: Route;
+  params: Params;
 }
 
 export interface RouteDescriptor {
@@ -57,7 +61,7 @@ export interface Route {
   keys: Array<string | number>;
   match: (
     pathname: string,
-    rc: ResponseCreator,
+    matches: Array<Match>,
     parentPath?: string
   ) => boolean;
   title: Title;
@@ -111,7 +115,7 @@ const createRoute = (options: RouteMidCreation): Route => {
     paramParsers,
     match: function(
       pathname: string,
-      rc: ResponseCreator,
+      matches: Array<Match>,
       parentPath?: string
     ): boolean {
       const testPath: string = stripLeadingSlash(pathname);
@@ -129,7 +133,7 @@ const createRoute = (options: RouteMidCreation): Route => {
           ? join(parentPath, segment)
           : withLeadingSlash(segment);
 
-      rc.push(this, params);
+      matches.push({ route: this, params });
       // if there are no children, then we accept the match
       if (!children || !children.length) {
         return true;
@@ -138,12 +142,12 @@ const createRoute = (options: RouteMidCreation): Route => {
       const remainder = testPath.slice(segment.length);
       const notExact = !!remainder.length;
       const hasChildMatch = children.some(c =>
-        c.match(remainder, rc, uriString)
+        c.match(remainder, matches, uriString)
       );
       // if the route has children, but none of them match, remove the match unless it
       // is exact
       if (expectedExact && notExact && !hasChildMatch) {
-        rc.pop();
+        matches.pop();
         return false;
       }
       return true;

@@ -2,6 +2,7 @@ export {
   AddonRegister,
   AddonGet,
   Addon,
+  Addons,
   Subscriber,
   SideEffect,
   UnsubscribeFn,
@@ -21,11 +22,7 @@ export {
   LoadFn,
   PreloadFn
 } from './createRoute';
-export {
-  Response,
-  RedirectResponse,
-  AnyResponse
-} from './createResponse';
+export { Response } from './createResponse';
 export { CuriConfig, ConfigOptions } from './createConfig';
 
 import createConfig from './createConfig';

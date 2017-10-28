@@ -1,32 +1,39 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import { Route, ParamParsers } from './createRoute';
-import { RawParams, Params } from './interface';
+import { Route, ParamParsers, Match } from './createRoute';
+import { RawParams, Params, Addons } from './interface';
 
-export interface BaseResponse {
+export interface ResponseProps {
+  location: HickoryLocation;
+  params: Params;
+  partials: Array<string>;
+  status: number;
+  data: any;
+  error?: any;
+  redirectTo?: ToArgument;
+}
+
+// this is a response object that will be emited
+export interface Response {
   key: string;
   location: HickoryLocation;
   status: number;
   data: any;
   title: string;
   body: any;
+  name?: string;
+  partials?: Array<string>;
+  params?: Params;
+  error?: any;
+  redirectTo?: any;
 }
 
-export interface Response extends BaseResponse {
-  name: string;
-  partials: Array<string>;
-  params: Params;
-  error: any;
-}
-
-export interface RedirectResponse extends BaseResponse {
-  redirectTo: any;
-}
-
-export type AnyResponse = Response | RedirectResponse;
-
-export interface Match {
-  route: Route;
-  params: Params;
+function generateTitle(route: Route, props: ResponseProps): string {
+  if (!route || !route.title) {
+    return '';
+  }
+  return typeof route.title === 'function'
+    ? route.title(props.params, props.data)
+    : route.title;
 }
 
 function parseParams(params: RawParams, fns: ParamParsers): Params {
@@ -52,109 +59,106 @@ function parseParams(params: RawParams, fns: ParamParsers): Params {
   return output;
 }
 
-class ResponseCreator {
-  key: string;
-  location: HickoryLocation;
-  status: number;
-  matches: Array<Match>;
-  route: Route;
-  partials: Array<string>;
-  params: Params;
-  body: any;
-  data: any;
-  redirectTo: any;
-  error: any;
+function createResponse(
+  location: HickoryLocation,
+  routes: Array<Route>,
+  addons: Addons
+): Promise<Response> {
+  let matches: Array<Match> = [];
+  let partials: Array<string> = [];
+  let params: Params = {};
+  let route: Route;
 
-  constructor(key: string, location: HickoryLocation) {
-    this.key = key;
-    this.location = location;
-    this.status = 200;
-    this.matches = [];
-    // properties to be set once we have
-    // finished walking over the routes
-    this.route;
-    this.partials = [];
-    this.params = {};
-    this.body;
+  // determine which route(s) match, then use the exact match
+  // as the matched route and the rest as partial routes
+  routes.some(route => route.match(location.pathname, matches));
+  if (matches.length) {
+    const bestMatch: Match = matches.pop();
+
+    matches.forEach(m => {
+      partials.push(m.route.name);
+      Object.assign(params, parseParams(m.params, m.route.paramParsers));
+    });
+
+    route = bestMatch.route;
+    Object.assign(params, parseParams(bestMatch.params, route.paramParsers));
   }
+  // start building the properties of the response object
+  const props: ResponseProps = {
+    location,
+    params,
+    partials,
+    status: route != null ? 200 : 404,
+    data: undefined
+  };
 
-  redirect(to: ToArgument, code: number = 301): void {
-    this.setStatus(code);
-    this.redirectTo = to;
-  }
-
-  fail(err: any): void {
-    this.error = err;
-  }
-
-  setStatus(code: number): void {
-    this.status = code;
-  }
-
-  push(route: Route, params: RawParams): void {
-    this.matches.push({ route, params });
-  }
-
-  pop(): void {
-    this.matches.pop();
-  }
-
-  setData(data: any): void {
-    this.data = data;
-  }
-
-  freezeMatch(): void {
-    if (this.matches.length) {
-      const parsers: ParamParsers = {};
-      const bestMatch: Match = this.matches.pop();
-      this.matches.forEach(m => {
-        this.partials.push(m.route.name);
-
-        Object.assign(this.params, parseParams(m.params, m.route.paramParsers));
-      });
-
-      this.route = bestMatch.route;
-      Object.assign(
-        this.params,
-        parseParams(bestMatch.params, bestMatch.route.paramParsers)
-      );
-    }
-  }
-
-  generateTitle(): string {
-    if (!this.route || !this.route.title) {
-      return '';
-    }
-    return typeof this.route.title === 'function'
-      ? this.route.title(this.params, this.data)
-      : this.route.title;
-  }
-
-  asObject(): AnyResponse {
-    const sharedResponse: BaseResponse = {
-      key: this.key,
-      location: this.location,
-      status: this.status,
-      data: this.data,
-      title: this.generateTitle(),
-      body: this.route && this.route.getBody()
-    };
-
-    if (this.redirectTo != null) {
-      return {
-        ...sharedResponse,
-        redirectTo: this.redirectTo
-      } as RedirectResponse;
-    }
-
-    return {
-      ...sharedResponse,
-      name: this.route ? this.route.name : undefined,
-      partials: this.partials,
-      params: this.params,
-      error: this.error
-    } as Response;
-  }
+  return loadRoute(route, props, addons).then(props =>
+    freezeResponse(route, props)
+  );
 }
 
-export default ResponseCreator;
+/*
+ * This will call any load/preload functions for the matching route
+ */
+function loadRoute(
+  route: Route,
+  props: ResponseProps,
+  addons: Addons
+): Promise<ResponseProps> {
+  if (!route) {
+    return Promise.resolve(props);
+  }
+  return Promise.all([
+    route.preload ? route.preload() : null,
+    route.load
+      ? route.load(
+          routeProperties(route, props),
+          responseModifiers(props),
+          addons
+        )
+      : null
+  ]).then(() => Promise.resolve(props));
+}
+
+function responseModifiers(props: ResponseProps) {
+  return {
+    redirect(to: ToArgument, code: number = 301): void {
+      props.status = code;
+      props.redirectTo = to;
+    },
+
+    fail(err: any): void {
+      props.error = err;
+    },
+
+    setStatus(code: number): void {
+      props.status = code;
+    },
+
+    setData(data: any): void {
+      props.data = data;
+    }
+  };
+}
+
+function routeProperties(route: Route, props: ResponseProps) {
+  return {
+    params: props.params,
+    location: props.location,
+    name: route.name
+  };
+}
+
+function freezeResponse(route: Route, props: ResponseProps): Promise<Response> {
+  const response: Response = {
+    ...props,
+    key: props.location.key,
+    body: route && route.getBody(),
+    title: generateTitle(route, props),
+    name: route && route.name
+  };
+
+  return Promise.resolve(response);
+}
+
+export default createResponse;

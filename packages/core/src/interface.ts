@@ -1,6 +1,6 @@
 import { HickoryLocation } from '@hickory/root';
 import { Route } from './createRoute';
-import { AnyResponse } from './createResponse';
+import { Response } from './createResponse';
 
 export type AddonRegister = (route: Route, parent?: any) => any;
 export type AddonGet = (name: string, ...rest: Array<any>) => any;
@@ -12,7 +12,9 @@ export interface Addon {
   reset(): void;
 }
 
-export type Subscriber = (response: AnyResponse, action?: string) => void;
+export type Addons = { [key: string]: AddonGet };
+
+export type Subscriber = (response: Response, action?: string) => void;
 export interface SideEffect {
   fn: Subscriber;
   after?: boolean;
@@ -20,8 +22,8 @@ export interface SideEffect {
 export type UnsubscribeFn = () => void;
 
 export interface Cache {
-  set: (response: AnyResponse) => void;
-  get: (location: HickoryLocation) => AnyResponse;
+  set: (response: Response) => void;
+  get: (location: HickoryLocation) => Response;
 }
 
 export type RawParams = { [key: string]: string };
