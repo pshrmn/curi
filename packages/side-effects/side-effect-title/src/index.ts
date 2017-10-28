@@ -1,4 +1,4 @@
-import { Subscriber, AnyResponse } from '@curi/core';
+import { Subscriber, Response } from '@curi/core';
 
 export interface TitleOptions {
   prefix?: string;
@@ -8,7 +8,7 @@ export interface TitleOptions {
 function createTitleSideEffect(options?: TitleOptions): Subscriber {
   const { prefix = '', suffix = '' } = options || {};
 
-  return function(response: AnyResponse) {
+  return function(response: Response) {
     document.title = [prefix, response.title, suffix].join(' ');
   };
 }

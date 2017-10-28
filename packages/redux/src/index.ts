@@ -1,11 +1,11 @@
-import { CuriConfig, AnyResponse } from '@curi/core';
+import { CuriConfig, Response } from '@curi/core';
 import { Store, Action } from 'redux';
 
 export const LOCATION_CHANGE = '@@curi/LOCATION_CHANGE';
 export const ADD_CURI = '@@curi/ADD_CURI';
 
 export interface ResponseAction extends Action {
-  response: AnyResponse;
+  response: Response;
 }
 
 export interface CuriAction extends Action {
@@ -13,9 +13,9 @@ export interface CuriAction extends Action {
 }
 
 export const responseReducer = (
-  state: AnyResponse,
+  state: Response,
   action: Action
-): AnyResponse => {
+): Response => {
   return action.type === LOCATION_CHANGE
     ? (<ResponseAction>action).response
     : state === undefined ? null : state;
