@@ -12,7 +12,7 @@
     "*.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist types",
     "build": "node ./scripts/build",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",

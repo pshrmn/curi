@@ -32,24 +32,24 @@ export interface RouteDescriptor {
         [key: string]: any;
     };
 }
-export interface RouteMidCreation extends RouteDescriptor {
-    children: Array<Route>;
-}
-export interface Route {
+export interface PublicRoute {
     name: string;
     path: string;
     body: () => any;
-    getBody: () => any;
-    children: Array<Route>;
     preload: PreloadFn;
     load: LoadFn;
-    keys: Array<string | number>;
-    match: (pathname: string, matches: Array<Match>, parentPath?: string) => boolean;
-    title: Title;
-    paramParsers: ParamParsers;
     extra: {
         [key: string]: any;
     };
+}
+export interface Route {
+    public: PublicRoute;
+    title: Title;
+    children: Array<Route>;
+    getBody: () => any;
+    keys: Array<string | number>;
+    match: (pathname: string, matches: Array<Match>, parentPath?: string) => boolean;
+    paramParsers: ParamParsers;
 }
 export interface LoadModifiers {
     fail: (err: any) => void;
@@ -57,5 +57,5 @@ export interface LoadModifiers {
     setData: (data: any) => void;
     setStatus: (status: number) => void;
 }
-declare const createRoute: (options: RouteMidCreation) => Route;
+declare const createRoute: (options: RouteDescriptor) => Route;
 export default createRoute;

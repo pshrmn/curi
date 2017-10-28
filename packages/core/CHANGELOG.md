@@ -1,5 +1,6 @@
 ## Next
 
+* Route object returned by `createRoute` now has a `public` property, which contains the route properties that are available to addons. Addons now receive a `PublicRoute` instead of a `Route`.
 * Only export a single `Response` type for TypeScript instead of `AnyResponse`, `Response`, and `RedirectResponse`.
 
 ## 1.0.0-beta.13
