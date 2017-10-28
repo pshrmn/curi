@@ -149,7 +149,10 @@ function routeProperties(route: InternalRoute, props: ResponseProps) {
   };
 }
 
-function freezeResponse(route: InternalRoute, props: ResponseProps): Promise<Response> {
+function freezeResponse(
+  route: InternalRoute,
+  props: ResponseProps
+): Promise<Response> {
   const response: Response = {
     ...props,
     key: props.location.key,

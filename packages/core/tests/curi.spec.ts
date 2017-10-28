@@ -341,269 +341,6 @@ describe('createConfig', () => {
     });
   });
 
-  describe('route matching', () => {
-    describe('response', () => {
-      it('is null if either load or preload fail (and error is logged)', () => {
-        const err = console.error;
-        const mockError = jest.fn();
-        console.error = mockError;
-        const routes = [
-          {
-            name: 'Contact',
-            path: 'contact',
-            load: () => {
-              return Promise.reject('This is an error');
-            }
-          }
-        ];
-        const history = InMemory({
-          locations: ['/contact']
-        });
-        const config = createConfig(history, routes);
-        expect.assertions(3);
-        return config.ready().then(arg => {
-          expect(arg).toBe(null);
-          expect(mockError.mock.calls.length).toBe(1);
-          expect(mockError.mock.calls[0][0]).toBe('This is an error');
-          console.error = err;
-        });
-      });
-
-      describe('error', () => {
-        it('is undefined for good responses', () => {
-          const routes = [{ name: 'Contact', path: 'contact' }];
-          const history = InMemory({
-            locations: ['/contact']
-          });
-          const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(arg => {
-            expect((<Response>arg).error).toBeUndefined();
-          });
-        });
-      });
-
-      describe('status', () => {
-        it('is 404 if no routes match', () => {
-          const routes = [
-            {
-              name: 'Contact',
-              path: 'contact',
-              children: [
-                { name: 'Email', path: 'email' },
-                { name: 'Phone', path: 'phone' }
-              ]
-            }
-          ];
-          const history = InMemory({ locations: ['/other-page'] });
-          const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(resp => {
-            expect(resp.status).toBe(404);
-          });
-        });
-      });
-
-      describe('body', () => {
-        it('is set after load/preload have resolved', () => {
-          let bodyValue;
-          const Route = {
-            name: 'A Route',
-            path: 'a-route',
-            load: () => {
-              bodyValue = 'testing';
-              return Promise.resolve(true);
-            },
-            body: () => bodyValue
-          };
-          const history = InMemory({ locations: ['/a-route'] });
-          const config = createConfig(history, [Route]);
-          expect.assertions(1);
-          return config.ready().then(response => {
-            expect((<Response>response).body).toBe('testing');
-          });
-        });
-      });
-    });
-
-    describe('load', () => {
-      it('passes params, location, modifier methods, and addons to load function', () => {
-        const spy = jest.fn((route, modifiers, addons) => {
-          expect(route).toMatchObject({
-            params: { anything: 'hello' },
-            location: {
-              pathname: '/hello',
-              query: 'one=two'
-            }
-          });
-          expect(modifiers).toMatchObject(
-            expect.objectContaining({
-              fail: expect.any(Function),
-              setData: expect.any(Function),
-              setStatus: expect.any(Function)
-            })
-          );
-
-          expect(typeof addons.pathname).toBe('function');
-        });
-
-        const CatchAll = {
-          name: 'Catch All',
-          path: ':anything',
-          load: spy
-        };
-
-        const history = InMemory({ locations: ['/hello?one=two'] });
-        const config = createConfig(history, [CatchAll]);
-        expect.assertions(3);
-        return config.ready();
-      });
-
-      describe('setData', () => {
-        it('sets response.data', () => {
-          const routes = [
-            {
-              name: 'A Route',
-              path: '',
-              load: (route, mods) => {
-                mods.setData({ test: 'value' });
-                return Promise.resolve();
-              }
-            }
-          ];
-
-          const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
-            expect(response.data).toMatchObject({ test: 'value' });
-          });
-        });
-      });
-
-      describe('redirect', () => {
-        it('sets response.redirectTo and response.status', () => {
-          const routes = [
-            {
-              name: 'A Route',
-              path: '',
-              load: (route, modifiers) => {
-                return modifiers.redirect('/somewhere', 301);
-              }
-            }
-          ];
-
-          const config = createConfig(history, routes);
-          expect.assertions(2);
-          return config.ready().then(response => {
-            expect(response.status).toBe(301);
-            expect(response.redirectTo).toBe('/somewhere');
-          });
-        });
-
-        it('can use addons.pathname to create pathname to redirect to', () => {
-          const routes = [
-            {
-              name: 'Old',
-              path: 'old/:id',
-              load: (route, modifiers, addons) => {
-                const pathname = addons.pathname('New', route.params);
-                return modifiers.redirect(pathname);
-              }
-            },
-            {
-              name: 'New',
-              path: 'new/:id'
-            }
-          ];
-          const history = InMemory({ locations: ['/old/1'] });
-          const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
-            expect(response.redirectTo).toBe('/new/1');
-          });
-        });
-      });
-
-      describe('setStatus', () => {
-        it('sets response.status', () => {
-          const routes = [
-            {
-              name: 'A Route',
-              path: '',
-              load: (route, mods) => {
-                mods.setStatus(451);
-                return Promise.resolve();
-              }
-            }
-          ];
-
-          const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
-            expect(response.status).toBe(451);
-          });
-        });
-      });
-
-      describe('fail', () => {
-        it('sets response.error', () => {
-          const routes = [
-            {
-              name: 'A Route',
-              path: '',
-              load: (route, mods) => {
-                mods.fail('woops');
-                return Promise.resolve();
-              }
-            }
-          ];
-
-          const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
-            expect((<Response>response).error).toBe('woops');
-          });
-        });
-      });
-    });
-
-    describe('response.redirectTo', () => {
-      it('triggers a history.replace call AFTER emitting response', () => {
-        let callPosition = 0;
-        const routes = [
-          {
-            name: 'A Route',
-            path: '',
-            load: (route, mods, addons) => {
-              mods.redirect('/somewhere-else', 301);
-              return Promise.resolve(true);
-            }
-          }
-        ];
-        let replacePosition;
-        history.replace = jest.fn(() => {
-          replacePosition = callPosition++;
-        });
-
-        const config = createConfig(history, routes);
-
-        let subscribePosition;
-        const subscriber = ignoreFirstCall(() => {
-          subscribePosition = callPosition++;
-        });
-        config.subscribe(subscriber);
-
-        expect.assertions(4);
-        expect(history.replace.mock.calls.length).toBe(0);
-        return config.ready().then(response => {
-          expect(history.replace.mock.calls.length).toBe(1);
-          expect(subscribePosition).toBe(0);
-          expect(replacePosition).toBe(1);
-        });
-      });
-    });
-  });
-
   describe('refresh', () => {
     const err = console.error;
 
@@ -880,6 +617,42 @@ describe('createConfig', () => {
         expect(sub1.mock.calls.length).toBe(1);
         expect(sub2.mock.calls.length).toBe(2);
         done();
+      });
+    });
+  });
+
+  describe('response.redirectTo', () => {
+    it('triggers a history.replace call AFTER emitting response', () => {
+      let callPosition = 0;
+      const routes = [
+        {
+          name: 'A Route',
+          path: '',
+          load: (route, mods, addons) => {
+            mods.redirect('/somewhere-else', 301);
+            return Promise.resolve(true);
+          }
+        }
+      ];
+      let replacePosition;
+      history.replace = jest.fn(() => {
+        replacePosition = callPosition++;
+      });
+
+      const config = createConfig(history, routes);
+
+      let subscribePosition;
+      const subscriber = ignoreFirstCall(() => {
+        subscribePosition = callPosition++;
+      });
+      config.subscribe(subscriber);
+
+      expect.assertions(4);
+      expect(history.replace.mock.calls.length).toBe(0);
+      return config.ready().then(response => {
+        expect(history.replace.mock.calls.length).toBe(1);
+        expect(subscribePosition).toBe(0);
+        expect(replacePosition).toBe(1);
       });
     });
   });
