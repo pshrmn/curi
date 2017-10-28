@@ -4,7 +4,7 @@ import PathToRegexp, {
 } from 'path-to-regexp';
 import { withLeadingSlash, join } from '../utils/path';
 import { Addon } from '../interface';
-import { Route } from '../createRoute';
+import { Route } from '../route';
 
 function createPathnameAddon(options?: PathFunctionOptions): Addon {
   let knownPaths: { [key: string]: string } = {};

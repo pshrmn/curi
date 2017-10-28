@@ -10,7 +10,7 @@ export {
   RawParams,
   Params
 } from './interface';
-export { Path } from './createPath';
+export { Path } from './path';
 export {
   Route,
   RouteDescriptor,
@@ -21,9 +21,9 @@ export {
   LoadModifiers,
   LoadFn,
   PreloadFn
-} from './createRoute';
-export { Response } from './createResponse';
-export { CuriConfig, ConfigOptions } from './createConfig';
+} from './route';
+export { Response } from './response';
+export { CuriConfig, ConfigOptions } from './curi';
 
-import createConfig from './createConfig';
+import createConfig from './curi';
 export default createConfig;

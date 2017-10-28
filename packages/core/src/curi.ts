@@ -1,6 +1,6 @@
 import walkRoutes from './utils/walkRoutes';
 import pathnameAddon from './addons/pathname';
-import createResponse from './createResponse';
+import createResponse from './response';
 
 import { History, HickoryLocation } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
@@ -9,8 +9,8 @@ import {
   Route,
   LoadModifiers,
   LoadRoute
-} from './createRoute';
-import { Response, ResponseProps } from './createResponse';
+} from './route';
+import { Response } from './response';
 import {
   Addon,
   Addons,

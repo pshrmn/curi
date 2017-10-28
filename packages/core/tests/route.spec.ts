@@ -1,6 +1,6 @@
 import 'jest';
 import { HickoryLocation } from '@hickory/root';
-import createRoute from '../src/createRoute';
+import createRoute from '../src/route';
 
 const noop = () => {};
 

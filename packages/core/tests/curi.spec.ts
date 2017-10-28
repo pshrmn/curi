@@ -1,9 +1,9 @@
 import 'jest';
-import createConfig from '../src/createConfig';
+import createConfig from '../src/curi';
 import pathname from '../src/addons/pathname';
 import InMemory from '@hickory/in-memory';
 import { Addon } from '../src/interface';
-import { Response } from '../src/createResponse';
+import { Response } from '../src/response';
 
 // The subscribe function is called when subscribing so that the
 // subscriber function is called with the original location. This has

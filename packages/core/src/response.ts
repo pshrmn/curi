@@ -1,5 +1,5 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import { Route, ParamParsers, Match } from './createRoute';
+import { Route, ParamParsers, Match } from './route';
 import { RawParams, Params, Addons } from './interface';
 
 export interface ResponseProps {

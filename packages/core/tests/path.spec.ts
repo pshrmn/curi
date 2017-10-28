@@ -1,5 +1,5 @@
 import 'jest';
-import createPath from '../src/createPath';
+import createPath from '../src/path';
 
 describe('path', () => {
   it('returns a regular expression using provided string', () => {

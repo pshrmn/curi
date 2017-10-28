@@ -1,10 +1,10 @@
 import { join, stripLeadingSlash, withLeadingSlash } from './utils/path';
 import once from './utils/once';
-import createPath from './createPath';
+import createPath from './path';
 
 import { HickoryLocation, ToArgument } from '@hickory/root';
 import { RegExpOptions } from 'path-to-regexp';
-import { Path } from './createPath';
+import { Path } from './path';
 import { RawParams, Params, AddonGet } from './interface';
 
 export type Title = string | ((params?: object, data?: any) => string);
