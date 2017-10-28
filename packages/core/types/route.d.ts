@@ -15,7 +15,7 @@ export interface ParamParsers {
     [key: string]: ParamParser;
 }
 export interface Match {
-    route: Route;
+    route: InternalRoute;
     params: Params;
 }
 export interface RouteDescriptor {
@@ -32,7 +32,7 @@ export interface RouteDescriptor {
         [key: string]: any;
     };
 }
-export interface PublicRoute {
+export interface Route {
     name: string;
     path: string;
     body: () => any;
@@ -43,10 +43,10 @@ export interface PublicRoute {
         [key: string]: any;
     };
 }
-export interface Route {
-    public: PublicRoute;
+export interface InternalRoute {
+    public: Route;
     title: Title;
-    children: Array<Route>;
+    children: Array<InternalRoute>;
     getBody: () => any;
     match: (pathname: string, matches: Array<Match>, parentPath?: string) => boolean;
     paramParsers: ParamParsers;
@@ -57,5 +57,5 @@ export interface LoadModifiers {
     setData: (data: any) => void;
     setStatus: (status: number) => void;
 }
-declare const createRoute: (options: RouteDescriptor) => Route;
+declare const createRoute: (options: RouteDescriptor) => InternalRoute;
 export default createRoute;

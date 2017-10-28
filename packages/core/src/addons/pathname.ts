@@ -4,7 +4,7 @@ import PathToRegexp, {
 } from 'path-to-regexp';
 import { withLeadingSlash, join } from '../utils/path';
 import { Addon } from '../interface';
-import { PublicRoute } from '../route';
+import { Route } from '../route';
 
 function createPathnameAddon(options?: PathFunctionOptions): Addon {
   let knownPaths: { [key: string]: string } = {};
@@ -12,7 +12,7 @@ function createPathnameAddon(options?: PathFunctionOptions): Addon {
 
   return {
     name: 'pathname',
-    register: (route: PublicRoute, parent: string): string => {
+    register: (route: Route, parent: string): string => {
       const { name, path } = route;
       if (knownPaths[name] !== undefined) {
         console.warn(

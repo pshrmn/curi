@@ -1,5 +1,5 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import { Route } from './route';
+import { InternalRoute } from './route';
 import { Params, Addons } from './interface';
 export interface ResponseProps {
     location: HickoryLocation;
@@ -23,5 +23,5 @@ export interface Response {
     error?: any;
     redirectTo?: any;
 }
-declare function createResponse(location: HickoryLocation, routes: Array<Route>, addons: Addons): Promise<Response>;
+declare function createResponse(location: HickoryLocation, routes: Array<InternalRoute>, addons: Addons): Promise<Response>;
 export default createResponse;

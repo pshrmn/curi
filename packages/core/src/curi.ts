@@ -7,7 +7,7 @@ import { History, HickoryLocation } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
 import {
   RouteDescriptor,
-  Route,
+  InternalRoute,
   LoadModifiers,
   LoadRoute
 } from './route';
@@ -60,7 +60,7 @@ function createConfig(
 
   // add the pathname addon to the provided addons
   const finalAddons = userAddons.concat(pathnameAddon(pathnameOptions));
-  let routes: Array<Route> = [];
+  let routes: Array<InternalRoute> = [];
   const registeredAddons: Addons = {};
   const subscribers: Array<Subscriber> = [];
 

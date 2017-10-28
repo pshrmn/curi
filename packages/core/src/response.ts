@@ -1,5 +1,5 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import { Route, ParamParsers, Match } from './route';
+import { InternalRoute, ParamParsers, Match } from './route';
 import { RawParams, Params, Addons } from './interface';
 
 export interface ResponseProps {
@@ -27,7 +27,7 @@ export interface Response {
   redirectTo?: any;
 }
 
-function generateTitle(route: Route, props: ResponseProps): string {
+function generateTitle(route: InternalRoute, props: ResponseProps): string {
   if (!route || !route.title) {
     return '';
   }
@@ -61,13 +61,13 @@ function parseParams(params: RawParams, fns: ParamParsers): Params {
 
 function createResponse(
   location: HickoryLocation,
-  routes: Array<Route>,
+  routes: Array<InternalRoute>,
   addons: Addons
 ): Promise<Response> {
   let matches: Array<Match> = [];
   let partials: Array<string> = [];
   let params: Params = {};
-  let route: Route;
+  let route: InternalRoute;
 
   // determine which route(s) match, then use the exact match
   // as the matched route and the rest as partial routes
@@ -101,7 +101,7 @@ function createResponse(
  * This will call any load/preload functions for the matching route
  */
 function loadRoute(
-  route: Route,
+  route: InternalRoute,
   props: ResponseProps,
   addons: Addons
 ): Promise<ResponseProps> {
@@ -141,7 +141,7 @@ function responseModifiers(props: ResponseProps) {
   };
 }
 
-function routeProperties(route: Route, props: ResponseProps) {
+function routeProperties(route: InternalRoute, props: ResponseProps) {
   return {
     params: props.params,
     location: props.location,
@@ -149,7 +149,7 @@ function routeProperties(route: Route, props: ResponseProps) {
   };
 }
 
-function freezeResponse(route: Route, props: ResponseProps): Promise<Response> {
+function freezeResponse(route: InternalRoute, props: ResponseProps): Promise<Response> {
   const response: Response = {
     ...props,
     key: props.location.key,

@@ -12,12 +12,19 @@ describe('createRoute', () => {
         path: 'test',
         children: []
       });
-      const publicProperties = [ 'name', 'path', 'preload', 'load', 'extra', 'body' ];
+      const publicProperties = [
+        'name',
+        'path',
+        'keys',
+        'preload',
+        'load',
+        'extra',
+        'body'
+      ];
       const privateProperties = [
         'title',
         'children',
         'getBody',
-        'keys',
         'match',
         'paramParsers'
       ];
@@ -59,7 +66,7 @@ describe('createRoute', () => {
             path: ':one/:two/:three',
             children: []
           });
-          expect(testRoute.keys).toEqual(['one', 'two', 'three']);
+          expect(testRoute.public.keys).toEqual(['one', 'two', 'three']);
         });
 
         it('is an empty array when the path has no params', () => {
@@ -68,7 +75,7 @@ describe('createRoute', () => {
             path: 'one/two/three',
             children: []
           });
-          expect(testRoute.keys).toEqual([]);
+          expect(testRoute.public.keys).toEqual([]);
         });
       });
 

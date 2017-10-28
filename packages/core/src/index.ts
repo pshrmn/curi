@@ -13,7 +13,6 @@ export {
 export { Path } from './path';
 export {
   Route,
-  PublicRoute,
   RouteDescriptor,
   Title,
   ParamParser,
