@@ -1,5 +1,4 @@
-import { RegExpOptions } from 'path-to-regexp';
-import { Path } from './path';
+import { RegExpOptions, Key } from 'path-to-regexp';
 import { LoadFn, PreloadFn } from './interface';
 import { ResponseProps } from './response';
 export declare type Title = string | ((params?: object, data?: any) => string);
@@ -39,7 +38,8 @@ export interface Route {
 }
 export interface InternalMatch {
     mustBeExact: boolean;
-    path: Path;
+    re: RegExp;
+    keys: Array<Key>;
 }
 export interface InternalRoute {
     public: Route;

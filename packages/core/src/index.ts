@@ -13,7 +13,6 @@ export {
   LoadFn,
   PreloadFn
 } from './interface';
-export { Path } from './path';
 export {
   Route,
   RouteDescriptor,

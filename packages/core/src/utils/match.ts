@@ -14,15 +14,15 @@ export default function matchRoute(
   parentPath?: string
 ): boolean {
   const testPath: string = stripLeadingSlash(pathname);
-  const { path, mustBeExact } = route.match;
+  const { re, keys, mustBeExact } = route.match;
   const { children } = route;
-  const match: RegExpMatchArray = path.re.exec(testPath);
+  const match: RegExpMatchArray = re.exec(testPath);
   if (!match) {
     return false;
   }
   const [segment, ...parsed] = match;
   const params: RawParams = {};
-  path.keys.forEach((key, index) => {
+  keys.forEach((key, index) => {
     params[key.name] = parsed[index];
   });
   const uriString =

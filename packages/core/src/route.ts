@@ -1,9 +1,8 @@
-import once from './utils/once';
-import createPath from './path';
-
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import { RegExpOptions } from 'path-to-regexp';
-import { Path } from './path';
+import PathToRegexp, { RegExpOptions, Key } from 'path-to-regexp';
+
+import once from './utils/once';
+
 import { LoadFn, PreloadFn } from './interface';
 import { ResponseProps } from './response';
 
@@ -49,7 +48,8 @@ export interface Route {
 
 export interface InternalMatch {
   mustBeExact: boolean;
-  path: Path;
+  re: RegExp;
+  keys: Array<Key>;
 }
 
 export interface InternalRoute {
@@ -92,20 +92,23 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     pathOptions.end = false;
     children = descriptorChildren.map(createRoute);
   }
-  const regexPath: Path = createPath(path, pathOptions);
+
+  const keys: Array<Key> = [];
+  const re = PathToRegexp(path, keys, pathOptions);
 
   return {
     public: {
       name,
       path: path,
       body,
-      keys: regexPath.keys.map(key => key.name),
+      keys: keys.map(key => key.name),
       preload: preload && once(preload),
       load,
       extra
     },
     match: {
-      path: regexPath,
+      re,
+      keys,
       mustBeExact
     },
     children,
