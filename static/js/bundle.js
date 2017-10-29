@@ -29,7 +29,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		0: 0
+/******/ 		4: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/" + ({"1":"example","2":"package","3":"tutorial","4":"guide"}[chunkId]||chunkId) + ".bundle.js";
+/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"example","1":"package","2":"tutorial","3":"guide"}[chunkId]||chunkId) + ".bundle.js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -142,7 +142,7 @@
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -153,196 +153,6 @@ module.exports = React;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -354,11 +164,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Navigator", function() { return Navigator; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics__);
 
 
@@ -615,6 +425,196 @@ var Navigator = /** #__PURE__ */ (function (_super) {
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -714,7 +714,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 5 */
@@ -739,6 +739,158 @@ module.exports = ReactPropTypesSecret;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PrismBlock = exports.InlineComponent = exports.InlineJS = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactPrism = __webpack_require__(37);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var InlineJS = exports.InlineJS = function InlineJS(_ref) {
+  var children = _ref.children;
+  return _react2.default.createElement(
+    _reactPrism.PrismCode,
+    { className: 'language-javascript' },
+    children
+  );
+};
+
+var InlineComponent = exports.InlineComponent = function InlineComponent(_ref2) {
+  var children = _ref2.children;
+  return _react2.default.createElement(
+    _reactPrism.PrismCode,
+    { className: 'language-jsx' },
+    '<',
+    children,
+    '>'
+  );
+};
+
+var PrismBlock = exports.PrismBlock = function PrismBlock(_ref3) {
+  var lang = _ref3.lang,
+      children = _ref3.children;
+  return _react2.default.createElement(
+    _reactPrism.PrismCode,
+    {
+      className: 'language-' + lang,
+      component: 'pre'
+    },
+    children
+  );
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (props) {
+  props.className = 'active';
+  return props;
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var examples = [{
+  name: 'Active Links',
+  slug: 'active-links',
+  description: 'Style links when they match the current location'
+}, {
+  name: 'Authentication',
+  slug: 'authentication',
+  description: 'Automatically redirect to a login page when attempting to access private content'
+}, {
+  name: 'Basic Vue',
+  slug: 'basic-vue',
+  description: 'A simple Curi app rendered using VueJS'
+}, {
+  name: 'Basic Svelte',
+  slug: 'basic-svelte',
+  description: 'A simple Curi app rendered using Svelte'
+}, {
+  name: 'Blocking Navigation (React)',
+  slug: 'blocking-navigation',
+  description: 'Prevent navigation away from a half-filled form'
+}, {
+  name: 'Blocking Navigation (Vue)',
+  slug: 'blocking-navigation-vue',
+  description: 'Prevent navigation away from a half-filled form'
+}, {
+  name: 'Breadcrumbs (React)',
+  slug: 'breadcrumbs',
+  description: 'Render breadcrumb links to ancestor routes'
+}, {
+  name: 'Breadcrumbs (Vue)',
+  slug: 'breadcrumbs-vue',
+  description: 'Render breadcrumb links to ancestor routes'
+}, {
+  name: 'Code Splitting',
+  slug: 'code-splitting',
+  description: 'Use import() to enable Webpack code splitting'
+}, {
+  name: 'Data Loading',
+  slug: 'data-loading',
+  description: 'Display a loading bar while waiting for data to load'
+}, {
+  name: 'Modal Routes',
+  slug: 'modal',
+  description: 'Load a route in a modal (the Pinterest model)'
+}, {
+  name: 'Redux',
+  slug: 'redux',
+  description: 'Integrate Redux, React, and Curi (easily!)'
+}, {
+  name: 'Script Tags',
+  slug: 'script-tags',
+  description: 'Load Curi packages using script tags instead of a bundle'
+}, {
+  name: 'Server Rendering',
+  slug: 'server-rendering',
+  description: 'Render your application on the server using Node (this example uses Express)'
+}, {
+  name: 'Side Effects',
+  slug: 'side-effect',
+  description: 'Add side effects that always respond to navigation'
+}, {
+  name: 'Transitions',
+  slug: 'transitions',
+  description: 'Transition between routes using react-transition-group'
+}];
+
+var byName = exports.byName = examples.reduce(function (acc, curr) {
+  acc[curr.slug] = curr;
+  return acc;
+}, {});
+
+exports.default = examples;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -761,17 +913,17 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(18)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(26)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(21)();
+  module.exports = __webpack_require__(29)();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 7 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -837,24 +989,372 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = warning;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(9);
-module.exports = __webpack_require__(10);
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.byName = exports.groupedPackages = undefined;
+
+var _versions = __webpack_require__(40);
+
+var _versions2 = _interopRequireDefault(_versions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var packages = [{
+  name: 'core',
+  version: _versions2.default['core'],
+  globalName: 'Curi',
+  type: 'core'
+}, {
+  name: 'addon-active',
+  version: _versions2.default['addon-active'],
+  globalName: 'CuriAddonActive',
+  type: 'addon'
+}, {
+  name: 'addon-ancestors',
+  version: _versions2.default['addon-ancestors'],
+  globalName: 'CuriAddonAncestors',
+  type: 'addon'
+}, {
+  name: 'addon-prefetch',
+  version: _versions2.default['addon-prefetch'],
+  globalName: 'CuriAddonPrefetch',
+  type: 'addon'
+}, {
+  name: 'side-effect-title',
+  version: _versions2.default['side-effect-title'],
+  globalName: 'CuriSideEffectTitle',
+  type: 'side-effect'
+}, {
+  name: 'side-effect-scroll',
+  version: _versions2.default['side-effect-scroll'],
+  globalName: 'CuriSideEffectScroll',
+  type: 'side-effect'
+}, {
+  name: 'react',
+  version: _versions2.default['react'],
+  globalName: 'CuriReact',
+  type: 'renderer'
+}, {
+  name: 'redux',
+  version: _versions2.default['redux'],
+  globalName: 'CuriRedux',
+  type: 'redux'
+}, {
+  name: 'svelte',
+  version: _versions2.default['svelte'],
+  globalName: 'CuriSvelte',
+  type: 'renderer'
+}, {
+  name: 'vue',
+  version: _versions2.default['vue'],
+  globalName: 'CuriVue',
+  type: 'renderer'
+}];
+
+var groupedPackages = exports.groupedPackages = packages.reduce(function (acc, curr) {
+  if (!acc[curr.type]) {
+    acc[curr.type] = [curr];
+  } else {
+    acc[curr.type].push(curr);
+  }
+  return acc;
+}, {});
+
+var byName = exports.byName = packages.reduce(function (acc, curr) {
+  acc[curr.name] = curr;
+  return acc;
+}, {});
+
+exports.default = packages;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Warning = exports.Note = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Note = exports.Note = function Note(_ref) {
+  var children = _ref.children;
+  return _react2.default.createElement(
+    'div',
+    { className: 'note' },
+    _react2.default.createElement(
+      'strong',
+      null,
+      'Note:'
+    ),
+    ' ',
+    children
+  );
+};
+
+var Warning = exports.Warning = function Warning(_ref2) {
+  var children = _ref2.children;
+  return _react2.default.createElement(
+    'div',
+    { className: 'warning' },
+    _react2.default.createElement(
+      'strong',
+      null,
+      'Warning:'
+    ),
+    ' ',
+    children
+  );
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react3 = __webpack_require__(1);
+
+var _packages = __webpack_require__(11);
+
+var _styleActive = __webpack_require__(7);
+
+var _styleActive2 = _interopRequireDefault(_styleActive);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var GroupPackages = function GroupPackages(_ref) {
+  var packages = _ref.packages,
+      withDescription = _ref.withDescription;
+  return _react2.default.createElement(
+    'ul',
+    { className: 'link-list' },
+    packages.map(function (p) {
+      return _react2.default.createElement(
+        'li',
+        { key: p.name, className: withDescription ? 'with' : 'solo' },
+        _react2.default.createElement(
+          _react3.Link,
+          {
+            to: 'Package',
+            params: { package: p.name },
+            active: { merge: _styleActive2.default }
+          },
+          p.name
+        )
+      );
+    })
+  );
+};
+
+exports.default = function (_ref2) {
+  var _ref2$withDescription = _ref2.withDescription,
+      withDescription = _ref2$withDescription === undefined ? false : _ref2$withDescription;
+  return _react2.default.createElement(
+    'ul',
+    null,
+    Object.keys(_packages.groupedPackages).map(function (name) {
+      return _react2.default.createElement(
+        'li',
+        { className: 'link-group', key: name },
+        _react2.default.createElement(
+          'h3',
+          null,
+          name
+        ),
+        _react2.default.createElement(GroupPackages, {
+          packages: _packages.groupedPackages[name],
+          withDescription: withDescription
+        })
+      );
+    })
+  );
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var tutorials = [{
+  name: '01-introduction',
+  displayName: 'Part 1: Introduction to Curi'
+}, {
+  name: '02-setup',
+  displayName: 'Part 2: Curi Setup'
+}, {
+  name: '03-routes',
+  displayName: 'Part 3: Curi Routes'
+}, {
+  name: '04-hickory',
+  displayName: 'Part 4: Hickory'
+}, {
+  name: '05-config',
+  displayName: 'Part 5: The Curi Configuration Object'
+}, {
+  name: '06-pages',
+  displayName: 'Part 6: Rendering Pages',
+  frameworks: ['react', 'vue']
+}, {
+  name: '07-load',
+  displayName: 'Part 7: The Load Function'
+}, {
+  name: '08-render-data',
+  displayName: 'Part 8: Rendering Data',
+  frameworks: ['react', 'vue']
+}, {
+  name: '09-nav',
+  displayName: 'Part 9: Forms & Programmatic Navigation',
+  frameworks: ['react', 'vue']
+}, {
+  name: '10-now-what',
+  displayName: 'Part 10: Now What?'
+}];
+
+var byName = exports.byName = tutorials.reduce(function (acc, curr) {
+  if (curr.frameworks) {
+    curr.frameworks.forEach(function (f) {
+      acc[curr.name + '-' + f] = curr;
+    });
+  } else {
+    acc[curr.name] = curr;
+  }
+  return acc;
+}, {});
+
+exports.default = tutorials;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var guides = [{
+  name: 'Installation',
+  slug: 'installation',
+  description: 'Learn how to install Curi',
+  type: 'basic'
+}, {
+  name: 'Getting Started',
+  slug: 'getting-started',
+  description: 'Learn the basic concepts that you\'ll need to know to setup your project',
+  type: 'basic'
+}, {
+  name: 'All About Routes',
+  slug: 'routes',
+  description: 'Learn about Curi routes and their properties',
+  type: 'basic'
+}, {
+  name: 'Rendering with Responses',
+  slug: 'responses',
+  description: 'Learn how to render your project using a response object',
+  type: 'basic'
+}, {
+  name: 'Using Addons',
+  slug: 'addons',
+  description: 'Learn how to use addons to interact with your routes in your project',
+  type: 'advanced'
+}, {
+  name: 'Using Side Effects',
+  slug: 'side-effects',
+  description: 'Learn how to use side effect functions to trigger behavior after navigation',
+  type: 'advanced'
+}, {
+  name: 'Response Caching',
+  slug: 'response-caching',
+  description: 'Learn how to cache responses to prevent recreating duplicate responses',
+  type: 'advanced'
+}, {
+  name: 'Code Splitting with the Preload Property',
+  slug: 'code-splitting',
+  description: 'Learn how to code split your project using Webpack',
+  type: 'advanced'
+}, {
+  name: 'The Load Property',
+  slug: 'load',
+  description: 'Learn how to use a route\'s load function to modify responses',
+  type: 'advanced'
+}, {
+  name: 'React Basics',
+  slug: 'react',
+  description: 'Learn the basics of how to use Curi with a React application',
+  type: 'advanced'
+}, {
+  name: 'Migrate from React Router v2/3 to Curi',
+  slug: 'migrate-rrv3',
+  descriptioni: 'Learn how to migrate an application from React Router v2 or v3 to Curi',
+  type: 'migration'
+}];
+
+var groupedGuides = exports.groupedGuides = guides.reduce(function (acc, curr) {
+  if (!acc[curr.type]) {
+    acc[curr.type] = [curr];
+  } else {
+    acc[curr.type].push(curr);
+  }
+  return acc;
+}, {});
+
+var byName = exports.byName = guides.reduce(function (acc, curr) {
+  acc[curr.slug] = curr;
+  return acc;
+}, {});
+
+exports.default = guides;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(17);
+module.exports = __webpack_require__(18);
 
 
 /***/ }),
-/* 9 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 10 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -864,37 +1364,37 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(11);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _browser = __webpack_require__(12);
+var _browser = __webpack_require__(20);
 
 var _browser2 = _interopRequireDefault(_browser);
 
-var _core = __webpack_require__(16);
+var _core = __webpack_require__(24);
 
 var _core2 = _interopRequireDefault(_core);
 
-var _react3 = __webpack_require__(2);
+var _react3 = __webpack_require__(1);
 
-var _sideEffectTitle = __webpack_require__(24);
+var _sideEffectTitle = __webpack_require__(32);
 
 var _sideEffectTitle2 = _interopRequireDefault(_sideEffectTitle);
 
-var _sideEffectScroll = __webpack_require__(25);
+var _sideEffectScroll = __webpack_require__(33);
 
 var _sideEffectScroll2 = _interopRequireDefault(_sideEffectScroll);
 
-var _addonActive = __webpack_require__(26);
+var _addonActive = __webpack_require__(34);
 
 var _addonActive2 = _interopRequireDefault(_addonActive);
 
-var _routes = __webpack_require__(27);
+var _routes = __webpack_require__(35);
 
 var _routes2 = _interopRequireDefault(_routes);
 
-var _render = __webpack_require__(32);
+var _render = __webpack_require__(43);
 
 var _render2 = _interopRequireDefault(_render);
 
@@ -915,19 +1415,19 @@ config.ready().then(function () {
 });
 
 /***/ }),
-/* 11 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = ReactDOM;
 
 /***/ }),
-/* 12 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hickory_root__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hickory_root__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__ = __webpack_require__(23);
 
 
 
@@ -1066,11 +1566,11 @@ function Browser(options) {
 
 
 /***/ }),
-/* 13 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__ = __webpack_require__(22);
 
 
 /*! *****************************************************************************
@@ -1298,7 +1798,7 @@ function Common$1(options) {
 
 
 /***/ }),
-/* 14 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1339,7 +1839,7 @@ function stripBaseSegment(path, prefix) {
 
 
 /***/ }),
-/* 15 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1394,12 +1894,12 @@ function createEventCoordinator(events) {
 
 
 /***/ }),
-/* 16 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_path_to_regexp__);
 
 
@@ -1777,7 +2277,7 @@ function createConfig$1(history, routeArray, options) {
 
 
 /***/ }),
-/* 17 */
+/* 25 */
 /***/ (function(module, exports) {
 
 /**
@@ -2154,7 +2654,7 @@ function pathToRegexp (path, keys, options) {
 
 
 /***/ }),
-/* 18 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2169,11 +2669,11 @@ function pathToRegexp (path, keys, options) {
 
 var emptyFunction = __webpack_require__(3);
 var invariant = __webpack_require__(4);
-var warning = __webpack_require__(7);
-var assign = __webpack_require__(19);
+var warning = __webpack_require__(10);
+var assign = __webpack_require__(27);
 
 var ReactPropTypesSecret = __webpack_require__(5);
-var checkPropTypes = __webpack_require__(20);
+var checkPropTypes = __webpack_require__(28);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -2701,10 +3201,10 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 19 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2801,7 +3301,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 20 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2816,7 +3316,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(4);
-  var warning = __webpack_require__(7);
+  var warning = __webpack_require__(10);
   var ReactPropTypesSecret = __webpack_require__(5);
   var loggedTypeFailures = {};
 }
@@ -2865,10 +3365,10 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 21 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2933,7 +3433,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 22 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2989,10 +3489,10 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 23 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3064,7 +3564,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 
 
 /***/ }),
-/* 24 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3080,7 +3580,7 @@ function createTitleSideEffect(options) {
 
 
 /***/ }),
-/* 25 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3113,7 +3613,7 @@ function createScrollSideEffect() {
 
 
 /***/ }),
-/* 26 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3166,7 +3666,7 @@ function createActiveAddon() {
 
 
 /***/ }),
-/* 27 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3180,25 +3680,25 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Home = __webpack_require__(28);
+var _Home = __webpack_require__(36);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _PackageList = __webpack_require__(42);
+var _PackageList = __webpack_require__(39);
 
 var _PackageList2 = _interopRequireDefault(_PackageList);
 
-var _ExampleList = __webpack_require__(46);
+var _ExampleList = __webpack_require__(41);
 
 var _ExampleList2 = _interopRequireDefault(_ExampleList);
 
-var _tutorials = __webpack_require__(48);
+var _tutorials = __webpack_require__(14);
 
-var _guides = __webpack_require__(49);
+var _guides = __webpack_require__(15);
 
-var _packages = __webpack_require__(39);
+var _packages = __webpack_require__(11);
 
-var _examples = __webpack_require__(41);
+var _examples = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3216,7 +3716,7 @@ exports.default = [{
   name: 'Tutorial',
   path: 'tutorial/:name',
   preload: function preload() {
-    return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 50)).then(function (module) {
+    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 46)).then(function (module) {
       loadedModules["Tutorial"] = module.default;
     }).catch(function (err) {
       console.error('Failed to load Tutorial component', err);
@@ -3240,7 +3740,7 @@ exports.default = [{
   name: 'Guide',
   path: 'guides/:slug/',
   preload: function preload() {
-    return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, 51)).then(function (module) {
+    return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 47)).then(function (module) {
       loadedModules["Guide"] = module.default;
     }).catch(function (err) {
       console.error('Failed to load Guide component', err);
@@ -3276,7 +3776,7 @@ exports.default = [{
     name: 'Package',
     path: '@curi/:package/',
     preload: function preload() {
-      return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 52)).then(function (module) {
+      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 48)).then(function (module) {
         loadedModules["Package"] = module.default;
       }).catch(function (err) {
         console.error('Failed to load Package component', err);
@@ -3313,7 +3813,7 @@ exports.default = [{
     name: 'Example',
     path: ':slug/',
     preload: function preload() {
-      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 53)).then(function (module) {
+      return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 49)).then(function (module) {
         loadedModules["Example"] = module.default;
       }).catch(function (err) {
         console.error('Failed to load Example component', err);
@@ -3342,7 +3842,7 @@ exports.default = [{
 }];
 
 /***/ }),
-/* 28 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3356,9 +3856,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _PrismBlocks = __webpack_require__(29);
+var _PrismBlocks = __webpack_require__(6);
 
-var _react3 = __webpack_require__(2);
+var _react3 = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4014,60 +4514,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PrismBlock = exports.InlineComponent = exports.InlineJS = undefined;
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactPrism = __webpack_require__(30);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var InlineJS = exports.InlineJS = function InlineJS(_ref) {
-  var children = _ref.children;
-  return _react2.default.createElement(
-    _reactPrism.PrismCode,
-    { className: 'language-javascript' },
-    children
-  );
-};
-
-var InlineComponent = exports.InlineComponent = function InlineComponent(_ref2) {
-  var children = _ref2.children;
-  return _react2.default.createElement(
-    _reactPrism.PrismCode,
-    { className: 'language-jsx' },
-    '<',
-    children,
-    '>'
-  );
-};
-
-var PrismBlock = exports.PrismBlock = function PrismBlock(_ref3) {
-  var lang = _ref3.lang,
-      children = _ref3.children;
-  return _react2.default.createElement(
-    _reactPrism.PrismCode,
-    {
-      className: 'language-' + lang,
-      component: 'pre'
-    },
-    children
-  );
-};
-
-/***/ }),
-/* 30 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4077,7 +4524,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _PrismCode = __webpack_require__(31);
+var _PrismCode = __webpack_require__(38);
 
 Object.defineProperty(exports, "PrismCode", {
   enumerable: true,
@@ -4095,7 +4542,7 @@ Object.defineProperty(exports, "default", {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 31 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4126,7 +4573,7 @@ var _react = __webpack_require__(0)
 
 var _react2 = _interopRequireDefault(_react)
 
-var _propTypes = __webpack_require__(6)
+var _propTypes = __webpack_require__(9)
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj }
@@ -4258,7 +4705,232 @@ exports.default = PrismCode
 
 
 /***/ }),
-/* 32 */
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react3 = __webpack_require__(1);
+
+var _PackageLinks = __webpack_require__(13);
+
+var _PackageLinks2 = _interopRequireDefault(_PackageLinks);
+
+var _Messages = __webpack_require__(12);
+
+var _PrismBlocks = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h1',
+      null,
+      'Curi Packages'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'Curi is split into a number of different packages that you can pick and choose from in order to only use what you need. You will always need the',
+      ' ',
+      _react2.default.createElement(
+        _react3.Link,
+        { to: 'Package', params: { package: 'core' } },
+        'core'
+      ),
+      ' package, but no other package is necessary.'
+    ),
+    _react2.default.createElement(
+      _Messages.Note,
+      null,
+      'All of the Curi packages are scoped under ',
+      _react2.default.createElement(
+        _PrismBlocks.InlineJS,
+        null,
+        '@curi'
+      ),
+      '. For example, to install the ',
+      _react2.default.createElement(
+        _PrismBlocks.InlineJS,
+        null,
+        'core'
+      ),
+      ', you would call ',
+      _react2.default.createElement(
+        _PrismBlocks.InlineJS,
+        null,
+        'npm install @curi/core'
+      ),
+      '.'
+    ),
+    _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'h2',
+        null,
+        'List of Official Packages'
+      ),
+      _react2.default.createElement(_PackageLinks2.default, null)
+    )
+  );
+};
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// this file is automatically generated using scripts/updatePackageVersions.js
+exports.default = {
+  "addon-active": "1.0.0-beta.5",
+  "addon-ancestors": "1.0.0-beta.5",
+  "addon-prefetch": "1.0.0-beta.5",
+  "core": "1.0.0-beta.14",
+  "react": "1.0.0-beta.11",
+  "redux": "1.0.0-alpha.3",
+  "side-effect-scroll": "1.0.0-beta.5",
+  "side-effect-title": "1.0.0-beta.5",
+  "svelte": "1.0.0-alpha.4",
+  "vue": "1.0.0-beta.7"
+};
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react3 = __webpack_require__(1);
+
+var _ExampleTiles = __webpack_require__(42);
+
+var _ExampleTiles2 = _interopRequireDefault(_ExampleTiles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h1',
+      null,
+      'Curi Examples'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'These are some Curi example projects that you can use for reference while building your own application. Most of these examples have CodeSandbox demos embedded with them, but some do not. Each example includes source code available through the Curi package ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://github.com/pshrmn/curi/tree/master/examples' },
+        'on GitHub'
+      ),
+      '.'
+    ),
+    _react2.default.createElement(_ExampleTiles2.default, null),
+    _react2.default.createElement(
+      'p',
+      null,
+      'You can see the source code for all of the examples on',
+      ' ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://github.com/pshrmn/curi/tree/master/examples' },
+        'GitHub'
+      ),
+      '.'
+    )
+  );
+};
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react3 = __webpack_require__(1);
+
+var _examples = __webpack_require__(8);
+
+var _examples2 = _interopRequireDefault(_examples);
+
+var _styleActive = __webpack_require__(7);
+
+var _styleActive2 = _interopRequireDefault(_styleActive);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'ul',
+    { className: 'tiles' },
+    _examples2.default.map(function (example) {
+      return _react2.default.createElement(
+        'li',
+        { key: example.slug, className: 'tile' },
+        _react2.default.createElement(
+          _react3.Link,
+          {
+            to: 'Example',
+            params: { slug: example.slug },
+            active: { merge: _styleActive2.default }
+          },
+          _react2.default.createElement(
+            'h2',
+            null,
+            example.name
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'description' },
+            example.description
+          )
+        )
+      );
+    })
+  );
+};
+
+/***/ }),
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4273,7 +4945,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Header = __webpack_require__(33);
+var _Header = __webpack_require__(44);
 
 var _Header2 = _interopRequireDefault(_Header);
 
@@ -4301,7 +4973,7 @@ function render(response, action, config) {
 };
 
 /***/ }),
-/* 33 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4315,7 +4987,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Nav = __webpack_require__(34);
+var _Nav = __webpack_require__(45);
 
 var _Nav2 = _interopRequireDefault(_Nav);
 
@@ -4330,7 +5002,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 34 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4344,7 +5016,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _react3 = __webpack_require__(2);
+var _react3 = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4412,682 +5084,6 @@ exports.default = function () {
     )
   );
 };
-
-/***/ }),
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.byName = exports.groupedPackages = undefined;
-
-var _versions = __webpack_require__(44);
-
-var _versions2 = _interopRequireDefault(_versions);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var packages = [{
-  name: 'core',
-  version: _versions2.default['core'],
-  globalName: 'Curi',
-  type: 'core'
-}, {
-  name: 'addon-active',
-  version: _versions2.default['addon-active'],
-  globalName: 'CuriAddonActive',
-  type: 'addon'
-}, {
-  name: 'addon-ancestors',
-  version: _versions2.default['addon-ancestors'],
-  globalName: 'CuriAddonAncestors',
-  type: 'addon'
-}, {
-  name: 'addon-prefetch',
-  version: _versions2.default['addon-prefetch'],
-  globalName: 'CuriAddonPrefetch',
-  type: 'addon'
-}, {
-  name: 'side-effect-title',
-  version: _versions2.default['side-effect-title'],
-  globalName: 'CuriSideEffectTitle',
-  type: 'side-effect'
-}, {
-  name: 'side-effect-scroll',
-  version: _versions2.default['side-effect-scroll'],
-  globalName: 'CuriSideEffectScroll',
-  type: 'side-effect'
-}, {
-  name: 'react',
-  version: _versions2.default['react'],
-  globalName: 'CuriReact',
-  type: 'renderer'
-}, {
-  name: 'redux',
-  version: _versions2.default['redux'],
-  globalName: 'CuriRedux',
-  type: 'redux'
-}, {
-  name: 'svelte',
-  version: _versions2.default['svelte'],
-  globalName: 'CuriSvelte',
-  type: 'renderer'
-}, {
-  name: 'vue',
-  version: _versions2.default['vue'],
-  globalName: 'CuriVue',
-  type: 'renderer'
-}];
-
-var groupedPackages = exports.groupedPackages = packages.reduce(function (acc, curr) {
-  if (!acc[curr.type]) {
-    acc[curr.type] = [curr];
-  } else {
-    acc[curr.type].push(curr);
-  }
-  return acc;
-}, {});
-
-var byName = exports.byName = packages.reduce(function (acc, curr) {
-  acc[curr.name] = curr;
-  return acc;
-}, {});
-
-exports.default = packages;
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function (props) {
-  props.className = 'active';
-  return props;
-};
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var examples = [{
-  name: 'Active Links',
-  slug: 'active-links',
-  description: 'Style links when they match the current location'
-}, {
-  name: 'Authentication',
-  slug: 'authentication',
-  description: 'Automatically redirect to a login page when attempting to access private content'
-}, {
-  name: 'Basic Vue',
-  slug: 'basic-vue',
-  description: 'A simple Curi app rendered using VueJS'
-}, {
-  name: 'Basic Svelte',
-  slug: 'basic-svelte',
-  description: 'A simple Curi app rendered using Svelte'
-}, {
-  name: 'Blocking Navigation (React)',
-  slug: 'blocking-navigation',
-  description: 'Prevent navigation away from a half-filled form'
-}, {
-  name: 'Blocking Navigation (Vue)',
-  slug: 'blocking-navigation-vue',
-  description: 'Prevent navigation away from a half-filled form'
-}, {
-  name: 'Breadcrumbs (React)',
-  slug: 'breadcrumbs',
-  description: 'Render breadcrumb links to ancestor routes'
-}, {
-  name: 'Breadcrumbs (Vue)',
-  slug: 'breadcrumbs-vue',
-  description: 'Render breadcrumb links to ancestor routes'
-}, {
-  name: 'Code Splitting',
-  slug: 'code-splitting',
-  description: 'Use import() to enable Webpack code splitting'
-}, {
-  name: 'Data Loading',
-  slug: 'data-loading',
-  description: 'Display a loading bar while waiting for data to load'
-}, {
-  name: 'Modal Routes',
-  slug: 'modal',
-  description: 'Load a route in a modal (the Pinterest model)'
-}, {
-  name: 'Redux',
-  slug: 'redux',
-  description: 'Integrate Redux, React, and Curi (easily!)'
-}, {
-  name: 'Script Tags',
-  slug: 'script-tags',
-  description: 'Load Curi packages using script tags instead of a bundle'
-}, {
-  name: 'Server Rendering',
-  slug: 'server-rendering',
-  description: 'Render your application on the server using Node (this example uses Express)'
-}, {
-  name: 'Side Effects',
-  slug: 'side-effect',
-  description: 'Add side effects that always respond to navigation'
-}, {
-  name: 'Transitions',
-  slug: 'transitions',
-  description: 'Transition between routes using react-transition-group'
-}];
-
-var byName = exports.byName = examples.reduce(function (acc, curr) {
-  acc[curr.slug] = curr;
-  return acc;
-}, {});
-
-exports.default = examples;
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _react3 = __webpack_require__(2);
-
-var _PackageLinks = __webpack_require__(43);
-
-var _PackageLinks2 = _interopRequireDefault(_PackageLinks);
-
-var _Messages = __webpack_require__(45);
-
-var _PrismBlocks = __webpack_require__(29);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h1',
-      null,
-      'Curi Packages'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'Curi is split into a number of different packages that you can pick and choose from in order to only use what you need. You will always need the',
-      ' ',
-      _react2.default.createElement(
-        _react3.Link,
-        { to: 'Package', params: { package: 'core' } },
-        'core'
-      ),
-      ' package, but no other package is necessary.'
-    ),
-    _react2.default.createElement(
-      _Messages.Note,
-      null,
-      'All of the Curi packages are scoped under ',
-      _react2.default.createElement(
-        _PrismBlocks.InlineJS,
-        null,
-        '@curi'
-      ),
-      '. For example, to install the ',
-      _react2.default.createElement(
-        _PrismBlocks.InlineJS,
-        null,
-        'core'
-      ),
-      ', you would call ',
-      _react2.default.createElement(
-        _PrismBlocks.InlineJS,
-        null,
-        'npm install @curi/core'
-      ),
-      '.'
-    ),
-    _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(
-        'h2',
-        null,
-        'List of Official Packages'
-      ),
-      _react2.default.createElement(_PackageLinks2.default, null)
-    )
-  );
-};
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _react3 = __webpack_require__(2);
-
-var _packages = __webpack_require__(39);
-
-var _styleActive = __webpack_require__(40);
-
-var _styleActive2 = _interopRequireDefault(_styleActive);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var GroupPackages = function GroupPackages(_ref) {
-  var packages = _ref.packages,
-      withDescription = _ref.withDescription;
-  return _react2.default.createElement(
-    'ul',
-    { className: 'link-list' },
-    packages.map(function (p) {
-      return _react2.default.createElement(
-        'li',
-        { key: p.name, className: withDescription ? 'with' : 'solo' },
-        _react2.default.createElement(
-          _react3.Link,
-          {
-            to: 'Package',
-            params: { package: p.name },
-            active: { merge: _styleActive2.default }
-          },
-          p.name
-        )
-      );
-    })
-  );
-};
-
-exports.default = function (_ref2) {
-  var _ref2$withDescription = _ref2.withDescription,
-      withDescription = _ref2$withDescription === undefined ? false : _ref2$withDescription;
-  return _react2.default.createElement(
-    'ul',
-    null,
-    Object.keys(_packages.groupedPackages).map(function (name) {
-      return _react2.default.createElement(
-        'li',
-        { className: 'link-group', key: name },
-        _react2.default.createElement(
-          'h3',
-          null,
-          name
-        ),
-        _react2.default.createElement(GroupPackages, {
-          packages: _packages.groupedPackages[name],
-          withDescription: withDescription
-        })
-      );
-    })
-  );
-};
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-// this file is automatically generated using scripts/updatePackageVersions.js
-exports.default = {
-  "addon-active": "1.0.0-beta.5",
-  "addon-ancestors": "1.0.0-beta.5",
-  "addon-prefetch": "1.0.0-beta.5",
-  "core": "1.0.0-beta.14",
-  "react": "1.0.0-beta.11",
-  "redux": "1.0.0-alpha.3",
-  "side-effect-scroll": "1.0.0-beta.5",
-  "side-effect-title": "1.0.0-beta.5",
-  "svelte": "1.0.0-alpha.4",
-  "vue": "1.0.0-beta.7"
-};
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Warning = exports.Note = undefined;
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Note = exports.Note = function Note(_ref) {
-  var children = _ref.children;
-  return _react2.default.createElement(
-    'div',
-    { className: 'note' },
-    _react2.default.createElement(
-      'strong',
-      null,
-      'Note:'
-    ),
-    ' ',
-    children
-  );
-};
-
-var Warning = exports.Warning = function Warning(_ref2) {
-  var children = _ref2.children;
-  return _react2.default.createElement(
-    'div',
-    { className: 'warning' },
-    _react2.default.createElement(
-      'strong',
-      null,
-      'Warning:'
-    ),
-    ' ',
-    children
-  );
-};
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _react3 = __webpack_require__(2);
-
-var _ExampleTiles = __webpack_require__(47);
-
-var _ExampleTiles2 = _interopRequireDefault(_ExampleTiles);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h1',
-      null,
-      'Curi Examples'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'These are some Curi example projects that you can use for reference while building your own application. Most of these examples have CodeSandbox demos embedded with them, but some do not. Each example includes source code available through the Curi package ',
-      _react2.default.createElement(
-        'a',
-        { href: 'https://github.com/pshrmn/curi/tree/master/examples' },
-        'on GitHub'
-      ),
-      '.'
-    ),
-    _react2.default.createElement(_ExampleTiles2.default, null),
-    _react2.default.createElement(
-      'p',
-      null,
-      'You can see the source code for all of the examples on',
-      ' ',
-      _react2.default.createElement(
-        'a',
-        { href: 'https://github.com/pshrmn/curi/tree/master/examples' },
-        'GitHub'
-      ),
-      '.'
-    )
-  );
-};
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _react3 = __webpack_require__(2);
-
-var _examples = __webpack_require__(41);
-
-var _examples2 = _interopRequireDefault(_examples);
-
-var _styleActive = __webpack_require__(40);
-
-var _styleActive2 = _interopRequireDefault(_styleActive);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  return _react2.default.createElement(
-    'ul',
-    { className: 'tiles' },
-    _examples2.default.map(function (example) {
-      return _react2.default.createElement(
-        'li',
-        { key: example.slug, className: 'tile' },
-        _react2.default.createElement(
-          _react3.Link,
-          {
-            to: 'Example',
-            params: { slug: example.slug },
-            active: { merge: _styleActive2.default }
-          },
-          _react2.default.createElement(
-            'h2',
-            null,
-            example.name
-          ),
-          _react2.default.createElement(
-            'p',
-            { className: 'description' },
-            example.description
-          )
-        )
-      );
-    })
-  );
-};
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var tutorials = [{
-  name: '01-introduction',
-  displayName: 'Part 1: Introduction to Curi'
-}, {
-  name: '02-setup',
-  displayName: 'Part 2: Curi Setup'
-}, {
-  name: '03-routes',
-  displayName: 'Part 3: Curi Routes'
-}, {
-  name: '04-hickory',
-  displayName: 'Part 4: Hickory'
-}, {
-  name: '05-config',
-  displayName: 'Part 5: The Curi Configuration Object'
-}, {
-  name: '06-pages',
-  displayName: 'Part 6: Rendering Pages',
-  frameworks: ['react', 'vue']
-}, {
-  name: '07-load',
-  displayName: 'Part 7: The Load Function'
-}, {
-  name: '08-render-data',
-  displayName: 'Part 8: Rendering Data',
-  frameworks: ['react', 'vue']
-}, {
-  name: '09-nav',
-  displayName: 'Part 9: Forms & Programmatic Navigation',
-  frameworks: ['react', 'vue']
-}, {
-  name: '10-now-what',
-  displayName: 'Part 10: Now What?'
-}];
-
-var byName = exports.byName = tutorials.reduce(function (acc, curr) {
-  if (curr.frameworks) {
-    curr.frameworks.forEach(function (f) {
-      acc[curr.name + '-' + f] = curr;
-    });
-  } else {
-    acc[curr.name] = curr;
-  }
-  return acc;
-}, {});
-
-exports.default = tutorials;
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var guides = [{
-  name: 'Installation',
-  slug: 'installation',
-  description: 'Learn how to install Curi',
-  type: 'basic'
-}, {
-  name: 'Getting Started',
-  slug: 'getting-started',
-  description: 'Learn the basic concepts that you\'ll need to know to setup your project',
-  type: 'basic'
-}, {
-  name: 'All About Routes',
-  slug: 'routes',
-  description: 'Learn about Curi routes and their properties',
-  type: 'basic'
-}, {
-  name: 'Rendering with Responses',
-  slug: 'responses',
-  description: 'Learn how to render your project using a response object',
-  type: 'basic'
-}, {
-  name: 'Using Addons',
-  slug: 'addons',
-  description: 'Learn how to use addons to interact with your routes in your project',
-  type: 'advanced'
-}, {
-  name: 'Using Side Effects',
-  slug: 'side-effects',
-  description: 'Learn how to use side effect functions to trigger behavior after navigation',
-  type: 'advanced'
-}, {
-  name: 'Response Caching',
-  slug: 'response-caching',
-  description: 'Learn how to cache responses to prevent recreating duplicate responses',
-  type: 'advanced'
-}, {
-  name: 'Code Splitting with the Preload Property',
-  slug: 'code-splitting',
-  description: 'Learn how to code split your project using Webpack',
-  type: 'advanced'
-}, {
-  name: 'The Load Property',
-  slug: 'load',
-  description: 'Learn how to use a route\'s load function to modify responses',
-  type: 'advanced'
-}, {
-  name: 'React Basics',
-  slug: 'react',
-  description: 'Learn the basics of how to use Curi with a React application',
-  type: 'advanced'
-}, {
-  name: 'Migrate from React Router v2/3 to Curi',
-  slug: 'migrate-rrv3',
-  descriptioni: 'Learn how to migrate an application from React Router v2 or v3 to Curi',
-  type: 'migration'
-}];
-
-var groupedGuides = exports.groupedGuides = guides.reduce(function (acc, curr) {
-  if (!acc[curr.type]) {
-    acc[curr.type] = [curr];
-  } else {
-    acc[curr.type].push(curr);
-  }
-  return acc;
-}, {});
-
-var byName = exports.byName = guides.reduce(function (acc, curr) {
-  acc[curr.slug] = curr;
-  return acc;
-}, {});
-
-exports.default = guides;
 
 /***/ })
 /******/ ]);
