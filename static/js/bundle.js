@@ -1,6 +1,5093 @@
-!function(e){function t(n){if(r[n])return r[n].exports;var a=r[n]={i:n,l:!1,exports:{}};return e[n].call(a.exports,a,a.exports,t),a.l=!0,a.exports}var n=window.webpackJsonp;window.webpackJsonp=function(t,r,o){for(var i,u,l=0,c=[];l<t.length;l++)u=t[l],a[u]&&c.push(a[u][0]),a[u]=0;for(i in r)Object.prototype.hasOwnProperty.call(r,i)&&(e[i]=r[i]);for(n&&n(t,r,o);c.length;)c.shift()()};var r={},a={4:0};t.e=function(e){function n(){u.onerror=u.onload=null,clearTimeout(l);var t=a[e];0!==t&&(t&&t[1](new Error("Loading chunk "+e+" failed.")),a[e]=void 0)}var r=a[e];if(0===r)return new Promise(function(e){e()});if(r)return r[2];var o=new Promise(function(t,n){r=a[e]=[t,n]});r[2]=o;var i=document.getElementsByTagName("head")[0],u=document.createElement("script");u.type="text/javascript",u.charset="utf-8",u.async=!0,u.timeout=12e4,t.nc&&u.setAttribute("nonce",t.nc),u.src=t.p+"js/"+({0:"example",1:"package",2:"tutorial",3:"guide"}[e]||e)+".bundle.js";var l=setTimeout(n,12e4);return u.onerror=u.onload=n,i.appendChild(u),o},t.m=e,t.c=r,t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="/static/",t.oe=function(e){throw console.error(e),e},t(t.s=16)}([function(e,t){e.exports=React},function(e,t,n){"use strict";function r(e,t){function n(){this.constructor=e}m(e,t),e.prototype=null===t?Object.create(t):(n.prototype=t.prototype,new n)}function a(e,t){var n={};for(var r in e)Object.prototype.hasOwnProperty.call(e,r)&&t.indexOf(r)<0&&(n[r]=e[r]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols)for(var a=0,r=Object.getOwnPropertySymbols(e);a<r.length;a++)t.indexOf(r[a])<0&&(n[r[a]]=e[r[a]]);return n}function o(e){var t=function(t,n){var r=t.internalRef,o=a(t,["internalRef"]);return u.a.createElement(e,h({curi:n.curi,response:n.curiResponse},o,{ref:r}))};return t.displayName="curious("+(e.displayName||e.name)+")",t.contextTypes={curi:c.a.object.isRequired,curiResponse:c.a.object.isRequired},p.a(t,e)}Object.defineProperty(t,"__esModule",{value:!0}),n.d(t,"Active",function(){return y}),n.d(t,"Block",function(){return v}),n.d(t,"curious",function(){return o}),n.d(t,"Link",function(){return b}),n.d(t,"Navigator",function(){return E}),n.d(t,"Provider",function(){return w});var i=n(0),u=n.n(i),l=n(9),c=n.n(l),s=n(30),f=n.n(s),d=n(31),p=n.n(d),m=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(e,t){e.__proto__=t}||function(e,t){for(var n in t)t.hasOwnProperty(n)&&(e[n]=t[n])},h=Object.assign||function(e){for(var t,n=1,r=arguments.length;n<r;n++){t=arguments[n];for(var a in t)Object.prototype.hasOwnProperty.call(t,a)&&(e[a]=t[a])}return e},y=function(e){function t(){return null!==e&&e.apply(this,arguments)||this}return r(t,e),t.prototype.componentWillMount=function(){this.verifyActiveAddon()},t.prototype.verifyActiveAddon=function(){f.a(this.context.curi.addons.active,'You are attempting to use the "active" prop, but have not included the "active" addon (curi-addon-active) in your Curi configuration object.')},t.prototype.render=function(){var e=this.context,t=e.curi,n=e.curiResponse,r=this.props,a=r.merge,o=r.partial,i=r.name,l=r.params,c=r.children,s=h({},c.props);return t.addons.active(i,n,l,o)&&(s=a(s)),u.a.cloneElement(c,h({},s))},t.contextTypes={curi:c.a.object.isRequired,curiResponse:c.a.object},t.defaultProps={partial:!1},t}(u.a.Component),v=function(e){function t(){return null!==e&&e.apply(this,arguments)||this}return r(t,e),t.prototype.on=function(){this.context.curi.history.confirmWith(this.props.confirm)},t.prototype.off=function(){this.context.curi.history.removeConfirmation()},t.prototype.componentDidMount=function(){this.props.active&&this.on()},t.prototype.componentDidUpdate=function(e){this.props.active===e.active&&this.props.confirm===e.confirm||(this.off(),this.props.active&&this.on())},t.prototype.componentWillUnmount=function(){this.off()},t.prototype.render=function(){return null},t.contextTypes={curi:c.a.object.isRequired},t.defaultProps={active:!0},t}(u.a.Component),g=function(e){return!e.defaultPrevented&&0===e.button&&!(e.metaKey||e.altKey||e.ctrlKey||e.shiftKey)},b=function(e){function t(){var t=null!==e&&e.apply(this,arguments)||this;return t.clickHandler=function(e){if(t.props.onClick&&t.props.onClick(e),g(e)&&!t.props.target){e.preventDefault();var n=t.context.curi,r=t.state.pathname,a=t.props,o=(a.to,a.params,a.details),i=void 0===o?{}:o,u=h({pathname:r},i);n.history.update(u)}},t}return r(t,e),t.prototype.createPathname=function(e,t){var n=e.to,r=e.params,a=t.curi,o=null!=n?a.addons.pathname(n,r):a.history.location.pathname;this.setState(function(){return{pathname:o}})},t.prototype.componentWillMount=function(){this.createPathname(this.props,this.context),this.props.active&&this.verifyActiveAddon()},t.prototype.componentWillReceiveProps=function(e,t){this.createPathname(e,t),e.active&&this.verifyActiveAddon()},t.prototype.verifyActiveAddon=function(){f.a(this.context.curi.addons.active,'You are attempting to use the "active" prop, but have not included the "active" addon (curi-addon-active) in your Curi configuration object.')},t.prototype.render=function(){var e=this.props,t=e.to,n=e.params,r=e.details,o=(e.onClick,e.active),i=e.anchor,l=a(e,["to","params","details","onClick","active","anchor"]),c=this.context,s=c.curi,f=c.curiResponse,d=l,p=i||"a";if(o){var m=o.partial,y=o.merge;s.addons.active(t,f,n,m)&&(d=y(d))}var v=this.state.pathname,g=s.history.toHref(h({pathname:v},r));return u.a.createElement(p,h({},d,{onClick:this.clickHandler,href:g}))},t.contextTypes={curi:c.a.object.isRequired,curiResponse:c.a.object},t}(u.a.Component),E=function(e){function t(){var t=null!==e&&e.apply(this,arguments)||this;return t.state={response:void 0,action:"PUSH"},t.setResponse=function(e,n){t.setState({response:e,action:n})},t}return r(t,e),t.prototype.getChildContext=function(){return{curi:this.props.config,curiResponse:this.state.response}},t.prototype.componentWillMount=function(){this.props.response?this.setResponse(this.props.response,"PUSH"):this.unsubscribe=this.props.config.subscribe(this.setResponse)},t.prototype.componentWillUnmount=function(){this.unsubscribe&&this.unsubscribe()},t.prototype.render=function(){return this.props.render(this.state.response,this.state.action,this.props.config)},t.childContextTypes={curi:c.a.object,curiResponse:c.a.object},t}(u.a.Component),w=function(e){function t(){return null!==e&&e.apply(this,arguments)||this}return r(t,e),t.prototype.getChildContext=function(){return{curi:this.props.curi}},t.prototype.render=function(){return this.props.children},t.propTypes={curi:c.a.object.isRequired,children:c.a.element.isRequired},t.childContextTypes={curi:c.a.object},t}(u.a.Component)},function(e,t){function n(){throw new Error("setTimeout has not been defined")}function r(){throw new Error("clearTimeout has not been defined")}function a(e){if(s===setTimeout)return setTimeout(e,0);if((s===n||!s)&&setTimeout)return s=setTimeout,setTimeout(e,0);try{return s(e,0)}catch(t){try{return s.call(null,e,0)}catch(t){return s.call(this,e,0)}}}function o(e){if(f===clearTimeout)return clearTimeout(e);if((f===r||!f)&&clearTimeout)return f=clearTimeout,clearTimeout(e);try{return f(e)}catch(t){try{return f.call(null,e)}catch(t){return f.call(this,e)}}}function i(){h&&p&&(h=!1,p.length?m=p.concat(m):y=-1,m.length&&u())}function u(){if(!h){var e=a(i);h=!0;for(var t=m.length;t;){for(p=m,m=[];++y<t;)p&&p[y].run();y=-1,t=m.length}p=null,h=!1,o(e)}}function l(e,t){this.fun=e,this.array=t}function c(){}var s,f,d=e.exports={};!function(){try{s="function"==typeof setTimeout?setTimeout:n}catch(e){s=n}try{f="function"==typeof clearTimeout?clearTimeout:r}catch(e){f=r}}();var p,m=[],h=!1,y=-1;d.nextTick=function(e){var t=new Array(arguments.length-1);if(arguments.length>1)for(var n=1;n<arguments.length;n++)t[n-1]=arguments[n];m.push(new l(e,t)),1!==m.length||h||a(u)},l.prototype.run=function(){this.fun.apply(null,this.array)},d.title="browser",d.browser=!0,d.env={},d.argv=[],d.version="",d.versions={},d.on=c,d.addListener=c,d.once=c,d.off=c,d.removeListener=c,d.removeAllListeners=c,d.emit=c,d.prependListener=c,d.prependOnceListener=c,d.listeners=function(e){return[]},d.binding=function(e){throw new Error("process.binding is not supported")},d.cwd=function(){return"/"},d.chdir=function(e){throw new Error("process.chdir is not supported")},d.umask=function(){return 0}},function(e,t,n){"use strict";function r(e){return function(){return e}}var a=function(){};a.thatReturns=r,a.thatReturnsFalse=r(!1),a.thatReturnsTrue=r(!0),a.thatReturnsNull=r(null),a.thatReturnsThis=function(){return this},a.thatReturnsArgument=function(e){return e},e.exports=a},function(e,t,n){"use strict";(function(t){function n(e,t,n,a,o,i,u,l){if(r(t),!e){var c;if(void 0===t)c=new Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var s=[n,a,o,i,u,l],f=0;c=new Error(t.replace(/%s/g,function(){return s[f++]})),c.name="Invariant Violation"}throw c.framesToPop=1,c}}var r=function(e){};"production"!==t.env.NODE_ENV&&(r=function(e){if(void 0===e)throw new Error("invariant requires an error message argument")}),e.exports=n}).call(t,n(2))},function(e,t,n){"use strict";e.exports="SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED"},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PrismBlock=t.InlineComponent=t.InlineJS=void 0;var r=n(0),a=function(e){return e&&e.__esModule?e:{default:e}}(r),o=n(38);t.InlineJS=function(e){var t=e.children;return a.default.createElement(o.PrismCode,{className:"language-javascript"},t)},t.InlineComponent=function(e){var t=e.children;return a.default.createElement(o.PrismCode,{className:"language-jsx"},"<",t,">")},t.PrismBlock=function(e){var t=e.lang,n=e.children;return a.default.createElement(o.PrismCode,{className:"language-"+t,component:"pre"},n)}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){return e.className="active",e}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=[{name:"Active Links",slug:"active-links",description:"Style links when they match the current location"},{name:"Authentication",slug:"authentication",description:"Automatically redirect to a login page when attempting to access private content"},{name:"Basic Vue",slug:"basic-vue",description:"A simple Curi app rendered using VueJS"},{name:"Basic Svelte",slug:"basic-svelte",description:"A simple Curi app rendered using Svelte"},{name:"Blocking Navigation (React)",slug:"blocking-navigation",description:"Prevent navigation away from a half-filled form"},{name:"Blocking Navigation (Vue)",slug:"blocking-navigation-vue",description:"Prevent navigation away from a half-filled form"},{name:"Breadcrumbs (React)",slug:"breadcrumbs",description:"Render breadcrumb links to ancestor routes"},{name:"Breadcrumbs (Vue)",slug:"breadcrumbs-vue",description:"Render breadcrumb links to ancestor routes"},{name:"Code Splitting",slug:"code-splitting",description:"Use import() to enable Webpack code splitting"},{name:"Data Loading",slug:"data-loading",description:"Display a loading bar while waiting for data to load"},{name:"Modal Routes",slug:"modal",description:"Load a route in a modal (the Pinterest model)"},{name:"Redux",slug:"redux",description:"Integrate Redux, React, and Curi (easily!)"},{name:"Script Tags",slug:"script-tags",description:"Load Curi packages using script tags instead of a bundle"},{name:"Server Rendering",slug:"server-rendering",description:"Render your application on the server using Node (this example uses Express)"},{name:"Side Effects",slug:"side-effect",description:"Add side effects that always respond to navigation"},{name:"Transitions",slug:"transitions",description:"Transition between routes using react-transition-group"}];t.byName=r.reduce(function(e,t){return e[t.slug]=t,e},{});t.default=r},function(e,t,n){(function(t){if("production"!==t.env.NODE_ENV){var r="function"==typeof Symbol&&Symbol.for&&Symbol.for("react.element")||60103,a=function(e){return"object"==typeof e&&null!==e&&e.$$typeof===r};e.exports=n(26)(a,!0)}else e.exports=n(29)()}).call(t,n(2))},function(e,t,n){"use strict";(function(t){var r=n(3),a=r;if("production"!==t.env.NODE_ENV){var o=function(e){for(var t=arguments.length,n=Array(t>1?t-1:0),r=1;r<t;r++)n[r-1]=arguments[r];var a=0,o="Warning: "+e.replace(/%s/g,function(){return n[a++]});"undefined"!=typeof console&&console.error(o);try{throw new Error(o)}catch(e){}};a=function(e,t){if(void 0===t)throw new Error("`warning(condition, format, ...args)` requires a warning message argument");if(0!==t.indexOf("Failed Composite propType: ")&&!e){for(var n=arguments.length,r=Array(n>2?n-2:0),a=2;a<n;a++)r[a-2]=arguments[a];o.apply(void 0,[t].concat(r))}}}e.exports=a}).call(t,n(2))},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.byName=t.groupedPackages=void 0;var r=n(44),a=function(e){return e&&e.__esModule?e:{default:e}}(r),o=[{name:"core",version:a.default.core,globalName:"Curi",type:"core"},{name:"addon-active",version:a.default["addon-active"],globalName:"CuriAddonActive",type:"addon"},{name:"addon-ancestors",version:a.default["addon-ancestors"],globalName:"CuriAddonAncestors",type:"addon"},{name:"addon-prefetch",version:a.default["addon-prefetch"],globalName:"CuriAddonPrefetch",type:"addon"},{name:"side-effect-title",version:a.default["side-effect-title"],globalName:"CuriSideEffectTitle",type:"side-effect"},{name:"side-effect-scroll",version:a.default["side-effect-scroll"],globalName:"CuriSideEffectScroll",type:"side-effect"},{name:"react",version:a.default.react,globalName:"CuriReact",type:"renderer"},{name:"redux",version:a.default.redux,globalName:"CuriRedux",type:"redux"},{name:"svelte",version:a.default.svelte,globalName:"CuriSvelte",type:"renderer"},{name:"vue",version:a.default.vue,globalName:"CuriVue",type:"renderer"}];t.groupedPackages=o.reduce(function(e,t){return e[t.type]?e[t.type].push(t):e[t.type]=[t],e},{}),t.byName=o.reduce(function(e,t){return e[t.name]=t,e},{});t.default=o},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.Warning=t.Note=void 0;var r=n(0),a=function(e){return e&&e.__esModule?e:{default:e}}(r);t.Note=function(e){var t=e.children;return a.default.createElement("div",{className:"note"},a.default.createElement("strong",null,"Note:")," ",t)},t.Warning=function(e){var t=e.children;return a.default.createElement("div",{className:"warning"},a.default.createElement("strong",null,"Warning:")," ",t)}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=[{name:"01-introduction",displayName:"Part 1: Introduction to Curi"},{name:"02-setup",displayName:"Part 2: Curi Setup"},{name:"03-routes",displayName:"Part 3: Curi Routes"},{name:"04-hickory",displayName:"Part 4: Hickory"},{name:"05-config",displayName:"Part 5: The Curi Configuration Object"},{name:"06-pages",displayName:"Part 6: Rendering Pages",frameworks:["react","vue"]},{name:"07-load",displayName:"Part 7: The Load Function"},{name:"08-render-data",displayName:"Part 8: Rendering Data",frameworks:["react","vue"]},{name:"09-nav",displayName:"Part 9: Forms & Programmatic Navigation",frameworks:["react","vue"]},{name:"10-now-what",displayName:"Part 10: Now What?"}];t.byName=r.reduce(function(e,t){return t.frameworks?t.frameworks.forEach(function(n){e[t.name+"-"+n]=t}):e[t.name]=t,e},{});t.default=r},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=[{name:"Installation",slug:"installation",description:"Learn how to install Curi",type:"basic"},{name:"Getting Started",slug:"getting-started",description:"Learn the basic concepts that you'll need to know to setup your project",type:"basic"},{name:"All About Routes",slug:"routes",description:"Learn about Curi routes and their properties",type:"basic"},{name:"Rendering with Responses",slug:"responses",description:"Learn how to render your project using a response object",type:"basic"},{name:"Using Addons",slug:"addons",description:"Learn how to use addons to interact with your routes in your project",type:"advanced"},{name:"Using Side Effects",slug:"side-effects",description:"Learn how to use side effect functions to trigger behavior after navigation",type:"advanced"},{name:"Response Caching",slug:"response-caching",description:"Learn how to cache responses to prevent recreating duplicate responses",type:"advanced"},{name:"Code Splitting with the Preload Property",slug:"code-splitting",description:"Learn how to code split your project using Webpack",type:"advanced"},{name:"The Load Property",slug:"load",description:"Learn how to use a route's load function to modify responses",type:"advanced"},{name:"React Basics",slug:"react",description:"Learn the basics of how to use Curi with a React application",type:"advanced"},{name:"Migrate from React Router v2/3 to Curi",slug:"migrate-rrv3",descriptioni:"Learn how to migrate an application from React Router v2 or v3 to Curi",type:"migration"}];t.groupedGuides=r.reduce(function(e,t){return e[t.type]?e[t.type].push(t):e[t.type]=[t],e},{}),t.byName=r.reduce(function(e,t){return e[t.slug]=t,e},{});t.default=r},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(0),o=r(a),i=n(1),u=n(11),l=n(7),c=r(l),s=function(e){var t=e.packages,n=e.withDescription;return o.default.createElement("ul",{className:"link-list"},t.map(function(e){return o.default.createElement("li",{key:e.name,className:n?"with":"solo"},o.default.createElement(i.Link,{to:"Package",params:{package:e.name},active:{merge:c.default}},e.name))}))};t.default=function(e){var t=e.withDescription,n=void 0!==t&&t;return o.default.createElement("ul",null,Object.keys(u.groupedPackages).map(function(e){return o.default.createElement("li",{className:"link-group",key:e},o.default.createElement("h3",null,e),o.default.createElement(s,{packages:u.groupedPackages[e],withDescription:n}))}))}},function(e,t,n){n(17),e.exports=n(18)},function(e,t){},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}var a=n(0),o=r(a),i=n(19),u=r(i),l=n(20),c=r(l),s=n(24),f=r(s),d=n(1),p=n(32),m=r(p),h=n(33),y=r(h),v=n(34),g=r(v),b=n(35),E=r(b),w=n(50),P=r(w),k=(0,m.default)({suffix:"| Curi Documentation"}),j=(0,y.default)(),O=(0,c.default)(),_=(0,f.default)(O,E.default,{addons:[(0,g.default)()],sideEffects:[{fn:k},{fn:j}]});_.ready().then(function(){u.default.render(o.default.createElement(d.Navigator,{config:_,render:P.default}),document.getElementById("root"))})},function(e,t){e.exports=ReactDOM},function(e,t,n){"use strict";function r(e){function t(e){var t=window.location,n=t.pathname,r=t.search,a=t.hash,i=n+r+a,u=e||o.d(),l=u.key,c=u.state;return l||(l=h.major(),window.history.replaceState({key:l,state:c},"",i)),s(i,l,c)}function n(e){return f(e)}function r(e){if(v)return void(v=!1);var n=t(e),r=b.location.key,a=h.diff(r,n.key);d({to:n,from:b.location,action:"POP"},function(){b.location=n,b.action="POP",l(b.location,"POP")},function(){v=!0,window.history.go(-1*a)})}if(void 0===e&&(e={}),o.b()){e.raw||(e.raw=o.c);var i=a.a(e),u=i.subscribe,l=i.emit,c=i.removeAllSubscribers,s=i.createLocation,f=i.createPath,d=i.confirmNavigation,p=i.confirmWith,m=i.removeConfirmation,h=i.keygen,y=[c],v=!1,g=void 0!==o.d().key?"POP":"PUSH",b={location:t(),action:g,toHref:n,subscribe:u,confirmWith:p,removeConfirmation:m,destroy:function(){y.forEach(function(e){e()})},update:function(e){var t=s(e,null);f(t)===f(b.location)?b.replace(e):b.push(e)},push:function(e){var t=h.major(b.location.key),r=s(e,t);d({to:r,from:b.location,action:"PUSH"},function(){var e=n(r),t=r.key,a=r.state;window.history.pushState({key:t,state:a},"",e),b.location=r,b.action="PUSH",l(b.location,"PUSH")})},replace:function(e){var t=h.minor(b.location.key),r=s(e,t);d({to:r,from:b.location,action:"REPLACE"},function(){var e=n(r),t=r.key,a=r.state;window.history.replaceState({key:t,state:a},"",e),b.location=r,b.action="REPLACE",l(b.location,"REPLACE")})},go:function(e){e?window.history.go(e):(b.action="POP",l(b.location,"POP"))}};return y.push(o.a({popstate:function(e){o.e(e)||r(e.state)}})),b}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(21),o=n(23);t.default=r},function(e,t,n){"use strict";function r(){function e(e){var t=r.push(e)-1;return function(){r[t]=null}}function t(e,t){r.forEach(function(n){null!==n&&n(e,t)})}function n(){r=[]}var r=[];return{subscribe:e,emit:t,removeAllSubscribers:n}}function a(e){return e||""}function o(e){return e||""}function i(e){return"string"==typeof e&&"/"===e.charAt(0)&&"/"!==e.charAt(e.length-1)}function u(e){return e||{parse:a,stringify:o}}function l(e){function t(e){var t={},n=e.indexOf("#");-1!==n?(t.hash=e.substring(n+1),e=e.substring(0,n)):t.hash="";var r=e.indexOf("?");return-1!==r?(t.query=y(e.substring(r+1)),e=e.substring(0,r)):t.query=y(),t.pathname=p.d(e,s),t}function n(e,n,r){void 0===r&&(r=null);var a;"string"==typeof e?a=t(e):(a=m({},e),null==a.hash&&(a.hash=""),null==a.query&&(a.query=y()),null==a.pathname&&(a.pathname="/")),r&&!a.state&&(a.state=r);var o=m({},a,{key:n,rawPathname:d(a.pathname)});if(o.key=n,o.rawPathname=d(o.pathname),l)try{o.pathname=decodeURI(o.pathname)}catch(e){throw e instanceof URIError?new URIError('Pathname "'+o.pathname+'" could not be decoded. This is most likely due to a bad percent-encoding. For more information, see the third paragraph here https://tools.ietf.org/html/rfc3986#section-2.4'):e}return o}function r(e){return s+p.b(e.rawPathname||e.pathname||"")+p.c(v(e.query))+p.a(e.hash)}void 0===e&&(e={});var a=e.query,o=e.decode,l=void 0===o||o,c=e.baseSegment,s=void 0===c?"":c,f=e.raw,d=void 0===f?function(e){return e}:f,h=u(a),y=h.parse,v=h.stringify;if(""!==s&&!i(s))throw new Error('The baseSegment "'+s+'" is not valid. The baseSegment must begin with a forward slash and end with a non-forward slash character.');return{createLocation:n,createPath:r}}function c(){}function s(){function e(e,t,n){r?r(e,t,n||c):t()}function t(e){"function"==typeof e&&(r=e)}function n(){r=null}var r;return{confirmNavigation:e,confirmWith:t,removeConfirmation:n}}function f(e){function t(e){return e.split(".").map(function(e){return parseInt(e,10)})}var n=e||0;return{keygen:{major:function(e){if(e){var r=t(e)[0];n=r+1}return n+++".0"},minor:function(e){var n=t(e);return n[0]+"."+(n[1]+1)},diff:function(e,n){var r=t(e)[0];return t(n)[0]-r}}}}function d(e){return m({},r(),l(e),s(),f())}var p=n(22),m=Object.assign||function(e){for(var t,n=1,r=arguments.length;n<r;n++){t=arguments[n];for(var a in t)Object.prototype.hasOwnProperty.call(t,a)&&(e[a]=t[a])}return e};t.a=d},function(e,t,n){"use strict";function r(e,t){return e?0===e.indexOf(t)?e:t+e:""}function a(e){return r(e,"/")}function o(e){return r(e,"#")}function i(e){return r(e,"?")}function u(e,t){return new RegExp("^"+t+"(\\/|\\?|#|$)","i").test(e)}function l(e,t){return u(e,t)?e.substr(t.length):e}n.d(t,"b",function(){return a}),n.d(t,"a",function(){return o}),n.d(t,"c",function(){return i}),n.d(t,"d",function(){return l})},function(e,t,n){"use strict";function r(e){var t=document.createElement("a");return t.setAttribute("href",e),t.pathname}function a(){return!(!window||!window.location)}function o(e){return void 0===e.state&&-1===navigator.userAgent.indexOf("CriOS")}function i(){try{return window.history.state||{}}catch(e){return{}}}function u(e){for(var t in e){var n=e[t];window.addEventListener(t,n,!1)}return function(){for(var t in e){var n=e[t];window.removeEventListener(t,n,!1)}}}n.d(t,"c",function(){return r}),n.d(t,"b",function(){return a}),n.d(t,"e",function(){return o}),n.d(t,"d",function(){return i}),n.d(t,"a",function(){return u})},function(e,t,n){"use strict";function r(e){var t=null,n=!1;return function(){return n?t:(t=e(),n=!0,t)}}function a(e,t){var n=[];return{re:d.a(e,n,t),keys:n}}function o(e,t){var n=i(e);return u(t,n),n}function i(e){return e.map(function(e){var t=e.children?i(e.children):[];return g(p({},e,{children:t}))})}function u(e,t){e.forEach(function(e){l(t,e)})}function l(e,t,n){e.forEach(function(e){var r=t.register(e,n);e.children&&l(e.children,t,r)})}function c(e){var t={},n={};return{name:"pathname",register:function(e,n){var r=e.name,a=e.path;void 0!==t[r]&&console.warn('A pathname with the name "'+r+'" already exists. Each route shouldhave a unique name. By registering a pathname with a name that already exists, you are overwriting the existing pathname. This may break your application.');var o;return n&&t[n]&&(o=t[n]),t[r]=o?v(o,a):a,r},get:function(r,a){if(null==t[r])return void console.error("Could not generate pathname for "+r+" because it is not registered.");var o=n[r]?n[r]:n[r]=d.a.compile(t[r]);return m(o(a,e))},reset:function(){t={},n={}}}}function s(e,t,n){function r(t){var n=[];for(var r in N)delete N[r];O.forEach(function(e){e.reset(),N[e.name]=e.get,n.push(e)}),_=o(t,n),d(e.location,e.action)}function a(t){return _.some(function(n){return n.match(e.location.pathname,t)}),t.freeze(),Promise.resolve(t)}function i(e){var t=e.route;if(!t)return e.setStatus(404),Promise.resolve(e);var n=t.load?{fail:e.fail.bind(e),redirect:e.redirect.bind(e),setData:e.setData.bind(e),setStatus:e.setStatus.bind(e)}:void 0;return Promise.all([t.preload?t.preload():null,t.load?t.load(e.params,e.location,n,N):null]).then(function(){return e})}function u(e){var t=e.asObject();return g&&g.set(t),t}function l(e){var t=e.key||Math.random().toString(36).slice(2,8);if(k=t,g){var n=g.get(e);if(null!=n)return Promise.resolve(n)}return a(new b(t,e)).then(i).then(u)}function s(e){if("function"!=typeof e)throw new Error("The argument passed to subscribe must be a function");e.apply(null,T);var t=x.push(e);return function(){x[t-1]=null}}function f(e,t){return e.key===k&&(w.forEach(function(n){n(e,t)}),x.forEach(function(n){null!=n&&n(e,t)}),P.forEach(function(n){n(e,t)}),!0)}function d(t,n){j=l(t).then(function(t){return f(t,n)&&(T=[t,n]),t.redirectTo&&e.replace(t.redirectTo),t},function(e){return console.error(e),null})}void 0===n&&(n={});var p=n,m=p.addons,h=void 0===m?[]:m,y=p.sideEffects,v=void 0===y?[]:y,g=p.cache,E=p.pathnameOptions,w=[],P=[];v.forEach(function(e){e.after?P.push(e.fn):w.push(e.fn)});var k,j,O=h.concat(c(E)),_=[],N={},x=[],T=[];r(t);e.subscribe(d);return{ready:function(){return j},refresh:r,subscribe:s,addons:N,history:e}}Object.defineProperty(t,"__esModule",{value:!0});var f=n(25),d=n.n(f),p=Object.assign||function(e){for(var t,n=1,r=arguments.length;n<r;n++){t=arguments[n];for(var a in t)Object.prototype.hasOwnProperty.call(t,a)&&(e[a]=t[a])}return e},m=function(e){return"/"===e.charAt(0)?e:"/"+e},h=function(e){return"/"===e.charAt(0)?e.slice(1):e},y=function(e){return"/"===e.charAt(e.length-1)?e:e+"/"},v=function(e,t){return y(e)+t},g=function(e){var t=e||{},n=t.name,o=t.path,i=t.pathOptions,u=void 0===i?{}:i,l=t.body,c=t.children,s=t.preload,f=t.load,d=t.title,p=t.extra,y=null==u.end||u.end;c.length&&(u.end=!1);var g=a(o,u);return{name:n,path:o,body:l,getBody:function(){return this.body&&this.body()},children:c,preload:s?r(s):void 0,load:f,keys:g.keys.map(function(e){return e.name}),title:d,extra:p,match:function(e,t,n){var r=h(e),a=g.re.exec(r);if(!a)return!1;var o=a[0],i=a.slice(1),u={};g.keys.forEach(function(e,t){u[e.name]=i[t]});var l=null!=n?v(n,o):m(o);if(t.push(this,u),!c||!c.length)return!0;var s=r.slice(o.length),f=!!s.length,d=c.some(function(e){return e.match(s,t,l)});return!(y&&f&&!d)||(t.pop(),!1)}}},b=function(){function e(e,t){this.key=e,this.location=t,this.status=200,this.matches=[],this.route,this.partials=[],this.params={},this.body}return e.prototype.redirect=function(e,t){void 0===t&&(t=301),this.setStatus(t),this.redirectTo=e},e.prototype.fail=function(e){this.error=e},e.prototype.setStatus=function(e){this.status=e},e.prototype.push=function(e,t){this.matches.push({route:e,params:t})},e.prototype.pop=function(){this.matches.pop()},e.prototype.setData=function(e){this.data=e},e.prototype.freeze=function(){var e=this;if(this.matches.length){var t=this.matches.pop();this.matches.forEach(function(t){e.partials.push(t.route.name),Object.assign(e.params,t.params)}),this.route=t.route,Object.assign(this.params,t.params)}},e.prototype.generateTitle=function(){return this.route&&this.route.title?"function"==typeof this.route.title?this.route.title(this.params,this.data):this.route.title:""},e.prototype.asObject=function(){var e={key:this.key,location:this.location,status:this.status,data:this.data,title:this.generateTitle(),body:this.route&&this.route.getBody()};return null!=this.redirectTo?p({},e,{redirectTo:this.redirectTo}):p({},e,{name:this.route?this.route.name:void 0,partials:this.partials,params:this.params,error:this.error})},e}();t.default=s},function(e,t){function n(e,t){for(var n,r=[],a=0,u=0,l="",c=t&&t.delimiter||"/",s=t&&t.delimiters||"./",f=!1;null!==(n=p.exec(e));){var d=n[0],m=n[1],h=n.index;if(l+=e.slice(u,h),u=h+d.length,m)l+=m[1],f=!0;else{var y="",v=e[u],g=n[2],b=n[3],E=n[4],w=n[5];if(!f&&l.length){var P=l.length-1;s.indexOf(l[P])>-1&&(y=l[P],l=l.slice(0,P))}l&&(r.push(l),l="",f=!1);var k=""!==y&&void 0!==v&&v!==y,j="+"===w||"*"===w,O="?"===w||"*"===w,_=y||c,N=b||E;r.push({name:g||a++,prefix:y,delimiter:_,optional:O,repeat:j,partial:k,pattern:N?i(N):"[^"+o(_)+"]+?"})}}return(l||u<e.length)&&r.push(l+e.substr(u)),r}function r(e,t){return a(n(e,t))}function a(e){for(var t=new Array(e.length),n=0;n<e.length;n++)"object"==typeof e[n]&&(t[n]=new RegExp("^(?:"+e[n].pattern+")$"));return function(n,r){for(var a="",o=r&&r.encode||encodeURIComponent,i=0;i<e.length;i++){var u=e[i];if("string"!=typeof u){var l,c=n?n[u.name]:void 0;if(Array.isArray(c)){if(!u.repeat)throw new TypeError('Expected "'+u.name+'" to not repeat, but got array');if(0===c.length){if(u.optional)continue;throw new TypeError('Expected "'+u.name+'" to not be empty')}for(var s=0;s<c.length;s++){if(l=o(c[s]),!t[i].test(l))throw new TypeError('Expected all "'+u.name+'" to match "'+u.pattern+'"');a+=(0===s?u.prefix:u.delimiter)+l}}else if("string"!=typeof c&&"number"!=typeof c&&"boolean"!=typeof c){if(!u.optional)throw new TypeError('Expected "'+u.name+'" to be '+(u.repeat?"an array":"a string"));u.partial&&(a+=u.prefix)}else{if(l=o(String(c)),!t[i].test(l))throw new TypeError('Expected "'+u.name+'" to match "'+u.pattern+'", but got "'+l+'"');a+=u.prefix+l}}else a+=u}return a}}function o(e){return e.replace(/([.+*?=^!:${}()[\]|\/\\])/g,"\\$1")}function i(e){return e.replace(/([=!:$\/()])/g,"\\$1")}function u(e){return e&&e.sensitive?"":"i"}function l(e,t){if(!t)return e;var n=e.source.match(/\((?!\?)/g);if(n)for(var r=0;r<n.length;r++)t.push({name:r,prefix:null,delimiter:null,optional:!1,repeat:!1,partial:!1,pattern:null});return e}function c(e,t,n){for(var r=[],a=0;a<e.length;a++)r.push(d(e[a],t,n).source);return new RegExp("(?:"+r.join("|")+")",u(n))}function s(e,t,r){return f(n(e,r),t,r)}function f(e,t,n){n=n||{};for(var r=n.strict,a=!1!==n.end,i=o(n.delimiter||"/"),l=[].concat(n.endsWith||[]).map(o).concat("$").join("|"),c="",s=0;s<e.length;s++){var f=e[s];if("string"==typeof f)c+=o(f);else{var d=o(f.prefix),p="(?:"+f.pattern+")";t&&t.push(f),f.repeat&&(p+="(?:"+d+p+")*"),p=f.optional?f.partial?d+"("+p+")?":"(?:"+d+"("+p+"))?":d+"("+p+")",c+=p}}return r||(c+="(?:"+i+"(?="+l+"))?"),c+=a?"$"===l?l:"(?="+l+")":"(?="+i+"|"+l+")",new RegExp("^"+c,u(n))}function d(e,t,n){return e instanceof RegExp?l(e,t):Array.isArray(e)?c(e,t,n):s(e,t,n)}e.exports=d,e.exports.parse=n,e.exports.compile=r,e.exports.tokensToFunction=a,e.exports.tokensToRegExp=f;var p=new RegExp(["(\\\\.)","(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?"].join("|"),"g")},function(e,t,n){"use strict";(function(t){var r=n(3),a=n(4),o=n(10),i=n(27),u=n(5),l=n(28);e.exports=function(e,n){function c(e){var t=e&&(N&&e[N]||e[x]);if("function"==typeof t)return t}function s(e,t){return e===t?0!==e||1/e==1/t:e!==e&&t!==t}function f(e){this.message=e,this.stack=""}function d(e){function r(r,c,s,d,p,m,h){if(d=d||T,m=m||s,h!==u)if(n)a(!1,"Calling PropTypes validators directly is not supported by the `prop-types` package. Use `PropTypes.checkPropTypes()` to call them. Read more at http://fb.me/use-check-prop-types");else if("production"!==t.env.NODE_ENV&&"undefined"!=typeof console){var y=d+":"+s;!i[y]&&l<3&&(o(!1,"You are manually calling a React.PropTypes validation function for the `%s` prop on `%s`. This is deprecated and will throw in the standalone `prop-types` package. You may be seeing this warning due to a third-party PropTypes library. See https://fb.me/react-warning-dont-call-proptypes for details.",m,d),i[y]=!0,l++)}return null==c[s]?r?new f(null===c[s]?"The "+p+" `"+m+"` is marked as required in `"+d+"`, but its value is `null`.":"The "+p+" `"+m+"` is marked as required in `"+d+"`, but its value is `undefined`."):null:e(c,s,d,p,m)}if("production"!==t.env.NODE_ENV)var i={},l=0;var c=r.bind(null,!1);return c.isRequired=r.bind(null,!0),c}function p(e){function t(t,n,r,a,o,i){var u=t[n];if(k(u)!==e)return new f("Invalid "+a+" `"+o+"` of type `"+j(u)+"` supplied to `"+r+"`, expected `"+e+"`.");return null}return d(t)}function m(e){function t(t,n,r,a,o){if("function"!=typeof e)return new f("Property `"+o+"` of component `"+r+"` has invalid PropType notation inside arrayOf.");var i=t[n];if(!Array.isArray(i)){return new f("Invalid "+a+" `"+o+"` of type `"+k(i)+"` supplied to `"+r+"`, expected an array.")}for(var l=0;l<i.length;l++){var c=e(i,l,r,a,o+"["+l+"]",u);if(c instanceof Error)return c}return null}return d(t)}function h(e){function t(t,n,r,a,o){if(!(t[n]instanceof e)){var i=e.name||T;return new f("Invalid "+a+" `"+o+"` of type `"+_(t[n])+"` supplied to `"+r+"`, expected instance of `"+i+"`.")}return null}return d(t)}function y(e){function n(t,n,r,a,o){for(var i=t[n],u=0;u<e.length;u++)if(s(i,e[u]))return null;return new f("Invalid "+a+" `"+o+"` of value `"+i+"` supplied to `"+r+"`, expected one of "+JSON.stringify(e)+".")}return Array.isArray(e)?d(n):("production"!==t.env.NODE_ENV&&o(!1,"Invalid argument supplied to oneOf, expected an instance of array."),r.thatReturnsNull)}function v(e){function t(t,n,r,a,o){if("function"!=typeof e)return new f("Property `"+o+"` of component `"+r+"` has invalid PropType notation inside objectOf.");var i=t[n],l=k(i);if("object"!==l)return new f("Invalid "+a+" `"+o+"` of type `"+l+"` supplied to `"+r+"`, expected an object.");for(var c in i)if(i.hasOwnProperty(c)){var s=e(i,c,r,a,o+"."+c,u);if(s instanceof Error)return s}return null}return d(t)}function g(e){function n(t,n,r,a,o){for(var i=0;i<e.length;i++){if(null==(0,e[i])(t,n,r,a,o,u))return null}return new f("Invalid "+a+" `"+o+"` supplied to `"+r+"`.")}if(!Array.isArray(e))return"production"!==t.env.NODE_ENV&&o(!1,"Invalid argument supplied to oneOfType, expected an instance of array."),r.thatReturnsNull;for(var a=0;a<e.length;a++){var i=e[a];if("function"!=typeof i)return o(!1,"Invalid argument supplied to oneOfType. Expected an array of check functions, but received %s at index %s.",O(i),a),r.thatReturnsNull}return d(n)}function b(e){function t(t,n,r,a,o){var i=t[n],l=k(i);if("object"!==l)return new f("Invalid "+a+" `"+o+"` of type `"+l+"` supplied to `"+r+"`, expected `object`.");for(var c in e){var s=e[c];if(s){var d=s(i,c,r,a,o+"."+c,u);if(d)return d}}return null}return d(t)}function E(e){function t(t,n,r,a,o){var l=t[n],c=k(l);if("object"!==c)return new f("Invalid "+a+" `"+o+"` of type `"+c+"` supplied to `"+r+"`, expected `object`.");var s=i({},t[n],e);for(var d in s){var p=e[d];if(!p)return new f("Invalid "+a+" `"+o+"` key `"+d+"` supplied to `"+r+"`.\nBad object: "+JSON.stringify(t[n],null,"  ")+"\nValid keys: "+JSON.stringify(Object.keys(e),null,"  "));var m=p(l,d,r,a,o+"."+d,u);if(m)return m}return null}return d(t)}function w(t){switch(typeof t){case"number":case"string":case"undefined":return!0;case"boolean":return!t;case"object":if(Array.isArray(t))return t.every(w);if(null===t||e(t))return!0;var n=c(t);if(!n)return!1;var r,a=n.call(t);if(n!==t.entries){for(;!(r=a.next()).done;)if(!w(r.value))return!1}else for(;!(r=a.next()).done;){var o=r.value;if(o&&!w(o[1]))return!1}return!0;default:return!1}}function P(e,t){return"symbol"===e||("Symbol"===t["@@toStringTag"]||"function"==typeof Symbol&&t instanceof Symbol)}function k(e){var t=typeof e;return Array.isArray(e)?"array":e instanceof RegExp?"object":P(t,e)?"symbol":t}function j(e){if(void 0===e||null===e)return""+e;var t=k(e);if("object"===t){if(e instanceof Date)return"date";if(e instanceof RegExp)return"regexp"}return t}function O(e){var t=j(e);switch(t){case"array":case"object":return"an "+t;case"boolean":case"date":case"regexp":return"a "+t;default:return t}}function _(e){return e.constructor&&e.constructor.name?e.constructor.name:T}var N="function"==typeof Symbol&&Symbol.iterator,x="@@iterator",T="<<anonymous>>",S={array:p("array"),bool:p("boolean"),func:p("function"),number:p("number"),object:p("object"),string:p("string"),symbol:p("symbol"),any:function(){return d(r.thatReturnsNull)}(),arrayOf:m,element:function(){function t(t,n,r,a,o){var i=t[n];if(!e(i)){return new f("Invalid "+a+" `"+o+"` of type `"+k(i)+"` supplied to `"+r+"`, expected a single ReactElement.")}return null}return d(t)}(),instanceOf:h,node:function(){function e(e,t,n,r,a){return w(e[t])?null:new f("Invalid "+r+" `"+a+"` supplied to `"+n+"`, expected a ReactNode.")}return d(e)}(),objectOf:v,oneOf:y,oneOfType:g,shape:b,exact:E};return f.prototype=Error.prototype,S.checkPropTypes=l,S.PropTypes=S,S}}).call(t,n(2))},function(e,t,n){"use strict";function r(e){if(null===e||void 0===e)throw new TypeError("Object.assign cannot be called with null or undefined");return Object(e)}/*
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	var parentJsonpFunction = window["webpackJsonp"];
+/******/ 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules, executeModules) {
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [], result;
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules, executeModules);
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 	};
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// objects to store loaded and loading chunks
+/******/ 	var installedChunks = {
+/******/ 		0: 0
+/******/ 	};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData === 0) {
+/******/ 			return new Promise(function(resolve) { resolve(); });
+/******/ 		}
+/******/
+/******/ 		// a Promise means "currently loading".
+/******/ 		if(installedChunkData) {
+/******/ 			return installedChunkData[2];
+/******/ 		}
+/******/
+/******/ 		// setup Promise in chunk cache
+/******/ 		var promise = new Promise(function(resolve, reject) {
+/******/ 			installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 		});
+/******/ 		installedChunkData[2] = promise;
+/******/
+/******/ 		// start chunk loading
+/******/ 		var head = document.getElementsByTagName('head')[0];
+/******/ 		var script = document.createElement('script');
+/******/ 		script.type = 'text/javascript';
+/******/ 		script.charset = 'utf-8';
+/******/ 		script.async = true;
+/******/ 		script.timeout = 120000;
+/******/
+/******/ 		if (__webpack_require__.nc) {
+/******/ 			script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 		}
+/******/ 		script.src = __webpack_require__.p + "js/" + ({"1":"example","2":"package","3":"tutorial","4":"guide"}[chunkId]||chunkId) + ".bundle.js";
+/******/ 		var timeout = setTimeout(onScriptComplete, 120000);
+/******/ 		script.onerror = script.onload = onScriptComplete;
+/******/ 		function onScriptComplete() {
+/******/ 			// avoid mem leaks in IE.
+/******/ 			script.onerror = script.onload = null;
+/******/ 			clearTimeout(timeout);
+/******/ 			var chunk = installedChunks[chunkId];
+/******/ 			if(chunk !== 0) {
+/******/ 				if(chunk) {
+/******/ 					chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
+/******/ 				}
+/******/ 				installedChunks[chunkId] = undefined;
+/******/ 			}
+/******/ 		};
+/******/ 		head.appendChild(script);
+/******/
+/******/ 		return promise;
+/******/ 	};
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/static/";
+/******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+module.exports = React;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Active", function() { return Active; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Block", function() { return Block; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "curious", function() { return curious; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return Link; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Navigator", function() { return Navigator; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics__);
+
+
+
+
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = Object.setPrototypeOf ||
+    ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+    function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = Object.assign || function __assign(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+    return t;
+};
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+}
+
+var Active = /** #__PURE__ */ (function (_super) {
+    __extends(Active, _super);
+    function Active() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Active.prototype.componentWillMount = function () {
+        this.verifyActiveAddon();
+    };
+    Active.prototype.verifyActiveAddon = function () {
+        var curi = this.props.curi || this.context.curi;
+        __WEBPACK_IMPORTED_MODULE_2_invariant___default()(curi.addons.active, 'You are attempting to use the "active" prop, but have not included the "active" ' +
+            'addon (curi-addon-active) in your Curi configuration object.');
+    };
+    Active.prototype.render = function () {
+        var curi = this.props.curi || this.context.curi;
+        var response = this.props.response || this.context.curiResponse;
+        var _a = this.props, merge = _a.merge, _b = _a.partial, partial = _b === void 0 ? false : _b, name = _a.name, params = _a.params, children = _a.children;
+        return curi.addons.active(name, response, params, partial)
+            ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.cloneElement(children, merge(__assign({}, children.props)))
+            : children;
+    };
+    Active.contextTypes = {
+        curi: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object,
+        curiResponse: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object
+    };
+    return Active;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component));
+
+var Block = /** #__PURE__ */ (function (_super) {
+    __extends(Block, _super);
+    function Block() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Block.prototype.on = function () {
+        var curi = this.props.curi || this.context.curi;
+        curi.history.confirmWith(this.props.confirm);
+    };
+    Block.prototype.off = function () {
+        var curi = this.props.curi || this.context.curi;
+        curi.history.removeConfirmation();
+    };
+    Block.prototype.componentDidMount = function () {
+        if (this.props.active) {
+            this.on();
+        }
+    };
+    Block.prototype.componentDidUpdate = function (prevProps) {
+        if (this.props.active === prevProps.active &&
+            this.props.confirm === prevProps.confirm) {
+            return;
+        }
+        this.off();
+        if (this.props.active) {
+            this.on();
+        }
+    };
+    Block.prototype.componentWillUnmount = function () {
+        this.off();
+    };
+    Block.prototype.render = function () {
+        return null;
+    };
+    Block.contextTypes = {
+        curi: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object
+    };
+    Block.defaultProps = {
+        active: true
+    };
+    return Block;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component));
+
+function curious(WrappedComponent) {
+    var CuriousComponent = function (props, context) {
+        var internalRef = props.internalRef, rest = __rest(props, ["internalRef"]);
+        return (__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(WrappedComponent, __assign({ curi: context.curi, response: context.curiResponse }, rest, { ref: internalRef })));
+    };
+    CuriousComponent.displayName = "curious(" + (WrappedComponent.displayName ||
+        WrappedComponent.name) + ")";
+    CuriousComponent.contextTypes = {
+        curi: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object.isRequired,
+        curiResponse: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object.isRequired
+    };
+    return __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics___default()(CuriousComponent, WrappedComponent);
+}
+
+var canNavigate = function (event) {
+    return (!event.defaultPrevented &&
+        event.button === 0 &&
+        !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey));
+};
+var Link = /** #__PURE__ */ (function (_super) {
+    __extends(Link, _super);
+    function Link() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.clickHandler = function (event) {
+            if (_this.props.onClick) {
+                _this.props.onClick(event);
+            }
+            if (canNavigate(event) && !_this.props.target) {
+                event.preventDefault();
+                var curi = _this.props.curi || _this.context.curi;
+                var pathname = _this.state.pathname;
+                var _a = _this.props, to = _a.to, params = _a.params, _b = _a.details, details = _b === void 0 ? {} : _b;
+                var location_1 = __assign({ pathname: pathname }, details);
+                curi.history.update(location_1);
+            }
+        };
+        return _this;
+    }
+    Link.prototype.createPathname = function (props, context) {
+        var to = props.to, params = props.params;
+        var curi = props.curi || context.curi;
+        var pathname = to != null
+            ? curi.addons.pathname(to, params)
+            : curi.history.location.pathname;
+        this.setState(function () { return ({
+            pathname: pathname
+        }); });
+    };
+    Link.prototype.componentWillMount = function () {
+        this.createPathname(this.props, this.context);
+        if (this.props.active) {
+            this.verifyActiveAddon();
+        }
+    };
+    Link.prototype.componentWillReceiveProps = function (nextProps, nextContext) {
+        this.createPathname(nextProps, nextContext);
+        if (nextProps.active) {
+            this.verifyActiveAddon();
+        }
+    };
+    Link.prototype.verifyActiveAddon = function () {
+        var curi = this.props.curi || this.context.curi;
+        __WEBPACK_IMPORTED_MODULE_2_invariant___default()(curi.addons.active, 'You are attempting to use the "active" prop, but have not included the "active" ' +
+            'addon (curi-addon-active) in your Curi configuration object.');
+    };
+    Link.prototype.render = function () {
+        var _a = this.props, to = _a.to, params = _a.params, details = _a.details, onClick = _a.onClick, active = _a.active, anchor = _a.anchor, rest = __rest(_a, ["to", "params", "details", "onClick", "active", "anchor"]);
+        var curi = this.props.curi || this.context.curi;
+        var response = this.props.response || this.context.curiResponse;
+        var anchorProps = rest;
+        var Anchor = anchor ? anchor : 'a';
+        if (active) {
+            var partial = active.partial, merge = active.merge;
+            var isActive = curi.addons.active(to, response, params, partial);
+            if (isActive) {
+                anchorProps = merge(anchorProps);
+            }
+        }
+        var pathname = this.state.pathname;
+        var href = curi.history.toHref(__assign({ pathname: pathname }, details));
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Anchor, __assign({}, anchorProps, { onClick: this.clickHandler, href: href }));
+    };
+    Link.contextTypes = {
+        curi: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object,
+        curiResponse: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object
+    };
+    return Link;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component));
+
+var Navigator = /** #__PURE__ */ (function (_super) {
+    __extends(Navigator, _super);
+    function Navigator() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {
+            response: undefined,
+            action: 'PUSH'
+        };
+        _this.setResponse = function (response, action) {
+            _this.setState({ response: response, action: action });
+        };
+        return _this;
+    }
+    Navigator.prototype.getChildContext = function () {
+        return {
+            curi: this.props.config,
+            curiResponse: this.state.response
+        };
+    };
+    Navigator.prototype.componentWillMount = function () {
+        if (this.props.response) {
+            this.setResponse(this.props.response, 'PUSH');
+        }
+        else {
+            this.unsubscribe = this.props.config.subscribe(this.setResponse);
+        }
+    };
+    Navigator.prototype.componentWillUnmount = function () {
+        if (this.unsubscribe) {
+            this.unsubscribe();
+        }
+    };
+    Navigator.prototype.render = function () {
+        return this.props.render(this.state.response, this.state.action, this.props.config);
+    };
+    Navigator.childContextTypes = {
+        curi: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object,
+        curiResponse: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object
+    };
+    return Navigator;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component));
+
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * 
+ */
+
+function makeEmptyFunction(arg) {
+  return function () {
+    return arg;
+  };
+}
+
+/**
+ * This function accepts and discards inputs; it has no side effects. This is
+ * primarily useful idiomatically for overridable function endpoints which
+ * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+ */
+var emptyFunction = function emptyFunction() {};
+
+emptyFunction.thatReturns = makeEmptyFunction;
+emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+emptyFunction.thatReturnsThis = function () {
+  return this;
+};
+emptyFunction.thatReturnsArgument = function (arg) {
+  return arg;
+};
+
+module.exports = emptyFunction;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var validateFormat = function validateFormat(format) {};
+
+if (process.env.NODE_ENV !== 'production') {
+  validateFormat = function validateFormat(format) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  };
+}
+
+function invariant(condition, format, a, b, c, d, e, f) {
+  validateFormat(format);
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(format.replace(/%s/g, function () {
+        return args[argIndex++];
+      }));
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+}
+
+module.exports = invariant;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(18)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(21)();
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var emptyFunction = __webpack_require__(3);
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var warning = emptyFunction;
+
+if (process.env.NODE_ENV !== 'production') {
+  var printWarning = function printWarning(format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  warning = function warning(condition, format) {
+    if (format === undefined) {
+      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+
+    if (format.indexOf('Failed Composite propType: ') === 0) {
+      return; // Ignore CompositeComponent proptype check.
+    }
+
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
+      }
+
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
+}
+
+module.exports = warning;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(9);
+module.exports = __webpack_require__(10);
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(11);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _browser = __webpack_require__(12);
+
+var _browser2 = _interopRequireDefault(_browser);
+
+var _core = __webpack_require__(16);
+
+var _core2 = _interopRequireDefault(_core);
+
+var _react3 = __webpack_require__(2);
+
+var _sideEffectTitle = __webpack_require__(24);
+
+var _sideEffectTitle2 = _interopRequireDefault(_sideEffectTitle);
+
+var _sideEffectScroll = __webpack_require__(25);
+
+var _sideEffectScroll2 = _interopRequireDefault(_sideEffectScroll);
+
+var _addonActive = __webpack_require__(26);
+
+var _addonActive2 = _interopRequireDefault(_addonActive);
+
+var _routes = __webpack_require__(27);
+
+var _routes2 = _interopRequireDefault(_routes);
+
+var _render = __webpack_require__(32);
+
+var _render2 = _interopRequireDefault(_render);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var setTitle = (0, _sideEffectTitle2.default)({ suffix: '| Curi Documentation' });
+var scrollTo = (0, _sideEffectScroll2.default)();
+
+var history = (0, _browser2.default)();
+
+var config = (0, _core2.default)(history, _routes2.default, {
+  addons: [(0, _addonActive2.default)()],
+  sideEffects: [{ fn: setTitle }, { fn: scrollTo }]
+});
+
+config.ready().then(function () {
+  _reactDom2.default.render(_react2.default.createElement(_react3.Navigator, { config: config, render: _render2.default }), document.getElementById('root'));
+});
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+module.exports = ReactDOM;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hickory_root__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__ = __webpack_require__(15);
+
+
+
+function Browser(options) {
+    if (options === void 0) { options = {}; }
+    if (!Object(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["b" /* domExists */])()) {
+        return;
+    }
+    if (!options.raw) {
+        options.raw = __WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["c" /* ensureEncodedPathname */];
+    }
+    var _a = Object(__WEBPACK_IMPORTED_MODULE_0__hickory_root__["a" /* default */])(options), subscribe = _a.subscribe, emit = _a.emit, removeAllSubscribers = _a.removeAllSubscribers, createLocation = _a.createLocation, createPath = _a.createPath, confirmNavigation = _a.confirmNavigation, confirmWith = _a.confirmWith, removeConfirmation = _a.removeConfirmation, keygen = _a.keygen;
+    var beforeDestroy = [removeAllSubscribers];
+    // when true, pop will run without attempting to get user confirmation
+    var reverting = false;
+    function locationFromBrowser(providedState) {
+        var _a = window.location, pathname = _a.pathname, search = _a.search, hash = _a.hash;
+        var path = pathname + search + hash;
+        var _b = providedState || Object(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["d" /* getStateFromHistory */])(), key = _b.key, state = _b.state;
+        if (!key) {
+            key = keygen.major();
+            window.history.replaceState({ key: key, state: state }, '', path);
+        }
+        return createLocation(path, key, state);
+    }
+    function toHref(location) {
+        return createPath(location);
+    }
+    var initialAction = Object(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["d" /* getStateFromHistory */])().key !== undefined ? 'POP' : 'PUSH';
+    var browserHistory = {
+        // location
+        location: locationFromBrowser(),
+        action: initialAction,
+        // convenience
+        toHref: toHref,
+        subscribe: subscribe,
+        confirmWith: confirmWith,
+        removeConfirmation: removeConfirmation,
+        destroy: function destroy() {
+            beforeDestroy.forEach(function (fn) { fn(); });
+        },
+        update: function update(to) {
+            var location = createLocation(to, null);
+            var path = createPath(location);
+            var currentPath = createPath(browserHistory.location);
+            if (path === currentPath) {
+                browserHistory.replace(to);
+            }
+            else {
+                browserHistory.push(to);
+            }
+        },
+        push: function push(to) {
+            // the major version should be the current key + 1
+            var key = keygen.major(browserHistory.location.key);
+            var location = createLocation(to, key);
+            confirmNavigation({
+                to: location,
+                from: browserHistory.location,
+                action: 'PUSH'
+            }, function () {
+                var path = toHref(location);
+                var key = location.key, state = location.state;
+                window.history.pushState({ key: key, state: state }, '', path);
+                browserHistory.location = location;
+                browserHistory.action = 'PUSH';
+                emit(browserHistory.location, 'PUSH');
+            });
+        },
+        replace: function replace(to) {
+            // pass the current key to just increment the minor portion
+            var key = keygen.minor(browserHistory.location.key);
+            var location = createLocation(to, key);
+            confirmNavigation({
+                to: location,
+                from: browserHistory.location,
+                action: 'REPLACE'
+            }, function () {
+                var path = toHref(location);
+                var key = location.key, state = location.state;
+                window.history.replaceState({ key: key, state: state }, '', path);
+                browserHistory.location = location;
+                browserHistory.action = 'REPLACE';
+                emit(browserHistory.location, 'REPLACE');
+            });
+        },
+        go: function go(num) {
+            // calling window.history.go with no value reloads the page, but
+            // we will just re-emit instead
+            if (!num) {
+                browserHistory.action = 'POP';
+                emit(browserHistory.location, 'POP');
+            }
+            else {
+                window.history.go(num);
+            }
+        }
+    };
+    function pop(state) {
+        // when we are reverting a pop (the user did not confirm navigation), we
+        // just need to reset the boolean and return. The browser has already taken
+        // care of updating the address bar and we never touched our internal values.
+        if (reverting) {
+            reverting = false;
+            return;
+        }
+        var location = locationFromBrowser(state);
+        var currentKey = browserHistory.location.key;
+        var diff = keygen.diff(currentKey, location.key);
+        confirmNavigation({
+            to: location,
+            from: browserHistory.location,
+            action: 'POP'
+        }, function () {
+            browserHistory.location = location;
+            browserHistory.action = 'POP';
+            emit(browserHistory.location, 'POP');
+        }, function () {
+            reverting = true;
+            window.history.go(-1 * diff);
+        });
+    }
+    // need to listen for browser navigation events
+    beforeDestroy.push(Object(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["a" /* createEventCoordinator */])({
+        popstate: function (event) {
+            if (Object(__WEBPACK_IMPORTED_MODULE_1__hickory_dom_utils__["e" /* ignorablePopstateEvent */])(event)) {
+                return;
+            }
+            pop(event.state);
+        }
+    }));
+    return browserHistory;
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Browser);
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__ = __webpack_require__(14);
+
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+
+
+var __assign = Object.assign || function __assign(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+    return t;
+};
+
+function subscriptionCoordinator() {
+    var subscribers = [];
+    function subscribe(fn) {
+        var index = subscribers.push(fn) - 1;
+        return function () {
+            subscribers[index] = null;
+        };
+    }
+    function emit(location, action) {
+        subscribers.forEach(function (fn) {
+            if (fn !== null) {
+                fn(location, action);
+            }
+        });
+    }
+    function removeAllSubscribers() {
+        subscribers = [];
+    }
+    return {
+        subscribe: subscribe,
+        emit: emit,
+        removeAllSubscribers: removeAllSubscribers
+    };
+}
+
+function defaultParseQuery(query) {
+    return query ? query : '';
+}
+function defaultStringifyQuery(query) {
+    return query ? query : '';
+}
+function isValidBase(baseSegment) {
+    return (typeof baseSegment === 'string' &&
+        baseSegment.charAt(0) === '/' &&
+        baseSegment.charAt(baseSegment.length - 1) !== '/');
+}
+function validateQueryOption(query) {
+    var parse, stringify;
+    return query
+        ? query
+        : {
+            parse: defaultParseQuery,
+            stringify: defaultStringifyQuery
+        };
+}
+function locationFactory(options) {
+    if (options === void 0) { options = {}; }
+    var query = options.query, _a = options.decode, decode = _a === void 0 ? true : _a, _b = options.baseSegment, baseSegment = _b === void 0 ? '' : _b, _c = options.raw, raw = _c === void 0 ? function (p) { return p; } : _c;
+    var _d = validateQueryOption(query), parse = _d.parse, stringify = _d.stringify;
+    if (baseSegment !== '' && !isValidBase(baseSegment)) {
+        throw new Error('The baseSegment "' + baseSegment + '" is not valid.' +
+            ' The baseSegment must begin with a forward slash and end with a' +
+            ' non-forward slash character.');
+    }
+    function parsePath(value) {
+        var location = {};
+        // hash is always after query, so split it off first
+        var hashIndex = value.indexOf('#');
+        if (hashIndex !== -1) {
+            location.hash = value.substring(hashIndex + 1);
+            value = value.substring(0, hashIndex);
+        }
+        else {
+            location.hash = '';
+        }
+        var queryIndex = value.indexOf('?');
+        if (queryIndex !== -1) {
+            location.query = parse(value.substring(queryIndex + 1));
+            value = value.substring(0, queryIndex);
+        }
+        else {
+            location.query = parse();
+        }
+        location.pathname = Object(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["d" /* stripBaseSegment */])(value, baseSegment);
+        return location;
+    }
+    function createLocation(value, key, state) {
+        if (state === void 0) { state = null; }
+        var partial;
+        if (typeof value === 'string') {
+            partial = parsePath(value);
+        }
+        else {
+            partial = __assign({}, value);
+            if (partial.hash == null) {
+                partial.hash = '';
+            }
+            if (partial.query == null) {
+                partial.query = parse();
+            }
+            if (partial.pathname == null) {
+                partial.pathname = '/';
+            }
+        }
+        // don't set state if it already exists
+        if (state && !partial.state) {
+            partial.state = state;
+        }
+        var location = __assign({}, partial, { key: key, rawPathname: raw(partial.pathname) });
+        location.key = key;
+        location.rawPathname = raw(location.pathname);
+        // it can be more convenient to interact with the decoded pathname,
+        // but leave the option for using the encoded value
+        if (decode) {
+            try {
+                location.pathname = decodeURI(location.pathname);
+            }
+            catch (e) {
+                throw e instanceof URIError
+                    ? new URIError('Pathname "' + location.pathname + '" could not be decoded. ' +
+                        'This is most likely due to a bad percent-encoding. For more information, ' +
+                        'see the third paragraph here https://tools.ietf.org/html/rfc3986#section-2.4')
+                    : e;
+            }
+        }
+        return location;
+    }
+    function createPath(location) {
+        // ensure that pathname begins with a forward slash, query begins
+        // with a question mark, and hash begins with a pound sign
+        return (baseSegment +
+            Object(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["b" /* completePathname */])(location.rawPathname ||
+                location.pathname ||
+                '') +
+            Object(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["c" /* completeQuery */])(stringify(location.query)) +
+            Object(__WEBPACK_IMPORTED_MODULE_0__hickory_location_utils__["a" /* completeHash */])(location.hash));
+    }
+    return {
+        createLocation: createLocation,
+        createPath: createPath
+    };
+}
+
+function noop() { }
+function createNavigationConfirmation() {
+    var confirmFunction;
+    function confirmNavigation(info, confirm, prevent) {
+        if (!confirmFunction) {
+            confirm();
+        }
+        else {
+            confirmFunction(info, confirm, prevent || noop);
+        }
+    }
+    function confirmWith(fn) {
+        if (typeof fn !== 'function') {
+            return;
+        }
+        confirmFunction = fn;
+    }
+    
+    function removeConfirmation() {
+        confirmFunction = null;
+    }
+    
+    return {
+        confirmNavigation: confirmNavigation,
+        confirmWith: confirmWith,
+        removeConfirmation: removeConfirmation
+    };
+}
+
+function createKeyGenerator(initial) {
+    var id = initial || 0;
+    function parse(key) {
+        return key
+            .split('.')
+            .map(function (value) { return parseInt(value, 10); });
+    }
+    return {
+        keygen: {
+            major: function (previous) {
+                if (previous) {
+                    var major = parse(previous)[0];
+                    id = major + 1;
+                }
+                return id++ + ".0";
+            },
+            minor: function (current) {
+                var _a = parse(current), major = _a[0], minor = _a[1];
+                return major + "." + (minor + 1);
+            },
+            diff: function (first, second) {
+                var firstMajor = parse(first)[0];
+                var secondMajor = parse(second)[0];
+                return secondMajor - firstMajor;
+            }
+        }
+    };
+}
+
+function Common$1(options) {
+    return __assign({}, subscriptionCoordinator(), locationFactory(options), createNavigationConfirmation(), createKeyGenerator());
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Common$1);
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export ensureBeginsWith */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return completePathname; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return completeHash; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return completeQuery; });
+/* unused harmony export stripPrefix */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return stripBaseSegment; });
+function ensureBeginsWith(str, prefix) {
+    if (!str) {
+        return '';
+    }
+    return str.indexOf(prefix) === 0 ? str : prefix + str;
+}
+function completePathname(pathname) {
+    return ensureBeginsWith(pathname, '/');
+}
+function completeHash(hash) {
+    return ensureBeginsWith(hash, '#');
+}
+function completeQuery(query) {
+    return ensureBeginsWith(query, '?');
+}
+function stripPrefix(str, prefix) {
+    return str.indexOf(prefix) === 0
+        ? str.slice(prefix.length)
+        : str;
+}
+function hasBaseSegment(path, prefix) {
+    return (new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i')).test(path);
+}
+function stripBaseSegment(path, prefix) {
+    return hasBaseSegment(path, prefix) ? path.substr(prefix.length) : path;
+}
+
+
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ensureEncodedPathname; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return domExists; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ignorablePopstateEvent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getStateFromHistory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createEventCoordinator; });
+function ensureEncodedPathname(pathname) {
+    var a = document.createElement('a');
+    a.setAttribute('href', pathname);
+    return a.pathname;
+}
+function domExists() {
+    return !!(window && window.location);
+}
+/*
+ * Ignore popstate events that don't define event.state
+ * unless they come from Chrome on iOS (because it emits
+ * events where event.state is undefined when you click
+ * the back button)
+ */
+function ignorablePopstateEvent(event) {
+    return (event.state === undefined &&
+        navigator.userAgent.indexOf('CriOS') === -1);
+}
+/*
+ * IE 11 might throw, so just catch and return empty object when that happens
+ */
+function getStateFromHistory() {
+    try {
+        return window.history.state || {};
+    }
+    catch (e) {
+        return {};
+    }
+}
+function createEventCoordinator(events) {
+    for (var event_1 in events) {
+        var fn = events[event_1];
+        window.addEventListener(event_1, fn, false);
+    }
+    return function destroyEvents() {
+        for (var event_2 in events) {
+            var fn = events[event_2];
+            window.removeEventListener(event_2, fn, false);
+        }
+    };
+}
+
+
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_path_to_regexp__);
+
+
+function registerRoutes(routes, addon, parentData) {
+    routes.forEach(function (route) {
+        var data = addon.register(route.public, parentData);
+        if (route.children) {
+            registerRoutes(route.children, addon, data);
+        }
+    });
+}
+
+var withLeadingSlash = function (path) {
+    return path.charAt(0) === '/' ? path : '/' + path;
+};
+var stripLeadingSlash = function (path) {
+    return path.charAt(0) === '/' ? path.slice(1) : path;
+};
+var withTrailingSlash = function (path) {
+    return path.charAt(path.length - 1) === '/' ? path : path + '/';
+};
+var join = function (beginning, end) {
+    return withTrailingSlash(beginning) + end;
+};
+
+function createPathnameAddon(options) {
+    var knownPaths = {};
+    var cache = {};
+    return {
+        name: 'pathname',
+        register: function (route, parent) {
+            var name = route.name, path = route.path;
+            if (knownPaths[name] !== undefined) {
+                console.warn('A pathname with the name "' +
+                    name +
+                    '" already exists. Each route should' +
+                    'have a unique name. By registering a pathname with a name that already exists, ' +
+                    'you are overwriting the existing pathname. This may break your application.');
+            }
+            var base;
+            if (parent && knownPaths[parent]) {
+                base = knownPaths[parent];
+            }
+            knownPaths[name] = base ? join(base, path) : path;
+            return name;
+        },
+        get: function (name, params) {
+            if (knownPaths[name] == null) {
+                console.error("Could not generate pathname for " + name + " because it is not registered.");
+                return;
+            }
+            var compile = cache[name]
+                ? cache[name]
+                : (cache[name] = __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default.a.compile(knownPaths[name]));
+            return withLeadingSlash(compile(params, options));
+        },
+        reset: function () {
+            knownPaths = {};
+            cache = {};
+        }
+    };
+}
+
+function matchRoute(route, pathname, matches, parentPath) {
+    var testPath = stripLeadingSlash(pathname);
+    var _a = route.match, path = _a.path, mustBeExact = _a.mustBeExact;
+    var children = route.children;
+    var match = path.re.exec(testPath);
+    if (!match) {
+        return false;
+    }
+    var segment = match[0], parsed = match.slice(1);
+    var params = {};
+    path.keys.forEach(function (key, index) {
+        params[key.name] = parsed[index];
+    });
+    var uriString = parentPath != null ? join(parentPath, segment) : withLeadingSlash(segment);
+    matches.push({ route: route, params: params });
+    // if there are no children, then we accept the match
+    if (!children || !children.length) {
+        return true;
+    }
+    // children only need to match against unmatched segments
+    var remainder = testPath.slice(segment.length);
+    var notExact = !!remainder.length;
+    var hasChildMatch = children.some(function (c) {
+        return matchRoute(c, remainder, matches, uriString);
+    });
+    // if the route has children, but none of them match, remove the match unless it
+    // is exact
+    if (mustBeExact && notExact && !hasChildMatch) {
+        matches.pop();
+        return false;
+    }
+    return true;
+}
+
+function parseParams(params, fns) {
+    if (!fns) {
+        return params;
+    }
+    var output = {};
+    // For each param, attempt to parse it. However, if that
+    // fails, fall back to the string value.
+    for (var key in params) {
+        var value = params[key];
+        var fn = fns[key];
+        if (fn) {
+            try {
+                value = fn(value);
+            }
+            catch (e) {
+                console.error(e);
+                value = params[key];
+            }
+        }
+        output[key] = value;
+    }
+    return output;
+}
+function createResponse(location, routes, addons) {
+    var matches = [];
+    var partials = [];
+    var params = {};
+    var route;
+    // determine which route(s) match, then use the exact match
+    // as the matched route and the rest as partial routes
+    routes.some(function (route) { return matchRoute(route, location.pathname, matches); });
+    if (matches.length) {
+        var bestMatch = matches.pop();
+        matches.forEach(function (m) {
+            partials.push(m.route.public.name);
+            Object.assign(params, parseParams(m.params, m.route.paramParsers));
+        });
+        route = bestMatch.route;
+        Object.assign(params, parseParams(bestMatch.params, route.paramParsers));
+    }
+    // start building the properties of the response object
+    var props = {
+        location: location,
+        params: params,
+        partials: partials,
+        status: route != null ? 200 : 404,
+        data: undefined
+    };
+    return loadRoute(route, props, addons).then(function (props) {
+        return freezeResponse(route, props);
+    });
+}
+/*
+ * This will call any load/preload functions for the matching route
+ */
+function loadRoute(route, props, addons) {
+    if (!route) {
+        return Promise.resolve(props);
+    }
+    return Promise.all([
+        route.public.preload ? route.public.preload() : null,
+        route.public.load
+            ? route.public.load(routeProperties(route, props), responseModifiers(props), addons)
+            : null
+    ]).then(function () { return Promise.resolve(props); });
+}
+function responseModifiers(props) {
+    return {
+        redirect: function (to, code) {
+            if (code === void 0) { code = 301; }
+            props.status = code;
+            props.redirectTo = to;
+        },
+        fail: function (err) {
+            props.error = err;
+        },
+        setStatus: function (code) {
+            props.status = code;
+        },
+        setData: function (data) {
+            props.data = data;
+        }
+    };
+}
+function routeProperties(route, props) {
+    return {
+        params: props.params,
+        location: props.location,
+        name: route.public.name
+    };
+}
+function missProps() {
+    return {
+        body: undefined,
+        title: ''
+    };
+}
+function freezeResponse(route, props) {
+    var response = Object.assign({}, props, { key: props.location.key }, route ? route.responseProps(props) : missProps());
+    return Promise.resolve(response);
+}
+
+function once(fn) {
+    var promise = null;
+    var hasRun = false;
+    return function () {
+        if (hasRun) {
+            return promise;
+        }
+        promise = fn();
+        hasRun = true;
+        return promise;
+    };
+}
+
+function path(pathString, options) {
+    var keys = [];
+    var re = __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default()(pathString, keys, options);
+    return { re: re, keys: keys };
+}
+
+function generateTitle(title, props) {
+    if (!title) {
+        return '';
+    }
+    return typeof title === 'function' ? title(props.params, props.data) : title;
+}
+var createRoute = function (options) {
+    var _a = options || {}, name = _a.name, path$$1 = _a.path, _b = _a.pathOptions, pathOptions = _b === void 0 ? {} : _b, body = _a.body, _c = _a.children, descriptorChildren = _c === void 0 ? [] : _c, preload = _a.preload, load = _a.load, title = _a.title, extra = _a.extra, paramParsers = _a.params;
+    // end defaults to true, so end has to be hardcoded for it to be false
+    var mustBeExact = pathOptions.end == null || pathOptions.end;
+    var children = [];
+    // when we have child routes, we need to perform non-end matching and
+    // create route objects for each child
+    if (descriptorChildren.length) {
+        pathOptions.end = false;
+        children = descriptorChildren.map(createRoute);
+    }
+    var regexPath = path(path$$1, pathOptions);
+    return {
+        public: {
+            name: name,
+            path: path$$1,
+            body: body,
+            keys: regexPath.keys.map(function (key) { return key.name; }),
+            preload: preload && once(preload),
+            load: load,
+            extra: extra
+        },
+        match: {
+            path: regexPath,
+            mustBeExact: mustBeExact
+        },
+        children: children,
+        paramParsers: paramParsers,
+        responseProps: function (props) {
+            return {
+                name: name,
+                body: this.public.body && this.public.body(),
+                title: generateTitle(title, props)
+            };
+        }
+    };
+};
+
+function createConfig$1(history, routeArray, options) {
+    if (options === void 0) { options = {}; }
+    var _a = options, _b = _a.addons, userAddons = _b === void 0 ? [] : _b, _c = _a.sideEffects, sideEffects = _c === void 0 ? [] : _c, cache = _a.cache, pathnameOptions = _a.pathnameOptions;
+    var beforeSideEffects = [];
+    var afterSideEffects = [];
+    sideEffects.forEach(function (se) {
+        if (se.after) {
+            afterSideEffects.push(se.fn);
+        }
+        else {
+            beforeSideEffects.push(se.fn);
+        }
+    });
+    var routes = [];
+    var registeredAddons = {};
+    var subscribers = [];
+    var mostRecentKey;
+    var previous = [];
+    var responseInProgress;
+    // add the pathname addon to the provided addons
+    var allAddons = userAddons.concat(createPathnameAddon(pathnameOptions));
+    function setupRoutesAndAddons(routeArray) {
+        // clear out any existing addons
+        for (var key in registeredAddons) {
+            delete registeredAddons[key];
+        }
+        routes = routeArray.map(createRoute);
+        allAddons.forEach(function (addon) {
+            addon.reset();
+            registeredAddons[addon.name] = addon.get;
+            registerRoutes(routes, addon);
+        });
+        makeResponse(history.location, history.action);
+    }
+    function prepareResponse(location) {
+        mostRecentKey = location.key;
+        if (cache) {
+            var cachedResponse = cache.get(location);
+            if (cachedResponse != null) {
+                return Promise.resolve(cachedResponse);
+            }
+        }
+        return createResponse(location, routes, registeredAddons).then(function (response) {
+            if (cache) {
+                cache.set(response);
+            }
+            return response;
+        });
+    }
+    function subscribe(fn) {
+        if (typeof fn !== 'function') {
+            throw new Error('The argument passed to subscribe must be a function');
+        }
+        // Immediately call subscriber function. If this is called before the
+        // initial response has resolved, both params will be undefined. If called
+        // after init resp has resolved, first param is the most recent response and
+        // action is last history.action.
+        fn.apply(null, previous);
+        var newLength = subscribers.push(fn);
+        return function () {
+            subscribers[newLength - 1] = null;
+        };
+    }
+    function emit(response, action) {
+        // don't emit old responses
+        if (response.key !== mostRecentKey) {
+            return false;
+        }
+        beforeSideEffects.forEach(function (fn) {
+            fn(response, action);
+        });
+        subscribers.forEach(function (fn) {
+            if (fn != null) {
+                fn(response, action);
+            }
+        });
+        afterSideEffects.forEach(function (fn) {
+            fn(response, action);
+        });
+        return true;
+    }
+    // create a response object using the current location and
+    // emit it to any subscribed functions
+    function makeResponse(location, action) {
+        responseInProgress = prepareResponse(location).then(function (response) {
+            var emitted = emit(response, action);
+            // only store these after we have emitted.
+            if (emitted) {
+                previous = [response, action];
+            }
+            if (response.redirectTo) {
+                history.replace(response.redirectTo);
+            }
+            return response;
+        }, function (err) {
+            console.error(err);
+            return null;
+        });
+    }
+    // now that everything is defined, actually do the setup
+    setupRoutesAndAddons(routeArray);
+    var unlisten = history.subscribe(makeResponse);
+    return {
+        ready: function () { return responseInProgress; },
+        refresh: setupRoutesAndAddons,
+        subscribe: subscribe,
+        addons: registeredAddons,
+        history: history
+    };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (createConfig$1);
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+/**
+ * Expose `pathToRegexp`.
+ */
+module.exports = pathToRegexp
+module.exports.parse = parse
+module.exports.compile = compile
+module.exports.tokensToFunction = tokensToFunction
+module.exports.tokensToRegExp = tokensToRegExp
+
+/**
+ * Default configs.
+ */
+var DEFAULT_DELIMITER = '/'
+var DEFAULT_DELIMITERS = './'
+
+/**
+ * The main path matching regexp utility.
+ *
+ * @type {RegExp}
+ */
+var PATH_REGEXP = new RegExp([
+  // Match escaped characters that would otherwise appear in future matches.
+  // This allows the user to escape special characters that won't transform.
+  '(\\\\.)',
+  // Match Express-style parameters and un-named parameters with a prefix
+  // and optional suffixes. Matches appear as:
+  //
+  // "/:test(\\d+)?" => ["/", "test", "\d+", undefined, "?"]
+  // "/route(\\d+)"  => [undefined, undefined, undefined, "\d+", undefined]
+  '(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?'
+].join('|'), 'g')
+
+/**
+ * Parse a string for the raw tokens.
+ *
+ * @param  {string}  str
+ * @param  {Object=} options
+ * @return {!Array}
+ */
+function parse (str, options) {
+  var tokens = []
+  var key = 0
+  var index = 0
+  var path = ''
+  var defaultDelimiter = (options && options.delimiter) || DEFAULT_DELIMITER
+  var delimiters = (options && options.delimiters) || DEFAULT_DELIMITERS
+  var pathEscaped = false
+  var res
+
+  while ((res = PATH_REGEXP.exec(str)) !== null) {
+    var m = res[0]
+    var escaped = res[1]
+    var offset = res.index
+    path += str.slice(index, offset)
+    index = offset + m.length
+
+    // Ignore already escaped sequences.
+    if (escaped) {
+      path += escaped[1]
+      pathEscaped = true
+      continue
+    }
+
+    var prev = ''
+    var next = str[index]
+    var name = res[2]
+    var capture = res[3]
+    var group = res[4]
+    var modifier = res[5]
+
+    if (!pathEscaped && path.length) {
+      var k = path.length - 1
+
+      if (delimiters.indexOf(path[k]) > -1) {
+        prev = path[k]
+        path = path.slice(0, k)
+      }
+    }
+
+    // Push the current path onto the tokens.
+    if (path) {
+      tokens.push(path)
+      path = ''
+      pathEscaped = false
+    }
+
+    var partial = prev !== '' && next !== undefined && next !== prev
+    var repeat = modifier === '+' || modifier === '*'
+    var optional = modifier === '?' || modifier === '*'
+    var delimiter = prev || defaultDelimiter
+    var pattern = capture || group
+
+    tokens.push({
+      name: name || key++,
+      prefix: prev,
+      delimiter: delimiter,
+      optional: optional,
+      repeat: repeat,
+      partial: partial,
+      pattern: pattern ? escapeGroup(pattern) : '[^' + escapeString(delimiter) + ']+?'
+    })
+  }
+
+  // Push any remaining characters.
+  if (path || index < str.length) {
+    tokens.push(path + str.substr(index))
+  }
+
+  return tokens
+}
+
+/**
+ * Compile a string to a template function for the path.
+ *
+ * @param  {string}             str
+ * @param  {Object=}            options
+ * @return {!function(Object=, Object=)}
+ */
+function compile (str, options) {
+  return tokensToFunction(parse(str, options))
+}
+
+/**
+ * Expose a method for transforming tokens into the path function.
+ */
+function tokensToFunction (tokens) {
+  // Compile all the tokens into regexps.
+  var matches = new Array(tokens.length)
+
+  // Compile all the patterns before compilation.
+  for (var i = 0; i < tokens.length; i++) {
+    if (typeof tokens[i] === 'object') {
+      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$')
+    }
+  }
+
+  return function (data, options) {
+    var path = ''
+    var encode = (options && options.encode) || encodeURIComponent
+
+    for (var i = 0; i < tokens.length; i++) {
+      var token = tokens[i]
+
+      if (typeof token === 'string') {
+        path += token
+        continue
+      }
+
+      var value = data ? data[token.name] : undefined
+      var segment
+
+      if (Array.isArray(value)) {
+        if (!token.repeat) {
+          throw new TypeError('Expected "' + token.name + '" to not repeat, but got array')
+        }
+
+        if (value.length === 0) {
+          if (token.optional) continue
+
+          throw new TypeError('Expected "' + token.name + '" to not be empty')
+        }
+
+        for (var j = 0; j < value.length; j++) {
+          segment = encode(value[j])
+
+          if (!matches[i].test(segment)) {
+            throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '"')
+          }
+
+          path += (j === 0 ? token.prefix : token.delimiter) + segment
+        }
+
+        continue
+      }
+
+      if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+        segment = encode(String(value))
+
+        if (!matches[i].test(segment)) {
+          throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but got "' + segment + '"')
+        }
+
+        path += token.prefix + segment
+        continue
+      }
+
+      if (token.optional) {
+        // Prepend partial segment prefixes.
+        if (token.partial) path += token.prefix
+
+        continue
+      }
+
+      throw new TypeError('Expected "' + token.name + '" to be ' + (token.repeat ? 'an array' : 'a string'))
+    }
+
+    return path
+  }
+}
+
+/**
+ * Escape a regular expression string.
+ *
+ * @param  {string} str
+ * @return {string}
+ */
+function escapeString (str) {
+  return str.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1')
+}
+
+/**
+ * Escape the capturing group by escaping special characters and meaning.
+ *
+ * @param  {string} group
+ * @return {string}
+ */
+function escapeGroup (group) {
+  return group.replace(/([=!:$/()])/g, '\\$1')
+}
+
+/**
+ * Get the flags for a regexp from the options.
+ *
+ * @param  {Object} options
+ * @return {string}
+ */
+function flags (options) {
+  return options && options.sensitive ? '' : 'i'
+}
+
+/**
+ * Pull out keys from a regexp.
+ *
+ * @param  {!RegExp} path
+ * @param  {Array=}  keys
+ * @return {!RegExp}
+ */
+function regexpToRegexp (path, keys) {
+  if (!keys) return path
+
+  // Use a negative lookahead to match only capturing groups.
+  var groups = path.source.match(/\((?!\?)/g)
+
+  if (groups) {
+    for (var i = 0; i < groups.length; i++) {
+      keys.push({
+        name: i,
+        prefix: null,
+        delimiter: null,
+        optional: false,
+        repeat: false,
+        partial: false,
+        pattern: null
+      })
+    }
+  }
+
+  return path
+}
+
+/**
+ * Transform an array into a regexp.
+ *
+ * @param  {!Array}  path
+ * @param  {Array=}  keys
+ * @param  {Object=} options
+ * @return {!RegExp}
+ */
+function arrayToRegexp (path, keys, options) {
+  var parts = []
+
+  for (var i = 0; i < path.length; i++) {
+    parts.push(pathToRegexp(path[i], keys, options).source)
+  }
+
+  return new RegExp('(?:' + parts.join('|') + ')', flags(options))
+}
+
+/**
+ * Create a path regexp from string input.
+ *
+ * @param  {string}  path
+ * @param  {Array=}  keys
+ * @param  {Object=} options
+ * @return {!RegExp}
+ */
+function stringToRegexp (path, keys, options) {
+  return tokensToRegExp(parse(path, options), keys, options)
+}
+
+/**
+ * Expose a function for taking tokens and returning a RegExp.
+ *
+ * @param  {!Array}  tokens
+ * @param  {Array=}  keys
+ * @param  {Object=} options
+ * @return {!RegExp}
+ */
+function tokensToRegExp (tokens, keys, options) {
+  options = options || {}
+
+  var strict = options.strict
+  var end = options.end !== false
+  var delimiter = escapeString(options.delimiter || DEFAULT_DELIMITER)
+  var delimiters = options.delimiters || DEFAULT_DELIMITERS
+  var endsWith = [].concat(options.endsWith || []).map(escapeString).concat('$').join('|')
+  var route = ''
+  var isEndDelimited = false
+
+  // Iterate over the tokens and create our regexp string.
+  for (var i = 0; i < tokens.length; i++) {
+    var token = tokens[i]
+
+    if (typeof token === 'string') {
+      route += escapeString(token)
+      isEndDelimited = i === tokens.length - 1 && delimiters.indexOf(token[token.length - 1]) > -1
+    } else {
+      var prefix = escapeString(token.prefix)
+      var capture = token.repeat
+        ? '(?:' + token.pattern + ')(?:' + prefix + '(?:' + token.pattern + '))*'
+        : token.pattern
+
+      if (keys) keys.push(token)
+
+      if (token.optional) {
+        if (token.partial) {
+          route += prefix + '(' + capture + ')?'
+        } else {
+          route += '(?:' + prefix + '(' + capture + '))?'
+        }
+      } else {
+        route += prefix + '(' + capture + ')'
+      }
+    }
+  }
+
+  if (end) {
+    if (!strict) route += '(?:' + delimiter + ')?'
+
+    route += endsWith === '$' ? '$' : '(?=' + endsWith + ')'
+  } else {
+    if (!strict) route += '(?:' + delimiter + '(?=' + endsWith + '))?'
+    if (!isEndDelimited) route += '(?=' + delimiter + '|' + endsWith + ')'
+  }
+
+  return new RegExp('^' + route, flags(options))
+}
+
+/**
+ * Normalize the given path string, returning a regular expression.
+ *
+ * An empty array can be passed in for the keys, which will hold the
+ * placeholder key descriptions. For example, using `/user/:id`, `keys` will
+ * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
+ *
+ * @param  {(string|RegExp|Array)} path
+ * @param  {Array=}                keys
+ * @param  {Object=}               options
+ * @return {!RegExp}
+ */
+function pathToRegexp (path, keys, options) {
+  if (path instanceof RegExp) {
+    return regexpToRegexp(path, keys)
+  }
+
+  if (Array.isArray(path)) {
+    return arrayToRegexp(/** @type {!Array} */ (path), keys, options)
+  }
+
+  return stringToRegexp(/** @type {string} */ (path), keys, options)
+}
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var emptyFunction = __webpack_require__(3);
+var invariant = __webpack_require__(4);
+var warning = __webpack_require__(7);
+var assign = __webpack_require__(19);
+
+var ReactPropTypesSecret = __webpack_require__(5);
+var checkPropTypes = __webpack_require__(20);
+
+module.exports = function(isValidElement, throwOnDirectAccess) {
+  /* global Symbol */
+  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+
+  /**
+   * Returns the iterator method function contained on the iterable object.
+   *
+   * Be sure to invoke the function with the iterable as context:
+   *
+   *     var iteratorFn = getIteratorFn(myIterable);
+   *     if (iteratorFn) {
+   *       var iterator = iteratorFn.call(myIterable);
+   *       ...
+   *     }
+   *
+   * @param {?object} maybeIterable
+   * @return {?function}
+   */
+  function getIteratorFn(maybeIterable) {
+    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+    if (typeof iteratorFn === 'function') {
+      return iteratorFn;
+    }
+  }
+
+  /**
+   * Collection of methods that allow declaration and validation of props that are
+   * supplied to React components. Example usage:
+   *
+   *   var Props = require('ReactPropTypes');
+   *   var MyArticle = React.createClass({
+   *     propTypes: {
+   *       // An optional string prop named "description".
+   *       description: Props.string,
+   *
+   *       // A required enum prop named "category".
+   *       category: Props.oneOf(['News','Photos']).isRequired,
+   *
+   *       // A prop named "dialog" that requires an instance of Dialog.
+   *       dialog: Props.instanceOf(Dialog).isRequired
+   *     },
+   *     render: function() { ... }
+   *   });
+   *
+   * A more formal specification of how these methods are used:
+   *
+   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+   *   decl := ReactPropTypes.{type}(.isRequired)?
+   *
+   * Each and every declaration produces a function with the same signature. This
+   * allows the creation of custom validation functions. For example:
+   *
+   *  var MyLink = React.createClass({
+   *    propTypes: {
+   *      // An optional string or URI prop named "href".
+   *      href: function(props, propName, componentName) {
+   *        var propValue = props[propName];
+   *        if (propValue != null && typeof propValue !== 'string' &&
+   *            !(propValue instanceof URI)) {
+   *          return new Error(
+   *            'Expected a string or an URI for ' + propName + ' in ' +
+   *            componentName
+   *          );
+   *        }
+   *      }
+   *    },
+   *    render: function() {...}
+   *  });
+   *
+   * @internal
+   */
+
+  var ANONYMOUS = '<<anonymous>>';
+
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
+  var ReactPropTypes = {
+    array: createPrimitiveTypeChecker('array'),
+    bool: createPrimitiveTypeChecker('boolean'),
+    func: createPrimitiveTypeChecker('function'),
+    number: createPrimitiveTypeChecker('number'),
+    object: createPrimitiveTypeChecker('object'),
+    string: createPrimitiveTypeChecker('string'),
+    symbol: createPrimitiveTypeChecker('symbol'),
+
+    any: createAnyTypeChecker(),
+    arrayOf: createArrayOfTypeChecker,
+    element: createElementTypeChecker(),
+    instanceOf: createInstanceTypeChecker,
+    node: createNodeChecker(),
+    objectOf: createObjectOfTypeChecker,
+    oneOf: createEnumTypeChecker,
+    oneOfType: createUnionTypeChecker,
+    shape: createShapeTypeChecker,
+    exact: createStrictShapeTypeChecker,
+  };
+
+  /**
+   * inlined Object.is polyfill to avoid requiring consumers ship their own
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+   */
+  /*eslint-disable no-self-compare*/
+  function is(x, y) {
+    // SameValue algorithm
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      return x !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+  /*eslint-enable no-self-compare*/
+
+  /**
+   * We use an Error-like object for backward compatibility as people may call
+   * PropTypes directly and inspect their output. However, we don't use real
+   * Errors anymore. We don't inspect their stack anyway, and creating them
+   * is prohibitively expensive if they are created too often, such as what
+   * happens in oneOfType() for any type before the one that matched.
+   */
+  function PropTypeError(message) {
+    this.message = message;
+    this.stack = '';
+  }
+  // Make `instanceof Error` still work for returned errors.
+  PropTypeError.prototype = Error.prototype;
+
+  function createChainableTypeChecker(validate) {
+    if (process.env.NODE_ENV !== 'production') {
+      var manualPropTypeCallCache = {};
+      var manualPropTypeWarningCount = 0;
+    }
+    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+      componentName = componentName || ANONYMOUS;
+      propFullName = propFullName || propName;
+
+      if (secret !== ReactPropTypesSecret) {
+        if (throwOnDirectAccess) {
+          // New behavior only for users of `prop-types` package
+          invariant(
+            false,
+            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+            'Use `PropTypes.checkPropTypes()` to call them. ' +
+            'Read more at http://fb.me/use-check-prop-types'
+          );
+        } else if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined') {
+          // Old behavior for people using React.PropTypes
+          var cacheKey = componentName + ':' + propName;
+          if (
+            !manualPropTypeCallCache[cacheKey] &&
+            // Avoid spamming the console because they are often not actionable except for lib authors
+            manualPropTypeWarningCount < 3
+          ) {
+            warning(
+              false,
+              'You are manually calling a React.PropTypes validation ' +
+              'function for the `%s` prop on `%s`. This is deprecated ' +
+              'and will throw in the standalone `prop-types` package. ' +
+              'You may be seeing this warning due to a third-party PropTypes ' +
+              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.',
+              propFullName,
+              componentName
+            );
+            manualPropTypeCallCache[cacheKey] = true;
+            manualPropTypeWarningCount++;
+          }
+        }
+      }
+      if (props[propName] == null) {
+        if (isRequired) {
+          if (props[propName] === null) {
+            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+          }
+          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+        }
+        return null;
+      } else {
+        return validate(props, propName, componentName, location, propFullName);
+      }
+    }
+
+    var chainedCheckType = checkType.bind(null, false);
+    chainedCheckType.isRequired = checkType.bind(null, true);
+
+    return chainedCheckType;
+  }
+
+  function createPrimitiveTypeChecker(expectedType) {
+    function validate(props, propName, componentName, location, propFullName, secret) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== expectedType) {
+        // `propValue` being instance of, say, date/regexp, pass the 'object'
+        // check, but we can offer a more precise error message here rather than
+        // 'of type `object`'.
+        var preciseType = getPreciseType(propValue);
+
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createAnyTypeChecker() {
+    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
+  }
+
+  function createArrayOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+      }
+      var propValue = props[propName];
+      if (!Array.isArray(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+      }
+      for (var i = 0; i < propValue.length; i++) {
+        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
+        if (error instanceof Error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!isValidElement(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createInstanceTypeChecker(expectedClass) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!(props[propName] instanceof expectedClass)) {
+        var expectedClassName = expectedClass.name || ANONYMOUS;
+        var actualClassName = getClassName(props[propName]);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createEnumTypeChecker(expectedValues) {
+    if (!Array.isArray(expectedValues)) {
+      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+      return emptyFunction.thatReturnsNull;
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      for (var i = 0; i < expectedValues.length; i++) {
+        if (is(propValue, expectedValues[i])) {
+          return null;
+        }
+      }
+
+      var valuesString = JSON.stringify(expectedValues);
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createObjectOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+      }
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+      }
+      for (var key in propValue) {
+        if (propValue.hasOwnProperty(key)) {
+          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+          if (error instanceof Error) {
+            return error;
+          }
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createUnionTypeChecker(arrayOfTypeCheckers) {
+    if (!Array.isArray(arrayOfTypeCheckers)) {
+      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+      return emptyFunction.thatReturnsNull;
+    }
+
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (typeof checker !== 'function') {
+        warning(
+          false,
+          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
+          'received %s at index %s.',
+          getPostfixForTypeWarning(checker),
+          i
+        );
+        return emptyFunction.thatReturnsNull;
+      }
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+        var checker = arrayOfTypeCheckers[i];
+        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
+          return null;
+        }
+      }
+
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createNodeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!isNode(props[propName])) {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      for (var key in shapeTypes) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          continue;
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createStrictShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      // We need to check all keys in case some are required but missing from
+      // props.
+      var allKeys = assign({}, props[propName], shapeTypes);
+      for (var key in allKeys) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          return new PropTypeError(
+            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
+            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
+            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
+          );
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+
+    return createChainableTypeChecker(validate);
+  }
+
+  function isNode(propValue) {
+    switch (typeof propValue) {
+      case 'number':
+      case 'string':
+      case 'undefined':
+        return true;
+      case 'boolean':
+        return !propValue;
+      case 'object':
+        if (Array.isArray(propValue)) {
+          return propValue.every(isNode);
+        }
+        if (propValue === null || isValidElement(propValue)) {
+          return true;
+        }
+
+        var iteratorFn = getIteratorFn(propValue);
+        if (iteratorFn) {
+          var iterator = iteratorFn.call(propValue);
+          var step;
+          if (iteratorFn !== propValue.entries) {
+            while (!(step = iterator.next()).done) {
+              if (!isNode(step.value)) {
+                return false;
+              }
+            }
+          } else {
+            // Iterator will provide entry [k,v] tuples rather than values.
+            while (!(step = iterator.next()).done) {
+              var entry = step.value;
+              if (entry) {
+                if (!isNode(entry[1])) {
+                  return false;
+                }
+              }
+            }
+          }
+        } else {
+          return false;
+        }
+
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  function isSymbol(propType, propValue) {
+    // Native Symbol.
+    if (propType === 'symbol') {
+      return true;
+    }
+
+    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+    if (propValue['@@toStringTag'] === 'Symbol') {
+      return true;
+    }
+
+    // Fallback for non-spec compliant Symbols which are polyfilled.
+    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Equivalent of `typeof` but with special handling for array and regexp.
+  function getPropType(propValue) {
+    var propType = typeof propValue;
+    if (Array.isArray(propValue)) {
+      return 'array';
+    }
+    if (propValue instanceof RegExp) {
+      // Old webkits (at least until Android 4.0) return 'function' rather than
+      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+      // passes PropTypes.object.
+      return 'object';
+    }
+    if (isSymbol(propType, propValue)) {
+      return 'symbol';
+    }
+    return propType;
+  }
+
+  // This handles more types than `getPropType`. Only used for error messages.
+  // See `createPrimitiveTypeChecker`.
+  function getPreciseType(propValue) {
+    if (typeof propValue === 'undefined' || propValue === null) {
+      return '' + propValue;
+    }
+    var propType = getPropType(propValue);
+    if (propType === 'object') {
+      if (propValue instanceof Date) {
+        return 'date';
+      } else if (propValue instanceof RegExp) {
+        return 'regexp';
+      }
+    }
+    return propType;
+  }
+
+  // Returns a string that is postfixed to a warning about an invalid type.
+  // For example, "undefined" or "of type array"
+  function getPostfixForTypeWarning(value) {
+    var type = getPreciseType(value);
+    switch (type) {
+      case 'array':
+      case 'object':
+        return 'an ' + type;
+      case 'boolean':
+      case 'date':
+      case 'regexp':
+        return 'a ' + type;
+      default:
+        return type;
+    }
+  }
+
+  // Returns class name of the object, if any.
+  function getClassName(propValue) {
+    if (!propValue.constructor || !propValue.constructor.name) {
+      return ANONYMOUS;
+    }
+    return propValue.constructor.name;
+  }
+
+  ReactPropTypes.checkPropTypes = checkPropTypes;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
 object-assign
 (c) Sindre Sorhus
 @license MIT
 */
-var a=Object.getOwnPropertySymbols,o=Object.prototype.hasOwnProperty,i=Object.prototype.propertyIsEnumerable;e.exports=function(){try{if(!Object.assign)return!1;var e=new String("abc");if(e[5]="de","5"===Object.getOwnPropertyNames(e)[0])return!1;for(var t={},n=0;n<10;n++)t["_"+String.fromCharCode(n)]=n;if("0123456789"!==Object.getOwnPropertyNames(t).map(function(e){return t[e]}).join(""))return!1;var r={};return"abcdefghijklmnopqrst".split("").forEach(function(e){r[e]=e}),"abcdefghijklmnopqrst"===Object.keys(Object.assign({},r)).join("")}catch(e){return!1}}()?Object.assign:function(e,t){for(var n,u,l=r(e),c=1;c<arguments.length;c++){n=Object(arguments[c]);for(var s in n)o.call(n,s)&&(l[s]=n[s]);if(a){u=a(n);for(var f=0;f<u.length;f++)i.call(n,u[f])&&(l[u[f]]=n[u[f]])}}return l}},function(e,t,n){"use strict";(function(t){function r(e,n,r,l,c){if("production"!==t.env.NODE_ENV)for(var s in e)if(e.hasOwnProperty(s)){var f;try{a("function"==typeof e[s],"%s: %s type `%s` is invalid; it must be a function, usually from the `prop-types` package, but received `%s`.",l||"React class",r,s,typeof e[s]),f=e[s](n,s,l,r,null,i)}catch(e){f=e}if(o(!f||f instanceof Error,"%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).",l||"React class",r,s,typeof f),f instanceof Error&&!(f.message in u)){u[f.message]=!0;var d=c?c():"";o(!1,"Failed %s type: %s%s",r,f.message,null!=d?d:"")}}}if("production"!==t.env.NODE_ENV)var a=n(4),o=n(10),i=n(5),u={};e.exports=r}).call(t,n(2))},function(e,t,n){"use strict";var r=n(3),a=n(4),o=n(5);e.exports=function(){function e(e,t,n,r,i,u){u!==o&&a(!1,"Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types")}function t(){return e}e.isRequired=e;var n={array:e,bool:e,func:e,number:e,object:e,string:e,symbol:e,any:e,arrayOf:t,element:e,instanceOf:t,node:e,objectOf:t,oneOf:t,oneOfType:t,shape:t,exact:t};return n.checkPropTypes=r,n.PropTypes=n,n}},function(e,t,n){"use strict";(function(t){var n=function(e,n,r,a,o,i,u,l){if("production"!==t.env.NODE_ENV&&void 0===n)throw new Error("invariant requires an error message argument");if(!e){var c;if(void 0===n)c=new Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var s=[r,a,o,i,u,l],f=0;c=new Error(n.replace(/%s/g,function(){return s[f++]})),c.name="Invariant Violation"}throw c.framesToPop=1,c}};e.exports=n}).call(t,n(2))},function(e,t,n){"use strict";var r={childContextTypes:!0,contextTypes:!0,defaultProps:!0,displayName:!0,getDefaultProps:!0,mixins:!0,propTypes:!0,type:!0},a={name:!0,length:!0,prototype:!0,caller:!0,callee:!0,arguments:!0,arity:!0},o=Object.defineProperty,i=Object.getOwnPropertyNames,u=Object.getOwnPropertySymbols,l=Object.getOwnPropertyDescriptor,c=Object.getPrototypeOf,s=c&&c(Object);e.exports=function e(t,n,f){if("string"!=typeof n){if(s){var d=c(n);d&&d!==s&&e(t,d,f)}var p=i(n);u&&(p=p.concat(u(n)));for(var m=0;m<p.length;++m){var h=p[m];if(!(r[h]||a[h]||f&&f[h])){var y=l(n,h);try{o(t,h,y)}catch(e){}}}return t}return t}},function(e,t,n){"use strict";function r(e){var t=e||{},n=t.prefix,r=void 0===n?"":n,a=t.suffix,o=void 0===a?"":a;return function(e){document.title=[r,e.title,o].join(" ")}}Object.defineProperty(t,"__esModule",{value:!0}),t.default=r},function(e,t,n){"use strict";function r(){return function(e,t){"POP"!==t&&setTimeout(function(){var t=e.location.hash;if(""!==t){var n=document.getElementById(t);if(n&&n.scrollIntoView)return void n.scrollIntoView()}window.scrollTo(0,0)},0)}}Object.defineProperty(t,"__esModule",{value:!0}),t.default=r},function(e,t,n){"use strict";function r(e,t,n){return e===t.name||!(!n||!t.partials.some(function(t){return e===t}))}function a(){var e={};return{name:"active",register:function(t,n){var r=t.name,a=t.keys;null==a&&(a=[]);var o=Array.isArray(n)?n.concat(a):a;return void 0!==e[r]&&console.warn('A route function with the name "'+r+'" already exists. Each route shouldhave a unique name. By registering a route function with a name that already exists, you are overwriting the existing one. This may break your application.'),e[r]=o,o},get:function(t,n,a,o){if(null==e[t]||!r(t,n,o))return!1;for(var i=e[t],u=0,l=i.length;u<l;u++){var c=i[u],s=a[c];if(!s||s!==n.params[c])return!1}return!0},reset:function(){e={}}}}Object.defineProperty(t,"__esModule",{value:!0}),t.default=a},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(36),o=r(a),i=n(40),u=r(i),l=n(41),c=r(l),s=n(42),f=r(s),d=n(46),p=r(d);t.default=[o.default,u.default,c.default,f.default,p.default]},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(37),a=function(e){return e&&e.__esModule?e:{default:e}}(r);t.default={name:"Home",path:"",body:function(){return a.default},title:"Curi"}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),a=function(e){return e&&e.__esModule?e:{default:e}}(r),o=n(6),i=n(1);t.default=function(){return a.default.createElement("div",null,a.default.createElement("div",{className:"banner"},a.default.createElement("h1",null,"Curi"),a.default.createElement("p",null,"A single page application router for any JavaScript rendering library."),a.default.createElement(o.PrismBlock,{lang:"javascript"},"import Browser from '@hickory/browser';\nimport createConfig from '@curi/core';\n\n// create your history object\nconst history = Browser();\n\n// define your routes\nconst routes = [\n  { name: 'Home', path: '', ... },\n  { name: 'User', path: 'u/:userID', ... },\n  ...\n];\n\n// create your Curi configuration object\nconst config = createConfig(history, routes);\n\n// wait for the first response to be generated\nconfig.ready().then(response => {\n  // and now, you're ready to render\n});"),a.default.createElement("p",null,"Ready to learn more? Check out the"," ",a.default.createElement(i.Link,{to:"Guide",params:{slug:"getting-started"}},"getting started")," guide.")),a.default.createElement("div",{className:"features"},a.default.createElement("h2",null,"Features"),a.default.createElement("div",{className:"feature"},a.default.createElement("h3",null,"Easy React Integration"),a.default.createElement("p",null,"Curi is not just a React router, but React is currently the best supported rendering library for Curi."),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"Use the ",a.default.createElement(o.InlineJS,null,"body")," property of routes to specify each route's component:")),a.default.createElement(o.PrismBlock,{lang:"jsx"},"const Home = () => <div>Home</div>;\nconst User = props => <div>User {props.params.userID}</div>;\nconst NotFound = () => <div>Page not found...</div>;\n\nconst routes = [\n  { name: 'Home', path: '', body: () => Home },\n  { name: 'User', path: 'u/:userID', body: () => User },\n  { name: 'Not Found', path: '*', body: () => NotFound }\n];")),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,a.default.createElement(o.InlineComponent,null,"Link"),"s are used for navigating between locations within an application. URI formatting is handled for you, all you have to do is know the name (and parameters) of the route that you want to link to.")),a.default.createElement(o.PrismBlock,{lang:"jsx"},"import Link from '@curi/react-link';\n\nconst Nav = () => (\n  <div>\n    <Link to='Home'>Home</Link>\n    <Link to='User' params={{ userID: 4 }}>User Four</Link>\n  </div>\n);")),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"The ",a.default.createElement(o.InlineComponent,null,"Navigator")," is responsible for re-rendering the application every time the location changes, using the ",a.default.createElement(o.InlineJS,null,"render")," function.")),a.default.createElement(o.PrismBlock,{lang:"jsx"},"import Navigator from '@curi/react-navigator';\n\nReactDOM.render((\n  <Navigator config={config} render={(response) => {\n    const { body:Body } = response;\n    return (\n      <div>\n        <Nav />\n        <Body />\n      </div>\n    );\n  }}\n));")),a.default.createElement("p",null,"There are a number of other Curi + React components, but ",a.default.createElement(o.InlineComponent,null,"Navigator")," and"," ",a.default.createElement(o.InlineComponent,null,"Link")," are the only ones that you'll need to be familiar with while getting started.. You can see the others via the"," ",a.default.createElement(i.Link,{to:"Package",params:{package:"react"}},a.default.createElement(o.InlineJS,null,"@curi/react"))," page.")),a.default.createElement("div",{className:"feature"},a.default.createElement("h3",null,"Information Rich Response Objects"),a.default.createElement("p",null,"Whenever the location changes (and on initial load), Curi will generate a response object with data on the matching route. The properties of this object are what you can use to render your application. You can learn more about these in the"," ",a.default.createElement(i.Link,{to:"Guide",params:{slug:"responses"}},"rendering with responses")," guide."),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,'There isn\'t one "right" way to render using the response object, but it is useful for ',a.default.createElement(o.InlineJS,null,"body")," to be a function that will render the content for the route. (The body property of a response is the value returned by calling the body property of a route.)")),a.default.createElement(o.PrismBlock,{lang:"javascript"},"{\n  key: '123',\n  location: { pathname: '/u/456', ... },\n  status: 200,\n  name: 'User',\n  body: function() { return ... },\n  params: { userID: '456' },\n  ...\n}")),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"The ",a.default.createElement(o.InlineJS,null,"data")," property of the response can contain data that you load using a route's ",a.default.createElement(o.InlineJS,null,"load")," function. The response won't be be generated until after the data has fully loaded, so if you use this property, you don't have to render a bunch of loading spinners or empty content while waiting for the data to be loaded.")),a.default.createElement(o.PrismBlock,{lang:"javascript"},"{\n  ...,\n  data: {\n    username: 'curi',\n    id: '234235',\n    color: '#222233'\n  }\n}"))),a.default.createElement("div",{className:"feature"},a.default.createElement("h3",null,"Powerful Route Matching with ",a.default.createElement(o.InlineJS,null,"path-to-regexp")),a.default.createElement("p",null,"Curi uses ",a.default.createElement("a",{href:"https://github.com/pillarjs/path-to-regexp"},"path-to-regexp")," ","to define route paths. This allows you to define route parameters that will be parsed from the URI and added to the response object (when the route matches)."),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"In the accompanying example code, when the ",a.default.createElement(o.InlineJS,null,"User")," route matches, the response object's ",a.default.createElement(o.InlineJS,null,"params")," object will have an ",a.default.createElement(o.InlineJS,null,"id")," property whose value is parsed from the URI."),a.default.createElement("p",null,a.default.createElement(o.InlineJS,null,"path-to-regexp")," offers a number of matching options, which you can learn more about from its documentation.")),a.default.createElement(o.PrismBlock,{lang:"javascript"},"const routes = [\n  {\n    name: 'User',\n    // when the User route matches, the \"id\"\n    // value will be parsed from the pathname\n    // and placed in the \"params\" property of\n    // the response\n    path: 'u/:id'\n  }\n];"))),a.default.createElement("div",{className:"feature"},a.default.createElement("h3",null,"No Hassle Nested Routes"),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"For nested routes, you only have to define the additional URI segments. Those will automatically be joined with any ancestor routes for you. If any ancestor routes have path parameters, those will be included in the response's"," ",a.default.createElement(o.InlineJS,null,"params")," object.")),a.default.createElement(o.PrismBlock,{lang:"javascript"},"const routes = [\n  {\n    name: 'Album',\n    path: 'a/:albumID',\n    body: () => Album,\n    children: [\n      {\n        name: 'Song',\n        path: ':songID',\n        body: () => Song\n      }\n    ]\n  }\n]")),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"Given the above example routes, when a user visits the URI"," ",a.default.createElement(o.InlineJS,null,"/a/4815/162342"),", we will get the following response object. The"," ",a.default.createElement(o.InlineJS,null,"partials")," array contains the ancestor route ",a.default.createElement(o.InlineJS,null,'"Song"'),', which makes it easy to identify "active" ancestor routes.')),a.default.createElement(o.PrismBlock,{lang:"javascript"},"// pathname = '/a/4815/162342'\n{\n  body: Song,\n  params: { albumID: '4815', songID: '162342' },\n  name: 'Song',\n  partials: ['Album'],\n  ...\n}\n"))),a.default.createElement("div",{className:"feature"},a.default.createElement("h3",null,"Navigation Powered by ",a.default.createElement(o.InlineJS,null,"hickory")),a.default.createElement("p",null,"Curi integrates with the"," ",a.default.createElement("a",{href:"https://github.com/pshrmn/hickory"},a.default.createElement(o.InlineJS,null,"hickory"))," package to make navigation within your application very easy."),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"Choose between the ",a.default.createElement(o.InlineJS,null,"browser"),", ",a.default.createElement(o.InlineJS,null,"hash"),", and ",a.default.createElement(o.InlineJS,null,"in-memory")," ","history types (depending on your environment).")),a.default.createElement(o.PrismBlock,{lang:"javascript"},"import Browser from '@hickory/browser';\nimport Hash from '@hickory/hash';\nimport InMemory form '@hickory/in-memory';")),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"Navigate to new locations using ",a.default.createElement(o.InlineJS,null,"push"),", ",a.default.createElement(o.InlineJS,null,"replace"),", and"," ",a.default.createElement(o.InlineJS,null,"update")," (a combination of push and replace that duplicates how anchors work).")),a.default.createElement(o.PrismBlock,{lang:"javascript"},"const history = Browser();\nhistory.push({ pathname: '/login' });\nhistory.replace({ pathname: '/profile' });\nhistory.update({ pathname: '/album/934' });")),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"Of course, you never have to actually generate pathnames yourself. Instead, you should use Curi's built-in ",a.default.createElement(o.InlineJS,null,"pathname")," addon to create them for you."),a.default.createElement("p",null,"The ",a.default.createElement(o.InlineComponent,null,"Link"),"s from ",a.default.createElement(o.InlineJS,null,"@curi/react-link")," and"," ",a.default.createElement(o.InlineJS,null,"@curi/vue")," use the ",a.default.createElement(o.InlineJS,null,"pathname")," addon internally to generate the ",a.default.createElement(o.InlineJS,null,"href")," attribute of the anchor elements that they render.")),a.default.createElement(o.PrismBlock,{lang:"javascript"},"const routes = [\n  { name: 'Album', path: 'a/:albumID' }\n];\nconst config = createConfig(history, routes);\nconst pathname = config.addons.pathname(\n  'Album',\n  { albumID: '3490' }\n);"))),a.default.createElement("div",{className:"feature"},a.default.createElement("h3",null,"Simple Code Splitting"),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"Use the ",a.default.createElement(o.InlineJS,null,"preload")," and ",a.default.createElement(o.InlineJS,null,"body")," properties to add code splitting at your routes."),a.default.createElement("p",null,a.default.createElement("strong",null,"Note:")," This relies on a bundler like Webpack."),a.default.createElement("p",null,"You can learn more about this with the"," ",a.default.createElement(i.Link,{to:"Guide",params:{slug:"code-splitting"}},"code splitting")," guide.")),a.default.createElement(o.PrismBlock,{lang:"javascript"},"const store = {};\n\nconst routes = [\n  {\n    name: 'User',\n    path: 'users/:userID',\n    preload: () => import('./components/User')\n      .then(module => { store['User'] = module.default; }),\n    body: () => store['User']\n  }\n  ...,\n]"))),a.default.createElement("div",{className:"feature"},a.default.createElement("h3",null,"Straightforward Server Side Rendering"),a.default.createElement("div",{className:"code"},a.default.createElement("div",{className:"description"},a.default.createElement("p",null,"Server side rendering is pretty much the same as client side rendering. The main difference is that you will use an in-memory history instead of a browser history."),a.default.createElement("p",null,"Use ",a.default.createElement(o.InlineJS,null,"config.ready")," to wait for the response object to be created, then render using the response object that that resolves with.")),a.default.createElement(o.PrismBlock,{lang:"javascript"},"import InMemory from '@hickory/in-memory';\n\nfunction requestHandler(req, resp) {\n  // create a history using the requested location\n  const history = InMemory({ locations: [req.url] });\n  const config = createConfig(history, routes);\n\n  config.ready().then(response => {\n    // render the markup. This will vary based on your\n    // rendering library, but here we'll use React\n    const markup = renderToString(\n      <Navigator\n        config={config}\n        response={response}\n        render={render}\n      />\n    );\n\n    // insert the generated HTML into the full HTML of the\n    // page and send the response\n    res.send(fullPageHtml(markup));\n  });\n}")))))}},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(39);Object.defineProperty(t,"PrismCode",{enumerable:!0,get:function(){return r(a).default}}),Object.defineProperty(t,"default",{enumerable:!0,get:function(){return r(a).default}})},function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function a(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function o(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var i=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(0),l=function(e){return e&&e.__esModule?e:{default:e}}(u),c=n(9),s=function(e){function t(){var e,n,o,i;r(this,t);for(var u=arguments.length,l=Array(u),c=0;c<u;c++)l[c]=arguments[c];return n=o=a(this,(e=t.__proto__||Object.getPrototypeOf(t)).call.apply(e,[this].concat(l))),o._handleRefMount=function(e){o._domNode=e},i=n,a(o,i)}return o(t,e),i(t,[{key:"componentDidMount",value:function(){this._hightlight()}},{key:"componentDidUpdate",value:function(){this._hightlight()}},{key:"_hightlight",value:function(){Prism.highlightElement(this._domNode,this.props.async)}},{key:"render",value:function(){var e=this.props,t=e.className,n=e.component,r=e.children;return l.default.createElement(n,{ref:this._handleRefMount,className:t},r)}}]),t}(u.PureComponent);s.propTypes={async:c.PropTypes.bool,className:c.PropTypes.string,children:c.PropTypes.any,component:c.PropTypes.node},s.defaultProps={component:"code"},t.default=s},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),a=function(e){return e&&e.__esModule?e:{default:e}}(r),o=n(13),i=void 0;t.default={name:"Tutorial",path:"tutorial/:name",preload:function(){return n.e(2).then(n.bind(null,53)).then(function(e){i=e.default}).catch(function(e){console.error("Failed to load Tutorial component",e),i=a.default.createElement("div",null,"Sorry, something went wrong...")})},body:function(){return i},title:function(e){var t=e.name,n=o.byName[t];return n?"Tutorial "+n.displayName:"Tutorial Not Found"}}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),a=function(e){return e&&e.__esModule?e:{default:e}}(r),o=n(14),i=void 0;t.default={name:"Guide",path:"guides/:slug/",preload:function(){return n.e(3).then(n.bind(null,54)).then(function(e){i=e.default}).catch(function(e){console.error("Failed to load Guide component",e),i=a.default.createElement("div",null,"Sorry, something went wrong...")})},load:function(e,t,n){return o.byName[e.slug]&&n.setData(o.byName[e.slug]),Promise.resolve()},body:function(){return i},title:function(e,t){return(t?t.name:"Unknown")+" Guide"}}},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(43),o=r(a),i=n(45),u=r(i);t.default={name:"Packages",path:"packages",body:function(){return o.default},title:"Curi Packages",children:[u.default]}},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(0),o=r(a),i=n(1),u=n(15),l=r(u),c=n(12),s=n(6);t.default=function(){return o.default.createElement("div",null,o.default.createElement("h1",null,"Curi Packages"),o.default.createElement("p",null,"Curi is split into a number of different packages that you can pick and choose from in order to only use what you need. You will always need the"," ",o.default.createElement(i.Link,{to:"Package",params:{package:"core"}},"core")," package, but no other package is necessary."),o.default.createElement(c.Note,null,"All of the Curi packages are scoped under ",o.default.createElement(s.InlineJS,null,"@curi"),". For example, to install the ",o.default.createElement(s.InlineJS,null,"core"),", you would call ",o.default.createElement(s.InlineJS,null,"npm install @curi/core"),"."),o.default.createElement("div",null,o.default.createElement("h2",null,"List of Official Packages"),o.default.createElement(l.default,null)))}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default={"addon-active":"1.0.0-beta.5","addon-ancestors":"1.0.0-beta.5","addon-prefetch":"1.0.0-beta.5",core:"1.0.0-beta.13",react:"1.0.0-beta.10",redux:"1.0.0-alpha.2","side-effect-scroll":"1.0.0-beta.5","side-effect-title":"1.0.0-beta.5",svelte:"1.0.0-alpha.4",vue:"1.0.0-beta.7"}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),a=function(e){return e&&e.__esModule?e:{default:e}}(r),o=n(11),i=void 0;t.default={name:"Package",path:"@curi/:package/",preload:function(){return n.e(1).then(n.bind(null,55)).then(function(e){i=e.default}).catch(function(e){console.error("Failed to load Package component",e),i=a.default.createElement("div",null,"Sorry, something went wrong...")})},load:function(e,t,n){return o.byName[e.package]&&n.setData(o.byName[e.package]),Promise.resolve()},body:function(){return i},title:function(e){return"@curi/"+e.package}}},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(47),o=r(a),i=n(49),u=r(i);t.default={name:"Examples",path:"examples",body:function(){return o.default},title:"Examples",children:[u.default]}},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(0),o=r(a),i=(n(1),n(48)),u=r(i);t.default=function(){return o.default.createElement("div",null,o.default.createElement("h1",null,"Curi Examples"),o.default.createElement("p",null,"These are some Curi example projects that you can use for reference while building your own application. Most of these examples have CodeSandbox demos embedded with them, but some do not. Each example includes source code available through the Curi package ",o.default.createElement("a",{href:"https://github.com/pshrmn/curi/tree/master/examples"},"on GitHub"),"."),o.default.createElement(u.default,null),o.default.createElement("p",null,"You can see the source code for all of the examples on"," ",o.default.createElement("a",{href:"https://github.com/pshrmn/curi/tree/master/examples"},"GitHub"),"."))}},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(0),o=r(a),i=n(1),u=n(8),l=r(u),c=n(7),s=r(c);t.default=function(){return o.default.createElement("ul",{className:"tiles"},l.default.map(function(e){return o.default.createElement("li",{key:e.slug,className:"tile"},o.default.createElement(i.Link,{to:"Example",params:{slug:e.slug},active:{merge:s.default}},o.default.createElement("h2",null,e.name),o.default.createElement("p",{className:"description"},e.description)))}))}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),a=function(e){return e&&e.__esModule?e:{default:e}}(r),o=n(8),i=void 0;t.default={name:"Example",path:":slug/",preload:function(){return n.e(0).then(n.bind(null,56)).then(function(e){i=e.default}).catch(function(e){console.error("Failed to load Example component",e),i=a.default.createElement("div",null,"Sorry, something went wrong...")})},load:function(e,t,n){return o.byName[e.slug]&&n.setData(o.byName[e.slug]),Promise.resolve()},body:function(){return i},title:function(e,t){return(t?t.name:"Unknown")+" Example"}}},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function a(e,t,n){if(e&&e.body){var r=e.body,a=e.params,o=e.data;return i.default.createElement("div",null,i.default.createElement(l.default,null),i.default.createElement("main",null,i.default.createElement(r,{params:a,data:o})))}return null}Object.defineProperty(t,"__esModule",{value:!0}),t.default=a;var o=n(0),i=r(o),u=n(51),l=r(u)},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var a=n(0),o=r(a),i=n(52),u=r(i);t.default=function(){return o.default.createElement("header",null,o.default.createElement(u.default,null))}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),a=function(e){return e&&e.__esModule?e:{default:e}}(r),o=n(1);t.default=function(){return a.default.createElement("nav",null,a.default.createElement("ul",null,a.default.createElement("li",null,a.default.createElement(o.Link,{to:"Home",className:"home-link"},"Curi")),a.default.createElement("li",null,a.default.createElement(o.Link,{to:"Packages"},"Packages")),a.default.createElement("li",null,a.default.createElement(o.Link,{to:"Tutorial",params:{name:"01-introduction"}},"Tutorial")),a.default.createElement("li",null,a.default.createElement(o.Link,{to:"Guide",params:{slug:"getting-started"}},"Guides")),a.default.createElement("li",null,a.default.createElement(o.Link,{to:"Examples"},"Examples")),a.default.createElement("li",null,a.default.createElement("a",{href:"https://github.com/pshrmn/curi"},"GitHub"))))}}]);
+
+
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (process.env.NODE_ENV !== 'production') {
+  var invariant = __webpack_require__(4);
+  var warning = __webpack_require__(7);
+  var ReactPropTypesSecret = __webpack_require__(5);
+  var loggedTypeFailures = {};
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (process.env.NODE_ENV !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+        }
+      }
+    }
+  }
+}
+
+module.exports = checkPropTypes;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var emptyFunction = __webpack_require__(3);
+var invariant = __webpack_require__(4);
+var ReactPropTypesSecret = __webpack_require__(5);
+
+module.exports = function() {
+  function shim(props, propName, componentName, location, propFullName, secret) {
+    if (secret === ReactPropTypesSecret) {
+      // It is still safe when called from React.
+      return;
+    }
+    invariant(
+      false,
+      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
+    );
+  };
+  shim.isRequired = shim;
+  function getShim() {
+    return shim;
+  };
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+  var ReactPropTypes = {
+    array: shim,
+    bool: shim,
+    func: shim,
+    number: shim,
+    object: shim,
+    string: shim,
+    symbol: shim,
+
+    any: shim,
+    arrayOf: getShim,
+    element: shim,
+    instanceOf: getShim,
+    node: shim,
+    objectOf: getShim,
+    oneOf: getShim,
+    oneOfType: getShim,
+    shape: getShim,
+    exact: getShim
+  };
+
+  ReactPropTypes.checkPropTypes = emptyFunction;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (process.env.NODE_ENV !== 'production') {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  }
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
+
+var REACT_STATICS = {
+    childContextTypes: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+};
+
+var KNOWN_STATICS = {
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
+};
+
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
+
+module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols) {
+            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+        }
+
+        for (var i = 0; i < keys.length; ++i) {
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try { // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
+            }
+        }
+
+        return targetComponent;
+    }
+
+    return targetComponent;
+};
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function createTitleSideEffect(options) {
+    var _a = options || {}, _b = _a.prefix, prefix = _b === void 0 ? '' : _b, _c = _a.suffix, suffix = _c === void 0 ? '' : _c;
+    return function (response) {
+        document.title = [prefix, response.title, suffix].join(' ');
+    };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (createTitleSideEffect);
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function createScrollSideEffect() {
+    return function (response, action) {
+        if (action === 'POP') {
+            return;
+        }
+        // we want to wait to scroll until after the re-render,
+        // so we use setTimeout to push this onto the event loop
+        setTimeout(function () {
+            var hash = response.location.hash;
+            if (hash !== '') {
+                var element = document.getElementById(hash);
+                if (element && element.scrollIntoView) {
+                    element.scrollIntoView();
+                    return;
+                }
+            }
+            // if there is no hash, no element matching the hash,
+            // or the browser doesn't support, we will just scroll
+            // to the top of the page
+            window.scrollTo(0, 0);
+        }, 0);
+    };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (createScrollSideEffect);
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function acceptableRouteName(name, response, partial) {
+    return name === response.name || !!(partial && response.partials.some(function (n) { return name === n; }));
+}
+function createActiveAddon() {
+    var routeParams = {};
+    return {
+        name: 'active',
+        register: function (route, parentKeys) {
+            var name = route.name, keys = route.keys;
+            if (keys == null) {
+                keys = [];
+            }
+            var fullKeys = Array.isArray(parentKeys)
+                ? parentKeys.concat(keys) : keys;
+            if (routeParams[name] !== undefined) {
+                console.warn('A route function with the name "' +
+                    name +
+                    '" already exists. Each route should' +
+                    'have a unique name. By registering a route function with a name that already exists, ' +
+                    'you are overwriting the existing one. This may break your application.');
+            }
+            routeParams[name] = fullKeys;
+            return fullKeys;
+        },
+        get: function (name, response, params, partial) {
+            if (routeParams[name] == null || !acceptableRouteName(name, response, partial)) {
+                return false;
+            }
+            var routeKeysToCheck = routeParams[name];
+            for (var r = 0, length = routeKeysToCheck.length; r < length; r++) {
+                var key = routeKeysToCheck[r];
+                var param = params[key];
+                if (!param || param !== response.params[key]) {
+                    return false;
+                }
+            }
+            return true;
+        },
+        reset: function () {
+            routeParams = {};
+        }
+    };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (createActiveAddon);
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Home = __webpack_require__(28);
+
+var _Home2 = _interopRequireDefault(_Home);
+
+var _PackageList = __webpack_require__(42);
+
+var _PackageList2 = _interopRequireDefault(_PackageList);
+
+var _ExampleList = __webpack_require__(46);
+
+var _ExampleList2 = _interopRequireDefault(_ExampleList);
+
+var _tutorials = __webpack_require__(48);
+
+var _guides = __webpack_require__(49);
+
+var _packages = __webpack_require__(39);
+
+var _examples = __webpack_require__(41);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var loadedModules = {};
+
+// components that are not code split
+exports.default = [{
+  name: 'Home',
+  path: '',
+  body: function body() {
+    return _Home2.default;
+  },
+  title: 'Curi'
+}, {
+  name: 'Tutorial',
+  path: 'tutorial/:name',
+  preload: function preload() {
+    return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 50)).then(function (module) {
+      loadedModules["Tutorial"] = module.default;
+    }).catch(function (err) {
+      console.error('Failed to load Tutorial component', err);
+      loadedModules["Tutorial"] = _react2.default.createElement(
+        'div',
+        null,
+        'Sorry, something went wrong...'
+      );
+    });
+  },
+  body: function body() {
+    return loadedModules["Tutorial"];
+  },
+  title: function title(_ref) {
+    var name = _ref.name;
+
+    var data = _tutorials.byName[name];
+    return !data ? 'Tutorial Not Found' : 'Tutorial ' + data.displayName;
+  }
+}, {
+  name: 'Guide',
+  path: 'guides/:slug/',
+  preload: function preload() {
+    return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, 51)).then(function (module) {
+      loadedModules["Guide"] = module.default;
+    }).catch(function (err) {
+      console.error('Failed to load Guide component', err);
+      loadedModules["Guide"] = _react2.default.createElement(
+        'div',
+        null,
+        'Sorry, something went wrong...'
+      );
+    });
+  },
+  load: function load(_ref2, mods) {
+    var params = _ref2.params;
+
+    if (_guides.byName[params.slug]) {
+      mods.setData(_guides.byName[params.slug]);
+    }
+    return Promise.resolve();
+  },
+  body: function body() {
+    return loadedModules["Guide"];
+  },
+  title: function title(params, data) {
+    return (data ? data.name : 'Unknown') + ' Guide';
+  }
+}, {
+  name: 'Packages',
+  path: 'packages',
+  body: function body() {
+    return _PackageList2.default;
+  },
+  title: 'Curi Packages',
+  children: [{
+    name: 'Package',
+    path: '@curi/:package/',
+    preload: function preload() {
+      return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 52)).then(function (module) {
+        loadedModules["Package"] = module.default;
+      }).catch(function (err) {
+        console.error('Failed to load Package component', err);
+        loadedModules["Package"] = _react2.default.createElement(
+          'div',
+          null,
+          'Sorry, something went wrong...'
+        );
+      });
+    },
+    load: function load(_ref3, mods) {
+      var params = _ref3.params;
+
+      if (_packages.byName[params.package]) {
+        mods.setData(_packages.byName[params.package]);
+      }
+      return Promise.resolve();
+    },
+    body: function body() {
+      return loadedModules["Package"];
+    },
+    title: function title(params) {
+      return '@curi/' + params.package;
+    }
+  }]
+}, {
+  name: 'Examples',
+  path: 'examples',
+  body: function body() {
+    return _ExampleList2.default;
+  },
+  title: 'Examples',
+  children: [{
+    name: 'Example',
+    path: ':slug/',
+    preload: function preload() {
+      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 53)).then(function (module) {
+        loadedModules["Example"] = module.default;
+      }).catch(function (err) {
+        console.error('Failed to load Example component', err);
+        loadedModules["Example"] = _react2.default.createElement(
+          'div',
+          null,
+          'Sorry, something went wrong...'
+        );
+      });
+    },
+    load: function load(_ref4, mods) {
+      var params = _ref4.params;
+
+      if (_examples.byName[params.slug]) {
+        mods.setData(_examples.byName[params.slug]);
+      }
+      return Promise.resolve();
+    },
+    body: function body() {
+      return loadedModules["Example"];
+    },
+    title: function title(params, data) {
+      return (data ? data.name : 'Unknown') + ' Example';
+    }
+  }]
+}];
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _PrismBlocks = __webpack_require__(29);
+
+var _react3 = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'div',
+      { className: 'banner' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        'Curi'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'A single page application router for any JavaScript rendering library.'
+      ),
+      _react2.default.createElement(
+        _PrismBlocks.PrismBlock,
+        {
+          lang: 'javascript'
+        },
+        'import Browser from \'@hickory/browser\';\nimport createConfig from \'@curi/core\';\n\n// create your history object\nconst history = Browser();\n\n// define your routes\nconst routes = [\n  { name: \'Home\', path: \'\', ... },\n  { name: \'User\', path: \'u/:userID\', ... },\n  ...\n];\n\n// create your Curi configuration object\nconst config = createConfig(history, routes);\n\n// wait for the first response to be generated\nconfig.ready().then(response => {\n  // and now, you\'re ready to render\n});'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Ready to learn more? Check out the',
+        ' ',
+        _react2.default.createElement(
+          _react3.Link,
+          { to: 'Guide', params: { slug: 'getting-started' } },
+          'getting started'
+        ),
+        ' guide.'
+      )
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'features' },
+      _react2.default.createElement(
+        'h2',
+        null,
+        'Features'
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'feature' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Easy React Integration'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Curi is not just a React router, but React is currently the best supported rendering library for Curi.'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Use the ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'body'
+              ),
+              ' property of routes to specify each route\'s component:'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'jsx' },
+            'const Home = () => <div>Home</div>;\nconst User = props => <div>User {props.params.userID}</div>;\nconst NotFound = () => <div>Page not found...</div>;\n\nconst routes = [\n  { name: \'Home\', path: \'\', body: () => Home },\n  { name: \'User\', path: \'u/:userID\', body: () => User },\n  { name: \'Not Found\', path: \'*\', body: () => NotFound }\n];'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              _react2.default.createElement(
+                _PrismBlocks.InlineComponent,
+                null,
+                'Link'
+              ),
+              's are used for navigating between locations within an application. URI formatting is handled for you, all you have to do is know the name (and parameters) of the route that you want to link to.'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'jsx' },
+            'import Link from \'@curi/react-link\';\n\nconst Nav = () => (\n  <div>\n    <Link to=\'Home\'>Home</Link>\n    <Link to=\'User\' params={{ userID: 4 }}>User Four</Link>\n  </div>\n);'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'The ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineComponent,
+                null,
+                'Navigator'
+              ),
+              ' is responsible for re-rendering the application every time the location changes, using the ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'render'
+              ),
+              ' function.'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'jsx' },
+            'import Navigator from \'@curi/react-navigator\';\n\nReactDOM.render((\n  <Navigator config={config} render={(response) => {\n    const { body:Body } = response;\n    return (\n      <div>\n        <Nav />\n        <Body />\n      </div>\n    );\n  }}\n));'
+          )
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'There are a number of other Curi + React components, but ',
+          _react2.default.createElement(
+            _PrismBlocks.InlineComponent,
+            null,
+            'Navigator'
+          ),
+          ' and',
+          ' ',
+          _react2.default.createElement(
+            _PrismBlocks.InlineComponent,
+            null,
+            'Link'
+          ),
+          ' are the only ones that you\'ll need to be familiar with while getting started.. You can see the others via the',
+          ' ',
+          _react2.default.createElement(
+            _react3.Link,
+            { to: 'Package', params: { package: 'react' } },
+            _react2.default.createElement(
+              _PrismBlocks.InlineJS,
+              null,
+              '@curi/react'
+            )
+          ),
+          ' page.'
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'feature' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Information Rich Response Objects'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Whenever the location changes (and on initial load), Curi will generate a response object with data on the matching route. The properties of this object are what you can use to render your application. You can learn more about these in the',
+          ' ',
+          _react2.default.createElement(
+            _react3.Link,
+            { to: 'Guide', params: { slug: 'responses' } },
+            'rendering with responses'
+          ),
+          ' guide.'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'There isn\'t one "right" way to render using the response object, but it is useful for ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'body'
+              ),
+              ' to be a function that will render the content for the route. (The body property of a response is the value returned by calling the body property of a route.)'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            '{\n  key: \'123\',\n  location: { pathname: \'/u/456\', ... },\n  status: 200,\n  name: \'User\',\n  body: function() { return ... },\n  params: { userID: \'456\' },\n  ...\n}'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'The ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'data'
+              ),
+              ' property of the response can contain data that you load using a route\'s ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'load'
+              ),
+              ' function. The response won\'t be be generated until after the data has fully loaded, so if you use this property, you don\'t have to render a bunch of loading spinners or empty content while waiting for the data to be loaded.'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            '{\n  ...,\n  data: {\n    username: \'curi\',\n    id: \'234235\',\n    color: \'#222233\'\n  }\n}'
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'feature' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Powerful Route Matching with ',
+          _react2.default.createElement(
+            _PrismBlocks.InlineJS,
+            null,
+            'path-to-regexp'
+          )
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Curi uses ',
+          _react2.default.createElement(
+            'a',
+            { href: 'https://github.com/pillarjs/path-to-regexp' },
+            'path-to-regexp'
+          ),
+          ' ',
+          'to define route paths. This allows you to define route parameters that will be parsed from the URI and added to the response object (when the route matches).'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'In the accompanying example code, when the ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'User'
+              ),
+              ' route matches, the response object\'s ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'params'
+              ),
+              ' object will have an ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'id'
+              ),
+              ' property whose value is parsed from the URI.'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'path-to-regexp'
+              ),
+              ' offers a number of matching options, which you can learn more about from its documentation.'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            'const routes = [\n  {\n    name: \'User\',\n    // when the User route matches, the "id"\n    // value will be parsed from the pathname\n    // and placed in the "params" property of\n    // the response\n    path: \'u/:id\'\n  }\n];'
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'feature' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'No Hassle Nested Routes'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'For nested routes, you only have to define the additional URI segments. Those will automatically be joined with any ancestor routes for you. If any ancestor routes have path parameters, those will be included in the response\'s',
+              ' ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'params'
+              ),
+              ' object.'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            'const routes = [\n  {\n    name: \'Album\',\n    path: \'a/:albumID\',\n    body: () => Album,\n    children: [\n      {\n        name: \'Song\',\n        path: \':songID\',\n        body: () => Song\n      }\n    ]\n  }\n]'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Given the above example routes, when a user visits the URI',
+              ' ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                '/a/4815/162342'
+              ),
+              ', we will get the following response object. The',
+              ' ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'partials'
+              ),
+              ' array contains the ancestor route ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                '"Song"'
+              ),
+              ', which makes it easy to identify "active" ancestor routes.'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            '// pathname = \'/a/4815/162342\'\n{\n  body: Song,\n  params: { albumID: \'4815\', songID: \'162342\' },\n  name: \'Song\',\n  partials: [\'Album\'],\n  ...\n}\n'
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'feature' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Navigation Powered by ',
+          _react2.default.createElement(
+            _PrismBlocks.InlineJS,
+            null,
+            'hickory'
+          )
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Curi integrates with the',
+          ' ',
+          _react2.default.createElement(
+            'a',
+            { href: 'https://github.com/pshrmn/hickory' },
+            _react2.default.createElement(
+              _PrismBlocks.InlineJS,
+              null,
+              'hickory'
+            )
+          ),
+          ' package to make navigation within your application very easy.'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Choose between the ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'browser'
+              ),
+              ', ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'hash'
+              ),
+              ', and ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'in-memory'
+              ),
+              ' ',
+              'history types (depending on your environment).'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            'import Browser from \'@hickory/browser\';\nimport Hash from \'@hickory/hash\';\nimport InMemory form \'@hickory/in-memory\';'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Navigate to new locations using ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'push'
+              ),
+              ', ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'replace'
+              ),
+              ', and',
+              ' ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'update'
+              ),
+              ' (a combination of push and replace that duplicates how anchors work).'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            'const history = Browser();\nhistory.push({ pathname: \'/login\' });\nhistory.replace({ pathname: \'/profile\' });\nhistory.update({ pathname: \'/album/934\' });'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Of course, you never have to actually generate pathnames yourself. Instead, you should use Curi\'s built-in ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'pathname'
+              ),
+              ' addon to create them for you.'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'The ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineComponent,
+                null,
+                'Link'
+              ),
+              's from ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                '@curi/react-link'
+              ),
+              ' and',
+              ' ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                '@curi/vue'
+              ),
+              ' use the ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'pathname'
+              ),
+              ' addon internally to generate the ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'href'
+              ),
+              ' attribute of the anchor elements that they render.'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            'const routes = [\n  { name: \'Album\', path: \'a/:albumID\' }\n];\nconst config = createConfig(history, routes);\nconst pathname = config.addons.pathname(\n  \'Album\',\n  { albumID: \'3490\' }\n);'
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'feature' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Simple Code Splitting'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Use the ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'preload'
+              ),
+              ' and ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'body'
+              ),
+              ' properties to add code splitting at your routes.'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Note:'
+              ),
+              ' This relies on a bundler like Webpack.'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'You can learn more about this with the',
+              ' ',
+              _react2.default.createElement(
+                _react3.Link,
+                { to: 'Guide', params: { slug: 'code-splitting' } },
+                'code splitting'
+              ),
+              ' guide.'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            'const store = {};\n\nconst routes = [\n  {\n    name: \'User\',\n    path: \'users/:userID\',\n    preload: () => import(\'./components/User\')\n      .then(module => { store[\'User\'] = module.default; }),\n    body: () => store[\'User\']\n  }\n  ...,\n]'
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'feature' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Straightforward Server Side Rendering'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'code' },
+          _react2.default.createElement(
+            'div',
+            { className: 'description' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Server side rendering is pretty much the same as client side rendering. The main difference is that you will use an in-memory history instead of a browser history.'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Use ',
+              _react2.default.createElement(
+                _PrismBlocks.InlineJS,
+                null,
+                'config.ready'
+              ),
+              ' to wait for the response object to be created, then render using the response object that that resolves with.'
+            )
+          ),
+          _react2.default.createElement(
+            _PrismBlocks.PrismBlock,
+            { lang: 'javascript' },
+            'import InMemory from \'@hickory/in-memory\';\n\nfunction requestHandler(req, resp) {\n  // create a history using the requested location\n  const history = InMemory({ locations: [req.url] });\n  const config = createConfig(history, routes);\n\n  config.ready().then(response => {\n    // render the markup. This will vary based on your\n    // rendering library, but here we\'ll use React\n    const markup = renderToString(\n      <Navigator\n        config={config}\n        response={response}\n        render={render}\n      />\n    );\n\n    // insert the generated HTML into the full HTML of the\n    // page and send the response\n    res.send(fullPageHtml(markup));\n  });\n}'
+          )
+        )
+      )
+    )
+  );
+};
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PrismBlock = exports.InlineComponent = exports.InlineJS = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactPrism = __webpack_require__(30);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var InlineJS = exports.InlineJS = function InlineJS(_ref) {
+  var children = _ref.children;
+  return _react2.default.createElement(
+    _reactPrism.PrismCode,
+    { className: 'language-javascript' },
+    children
+  );
+};
+
+var InlineComponent = exports.InlineComponent = function InlineComponent(_ref2) {
+  var children = _ref2.children;
+  return _react2.default.createElement(
+    _reactPrism.PrismCode,
+    { className: 'language-jsx' },
+    '<',
+    children,
+    '>'
+  );
+};
+
+var PrismBlock = exports.PrismBlock = function PrismBlock(_ref3) {
+  var lang = _ref3.lang,
+      children = _ref3.children;
+  return _react2.default.createElement(
+    _reactPrism.PrismCode,
+    {
+      className: 'language-' + lang,
+      component: 'pre'
+    },
+    children
+  );
+};
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _PrismCode = __webpack_require__(31);
+
+Object.defineProperty(exports, "PrismCode", {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_PrismCode).default;
+  }
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_PrismCode).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true,
+})
+
+var _createClass = (function() {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i]
+      descriptor.enumerable = descriptor.enumerable || false
+      descriptor.configurable = true
+      if ("value" in descriptor) descriptor.writable = true
+      Object.defineProperty(target, descriptor.key, descriptor)
+    }
+  }
+  return function(Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps)
+    if (staticProps) defineProperties(Constructor, staticProps)
+    return Constructor
+  }
+})()
+
+var _react = __webpack_require__(0)
+
+var _react2 = _interopRequireDefault(_react)
+
+var _propTypes = __webpack_require__(6)
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj }
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function")
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError(
+      "this hasn't been initialised - super() hasn't been called"
+    )
+  }
+  return call && (typeof call === "object" || typeof call === "function")
+    ? call
+    : self
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError(
+      "Super expression must either be null or a function, not " +
+        typeof superClass
+    )
+  }
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true,
+    },
+  })
+  if (superClass)
+    Object.setPrototypeOf
+      ? Object.setPrototypeOf(subClass, superClass)
+      : (subClass.__proto__ = superClass)
+} /* global Prism */
+
+var PrismCode = (function(_PureComponent) {
+  _inherits(PrismCode, _PureComponent)
+
+  function PrismCode() {
+    var _ref
+
+    var _temp, _this, _ret
+
+    _classCallCheck(this, PrismCode)
+
+    for (
+      var _len = arguments.length, args = Array(_len), _key = 0;
+      _key < _len;
+      _key++
+    ) {
+      args[_key] = arguments[_key]
+    }
+
+    return (
+      (_ret = ((_temp = ((_this = _possibleConstructorReturn(
+        this,
+        (_ref =
+          PrismCode.__proto__ || Object.getPrototypeOf(PrismCode)).call.apply(
+          _ref,
+          [this].concat(args)
+        )
+      )),
+      _this)),
+      (_this._handleRefMount = function(domNode) {
+        _this._domNode = domNode
+      }),
+      _temp)),
+      _possibleConstructorReturn(_this, _ret)
+    )
+  }
+
+  _createClass(PrismCode, [
+    {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this._hightlight()
+      },
+    },
+    {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate() {
+        this._hightlight()
+      },
+    },
+    {
+      key: "_hightlight",
+      value: function _hightlight() {
+        Prism.highlightElement(this._domNode, this.props.async)
+      },
+    },
+    {
+      key: "render",
+      value: function render() {
+        var _props = this.props,
+          className = _props.className,
+          Wrapper = _props.component,
+          children = _props.children
+
+        return _react2.default.createElement(
+          Wrapper,
+          { ref: this._handleRefMount, className: className },
+          children
+        )
+      },
+    },
+  ])
+
+  return PrismCode
+})(_react.PureComponent)
+
+PrismCode.propTypes = {
+  async: _propTypes.PropTypes.bool,
+  className: _propTypes.PropTypes.string,
+  children: _propTypes.PropTypes.any,
+  component: _propTypes.PropTypes.node,
+}
+PrismCode.defaultProps = {
+  component: "code",
+}
+exports.default = PrismCode
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = render;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Header = __webpack_require__(33);
+
+var _Header2 = _interopRequireDefault(_Header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function render(response, action, config) {
+  if (!response || !response.body) {
+    return null;
+  } else {
+    var Body = response.body,
+        params = response.params,
+        data = response.data;
+
+    return _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(_Header2.default, null),
+      _react2.default.createElement(
+        'main',
+        null,
+        _react2.default.createElement(Body, { params: params, data: data })
+      )
+    );
+  }
+};
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Nav = __webpack_require__(34);
+
+var _Nav2 = _interopRequireDefault(_Nav);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'header',
+    null,
+    _react2.default.createElement(_Nav2.default, null)
+  );
+};
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react3 = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'nav',
+    null,
+    _react2.default.createElement(
+      'ul',
+      null,
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _react3.Link,
+          { to: 'Home', className: 'home-link' },
+          'Curi'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _react3.Link,
+          { to: 'Packages' },
+          'Packages'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _react3.Link,
+          { to: 'Tutorial', params: { name: '01-introduction' } },
+          'Tutorial'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _react3.Link,
+          { to: 'Guide', params: { slug: 'getting-started' } },
+          'Guides'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _react3.Link,
+          { to: 'Examples' },
+          'Examples'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          'a',
+          { href: 'https://github.com/pshrmn/curi' },
+          'GitHub'
+        )
+      )
+    )
+  );
+};
+
+/***/ }),
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.byName = exports.groupedPackages = undefined;
+
+var _versions = __webpack_require__(44);
+
+var _versions2 = _interopRequireDefault(_versions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var packages = [{
+  name: 'core',
+  version: _versions2.default['core'],
+  globalName: 'Curi',
+  type: 'core'
+}, {
+  name: 'addon-active',
+  version: _versions2.default['addon-active'],
+  globalName: 'CuriAddonActive',
+  type: 'addon'
+}, {
+  name: 'addon-ancestors',
+  version: _versions2.default['addon-ancestors'],
+  globalName: 'CuriAddonAncestors',
+  type: 'addon'
+}, {
+  name: 'addon-prefetch',
+  version: _versions2.default['addon-prefetch'],
+  globalName: 'CuriAddonPrefetch',
+  type: 'addon'
+}, {
+  name: 'side-effect-title',
+  version: _versions2.default['side-effect-title'],
+  globalName: 'CuriSideEffectTitle',
+  type: 'side-effect'
+}, {
+  name: 'side-effect-scroll',
+  version: _versions2.default['side-effect-scroll'],
+  globalName: 'CuriSideEffectScroll',
+  type: 'side-effect'
+}, {
+  name: 'react',
+  version: _versions2.default['react'],
+  globalName: 'CuriReact',
+  type: 'renderer'
+}, {
+  name: 'redux',
+  version: _versions2.default['redux'],
+  globalName: 'CuriRedux',
+  type: 'redux'
+}, {
+  name: 'svelte',
+  version: _versions2.default['svelte'],
+  globalName: 'CuriSvelte',
+  type: 'renderer'
+}, {
+  name: 'vue',
+  version: _versions2.default['vue'],
+  globalName: 'CuriVue',
+  type: 'renderer'
+}];
+
+var groupedPackages = exports.groupedPackages = packages.reduce(function (acc, curr) {
+  if (!acc[curr.type]) {
+    acc[curr.type] = [curr];
+  } else {
+    acc[curr.type].push(curr);
+  }
+  return acc;
+}, {});
+
+var byName = exports.byName = packages.reduce(function (acc, curr) {
+  acc[curr.name] = curr;
+  return acc;
+}, {});
+
+exports.default = packages;
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (props) {
+  props.className = 'active';
+  return props;
+};
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var examples = [{
+  name: 'Active Links',
+  slug: 'active-links',
+  description: 'Style links when they match the current location'
+}, {
+  name: 'Authentication',
+  slug: 'authentication',
+  description: 'Automatically redirect to a login page when attempting to access private content'
+}, {
+  name: 'Basic Vue',
+  slug: 'basic-vue',
+  description: 'A simple Curi app rendered using VueJS'
+}, {
+  name: 'Basic Svelte',
+  slug: 'basic-svelte',
+  description: 'A simple Curi app rendered using Svelte'
+}, {
+  name: 'Blocking Navigation (React)',
+  slug: 'blocking-navigation',
+  description: 'Prevent navigation away from a half-filled form'
+}, {
+  name: 'Blocking Navigation (Vue)',
+  slug: 'blocking-navigation-vue',
+  description: 'Prevent navigation away from a half-filled form'
+}, {
+  name: 'Breadcrumbs (React)',
+  slug: 'breadcrumbs',
+  description: 'Render breadcrumb links to ancestor routes'
+}, {
+  name: 'Breadcrumbs (Vue)',
+  slug: 'breadcrumbs-vue',
+  description: 'Render breadcrumb links to ancestor routes'
+}, {
+  name: 'Code Splitting',
+  slug: 'code-splitting',
+  description: 'Use import() to enable Webpack code splitting'
+}, {
+  name: 'Data Loading',
+  slug: 'data-loading',
+  description: 'Display a loading bar while waiting for data to load'
+}, {
+  name: 'Modal Routes',
+  slug: 'modal',
+  description: 'Load a route in a modal (the Pinterest model)'
+}, {
+  name: 'Redux',
+  slug: 'redux',
+  description: 'Integrate Redux, React, and Curi (easily!)'
+}, {
+  name: 'Script Tags',
+  slug: 'script-tags',
+  description: 'Load Curi packages using script tags instead of a bundle'
+}, {
+  name: 'Server Rendering',
+  slug: 'server-rendering',
+  description: 'Render your application on the server using Node (this example uses Express)'
+}, {
+  name: 'Side Effects',
+  slug: 'side-effect',
+  description: 'Add side effects that always respond to navigation'
+}, {
+  name: 'Transitions',
+  slug: 'transitions',
+  description: 'Transition between routes using react-transition-group'
+}];
+
+var byName = exports.byName = examples.reduce(function (acc, curr) {
+  acc[curr.slug] = curr;
+  return acc;
+}, {});
+
+exports.default = examples;
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react3 = __webpack_require__(2);
+
+var _PackageLinks = __webpack_require__(43);
+
+var _PackageLinks2 = _interopRequireDefault(_PackageLinks);
+
+var _Messages = __webpack_require__(45);
+
+var _PrismBlocks = __webpack_require__(29);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h1',
+      null,
+      'Curi Packages'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'Curi is split into a number of different packages that you can pick and choose from in order to only use what you need. You will always need the',
+      ' ',
+      _react2.default.createElement(
+        _react3.Link,
+        { to: 'Package', params: { package: 'core' } },
+        'core'
+      ),
+      ' package, but no other package is necessary.'
+    ),
+    _react2.default.createElement(
+      _Messages.Note,
+      null,
+      'All of the Curi packages are scoped under ',
+      _react2.default.createElement(
+        _PrismBlocks.InlineJS,
+        null,
+        '@curi'
+      ),
+      '. For example, to install the ',
+      _react2.default.createElement(
+        _PrismBlocks.InlineJS,
+        null,
+        'core'
+      ),
+      ', you would call ',
+      _react2.default.createElement(
+        _PrismBlocks.InlineJS,
+        null,
+        'npm install @curi/core'
+      ),
+      '.'
+    ),
+    _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'h2',
+        null,
+        'List of Official Packages'
+      ),
+      _react2.default.createElement(_PackageLinks2.default, null)
+    )
+  );
+};
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react3 = __webpack_require__(2);
+
+var _packages = __webpack_require__(39);
+
+var _styleActive = __webpack_require__(40);
+
+var _styleActive2 = _interopRequireDefault(_styleActive);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var GroupPackages = function GroupPackages(_ref) {
+  var packages = _ref.packages,
+      withDescription = _ref.withDescription;
+  return _react2.default.createElement(
+    'ul',
+    { className: 'link-list' },
+    packages.map(function (p) {
+      return _react2.default.createElement(
+        'li',
+        { key: p.name, className: withDescription ? 'with' : 'solo' },
+        _react2.default.createElement(
+          _react3.Link,
+          {
+            to: 'Package',
+            params: { package: p.name },
+            active: { merge: _styleActive2.default }
+          },
+          p.name
+        )
+      );
+    })
+  );
+};
+
+exports.default = function (_ref2) {
+  var _ref2$withDescription = _ref2.withDescription,
+      withDescription = _ref2$withDescription === undefined ? false : _ref2$withDescription;
+  return _react2.default.createElement(
+    'ul',
+    null,
+    Object.keys(_packages.groupedPackages).map(function (name) {
+      return _react2.default.createElement(
+        'li',
+        { className: 'link-group', key: name },
+        _react2.default.createElement(
+          'h3',
+          null,
+          name
+        ),
+        _react2.default.createElement(GroupPackages, {
+          packages: _packages.groupedPackages[name],
+          withDescription: withDescription
+        })
+      );
+    })
+  );
+};
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// this file is automatically generated using scripts/updatePackageVersions.js
+exports.default = {
+  "addon-active": "1.0.0-beta.5",
+  "addon-ancestors": "1.0.0-beta.5",
+  "addon-prefetch": "1.0.0-beta.5",
+  "core": "1.0.0-beta.14",
+  "react": "1.0.0-beta.11",
+  "redux": "1.0.0-alpha.3",
+  "side-effect-scroll": "1.0.0-beta.5",
+  "side-effect-title": "1.0.0-beta.5",
+  "svelte": "1.0.0-alpha.4",
+  "vue": "1.0.0-beta.7"
+};
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Warning = exports.Note = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Note = exports.Note = function Note(_ref) {
+  var children = _ref.children;
+  return _react2.default.createElement(
+    'div',
+    { className: 'note' },
+    _react2.default.createElement(
+      'strong',
+      null,
+      'Note:'
+    ),
+    ' ',
+    children
+  );
+};
+
+var Warning = exports.Warning = function Warning(_ref2) {
+  var children = _ref2.children;
+  return _react2.default.createElement(
+    'div',
+    { className: 'warning' },
+    _react2.default.createElement(
+      'strong',
+      null,
+      'Warning:'
+    ),
+    ' ',
+    children
+  );
+};
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react3 = __webpack_require__(2);
+
+var _ExampleTiles = __webpack_require__(47);
+
+var _ExampleTiles2 = _interopRequireDefault(_ExampleTiles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h1',
+      null,
+      'Curi Examples'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'These are some Curi example projects that you can use for reference while building your own application. Most of these examples have CodeSandbox demos embedded with them, but some do not. Each example includes source code available through the Curi package ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://github.com/pshrmn/curi/tree/master/examples' },
+        'on GitHub'
+      ),
+      '.'
+    ),
+    _react2.default.createElement(_ExampleTiles2.default, null),
+    _react2.default.createElement(
+      'p',
+      null,
+      'You can see the source code for all of the examples on',
+      ' ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://github.com/pshrmn/curi/tree/master/examples' },
+        'GitHub'
+      ),
+      '.'
+    )
+  );
+};
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react3 = __webpack_require__(2);
+
+var _examples = __webpack_require__(41);
+
+var _examples2 = _interopRequireDefault(_examples);
+
+var _styleActive = __webpack_require__(40);
+
+var _styleActive2 = _interopRequireDefault(_styleActive);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'ul',
+    { className: 'tiles' },
+    _examples2.default.map(function (example) {
+      return _react2.default.createElement(
+        'li',
+        { key: example.slug, className: 'tile' },
+        _react2.default.createElement(
+          _react3.Link,
+          {
+            to: 'Example',
+            params: { slug: example.slug },
+            active: { merge: _styleActive2.default }
+          },
+          _react2.default.createElement(
+            'h2',
+            null,
+            example.name
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'description' },
+            example.description
+          )
+        )
+      );
+    })
+  );
+};
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var tutorials = [{
+  name: '01-introduction',
+  displayName: 'Part 1: Introduction to Curi'
+}, {
+  name: '02-setup',
+  displayName: 'Part 2: Curi Setup'
+}, {
+  name: '03-routes',
+  displayName: 'Part 3: Curi Routes'
+}, {
+  name: '04-hickory',
+  displayName: 'Part 4: Hickory'
+}, {
+  name: '05-config',
+  displayName: 'Part 5: The Curi Configuration Object'
+}, {
+  name: '06-pages',
+  displayName: 'Part 6: Rendering Pages',
+  frameworks: ['react', 'vue']
+}, {
+  name: '07-load',
+  displayName: 'Part 7: The Load Function'
+}, {
+  name: '08-render-data',
+  displayName: 'Part 8: Rendering Data',
+  frameworks: ['react', 'vue']
+}, {
+  name: '09-nav',
+  displayName: 'Part 9: Forms & Programmatic Navigation',
+  frameworks: ['react', 'vue']
+}, {
+  name: '10-now-what',
+  displayName: 'Part 10: Now What?'
+}];
+
+var byName = exports.byName = tutorials.reduce(function (acc, curr) {
+  if (curr.frameworks) {
+    curr.frameworks.forEach(function (f) {
+      acc[curr.name + '-' + f] = curr;
+    });
+  } else {
+    acc[curr.name] = curr;
+  }
+  return acc;
+}, {});
+
+exports.default = tutorials;
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var guides = [{
+  name: 'Installation',
+  slug: 'installation',
+  description: 'Learn how to install Curi',
+  type: 'basic'
+}, {
+  name: 'Getting Started',
+  slug: 'getting-started',
+  description: 'Learn the basic concepts that you\'ll need to know to setup your project',
+  type: 'basic'
+}, {
+  name: 'All About Routes',
+  slug: 'routes',
+  description: 'Learn about Curi routes and their properties',
+  type: 'basic'
+}, {
+  name: 'Rendering with Responses',
+  slug: 'responses',
+  description: 'Learn how to render your project using a response object',
+  type: 'basic'
+}, {
+  name: 'Using Addons',
+  slug: 'addons',
+  description: 'Learn how to use addons to interact with your routes in your project',
+  type: 'advanced'
+}, {
+  name: 'Using Side Effects',
+  slug: 'side-effects',
+  description: 'Learn how to use side effect functions to trigger behavior after navigation',
+  type: 'advanced'
+}, {
+  name: 'Response Caching',
+  slug: 'response-caching',
+  description: 'Learn how to cache responses to prevent recreating duplicate responses',
+  type: 'advanced'
+}, {
+  name: 'Code Splitting with the Preload Property',
+  slug: 'code-splitting',
+  description: 'Learn how to code split your project using Webpack',
+  type: 'advanced'
+}, {
+  name: 'The Load Property',
+  slug: 'load',
+  description: 'Learn how to use a route\'s load function to modify responses',
+  type: 'advanced'
+}, {
+  name: 'React Basics',
+  slug: 'react',
+  description: 'Learn the basics of how to use Curi with a React application',
+  type: 'advanced'
+}, {
+  name: 'Migrate from React Router v2/3 to Curi',
+  slug: 'migrate-rrv3',
+  descriptioni: 'Learn how to migrate an application from React Router v2 or v3 to Curi',
+  type: 'migration'
+}];
+
+var groupedGuides = exports.groupedGuides = guides.reduce(function (acc, curr) {
+  if (!acc[curr.type]) {
+    acc[curr.type] = [curr];
+  } else {
+    acc[curr.type].push(curr);
+  }
+  return acc;
+}, {});
+
+var byName = exports.byName = guides.reduce(function (acc, curr) {
+  acc[curr.slug] = curr;
+  return acc;
+}, {});
+
+exports.default = guides;
+
+/***/ })
+/******/ ]);
