@@ -34,7 +34,7 @@ function renderFullPage(html, title, debug) {
   return `<!doctype html>
 <html>
   <head>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${title} | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
