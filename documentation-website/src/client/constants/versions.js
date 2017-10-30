@@ -4,10 +4,10 @@ export default {
   "addon-ancestors": "1.0.0-beta.5",
   "addon-prefetch": "1.0.0-beta.5",
   "core": "1.0.0-beta.14",
-  "react": "1.0.0-beta.11",
+  "react": "1.0.0-beta.12",
   "redux": "1.0.0-alpha.3",
   "side-effect-scroll": "1.0.0-beta.5",
   "side-effect-title": "1.0.0-beta.5",
-  "svelte": "1.0.0-alpha.4",
-  "vue": "1.0.0-beta.7"
+  "svelte": "1.0.0-alpha.5",
+  "vue": "1.0.0-beta.8"
 };
