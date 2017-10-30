@@ -272,7 +272,7 @@ const routes = [
         as if you were to use a regular anchor. Using a regular anchor would not work
         here, though. You could hand code the URI to link to, which is half of what the
         Link does, but clicking the anchor would cause a full page reload. The Link uses
-        calls the <IJS>update</IJS> method from your Hickory history object to allow for
+        calls the <IJS>navigate</IJS> method from your Hickory history object to allow for
         in-app navigation without reloading the page.
       </p>
 

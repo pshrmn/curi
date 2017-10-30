@@ -309,7 +309,7 @@ import InMemory form '@hickory/in-memory';`
           <div className='description'>
             <p>
               Navigate to new locations using <IJS>push</IJS>, <IJS>replace</IJS>, and{' '}
-              <IJS>update</IJS> (a combination of push and replace that duplicates how anchors
+              <IJS>navigate</IJS> (a combination of push and replace that duplicates how anchors
               work).
             </p>
           </div>
@@ -318,7 +318,7 @@ import InMemory form '@hickory/in-memory';`
 `const history = Browser();
 history.push({ pathname: '/login' });
 history.replace({ pathname: '/profile' });
-history.update({ pathname: '/album/934' });`
+history.navigate({ pathname: '/album/934' });`
             }
           </PrismBlock>
         </div>

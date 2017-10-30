@@ -44,8 +44,8 @@ const memoryHistory = InMemory();`
 
       <p>
         Each history object has essentially the same API (InMemory has a few extra properties).
-        The most important properties to know are the location object as well as the update, push, and
-        replace methods.
+        The most important properties to know are the location object as well as the navigate,
+        push, and replace methods.
       </p>
 
       <p>
@@ -67,8 +67,8 @@ browserHistory.push({ pathname: '/guides/installation' });
 // with the provided one
 browserHistory.push({ pathname: '/guides/confirming-navigation' });
 
-// the update method will choose whether to push or replace for you
-browserHistory.update({ pathname: '/guides/getting-started' });
+// the navigate method will choose whether to push or replace for you
+browserHistory.navigate({ pathname: '/guides/getting-started' });
 `
         }
       </PrismBlock>
