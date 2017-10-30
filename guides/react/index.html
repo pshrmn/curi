@@ -69,7 +69,7 @@ const routes = [
 &gt;
   Some Song on Some Album
 &lt;/Link&gt;
-// &lt;a href=&quot;/a/2390/8?time=17&gt;Some Song on Some Album&lt;/a&gt;</pre><p>The <code class="language-javascript">children</code> prop has been used, but not mentioned. The contents of the children prop will simply be passed as the children of the anchor, the same as if you were to use a regular anchor. Using a regular anchor would not work here, though. You could hand code the URI to link to, which is half of what the Link does, but clicking the anchor would cause a full page reload. The Link uses calls the <code class="language-javascript">update</code> method from your Hickory history object to allow for in-app navigation without reloading the page.</p><pre class="language-javascript">// if you render this, clicking it will reload the page
+// &lt;a href=&quot;/a/2390/8?time=17&gt;Some Song on Some Album&lt;/a&gt;</pre><p>The <code class="language-javascript">children</code> prop has been used, but not mentioned. The contents of the children prop will simply be passed as the children of the anchor, the same as if you were to use a regular anchor. Using a regular anchor would not work here, though. You could hand code the URI to link to, which is half of what the Link does, but clicking the anchor would cause a full page reload. The Link uses calls the <code class="language-javascript">navigate</code> method from your Hickory history object to allow for in-app navigation without reloading the page.</p><pre class="language-javascript">// if you render this, clicking it will reload the page
 &lt;a href=&quot;/about&quot;&gt;About&lt;/a&gt;
 
 // while rendering this will not cause a reload
