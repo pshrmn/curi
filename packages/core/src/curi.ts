@@ -58,19 +58,21 @@ function createConfig(
   const subscribers: Array<Subscriber> = [];
 
   let mostRecentKey: string;
+  // This is the response generated for the previous navigation
+  // and the action type of the navigation. These will be passed
+  // to config.subscribe on their initial call.
   let previous: [Response, string] = [] as [Response, string];
-  let responseInProgress: Promise<Response>;
+  let currentResponse: Promise<Response>;
 
   // add the pathname addon to the provided addons
   const allAddons = userAddons.concat(pathnameAddon(pathnameOptions));
 
   function setupRoutesAndAddons(routeArray: Array<RouteDescriptor>): void {
-    // clear out any existing addons
+    routes = routeArray.map(createRoute);
+    
     for (let key in registeredAddons) {
       delete registeredAddons[key];
     }
-
-    routes = routeArray.map(createRoute);
 
     allAddons.forEach(addon => {
       addon.reset();
@@ -78,10 +80,10 @@ function createConfig(
       registerRoutes(routes, addon);
     });
 
-    makeResponse(history.location, history.action);
+    respond(history.location, history.action);
   }
 
-  function prepareResponse(location: HickoryLocation): Promise<Response> {
+  function getResponse(location: HickoryLocation): Promise<Response> {
     mostRecentKey = location.key;
 
     if (cache) {
@@ -97,23 +99,6 @@ function createConfig(
       }
       return response;
     });
-  }
-
-  function subscribe(fn: Subscriber): UnsubscribeFn {
-    if (typeof fn !== 'function') {
-      throw new Error('The argument passed to subscribe must be a function');
-    }
-
-    // Immediately call subscriber function. If this is called before the
-    // initial response has resolved, both params will be undefined. If called
-    // after init resp has resolved, first param is the most recent response and
-    // action is last history.action.
-    fn.apply(null, previous);
-
-    const newLength = subscribers.push(fn);
-    return () => {
-      subscribers[newLength - 1] = null;
-    };
   }
 
   function emit(response: Response, action: string): boolean {
@@ -139,10 +124,8 @@ function createConfig(
     return true;
   }
 
-  // create a response object using the current location and
-  // emit it to any subscribed functions
-  function makeResponse(location: HickoryLocation, action: string): void {
-    responseInProgress = prepareResponse(location).then(
+  function respond(location: HickoryLocation, action: string): void {
+    currentResponse = getResponse(location).then(
       response => {
         const emitted = emit(response, action);
         // only store these after we have emitted.
@@ -164,14 +147,25 @@ function createConfig(
 
   // now that everything is defined, actually do the setup
   setupRoutesAndAddons(routeArray);
-  const unlisten = history.subscribe(makeResponse);
+  const unlisten = history.subscribe(respond);
 
   return {
-    ready: () => responseInProgress,
-    refresh: setupRoutesAndAddons,
-    subscribe,
     addons: registeredAddons,
-    history
+    history,
+    ready: () => currentResponse,
+    subscribe: function(fn: Subscriber): UnsubscribeFn {
+      if (typeof fn !== 'function') {
+        throw new Error('The argument passed to subscribe must be a function');
+      }
+  
+      fn.apply(null, previous);
+  
+      const newLength = subscribers.push(fn);
+      return () => {
+        subscribers[newLength - 1] = null;
+      };
+    },
+    refresh: setupRoutesAndAddons
   };
 }
 
