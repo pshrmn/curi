@@ -127,13 +127,13 @@ describe('<Link>', () => {
       expect(a.prop('href')).toBe('/');
     });
 
-    it("uses the current location's pathname if 'to' is not provided", () => {
+    it("uses the pathname from current response's location if 'to' is not provided", () => {
       const history = InMemory({
         locations: ['/the-initial-location']
       });
       const config = createConfig(history, []);
       const wrapper = shallow(<Link to={null}>Test</Link>, {
-        context: { curi: config }
+        context: { curi: config, curiResponse:  { location: history.location }}
       });
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/the-initial-location');

@@ -1,3 +1,7 @@
+## Next
+
+* When `<Link>` is not provided a `to` prop, use `response.location` instead of `history.location` to get the `pathname`. Normally, these are the same object, but they could differ if clicking a link after navigation has started (but a response has not been emitted).
+
 ## 1.0.0-beta.12
 
 * `<Link>` uses `history.navigate`, not `history.update`.

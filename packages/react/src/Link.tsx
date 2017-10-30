@@ -58,10 +58,11 @@ class Link extends React.Component<LinkProps, LinkState> {
   createPathname(props: LinkProps, context: CuriContext) {
     const { to, params } = props;
     const curi = props.curi || context.curi;
+    const response = props.response || context.curiResponse;
     const pathname =
       to != null
         ? curi.addons.pathname(to, params)
-        : curi.history.location.pathname;
+        : response.location.pathname;
     this.setState(() => ({
       pathname
     }));
