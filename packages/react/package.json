@@ -39,31 +39,31 @@
   "dependencies": {
     "@curi/addon-active": "^1.0.0-beta.5",
     "@curi/core": "^1.0.0-beta.14",
-    "@hickory/root": "^1.0.0-beta.3",
+    "@hickory/root": "^1.0.0-beta.4",
     "@types/invariant": "^2.2.29",
-    "@types/prop-types": "^15.5.1",
-    "@types/react": "^16.0.5",
+    "@types/prop-types": "^15.5.2",
+    "@types/react": "^16.0.18",
     "hoist-non-react-statics": "^2.3.1",
     "invariant": "^2.2.2",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.6.0"
   },
   "devDependencies": {
     "@curi/addon-active": "^1.0.0-beta.5",
     "@curi/core": "^1.0.0-beta.14",
-    "@hickory/in-memory": "^1.0.0-beta.1",
+    "@hickory/in-memory": "^1.0.0-beta.2",
     "@types/enzyme": "^2.8.8",
     "@types/jest": "^21.1.0",
     "@types/node": "^8.0.30",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
     "jest": "^21.1.0",
-    "prettier": "^1.5.2",
+    "prettier": "^1.7.4",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-test-renderer": "^16.0.0",
     "rimraf": "^2.6.1",
     "rollup": "^0.50.0",
-    "ts-jest": "^21.0.1",
+    "ts-jest": "^21.1.4",
     "typescript": "^2.5.2"
   }
 }
