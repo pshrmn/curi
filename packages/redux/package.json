@@ -33,15 +33,15 @@
     "@curi/core": "^1.0.0-beta.14"
   },
   "devDependencies": {
-    "@hickory/in-memory": "^1.0.0-beta.1",
-    "@types/jest": "^21.1.0",
-    "@types/node": "^8.0.30",
-    "jest": "^21.1.0",
-    "prettier": "^1.7.0",
+    "@hickory/in-memory": "^1.0.0-beta.2",
+    "@types/jest": "^21.1.5",
+    "@types/node": "^8.0.47",
+    "jest": "^21.2.1",
+    "prettier": "^1.7.4",
     "redux": "^3.7.2",
-    "rimraf": "^2.6.1",
+    "rimraf": "^2.6.2",
     "rollup": "^0.50.0",
-    "ts-jest": "^21.0.1",
-    "typescript": "^2.5.2"
+    "ts-jest": "^21.1.4",
+    "typescript": "^2.5.3"
   }
 }
