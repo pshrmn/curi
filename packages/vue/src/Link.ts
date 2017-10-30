@@ -37,7 +37,7 @@ const Link: ComponentOptions<LinkComponent> = {
     click: function(event: MouseEvent) {
       if (canNavigate(event)) {
         event.preventDefault();
-        this.$curi.history.update(this.location);
+        this.$curi.history.navigate(this.location);
       }
     }
   },

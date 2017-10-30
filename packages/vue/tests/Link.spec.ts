@@ -7,8 +7,8 @@ import Link from '../src/Link';
 
 describe('Link component', () => {
   const history = InMemory();
-  const mockPush = jest.fn();
-  history.push = mockPush;
+  const mockNavigate = jest.fn();
+  history.navigate = mockNavigate;
 
   const routes = [{ name: 'Place', path: '/place/:name' }];
   const config = createConfig(history, routes);
@@ -17,7 +17,7 @@ describe('Link component', () => {
   Vue.use(CuriPlugin, { config });
 
   afterEach(() => {
-    mockPush.mockReset();
+    mockNavigate.mockReset();
   });
 
   it('registers with the name curi-link', () => {
@@ -64,10 +64,10 @@ describe('Link component', () => {
       });
 
       const mockClick = new MouseEvent('click');
-      expect(mockPush.mock.calls.length).toBe(0);
+      expect(mockNavigate.mock.calls.length).toBe(0);
       wrapper.vm.$el.dispatchEvent(mockClick);
-      expect(mockPush.mock.calls.length).toBe(1);
-      expect(mockPush.mock.calls[0][0]).toEqual({
+      expect(mockNavigate.mock.calls.length).toBe(1);
+      expect(mockNavigate.mock.calls[0][0]).toEqual({
         pathname: '/place/Bermuda',
         query: 'to=Bermuda',
         hash: 'beach-boys'
@@ -88,9 +88,9 @@ describe('Link component', () => {
 
       const mockClick = new MouseEvent('click');
       mockClick.preventDefault();
-      expect(mockPush.mock.calls.length).toBe(0);
+      expect(mockNavigate.mock.calls.length).toBe(0);
       wrapper.vm.$el.dispatchEvent(mockClick);
-      expect(mockPush.mock.calls.length).toBe(0);
+      expect(mockNavigate.mock.calls.length).toBe(0);
     });
 
     it('does not navigate if a modifier key is held while clicking', () => {
@@ -103,14 +103,14 @@ describe('Link component', () => {
         }
       });
 
-      expect(mockPush.mock.calls.length).toBe(0);
+      expect(mockNavigate.mock.calls.length).toBe(0);
       const modifiers = ['metaKey', 'altKey', 'ctrlKey', 'shiftKey'];
       modifiers.forEach(m => {
         const mockClick = new MouseEvent('click', {
           [m]: true
         });
         wrapper.vm.$el.dispatchEvent(mockClick);
-        expect(mockPush.mock.calls.length).toBe(0);
+        expect(mockNavigate.mock.calls.length).toBe(0);
       });
     });
 
@@ -124,9 +124,9 @@ describe('Link component', () => {
         }
       });
       const mockClick = new MouseEvent('click', { button: 1 });
-      expect(mockPush.mock.calls.length).toBe(0);
+      expect(mockNavigate.mock.calls.length).toBe(0);
       wrapper.vm.$el.dispatchEvent(mockClick);
-      expect(mockPush.mock.calls.length).toBe(0);
+      expect(mockNavigate.mock.calls.length).toBe(0);
     });
   });
 
