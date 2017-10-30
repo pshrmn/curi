@@ -67,7 +67,7 @@ describe('<Link>', () => {
   describe('clicking a <Link>', () => {
     it('will navigate to the new location', () => {
       const history = InMemory();
-      history.update = jest.fn();
+      history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
       const config = createConfig(history, routes);
       
@@ -85,12 +85,12 @@ describe('<Link>', () => {
       const a = node.querySelector('a');
       const event = simulant('click');
       simulant.fire(a, event);
-      expect(history.update.mock.calls.length).toBe(1);
+      expect(history.navigate.mock.calls.length).toBe(1);
     });
 
     it('will ignore modified clicks', () => {
       const history = InMemory();
-      history.update = jest.fn();
+      history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
       const config = createConfig(history, routes);
 
@@ -110,13 +110,13 @@ describe('<Link>', () => {
       const modifiers = ['metaKey', 'altKey', 'ctrlKey', 'shiftKey'];
       modifiers.forEach(m => {
         simulant.fire(a, 'click', { [m]: true });
-        expect(history.update.mock.calls.length).toBe(0);
+        expect(history.navigate.mock.calls.length).toBe(0);
       });
     });
 
     it('will ignore click if event.defaultPrevented is true', () => {
       const history = InMemory();
-      history.update = jest.fn();
+      history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
       const config = createConfig(history, routes);
 
@@ -135,12 +135,12 @@ describe('<Link>', () => {
       const event = simulant('click');
       event.preventDefault();
       simulant.fire(a, event);
-      expect(history.update.mock.calls.length).toBe(0);
+      expect(history.navigate.mock.calls.length).toBe(0);
     });
 
     it('will ignore click if not done with left mouse button', () => {
       const history = InMemory();
-      history.update = jest.fn();
+      history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
       const config = createConfig(history, routes);
 
@@ -158,7 +158,7 @@ describe('<Link>', () => {
       const a = node.querySelector('a');
       const event = simulant('click', { button: 1 });
       simulant.fire(a, event);
-      expect(history.update.mock.calls.length).toBe(0);
+      expect(history.navigate.mock.calls.length).toBe(0);
     });
   });
 });
