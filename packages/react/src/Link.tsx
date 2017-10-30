@@ -51,7 +51,7 @@ class Link extends React.Component<LinkProps, LinkState> {
       const { pathname } = this.state;
       const { to, params, details = {} } = this.props;
       const location = { pathname, ...details };
-      curi.history.update(location);
+      curi.history.navigate(location);
     }
   };
 

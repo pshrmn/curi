@@ -2,7 +2,7 @@ import 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import InMemory from '@hickory/in-memory';
-import createConfig, { AnyResponse } from '@curi/core';
+import createConfig, { Response } from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
 import Link from '../src/Link';
 
@@ -13,7 +13,7 @@ describe('<Link>', () => {
       const config = createConfig(history, [{ name: 'Test', path: '' }], {
         addons: [createActiveAddon()]
       });
-      const fakeResponse = { name: 'Test', params: {} } as AnyResponse;
+      const fakeResponse = { name: 'Test', params: {} } as Response;
       const wrapper = shallow(
         <Link
           to="Test"
@@ -34,7 +34,7 @@ describe('<Link>', () => {
       const config = createConfig(history, [{ name: 'Test', path: '' }], {
         addons: [createActiveAddon()]
       });
-      const fakeResponse = { name: 'Test', params: {} } as AnyResponse;
+      const fakeResponse = { name: 'Test', params: {} } as Response;
       const wrapper = shallow(
         <Link
           to="Test"
@@ -54,8 +54,8 @@ describe('<Link>', () => {
       const config = createConfig(history, [{ name: 'Test', path: '' }], {
         addons: [createActiveAddon()]
       });
-      const propResponse = { name: 'Test', params: {} } as AnyResponse;
-      const contextResponse = { name: 'Not a Test', params: {} } as AnyResponse;
+      const propResponse = { name: 'Test', params: {} } as Response;
+      const contextResponse = { name: 'Not a Test', params: {} } as Response;
       const wrapper = shallow(
         <Link
           to="Test"
@@ -308,10 +308,10 @@ describe('<Link>', () => {
   });
 
   describe('clicking a link', () => {
-    it('calls history.update', () => {
+    it('calls history.navigate', () => {
       const history = InMemory();
-      const mockUpdate = jest.fn();
-      history.update = mockUpdate;
+      const mockNavigate = jest.fn();
+      history.navigate = mockNavigate;
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
@@ -329,14 +329,14 @@ describe('<Link>', () => {
         button: 0
       };
       wrapper.find('a').simulate('click', leftClickEvent);
-      expect(mockUpdate.mock.calls.length).toBe(1);
+      expect(mockNavigate.mock.calls.length).toBe(1);
     });
 
     describe('onClick', () => {
       it('calls onClick prop func if provided', () => {
         const history = InMemory();
-        const mockUpdate = jest.fn();
-        history.update = mockUpdate;
+        const mockNavigate = jest.fn();
+        history.navigate = mockNavigate;
         const onClick = jest.fn();
         const config = createConfig(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(
@@ -360,13 +360,13 @@ describe('<Link>', () => {
         };
         wrapper.find('a').simulate('click', leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
-        expect(mockUpdate.mock.calls.length).toBe(1);
+        expect(mockNavigate.mock.calls.length).toBe(1);
       });
 
-      it('does not call history.update if onClick prevents default', () => {
+      it('does not call history.navigate if onClick prevents default', () => {
         const history = InMemory();
-        const mockUpdate = jest.fn();
-        history.update = mockUpdate;
+        const mockNavigate = jest.fn();
+        history.navigate = mockNavigate;
         const onClick = jest.fn(event => {
           event.preventDefault();
         });
@@ -392,14 +392,14 @@ describe('<Link>', () => {
         };
         wrapper.find('a').simulate('click', leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
-        expect(mockUpdate.mock.calls.length).toBe(0);
+        expect(mockNavigate.mock.calls.length).toBe(0);
       });
     });
 
-    it("doesn't call update for modified clicks", () => {
+    it("doesn't call historynavigate for modified clicks", () => {
       const history = InMemory();
-      const mockUpdate = jest.fn();
-      history.update = mockUpdate;
+      const mockNavigate = jest.fn();
+      history.navigate = mockNavigate;
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
@@ -421,14 +421,14 @@ describe('<Link>', () => {
         const eventCopy = Object.assign({}, modifiedClickEvent);
         eventCopy[m] = true;
         wrapper.find('a').simulate('click', eventCopy);
-        expect(mockUpdate.mock.calls.length).toBe(0);
+        expect(mockNavigate.mock.calls.length).toBe(0);
       });
     });
 
-    it("doesn't call update if event.preventDefault has been called", () => {
+    it("doesn't call history.navigate if event.preventDefault has been called", () => {
       const history = InMemory();
-      const mockUpdate = jest.fn();
-      history.update = mockUpdate;
+      const mockNavigate = jest.fn();
+      history.navigate = mockNavigate;
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
@@ -446,7 +446,7 @@ describe('<Link>', () => {
         button: 0
       };
       wrapper.find('a').simulate('click', preventedEvent);
-      expect(mockUpdate.mock.calls.length).toBe(0);
+      expect(mockNavigate.mock.calls.length).toBe(0);
     });
   });
 });
