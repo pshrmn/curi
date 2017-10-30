@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-alpha.5
 
 * `<Link>` uses `history.navigate`, not `history.update`.
 
