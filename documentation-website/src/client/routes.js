@@ -12,6 +12,18 @@ import { byName as examplesByName } from './constants/examples';
 
 const loadedModules = {};
 
+function handleImport(name) {
+  return {
+    loaded: module => {
+      loadedModules[name] = module.default;
+    },
+    caught: err => {
+      console.error('Failed to load module for:', name, err);
+      loadedModules[name] = () => <div>Sorry, something went wrong...</div>;
+    }
+  }
+}
+
 export default [
   {
     name: 'Home',
@@ -23,14 +35,10 @@ export default [
     name: 'Tutorial',
     path: 'tutorial/:name',
     preload: () => {
+      const { loaded, caught } = handleImport('Tutorial');
       return import(/* webpackChunkName: 'tutorial' */'./route-components/Tutorial')
-        .then(module => {
-          loadedModules["Tutorial"] = module.default;
-        })
-        .catch(err => {
-          console.error('Failed to load Tutorial component', err);
-          loadedModules["Tutorial"] = <div>Sorry, something went wrong...</div>;
-        })
+        .then(loaded)
+        .catch(caught);
     },
     body: () => loadedModules["Tutorial"],
     title: ({ name }) => {
@@ -42,14 +50,10 @@ export default [
     name: 'Guide',
     path: 'guides/:slug/',
     preload: () => {
+      const { loaded, caught } = handleImport('Guide');
       return import(/* webpackChunkName: 'guide' */'./route-components/Guide')
-        .then(module => {
-          loadedModules["Guide"] = module.default;
-        })
-        .catch(err => {
-          console.error('Failed to load Guide component', err);
-          loadedModules["Guide"] = <div>Sorry, something went wrong...</div>;
-        })
+        .then(loaded)
+        .catch(caught);
     },
     load: ({ params }, mods) => {
       if (guidesByName[params.slug]) {
@@ -70,14 +74,10 @@ export default [
         name: 'Package',
         path: '@curi/:package/',
         preload: () => {
+          const { loaded, caught } = handleImport('Package');
           return import(/* webpackChunkName: 'package' */'./route-components/Package')
-            .then(module => {
-              loadedModules["Package"] = module.default;
-            })
-            .catch(err => {
-              console.error('Failed to load Package component', err);
-              loadedModules["Package"] = <div>Sorry, something went wrong...</div>;
-            })
+            .then(loaded)
+            .catch(caught);
         },
         load: ({ params }, mods) => {
           if (packagesByName[params.package]) {
@@ -100,14 +100,10 @@ export default [
         name: 'Example',
         path: ':slug/',
         preload: () => {
+          const { loaded, caught } = handleImport('Tutorial');
           return import(/* webpackChunkName: 'example' */'./route-components/Example')
-            .then(module => {
-              loadedModules["Example"] = module.default;
-            })
-            .catch(err => {
-              console.error('Failed to load Example component', err);
-              loadedModules["Example"] = <div>Sorry, something went wrong...</div>;
-            })
+            .then(loaded)
+            .catch(caught);
         },
         load: ({ params }, mods) => {
           if (examplesByName[params.slug]) {
