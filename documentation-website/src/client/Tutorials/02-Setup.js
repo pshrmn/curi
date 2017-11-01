@@ -33,12 +33,10 @@ export default () => (
           Setting up a simple Express server to serve our website
           contents.
         </li>
+        <li>
+          Setting up Babel/Webpack.
+        </li>
       </ul>
-      <Note>
-        We aren't going to cover getting build steps setup. The accompanying Git repo
-        includes the necessary files for building the application (using Babel and
-        Webpack).
-      </Note>
     </div>
     <Section
       title='The Basics'
@@ -168,7 +166,80 @@ app.listen('8000', () => {
         }
       </PrismBlock>
     </Section>
+    <Section
+      title='Build Scripts'
+      id='build-scripts'
+    >
+      <p>
+        We will be using Babel/Webpack to build our project. We won't be
+        diving into the details of how these work, but will provide the
+        code necessary to get this setup.
+      </p>
+      <p>
+        We can start by installing the necessary packages as well as adding
+        configuration files for both Babel and Webpack. We will be using
+        Babel 7, so we can use a JavaScript file instead of JSON for our
+        Babel config.
+      </p>
+      <PrismBlock lang='bash'>
+        {
+`npm install -D webpack @babel/core @babel/preset-env babel-loader@next
+touch .babelrc.js webpack.config.js`
+        }
+      </PrismBlock>
+      <PrismBlock lang='javascript'>
+        {
+`// .babelrc.js
+module.exports = {
+  presets: [
+    ['@babel/env',{
+      modules: false
+    }]
+  ]
+};`
+        }
+      </PrismBlock>
+      <PrismBlock lang='javascript'>
+        {
+`// webpack.config.js
+const path = require('path');
 
+const config = {
+  context: path.resolve(__dirname, 'src'),
+  entry: './index.js',
+  output: {
+    path: path.resolve(__dirname, 'public'),
+    filename: 'js/bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: 'babel-loader'
+      }
+    ]
+  }
+}
+
+module.exports = config;`
+        }
+      </PrismBlock>
+      <p>
+        Finally, we just need to add a scripts to our{' '}
+        <IJS>package.json</IJS> file in order to build our bundle.
+      </p>
+      <PrismBlock lang='javascript'>
+        {
+`// package.json
+{
+  // ...,
+  "scripts": {
+    "build": "webpack"
+  }
+}`
+        }
+      </PrismBlock>
+    </Section>
     <Section
       title='Next'
       id='next'

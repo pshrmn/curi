@@ -26,6 +26,9 @@ export default () => (
       </p>
       <ul>
         <li>
+          Modifying our Babel configuration to support React.
+        </li>
+        <li>
           Installing the <IJS>@curi/react</IJS> package and learning about
           some of the components it provides (<Cmp>Navigator</Cmp> and{' '}
           <Cmp>Link</Cmp>).
@@ -43,6 +46,34 @@ export default () => (
         </li>
       </ul>
     </div>
+    <Section
+      title='Babel'
+      id='babel'
+    >
+      <p>
+        Before we dive in, let's make sure that our build scripts can handle
+        React. To do this, we just need to install Babel's React preset
+        and add it to our Babel configuration file.
+      </p>
+      <PrismBlock lang='bash'>
+        {
+`npm install --save-dev @babel/preset-react`
+        }
+      </PrismBlock>
+      <PrismBlock lang='javascript'>
+        {
+`// .babelrc.js
+module.exports = {
+  presets: [
+    ['@babel/env',{
+      modules: false
+    }],
+    '@babel/react'
+  ]
+};`
+        }
+      </PrismBlock>
+    </Section>
     <Section
       title={<span>The <IJS>@curi/react</IJS> Package</span>}
       id='package'

@@ -17,7 +17,7 @@ export default () => (
     <p>
       Now that we have our configuration object ready to go, we can think
       about what our pages should look like. This tutorial will be rendering
-      our website using React. If you prefer to use React, you should check
+      our website using Vue. If you prefer to use React, you should check
       out the <Link to='Tutorial' params={{ name: '06-pages-react' }}>
       Part 6: React Pages</Link> tutorial.
     </p>
@@ -26,6 +26,9 @@ export default () => (
         In this tutorial, we will be doing the following:
       </p>
       <ul>
+        <li>
+          Modifying our Webpack configuration to support Vue.
+        </li>
         <li>
           Installing the <IJS>@curi/vue</IJS> package, learning about
           the <IJS>CuriPlugin</IJS> and one of the components it
@@ -44,6 +47,44 @@ export default () => (
         </li>
       </ul>
     </div>
+    <Section
+      title='Webpack'
+      id='webpack'
+    >
+      <p>
+        Before we dive in, let's make sure that our build scripts can handle
+        Vue. To do this, we just need to install Webpack's Vue loader
+        and add support for <IJS>.vue</IJS> files to our Webpack configuration.
+      </p>
+      <PrismBlock lang='bash'>
+        {
+`npm install --save-dev vue-loader`
+        }
+      </PrismBlock>
+      <PrismBlock lang='javascript'>
+        {
+`// webpack.config.js
+const config = {
+  // ...,
+  resolve: {
+    extensions: ['.js', '.vue'],
+    alias: {
+      vue: 'vue/dist/vue.js'
+    }
+  },
+  module: {
+    rules: [
+      // ...
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }
+    ]
+  }
+};`
+        }
+      </PrismBlock>
+    </Section>
     <Section
       title={<span>The <IJS>@curi/vue</IJS> Package</span>}
       id='package'
