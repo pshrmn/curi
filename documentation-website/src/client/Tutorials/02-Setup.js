@@ -187,7 +187,7 @@ app.listen('8000', () => {
       </p>
       <PrismBlock lang='bash'>
         {
-`npm install -D webpack @babel/core @babel/preset-env babel-loader@next
+`npm install -D webpack @babel/core@next @babel/preset-env@next babel-loader@next
 touch .babelrc.js webpack.config.js`
         }
       </PrismBlock>

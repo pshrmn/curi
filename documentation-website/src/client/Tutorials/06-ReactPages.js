@@ -59,7 +59,7 @@ export default () => (
       </p>
       <PrismBlock lang='bash'>
         {
-`npm install --save-dev @babel/preset-react`
+`npm install --save-dev @babel/preset-react@next`
         }
       </PrismBlock>
       <PrismBlock lang='javascript'>
@@ -498,6 +498,8 @@ const routes = [
         {
 `// components/NavLinks.js
 import React from 'react';
+import { Link } from '@curi/react';
+
 const NavLinks = () => (
   <nav>
     <ul>
@@ -543,7 +545,7 @@ ReactDOM.render((
     return (
       <div>
         <header>
-          <Nav />
+          <NavLinks />
         </header>
         <main>
           <Body />
@@ -589,6 +591,8 @@ export default books;`
         <PrismBlock lang='jsx'>
         {
 `// components/BookList.js
+import { Link } from '@curi/react';
+
 import books from '../books';
 
 const BookList = () => (
@@ -633,7 +637,7 @@ ReactDOM.render((
     return (
       <div>
         <header>
-          <Nav />
+          <NavLinks />
         </header>
         <main>
           <Body response={response} />
