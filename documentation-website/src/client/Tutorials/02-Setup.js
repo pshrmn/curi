@@ -104,75 +104,8 @@ touch public/index.html`
       </PrismBlock>
     </Section>
     <Section
-      title='A Simple Server'
-      id='server'
-    >
-      <p>
-        Our website needs a server that can respond to dynamic requests. For this, we
-        will use <a href="https://www.npmjs.com/package/express">express</a>.
-      </p>
-      <PrismBlock lang='bash'>
-        {
-`npm install --save-dev express
-touch server.js`
-        }
-      </PrismBlock>
-      <p>
-        Our server isn't very fancy. For static file requests, it serves files
-        from the <IJS>/public</IJS> directory. For everything else, it will serve
-        the <IJS>/public/index.html</IJS> file. You can just copy the following
-        code into <IJS>server.js</IJS>.
-      </p>
-      <PrismBlock lang='javascript'>
-        {
-`const express = require('express');
-const path = require('path');
-
-const STATIC_DIR = path.join(__dirname, 'public');
-const INDEX_HTML = path.join(STATIC_DIR, 'index.html');
-
-const app = express();
-
-// respond to requests for files that begin with /static
-// with the corresponding file in the /public directory
-app.use('/static', express.static(STATIC_DIR));
-
-// all other requests will respond with the index.html file
-app.get('*', (req, res) => {
-  res.sendFile(INDEX_HTML);
-});
-
-app.listen('8000', () => {
-  console.log('Server started. Listening on port 8000');
-});`
-        }
-      </PrismBlock>
-      <p>
-        To run the server, you just need to run <IJS>node server.js</IJS>.
-      </p>
-      <p>
-        Our <IJS>index.html</IJS> file is a simple HTML file with with
-        a <Cmp>script</Cmp> that loads our bundled application. You can copy
-        the code below into your <IJS>public/index.html</IJS> file.
-      </p>
-      <PrismBlock lang='html'>
-        {
-`<!doctype html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script src="/static/js/bundle.js"></script>
-  </body>
-</html>`
-        }
-      </PrismBlock>
-    </Section>
-    <Section
-      title='Build Scripts'
-      id='build-scripts'
+      title='Building the Site'
+      id='building'
     >
       <p>
         We will be using Babel/Webpack to build our project. We won't be
@@ -185,10 +118,16 @@ app.listen('8000', () => {
         Babel 7, so we can use a JavaScript file instead of JSON for our
         Babel config.
       </p>
+      <p>
+        We will also be using <IJS>webpack-dev-server</IJS> in place of
+        setting up a server. This allows us to have live reloading
+        in development. 
+      </p>
       <PrismBlock lang='bash'>
         {
-`npm install -D webpack @babel/core@next @babel/preset-env@next babel-loader@next
-touch .babelrc.js webpack.config.js`
+`touch .babelrc.js webpack.config.js
+npm install -D webpack webpack-dev-server @babel/core@next
+  @babel/preset-env@next babel-loader@next`
         }
       </PrismBlock>
       <PrismBlock lang='javascript'>
@@ -222,6 +161,9 @@ const config = {
         use: 'babel-loader'
       }
     ]
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'public')
   }
 }
 
@@ -229,7 +171,27 @@ module.exports = config;`
         }
       </PrismBlock>
       <p>
-        Finally, we just need to add a scripts to our{' '}
+        We also need to create the <IJS>index.html</IJS> file. This just needs
+        to include the DOM element that we will render our application in and
+        a <Cmp>script</Cmp> that loads our bundled application. You can copy
+        the code below into your <IJS>public/index.html</IJS> file.
+      </p>
+      <PrismBlock lang='html'>
+        {
+`<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="/js/bundle.js"></script>
+  </body>
+</html>`
+        }
+      </PrismBlock>
+      <p>
+        Finally, we just need to add a script to our{' '}
         <IJS>package.json</IJS> file in order to build our bundle.
       </p>
       <PrismBlock lang='javascript'>
@@ -238,11 +200,16 @@ module.exports = config;`
 {
   // ...,
   "scripts": {
-    "build": "webpack"
+    "dev": "webpack-dev-server"
   }
 }`
         }
       </PrismBlock>
+      <Note>
+        If you're building this from scratch, you should also add a{' '}
+        <IJS>.gitignore</IJS> file and ignore the <IJS>node_modules/</IJS>
+        {' '}directory.
+      </Note>
     </Section>
     <Section
       title='Next'
