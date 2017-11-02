@@ -8,7 +8,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="tutorial"><div class="content"><h1>Part 9: Forms &amp; Programmatic Navigation</h1><p>In this tutorial, we are going to be using another property of our Curi configuration object: <code class="language-javascript">history</code>. This property is the Hickory history instance. We will use it to perform navigation between pages in our website.</p><div><p>In this tutorial, we will be doing the following:</p><ul><li>Creating another fake API, this time for getting/setting items in our shopping cart.</li><li>Adding the ability to add books to the shopping cart from the &quot;Book&quot; page.</li><li>Displaying books in the shopping cart from the &quot;Checkout&quot; page and allowing users to &quot;purchase&quot; their selected books.</li><li>Performing programmatic navigation to automatically navigate to another location.</li></ul></div><div class="section"><h2 id="API">The (Fake) API<a class="header-link" href="/tutorial/09-nav-vue#API">#</a></h2><p>Since we do not have a backend to store the books that a user wants to purchase, we will simulate this using <code class="language-javascript">localStorage</code>. This will be done by maintaining an object whose keys are book <code class="language-javascript">id</code>s and whose values is how many of that book should be purchased.</p><p>Our API should export three methods: the first will get the current state of the shopping cart, the second will update the shopping cart, and the third will reset the shopping cart.</p><pre class="language-javascript">// api/shoppingCart.js
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="tutorial"><div class="content"><h1>Part 9: Forms &amp; Programmatic Navigation</h1><p>In this tutorial, we are going to be using another property of our Curi configuration object: <code class="language-javascript">history</code>. This property is the Hickory history instance. We will use it to perform navigation between pages in our website.</p><div><p>In this tutorial, we will be doing the following:</p><ul><li>Creating another fake API, this time for getting/setting items in our shopping cart.</li><li>Adding the ability to add books to the shopping cart from the &quot;Book&quot; page.</li><li>Displaying books in the shopping cart from the &quot;Checkout&quot; page and allowing users to &quot;purchase&quot; their selected books.</li><li>Performing programmatic navigation to automatically navigate to another location.</li></ul></div><div class="tutorial-branch"><p>If you are following along using the<!-- --> <a href="https://github.com/pshrmn/curi-tutorial">tutorial repo</a>, please checkout the <code class="language-javascript">09-nav-vue</code> branch.</p><pre class="language-bash">git checkout 09-nav-vue</pre></div><div class="section"><h2 id="API">The (Fake) API<a class="header-link" href="/tutorial/09-nav-vue#API">#</a></h2><p>Since we do not have a backend to store the books that a user wants to purchase, we will simulate this using <code class="language-javascript">localStorage</code>. This will be done by maintaining an object whose keys are book <code class="language-javascript">id</code>s and whose values is how many of that book should be purchased.</p><p>Our API should export three methods: the first will get the current state of the shopping cart, the second will update the shopping cart, and the third will reset the shopping cart.</p><pre class="language-javascript">// api/shoppingCart.js
 function saveCart(cart) {
   localStorage.setItem(&#x27;cart&#x27;, JSON.stringify(cart));
 }
@@ -51,13 +51,13 @@ export function resetCart() {
 &lt;/template&gt;
 
 &lt;script&gt;
-export default {
-  data: function() {
-    return {
-      count: &#x27;1&#x27;
-    };
-  }
-};
+  export default {
+    data: function() {
+      return {
+        count: &#x27;1&#x27;
+      };
+    }
+  };
 &lt;/script&gt;
 </pre><p>Next, we need to add a button to add the book to the shopping cart. We&#x27;re actually going to add two buttons. The first will just add the book/count to the shopping cart. The second will add the book/count to the shopping cart and then redirect to the &quot;Checkout&quot; page.</p><p>How will we redirect? So far, all navigation within the website has been performed using <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s. However, sometimes you might want to navigate programmatically. To do this, we can take advantage of our Hickory history object. The history object has <code class="language-javascript">push</code>, <code class="language-javascript">replace</code>, and <code class="language-javascript">update</code> <!-- -->methods that we can call to trigger navigation. You can read about each of these in the<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#methods">Hickory documentation</a>. For this tutorial, we will be using<!-- --> <code class="language-javascript">push</code>.</p><p>The <code class="language-javascript">CuriPlugin</code> makes our configuration object available to all of our components as <code class="language-javascript">this.$curi</code>. That means that we can call <code class="language-javascript">this.$curi.history.push</code> (a bit of a mouthful) to automatically redirect to another page.</p><p>We can also access all of our Curi <code class="language-javascript">addons</code> from our configuration object, so we will use <code class="language-javascript">curi.addons.pathname</code> to generate the pathname for the location that we wan to redirect to.</p><p>When the user clicks either of the buttons, we will want to use the<!-- --> <code class="language-javascript">updateCart</code> API method to add the book to the shopping cart. The <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code> component doesn&#x27;t inherently know which book it is for, so we will need to pass it the <code class="language-javascript">id</code> of the book as a prop when we render it.</p><pre class="language-html">&lt;!-- components/AddToCart.vue --&gt;
 &lt;template&gt;
@@ -77,7 +77,7 @@ export default {
   import { updateCart } from &#x27;../api/shoppingCart&#x27;;
 
   export default {
-    props: [&#x27;book&#x27;],
+    props: [&#x27;bookID&#x27;],
     data: function() {
       return {
         count: &#x27;1&#x27;
@@ -85,10 +85,10 @@ export default {
     },
     methods: {
       addToCart(event) {
-        updateCart(this.book, parseInt(this.count));
+        updateCart(this.bookID, parseInt(this.count));
       },
       addAndCheckout(event) {
-        updateCart(this.book, parseInt(this.count))
+        updateCart(this.bookID, parseInt(this.count))
           .then(() =&gt; {
             const pathname = this.$curi.addons.pathname(&#x27;Checkout&#x27;);
             this.$curi.history.push({ pathname });
@@ -199,20 +199,20 @@ const routes = [
 &lt;/template&gt;
 
 &lt;script&gt;
-import { resetCart } from &#x27;../api/shoppingCart&#x27;;
+  import { resetCart } from &#x27;../api/shoppingCart&#x27;;
 
-export default {
-  props: [&#x27;response&#x27;],
-  methods: {
-    purchase: function(event) {
-      // when the user &quot;purchases&quot; their books, we just
-      // reset the cart and redirect to the &quot;Checkout Complete&quot; page
-      resetCart();
-      const pathname = this.$curi.addons.pathname(&#x27;Checkout Complete&#x27;);
-      this.$curi.history.push({ pathname });
+  export default {
+    props: [&#x27;response&#x27;],
+    methods: {
+      purchase: function(event) {
+        // when the user &quot;purchases&quot; their books, we just
+        // reset the cart and redirect to the &quot;Checkout Complete&quot; page
+        resetCart();
+        const pathname = this.$curi.addons.pathname(&#x27;Checkout Complete&#x27;);
+        this.$curi.history.push({ pathname });
+      }
     }
-  }
-};
+  };
 &lt;/script&gt;</pre><p>One last thing to consider about our <code class="language-jsx"><!-- -->&lt;<!-- -->Checkout<!-- -->&gt;</code> <!-- -->component is what we should display when there are no items in the shopping cart. We can just check our<!-- --> <code class="language-javascript">response.data.items</code> array and display a message stating that the cart is empty when the list&#x27;s length is zero.</p><pre class="language-html">&lt;!-- component/Checkout.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;checkout&#x27;&gt;
