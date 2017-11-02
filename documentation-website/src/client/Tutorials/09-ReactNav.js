@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch } from '../components/TutorialBranch';
+import { TutorialBranch, CompleteBranch } from './base/Branch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -504,7 +504,14 @@ class Checkout extends React.Component {
         We can now add books to our shopping cart and "buy" them from the
         checkout page.
       </p>
+      <CompleteBranch name='09-nav-react-complete' />
       <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/09-nav-react-complete' />
+      <Note>
+        The embedded sandbox will not work if your browser is blocking third-party
+        data. If this is the case for you, you <em>could</em> disable this through
+        your browser's settings, but a better solution is to click the "Edit on
+        CodeSandbox" button to view the sandbox there.
+      </Note>
     </Section>
     <Section
       title='Next'

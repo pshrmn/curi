@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch } from '../components/TutorialBranch';
+import { TutorialBranch, CompleteBranch } from './base/Branch';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
@@ -175,6 +175,12 @@ console.log("Look, Ma, no response yet!");`
         you use <IJS>config.ready()</IJS>, but if you do not, you will need to
         handle rendering when the response is <IJS>undefined</IJS>.
       </p>
+    </Section>
+    <Section
+      title='Review'
+      id='review'
+    >
+      <CompleteBranch name='05-config-complete' />
     </Section>
     <Section
       title='Next'

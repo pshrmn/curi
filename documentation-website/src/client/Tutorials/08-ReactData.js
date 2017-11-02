@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch } from '../components/TutorialBranch';
+import { TutorialBranch, CompleteBranch } from './base/Branch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -132,6 +132,7 @@ const Book = (props) => {
         Our "Book List" and "Book" pages are now rendered using data
         from <IJS>response.data</IJS>.
       </p>
+      <CompleteBranch name='08-render-data-react-complete' />
       <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/08-render-data-react-complete' />
     </Section>
     <Section

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch } from '../components/TutorialBranch';
+import { TutorialBranch, CompleteBranch } from './base/Branch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -211,6 +211,12 @@ module.exports = config;`
         <IJS>.gitignore</IJS> file and ignore the <IJS>node_modules/</IJS>
         {' '}directory.
       </Note>
+    </Section>
+    <Section
+      title='Review'
+      id='review'
+    >
+      <CompleteBranch name='02-setup-complete' />
     </Section>
     <Section
       title='Next'

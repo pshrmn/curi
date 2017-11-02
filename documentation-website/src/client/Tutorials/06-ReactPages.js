@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch } from '../components/TutorialBranch';
+import { TutorialBranch, CompleteBranch } from './base/Branch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -683,6 +683,7 @@ const Book = ({ response }) => (
         After completing this tutorial, we now have a semi-functional website
         that renders basic content for each of our pages.
       </p>
+      <CompleteBranch name='06-pages-react-complete' />
       <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/06-pages-react-complete' />
     </Section>
     <Section

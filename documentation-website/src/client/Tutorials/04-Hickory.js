@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch } from '../components/TutorialBranch';
+import { TutorialBranch, CompleteBranch } from './base/Branch';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
@@ -149,6 +149,12 @@ const history = Browser();`
         basic usage, you should never have to think about it except for creating
         your history object.
       </p>
+    </Section>
+    <Section
+      title='Review'
+      id='review'
+    >
+      <CompleteBranch name='04-hickory-complete' />
     </Section>
     <Section
       title='Next'

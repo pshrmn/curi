@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranches } from '../components/TutorialBranch';
+import { TutorialBranches, CompleteBranch } from './base/Branch';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
@@ -413,7 +413,19 @@ const routes = [
         }
       </PrismBlock>
     </Section>
-
+    <Section
+      title='Review'
+      id='review'
+    >
+      <p>
+        If you are following the React path:
+      </p>
+      <CompleteBranch name='07-load-react-complete' />
+      <p>
+        If you are following the Vue path:
+      </p>
+      <CompleteBranch name='07-load-vue-complete' />
+    </Section>
     <Section
       title='Next'
       id='next'

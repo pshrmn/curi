@@ -2,7 +2,7 @@ import React from 'react';
 import {
   InlineJS as IJS,
   PrismBlock
-} from '../components/PrismBlocks';
+} from '../../components/PrismBlocks';
 
 export const TutorialBranch = ({ name }) => (
   <div className='tutorial-branch'>
@@ -29,5 +29,14 @@ export const TutorialBranches = ({ names }) => (
     <PrismBlock lang='bash'>
       {names.map(n => `git checkout ${n}`).join('\n')}
     </PrismBlock>
+  </div>
+);
+
+export const CompleteBranch = ({ name }) => (
+  <div className='tutorial-branch'>
+    <p>
+      You can view the complete source code for this tutorial here:{' '}
+      <a href={`https://github.com/pshrmn/curi-tutorial/tree/${name}`}>{name}</a>.
+    </p>
   </div>
 );
