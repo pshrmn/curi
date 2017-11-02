@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
+import { TutorialBranch } from '../components/TutorialBranch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -42,7 +43,7 @@ export default () => (
         </li>
       </ul>
     </div>
-    
+    <TutorialBranch name='09-nav-react' />
     <Section
       title='The (Fake) API'
       id='API'

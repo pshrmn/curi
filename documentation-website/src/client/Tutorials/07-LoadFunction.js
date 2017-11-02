@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
+import { TutorialBranches } from '../components/TutorialBranch';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
@@ -30,6 +31,7 @@ export default () => (
         </li>
       </ul>
     </div>
+    <TutorialBranches names={['07-load-react', '07-load-vue']} />
     <Section
       title='Fake API'
       id='api'

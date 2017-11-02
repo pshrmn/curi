@@ -61,6 +61,12 @@
       }
     }
   }
+
+  .tutorial-branch {
+    background: $orange;
+    border: 1px solid $border-orange;
+    padding: 5px;
+  }
 }
 
 @media only screen and (min-width: $largeScreen) {

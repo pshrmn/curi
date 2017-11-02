@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
+import { TutorialBranch } from '../components/TutorialBranch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -46,6 +47,7 @@ export default () => (
         </li>
       </ul>
     </div>
+    <TutorialBranch name='06-pages-react' />
     <Section
       title='Babel'
       id='babel'

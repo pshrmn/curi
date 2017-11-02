@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
+import { TutorialBranch } from '../components/TutorialBranch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -38,6 +39,7 @@ export default () => (
         </li>
       </ul>
     </div>
+    <TutorialBranch name='02-setup' />
     <Section
       title='The Basics'
       id='basics'
@@ -49,7 +51,9 @@ export default () => (
       </p>
       <PrismBlock lang='bash'>
         {
-`mkdir curi-bookstore
+`# if you're using the tutorial repo, you should skip
+# this because you'll be using the repo folder
+mkdir curi-bookstore
 cd curi-bookstore`
         }
       </PrismBlock>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
+import { TutorialBranch } from '../components/TutorialBranch';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
@@ -32,6 +33,7 @@ export default () => (
         </li>
       </ul>
     </div>
+    <TutorialBranch name='05-config' />
     <Section
       title='Installation'
       id='installation'
