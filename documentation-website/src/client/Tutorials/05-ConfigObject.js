@@ -158,10 +158,10 @@ config.subscribe(responseLogger);`
       <PrismBlock lang='javascript'>
         {
 `const config = createConfig(history, routes);
-config.ready().then(resp => {
+config.ready().then(response => {
   // this function won't be called until the Promise returned
   // by config.ready() has resolved with our response object
-  console.log("Houston, we have a response", resp);
+  console.log("Houston, we have a response", response);
 });
 // since Curi is async, other parts of our code can continue
 // to run while we wait for the response to be ready

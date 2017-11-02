@@ -60,7 +60,7 @@ export default () => (
       </p>
       <PrismBlock lang='bash'>
         {
-`npm install --save-dev vue-loader`
+`npm install --save-dev vue-loader vue-template-compiler`
         }
       </PrismBlock>
       <PrismBlock lang='javascript'>
@@ -666,7 +666,7 @@ export default books;`
     <div class='books'>
       <div v-for="book in books" :key="book.id" class='book-item'>
         <curi-link to='Book' :params="{ id: book.id }">
-          Book {book.id}
+          Book {{book.id}}
         </curi-link>
       </div>
     </div>

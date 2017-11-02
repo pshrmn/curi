@@ -136,13 +136,13 @@ export function resetCart() {
 </template>
 
 <script>
-export default {
-  data: function() {
-    return {
-      count: '1'
-    };
-  }
-};
+  export default {
+    data: function() {
+      return {
+        count: '1'
+      };
+    }
+  };
 </script>
 `
         }
@@ -204,7 +204,7 @@ export default {
   import { updateCart } from '../api/shoppingCart';
 
   export default {
-    props: ['book'],
+    props: ['bookID'],
     data: function() {
       return {
         count: '1'
@@ -212,10 +212,10 @@ export default {
     },
     methods: {
       addToCart(event) {
-        updateCart(this.book, parseInt(this.count));
+        updateCart(this.bookID, parseInt(this.count));
       },
       addAndCheckout(event) {
-        updateCart(this.book, parseInt(this.count))
+        updateCart(this.bookID, parseInt(this.count))
           .then(() => {
             const pathname = this.$curi.addons.pathname('Checkout');
             this.$curi.history.push({ pathname });
@@ -390,20 +390,20 @@ const routes = [
 </template>
 
 <script>
-import { resetCart } from '../api/shoppingCart';
+  import { resetCart } from '../api/shoppingCart';
 
-export default {
-  props: ['response'],
-  methods: {
-    purchase: function(event) {
-      // when the user "purchases" their books, we just
-      // reset the cart and redirect to the "Checkout Complete" page
-      resetCart();
-      const pathname = this.$curi.addons.pathname('Checkout Complete');
-      this.$curi.history.push({ pathname });
+  export default {
+    props: ['response'],
+    methods: {
+      purchase: function(event) {
+        // when the user "purchases" their books, we just
+        // reset the cart and redirect to the "Checkout Complete" page
+        resetCart();
+        const pathname = this.$curi.addons.pathname('Checkout Complete');
+        this.$curi.history.push({ pathname });
+      }
     }
-  }
-};
+  };
 </script>`
         }
       </PrismBlock>

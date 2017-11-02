@@ -45,6 +45,33 @@ export default () => (
     </div>
     <TutorialBranch name='09-nav-react' />
     <Section
+      id='A Little Babel'
+      title='babel'
+    >
+      <p>
+        Up until now, we have used stateless functional React components. In
+        this tutorial, we will be using classes (extending <IJS>React.Component</IJS>).
+        To help us, we will be taking advantage of some class properties, so we
+        need to install the propert Babel plugin to support this and add it
+        to our Babel configuration.
+      </p>
+      <PrismBlock lang='bash'>
+        {
+`npm install --save-dev @babel/plugin-proposal-class-properties`
+        }
+      </PrismBlock>
+      <PrismBlock lang='javascript'>
+        {
+`// .babelrc.js
+module.exports = {
+  // ...,
+  plugins: ['@babel/proposal-class-properties']
+};
+`
+        }
+      </PrismBlock>
+    </Section>
+    <Section
       title='The (Fake) API'
       id='API'
     >
@@ -147,7 +174,9 @@ class AddToCart extends React.Component {
       </form>    
     );
   }
-}`
+}
+
+export default AddToCart;`
         }
       </PrismBlock>
       <p>
@@ -211,11 +240,13 @@ class AddToCart extends React.Component {
 
   addAndCheckout = () => {
     const { curi, bookID } = this.props;
-    updateCart(bookID, this.state.count);
-    // generate the pathname for the Checkout route and then
-    // navigate to there automatically
-    const pathname = curi.addons.pathname('Checkout');
-    curi.history.push({ pathname }); 
+    updateCart(bookID, this.state.count)
+      .then(() => {
+        // generate the pathname for the Checkout route and then
+        // navigate to there automatically
+        const pathname = curi.addons.pathname('Checkout');
+        curi.history.push({ pathname });
+      });
   }
 
   render() {

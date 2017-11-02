@@ -63,9 +63,9 @@ export default () => (
 </template>
 
 <script>
-export default {
-  props: ['response']
-};
+  export default {
+    props: ['response']
+  };
 </script>
 `
         }
