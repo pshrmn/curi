@@ -10,6 +10,7 @@ import {
 } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
+import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
 export default () => (
   <BaseTutorial>
@@ -123,6 +124,16 @@ const Book = (props) => {
 `git rm src/books.js`
       }
     </PrismBlock>
+    <Section
+      title='Review'
+      id='review'
+    >
+      <p>
+        Our "Book List" and "Book" pages are now rendered using data
+        from <IJS>response.data</IJS>.
+      </p>
+      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/08-render-data-react-complete' />
+    </Section>
     <Section
       title='Next'
       id='next'

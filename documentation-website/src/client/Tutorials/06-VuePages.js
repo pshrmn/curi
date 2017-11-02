@@ -10,7 +10,7 @@ import {
 } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
-
+import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
 export default () => (
   <BaseTutorial>
@@ -757,6 +757,16 @@ export default books;`
 </script>`
         }
       </PrismBlock>
+    </Section>
+    <Section
+      title='Review'
+      id='review'
+    >
+      <p>
+        After completing this tutorial, we now have a semi-functional website
+        that renders basic content for each of our pages.
+      </p>
+      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/06-pages-vue-complete' />
     </Section>
     <Section
       title='Next'

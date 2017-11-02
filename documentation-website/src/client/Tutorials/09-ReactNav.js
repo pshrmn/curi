@@ -10,6 +10,7 @@ import {
 } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
+import CodeSandboxDemo from '../components/CodeSandboxDemo'
 
 export default () => (
   <BaseTutorial>
@@ -494,6 +495,16 @@ class Checkout extends React.Component {
 }`
         }
       </PrismBlock>
+    </Section>
+    <Section
+      title='Review'
+      id='review'
+    >
+      <p>
+        We can now add books to our shopping cart and "buy" them from the
+        checkout page.
+      </p>
+      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/09-nav-react-complete' />
     </Section>
     <Section
       title='Next'
