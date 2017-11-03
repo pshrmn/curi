@@ -100,7 +100,7 @@ export default [
         name: 'Example',
         path: ':slug/',
         preload: () => {
-          const { loaded, caught } = handleImport('Tutorial');
+          const { loaded, caught } = handleImport('Example');
           return import(/* webpackChunkName: 'example' */'./route-components/Example')
             .then(loaded)
             .catch(caught);
