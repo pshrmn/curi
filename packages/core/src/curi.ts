@@ -68,7 +68,7 @@ function createConfig(
 
   function setupRoutesAndAddons(routeArray: Array<RouteDescriptor>): void {
     routes = routeArray.map(createRoute);
-    
+
     for (let key in registeredAddons) {
       delete registeredAddons[key];
     }
@@ -155,9 +155,9 @@ function createConfig(
       if (typeof fn !== 'function') {
         throw new Error('The argument passed to subscribe must be a function');
       }
-  
+
       fn.apply(null, previous);
-  
+
       const newLength = subscribers.push(fn);
       return () => {
         subscribers[newLength - 1] = null;

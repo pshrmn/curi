@@ -125,9 +125,9 @@ describe('createConfig', () => {
             return {
               name: 'second',
               register: (route, extra) => {
-                secondAddonCache[route.name] = `${extra
-                  ? extra
-                  : 'None'} + ${route.name}`;
+                secondAddonCache[route.name] = `${extra ? extra : 'None'} + ${
+                  route.name
+                }`;
                 return route.name;
               },
               get(route) {},
@@ -589,7 +589,7 @@ describe('createConfig', () => {
         done();
       });
 
-      const config = createConfig(history, routes);      
+      const config = createConfig(history, routes);
       config.subscribe(check);
       history.push('/contact/phone');
       history.push('/contact/mail');

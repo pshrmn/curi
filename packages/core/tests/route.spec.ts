@@ -15,7 +15,9 @@ function PropertyReporter(): Addon {
     get: (name: string): Route => {
       if (knownRoutes[name] == null) {
         console.error(
-          `Could not generate pathname for ${name} because it is not registered.`
+          `Could not generate pathname for ${
+            name
+          } because it is not registered.`
         );
         return;
       }
