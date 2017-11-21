@@ -3,7 +3,7 @@ import pathnameAddon from './addons/pathname';
 import createResponse from './response';
 import createRoute from './route';
 
-import { History, HickoryLocation } from '@hickory/root';
+import { History, HickoryLocation, PendingNavigation } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
 import { RouteDescriptor, InternalRoute } from './route';
 import { Response } from './response';
@@ -57,7 +57,6 @@ function createConfig(
   const registeredAddons: Addons = {};
   const subscribers: Array<Subscriber> = [];
 
-  let mostRecentKey: string;
   // This is the response generated for the previous navigation
   // and the action type of the navigation. These will be passed
   // to config.subscribe on their initial call.
@@ -79,13 +78,9 @@ function createConfig(
       registeredAddons[addon.name] = addon.get;
       registerRoutes(routes, addon);
     });
-
-    respond(history.location, history.action);
   }
 
   function getResponse(location: HickoryLocation): Promise<Response> {
-    mostRecentKey = location.key;
-
     if (cache) {
       const cachedResponse = cache.get(location);
       if (cachedResponse != null) {
@@ -101,12 +96,7 @@ function createConfig(
     });
   }
 
-  function emit(response: Response, action: string): boolean {
-    // don't emit old responses
-    if (response.key !== mostRecentKey) {
-      return false;
-    }
-
+  function emit(response: Response, action: string): void {
     beforeSideEffects.forEach(fn => {
       fn(response, action);
     });
@@ -120,18 +110,26 @@ function createConfig(
     afterSideEffects.forEach(fn => {
       fn(response, action);
     });
-
-    return true;
   }
 
-  function respond(location: HickoryLocation, action: string): void {
-    currentResponse = getResponse(location).then(
+  let activeResponse: PendingNavigation;
+
+  function respond(pending: PendingNavigation): void {
+    if (activeResponse) {
+      activeResponse.cancel(pending.action);
+      activeResponse.cancelled = true;
+    }
+    activeResponse = pending;
+
+    currentResponse = getResponse(pending.location).then(
       response => {
-        const emitted = emit(response, action);
-        // only store these after we have emitted.
-        if (emitted) {
-          previous = [response, action];
+        if (pending.cancelled) {
+          return;
         }
+        pending.finish();
+        activeResponse = undefined;
+        emit(response, pending.action);
+        previous = [response, pending.action];
 
         if (response.redirectTo) {
           history.replace(response.redirectTo);
@@ -147,7 +145,7 @@ function createConfig(
 
   // now that everything is defined, actually do the setup
   setupRoutesAndAddons(routeArray);
-  const unlisten = history.subscribe(respond);
+  history.respondWith(respond);
 
   return {
     addons: registeredAddons,

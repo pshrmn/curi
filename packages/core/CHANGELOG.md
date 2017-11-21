@@ -1,3 +1,7 @@
+## Next
+
+* Update to using Hickory's response handler model. Instead of subscribing to the history object, we pass it a response handler function which will be called whenever the location changes. This allows for better control of how navigation changes are emitted (the Curi router is now the only source of "truth"). Now, if a new navigation occurs while a previous navigation is still resolving, the previous navigation will be properly cancelled (it won't be added to the history array).
+
 ## 1.0.0-beta.14
 
 * Route object returned by `createRoute` now has a `public` property, which contains the route properties that are available to addons.

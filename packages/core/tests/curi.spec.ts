@@ -568,7 +568,7 @@ describe('createConfig', () => {
       history.push('/contact/phone');
     });
 
-    it('only emits most recent update if another one occurs before emitting', done => {
+    it('does not emit responses for cancelled navigation', done => {
       const routes = [
         { name: 'Home', path: '' },
         { name: 'About', path: 'about' },
@@ -589,7 +589,7 @@ describe('createConfig', () => {
         done();
       });
 
-      const config = createConfig(history, routes);
+      const config = createConfig(history, routes);      
       config.subscribe(check);
       history.push('/contact/phone');
       history.push('/contact/mail');
