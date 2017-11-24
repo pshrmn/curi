@@ -15,13 +15,13 @@ import renderFunction from './renderFunction';
  * a string. This is most likely route params, but you can pass
  * an object containing any values that you want.
  */
-function createTitleAddon() {
+function createTitleTextAddon() {
   let routes = {};
   return {
     name: 'title',
     register: (route) => {
-      let { name, title } = route;
-      routes[name] = title;
+      let { name, extra } = route;
+      routes[name] = extra && extra.title;
     },
     get: (name, params) => {
       const titleFn = routes[name];
@@ -36,7 +36,7 @@ function createTitleAddon() {
 const history = Browser();
 
 const config = createConfig(history, routes, {
-  addons: [createAncestorsAddon(), createTitleAddon()]
+  addons: [createAncestorsAddon(), createTitleTextAddon()]
 });
 
 ReactDOM.render((

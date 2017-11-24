@@ -34,7 +34,9 @@ export default [
           }
           mods.setData(products);
         },
-        title: (params) => `${params.category || 'Category'}`,
+        extra: {
+          title: (params) => `${params.category || 'Category'}`
+        },
         children: [
           {
             name: 'Product',
@@ -47,7 +49,9 @@ export default [
               }
               mods.setData(product);
             },
-            title: (params) => `${params.name || 'Product'}`
+            extra: {
+              title: (params) => `${params.name || 'Product'}`
+            }
           }
         ]
       }
