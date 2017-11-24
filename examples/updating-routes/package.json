@@ -17,9 +17,9 @@
     "webpack": "^3.8.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.14",
-    "@curi/react": "^1.0.0-beta.11",
-    "@hickory/browser": "^1.0.0-beta.3",
+    "@curi/core": "^1.0.0-beta.15",
+    "@curi/react": "^1.0.0-beta.12",
+    "@hickory/browser": "^1.0.0-beta.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   }
