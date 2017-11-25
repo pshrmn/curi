@@ -73,4 +73,13 @@ describe('createScrollSideEffect', () => {
     expect(mockScroll.mock.calls.length).toBe(1);
     expect(mockElementScroll.mock.calls.length).toBe(0);
   });
+
+  it('scrolls to top if location.hash is empty string', () => {
+    const sideEffect = createScrollSideEffect();
+    sideEffect({ location: { hash: '' } } as AnyResponse, 'REPLACE');
+
+    jest.runAllTimers();
+    expect(mockScroll.mock.calls.length).toBe(1);
+    expect(mockElementScroll.mock.calls.length).toBe(0);
+  });
 });
