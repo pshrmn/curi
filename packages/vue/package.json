@@ -12,6 +12,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
+    "coverage": "jest --coverage",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.ts\"",
