@@ -79,8 +79,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     title,
     extra,
     params: paramParsers
-  } =
-    options || <RouteDescriptor>{};
+  } = options;
 
   // end defaults to true, so end has to be hardcoded for it to be false
   const mustBeExact = pathOptions.end == null || pathOptions.end;

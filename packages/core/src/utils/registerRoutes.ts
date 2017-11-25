@@ -8,8 +8,6 @@ export default function registerRoutes(
 ) {
   routes.forEach(route => {
     const data = addon.register(route.public, parentData);
-    if (route.children) {
-      registerRoutes(route.children, addon, data);
-    }
+    registerRoutes(route.children, addon, data);
   });
 }

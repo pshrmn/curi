@@ -618,6 +618,17 @@ describe('createConfig', () => {
         done();
       });
     });
+
+    it('throws an error if passing a non-function to subscribe', () => {
+      // adding this test for coverage, but TypeScript doesn't like it
+      const config = createConfig(history, [{ name: 'Home', path: '' }]);
+      const nonFuncs = [null, undefined, 'test', 123, [1,2,3], {key: 'value'}];
+      nonFuncs.forEach(nf => {
+        expect(() => {
+          config.subscribe(nf);
+        }).toThrow('The argument passed to subscribe must be a function');
+      });
+    });
   });
 
   describe('response.redirectTo', () => {

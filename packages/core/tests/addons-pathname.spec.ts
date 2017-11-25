@@ -84,5 +84,24 @@ describe('pathname addon', () => {
       const output = pathname.get('Static');
       expect(output).toBe('/this/has/no/params');
     });
+
+    it('re-uses compiled fn on subsequent calls', () => {
+      // this test is just added for coverage
+      const player = { name: 'Player', path: 'player/:id' };
+      pathname.register(player);
+      const output = pathname.get('Player', { id: 17 });
+      expect(output).toBe('/player/17');
+      const output2 = pathname.get('Player', { id: 71 });
+      expect(output2).toBe('/player/71');
+    });
+
+    it('does not add extra leading slash if path begins with slash', () => {
+      // another code coverage test. There wasn't a "good" place to
+      // put this
+      const player = { name: 'Player', path: '/player/:id' };
+      pathname.register(player);
+      const output = pathname.get('Player', { id: 17 });
+      expect(output).toBe('/player/17');
+    });
   });
 });
