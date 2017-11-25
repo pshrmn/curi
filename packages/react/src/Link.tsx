@@ -87,7 +87,7 @@ class Link extends React.Component<LinkProps, LinkState> {
     invariant(
       curi.addons.active,
       'You are attempting to use the "active" prop, but have not included the "active" ' +
-        'addon (curi-addon-active) in your Curi configuration object.'
+        'addon (@curi/addon-active) in your Curi configuration object.'
     );
   }
 
@@ -117,7 +117,7 @@ class Link extends React.Component<LinkProps, LinkState> {
     }
 
     const { pathname } = this.state;
-    const href: string = curi.history.toHref({ pathname, ...details });
+    const href: string = curi.history.toHref({ ...details, pathname });
 
     return <Anchor {...anchorProps} onClick={this.clickHandler} href={href} />;
   }

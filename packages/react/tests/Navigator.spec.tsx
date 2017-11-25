@@ -208,6 +208,33 @@ describe('<Navigator>', () => {
         expect(unsub.mock.calls.length).toBe(1);
       });
     });
+
+    it('does not try to unsubscribe when unmounting <Navigator response>', () => {
+      const history = InMemory();
+      const routes = [
+        { name: 'Home', path: '', pathOptions: { end: true } },
+        { name: 'About', path: 'about' }
+      ];
+      const config = createConfig(history, routes);
+      const unsub = jest.fn();
+      const mockSubscribe = jest.fn(fn => unsub);
+      config.subscribe = mockSubscribe;
+
+      let received;
+      const fn = jest.fn(response => {
+        received = response;
+        return null;
+      });
+      const response = {} as AnyResponse;
+      
+      return config.ready().then(response => {
+        const wrapper = shallow(<Navigator config={config} response={response} render={fn} />);
+        expect(mockSubscribe.mock.calls.length).toBe(0);
+        expect(unsub.mock.calls.length).toBe(0);
+        wrapper.unmount();
+        expect(unsub.mock.calls.length).toBe(0);
+      });
+    });
   });
 
   describe('context', () => {

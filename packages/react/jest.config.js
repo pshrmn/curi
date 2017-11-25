@@ -17,5 +17,8 @@ module.exports = {
     }
   },
   "setupFiles": ["<rootDir>/tests/setup/rAF.js", "<rootDir>/tests/setup/enzyme.js"],
-  "mapCoverage": true
+  "mapCoverage": true,
+  "collectCoverageFrom": [
+    "src/*.tsx"
+  ]
 };

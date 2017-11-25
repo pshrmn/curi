@@ -196,7 +196,7 @@ describe('<Link>', () => {
       expect(a.prop('href')).toBe('/test?one=two#hashtag');
     });
 
-    it('overwrites the generated pathname if to includes one', () => {
+    it('providing a pathname in details does not overwrite the generated pathname', () => {
       const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
@@ -206,12 +206,12 @@ describe('<Link>', () => {
         { context: { curi: config } }
       );
       const a = wrapper.find('a');
-      expect(a.prop('href')).toBe('/not-a-test');
+      expect(a.prop('href')).toBe('/test');
     });
   });
 
   describe('active', () => {
-    it('throws if attempting to use when curi-addon-active is not "installed"', () => {
+    it('throws if attempting to use when @curi/addon-active is not "installed"', () => {
       const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
       const fakeResponse = {};
@@ -229,7 +229,7 @@ describe('<Link>', () => {
         );
       }).toThrow(
         'You are attempting to use the "active" prop, but have not included the "active" ' +
-          'addon (curi-addon-active) in your Curi configuration object.'
+          'addon (@curi/addon-active) in your Curi configuration object.'
       );
     });
 
@@ -305,6 +305,30 @@ describe('<Link>', () => {
       const link = wrapper.find('a');
       expect(link.prop('className')).toBe('test active');
     });
+
+    it('throws if adding active prop on re-render and @curi/addon-active is not installed', () => {
+      const history = InMemory();
+      const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
+      const fakeResponse = {};
+      function merge(props) {
+        props.className += ' active';
+        return props;
+      }
+
+      const wrapper = shallow(
+        <Link to="Test">
+          Test
+        </Link>,
+        { context: { curi: config, curiResponse: fakeResponse } }
+      );
+      
+      expect(() => {
+        wrapper.setProps({ active: { merge } });
+      }).toThrow(
+        'You are attempting to use the "active" prop, but have not included the "active" ' +
+          'addon (@curi/addon-active) in your Curi configuration object.'
+      );
+    });
   });
 
   describe('clicking a link', () => {
@@ -330,6 +354,34 @@ describe('<Link>', () => {
       };
       wrapper.find('a').simulate('click', leftClickEvent);
       expect(mockNavigate.mock.calls.length).toBe(1);
+    });
+
+    it('includes details in location passed to history.navigate', () => {
+      const history = InMemory();
+      const mockNavigate = jest.fn();
+      history.navigate = mockNavigate;
+
+      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const wrapper = shallow(<Link to="Test" details={{ hash: 'thing' }}>Test</Link>, {
+        context: { curi: config }
+      });
+      const leftClickEvent = {
+        defaultPrevented: false,
+        preventDefault() {
+          this.defaultPrevented = true;
+        },
+        metaKey: null,
+        altKey: null,
+        ctrlKey: null,
+        shiftKey: null,
+        button: 0
+      };
+      wrapper.find('a').simulate('click', leftClickEvent);
+      const mockLocation = mockNavigate.mock.calls[0][0];
+      expect(mockLocation).toMatchObject({
+        pathname: '/',
+        hash: 'thing'
+      })
     });
 
     describe('onClick', () => {
@@ -396,7 +448,7 @@ describe('<Link>', () => {
       });
     });
 
-    it("doesn't call historynavigate for modified clicks", () => {
+    it("doesn't call history.navigate for modified clicks", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
