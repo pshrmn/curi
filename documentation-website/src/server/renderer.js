@@ -17,16 +17,17 @@ export default function createHandler(debug=false) {
       addons: [createActiveAddon()]
     });
 
-    config.ready()
-      .then((response) => {
-        const markup = renderToString(
-          <Navigator response={response} config={config} render={renderFunction} />
-        );
-        res.send(renderFullPage(markup, response.title, debug));
-      })
-      .catch(err => {
-        console.log('uh oh', err);
-      })
+    config.subscribe((response, action) => {
+      const markup = renderToString(
+        <Navigator
+          response={response}
+          action={action}
+          config={config}
+          render={renderFunction}
+        />
+      );
+      res.send(renderFullPage(markup, response.title, debug));
+    });
   }
 }
 

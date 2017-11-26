@@ -13,8 +13,9 @@ export default ({ name }) => (
       Curi aims to be easy to setup. To get started, you just need to create a Hickory
       history object and an array of route objects. Pass those as arguments to the{' '}
       <IJS>createConfig</IJS> function to create your configuration object. Then,
-      use the Promise returned by <IJS>config.ready()</IJS> to wait for your
-      first response to be generated and you're ready to render.
+      subscribe to the configuration object using <IJS>config.subscribe()</IJS>. The function
+      you pass to <IJS>config.subscribe</IJS> will be called every time the location changes.
+      You can use this to (re-)render your application based on the response.
     </p>
 
     <Section
@@ -182,18 +183,15 @@ config.subscribe(response => {
 
       <p>
         Responses are generated asynchronously. A Curi configuration object has a{' '}
-        <IJS>ready</IJS> function that returns a Promise and will resolve once
-        the initial response has been generated. You do not have to use this, but it allows
-        you to delay rendering until after the first response has been generated. If you want
-        to render immediately, then you will need to handle how to render when there is no
-        response.
+        <IJS>subscribe</IJS> function that you can use to register a function to be called
+        whenever a new response is generated.
       </p>
       <PrismBlock lang='javascript'>
         {
 `const config = createConfig(history, routes);
-// wait to render until the first response is generated
-config.ready().then(response => {
-  // now we can render using the first response.
+// wait to render until a response is generated
+config.subscribe((response, action) => {
+  // now we can render using the response
 });`
         }
       </PrismBlock>

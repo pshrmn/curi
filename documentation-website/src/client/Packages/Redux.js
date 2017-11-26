@@ -44,20 +44,14 @@ export default ({ name, version, globalName }) => (
           It will also add your Curi configuration object to the store. You can get the object
           from the store using the <IJS>curi</IJS> property identifier.
         </p>
-        <Note>
-          <p>
-            You will probably want to wait for your configuration object to generate its initial
-            response before syncing by using <IJS>config.ready</IJS>. Otherwise, the initial
-            response will be <IJS>undefined</IJS>.
-          </p>
-        </Note>
         <PrismBlock lang='javascript'>
           {
 `const config = createConfig(history, routes);
 const store = createStore(reducer);
 
-config.ready().then(() => {
-  syncResponses(store, config);
+syncResponses(store, config);
+config.subscribe((response, action) => {
+  // render
 });`
           }
         </PrismBlock>

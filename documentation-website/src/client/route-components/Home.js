@@ -33,9 +33,11 @@ const routes = [
 // create your Curi configuration object
 const config = createConfig(history, routes);
 
-// wait for the first response to be generated
-config.ready().then(response => {
-  // and now, you're ready to render
+// subscribe to the config object with a function
+// that will be called whenever a new response
+// is generated
+config.subscribe((response, action) => {
+  // handle any rendering inside of this function
 });`
         }
       </PrismBlock>
@@ -393,10 +395,6 @@ const routes = [
               Server side rendering is pretty much the same as client side rendering. The main
               difference is that you will use an in-memory history instead of a browser history.
             </p>
-            <p>
-              Use <IJS>config.ready</IJS> to wait for the response object to be created, then
-              render using the response object that that resolves with.
-            </p>
           </div>
           <PrismBlock lang='javascript'>
             {
@@ -407,13 +405,14 @@ function requestHandler(req, resp) {
   const history = InMemory({ locations: [req.url] });
   const config = createConfig(history, routes);
 
-  config.ready().then(response => {
+  config.subscribe((response, action) => {
     // render the markup. This will vary based on your
     // rendering library, but here we'll use React
     const markup = renderToString(
       <Navigator
-        config={config}
         response={response}
+        action={action}
+        config={config}
         render={render}
       />
     );

@@ -24,13 +24,17 @@ export default ({ name }) => (
   // 2. Create a config
   const config = createConfig(history, routes);
 
-  // 3. Wait for the initial location's response to finish
-  config.ready()
-    .then(response => {
+  // 3. Subscribe to the config object
+  config.subscribe((response, action) => {
       // 4. Generate the HTML markup by rendering a <Navigator> and
       // passing it the response
       const markup = renderToString(
-        <Navigator response={response} config={config} children={renderFunction} />
+        <Navigator
+          response={response}
+          action={action}
+          config={config}
+          render={renderFunction}
+        />
       );
       // 5. Insert the markup into the page's html and send it
       res.send(renderFullPage(markup));
@@ -47,20 +51,6 @@ export default ({ name }) => (
       </p>
 
       <ul>
-        <li>
-          redirects — You should redirect instead of rendering markup when redirectTo is set.
-          <PrismBlock lang='javascript'>
-            {
-`config.ready()
-  .then(response => {
-    if (response.redirectTo) {
-      res.redirect(response.redirectTo);
-    }
-    // ...
-  });`
-            }
-          </PrismBlock>
-        </li>
         <li>
           Data loading — You would need to maintain two copies of your routes if you want to handle data fetching on the server differently than it works on the client side. This is not something that I have explored very closely yet, so I don't have any recommendations on exactly how to approach this.
         </li>

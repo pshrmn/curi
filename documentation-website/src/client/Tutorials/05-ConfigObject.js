@@ -100,13 +100,6 @@ const config = createConfig(history, routes);`
       </PrismBlock>
     </Section>
 
-    <p>
-      There are two more things we should cover before we're ready to render. The
-      first is how your application knows that navigation has happened so that it
-      can re-render. The second is something that we haven't seen any evidence of
-      it yet, but will become important soon: Curi is an asynchronous router.
-    </p>
-
     <Section
       title='Subscriber Model'
       id='subscriber'
@@ -122,7 +115,7 @@ const config = createConfig(history, routes);`
       <p>
         What does a subscriber function look like? It can take two arguments. The
         first will be the <IJS>response</IJS> object generated for the new location.
-        The second is the <IJS>action</IJS>type from the navigation (<IJS>'PUSH'</IJS>,
+        The second is the <IJS>action</IJS> type from the navigation (<IJS>'PUSH'</IJS>,
         <IJS>'POP'</IJS>, and <IJS>'REPLACE'</IJS>).
       </p>
       <PrismBlock lang='javascript'>
@@ -135,47 +128,7 @@ config.subscribe(responseLogger);`
         }
       </PrismBlock>
     </Section>
-    <Section
-      title='Ready or Not'
-      id='ready'
-      type='aside'
-    >
 
-      <p>
-        Curi being asynchronous means that we can run async code (e.g. code splitting
-        using <IJS>import()</IJS> or data fetching using <IJS>fetch()</IJS>) prior to
-        emitting a response. This is really convenient, but it can also be a gotcha if
-        you are not aware of it.
-      </p>
-      <p>
-        The reason that you need to be aware of it is because of what happens when you
-        create your configuration object. When you do this, Curi will begin creating a
-        response for you using the initial location (in a browser, this will be the current
-        URI). However, we will not be able to access the initial response right after we
-        create our config object. Instead, we will need to use the <IJS>config.ready</IJS>
-        {' '}method to wait for our initial response to be ready.
-      </p>
-      <PrismBlock lang='javascript'>
-        {
-`const config = createConfig(history, routes);
-config.ready().then(response => {
-  // this function won't be called until the Promise returned
-  // by config.ready() has resolved with our response object
-  console.log("Houston, we have a response", response);
-});
-// since Curi is async, other parts of our code can continue
-// to run while we wait for the response to be ready
-// this code will be run before code inside of the then function
-console.log("Look, Ma, no response yet!");`
-        }
-      </PrismBlock>
-      <p>
-        Calling <IJS>config.ready()</IJS> returns a <IJS>Promise</IJS> that
-        resolves with our response object. It isn't absolutely mandatory that
-        you use <IJS>config.ready()</IJS>, but if you do not, you will need to
-        handle rendering when the response is <IJS>undefined</IJS>.
-      </p>
-    </Section>
     <Section
       title='Review'
       id='review'

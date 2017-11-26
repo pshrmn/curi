@@ -297,7 +297,7 @@ const config = create1Config(history, routes);`
       </p>
       <PrismBlock lang='javascript'>
         {
-`config.ready().then(() => {
+`config.subscribe((response, action) => {
   // now our first response has resolved, so we
   // know that we will render with an actual response
 });`
@@ -348,9 +348,11 @@ const config = create1Config(history, routes);`
         </p>
         <PrismBlock lang='jsx'>
           {
-`config.ready().then(() => {
+`config.subscribe((response, action) => {
   ReactDOM.render((
     <Navigator
+      response={response}
+      action={action}
       config={config}
       render={response => { return ...; }}
     />

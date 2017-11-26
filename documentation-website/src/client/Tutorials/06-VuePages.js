@@ -215,85 +215,63 @@ Vue.use(CuriPlugin, { config });`
       <p>
         Being able to access the Curi configuration object is nice, but what we really
         need is to access the response objects that are emitted by Curi whenever the
-        location changes. We can do this through a combination of configuration object
-        methods that were covered in the{' '}
-        <Link to='Tutorial' params={{ name: '05-config' }}>configuration object</Link>
-        {' '}tutorial: <IJS>subscribe</IJS> and <IJS>ready</IJS>.
+        location changes. We can do this the <IJS>subscribe</IJS> method that we covered
+        in the <Link to='Tutorial' params={{ name: '05-config' }}>configuration object</Link>
+        {' '}tutorial.
       </p>
 
       <p>
-        First, we need to use <IJS>config.ready</IJS> to wait for our initial
-        response object. If we don't do this, we would have to handle rendering
-        when our <IJS>response</IJS> is <IJS>undefined</IJS>.
+        First, we need to have a variable that will be used to store our Vue instance.
+        Then, we will subscribe to the configuration object.
       </p>
 
       <PrismBlock lang='javascript'>
         {
 `// index.js
-config.ready().then(response => {
+let vm;
+config.subscribe(response => {
   // ...
 });`
         }
       </PrismBlock>
 
       <p>
-        Inside of the <IJS>then</IJS> function, we should create our Vue instance.
-        The response object should be passed as a data property to the instance.
-        We will have our Vue instance render an <Cmp>app</Cmp> component, which
-        we will define next. The <Cmp>app</Cmp> is passed the <IJS>response</IJS>
-        {' '}object as a prop, which it will use to determine what to render.
+        Inside of the subscribe function, we have two branches. The first is when
+        we don't have a Vue instance. When that is the case, we should create a new
+        Vue instance. When we already have a Vue instance, we just need to update
+        the <IJS>response</IJS> object.
       </p>
-
+      <p>
+        When we are creating a Vue instance, the response object should be passed as
+        a data property to the instance. We will have our Vue instance render
+        an <Cmp>app</Cmp> component, which we will define next. The <Cmp>app</Cmp> is
+        passed the <IJS>response</IJS> object as a prop, which it will use to determine
+        what to render.
+      </p>
+      <p>
+        When we are updating a Vue instance, we just need to set the new property on the
+        Vue instance and Vue's reactivity will handle re-rendering the application.
+      </p>
       <PrismBlock lang='javascript'>
         {
 `// index.js
 import app from './components/App';
 
-config.ready().then(response => {
-  const vm = new Vue({
-    el: '#root',
-    data: {
-      response
-    },
-    // we'll get into the <app> soon
-    template: '<app :response="response" />',
-    components: { app }
-  });
-});`
-        }
-      </PrismBlock>
-
-      <p>
-        Passing the <IJS>response</IJS> that <IJS>config.ready()</IJS> resolved
-         is great for our initial response, but what happens when the user navigates
-        to a new location? We need a way to update this value. This is where{' '}
-        <IJS>config.subscribe</IJS> comes into play.
-      </p>
-      <p>
-        We can pass a function to <IJS>config.subscribe</IJS> that will be
-        called whenever a new response is emitted. The first argument that
-        that function will receive is the new response object. That means
-        that we can write a subscriber function that sets <IJS>vm.response</IJS>
-        {' '}using the new response and Vue will re-render using the new
-        response.
-      </p>
-
-      <PrismBlock lang='javascript'>
-        {
-`// index.js
-config.ready().then(response => {
-  const vm = new Vue({
-    el: '#root',
-    data: {
-      response
-    },
-    template: '<app :response="response" />',
-    components: { app }
-  });
-
-  config.subscribe(response => {
+let vm;
+config.subscribe(response => {
+  if (!vm) {
+    vm = new Vue({
+      el: '#root',
+      data: {
+        response
+      },
+      // we'll get into the <app> soon
+      template: '<app :response="response" />',
+      components: { app }
+    });
+  } else {
     vm.response = response;
-  });
+  }
 });`
         }
       </PrismBlock>

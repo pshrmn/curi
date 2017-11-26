@@ -194,38 +194,39 @@ export default function renderFunction(h, resp) {
 
       <PrismBlock lang='javascript'>
         {
-`// 1. wait for the initial response to be resolved
-config.ready().then(resp => {
-  // 2. create the Vue app
-  const vm = new Vue({
-    el: '#app',
-    // 3. initialize the data with the first response object
-    data: {
-      response: resp
-    },
-
-    // 4. either use a template or a render function
-    // 4a. TEMPLATE
-    template: '<app :response="response" />',
-    components: { app: App },
-
-    // 4b. RENDER FUNCTION
-    methods: {
-      render: function(h, resp) {
-        const { body } = resp;
-        return h(body, { params: resp.params });
+`// 1. declare a variable for storing our Vue app
+let vm;
+// 2. subscribe to the configuration object so we can re-render
+// whenever a new response is created
+config.subscribe(response => {
+  // 3. create the Vue app if it doesn't exist
+  if (!vm) {
+    vm = new Vue({
+      el: '#app',
+      // 4. initialize the data with the first response object
+      data: { response },
+  
+      // 4. either use a template or a render function
+      // 4a. TEMPLATE
+      template: '<app :response="response" />',
+      components: { app: App },
+  
+      // 4b. RENDER FUNCTION
+      methods: {
+        render: function(h, resp) {
+          const { body } = resp;
+          return h(body, { params: resp.params });
+        }
+      },
+      render: function(h) {
+        return this.render(h, this.response);
       }
-    },
-    render: function(h) {
-      return this.render(h, this.response);
-    }
-  });
-
-  // 5. Subscribe to the config and update vm.response whenever
-  //    a new response is generated.
-  config.subscribe(resp => {
-    vm.response = resp;
-  });
+    });
+  }
+  // if the Vue app does exist, just update the response
+  else {
+    vm.response = response;
+  }
 });`
         }
       </PrismBlock>

@@ -128,36 +128,6 @@ const config = createConfig(history, routes, options);`
 
           <Subsection
             tag='h5'
-            title='ready()'
-            id='ready'
-          >
-            <p>
-              When you create a new configuration object, an initial response will be created for the current
-              location (<IJS>history.location</IJS>). One thing to note, though, is that route matching
-              is an asynchronous process. This allows for behavior like code splitting for bundles and ensuring
-              that data is loaded prior to rendering. However, this means that we can not rely on the response
-              being fully prepared right after the configuration object is created.
-            </p>
-            <p>
-              The ready method returns a Promise that will not resolve until the response has been fully
-              prepared. The returned Promise will resolve with the prepared response (unless an error
-              occurred in preparing the response, which you will need to catch yourself).
-            </p>
-            <p>
-              If a response has already been generated before ready is called, then ready will resolve with
-              that response.
-            </p>
-            <PrismBlock lang='javascript'>
-              {
-`config.ready().then(resp => {
-  // now we know that the response is ready
-});`
-              }
-            </PrismBlock>
-          </Subsection>
-
-          <Subsection
-            tag='h5'
             title='addons'
             id='addons'
           >

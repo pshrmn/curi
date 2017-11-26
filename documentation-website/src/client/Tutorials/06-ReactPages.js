@@ -145,11 +145,16 @@ import { Navigator } from '@curi/react';
 
 // ...
 
-config.ready().then(() => {
+config.subscribe((response, action) => {
   ReactDOM.render((
-    <Navigator config={config} render={(response, action, config) => {
-      return null;
-    }} />
+    <Navigator
+      response={response}
+      action={action}
+      config={config}
+      render={(response, action, config) => {
+        return null;
+      }}
+    />
   ), document.getElementById('root'));
 });`
           }

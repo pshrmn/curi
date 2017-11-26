@@ -19,8 +19,13 @@ const config = createConfig(history, routes, {
   sideEffects: [{ fn: setTitle }, { fn: scrollTo }]
 });
 
-config.ready().then(() => { 
+config.subscribe((response, action) => {
   ReactDOM.render((
-    <Navigator config={config} render={renderFunction} />
+    <Navigator
+      response={response}
+      action={action}
+      config={config}
+      render={renderFunction}
+    />
   ), document.getElementById('root'));
 });
