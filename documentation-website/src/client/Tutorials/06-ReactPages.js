@@ -120,10 +120,16 @@ module.exports = {
         </PrismBlock>
         <p>
           The <Cmp>Navigator</Cmp> is responsible for rendering the website whenever the
-          location changes. It has two props that we have to pass it: <IJS>config</IJS>
-          {' '}and <IJS>render</IJS>.
+          location changes. It expects four props: <IJS>response</IJS>, <IJS>action</IJS>,
+          <IJS>config</IJS>, and <IJS>render</IJS>.
         </p>
         <ol>
+          <li>
+            <IJS>response</IJS> is a Curi response object.
+          </li>
+          <li>
+          <IJS>action</IJS> is the action type of the last navigation.
+          </li>
           <li>
             <IJS>config</IJS> is our Curi configuration object.
           </li>
@@ -136,6 +142,11 @@ module.exports = {
             the <IJS>response</IJS> is what we really need for rendering.
           </li>
         </ol>
+        <p>
+          In order to get the <IJS>response</IJS> and <IJS>action</IJS> props, we need
+          to subscribe to our Curi configuration object. That will allow us to always
+          have the latest response and action values.
+        </p>
         <PrismBlock lang='jsx'>
           {
 `// index.js
@@ -160,11 +171,10 @@ config.subscribe((response, action) => {
           }
         </PrismBlock>
         <p>
-          The <Cmp>Navigator</Cmp> also places some variables on React's context.
-          A number of the other components exported by <IJS>@curi/react</IJS> rely
-          on these variables to render/function. These variables are <IJS>curi</IJS>,
-          which is the configuration object, and <IJS>curiResponse</IJS>, which is
-          the current response object.
+          The <Cmp>Navigator</Cmp> also adds a <IJS>curi</IJS> object to React's context.
+          This object has <IJS>config</IJS>, <IJS>response</IJS>, and <IJS>action</IJS>
+          {' '}properties. A number of the other components exported by <IJS>@curi/react</IJS>
+          {' '}rely on these variables to render/function.
         </p>
         <p>
           The above <IJS>render</IJS> function isn't very interesting because our
@@ -466,14 +476,30 @@ const routes = [
       </PrismBlock>
       <p>
         We can update our <IJS>render</IJS> function now to use <IJS>response.body</IJS>.
+        This is also a good time to separate the render function from the component. This
+        isn't absolutely necessary, but can help keep the code cleaner.
       </p>
       <PrismBlock lang='jsx'>
         {
-`ReactDOM.render((
-  <Navigator config={config} render={(response) => {
-    return <response.body />;
-  }} />
-), document.getElementById('root'));`
+`// index.js
+import renderFunction from './render';
+
+let root = document.getElementById('root');
+config.subscribe((response, action) => {
+  ReactDOM.render((
+    <Navigator
+      response={response}
+      action={action}
+      config={config}
+      render={renderFunction}
+    />
+  ), root);
+});
+
+// render.js
+export default function(response) {
+  return <response.body />;
+}`
         }
       </PrismBlock>
       <p>
@@ -542,24 +568,22 @@ export default NavLinks;`
       </p>
       <PrismBlock lang='jsx'>
         {
-`// index.js
+`// render.js
 import NavLinks from './components/NavLinks.js';
 
-ReactDOM.render((
-  <Navigator config={config} render={(response) => {
-    const { body: Body } = response;
-    return (
-      <div>
-        <header>
-          <NavLinks />
-        </header>
-        <main>
-          <Body />
-        </main>
-      </div>
-    );
-  }} />
-), document.getElementById('root'));`
+export default function(response) {
+  const { body: Body } = response;
+  return (
+    <div>
+      <header>
+        <NavLinks />
+      </header>
+      <main>
+        <Body />
+      </main>
+    </div>
+  );
+}`
         }
       </PrismBlock>
       <p>
@@ -636,22 +660,20 @@ const BookList = () => (
       </p>
       <PrismBlock lang='jsx'>
         {
-`// index.js
-ReactDOM.render((
-  <Navigator config={config} render={(response) => {
-    const { body: Body } = response;
-    return (
-      <div>
-        <header>
-          <NavLinks />
-        </header>
-        <main>
-          <Body response={response} />
-        </main>
-      </div>
-    );
-  }} />
-), document.getElementById('root'));`
+`// render.js
+export default function(response) {
+  const { body: Body } = response;
+  return (
+    <div>
+      <header>
+        <NavLinks />
+      </header>
+      <main>
+        <Body response={response} />
+      </main>
+    </div>
+  );
+}`
         }
       </PrismBlock>
       <Note>
