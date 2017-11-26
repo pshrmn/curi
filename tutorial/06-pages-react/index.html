@@ -16,20 +16,25 @@ module.exports = {
     }],
     &#x27;@babel/react&#x27;
   ]
-};</pre></div><div class="section"><h2 id="package"><span>The <code class="language-javascript">@curi/react</code> Package</span><a class="header-link" href="/tutorial/06-pages-react#package">#</a></h2><p>The <code class="language-javascript">@curi/react</code> package provides React components that know how to interact with Curi. For this tutorial, we will only be using two: <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> and<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>. However, there are a number of other ones that you might find useful. You can read more about them in the<!-- --> <a href="/packages/@curi/react/#API"><code class="language-javascript">@curi/react</code> documentation</a>.</p><div class="subsection"><h3 id="installation">Installation<a class="header-link" href="/tutorial/06-pages-react#installation">#</a></h3><p>Let&#x27;s start by installing the <code class="language-javascript">@curi/react</code> package. If you haven&#x27;t already, you should also install the <code class="language-javascript">react</code> and<!-- --> <code class="language-javascript">react-dom</code> packages.</p><pre class="language-bash">npm install @curi/react react react-dom</pre></div><div class="subsection"><h3 id="Navigator"><span>The <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> Component</span><a class="header-link" href="/tutorial/06-pages-react#Navigator">#</a></h3><pre class="language-javascript">import { Navigator } from &#x27;@curi/react&#x27;;</pre><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> is responsible for rendering the website whenever the location changes. It has two props that we have to pass it: <code class="language-javascript">config</code> <!-- -->and <code class="language-javascript">render</code>.</p><ol><li><code class="language-javascript">config</code> is our Curi configuration object.</li><li><code class="language-javascript">render</code> is a function that will be called whenever a new response is emitted (and during the initial render) and returns the React element(s) that make up your website. It will receive three arguments: the new <code class="language-javascript">response</code> object, the navigation&#x27;s <code class="language-javascript">action</code> and the Curi config object. The second two can be useful occasionally, but the <code class="language-javascript">response</code> is what we really need for rendering.</li></ol><pre class="language-jsx">// index.js
+};</pre></div><div class="section"><h2 id="package"><span>The <code class="language-javascript">@curi/react</code> Package</span><a class="header-link" href="/tutorial/06-pages-react#package">#</a></h2><p>The <code class="language-javascript">@curi/react</code> package provides React components that know how to interact with Curi. For this tutorial, we will only be using two: <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> and<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>. However, there are a number of other ones that you might find useful. You can read more about them in the<!-- --> <a href="/packages/@curi/react/#API"><code class="language-javascript">@curi/react</code> documentation</a>.</p><div class="subsection"><h3 id="installation">Installation<a class="header-link" href="/tutorial/06-pages-react#installation">#</a></h3><p>Let&#x27;s start by installing the <code class="language-javascript">@curi/react</code> package. If you haven&#x27;t already, you should also install the <code class="language-javascript">react</code> and<!-- --> <code class="language-javascript">react-dom</code> packages.</p><pre class="language-bash">npm install @curi/react react react-dom</pre></div><div class="subsection"><h3 id="Navigator"><span>The <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> Component</span><a class="header-link" href="/tutorial/06-pages-react#Navigator">#</a></h3><pre class="language-javascript">import { Navigator } from &#x27;@curi/react&#x27;;</pre><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> is responsible for rendering the website whenever the location changes. It expects four props: <code class="language-javascript">response</code>, <code class="language-javascript">action</code>,<code class="language-javascript">config</code>, and <code class="language-javascript">render</code>.</p><ol><li><code class="language-javascript">response</code> is a Curi response object.</li><li><code class="language-javascript">action</code> is the action type of the last navigation.</li><li><code class="language-javascript">config</code> is our Curi configuration object.</li><li><code class="language-javascript">render</code> is a function that will be called whenever a new response is emitted (and during the initial render) and returns the React element(s) that make up your website. It will receive three arguments: the new <code class="language-javascript">response</code> object, the navigation&#x27;s <code class="language-javascript">action</code> and the Curi config object. The second two can be useful occasionally, but the <code class="language-javascript">response</code> is what we really need for rendering.</li></ol><p>In order to get the <code class="language-javascript">response</code> and <code class="language-javascript">action</code> props, we need to subscribe to our Curi configuration object. That will allow us to always have the latest response and action values.</p><pre class="language-jsx">// index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { Navigator } from &#x27;@curi/react&#x27;;
 
 // ...
 
-config.ready().then(() =&gt; {
+config.subscribe((response, action) =&gt; {
   ReactDOM.render((
-    &lt;Navigator config={config} render={(response, action, config) =&gt; {
-      return null;
-    }} /&gt;
+    &lt;Navigator
+      response={response}
+      action={action}
+      config={config}
+      render={(response, action, config) =&gt; {
+        return null;
+      }}
+    /&gt;
   ), document.getElementById(&#x27;root&#x27;));
-});</pre><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> also places some variables on React&#x27;s context. A number of the other components exported by <code class="language-javascript">@curi/react</code> rely on these variables to render/function. These variables are <code class="language-javascript">curi</code>, which is the configuration object, and <code class="language-javascript">curiResponse</code>, which is the current response object.</p><p>The above <code class="language-javascript">render</code> function isn&#x27;t very interesting because our application is rendering nothing (<code class="language-javascript">null</code>). We&#x27;ll come back to that in a minute, but first we should learn about the other React component that we&#x27;ll be using.</p></div><div class="subsection"><h3 id="Link"><span>The <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> Component</span><a class="header-link" href="/tutorial/06-pages-react#Link">#</a></h3><pre class="language-javascript">import { Link } from &#x27;@curi/react&#x27;;</pre><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> component renders anchor (<code class="language-jsx"><!-- -->&lt;<!-- -->a<!-- -->&gt;</code>) elements. However, unlike an anchor, we don&#x27;t actually have to write the URI that we want to navigate to (the <code class="language-javascript">href</code>). Instead, you use the <code class="language-javascript">to</code> prop to pass the name of the route that you want to navigate to.</p><pre class="language-jsx">&lt;Link to=&#x27;Home&#x27;&gt;Home&lt;/Link&gt;
+});</pre><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> also adds a <code class="language-javascript">curi</code> object to React&#x27;s context. This object has <code class="language-javascript">config</code>, <code class="language-javascript">response</code>, and <code class="language-javascript">action</code> <!-- -->properties. A number of the other components exported by <code class="language-javascript">@curi/react</code> <!-- -->rely on these variables to render/function.</p><p>The above <code class="language-javascript">render</code> function isn&#x27;t very interesting because our application is rendering nothing (<code class="language-javascript">null</code>). We&#x27;ll come back to that in a minute, but first we should learn about the other React component that we&#x27;ll be using.</p></div><div class="subsection"><h3 id="Link"><span>The <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> Component</span><a class="header-link" href="/tutorial/06-pages-react#Link">#</a></h3><pre class="language-javascript">import { Link } from &#x27;@curi/react&#x27;;</pre><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> component renders anchor (<code class="language-jsx"><!-- -->&lt;<!-- -->a<!-- -->&gt;</code>) elements. However, unlike an anchor, we don&#x27;t actually have to write the URI that we want to navigate to (the <code class="language-javascript">href</code>). Instead, you use the <code class="language-javascript">to</code> prop to pass the name of the route that you want to navigate to.</p><pre class="language-jsx">&lt;Link to=&#x27;Home&#x27;&gt;Home&lt;/Link&gt;
 // &lt;a href=&#x27;/&#x27;&gt;Home&lt;/a&gt;</pre><p>If the route that you are navigating to has any params, you pass them using the <code class="language-javascript">params</code> prop.</p><pre class="language-jsx">// { name: &#x27;Book&#x27;, path: &#x27;:id&#x27; }
 // (inherits &#x27;books&#x27; path from parent route)
 &lt;Link to=&#x27;Book&#x27; params={{ id: 1357 }}&gt;
@@ -161,11 +166,25 @@ const routes = [
     path: &#x27;(.*)&#x27;,
     body: () =&gt; NotFound
   }
-];</pre><p>We can update our <code class="language-javascript">render</code> function now to use <code class="language-javascript">response.body</code>.</p><pre class="language-jsx">ReactDOM.render((
-  &lt;Navigator config={config} render={(response) =&gt; {
-    return &lt;response.body /&gt;;
-  }} /&gt;
-), document.getElementById(&#x27;root&#x27;));</pre><p>Now, if we load up our application, we will render our home page (the<!-- --> <code class="language-javascript">Home</code> component). Unfortunately, there is no way to navigate to any of our other pages. In order to do this, we will need to add some<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s to our application.</p></div><div class="section"><h2 id="nav-menu">A Navigation Menu<a class="header-link" href="/tutorial/06-pages-react#nav-menu">#</a></h2><p>We can write a simple <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> menu component to add navigation to our application. From this menu, we only need to be able to navigate to our &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, and &quot;Checkout&quot; routes. Navigation to individual books will be done from the book list page.</p><p>We will use a <code class="language-jsx"><!-- -->&lt;<!-- -->nav<!-- -->&gt;</code> element as the parent for our<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code>. Inside of that is a <code class="language-jsx"><!-- -->&lt;<!-- -->ul<!-- -->&gt;</code> and then each of our routes will be <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s wrapped in <code class="language-jsx"><!-- -->&lt;<!-- -->li<!-- -->&gt;</code>s.</p><pre class="language-jsx">// components/NavLinks.js
+];</pre><p>We can update our <code class="language-javascript">render</code> function now to use <code class="language-javascript">response.body</code>. This is also a good time to separate the render function from the component. This isn&#x27;t absolutely necessary, but can help keep the code cleaner.</p><pre class="language-jsx">// index.js
+import renderFunction from &#x27;./render&#x27;;
+
+let root = document.getElementById(&#x27;root&#x27;);
+config.subscribe((response, action) =&gt; {
+  ReactDOM.render((
+    &lt;Navigator
+      response={response}
+      action={action}
+      config={config}
+      render={renderFunction}
+    /&gt;
+  ), root);
+});
+
+// render.js
+export default function(response) {
+  return &lt;response.body /&gt;;
+}</pre><p>Now, if we load up our application, we will render our home page (the<!-- --> <code class="language-javascript">Home</code> component). Unfortunately, there is no way to navigate to any of our other pages. In order to do this, we will need to add some<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s to our application.</p></div><div class="section"><h2 id="nav-menu">A Navigation Menu<a class="header-link" href="/tutorial/06-pages-react#nav-menu">#</a></h2><p>We can write a simple <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> menu component to add navigation to our application. From this menu, we only need to be able to navigate to our &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, and &quot;Checkout&quot; routes. Navigation to individual books will be done from the book list page.</p><p>We will use a <code class="language-jsx"><!-- -->&lt;<!-- -->nav<!-- -->&gt;</code> element as the parent for our<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code>. Inside of that is a <code class="language-jsx"><!-- -->&lt;<!-- -->ul<!-- -->&gt;</code> and then each of our routes will be <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s wrapped in <code class="language-jsx"><!-- -->&lt;<!-- -->li<!-- -->&gt;</code>s.</p><pre class="language-jsx">// components/NavLinks.js
 import React from &#x27;react&#x27;;
 import { Link } from &#x27;@curi/react&#x27;;
 
@@ -187,24 +206,22 @@ const NavLinks = () =&gt; (
     &lt;/ul&gt;
   &lt;/nav&gt;
 );
-export default NavLinks;</pre><p>That is simple enough, but where should we render this? Our <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> components rely on the context variables that are provided by the <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code>. This means that our <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> needs to be a child of the <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code>.</p><p>The easiest way for us to do that would be to modify our<!-- --> <code class="language-javascript">render</code> function. Instead of just returning the<!-- --> <code class="language-javascript">response.body</code> component, we can return a <code class="language-jsx"><!-- -->&lt;<!-- -->div<!-- -->&gt;</code> <!-- -->that wraps both <code class="language-javascript">response.body</code> and our<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> component.</p><pre class="language-jsx">// index.js
+export default NavLinks;</pre><p>That is simple enough, but where should we render this? Our <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> components rely on the context variables that are provided by the <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code>. This means that our <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> needs to be a child of the <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code>.</p><p>The easiest way for us to do that would be to modify our<!-- --> <code class="language-javascript">render</code> function. Instead of just returning the<!-- --> <code class="language-javascript">response.body</code> component, we can return a <code class="language-jsx"><!-- -->&lt;<!-- -->div<!-- -->&gt;</code> <!-- -->that wraps both <code class="language-javascript">response.body</code> and our<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> component.</p><pre class="language-jsx">// render.js
 import NavLinks from &#x27;./components/NavLinks.js&#x27;;
 
-ReactDOM.render((
-  &lt;Navigator config={config} render={(response) =&gt; {
-    const { body: Body } = response;
-    return (
-      &lt;div&gt;
-        &lt;header&gt;
-          &lt;NavLinks /&gt;
-        &lt;/header&gt;
-        &lt;main&gt;
-          &lt;Body /&gt;
-        &lt;/main&gt;
-      &lt;/div&gt;
-    );
-  }} /&gt;
-), document.getElementById(&#x27;root&#x27;));</pre><p>Now, we can navigate between most of our routes. However, we still need to add navigation to our books.</p></div><div class="section"><h2 id="param-navigation">Navigating to Our Books<a class="header-link" href="/tutorial/06-pages-react#param-navigation">#</a></h2><p>Our &quot;Book&quot; route is different than all of our other routes because the book path includes an <code class="language-javascript">id</code> param. This means that we need to actually have &quot;id&quot; values to pass to our <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s. Later on, we&#x27;ll generate some better data, but for now we can just generate a placeholder list in a module called <code class="language-javascript">books.js</code>.</p><pre class="language-jsx"> // books.js
+export default function(response) {
+  const { body: Body } = response;
+  return (
+    &lt;div&gt;
+      &lt;header&gt;
+        &lt;NavLinks /&gt;
+      &lt;/header&gt;
+      &lt;main&gt;
+        &lt;Body /&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+  );
+}</pre><p>Now, we can navigate between most of our routes. However, we still need to add navigation to our books.</p></div><div class="section"><h2 id="param-navigation">Navigating to Our Books<a class="header-link" href="/tutorial/06-pages-react#param-navigation">#</a></h2><p>Our &quot;Book&quot; route is different than all of our other routes because the book path includes an <code class="language-javascript">id</code> param. This means that we need to actually have &quot;id&quot; values to pass to our <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s. Later on, we&#x27;ll generate some better data, but for now we can just generate a placeholder list in a module called <code class="language-javascript">books.js</code>.</p><pre class="language-jsx"> // books.js
 const books = [
   { id: 0 },
   { id: 1 },
@@ -229,22 +246,20 @@ const BookList = () =&gt; (
       )) }
     &lt;/div&gt;
   &lt;/div&gt;
-);</pre></div><div class="section"><h2 id="book-props">Book Props<a class="header-link" href="/tutorial/06-pages-react#book-props">#</a></h2><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s above allow us to navigate to our books, but we don&#x27;t actually have any information about which book we are supposed to be seeing. It would really help if our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> was able to access the parsed params so that it can render the information for the correct book.</p><p>The <code class="language-javascript">params</code> object is a property of our response object. That means that if we pass our response object as a prop to the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->Body<!-- -->&gt;</code>, we can access these params in our route components.</p><pre class="language-jsx">// index.js
-ReactDOM.render((
-  &lt;Navigator config={config} render={(response) =&gt; {
-    const { body: Body } = response;
-    return (
-      &lt;div&gt;
-        &lt;header&gt;
-          &lt;NavLinks /&gt;
-        &lt;/header&gt;
-        &lt;main&gt;
-          &lt;Body response={response} /&gt;
-        &lt;/main&gt;
-      &lt;/div&gt;
-    );
-  }} /&gt;
-), document.getElementById(&#x27;root&#x27;));</pre><div class="note"><strong>Note:</strong> <!-- -->There are a number of ways that you can decide to pass props to your route components. The one thing to keep in mind is that<!-- --> <em>all</em> of your route components will receive the same set of props. You can either be very specific and only pass the props that are necessary (e.g. <code class="language-jsx"><!-- -->&lt;<!-- -->Body params=<!-- -->{params}<!-- -->&gt;</code>) or you can just pass the entire response object (e.g. <code class="language-jsx"><!-- -->&lt;<!-- -->Body response=<!-- -->{response}<!-- -->&gt;</code>) so you don&#x27;t have to worry about updating this every time one of your route components needs another prop from the response.</div><p>Next, we just need to update our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component so that it can access its <code class="language-javascript">params</code> prop and figure out which book to render content for.</p><pre class="language-jsx">// components/Book.js
+);</pre></div><div class="section"><h2 id="book-props">Book Props<a class="header-link" href="/tutorial/06-pages-react#book-props">#</a></h2><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s above allow us to navigate to our books, but we don&#x27;t actually have any information about which book we are supposed to be seeing. It would really help if our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> was able to access the parsed params so that it can render the information for the correct book.</p><p>The <code class="language-javascript">params</code> object is a property of our response object. That means that if we pass our response object as a prop to the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->Body<!-- -->&gt;</code>, we can access these params in our route components.</p><pre class="language-jsx">// render.js
+export default function(response) {
+  const { body: Body } = response;
+  return (
+    &lt;div&gt;
+      &lt;header&gt;
+        &lt;NavLinks /&gt;
+      &lt;/header&gt;
+      &lt;main&gt;
+        &lt;Body response={response} /&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+  );
+}</pre><div class="note"><strong>Note:</strong> <!-- -->There are a number of ways that you can decide to pass props to your route components. The one thing to keep in mind is that<!-- --> <em>all</em> of your route components will receive the same set of props. You can either be very specific and only pass the props that are necessary (e.g. <code class="language-jsx"><!-- -->&lt;<!-- -->Body params=<!-- -->{params}<!-- -->&gt;</code>) or you can just pass the entire response object (e.g. <code class="language-jsx"><!-- -->&lt;<!-- -->Body response=<!-- -->{response}<!-- -->&gt;</code>) so you don&#x27;t have to worry about updating this every time one of your route components needs another prop from the response.</div><p>Next, we just need to update our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component so that it can access its <code class="language-javascript">params</code> prop and figure out which book to render content for.</p><pre class="language-jsx">// components/Book.js
 const Book = ({ response }) =&gt; (
   &lt;div className=&#x27;book&#x27;&gt;
     Book {response.params.id}

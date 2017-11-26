@@ -24,36 +24,62 @@ const routes = [
 // create your Curi configuration object
 const config = createConfig(history, routes);
 
-// wait for the first response to be generated
-config.ready().then(response =&gt; {
-  // and now, you&#x27;re ready to render
-});</pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> guide.</p></div><div class="features"><h2>Features</h2><div class="feature"><h3>Easy React Integration</h3><p>Curi is not just a React router, but React is currently the best supported rendering library for Curi.</p><div class="code"><div class="description"><p>Use the <code class="language-javascript">body</code> property of routes to specify each route&#x27;s component:</p></div><pre class="language-jsx">const Home = () =&gt; &lt;div&gt;Home&lt;/div&gt;;
-const User = props =&gt; &lt;div&gt;User {props.params.userID}&lt;/div&gt;;
-const NotFound = () =&gt; &lt;div&gt;Page not found...&lt;/div&gt;;
+// subscribe to the config object with a function
+// that will be called whenever a new response
+// is generated
+config.subscribe((response, action) =&gt; {
+  // handle any rendering inside of this function
+});</pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> guide.</p></div><div class="features"><h2>Features</h2><div class="feature"><h3>Easy React Integration</h3><p>Curi is not just a React router, but React is currently the best supported rendering library for Curi.</p><div class="code"><div class="description"><p>Use the <code class="language-javascript">body</code> property of routes to specify each route&#x27;s component:</p></div><pre class="language-jsx">const Home = () =&gt; (
+  &lt;div&gt;Home&lt;/div&gt;
+);
+const User = props =&gt; (
+  &lt;div&gt;User {props.params.userID}&lt;/div&gt;
+);
+const NotFound = () =&gt; (
+  &lt;div&gt;Page not found...&lt;/div&gt;
+);
 
 const routes = [
-  { name: &#x27;Home&#x27;, path: &#x27;&#x27;, body: () =&gt; Home },
-  { name: &#x27;User&#x27;, path: &#x27;u/:userID&#x27;, body: () =&gt; User },
-  { name: &#x27;Not Found&#x27;, path: &#x27;*&#x27;, body: () =&gt; NotFound }
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+    body: () =&gt; Home
+  },
+  {
+    name: &#x27;User&#x27;,
+    path: &#x27;u/:userID&#x27;,
+    body: () =&gt; User
+  },
+  {
+    name: &#x27;Not Found&#x27;,
+    path: &#x27;(.*)&#x27;,
+    body: () =&gt; NotFound
+  }
 ];</pre></div><div class="code"><div class="description"><p><code class="language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code>s are used for navigating between locations within an application. URI formatting is handled for you, all you have to do is know the name (and parameters) of the route that you want to link to.</p></div><pre class="language-jsx">import Link from &#x27;@curi/react-link&#x27;;
 
 const Nav = () =&gt; (
   &lt;div&gt;
     &lt;Link to=&#x27;Home&#x27;&gt;Home&lt;/Link&gt;
-    &lt;Link to=&#x27;User&#x27; params={{ userID: 4 }}&gt;User Four&lt;/Link&gt;
+    &lt;Link to=&#x27;User&#x27; params={{ userID: 4 }}&gt;
+      User Four
+    &lt;/Link&gt;
   &lt;/div&gt;
 );</pre></div><div class="code"><div class="description"><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> is responsible for re-rendering the application every time the location changes, using the <code class="language-javascript">render</code> function.</p></div><pre class="language-jsx">import Navigator from &#x27;@curi/react-navigator&#x27;;
 
 ReactDOM.render((
-  &lt;Navigator config={config} render={(response) =&gt; {
-    const { body:Body } = response;
-    return (
-      &lt;div&gt;
-        &lt;Nav /&gt;
-        &lt;Body /&gt;
-      &lt;/div&gt;
-    );
-  }}
+  &lt;Navigator
+    response={response}
+    action={action}
+    config={config}
+    render={(response) =&gt; {
+      const { body:Body } = response;
+      return (
+        &lt;div&gt;
+          &lt;Nav /&gt;
+          &lt;Body /&gt;
+        &lt;/div&gt;
+      );
+    }}
 ));</pre></div><p>There are a number of other Curi + React components, but <code class="language-jsx"><!-- -->&lt;<!-- -->Navigator<!-- -->&gt;</code> and<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> are the only ones that you&#x27;ll need to be familiar with while getting started.. You can see the others via the<!-- --> <a href="/packages/@curi/react/"><code class="language-javascript">@curi/react</code></a> page.</p></div><div class="feature"><h3>Information Rich Response Objects</h3><p>Whenever the location changes (and on initial load), Curi will generate a response object with data on the matching route. The properties of this object are what you can use to render your application. You can learn more about these in the<!-- --> <a href="/guides/responses/">rendering with responses</a> guide.</p><div class="code"><div class="description"><p>There isn&#x27;t one &quot;right&quot; way to render using the response object, but it is useful for <code class="language-javascript">body</code> to be a function that will render the content for the route. (The body property of a response is the value returned by calling the body property of a route.)</p></div><pre class="language-javascript">{
   key: &#x27;123&#x27;,
   location: { pathname: &#x27;/u/456&#x27;, ... },
@@ -118,30 +144,36 @@ const routes = [
     name: &#x27;User&#x27;,
     path: &#x27;users/:userID&#x27;,
     preload: () =&gt; import(&#x27;./components/User&#x27;)
-      .then(module =&gt; { store[&#x27;User&#x27;] = module.default; }),
+      .then(module =&gt; {
+        store[&#x27;User&#x27;] = module.default;
+      }),
     body: () =&gt; store[&#x27;User&#x27;]
   }
   ...,
-]</pre></div></div><div class="feature"><h3>Straightforward Server Side Rendering</h3><div class="code"><div class="description"><p>Server side rendering is pretty much the same as client side rendering. The main difference is that you will use an in-memory history instead of a browser history.</p><p>Use <code class="language-javascript">config.ready</code> to wait for the response object to be created, then render using the response object that that resolves with.</p></div><pre class="language-javascript">import InMemory from &#x27;@hickory/in-memory&#x27;;
+]</pre></div></div><div class="feature"><h3>Straightforward Server Side Rendering</h3><div class="code"><div class="description"><p>Server side rendering is pretty much the same as client side rendering. The main difference is that you will use an in-memory history instead of a browser history.</p></div><pre class="language-javascript">import InMemory from &#x27;@hickory/in-memory&#x27;;
 
 function requestHandler(req, resp) {
   // create a history using the requested location
-  const history = InMemory({ locations: [req.url] });
+  const history = InMemory({
+    locations: [req.url]
+  });
   const config = createConfig(history, routes);
 
-  config.ready().then(response =&gt; {
-    // render the markup. This will vary based on your
-    // rendering library, but here we&#x27;ll use React
+  config.subscribe((response, action) =&gt; {
+    // render the markup. This will vary based on
+    // your rendering library, but here we&#x27;ll
+    use React
     const markup = renderToString(
       &lt;Navigator
-        config={config}
         response={response}
+        action={action}
+        config={config}
         render={render}
       /&gt;
     );
 
-    // insert the generated HTML into the full HTML of the
-    // page and send the response
+    // insert the generated HTML into the full
+    // HTML of the page and send the response
     res.send(fullPageHtml(markup));
   });
 }</pre></div></div></div></div></main></div></div>

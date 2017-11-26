@@ -15,13 +15,17 @@
   // 2. Create a config
   const config = createConfig(history, routes);
 
-  // 3. Wait for the initial location&#x27;s response to finish
-  config.ready()
-    .then(response =&gt; {
+  // 3. Subscribe to the config object
+  config.subscribe((response, action) =&gt; {
       // 4. Generate the HTML markup by rendering a &lt;Navigator&gt; and
       // passing it the response
       const markup = renderToString(
-        &lt;Navigator response={response} config={config} children={renderFunction} /&gt;
+        &lt;Navigator
+          response={response}
+          action={action}
+          config={config}
+          render={renderFunction}
+        /&gt;
       );
       // 5. Insert the markup into the page&#x27;s html and send it
       res.send(renderFullPage(markup));
@@ -29,13 +33,7 @@
     .catch(err =&gt; {
       // 6. You should also handle any errors that might occur
     });
-}</pre><p>The above example is very basic. Some other things that you might need to consider are:</p><ul><li>redirects — You should redirect instead of rendering markup when redirectTo is set.<pre class="language-javascript">config.ready()
-  .then(response =&gt; {
-    if (response.redirectTo) {
-      res.redirect(response.redirectTo);
-    }
-    // ...
-  });</pre></li><li>Data loading — You would need to maintain two copies of your routes if you want to handle data fetching on the server differently than it works on the client side. This is not something that I have explored very closely yet, so I don&#x27;t have any recommendations on exactly how to approach this.</li><li>Code splitting — In order to use dynamic imports on the server, you will probably need to use a Babel plugin like dynamic-import-node. Unfortunately, dynamic-import-node breaks Webpack&#x27;s code splitting. In order for your code to be split into multiple bundles, you should ensure that dynamic-import-node isn&#x27;t being run when building your client side bundle. The solution used in this experiment is to use the env property.<pre class="language-javascript">{
+}</pre><p>The above example is very basic. Some other things that you might need to consider are:</p><ul><li>Data loading — You would need to maintain two copies of your routes if you want to handle data fetching on the server differently than it works on the client side. This is not something that I have explored very closely yet, so I don&#x27;t have any recommendations on exactly how to approach this.</li><li>Code splitting — In order to use dynamic imports on the server, you will probably need to use a Babel plugin like dynamic-import-node. Unfortunately, dynamic-import-node breaks Webpack&#x27;s code splitting. In order for your code to be split into multiple bundles, you should ensure that dynamic-import-node isn&#x27;t being run when building your client side bundle. The solution used in this experiment is to use the env property.<pre class="language-javascript">{
   &quot;presets&quot;: [ &quot;es2015&quot;, &quot;react&quot; ],
   &quot;plugins&quot;: [
     &quot;syntax-dynamic-import&quot;

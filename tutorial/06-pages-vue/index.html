@@ -43,36 +43,28 @@ Vue.use(CuriPlugin, { config });</pre><p>This plugins does a couple things. Firs
 // &lt;a href=&#x27;/contact#email&gt;Contact by Email&lt;/a&gt;</pre><div class="note"><strong>Note:</strong> <!-- -->If you want to navigate outside of the application, use an anchor not a <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>.<pre class="language-jsx">// interal
 &lt;curi-link to=&#x27;Contact&#x27;&gt;Contact&lt;/curi-link&gt;
 // external
-&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</pre></div></div></div><div class="section"><h2 id="response">The Response<a class="header-link" href="/tutorial/06-pages-vue#response">#</a></h2><p>Being able to access the Curi configuration object is nice, but what we really need is to access the response objects that are emitted by Curi whenever the location changes. We can do this through a combination of configuration object methods that were covered in the<!-- --> <a href="/tutorial/05-config">configuration object</a> <!-- -->tutorial: <code class="language-javascript">subscribe</code> and <code class="language-javascript">ready</code>.</p><p>First, we need to use <code class="language-javascript">config.ready</code> to wait for our initial response object. If we don&#x27;t do this, we would have to handle rendering when our <code class="language-javascript">response</code> is <code class="language-javascript">undefined</code>.</p><pre class="language-javascript">// index.js
-config.ready().then(response =&gt; {
+&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</pre></div></div></div><div class="section"><h2 id="response">The Response<a class="header-link" href="/tutorial/06-pages-vue#response">#</a></h2><p>Being able to access the Curi configuration object is nice, but what we really need is to access the response objects that are emitted by Curi whenever the location changes. We can do this using the <code class="language-javascript">subscribe</code> method that we covered in the <a href="/tutorial/05-config">configuration object</a> <!-- -->tutorial.</p><p>First, we need to have a variable that will be used to store our Vue instance. Then, we will subscribe to the configuration object.</p><pre class="language-javascript">// index.js
+let vm;
+config.subscribe(response =&gt; {
   // ...
-});</pre><p>Inside of the <code class="language-javascript">then</code> function, we should create our Vue instance. The response object should be passed as a data property to the instance. We will have our Vue instance render an <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> component, which we will define next. The <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> is passed the <code class="language-javascript">response</code> <!-- -->object as a prop, which it will use to determine what to render.</p><pre class="language-javascript">// index.js
+});</pre><p>Inside of the subscribe function, we have two branches. The first is when we don&#x27;t have a Vue instance. When that is the case, we should create a new Vue instance. When we already have a Vue instance, we just need to update the <code class="language-javascript">response</code> object on the Vue instance.</p><p>When we are creating a Vue instance, the response object should be passed as a data property to the instance. We will have our Vue instance render an <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> component, which we will define next. The <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> is passed the <code class="language-javascript">response</code> object as a prop, which it will use to determine what to render.</p><p>When we are updating a Vue instance, we just need to set the new property on the Vue instance and Vue&#x27;s reactivity will handle re-rendering the application.</p><pre class="language-javascript">// index.js
 import app from &#x27;./components/App&#x27;;
 
-config.ready().then(response =&gt; {
-  const vm = new Vue({
-    el: &#x27;#root&#x27;,
-    data: {
-      response
-    },
-    // we&#x27;ll get into the &lt;app&gt; soon
-    template: &#x27;&lt;app :response=&quot;response&quot; /&gt;&#x27;,
-    components: { app }
-  });
-});</pre><p>Passing the <code class="language-javascript">response</code> that <code class="language-javascript">config.ready()</code> resolved is great for our initial response, but what happens when the user navigates to a new location? We need a way to update this value. This is where<!-- --> <code class="language-javascript">config.subscribe</code> comes into play.</p><p>We can pass a function to <code class="language-javascript">config.subscribe</code> that will be called whenever a new response is emitted. The first argument that that function will receive is the new response object. That means that we can write a subscriber function that sets <code class="language-javascript">vm.response</code> <!-- -->using the new response and Vue will re-render using the new response.</p><pre class="language-javascript">// index.js
-config.ready().then(response =&gt; {
-  const vm = new Vue({
-    el: &#x27;#root&#x27;,
-    data: {
-      response
-    },
-    template: &#x27;&lt;app :response=&quot;response&quot; /&gt;&#x27;,
-    components: { app }
-  });
-
-  config.subscribe(response =&gt; {
+let vm;
+config.subscribe(response =&gt; {
+  if (!vm) {
+    vm = new Vue({
+      el: &#x27;#root&#x27;,
+      data: {
+        response
+      },
+      // we&#x27;ll get into the &lt;app&gt; soon
+      template: &#x27;&lt;app :response=&quot;response&quot; /&gt;&#x27;,
+      components: { app }
+    });
+  } else {
     vm.response = response;
-  });
+  }
 });</pre></div><div class="section"><h2 id="app">The App<a class="header-link" href="/tutorial/06-pages-vue#app">#</a></h2><p>At this point we have the ability to access our configuration object throughout our components and we are passing response objects to some <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> component that we haven&#x27;t actually written yet. We should do that now.</p><p>Our <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> component will be responsible for rendering our website based on the response object. To start, let&#x27;s add a <code class="language-javascript">components</code> directory to our <code class="language-javascript">src</code> directory.</p><pre class="language-bash">mkdir -p src/components</pre><p>From up above, we know that our <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> will be receiving the response object as a prop. What should it render, though?</p><pre class="language-html">&lt;!-- components/App.vue --&gt;
 &lt;template&gt;
 &lt;/template&gt;

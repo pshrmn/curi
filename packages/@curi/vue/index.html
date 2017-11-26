@@ -57,38 +57,39 @@ export default function renderFunction(h, resp) {
     h(Nav),
     h(resp.body, { props: { params: resp.params, data: resp.data } })
   ]);
-}</pre><p>To actually render the application, you will want to make <code class="language-javascript">response</code> an observed property of your application. Then, you can use <code class="language-javascript">config.subscribe</code> to update that object whenever a new response is emitted.</p><pre class="language-javascript">// 1. wait for the initial response to be resolved
-config.ready().then(resp =&gt; {
-  // 2. create the Vue app
-  const vm = new Vue({
-    el: &#x27;#app&#x27;,
-    // 3. initialize the data with the first response object
-    data: {
-      response: resp
-    },
-
-    // 4. either use a template or a render function
-    // 4a. TEMPLATE
-    template: &#x27;&lt;app :response=&quot;response&quot; /&gt;&#x27;,
-    components: { app: App },
-
-    // 4b. RENDER FUNCTION
-    methods: {
-      render: function(h, resp) {
-        const { body } = resp;
-        return h(body, { params: resp.params });
+}</pre><p>To actually render the application, you will want to make <code class="language-javascript">response</code> an observed property of your application. Then, you can use <code class="language-javascript">config.subscribe</code> to update that object whenever a new response is emitted.</p><pre class="language-javascript">// 1. declare a variable for storing our Vue app
+let vm;
+// 2. subscribe to the configuration object so we can re-render
+// whenever a new response is created
+config.subscribe(response =&gt; {
+  // 3. create the Vue app if it doesn&#x27;t exist
+  if (!vm) {
+    vm = new Vue({
+      el: &#x27;#app&#x27;,
+      // 4. initialize the data with the first response object
+      data: { response },
+  
+      // 4. either use a template or a render function
+      // 4a. TEMPLATE
+      template: &#x27;&lt;app :response=&quot;response&quot; /&gt;&#x27;,
+      components: { app: App },
+  
+      // 4b. RENDER FUNCTION
+      methods: {
+        render: function(h, resp) {
+          const { body } = resp;
+          return h(body, { params: resp.params });
+        }
+      },
+      render: function(h) {
+        return this.render(h, this.response);
       }
-    },
-    render: function(h) {
-      return this.render(h, this.response);
-    }
-  });
-
-  // 5. Subscribe to the config and update vm.response whenever
-  //    a new response is generated.
-  config.subscribe(resp =&gt; {
-    vm.response = resp;
-  });
+    });
+  }
+  // if the Vue app does exist, just update the response
+  else {
+    vm.response = response;
+  }
 });</pre></div></div><div class="sidebar"><h2>Packages</h2><ul><li class="link-group"><h3>core</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/core/">core</a></li></ul></li><li class="link-group"><h3>addon</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/addon-active/">addon-active</a></li><li class="solo"><a href="/packages/@curi/addon-ancestors/">addon-ancestors</a></li><li class="solo"><a href="/packages/@curi/addon-prefetch/">addon-prefetch</a></li></ul></li><li class="link-group"><h3>side-effect</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/side-effect-title/">side-effect-title</a></li><li class="solo"><a href="/packages/@curi/side-effect-scroll/">side-effect-scroll</a></li></ul></li><li class="link-group"><h3>renderer</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/react/">react</a></li><li class="solo"><a href="/packages/@curi/svelte/">svelte</a></li><li class="solo"><a class="active" href="/packages/@curi/vue/">vue</a></li></ul></li><li class="link-group"><h3>redux</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/redux/">redux</a></li></ul></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
