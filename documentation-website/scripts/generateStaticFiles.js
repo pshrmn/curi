@@ -1,4 +1,4 @@
-require('babel-core/register');
+require('@babel/register');
 const PathToRegexp = require('path-to-regexp');
 const request = require('request-promise-native');
 const fs = require('fs');

@@ -1,4 +1,6 @@
-require('babel-core/register');
+require('@babel/register');
+
+console.log('yo....');
 
 const createApp = require('./app');
 const app = createApp(true);

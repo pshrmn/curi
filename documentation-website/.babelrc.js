@@ -1,23 +1,21 @@
 const plugins = [
-  'transform-object-rest-spread',
-  'syntax-async-functions',
-  'transform-regenerator',
-  'transform-class-properties'
+  '@babel/plugin-proposal-class-properties',
+  '@babel/plugin-proposal-object-rest-spread'
 ];
 
 const BABEL_ENV = process.env.BABEL_ENV
 
 if (BABEL_ENV === 'build') {
-  plugins.push('syntax-dynamic-import');
+  plugins.push('@babel/plugin-syntax-dynamic-import');
 } else if (BABEL_ENV === 'serve') {
   plugins.push('dynamic-import-node');
 }
 
 const config = {
   presets: [
-    'react',
+    '@babel/preset-react',
     [
-      'env',
+      '@babel/preset-env',
       {
         modules: 'commonjs',
         targets: {

@@ -1,4 +1,4 @@
-require('babel-core/register');
+require('@babel/register');
 
 const generateStaticFiles = require('./generateStaticFiles');
 const updatePackageVersions = require('./updatePackageVersions');
