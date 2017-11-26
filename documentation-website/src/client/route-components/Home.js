@@ -65,14 +65,32 @@ config.subscribe((response, action) => {
           </div>
           <PrismBlock lang='jsx'>
             {
-`const Home = () => <div>Home</div>;
-const User = props => <div>User {props.params.userID}</div>;
-const NotFound = () => <div>Page not found...</div>;
+`const Home = () => (
+  <div>Home</div>
+);
+const User = props => (
+  <div>User {props.params.userID}</div>
+);
+const NotFound = () => (
+  <div>Page not found...</div>
+);
 
 const routes = [
-  { name: 'Home', path: '', body: () => Home },
-  { name: 'User', path: 'u/:userID', body: () => User },
-  { name: 'Not Found', path: '*', body: () => NotFound }
+  {
+    name: 'Home',
+    path: '',
+    body: () => Home
+  },
+  {
+    name: 'User',
+    path: 'u/:userID',
+    body: () => User
+  },
+  {
+    name: 'Not Found',
+    path: '(.*)',
+    body: () => NotFound
+  }
 ];`
               
             }
@@ -94,7 +112,9 @@ const routes = [
 const Nav = () => (
   <div>
     <Link to='Home'>Home</Link>
-    <Link to='User' params={{ userID: 4 }}>User Four</Link>
+    <Link to='User' params={{ userID: 4 }}>
+      User Four
+    </Link>
   </div>
 );`
             }
@@ -113,15 +133,19 @@ const Nav = () => (
 `import Navigator from '@curi/react-navigator';
 
 ReactDOM.render((
-  <Navigator config={config} render={(response) => {
-    const { body:Body } = response;
-    return (
-      <div>
-        <Nav />
-        <Body />
-      </div>
-    );
-  }}
+  <Navigator
+    response={response}
+    action={action}
+    config={config}
+    render={(response) => {
+      const { body:Body } = response;
+      return (
+        <div>
+          <Nav />
+          <Body />
+        </div>
+      );
+    }}
 ));`
             }
           </PrismBlock>
@@ -377,7 +401,9 @@ const routes = [
     name: 'User',
     path: 'users/:userID',
     preload: () => import('./components/User')
-      .then(module => { store['User'] = module.default; }),
+      .then(module => {
+        store['User'] = module.default;
+      }),
     body: () => store['User']
   }
   ...,
@@ -402,12 +428,15 @@ const routes = [
 
 function requestHandler(req, resp) {
   // create a history using the requested location
-  const history = InMemory({ locations: [req.url] });
+  const history = InMemory({
+    locations: [req.url]
+  });
   const config = createConfig(history, routes);
 
   config.subscribe((response, action) => {
-    // render the markup. This will vary based on your
-    // rendering library, but here we'll use React
+    // render the markup. This will vary based on
+    // your rendering library, but here we'll
+    use React
     const markup = renderToString(
       <Navigator
         response={response}
@@ -417,8 +446,8 @@ function requestHandler(req, resp) {
       />
     );
 
-    // insert the generated HTML into the full HTML of the
-    // page and send the response
+    // insert the generated HTML into the full
+    // HTML of the page and send the response
     res.send(fullPageHtml(markup));
   });
 }`
