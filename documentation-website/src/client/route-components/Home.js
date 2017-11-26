@@ -5,47 +5,11 @@ import {
   InlineComponent as Cmp
 } from '../components/PrismBlocks';
 import { Link } from '@curi/react';
+import Banner from '../components/Banner';
 
 export default () => (
   <div>
-    <div className='banner'>
-      <h1>Curi</h1>
-      <p>
-        A single page application router for any JavaScript rendering library.
-      </p>
-      <PrismBlock
-        lang='javascript'
-      >
-      {
-`import Browser from '@hickory/browser';
-import createConfig from '@curi/core';
-
-// create your history object
-const history = Browser();
-
-// define your routes
-const routes = [
-  { name: 'Home', path: '', ... },
-  { name: 'User', path: 'u/:userID', ... },
-  ...
-];
-
-// create your Curi configuration object
-const config = createConfig(history, routes);
-
-// subscribe to the config object with a function
-// that will be called whenever a new response
-// is generated
-config.subscribe((response, action) => {
-  // handle any rendering inside of this function
-});`
-        }
-      </PrismBlock>
-      <p>
-        Ready to learn more? Check out the{' '}
-        <Link to='Guide' params={{ slug: 'getting-started' }}>getting started</Link> guide.
-      </p>
-    </div>
+    <Banner />
     <div className='features'>
       <h2>Features</h2>
 

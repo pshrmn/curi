@@ -1,7 +1,8 @@
 const plugins = [
   'transform-object-rest-spread',
   'syntax-async-functions',
-  'transform-regenerator'
+  'transform-regenerator',
+  'transform-class-properties'
 ];
 
 const BABEL_ENV = process.env.BABEL_ENV

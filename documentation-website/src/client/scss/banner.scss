@@ -15,4 +15,31 @@
   p {
     font-size: 1.1em;
   }
+
+  pre {
+    margin-top: 3px;
+  }
+
+  .banner-buttons {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      font-family: $serif;
+      flex-grow: 1;
+      font-size: 1.1em;
+      background: $white;
+      color: $purple;
+      border: 0;
+      border-bottom: 3px solid $white;
+      cursor: pointer;
+
+      &.active {
+        font-weight: normal;
+        border-color: $purple;
+      }
+    }
+  }
 }
