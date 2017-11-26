@@ -4,21 +4,6 @@ import InMemory from '@hickory/in-memory';
 import { Addon } from '../src/interface';
 import { Response } from '../src/response';
 
-// The subscribe function is called when subscribing so that the
-// subscriber function is called with the original location. This has
-// the downside that if we want to test navigation changes, we have to
-// ignore the first call of the subscribed function. This does that for us.
-function ignoreFirstCall(fn) {
-  let called = false;
-  return function() {
-    if (!called) {
-      called = true;
-      return;
-    }
-    return fn(...arguments);
-  };
-}
-
 describe('createConfig', () => {
   let history;
 
@@ -183,34 +168,26 @@ describe('createConfig', () => {
       });
 
       describe('sideEffects', () => {
-        it('calls side effect methods after a response is generated, passing them response and action', () => {
+        it('calls side effect methods after a response is generated, passing them response and action', done => {
           const routes = [{ name: 'All', path: ':all+' }];
           const sideEffect = jest.fn();
 
           const config = createConfig(history, routes, {
             sideEffects: [{ fn: sideEffect }]
           });
-          expect.assertions(3);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(sideEffect.mock.calls.length).toBe(1);
             expect(sideEffect.mock.calls[0][0]).toBe(response);
             expect(sideEffect.mock.calls[0][1]).toBe('PUSH');
+            done();
           });
         });
 
-        it('calls side effects WITHOUT "after: true" property before subscribers', () => {
+        it('calls side effects WITHOUT "after: true" property before subscribers', done => {
           const routes = [{ name: 'All', path: ':all+' }];
 
-          let subscriberValue = undefined;
-          const subscriber = ignoreFirstCall(function(loc) {
-            subscriberValue = Math.random();
-          });
-          const sideEffect1 = function() {
-            expect(subscriberValue).toBeUndefined();
-          };
-          const sideEffect2 = function() {
-            expect(subscriberValue).toBeUndefined();
-          };
+          const sideEffect1 = jest.fn();
+          const sideEffect2 = jest.fn();
 
           const config = createConfig(history, routes, {
             sideEffects: [
@@ -218,30 +195,27 @@ describe('createConfig', () => {
               { fn: sideEffect2 }
             ]
           });
-          config.subscribe(subscriber);
 
           expect.assertions(2);
-          return config.ready();
+          config.subscribe(response => {
+            expect(sideEffect1.mock.calls.length).toBe(1);
+            expect(sideEffect2.mock.calls.length).toBe(1);
+            done();
+          });
         });
 
-        it('calls side effects WITH "after: true" property after subscribers', () => {
+        it('calls side effects WITH "after: true" property after subscribers', done => {
           const routes = [{ name: 'All', path: ':all+' }];
-
-          let subscriberValue = undefined;
-          const subscriber = ignoreFirstCall(function(loc) {
-            subscriberValue = Math.random();
-          });
+          const subscriber = jest.fn();
           const sideEffect = function() {
-            expect(subscriberValue).not.toBeUndefined();
+            expect(subscriber.mock.calls.length).toBe(1);
+            done();
           };
 
           const config = createConfig(history, routes, {
             sideEffects: [{ fn: sideEffect, after: true }]
           });
           config.subscribe(subscriber);
-
-          expect.assertions(1);
-          return config.ready();
         });
       });
 
@@ -293,10 +267,7 @@ describe('createConfig', () => {
           function subscriber(response) {
             steps[calls++](response);
           }
-
-          return config.ready().then(() => {
-            config.subscribe(subscriber);
-          });
+          config.subscribe(subscriber);
         });
 
         it('generates new response for same key on subsequent calls if cache is not provided', done => {
@@ -332,9 +303,8 @@ describe('createConfig', () => {
           function subscriber(response) {
             steps[calls++](response);
           }
-          config.ready().then(() => {
-            config.subscribe(subscriber);
-          });
+
+          config.subscribe(subscriber);
         });
       });
     });
@@ -379,132 +349,29 @@ describe('createConfig', () => {
     });
   });
 
-  describe('ready', () => {
-    it('returns a Promise that resolves with a response object', () => {
-      const routes = [
-        {
-          name: 'Contact',
-          path: 'contact',
-          children: [
-            { name: 'Email', path: 'email' },
-            { name: 'Phone', path: 'phone' }
-          ]
-        }
-      ];
-      const history = InMemory({
-        locations: ['/contact/email']
-      });
-      const config = createConfig(history, routes);
-      const properties = [
-        'key',
-        'location',
-        'status',
-        'body',
-        'name',
-        'partials',
-        'params',
-        'data',
-        'title'
-      ];
-      expect.assertions(properties.length + 1);
-      return config.ready().then(arg => {
-        expect(Object.keys(arg).length).toEqual(properties.length);
-        properties.forEach(prop => {
-          expect(arg.hasOwnProperty(prop)).toBe(true);
-        });
-      });
-    });
-
-    it('resolves once route that matches initial location has loaded', () => {
-      let loaded = false;
-      const routes = [
-        {
-          name: 'Home',
-          path: '',
-          load: () => {
-            loaded = true;
-            return Promise.resolve();
-          }
-        }
-      ];
-
-      const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(() => {
-        expect(loaded).toBe(true);
-      });
-    });
-
-    it('will resolve with the last response if calling ready after a response has been created', () => {
-      const routes = [
-        {
-          name: 'Contact',
-          path: 'contact',
-          children: [
-            { name: 'Email', path: 'email' },
-            { name: 'Phone', path: 'phone' }
-          ]
-        }
-      ];
-      const history = InMemory({
-        locations: ['/contact/email']
-      });
-      const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(readyOne => {
-        config.ready().then(readyTwo => {
-          expect(readyTwo).toBe(readyOne);
-        });
-      });
-    });
-  });
-
   describe('subscribe', () => {
     describe('when subscribing', () => {
-      it('calls subscriber function, passing it the response object and last action', () => {
+      it('does not immediately call subscriber when initial=false (DEFAULT)', () => {
         const history = InMemory({
-          locations: ['/contact/phone']
+          locations: ['/']
         });
-        const How = { name: 'How', path: ':method' };
-        const routes = [
-          { name: 'Home', path: '' },
-          { name: 'About', path: 'about' },
-          {
-            name: 'Contact',
-            path: 'contact',
-            children: [How]
-          }
-        ];
+        const routes = [{ name: 'Home', path: '' }];
         const sub = jest.fn();
         const config = createConfig(history, routes);
-        expect.assertions(4);
-        return config.ready().then(() => {
-          config.subscribe(sub);
-          expect(sub.mock.calls.length).toBe(1);
-          const [resp, action] = sub.mock.calls[0];
-          expect(resp.name).toBe('How');
-          expect(resp.partials[0]).toBe('Contact');
-          expect(action).toBe('PUSH');
-        });
+
+        config.subscribe(sub);
+        expect(sub.mock.calls.length).toBe(0);
       });
 
-      it('calls subscriber function with undefined params when no response has resolved', () => {
+      it('immediately calls subscriber (with undefined values if not resolved) when called with initial=true', () => {
         const history = InMemory({
-          locations: ['/contact/phone']
+          locations: ['/']
         });
         const How = { name: 'How', path: ':method' };
-        const routes = [
-          { name: 'Home', path: '' },
-          { name: 'About', path: 'about' },
-          {
-            name: 'Contact',
-            path: 'contact',
-            children: [How]
-          }
-        ];
+        const routes = [{ name: 'Home', path: '' }];
         const sub = jest.fn();
         const config = createConfig(history, routes);
-        config.subscribe(sub);
+        config.subscribe(sub, true);
         expect(sub.mock.calls.length).toBe(1);
         const [resp, action] = sub.mock.calls[0];
         expect(resp).toBeUndefined();
@@ -520,7 +387,7 @@ describe('createConfig', () => {
         { name: 'Contact', path: 'contact', children: [How] }
       ];
 
-      const check = ignoreFirstCall((response, action) => {
+      const check = (response, action) => {
         expect(response).toMatchObject({
           name: 'How',
           partials: ['Contact'],
@@ -530,7 +397,7 @@ describe('createConfig', () => {
         });
         expect(action).toBe('PUSH');
         done();
-      });
+      };
 
       const config = createConfig(history, routes);
       config.subscribe(check);
@@ -558,10 +425,10 @@ describe('createConfig', () => {
         }
       ];
 
-      const check = ignoreFirstCall(response => {
+      const check = response => {
         expect(promiseResolved).toBe(true);
         done();
-      });
+      };
 
       const config = createConfig(history, routes);
       config.subscribe(check);
@@ -584,10 +451,10 @@ describe('createConfig', () => {
           ]
         }
       ];
-      const check = ignoreFirstCall(response => {
+      const check = response => {
         expect(response.params.method).toBe('mail');
         done();
-      });
+      };
 
       const config = createConfig(history, routes);
       config.subscribe(check);
@@ -606,15 +473,15 @@ describe('createConfig', () => {
       const unsub1 = config.subscribe(sub1);
       const unsub2 = config.subscribe(sub2);
 
-      expect(sub1.mock.calls.length).toBe(1);
-      expect(sub2.mock.calls.length).toBe(1);
+      expect(sub1.mock.calls.length).toBe(0);
+      expect(sub2.mock.calls.length).toBe(0);
       unsub1();
       history.push({ pathname: '/next' });
 
       // need to wait for the subscribers to actually be called
       process.nextTick(() => {
-        expect(sub1.mock.calls.length).toBe(1);
-        expect(sub2.mock.calls.length).toBe(2);
+        expect(sub1.mock.calls.length).toBe(0);
+        expect(sub2.mock.calls.length).toBe(1);
         done();
       });
     });
@@ -622,7 +489,14 @@ describe('createConfig', () => {
     it('throws an error if passing a non-function to subscribe', () => {
       // adding this test for coverage, but TypeScript doesn't like it
       const config = createConfig(history, [{ name: 'Home', path: '' }]);
-      const nonFuncs = [null, undefined, 'test', 123, [1,2,3], {key: 'value'}];
+      const nonFuncs = [
+        null,
+        undefined,
+        'test',
+        123,
+        [1, 2, 3],
+        { key: 'value' }
+      ];
       nonFuncs.forEach(nf => {
         expect(() => {
           config.subscribe(nf);
@@ -632,7 +506,7 @@ describe('createConfig', () => {
   });
 
   describe('response.redirectTo', () => {
-    it('triggers a history.replace call AFTER emitting response', () => {
+    it('triggers a history.replace call AFTER emitting response', done => {
       let callPosition = 0;
       const routes = [
         {
@@ -644,26 +518,20 @@ describe('createConfig', () => {
           }
         }
       ];
-      let replacePosition;
+
       history.replace = jest.fn(() => {
-        replacePosition = callPosition++;
+        expect(hasEmitted).toBe(true);
+        done();
       });
 
       const config = createConfig(history, routes);
 
-      let subscribePosition;
-      const subscriber = ignoreFirstCall(() => {
-        subscribePosition = callPosition++;
-      });
-      config.subscribe(subscriber);
+      let hasEmitted = false;
+      const subscriber = () => {
+        hasEmitted = true;
+      };
 
-      expect.assertions(4);
-      expect(history.replace.mock.calls.length).toBe(0);
-      return config.ready().then(response => {
-        expect(history.replace.mock.calls.length).toBe(1);
-        expect(subscribePosition).toBe(0);
-        expect(replacePosition).toBe(1);
-      });
+      config.subscribe(subscriber);
     });
   });
 });

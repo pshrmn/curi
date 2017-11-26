@@ -1,3 +1,10 @@
+## Next
+
+* The type of the second argument to subscriber functions is now`Action` (instead of a `string`).
+* When `route.load` or `route.preload` has an uncaught error, the error will be set as the response's `error` property. Previously, Curi wouldn't emit a response. The user should still make sure to catch errors themselves, but at least now it should be more obvious what is happening.
+* Add `initial` argument to `subscribe`. When `false` (default), the subscriber will not be called initially; when `true`, the subscriber will be immediately called. The default allows us to remove `ready` since the subscriber will not be called until a response has been resolved.
+* Remove `ready` function.
+
 ## 1.0.0-beta.15
 
 * Update to using Hickory's response handler model. Instead of subscribing to the history object, we pass it a response handler function which will be called whenever the location changes. This allows for better control of how navigation changes are emitted (the Curi router is now the only source of "truth"). Now, if a new navigation occurs while a previous navigation is still resolving, the previous navigation will be properly cancelled (it won't be added to the history array).

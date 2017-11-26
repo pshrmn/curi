@@ -3,7 +3,7 @@ import pathnameAddon from './addons/pathname';
 import createResponse from './response';
 import createRoute from './route';
 
-import { History, HickoryLocation, PendingNavigation } from '@hickory/root';
+import { History, HickoryLocation, PendingNavigation, Action } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
 import { RouteDescriptor, InternalRoute } from './route';
 import { Response } from './response';
@@ -24,9 +24,8 @@ export interface ConfigOptions {
 }
 
 export interface CuriConfig {
-  ready: () => Promise<Response>;
   refresh: (routeArray: Array<RouteDescriptor>) => void;
-  subscribe: (fn: Subscriber) => UnsubscribeFn;
+  subscribe: (fn: Subscriber, initial?: boolean) => UnsubscribeFn;
   addons: Addons;
   history: History;
 }
@@ -96,7 +95,7 @@ function createConfig(
     });
   }
 
-  function emit(response: Response, action: string): void {
+  function emit(response: Response, action: Action): void {
     beforeSideEffects.forEach(fn => {
       fn(response, action);
     });
@@ -121,26 +120,20 @@ function createConfig(
     }
     activeResponse = pending;
 
-    currentResponse = getResponse(pending.location).then(
-      response => {
-        if (pending.cancelled) {
-          return;
-        }
-        pending.finish();
-        activeResponse = undefined;
-        emit(response, pending.action);
-        previous = [response, pending.action];
-
-        if (response.redirectTo) {
-          history.replace(response.redirectTo);
-        }
-        return response;
-      },
-      err => {
-        console.error(err);
-        return null;
+    currentResponse = getResponse(pending.location).then(response => {
+      if (pending.cancelled) {
+        return;
       }
-    );
+      pending.finish();
+      activeResponse = undefined;
+      emit(response, pending.action);
+      previous = [response, pending.action];
+
+      if (response.redirectTo) {
+        history.replace(response.redirectTo);
+      }
+      return response;
+    });
   }
 
   // now that everything is defined, actually do the setup
@@ -150,13 +143,14 @@ function createConfig(
   return {
     addons: registeredAddons,
     history,
-    ready: () => currentResponse,
-    subscribe: function(fn: Subscriber): UnsubscribeFn {
+    subscribe: function(fn: Subscriber, initial?: boolean): UnsubscribeFn {
       if (typeof fn !== 'function') {
         throw new Error('The argument passed to subscribe must be a function');
       }
 
-      fn.apply(null, previous);
+      if (initial) {
+        fn.apply(null, previous);
+      }
 
       const newLength = subscribers.push(fn);
       return () => {

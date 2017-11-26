@@ -1,4 +1,4 @@
-import { HickoryLocation } from '@hickory/root';
+import { HickoryLocation, Action } from '@hickory/root';
 import { Route } from './route';
 import { Response } from './response';
 
@@ -14,7 +14,7 @@ export interface Addon {
 
 export type Addons = { [key: string]: AddonGet };
 
-export type Subscriber = (response: Response, action?: string) => void;
+export type Subscriber = (response: Response, action?: Action) => void;
 export interface SideEffect {
   fn: Subscriber;
   after?: boolean;

@@ -4,7 +4,7 @@ import InMemory from '@hickory/in-memory';
 
 describe('route matching/response generation', () => {
   describe('route matching', () => {
-    it('ignores leading slash on the pathname', () => {
+    it('ignores leading slash on the pathname', done => {
       const history = InMemory({ locations: ['/test'] });
       const routes = [
         {
@@ -13,13 +13,13 @@ describe('route matching/response generation', () => {
         }
       ];
       const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
+      config.subscribe(response => {
         expect(response.name).toBe('Test');
+        done();
       });
     });
 
-    it('does exact matching', () => {
+    it('does exact matching', done => {
       const history = InMemory({ locations: ['/test/leftovers'] });
       const routes = [
         {
@@ -32,14 +32,14 @@ describe('route matching/response generation', () => {
         }
       ];
       const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
+      config.subscribe(response => {
         expect(response.name).toBe('Not Found');
+        done();
       });
     });
 
     describe('nested routes', () => {
-      it('includes parent if partials if a child matches', () => {
+      it('includes parent if partials if a child matches', done => {
         const history = InMemory({ locations: ['/ND/Fargo'] });
         const routes = [
           {
@@ -54,14 +54,14 @@ describe('route matching/response generation', () => {
           }
         ];
         const config = createConfig(history, routes);
-        expect.assertions(2);
-        return config.ready().then(response => {
+        config.subscribe(response => {
           expect(response.name).toBe('City');
           expect(response.partials).toEqual(['State']);
+          done();
         });
       });
 
-      it('does non-end parent matching when there are child routes, even if pathOptions.end=true', () => {
+      it('does non-end parent matching when there are child routes, even if pathOptions.end=true', done => {
         const history = InMemory({ locations: ['/ND/Fargo'] });
         const routes = [
           {
@@ -77,14 +77,14 @@ describe('route matching/response generation', () => {
           }
         ];
         const config = createConfig(history, routes);
-        expect.assertions(2);
-        return config.ready().then(response => {
+        config.subscribe(response => {
           expect(response.name).toBe('City');
           expect(response.partials).toEqual(['State']);
+          done();
         });
       });
 
-      it('skips parent match if no children match', () => {
+      it('skips parent match if no children match', done => {
         const history = InMemory({ locations: ['/MT/Bozeman'] });
         const routes = [
           {
@@ -103,15 +103,15 @@ describe('route matching/response generation', () => {
           }
         ];
         const config = createConfig(history, routes);
-        expect.assertions(2);
-        return config.ready().then(response => {
+        config.subscribe(response => {
           expect(response.name).toBe('Not Found');
           expect(response.partials).toEqual([]);
+          done();
         });
       });
     });
 
-    it('matches partial routes if route.pathOptions.end=false', () => {
+    it('matches partial routes if route.pathOptions.end=false', done => {
       const history = InMemory({ locations: ['/SD/Sioux City'] });
       const routes = [
         {
@@ -125,18 +125,15 @@ describe('route matching/response generation', () => {
         }
       ];
       const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
+      config.subscribe(response => {
         expect(response.name).toBe('State');
+        done();
       });
     });
   });
 
   describe('response', () => {
-    it('is null if either load or preload fail (and error is logged)', () => {
-      const err = console.error;
-      const mockError = jest.fn();
-      console.error = mockError;
+    it('if either load or preload have uncaught errors, error is set as response.error', done => {
       const routes = [
         {
           name: 'Contact',
@@ -150,42 +147,39 @@ describe('route matching/response generation', () => {
         locations: ['/contact']
       });
       const config = createConfig(history, routes);
-      expect.assertions(3);
-      return config.ready().then(arg => {
-        expect(arg).toBe(null);
-        expect(mockError.mock.calls.length).toBe(1);
-        expect(mockError.mock.calls[0][0]).toBe('This is an error');
-        console.error = err;
+      config.subscribe(response => {
+        expect(response.error).toBe('This is an error');
+        done();
       });
     });
 
     describe('properties', () => {
       describe('key', () => {
-        it('is the key property from the location', () => {
+        it('is the key property from the location', done => {
           const routes = [];
           const history = InMemory({ locations: ['/other-page'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.key).toBe(history.location.key);
+            done();
           });
         });
       });
 
       describe('location', () => {
-        it('is the location used to match routes', () => {
+        it('is the location used to match routes', done => {
           const routes = [];
           const history = InMemory({ locations: ['/other-page'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.location).toBe(history.location);
+            done();
           });
         });
       });
 
       describe('status', () => {
-        it('is 200 if a route matches', () => {
+        it('is 200 if a route matches', done => {
           const routes = [
             {
               name: 'Contact',
@@ -199,12 +193,13 @@ describe('route matching/response generation', () => {
           const history = InMemory({ locations: ['/contact'] });
           const config = createConfig(history, routes);
           expect.assertions(1);
-          return config.ready().then(resp => {
-            expect(resp.status).toBe(200);
+          config.subscribe(response => {
+            expect(response.status).toBe(200);
+            done();
           });
         });
 
-        it('is 404 if no routes match', () => {
+        it('is 404 if no routes match', done => {
           const routes = [
             {
               name: 'Contact',
@@ -217,13 +212,13 @@ describe('route matching/response generation', () => {
           ];
           const history = InMemory({ locations: ['/other-page'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(resp => {
-            expect(resp.status).toBe(404);
+          config.subscribe(response => {
+            expect(response.status).toBe(404);
+            done();
           });
         });
 
-        it("is the value set by calling setStatus in the matching route's load function", () => {
+        it("is the value set by calling setStatus in the matching route's load function", done => {
           const routes = [
             {
               name: 'A Route',
@@ -236,16 +231,16 @@ describe('route matching/response generation', () => {
           ];
           const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.status).toBe(451);
+            done();
           });
         });
 
-        it("is set by calling redirect in the matching route's load function", () => {
+        it("is set by calling redirect in the matching route's load function", done => {
           const routes = [
             {
-              name: 'A Route',
+              name: '302 Route',
               path: '',
               load: (route, modifiers) => {
                 return modifiers.redirect('/somewhere', 302);
@@ -254,16 +249,20 @@ describe('route matching/response generation', () => {
           ];
           const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
-            expect(response.status).toBe(302);
+          let firstCall = true;
+          config.subscribe(response => {
+            if (firstCall) {
+              expect(response.status).toBe(302);
+              firstCall = false;
+              done();
+            }
           });
         });
 
-        it("is set to 301 by default when calling redirect in the matching route's load function", () => {
+        it("is set to 301 by default when calling redirect in the matching route's load function", done => {
           const routes = [
             {
-              name: 'A Route',
+              name: '301 Route',
               path: '',
               load: (route, modifiers) => {
                 return modifiers.redirect('/somewhere');
@@ -272,15 +271,19 @@ describe('route matching/response generation', () => {
           ];
           const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
-            expect(response.status).toBe(301);
+          let firstCall = true;
+          config.subscribe(response => {
+            if (firstCall) {
+              expect(response.status).toBe(301);
+              firstCall = false;
+              done();
+            }
           });
         });
       });
 
       describe('data', () => {
-        it('is undefined by default', () => {
+        it('is undefined by default', done => {
           const routes = [
             {
               name: 'A Route',
@@ -289,13 +292,13 @@ describe('route matching/response generation', () => {
           ];
           const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.data).toBeUndefined();
+            done();
           });
         });
 
-        it("is the value set by the matching route's load function calling setData", () => {
+        it("is the value set by the matching route's load function calling setData", done => {
           const routes = [
             {
               name: 'A Route',
@@ -308,15 +311,15 @@ describe('route matching/response generation', () => {
           ];
           const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.data).toMatchObject({ test: 'value' });
+            done();
           });
         });
       });
 
       describe('title', () => {
-        it('is an empty string when there is no matched route', () => {
+        it('is an empty string when there is no matched route', done => {
           const routes = [
             {
               name: 'State',
@@ -326,13 +329,13 @@ describe('route matching/response generation', () => {
           const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
 
-          expect.assertions(1);
-          return config.ready().then(resp => {
-            expect(resp.title).toBe('');
+          config.subscribe(response => {
+            expect(response.title).toBe('');
+            done();
           });
         });
 
-        it('is an empty string if the matched route does not have a title property', () => {
+        it('is an empty string if the matched route does not have a title property', done => {
           const routes = [
             {
               name: 'State',
@@ -342,13 +345,13 @@ describe('route matching/response generation', () => {
           const history = InMemory({ locations: ['/AZ'] });
           const config = createConfig(history, routes);
 
-          expect.assertions(1);
-          return config.ready().then(resp => {
-            expect(resp.title).toBe('');
+          config.subscribe(response => {
+            expect(response.title).toBe('');
+            done();
           });
         });
 
-        it('is the route.title value route.title is a string', () => {
+        it('is the route.title value route.title is a string', done => {
           const routes = [
             {
               name: 'State',
@@ -359,13 +362,13 @@ describe('route matching/response generation', () => {
           const history = InMemory({ locations: ['/VA'] });
           const config = createConfig(history, routes);
 
-          expect.assertions(1);
-          return config.ready().then(resp => {
-            expect(resp.title).toBe('A State');
+          config.subscribe(response => {
+            expect(response.title).toBe('A State');
+            done();
           });
         });
 
-        it('calls route.title passing it the params and data when it is a function', () => {
+        it('calls route.title passing it the params and data when it is a function', done => {
           const routes = [
             {
               name: 'State',
@@ -381,15 +384,15 @@ describe('route matching/response generation', () => {
           const history = InMemory({ locations: ['/WV'] });
           const config = createConfig(history, routes);
 
-          expect.assertions(1);
-          return config.ready().then(resp => {
-            expect(resp.title).toBe('WV (aka West Virginia)');
+          config.subscribe(response => {
+            expect(response.title).toBe('WV (aka West Virginia)');
+            done();
           });
         });
       });
 
       describe('body', () => {
-        it('is set after load/preload have resolved', () => {
+        it('is set after load/preload have resolved', done => {
           let bodyValue;
           const Route = {
             name: 'A Route',
@@ -402,56 +405,56 @@ describe('route matching/response generation', () => {
           };
           const history = InMemory({ locations: ['/a-route'] });
           const config = createConfig(history, [Route]);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.body).toBe('testing');
+            done();
           });
         });
 
-        it('is undefined if matching route has no body property', () => {
+        it('is undefined if matching route has no body property', done => {
           const Route = {
             name: 'A Route',
             path: 'a-route'
           };
           const history = InMemory({ locations: ['/a-route'] });
           const config = createConfig(history, [Route]);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.body).toBeUndefined();
+            done();
           });
         });
       });
 
       describe('name', () => {
-        it('is the name of the best matching route', () => {
+        it('is the name of the best matching route', done => {
           const Route = {
             name: 'A Route',
             path: 'a-route'
           };
           const history = InMemory({ locations: ['/a-route'] });
           const config = createConfig(history, [Route]);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.name).toBe('A Route');
+            done();
           });
         });
 
-        it('is undefined if no routes match', () => {
+        it('is undefined if no routes match', done => {
           const Route = {
             name: 'A Route',
             path: 'a-route'
           };
           const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, [Route]);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.name).toBeUndefined();
+            done();
           });
         });
       });
 
       describe('partials', () => {
-        it('is set using the names of all partially matching routes', () => {
+        it('is set using the names of all partially matching routes', done => {
           const history = InMemory({ locations: ['/TX/Austin'] });
           const routes = [
             {
@@ -466,15 +469,15 @@ describe('route matching/response generation', () => {
             }
           ];
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.partials).toEqual(['State']);
+            done();
           });
         });
       });
 
       describe('params', () => {
-        it('includes params from partially matched routes', () => {
+        it('includes params from partially matched routes', done => {
           const history = InMemory({ locations: ['/MT/Bozeman'] });
           const routes = [
             {
@@ -489,16 +492,16 @@ describe('route matching/response generation', () => {
             }
           ];
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.params).toEqual({
               state: 'MT',
               city: 'Bozeman'
             });
+            done();
           });
         });
 
-        it('overwrites param name conflicts', () => {
+        it('overwrites param name conflicts', done => {
           const history = InMemory({ locations: ['/1/2'] });
           const routes = [
             {
@@ -508,13 +511,13 @@ describe('route matching/response generation', () => {
             }
           ];
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.params['id']).toBe('2');
+            done();
           });
         });
 
-        it('uses route.paramParsers to parse params', () => {
+        it('uses route.paramParsers to parse params', done => {
           const history = InMemory({ locations: ['/123'] });
           const routes = [
             {
@@ -526,13 +529,13 @@ describe('route matching/response generation', () => {
             }
           ];
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.params).toEqual({ num: 123 });
+            done();
           });
         });
 
-        it('parsers params from parent routes', () => {
+        it('parsers params from parent routes', done => {
           const history = InMemory({ locations: ['/123/456'] });
           const routes = [
             {
@@ -553,16 +556,16 @@ describe('route matching/response generation', () => {
             }
           ];
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.params).toEqual({
               first: 123,
               second: 456
             });
+            done();
           });
         });
 
-        it('uses string for any params not in route.paramParsers', () => {
+        it('uses string for any params not in route.paramParsers', done => {
           const history = InMemory({ locations: ['/123/456'] });
           const routes = [
             {
@@ -574,16 +577,16 @@ describe('route matching/response generation', () => {
             }
           ];
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.params).toEqual({
               first: 123,
               second: '456'
             });
+            done();
           });
         });
 
-        it('falls back to string value if param parser throws', () => {
+        it('falls back to string value if param parser throws', done => {
           const originalError = console.error;
           const errorMock = jest.fn();
           console.error = errorMock;
@@ -601,32 +604,32 @@ describe('route matching/response generation', () => {
             }
           ];
           const config = createConfig(history, routes);
-          expect.assertions(3);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.params).toEqual({
               num: '123'
             });
             expect(errorMock.mock.calls.length).toBe(1);
             expect(errorMock.mock.calls[0][0].message).toBe('This will fail.');
             console.error = originalError;
+            done();
           });
         });
       });
 
       describe('error', () => {
-        it('is undefined for good responses', () => {
+        it('is undefined for good responses', done => {
           const routes = [{ name: 'Contact', path: 'contact' }];
           const history = InMemory({
             locations: ['/contact']
           });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(arg => {
-            expect(arg.error).toBeUndefined();
+          config.subscribe(response => {
+            expect(response.error).toBeUndefined();
+            done();
           });
         });
 
-        it("is set by calling the fail method from a matched route's load function", () => {
+        it("is set by calling the fail method from a matched route's load function", done => {
           const routes = [
             {
               name: 'A Route',
@@ -639,15 +642,15 @@ describe('route matching/response generation', () => {
           ];
           const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
+          config.subscribe(response => {
             expect(response.error).toBe('woops');
+            done();
           });
         });
       });
 
       describe('redirectTo', () => {
-        it("is sets by calling the redirect function in a matching route's load function", () => {
+        it("is sets by calling the redirect function in a matching route's load function", done => {
           const routes = [
             {
               name: 'A Route',
@@ -659,9 +662,13 @@ describe('route matching/response generation', () => {
           ];
           const history = InMemory({ locations: ['/'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
-          return config.ready().then(response => {
-            expect(response.redirectTo).toBe('/somewhere');
+          let firstCall = true;
+          config.subscribe(response => {
+            if (firstCall) {
+              expect(response.redirectTo).toBe('/somewhere');
+              firstCall = false;
+              done();
+            }
           });
         });
       });
@@ -670,7 +677,7 @@ describe('route matching/response generation', () => {
 
   describe('the matching route', () => {
     describe('calling the load function', () => {
-      it('passes params, location, modifier methods, and addons to load function', () => {
+      it('passes params, location, modifier methods, and addons to load function', done => {
         const spy = jest.fn((route, modifiers, addons) => {
           expect(route).toMatchObject({
             params: { anything: 'hello' },
@@ -699,10 +706,12 @@ describe('route matching/response generation', () => {
         const history = InMemory({ locations: ['/hello?one=two'] });
         const config = createConfig(history, [CatchAll]);
         expect.assertions(3);
-        return config.ready();
+        config.subscribe(response => {
+          done();
+        });
       });
 
-      it('can use registered addons', () => {
+      it('can use registered addons', done => {
         const routes = [
           {
             name: 'Old',
@@ -719,23 +728,27 @@ describe('route matching/response generation', () => {
         ];
         const history = InMemory({ locations: ['/old/1'] });
         const config = createConfig(history, routes);
-        expect.assertions(1);
-        return config.ready().then(response => {
-          expect(response.redirectTo).toBe('/new/1');
+        let firstCall = true;
+        config.subscribe(response => {
+          if (firstCall) {
+            expect(response.redirectTo).toBe('/new/1');
+            firstCall = false;
+            done();
+          }
         });
       });
     });
 
     describe('calling the preload function', () => {
-      it('will only call promise once', done => {
+      it('will only be called once', done => {
         /*
          * This test is a bit odd to read, but it verifies that the
          * preload function is only called once (while the load function
          * is called on every match).
          */
-        let callCount = 0;
+        let preCount = 0;
         let loadCount = 0;
-        const preload = () => Promise.resolve(callCount++);
+        const preload = () => Promise.resolve(preCount++);
         const load = () => Promise.resolve(loadCount++);
         const history = InMemory({ locations: ['/test'] });
         const routes = [
@@ -747,18 +760,19 @@ describe('route matching/response generation', () => {
           }
         ];
         const config = createConfig(history, routes);
-        const expectedValues = [[1, 1], [1, 2]];
-        let subscriberIndex = 0;
+        let firstCall = true;
         config.subscribe(() => {
-          const [cc, lc] = expectedValues[subscriberIndex++];
-          expect(callCount).toBe(1);
-          expect(callCount).toBe(1);
-          if (subscriberIndex === 2) {
+          if (firstCall) {
+            firstCall = false;
+            expect(preCount).toBe(1);
+            expect(loadCount).toBe(1);
+            history.push('/another-one');
+          } else {
+            expect(preCount).toBe(1);
+            expect(loadCount).toBe(2);
             done();
           }
         });
-
-        history.push('/another-one');
       });
     });
   });

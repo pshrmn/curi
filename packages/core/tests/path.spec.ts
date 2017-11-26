@@ -4,7 +4,7 @@ import InMemory from '@hickory/in-memory';
 
 describe('route.pathOptions matching', () => {
   describe('default options', () => {
-    it('sensitive = false', () => {
+    it('sensitive = false', done => {
       const history = InMemory({ locations: ['/Here'] });
       const routes = [
         {
@@ -17,13 +17,13 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
+      config.subscribe(response => {
         expect(response.name).toBe('Test');
+        done();
       });
     });
 
-    it('strict = false', () => {
+    it('strict = false', done => {
       const history = InMemory({ locations: ['/here/'] });
       const routes = [
         {
@@ -36,13 +36,13 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
+      config.subscribe(response => {
         expect(response.name).toBe('Test');
+        done();
       });
     });
 
-    it('end = true', () => {
+    it('end = true', done => {
       const history = InMemory({ locations: ['/here/again'] });
       const routes = [
         {
@@ -55,15 +55,15 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
+      config.subscribe(response => {
         expect(response.name).toBe('Not Found');
+        done();
       });
     });
   });
 
   describe('user provided options', () => {
-    it('sensitive = true', () => {
+    it('sensitive = true', done => {
       const history = InMemory({ locations: ['/Here'] });
       const routes = [
         {
@@ -77,13 +77,13 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
+      config.subscribe(response => {
         expect(response.name).toBe('Not Found');
+        done();
       });
     });
 
-    it('strict = true', () => {
+    it('strict = true', done => {
       const history = InMemory({ locations: ['/here/'] });
       const routes = [
         {
@@ -97,13 +97,13 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
+      config.subscribe(response => {
         expect(response.name).toBe('Not Found');
+        done();
       });
     });
 
-    it('end = false', () => {
+    it('end = false', done => {
       const history = InMemory({ locations: ['/here/again'] });
       const routes = [
         {
@@ -117,9 +117,9 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      expect.assertions(1);
-      return config.ready().then(response => {
+      config.subscribe(response => {
         expect(response.name).toBe('Test');
+        done();
       });
     });
   });

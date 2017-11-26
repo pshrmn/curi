@@ -109,7 +109,14 @@ function loadRoute(
           addons
         )
       : null
-  ]).then(() => Promise.resolve(props));
+  ]).then(
+    () => props,
+    err => {
+      // when there is an uncaught error, set it on the response
+      props.error = err;
+      return props;
+    }
+  );
 }
 
 function responseModifiers(props: ResponseProps) {
