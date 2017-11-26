@@ -18,7 +18,7 @@ describe('Block', () => {
   history.removeConfirmation = removeConfirmation;
   const config = createConfig(history, []);
   const fakeContext = {
-    curi: config
+    curi: { config }
   };
 
   afterEach(() => {

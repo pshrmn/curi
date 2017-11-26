@@ -42,7 +42,7 @@ describe('<Link>', () => {
         >
           Test
         </Link>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/');
@@ -65,7 +65,7 @@ describe('<Link>', () => {
         >
           Test
         </Link>,
-        { context: { curi: config, curiResponse: contextResponse } }
+        { context: { curi: { config, response: contextResponse } } }
       );
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/');
@@ -89,7 +89,7 @@ describe('<Link>', () => {
       const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: config }
+        context: { curi: { config } }
       });
       const a = wrapper.find('a');
       expect(a.exists()).toBe(true);
@@ -107,7 +107,7 @@ describe('<Link>', () => {
           Test
         </Link>,
         {
-          context: { curi: config }
+          context: { curi: { config } }
         }
       );
       const a = wrapper.find('a');
@@ -121,7 +121,7 @@ describe('<Link>', () => {
       const history = InMemory();
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: config }
+        context: { curi: { config } }
       });
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/');
@@ -133,7 +133,7 @@ describe('<Link>', () => {
       });
       const config = createConfig(history, []);
       const wrapper = shallow(<Link to={null}>Test</Link>, {
-        context: { curi: config, curiResponse:  { location: history.location }}
+        context: { curi: { config, response: { location: history.location } } }
       });
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/the-initial-location');
@@ -152,7 +152,7 @@ describe('<Link>', () => {
           Test
         </Link>,
         {
-          context: { curi: config }
+          context: { curi: { config } }
         }
       );
       const a = wrapper.find('a');
@@ -170,7 +170,7 @@ describe('<Link>', () => {
           Test
         </Link>,
         {
-          context: { curi: config }
+          context: { curi: { config } }
         }
       );
       let a = wrapper.find('a');
@@ -190,7 +190,7 @@ describe('<Link>', () => {
         <Link to="Test" details={{ query: 'one=two', hash: '#hashtag' }}>
           Test
         </Link>,
-        { context: { curi: config } }
+        { context: { curi: { config } } }
       );
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/test?one=two#hashtag');
@@ -203,7 +203,7 @@ describe('<Link>', () => {
         <Link to="Test" details={{ pathname: '/not-a-test' }}>
           Test
         </Link>,
-        { context: { curi: config } }
+        { context: { curi: { config } } }
       );
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/test');
@@ -225,7 +225,7 @@ describe('<Link>', () => {
           <Link to="Test" active={{ merge }}>
             Test
           </Link>,
-          { context: { curi: config, curiResponse: fakeResponse } }
+          { context: { curi: { config, response: fakeResponse } } }
         );
       }).toThrow(
         'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -248,7 +248,7 @@ describe('<Link>', () => {
         <Link to="Test" className="test" active={{ merge }}>
           Test
         </Link>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       const link = wrapper.find('a');
       expect(link.prop('className')).toBe('test');
@@ -269,7 +269,7 @@ describe('<Link>', () => {
         <Link to="Test" className="test" active={{ merge }}>
           Test
         </Link>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       const link = wrapper.find('a');
       expect(link.prop('className')).toBe('test active');
@@ -300,7 +300,7 @@ describe('<Link>', () => {
         <Link to="Test" className="test" active={{ partial: true, merge }}>
           Test
         </Link>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       const link = wrapper.find('a');
       expect(link.prop('className')).toBe('test active');
@@ -315,13 +315,10 @@ describe('<Link>', () => {
         return props;
       }
 
-      const wrapper = shallow(
-        <Link to="Test">
-          Test
-        </Link>,
-        { context: { curi: config, curiResponse: fakeResponse } }
-      );
-      
+      const wrapper = shallow(<Link to="Test">Test</Link>, {
+        context: { curi: { config, response: fakeResponse } }
+      });
+
       expect(() => {
         wrapper.setProps({ active: { merge } });
       }).toThrow(
@@ -339,7 +336,7 @@ describe('<Link>', () => {
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: config }
+        context: { curi: { config } }
       });
       const leftClickEvent = {
         defaultPrevented: false,
@@ -362,9 +359,14 @@ describe('<Link>', () => {
       history.navigate = mockNavigate;
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
-      const wrapper = shallow(<Link to="Test" details={{ hash: 'thing' }}>Test</Link>, {
-        context: { curi: config }
-      });
+      const wrapper = shallow(
+        <Link to="Test" details={{ hash: 'thing' }}>
+          Test
+        </Link>,
+        {
+          context: { curi: { config } }
+        }
+      );
       const leftClickEvent = {
         defaultPrevented: false,
         preventDefault() {
@@ -381,7 +383,7 @@ describe('<Link>', () => {
       expect(mockLocation).toMatchObject({
         pathname: '/',
         hash: 'thing'
-      })
+      });
     });
 
     describe('onClick', () => {
@@ -396,7 +398,7 @@ describe('<Link>', () => {
             Test
           </Link>,
           {
-            context: { curi: config }
+            context: { curi: { config } }
           }
         );
         const leftClickEvent = {
@@ -428,7 +430,7 @@ describe('<Link>', () => {
             Test
           </Link>,
           {
-            context: { curi: config }
+            context: { curi: { config } }
           }
         );
         const leftClickEvent = {
@@ -455,7 +457,7 @@ describe('<Link>', () => {
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: config }
+        context: { curi: { config } }
       });
       const modifiedClickEvent = {
         defaultPrevented: false,
@@ -484,7 +486,7 @@ describe('<Link>', () => {
 
       const config = createConfig(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: config }
+        context: { curi: { config } }
       });
       const preventedEvent = {
         defaultPrevented: true,

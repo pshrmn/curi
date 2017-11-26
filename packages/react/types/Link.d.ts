@@ -24,7 +24,6 @@ export interface LinkState {
 declare class Link extends React.Component<LinkProps, LinkState> {
     static contextTypes: {
         curi: PropTypes.Requireable<any>;
-        curiResponse: PropTypes.Requireable<any>;
     };
     clickHandler: (event: React.MouseEvent<HTMLElement>) => void;
     createPathname(props: LinkProps, context: CuriContext): void;

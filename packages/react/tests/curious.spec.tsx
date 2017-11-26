@@ -10,7 +10,7 @@ describe('curious', () => {
     const TestComponent = curious(() => null);
 
     const wrapper = shallow(<TestComponent />, {
-      context: { curi: fakeConfig, curiResponse: fakeResponse }
+      context: { curi: { config: fakeConfig, response: fakeResponse } }
     });
     expect(wrapper.prop('curi')).toBe(fakeConfig);
   });
@@ -21,7 +21,7 @@ describe('curious', () => {
     const TestComponent = curious(() => null);
 
     const wrapper = shallow(<TestComponent />, {
-      context: { curi: fakeConfig, curiResponse: fakeResponse }
+      context: { curi: { config: fakeConfig, response: fakeResponse } }
     });
     expect(wrapper.prop('response')).toBe(fakeResponse);
   });
@@ -49,7 +49,7 @@ describe('curious', () => {
 
     let ref;
     const wrapper = mount(<Wrapped internalRef={node => (ref = node)} />, {
-      context: { curi: fakeConfig, curiResponse: fakeResponse }
+      context: { curi: { config: fakeConfig, response: fakeResponse } }
     });
     expect(ref).toBeInstanceOf(TestComponent);
     const wrappedTest = wrapper.find(TestComponent);

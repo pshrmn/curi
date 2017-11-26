@@ -2,7 +2,7 @@ import 'jest';
 import React from 'react';
 import { shallow } from 'enzyme';
 import InMemory from '@hickory/in-memory';
-import createConfig, { Response, AnyResponse } from '@curi/core';
+import createConfig, { Response } from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
 import Active from '../src/Active';
 
@@ -31,12 +31,12 @@ describe('<Active>', () => {
     }
     const Test = () => null;
 
-    it('can get the values from props', () => {
+    it('can get the config/response values from props', () => {
       const fakeResponse = {
         name: 'Home',
         params: {},
         partials: []
-      } as AnyResponse;
+      } as Response;
 
       const wrapper = shallow(
         <Active name="Home" merge={merge} curi={config} response={fakeResponse}>
@@ -52,13 +52,13 @@ describe('<Active>', () => {
         name: 'Home',
         params: {},
         partials: []
-      } as AnyResponse;
+      } as Response;
 
       const wrapper = shallow(
         <Active name="Home" merge={merge}>
           <Test />
         </Active>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       expect(wrapper.type()).toBe(Test);
       expect(wrapper.prop('className')).toBe('not-a-test');
@@ -69,18 +69,18 @@ describe('<Active>', () => {
         name: 'Home',
         params: {},
         partials: []
-      } as AnyResponse;
+      } as Response;
       const contextResponse = {
         name: 'House',
         params: {},
         partials: []
-      } as AnyResponse;
+      } as Response;
 
       const wrapper = shallow(
         <Active name="Home" merge={merge} curi={config} response={propResponse}>
           <Test />
         </Active>,
-        { context: { curi: config, curiResponse: contextResponse } }
+        { context: { curi: { config, response: contextResponse } } }
       );
       expect(wrapper.type()).toBe(Test);
       expect(wrapper.prop('className')).toBe('not-a-test');
@@ -116,7 +116,7 @@ describe('<Active>', () => {
           <Active name="Home" merge={merge}>
             <Test />
           </Active>,
-          { context: { curi: config, curiResponse: fakeResponse } }
+          { context: { curi: { config, response: fakeResponse } } }
         );
       }).toThrow(
         'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -137,7 +137,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <Test />
         </Active>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       expect(wrapper.type()).toBe(Test);
     });
@@ -153,7 +153,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <Test />
         </Active>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       expect(merge.mock.calls.length).toBe(0);
     });
@@ -167,7 +167,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <Test />
         </Active>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       expect(merge.mock.calls.length).toBe(1);
     });
@@ -184,7 +184,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <div className="test" />
         </Active>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       expect(wrapper.prop('className')).toBe('not-a-test');
     });
@@ -207,7 +207,7 @@ describe('<Active>', () => {
         <Active name="Contact" partial={true} merge={merge}>
           <div className="test" />
         </Active>,
-        { context: { curi: config, curiResponse: fakeResponse } }
+        { context: { curi: { config, response: fakeResponse } } }
       );
       expect(wrapper.prop('className')).toBe('not-a-test');
     });

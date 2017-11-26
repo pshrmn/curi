@@ -15,7 +15,6 @@ export interface ActiveProps {
 declare class Active extends React.Component<ActiveProps, {}> {
     static contextTypes: {
         curi: PropTypes.Requireable<any>;
-        curiResponse: PropTypes.Requireable<any>;
     };
     componentWillMount(): void;
     verifyActiveAddon(): void;

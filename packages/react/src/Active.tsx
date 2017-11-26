@@ -16,8 +16,10 @@ export interface ActiveProps {
 
 class Active extends React.Component<ActiveProps, {}> {
   static contextTypes = {
-    curi: PropTypes.object,
-    curiResponse: PropTypes.object
+    curi: PropTypes.shape({
+      config: PropTypes.object,
+      response: PropTypes.object
+    })
   };
 
   componentWillMount() {
@@ -25,7 +27,7 @@ class Active extends React.Component<ActiveProps, {}> {
   }
 
   verifyActiveAddon() {
-    const curi = this.props.curi || this.context.curi;
+    const curi = this.props.curi || this.context.curi.config;
     invariant(
       curi.addons.active,
       'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -34,8 +36,8 @@ class Active extends React.Component<ActiveProps, {}> {
   }
 
   render() {
-    const curi = this.props.curi || this.context.curi;
-    const response = this.props.response || this.context.curiResponse;
+    const curi = this.props.curi || this.context.curi.config;
+    const response = this.props.response || this.context.curi.response;
     const { merge, partial = false, name, params, children } = this.props;
     return curi.addons.active(name, response, params, partial)
       ? React.cloneElement(children, merge({ ...children.props }))

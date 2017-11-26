@@ -36,8 +36,10 @@ export interface LinkState {
 
 class Link extends React.Component<LinkProps, LinkState> {
   static contextTypes = {
-    curi: PropTypes.object,
-    curiResponse: PropTypes.object
+    curi: PropTypes.shape({
+      config: PropTypes.object,
+      response: PropTypes.object
+    })
   };
 
   clickHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -47,7 +49,7 @@ class Link extends React.Component<LinkProps, LinkState> {
 
     if (canNavigate(event) && !this.props.target) {
       event.preventDefault();
-      const curi = this.props.curi || this.context.curi;
+      const curi = this.props.curi || this.context.curi.config;
       const { pathname } = this.state;
       const { to, params, details = {} } = this.props;
       const location = { ...details, pathname };
@@ -57,8 +59,8 @@ class Link extends React.Component<LinkProps, LinkState> {
 
   createPathname(props: LinkProps, context: CuriContext) {
     const { to, params } = props;
-    const curi = props.curi || context.curi;
-    const response = props.response || context.curiResponse;
+    const curi = props.curi || context.curi.config;
+    const response = props.response || context.curi.response;
     const pathname =
       to != null
         ? curi.addons.pathname(to, params)
@@ -83,7 +85,7 @@ class Link extends React.Component<LinkProps, LinkState> {
   }
 
   verifyActiveAddon() {
-    const curi = this.props.curi || this.context.curi;
+    const curi = this.props.curi || this.context.curi.config;
     invariant(
       curi.addons.active,
       'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -101,8 +103,8 @@ class Link extends React.Component<LinkProps, LinkState> {
       anchor,
       ...rest
     } = this.props;
-    const curi = this.props.curi || this.context.curi;
-    const response = this.props.response || this.context.curiResponse;
+    const curi = this.props.curi || this.context.curi.config;
+    const response = this.props.response || this.context.curi.response;
     let anchorProps = rest;
     const Anchor:
       | React.ComponentClass

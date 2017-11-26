@@ -11,7 +11,9 @@ export interface BlockProps {
 
 class Block extends React.Component<BlockProps> {
   static contextTypes = {
-    curi: PropTypes.object
+    curi: PropTypes.shape({
+      config: PropTypes.object
+    })
   };
 
   static defaultProps = {
@@ -19,12 +21,12 @@ class Block extends React.Component<BlockProps> {
   };
 
   on() {
-    const curi = this.props.curi || this.context.curi;
+    const curi = this.props.curi || this.context.curi.config;
     curi.history.confirmWith(this.props.confirm);
   }
 
   off() {
-    const curi = this.props.curi || this.context.curi;
+    const curi = this.props.curi || this.context.curi.config;
     curi.history.removeConfirmation();
   }
 

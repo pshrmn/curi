@@ -25,8 +25,8 @@ export default function curious(
     const { internalRef, ...rest } = props;
     return (
       <WrappedComponent
-        curi={context.curi}
-        response={context.curiResponse}
+        curi={context.curi.config}
+        response={context.curi.response}
         {...rest}
         ref={internalRef}
       />
@@ -37,8 +37,11 @@ export default function curious(
     WrappedComponent.name})`;
 
   CuriousComponent.contextTypes = {
-    curi: PropTypes.object.isRequired,
-    curiResponse: PropTypes.object.isRequired
+    curi: PropTypes.shape({
+      config: PropTypes.object.isRequired,
+      response: PropTypes.object.isRequired,
+      action: PropTypes.string
+    }).isRequired
   };
 
   return hoist(CuriousComponent, WrappedComponent);
