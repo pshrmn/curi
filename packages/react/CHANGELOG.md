@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.13
 
 * `<Navigator>` no longer subscribers. Instead, the user should subscribe themselves and pass the `response` to the `<Navigator>`. In addition to the `response` prop, the `<Navigator>` also now accepts an `action` prop.
 * There is now one base Curi `context` object. The object is referenced as `curi` and contains three properties: `config` (the Curi config object), `response` (the current `response` object), and `action` (the current `action` string). All components have been updated to reflect this change.

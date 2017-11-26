@@ -29,10 +29,10 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "@curi/core": "^1.0.0-beta.15"
+    "@curi/core": "^1.0.0-beta.16"
   },
   "devDependencies": {
-    "@curi/core": "^1.0.0-beta.15",
+    "@curi/core": "^1.0.0-beta.16",
     "@hickory/in-memory": "^1.0.0-beta.3",
     "babel-core": "7.0.0-beta.0",
     "babel-jest": "^21.0.2",

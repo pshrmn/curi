@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.16
 
 * The type of the second argument to subscriber functions is now`Action` (instead of a `string`).
 * When `route.load` or `route.preload` has an uncaught error, the error will be set as the response's `error` property. Previously, Curi wouldn't emit a response. The user should still make sure to catch errors themselves, but at least now it should be more obvious what is happening.
