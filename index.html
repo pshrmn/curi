@@ -8,7 +8,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div><div class="banner"><h1>Curi</h1><p>A single page application router for any JavaScript rendering library.</p><pre class="language-javascript">import Browser from &#x27;@hickory/browser&#x27;;
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div><div class="banner"><h1>Curi</h1><p>A universal JavaScript single-page application router.</p><div class="banner-buttons"><button class="active">Any</button><button class="">React</button><button class="">Vue</button><button class="">Svelte</button></div><pre class="language-javascript">import Browser from &#x27;@hickory/browser&#x27;;
 import createConfig from &#x27;@curi/core&#x27;;
 
 // create your history object
@@ -25,8 +25,7 @@ const routes = [
 const config = createConfig(history, routes);
 
 // subscribe to the config object with a function
-// that will be called whenever a new response
-// is generated
+// that will be called whenever the location changes
 config.subscribe((response, action) =&gt; {
   // handle any rendering inside of this function
 });</pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> guide.</p></div><div class="features"><h2>Features</h2><div class="feature"><h3>Easy React Integration</h3><p>Curi is not just a React router, but React is currently the best supported rendering library for Curi.</p><div class="code"><div class="description"><p>Use the <code class="language-javascript">body</code> property of routes to specify each route&#x27;s component:</p></div><pre class="language-jsx">const Home = () =&gt; (
