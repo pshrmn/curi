@@ -9,16 +9,18 @@ import renderFunction from './src/renderFunction';
 export default function(req, res) {
   const history = InMemory({ locations: [ req.url ]})
   const config = createConfig(history, routes);
-  config.ready()
-    .then((response) => {
-      const markup = renderToString(
-        <Navigator response={response} config={config} render={renderFunction} />
-      );
-      res.send(renderFullPage(markup));
-    })
-    .catch(err => {
-      console.log('uh oh', err);
-    })
+ 
+  config.subscribe((response, action) => {
+    const markup = renderToString(
+      <Navigator
+        response={response}
+        action={action}
+        config={config}
+        render={renderFunction}
+      />
+    );
+    res.send(renderFullPage(markup));
+  });
 }
 
 function renderFullPage(html) {

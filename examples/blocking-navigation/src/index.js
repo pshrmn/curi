@@ -10,7 +10,15 @@ import renderFunction from './renderFunction';
 const history = Browser();
 
 const config = createConfig(history, routes);
+const root = document.getElementById('root');
 
-ReactDOM.render((
-  <Navigator config={config} render={renderFunction} />
-), document.getElementById('root'));
+config.subscribe((response, action) => {
+  ReactDOM.render((
+    <Navigator
+      response={response}
+      action={action}
+      config={config}
+      render={renderFunction}
+    />
+  ), root);
+});

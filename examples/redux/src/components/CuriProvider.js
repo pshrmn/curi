@@ -7,7 +7,11 @@ import PropTypes from 'prop-types';
 class CuriProvider extends React.Component {
 
   getChildContext() {
-    return { curi: this.props.curi };
+    return {
+      curi: {
+        config: this.props.config
+      }
+    };
   }
 
   render() {
@@ -16,7 +20,9 @@ class CuriProvider extends React.Component {
 }
 
 CuriProvider.childContextTypes = {
-  curi: PropTypes.object.isRequired
+  curi: PropTypes.shape({
+    config: PropTypes.object.isRequired
+  }).isRequired
 };
 
 export default CuriProvider;

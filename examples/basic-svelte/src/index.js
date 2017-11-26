@@ -35,7 +35,6 @@ function render(response) {
       response
     }
   });
-
 }
 
 config.subscribe(render)

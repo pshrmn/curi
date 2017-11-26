@@ -26,7 +26,7 @@ class App extends React.Component {
   render() {
     return (
       <Navigator
-        config={this.props.config}
+        {...this.props}
         render={(response) => {
           const { body: Body } = response;
           return (

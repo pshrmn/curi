@@ -8,9 +8,14 @@ import { baseRoutes } from './routes';
 
 const history = Browser();
 const config = createConfig(history, baseRoutes);
+const root = document.getElementById('root');
 
-config.ready().then(() => {
+config.subscribe((response, action) => {
   ReactDOM.render((
-    <App config={config} />
-  ), document.getElementById('root'));
+    <App
+      response={response}
+      action={action}
+      config={config}
+    />
+  ), root);
 });

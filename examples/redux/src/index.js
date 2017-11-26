@@ -12,15 +12,16 @@ import App from './components/App';
 
 const history = Browser();
 const config = createConfig(history, routes);
+const root = document.getElementById('root');
 
-config.ready().then(() => {
-  syncResponses(store, config);
+syncResponses(store, config);
 
+config.subscribe((response, action) => {
   ReactDOM.render((
     <Provider store={store}>
-      <CuriProvider curi={config}>
+      <CuriProvider config={config}>
         <App />
       </CuriProvider>
     </Provider>
-  ), document.getElementById('root'));  
+  ), root);
 });

@@ -5,9 +5,6 @@ import Nav from './components/Nav';
 const FourOhFour = () => <div>404</div>
 
 function render(response) {
-  if (!response) {
-    return null;
-  }
   const { location, params, body } = response;
   const BodyComponent = body ? body : FourOhFour
   return (

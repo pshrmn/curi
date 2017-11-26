@@ -29,21 +29,28 @@ const routes = [
 ];
 
 const config = Curi(hashHistory, routes);
+const root = document.getElementById('root');
 
-ReactDOM.render((
-  React.createElement(CuriReact.Navigator, {
-    config: config,
-    render: function(response) {
-      if (!response || response.status === 404) {
-        return React.createElement('div', null,
-          'The page you were looking for does not exist'
-        );
-      }
-      const Body = response.body ? response.body : null
-      return React.createElement('div', null,
-        React.createElement(Nav),
-        React.createElement(Body)
-      );
-    }
-  })
-), document.getElementById('root'));
+function render(response) {
+  if (!response || response.status === 404) {
+    return React.createElement('div', null,
+      'The page you were looking for does not exist'
+    );
+  }
+  const Body = response.body ? response.body : null
+  return React.createElement('div', null,
+    React.createElement(Nav),
+    React.createElement(Body)
+  );
+}
+
+config.subscribe((response, action) => {
+  ReactDOM.render((
+    React.createElement(CuriReact.Navigator, {
+      response: response,
+      action: action,
+      config: config,
+      render: render
+    })
+  ), root);
+});
