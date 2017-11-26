@@ -10,7 +10,7 @@ import {
   LOCATION_CHANGE,
   ADD_CURI
 } from '../src';
-import { AnyResponse } from '@curi/core';
+import { Response } from '@curi/core';
 import { Action } from 'redux';
 
 describe('syncResponses', () => {
@@ -32,9 +32,10 @@ describe('syncResponses', () => {
   });
 
   it('dispatches response to store whenever the location changes', done => {
-    config.ready().then(() => {
-      syncResponses(store, config);
-
+    syncResponses(store, config);
+    config.subscribe(() => {
+      // this Redux subscriber will be called when the response for
+      // the push (below) is emitted.
       store.subscribe(() => {
         const { response } = store.getState();
         expect(response.name).toBe('One');
@@ -45,24 +46,24 @@ describe('syncResponses', () => {
     });
   });
 
-  it('makes the curi config object available from the store', () => {
-    expect.assertions(2);
-    return config.ready().then(() => {
+  it('makes the curi config object available from the store', done => {
+    config.subscribe(() => {
       const { curi: before } = store.getState();
       expect(before).toBe(null);
       syncResponses(store, config);
 
       const { curi: after } = store.getState();
       expect(after).toBe(config);
+      done();
     });
   });
 });
 
 describe('responseReducer', () => {
   it('sets the response from LOCATION_CHANGE actions', () => {
-    const response = { key: 'test' } as AnyResponse;
+    const response = { key: 'test' } as Response;
     const output = responseReducer(
-      {} as AnyResponse,
+      {} as Response,
       {
         type: LOCATION_CHANGE,
         response
@@ -72,7 +73,7 @@ describe('responseReducer', () => {
   });
 
   it('returns current response for non-location change actions', () => {
-    const response = { key: 'test' } as AnyResponse;
+    const response = { key: 'test' } as Response;
     const output = responseReducer(response, { type: 'UNKNOWN' });
     expect(output).toBe(response);
   });
