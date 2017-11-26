@@ -15,7 +15,7 @@ export default ({ name }) => (
       on the Hickory package, so you should go ahead and install that as well.
     </p>
     <PrismBlock lang='bash'>
-      npm install hickory curi
+      npm install @hickory/browser @curi/core
     </PrismBlock>
 
     <p>
@@ -25,8 +25,8 @@ export default ({ name }) => (
 
     <PrismBlock lang='markup'>
       {
-`<script src="https://unpkg.com/hickory/dist/hickory.js" />
-<script src="https://unpkg.com/curi/dist/curi.js" />`
+`<script src="https://unpkg.com/@hickory/browser/dist/hickory-browser.min.js" />
+<script src="https://unpkg.com/@curi/core/dist/curi.min.js" />`
       }
     </PrismBlock>
 

@@ -147,7 +147,7 @@ export default ({ name }) => (
 
       <PrismBlock lang='javascript'>
         {
-`import createConfig from 'curi';
+`import createConfig from '@curi/core';
 import myAddonFactory from './myAddon'
 
 const routes = [{ name: 'Home', path: '' }];
