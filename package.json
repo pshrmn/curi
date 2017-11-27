@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "gzip-size": "^3.0.0",
-    "lerna": "^2.0.0",
+    "lerna": "^2.5.1",
     "pretty-bytes": "^4.0.2",
     "rollup": "^0.50.0",
     "rollup-plugin-commonjs": "^8.2.0",
