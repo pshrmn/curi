@@ -14,31 +14,27 @@ export default () => (
       <h2>Features</h2>
 
       <div className='feature'>
-        <h3>Easy React Integration</h3>
+        <h3>Framework Integration</h3>
 
         <p>
-          Curi is not just a React router, but React is currently the best supported rendering library
-          for Curi.
-        </p>  
+          While Curi is a universal router, it still has to be integrated with
+          whichever framework you are using to render your application. Currently,
+          there are packages to easily use Curi with React and Vue applications
+          (as well as one that provides basic Svelte support).
+        </p>
 
         <div className='code'>
           <div className='description'>
             <p>
-              Use the <IJS>body</IJS> property of routes to specify each route's component:
+              The <IJS>body</IJS> function of routes can be used to attach a <IJS>body</IJS>
+              {' '}property to response objects. Generally, this attached value would be a
+              function or component (this would vary based on how your framework renders),
+              but it can be anything you want it to be.
             </p>
           </div>
-          <PrismBlock lang='jsx'>
+          <PrismBlock lang='javascript'>
             {
-`const Home = () => (
-  <div>Home</div>
-);
-const User = props => (
-  <div>User {props.params.userID}</div>
-);
-const NotFound = () => (
-  <div>Page not found...</div>
-);
-
+`// routes.js
 const routes = [
   {
     name: 'Home',
@@ -56,24 +52,27 @@ const routes = [
     body: () => NotFound
   }
 ];`
-              
             }
-          </PrismBlock>
-        </div>
+            </PrismBlock>
 
+        </div>
+        <p>
+          Links are used for navigating between locations within an application.
+          Links handle URI formatting for you, all you have to do is know the
+          name (and parameters) of the route that you want to link to.
+        </p>
         <div className='code'>
           <div className='description'>
             <p>
-              <Cmp>Link</Cmp>s are used for navigating between locations within an application.
-              URI formatting is handled for you, all you have to do is know the name (and parameters)
-              of the route that you want to link to.
+              The <IJS>@curi/react</IJS> package provides a <Cmp>Link</Cmp> component
+              for rendering links in React applications.
             </p>
           </div>
           <PrismBlock lang='jsx'>
             {
 `import Link from '@curi/react-link';
 
-const Nav = () => (
+const NavLinks = () => (
   <div>
     <Link to='Home'>Home</Link>
     <Link to='User' params={{ userID: 4 }}>
@@ -84,62 +83,44 @@ const Nav = () => (
             }
           </PrismBlock>
         </div>
-
         <div className='code'>
           <div className='description'>
             <p>
-              The <Cmp>Navigator</Cmp> is responsible for re-rendering the application every time
-              the location changes, using the <IJS>render</IJS> function.
+              With Vue, you register Curi using a Vue plugin from the <IJS>@curi/vue</IJS>
+              {' '}package. That plugin will make the <Cmp>curi-link</Cmp> component
+              available to use in your application.
             </p>
           </div>
-          <PrismBlock lang='jsx'>
+          <PrismBlock lang='html'>
             {
-`import Navigator from '@curi/react-navigator';
-
-ReactDOM.render((
-  <Navigator
-    response={response}
-    action={action}
-    config={config}
-    render={(response) => {
-      const { body:Body } = response;
-      return (
-        <div>
-          <Nav />
-          <Body />
-        </div>
-      );
-    }}
-));`
+`<!-- NavLinks.html -->
+<div>
+  <curi-link to='Home'>Home</curi-link>
+  <curi-link to='User' :params="{ userID: 4 }">
+    User Four
+  </curi-link>
+</div>`
             }
           </PrismBlock>
         </div>
-
-        <p>
-          There are a number of other Curi + React components, but <Cmp>Navigator</Cmp> and{' '}
-          <Cmp>Link</Cmp> are the only ones that you'll need to be familiar with while getting
-          started.. You can see the others via the{' '}
-          <Link to='Package' params={{ package: 'react' }}><IJS>@curi/react</IJS></Link> page.
-        </p>
       </div>
 
       <div className='feature'>
-        <h3>Information Rich Response Objects</h3>
+        <h3>Response Objects</h3>
         <p>
-          Whenever the location changes (and on initial load), Curi will generate a response
-          object with data on the matching route. The properties of this object are what you
-          can use to render your application. You can learn more about these in the{' '}
-          <Link to='Guide' params={{ slug: 'responses' }}>rendering with responses</Link> guide.
+          Whenever the location changes (and on initial load), Curi will generate a
+          response object with data based on the matching route. The properties of this
+          object are what you can use to render your application. You can learn more
+          about these in the <Link to='Guide' params={{ slug: 'responses' }}>
+            rendering with responses
+          </Link> guide.
         </p>
         <div className='code'>
           <div className='description'>
             <p>
-              There isn't one "right" way to render using the response object, but it is
-              useful for <IJS>body</IJS> to be a function that will render the content for the
-              route. (The body property of a response is the value returned by calling the body
-              property of a route.)
+              The <IJS>body</IJS> property is the return value from the matching
+              route's <IJS>body</IJS> function.
             </p>
-
           </div>
           <PrismBlock lang='javascript'>
             {
@@ -159,9 +140,9 @@ ReactDOM.render((
         <div className='code'>
           <div className='description'>
             <p>
-              The <IJS>data</IJS> property of the response can contain data that you load using
-              a route's <IJS>load</IJS> function. The response won't be be generated until after
-              the data has fully loaded, so if you use this property, you don't have to render a
+              <IJS>data</IJS> can contain values that you load using a route's <IJS>load</IJS>
+              {' '}function. The response won't be be generated until after the <IJS>load</IJS>
+              {' '}function has resolved, so if you use this property, you don't have to render a
               bunch of loading spinners or empty content while waiting for the data to be loaded.
             </p>
           </div>
@@ -181,7 +162,7 @@ ReactDOM.render((
       </div>
 
       <div className='feature'>
-        <h3>Powerful Route Matching with <IJS>path-to-regexp</IJS></h3>
+        <h3>Expressive Route Matching with <IJS>path-to-regexp</IJS></h3>
         <p>
           Curi uses <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a>
           {' '}to define route paths. This allows you to define route parameters that will
@@ -196,7 +177,9 @@ ReactDOM.render((
             </p>
             <p>
               <IJS>path-to-regexp</IJS> offers a number of matching options, which you can 
-              learn more about from its documentation.
+              learn more about from <a href="https://github.com/pillarjs/path-to-regexp">
+                its documentation
+              </a>.
             </p>
           </div>
           <PrismBlock lang='javascript'>
@@ -217,7 +200,7 @@ ReactDOM.render((
       </div>
 
       <div className='feature'>
-        <h3>No Hassle Nested Routes</h3>
+        <h3>Route Nesting</h3>
         <div className='code'>
           <div className='description'>
             <p>
@@ -298,9 +281,9 @@ import InMemory form '@hickory/in-memory';`
         <div className='code'>
           <div className='description'>
             <p>
-              Navigate to new locations using <IJS>push</IJS>, <IJS>replace</IJS>, and{' '}
-              <IJS>navigate</IJS> (a combination of push and replace that duplicates how anchors
-              work).
+              Programmatically navigate using <IJS>push</IJS>, <IJS>replace</IJS>,
+              and <IJS>navigate</IJS> (a combination of push and replace that
+              replicates how anchors work).
             </p>
           </div>
           <PrismBlock lang='javascript'>
@@ -316,13 +299,10 @@ history.navigate({ pathname: '/album/934' });`
         <div className='code'>
           <div className='description'>
             <p>
-              Of course, you never have to actually generate pathnames yourself. Instead, you
-              should use Curi's built-in <IJS>pathname</IJS> addon to create them for you.
-            </p>
-            <p>
-              The <Cmp>Link</Cmp>s from <IJS>@curi/react-link</IJS> and{' '}
-              <IJS>@curi/vue</IJS> use the <IJS>pathname</IJS> addon internally to generate
-              the <IJS>href</IJS> attribute of the anchor elements that they render.
+              Of course, you never have to actually generate pathnames yourself. Curi's
+              built-in <IJS>pathname</IJS> addon will generate pathnames given the name
+              of a route (and any of that route's parameters). This addon is used by the
+              various link components to generate <IJS>anchor</IJS> attributes.
             </p>
           </div>
           <PrismBlock lang='javascript'>
@@ -334,14 +314,15 @@ const config = createConfig(history, routes);
 const pathname = config.addons.pathname(
   'Album',
   { albumID: '3490' }
-);`
+);
+history.navigate({ pathname });`
             }
           </PrismBlock>
         </div>
       </div>
 
       <div className='feature'>
-        <h3>Simple Code Splitting</h3>
+        <h3>Code Splitting</h3>
         <div className='code'>
           <div className='description'>
             <p>
@@ -378,7 +359,7 @@ const routes = [
       </div>
 
       <div className='feature'>
-        <h3>Straightforward Server Side Rendering</h3>
+        <h3>Server Side Rendering</h3>
         <div className='code'>
           <div className='description'>
             <p>
