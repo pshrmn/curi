@@ -386,7 +386,7 @@ const routes = [
               difference is that you will use an in-memory history instead of a browser history.
             </p>
           </div>
-          <PrismBlock lang='javascript'>
+          <PrismBlock lang='jsx'>
             {
 `import InMemory from '@hickory/in-memory';
 

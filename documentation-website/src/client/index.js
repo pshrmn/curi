@@ -20,7 +20,7 @@ const config = createConfig(history, routes, {
 });
 
 config.subscribe((response, action) => {
-  ReactDOM.render((
+  ReactDOM.hydrate((
     <Navigator
       response={response}
       action={action}
