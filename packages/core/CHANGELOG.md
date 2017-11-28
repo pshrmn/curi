@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.18
 
 * Call one time subscribers (`config.subscribe(fn, { once: true })`) **after** regular subscribers. This allows for subscribers to be setup prior to registering the one time function. This also means that a subscriber registered after the one time function will be called before it. This should be fine because one time functions essentially serve as a ready check. If a subscriber shouldn't be called before the one time function, it should be registered _in_ the one time function.
 

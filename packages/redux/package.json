@@ -31,7 +31,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.17",
+    "@curi/core": "^1.0.0-beta.18",
     "@hickory/root": "^1.0.0-beta.6",
     "redux": "^3.7.2"
   },

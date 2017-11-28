@@ -34,7 +34,7 @@
     "vue": "^2.5.2"
   },
   "devDependencies": {
-    "@curi/core": "^1.0.0-beta.17",
+    "@curi/core": "^1.0.0-beta.18",
     "@hickory/in-memory": "^1.0.0-beta.3",
     "@types/jest": "^21.1.8",
     "@types/node": "^8.0.53",
@@ -49,7 +49,7 @@
     "vue-test-utils": "^1.0.0-beta.3"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.17",
+    "@curi/core": "^1.0.0-beta.18",
     "@hickory/root": "^1.0.0-beta.6"
   }
 }
