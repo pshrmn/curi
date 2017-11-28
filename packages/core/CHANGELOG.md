@@ -1,3 +1,7 @@
+## Next
+
+* Call one time subscribers (`config.subscribe(fn, { once: true })`) **after** regular subscribers. This allows for subscribers to be setup prior to registering the one time function. This also means that a subscriber registered after the one time function will be called before it. This should be fine because one time functions essentially serve as a ready check. If a subscriber shouldn't be called before the one time function, it should be registered _in_ the one time function.
+
 ## 1.0.0-beta.17
 
 * Make the second argument to `config.subscribe` an options object. There is now a `once` option. When `once` is `true`, the "subscriber" will only be called one time. Calling `config.subscribe` when `{ once: true }` will **not** return an unsubscribe function. The `initial` argument has been removed.

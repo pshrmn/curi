@@ -130,16 +130,17 @@ function createConfig(
       fn(response, action);
     });
 
-    while (oneTimers.length) {
-      const fn = oneTimers.pop();
-      fn(response, action);
-    }
-
     subscribers.forEach(fn => {
       if (fn != null) {
         fn(response, action);
       }
     });
+    // calling one time subscribers after regular subscribers
+    // ensures that those are called prior to the one time fns
+    while (oneTimers.length) {
+      const fn = oneTimers.pop();
+      fn(response, action);
+    }
 
     afterSideEffects.forEach(fn => {
       fn(response, action);

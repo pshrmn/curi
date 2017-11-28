@@ -394,8 +394,6 @@ describe('createConfig', () => {
               done();
             } else {
               called = true;
-              expect(oneTime.mock.calls.length).toBe(1);
-              expect(subscriber.mock.calls.length).toBe(1);
               // trigger another navigation to verify that the once sub
               // is not called again
               config.history.push('/another-one');
@@ -420,6 +418,33 @@ describe('createConfig', () => {
             expect(oneTime.mock.calls[0][0].location.pathname).toBe('/');
             done();
           }, 50);
+        });
+
+        it('when subscribed, the function is called AFTER regular subscribers', done => {
+          const history = InMemory({
+            locations: ['/']
+          });
+          const routes = [{ name: 'Home', path: '' }];
+          const oneTime = jest.fn();
+          let called = false;
+          const subscriber = jest.fn(() => {
+            if (called) {
+              expect(oneTime.mock.calls.length).toBe(1);
+              expect(subscriber.mock.calls.length).toBe(2);
+              done();
+            } else {
+              called = true;
+              expect(oneTime.mock.calls.length).toBe(0);
+              expect(subscriber.mock.calls.length).toBe(1);
+              // trigger another navigation to verify that the once sub
+              // is not called again
+              config.history.push('/another-one');
+            }
+          });
+          const config = createConfig(history, routes);
+    
+          config.subscribe(oneTime, { once: true });
+          config.subscribe(subscriber);
         });
       });
     });
