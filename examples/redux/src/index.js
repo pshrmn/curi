@@ -15,8 +15,10 @@ const config = createConfig(history, routes);
 const root = document.getElementById('root');
 
 syncResponses(store, config);
-ReactDOM.render((
-  <Provider store={store}>
-    <ConnectedNavigator render={renderFunction} />
-  </Provider>
-), root);
+config.subscribe(() => {
+  ReactDOM.render((
+    <Provider store={store}>
+      <ConnectedNavigator render={renderFunction} />
+    </Provider>
+  ), root);
+}, { once: true });
