@@ -10,7 +10,6 @@ export interface ConfigOptions {
 }
 export interface SubscribeOptions {
     once?: boolean;
-    emitEmpty?: boolean;
 }
 export interface CuriConfig {
     refresh: (routeArray: Array<RouteDescriptor>) => void;
