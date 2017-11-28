@@ -350,8 +350,8 @@ describe('createConfig', () => {
   });
 
   describe('subscribe', () => {
-    describe('when subscribing', () => {
-      it('does not immediately call subscriber when initial=false (DEFAULT)', () => {
+    describe('initial call', () => {
+      it('does not immediately calls subscriber when there is not a response', () => {
         const history = InMemory({
           locations: ['/']
         });
@@ -363,19 +363,64 @@ describe('createConfig', () => {
         expect(sub.mock.calls.length).toBe(0);
       });
 
-      it('immediately calls subscriber (with undefined values if not resolved) when called with initial=true', () => {
+      it('immediately calls subscriber when there is already a response', done => {
         const history = InMemory({
           locations: ['/']
         });
-        const How = { name: 'How', path: ':method' };
         const routes = [{ name: 'Home', path: '' }];
         const sub = jest.fn();
         const config = createConfig(history, routes);
-        config.subscribe(sub, true);
-        expect(sub.mock.calls.length).toBe(1);
-        const [resp, action] = sub.mock.calls[0];
-        expect(resp).toBeUndefined();
-        expect(action).toBeUndefined();
+        setTimeout(() => {
+          config.subscribe(sub);
+          expect(sub.mock.calls.length).toBe(1);
+          done();
+        }, 50);
+      });
+    });
+
+    describe('subscriber options', () => {
+      describe('once', () => {
+        it('calls the subscriber function only one time', done => {
+          const history = InMemory({
+            locations: ['/']
+          });
+          const routes = [{ name: 'Home', path: '' }];
+          const oneTime = jest.fn();
+          let called = false;
+          const subscriber = jest.fn(() => {
+            if (called) {
+              expect(oneTime.mock.calls.length).toBe(1);
+              expect(subscriber.mock.calls.length).toBe(2);
+              done();
+            } else {
+              called = true;
+              expect(oneTime.mock.calls.length).toBe(1);
+              expect(subscriber.mock.calls.length).toBe(1);
+              // trigger another navigation to verify that the once sub
+              // is not called again
+              config.history.push('/another-one');
+            }
+          });
+          const config = createConfig(history, routes);
+    
+          config.subscribe(oneTime, { once: true });
+          config.subscribe(subscriber);
+        });
+    
+        it('calls the subscriber function immediately if a response has already resolved', done => {
+          const history = InMemory({
+            locations: ['/']
+          });
+          const routes = [{ name: 'Home', path: '' }];
+          const oneTime = jest.fn();
+          const config = createConfig(history, routes);
+          setTimeout(() => {
+            config.subscribe(oneTime, { once: true });
+            expect(oneTime.mock.calls.length).toBe(1);
+            expect(oneTime.mock.calls[0][0].location.pathname).toBe('/');
+            done();
+          }, 50);
+        });
       });
     });
 

@@ -8,9 +8,13 @@ export interface ConfigOptions {
     cache?: Cache;
     pathnameOptions?: PathFunctionOptions;
 }
+export interface SubscribeOptions {
+    once?: boolean;
+    emitEmpty?: boolean;
+}
 export interface CuriConfig {
     refresh: (routeArray: Array<RouteDescriptor>) => void;
-    subscribe: (fn: Subscriber, initial?: boolean) => UnsubscribeFn;
+    subscribe: (fn: Subscriber, options?: SubscribeOptions) => UnsubscribeFn;
     addons: Addons;
     history: History;
 }

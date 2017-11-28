@@ -23,9 +23,13 @@ export interface ConfigOptions {
   pathnameOptions?: PathFunctionOptions;
 }
 
+export interface SubscribeOptions {
+  once?: boolean;
+}
+
 export interface CuriConfig {
   refresh: (routeArray: Array<RouteDescriptor>) => void;
-  subscribe: (fn: Subscriber, initial?: boolean) => UnsubscribeFn;
+  subscribe: (fn: Subscriber, options?: SubscribeOptions) => UnsubscribeFn;
   addons: Addons;
   history: History;
 }
@@ -54,13 +58,6 @@ function createConfig(
 
   let routes: Array<InternalRoute> = [];
   const registeredAddons: Addons = {};
-  const subscribers: Array<Subscriber> = [];
-
-  // This is the response generated for the previous navigation
-  // and the action type of the navigation. These will be passed
-  // to config.subscribe on their initial call.
-  let previous: [Response, string] = [] as [Response, string];
-  let currentResponse: Promise<Response>;
 
   // add the pathname addon to the provided addons
   const allAddons = userAddons.concat(pathnameAddon(pathnameOptions));
@@ -95,10 +92,48 @@ function createConfig(
     });
   }
 
+  const subscribers: Array<Subscriber> = [];
+  const oneTimers: Array<Subscriber> = [];
+  let previous: [Response, Action] = [] as [Response, Action];
+
+  function subscribe(fn: Subscriber, options?: SubscribeOptions): UnsubscribeFn {
+    if (typeof fn !== 'function') {
+      throw new Error('The argument passed to subscribe must be a function');
+    }
+
+    const {
+      once = false
+    } = options || {};
+
+    if (once) {
+      if (previous.length) {
+        fn.apply(null, previous);
+      } else {
+        oneTimers.push(fn);
+      }
+    } else {
+      // Always call subscriber immediately if a previous
+      // response/action exists.
+      if (previous.length) {
+        fn.apply(null, previous);
+      }
+
+      const newLength = subscribers.push(fn);
+      return () => {
+        subscribers[newLength - 1] = null;
+      };
+    }
+  }
+
   function emit(response: Response, action: Action): void {
     beforeSideEffects.forEach(fn => {
       fn(response, action);
     });
+
+    while (oneTimers.length) {
+      const fn = oneTimers.pop();
+      fn(response, action);
+    }
 
     subscribers.forEach(fn => {
       if (fn != null) {
@@ -112,7 +147,7 @@ function createConfig(
   }
 
   let activeResponse: PendingNavigation;
-
+  
   function respond(pending: PendingNavigation): void {
     if (activeResponse) {
       activeResponse.cancel(pending.action);
@@ -120,7 +155,7 @@ function createConfig(
     }
     activeResponse = pending;
 
-    currentResponse = getResponse(pending.location).then(response => {
+    getResponse(pending.location).then(response => {
       if (pending.cancelled) {
         return;
       }
@@ -143,20 +178,7 @@ function createConfig(
   return {
     addons: registeredAddons,
     history,
-    subscribe: function(fn: Subscriber, initial?: boolean): UnsubscribeFn {
-      if (typeof fn !== 'function') {
-        throw new Error('The argument passed to subscribe must be a function');
-      }
-
-      if (initial) {
-        fn.apply(null, previous);
-      }
-
-      const newLength = subscribers.push(fn);
-      return () => {
-        subscribers[newLength - 1] = null;
-      };
-    },
+    subscribe,
     refresh: setupRoutesAndAddons
   };
 }
