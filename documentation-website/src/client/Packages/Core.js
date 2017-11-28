@@ -105,7 +105,7 @@ const config = createConfig(history, routes, options);`
 
           <Subsection
             tag='h5'
-            title='subscribe(fn)'
+            title='subscribe(fn, options)'
             id='subscribe'
           >
             <p>
@@ -124,6 +124,20 @@ const config = createConfig(history, routes, options);`
 });`
               }
             </PrismBlock>
+
+            <Subsection
+              tag='h6'
+              title='options'
+              id='subscribe-options'
+            >
+              <PrismBlock lang='javascript'>
+                {
+`{ once: true } // default false
+// When true, the subscriber function will only be called once. When
+// once is true, config.subscribe does not return an unsubscribe function.`
+                }
+              </PrismBlock>
+            </Subsection>
           </Subsection>
 
           <Subsection
