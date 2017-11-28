@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.17
 
 * Make the second argument to `config.subscribe` an options object. There is now a `once` option. When `once` is `true`, the "subscriber" will only be called one time. Calling `config.subscribe` when `{ once: true }` will **not** return an unsubscribe function. The `initial` argument has been removed.
 
