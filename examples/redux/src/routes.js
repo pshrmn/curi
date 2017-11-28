@@ -1,5 +1,6 @@
 import Home from './components/Home';
 import Product from './components/Product';
+import NotFound from './components/NotFound';
 
 import fakeData from './fakeData';
 import store, { loadProducts, loadProduct } from './reduxStuff';
@@ -36,5 +37,10 @@ export default [
         mods.setStatus(404);
       }
     }
+  },
+  {
+    name: 'Not Found',
+    path: '(.*)',
+    body: () => NotFound
   }
 ];

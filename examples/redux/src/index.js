@@ -5,23 +5,18 @@ import Browser from '@hickory/browser';
 import createConfig from '@curi/core'
 import { syncResponses } from '@curi/redux';
 
-import CuriProvider from './components/CuriProvider';
+import ConnectedNavigator from './components/ConnectedNavigator';
 import store from './reduxStuff';
 import routes from './routes';
-import App from './components/App';
+import renderFunction from './renderFunction';
 
 const history = Browser();
 const config = createConfig(history, routes);
 const root = document.getElementById('root');
 
 syncResponses(store, config);
-
-config.subscribe((response, action) => {
-  ReactDOM.render((
-    <Provider store={store}>
-      <CuriProvider config={config}>
-        <App />
-      </CuriProvider>
-    </Provider>
-  ), root);
-});
+ReactDOM.render((
+  <Provider store={store}>
+    <ConnectedNavigator render={renderFunction} />
+  </Provider>
+), root);

@@ -18,7 +18,7 @@
   "dependencies": {
     "@curi/core": "^1.0.0-beta.16",
     "@curi/react": "^1.0.0-beta.13",
-    "@curi/redux": "^1.0.0-alpha.3",
+    "@curi/redux": "^1.0.0-beta.0",
     "@hickory/browser": "^1.0.0-beta.5",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
