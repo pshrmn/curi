@@ -8,7 +8,7 @@
     "clean": "lerna clean",
     "postinstall": "npm run bootstrap",
     "prettier": "lerna run prettier",
-    "update-dep-versions": "lerna publish --skip-git --skip-npm",
+    "versions": "lerna publish --skip-git --skip-npm",
     "test": "lerna run test",
     "coverage": "lerna run coverage"
   },
