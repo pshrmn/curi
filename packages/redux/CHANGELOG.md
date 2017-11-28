@@ -1,3 +1,8 @@
+## 1.0.0-beta.0
+
+* Remove `responseReducer` and group everything in store under `curi` property.
+* Add the `action` emitted by Curi to the store.
+
 ## 1.0.0-alpha.3
 
 * `Response` type replaces `AnyResponse`.

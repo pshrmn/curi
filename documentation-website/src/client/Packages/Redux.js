@@ -28,7 +28,7 @@ export default ({ name, version, globalName }) => (
     <APIBlock>
       <PrismBlock lang='javascript'>
         {
-`import { syncResponses, responseReducer, curiReducer } from '@curi/redux';`
+`import { syncResponses, curiReducer } from '@curi/redux';`
         }
       </PrismBlock>
 
@@ -41,8 +41,7 @@ export default ({ name, version, globalName }) => (
           <IJS>syncResponses</IJS> is responsible for linking your Redux store with your Curi
           configuration object. It subscribes to location changes emitted from your configuration
           object with a function that will dispatch a "location changed" event to the Redux store.
-          It will also add your Curi configuration object to the store. You can get the object
-          from the store using the <IJS>curi</IJS> property identifier.
+          It will also add your Curi configuration object to the store.
         </p>
         <PrismBlock lang='javascript'>
           {
@@ -50,9 +49,9 @@ export default ({ name, version, globalName }) => (
 const store = createStore(reducer);
 
 syncResponses(store, config);
-config.subscribe((response, action) => {
-  // render
-});`
+// whenever navigation happens, the config object will now
+// pass the response and action to your Redux store.
+`
           }
         </PrismBlock>
       </Section>
@@ -63,8 +62,8 @@ config.subscribe((response, action) => {
         id='curiReducer'
       >
         <p>
-          Use the <IJS>curiReducer</IJS> to keep your Curi configuration object in the store. When
-          you call <IJS>syncResponses</IJS>, your configuration object will be added to the store.
+          The <IJS>curiReducer</IJS> keeps track of your Curi configuration object, the latest
+          response object, and the latest action string in your Redux store.
         </p>
         <PrismBlock lang='javascript'>
           {
@@ -76,29 +75,7 @@ const reducer = combineReducers({
 const store = createStore(reducer);
 syncResponses(store, config);
 const { curi } = store.getState();
-// curi === config`
-          }
-        </PrismBlock>
-      </Section>
-
-
-      <Section
-        tag='h3'
-        title='responseReducer'
-        id='responseReducer'
-      >
-        <p>
-          Use the <IJS>responseReducer</IJS> to store the latest response object in your Redux store.
-          If you use <IJS>syncResponses</IJS>, this will automatically be done for you (by subscribing to
-          your Curi configuration object's <IJS>history</IJS>).
-        </p>
-        <PrismBlock lang='javascript'>
-          {
-`const reducer = combineReducers({
-  response: responseReducer,
-  ...
-});
-const store = createStore(reducer);`
+// curi = { config, response, action }`
           }
         </PrismBlock>
       </Section>

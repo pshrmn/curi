@@ -5,13 +5,14 @@ import { createStore, combineReducers } from 'redux';
 
 import {
   syncResponses,
-  responseReducer,
   curiReducer,
   LOCATION_CHANGE,
-  ADD_CURI
+  ADD_CURI,
+  CuriState
 } from '../src';
-import { Response } from '@curi/core';
-import { Action } from 'redux';
+import { Response, CuriConfig } from '@curi/core';
+import { Action as HickoryAction } from '@hickory/root';
+import { Action, Store } from 'redux';
 
 describe('syncResponses', () => {
   let history, config, store;
@@ -24,21 +25,21 @@ describe('syncResponses', () => {
     ]);
 
     const reducer = combineReducers({
-      response: responseReducer,
       curi: curiReducer
     });
 
     store = createStore(reducer);
   });
 
-  it('dispatches response to store whenever the location changes', done => {
+  it('dispatches response and action to store whenever the location changes', done => {
     syncResponses(store, config);
     config.subscribe(() => {
       // this Redux subscriber will be called when the response for
       // the push (below) is emitted.
       store.subscribe(() => {
-        const { response } = store.getState();
+        const { response, action } = store.getState().curi;
         expect(response.name).toBe('One');
+        expect(action).toBe('PUSH');
         done();
       });
 
@@ -49,38 +50,13 @@ describe('syncResponses', () => {
   it('makes the curi config object available from the store', done => {
     config.subscribe(() => {
       const { curi: before } = store.getState();
-      expect(before).toBe(null);
+      expect(before.config).toBe(null);
       syncResponses(store, config);
 
       const { curi: after } = store.getState();
-      expect(after).toBe(config);
+      expect(after.config).toBe(config);
       done();
     });
-  });
-});
-
-describe('responseReducer', () => {
-  it('sets the response from LOCATION_CHANGE actions', () => {
-    const response = { key: 'test' } as Response;
-    const output = responseReducer(
-      {} as Response,
-      {
-        type: LOCATION_CHANGE,
-        response
-      } as Action
-    );
-    expect(output).toBe(response);
-  });
-
-  it('returns current response for non-location change actions', () => {
-    const response = { key: 'test' } as Response;
-    const output = responseReducer(response, { type: 'UNKNOWN' });
-    expect(output).toBe(response);
-  });
-
-  it('returns null for non-location change actions if store.response is undefined', () => {
-    const output = responseReducer(undefined, { type: 'UNKNOWN' });
-    expect(output).toBe(null);
   });
 });
 
@@ -95,21 +71,66 @@ describe('curiReducer', () => {
     ]);
   });
 
-  it('returns the provided curi config for ADD_CURI actions', () => {
-    const output = curiReducer(undefined, {
-      type: ADD_CURI,
-      curi: config
-    } as Action);
-    expect(output).toBe(config);
+  describe('default state', () => {
+    it('returns object with null properties', () => {
+      const reducer = combineReducers({
+        curi: curiReducer
+      });
+
+      const store: Store<any> = createStore(reducer);
+      const { curi } = store.getState();
+      expect(curi).toMatchObject({
+        config: null,
+        response: null,
+        action: null
+      });
+    });
   });
 
-  it('returns the curi config object saved in the store', () => {
-    const output = curiReducer(config, { type: 'UNKNOWN' });
-    expect(output).toBe(config);
+  describe('ADD_CURI', () => {
+    it('returns the provided curi config for ADD_CURI actions', () => {
+      const output = curiReducer(undefined, {
+        type: ADD_CURI,
+        curi: config
+      } as Action);
+      expect(output.config).toBe(config);
+    });
   });
 
-  it('returns null for non-add curi actions if store.curi is undefined', () => {
-    const output = curiReducer(undefined, { type: 'UNKNOWN' });
-    expect(output).toBe(null);
+  describe('LOCATION_CHANGE', () => {
+    it('sets the response and action from LOCATION_CHANGE actions', () => {
+      const response = { key: 'test' } as Response;
+      const action = 'POP' as HickoryAction;
+      const output = curiReducer(
+        {} as CuriState,
+        {
+          type: LOCATION_CHANGE,
+          response,
+          action
+        } as Action
+      );
+      expect(output.response).toBe(response);
+      expect(output.action).toBe(action);
+    });
+  });
+
+  describe('other actions', () => {
+    it('returns current config/response/action for other actions', () => {
+      const fakeConfig = {} as CuriConfig;
+      const fakeResponse = { key: 'test' } as Response;
+      const output = curiReducer(
+        {
+          config: fakeConfig,
+          response: fakeResponse,
+          action: 'POP'
+        } as CuriState,
+        { type: 'UNKNOWN' }
+      );
+      expect(output).toMatchObject({
+        config: fakeConfig,
+        response: fakeResponse,
+        action: 'POP'
+      });
+    });
   });
 });

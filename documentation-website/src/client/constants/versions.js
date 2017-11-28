@@ -5,7 +5,7 @@ export default {
   "addon-prefetch": "1.0.0-beta.5",
   "core": "1.0.0-beta.16",
   "react": "1.0.0-beta.13",
-  "redux": "1.0.0-alpha.3",
+  "redux": "1.0.0-beta.0",
   "side-effect-scroll": "1.0.0-beta.5",
   "side-effect-title": "1.0.0-beta.5",
   "svelte": "1.0.0-alpha.5",
