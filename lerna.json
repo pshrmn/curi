@@ -9,7 +9,7 @@
   "commands": {
     "bootstrap": {
       "hoist": "**",
-      "nohoist": "ts-jest"
+      "nohoist": ["ts-jest", "svelte"]
     }
   }
 }

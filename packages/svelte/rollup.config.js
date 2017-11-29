@@ -11,7 +11,8 @@ const config = {
   sourcemap: true,
   plugins: [
     svelte({
-      include: 'src/**/*.html'
+      include: 'src/**/*.html',
+      store: true
     }),
     babel({
       exclude: 'node_modules/**'
