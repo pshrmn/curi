@@ -1,7 +1,11 @@
 import React from 'react';
 import BasePackage from './base/BasePackage';
 import APIBlock from './base/APIBlock';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
+import {
+  InlineJS as IJS,
+  InlineComponent as Cmp,
+  PrismBlock
+} from '../components/PrismBlocks';
 import { Section } from '../components/Sections';
 
 export default ({ name, version, globalName }) => (
@@ -11,49 +15,34 @@ export default ({ name, version, globalName }) => (
     globalName={globalName}
     about={(
       <p>
-        This package enables you to use Curi alongside Svelte. This is more of a proof of concept
-        than a fleshed out routing solution and only provides bare routing functionality.
+        This package enables you to use Curi alongside Svelte. <strong>This package
+        relies on the Svelte store.</strong>
       </p>
     )}
   >
     <APIBlock>
       <Section
         tag='h3'
-        title='setConfig'
-        id='setConfig'
+        title={<Cmp>Link</Cmp>}
+        id='link'
       >
         <p>
           In order for the components provided by this package to work, they need to have access to
           your Curi config object.
         </p>
 
-        <PrismBlock lang='javascript'>
+        <PrismBlock lang='html'>
           {
-`import { setConfig } from '@curi/svelte';
-
-const config = createConfig(history, routes);
-setConfig(config);`
-          }
-        </PrismBlock>
-      </Section>
-
-      <Section
-        tag='h3'
-        title='getConfig'
-        id='getConfig'
-      >
-        <p>
-          <IJS>getConfig</IJS> complements <IJS>setConfig</IJS> by returning the configuration object
-          set by calling <IJS>setConfig</IJS>. This can be used to access the configuration object
-          throughout your application. It is used internally by <IJS>@curi/svelte</IJS> components.
-        </p>
-
-        <PrismBlock lang='javascript'>
-          {
-`import { getConfig } from '@curi/svelte';
-
-// config will be undefined if you haven't called setConfig yet!
-const config = getConfig();`
+`<div>
+  <Link to='Home'>Home</Link>
+  <Link to='User' params='{{ { userID: 5 } }}'>Profile</Link>
+</div>
+<script>
+  import { Link } from '@curi/svelte';
+  export default {
+    components: { Link }
+  }
+</script>`
           }
         </PrismBlock>
       </Section>
@@ -64,28 +53,49 @@ const config = getConfig();`
       id='usage'
     >
       <p>
-        The following is one way to setup rendering for a Curi + Vue application.
+        The components exported by <IJS>@curi/svelte</IJS> rely on Svelte's
+        store. The store should include a <IJS>curi</IJS> property that has
+        a <IJS>config</IJS> property. Future releases might also include{' '}
+        <IJS>response</IJS> and <IJS>action</IJS> properties, but for now{' '}
+        <IJS>config</IJS> is the only required property.
+      </p>
+      <PrismBlock lang='javascript'>
+        {
+`import { Store } from 'svelte/store';
+
+const config = createConfig(history, routes);
+const store = new Store({
+  curi: { config }
+});`
+        }
+      </PrismBlock>
+      <p>
+        As far as rendering your application goes, you should use the{' '}
+        <IJS>subscribe</IJS> method provided by the Curi configuration object
+        to re-render whenever a new response is emitted.
       </p>
 
       <PrismBlock lang='javascript'>
         {
-`import { setConfig } from '@curi/svelte';
-const config = createConfig(history, routes);
-setConfig(config);
+`const config = createConfig(history, routes);
+
+const store = new Store({
+  curi: { config }
+});
 
 const root = document.getElementById('root');
 let view;
-function subscriber(response) {
+
+config.subscribe(response => {
   if (view) {
     view.destroy();
   }
   view = new response.body({
     target: root,
+    store,
     data: response
   });
-}
-config.subscribe(subscriber);
-`
+});`
         }
       </PrismBlock>
     </Section>
