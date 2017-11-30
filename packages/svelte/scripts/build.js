@@ -1,4 +1,5 @@
 const rollupBuild = require('../../../scripts/build');
+const copyHTML = require('./copyHTML');
 
 rollupBuild(
   'ES',
@@ -23,3 +24,5 @@ rollupBuild(
   { f: 'iife', o: 'dist/curi-svelte.min.js' },
   { NODE_ENV: 'production', BABEL_ENV: 'build' }
 );
+
+copyHTML();
