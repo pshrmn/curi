@@ -1,15 +1,14 @@
 import Browser from '@hickory/browser';
 import createConfig from '@curi/core';
-import { setConfig } from '@curi/svelte';
+import { Store } from 'svelte/store';
 
 import routes from './routes';
 
 const history = Browser();
 const config = createConfig(history, routes);
-// Use setConfig so that the @curi/svelte components
-// (curently just the <Link>) can interact with the
-// configuration object.
-setConfig(config);
+const store = new Store({
+  curi: { config }
+});
 
 let view;
 const root = document.getElementById('root');
@@ -31,6 +30,7 @@ function render(response) {
 
   view = new response.body({
     target: root,
+    store,
     data: {
       response
     }
