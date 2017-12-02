@@ -49,16 +49,18 @@ export default ({ name, version, globalName }) => (
           {
 `const config = createConfig(history, routes);
 
-ReactDOM.render((
-  <Navigator config={config}>
-    {(response, config) => {
-      if (!response) {
-        return null;
-      }
-      return response.body ? <response.body /> : null;
-    }}
-  </Navigator>
-), holder);`
+config.subscribe((response, action) => {
+  ReactDOM.render((
+    <Navigator
+      response={response}
+      action={acton}
+      config={config}
+      render={response => {
+        return response.body ? <response.body /> : null;
+      }}
+    />
+  ), holder);
+});`
           }
         </PrismBlock>
 
@@ -99,6 +101,16 @@ ReactDOM.render((
               A response object. You can pass your <Cmp>Navigator</Cmp> a response object and
               it will use that instead of subscribing to the configuration object. This is ideal for server-side
               rendering.
+            </p>
+          </Subsection>
+
+          <Subsection
+            tag='h4'
+            title='action'
+            id='Navigator-action'
+          >
+            <p>
+              The `action` from the most recent navigation.
             </p>
           </Subsection>
         </Section>
