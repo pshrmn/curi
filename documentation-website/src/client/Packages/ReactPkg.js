@@ -53,7 +53,7 @@ config.subscribe((response, action) => {
   ReactDOM.render((
     <Navigator
       response={response}
-      action={acton}
+      action={action}
       config={config}
       render={response => {
         return response.body ? <response.body /> : null;
