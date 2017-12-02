@@ -14,7 +14,7 @@ config.subscribe((response, action) =&gt; {
   ReactDOM.render((
     &lt;Navigator
       response={response}
-      action={acton}
+      action={action}
       config={config}
       render={response =&gt; {
         return response.body ? &lt;response.body /&gt; : null;
