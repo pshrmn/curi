@@ -1,10 +1,12 @@
-import Link from './Link';
-import Block from './Block';
 import { CuriConfig } from '@curi/core';
 import { PluginObject, PluginFunction } from 'vue';
 
+import Link from './Link';
+import Block from './Block';
+import { CuriPluginObject } from './interface';
+
 export interface CuriPluginOptions {
-  config: CuriConfig;
+  curi: CuriPluginObject;
 }
 
 const CuriPlugin: PluginObject<CuriPluginOptions> = {
@@ -14,7 +16,7 @@ const CuriPlugin: PluginObject<CuriPluginOptions> = {
 
     _Vue.mixin({
       created: function() {
-        this.$curi = options.config;
+        this.$curi = options.curi;
       }
     });
   }

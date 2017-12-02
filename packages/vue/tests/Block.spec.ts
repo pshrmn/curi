@@ -17,7 +17,9 @@ describe('Block component', () => {
 
   const Vue = createLocalVue();
 
-  Vue.use(CuriPlugin, { config });
+  Vue.use(CuriPlugin, {
+    curi: { config }
+  });
 
   afterEach(() => {
     mockConfirmWith.mockReset();
@@ -40,7 +42,7 @@ describe('Block component', () => {
     });
     expect(wrapper.isEmpty()).toBe(true);
   });
-  
+
   it('if active=true when mounting, adds block', () => {
     const confirm = jest.fn();
     const wrapper = shallow(Block, {
@@ -50,11 +52,11 @@ describe('Block component', () => {
         confirm
       }
     });
-    
+
     expect(mockConfirmWith.mock.calls.length).toBe(1);
     expect(mockConfirmWith.mock.calls[0][0]).toBe(confirm);
   });
-  
+
   it('defaults to active=true', () => {
     const confirm = jest.fn();
     const wrapper = shallow(Block, {

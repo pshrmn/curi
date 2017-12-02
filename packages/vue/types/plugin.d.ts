@@ -1,7 +1,7 @@
-import { CuriConfig } from '@curi/core';
 import { PluginObject } from 'vue';
+import { CuriPluginObject } from './interface';
 export interface CuriPluginOptions {
-    config: CuriConfig;
+    curi: CuriPluginObject;
 }
 declare const CuriPlugin: PluginObject<CuriPluginOptions>;
 export default CuriPlugin;

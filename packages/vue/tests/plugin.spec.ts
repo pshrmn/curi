@@ -9,7 +9,9 @@ describe('CuriPlugin', () => {
   const routes = [];
   const config = createConfig(history, routes);
   const Vue = createLocalVue();
-  Vue.use(CuriPlugin, { config });
+  Vue.use(CuriPlugin, {
+    curi: { config }
+  });
 
   it('Adds a mixin that sets $curi for all components', () => {
     const FakeComponent = {
@@ -19,7 +21,7 @@ describe('CuriPlugin', () => {
     };
     const fakeConsructor = Vue.extend(FakeComponent);
     const vm = new fakeConsructor().$mount();
-    expect(vm.$curi).toBe(config);
+    expect(vm.$curi.config).toBe(config);
   });
 
   it('Adds the Link component as <curi-link>', () => {

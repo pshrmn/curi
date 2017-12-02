@@ -2,22 +2,19 @@ import 'jest';
 import { createLocalVue, shallow } from 'vue-test-utils';
 import InMemory from '@hickory/in-memory';
 import createConfig from '@curi/core';
+import createActiveAddon from '@curi/addon-active';
 import CuriPlugin from '../src/plugin';
 import Link from '../src/Link';
 
 describe('Link component', () => {
   const history = InMemory();
-  const mockNavigate = jest.fn();
-  history.navigate = mockNavigate;
 
-  const routes = [{ name: 'Place', path: '/place/:name' }];
+  const routes = [{ name: 'Place', path: 'place/:name' }];
   const config = createConfig(history, routes);
 
   const Vue = createLocalVue();
-  Vue.use(CuriPlugin, { config });
-
-  afterEach(() => {
-    mockNavigate.mockReset();
+  Vue.use(CuriPlugin, {
+    curi: { config }
   });
 
   it('registers with the name curi-link', () => {
@@ -48,7 +45,215 @@ describe('Link component', () => {
     expect(wrapper.hasAttribute('href', '/place/Jamaica')).toBe(true);
   });
 
+  describe('active', () => {
+    const history = InMemory({
+      locations: ['/place/somewhere']
+    });
+
+    const routes = [
+      {
+        name: 'Places',
+        path: 'place',
+        children: [{ name: 'Place', path: ':name' }]
+      }
+    ];
+    const config = createConfig(history, routes, {
+      addons: [createActiveAddon()]
+    });
+
+    function merge(props) {
+      props.class = 'active';
+      return props;
+    }
+
+    describe('without the @curi/addon-active addon', () => {
+      const history = InMemory({
+        locations: ['/place/somewhere']
+      });
+
+      const routes = [
+        {
+          name: 'Places',
+          path: 'place',
+          children: [{ name: 'Place', path: ':name' }]
+        }
+      ];
+      const config = createConfig(history, routes);
+      function merge(props) {
+        props.class = 'active';
+        return props;
+      }
+
+      it('is always non-active', done => {
+        const Vue = createLocalVue();
+        // silence the warning
+        const warn = console.error;
+        console.error = jest.fn();
+        config.subscribe(
+          (response, action) => {
+            Vue.use(CuriPlugin, {
+              curi: { config, response, action }
+            });
+
+            const wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Place',
+                params: { name: 'somewhere' },
+                text: 'somewhere',
+                active: { merge }
+              }
+            });
+            expect(wrapper.hasClass('active')).toBe(false);
+            console.error = warn;
+            done();
+          },
+          { once: true }
+        );
+      });
+
+      it('calls console.error', done => {
+        const Vue = createLocalVue();
+
+        const warns = console.error;
+        console.error = jest.fn();
+
+        config.subscribe(
+          (response, action) => {
+            Vue.use(CuriPlugin, {
+              curi: { config, response, action }
+            });
+
+            const wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Place',
+                params: { name: 'somewhere' },
+                text: 'somewhere',
+                active: { merge }
+              }
+            });
+            expect(console.error.mock.calls.length).toBe(1);
+            console.error = warns;
+            done();
+          },
+          { once: true }
+        );
+      });
+    });
+
+    it('merges active props when the location is active', done => {
+      const Vue = createLocalVue();
+      config.subscribe(
+        (response, action) => {
+          Vue.use(CuriPlugin, {
+            curi: { config, response, action }
+          });
+
+          const wrapper = shallow(Link, {
+            localVue: Vue,
+            propsData: {
+              to: 'Place',
+              params: { name: 'somewhere' },
+              text: 'somewhere',
+              active: { merge }
+            }
+          });
+          expect(wrapper.hasClass('active')).toBe(true);
+          done();
+        },
+        { once: true }
+      );
+    });
+
+    it('does not merge active props when the location is not active', done => {
+      const Vue = createLocalVue();
+      config.subscribe(
+        (response, action) => {
+          Vue.use(CuriPlugin, {
+            curi: { config, response, action }
+          });
+
+          const wrapper = shallow(Link, {
+            localVue: Vue,
+            propsData: {
+              to: 'Place',
+              params: { name: 'nowhere' },
+              text: 'nowhere',
+              active: { merge }
+            }
+          });
+          expect(wrapper.hasClass('active')).toBe(false);
+          done();
+        },
+        { once: true }
+      );
+    });
+
+    it('merges active props for partial matches when active.partial = true', done => {
+      const Vue = createLocalVue();
+      config.subscribe(
+        (response, action) => {
+          Vue.use(CuriPlugin, {
+            curi: { config, response, action }
+          });
+
+          const wrapper = shallow(Link, {
+            localVue: Vue,
+            propsData: {
+              to: 'Places',
+              text: 'Places',
+              active: { merge, partial: true }
+            }
+          });
+          expect(wrapper.hasClass('active')).toBe(true);
+          done();
+        },
+        { once: true }
+      );
+    });
+
+    it('does not merge active props for partial matches when active.partial is falsy', done => {
+      const Vue = createLocalVue();
+      config.subscribe(
+        (response, action) => {
+          Vue.use(CuriPlugin, {
+            curi: { config, response, action }
+          });
+
+          const wrapper = shallow(Link, {
+            localVue: Vue,
+            propsData: {
+              to: 'Places',
+              text: 'Places',
+              active: { merge }
+            }
+          });
+          expect(wrapper.hasClass('active')).toBe(false);
+          done();
+        },
+        { once: true }
+      );
+    });
+  });
+
   describe('clicking a <curi-link>', () => {
+    const history = InMemory();
+    const mockNavigate = jest.fn();
+    history.navigate = mockNavigate;
+
+    const routes = [{ name: 'Place', path: 'place/:name' }];
+    const config = createConfig(history, routes);
+
+    const Vue = createLocalVue();
+    Vue.use(CuriPlugin, {
+      curi: { config }
+    });
+
+    afterEach(() => {
+      mockNavigate.mockReset();
+    });
+
     it('navigates to expected location when clicked', () => {
       const wrapper = shallow(Link, {
         localVue: Vue,
@@ -63,9 +268,8 @@ describe('Link component', () => {
         }
       });
 
-      const mockClick = new MouseEvent('click');
       expect(mockNavigate.mock.calls.length).toBe(0);
-      wrapper.vm.$el.dispatchEvent(mockClick);
+      wrapper.trigger('click', { button: 0 });
       expect(mockNavigate.mock.calls.length).toBe(1);
       expect(mockNavigate.mock.calls[0][0]).toEqual({
         pathname: '/place/Bermuda',
@@ -74,9 +278,7 @@ describe('Link component', () => {
       });
     });
 
-    it.skip('does not navigate if event.defaultPrevented is true', () => {
-      // need to figure out how to do this. have not yet implemented
-      // a click prop, which is where this would actually be triggered.
+    it('does not navigate if event.defaultPrevented is true', () => {
       const wrapper = shallow(Link, {
         localVue: Vue,
         propsData: {
@@ -86,10 +288,8 @@ describe('Link component', () => {
         }
       });
 
-      const mockClick = new MouseEvent('click');
-      mockClick.preventDefault();
       expect(mockNavigate.mock.calls.length).toBe(0);
-      wrapper.vm.$el.dispatchEvent(mockClick);
+      wrapper.trigger('click', { button: 0, preventDefault: true });
       expect(mockNavigate.mock.calls.length).toBe(0);
     });
 
@@ -106,10 +306,7 @@ describe('Link component', () => {
       expect(mockNavigate.mock.calls.length).toBe(0);
       const modifiers = ['metaKey', 'altKey', 'ctrlKey', 'shiftKey'];
       modifiers.forEach(m => {
-        const mockClick = new MouseEvent('click', {
-          [m]: true
-        });
-        wrapper.vm.$el.dispatchEvent(mockClick);
+        wrapper.trigger('click', { [m]: true, button: 0 });
         expect(mockNavigate.mock.calls.length).toBe(0);
       });
     });
@@ -123,10 +320,46 @@ describe('Link component', () => {
           text: 'Montego'
         }
       });
-      const mockClick = new MouseEvent('click', { button: 1 });
+
       expect(mockNavigate.mock.calls.length).toBe(0);
-      wrapper.vm.$el.dispatchEvent(mockClick);
+      wrapper.trigger('click', { button: 1 });
       expect(mockNavigate.mock.calls.length).toBe(0);
+    });
+
+    describe('click prop', () => {
+      it('will be called prior to navigation', () => {
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: 'Place',
+            params: { name: 'Montego' },
+            text: 'Montego',
+            click: function(event) {
+              expect(mockNavigate.mock.calls.length).toBe(0);
+            }
+          }
+        });
+  
+        wrapper.trigger('click', { button: 0 });
+        expect(mockNavigate.mock.calls.length).toBe(1);
+      });
+
+      it('calling event.preventDefault() in click fn will stop navigation', () => {
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: 'Place',
+            params: { name: 'Montego' },
+            text: 'Montego',
+            click: function(event) {
+              event.preventDefault();
+            }
+          }
+        });
+
+        wrapper.trigger('click', { button: 0 });
+        expect(mockNavigate.mock.calls.length).toBe(0);
+      });
     });
   });
 
