@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.9
 
 * Add `active` support to the `<curi-link>`, where `active` is an object with a `merge` function and an optional `partial` boolean.
 * Expand the `$curi` object to contain `response` and `action` (`this.$curi = { config, response, action }`).
