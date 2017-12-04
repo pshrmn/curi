@@ -89,7 +89,7 @@ describe('Link component', () => {
         console.error = jest.fn();
 
         installCuri(Vue, config);
-        config.subscribe(
+        config.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -115,7 +115,7 @@ describe('Link component', () => {
         console.error = jest.fn();
 
         installCuri(Vue, config);
-        config.subscribe(
+        config.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -139,7 +139,7 @@ describe('Link component', () => {
       const Vue = createLocalVue();
 
       installCuri(Vue, config);
-      config.subscribe(
+      config.respond(
         (response, action) => {
           const wrapper = shallow(Link, {
             localVue: Vue,
@@ -161,7 +161,7 @@ describe('Link component', () => {
       const Vue = createLocalVue();
 
       installCuri(Vue, config);
-      config.subscribe(
+      config.respond(
         (response, action) => {
           const wrapper = shallow(Link, {
             localVue: Vue,
@@ -183,7 +183,7 @@ describe('Link component', () => {
       const Vue = createLocalVue();
 
       installCuri(Vue, config);
-      config.subscribe(
+      config.respond(
         (response, action) => {
           const wrapper = shallow(Link, {
             localVue: Vue,
@@ -204,7 +204,7 @@ describe('Link component', () => {
       const Vue = createLocalVue();
 
       installCuri(Vue, config);
-      config.subscribe(
+      config.respond(
         (response, action) => {
           const wrapper = shallow(Link, {
             localVue: Vue,
@@ -227,7 +227,7 @@ describe('Link component', () => {
 
         installCuri(Vue, config);
         let wrapper;
-        config.subscribe((response, action) => {
+        config.respond((response, action) => {
           if (!wrapper) {
             wrapper = shallow(Link, {
               localVue: Vue,

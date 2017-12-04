@@ -17,7 +17,7 @@ describe('CuriPlugin', () => {
       }
     };
     let curi;
-    config.subscribe(
+    config.respond(
       (response, action) => {
         curi = { config, response, action };
         Vue.use(CuriPlugin, { curi });
@@ -73,7 +73,7 @@ describe('CuriPlugin', () => {
       curi = { config };
     Vue.use(CuriPlugin, { curi });
 
-    config.subscribe((response, action) => {
+    config.respond((response, action) => {
       curi = Object.assign(curi, { response, action });
       if (!wrapper) {
         wrapper = shallow(FakeComponent, {

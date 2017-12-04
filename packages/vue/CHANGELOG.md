@@ -1,5 +1,6 @@
 ## Next
 
+* Switch to `config.respond` from `config.subscribe`.
 * Export an `installCuri` function to handle registering Curi and automatically updating the `response`/`action` after location changes.
 * `CuriPlugin` is now a named export instead of a default export.
 * Make the `$curi` object reactive.

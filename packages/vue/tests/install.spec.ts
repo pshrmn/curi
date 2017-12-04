@@ -19,7 +19,7 @@ describe('installCuri', () => {
     };
     installCuri(Vue, config);
 
-    config.subscribe(
+    config.respond(
       (response, action) => {
         const wrapper = shallow(FakeComponent, {
           localVue: Vue
@@ -70,7 +70,7 @@ describe('installCuri', () => {
 
     installCuri(Vue, config);
 
-    config.subscribe(
+    config.respond(
       (response, action) => {
         const wrapper = shallow(FakeComponent, {
           localVue: Vue
