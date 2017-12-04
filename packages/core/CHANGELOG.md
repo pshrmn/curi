@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.19
 
 * Rename `config.subscribe` to `config.respond`. This is mostly an aesthetic change, but it also makes more sense to `respond` once (`config.respond(fn, { once: true })`) than it does to `subscribe` once. `Subscriber` and `UnsubscribeFn` types are now `ResponseHandler` and `RemoveResponseHandler`.
 

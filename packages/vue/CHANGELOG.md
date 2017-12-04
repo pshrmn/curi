@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.10
 
 * Switch to `config.respond` from `config.subscribe`.
 * Export an `installCuri` function to handle registering Curi and automatically updating the `response`/`action` after location changes.
