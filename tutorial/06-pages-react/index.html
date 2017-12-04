@@ -23,7 +23,7 @@ import { Navigator } from &#x27;@curi/react&#x27;;
 
 // ...
 
-config.subscribe((response, action) =&gt; {
+config.respond((response, action) =&gt; {
   ReactDOM.render((
     &lt;Navigator
       response={response}
@@ -170,7 +170,7 @@ const routes = [
 import renderFunction from &#x27;./render&#x27;;
 
 let root = document.getElementById(&#x27;root&#x27;);
-config.subscribe((response, action) =&gt; {
+config.respond((response, action) =&gt; {
   ReactDOM.render((
     &lt;Navigator
       response={response}

@@ -26,7 +26,7 @@ const config = createConfig(history, routes);
 
 // subscribe to the config object with a function
 // that will be called whenever the location changes
-config.subscribe((response, action) =&gt; {
+config.respond((response, action) =&gt; {
   // handle any rendering inside of this function
 });</pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> guide.</p></div><div class="features"><h2>Features</h2><div class="feature"><h3>Framework Integration</h3><p>While Curi is a universal router, it still has to be integrated with whichever framework you are using to render your application. Currently, there are packages to easily use Curi with React and Vue applications (as well as one that provides basic Svelte support).</p><div class="code"><div class="description"><p>The <code class="language-javascript">body</code> function of routes can be used to attach a <code class="language-javascript">body</code> <!-- -->property to response objects. Generally, this attached value would be a function or component (this would vary based on how your framework renders), but it can be anything you want it to be.</p></div><pre class="language-javascript">// routes.js
 const routes = [
@@ -140,7 +140,7 @@ function requestHandler(req, resp) {
   });
   const config = createConfig(history, routes);
 
-  config.subscribe((response, action) =&gt; {
+  config.respond((response, action) =&gt; {
     // render the markup. This will vary based on
     // your rendering library, but here we&#x27;ll
     use React
@@ -156,7 +156,7 @@ function requestHandler(req, resp) {
     // insert the generated HTML into the full
     // HTML of the page and send the response
     res.send(fullPageHtml(markup));
-  });
+  }, { once: true });
 }</pre></div></div></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>

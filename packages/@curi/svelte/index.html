@@ -22,7 +22,7 @@
 const config = createConfig(history, routes);
 const store = new Store({
   curi: { config }
-});</pre><p>As far as rendering your application goes, you should use the<!-- --> <code class="language-javascript">subscribe</code> method provided by the Curi configuration object to re-render whenever a new response is emitted.</p><pre class="language-javascript">const config = createConfig(history, routes);
+});</pre><p>As far as rendering your application goes, you should use the<!-- --> <code class="language-javascript">respond</code> method provided by the Curi configuration object to re-render whenever a new response is emitted.</p><pre class="language-javascript">const config = createConfig(history, routes);
 
 const store = new Store({
   curi: { config }
@@ -31,7 +31,7 @@ const store = new Store({
 const root = document.getElementById(&#x27;root&#x27;);
 let view;
 
-config.subscribe(response =&gt; {
+config.respond(response =&gt; {
   if (view) {
     view.destroy();
   }

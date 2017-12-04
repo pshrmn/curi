@@ -57,11 +57,11 @@ export default function renderFunction(h, resp) {
     h(Nav),
     h(resp.body, { props: { params: resp.params, data: resp.data } })
   ]);
-}</pre><p>To actually render the application, you will want to make <code class="language-javascript">response</code> an observed property of your application. Then, you can use <code class="language-javascript">config.subscribe</code> to update that object whenever a new response is emitted.</p><pre class="language-javascript">// 1. declare a variable for storing our Vue app
+}</pre><p>To actually render the application, you will want to make <code class="language-javascript">response</code> an observed property of your application. Then, you can use <code class="language-javascript">config.respond</code> to update that object whenever a new response is emitted.</p><pre class="language-javascript">// 1. declare a variable for storing our Vue app
 let vm;
 // 2. subscribe to the configuration object so we can re-render
 // whenever a new response is created
-config.subscribe(response =&gt; {
+config.respond(response =&gt; {
   // 3. create the Vue app if it doesn&#x27;t exist
   if (!vm) {
     vm = new Vue({
