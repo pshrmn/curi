@@ -50,7 +50,7 @@ describe('<Navigator>', () => {
       'data',
       'title'
     ];
-    config.subscribe((response, action) => {
+    config.respond((response, action) => {
       const wrapper = shallow(
         <Navigator
           response={response}
@@ -79,7 +79,7 @@ describe('<Navigator>', () => {
 
     const config = createConfig(history, routes);
 
-    config.subscribe((response, action) => {
+    config.respond((response, action) => {
       const wrapper = shallow(
         <Navigator
           response={response}
@@ -104,7 +104,7 @@ describe('<Navigator>', () => {
     });
 
     const config = createConfig(history, routes);
-    config.subscribe((response, action) => {
+    config.respond((response, action) => {
       const wrapper = shallow(
         <Navigator
           response={response}
@@ -146,7 +146,7 @@ describe('<Navigator>', () => {
       ];
       const config = createConfig(history, routes);
 
-      config.subscribe((response, action) => {
+      config.respond((response, action) => {
         const wrapper = mount(
           <Navigator
             response={response}
@@ -168,7 +168,7 @@ describe('<Navigator>', () => {
       ];
       const config = createConfig(history, routes);
 
-      config.subscribe((response, action) => {
+      config.respond((response, action) => {
         const wrapper = mount(
           <Navigator
             response={response}
@@ -190,7 +190,7 @@ describe('<Navigator>', () => {
       ];
       const config = createConfig(history, routes);
 
-      config.subscribe((response, action) => {
+      config.respond((response, action) => {
         const wrapper = mount(
           <Navigator
             response={response}
