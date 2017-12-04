@@ -22,7 +22,7 @@ const config = createConfig(history, routes);
 
 // subscribe to the config object with a function
 // that will be called whenever the location changes
-config.subscribe((response, action) => {
+config.respond((response, action) => {
   // handle any rendering inside of this function
 });`
     }

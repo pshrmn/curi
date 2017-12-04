@@ -297,7 +297,7 @@ const config = create1Config(history, routes);`
       </p>
       <PrismBlock lang='javascript'>
         {
-`config.subscribe((response, action) => {
+`config.respond((response, action) => {
   // now our first response has resolved, so we
   // know that we will render with an actual response
 });`
@@ -340,15 +340,17 @@ const config = create1Config(history, routes);`
         id='rendering-with-curi'
       >
         <p>
-          With Curi, we need to have a way to re-render our application every time that the location changes. The easiest approach is to use
-          the <Cmp>Navigator</Cmp> component, which comes from the <IJS>@curi/react</IJS> package. This expects two props: <IJS>config</IJS>,
-          which is our Curi configuration object, and <IJS>render</IJS>, which is a render function it will call to render the application.
-          The <Cmp>Navigator</Cmp> will subscribe to your configuration object and automatically re-render when the location changes (and a
-          new response object is created).
+          With Curi, we need to re-render our application every time that the location changes. We will do this by combining the{' '}
+          <IJS>respond</IJS> function from our config object and the <Cmp>Navigator</Cmp> component, which comes from
+          the <IJS>@curi/react</IJS> package. The response handler passed to <IJS>config.respond</IJS> will be called every time
+          the location changes, so we can re-render inside of that. The <Cmp>Navigator</Cmp> places the new <IJS>response</IJS> and{' '}
+          <IJS>action</IJS> (alongside the <IJS>config</IJS> object) on React's <IJS>context</IJS>, so child components will be able
+          to automatically access those values. It also expects a <IJS>render</IJS> prop, which is a render function it will call to
+          render the application.
         </p>
         <PrismBlock lang='jsx'>
           {
-`config.subscribe((response, action) => {
+`config.respond((response, action) => {
   ReactDOM.render((
     <Navigator
       response={response}

@@ -16,12 +16,10 @@ export default ({ name }) => (
       id='explanation'
     >
       <p>
-        While Vue does have an official router, this project shows how you could use Curi as
-        the router for a Vue project instead. It uses <Cmp>curi-link</Cmp>
-        {' '}component provided by the the curi-vue package. Unlike the React examples, which
-        use a <Cmp>Navigator</Cmp> component to automatically subscribe, here
-        we are manually subscribing to navigation changes. We keep a reactive response object
-        on our view model in order to automatically re-render when a new response is generated.
+        While Vue does have an official router, this project shows how you
+        could use Curi as the router for a Vue project instead. It uses{' '}
+        <Cmp>curi-link</Cmp> component provided by the the <IJS>@curi/vue</IJS>
+        {' '}package.
       </p>
     </Section>
 

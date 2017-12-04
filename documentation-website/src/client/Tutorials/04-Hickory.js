@@ -44,8 +44,8 @@ export default () => (
         forward and back buttons.
       </p>
       <p>
-        Hickory uses a subscriber model so that whenever navigation to a new location
-        happens, a subscribed method will be called. Curi will subscribe to your
+        Hickory uses a single-subscriber model so that whenever navigation to a new location
+        happens, the subscribed method will be called. Curi will subscribe to your
         history object to create new responses whenever the location changes.
       </p>
     </Section>

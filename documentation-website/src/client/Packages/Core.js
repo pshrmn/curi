@@ -105,11 +105,11 @@ const config = createConfig(history, routes, options);`
 
           <Subsection
             tag='h5'
-            title='subscribe(fn, options)'
-            id='subscribe'
+            title='respond(fn, options)'
+            id='respond'
           >
             <p>
-              The returned object provides a subscribe method that allows your application to be informed of
+              The returned object provides a <IJS>respond</IJS> method that allows your application to be informed of
               navigation. It expects to be passed a function, which will be called whenever a new response is
               generated.
             </p>
@@ -119,7 +119,7 @@ const config = createConfig(history, routes, options);`
             </p>
             <PrismBlock lang='javascript'>
               {
-`config.subscribe((response) => {
+`config.respond((response) => {
   // render the application based on the response
 });`
               }
@@ -128,13 +128,13 @@ const config = createConfig(history, routes, options);`
             <Subsection
               tag='h6'
               title='options'
-              id='subscribe-options'
+              id='respond-options'
             >
               <PrismBlock lang='javascript'>
                 {
 `{ once: true } // default false
-// When true, the subscriber function will only be called once. When
-// once is true, config.subscribe does not return an unsubscribe function.`
+// When true, the response handler function will only be called once. When
+// once is true, config.respond does not return an unsubscribe function.`
                 }
               </PrismBlock>
             </Subsection>

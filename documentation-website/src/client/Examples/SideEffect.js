@@ -13,15 +13,15 @@ export default ({ name }) => (
     >
       <p>
         Side effects are pretty straightforward. Once a response has completed (any preload and load functions
-        have resolved), the response's properties are used to create a JavaScript object. Then, any subscribed
+        have resolved), the response's properties are used to create a JavaScript object. Then, any response handler
         functions are called and passed that JavaScript object as their argument. Between those two steps, side
         effect functions can be run. They receive the new response as well as the action type used to trigger
         the navigation (POP, PUSH, or REPLACE).
       </p>
 
       <p>
-        A side effect function just does something using its arguments. It is basically a subscriber, but a
-        permanent one (cannot be removed).
+        A side effect function just does something using its arguments. It is a response handler, but unlike ones
+        assigned using <IJS>config.response</IJS>, side effects cannot be removed.
       </p>
 
       <p>

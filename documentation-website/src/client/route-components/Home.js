@@ -378,7 +378,7 @@ function requestHandler(req, resp) {
   });
   const config = createConfig(history, routes);
 
-  config.subscribe((response, action) => {
+  config.respond((response, action) => {
     // render the markup. This will vary based on
     // your rendering library, but here we'll
     use React
@@ -394,7 +394,7 @@ function requestHandler(req, resp) {
     // insert the generated HTML into the full
     // HTML of the page and send the response
     res.send(fullPageHtml(markup));
-  });
+  }, { once: true });
 }`
             }
           </PrismBlock>

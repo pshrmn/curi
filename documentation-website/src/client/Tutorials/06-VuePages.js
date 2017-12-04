@@ -215,28 +215,28 @@ Vue.use(CuriPlugin, { config });`
       <p>
         Being able to access the Curi configuration object is nice, but what we really
         need is to access the response objects that are emitted by Curi whenever the
-        location changes. We can do this using the <IJS>subscribe</IJS> method that we covered
+        location changes. We can do this using the <IJS>respond</IJS> method that we covered
         in the <Link to='Tutorial' params={{ name: '05-config' }}>configuration object</Link>
         {' '}tutorial.
       </p>
 
       <p>
         First, we need to have a variable that will be used to store our Vue instance.
-        Then, we will subscribe to the configuration object.
+        Then, we will subscribe to the configuration object with a response handler function.
       </p>
 
       <PrismBlock lang='javascript'>
         {
 `// index.js
 let vm;
-config.subscribe(response => {
+config.respond(response => {
   // ...
 });`
         }
       </PrismBlock>
 
       <p>
-        Inside of the subscribe function, we have two branches. The first is when
+        Inside of the response handler function, we have two branches. The first is when
         we don't have a Vue instance. When that is the case, we should create a new
         Vue instance. When we already have a Vue instance, we just need to update
         the <IJS>response</IJS> object on the Vue instance.
@@ -258,7 +258,7 @@ config.subscribe(response => {
 import app from './components/App';
 
 let vm;
-config.subscribe(response => {
+config.respond(response => {
   if (!vm) {
     vm = new Vue({
       el: '#root',

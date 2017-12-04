@@ -13,8 +13,8 @@ export default ({ name }) => (
       Curi aims to be easy to setup. To get started, you just need to create a Hickory
       history object and an array of route objects. Pass those as arguments to the{' '}
       <IJS>createConfig</IJS> function to create your configuration object. Then,
-      subscribe to the configuration object using <IJS>config.subscribe()</IJS>. The function
-      you pass to <IJS>config.subscribe</IJS> will be called every time the location changes.
+      subscribe to the configuration object using <IJS>config.respond()</IJS>. The function
+      you pass to <IJS>config.respond</IJS> will be called every time the location changes.
       You can use this to (re-)render your application based on the response.
     </p>
 
@@ -166,13 +166,14 @@ const config = createConfig(history, routes);
         Whenever navigation happens, a new location object is created by Hickory. Curi uses
         that location object's pathname property to match against all of your routes. When
         it finds one that matches, it uses that route object to create a response object. You
-        can subscribe to a Curi configuration object, and when a new response is created, your
-        subscriber function will be called with the response.
+        can subscribe to a Curi configuration object with a response handler function. When a
+        new response is created, your response handler function will be called with the response
+        and the action type of the navigation.
       </p>
       <PrismBlock lang='javascript'>
         {
 `const config = createConfig(history, routes);
-config.subscribe(response => {
+config.response((response, action) => {
   // whenever the location changes, this function is called
   // you can use this function to re-render your application
   // using the new response object
@@ -183,14 +184,14 @@ config.subscribe(response => {
 
       <p>
         Responses are generated asynchronously. A Curi configuration object has a{' '}
-        <IJS>subscribe</IJS> function that you can use to register a function to be called
+        <IJS>response</IJS> function that you can use to register a function to be called
         whenever a new response is generated.
       </p>
       <PrismBlock lang='javascript'>
         {
 `const config = createConfig(history, routes);
 // wait to render until a response is generated
-config.subscribe((response, action) => {
+config.respond((response, action) => {
   // now we can render using the response
 });`
         }

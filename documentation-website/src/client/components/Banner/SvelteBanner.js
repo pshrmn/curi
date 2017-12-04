@@ -30,7 +30,7 @@ const root = document.getElementById('root');
 
 // subscribe to the config object with a function
 // that will be called whenever the location changes
-config.subscribe((response, action) => {
+config.respond((response, action) => {
   if (view) {
     view.destroy();
   } else {

@@ -71,7 +71,7 @@ const store = new Store({
       </PrismBlock>
       <p>
         As far as rendering your application goes, you should use the{' '}
-        <IJS>subscribe</IJS> method provided by the Curi configuration object
+        <IJS>respond</IJS> method provided by the Curi configuration object
         to re-render whenever a new response is emitted.
       </p>
 
@@ -86,7 +86,7 @@ const store = new Store({
 const root = document.getElementById('root');
 let view;
 
-config.subscribe(response => {
+config.respond(response => {
   if (view) {
     view.destroy();
   }

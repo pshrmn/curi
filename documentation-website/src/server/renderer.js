@@ -27,7 +27,7 @@ export default function createHandler(debug=false) {
         />
       );
       res.send(renderFullPage(markup, response.title, debug));
-    });
+    }, { once: true });
   }
 }
 

@@ -24,24 +24,21 @@ export default ({ name }) => (
   // 2. Create a config
   const config = createConfig(history, routes);
 
-  // 3. Subscribe to the config object
-  config.subscribe((response, action) => {
-      // 4. Generate the HTML markup by rendering a <Navigator> and
-      // passing it the response
-      const markup = renderToString(
-        <Navigator
-          response={response}
-          action={action}
-          config={config}
-          render={renderFunction}
-        />
-      );
-      // 5. Insert the markup into the page's html and send it
-      res.send(renderFullPage(markup));
-    })
-    .catch(err => {
-      // 6. You should also handle any errors that might occur
-    });
+  // 3. Wait for the response to be generated
+  config.respond((response, action) => {
+    // 4. Generate the HTML markup by rendering a <Navigator> and
+    // passing it the response
+    const markup = renderToString(
+      <Navigator
+        response={response}
+        action={action}
+        config={config}
+        render={renderFunction}
+      />
+    );
+    // 5. Insert the markup into the page's html and send it
+    res.send(renderFullPage(markup));
+  }, { once: true });
 }`
         }
       </PrismBlock>

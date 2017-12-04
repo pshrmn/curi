@@ -10,10 +10,10 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      Curi side effects are essentially permament subscribers to your configuration object.
-      They can be considered slightly more convenient than subscribers since you don't have
-      to subscribe to your configuration object to set them up. However, you also cannot
-      unsubscribe them.
+      Curi side effects are essentially permament subscribers (response handlers) to your
+      configuration object. They can be considered slightly more convenient than response
+      handlers since you don't have to subscribe to your configuration object to set them up.
+      However, you also cannot remove them.
     </p>
 
     <p>
@@ -38,7 +38,7 @@ export default ({ name }) => (
         You add side effect functions to your configuration object by adding a{' '}
         <IJS>sideEffects</IJS> array to the options object (the third agument)
         of <IJS>createConfig</IJS>. A side effect is an object with an <IJS>fn</IJS> property
-        whose values is a subscriber function.
+        whose values is a response handler function.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -51,8 +51,8 @@ export default ({ name }) => (
 
       <p>
         Side effects can also have an <IJS>after</IJS> property. By default, side effect functions
-        will be called before any subscriber functions (the ones added with <IJS>config.subscribe</IJS>).
-        However, you might prefer for a side effect to be run after the subscribers. To do that, you
+        will be called before any response handler functions (the ones added with <IJS>config.respond</IJS>).
+        However, you might prefer for a side effect to be run after the response handlers. To do that, you
         just need to include <IJS>after: true</IJS> in your side effect object. If you do no provide
         this property, this will default to <IJS>false</IJS>.
       </p>

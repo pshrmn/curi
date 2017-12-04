@@ -32,7 +32,7 @@ export default ({ name }) => (
         By having the route's <IJS>body</IJS> functions return Svelte render functions,
         we can just call <IJS>response.body</IJS> to render our view. Of course, we will
         want to destroy the current view before doing this. All of this should be done in
-        a subscription function (<IJS>config.subscribe(fn)</IJS>).
+        a response handler function (<IJS>config.respond(fn)</IJS>).
       </p>
     </Section>
 

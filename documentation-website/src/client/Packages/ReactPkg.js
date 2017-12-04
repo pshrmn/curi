@@ -31,9 +31,8 @@ export default ({ name, version, globalName }) => (
         id='Navigator'
       >
         <p>
-          The <Cmp>Navigator</Cmp> component provides a way to automatically re-render your
-          application when the location changes. This component gets passed a Curi configuration
-          object, which it will subscribe to so that it can re-render when the location changes.
+          The <Cmp>Navigator</Cmp> component places values on React's <IJS>context</IJS> so that
+          child components can access them.
         </p>
         <PrismBlock lang='javascript'>
           {
@@ -41,15 +40,11 @@ export default ({ name, version, globalName }) => (
           }
         </PrismBlock>
 
-        <p>
-          
-        </p>
-
         <PrismBlock lang='jsx'>
           {
 `const config = createConfig(history, routes);
 
-config.subscribe((response, action) => {
+config.respond((response, action) => {
   ReactDOM.render((
     <Navigator
       response={response}

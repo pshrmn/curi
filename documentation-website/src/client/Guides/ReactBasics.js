@@ -38,10 +38,11 @@ export default ({ name }) => (
           to='Package'
           params={{ package: 'react' }}
           details={{ hash: 'Navigator' }}
-        >Navigator</Link> component is responsible for re-rendering your application whenever
-        the location changes. To do this, you pass it a Curi configuration object. When the
-        Navigator is mounted, it will subscribe to your configuration object with a function
-        that will trigger the Navigator to re-render whenever the location changes.
+        >Navigator</Link> component is responsible for placing values on React's <IJS>context</IJS>
+        {' '}so that child components can access them. To do this, you pass it a Curi configuration
+        object, a <IJS>response</IJS> object, and an <IJS>action</IJS> string. You should re-render
+        this whenever the a new response is emitted, so it makes sense to render this inside of a
+        response handler (the function passed to <IJS>config.respond</IJS>).
       </p>
 
       <PrismBlock lang='javascript'>

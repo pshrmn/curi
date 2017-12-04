@@ -188,7 +188,7 @@ export default function renderFunction(h, resp) {
 
       <p>
         To actually render the application, you will want to make <IJS>response</IJS> an observed property
-        of your application. Then, you can use <IJS>config.subscribe</IJS> to update that object whenever
+        of your application. Then, you can use <IJS>config.respond</IJS> to update that object whenever
         a new response is emitted.
       </p>
 
@@ -198,7 +198,7 @@ export default function renderFunction(h, resp) {
 let vm;
 // 2. subscribe to the configuration object so we can re-render
 // whenever a new response is created
-config.subscribe(response => {
+config.respond(response => {
   // 3. create the Vue app if it doesn't exist
   if (!vm) {
     vm = new Vue({

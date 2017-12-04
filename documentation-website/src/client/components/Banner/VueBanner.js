@@ -7,7 +7,7 @@ const VueBanner = () => (
 `import Vue from 'vue';
 
 import Browser from '@hickory/browser';
-import CuriPlugin from '@curi/vue';
+import { installCuri } from '@curi/vue';
 import createConfig from '@curi/core';
 import App from './components/App';
 
@@ -24,21 +24,19 @@ const routes = [
 // create your Curi configuration object
 const config = createConfig(history, routes);
 
-// subscribe to the config object with a function
-// that will be called whenever the location changes
-let vm;
-config.subscribe((response, action) => {
-  if (!vm) {
-    vm = new Vue({
-      el: '#root',
-      data: { response },
-      template: '<app :response="response" />',
-      components: { app: App }
-    });
-  } else {
-    vm.resposne = response;
-  }
-});`
+// install the CuriPlugin to your Vue instance
+installCuri(Vue, config);
+
+// use the "once: true" option of config.respond
+// for the initial render
+config.respond(() => {
+  const vm = new Vue({
+    el: '#root',
+    data: { response },
+    template: '<app :response="response" />',
+    components: { app: App }
+  });
+}, { once: true });`
     }
   </PrismBlock>
 );
