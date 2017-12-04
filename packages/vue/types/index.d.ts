@@ -1,2 +1,3 @@
 import CuriPlugin from './plugin';
-export default CuriPlugin;
+import installCuri from './install';
+export { CuriPlugin, installCuri };

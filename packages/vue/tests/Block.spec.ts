@@ -2,7 +2,7 @@ import 'jest';
 import { createLocalVue, shallow } from 'vue-test-utils';
 import InMemory from '@hickory/in-memory';
 import createConfig from '@curi/core';
-import CuriPlugin from '../src/plugin';
+import installCuri from '../src/install';
 import Block from '../src/Block';
 
 describe('Block component', () => {
@@ -16,18 +16,11 @@ describe('Block component', () => {
   const config = createConfig(history, routes);
 
   const Vue = createLocalVue();
-
-  Vue.use(CuriPlugin, {
-    curi: { config }
-  });
+  installCuri(Vue, config);
 
   afterEach(() => {
     mockConfirmWith.mockReset();
     mockRemoveConfirmation.mockReset();
-  });
-
-  it('registers with the name curi-block', () => {
-    expect(Vue.options.components['curi-block']).toBeDefined();
   });
 
   it('renders undefined', () => {

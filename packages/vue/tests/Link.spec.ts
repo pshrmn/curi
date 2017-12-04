@@ -3,7 +3,7 @@ import { createLocalVue, shallow } from 'vue-test-utils';
 import InMemory from '@hickory/in-memory';
 import createConfig from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
-import CuriPlugin from '../src/plugin';
+import installCuri from '../src/install';
 import Link from '../src/Link';
 
 describe('Link component', () => {
@@ -13,13 +13,7 @@ describe('Link component', () => {
   const config = createConfig(history, routes);
 
   const Vue = createLocalVue();
-  Vue.use(CuriPlugin, {
-    curi: { config }
-  });
-
-  it('registers with the name curi-link', () => {
-    expect(Vue.options.components['curi-link']).toBeDefined();
-  });
+  installCuri(Vue, config);
 
   it('renders an anchor element', () => {
     const wrapper = shallow(Link, {
@@ -46,10 +40,7 @@ describe('Link component', () => {
   });
 
   describe('active', () => {
-    const history = InMemory({
-      locations: ['/place/somewhere']
-    });
-
+    let history, config;
     const routes = [
       {
         name: 'Places',
@@ -57,14 +48,21 @@ describe('Link component', () => {
         children: [{ name: 'Place', path: ':name' }]
       }
     ];
-    const config = createConfig(history, routes, {
-      addons: [createActiveAddon()]
-    });
 
     function merge(props) {
       props.class = 'active';
       return props;
     }
+
+    beforeEach(() => {
+      history = InMemory({
+        locations: ['/place/somewhere']
+      });
+
+      config = createConfig(history, routes, {
+        addons: [createActiveAddon()]
+      });
+    });
 
     describe('without the @curi/addon-active addon', () => {
       const history = InMemory({
@@ -89,12 +87,10 @@ describe('Link component', () => {
         // silence the warning
         const warn = console.error;
         console.error = jest.fn();
+
+        installCuri(Vue, config);
         config.subscribe(
           (response, action) => {
-            Vue.use(CuriPlugin, {
-              curi: { config, response, action }
-            });
-
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -118,12 +114,9 @@ describe('Link component', () => {
         const warns = console.error;
         console.error = jest.fn();
 
+        installCuri(Vue, config);
         config.subscribe(
           (response, action) => {
-            Vue.use(CuriPlugin, {
-              curi: { config, response, action }
-            });
-
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -144,12 +137,10 @@ describe('Link component', () => {
 
     it('merges active props when the location is active', done => {
       const Vue = createLocalVue();
+
+      installCuri(Vue, config);
       config.subscribe(
         (response, action) => {
-          Vue.use(CuriPlugin, {
-            curi: { config, response, action }
-          });
-
           const wrapper = shallow(Link, {
             localVue: Vue,
             propsData: {
@@ -168,12 +159,10 @@ describe('Link component', () => {
 
     it('does not merge active props when the location is not active', done => {
       const Vue = createLocalVue();
+
+      installCuri(Vue, config);
       config.subscribe(
         (response, action) => {
-          Vue.use(CuriPlugin, {
-            curi: { config, response, action }
-          });
-
           const wrapper = shallow(Link, {
             localVue: Vue,
             propsData: {
@@ -192,12 +181,10 @@ describe('Link component', () => {
 
     it('merges active props for partial matches when active.partial = true', done => {
       const Vue = createLocalVue();
+
+      installCuri(Vue, config);
       config.subscribe(
         (response, action) => {
-          Vue.use(CuriPlugin, {
-            curi: { config, response, action }
-          });
-
           const wrapper = shallow(Link, {
             localVue: Vue,
             propsData: {
@@ -215,12 +202,10 @@ describe('Link component', () => {
 
     it('does not merge active props for partial matches when active.partial is falsy', done => {
       const Vue = createLocalVue();
+
+      installCuri(Vue, config);
       config.subscribe(
         (response, action) => {
-          Vue.use(CuriPlugin, {
-            curi: { config, response, action }
-          });
-
           const wrapper = shallow(Link, {
             localVue: Vue,
             propsData: {
@@ -235,6 +220,35 @@ describe('Link component', () => {
         { once: true }
       );
     });
+
+    describe('location changes', () => {
+      it('recomputes active using new response', done => {
+        const Vue = createLocalVue();
+
+        installCuri(Vue, config);
+        let wrapper;
+        config.subscribe((response, action) => {
+          if (!wrapper) {
+            wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Place',
+                params: { name: 'somewhere' },
+                text: 'somewhere',
+                active: { merge }
+              }
+            });
+            expect(wrapper.hasClass('active')).toBe(true);
+            config.history.push('/place/nowhere');
+          } else {
+            Vue.nextTick(() => {
+              expect(wrapper.hasClass('active')).toBe(false);
+              done();
+            });
+          }
+        });
+      });
+    });
   });
 
   describe('clicking a <curi-link>', () => {
@@ -246,9 +260,7 @@ describe('Link component', () => {
     const config = createConfig(history, routes);
 
     const Vue = createLocalVue();
-    Vue.use(CuriPlugin, {
-      curi: { config }
-    });
+    installCuri(Vue, config);
 
     afterEach(() => {
       mockNavigate.mockReset();
@@ -339,7 +351,7 @@ describe('Link component', () => {
             }
           }
         });
-  
+
         wrapper.trigger('click', { button: 0 });
         expect(mockNavigate.mock.calls.length).toBe(1);
       });

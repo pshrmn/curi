@@ -1,3 +1,9 @@
+## Next
+
+* Export an `installCuri` function to handle registering Curi and automatically updating the `response`/`action` after location changes.
+* `CuriPlugin` is now a named export instead of a default export.
+* Make the `$curi` object reactive.
+
 ## 1.0.0-beta.9
 
 * Add `active` support to the `<curi-link>`, where `active` is an object with a `merge` function and an optional `partial` boolean.
