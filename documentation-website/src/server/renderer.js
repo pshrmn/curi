@@ -17,7 +17,7 @@ export default function createHandler(debug=false) {
       addons: [createActiveAddon()]
     });
 
-    config.subscribe((response, action) => {
+    config.respond((response, action) => {
       const markup = renderToString(
         <Navigator
           response={response}

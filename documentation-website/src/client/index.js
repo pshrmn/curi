@@ -19,7 +19,7 @@ const config = createConfig(history, routes, {
   sideEffects: [{ fn: setTitle }, { fn: scrollTo }]
 });
 
-config.subscribe((response, action) => {
+config.respond((response, action) => {
   ReactDOM.hydrate((
     <Navigator
       response={response}
