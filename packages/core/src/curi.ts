@@ -11,8 +11,8 @@ import {
   Addon,
   Addons,
   SideEffect,
-  Subscriber,
-  UnsubscribeFn,
+  ResponseHandler,
+  RemoveResponseHandler,
   Cache
 } from './interface';
 
@@ -23,13 +23,13 @@ export interface ConfigOptions {
   pathnameOptions?: PathFunctionOptions;
 }
 
-export interface SubscribeOptions {
+export interface ResponseHandlerOptions {
   once?: boolean;
 }
 
 export interface CuriConfig {
   refresh: (routeArray: Array<RouteDescriptor>) => void;
-  subscribe: (fn: Subscriber, options?: SubscribeOptions) => UnsubscribeFn;
+  respond: (fn: ResponseHandler, options?: ResponseHandlerOptions) => RemoveResponseHandler;
   addons: Addons;
   history: History;
 }
@@ -46,8 +46,8 @@ function createConfig(
     pathnameOptions
   } = options as ConfigOptions;
 
-  const beforeSideEffects: Array<Subscriber> = [];
-  const afterSideEffects: Array<Subscriber> = [];
+  const beforeSideEffects: Array<ResponseHandler> = [];
+  const afterSideEffects: Array<ResponseHandler> = [];
   sideEffects.forEach(se => {
     if (se.after) {
       afterSideEffects.push(se.fn);
@@ -92,13 +92,13 @@ function createConfig(
     });
   }
 
-  const subscribers: Array<Subscriber> = [];
-  const oneTimers: Array<Subscriber> = [];
+  const responseHandlers: Array<ResponseHandler> = [];
+  const oneTimers: Array<ResponseHandler> = [];
   let previous: [Response, Action] = [] as [Response, Action];
 
-  function subscribe(fn: Subscriber, options?: SubscribeOptions): UnsubscribeFn {
+  function respond(fn: ResponseHandler, options?: ResponseHandlerOptions): RemoveResponseHandler {
     if (typeof fn !== 'function') {
-      throw new Error('The argument passed to subscribe must be a function');
+      throw new Error('The first argument passed to "respond" must be a function');
     }
 
     const {
@@ -112,15 +112,15 @@ function createConfig(
         oneTimers.push(fn);
       }
     } else {
-      // Always call subscriber immediately if a previous
+      // Always call response handler immediately if a previous
       // response/action exists.
       if (previous.length) {
         fn.apply(null, previous);
       }
 
-      const newLength = subscribers.push(fn);
+      const newLength = responseHandlers.push(fn);
       return () => {
-        subscribers[newLength - 1] = null;
+        responseHandlers[newLength - 1] = null;
       };
     }
   }
@@ -130,12 +130,12 @@ function createConfig(
       fn(response, action);
     });
 
-    subscribers.forEach(fn => {
+    responseHandlers.forEach(fn => {
       if (fn != null) {
         fn(response, action);
       }
     });
-    // calling one time subscribers after regular subscribers
+    // calling one time responseHandlers after regular responseHandlers
     // ensures that those are called prior to the one time fns
     while (oneTimers.length) {
       const fn = oneTimers.pop();
@@ -149,7 +149,7 @@ function createConfig(
 
   let activeResponse: PendingNavigation;
   
-  function respond(pending: PendingNavigation): void {
+  function navigationHandler(pending: PendingNavigation): void {
     if (activeResponse) {
       activeResponse.cancel(pending.action);
       activeResponse.cancelled = true;
@@ -174,12 +174,12 @@ function createConfig(
 
   // now that everything is defined, actually do the setup
   setupRoutesAndAddons(routeArray);
-  history.respondWith(respond);
+  history.respondWith(navigationHandler);
 
   return {
     addons: registeredAddons,
     history,
-    subscribe,
+    respond,
     refresh: setupRoutesAndAddons
   };
 }

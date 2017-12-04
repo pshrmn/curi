@@ -12,12 +12,12 @@ export interface Addon {
 export declare type Addons = {
     [key: string]: AddonGet;
 };
-export declare type Subscriber = (response: Response, action?: Action) => void;
+export declare type ResponseHandler = (response: Response, action?: Action) => void;
 export interface SideEffect {
-    fn: Subscriber;
+    fn: ResponseHandler;
     after?: boolean;
 }
-export declare type UnsubscribeFn = () => void;
+export declare type RemoveResponseHandler = () => void;
 export interface Cache {
     set: (response: Response) => void;
     get: (location: HickoryLocation) => Response;

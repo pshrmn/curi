@@ -175,7 +175,7 @@ describe('createConfig', () => {
           const config = createConfig(history, routes, {
             sideEffects: [{ fn: sideEffect }]
           });
-          config.subscribe(response => {
+          config.respond(response => {
             expect(sideEffect.mock.calls.length).toBe(1);
             expect(sideEffect.mock.calls[0][0]).toBe(response);
             expect(sideEffect.mock.calls[0][1]).toBe('PUSH');
@@ -183,7 +183,7 @@ describe('createConfig', () => {
           });
         });
 
-        it('calls side effects WITHOUT "after: true" property before subscribers', done => {
+        it('calls side effects WITHOUT "after: true" property before response handlers', done => {
           const routes = [{ name: 'All', path: ':all+' }];
 
           const sideEffect1 = jest.fn();
@@ -197,25 +197,25 @@ describe('createConfig', () => {
           });
 
           expect.assertions(2);
-          config.subscribe(response => {
+          config.respond(response => {
             expect(sideEffect1.mock.calls.length).toBe(1);
             expect(sideEffect2.mock.calls.length).toBe(1);
             done();
           });
         });
 
-        it('calls side effects WITH "after: true" property after subscribers', done => {
+        it('calls side effects WITH "after: true" property after response handlers', done => {
           const routes = [{ name: 'All', path: ':all+' }];
-          const subscriber = jest.fn();
+          const responseHandler = jest.fn();
           const sideEffect = function() {
-            expect(subscriber.mock.calls.length).toBe(1);
+            expect(responseHandler.mock.calls.length).toBe(1);
             done();
           };
 
           const config = createConfig(history, routes, {
             sideEffects: [{ fn: sideEffect, after: true }]
           });
-          config.subscribe(subscriber);
+          config.respond(responseHandler);
         });
       });
 
@@ -264,10 +264,10 @@ describe('createConfig', () => {
             }
           ];
 
-          function subscriber(response) {
+          function responseHandler(response) {
             steps[calls++](response);
           }
-          config.subscribe(subscriber);
+          config.respond(responseHandler);
         });
 
         it('generates new response for same key on subsequent calls if cache is not provided', done => {
@@ -300,11 +300,11 @@ describe('createConfig', () => {
             }
           ];
 
-          function subscriber(response) {
+          function responseHandler(response) {
             steps[calls++](response);
           }
 
-          config.subscribe(subscriber);
+          config.respond(responseHandler);
         });
       });
     });
@@ -349,9 +349,9 @@ describe('createConfig', () => {
     });
   });
 
-  describe('subscribe', () => {
+  describe('respond', () => {
     describe('initial call', () => {
-      it('does not immediately calls subscriber when there is not a response', () => {
+      it('does not immediately calls response handler when there is not a response', () => {
         const history = InMemory({
           locations: ['/']
         });
@@ -359,11 +359,11 @@ describe('createConfig', () => {
         const sub = jest.fn();
         const config = createConfig(history, routes);
 
-        config.subscribe(sub);
+        config.respond(sub);
         expect(sub.mock.calls.length).toBe(0);
       });
 
-      it('immediately calls subscriber when there is already a response', done => {
+      it('immediately calls response handler when there is already a response', done => {
         const history = InMemory({
           locations: ['/']
         });
@@ -371,26 +371,26 @@ describe('createConfig', () => {
         const sub = jest.fn();
         const config = createConfig(history, routes);
         setTimeout(() => {
-          config.subscribe(sub);
+          config.respond(sub);
           expect(sub.mock.calls.length).toBe(1);
           done();
         }, 50);
       });
     });
 
-    describe('subscriber options', () => {
+    describe('response handler options', () => {
       describe('once', () => {
-        it('calls the subscriber function only one time', done => {
+        it('calls the response handler function only one time', done => {
           const history = InMemory({
             locations: ['/']
           });
           const routes = [{ name: 'Home', path: '' }];
           const oneTime = jest.fn();
           let called = false;
-          const subscriber = jest.fn(() => {
+          const responseHandler = jest.fn(() => {
             if (called) {
               expect(oneTime.mock.calls.length).toBe(1);
-              expect(subscriber.mock.calls.length).toBe(2);
+              expect(responseHandler.mock.calls.length).toBe(2);
               done();
             } else {
               called = true;
@@ -401,11 +401,11 @@ describe('createConfig', () => {
           });
           const config = createConfig(history, routes);
     
-          config.subscribe(oneTime, { once: true });
-          config.subscribe(subscriber);
+          config.respond(oneTime, { once: true });
+          config.respond(responseHandler);
         });
     
-        it('calls the subscriber function immediately if a response has already resolved', done => {
+        it('calls the response handler function immediately if a response has already resolved', done => {
           const history = InMemory({
             locations: ['/']
           });
@@ -413,29 +413,29 @@ describe('createConfig', () => {
           const oneTime = jest.fn();
           const config = createConfig(history, routes);
           setTimeout(() => {
-            config.subscribe(oneTime, { once: true });
+            config.respond(oneTime, { once: true });
             expect(oneTime.mock.calls.length).toBe(1);
             expect(oneTime.mock.calls[0][0].location.pathname).toBe('/');
             done();
           }, 50);
         });
 
-        it('when subscribed, the function is called AFTER regular subscribers', done => {
+        it('when subscribed, the function is called AFTER regular response handlers', done => {
           const history = InMemory({
             locations: ['/']
           });
           const routes = [{ name: 'Home', path: '' }];
           const oneTime = jest.fn();
           let called = false;
-          const subscriber = jest.fn(() => {
+          const responseHandler = jest.fn(() => {
             if (called) {
               expect(oneTime.mock.calls.length).toBe(1);
-              expect(subscriber.mock.calls.length).toBe(2);
+              expect(responseHandler.mock.calls.length).toBe(2);
               done();
             } else {
               called = true;
               expect(oneTime.mock.calls.length).toBe(0);
-              expect(subscriber.mock.calls.length).toBe(1);
+              expect(responseHandler.mock.calls.length).toBe(1);
               // trigger another navigation to verify that the once sub
               // is not called again
               config.history.push('/another-one');
@@ -443,13 +443,13 @@ describe('createConfig', () => {
           });
           const config = createConfig(history, routes);
     
-          config.subscribe(oneTime, { once: true });
-          config.subscribe(subscriber);
+          config.respond(oneTime, { once: true });
+          config.respond(responseHandler);
         });
       });
     });
 
-    it('notifies subscribers of new response and action when location changes', done => {
+    it('notifies response handlers of new response and action when location changes', done => {
       const How = { name: 'How', path: ':method' };
       const routes = [
         { name: 'Home', path: '' },
@@ -470,11 +470,11 @@ describe('createConfig', () => {
       };
 
       const config = createConfig(history, routes);
-      config.subscribe(check);
+      config.respond(check);
       history.push('/contact/mail');
     });
 
-    it('notifies subscribers after promises have resolved', done => {
+    it('notifies response handlers after promises have resolved', done => {
       let promiseResolved = false;
       const routes = [
         { name: 'Home', path: '' },
@@ -501,7 +501,7 @@ describe('createConfig', () => {
       };
 
       const config = createConfig(history, routes);
-      config.subscribe(check);
+      config.respond(check);
       history.push('/contact/phone');
     });
 
@@ -527,7 +527,7 @@ describe('createConfig', () => {
       };
 
       const config = createConfig(history, routes);
-      config.subscribe(check);
+      config.respond(check);
       history.push('/contact/phone');
       history.push('/contact/mail');
     });
@@ -539,16 +539,16 @@ describe('createConfig', () => {
       const sub2 = jest.fn();
 
       // wait for the first response to be generated to ensure that both
-      // subscriber functions are called when subscribing
-      const unsub1 = config.subscribe(sub1);
-      const unsub2 = config.subscribe(sub2);
+      // response handler functions are called when subscribing
+      const unsub1 = config.respond(sub1);
+      const unsub2 = config.respond(sub2);
 
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(0);
       unsub1();
       history.push({ pathname: '/next' });
 
-      // need to wait for the subscribers to actually be called
+      // need to wait for the response handlers to actually be called
       process.nextTick(() => {
         expect(sub1.mock.calls.length).toBe(0);
         expect(sub2.mock.calls.length).toBe(1);
@@ -556,7 +556,7 @@ describe('createConfig', () => {
       });
     });
 
-    it('throws an error if passing a non-function to subscribe', () => {
+    it('throws an error if passing a non-function to respond', () => {
       // adding this test for coverage, but TypeScript doesn't like it
       const config = createConfig(history, [{ name: 'Home', path: '' }]);
       const nonFuncs = [
@@ -569,8 +569,8 @@ describe('createConfig', () => {
       ];
       nonFuncs.forEach(nf => {
         expect(() => {
-          config.subscribe(nf);
-        }).toThrow('The argument passed to subscribe must be a function');
+          config.respond(nf);
+        }).toThrow('The first argument passed to "respond" must be a function');
       });
     });
   });
@@ -597,11 +597,11 @@ describe('createConfig', () => {
       const config = createConfig(history, routes);
 
       let hasEmitted = false;
-      const subscriber = () => {
+      const responseHandler = () => {
         hasEmitted = true;
       };
 
-      config.subscribe(subscriber);
+      config.respond(responseHandler);
     });
   });
 });

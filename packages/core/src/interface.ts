@@ -14,12 +14,12 @@ export interface Addon {
 
 export type Addons = { [key: string]: AddonGet };
 
-export type Subscriber = (response: Response, action?: Action) => void;
+export type ResponseHandler = (response: Response, action?: Action) => void;
 export interface SideEffect {
-  fn: Subscriber;
+  fn: ResponseHandler;
   after?: boolean;
 }
-export type UnsubscribeFn = () => void;
+export type RemoveResponseHandler = () => void;
 
 export interface Cache {
   set: (response: Response) => void;

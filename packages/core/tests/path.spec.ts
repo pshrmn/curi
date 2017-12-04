@@ -17,7 +17,7 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      config.subscribe(response => {
+      config.respond(response => {
         expect(response.name).toBe('Test');
         done();
       });
@@ -36,7 +36,7 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      config.subscribe(response => {
+      config.respond(response => {
         expect(response.name).toBe('Test');
         done();
       });
@@ -55,7 +55,7 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      config.subscribe(response => {
+      config.respond(response => {
         expect(response.name).toBe('Not Found');
         done();
       });
@@ -77,7 +77,7 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      config.subscribe(response => {
+      config.respond(response => {
         expect(response.name).toBe('Not Found');
         done();
       });
@@ -97,7 +97,7 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      config.subscribe(response => {
+      config.respond(response => {
         expect(response.name).toBe('Not Found');
         done();
       });
@@ -117,7 +117,7 @@ describe('route.pathOptions matching', () => {
         }
       ];
       const config = createConfig(history, routes);
-      config.subscribe(response => {
+      config.respond(response => {
         expect(response.name).toBe('Test');
         done();
       });

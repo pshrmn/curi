@@ -1,19 +1,19 @@
 import { History } from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
 import { RouteDescriptor } from './route';
-import { Addon, Addons, SideEffect, Subscriber, UnsubscribeFn, Cache } from './interface';
+import { Addon, Addons, SideEffect, ResponseHandler, RemoveResponseHandler, Cache } from './interface';
 export interface ConfigOptions {
     addons?: Array<Addon>;
     sideEffects?: Array<SideEffect>;
     cache?: Cache;
     pathnameOptions?: PathFunctionOptions;
 }
-export interface SubscribeOptions {
+export interface ResponseHandlerOptions {
     once?: boolean;
 }
 export interface CuriConfig {
     refresh: (routeArray: Array<RouteDescriptor>) => void;
-    subscribe: (fn: Subscriber, options?: SubscribeOptions) => UnsubscribeFn;
+    respond: (fn: ResponseHandler, options?: ResponseHandlerOptions) => RemoveResponseHandler;
     addons: Addons;
     history: History;
 }
