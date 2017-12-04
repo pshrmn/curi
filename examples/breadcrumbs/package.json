@@ -24,10 +24,10 @@
   },
   "dependencies": {
     "@curi/addon-ancestors": "^1.0.0-beta.5",
-    "@curi/core": "^1.0.0-beta.17",
+    "@curi/core": "^1.0.0-beta.19",
     "@curi/react": "^1.0.0-beta.13",
     "@hickory/browser": "^1.0.0-beta.5",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   }
 }

@@ -10,17 +10,17 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^7.0.0-beta.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^2.0.0-beta.2",
     "babel-preset-react": "^7.0.0-beta.3",
-    "webpack": "^3.8.1"
+    "webpack": "^3.9.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.17",
+    "@curi/core": "^1.0.0-beta.19",
     "@curi/react": "^1.0.0-beta.13",
     "@hickory/browser": "^1.0.0-beta.5",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   }
 }

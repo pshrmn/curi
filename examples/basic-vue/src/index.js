@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import createConfig from '@curi/core';
-import CuriPlugin from '@curi/vue';
+import { installCuri } from '@curi/vue';
 import Browser from '@hickory/browser';
 
 import routes from './routes';
@@ -9,18 +9,12 @@ import App from './components/App';
 const history = Browser();
 const config = createConfig(history, routes);
 
-Vue.use(CuriPlugin, { config });
+installCuri(Vue, config);
 
-let vm;
-config.subscribe(response => {
-  if (vm) {
-    vm.response = response;
-  } else {
-    vm = new Vue({
-      el: '#root',
-      data: { response },
-      template: '<app :response="response" />',
-      components: { app: App }
-    });
-  }
-});
+config.respond((response, action) => {
+  const vm = new Vue({
+    el: '#root',
+    template: '<app />',
+    components: { app: App }
+  });
+}, { once: true });

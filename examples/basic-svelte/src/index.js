@@ -37,5 +37,5 @@ function render(response) {
   });
 }
 
-config.subscribe(render)
+config.respond(render)
 

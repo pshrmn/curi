@@ -22,7 +22,7 @@
     props: ['params', 'data'],
     methods: {
       title(name) {
-        return this.$curi.addons.title('Product', { name });
+        return this.$curi.config.addons.title('Product', { name });
       },
       linkParams(productID) {
         return { ...this.params, productID };

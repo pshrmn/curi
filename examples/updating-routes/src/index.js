@@ -10,7 +10,7 @@ const history = Browser();
 const config = createConfig(history, baseRoutes);
 const root = document.getElementById('root');
 
-config.subscribe((response, action) => {
+config.respond((response, action) => {
   ReactDOM.render((
     <App
       response={response}

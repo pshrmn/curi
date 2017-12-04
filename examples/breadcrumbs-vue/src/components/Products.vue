@@ -18,7 +18,7 @@
     props: ['data'],
     methods: {
       title(category) {
-        return this.$curi.addons.title('Category', { category });
+        return this.$curi.config.addons.title('Category', { category });
       }
     }
   }

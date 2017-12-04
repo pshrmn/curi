@@ -12,7 +12,7 @@ const history = Browser();
 const config = createConfig(history, routes);
 const root = document.getElementById('root');
 
-config.subscribe((response, action) => {
+config.respond((response, action) => {
   ReactDOM.render((
     <Navigator
       response={response}

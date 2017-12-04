@@ -15,7 +15,7 @@ const config = createConfig(history, routes);
 const root = document.getElementById('root');
 
 syncResponses(store, config);
-config.subscribe(() => {
+config.respond(() => {
   ReactDOM.render((
     <Provider store={store}>
       <ConnectedNavigator render={renderFunction} />

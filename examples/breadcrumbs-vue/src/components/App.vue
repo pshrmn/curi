@@ -2,8 +2,8 @@
   <div>
     <component
       :is="cmp"
-      :data="response.data"
-      :params="response.params"
+      :data="$curi.response.data"
+      :params="$curi.response.params"
     />
   </div>
 </template>
@@ -12,10 +12,9 @@
   import NotFound from './NotFound';
   export default {
     name: 'app',
-    props: ['response'],
     computed: {
       cmp() {
-        return this.response.body || NotFound
+        return this.$curi.response.body || NotFound
       }
     }
   }

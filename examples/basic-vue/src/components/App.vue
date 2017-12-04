@@ -3,7 +3,7 @@
     <Nav />
     <component
       :is="cmp"
-      :params="response.params"
+      :params="$curi.response.params"
     />
   </div>
 </template>
@@ -13,10 +13,9 @@
   import Nav from './Nav';
   export default {
     name: 'app',
-    props: ['response'],
     computed: {
       cmp() {
-        return this.response.body || NotFound
+        return this.$curi.response.body || NotFound
       }
     },
     components: { Nav }

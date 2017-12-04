@@ -12,12 +12,12 @@
     props: ['name', 'params'],
     computed: {
       ancestors() {
-        return this.$curi.addons.ancestors(this.name).reverse();
+        return this.$curi.config.addons.ancestors(this.name).reverse();
       }
     },
     methods: {
       title(a) {
-        return this.$curi.addons.title(a, this.params);
+        return this.$curi.config.addons.title(a, this.params);
       }
     }
   }

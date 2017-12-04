@@ -1,7 +1,7 @@
 <template>
   <div>
     <Nav />
-    <component :is='response.body' />
+    <component :is='$curi.response.body' />
   </div>
 </template>
 
@@ -9,7 +9,6 @@
   import Nav from './Nav';
   export default {
     name: 'app',
-    props: ['response'],
     components: { Nav }
   };
 </script>

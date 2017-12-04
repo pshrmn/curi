@@ -10,7 +10,7 @@ export default function(req, res) {
   const history = InMemory({ locations: [ req.url ]})
   const config = createConfig(history, routes);
  
-  config.subscribe((response, action) => {
+  config.respond((response, action) => {
     const markup = renderToString(
       <Navigator
         response={response}
@@ -20,7 +20,7 @@ export default function(req, res) {
       />
     );
     res.send(renderFullPage(markup));
-  });
+  }, { once: true });
 }
 
 function renderFullPage(html) {
