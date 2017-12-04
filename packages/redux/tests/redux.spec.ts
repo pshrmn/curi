@@ -33,7 +33,7 @@ describe('syncResponses', () => {
 
   it('dispatches response and action to store whenever the location changes', done => {
     syncResponses(store, config);
-    config.subscribe(() => {
+    config.respond(() => {
       // this Redux subscriber will be called when the response for
       // the push (below) is emitted.
       store.subscribe(() => {
@@ -48,7 +48,7 @@ describe('syncResponses', () => {
   });
 
   it('makes the curi config object available from the store', done => {
-    config.subscribe(() => {
+    config.respond(() => {
       const { curi: before } = store.getState();
       expect(before.config).toBe(null);
       syncResponses(store, config);

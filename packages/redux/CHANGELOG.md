@@ -1,3 +1,7 @@
+## Next
+
+* Switch to `config.respond` from `config.subscribe`.
+
 ## 1.0.0-beta.0
 
 * Remove `responseReducer` and group everything in store under `curi` property.

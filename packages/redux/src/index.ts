@@ -48,7 +48,7 @@ export const syncResponses = (store: Store<any>, curi: CuriConfig): void => {
     curi
   });
 
-  curi.subscribe((response, action) => {
+  curi.respond((response, action) => {
     store.dispatch({
       type: LOCATION_CHANGE,
       response,
