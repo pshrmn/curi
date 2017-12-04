@@ -1,3 +1,7 @@
+## Next
+
+* Return a `ResponseHandler`, not a `Subscriber`.
+
 ## 1.0.0-beta.5
 
 * Return a `Subscriber`, not a `SideEffect`.

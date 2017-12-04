@@ -1,6 +1,6 @@
-import { Subscriber, Response } from '@curi/core';
+import { ResponseHandler, Response } from '@curi/core';
 
-function createScrollSideEffect(): Subscriber {
+function createScrollSideEffect(): ResponseHandler {
   return function(response: Response, action: string): void {
     if (action === 'POP') {
       return;
