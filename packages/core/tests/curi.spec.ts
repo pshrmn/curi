@@ -225,9 +225,10 @@ describe('createConfig', () => {
             {
               name: 'All',
               path: '(.*)',
-              load: (route, mods) => {
-                mods.setData(Math.random());
-                return Promise.resolve(true);
+              match: {
+                finish: ({ set }) => {
+                  set.data(Math.random());
+                }
               }
             }
           ];
@@ -265,7 +266,10 @@ describe('createConfig', () => {
           ];
 
           function responseHandler(response) {
-            steps[calls++](response);
+            let fn = steps[calls++];
+            if (fn) {
+              fn(response);
+            }
           }
           config.respond(responseHandler);
         });
@@ -275,9 +279,10 @@ describe('createConfig', () => {
             {
               name: 'All',
               path: '(.*)',
-              load: (route, mods) => {
-                mods.setData(Math.random());
-                return Promise.resolve(true);
+              match: {
+                finish: ({ set }) => {
+                  set.data(Math.random());
+                }
               }
             }
           ];
@@ -400,11 +405,11 @@ describe('createConfig', () => {
             }
           });
           const config = createConfig(history, routes);
-    
+
           config.respond(oneTime, { once: true });
           config.respond(responseHandler);
         });
-    
+
         it('calls the response handler function immediately if a response has already resolved', done => {
           const history = InMemory({
             locations: ['/']
@@ -442,7 +447,7 @@ describe('createConfig', () => {
             }
           });
           const config = createConfig(history, routes);
-    
+
           config.respond(oneTime, { once: true });
           config.respond(responseHandler);
         });
@@ -486,9 +491,11 @@ describe('createConfig', () => {
             {
               name: 'How',
               path: ':method',
-              load: () => {
-                promiseResolved = true;
-                return Promise.resolve(promiseResolved);
+              match: {
+                every: () => {
+                  promiseResolved = true;
+                  return Promise.resolve(promiseResolved);
+                }
               }
             }
           ]
@@ -516,7 +523,9 @@ describe('createConfig', () => {
             {
               name: 'How',
               path: ':method',
-              preload: () => Promise.resolve()
+              match: {
+                initial: () => Promise.resolve()
+              }
             }
           ]
         }
@@ -582,9 +591,10 @@ describe('createConfig', () => {
         {
           name: 'A Route',
           path: '',
-          load: (route, mods, addons) => {
-            mods.redirect('/somewhere-else', 301);
-            return Promise.resolve(true);
+          match: {
+            finish: ({ set }) => {
+              set.redirect('/somewhere-else', 301);
+            }
           }
         }
       ];

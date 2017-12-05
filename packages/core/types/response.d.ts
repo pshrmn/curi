@@ -6,9 +6,20 @@ export interface ResponseProps {
     params: Params;
     partials: Array<string>;
     status: number;
+    body: any;
     data: any;
     error?: any;
     redirectTo?: ToArgument;
+}
+export interface ResolvedObject {
+    initial: any;
+    every: any;
+}
+export interface PendingResponse {
+    error?: any;
+    resolved?: ResolvedObject;
+    route: InternalRoute;
+    props: ResponseProps;
 }
 export interface Response {
     key: string;
@@ -23,5 +34,5 @@ export interface Response {
     error?: any;
     redirectTo?: any;
 }
-declare function createResponse(location: HickoryLocation, routes: Array<InternalRoute>, addons: Addons): Promise<Response>;
-export default createResponse;
+export declare function createResponse(location: HickoryLocation, routes: Array<InternalRoute>): Promise<PendingResponse>;
+export declare function finishResponse(pending: PendingResponse, addons: Addons): Response;

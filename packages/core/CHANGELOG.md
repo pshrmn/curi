@@ -1,3 +1,9 @@
+## Next
+
+* Added a `body` function to response modifiers, removed the `route.body` property. This change allows the user to just reference the resolved value instead of keeping a store.
+* Change response modifiers property name to `set` and renamed response modifier functions: `setData` to `data`, `setStatus` to `status`, and `fail` to `error`
+* Group route load functions under the `match` property. The old `preload` function is now `match.initial` (since it is run the initial time that route matches) and `load` is now a mix between `match.every` (since it is run every time that route matches) and `match.finish`.
+
 ## 1.0.0-beta.19
 
 * Rename `config.subscribe` to `config.respond`. This is mostly an aesthetic change, but it also makes more sense to `respond` once (`config.respond(fn, { once: true })`) than it does to `subscribe` once. `Subscriber` and `UnsubscribeFn` types are now `ResponseHandler` and `RemoveResponseHandler`.

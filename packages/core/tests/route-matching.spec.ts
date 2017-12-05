@@ -133,13 +133,18 @@ describe('route matching/response generation', () => {
   });
 
   describe('response', () => {
-    it('if either load or preload have uncaught errors, error is set as response.error', done => {
+    it('if either initial or every response fns have uncaught errors, error is passed to finish fn', done => {
       const routes = [
         {
           name: 'Contact',
           path: 'contact',
-          load: () => {
-            return Promise.reject('This is an error');
+          match: {
+            every: () => {
+              return Promise.reject('This is an error');
+            },
+            finish: ({ error }) => {
+              expect(error).toBe('This is an error');
+            }
           }
         }
       ];
@@ -148,7 +153,6 @@ describe('route matching/response generation', () => {
       });
       const config = createConfig(history, routes);
       config.respond(response => {
-        expect(response.error).toBe('This is an error');
         done();
       });
     });
@@ -178,6 +182,44 @@ describe('route matching/response generation', () => {
         });
       });
 
+      describe('body', () => {
+        it('is undefined if it isn\'t set in match.finish', done => {
+          const history = InMemory({ locations: ['/test'] });
+          const routes = [
+            {
+              name: 'Test',
+              path: 'test'
+            }
+          ];
+          const config = createConfig(history, routes);
+          config.respond(response => {
+            expect(response.body).toBeUndefined();
+            done();
+          });
+        });
+    
+        it('is the value set with set.body', done => {
+          const history = InMemory({ locations: ['/test'] });
+          const body = () => 'anybody out there?';
+          const routes = [
+            {
+              name: 'Test',
+              path: 'test',
+              match: {
+                finish: ({ set }) => {
+                  set.body(body);
+                }
+              }
+            }
+          ];
+          const config = createConfig(history, routes);
+          config.respond(response => {
+            expect(response.body).toBe(body);
+            done();
+          });
+        });
+      });
+
       describe('status', () => {
         it('is 200 if a route matches', done => {
           const routes = [
@@ -192,7 +234,6 @@ describe('route matching/response generation', () => {
           ];
           const history = InMemory({ locations: ['/contact'] });
           const config = createConfig(history, routes);
-          expect.assertions(1);
           config.respond(response => {
             expect(response.status).toBe(200);
             done();
@@ -218,14 +259,15 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is the value set by calling setStatus in the matching route's load function", done => {
+        it("is the value set by calling status in the matching route's match.finish function", done => {
           const routes = [
             {
               name: 'A Route',
               path: '',
-              load: (route, mods) => {
-                mods.setStatus(451);
-                return Promise.resolve();
+              match: {
+                finish: ({ set }) => {
+                  set.status(451);
+                }
               }
             }
           ];
@@ -237,13 +279,15 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is set by calling redirect in the matching route's load function", done => {
+        it("is set by calling set.redirect in the matching match.finish", done => {
           const routes = [
             {
               name: '302 Route',
               path: '',
-              load: (route, modifiers) => {
-                return modifiers.redirect('/somewhere', 302);
+              match: {
+                finish: ({ set }) => {
+                  set.redirect('/somewhere', 302);
+                }
               }
             }
           ];
@@ -259,13 +303,15 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is set to 301 by default when calling redirect in the matching route's load function", done => {
+        it("is set to 301 by default when calling set.redirect in match.finish", done => {
           const routes = [
             {
               name: '301 Route',
               path: '',
-              load: (route, modifiers) => {
-                return modifiers.redirect('/somewhere');
+              match: {
+                finish: ({ set }) => {
+                  set.redirect('/somewhere');
+                }
               }
             }
           ];
@@ -298,14 +344,15 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is the value set by the matching route's load function calling setData", done => {
+        it("is the value set by calling set.data in match.finish", done => {
           const routes = [
             {
               name: 'A Route',
               path: '',
-              load: (route, mods) => {
-                mods.setData({ test: 'value' });
-                return Promise.resolve();
+              match: {
+                finish: ({ set }) => {
+                  set.data({ test: 'value' });
+                }
               }
             }
           ];
@@ -373,8 +420,10 @@ describe('route matching/response generation', () => {
             {
               name: 'State',
               path: ':state',
-              load: (route, mods): any => {
-                mods.setData({ full: 'West Virginia' });
+              match: {
+                finish: ({ set }) => {
+                  set.data({ full: 'West Virginia' });
+                }
               },
               title: (params, data) => {
                 return `${params['state']} (aka ${data.full})`;
@@ -386,40 +435,6 @@ describe('route matching/response generation', () => {
 
           config.respond(response => {
             expect(response.title).toBe('WV (aka West Virginia)');
-            done();
-          });
-        });
-      });
-
-      describe('body', () => {
-        it('is set after load/preload have resolved', done => {
-          let bodyValue;
-          const Route = {
-            name: 'A Route',
-            path: 'a-route',
-            load: () => {
-              bodyValue = 'testing';
-              return Promise.resolve(true);
-            },
-            body: () => bodyValue
-          };
-          const history = InMemory({ locations: ['/a-route'] });
-          const config = createConfig(history, [Route]);
-          config.respond(response => {
-            expect(response.body).toBe('testing');
-            done();
-          });
-        });
-
-        it('is undefined if matching route has no body property', done => {
-          const Route = {
-            name: 'A Route',
-            path: 'a-route'
-          };
-          const history = InMemory({ locations: ['/a-route'] });
-          const config = createConfig(history, [Route]);
-          config.respond(response => {
-            expect(response.body).toBeUndefined();
             done();
           });
         });
@@ -629,14 +644,15 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is set by calling the fail method from a matched route's load function", done => {
+        it("is set by calling the error method from a matched route's match.finish function", done => {
           const routes = [
             {
               name: 'A Route',
               path: '',
-              load: (route, mods) => {
-                mods.fail('woops');
-                return Promise.resolve();
+              match: {
+                finish: ({ set }) => {
+                  set.error('woops');
+                }
               }
             }
           ];
@@ -650,13 +666,15 @@ describe('route matching/response generation', () => {
       });
 
       describe('redirectTo', () => {
-        it("is sets by calling the redirect function in a matching route's load function", done => {
+        it("is sets by calling the redirect function in a matching route's match.finish function", done => {
           const routes = [
             {
               name: 'A Route',
               path: '',
-              load: (route, modifiers) => {
-                return modifiers.redirect('/somewhere', 301);
+              match: {
+                finish: ({ set }) => {
+                  set.redirect('/somewhere', 301);
+                }
               }
             }
           ];
@@ -675,88 +693,24 @@ describe('route matching/response generation', () => {
     });
   });
 
-  describe('the matching route', () => {
-    describe('calling the load function', () => {
-      it('passes params, location, modifier methods, and addons to load function', done => {
-        const spy = jest.fn((route, modifiers, addons) => {
-          expect(route).toMatchObject({
-            params: { anything: 'hello' },
-            location: {
-              pathname: '/hello',
-              query: 'one=two'
-            }
-          });
-          expect(modifiers).toMatchObject(
-            expect.objectContaining({
-              fail: expect.any(Function),
-              setData: expect.any(Function),
-              setStatus: expect.any(Function)
-            })
-          );
-
-          expect(typeof addons.pathname).toBe('function');
-        });
-
-        const CatchAll = {
-          name: 'Catch All',
-          path: ':anything',
-          load: spy
-        };
-
-        const history = InMemory({ locations: ['/hello?one=two'] });
-        const config = createConfig(history, [CatchAll]);
-        expect.assertions(3);
-        config.respond(response => {
-          done();
-        });
-      });
-
-      it('can use registered addons', done => {
-        const routes = [
-          {
-            name: 'Old',
-            path: 'old/:id',
-            load: (route, modifiers, addons) => {
-              const pathname = addons.pathname('New', route.params);
-              return modifiers.redirect(pathname);
-            }
-          },
-          {
-            name: 'New',
-            path: 'new/:id'
-          }
-        ];
-        const history = InMemory({ locations: ['/old/1'] });
-        const config = createConfig(history, routes);
-        let firstCall = true;
-        config.respond(response => {
-          if (firstCall) {
-            expect(response.redirectTo).toBe('/new/1');
-            firstCall = false;
-            done();
-          }
-        });
-      });
-    });
-
-    describe('calling the preload function', () => {
+  describe('the match functions', () => {
+    describe('initial', () => {
       it('will only be called once', done => {
         /*
          * This test is a bit odd to read, but it verifies that the
-         * preload function is only called once (while the load function
-         * is called on every match).
+         * match.initial function is only called once (while the
+         * match.every function is called on every match).
          */
-        let preCount = 0;
-        let loadCount = 0;
-        const preload = () => Promise.resolve(preCount++);
-        const load = () => Promise.resolve(loadCount++);
+        let initialCount = 0;
+        let everyCount = 0;
+        const initial = () => Promise.resolve(initialCount++);
+        const every = () => Promise.resolve(everyCount++);
         const history = InMemory({ locations: ['/test'] });
         const routes = [
           {
             name: 'Test',
             path: ':test',
-            preload,
-            load
+            match: { initial, every }
           }
         ];
         const config = createConfig(history, routes);
@@ -764,14 +718,384 @@ describe('route matching/response generation', () => {
         config.respond(() => {
           if (firstCall) {
             firstCall = false;
-            expect(preCount).toBe(1);
-            expect(loadCount).toBe(1);
+            expect(initialCount).toBe(1);
+            expect(everyCount).toBe(1);
             history.push('/another-one');
           } else {
-            expect(preCount).toBe(1);
-            expect(loadCount).toBe(2);
+            expect(initialCount).toBe(1);
+            expect(everyCount).toBe(2);
             done();
           }
+        });
+      });
+    });
+
+    describe('every', () => {
+      it('receives the route props from the matching route', done => {
+        const spy = jest.fn(route => {
+          expect(route).toMatchObject({
+            params: { anything: 'hello' },
+            location: {
+              pathname: '/hello',
+              query: 'one=two'
+            },
+            name: 'Catch All'
+          });
+        });
+
+        const CatchAll = {
+          name: 'Catch All',
+          path: ':anything',
+          match: { every: spy }
+        };
+
+        const history = InMemory({ locations: ['/hello?one=two'] });
+        const config = createConfig(history, [CatchAll]);
+        config.respond(
+          response => {
+            done();
+          },
+          { once: true }
+        );
+      });
+    });
+
+    describe('finish', () => {
+      it('is not called if the navigation has been cancelled', done => {
+        const finishSpy = jest.fn();
+        let firstHasResolved = false;
+        const everySpy = jest.fn(() => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              firstHasResolved = true;
+              resolve();
+            }, 15);
+          });
+        });
+
+        const routes = [
+          {
+            name: 'First',
+            path: 'first',
+            match: {
+              every: everySpy,
+              finish: finishSpy
+            }
+          },
+          {
+            name: 'Second',
+            path: 'second',
+            match: {
+              // re-use the every spy so that this route's finish
+              // fn isn't call until after the first route's every
+              // fn has resolved
+              every: everySpy,
+              finish: () => {
+                expect(firstHasResolved).toBe(true);
+                expect(everySpy.mock.calls.length).toBe(2);
+                expect(finishSpy.mock.calls.length).toBe(0);
+                done();
+              }
+            }
+          }
+        ];
+
+        const history = InMemory({ locations: ['/first'] });
+        const config = createConfig(history, routes);
+        history.push('/second');
+      });
+
+      describe('error', () => {
+        it('receives the error rejected by match.initial', done => {
+          const spy = jest.fn(({ error }) => {
+            expect(error).toBe('rejected by initial');
+          });
+
+          const CatchAll = {
+            name: 'Catch All',
+            path: ':anything',
+            match: {
+              initial: () => Promise.reject('rejected by initial'),
+              finish: spy
+            }
+          };
+
+          const history = InMemory({ locations: ['/hello?one=two'] });
+          const config = createConfig(history, [CatchAll]);
+          config.respond(
+            response => {
+              done();
+            },
+            { once: true }
+          );
+        });
+
+        it('receives the error rejected by match.every', done => {
+          const spy = jest.fn(({ error }) => {
+            expect(error).toBe('rejected by every');
+          });
+
+          const CatchAll = {
+            name: 'Catch All',
+            path: ':anything',
+            match: {
+              every: () => Promise.reject('rejected by every'),
+              finish: spy
+            }
+          };
+
+          const history = InMemory({ locations: ['/hello?one=two'] });
+          const config = createConfig(history, [CatchAll]);
+          config.respond(
+            response => {
+              done();
+            },
+            { once: true }
+          );
+        });
+      });
+
+      describe('resolved', () => {
+        describe('initial', () => {
+
+
+          it('receives the data resolved by match.initial', done => {
+            const spy = jest.fn(({ resolved }) => {
+              expect(resolved.initial).toMatchObject({ test: 'ing' });
+            });
+
+            const CatchAll = {
+              name: 'Catch All',
+              path: ':anything',
+              match: {
+                initial: () => Promise.resolve({ test: 'ing' }),
+                finish: spy
+              }
+            };
+
+            const history = InMemory({ locations: ['/hello?one=two'] });
+            const config = createConfig(history, [CatchAll]);
+            config.respond(
+              response => {
+                done();
+              },
+              { once: true }
+            );
+          });
+
+          it('re-use the Promise returned by initial on subsequent matches', done => {
+            const history = InMemory({ locations: ['/test'] });
+            let hasFinished = false;
+            let random;
+            const routes = [
+              {
+                name: 'Test',
+                path: ':test',
+                match: {
+                  initial: () => {
+                    return Promise.resolve(Math.random());
+                  },
+                  finish: ({ resolved }) => {
+                    if (!hasFinished) {
+                      hasFinished = true;
+                      random = resolved.initial;
+                    } else {
+                      expect(resolved.initial).toBe(random);
+                      done();
+                    }
+                  }
+                }
+              }
+            ];
+            const config = createConfig(history, routes);
+            config.respond(() => {
+              history.push('/another-one');
+            }, { once: true });
+          });
+
+          it('resolved.initial is undefined if there is no match.initial function', done => {
+            const spy = jest.fn(({ resolved }) => {
+              expect(resolved.initial).toBeUndefined();
+            });
+  
+            const CatchAll = {
+              name: 'Catch All',
+              path: ':anything',
+              match: {
+                finish: spy
+              }
+            };
+  
+            const history = InMemory({ locations: ['/hello?one=two'] });
+            const config = createConfig(history, [CatchAll]);
+            config.respond(
+              response => {
+                done();
+              },
+              { once: true }
+            );
+          });
+        });
+
+        describe('every', () => {
+          it('receives the data resolved by match.every', done => {
+            const spy = jest.fn(({ resolved }) => {
+              expect(resolved.every).toMatchObject({ test: 'ing' });
+            });
+  
+            const CatchAll = {
+              name: 'Catch All',
+              path: ':anything',
+              match: {
+                every: () => Promise.resolve({ test: 'ing' }),
+                finish: spy
+              }
+            };
+  
+            const history = InMemory({ locations: ['/hello?one=two'] });
+            const config = createConfig(history, [CatchAll]);
+            config.respond(
+              response => {
+                done();
+              },
+              { once: true }
+            );
+          });
+
+          it('resolved.every is undefined if there is no match.every function', done => {
+            const spy = jest.fn(({ resolved }) => {
+              expect(resolved.every).toBeUndefined();
+            });
+  
+            const CatchAll = {
+              name: 'Catch All',
+              path: ':anything',
+              match: {
+                finish: spy
+              }
+            };
+  
+            const history = InMemory({ locations: ['/hello?one=two'] });
+            const config = createConfig(history, [CatchAll]);
+            config.respond(
+              response => {
+                done();
+              },
+              { once: true }
+            );
+          });
+        });
+      });
+
+      describe('route', () => {
+        it('receives the route props', done => {
+          const spy = jest.fn(({ route }) => {
+            expect(route).toMatchObject({
+              params: { anything: 'hello' },
+              location: {
+                pathname: '/hello',
+                query: 'one=two'
+              }
+            });
+          });
+  
+          const CatchAll = {
+            name: 'Catch All',
+            path: ':anything',
+            match: { finish: spy }
+          };
+  
+          const history = InMemory({ locations: ['/hello?one=two'] });
+          const config = createConfig(history, [CatchAll]);
+          config.respond(
+            response => {
+              done();
+            },
+            { once: true }
+          );
+        });
+      });
+
+      describe('set', () => {
+        it('receives the response set functions', done => {
+          const spy = jest.fn(({ set }) => {
+            expect(set).toMatchObject(
+              expect.objectContaining({
+                body: expect.any(Function),
+                data: expect.any(Function),
+                status: expect.any(Function),
+                redirect: expect.any(Function),
+                error: expect.any(Function)
+              })
+            );
+          });
+  
+          const CatchAll = {
+            name: 'Catch All',
+            path: ':anything',
+            match: { finish: spy }
+          };
+  
+          const history = InMemory({ locations: ['/hello?one=two'] });
+          const config = createConfig(history, [CatchAll]);
+          config.respond(
+            response => {
+              done();
+            },
+            { once: true }
+          );
+        });
+      });
+
+      describe('addons', () => {
+        it('receives the registered addons object', done => {
+          const spy = jest.fn(({ addons }) => {
+            expect(typeof addons.pathname).toBe('function');
+          });
+  
+          const CatchAll = {
+            name: 'Catch All',
+            path: ':anything',
+            match: { finish: spy }
+          };
+  
+          const history = InMemory({ locations: ['/hello?one=two'] });
+          const config = createConfig(history, [CatchAll]);
+          config.respond(
+            response => {
+              done();
+            },
+            { once: true }
+          );
+        });
+  
+        it('can use registered addons', done => {
+          const routes = [
+            {
+              name: 'Old',
+              path: 'old/:id',
+              match: {
+                finish: ({ route, set, addons }) => {
+                  const pathname = addons.pathname('New', route.params);
+                  set.redirect(pathname);
+                }
+              }
+            },
+            {
+              name: 'New',
+              path: 'new/:id'
+            }
+          ];
+          const history = InMemory({ locations: ['/old/1'] });
+          const config = createConfig(history, routes);
+          let firstCall = true;
+          config.respond(response => {
+            if (firstCall) {
+              expect(response.redirectTo).toBe('/new/1');
+              firstCall = false;
+              done();
+            }
+          });
         });
       });
     });

@@ -96,96 +96,112 @@ describe('public route properties', () => {
     });
   });
 
-  describe('body', () => {
-    it('is the provided value', () => {
-      const history = InMemory({ locations: ['/test'] });
-      const body = () => 'Longitude';
-      const routes = [
-        {
-          name: 'Test',
-          path: 'test',
-          body
-        }
-      ];
-      const config = createConfig(history, routes, {
-        addons: [PropertyReporter()]
+  describe('match', () => {
+    describe('initial', () => {
+      it('will be defined when a match.initial function is provided', () => {
+        const matchTest = () => Promise.resolve();
+
+        const history = InMemory({ locations: ['/test'] });
+        const routes = [
+          {
+            name: 'Test',
+            path: 'test',
+            match: {
+              initial: matchTest
+            }
+          }
+        ];
+        const config = createConfig(history, routes, {
+          addons: [PropertyReporter()]
+        });
+        const routeProperties = config.addons.properties('Test');
+        expect(routeProperties.match.initial).toBeDefined();
       });
-      const routeProperties = config.addons.properties('Test');
-      expect(routeProperties.body).toBe(body);
-    });
-  });
 
-  describe('preload', () => {
-    it('will be defined when a preload function is provided', () => {
-      const loadTest = () => Promise.resolve();
-
-      const history = InMemory({ locations: ['/test'] });
-      const body = () => 'Longitude';
-      const routes = [
-        {
-          name: 'Test',
-          path: 'test',
-          preload: loadTest
-        }
-      ];
-      const config = createConfig(history, routes, {
-        addons: [PropertyReporter()]
+      it("will be undefined when match.initial fn isn't defined", () => {
+        const history = InMemory({ locations: ['/test'] });
+        const routes = [
+          {
+            name: 'Test',
+            path: 'test'
+          }
+        ];
+        const config = createConfig(history, routes, {
+          addons: [PropertyReporter()]
+        });
+        const routeProperties = config.addons.properties('Test');
+        expect(routeProperties.match.initial).toBeUndefined();
       });
-      const routeProperties = config.addons.properties('Test');
-      expect(routeProperties.preload).toBeDefined();
-    });
-
-    it("will be undefined when preload isn't defined", () => {
-      const history = InMemory({ locations: ['/test'] });
-      const body = () => 'Longitude';
-      const routes = [
-        {
-          name: 'Test',
-          path: 'test'
-        }
-      ];
-      const config = createConfig(history, routes, {
-        addons: [PropertyReporter()]
-      });
-      const routeProperties = config.addons.properties('Test');
-      expect(routeProperties.preload).toBeUndefined();
-    });
-  });
-
-  describe('load', () => {
-    it('will be the provided load function', () => {
-      const loadTest = () => Promise.resolve();
-
-      const history = InMemory({ locations: ['/test'] });
-      const body = () => 'Longitude';
-      const routes = [
-        {
-          name: 'Test',
-          path: 'test',
-          load: loadTest
-        }
-      ];
-      const config = createConfig(history, routes, {
-        addons: [PropertyReporter()]
-      });
-      const routeProperties = config.addons.properties('Test');
-      expect(routeProperties.load).toBe(loadTest);
     });
 
-    it("will be undefined when load isn't defined", () => {
-      const history = InMemory({ locations: ['/test'] });
-      const body = () => 'Longitude';
-      const routes = [
-        {
-          name: 'Test',
-          path: 'test'
-        }
-      ];
-      const config = createConfig(history, routes, {
-        addons: [PropertyReporter()]
+    describe('every', () => {
+      it('will be the provided match.every function', () => {
+        const matchTest = () => Promise.resolve();
+
+        const history = InMemory({ locations: ['/test'] });
+        const routes = [
+          {
+            name: 'Test',
+            path: 'test',
+            match: { every: matchTest }
+          }
+        ];
+        const config = createConfig(history, routes, {
+          addons: [PropertyReporter()]
+        });
+        const routeProperties = config.addons.properties('Test');
+        expect(routeProperties.match.every).toBe(matchTest);
       });
-      const routeProperties = config.addons.properties('Test');
-      expect(routeProperties.load).toBeUndefined();
+
+      it("will be undefined when match.every isn't defined", () => {
+        const history = InMemory({ locations: ['/test'] });
+        const routes = [
+          {
+            name: 'Test',
+            path: 'test'
+          }
+        ];
+        const config = createConfig(history, routes, {
+          addons: [PropertyReporter()]
+        });
+        const routeProperties = config.addons.properties('Test');
+        expect(routeProperties.match.every).toBeUndefined();
+      });
+    });
+
+    describe('finish', () => {
+      it('will be the provided match.finish function', () => {
+        const matchTest = () => Promise.resolve();
+
+        const history = InMemory({ locations: ['/test'] });
+        const routes = [
+          {
+            name: 'Test',
+            path: 'test',
+            match: { finish: matchTest }
+          }
+        ];
+        const config = createConfig(history, routes, {
+          addons: [PropertyReporter()]
+        });
+        const routeProperties = config.addons.properties('Test');
+        expect(routeProperties.match.finish).toBe(matchTest);
+      });
+
+      it("will be undefined when match.finish isn't defined", () => {
+        const history = InMemory({ locations: ['/test'] });
+        const routes = [
+          {
+            name: 'Test',
+            path: 'test'
+          }
+        ];
+        const config = createConfig(history, routes, {
+          addons: [PropertyReporter()]
+        });
+        const routeProperties = config.addons.properties('Test');
+        expect(routeProperties.match.finish).toBeUndefined();
+      });
     });
   });
 

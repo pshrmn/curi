@@ -13,11 +13,11 @@ export declare type Addons = {
     [key: string]: AddonGet;
 };
 export declare type ResponseHandler = (response: Response, action?: Action) => void;
+export declare type RemoveResponseHandler = () => void;
 export interface SideEffect {
     fn: ResponseHandler;
     after?: boolean;
 }
-export declare type RemoveResponseHandler = () => void;
 export interface Cache {
     set: (response: Response) => void;
     get: (location: HickoryLocation) => Response;
@@ -28,16 +28,25 @@ export declare type RawParams = {
 export declare type Params = {
     [key: string]: any;
 };
-export interface LoadRoute {
+export interface RouteProps {
     params: object;
     location: object;
     name: string;
 }
-export interface LoadModifiers {
-    fail: (err: any) => void;
+export interface ResponseSetters {
+    error: (err: any) => void;
     redirect: (to: any, status?: number) => void;
-    setData: (data: any) => void;
-    setStatus: (status: number) => void;
+    data: (data: any) => void;
+    status: (status: number) => void;
+    body: (body: any) => void;
 }
-export declare type LoadFn = (route?: LoadRoute, modifiers?: LoadModifiers, addons?: Addons) => Promise<any>;
-export declare type PreloadFn = () => Promise<any>;
+export interface FinishProps {
+    error: any;
+    resolved: any;
+    route: RouteProps;
+    set: ResponseSetters;
+    addons: Addons;
+}
+export declare type EveryMatchFn = (route?: RouteProps) => Promise<any>;
+export declare type InitialMatchFn = () => Promise<any>;
+export declare type FinishMatchFn = (props: FinishProps) => void;

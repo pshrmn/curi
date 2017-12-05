@@ -8,9 +8,22 @@ export interface ResponseProps {
   params: Params;
   partials: Array<string>;
   status: number;
+  body: any;
   data: any;
   error?: any;
   redirectTo?: ToArgument;
+}
+
+export interface ResolvedObject {
+  initial: any;
+  every: any;
+}
+
+export interface PendingResponse {
+  error?: any;
+  resolved?: ResolvedObject;
+  route: InternalRoute;
+  props: ResponseProps;
 }
 
 // this is a response object that will be emited
@@ -51,11 +64,10 @@ function parseParams(params: RawParams, fns: ParamParsers): Params {
   return output;
 }
 
-function createResponse(
+export function createResponse(
   location: HickoryLocation,
-  routes: Array<InternalRoute>,
-  addons: Addons
-): Promise<Response> {
+  routes: Array<InternalRoute>
+): Promise<PendingResponse> {
   let matches: Array<Match> = [];
   let partials: Array<string> = [];
   let params: Params = {};
@@ -81,61 +93,72 @@ function createResponse(
     params,
     partials,
     status: route != null ? 200 : 404,
+    body: undefined,
     data: undefined
   };
 
-  return loadRoute(route, props, addons).then(props =>
-    freezeResponse(route, props)
-  );
+  return loadRoute(route, props);
 }
 
 /*
- * This will call any load/preload functions for the matching route
+ * This will call any initial/every match functions for the matching route
  */
 function loadRoute(
   route: InternalRoute,
-  props: ResponseProps,
-  addons: Addons
-): Promise<ResponseProps> {
+  props: ResponseProps
+): Promise<PendingResponse> {
   if (!route) {
-    return Promise.resolve(props);
+    return Promise.resolve({
+      route,
+      props
+    });
   }
+  const { match } = route.public;
   return Promise.all([
-    route.public.preload ? route.public.preload() : null,
-    route.public.load
-      ? route.public.load(
-          routeProperties(route, props),
-          responseModifiers(props),
-          addons
-        )
-      : null
+    match.initial ? match.initial() : undefined,
+    match.every ? match.every(routeProperties(route, props)) : undefined
   ]).then(
-    () => props,
+    ([ initial, every ]) => {
+      return {
+        route,
+        props,
+        error: null,
+        resolved: { initial, every }
+      };
+    },
     err => {
       // when there is an uncaught error, set it on the response
-      props.error = err;
-      return props;
+      return {
+        route,
+        props,
+        error: err,
+        resolved: null
+      };
     }
   );
 }
 
-function responseModifiers(props: ResponseProps) {
+function responseSetters(props: ResponseProps) {
   return {
     redirect(to: ToArgument, code: number = 301): void {
       props.status = code;
       props.redirectTo = to;
     },
 
-    fail(err: any): void {
+    error(err: any): void {
       props.error = err;
     },
 
-    setStatus(code: number): void {
+    status(code: number): void {
       props.status = code;
     },
 
-    setData(data: any): void {
+    data(data: any): void {
       props.data = data;
+    },
+
+    body(body: any): void {
+      props.body = body;
     }
   };
 }
@@ -150,15 +173,11 @@ function routeProperties(route: InternalRoute, props: ResponseProps) {
 
 function missProps(): RouteProps {
   return {
-    body: undefined,
     title: ''
   };
 }
 
-function freezeResponse(
-  route: InternalRoute,
-  props: ResponseProps
-): Promise<Response> {
+function freezeResponse(route: InternalRoute, props: ResponseProps): Response {
   const response: Response = Object.assign(
     {},
     props,
@@ -166,7 +185,22 @@ function freezeResponse(
     route ? route.responseProps(props) : missProps()
   );
 
-  return Promise.resolve(response);
+  return response;
 }
 
-export default createResponse;
+export function finishResponse(
+  pending: PendingResponse,
+  addons: Addons
+): Response {
+  const { error, resolved, route, props } = pending;
+  if (route && route.public.match.finish) {
+    route.public.match.finish({
+      error,
+      resolved,
+      route: routeProperties(route, props),
+      set: responseSetters(props),
+      addons
+    });
+  }
+  return freezeResponse(route, props);
+}

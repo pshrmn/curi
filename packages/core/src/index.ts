@@ -7,11 +7,14 @@ export {
   RemoveResponseHandler,
   SideEffect,
   Cache,
+  RawParams,
   Params,
-  LoadRoute,
-  LoadModifiers,
-  LoadFn,
-  PreloadFn
+  RouteProps,
+  ResponseSetters,
+  FinishProps,
+  EveryMatchFn,
+  InitialMatchFn,
+  FinishMatchFn
 } from './interface';
 export {
   Route,

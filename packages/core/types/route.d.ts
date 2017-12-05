@@ -1,5 +1,5 @@
 import { RegExpOptions, Key } from 'path-to-regexp';
-import { LoadFn, PreloadFn } from './interface';
+import { EveryMatchFn, InitialMatchFn, FinishMatchFn } from './interface';
 import { ResponseProps } from './response';
 export declare type Title = string | ((params?: object, data?: any) => string);
 export declare type ParamParser = (input: string) => any;
@@ -7,19 +7,21 @@ export interface ParamParsers {
     [key: string]: ParamParser;
 }
 export interface RouteProps {
-    body: any;
     title: string;
     name?: string;
+}
+export interface MatchFns {
+    initial?: InitialMatchFn;
+    every?: EveryMatchFn;
+    finish?: FinishMatchFn;
 }
 export interface RouteDescriptor {
     name: string;
     path: string;
     pathOptions?: RegExpOptions;
     params?: ParamParsers;
-    body?: () => any;
     children?: Array<RouteDescriptor>;
-    preload?: PreloadFn;
-    load?: LoadFn;
+    match?: MatchFns;
     title?: Title;
     extra?: {
         [key: string]: any;
@@ -28,10 +30,8 @@ export interface RouteDescriptor {
 export interface Route {
     name: string;
     path: string;
-    body: () => any;
     keys: Array<string | number>;
-    preload: PreloadFn;
-    load: LoadFn;
+    match: MatchFns;
     extra: {
         [key: string]: any;
     };

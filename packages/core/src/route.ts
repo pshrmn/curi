@@ -3,7 +3,7 @@ import PathToRegexp, { RegExpOptions, Key } from 'path-to-regexp';
 
 import once from './utils/once';
 
-import { LoadFn, PreloadFn } from './interface';
+import { EveryMatchFn, InitialMatchFn, FinishMatchFn } from './interface';
 import { ResponseProps } from './response';
 
 export type Title = string | ((params?: object, data?: any) => string);
@@ -14,9 +14,14 @@ export interface ParamParsers {
 }
 
 export interface RouteProps {
-  body: any;
   title: string;
   name?: string;
+}
+
+export interface MatchFns {
+  initial?: InitialMatchFn;
+  every?: EveryMatchFn;
+  finish?: FinishMatchFn;
 }
 
 export interface RouteDescriptor {
@@ -24,10 +29,8 @@ export interface RouteDescriptor {
   path: string;
   pathOptions?: RegExpOptions;
   params?: ParamParsers;
-  body?: () => any;
   children?: Array<RouteDescriptor>;
-  preload?: PreloadFn;
-  load?: LoadFn;
+  match?: MatchFns;
   title?: Title;
   extra?: { [key: string]: any };
 }
@@ -39,10 +42,8 @@ export interface RouteDescriptor {
 export interface Route {
   name: string;
   path: string;
-  body: () => any;
   keys: Array<string | number>;
-  preload: PreloadFn;
-  load: LoadFn;
+  match: MatchFns;
   extra: { [key: string]: any };
 }
 
@@ -72,10 +73,8 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     name,
     path,
     pathOptions = {},
-    body,
     children: descriptorChildren = [],
-    preload,
-    load,
+    match = {},
     title,
     extra,
     params: paramParsers
@@ -99,10 +98,12 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     public: {
       name,
       path: path,
-      body,
       keys: keys.map(key => key.name),
-      preload: preload && once(preload),
-      load,
+      match: {
+        initial: match.initial && once(match.initial),
+        every: match.every,
+        finish: match.finish
+      },
       extra
     },
     match: {
@@ -115,7 +116,6 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     responseProps: function(props: ResponseProps): RouteProps {
       return {
         name,
-        body: this.public.body && this.public.body(),
         title: generateTitle(title, props)
       };
     }

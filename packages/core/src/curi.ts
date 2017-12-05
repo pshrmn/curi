@@ -1,12 +1,17 @@
 import registerRoutes from './utils/registerRoutes';
 import pathnameAddon from './addons/pathname';
-import createResponse from './response';
+import { createResponse, finishResponse } from './response';
 import createRoute from './route';
 
-import { History, HickoryLocation, PendingNavigation, Action } from '@hickory/root';
+import {
+  History,
+  HickoryLocation,
+  PendingNavigation,
+  Action
+} from '@hickory/root';
 import { PathFunctionOptions } from 'path-to-regexp';
 import { RouteDescriptor, InternalRoute } from './route';
-import { Response } from './response';
+import { Response, PendingResponse } from './response';
 import {
   Addon,
   Addons,
@@ -29,7 +34,10 @@ export interface ResponseHandlerOptions {
 
 export interface CuriConfig {
   refresh: (routeArray: Array<RouteDescriptor>) => void;
-  respond: (fn: ResponseHandler, options?: ResponseHandlerOptions) => RemoveResponseHandler;
+  respond: (
+    fn: ResponseHandler,
+    options?: ResponseHandlerOptions
+  ) => RemoveResponseHandler;
   addons: Addons;
   history: History;
 }
@@ -76,34 +84,21 @@ function createConfig(
     });
   }
 
-  function getResponse(location: HickoryLocation): Promise<Response> {
-    if (cache) {
-      const cachedResponse = cache.get(location);
-      if (cachedResponse != null) {
-        return Promise.resolve(cachedResponse);
-      }
-    }
-
-    return createResponse(location, routes, registeredAddons).then(response => {
-      if (cache) {
-        cache.set(response);
-      }
-      return response;
-    });
-  }
-
   const responseHandlers: Array<ResponseHandler> = [];
   const oneTimers: Array<ResponseHandler> = [];
   let previous: [Response, Action] = [] as [Response, Action];
 
-  function respond(fn: ResponseHandler, options?: ResponseHandlerOptions): RemoveResponseHandler {
+  function respond(
+    fn: ResponseHandler,
+    options?: ResponseHandlerOptions
+  ): RemoveResponseHandler {
     if (typeof fn !== 'function') {
-      throw new Error('The first argument passed to "respond" must be a function');
+      throw new Error(
+        'The first argument passed to "respond" must be a function'
+      );
     }
 
-    const {
-      once = false
-    } = options || {};
+    const { once = false } = options || {};
 
     if (once) {
       if (previous.length) {
@@ -148,28 +143,42 @@ function createConfig(
   }
 
   let activeResponse: PendingNavigation;
-  
-  function navigationHandler(pending: PendingNavigation): void {
+
+  function navigationHandler(pendingNav: PendingNavigation): void {
     if (activeResponse) {
-      activeResponse.cancel(pending.action);
+      activeResponse.cancel(pendingNav.action);
       activeResponse.cancelled = true;
     }
-    activeResponse = pending;
+    activeResponse = pendingNav;
 
-    getResponse(pending.location).then(response => {
-      if (pending.cancelled) {
+    if (cache) {
+      const cachedResponse = cache.get(pendingNav.location);
+      if (cachedResponse != null) {
+        cacheAndEmit(cachedResponse, pendingNav.action);
+      }
+    }
+
+    createResponse(pendingNav.location, routes).then(pendingResponse => {
+      if (pendingNav.cancelled) {
         return;
       }
-      pending.finish();
-      activeResponse = undefined;
-      emit(response, pending.action);
-      previous = [response, pending.action];
-
-      if (response.redirectTo) {
-        history.replace(response.redirectTo);
-      }
-      return response;
+      pendingNav.finish();
+      const response = finishResponse(pendingResponse, registeredAddons);
+      cacheAndEmit(response, pendingNav.action);
     });
+  }
+
+  function cacheAndEmit(response: Response, action: Action) {
+    activeResponse = undefined;
+    if (cache) {
+      cache.set(response);
+    }
+    emit(response, action);
+    previous = [response, action];
+
+    if (response.redirectTo) {
+      history.replace(response.redirectTo);
+    }
   }
 
   // now that everything is defined, actually do the setup
