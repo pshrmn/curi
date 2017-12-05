@@ -40,6 +40,7 @@ config.respond((response, action) => {
   view = new response.body({
     target: root,
     data: { response }
+  });
 });`
     }
   </PrismBlock>

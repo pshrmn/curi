@@ -32,8 +32,7 @@ installCuri(Vue, config);
 config.respond(() => {
   const vm = new Vue({
     el: '#root',
-    data: { response },
-    template: '<app :response="response" />',
+    template: '<app />',
     components: { app: App }
   });
 }, { once: true });`
