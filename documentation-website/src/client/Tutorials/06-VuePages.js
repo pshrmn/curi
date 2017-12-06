@@ -125,28 +125,29 @@ const config = {
         <p>
           The <IJS>CuriPlugin</IJS> exported by <IJS>@curi/vue</IJS>, should
           be registered with Vue after the Curi configuration object has been
-          created. When registering it (via <IJS>Vue.use</IJS>), you should
-          pass a second argument: an object with a <IJS>config</IJS> property
-          whose value is your Curi configuration object.
+          created. The plugin does a couple things. First, it will make your Curi
+          configuration object and new responses/actions accessible to every
+          component as through the <IJS>this.$curi</IJS> object. Second, it will
+          register Curi specific components. For this tutorial, the only component
+          that we care about is <Cmp>curi-link</Cmp>.
+        </p>
+        <p>
+          Instead of having to register the plugin manually (via{' '}
+          <IJS>Vue.use</IJS>), <IJS>@curi/vue</IJS> also exports an{' '}
+          <IJS>installCuri</IJS> function that will handle that for you. The
+          install function will also subscribe to your Curi configuration object
+          to handle new responses.
         </p>
         <PrismBlock lang='javascript'>
           {
 `// index.js
 import Vue from 'vue';
-import CuriPlugin from '@curi/vue';
+import { installCuri } from '@curi/vue';
 
 const config = createConfig(history, routes);
-Vue.use(CuriPlugin, { config });`
+installCuri(Vue, config);`
           }
         </PrismBlock>
-
-        <p>
-          This plugins does a couple things. First, it will make your Curi
-          configuration object accessible to every component as{' '}
-          <IJS>this.$curi</IJS>. Second, it will register Curi specific
-          components. For this tutorial, the only component that we care
-          about is <Cmp>curi-link</Cmp>.
-        </p>
       </Subsection>
 
       <Subsection
@@ -215,64 +216,41 @@ Vue.use(CuriPlugin, { config });`
       <p>
         Being able to access the Curi configuration object is nice, but what we really
         need is to access the response objects that are emitted by Curi whenever the
-        location changes. We can do this using the <IJS>respond</IJS> method that we covered
-        in the <Link to='Tutorial' params={{ name: '05-config' }}>configuration object</Link>
-        {' '}tutorial.
+        location changes. We <em>could</em> use the <IJS>config.respond</IJS> method that
+        we covered in the <Link to='Tutorial' params={{ name: '05-config' }}>
+          configuration object
+        </Link> tutorial, but <IJS>installCuri</IJS> takes care of that step for us.{' '}
+        <IJS>installCuri</IJS> calls <IJS>config.respond</IJS> and in the response
+        handler, it updates the reactive <IJS>response</IJS> and <IJS>action</IJS>
+        {' '}properties of <IJS>this.$curi</IJS> whenever a new response is emitted.
       </p>
 
       <p>
-        First, we need to have a variable that will be used to store our Vue instance.
-        Then, we will subscribe to the configuration object with a response handler function.
-      </p>
-
-      <PrismBlock lang='javascript'>
-        {
-`// index.js
-let vm;
-config.respond(response => {
-  // ...
-});`
-        }
-      </PrismBlock>
-
-      <p>
-        Inside of the response handler function, we have two branches. The first is when
-        we don't have a Vue instance. When that is the case, we should create a new
-        Vue instance. When we already have a Vue instance, we just need to update
-        the <IJS>response</IJS> object on the Vue instance.
+        While we do not have to manually subscribe to all responses, we do need
+        to listen for the first response to be emitted so that we can render the
+        application. The second argument to <IJS>config.respond</IJS> is an options
+        object. If we pass the options <IJS>{`{ once: true }`}</IJS>, then that function
+        will only be called after the initial response is emitted.
       </p>
       <p>
-        When we are creating a Vue instance, the response object should be passed as
-        a data property to the instance. We will have our Vue instance render
-        an <Cmp>app</Cmp> component, which we will define next. The <Cmp>app</Cmp> is
-        passed the <IJS>response</IJS> object as a prop, which it will use to determine
-        what to render.
-      </p>
-      <p>
-        When we are updating a Vue instance, we just need to set the new property on the
-        Vue instance and Vue's reactivity will handle re-rendering the application.
+        Inside of the response handler function, we just need to render our root
+        application component. All of our Curi related data will be available
+        through <IJS>this.$curi</IJS>, so we don't have to attach any data to the
+        Vue instance.
       </p>
       <PrismBlock lang='javascript'>
         {
 `// index.js
-import app from './components/App';
+import app from './components/app';
 
-let vm;
 config.respond(response => {
-  if (!vm) {
-    vm = new Vue({
-      el: '#root',
-      data: {
-        response
-      },
-      // we'll get into the <app> soon
-      template: '<app :response="response" />',
-      components: { app }
-    });
-  } else {
-    vm.response = response;
-  }
-});`
+  const vm = new Vue({
+    el: '#root',
+    // we'll get into the <app> soon
+    template: '<app />',
+    components: { app }
+  });
+}, { once: true });`
         }
       </PrismBlock>
     </Section>
@@ -285,7 +263,7 @@ config.respond(response => {
         At this point we have the ability to access our configuration
         object throughout our components and we are passing response
         objects to some <Cmp>app</Cmp> component that we haven't actually
-        written yet. We should do that now.
+        written yet. We should write those components now.
       </p>
 
       <p>
@@ -313,8 +291,7 @@ config.respond(response => {
 
 <script>
   export default {
-    name: 'app',
-    props: ['response']
+    name: 'app'
   };
 </script>`
         }
@@ -346,65 +323,31 @@ config.respond(response => {
       </Note>
 
       <p>
-        Your first thought about how to use a response to render might
-        be to use <IJS>response.name</IJS>. You could use a template full of
-        if/else attributes and render a different component based on the{' '}
-        <IJS>response.name</IJS>. In the same vein, you could add a computed
-        property that returns a component for each possible <IJS>name</IJS>
-        {' '}value and use <Cmp>component :is</Cmp> to render the computed
-        property. Neither of those sounds very convenient, especially as your
-        application gets more complex, although <Cmp>component :is</Cmp> is
-        something we will want to use.
-      </p>
-      <p>
-        Instead, we are going to use one of the <IJS>undefined</IJS> properties
-        from the above response: <IJS>body</IJS>. What is this property? The{' '}
-        <IJS>body</IJS> property of a response is set by calling the <IJS>body</IJS>
-        {' '}function property of a matched route.
-      </p>
-      <PrismBlock lang='jsx'>
-        {
-`const routes = [
-  {
-    name: 'Home',
-    path: '',
-    body: () => 'You are here!'
-  }
-];
-// when the user visits the location{ pathname: '/' }, the
-// response will look like this:
-{
-  name: 'Home',
-  status: 200,
-  body: 'You are here!',
-  ...
-}`
-        }
-      </PrismBlock>
-      <p>
-        Now, instead of returning a string, what if our <IJS>route.body</IJS>
-        {' '}properties were functions that returned Vue components? We can use{' '}
-        <Cmp>component :is</Cmp> to dynamically set the component that Vue should
-        render. Then, our render function can use <IJS>response.body</IJS> to
-        render our website. 
+        In <Link to='Tutorial'  params={{ name: '03-routes' }}>Part 3</Link> of
+        this tutorial, we added <IJS>match.finish</IJS> functions that set the{' '}
+        <IJS>body</IJS> property for each of our routes. There, we just used a
+        placeholder string, but now we can actually set the component for each route.
+        Instead of returning a string, what if <IJS>set.body</IJS> set
+        the <IJS>body</IJS> to be a Vue component? Then, our render function
+        can use <IJS>response.body</IJS> to render our website.
       </p>
       <PrismBlock lang='html'>
         {
 `<!-- components/App.vue -->
 <template>
-  <component :is="response.body" />
+  <component :is="$curi.response.body" />
 </template>
 
 <script>
 export default {
-  name: 'app',
-  props: ['response']
+  name: 'app'
 };
 </script>`
         }
       </PrismBlock>
       <p>
-        Next, we should define the components for each of our routes.
+        We'll expand on that later on, but for now, let's go ahead and define the
+        components for each of our routes.
       </p>
     </Section>
     <Section
@@ -480,7 +423,8 @@ export default {
       </PrismBlock>
       <p>
         All of these components should be imported in our <IJS>routes.js</IJS> and
-        set as the return value of their respective route's <IJS>body</IJS> function.
+        set using <IJS>set.body</IJS> in their respectiev <IJS>match.finish</IJS>
+        {' '}functions.
       </p>
       <PrismBlock lang='javascript'>
         {
@@ -496,34 +440,58 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      finish: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     name: 'Contact',
     path: 'contact',
-    body: () => Contact
+    match: {
+      finish: ({ set }) => {
+        set.body(Contact);
+      }
+    }
   },
   {
     name: 'Checkout',
     path: 'checkout',
-    body: () => Checkout
+    match: {
+      finish: ({ set }) => {
+        set.body(Checkout);
+      }
+    }
   },
   {
     name: 'Book List',
     path: 'books',
-    body: () => BookList,
+    match: {
+      finish: ({ set }) => {
+        set.body(BookList);
+      }
+    }
     children: [
       {
         name: 'Book',
         path: ':id',
-        body: () => Book
+        match: {
+          finish: ({ set }) => {
+            set.body(Book);
+          }
+        }
       }
     ]
   },
   {
     name: 'Not Found',
     path: '(.*)',
-    body: () => NotFound
+    match: {
+      finish: ({ set }) => {
+        set.body(NotFound);
+      }
+    }
   }
 ];
 
@@ -590,7 +558,7 @@ export default routes;`
       <NavLinks />
     </header>
     <main>
-      <component :is="response.body" />
+      <component :is="$curi.response.body" />
     </main>
   </div>
 </template>
@@ -599,7 +567,6 @@ export default routes;`
   import NavLinks from './NavLinks';
   export default {
     name: 'app',
-    props: ['response'],
     components: { NavLinks }
   };
 </script>`
@@ -674,9 +641,9 @@ export default books;`
         information for the correct book.
       </p>
       <p>
-        The <IJS>params</IJS> object is a property of our response object. That means that if
-        we pass our response object as a prop to the <IJS>response.body</IJS>, we can access these
-        params in our route components.
+        The <IJS>params</IJS> object is a property of our response object. We can access
+        the response in our components using <IJS>this.$curi.response</IJS>, so we don't
+        actually have to manually pass it as a prop.
       </p>
       <PrismBlock lang='html'>
       {
@@ -687,10 +654,7 @@ export default books;`
       <NavLinks />
     </header>
     <main>
-      <component
-        :is="response.body"
-        :response="response"
-      />
+      <component :is="$curi.response.body" />
     </main>
   </div>
 </template>
@@ -706,33 +670,18 @@ export default books;`
 </script>`
       }
     </PrismBlock>
-      <Note>
-        There are a number of ways that you can decide to pass props to your route components. The
-        one thing to keep in mind is that <em>all</em> of your route components will receive
-        the same set of props. You can either be very specific and only pass the props that
-        are necessary (e.g. <Cmp>component :params="response.params"</Cmp>) or you can just pass the entire
-        response object (e.g. <Cmp>component :response="response"</Cmp>) so you don't have to worry
-        about updating this every time one of your route components needs another prop from the
-        response.
-      </Note>
       <p>
-        Next, we just need to update our <Cmp>Book</Cmp> component so that it can access its{' '}
-        <IJS>params</IJS> prop and figure out which book to render content for.
+        Next, we just need to update our <Cmp>Book</Cmp> component to access the{' '}
+        <IJS>params</IJS> object and figure out which book to render content for.
       </p>
       <PrismBlock lang='html'>
         {
 `<!-- components/Book.vue -->
 <template>
   <div class='book'>
-    Book {{response.params.id}}
+    Book {{$curi.response.params.id}}
   </div>
-</template>
-
-<script>
-  export default {
-    props: ['response']
-  };
-</script>`
+</template>`
         }
       </PrismBlock>
     </Section>
@@ -755,7 +704,7 @@ export default books;`
         At this point, we have a website with a number of pages. It isn't particularly useful yet,
         but at least we can navigate between pages. Next we will take a step back from Vue and
         look at how we can implement data loading with with{' '}
-        <Link to='Tutorial' params={{ name: '07-load' }}>Part 7: The Load Function</Link>.
+        <Link to='Tutorial' params={{ name: '07-loading-data' }}>Part 7: Loading Data</Link>.
       </p>
     </Section>
   </BaseTutorial>

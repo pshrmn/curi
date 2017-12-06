@@ -26,30 +26,26 @@ export default () => (
         <div className='code'>
           <div className='description'>
             <p>
-              The <IJS>body</IJS> function of routes can be used to attach a <IJS>body</IJS>
-              {' '}property to response objects. Generally, this attached value would be a
-              function or component (this would vary based on how your framework renders),
-              but it can be anything you want it to be.
+              You can attach a <IJS>body</IJS> property to response object. Generally,
+              this attached value should be a function or component (this would vary
+              based on how your framework renders), but it can be anything you want it to be.
             </p>
           </div>
           <PrismBlock lang='javascript'>
             {
 `// routes.js
+import User from './components/User';
+
 const routes = [
-  {
-    name: 'Home',
-    path: '',
-    body: () => Home
-  },
+  // ...
   {
     name: 'User',
     path: 'u/:userID',
-    body: () => User
-  },
-  {
-    name: 'Not Found',
-    path: '(.*)',
-    body: () => NotFound
+    match: {
+      finish: ({ set }) => {
+        set.body(User);
+      }
+    }
   }
 ];`
             }
@@ -140,10 +136,11 @@ const NavLinks = () => (
         <div className='code'>
           <div className='description'>
             <p>
-              <IJS>data</IJS> can contain values that you load using a route's <IJS>load</IJS>
-              {' '}function. The response won't be be generated until after the <IJS>load</IJS>
-              {' '}function has resolved, so if you use this property, you don't have to render a
-              bunch of loading spinners or empty content while waiting for the data to be loaded.
+              <IJS>data</IJS> can contain values that you load using a route's{' '}
+              <IJS>match.every</IJS> function. The response won't be be generated until
+              after the <IJS>match.every</IJS> function has resolved, so if you use this
+              property, you don't have to render a bunch of loading spinners or empty
+              content while waiting for the data to be loaded.
             </p>
           </div>
           <PrismBlock lang='javascript'>
@@ -216,12 +213,20 @@ const NavLinks = () => (
   {
     name: 'Album',
     path: 'a/:albumID',
-    body: () => Album,
+    match: {
+      finish: ({ set }) => {
+        set.body(Album);
+      }
+    },
     children: [
       {
         name: 'Song',
         path: ':songID',
-        body: () => Song
+        match: {
+          finish: ({ set }) => {
+            set.body(Song);
+          }
+        }
       }
     ]
   }
@@ -326,8 +331,8 @@ history.navigate({ pathname });`
         <div className='code'>
           <div className='description'>
             <p>
-              Use the <IJS>preload</IJS> and <IJS>body</IJS> properties to add code splitting
-              at your routes.
+              Use the <IJS>match.initial</IJS> and <IJS>match.finish</IJS> functions to
+              add code splitting at your routes.
             </p>
             <p>
               <strong>Note:</strong> This relies on a bundler like Webpack.
@@ -339,17 +344,19 @@ history.navigate({ pathname });`
           </div>
           <PrismBlock lang='javascript'>
             {
-`const store = {};
-
-const routes = [
+`const routes = [
   {
     name: 'User',
     path: 'users/:userID',
-    preload: () => import('./components/User')
-      .then(module => {
-        store['User'] = module.default;
-      }),
-    body: () => store['User']
+    match: {
+      initial: () => (
+        import('./components/User')
+          .then(module => module.default)
+      ),
+      finish: ({ resolved, set }) => {
+        set.body(resolved.initial);
+      }
+    }
   }
   ...,
 ]`

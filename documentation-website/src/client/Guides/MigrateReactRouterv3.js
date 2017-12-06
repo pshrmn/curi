@@ -128,39 +128,53 @@ export default ({ name }) => (
         </PrismBlock>
 
         <p>
-          The biggest difference between the Curi paths and the React Router paths is that with Curi, you never include a forward
-          slash at the beginning of the path. This means that while the root path for React Router is <IJS>'/'</IJS>, the root path
-          for Curi is <IJS>''</IJS>.
+          The biggest difference between the Curi paths and the React Router paths
+          is that with Curi, you never include a forward slash at the beginning of
+          the path. This means that while the root path for React Router is{' '}
+          <IJS>'/'</IJS>, the root path for Curi is <IJS>''</IJS>.
         </p>
         <p>
-          Next, we should add our components to each route. We will ignore the <Cmp>App</Cmp> component that is used in the
-          React Router routes. That is not route specific and will be rendered by our application (assuming we actually need it).
+          Next, we should add our components to each route. We will ignore
+          the <Cmp>App</Cmp> component that is used in the React Router routes. That is
+          not route specific and will be rendered by our application (assuming we
+          actually need it).
         </p>
         <p>
-          With Curi routes, we have a <IJS>body</IJS> property. This is a function that will be called whenever the route matches.
-          Its return value will be added to the response object that Curi creates (more on that later). For this React application,
-          we want our <IJS>body</IJS> functions to return the React component associated with each route.
+          With Curi routes, we have a <IJS>match</IJS> property. This is an object with
+          a couple different optional function properties, but the one we care about right
+          now is <IJS>match.finish</IJS>. In our <IJS>match.finish</IJS> function, we have
+          a <IJS>set</IJS> object that we can use to modify the response. One of the
+          properties of this object is a <IJS>body</IJS> function that we can call to set
+          the <IJS>body</IJS> property of the response. For this React application, we want
+          our <IJS>body</IJS> property to be the React component associated with each route.
         </p>
-        <p>
-          <IJS>body</IJS> is a function and not a value because we might not always have access to the body value when the application
-          loads. For example, with code splitting, we might not load the module until the user navigates to the route. Then, we would
-          store the component in a cache and have the <IJS>body</IJS> function return the component from the cache. You can read the{' '}
-          <Link to='Guide' params={{ slug: 'code-splitting' }}>code splitting guide</Link> for more information on how to do that.
-        </p>
+
         <PrismBlock lang='javascript'>
           {
 `const routes = [
   {
     path: '',
-    body: () => Home
+    match: {
+      finish: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     path: 'inbox',
-    body: () => Inbox,
+    match: {
+      finish: ({ set }) => {
+        set.body(Inbox);
+      }
+    }
     children: [
       {
         path: ':message',
-        body: () => Message
+        match: {
+          finish: ({ set }) => {
+            set.body(Message);
+          }
+        }
       }
     ]
   }
@@ -169,17 +183,23 @@ export default ({ name }) => (
         </PrismBlock>
         <p>
           We are close to replicating our React Router routes, we just have to implement the <IJS>on___</IJS> methods for
-          our <IJS>:message</IJS> route. With Curi, routes have two possible loading function properties: <IJS>preload</IJS>
-          {' '}and <IJS>load</IJS>. <IJS>preload</IJS> is useful for tasks that only need to be run once per route, like the
-          code splitting mentioned above. <IJS>load</IJS>, on the other hand, will be called every time that a route matches.
+          our <IJS>:message</IJS> route. With Curi, routes have two possible loading function properties: <IJS>match.initial</IJS>
+          {' '}and <IJS>match.every</IJS>. <IJS>match.initial</IJS> is useful for tasks that only need to be run once per route, like the
+          code splitting mentioned above. <IJS>match.every</IJS>, on the other hand, will be called every time that a route matches.
         </p>
         <p>
           With React Router, <IJS>onEnter</IJS> is called when the route first matches, while <IJS>onChange</IJS> is called when
           the same route matches a new location (e.g. with new path parameters). <IJS>onEnter</IJS> and <IJS>onChange</IJS> are
           nearly the same; the big difference between the two is that <IJS>onChange</IJS> will receive the previous props, which
-          could be used to determine which props changed. When converting these to Curi, we will use <IJS>load</IJS> for both. This
-          misses out on the ability to compare props in <IJS>onChange</IJS>, but (assuming you’re using the comparison to determine
-          whether to load new data) a cache should serve the same purpose.
+          could be used to determine which props changed. When converting these to Curi, we will use <IJS>match.every</IJS> for both. This
+          misses out on the ability to compare props in <IJS>onChange</IJS>, but the primary purpose for comparing props in{' '}
+          <IJS>onChange</IJS> was to know whether you're navigating to a new route or just swapping query/hash values, so a cache
+          should serve the same purpose.
+        </p>
+        <p>
+          Curi routes can also have a <IJS>match.finish</IJS> property which you can use to
+          modify the response object. This function will run once we know that the response will
+          be emitted, so side effects can be run in here.
         </p>
         <p>
           There currently is no equivalent to <IJS>onLeave</IJS> with Curi. This is mostly because I haven’t seen a compelling need
@@ -191,16 +211,28 @@ export default ({ name }) => (
 `const routes = [
   {
     path: '',
-    body: () => Home
+    match: {
+      finish: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     path: 'inbox',
-    body: () => Inbox,
+    match: {
+      finish: ({ set }) => {
+        set.body(Inbox);
+      }
+    }
     children: [
       {
         path: ':message',
-        body: () => Message,
-        load: (params, location, mods) => {...}
+        match: {
+          every: (route) => { return ... },
+          finish: ({ set }) => {
+            set.body(Message);
+          }
+        }
       }
     ]
   }
@@ -208,10 +240,8 @@ export default ({ name }) => (
           }
         </PrismBlock>
         <p>
-          <IJS>params</IJS> is an object of parsed path parameters, <IJS>location</IJS> is the current location object, and <IJS>mods</IJS>
-          {' '}is an object with functions to modify the response. For example, <IJS>mods.setData</IJS> allows you to attach loaded data to
-          the response object. The <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'load' }}>routes guide</Link> covers all of
-          the functions provided by the <IJS>mods</IJS> object.
+          The <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'match' }}>routes guide</Link> covers all
+          of the <IJS>match</IJS> functions and their arguments.
         </p>
         <p>
           We now have the equivalent routes implemented in Curi, but we have one last step. With Curi, each route has to have a unique name.
@@ -222,18 +252,30 @@ export default ({ name }) => (
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      finish: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     name: 'Inbox',
     path: 'inbox',
-    body: () => Inbox,
+    match: {
+      finish: ({ set }) => {
+        set.body(Inbox);
+      }
+    }
     children: [
       {
         name: 'Message',
         path: ':message',
-        body: () => Message,
-        load: (params, location, mods) => {...}
+        match: {
+          every: (route) => { return ... },
+          finish: ({ set }) => {
+            set.body(Message);
+          }
+        }
       }
     ]
   }
@@ -368,9 +410,11 @@ const config = create1Config(history, routes);`
           the config is just there for convenience.
         </p>
         <p>
-          If you remember from above, we added <IJS>body</IJS> properties to each of the routes and said that when a route matches, that
-          function would be called and its return value would be attached to the response. That means, that inside of our render function,
-          we can access the matched route’s component as <IJS>response.body</IJS>.
+          Earlier, we added <IJS>body</IJS> properties to each of the routes and
+          said that when a route matches, that function would be called and its
+          return value would be attached to the response. That means, that inside of
+          our render function, we can access the matched route’s component as{' '}
+          <IJS>response.body</IJS>.
         </p>
         <PrismBlock lang='jsx'>
           {
@@ -381,8 +425,10 @@ const config = create1Config(history, routes);`
           }
         </PrismBlock>
         <p>
-          That isn’t perfect because it doesn’t consider what happens when there is no body (which happens if none of the routes match the
-          location). Wildcard routes (<IJS>(.*)</IJS>) can be useful here or you can just return something else when there is no{' '}
+          That isn’t perfect because it doesn’t consider what happens when there is no body
+          (which happens if none of the routes match the location or you don't set it in a
+          route's <IJS>match.finish</IJS> function). Wildcard routes (<IJS>(.*)</IJS>) can
+          be useful here or you can just return something else when there is no{' '}
           <IJS>response.body</IJS> property.
         </p>
         <p>

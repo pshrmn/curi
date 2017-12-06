@@ -285,53 +285,15 @@ response: {
       </Note>
 
       <p>
-        Your first thought about how to use a response to render might be to
-        use <IJS>response.name</IJS>. You <em>could</em> use a <IJS>switch</IJS>
-        {' '}to render different content based on the name.
-      </p>
-      <PrismBlock lang='jsx'>
-        {
-`function render(response) {
-  switch (response.name) {
-  case 'Home':
-    return <Home />;
-  case 'Contact':
-    return <Contact />;
-  }
-}`
-        }
-      </PrismBlock>
-      <p>
-        Using <IJS>response.name</IJS> grsow increasingly complex as you add more
-        routes to your application. Instead, we are going to use one of the{' '}
-        <IJS>undefined</IJS> properties of the above response: <IJS>body</IJS>.
-        What is this property? The <IJS>body</IJS> property of a response is set by
-        calling the <IJS>body</IJS> function property of a matched route.
-      </p>
-      <PrismBlock lang='jsx'>
-        {
-`const routes = [
-  {
-    name: 'Home',
-    path: '',
-    body: () => 'You are here!'
-  }
-];
-// when the user visits the location { pathname: '/' }, the
-// response will look like this:
-{
-  name: 'Home',
-  status: 200,
-  body: 'You are here!',
-  // ...
-}`
-        }
-      </PrismBlock>
-      <p>
-        Instead of returning a string, what if <IJS>route.body</IJS> returned
-        React components? Then, our render function can use <IJS>response.body</IJS>
-        {' '}to render our website. We'll expand on that later on, but for now,
-        let's go ahead and define the components for each of our routes.
+        In <Link to='Tutorial'  params={{ name: '03-routes' }}>Part 3</Link> of
+        this tutorial, we added <IJS>match.finish</IJS> functions that set the{' '}
+        <IJS>body</IJS> property for each of our routes. There, we just used a
+        placeholder string, but now we can actually set the component for each route.
+        Instead of returning a string, what if <IJS>set.body</IJS> set
+        the <IJS>body</IJS> to be a React component? Then, our render function
+        can use <IJS>response.body</IJS> to render our website. We'll expand on
+        that later on, but for now, let's go ahead and define the components for
+        each of our routes.
       </p>
     </Section>
     <Section
@@ -425,8 +387,9 @@ export default NotFound;`
         }
       </PrismBlock>
       <p>
-        All of these components should be imported in our <IJS>routes.js</IJS> and
-        set as the return value of their respective route's <IJS>body</IJS> function.
+        All of these components should be imported in our <IJS>routes.js</IJS>. We
+        can now update our <IJS>set.body()</IJS> calls to set the actual
+        components as the <IJS>body</IJS> property of responses.
       </p>
       <PrismBlock lang='javascript'>
         {
@@ -442,40 +405,66 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      finish: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     name: 'Contact',
     path: 'contact',
-    body: () => Contact
+    match: {
+      finish: ({ set }) => {
+        set.body(Contact);
+      }
+    }
   },
   {
     name: 'Checkout',
     path: 'checkout',
-    body: () => Checkout
+    match: {
+      finish: ({ set }) => {
+        set.body(Checkout);
+      }
+    }
   },
   {
     name: 'Book List',
     path: 'books',
-    body: () => BookList,
+    match: {
+      finish: ({ set }) => {
+        set.body(BookList);
+      }
+    }
     children: [
       {
         name: 'Book',
         path: ':id',
-        body: () => Book
+        match: {
+          finish: ({ set }) => {
+            set.body(Book);
+          }
+        }
       }
     ]
   },
   {
     name: 'Not Found',
     path: '(.*)',
-    body: () => NotFound
+    match: {
+      finish: ({ set }) => {
+        set.body(NotFound);
+      }
+    }
   }
-];`
+];
+
+export default routes;`
         }
       </PrismBlock>
       <p>
-        We can update our <IJS>render</IJS> function now to use <IJS>response.body</IJS>.
+        Our <IJS>render</IJS> function is now able to use <IJS>response.body</IJS>.
         This is also a good time to separate the render function from the component. This
         isn't absolutely necessary, but can help keep the code cleaner.
       </p>
@@ -587,8 +576,8 @@ export default function(response) {
         }
       </PrismBlock>
       <p>
-        Now, we can navigate between most of our routes. However, we still
-        need to add navigation to our books.
+        With the <Cmp>NavLink</Cmp>s, we can navigate between most of our routes.
+        However, we still need to add navigation to our individual books.
       </p>
     </Section>
     <Section
@@ -721,8 +710,9 @@ const Book = ({ response }) => (
         At this point, we have a website with a number of pages. It isn't
         particularly useful yet, but at least we can navigate between pages.
         Next we will take a step back from React and learn how to implement
-        data loading with{' '}
-        <Link to='Tutorial' params={{ name: '07-load' }}>Part 7: The Load Function</Link>.
+        data loading with <Link to='Tutorial' params={{ name: '07-loading-data' }}>
+          Part 7: Loading Data
+        </Link>.
       </p>
     </Section>
   </BaseTutorial>

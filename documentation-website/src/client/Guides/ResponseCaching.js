@@ -51,8 +51,8 @@ const config = createConfig(history, routes, {
     </p>
     <p>
       So why would you want to use a cache? When the user uses the browser's forward/back buttons,
-      Curi will generate a new response. This means that if the route has a load function, it will
-      be re-called. You can mitigate this by adding a cache to your load function, but you may also
+      Curi will generate a new response. This means that if the route has a <IJS>match.every</IJS> function,
+      it will be re-called. You can mitigate this by adding a cache to that function, but you may also
       find it preferable to just re-use the existing response.
     </p>
     <p>

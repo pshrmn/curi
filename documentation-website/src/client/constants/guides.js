@@ -42,15 +42,15 @@ const guides = [
     type: 'advanced'
   },
   {
-    name: 'Code Splitting with the Preload Property',
+    name: 'Code Splitting',
     slug: 'code-splitting',
     description: 'Learn how to code split your project using Webpack',
     type: 'advanced'
   },
   {
-    name: 'The Load Property',
-    slug: 'load',
-    description: 'Learn how to use a route\'s load function to modify responses',
+    name: 'Loading Route Data',
+    slug: 'loading',
+    description: 'Learn how to load data for a route and modify the response object',
     type: 'advanced'
   },
   {

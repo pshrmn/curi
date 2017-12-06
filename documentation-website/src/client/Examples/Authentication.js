@@ -16,12 +16,14 @@ export default ({ name }) => (
       id='explanation'
     >
       <p>
-        Sometimes you will want to redirect based on the results of your load function. For instance, you might see
-        that a user is not authenticated and shouldn't be able to view a page.
+        Sometimes you will want to redirect based on the results of your{' '}
+        <IJS>match.every</IJS> function. For instance, you might see that a
+        user is not authenticated and shouldn't be able to view a page.
       </p>
 
       <p>
-        When this happens, your load function should modify the response by calling its redirect method.
+        When this happens, your <IJS>match.finish</IJS> function should modify
+        the response by calling its redirect method.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -31,9 +33,11 @@ export default ({ name }) => (
   {
     name: 'Protected',
     path: 'super-secret',
-    load: (resp) => {
-      if (!store.userIsAuthenticated) {
-        resp.redirect('/login', 302);
+    match: {
+      finish: ({ set }) => {
+        if (!store.userIsAuthenticated) {
+          set.redirect('/login', 302);
+        }
       }
     }
   }

@@ -40,8 +40,8 @@ export default ({ name }) => (
   // if no routes match or a route issues a redirect.
   status: 200,
 
-  // If the route had a load function and called
-  // setData, that value will be set here. If not,
+  // If the route had a match.finish function and called
+  // set.data, that value will be set here. If not,
   // this will be undefined.
   data: {...},
 
@@ -106,24 +106,33 @@ export default ({ name }) => (
       id='body-property'
     >
       <p>
-        The body property of a response is the value returned by the matched route's body property.
-        This value can be anything you want it to be, but it should usually be a function/component.
-        Here, we will assume that each of your routes have body properties that return a function.
+        The body property of a response is the value set by the matched
+        route's <IJS>match.finish</IJS> function, using{' '}
+        <IJS>set.body()</IJS>. This value can be anything you want it
+        to be, but it should usually be a function/component. Here, we will assume
+        that each of your routes have <IJS>body</IJS> properties that return a function.
       </p>
       <PrismBlock lang='javascript'>
         {
 `// we are assuming all routes are setup like this
 {
   ...,
-  body: () => function() {...}
+  match: {
+    finish: ({ set }) => {
+      set.body(function() { ... });
+    }
+  }
 }`
         }
       </PrismBlock>
       <p>
-        The response's body function should take other response properties as its arguments. Which ones
-        will vary based on your application, but if you are using path parameters, then the params object
-        should be one of these. If you are doing data loading in your routes (using the load property),
-        then you will probably also want to pass the data property to your body function.
+        The response's <IJS>body</IJS> function should take other response
+        properties as its arguments. Which ones will vary based on your application,
+        but if you are using path parameters, then the <IJS>params</IJS> object
+        should be one of these. If you are doing data loading in your routes (using the
+        <IJS>match.every</IJS> property), then you will probably also want to pass
+        the data property (which is attached to the response in the <IJS>match.finish</IJS>
+        {' '}function) to your body function.
       </p>
       <Note>
         It is important that each body function has the same argument signature. If you want to play
@@ -131,8 +140,9 @@ export default ({ name }) => (
         argument.
       </Note>
       <p>
-        As stated above, the body property does not have to be a function. You may want to pass extra
-        data for each route, in which case it might be convenient for the route's body function to return
+        As stated above, the body property does not have to be a function. You may
+        want to pass extra data for each route, in which case it might be convenient
+        for the route's <IJS>set.body</IJS> call to set the <IJS>body</IJS> as
         an object. This can be useful if you want to have multiple render functions (where each one would
         manipulate a different part of your application).
       </p>
@@ -140,10 +150,14 @@ export default ({ name }) => (
         {
 `{
   name: 'User',
-  body: () => ({
-    main: function User() {...},
-    menu: function UserMenu() {...}
-  })
+  match: {
+    finish: ({ set }) => {
+      set.body({
+        main: function User() {...},
+        menu: function UserMenu() {...}
+      });
+    }
+  }
 }`
         }
       </PrismBlock>
@@ -205,7 +219,7 @@ const routes = [
   // ...,
   {
     name: 'Not Found',
-    path: '*'
+    path: '(.*)'
   }
 ];
 

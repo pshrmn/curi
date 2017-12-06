@@ -243,6 +243,102 @@ export default () => (
 ];`
         }
       </PrismBlock>
+      
+      <Subsection
+        title='route.match'
+        id='route-match'
+      >
+        <p>
+          We don't need it quite yet, but we should quickly cover another
+          one of the properties of a route: <IJS>match</IJS>. The <IJS>match</IJS>
+          {' '}property is where we can provide functions that will be called
+          when the route matches. There are three valid functions: <IJS>initial</IJS>,{' '}
+          <IJS>every</IJS>, and <IJS>finish</IJS>.
+        </p>
+        <p>
+          We won't be using the <IJS>initial</IJS> function, but you can read more
+          about it in the <Link to='Guide' params={{ slug: 'code-splitting' }}>
+            Code Splitting
+          </Link> guide. The <IJS>every</IJS> function will be used later on, but for now,
+          we only care about the <IJS>finish</IJS> function.
+        </p>
+        <p>
+          The <IJS>finish</IJS> function
+          gives us an opportunity to set some properties on the response object
+          before it is emitted. <IJS>finish</IJS> receives an object with are a bunch
+          of properties (which you can read about{' '}
+          <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'finish' }}>
+            here
+          </Link>), but right now we only care about the <IJS>set</IJS> object.
+        </p>
+        <p>
+          The <IJS>set</IJS> object has functions that can be called to modify
+          the response object. For example, calling <IJS>set.body('Hi!')</IJS>
+          {' '}will set the <IJS>body</IJS> property of the response to "Hi!". Let's
+          go ahead and add <IJS>match.finish</IJS> functions to each of our routes.
+          We don't really have anything to set as the body, so we'll just use the
+          route's name as a placeholder.
+        </p>
+        <PrismBlock lang='javascript'>
+        {
+`const routes = [
+  {
+    name: 'Home',
+    path: '',
+    match: {
+      finish: ({ set }) => {
+        set.body('Home');
+      }
+    }
+  },
+  {
+    name: 'Contact',
+    path: 'contact',
+    match: {
+      finish: ({ set }) => {
+        set.body('Contact');
+      }
+    }
+  },
+  {
+    name: 'Checkout',
+    path: 'checkout',
+    match: {
+      finish: ({ set }) => {
+        set.body('Checkout');
+      }
+    }
+  },
+  {
+    name: 'Book List',
+    path: 'books',
+    match: {
+      finish: ({ set }) => {
+        set.body('Book List');
+      }
+    }
+    children: [
+      {
+        name: 'Book',
+        path: ':id',
+        match: {
+          finish: ({ set }) => {
+            set.body('Book');
+          }
+        }
+      }
+    ]
+  }
+];`
+          }
+        </PrismBlock>
+        <p>
+          Now, if a user visits the <IJS>/books</IJS> page, the response
+          object will include a <IJS>body</IJS> property whose value
+          is "Book List".
+        </p>
+      </Subsection>
+
       <Subsection
         title='Wildcard Routes'
         id='wildcard'
@@ -268,22 +364,15 @@ export default () => (
         <PrismBlock lang='javascript'>
           {
 `const routes = [
-  { name: 'Home', path: '' },
-  { name: 'Contact', path: 'contact' },
-  { name: 'Checkout', path: 'checkout' },
-  {
-    name: 'Book List',
-    path: 'books',
-    children: [
-      {
-        name: 'Book',
-        path: ':id'
-      }
-    ]
-  },
+  // ...,
   {
     name: 'Not Found',
-    path: '(.*)'
+    path: '(.*)',
+    match: {
+      finish: ({ set }) => {
+        set.body('Not Found');
+      }
+    }
   }
 ];
 // don't forget to export the routes

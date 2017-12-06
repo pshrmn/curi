@@ -6,7 +6,7 @@ import UsingAddons from './UsingAddons';
 import UsingSideEffects from './UsingSideEffects';
 import ResponseCaching from './ResponseCaching';
 import CodeSplitting from './CodeSplitting';
-import Load from './Load';
+import Loading from './Loading';
 import ReactBasics from './ReactBasics';
 import MigrateReactRouterv3 from './MigrateReactRouterv3';
 
@@ -19,7 +19,7 @@ export default {
   'side-effects': UsingSideEffects,
   'response-caching': ResponseCaching,
   'code-splitting': CodeSplitting,
-  'load': Load,
+  'loading': Loading,
   'react': ReactBasics,
   'migrate-rrv3': MigrateReactRouterv3
 };

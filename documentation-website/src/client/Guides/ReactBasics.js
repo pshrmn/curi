@@ -88,11 +88,12 @@ ReactDOM.render((
 
       <p>
         The primary property of the response object that you will find useful is{' '}
-        <IJS>body</IJS>. The body property is the value returned by the matched route's
-        body function. Since this is a React guide, this value should be a React component
-        that will render the contents of the page for a specific route. For example, a
-        Home component might render the contents of your homepage while an About component
-        might render a page describing your application.
+        <IJS>body</IJS>. The body property is the value set by calling <IJS>set.body()</IJS>
+        {' '}in the route's <IJS>match.finish</IJS> function. Since this is a React guide,
+        this value should be a React component that will render the contents of the page for
+        a specific route. For example, a <Cmp>Home</Cmp> component might render the contents
+        of your homepage while an <Cmp>About</Cmp> component might render a page describing
+        your application.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -104,12 +105,20 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      finish: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     name: 'About',
     path: 'about',
-    body: () => About
+    match: {
+      finish: ({ set }) => {
+        set.body(About);
+      }
+    }
   }
 ]`
         }
@@ -118,8 +127,8 @@ const routes = [
       <p>
         When the body property of a response is <IJS>undefined</IJS>, that means that none of
         your routes matched the new location and you should render some sort of 404/page not
-        found component. You may also want to add a catch all route (one whose path is <IJS>*</IJS>)
-        so that you can expect to always have a body property on the response.
+        found component. You may also want to add a catch all route (one whose path is <IJS>(.*)</IJS>)
+        so that you can expect to always have a <IJS>body</IJS> property on the response.
       </p>
       <PrismBlock lang='javascript'>
         {

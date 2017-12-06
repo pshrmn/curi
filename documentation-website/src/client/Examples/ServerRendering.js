@@ -49,10 +49,17 @@ export default ({ name }) => (
 
       <ul>
         <li>
-          Data loading — You would need to maintain two copies of your routes if you want to handle data fetching on the server differently than it works on the client side. This is not something that I have explored very closely yet, so I don't have any recommendations on exactly how to approach this.
+          Data loading — You would need to maintain two copies of your routes if you want to handle
+          data fetching on the server differently than it works on the client side. This is not
+          something that I have explored very closely yet, so I don't have any recommendations on
+          exactly how to approach this.
         </li>
         <li>
-          Code splitting — In order to use dynamic imports on the server, you will probably need to use a Babel plugin like dynamic-import-node. Unfortunately, dynamic-import-node breaks Webpack's code splitting. In order for your code to be split into multiple bundles, you should ensure that dynamic-import-node isn't being run when building your client side bundle. The solution used in this experiment is to use the env property.
+          Code splitting — In order to use dynamic imports on the server, you will probably need to use
+          a Babel plugin like <IJS>dynamic-import-node</IJS>. Unfortunately, <IJS>dynamic-import-node</IJS>
+          {' '}breaks Webpack's code splitting. In order for your code to be split into multiple bundles,
+          you should ensure that <IJS>dynamic-import-node</IJS> isn't being run when building your client
+          side bundle. The solution used in this experiment is to use the <IJS>env</IJS> property.
           <PrismBlock lang='javascript'>
             {
 `{

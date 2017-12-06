@@ -15,20 +15,21 @@ export default ({ name }) => (
       id='explanation'
     >
       <p>
-        When a user navigates to one of your routes, the re-rendering will not be triggered until
-        a response has been created. If the route that matches has a `load` function that has to
-        make a request to the server, the re-render will be delayed, possibly giving the user the
-        impression that nothing is happening. One way that you can attempt to show that something
-        is happening is by adding a loading bar to your page that will demonstrate to the user
-        that their request is going through.
+        When a user navigates to one of your routes, the re-rendering will not
+        be triggered until a response has been created. If the route that matches
+        has a <IJS>match.every</IJS> function that has to make a request to the
+        server, the re-render will be delayed, possibly giving the user the
+        impression that nothing is happening. One way that you can attempt to show
+        that something is happening is by adding a loading bar to your page that will
+        demonstrate to the user that their request is going through.
       </p>
 
       <p>
-        The `nprogress` package allows you to render a loading bar that will run across the top
-        of your page. There are many possible solutions, but this one is very easy to use, so it
-        works well for our example. The basis of what we will do is to tell `nprogress` to start
-        when the user clicks a link, and then when we re-render, we tell `nprogres` that we are
-        done loading.
+        The <IJS>nprogress</IJS> package allows you to render a loading bar that will
+        run across the top of your page. There are many possible solutions, but this one
+        is very easy to use, so it works well for our example. The basis of what we will
+        do is to tell <IJS>nprogress</IJS> to start when the user clicks a link, and then
+        when we re-render, we tell <IJS>nprogress</IJS> that we are done loading.
       </p>
 
       <PrismBlock lang='javascript'>

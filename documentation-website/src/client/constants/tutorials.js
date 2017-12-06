@@ -25,8 +25,8 @@ const tutorials = [
     frameworks: ['react', 'vue']
   },
   {
-    name: '07-load',
-    displayName: 'Part 7: The Load Function'
+    name: '07-loading-data',
+    displayName: 'Part 7: Loading Data'
   },
   {
     name: '08-render-data',

@@ -40,17 +40,29 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: () => {
+      finish: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     name: 'Contact',
     path: 'contact',
-    body: () => Contact,
+    match: () => {
+      finish: ({ set }) => {
+        set.body(Contact);
+      }
+    },
     children: [
       {
         name: 'Contact Method',
         path: ':method',
-        body: () => ContactMethod
+        match: () => {
+          finish: ({ set }) => {
+            set.body(ContactMethod);
+          }
+        }
       }
     ]
   }
@@ -60,13 +72,29 @@ const routes = [
     </Section>
 
     <Section
-      title='Removing static imports'
-      id='no-static-imports'
+      title='import() in match.initial'
+      id='initial'
     >
       <p>
-        With code splitting, we don't want to have access to the component values when creating our
-        routes because that means we have to download all of them before our application can render.
-        We should remove our import calls so that that doesn't happen.
+        Instead of having static imports, we will use the <IJS>import()</IJS>
+        {' '}function to import our modules. We will import our components
+        using the <IJS>match.initial</IJS> property of routes. This function
+        will only be called the first time that its route matches, so we don't
+        have to worry about making extra requests to our server.
+      </p>
+
+      <p>
+        <IJS>match.initial</IJS> should be a function that returns a Promise;{' '}
+        <IJS>import()</IJS>, conveniently, returns a Promise. Then, in our{' '}
+        <IJS>match.finish</IJS> function, instead of referencing values imported
+        at the top of the file, we can reference the result of the <IJS>initial</IJS>
+        {' '}function using <IJS>resolved.initial</IJS>.
+      </p>
+      <p>
+        <IJS>import()</IJS> resolves with a module object, so we will just assume
+        that the component are default imports and reference them as{' '}
+        <IJS>resolved.initial.default</IJS>. Alternatively, we could just resolve the
+        default value in our <IJS>match.initial</IJS> function.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -75,65 +103,37 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    body: () => Home
-  },
-  {
-    name: 'Contact',
-    path: 'contact',
-    body: () => Contact,
-    children: [
-      {
-        name: 'Contact Method',
-        path: ':method',
-        body: () => ContactMethod
+    match: {
+      initial: () => import('./components/Home'),
+      finish: ({ resolved, set }) => {
+        set.body(resolved.initial.default);
       }
-    ]
-  }
-];`
-        }
-      </PrismBlock>
-    </Section>
-
-    <Section
-      title='Importing in preload'
-      id='preload'
-    >
-      <p>
-        Now, <IJS>Home</IJS>, <IJS>Contact</IJS>, and{' '}
-        <IJS>ContactMethod</IJS> are all undefined, so if we tried to render
-        our application we would get errors. We need to actually import our components so that
-        our body functions actually have something to return.
-      </p>
-      <p>
-        We will import our components using the preload property of routes. This function will
-        only be called the first time that its route matches, so we don't have to worry about
-        making extra requests to our server.
-      </p>
-
-      <p>
-        <IJS>preload</IJS> should be a function that returns a Promise. Here, we will call
-        <IJS>import()</IJS>, which conveniently returns a Promise.
-      </p>
-
-      <PrismBlock lang='javascript'>
-        {
-`const routes = [
-  {
-    name: 'Home',
-    path: '',
-    preload: () => import('./components/Home'),
+    },
     body: () => Home
   },
   {
     name: 'Contact',
     path: 'contact',
-    preload: () => import('./components/Contact'),
+    match: {
+      initial: () => import('./components/Contact'),
+      finish: ({ resolved, set }) => {
+        set.body(resolved.initial.default);
+      }
+    },
     body: () => Contact,
     children: [
       {
         name: 'Contact Method',
         path: ':method',
-        preload: () => import('./components/ContactMethod'),
+        match: {
+          // we can resolve module.default in initial
+          // instead of in finish
+          initial: () => import('./components/ContactMethod')
+            .then(module => module.default),
+          finish: ({ resolved, set }) => {
+            set.body(resolved.initial);
+          }
+        },
         body: () => ContactMethod
       }
     ]
@@ -144,172 +144,22 @@ const routes = [
     </Section> 
 
     <Section
-      title='Saving our imports'
-      id='saving'
-    >
-      <p>
-        That will load our components when their route matches, but we still don't have access to
-        the component functions that we need in order to render. We will need to use a{' '}
-        <IJS>then</IJS> call to our <IJS>import()</IJS> Promises in order
-        to access the component functions.
-      </p>
-
-      <PrismBlock lang='javascript'>
-        {
-`let Home;
-let Contact;
-let ContactMethod;
-
-const routes = [
-  {
-    name: 'Home',
-    path: '',
-    preload: () => (
-      import('./components/Home').then(module => {
-        Home = module.default;
-      })
-    ),
-    body: () => Home
-  },
-  {
-    name: 'Contact',
-    path: 'contact',
-    preload: () => (
-      import('./components/Contact').then(module => {
-        Contact = module.default;
-      })
-    ),
-    body: () => Contact,
-    children: [
-      {
-        name: 'Contact Method',
-        path: ':method',
-        preload: () => (
-          import('./components/ContactMethod').then(module => {
-            ContactMethod = module.default;
-          })
-        ),
-        body: () => ContactMethod
-      }
-    ]
-  }
-];`
-          }
-        </PrismBlock>
-      </Section>
-
-      <Section
-        title='Storing our imports'
-        id='storing'
-      >
-        <p>
-          Our application will now only load components when they are needed and will correctly
-          render. However, it is a bit ugly and error prone to define variables for all of our
-          routes. Instead we can create a "store" where we can store references to each route's
-          component. The simplest store is an object, so we will start with that.
-        </p>
-
-        <PrismBlock lang='javascript'>
-          {
-`const store = {}
-
-const routes = [
-  {
-    name: 'Home',
-    path: '',
-    preload: () => (
-      import('./components/Home').then(module => {
-        store['Home'] = module.default;
-      })
-    ),
-    body: () => store['Home']
-  },
-  {
-    name: 'Contact',
-    path: 'contact',
-    preload: () => (
-      import('./components/Contact').then(module => {
-        store['Contact'] = module.default;
-      })
-    ),
-    body: () => store['Contact'],
-    children: [
-      {
-        name: 'Contact Method',
-        path: ':method',
-        preload: () => (
-          import('./components/ContactMethod').then(module => {
-            store['ContactMethod'] = module.default;
-          })
-        ),
-        body: () => store['ContactMethod']
-      }
-    ]
-  }
-];`
-          }
-        </PrismBlock>
-
-        <Subsection
-          title='A better store'
-          id='better-store'
-        >
-          <p>
-            That should be sufficient, although it is not an error proof approach. Our preload
-            functions currently do nothing when there are errors in importing the components.
-            What you do when that happens is up to you, but you would most likely want to have a
-            default component that you display when the error occurs.
-          </p>
-
-          <PrismBlock lang='jsx'>
-            {
-`const defaultComponent = () => <div>Uh oh, something must have gone wrong</div>;
-const store = {
-  stored: {},
-  set: function(name, value) {
-    this.stored[name] = value;
-  },
-  get: function(name) {
-    return this.stored[name] || defaultComponent;
-  }
-}
-
-// usage
-{
-  ...,
-  preload: () => (
-    import('./components/Something')
-      .then(module => {
-        store.set('Something', module.default);
-      })
-      .catch(err => {
-        console.error(err);
-        store.set('Something', defaultComponent);
-      })
-  ),
-  body: () => store.get('Something')
-}`
-          }
-        </PrismBlock>
-      </Subsection>
-    </Section>
-
-    <Section
       title='Next'
       id='next'
     >
       <p>
-        The approaches taken here are not the only way to do code splitting. You may choose to skip
-        the preload method and do code splitting at other points in your application. You may also
-        create a more full-fledged solution for storing loaded imports. Whatever path you decide
-        to go, hopefully this has shown you that setting up code splitting with the preload
-        property is fairly simple to do. If you are using Webpack and want to reduce your initial
-        bundle size, preload is a great way to accomplish this.
+        The approaches taken here are not the only way to do code splitting. You
+        may choose to skip the <IJS>match.initial</IJS> method and do code splitting
+        at other points in your application. Whatever path you decide to go, hopefully this
+        has shown you that setting up code splitting with the <IJS>match.initial</IJS>
+        {' '}property is fairly simple to do. If you are using Webpack and want to
+        reduce your initial bundle size, <IJS>match.initial</IJS> is an easy way
+        to accomplish this.
       </p>
 
       <p>
-        Next, we will take a look at a related route property:{' '}
-        <Link to='Guide' params={{ slug: 'load' }}>load</Link>.
+        Next, we will take a look at some related route properties in{' '}
+        <Link to='Guide' params={{ slug: 'loading' }}>the loading guide</Link>.
       </p>
     </Section>
   </BaseGuide>

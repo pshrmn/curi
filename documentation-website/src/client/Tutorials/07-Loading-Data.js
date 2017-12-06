@@ -9,13 +9,12 @@ import { Section, Subsection } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 7: The Load Function</h1>
+    <h1>Part 7: Loading Data</h1>
     <p>
       In the previous tutorial, we wrote mocked book data in <IJS>books.js</IJS>
-      {' '} to have some data to load, but it was just filler data. We just
-      imported the data as an array, whereas in a "real" website, we would most
-      likely make a request to our server which would return our data (possibly
-      after running a database query).
+      {' '} to have some data to load, but it was just filler. We imported the data
+      as an array, whereas in a "real" website, we would most likely make a request
+      to our server which would return our data.
     </p>
     <div>
       <p>
@@ -26,12 +25,12 @@ export default () => (
           Writing a fake API to simulate data requests.
         </li>
         <li>
-          Adding <IJS>load</IJS> functions to our "Book List" and "Book"
-          routes.
+          Adding <IJS>match.every</IJS> functions toour "Book List" and "Book"
+          routes and updating their <IJS>match.finish</IJS> functions.
         </li>
       </ul>
     </div>
-    <TutorialBranches names={['07-load-react', '07-load-vue']} />
+    <TutorialBranches names={['07-loading-data-react', '07-loading-data-vue']} />
     <Section
       title='Fake API'
       id='api'
@@ -191,196 +190,148 @@ export function fetchBook(id) {
     </Section>
 
     <Section
-      title='route.load'
-      id='load'
+      title='match'
+      id='match'
     >
       <p>
         Do you remember before when we said that Curi is an asynchronous
-        router? Now is the time that we finally will see why.
+        router? Now is the time that we finally will see why. We have already
+        added <IJS>match</IJS> properties to each of our route objects,
+        but <IJS>match.finish</IJS> is a synchronous function. <IJS>match.every</IJS>,
+        on the other hand, is an asynchronous function.
       </p>
-      <p>
-        Each route can have a <IJS>load</IJS> property. This is a function
-        that can perform data loading related to a route prior to emitting
-        a response. We can use the <IJS>load</IJS> function to modify the
-        response or to update some other code like a global data store.
-      </p>
-      <PrismBlock lang='javascript'>
-        {
-`{
+      <Subsection
+        title='every'
+        id='every'
+      >
+        <p>
+          <IJS>match.every</IJS> is a function that can perform data loading
+          related to a route prior to emitting a response. The function will be
+          passed route related props (the <IJS>params</IJS> object, the{' '}
+          <IJS>location</IJS>, and the <IJS>name</IJS> of the matched route),
+          which it can use to formulate any API calls. Each time that a route
+          matches, its <IJS>match.every</IJS> function will be called.
+        </p>
+      
+        <p>
+          <IJS>match.every</IJS> functions are expected to return a Promise. Curi
+          uses <IJS>Promise.all</IJS> to wait for your <IJS>match.every</IJS> and{' '}
+          <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'initial' }}>
+            <IJS>match.initial</IJS> functions
+          </Link> to resolve before it emits a response. Technically speaking, these
+          functions don't have to return a Promise, but it is recommended.
+        </p>
+        <p>
+          We have two routes that we need to load data in: "Book List" and "Book".
+          Let's start by adding <IJS>match.every</IJS> functions to each one,
+          calling their respective API functions that we defined above.
+        </p>
+        <PrismBlock lang='javascript'>
+          {
+`// routes.js
+import { fetchAllBooks, fetchBook } from './api/books';
+const routes = [
+  // ...,
+  {
+    name: 'Book List',
+    path: 'books',
+    match: {
+      every: () => fetchAllBooks(),
+      finish: ({ set }) => {
+        set.body(BookList);
+      }
+    }
+    children: [
+      {
+        name: 'Book',
+        path: ':id',
+        params: { id: n => parseInt(n, 10) },
+        match: {
+          every: ({ params }) => fetchBook(params.id),
+          finish: ({ set }) => {
+            set.body(Book);
+          }
+        }
+      }
+    ]
+  }
+  // ...
+];`
+          }
+        </PrismBlock>
+        <Note>
+          In the above "Book" route, we introduce the <IJS>route.params</IJS>
+          {' '}property. This is an object whose keys are path param names and
+          whose values are functions that will parse the param string to return
+          a new value. For example, the above function takes the input string
+          and returns that string parsed as an integer.
+        </Note>
+      </Subsection>
+      <Subsection
+        title='finish'
+        id='finish'
+      >
+        <p>
+          While we have already used <IJS>match.finish</IJS>, we have
+          only used the <IJS>set.body</IJS> function so far. If you need
+          to review them, you can view all of the properties passed to the{' '}
+          <IJS>finish</IJS> function in the{' '}
+          <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'finish' }}>
+            All About Routes
+          </Link> guide. We want to attach our loaded data to the response, so we
+          will use <IJS>resolved.every</IJS> to access the data from our <IJS>every</IJS>
+          {' '}function and <IJS>set.data</IJS> to attach the data to the
+          response object. It is also possible that someone might request a book that
+          does not exist, to deal with that, we will use the <IJS>error</IJS> property
+          and the <IJS>set.error</IJS> function.
+        </p>
+        <PrismBlock lang='javascript'>
+          {
+`// routes.js
+import { fetchAllBooks, fetchBook } from './api/books';
+const routes = [
+// ...,
+{
   name: 'Book List',
   path: 'books',
-  load: function() {
-    // ...
-  }
-}`
-        }
-      </PrismBlock>
-      <Subsection
-        title='Load Arguments'
-        id='load-arguments'
-        type='aside'
-      >
-        <p>
-          In order to load data/modify the response, <IJS>load</IJS> functions
-          need to receive a few arguments.
-        </p>
-        <PrismBlock lang='javascript'>
-          {
-  `{
-    name: 'Book',
-    load: (route, mods, addons) => {
-      const { params, location, name } = route;
-      const { setData, redirect, fail, setStatus } = mods;
-      const { pathname, ...rest } = addons;   
+  match: {
+    every: () => fetchAllBooks(),
+    finish: ({ resolved, set }) => {
+      set.body(BookList);
+      set.data(resolved.every);
     }
-  }`
-          }
-        </PrismBlock>
-        <p>
-          The first argument that will be passed to your load function is an object
-          with properties related to the matched route. These are <IJS>params</IJS>,
-          which is the object of path params parsed from the location's pathname,{' '}
-          <IJS>location</IJS>, which is the location object used to match the route,
-          and <IJS>name</IJS>, which is the name of the matched route.
-        </p>
-        <p>
-          The second argument that will be passed to your load function is an object
-          whose properties are functions that you can use to modify the response object.
-          These functions are <IJS>setData</IJS>, <IJS>redirect</IJS>, <IJS>setStatus</IJS>,
-          and <IJS>fail</IJS>. The{' '}
-          <Link
-            to='Guide'
-            params={{ slug: 'routes' }}
-            details={{ hash: 'load' }}
-          >All About Routes</Link> guide goes into detail about all four of those. For
-          this tutorial, we will only be using <IJS>setData</IJS>.
-        </p>
-        <p>
-          The third, and final, argument that will be passed to your load function is
-          an object containing all of the Curi addons that are registered with your
-          Curi configuration object. This includes the <IJS>pathname</IJS> addon, which
-          you may find useful for generating pathnames in your <IJS>load</IJS> (particularly
-          if you plan to use the <IJS>redirect</IJS> function mentioned above).
-        </p>
-      </Subsection>
-      <Subsection
-        title='Load Return Value'
-        id='load-return'
-        type='aside'
-      >
-        <p>
-          <IJS>load</IJS> functions are expected to return a Promise. Curi uses{' '}
-          <IJS>Promise.all</IJS> to wait for your <IJS>load</IJS> function to resolve
-          before it emits a response. Technically speaking, your <IJS>load</IJS> function
-          does not have to return a Promise, but it is recommended.
-        </p>
-        <PrismBlock lang='javascript'>
-          {
-`{
-  load: (route, mods, addons) => {
-    return fetch(\`/api/book/\${route.params.id}\`)
-      .then(resp => {...});
   }
-}`
+  children: [
+    {
+      name: 'Book',
+      path: ':id',
+      params: { id: n => parseInt(n, 10) },
+      match: {
+        every: ({ params }) => fetchBook(params.id),
+        finish: ({ error, resolved, set }) => {
+          set.body(Book);
+          if (error) {
+            set.error(error);
+          } else {
+            set.data({ book: resolved.every });
+          }
+        }
+      }
+    }
+  ]
+}
+// ...
+];`
           }
         </PrismBlock>
-      </Subsection>
-
-      <p>
-        We have two routes to add load functions to: "Book List" and "Book". Let's
-        start by having each one call their respective API functions that we
-        defined above.
-      </p>
-      <PrismBlock lang='javascript'>
-        {
-`// routes.js
-import { fetchAllBooks, fetchBook } from './api/books';
-const routes = [
-  // ...,
-  {
-    name: 'Book List',
-    path: 'books',
-    body: () => BookList,
-    load: (route, response, addons) => {
-      return fetchAllBooks();
-    },
-    children: [
-      {
-        name: 'Book',
-        path: ':id',
-        body: () => Book,
-        params: { id: n => parseInt(n, 10) },
-        load: (route, response, addons) => {
-          return fetchBook(route.params.id);
-        }
-      }
-    ]
-  },
-  // ...
-];`
-        }
-      </PrismBlock>
-      <Note>
-        In the above "Book" route, we introduce the <IJS>route.params</IJS>
-        {' '}property. This is an object whose keys are path param names and
-        whose values are functions that will parse the param string to return
-        a new value. For example, the above function takes the input string
-        and returns that string parsed as an integer.
-      </Note>
-      <p>
-        If the only thing that our <IJS>load</IJS> functions do is
-        return a Promise, they aren't particularly useful. Instead, we
-        need to use the results of our fetch functions to call the{' '}
-        <IJS>setData</IJS> function that is provided by the second argument
-        to our load function. <IJS>setData</IJS> takes an object and will add
-        that object to the response object as its <IJS>data</IJS> property. Let's
-        add <IJS>then</IJS> callback functions to our fetches to do this.
-      </p>
-      <PrismBlock lang='javascript'>
-        {
-`// routes.js
-import { fetchAllBooks, fetchBook } from './api/books';
-const routes = [
-  // ...,
-  {
-    name: 'Book List',
-    path: 'books',
-    body: () => BookList,
-    load: (route, response, addons) => {
-      return fetchAllBooks()
-        .then(books => {
-          response.setData({ books });
-        });
-    },
-    children: [
-      {
-        name: 'Book',
-        path: ':id',
-        body: () => Book,
-        params: { id: n => parseInt(n, 10) },
-        load: (route, response, addons) => {
-          return fetchBook(route.params.id)
-            .then(
-              book => {
-                response.setData({ book });
-              },
-              err => {
-                console.error(err);
-              }
-            );
-        }
-      }
-    ]
-  },
-  // ...
-];`
-        }
-      </PrismBlock>
-      <Note>
-        You are responsible for catching any errors within your{' '}
-        <IJS>load</IJS> function. If you do not, they can be swallowed
-        and cause unexpected errors in your website.
-      </Note>
+        <Note>
+          If you do not catch errors in your <IJS>every</IJS> function, you
+          still get the opportunity to deal with them using the <IJS>error</IJS>
+          {' '}property passed to <IJS>match.finish</IJS>. However, if you do
+          not handle the error there, you may end up with unexpected errors in
+          your website.
+        </Note>
+      </Subsection>      
       <p>
         Now, when a user visits <IJS>/books</IJS>, the response generated
         by Curi will look like this:
@@ -412,6 +363,7 @@ const routes = [
 }`
         }
       </PrismBlock>
+
     </Section>
     <Section
       title='Review'
@@ -420,11 +372,11 @@ const routes = [
       <p>
         If you are following the React path:
       </p>
-      <CompleteBranch name='07-load-react-complete' />
+      <CompleteBranch name='07-loading-data-react-complete' />
       <p>
         If you are following the Vue path:
       </p>
-      <CompleteBranch name='07-load-vue-complete' />
+      <CompleteBranch name='07-loading-data-vue-complete' />
     </Section>
     <Section
       title='Next'

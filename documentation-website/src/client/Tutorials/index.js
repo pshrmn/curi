@@ -5,7 +5,7 @@ import Hickory from './04-Hickory';
 import Config from './05-ConfigObject';
 import ReactPages from './06-ReactPages';
 import VuePages from './06-VuePages';
-import LoadFunction from './07-LoadFunction';
+import Loading from './07-Loading-Data';
 import ReactData from './08-ReactData';
 import VueData from './08-VueData';
 import ReactNav from './09-ReactNav';
@@ -20,7 +20,7 @@ export default {
   '05-config': Config,
   '06-pages-react': ReactPages,
   '06-pages-vue': VuePages,
-  '07-load': LoadFunction,
+  '07-loading-data': Loading,
   '08-render-data-react': ReactData,
   '08-render-data-vue': VueData,
   '09-nav-react': ReactNav,

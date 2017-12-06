@@ -81,8 +81,8 @@ const config = createConfig(history, routes, options);`
               </li>
               <li>
                 cache - An object with get/set properties. This allows you to cache old
-                responses, preventing any load functions from being re-called when navigating to an
-                already-visited location.
+                responses, preventing any <IJS>match.every</IJS> functions from being re-called when
+                navigating to an already-visited location.
               </li>
               <li>
                 pathnameOptions - An object with an <IJS>encode</IJS> function that will be used to encode the
@@ -114,8 +114,9 @@ const config = createConfig(history, routes, options);`
               generated.
             </p>
             <p>
-              If the best-matched route has either a preload and/or load loading function, the configuration
-              object will not call the subscribed functions until the loading functions have all resolved.
+              If the best-matched route has either a <IJS>match.initial</IJS> or <IJS>match.every</IJS> loading
+              function, the configuration object will not call the subscribed functions until the loading
+              functions have all resolved.
             </p>
             <PrismBlock lang='javascript'>
               {

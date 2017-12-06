@@ -280,7 +280,7 @@ export function resetCart() {
       <p>
         Let's start out in our <IJS>routes.js</IJS> file. We want our "Checkout"
         page to know which books are in the shopping cart. We can use the{' '}
-        <IJS>load</IJS> function of the "Checkout" route to load all of the books
+        <IJS>match.every</IJS> function of the "Checkout" route to load all of the books
         and our shopping cart. We can merge the two together to create an array
         of items in the cart.
       </p>
@@ -301,12 +301,16 @@ const routes = [
   {
     name: 'Checkout',
     path: 'checkout',
-    body: () => Checkout,
-    load: (route, response, addons) => {
-      return Promise.all([
-        fetchAllBooks(),
-        getCart()
-      ]).then(([ books, cart ]) => {
+    match: {
+      every: () => {
+        return Promise.all([
+          fetchAllBooks(),
+          getCart()
+        ])
+      },
+      finish: ({ resolved, set }) => {
+        set.body(CheckoutComplete);
+
         /*
          * We will iterate over all of the items in
          * our shopping cart and find the matching
@@ -317,20 +321,25 @@ const routes = [
          * the "items" property of our response's
          * data object.
          */ 
+        const [ books, cart ] = resolved.every;
         const items = Object.keys(cart).map(key => {
           const id = parseInt(key, 10);
           const count = cart[key];
           const book = books.find(b => b.id === id);
           return Object.assign({}, book, { count });
         });
-        response.setData({ items });
+        set.setData({ items });
       });
     },
     children: [
       {
         name: 'Checkout Complete',
         path: 'complete',
-        body: () => CheckoutComplete
+        match: {
+          finish({ set }) => {
+            set.body(CheckoutComplete);
+          }
+        }
       }
     ]
   }

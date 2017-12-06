@@ -11,8 +11,8 @@ export default ({ name }) => (
       id='explanation'
     >
       <p>
-        Code splitting with curi routes is done using the preload property. The{' '}
-        <Link to='Guide' params={{ slug: 'code-splitting'}}>code splitting</Link> guide
+        Code splitting with Curi routes is done using the <IJS>match.initial</IJS> function.
+        The <Link to='Guide' params={{ slug: 'code-splitting'}}>code splitting</Link> guide
         covers the basic principles for how to do this. This example just provides you
         with code that actually implements what is explained there.
       </p>

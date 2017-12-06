@@ -216,7 +216,11 @@ const routes = [
       {
         name: 'Photo',
         path: ':photoID',
-        body: () => Photo
+        match: {
+          finish: ({ set }) => {
+            set.body(Photo);
+          }
+        }
       }
     ]
   }

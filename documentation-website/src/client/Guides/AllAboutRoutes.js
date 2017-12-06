@@ -91,12 +91,14 @@ export default ({ name }) => (
         }
       </PrismBlock>
       <p>
-        If none of your routes match a pathname, then Curi will set a "404" status on the response object.
-        The body property of the response will also be <IJS>undefined</IJS>, so it is important
-        that your application checks the response's status when it goes to render a response. You can also
-        add a wildcard route (<IJS>path: '*'</IJS>) to the end of your routes array, and that route
-        will always match. You may want to still manually set the status to "404" for the wildcard route, but
-        it is not required.
+        If none of your routes match a pathname, then Curi will set a "404"
+        status on the response object. The <IJS>body</IJS> property of the
+        response will also be <IJS>undefined</IJS>, so it is important that
+        your application checks the response's status when it goes to render
+        a response. You can also add a wildcard route (<IJS>path: '(.*)'</IJS>)
+        to the end of your routes array, and that route will always match.
+        You may want to still manually set the status to "404" for the wildcard
+        route, but it is not required.
       </p>
     </Section>
 
@@ -146,53 +148,256 @@ export default ({ name }) => (
       </Subsection>
 
       <Subsection
-        title='body'
-        id='body'
+        title='match'
+        id='match'
       >
         <p>
-          The body property gives you the opportunity to set the body property of a response for a given
-          route. This must be a function and its return value will be what is set as the response object's
-          body property.
+          The <IJS>match</IJS> object is where you can attach functions that will be
+          called when a route matches.
         </p>
-        <PrismBlock lang='javascript'>
-          {
-`// when the user visits /contact, the response object's body
-// property will be the Contact value
-const contact = {
-  name: 'Contact',
-  path: 'contact',
-  body: () => Contact
-};`
-          }
-        </PrismBlock>
         <p>
-          While the above example returns a single value, you might have multiple page values that you want to
-          associate with a route. In that case, you can return an object with a property for each one. Then, when
-          you render the application, you would access the values using <IJS>response.body.&lt;property-name&gt;</IJS>.
-          {' '}If you take this approach, each route's <IJS>body</IJS> function should return an object with the same
-          properties.
+          While not required (like the <IJS>name</IJS> and <IJS>path</IJS> properties),
+          you will almost always want to have a <IJS>match.finish</IJS> property on your
+          routes.
         </p>
-        <PrismBlock lang='javascript'>
-          {
-`const routes = [
-  {
-    name: 'Home',
-    path: '',
-    body: () => ({ main: Home, nav: HomeNav })
-  },
-  {
-    name: 'Contact',
-    path: 'contact',
-    body: () => ({ main: Contact, nav: ContactNav })
+        <Subsection
+          tag='h5'
+          title='initial'
+          id='initial'
+        >
+          <p>
+            A function that will be called the first time that a route matches.
+            This should be used for loading resources that are required for the
+            route to display properly. For example, if you are doing code splitting
+            with Webpack using <IJS>import()</IJS>, you would load the modules in{' '}
+            <IJS>initial</IJS>.
+          </p>
+          <p>
+            The <IJS>initial</IJS> function must return a Promise.
+          </p>
+          <PrismBlock lang='javascript'>
+            {
+`const about = {
+  name: 'About',
+  path: 'about',
+  match: {
+    initial: () => import('./components/About')
   }
-];
-
-function render(response) {
-  const { main, nav } = response.body
-  ...
+};`
+            }
+          </PrismBlock>
+        </Subsection>
+        
+        <Subsection
+          tag='h5'
+          title='every'
+          id='every'
+        >
+          <p>
+            A function that will be called every time a route matches. This can be
+            useful for data fetching. The <IJS>every</IJS> function will be passed
+            the a "route" object containing the <IJS>params</IJS> parsed from the
+            location's pathname (using the route and its ancestor's paths), the
+            current <IJS>location</IJS>, and the <IJS>name</IJS> of the matched route.
+          </p>
+          <p>
+            Like <IJS>initial</IJS>, <IJS>every</IJS> must return a Promise.
+          </p>
+          <PrismBlock lang='javascript'>
+            {
+`// fetch user data
+const user = {
+  name: 'User',
+  path: ':id',
+  match: {
+    every: ({ params, location }) =>
+      fetch(\`/api/users/$\{params.id\}\`)
+        .then(resp => JSON.parse(resp))
+  }
 }`
           }
         </PrismBlock>
+        <p>
+          You should not perform side effects in <IJS>every</IJS> because it is
+          possible that navigating to the route might be cancelled. Instead,
+          side effects should be performed in <IJS>match.finish</IJS>.
+        </p>
+      </Subsection>
+
+      <Subsection
+        tag='h5'
+        title='finish'
+        id='finish'
+      >
+        <p>
+          A function that will be called right before a response is emitted.{' '}
+          <IJS>finish</IJS> will be passed an object with a number of properties.
+          The <IJS>finish</IJS> function gives you an opportunity to modify the
+          response object that will be emitted, including using the data that was
+          loaded in either the <IJS>initial</IJS> or <IJS>every</IJS> functions.
+        </p>
+          <Subsection
+            tag='h6'
+            title='error'
+            id='finish-error'
+          >
+            <p>
+              If either the <IJS>initial</IJS> or <IJS>every</IJS> functions
+              reject with an error, that error will be passed to the <IJS>finish</IJS>
+              {' '}function.
+            </p>
+            <PrismBlock lang='javascript'>
+            {
+`// check if there was an error in every or initial
+const user = {
+  name: 'User',
+  path: ':id',
+  match: {
+    every: ({ params, location }) => (
+      Promise.reject('Nope!')
+    ),
+    finish: ({ error, set }) => {
+      if (error) {
+        set.error(error);
+      }
+    }
+  }
+}`
+          }
+        </PrismBlock>
+          </Subsection>
+          <Subsection
+            tag='h6'
+            title='resolved'
+            id='finish-resolved'
+          >
+            <p>
+              <IJS>resolved</IJS> is the value that was resolved by the <IJS>every</IJS>
+              {' '}function. If a route does not have a <IJS>match.every</IJS> function,
+              then this property will be <IJS>undefined</IJS>.
+            </p>
+            <PrismBlock lang='javascript'>
+            {
+`// attach resolved data to the response
+const user = {
+  name: 'User',
+  path: ':id',
+  match: {
+    every: ({ params, location }) => (
+      fetch(\`/api/users/$\{params.id\}\`)
+        .then(resp => JSON.parse(resp))
+    ),
+    finish: ({ resolved, set }) => {
+      set.data(resolved);
+    }
+  }
+}`
+          }
+        </PrismBlock>
+          </Subsection>
+          <Subsection
+            tag='h6'
+            title='route'
+            id='finish-route'
+          >
+            <p>
+              This is the same object that is passed to the <IJS>every</IJS> function
+              and contains three properties: the parsed <IJS>params</IJS>, the{' '}
+              <IJS>location</IJS>, and the <IJS>name</IJS> of the matched route.
+            </p>
+          </Subsection>
+          <Subsection
+            tag='h6'
+            title='set'
+            id='finish-set'
+          >
+            <p>
+              The <IJS>set</IJS> object contains a number of functions that you can
+              use to modify the response.
+            </p>
+            <ul>
+              <li>
+                <IJS>body(body)</IJS> - The value passed to this method will be set as the
+                response's <IJS>body</IJS> property.
+              </li>
+              <li>
+                <IJS>data(data)</IJS> - The value passed to this method will be set as the
+                response's <IJS>data</IJS> property.
+              </li>
+              <li>
+                <IJS>redirect(to, code)</IJS> - This allows you to turn the response into a
+                redirect response. When you application receives a redirect response, it should redirect
+                to the new location (using your history object) instead of re-rendering. If you do not
+                provide a code, then 301 will be used. Setting the status code is mostly important for
+                rendering on the server. The <IJS>to</IJS> argument should be a string or a location
+                object. Once the response has been created, Curi will automatically redirect
+                to the <IJS>to</IJS> location.
+              </li>
+              <li>
+                <IJS>error(error)</IJS> - A method to call when something goes wrong. This will
+                add an error property to the response.
+              </li>
+              <li>
+                <IJS>status(code)</IJS> - This method will set a new status for the response
+                (the default status is 200 when a route matches and 404 when no routes match).
+              </li>
+            </ul>
+            <PrismBlock lang='javascript'>
+              {
+`// when the user visits /contact, the response object's body
+// property will be the Contact value
+import Contact from './components/Contact';
+
+const routes = [
+  {
+    name: 'Contact',
+    path: 'contact',
+    match: {
+      finish: ({ set }) => {
+        set.body(Contact);
+      }
+    }
+  }
+];`
+              }
+            </PrismBlock>
+          </Subsection>
+          
+          <Subsection
+            tag='h6'
+            title='addons'
+            id='finish-addons'
+          >
+            <p>
+              The addons that have been registered with Curi are available to the{' '}
+              <IJS>finish</IJS> function. This includes the built-in <IJS>pathname</IJS>
+              {' '}addon, which you might find useful if you need to redirect in a{' '}
+              <IJS>finish</IJS> function.
+            </p>
+            <PrismBlock lang='javascript'>
+              {
+`// set a permanent redirect
+// navigating to /photo/123 will automatically redirect to /p/123
+const routes = [
+  {
+    name: 'Photo',
+    path: 'p/:id'
+  },
+  {
+    name: 'Old Photo',
+    path: 'photo/:id',
+    match: {
+      finish: ({ route, set, addons }) => {
+        const pathname = addons.pathname('Photo', route.params);
+        set.redirect({ ...route.location, pathname }, 301);
+      }
+    }
+  }
+];`
+              }
+            </PrismBlock>
+          </Subsection>
+        </Subsection>
       </Subsection>
 
       <Subsection
@@ -240,116 +445,7 @@ function render(response) {
         </p>
       </Subsection>
 
-      <Subsection
-        title='preload'
-        id='preload'
-      >
-        <p>
-          A function that will only be called the first time that a route matches. This should only be
-          used for loading resources that are required for the route to display properly. For example,
-          if you are doing code splitting with Webpack using <IJS>import()</IJS>, you would
-          load the modules in preload.
-        </p>
-        <p>
-          The preload function must return a Promise.
-        </p>
-        <PrismBlock lang='javascript'>
-          {
-`const about = {
-  name: 'About',
-  path: 'about',
-  preload: () => {
-    return import('./components/About')
-      .then(module => AsyncStore.register(module.default));
-  }
-};`
-          }
-        </PrismBlock>
-      </Subsection>
       
-      <Subsection
-        title='load'
-        id='load'
-      >
-        <p>
-          A function that can be used for data fetching as well as for triggering redirects.
-          The load function will be passed the a "route" object containing the params object
-          that is parsed from the location's pathname (using the route and its ancestor's paths),
-          the current location, and then name of the matched route. Additionally, it will be passed
-          a modifiers object that can be used to modify the response object that will be created
-          and an object containing all of the registered Curi addons (the <IJS>pathname</IJS> addon
-          being particularly useful).
-        </p>
-        <p>
-          Like preload, load must return a Promise.
-        </p>
-        <PrismBlock lang='javascript'>
-          {
-
-`// set response data
-const user = {
-  name: 'User',
-  path: ':id',
-  load: ({ params, location }, mod, addons) => {
-    return fetch(\`/api/users/$\{params.id\}\`)
-      .then(resp => JSON.parse(resp))
-      .then(data => mod.setData(data);)
-      .catch(err => {
-        mod.fail(err);
-        mod.setStatus(404);
-      });
-  }
-}
-
-// set a permanent redirect
-const routes = [
-  {
-    name: 'Photo',
-    path: 'p/:id'
-  },
-  {
-    name: 'Old Photo',
-    path: 'photo/:id',
-    load: ({ params, location }, mod, addons) => {
-      const pathname = addons.pathname('Photo', params);
-      mod.redirect({ ...location, pathname }, 301);
-    }
-  }
-]
-// navigating to /photo/123 will automatically redirect to /p/123`
-          }
-        </PrismBlock>
-        <p>
-          What is that modifiers object that gets passed to the load function?
-          It contains a number of functions that you can use to modify the response. These
-          functions are <IJS>redirect</IJS>, <IJS>fail</IJS>,{' '}
-          <IJS>setStatus</IJS>, and <IJS>setData</IJS>.
-        </p>
-        <ul>
-          <li>
-            <IJS>redirect(to, code)</IJS> - This allows you to turn the response into a
-            redirect response. When you application receives a redirect response, it should redirect
-            to the new location (using your history object) instead of re-rendering. If you do not
-            provide a code, then 301 will be used. Setting the status code is mostly important for
-            rendering on the server. The <IJS>to</IJS> argument should be a string or a location
-            object. Once the response has been created, Curi will automatically redirect
-            to the <IJS>to</IJS> location.
-          </li>
-          <li>
-            <IJS>fail(error)</IJS> - A method to call when something goes wrong. This will
-            add an error property to the response.
-          </li>
-          <li>
-            <IJS>setStatus(code)</IJS> - This method will set a new status for the response
-            (the default status is 200 when a route matches and 404 when no routes match).
-          </li>
-          <li>
-            <IJS>setData(data)</IJS> - The value passed to this method will be set as the
-            response's data property.
-          </li>
-        </ul>
-      </Subsection>
-
       <Subsection
         title='params'
         id='params'

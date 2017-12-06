@@ -12,11 +12,14 @@ export default ({ name }) => (
       id='explanation'
     >
       <p>
-        Side effects are pretty straightforward. Once a response has completed (any preload and load functions
-        have resolved), the response's properties are used to create a JavaScript object. Then, any response handler
-        functions are called and passed that JavaScript object as their argument. Between those two steps, side
-        effect functions can be run. They receive the new response as well as the action type used to trigger
-        the navigation (POP, PUSH, or REPLACE).
+        Side effects are pretty straightforward. Once a response has completed
+        (the route's <IJS>match.initial</IJS> and/or <IJS>match.every</IJS> functions
+        have resolved), the response's properties are used to create a JavaScript
+        object. Then, any response handler functions are called and passed that JavaScript
+        object . Side effects are basically permanent response handlers (they cannot be
+        removed). Side effects can either be run before (default) or after subscribed
+        response handlers. They receive the new response and the action type used to trigger
+        the navigation (<IJS>POP</IJS>, <IJS>PUSH</IJS>, or <IJS>REPLACE</IJS>).
       </p>
 
       <p>
