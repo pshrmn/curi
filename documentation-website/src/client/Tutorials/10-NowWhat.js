@@ -37,7 +37,7 @@ export default () => (
     <ol>
       <li>
         The current home page is quite boring. You could add a "featured"
-        book to it using the "Home" route's <IJS>match.finish</IJS> function
+        book to it using the "Home" route's <IJS>match.response</IJS> function
         to attach a random book to the response.
       </li>
       <li>
@@ -62,13 +62,13 @@ export default () => (
         While we used <IJS>response.data</IJS> to pass data to our components, you might
         prefer a global store like Redux or Vuex. You could rewrite the application to
         use these, <IJS>response.data</IJS> is a convenience, not a requirement. You
-        can even continue to use <IJS>match.finish</IJS> with a global store. Instead of
+        can even continue to use <IJS>match.response</IJS> with a global store. Instead of
         calling <IJS>set.data</IJS>, you could just dispatch the data to your store. You
         can check out the <Link to='Example' params={{ slug: 'redux' }}>Redux example</Link>
         {' '}to see how this might be implemented.
       </li>
       <li>
-        You can explore the other response methods available in <IJS>match.finish</IJS>.
+        You can explore the other response methods available in <IJS>match.response</IJS>.
         For example, you could use the <IJS>redirect</IJS> function to automatically
         redirect when the user attempt to navigate to a "Book" page that doesn't exist
         (e.g. there is no book whose <IJS>id</IJS> equals <IJS>params.id</IJS>).

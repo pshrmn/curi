@@ -41,7 +41,7 @@ const routes = [
     name: 'Home',
     path: '',
     match: () => {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Home);
       }
     }
@@ -50,7 +50,7 @@ const routes = [
     name: 'Contact',
     path: 'contact',
     match: () => {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Contact);
       }
     },
@@ -59,7 +59,7 @@ const routes = [
         name: 'Contact Method',
         path: ':method',
         match: () => {
-          finish: ({ set }) => {
+          response: ({ set }) => {
             set.body(ContactMethod);
           }
         }
@@ -86,7 +86,7 @@ const routes = [
       <p>
         <IJS>match.initial</IJS> should be a function that returns a Promise;{' '}
         <IJS>import()</IJS>, conveniently, returns a Promise. Then, in our{' '}
-        <IJS>match.finish</IJS> function, instead of referencing values imported
+        <IJS>match.response</IJS> function, instead of referencing values imported
         at the top of the file, we can reference the result of the <IJS>initial</IJS>
         {' '}function using <IJS>resolved.initial</IJS>.
       </p>
@@ -105,7 +105,7 @@ const routes = [
     path: '',
     match: {
       initial: () => import('./components/Home'),
-      finish: ({ resolved, set }) => {
+      response: ({ resolved, set }) => {
         set.body(resolved.initial.default);
       }
     },
@@ -116,7 +116,7 @@ const routes = [
     path: 'contact',
     match: {
       initial: () => import('./components/Contact'),
-      finish: ({ resolved, set }) => {
+      response: ({ resolved, set }) => {
         set.body(resolved.initial.default);
       }
     },
@@ -127,10 +127,10 @@ const routes = [
         path: ':method',
         match: {
           // we can resolve module.default in initial
-          // instead of in finish
+          // instead of in response
           initial: () => import('./components/ContactMethod')
             .then(module => module.default),
-          finish: ({ resolved, set }) => {
+            response: ({ resolved, set }) => {
             set.body(resolved.initial);
           }
         },

@@ -42,7 +42,7 @@ const routes = [
     name: 'User',
     path: 'u/:userID',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(User);
       }
     }
@@ -214,7 +214,7 @@ const NavLinks = () => (
     name: 'Album',
     path: 'a/:albumID',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Album);
       }
     },
@@ -223,7 +223,7 @@ const NavLinks = () => (
         name: 'Song',
         path: ':songID',
         match: {
-          finish: ({ set }) => {
+          response: ({ set }) => {
             set.body(Song);
           }
         }
@@ -331,7 +331,7 @@ history.navigate({ pathname });`
         <div className='code'>
           <div className='description'>
             <p>
-              Use the <IJS>match.initial</IJS> and <IJS>match.finish</IJS> functions to
+              Use the <IJS>match.initial</IJS> and <IJS>match.response</IJS> functions to
               add code splitting at your routes.
             </p>
             <p>
@@ -353,7 +353,7 @@ history.navigate({ pathname });`
         import('./components/User')
           .then(module => module.default)
       ),
-      finish: ({ resolved, set }) => {
+      response: ({ resolved, set }) => {
         set.body(resolved.initial);
       }
     }

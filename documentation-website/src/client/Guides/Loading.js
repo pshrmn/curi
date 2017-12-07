@@ -16,9 +16,9 @@ export default ({ name }) => (
 
     <p>
       In the code splitting guide, we used the <IJS>match.initial</IJS> property
-      of routes. Routes also have <IJS>match.every</IJS> and <IJS>match.finish</IJS>
+      of routes. Routes also have <IJS>match.every</IJS> and <IJS>match.response</IJS>
       {' '}properties. While <IJS>initial</IJS>is only called the first time a route
-      matches, <IJS>every</IJS> and <IJS>finish</IJS> are called every time a route
+      matches, <IJS>every</IJS> and <IJS>response</IJS> are called every time a route
       matches.
     </p>
 
@@ -76,13 +76,13 @@ export default ({ name }) => (
     </Section>
 
     <Section
-      title='finish'
-      id='finish'
+      title='response'
+      id='response'
     >
       <p>
         While <IJS>match.every</IJS> starts our data loading, it doesn't actually
         do anything. Instead, we should handle any loaded data with the{' '}
-        <IJS>match.finish</IJS> function.
+        <IJS>match.response</IJS> function.
       </p>
 
       <p>
@@ -91,14 +91,14 @@ export default ({ name }) => (
         is resolving, the user may navigate again, which overrides the current
         navigation. We cannot cancel the <IJS>every</IJS> function for the current
         navigation, so if it performs any side effects, our application is stuck with
-        them. To avoid this, the <IJS>finish</IJS> function is not called until
+        them. To avoid this, the <IJS>response</IJS> function is not called until
         we know that the current navigation will complete.
       </p>
 
       <p>
-        The <IJS>finish</IJS> function will receive an object with a number of properties.
+        The <IJS>response</IJS> function will receive an object with a number of properties.
         These are covered in detail in the{' '}
-        <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'finish' }}>
+        <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'response' }}>
           All About Routes
         </Link> guide.
       </p>
@@ -117,7 +117,7 @@ export default ({ name }) => (
   path: 'recipe/:id',
   match: {
     every: ({ params }) => fakeAPI.getRecipe(params.id),
-    finish: ({ resolved, set }) => {
+    response                                                                                                                                     : ({ resolved, set }) => {
       set.data(resolved);
       set.body(Recipe);
     }
@@ -128,7 +128,7 @@ export default ({ name }) => (
 
       <p>
         If at some point in time we decide that we want to change our URI
-        pathname structure, we can also use the <IJS>match.finish</IJS>
+        pathname structure, we can also use the <IJS>match.response</IJS>
         {' '}function to redirect.
       </p>
 
@@ -145,7 +145,7 @@ export default ({ name }) => (
   name: 'Old Recipe',
   path: 'r/:id',
   match: {
-    finish: ({ route, set, addons }) => {
+    response: ({ route, set, addons }) => {
       const pathname = addons.pathname('Recipe', route.params);
       // destructure the current location to preserve
       // query/hash values
@@ -161,7 +161,7 @@ export default ({ name }) => (
       </p>
     </Section>
     <p>
-      <IJS>every</IJS> and <IJS>finish</IJS> offer a conveneint great place to do any
+      <IJS>every</IJS> and <IJS>response</IJS> offer a conveneint great place to do any
       route setup prior to actually rendering the route. Please remember, however, that
       your application will not be re-rendering until after the fetching has resolved.
       If you have a long running load function, you may wish to implement some sort of

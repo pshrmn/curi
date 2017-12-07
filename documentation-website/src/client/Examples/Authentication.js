@@ -22,7 +22,7 @@ export default ({ name }) => (
       </p>
 
       <p>
-        When this happens, your <IJS>match.finish</IJS> function should modify
+        When this happens, your <IJS>match.response</IJS> function should modify
         the response by calling its redirect method.
       </p>
 
@@ -34,7 +34,7 @@ export default ({ name }) => (
     name: 'Protected',
     path: 'super-secret',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         if (!store.userIsAuthenticated) {
           set.redirect('/login', 302);
         }

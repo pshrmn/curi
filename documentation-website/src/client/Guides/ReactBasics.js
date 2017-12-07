@@ -89,7 +89,7 @@ ReactDOM.render((
       <p>
         The primary property of the response object that you will find useful is{' '}
         <IJS>body</IJS>. The body property is the value set by calling <IJS>set.body()</IJS>
-        {' '}in the route's <IJS>match.finish</IJS> function. Since this is a React guide,
+        {' '}in the route's <IJS>match.response</IJS> function. Since this is a React guide,
         this value should be a React component that will render the contents of the page for
         a specific route. For example, a <Cmp>Home</Cmp> component might render the contents
         of your homepage while an <Cmp>About</Cmp> component might render a page describing
@@ -106,7 +106,7 @@ const routes = [
     name: 'Home',
     path: '',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Home);
       }
     }
@@ -115,7 +115,7 @@ const routes = [
     name: 'About',
     path: 'about',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(About);
       }
     }

@@ -253,21 +253,21 @@ export default () => (
           one of the properties of a route: <IJS>match</IJS>. The <IJS>match</IJS>
           {' '}property is where we can provide functions that will be called
           when the route matches. There are three valid functions: <IJS>initial</IJS>,{' '}
-          <IJS>every</IJS>, and <IJS>finish</IJS>.
+          <IJS>every</IJS>, and <IJS>response</IJS>.
         </p>
         <p>
           We won't be using the <IJS>initial</IJS> function, but you can read more
           about it in the <Link to='Guide' params={{ slug: 'code-splitting' }}>
             Code Splitting
           </Link> guide. The <IJS>every</IJS> function will be used later on, but for now,
-          we only care about the <IJS>finish</IJS> function.
+          we only care about the <IJS>response</IJS> function.
         </p>
         <p>
-          The <IJS>finish</IJS> function
+          The <IJS>response</IJS> function
           gives us an opportunity to set some properties on the response object
-          before it is emitted. <IJS>finish</IJS> receives an object with are a bunch
+          before it is emitted. <IJS>response</IJS> receives an object with are a bunch
           of properties (which you can read about{' '}
-          <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'finish' }}>
+          <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'response' }}>
             here
           </Link>), but right now we only care about the <IJS>set</IJS> object.
         </p>
@@ -275,7 +275,7 @@ export default () => (
           The <IJS>set</IJS> object has functions that can be called to modify
           the response object. For example, calling <IJS>set.body('Hi!')</IJS>
           {' '}will set the <IJS>body</IJS> property of the response to "Hi!". Let's
-          go ahead and add <IJS>match.finish</IJS> functions to each of our routes.
+          go ahead and add <IJS>match.response</IJS> functions to each of our routes.
           We don't really have anything to set as the body, so we'll just use the
           route's name as a placeholder.
         </p>
@@ -286,7 +286,7 @@ export default () => (
     name: 'Home',
     path: '',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body('Home');
       }
     }
@@ -295,7 +295,7 @@ export default () => (
     name: 'Contact',
     path: 'contact',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body('Contact');
       }
     }
@@ -304,7 +304,7 @@ export default () => (
     name: 'Checkout',
     path: 'checkout',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body('Checkout');
       }
     }
@@ -313,16 +313,16 @@ export default () => (
     name: 'Book List',
     path: 'books',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body('Book List');
       }
-    }
+    },
     children: [
       {
         name: 'Book',
         path: ':id',
         match: {
-          finish: ({ set }) => {
+          response: ({ set }) => {
             set.body('Book');
           }
         }
@@ -369,7 +369,7 @@ export default () => (
     name: 'Not Found',
     path: '(.*)',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body('Not Found');
       }
     }

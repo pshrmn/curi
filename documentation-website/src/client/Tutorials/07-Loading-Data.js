@@ -25,8 +25,8 @@ export default () => (
           Writing a fake API to simulate data requests.
         </li>
         <li>
-          Adding <IJS>match.every</IJS> functions toour "Book List" and "Book"
-          routes and updating their <IJS>match.finish</IJS> functions.
+          Adding <IJS>match.every</IJS> functions to our "Book List" and "Book"
+          routes and updating their <IJS>match.response</IJS> functions.
         </li>
       </ul>
     </div>
@@ -197,7 +197,7 @@ export function fetchBook(id) {
         Do you remember before when we said that Curi is an asynchronous
         router? Now is the time that we finally will see why. We have already
         added <IJS>match</IJS> properties to each of our route objects,
-        but <IJS>match.finish</IJS> is a synchronous function. <IJS>match.every</IJS>,
+        but <IJS>match.response</IJS> is a synchronous function. <IJS>match.every</IJS>,
         on the other hand, is an asynchronous function.
       </p>
       <Subsection
@@ -237,7 +237,7 @@ const routes = [
     path: 'books',
     match: {
       every: () => fetchAllBooks(),
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(BookList);
       }
     }
@@ -248,7 +248,7 @@ const routes = [
         params: { id: n => parseInt(n, 10) },
         match: {
           every: ({ params }) => fetchBook(params.id),
-          finish: ({ set }) => {
+          response: ({ set }) => {
             set.body(Book);
           }
         }
@@ -268,15 +268,15 @@ const routes = [
         </Note>
       </Subsection>
       <Subsection
-        title='finish'
-        id='finish'
+        title='response'
+        id='response'
       >
         <p>
-          While we have already used <IJS>match.finish</IJS>, we have
+          While we have already used <IJS>match.response</IJS>, we have
           only used the <IJS>set.body</IJS> function so far. If you need
           to review them, you can view all of the properties passed to the{' '}
-          <IJS>finish</IJS> function in the{' '}
-          <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'finish' }}>
+          <IJS>response</IJS> function in the{' '}
+          <Link to='Guide' params={{ slug: 'routes' }} details={{ hash: 'response' }}>
             All About Routes
           </Link> guide. We want to attach our loaded data to the response, so we
           will use <IJS>resolved.every</IJS> to access the data from our <IJS>every</IJS>
@@ -296,7 +296,7 @@ const routes = [
   path: 'books',
   match: {
     every: () => fetchAllBooks(),
-    finish: ({ resolved, set }) => {
+    response: ({ resolved, set }) => {
       set.body(BookList);
       set.data(resolved.every);
     }
@@ -308,7 +308,7 @@ const routes = [
       params: { id: n => parseInt(n, 10) },
       match: {
         every: ({ params }) => fetchBook(params.id),
-        finish: ({ error, resolved, set }) => {
+        response: ({ error, resolved, set }) => {
           set.body(Book);
           if (error) {
             set.error(error);
@@ -327,7 +327,7 @@ const routes = [
         <Note>
           If you do not catch errors in your <IJS>every</IJS> function, you
           still get the opportunity to deal with them using the <IJS>error</IJS>
-          {' '}property passed to <IJS>match.finish</IJS>. However, if you do
+          {' '}property passed to <IJS>match.response</IJS>. However, if you do
           not handle the error there, you may end up with unexpected errors in
           your website.
         </Note>

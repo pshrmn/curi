@@ -157,7 +157,7 @@ export default ({ name }) => (
         </p>
         <p>
           While not required (like the <IJS>name</IJS> and <IJS>path</IJS> properties),
-          you will almost always want to have a <IJS>match.finish</IJS> property on your
+          you will almost always want to have a <IJS>match.response</IJS> property on your
           routes.
         </p>
         <Subsection
@@ -220,30 +220,30 @@ const user = {
         <p>
           You should not perform side effects in <IJS>every</IJS> because it is
           possible that navigating to the route might be cancelled. Instead,
-          side effects should be performed in <IJS>match.finish</IJS>.
+          side effects should be performed in <IJS>match.response</IJS>.
         </p>
       </Subsection>
 
       <Subsection
         tag='h5'
-        title='finish'
-        id='finish'
+        title='response'
+        id='response'
       >
         <p>
           A function that will be called right before a response is emitted.{' '}
-          <IJS>finish</IJS> will be passed an object with a number of properties.
-          The <IJS>finish</IJS> function gives you an opportunity to modify the
+          <IJS>response</IJS> will be passed an object with a number of properties.
+          The <IJS>response</IJS> function gives you an opportunity to modify the
           response object that will be emitted, including using the data that was
           loaded in either the <IJS>initial</IJS> or <IJS>every</IJS> functions.
         </p>
           <Subsection
             tag='h6'
             title='error'
-            id='finish-error'
+            id='response-error'
           >
             <p>
               If either the <IJS>initial</IJS> or <IJS>every</IJS> functions
-              reject with an error, that error will be passed to the <IJS>finish</IJS>
+              reject with an error, that error will be passed to the <IJS>response</IJS>
               {' '}function.
             </p>
             <PrismBlock lang='javascript'>
@@ -256,7 +256,7 @@ const user = {
     every: ({ params, location }) => (
       Promise.reject('Nope!')
     ),
-    finish: ({ error, set }) => {
+    response: ({ error, set }) => {
       if (error) {
         set.error(error);
       }
@@ -269,7 +269,7 @@ const user = {
           <Subsection
             tag='h6'
             title='resolved'
-            id='finish-resolved'
+            id='response-resolved'
           >
             <p>
               <IJS>resolved</IJS> is the value that was resolved by the <IJS>every</IJS>
@@ -287,7 +287,7 @@ const user = {
       fetch(\`/api/users/$\{params.id\}\`)
         .then(resp => JSON.parse(resp))
     ),
-    finish: ({ resolved, set }) => {
+    response: ({ resolved, set }) => {
       set.data(resolved);
     }
   }
@@ -298,7 +298,7 @@ const user = {
           <Subsection
             tag='h6'
             title='route'
-            id='finish-route'
+            id='response-route'
           >
             <p>
               This is the same object that is passed to the <IJS>every</IJS> function
@@ -309,7 +309,7 @@ const user = {
           <Subsection
             tag='h6'
             title='set'
-            id='finish-set'
+            id='response-set'
           >
             <p>
               The <IJS>set</IJS> object contains a number of functions that you can
@@ -353,7 +353,7 @@ const routes = [
     name: 'Contact',
     path: 'contact',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Contact);
       }
     }
@@ -366,13 +366,13 @@ const routes = [
           <Subsection
             tag='h6'
             title='addons'
-            id='finish-addons'
+            id='response-addons'
           >
             <p>
               The addons that have been registered with Curi are available to the{' '}
-              <IJS>finish</IJS> function. This includes the built-in <IJS>pathname</IJS>
+              <IJS>response</IJS> function. This includes the built-in <IJS>pathname</IJS>
               {' '}addon, which you might find useful if you need to redirect in a{' '}
-              <IJS>finish</IJS> function.
+              <IJS>response</IJS> function.
             </p>
             <PrismBlock lang='javascript'>
               {
@@ -387,7 +387,7 @@ const routes = [
     name: 'Old Photo',
     path: 'photo/:id',
     match: {
-      finish: ({ route, set, addons }) => {
+      response: ({ route, set, addons }) => {
         const pathname = addons.pathname('Photo', route.params);
         set.redirect({ ...route.location, pathname }, 301);
       }

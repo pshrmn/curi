@@ -324,12 +324,12 @@ config.respond(response => {
 
       <p>
         In <Link to='Tutorial'  params={{ name: '03-routes' }}>Part 3</Link> of
-        this tutorial, we added <IJS>match.finish</IJS> functions that set the{' '}
+        this tutorial, we added <IJS>match.response</IJS> functions that set the{' '}
         <IJS>body</IJS> property for each of our routes. There, we just used a
         placeholder string, but now we can actually set the component for each route.
         Instead of returning a string, what if <IJS>set.body</IJS> set
         the <IJS>body</IJS> to be a Vue component? Then, our render function
-        can use <IJS>response.body</IJS> to render our website.
+        can use the <IJS>body</IJS> property of our response object to render our website.
       </p>
       <PrismBlock lang='html'>
         {
@@ -423,7 +423,7 @@ export default {
       </PrismBlock>
       <p>
         All of these components should be imported in our <IJS>routes.js</IJS> and
-        set using <IJS>set.body</IJS> in their respectiev <IJS>match.finish</IJS>
+        set using <IJS>set.body</IJS> in their respective <IJS>match.response</IJS>
         {' '}functions.
       </p>
       <PrismBlock lang='javascript'>
@@ -441,7 +441,7 @@ const routes = [
     name: 'Home',
     path: '',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Home);
       }
     }
@@ -450,7 +450,7 @@ const routes = [
     name: 'Contact',
     path: 'contact',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Contact);
       }
     }
@@ -459,7 +459,7 @@ const routes = [
     name: 'Checkout',
     path: 'checkout',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Checkout);
       }
     }
@@ -468,7 +468,7 @@ const routes = [
     name: 'Book List',
     path: 'books',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(BookList);
       }
     }
@@ -477,7 +477,7 @@ const routes = [
         name: 'Book',
         path: ':id',
         match: {
-          finish: ({ set }) => {
+          response: ({ set }) => {
             set.body(Book);
           }
         }
@@ -488,7 +488,7 @@ const routes = [
     name: 'Not Found',
     path: '(.*)',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(NotFound);
       }
     }

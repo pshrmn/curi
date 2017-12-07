@@ -142,7 +142,7 @@ export default ({ name }) => (
         <p>
           With Curi routes, we have a <IJS>match</IJS> property. This is an object with
           a couple different optional function properties, but the one we care about right
-          now is <IJS>match.finish</IJS>. In our <IJS>match.finish</IJS> function, we have
+          now is <IJS>match.response</IJS>. In our <IJS>match.response</IJS> function, we have
           a <IJS>set</IJS> object that we can use to modify the response. One of the
           properties of this object is a <IJS>body</IJS> function that we can call to set
           the <IJS>body</IJS> property of the response. For this React application, we want
@@ -155,7 +155,7 @@ export default ({ name }) => (
   {
     path: '',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Home);
       }
     }
@@ -163,7 +163,7 @@ export default ({ name }) => (
   {
     path: 'inbox',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Inbox);
       }
     }
@@ -171,7 +171,7 @@ export default ({ name }) => (
       {
         path: ':message',
         match: {
-          finish: ({ set }) => {
+          response: ({ set }) => {
             set.body(Message);
           }
         }
@@ -197,7 +197,7 @@ export default ({ name }) => (
           should serve the same purpose.
         </p>
         <p>
-          Curi routes can also have a <IJS>match.finish</IJS> property which you can use to
+          Curi routes can also have a <IJS>match.response</IJS> property which you can use to
           modify the response object. This function will run once we know that the response will
           be emitted, so side effects can be run in here.
         </p>
@@ -212,7 +212,7 @@ export default ({ name }) => (
   {
     path: '',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Home);
       }
     }
@@ -220,7 +220,7 @@ export default ({ name }) => (
   {
     path: 'inbox',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Inbox);
       }
     }
@@ -229,7 +229,7 @@ export default ({ name }) => (
         path: ':message',
         match: {
           every: (route) => { return ... },
-          finish: ({ set }) => {
+          response: ({ set }) => {
             set.body(Message);
           }
         }
@@ -253,7 +253,7 @@ export default ({ name }) => (
     name: 'Home',
     path: '',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Home);
       }
     }
@@ -262,7 +262,7 @@ export default ({ name }) => (
     name: 'Inbox',
     path: 'inbox',
     match: {
-      finish: ({ set }) => {
+      response: ({ set }) => {
         set.body(Inbox);
       }
     }
@@ -272,7 +272,7 @@ export default ({ name }) => (
         path: ':message',
         match: {
           every: (route) => { return ... },
-          finish: ({ set }) => {
+          response: ({ set }) => {
             set.body(Message);
           }
         }
@@ -427,7 +427,7 @@ const config = create1Config(history, routes);`
         <p>
           That isn’t perfect because it doesn’t consider what happens when there is no body
           (which happens if none of the routes match the location or you don't set it in a
-          route's <IJS>match.finish</IJS> function). Wildcard routes (<IJS>(.*)</IJS>) can
+          route's <IJS>match.response</IJS> function). Wildcard routes (<IJS>(.*)</IJS>) can
           be useful here or you can just return something else when there is no{' '}
           <IJS>response.body</IJS> property.
         </p>

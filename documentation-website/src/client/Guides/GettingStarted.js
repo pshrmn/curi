@@ -217,7 +217,7 @@ const routes = [
         name: 'Photo',
         path: ':photoID',
         match: {
-          finish: ({ set }) => {
+          response: ({ set }) => {
             set.body(Photo);
           }
         }

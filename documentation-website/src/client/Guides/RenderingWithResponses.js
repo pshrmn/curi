@@ -40,7 +40,7 @@ export default ({ name }) => (
   // if no routes match or a route issues a redirect.
   status: 200,
 
-  // If the route had a match.finish function and called
+  // If the route had a match.response function and called
   // set.data, that value will be set here. If not,
   // this will be undefined.
   data: {...},
@@ -107,7 +107,7 @@ export default ({ name }) => (
     >
       <p>
         The body property of a response is the value set by the matched
-        route's <IJS>match.finish</IJS> function, using{' '}
+        route's <IJS>match.response</IJS> function, using{' '}
         <IJS>set.body()</IJS>. This value can be anything you want it
         to be, but it should usually be a function/component. Here, we will assume
         that each of your routes have <IJS>body</IJS> properties that return a function.
@@ -118,7 +118,7 @@ export default ({ name }) => (
 {
   ...,
   match: {
-    finish: ({ set }) => {
+    response: ({ set }) => {
       set.body(function() { ... });
     }
   }
@@ -131,7 +131,7 @@ export default ({ name }) => (
         but if you are using path parameters, then the <IJS>params</IJS> object
         should be one of these. If you are doing data loading in your routes (using the
         <IJS>match.every</IJS> property), then you will probably also want to pass
-        the data property (which is attached to the response in the <IJS>match.finish</IJS>
+        the data property (which is attached to the response in the <IJS>match.response</IJS>
         {' '}function) to your body function.
       </p>
       <Note>
@@ -151,7 +151,7 @@ export default ({ name }) => (
 `{
   name: 'User',
   match: {
-    finish: ({ set }) => {
+    response: ({ set }) => {
       set.body({
         main: function User() {...},
         menu: function UserMenu() {...}

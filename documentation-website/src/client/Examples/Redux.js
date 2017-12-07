@@ -19,7 +19,7 @@ export default ({ name }) => (
         You will most likely want to export your store from its own module
         so that it can be imported throughout your project. Then, any routes
         that need data to be loaded prior to rendering would dispatch to the
-        store from their <IJS>match.finish</IJS> function.
+        store from their <IJS>match.response</IJS> function.
       </p>
 
       <PrismBlock lang='javascript'>
@@ -37,7 +37,7 @@ const routes = [
         // get the data associated with the id
         return fetch(\`/api/data/\$\{id\}\`)
       },
-      finish: ({ resolved }) => {
+      response: ({ resolved }) => {
         store.dispatch(
           setData(resolved)
         );

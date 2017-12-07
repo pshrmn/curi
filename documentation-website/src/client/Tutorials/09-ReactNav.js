@@ -352,7 +352,7 @@ const routes = [
           fetchAllBooks(),
           getCart()
         ])
-      finish: ({ resolved, set }) => {
+        response: ({ resolved, set }) => {
         set.body(Checkout)
         
         /*
@@ -380,7 +380,7 @@ const routes = [
         name: 'Checkout Complete',
         path: 'complete',
         match: {
-          finish({ set }) => {
+          response({ set }) => {
             set.body(CheckoutComplete);
           }
         }
