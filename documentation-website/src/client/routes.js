@@ -10,37 +10,33 @@ import { byName as guidesByName } from './constants/guides';
 import { byName as packagesByName } from './constants/packages';
 import { byName as examplesByName } from './constants/examples';
 
-const loadedModules = {};
-
-function handleImport(name) {
-  return {
-    loaded: module => {
-      loadedModules[name] = module.default;
-    },
-    caught: err => {
-      console.error('Failed to load module for:', name, err);
-      loadedModules[name] = () => <div>Sorry, something went wrong...</div>;
-    }
-  }
+function caught(error) {
+  console.error('Failed to load module for:', name, err);
+  return () => <div>Sorry, something went wrong...</div>;
 }
 
 export default [
   {
     name: 'Home',
     path: '',
-    body: () => Home,
+    match: {
+      response: ({ set }) => {
+        set.body(Home)
+      }
+    },
     title: 'Curi'
   },
   {
     name: 'Tutorial',
     path: 'tutorial/:name',
-    preload: () => {
-      const { loaded, caught } = handleImport('Tutorial');
-      return import(/* webpackChunkName: 'tutorial' */'./route-components/Tutorial')
-        .then(loaded)
-        .catch(caught);
+    match: {
+      initial: () => 
+        import(/* webpackChunkName: 'tutorial' */'./route-components/Tutorial')
+          .then(module => module.default, caught),
+      response: ({ resolved, set }) => {
+        set.body(resolved.initial);
+      }
     },
-    body: () => loadedModules["Tutorial"],
     title: ({ name }) => {
       const data = tutorialsByName[name];
       return !data ? 'Tutorial Not Found' : `Tutorial ${data.displayName}`;
@@ -49,43 +45,45 @@ export default [
   {
     name: 'Guide',
     path: 'guides/:slug/',
-    preload: () => {
-      const { loaded, caught } = handleImport('Guide');
-      return import(/* webpackChunkName: 'guide' */'./route-components/Guide')
-        .then(loaded)
-        .catch(caught);
-    },
-    load: ({ params }, mods) => {
-      if (guidesByName[params.slug]) {
-        mods.setData(guidesByName[params.slug]);
+    match: {
+      initial: () => 
+        import(/* webpackChunkName: 'guide' */'./route-components/Guide')
+          .then(module => module.default, caught),
+      response: ({ route, resolved, set }) => {
+        set.body(resolved.initial)
+        const guide = guidesByName[route.params.slug];
+        if (guide) {
+          set.data(guide);
+        }
       }
-      return Promise.resolve();
     },
-    body: () => loadedModules["Guide"],
     title: (params, data) => `${data ? data.name : 'Unknown'} Guide`
   },
   {
     name: 'Packages',
     path: 'packages',
-    body: () => PackageList,
+    match: {
+      response: ({ set }) => {
+        set.body(PackageList);
+      }
+    },
     title: 'Curi Packages',
     children: [
       {
         name: 'Package',
         path: '@curi/:package/',
-        preload: () => {
-          const { loaded, caught } = handleImport('Package');
-          return import(/* webpackChunkName: 'package' */'./route-components/Package')
-            .then(loaded)
-            .catch(caught);
-        },
-        load: ({ params }, mods) => {
-          if (packagesByName[params.package]) {
-            mods.setData(packagesByName[params.package]);
+        match: {
+          initial: () => 
+            import(/* webpackChunkName: 'package' */'./route-components/Package')
+              .then(module => module.default, caught),
+          response: ({ route, resolved, set }) => {
+            set.body(resolved.initial);
+            const pkg = packagesByName[route.params.package];
+            if (pkg) {
+              set.data(pkg);
+            }
           }
-          return Promise.resolve();
         },
-        body: () => loadedModules["Package"],
         title: (params) => `@curi/${params.package}`
       }
     ]
@@ -93,25 +91,28 @@ export default [
   {
     name: 'Examples',
     path: 'examples',
-    body: () => ExampleList,
+    match: {
+      response: ({ set }) => {
+        set.body(ExampleList);
+      }
+    },
     title: 'Examples',
     children: [
       {
         name: 'Example',
         path: ':slug/',
-        preload: () => {
-          const { loaded, caught } = handleImport('Example');
-          return import(/* webpackChunkName: 'example' */'./route-components/Example')
-            .then(loaded)
-            .catch(caught);
-        },
-        load: ({ params }, mods) => {
-          if (examplesByName[params.slug]) {
-            mods.setData(examplesByName[params.slug]);
+        match: {
+          initial: () => 
+            import(/* webpackChunkName: 'example' */'./route-components/Example')
+              .then(module => module.default, caught),
+          response: ({ route, resolved, set }) => {
+            set.body(resolved.initial);
+            const example = examplesByName[route.params.slug];
+            if (example) {
+              set.data(example);
+            }
           }
-          return Promise.resolve();
         },
-        body: () => loadedModules["Example"],
         title: (params, data) => `${data ? data.name : 'Unknown'} Example`
       }
     ]

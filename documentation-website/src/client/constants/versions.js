@@ -2,8 +2,8 @@
 export default {
   "addon-active": "1.0.0-beta.5",
   "addon-ancestors": "1.0.0-beta.5",
-  "addon-prefetch": "1.0.0-beta.5",
-  "core": "1.0.0-beta.19",
+  "addon-prefetch": "1.0.0-beta.6",
+  "core": "1.0.0-beta.21",
   "react": "1.0.0-beta.13",
   "redux": "1.0.0-beta.1",
   "side-effect-scroll": "1.0.0-beta.6",
