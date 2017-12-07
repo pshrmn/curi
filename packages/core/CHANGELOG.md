@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.20
 
 * Added a `body` function to response modifiers, removed the `route.body` property. This change allows the user to just reference the resolved value instead of keeping a store.
 * Change response modifiers property name to `set` and renamed response modifier functions: `setData` to `data`, `setStatus` to `status`, and `fail` to `error`
