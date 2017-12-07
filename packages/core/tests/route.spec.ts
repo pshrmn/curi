@@ -169,8 +169,8 @@ describe('public route properties', () => {
       });
     });
 
-    describe('finish', () => {
-      it('will be the provided match.finish function', () => {
+    describe('response', () => {
+      it('will be the provided match.response function', () => {
         const matchTest = () => Promise.resolve();
 
         const history = InMemory({ locations: ['/test'] });
@@ -178,17 +178,17 @@ describe('public route properties', () => {
           {
             name: 'Test',
             path: 'test',
-            match: { finish: matchTest }
+            match: { response: matchTest }
           }
         ];
         const config = createConfig(history, routes, {
           addons: [PropertyReporter()]
         });
         const routeProperties = config.addons.properties('Test');
-        expect(routeProperties.match.finish).toBe(matchTest);
+        expect(routeProperties.match.response).toBe(matchTest);
       });
 
-      it("will be undefined when match.finish isn't defined", () => {
+      it("will be undefined when match.response isn't defined", () => {
         const history = InMemory({ locations: ['/test'] });
         const routes = [
           {
@@ -200,7 +200,7 @@ describe('public route properties', () => {
           addons: [PropertyReporter()]
         });
         const routeProperties = config.addons.properties('Test');
-        expect(routeProperties.match.finish).toBeUndefined();
+        expect(routeProperties.match.response).toBeUndefined();
       });
     });
   });

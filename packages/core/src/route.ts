@@ -3,7 +3,7 @@ import PathToRegexp, { RegExpOptions, Key } from 'path-to-regexp';
 
 import once from './utils/once';
 
-import { EveryMatchFn, InitialMatchFn, FinishMatchFn } from './interface';
+import { EveryMatchFn, InitialMatchFn, ResponseMatchFn } from './interface';
 import { ResponseProps } from './response';
 
 export type Title = string | ((params?: object, data?: any) => string);
@@ -21,7 +21,7 @@ export interface RouteProps {
 export interface MatchFns {
   initial?: InitialMatchFn;
   every?: EveryMatchFn;
-  finish?: FinishMatchFn;
+  response?: ResponseMatchFn;
 }
 
 export interface RouteDescriptor {
@@ -102,7 +102,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       match: {
         initial: match.initial && once(match.initial),
         every: match.every,
-        finish: match.finish
+        response: match.response
       },
       extra
     },

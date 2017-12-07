@@ -40,7 +40,7 @@ export interface ResponseSetters {
     status: (status: number) => void;
     body: (body: any) => void;
 }
-export interface FinishProps {
+export interface ResponseBuilder {
     error: any;
     resolved: any;
     route: RouteProps;
@@ -49,4 +49,4 @@ export interface FinishProps {
 }
 export declare type EveryMatchFn = (route?: RouteProps) => Promise<any>;
 export declare type InitialMatchFn = () => Promise<any>;
-export declare type FinishMatchFn = (props: FinishProps) => void;
+export declare type ResponseMatchFn = (props: ResponseBuilder) => void;

@@ -1,3 +1,7 @@
+## Next
+
+* `match.response` instead of `match.finish`.
+
 ## 1.0.0-beta.20
 
 * Added a `body` function to response modifiers, removed the `route.body` property. This change allows the user to just reference the resolved value instead of keeping a store.

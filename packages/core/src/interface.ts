@@ -43,7 +43,7 @@ export interface ResponseSetters {
   body: (body: any) => void;
 }
 
-export interface FinishProps {
+export interface ResponseBuilder {
   error: any;
   resolved: any;
   route: RouteProps;
@@ -53,4 +53,4 @@ export interface FinishProps {
 
 export type EveryMatchFn = (route?: RouteProps) => Promise<any>;
 export type InitialMatchFn = () => Promise<any>;
-export type FinishMatchFn = (props: FinishProps) => void;
+export type ResponseMatchFn = (props: ResponseBuilder) => void;

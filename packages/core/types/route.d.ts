@@ -1,5 +1,5 @@
 import { RegExpOptions, Key } from 'path-to-regexp';
-import { EveryMatchFn, InitialMatchFn, FinishMatchFn } from './interface';
+import { EveryMatchFn, InitialMatchFn, ResponseMatchFn } from './interface';
 import { ResponseProps } from './response';
 export declare type Title = string | ((params?: object, data?: any) => string);
 export declare type ParamParser = (input: string) => any;
@@ -13,7 +13,7 @@ export interface RouteProps {
 export interface MatchFns {
     initial?: InitialMatchFn;
     every?: EveryMatchFn;
-    finish?: FinishMatchFn;
+    response?: ResponseMatchFn;
 }
 export interface RouteDescriptor {
     name: string;

@@ -11,10 +11,10 @@ export {
   Params,
   RouteProps,
   ResponseSetters,
-  FinishProps,
+  ResponseBuilder,
   EveryMatchFn,
   InitialMatchFn,
-  FinishMatchFn
+  ResponseMatchFn
 } from './interface';
 export {
   Route,

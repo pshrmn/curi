@@ -226,7 +226,7 @@ describe('createConfig', () => {
               name: 'All',
               path: '(.*)',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.data(Math.random());
                 }
               }
@@ -280,7 +280,7 @@ describe('createConfig', () => {
               name: 'All',
               path: '(.*)',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.data(Math.random());
                 }
               }
@@ -592,7 +592,7 @@ describe('createConfig', () => {
           name: 'A Route',
           path: '',
           match: {
-            finish: ({ set }) => {
+            response: ({ set }) => {
               set.redirect('/somewhere-else', 301);
             }
           }

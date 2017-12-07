@@ -193,8 +193,8 @@ export function finishResponse(
   addons: Addons
 ): Response {
   const { error, resolved, route, props } = pending;
-  if (route && route.public.match.finish) {
-    route.public.match.finish({
+  if (route && route.public.match.response) {
+    route.public.match.response({
       error,
       resolved,
       route: routeProperties(route, props),

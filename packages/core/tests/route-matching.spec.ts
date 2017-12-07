@@ -133,7 +133,7 @@ describe('route matching/response generation', () => {
   });
 
   describe('response', () => {
-    it('if either initial or every response fns have uncaught errors, error is passed to finish fn', done => {
+    it('if either initial or every response fns have uncaught errors, error is passed to response fn', done => {
       const routes = [
         {
           name: 'Contact',
@@ -142,7 +142,7 @@ describe('route matching/response generation', () => {
             every: () => {
               return Promise.reject('This is an error');
             },
-            finish: ({ error }) => {
+            response: ({ error }) => {
               expect(error).toBe('This is an error');
             }
           }
@@ -183,7 +183,7 @@ describe('route matching/response generation', () => {
       });
 
       describe('body', () => {
-        it('is undefined if it isn\'t set in match.finish', done => {
+        it('is undefined if it isn\'t set in match.response', done => {
           const history = InMemory({ locations: ['/test'] });
           const routes = [
             {
@@ -206,7 +206,7 @@ describe('route matching/response generation', () => {
               name: 'Test',
               path: 'test',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.body(body);
                 }
               }
@@ -259,13 +259,13 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is the value set by calling status in the matching route's match.finish function", done => {
+        it("is the value set by calling status in the matching route's match.response function", done => {
           const routes = [
             {
               name: 'A Route',
               path: '',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.status(451);
                 }
               }
@@ -279,13 +279,13 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is set by calling set.redirect in the matching match.finish", done => {
+        it("is set by calling set.redirect in the matching match.response", done => {
           const routes = [
             {
               name: '302 Route',
               path: '',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.redirect('/somewhere', 302);
                 }
               }
@@ -303,13 +303,13 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is set to 301 by default when calling set.redirect in match.finish", done => {
+        it("is set to 301 by default when calling set.redirect in match.response", done => {
           const routes = [
             {
               name: '301 Route',
               path: '',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.redirect('/somewhere');
                 }
               }
@@ -344,13 +344,13 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is the value set by calling set.data in match.finish", done => {
+        it("is the value set by calling set.data in match.response", done => {
           const routes = [
             {
               name: 'A Route',
               path: '',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.data({ test: 'value' });
                 }
               }
@@ -421,7 +421,7 @@ describe('route matching/response generation', () => {
               name: 'State',
               path: ':state',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.data({ full: 'West Virginia' });
                 }
               },
@@ -644,13 +644,13 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is set by calling the error method from a matched route's match.finish function", done => {
+        it("is set by calling the error method from a matched route's match.response function", done => {
           const routes = [
             {
               name: 'A Route',
               path: '',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.error('woops');
                 }
               }
@@ -666,13 +666,13 @@ describe('route matching/response generation', () => {
       });
 
       describe('redirectTo', () => {
-        it("is sets by calling the redirect function in a matching route's match.finish function", done => {
+        it("is sets by calling the redirect function in a matching route's match.response function", done => {
           const routes = [
             {
               name: 'A Route',
               path: '',
               match: {
-                finish: ({ set }) => {
+                response: ({ set }) => {
                   set.redirect('/somewhere', 301);
                 }
               }
@@ -760,9 +760,9 @@ describe('route matching/response generation', () => {
       });
     });
 
-    describe('finish', () => {
+    describe('response', () => {
       it('is not called if the navigation has been cancelled', done => {
-        const finishSpy = jest.fn();
+        const responseSpy = jest.fn();
         let firstHasResolved = false;
         const everySpy = jest.fn(() => {
           return new Promise((resolve, reject) => {
@@ -779,21 +779,21 @@ describe('route matching/response generation', () => {
             path: 'first',
             match: {
               every: everySpy,
-              finish: finishSpy
+              response: responseSpy
             }
           },
           {
             name: 'Second',
             path: 'second',
             match: {
-              // re-use the every spy so that this route's finish
+              // re-use the every spy so that this route's response
               // fn isn't call until after the first route's every
               // fn has resolved
               every: everySpy,
-              finish: () => {
+              response: () => {
                 expect(firstHasResolved).toBe(true);
                 expect(everySpy.mock.calls.length).toBe(2);
-                expect(finishSpy.mock.calls.length).toBe(0);
+                expect(responseSpy.mock.calls.length).toBe(0);
                 done();
               }
             }
@@ -816,7 +816,7 @@ describe('route matching/response generation', () => {
             path: ':anything',
             match: {
               initial: () => Promise.reject('rejected by initial'),
-              finish: spy
+              response: spy
             }
           };
 
@@ -840,7 +840,7 @@ describe('route matching/response generation', () => {
             path: ':anything',
             match: {
               every: () => Promise.reject('rejected by every'),
-              finish: spy
+              response: spy
             }
           };
 
@@ -869,7 +869,7 @@ describe('route matching/response generation', () => {
               path: ':anything',
               match: {
                 initial: () => Promise.resolve({ test: 'ing' }),
-                finish: spy
+                response: spy
               }
             };
 
@@ -895,7 +895,7 @@ describe('route matching/response generation', () => {
                   initial: () => {
                     return Promise.resolve(Math.random());
                   },
-                  finish: ({ resolved }) => {
+                  response: ({ resolved }) => {
                     if (!hasFinished) {
                       hasFinished = true;
                       random = resolved.initial;
@@ -922,7 +922,7 @@ describe('route matching/response generation', () => {
               name: 'Catch All',
               path: ':anything',
               match: {
-                finish: spy
+                response: spy
               }
             };
   
@@ -948,7 +948,7 @@ describe('route matching/response generation', () => {
               path: ':anything',
               match: {
                 every: () => Promise.resolve({ test: 'ing' }),
-                finish: spy
+                response: spy
               }
             };
   
@@ -971,7 +971,7 @@ describe('route matching/response generation', () => {
               name: 'Catch All',
               path: ':anything',
               match: {
-                finish: spy
+                response: spy
               }
             };
   
@@ -1002,7 +1002,7 @@ describe('route matching/response generation', () => {
           const CatchAll = {
             name: 'Catch All',
             path: ':anything',
-            match: { finish: spy }
+            match: { response: spy }
           };
   
           const history = InMemory({ locations: ['/hello?one=two'] });
@@ -1033,7 +1033,7 @@ describe('route matching/response generation', () => {
           const CatchAll = {
             name: 'Catch All',
             path: ':anything',
-            match: { finish: spy }
+            match: { response: spy }
           };
   
           const history = InMemory({ locations: ['/hello?one=two'] });
@@ -1056,7 +1056,7 @@ describe('route matching/response generation', () => {
           const CatchAll = {
             name: 'Catch All',
             path: ':anything',
-            match: { finish: spy }
+            match: { response: spy }
           };
   
           const history = InMemory({ locations: ['/hello?one=two'] });
@@ -1075,7 +1075,7 @@ describe('route matching/response generation', () => {
               name: 'Old',
               path: 'old/:id',
               match: {
-                finish: ({ route, set, addons }) => {
+                response: ({ route, set, addons }) => {
                   const pathname = addons.pathname('New', route.params);
                   set.redirect(pathname);
                 }
