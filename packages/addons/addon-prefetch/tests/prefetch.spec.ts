@@ -1,7 +1,6 @@
 import 'jest';
 import createPrefetch from '../src';
 import { HickoryLocation } from '@hickory/root';
-import { LoadModifiers } from '@curi/core';
 
 describe('prefetch addon', () => {
   let prefetch;
@@ -22,35 +21,23 @@ describe('prefetch addon', () => {
       const playerURI = {
         name: 'Player',
         path: 'player',
-        load: () => Promise.resolve()
+        match: {
+          every: () => Promise.resolve()
+        }
       };
       prefetch.register(playerURI);
 
       expect(prefetch.get('Player')).toBeDefined();
     });
 
-    it('does not register if there is no load function', () => {
-      const noLoadURI = { name: 'No load', path: 'player' };
-      const preloadURI = {
-        name: 'Preload',
-        path: 'player',
-        preload: () => Promise.resolve()
-      };
-      prefetch.register(noLoadURI);
-      prefetch.register(preloadURI);
+    it('does not register if there is no match.every function', () => {
+      const route = { name: 'None', path: 'player' };
+      prefetch.register(route);
       // This is a bit roundabout, but we verify that the paths did not register
       // by resolving from catch
-      expect.assertions(2);
-      return Promise.all([
-        prefetch.get('No load').catch(() => {
-          return Promise.resolve('No load failed');
-        }),
-        prefetch.get('Preload').catch(() => {
-          return Promise.resolve('Preload failed');
-        })
-      ]).then(results => {
-        expect(results[0]).toBe('No load failed');
-        expect(results[1]).toBe('Preload failed');
+      expect.assertions(1);
+      return prefetch.get('None').catch(err => {
+        expect(err).toBe('Could not prefetch data for None because it is not registered.')
       });
     });
 
@@ -62,12 +49,16 @@ describe('prefetch addon', () => {
       const first = {
         name: 'Test',
         path: 'first',
-        load: () => Promise.resolve()
+        match: {
+          every: () => Promise.resolve()
+        }
       };
       const second = {
         name: 'Test',
         path: 'second',
-        load: () => Promise.resolve()
+        match: {
+          every: () => Promise.resolve()
+        }
       };
 
       prefetch.register(first);
@@ -85,28 +76,33 @@ describe('prefetch addon', () => {
       const playerURI = {
         name: 'Player',
         path: 'player/:id',
-        load: () => Promise.resolve()
+        match: {
+          every: () => Promise.resolve()
+        }
       };
       prefetch.register(playerURI);
       expect(prefetch.get('Player').then).toBeDefined();
     });
 
-    it('passes arguments to load function', () => {
+    it("passes arguments to route's match.every function", () => {
       const playerURI = {
         name: 'Player',
         path: 'player/:id',
-        load: function(params, location, modifiers) {
-          expect(params).toEqual(paramsToPass);
-          expect(location).toEqual(locationToPass);
-          expect(modifiers).toEqual(modifiersToPass);
-          return Promise.resolve(true);
+        match: {
+          every: function(props) {
+            expect(props).toMatchObject({
+              name: 'Player',
+              location: locationToPass,
+              params: paramsToPass
+            });
+            return Promise.resolve(true);
+          }
         }
       };
       const paramsToPass = { id: 1 };
       const locationToPass = {} as HickoryLocation;
-      const modifiersToPass = {} as LoadModifiers;
       prefetch.register(playerURI);
-      prefetch.get('Player', paramsToPass, locationToPass, modifiersToPass);
+      prefetch.get('Player', { name: 'Player', params: paramsToPass, location: locationToPass });
     });
 
     it('returns rejected Promise when path not found', () => {
@@ -124,7 +120,9 @@ describe('prefetch addon', () => {
       const playerURI = {
         name: 'Player',
         path: 'player/:id',
-        load: () => Promise.resolve()
+        match: {
+          every: () => Promise.resolve()
+        }
       };
       prefetch.register(playerURI);
       expect(prefetch.get('Player').then).toBeDefined();
@@ -132,7 +130,7 @@ describe('prefetch addon', () => {
       expect.assertions(2);
       return prefetch.get('Player').catch(err => {
         expect(err).toBe(
-          `Could not preload data for Player because it is not registered.`
+          `Could not prefetch data for Player because it is not registered.`
         );
       });
     });
