@@ -23,28 +23,49 @@ export default ({ name, version, globalName }) => (
     <APIBlock>
       <Section
         tag='h3'
+        title='installCuri'
+        id='installCuri'
+      >
+      </Section>
+        <p>
+          The <IJS>installCuri</IJS> will install a Vue plugin that adds Curi support
+          to your Vue instance. This will also automatically subscribe to your Curi
+          configuration object so that your application will re-render whenever a new
+          response is emitted.
+        </p>
+        <PrismBlock lang='javascript'>
+          {
+`import { installCuri } from '@curi/vue';
+
+const config = createConfig(history, routes);
+installCuri(Vue, config);`
+          }
+        </PrismBlock>
+      <Section
+        tag='h3'
         title='CuriPlugin'
         id='curiplugin'
       >
         <p>
-          curi-vue exports a Vue plugin that you can use to add Curi support to a Vue application.
-          The plugin is passed to Vue using the use method. Along with the plugin, you will need to
-          pass your Curi configuration object to <IJS>Vue.use</IJS>.
+          If you would prefer to install the Curi Vue plugin yourself, you can also import
+          it directly.
+        </p>
+        <p>
+          What does the plugin do? First, it will register <Cmp>curi-link</Cmp> and{' '}
+          <Cmp>curi-block</Cmp> components with Vue. You can use these components anywhere
+          within your application. Second, it makes your configuration object and any
+          response/action properties reactive Vue properties. These values are grouped under
+          the <IJS>$curi</IJS> variable as <IJS>$curi.config</IJS>, <IJS>$curi.response</IJS>,
+          and <IJS>$curi.action</IJS>.
         </p>
         <PrismBlock lang='javascript'>
           {
-`import CuriPlugin from '@curi/vue';
+`import { CuriPlugin } from '@curi/vue';
 
 const config = createConfig(history, routes);
 Vue.use(CuriPlugin, { config });`
           }
         </PrismBlock>
-
-        <p>
-          This will do two things. First, it will register a <IJS>curi-link</IJS> component
-          with Vue. You can use that component to navigate within your application. Second, it makes
-          your configuration a global Vue property, which you can then access as <IJS>Vue.Curi</IJS>.
-        </p>
 
         <Subsection
           tag='h4'
@@ -157,7 +178,7 @@ Vue.use(CuriPlugin, { config });`
 <template>
   <div>
     <Nav />
-    <component :is="response.body" :params="response.params" :data="response.data" />
+    <component :is="$curi.response.body" />
   </div>
 </template>
 
@@ -165,7 +186,6 @@ Vue.use(CuriPlugin, { config });`
   import Nav from './Nav';
   export default {
     name: 'app',
-    props: ['response'],
     components: { Nav }
   }
 </script>
@@ -177,57 +197,40 @@ Vue.use(CuriPlugin, { config });`
         {
 `// renderFunction.js
 import Nav from './Nav';
-export default function renderFunction(h, resp) {
+export default function renderFunction(h) {
   return h('div', [
     h(Nav),
-    h(resp.body, { props: { params: resp.params, data: resp.data } })
+    h(this.$curi.resp.body)
   ]);
 }`
         }
       </PrismBlock>
 
       <p>
-        To actually render the application, you will want to make <IJS>response</IJS> an observed property
-        of your application. Then, you can use <IJS>config.respond</IJS> to update that object whenever
-        a new response is emitted.
+        While <IJS>installCuri</IJS> subscribes to your config object,
+        you will still need to wait for it to emit its first update before
+        you can render. To do that, you can pass the <IJS>{`{ once: true }`}</IJS>
+        {' '}option to a <IJS>config.respond</IJS> call.
       </p>
 
       <PrismBlock lang='javascript'>
         {
-`// 1. declare a variable for storing our Vue app
-let vm;
-// 2. subscribe to the configuration object so we can re-render
-// whenever a new response is created
-config.respond(response => {
-  // 3. create the Vue app if it doesn't exist
-  if (!vm) {
-    vm = new Vue({
-      el: '#app',
-      // 4. initialize the data with the first response object
-      data: { response },
-  
-      // 4. either use a template or a render function
-      // 4a. TEMPLATE
-      template: '<app :response="response" />',
-      components: { app: App },
-  
-      // 4b. RENDER FUNCTION
-      methods: {
-        render: function(h, resp) {
-          const { body } = resp;
-          return h(body, { params: resp.params });
-        }
-      },
-      render: function(h) {
-        return this.render(h, this.response);
-      }
-    });
-  }
-  // if the Vue app does exist, just update the response
-  else {
-    vm.response = response;
-  }
-});`
+`
+config.respond(() => {
+  const vm = new Vue({
+    el: '#app',
+      
+    // either use a template or a render function
+    // TEMPLATE
+    template: '<app />',
+    components: { app: App },
+
+    // RENDER FUNCTION
+    render: function(h) {
+      return h(this.$curi.response.body)
+    }
+  });
+}, { once: true });`
         }
       </PrismBlock>
     </Section>
