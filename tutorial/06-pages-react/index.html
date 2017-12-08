@@ -62,28 +62,7 @@ response: {
  partials: [],
  status: 200
 }
-*/</pre><div class="note"><strong>Note:</strong> <!-- -->The <a href="/guides/responses/#properties">Rendering with Responses</a> guide goes into more detail about each of the properties of a response object.</div><p>Your first thought about how to use a response to render might be to use <code class="language-javascript">response.name</code>. You <em>could</em> use a <code class="language-javascript">switch</code> <!-- -->to render different content based on the name.</p><pre class="language-jsx">function render(response) {
-  switch (response.name) {
-  case &#x27;Home&#x27;:
-    return &lt;Home /&gt;;
-  case &#x27;Contact&#x27;:
-    return &lt;Contact /&gt;;
-  }
-}</pre><p>Using <code class="language-javascript">response.name</code> grsow increasingly complex as you add more routes to your application. Instead, we are going to use one of the<!-- --> <code class="language-javascript">undefined</code> properties of the above response: <code class="language-javascript">body</code>. What is this property? The <code class="language-javascript">body</code> property of a response is set by calling the <code class="language-javascript">body</code> function property of a matched route.</p><pre class="language-jsx">const routes = [
-  {
-    name: &#x27;Home&#x27;,
-    path: &#x27;&#x27;,
-    body: () =&gt; &#x27;You are here!&#x27;
-  }
-];
-// when the user visits the location { pathname: &#x27;/&#x27; }, the
-// response will look like this:
-{
-  name: &#x27;Home&#x27;,
-  status: 200,
-  body: &#x27;You are here!&#x27;,
-  // ...
-}</pre><p>Instead of returning a string, what if <code class="language-javascript">route.body</code> returned React components? Then, our render function can use <code class="language-javascript">response.body</code> <!-- -->to render our website. We&#x27;ll expand on that later on, but for now, let&#x27;s go ahead and define the components for each of our routes.</p></div><div class="section"><h2 id="route-components">The Route Components<a class="header-link" href="/tutorial/06-pages-react#route-components">#</a></h2><p>To refresh your memory, we have &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, &quot;Book&quot;, &quot;Checkout&quot;, and &quot;Not Found&quot; pages that we will need to create components for. We can write some barebones components and add some more content later on.</p><p>Let&#x27;s create a <code class="language-javascript">components</code> directory inside of our <code class="language-javascript">src</code> <!-- -->directory. Then, we can add files for each route in there.</p><pre class="language-bash">mkdir -p src/components</pre><pre class="language-jsx">// components/Home.js
+*/</pre><div class="note"><strong>Note:</strong> <!-- -->The <a href="/guides/responses/#properties">Rendering with Responses</a> guide goes into more detail about each of the properties of a response object.</div><p>In <a href="/tutorial/03-routes">Part 3</a> of this tutorial, we added <code class="language-javascript">match.response</code> functions that set the<!-- --> <code class="language-javascript">body</code> property for each of our routes. There, we just used a placeholder string, but now we can actually set the component for each route. Instead of returning a string, what if <code class="language-javascript">set.body</code> set the <code class="language-javascript">body</code> to be a React component? Then, our render function can use the <code class="language-javascript">body</code> property of our response object to render our website. We&#x27;ll expand on that later on, but for now, let&#x27;s go ahead and define the components for each of our routes.</p></div><div class="section"><h2 id="route-components">The Route Components<a class="header-link" href="/tutorial/06-pages-react#route-components">#</a></h2><p>To refresh your memory, we have &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, &quot;Book&quot;, &quot;Checkout&quot;, and &quot;Not Found&quot; pages that we will need to create components for. We can write some barebones components and add some more content later on.</p><p>Let&#x27;s create a <code class="language-javascript">components</code> directory inside of our <code class="language-javascript">src</code> <!-- -->directory. Then, we can add files for each route in there.</p><pre class="language-bash">mkdir -p src/components</pre><pre class="language-jsx">// components/Home.js
 import React from &#x27;react&#x27;;
 const Home = () =&gt; (
   &lt;div className=&#x27;home&#x27;&gt;
@@ -125,7 +104,7 @@ const NotFound = () =&gt; (
     Page not found
   &lt;/div&gt;
 );
-export default NotFound;</pre><p>All of these components should be imported in our <code class="language-javascript">routes.js</code> and set as the return value of their respective route&#x27;s <code class="language-javascript">body</code> function.</p><pre class="language-javascript">// routes.js
+export default NotFound;</pre><p>All of these components should be imported in our <code class="language-javascript">routes.js</code>. We can now update our <code class="language-javascript">set.body()</code> calls to set the actual components as the <code class="language-javascript">body</code> property of responses.</p><pre class="language-javascript">// routes.js
 import Home from &#x27;./components/Home&#x27;;
 import Contact from &#x27;./components/Contact&#x27;;
 import BookList from &#x27;./components/BookList&#x27;;
@@ -137,36 +116,62 @@ const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;,
-    body: () =&gt; Home
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(Home);
+      }
+    }
   },
   {
     name: &#x27;Contact&#x27;,
     path: &#x27;contact&#x27;,
-    body: () =&gt; Contact
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(Contact);
+      }
+    }
   },
   {
     name: &#x27;Checkout&#x27;,
     path: &#x27;checkout&#x27;,
-    body: () =&gt; Checkout
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(Checkout);
+      }
+    }
   },
   {
     name: &#x27;Book List&#x27;,
     path: &#x27;books&#x27;,
-    body: () =&gt; BookList,
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(BookList);
+      }
+    },
     children: [
       {
         name: &#x27;Book&#x27;,
         path: &#x27;:id&#x27;,
-        body: () =&gt; Book
+        match: {
+          response: ({ set }) =&gt; {
+            set.body(Book);
+          }
+        }
       }
     ]
   },
   {
     name: &#x27;Not Found&#x27;,
     path: &#x27;(.*)&#x27;,
-    body: () =&gt; NotFound
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(NotFound);
+      }
+    }
   }
-];</pre><p>We can update our <code class="language-javascript">render</code> function now to use <code class="language-javascript">response.body</code>. This is also a good time to separate the render function from the component. This isn&#x27;t absolutely necessary, but can help keep the code cleaner.</p><pre class="language-jsx">// index.js
+];
+
+export default routes;</pre><p>Our <code class="language-javascript">render</code> function is now able to use <code class="language-javascript">response.body</code>. This is also a good time to separate the render function from the component. This isn&#x27;t absolutely necessary, but can help keep the code cleaner.</p><pre class="language-jsx">// index.js
 import renderFunction from &#x27;./render&#x27;;
 
 let root = document.getElementById(&#x27;root&#x27;);
@@ -221,7 +226,7 @@ export default function(response) {
       &lt;/main&gt;
     &lt;/div&gt;
   );
-}</pre><p>Now, we can navigate between most of our routes. However, we still need to add navigation to our books.</p></div><div class="section"><h2 id="param-navigation">Navigating to Our Books<a class="header-link" href="/tutorial/06-pages-react#param-navigation">#</a></h2><p>Our &quot;Book&quot; route is different than all of our other routes because the book path includes an <code class="language-javascript">id</code> param. This means that we need to actually have &quot;id&quot; values to pass to our <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s. Later on, we&#x27;ll generate some better data, but for now we can just generate a placeholder list in a module called <code class="language-javascript">books.js</code>.</p><pre class="language-jsx"> // books.js
+}</pre><p>With the <code class="language-jsx"><!-- -->&lt;<!-- -->NavLink<!-- -->&gt;</code>s, we can navigate between most of our routes. However, we still need to add navigation to our individual books.</p></div><div class="section"><h2 id="param-navigation">Navigating to Our Books<a class="header-link" href="/tutorial/06-pages-react#param-navigation">#</a></h2><p>Our &quot;Book&quot; route is different than all of our other routes because the book path includes an <code class="language-javascript">id</code> param. This means that we need to actually have &quot;id&quot; values to pass to our <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s. Later on, we&#x27;ll generate some better data, but for now we can just generate a placeholder list in a module called <code class="language-javascript">books.js</code>.</p><pre class="language-jsx"> // books.js
 const books = [
   { id: 0 },
   { id: 1 },
@@ -264,7 +269,7 @@ const Book = ({ response }) =&gt; (
   &lt;div className=&#x27;book&#x27;&gt;
     Book {response.params.id}
   &lt;/div&gt;
-);</pre></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/06-pages-react#review">#</a></h2><p>After completing this tutorial, we now have a semi-functional website that renders basic content for each of our pages.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/06-pages-react-complete">06-pages-react-complete</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/06-pages-react-complete" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/06-pages-react#next">#</a></h2><p>At this point, we have a website with a number of pages. It isn&#x27;t particularly useful yet, but at least we can navigate between pages. Next we will take a step back from React and learn how to implement data loading with<!-- --> <a href="/tutorial/07-load">Part 7: The Load Function</a>.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a class="active" href="/tutorial/06-pages-react">react</a></li><li><a href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-load">Part 7: The Load Function</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
+);</pre></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/06-pages-react#review">#</a></h2><p>After completing this tutorial, we now have a semi-functional website that renders basic content for each of our pages.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/06-pages-react-complete">06-pages-react-complete</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/06-pages-react-complete" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/06-pages-react#next">#</a></h2><p>At this point, we have a website with a number of pages. It isn&#x27;t particularly useful yet, but at least we can navigate between pages. Next we will take a step back from React and learn how to implement data loading with <a href="/tutorial/07-loading-data">Part 7: Loading Data</a>.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a class="active" href="/tutorial/06-pages-react">react</a></li><li><a href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-loading-data">Part 7: Loading Data</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

@@ -142,7 +142,7 @@ const Book = (props) =&gt; {
   );
 };
 
-export default Book;</pre></div><div class="section"><h2 id="checkout">The Checkout Page<a class="header-link" href="/tutorial/09-nav-react#checkout">#</a></h2><p>Now that we can add books to our shopping cart, we also should give the user the ability to buy them. Of course, this isn&#x27;t a real store website that we are building, so instead of asking for payment and shipping information, we will just redirect the user once they &quot;purchase&quot; their books.</p><p>Let&#x27;s start out in our <code class="language-javascript">routes.js</code> file. We want our &quot;Checkout&quot; page to know which books are in the shopping cart. We can use the<!-- --> <code class="language-javascript">load</code> function of the &quot;Checkout&quot; route to load all of the books and our shopping cart. We can merge the two together to create an array of items in the cart.</p><p>While we&#x27;re at it, we should also add one more route to our website. This will be a &quot;Checkout Complete&quot; route that we redirect to after a user has &quot;purchased&quot; their books.</p><pre class="language-javascript">// routes.js
+export default Book;</pre></div><div class="section"><h2 id="checkout">The Checkout Page<a class="header-link" href="/tutorial/09-nav-react#checkout">#</a></h2><p>Now that we can add books to our shopping cart, we also should give the user the ability to buy them. Of course, this isn&#x27;t a real store website that we are building, so instead of asking for payment and shipping information, we will just redirect the user once they &quot;purchase&quot; their books.</p><p>Let&#x27;s start out in our <code class="language-javascript">routes.js</code> file. We want our &quot;Checkout&quot; page to know which books are in the shopping cart. We can use the<!-- --> <code class="language-javascript">match.every</code> function of the &quot;Checkout&quot; route to load all of the books and our shopping cart. We can merge the two together to create an array of items in the cart.</p><p>While we&#x27;re at it, we should also add one more route to our website. This will be a &quot;Checkout Complete&quot; route that we redirect to after a user has &quot;purchased&quot; their books.</p><pre class="language-javascript">// routes.js
 import CheckoutComplete from &#x27;./components/CheckoutComplete&#x27;;
 
 import { getCart } from &#x27;./api/shoppingCart&#x27;;
@@ -152,12 +152,15 @@ const routes = [
   {
     name: &#x27;Checkout&#x27;,
     path: &#x27;checkout&#x27;,
-    body: () =&gt; Checkout,
-    load: (route, response, addons) =&gt; {
-      return Promise.all([
-        fetchAllBooks(),
-        getCart()
-      ]).then(([ books, cart ]) =&gt; {
+    match: {
+      every: () =&gt; {
+        return Promise.all([
+          fetchAllBooks(),
+          getCart()
+        ])
+        response: ({ resolved, set }) =&gt; {
+        set.body(Checkout)
+        
         /*
          * We will iterate over all of the items in
          * our shopping cart and find the matching
@@ -168,20 +171,25 @@ const routes = [
          * the &quot;items&quot; property of our response&#x27;s
          * data object.
          */ 
+        const [ books, cart ] = resolved.every;
         const items = Object.keys(cart).map(key =&gt; {
           const id = parseInt(key, 10);
           const count = cart[key];
           const book = books.find(b =&gt; b.id === id);
           return Object.assign({}, book, { count });
         });
-        response.setData({ items });
+        set.data({ items });
       });
     },
     children: [
       {
         name: &#x27;Checkout Complete&#x27;,
         path: &#x27;complete&#x27;,
-        body: () =&gt; CheckoutComplete
+        match: {
+          response({ set }) =&gt; {
+            set.body(CheckoutComplete);
+          }
+        }
       }
     ]
   }
@@ -262,7 +270,7 @@ class Checkout extends React.Component {
     }
     // ...
   }
-}</pre></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/09-nav-react#review">#</a></h2><p>We can now add books to our shopping cart and &quot;buy&quot; them from the checkout page.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/09-nav-react-complete">09-nav-react-complete</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/09-nav-react-complete" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div><div class="note"><strong>Note:</strong> <!-- -->The embedded sandbox will not work if your browser is blocking third-party data. If this is the case for you, you <em>could</em> disable this through your browser&#x27;s settings, but a better solution is to click the &quot;Edit on CodeSandbox&quot; button to view the sandbox there.</div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/09-nav-react#next">#</a></h2><p>With that, we have considered pretty much everything you need to know to get started building your website with Curi. We have one last part,<!-- --> <a href="/tutorial/10-now-what">Part 10: Now What?</a>, that gives some suggestions on what you can do with your new knowledge.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-load">Part 7: The Load Function</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a class="active" href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
+}</pre></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/09-nav-react#review">#</a></h2><p>We can now add books to our shopping cart and &quot;buy&quot; them from the checkout page.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/09-nav-react-complete">09-nav-react-complete</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/09-nav-react-complete" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div><div class="note"><strong>Note:</strong> <!-- -->The embedded sandbox will not work if your browser is blocking third-party data. If this is the case for you, you <em>could</em> disable this through your browser&#x27;s settings, but a better solution is to click the &quot;Edit on CodeSandbox&quot; button to view the sandbox there.</div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/09-nav-react#next">#</a></h2><p>With that, we have considered pretty much everything you need to know to get started building your website with Curi. We have one last part,<!-- --> <a href="/tutorial/10-now-what">Part 10: Now What?</a>, that gives some suggestions on what you can do with your new knowledge.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-loading-data">Part 7: Loading Data</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a class="active" href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

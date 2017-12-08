@@ -28,22 +28,19 @@ const config = createConfig(history, routes);
 // that will be called whenever the location changes
 config.respond((response, action) =&gt; {
   // handle any rendering inside of this function
-});</pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> guide.</p></div><div class="features"><h2>Features</h2><div class="feature"><h3>Framework Integration</h3><p>While Curi is a universal router, it still has to be integrated with whichever framework you are using to render your application. Currently, there are packages to easily use Curi with React and Vue applications (as well as one that provides basic Svelte support).</p><div class="code"><div class="description"><p>The <code class="language-javascript">body</code> function of routes can be used to attach a <code class="language-javascript">body</code> <!-- -->property to response objects. Generally, this attached value would be a function or component (this would vary based on how your framework renders), but it can be anything you want it to be.</p></div><pre class="language-javascript">// routes.js
+});</pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> guide.</p></div><div class="features"><h2>Features</h2><div class="feature"><h3>Framework Integration</h3><p>While Curi is a universal router, it still has to be integrated with whichever framework you are using to render your application. Currently, there are packages to easily use Curi with React and Vue applications (as well as one that provides basic Svelte support).</p><div class="code"><div class="description"><p>You can attach a <code class="language-javascript">body</code> property to response object. Generally, this attached value should be a function or component (this would vary based on how your framework renders), but it can be anything you want it to be.</p></div><pre class="language-javascript">// routes.js
+import User from &#x27;./components/User&#x27;;
+
 const routes = [
-  {
-    name: &#x27;Home&#x27;,
-    path: &#x27;&#x27;,
-    body: () =&gt; Home
-  },
+  // ...
   {
     name: &#x27;User&#x27;,
     path: &#x27;u/:userID&#x27;,
-    body: () =&gt; User
-  },
-  {
-    name: &#x27;Not Found&#x27;,
-    path: &#x27;(.*)&#x27;,
-    body: () =&gt; NotFound
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(User);
+      }
+    }
   }
 ];</pre></div><p>Links are used for navigating between locations within an application. Links handle URI formatting for you, all you have to do is know the name (and parameters) of the route that you want to link to.</p><div class="code"><div class="description"><p>The <code class="language-javascript">@curi/react</code> package provides a <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> component for rendering links in React applications.</p></div><pre class="language-jsx">import Link from &#x27;@curi/react-link&#x27;;
 
@@ -68,7 +65,7 @@ const NavLinks = () =&gt; (
   body: function() { return ... },
   params: { userID: &#x27;456&#x27; },
   ...
-}</pre></div><div class="code"><div class="description"><p><code class="language-javascript">data</code> can contain values that you load using a route&#x27;s <code class="language-javascript">load</code> <!-- -->function. The response won&#x27;t be be generated until after the <code class="language-javascript">load</code> <!-- -->function has resolved, so if you use this property, you don&#x27;t have to render a bunch of loading spinners or empty content while waiting for the data to be loaded.</p></div><pre class="language-javascript">{
+}</pre></div><div class="code"><div class="description"><p><code class="language-javascript">data</code> can contain values that you load using a route&#x27;s<!-- --> <code class="language-javascript">match.every</code> function. The response won&#x27;t be be generated until after the <code class="language-javascript">match.every</code> function has resolved, so if you use this property, you don&#x27;t have to render a bunch of loading spinners or empty content while waiting for the data to be loaded.</p></div><pre class="language-javascript">{
   ...,
   data: {
     username: &#x27;curi&#x27;,
@@ -88,12 +85,20 @@ const NavLinks = () =&gt; (
   {
     name: &#x27;Album&#x27;,
     path: &#x27;a/:albumID&#x27;,
-    body: () =&gt; Album,
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(Album);
+      }
+    },
     children: [
       {
         name: &#x27;Song&#x27;,
         path: &#x27;:songID&#x27;,
-        body: () =&gt; Song
+        match: {
+          response: ({ set }) =&gt; {
+            set.body(Song);
+          }
+        }
       }
     ]
   }
@@ -118,17 +123,19 @@ const pathname = config.addons.pathname(
   &#x27;Album&#x27;,
   { albumID: &#x27;3490&#x27; }
 );
-history.navigate({ pathname });</pre></div></div><div class="feature"><h3>Code Splitting</h3><div class="code"><div class="description"><p>Use the <code class="language-javascript">preload</code> and <code class="language-javascript">body</code> properties to add code splitting at your routes.</p><p><strong>Note:</strong> This relies on a bundler like Webpack.</p><p>You can learn more about this with the<!-- --> <a href="/guides/code-splitting/">code splitting</a> guide.</p></div><pre class="language-javascript">const store = {};
-
-const routes = [
+history.navigate({ pathname });</pre></div></div><div class="feature"><h3>Code Splitting</h3><div class="code"><div class="description"><p>Use the <code class="language-javascript">match.initial</code> and <code class="language-javascript">match.response</code> functions to add code splitting at your routes.</p><p><strong>Note:</strong> This relies on a bundler like Webpack.</p><p>You can learn more about this with the<!-- --> <a href="/guides/code-splitting/">code splitting</a> guide.</p></div><pre class="language-javascript">const routes = [
   {
     name: &#x27;User&#x27;,
     path: &#x27;users/:userID&#x27;,
-    preload: () =&gt; import(&#x27;./components/User&#x27;)
-      .then(module =&gt; {
-        store[&#x27;User&#x27;] = module.default;
-      }),
-    body: () =&gt; store[&#x27;User&#x27;]
+    match: {
+      initial: () =&gt; (
+        import(&#x27;./components/User&#x27;)
+          .then(module =&gt; module.default)
+      ),
+      response: ({ resolved, set }) =&gt; {
+        set.body(resolved.initial);
+      }
+    }
   }
   ...,
 ]</pre></div></div><div class="feature"><h3>Server Side Rendering</h3><div class="code"><div class="description"><p>Server side rendering is pretty much the same as client side rendering. The main difference is that you will use an in-memory history instead of a browser history.</p></div><pre class="language-jsx">import InMemory from &#x27;@hickory/in-memory&#x27;;

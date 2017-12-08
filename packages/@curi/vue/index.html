@@ -8,10 +8,13 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="package"><div class="content"><h1>@curi/<!-- -->vue</h1><div class="package-info"><div>v<!-- -->1.0.0-beta.8</div><a href="https://github.com/pshrmn/curi/tree/master/packages/vue"><img style="height:16px;margin-right:5px" src="/static/img/github-logo.png"/>GitHub Repo</a><a href="https://npmjs.com/package/@curi/vue"><img style="height:16px;margin-right:5px" src="/static/img/npm-logo.png"/>NPM Package</a></div><div class="section"><h2 id="about">About<a class="header-link" href="/packages/@curi/vue/#about">#</a></h2><p>This package enables you to use Curi alongside VueJS. This is more of a proof of concept than a fleshed out routing solution and only provides bare routing functionality.</p></div><div class="section"><h2 id="installation">Installation<a class="header-link" href="/packages/@curi/vue/#installation">#</a></h2><div><p>You can install the <code class="language-javascript">vue</code> package from NPM.</p><pre class="language-bash">npm install @curi/vue</pre></div><div><p>If you prefer to use script tags, <a href="https://unpkg.com">Unpkg</a> will always have the latest version of <code class="language-javascript">vue</code> available for you.</p><pre class="language-markup">&lt;script src=&quot;https://unpkg.com/@curi/vue@1.0.0-beta.8/dist/curi-vue.js&quot; /&gt;</pre><p>There is also a minimized version available if you change the filename to<!-- --> <code class="language-javascript"><!-- -->vue<!-- -->.min.js</code>. The package will be attached to the window as <code class="language-javascript"><!-- -->window.<!-- -->CuriVue</code>.</p></div></div><div class="section"><h2 id="API">API<a class="header-link" href="/packages/@curi/vue/#API">#</a></h2><div class="section"><h3 id="curiplugin">CuriPlugin<a class="header-link" href="/packages/@curi/vue/#curiplugin">#</a></h3><p>curi-vue exports a Vue plugin that you can use to add Curi support to a Vue application. The plugin is passed to Vue using the use method. Along with the plugin, you will need to pass your Curi configuration object to <code class="language-javascript">Vue.use</code>.</p><pre class="language-javascript">import CuriPlugin from &#x27;@curi/vue&#x27;;
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="package"><div class="content"><h1>@curi/<!-- -->vue</h1><div class="package-info"><div>v<!-- -->1.0.0-beta.10</div><a href="https://github.com/pshrmn/curi/tree/master/packages/vue"><img style="height:16px;margin-right:5px" src="/static/img/github-logo.png"/>GitHub Repo</a><a href="https://npmjs.com/package/@curi/vue"><img style="height:16px;margin-right:5px" src="/static/img/npm-logo.png"/>NPM Package</a></div><div class="section"><h2 id="about">About<a class="header-link" href="/packages/@curi/vue/#about">#</a></h2><p>This package enables you to use Curi alongside VueJS. This is more of a proof of concept than a fleshed out routing solution and only provides bare routing functionality.</p></div><div class="section"><h2 id="installation">Installation<a class="header-link" href="/packages/@curi/vue/#installation">#</a></h2><div><p>You can install the <code class="language-javascript">vue</code> package from NPM.</p><pre class="language-bash">npm install @curi/vue</pre></div><div><p>If you prefer to use script tags, <a href="https://unpkg.com">Unpkg</a> will always have the latest version of <code class="language-javascript">vue</code> available for you.</p><pre class="language-markup">&lt;script src=&quot;https://unpkg.com/@curi/vue@1.0.0-beta.10/dist/curi-vue.js&quot; /&gt;</pre><p>There is also a minimized version available if you change the filename to<!-- --> <code class="language-javascript"><!-- -->vue<!-- -->.min.js</code>. The package will be attached to the window as <code class="language-javascript"><!-- -->window.<!-- -->CuriVue</code>.</p></div></div><div class="section"><h2 id="API">API<a class="header-link" href="/packages/@curi/vue/#API">#</a></h2><div class="section"><h3 id="installCuri">installCuri<a class="header-link" href="/packages/@curi/vue/#installCuri">#</a></h3></div><p>The <code class="language-javascript">installCuri</code> will install a Vue plugin that adds Curi support to your Vue instance. This will also automatically subscribe to your Curi configuration object so that your application will re-render whenever a new response is emitted.</p><pre class="language-javascript">import { installCuri } from &#x27;@curi/vue&#x27;;
 
 const config = createConfig(history, routes);
-Vue.use(CuriPlugin, { config });</pre><p>This will do two things. First, it will register a <code class="language-javascript">curi-link</code> component with Vue. You can use that component to navigate within your application. Second, it makes your configuration a global Vue property, which you can then access as <code class="language-javascript">Vue.Curi</code>.</p><div class="subsection"><h4 id="components">Components<a class="header-link" href="/packages/@curi/vue/#components">#</a></h4><p><code class="language-javascript">CuriPlugin</code> will register a few components that you can use throughout your application.</p><div class="subsection"><h5 id="link"><code class="language-jsx">&lt;<!-- -->curi-link<!-- -->&gt;</code><a class="header-link" href="/packages/@curi/vue/#link">#</a></h5><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> component will render an anchor (<code class="language-jsx"><!-- -->&lt;<!-- -->a<!-- -->&gt;</code>) element. It can take three props:</p><ul><li><code class="language-javascript">to</code> - The name of the route to navigate to. <em>This is required</em>.</li><li><code class="language-javascript">params</code> - An object containing the key-value params for the route. For example, if you are linking to a route with the path <code class="language-javascript">album/:title</code>, the params object should have a<!-- --> <code class="language-javascript">title</code> property.</li><li><code class="language-javascript">details</code> - An object containing additional location properties that should be used for generating the anchor&#x27;s <code class="language-javascript">href</code>. These additional properties may be <code class="language-javascript">query</code>, <code class="language-javascript">hash</code>, and<!-- --> <code class="language-javascript">state</code> (which isn&#x27;t actually part of the <code class="language-javascript">href</code>).</li></ul><p>Additionally, any slots that you pass to the <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> will be rendered inside of the anchor.</p><pre class="language-html">&lt;curi-link to=&#x27;Album&#x27; :params=&quot;{ title: &#x27;Coloring Book&#x27; }&quot;&gt;Coloring Book&lt;/curi-link&gt;</pre></div><div class="subsection"><h5 id="block"><code class="language-jsx">&lt;<!-- -->curi-block<!-- -->&gt;</code><a class="header-link" href="/packages/@curi/vue/#block">#</a></h5><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-block<!-- -->&gt;</code> component can be used to automatically block navigation from a page. This will only block in-app navigation. If the user attempts to leave your application, they will not be blocked.</p><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-block<!-- -->&gt;</code> expects two props: <code class="language-javascript">action</code> and <code class="language-javascript">confirm</code>.</p><ul><li><code class="language-javascript">active</code> - When this is true, navigation will be blocked and when it is false, navigation will be allowed. If you do not provide this prop, it will default to <code class="language-javascript">true</code>.</li><li><code class="language-javascript">confirm</code> - The function that will be called to confirm/deny the navigation.</li></ul><pre class="language-html">&lt;template&gt;
+installCuri(Vue, config);</pre><div class="section"><h3 id="curiplugin">CuriPlugin<a class="header-link" href="/packages/@curi/vue/#curiplugin">#</a></h3><p>If you would prefer to install the Curi Vue plugin yourself, you can also import it directly.</p><p>What does the plugin do? First, it will register <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> and<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->curi-block<!-- -->&gt;</code> components with Vue. You can use these components anywhere within your application. Second, it makes your configuration object and any response/action properties reactive Vue properties. These values are grouped under the <code class="language-javascript">$curi</code> variable as <code class="language-javascript">$curi.config</code>, <code class="language-javascript">$curi.response</code>, and <code class="language-javascript">$curi.action</code>.</p><pre class="language-javascript">import { CuriPlugin } from &#x27;@curi/vue&#x27;;
+
+const config = createConfig(history, routes);
+Vue.use(CuriPlugin, { config });</pre><div class="subsection"><h4 id="components">Components<a class="header-link" href="/packages/@curi/vue/#components">#</a></h4><p><code class="language-javascript">CuriPlugin</code> will register a few components that you can use throughout your application.</p><div class="subsection"><h5 id="link"><code class="language-jsx">&lt;<!-- -->curi-link<!-- -->&gt;</code><a class="header-link" href="/packages/@curi/vue/#link">#</a></h5><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> component will render an anchor (<code class="language-jsx"><!-- -->&lt;<!-- -->a<!-- -->&gt;</code>) element. It can take three props:</p><ul><li><code class="language-javascript">to</code> - The name of the route to navigate to. <em>This is required</em>.</li><li><code class="language-javascript">params</code> - An object containing the key-value params for the route. For example, if you are linking to a route with the path <code class="language-javascript">album/:title</code>, the params object should have a<!-- --> <code class="language-javascript">title</code> property.</li><li><code class="language-javascript">details</code> - An object containing additional location properties that should be used for generating the anchor&#x27;s <code class="language-javascript">href</code>. These additional properties may be <code class="language-javascript">query</code>, <code class="language-javascript">hash</code>, and<!-- --> <code class="language-javascript">state</code> (which isn&#x27;t actually part of the <code class="language-javascript">href</code>).</li></ul><p>Additionally, any slots that you pass to the <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> will be rendered inside of the anchor.</p><pre class="language-html">&lt;curi-link to=&#x27;Album&#x27; :params=&quot;{ title: &#x27;Coloring Book&#x27; }&quot;&gt;Coloring Book&lt;/curi-link&gt;</pre></div><div class="subsection"><h5 id="block"><code class="language-jsx">&lt;<!-- -->curi-block<!-- -->&gt;</code><a class="header-link" href="/packages/@curi/vue/#block">#</a></h5><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-block<!-- -->&gt;</code> component can be used to automatically block navigation from a page. This will only block in-app navigation. If the user attempts to leave your application, they will not be blocked.</p><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-block<!-- -->&gt;</code> expects two props: <code class="language-javascript">action</code> and <code class="language-javascript">confirm</code>.</p><ul><li><code class="language-javascript">active</code> - When this is true, navigation will be blocked and when it is false, navigation will be allowed. If you do not provide this prop, it will default to <code class="language-javascript">true</code>.</li><li><code class="language-javascript">confirm</code> - The function that will be called to confirm/deny the navigation.</li></ul><pre class="language-html">&lt;template&gt;
   &lt;div&gt;
     &lt;!-- ... --&gt;
     &lt;curi-block :active=&quot;active&quot; :confirm=&quot;confirm&quot; /&gt;
@@ -38,7 +41,7 @@ Vue.use(CuriPlugin, { config });</pre><p>This will do two things. First, it will
 &lt;template&gt;
   &lt;div&gt;
     &lt;Nav /&gt;
-    &lt;component :is=&quot;response.body&quot; :params=&quot;response.params&quot; :data=&quot;response.data&quot; /&gt;
+    &lt;component :is=&quot;$curi.response.body&quot; /&gt;
   &lt;/div&gt;
 &lt;/template&gt;
 
@@ -46,51 +49,33 @@ Vue.use(CuriPlugin, { config });</pre><p>This will do two things. First, it will
   import Nav from &#x27;./Nav&#x27;;
   export default {
     name: &#x27;app&#x27;,
-    props: [&#x27;response&#x27;],
     components: { Nav }
   }
 &lt;/script&gt;
 </pre><pre class="language-javascript">// renderFunction.js
 import Nav from &#x27;./Nav&#x27;;
-export default function renderFunction(h, resp) {
+export default function renderFunction(h) {
   return h(&#x27;div&#x27;, [
     h(Nav),
-    h(resp.body, { props: { params: resp.params, data: resp.data } })
+    h(this.$curi.resp.body)
   ]);
-}</pre><p>To actually render the application, you will want to make <code class="language-javascript">response</code> an observed property of your application. Then, you can use <code class="language-javascript">config.respond</code> to update that object whenever a new response is emitted.</p><pre class="language-javascript">// 1. declare a variable for storing our Vue app
-let vm;
-// 2. subscribe to the configuration object so we can re-render
-// whenever a new response is created
-config.respond(response =&gt; {
-  // 3. create the Vue app if it doesn&#x27;t exist
-  if (!vm) {
-    vm = new Vue({
-      el: &#x27;#app&#x27;,
-      // 4. initialize the data with the first response object
-      data: { response },
-  
-      // 4. either use a template or a render function
-      // 4a. TEMPLATE
-      template: &#x27;&lt;app :response=&quot;response&quot; /&gt;&#x27;,
-      components: { app: App },
-  
-      // 4b. RENDER FUNCTION
-      methods: {
-        render: function(h, resp) {
-          const { body } = resp;
-          return h(body, { params: resp.params });
-        }
-      },
-      render: function(h) {
-        return this.render(h, this.response);
-      }
-    });
-  }
-  // if the Vue app does exist, just update the response
-  else {
-    vm.response = response;
-  }
-});</pre></div></div><div class="sidebar"><h2>Packages</h2><ul><li class="link-group"><h3>core</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/core/">core</a></li></ul></li><li class="link-group"><h3>addon</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/addon-active/">addon-active</a></li><li class="solo"><a href="/packages/@curi/addon-ancestors/">addon-ancestors</a></li><li class="solo"><a href="/packages/@curi/addon-prefetch/">addon-prefetch</a></li></ul></li><li class="link-group"><h3>side-effect</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/side-effect-title/">side-effect-title</a></li><li class="solo"><a href="/packages/@curi/side-effect-scroll/">side-effect-scroll</a></li></ul></li><li class="link-group"><h3>renderer</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/react/">react</a></li><li class="solo"><a href="/packages/@curi/svelte/">svelte</a></li><li class="solo"><a class="active" href="/packages/@curi/vue/">vue</a></li></ul></li><li class="link-group"><h3>redux</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/redux/">redux</a></li></ul></li></ul></div></div></main></div></div>
+}</pre><p>While <code class="language-javascript">installCuri</code> subscribes to your config object, you will still need to wait for it to emit its first update before you can render. To do that, you can pass the <code class="language-javascript">{ once: true }</code> <!-- -->option to a <code class="language-javascript">config.respond</code> call.</p><pre class="language-javascript">
+
+config.respond(() =&gt; {
+  const vm = new Vue({
+    el: &#x27;#app&#x27;,
+      
+    // either use a template or a render function
+    // TEMPLATE
+    template: &#x27;&lt;app /&gt;&#x27;,
+    components: { app: App },
+
+    // RENDER FUNCTION
+    render: function(h) {
+      return h(this.$curi.response.body)
+    }
+  });
+}, { once: true });</pre></div></div><div class="sidebar"><h2>Packages</h2><ul><li class="link-group"><h3>core</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/core/">core</a></li></ul></li><li class="link-group"><h3>addon</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/addon-active/">addon-active</a></li><li class="solo"><a href="/packages/@curi/addon-ancestors/">addon-ancestors</a></li><li class="solo"><a href="/packages/@curi/addon-prefetch/">addon-prefetch</a></li></ul></li><li class="link-group"><h3>side-effect</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/side-effect-title/">side-effect-title</a></li><li class="solo"><a href="/packages/@curi/side-effect-scroll/">side-effect-scroll</a></li></ul></li><li class="link-group"><h3>renderer</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/react/">react</a></li><li class="solo"><a href="/packages/@curi/svelte/">svelte</a></li><li class="solo"><a class="active" href="/packages/@curi/vue/">vue</a></li></ul></li><li class="link-group"><h3>redux</h3><ul class="link-list"><li class="solo"><a href="/packages/@curi/redux/">redux</a></li></ul></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

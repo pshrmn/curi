@@ -37,27 +37,68 @@
       }
     ]
   }
-];</pre><div class="subsection"><h3 id="wildcard">Wildcard Routes<a class="header-link" href="/tutorial/03-routes#wildcard">#</a></h3><p>We have one last &quot;route&quot; to define. This isn&#x27;t really a route, just a catch all that we can use to identify locations that we don&#x27;t have a route defined for. <code class="language-javascript">path-to-regexp</code> allows us to capture everything using the path string <code class="language-javascript">(.*)</code>.</p><div class="note"><strong>Note:</strong> <code class="language-javascript">(.*)</code> uses another of the special <code class="language-javascript">path-to-regexp</code> <!-- -->formats. If you provide a regular expression within parentheses,<!-- --> <code class="language-javascript">path-to-regexp</code> will only match content that is matched by the regular expression. This can also be paired with a named path param (e.g. <code class="language-javascript">:id(\d{4})</code>), but is not necessary.</div><p>Since the regular expression <code class="language-javascript">.*</code> <!-- -->matches everything, we can use this to match all possible pathnames that someone using the website might navigate to.</p><pre class="language-javascript">const routes = [
-  { name: &#x27;Home&#x27;, path: &#x27;&#x27; },
-  { name: &#x27;Contact&#x27;, path: &#x27;contact&#x27; },
-  { name: &#x27;Checkout&#x27;, path: &#x27;checkout&#x27; },
+];</pre><div class="subsection"><h3 id="route-match">route.match<a class="header-link" href="/tutorial/03-routes#route-match">#</a></h3><p>We don&#x27;t need it quite yet, but we should quickly cover another one of the properties of a route: <code class="language-javascript">match</code>. The <code class="language-javascript">match</code> <!-- -->property is where we can provide functions that will be called when the route matches. There are three valid functions: <code class="language-javascript">initial</code>,<!-- --> <code class="language-javascript">every</code>, and <code class="language-javascript">response</code>.</p><p>We won&#x27;t be using the <code class="language-javascript">initial</code> function, but you can read more about it in the <a href="/guides/code-splitting/">Code Splitting</a> guide. The <code class="language-javascript">every</code> function will be used later on, but for now, we only care about the <code class="language-javascript">response</code> function.</p><p>The <code class="language-javascript">response</code> function gives us an opportunity to set some properties on the response object before it is emitted. <code class="language-javascript">response</code> receives an object with are a bunch of properties (which you can read about<!-- --> <a href="/guides/routes/#response">here</a>), but right now we only care about the <code class="language-javascript">set</code> object.</p><p>The <code class="language-javascript">set</code> object has functions that can be called to modify the response object. For example, calling <code class="language-javascript">set.body(&#x27;Hi!&#x27;)</code> <!-- -->will set the <code class="language-javascript">body</code> property of the response to &quot;Hi!&quot;. Let&#x27;s go ahead and add <code class="language-javascript">match.response</code> functions to each of our routes. We don&#x27;t really have anything to set as the body, so we&#x27;ll just use the route&#x27;s name as a placeholder.</p><pre class="language-javascript">const routes = [
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(&#x27;Home&#x27;);
+      }
+    }
+  },
+  {
+    name: &#x27;Contact&#x27;,
+    path: &#x27;contact&#x27;,
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(&#x27;Contact&#x27;);
+      }
+    }
+  },
+  {
+    name: &#x27;Checkout&#x27;,
+    path: &#x27;checkout&#x27;,
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(&#x27;Checkout&#x27;);
+      }
+    }
+  },
   {
     name: &#x27;Book List&#x27;,
     path: &#x27;books&#x27;,
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(&#x27;Book List&#x27;);
+      }
+    },
     children: [
       {
         name: &#x27;Book&#x27;,
-        path: &#x27;:id&#x27;
+        path: &#x27;:id&#x27;,
+        match: {
+          response: ({ set }) =&gt; {
+            set.body(&#x27;Book&#x27;);
+          }
+        }
       }
     ]
-  },
+  }
+];</pre><p>Now, if a user visits the <code class="language-javascript">/books</code> page, the response object will include a <code class="language-javascript">body</code> property whose value is &quot;Book List&quot;.</p></div><div class="subsection"><h3 id="wildcard">Wildcard Routes<a class="header-link" href="/tutorial/03-routes#wildcard">#</a></h3><p>We have one last &quot;route&quot; to define. This isn&#x27;t really a route, just a catch all that we can use to identify locations that we don&#x27;t have a route defined for. <code class="language-javascript">path-to-regexp</code> allows us to capture everything using the path string <code class="language-javascript">(.*)</code>.</p><div class="note"><strong>Note:</strong> <code class="language-javascript">(.*)</code> uses another of the special <code class="language-javascript">path-to-regexp</code> <!-- -->formats. If you provide a regular expression within parentheses,<!-- --> <code class="language-javascript">path-to-regexp</code> will only match content that is matched by the regular expression. This can also be paired with a named path param (e.g. <code class="language-javascript">:id(\d{4})</code>), but is not necessary.</div><p>Since the regular expression <code class="language-javascript">.*</code> <!-- -->matches everything, we can use this to match all possible pathnames that someone using the website might navigate to.</p><pre class="language-javascript">const routes = [
+  // ...,
   {
     name: &#x27;Not Found&#x27;,
-    path: &#x27;(.*)&#x27;
+    path: &#x27;(.*)&#x27;,
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(&#x27;Not Found&#x27;);
+      }
+    }
   }
 ];
 // don&#x27;t forget to export the routes
-export default routes;</pre></div><div class="subsection"><h3 id="order">Route Order<a class="header-link" href="/tutorial/03-routes#order">#</a></h3><p>One last thing to note about routes is that their order in the routes array is important. Curi will iterate over them in (depth-first) order. This means that with the above config, Curi will first check if <code class="language-javascript">&#x27;&#x27;</code> matches the pathname, if it does not, it will move on to <code class="language-javascript">&#x27;contact&#x27;</code>, so on and so forth. If no other routes match, then we know that our &quot;Not Found&quot; route will.</p><p>Curi will only attempt to match children routes if their parent route (partially) matches the location&#x27;s pathname. That means that when the pathname is <code class="language-javascript">&#x27;/somewhere&#x27;</code>, because our &quot;Book List&quot; route does not match, Curi will not attempt to match our &quot;Book&quot; route.</p></div></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/03-routes#review">#</a></h2><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/03-routes-complete">03-routes-complete</a>.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/03-routes#next">#</a></h2><p>Now that our routes are defined, it is time to talk about history in <!-- --> <a href="/tutorial/04-hickory">Part 4: Hickory</a></p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a class="active" href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-load">Part 7: The Load Function</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
+export default routes;</pre></div><div class="subsection"><h3 id="order">Route Order<a class="header-link" href="/tutorial/03-routes#order">#</a></h3><p>One last thing to note about routes is that their order in the routes array is important. Curi will iterate over them in (depth-first) order. This means that with the above config, Curi will first check if <code class="language-javascript">&#x27;&#x27;</code> matches the pathname, if it does not, it will move on to <code class="language-javascript">&#x27;contact&#x27;</code>, so on and so forth. If no other routes match, then we know that our &quot;Not Found&quot; route will.</p><p>Curi will only attempt to match children routes if their parent route (partially) matches the location&#x27;s pathname. That means that when the pathname is <code class="language-javascript">&#x27;/somewhere&#x27;</code>, because our &quot;Book List&quot; route does not match, Curi will not attempt to match our &quot;Book&quot; route.</p></div></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/03-routes#review">#</a></h2><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/03-routes-complete">03-routes-complete</a>.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/03-routes#next">#</a></h2><p>Now that our routes are defined, it is time to talk about history in <!-- --> <a href="/tutorial/04-hickory">Part 4: Hickory</a></p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a class="active" href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-loading-data">Part 7: Loading Data</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

@@ -21,21 +21,29 @@ function render(response, config) {
 
 ReactDOM.render((
   &lt;Navigator config={config} render={render} /&gt;
-), holder);</pre><p>You <em>can</em> define your render function inline, but typically it is easier to define the function in its own module and import it wherever you are rendering your Navigator. Inlining would also mean that the function gets recreated every time that the Navigator is re-rendered by its parent, which is not ideal.</p><p>The primary property of the response object that you will find useful is<!-- --> <code class="language-javascript">body</code>. The body property is the value returned by the matched route&#x27;s body function. Since this is a React guide, this value should be a React component that will render the contents of the page for a specific route. For example, a Home component might render the contents of your homepage while an About component might render a page describing your application.</p><pre class="language-javascript">import Home from &#x27;./components/Home&#x27;;
+), holder);</pre><p>You <em>can</em> define your render function inline, but typically it is easier to define the function in its own module and import it wherever you are rendering your Navigator. Inlining would also mean that the function gets recreated every time that the Navigator is re-rendered by its parent, which is not ideal.</p><p>The primary property of the response object that you will find useful is<!-- --> <code class="language-javascript">body</code>. The body property is the value set by calling <code class="language-javascript">set.body()</code> <!-- -->in the route&#x27;s <code class="language-javascript">match.response</code> function. Since this is a React guide, this value should be a React component that will render the contents of the page for a specific route. For example, a <code class="language-jsx"><!-- -->&lt;<!-- -->Home<!-- -->&gt;</code> component might render the contents of your homepage while an <code class="language-jsx"><!-- -->&lt;<!-- -->About<!-- -->&gt;</code> component might render a page describing your application.</p><pre class="language-javascript">import Home from &#x27;./components/Home&#x27;;
 import About from &#x27;./components/About&#x27;;
 
 const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;,
-    body: () =&gt; Home
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(Home);
+      }
+    }
   },
   {
     name: &#x27;About&#x27;,
     path: &#x27;about&#x27;,
-    body: () =&gt; About
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(About);
+      }
+    }
   }
-]</pre><p>When the body property of a response is <code class="language-javascript">undefined</code>, that means that none of your routes matched the new location and you should render some sort of 404/page not found component. You may also want to add a catch all route (one whose path is <code class="language-javascript">*</code>) so that you can expect to always have a body property on the response.</p><pre class="language-javascript">function render(response) {
+]</pre><p>When the body property of a response is <code class="language-javascript">undefined</code>, that means that none of your routes matched the new location and you should render some sort of 404/page not found component. You may also want to add a catch all route (one whose path is <code class="language-javascript">(.*)</code>) so that you can expect to always have a <code class="language-javascript">body</code> property on the response.</p><pre class="language-javascript">function render(response) {
   const { body:Body } = response;
   return &lt;Body /&gt;;
 }</pre><div class="note"><strong>Note:</strong> <!-- -->We rename &quot;body&quot; to &quot;Body&quot; so that the JSX is<!-- --> <a href="https://facebook.github.io/react/docs/jsx-in-depth.html#user-defined-components-must-be-capitalized">transformed properly</a>.</div><p>You can review all of the response properties in the<!-- --> <a href="/guides/responses/#properties">Rendering with Responses</a> guide. The other ones that you will most likely be interested in are<code class="language-javascript">params</code> and <code class="language-javascript">data</code>.</p><pre class="language-javascript">function render(response) {
@@ -74,7 +82,7 @@ const routes = [
 
 // while rendering this will not cause a reload
 &lt;Link to=&#x27;About&#x27;&gt;About&lt;/Link&gt;
-</pre><p>Both of the above elements render the same thing to the page, an anchor element, but the &quot;magic&quot; is the Link&#x27;s usage of your history object.</p><div class="note"><strong>Note:</strong> <!-- -->This does not cover all of the Link props. Please check out the<!-- --> <a href="/packages/@curi/react/#Link">Link</a> API docs to learn more about the other props.</div></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/routes/">All About Routes</a></li><li class="solo"><a href="/guides/responses/">Rendering with Responses</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Addons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting with the Preload Property</a></li><li class="solo"><a href="/guides/load/">The Load Property</a></li><li class="solo"><a class="active" href="/guides/react/">React Basics</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
+</pre><p>Both of the above elements render the same thing to the page, an anchor element, but the &quot;magic&quot; is the Link&#x27;s usage of your history object.</p><div class="note"><strong>Note:</strong> <!-- -->This does not cover all of the Link props. Please check out the<!-- --> <a href="/packages/@curi/react/#Link">Link</a> API docs to learn more about the other props.</div></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/routes/">All About Routes</a></li><li class="solo"><a href="/guides/responses/">Rendering with Responses</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Addons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class="active" href="/guides/react/">React Basics</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

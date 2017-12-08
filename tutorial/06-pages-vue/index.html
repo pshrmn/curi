@@ -26,12 +26,12 @@ const config = {
       }
     ]
   }
-};</pre></div><div class="section"><h2 id="package"><span>The <code class="language-javascript">@curi/vue</code> Package</span><a class="header-link" href="/tutorial/06-pages-vue#package">#</a></h2><p>The <code class="language-javascript">@curi/vue</code> package exports a Vue plugin, which provides components that know how to interact with Curi. For this tutorial, we will only be using one: <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>. You can read more about the package in the<!-- --> <a href="/packages/@curi/vue/#API"><code class="language-javascript">@curi/vue</code> documentation</a>.</p><div class="subsection"><h3 id="installation">Installation<a class="header-link" href="/tutorial/06-pages-vue#installation">#</a></h3><p>Let&#x27;s start by installing the <code class="language-javascript">@curi/vue</code> package as well as Vue.</p><pre class="language-bash">npm install @curi/vue vue</pre></div><div class="subsection"><h3 id="plugin">The Plugin<a class="header-link" href="/tutorial/06-pages-vue#plugin">#</a></h3><p>The <code class="language-javascript">CuriPlugin</code> exported by <code class="language-javascript">@curi/vue</code>, should be registered with Vue after the Curi configuration object has been created. When registering it (via <code class="language-javascript">Vue.use</code>), you should pass a second argument: an object with a <code class="language-javascript">config</code> property whose value is your Curi configuration object.</p><pre class="language-javascript">// index.js
+};</pre></div><div class="section"><h2 id="package"><span>The <code class="language-javascript">@curi/vue</code> Package</span><a class="header-link" href="/tutorial/06-pages-vue#package">#</a></h2><p>The <code class="language-javascript">@curi/vue</code> package exports a Vue plugin, which provides components that know how to interact with Curi. For this tutorial, we will only be using one: <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>. You can read more about the package in the<!-- --> <a href="/packages/@curi/vue/#API"><code class="language-javascript">@curi/vue</code> documentation</a>.</p><div class="subsection"><h3 id="installation">Installation<a class="header-link" href="/tutorial/06-pages-vue#installation">#</a></h3><p>Let&#x27;s start by installing the <code class="language-javascript">@curi/vue</code> package as well as Vue.</p><pre class="language-bash">npm install @curi/vue vue</pre></div><div class="subsection"><h3 id="plugin">The Plugin<a class="header-link" href="/tutorial/06-pages-vue#plugin">#</a></h3><p>The <code class="language-javascript">CuriPlugin</code> exported by <code class="language-javascript">@curi/vue</code>, should be registered with Vue after the Curi configuration object has been created. The plugin does a couple things. First, it will make your Curi configuration object and new responses/actions accessible to every component as through the <code class="language-javascript">this.$curi</code> object. Second, it will register Curi specific components. For this tutorial, the only component that we care about is <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>.</p><p>Instead of having to register the plugin manually (via<!-- --> <code class="language-javascript">Vue.use</code>), <code class="language-javascript">@curi/vue</code> also exports an<!-- --> <code class="language-javascript">installCuri</code> function that will handle that for you. The install function will also subscribe to your Curi configuration object to handle new responses.</p><pre class="language-javascript">// index.js
 import Vue from &#x27;vue&#x27;;
-import CuriPlugin from &#x27;@curi/vue&#x27;;
+import { installCuri } from &#x27;@curi/vue&#x27;;
 
 const config = createConfig(history, routes);
-Vue.use(CuriPlugin, { config });</pre><p>This plugins does a couple things. First, it will make your Curi configuration object accessible to every component as<!-- --> <code class="language-javascript">this.$curi</code>. Second, it will register Curi specific components. For this tutorial, the only component that we care about is <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>.</p></div><div class="subsection"><h3 id="Link"><span>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> Component</span><a class="header-link" href="/tutorial/06-pages-vue#Link">#</a></h3><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> component renders anchor (<code class="language-jsx"><!-- -->&lt;<!-- -->a<!-- -->&gt;</code>) elements. However, unlike an anchor, we don&#x27;t actually have to write the URI that we want to navigate to (the <code class="language-javascript">href</code>). Instead, you use the <code class="language-javascript">to</code> prop to pass the name of the route that you want to navigate to.</p><pre class="language-jsx">&lt;curi-link to=&#x27;Home&#x27;&gt;Home&lt;/curi-link&gt;
+installCuri(Vue, config);</pre></div><div class="subsection"><h3 id="Link"><span>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> Component</span><a class="header-link" href="/tutorial/06-pages-vue#Link">#</a></h3><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> component renders anchor (<code class="language-jsx"><!-- -->&lt;<!-- -->a<!-- -->&gt;</code>) elements. However, unlike an anchor, we don&#x27;t actually have to write the URI that we want to navigate to (the <code class="language-javascript">href</code>). Instead, you use the <code class="language-javascript">to</code> prop to pass the name of the route that you want to navigate to.</p><pre class="language-jsx">&lt;curi-link to=&#x27;Home&#x27;&gt;Home&lt;/curi-link&gt;
 // &lt;a href=&#x27;/&#x27;&gt;Home&lt;/a&gt;</pre><p>If the route that you are navigating to has any params, you pass them using the <code class="language-javascript">params</code> prop.</p><pre class="language-jsx">// { name: &#x27;Book&#x27;, path: &#x27;:id&#x27; }
 // (inherits &#x27;books&#x27; path from parent route)
 &lt;curi-link to=&#x27;Book&#x27; params={{ id: 1357 }}&gt;
@@ -43,36 +43,23 @@ Vue.use(CuriPlugin, { config });</pre><p>This plugins does a couple things. Firs
 // &lt;a href=&#x27;/contact#email&gt;Contact by Email&lt;/a&gt;</pre><div class="note"><strong>Note:</strong> <!-- -->If you want to navigate outside of the application, use an anchor not a <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>.<pre class="language-jsx">// interal
 &lt;curi-link to=&#x27;Contact&#x27;&gt;Contact&lt;/curi-link&gt;
 // external
-&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</pre></div></div></div><div class="section"><h2 id="response">The Response<a class="header-link" href="/tutorial/06-pages-vue#response">#</a></h2><p>Being able to access the Curi configuration object is nice, but what we really need is to access the response objects that are emitted by Curi whenever the location changes. We can do this using the <code class="language-javascript">respond</code> method that we covered in the <a href="/tutorial/05-config">configuration object</a> <!-- -->tutorial.</p><p>First, we need to have a variable that will be used to store our Vue instance. Then, we will subscribe to the configuration object with a response handler function.</p><pre class="language-javascript">// index.js
-let vm;
-config.respond(response =&gt; {
-  // ...
-});</pre><p>Inside of the response handler function, we have two branches. The first is when we don&#x27;t have a Vue instance. When that is the case, we should create a new Vue instance. When we already have a Vue instance, we just need to update the <code class="language-javascript">response</code> object on the Vue instance.</p><p>When we are creating a Vue instance, the response object should be passed as a data property to the instance. We will have our Vue instance render an <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> component, which we will define next. The <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> is passed the <code class="language-javascript">response</code> object as a prop, which it will use to determine what to render.</p><p>When we are updating a Vue instance, we just need to set the new property on the Vue instance and Vue&#x27;s reactivity will handle re-rendering the application.</p><pre class="language-javascript">// index.js
-import app from &#x27;./components/App&#x27;;
+&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</pre></div></div></div><div class="section"><h2 id="response">The Response<a class="header-link" href="/tutorial/06-pages-vue#response">#</a></h2><p>Being able to access the Curi configuration object is nice, but what we really need is to access the response objects that are emitted by Curi whenever the location changes. We <em>could</em> use the <code class="language-javascript">config.respond</code> method that we covered in the <a href="/tutorial/05-config">configuration object</a> tutorial, but <code class="language-javascript">installCuri</code> takes care of that step for us.<!-- --> <code class="language-javascript">installCuri</code> calls <code class="language-javascript">config.respond</code> and in the response handler, it updates the reactive <code class="language-javascript">response</code> and <code class="language-javascript">action</code> <!-- -->properties of <code class="language-javascript">this.$curi</code> whenever a new response is emitted.</p><p>While we do not have to manually subscribe to all responses, we do need to listen for the first response to be emitted so that we can render the application. The second argument to <code class="language-javascript">config.respond</code> is an options object. If we pass the options <code class="language-javascript">{ once: true }</code>, then that function will only be called after the initial response is emitted.</p><p>Inside of the response handler function, we just need to render our root application component. All of our Curi related data will be available through <code class="language-javascript">this.$curi</code>, so we don&#x27;t have to attach any data to the Vue instance.</p><pre class="language-javascript">// index.js
+import app from &#x27;./components/app&#x27;;
 
-let vm;
 config.respond(response =&gt; {
-  if (!vm) {
-    vm = new Vue({
-      el: &#x27;#root&#x27;,
-      data: {
-        response
-      },
-      // we&#x27;ll get into the &lt;app&gt; soon
-      template: &#x27;&lt;app :response=&quot;response&quot; /&gt;&#x27;,
-      components: { app }
-    });
-  } else {
-    vm.response = response;
-  }
-});</pre></div><div class="section"><h2 id="app">The App<a class="header-link" href="/tutorial/06-pages-vue#app">#</a></h2><p>At this point we have the ability to access our configuration object throughout our components and we are passing response objects to some <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> component that we haven&#x27;t actually written yet. We should do that now.</p><p>Our <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> component will be responsible for rendering our website based on the response object. To start, let&#x27;s add a <code class="language-javascript">components</code> directory to our <code class="language-javascript">src</code> directory.</p><pre class="language-bash">mkdir -p src/components</pre><p>From up above, we know that our <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> will be receiving the response object as a prop. What should it render, though?</p><pre class="language-html">&lt;!-- components/App.vue --&gt;
+  const vm = new Vue({
+    el: &#x27;#root&#x27;,
+    // we&#x27;ll get into the &lt;app&gt; soon
+    template: &#x27;&lt;app /&gt;&#x27;,
+    components: { app }
+  });
+}, { once: true });</pre></div><div class="section"><h2 id="app">The App<a class="header-link" href="/tutorial/06-pages-vue#app">#</a></h2><p>At this point we have the ability to access our configuration object throughout our components and we are passing response objects to some <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> component that we haven&#x27;t actually written yet. We should write those components now.</p><p>Our <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> component will be responsible for rendering our website based on the response object. To start, let&#x27;s add a <code class="language-javascript">components</code> directory to our <code class="language-javascript">src</code> directory.</p><pre class="language-bash">mkdir -p src/components</pre><p>From up above, we know that our <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code> will be receiving the response object as a prop. What should it render, though?</p><pre class="language-html">&lt;!-- components/App.vue --&gt;
 &lt;template&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
   export default {
-    name: &#x27;app&#x27;,
-    props: [&#x27;response&#x27;]
+    name: &#x27;app&#x27;
   };
 &lt;/script&gt;</pre><p>Let&#x27;s take a look at the properties of our response object to see which of its properties would be helpful for rendering our website.</p><pre class="language-javascript">{
  body: undefined,
@@ -84,31 +71,16 @@ config.respond(response =&gt; {
  params: {},
  partials: [],
  status: 200
-}</pre><div class="note"><strong>Note:</strong> <!-- -->The <a href="/guides/responses/#properties">Rendering with Responses</a> guide goes into more detail about each of the properties of a response object.</div><p>Your first thought about how to use a response to render might be to use <code class="language-javascript">response.name</code>. You could use a template full of if/else attributes and render a different component based on the<!-- --> <code class="language-javascript">response.name</code>. In the same vein, you could add a computed property that returns a component for each possible <code class="language-javascript">name</code> <!-- -->value and use <code class="language-jsx"><!-- -->&lt;<!-- -->component :is<!-- -->&gt;</code> to render the computed property. Neither of those sounds very convenient, especially as your application gets more complex, although <code class="language-jsx"><!-- -->&lt;<!-- -->component :is<!-- -->&gt;</code> is something we will want to use.</p><p>Instead, we are going to use one of the <code class="language-javascript">undefined</code> properties from the above response: <code class="language-javascript">body</code>. What is this property? The<!-- --> <code class="language-javascript">body</code> property of a response is set by calling the <code class="language-javascript">body</code> <!-- -->function property of a matched route.</p><pre class="language-jsx">const routes = [
-  {
-    name: &#x27;Home&#x27;,
-    path: &#x27;&#x27;,
-    body: () =&gt; &#x27;You are here!&#x27;
-  }
-];
-// when the user visits the location{ pathname: &#x27;/&#x27; }, the
-// response will look like this:
-{
-  name: &#x27;Home&#x27;,
-  status: 200,
-  body: &#x27;You are here!&#x27;,
-  ...
-}</pre><p>Now, instead of returning a string, what if our <code class="language-javascript">route.body</code> <!-- -->properties were functions that returned Vue components? We can use<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->component :is<!-- -->&gt;</code> to dynamically set the component that Vue should render. Then, our render function can use <code class="language-javascript">response.body</code> to render our website.</p><pre class="language-html">&lt;!-- components/App.vue --&gt;
+}</pre><div class="note"><strong>Note:</strong> <!-- -->The <a href="/guides/responses/#properties">Rendering with Responses</a> guide goes into more detail about each of the properties of a response object.</div><p>In <a href="/tutorial/03-routes">Part 3</a> of this tutorial, we added <code class="language-javascript">match.response</code> functions that set the<!-- --> <code class="language-javascript">body</code> property for each of our routes. There, we just used a placeholder string, but now we can actually set the component for each route. Instead of returning a string, what if <code class="language-javascript">set.body</code> set the <code class="language-javascript">body</code> to be a Vue component? Then, our render function can use the <code class="language-javascript">body</code> property of our response object to render our website.</p><pre class="language-html">&lt;!-- components/App.vue --&gt;
 &lt;template&gt;
-  &lt;component :is=&quot;response.body&quot; /&gt;
+  &lt;component :is=&quot;$curi.response.body&quot; /&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
 export default {
-  name: &#x27;app&#x27;,
-  props: [&#x27;response&#x27;]
+  name: &#x27;app&#x27;
 };
-&lt;/script&gt;</pre><p>Next, we should define the components for each of our routes.</p></div><div class="section"><h2 id="route-components">The Route Components<a class="header-link" href="/tutorial/06-pages-vue#route-components">#</a></h2><p>To refresh your memory, we have &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, &quot;Book&quot;, &quot;Checkout&quot;, and &quot;Not Found&quot; pages that we will need to create components for. We can write some barebones components and add some more content later on.</p><pre class="language-html">&lt;!-- components/Home.vue --&gt;
+&lt;/script&gt;</pre><p>We&#x27;ll expand on that later on, but for now, let&#x27;s go ahead and define the components for each of our routes.</p></div><div class="section"><h2 id="route-components">The Route Components<a class="header-link" href="/tutorial/06-pages-vue#route-components">#</a></h2><p>To refresh your memory, we have &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, &quot;Book&quot;, &quot;Checkout&quot;, and &quot;Not Found&quot; pages that we will need to create components for. We can write some barebones components and add some more content later on.</p><pre class="language-html">&lt;!-- components/Home.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;home&#x27;&gt;
     Welcome to our book store!
@@ -138,7 +110,7 @@ export default {
   &lt;div class=&#x27;not-found&#x27;&gt;
     Page not found
   &lt;/div&gt;
-&lt;/template&gt;</pre><p>All of these components should be imported in our <code class="language-javascript">routes.js</code> and set as the return value of their respective route&#x27;s <code class="language-javascript">body</code> function.</p><pre class="language-javascript">// routes.js
+&lt;/template&gt;</pre><p>All of these components should be imported in our <code class="language-javascript">routes.js</code> and set using <code class="language-javascript">set.body</code> in their respective <code class="language-javascript">match.response</code> <!-- -->functions.</p><pre class="language-javascript">// routes.js
 import Home from &#x27;./components/Home&#x27;;
 import Contact from &#x27;./components/Contact&#x27;;
 import BookList from &#x27;./components/BookList&#x27;;
@@ -150,34 +122,58 @@ const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;,
-    body: () =&gt; Home
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(Home);
+      }
+    }
   },
   {
     name: &#x27;Contact&#x27;,
     path: &#x27;contact&#x27;,
-    body: () =&gt; Contact
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(Contact);
+      }
+    }
   },
   {
     name: &#x27;Checkout&#x27;,
     path: &#x27;checkout&#x27;,
-    body: () =&gt; Checkout
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(Checkout);
+      }
+    }
   },
   {
     name: &#x27;Book List&#x27;,
     path: &#x27;books&#x27;,
-    body: () =&gt; BookList,
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(BookList);
+      }
+    }
     children: [
       {
         name: &#x27;Book&#x27;,
         path: &#x27;:id&#x27;,
-        body: () =&gt; Book
+        match: {
+          response: ({ set }) =&gt; {
+            set.body(Book);
+          }
+        }
       }
     ]
   },
   {
     name: &#x27;Not Found&#x27;,
     path: &#x27;(.*)&#x27;,
-    body: () =&gt; NotFound
+    match: {
+      response: ({ set }) =&gt; {
+        set.body(NotFound);
+      }
+    }
   }
 ];
 
@@ -206,7 +202,7 @@ export default routes;</pre><p>Now, if we load up our application, we will rende
       &lt;NavLinks /&gt;
     &lt;/header&gt;
     &lt;main&gt;
-      &lt;component :is=&quot;response.body&quot; /&gt;
+      &lt;component :is=&quot;$curi.response.body&quot; /&gt;
     &lt;/main&gt;
   &lt;/div&gt;
 &lt;/template&gt;
@@ -215,7 +211,6 @@ export default routes;</pre><p>Now, if we load up our application, we will rende
   import NavLinks from &#x27;./NavLinks&#x27;;
   export default {
     name: &#x27;app&#x27;,
-    props: [&#x27;response&#x27;],
     components: { NavLinks }
   };
 &lt;/script&gt;</pre><p>At this point, we can navigate between most of our routes. However, we still need to add navigation to our books.</p></div><div class="section"><h2 id="param-navigation">Navigating to Our Books<a class="header-link" href="/tutorial/06-pages-vue#param-navigation">#</a></h2><p>Our &quot;Book&quot; route is different than all of our other routes because the book path includes an <code class="language-javascript">id</code> param. This means that we need to actually have &quot;id&quot; values to pass to our <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s. Later on, we&#x27;ll generate some better data, but for now we can just generate a placeholder list in a module called <code class="language-javascript">books.js</code>.</p><pre class="language-jsx"> // books.js
@@ -247,17 +242,14 @@ export default books;</pre><p>Then, in <code class="language-jsx"><!-- -->&lt;<!
     }
   };
 &lt;/script&gt;
-</pre></div><div class="section"><h2 id="book-props">Book Props<a class="header-link" href="/tutorial/06-pages-vue#book-props">#</a></h2><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s above allow us to navigate to our books, but we don&#x27;t actually have any information about which book we are supposed to be seeing. It would really help if our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> was able to access the parsed params so that it can render the information for the correct book.</p><p>The <code class="language-javascript">params</code> object is a property of our response object. That means that if we pass our response object as a prop to the <code class="language-javascript">response.body</code>, we can access these params in our route components.</p><pre class="language-html">&lt;!-- components/App.vue --&gt;
+</pre></div><div class="section"><h2 id="book-props">Book Props<a class="header-link" href="/tutorial/06-pages-vue#book-props">#</a></h2><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s above allow us to navigate to our books, but we don&#x27;t actually have any information about which book we are supposed to be seeing. It would really help if our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> was able to access the parsed params so that it can render the information for the correct book.</p><p>The <code class="language-javascript">params</code> object is a property of our response object. We can access the response in our components using <code class="language-javascript">this.$curi.response</code>, so we don&#x27;t actually have to manually pass it as a prop.</p><pre class="language-html">&lt;!-- components/App.vue --&gt;
 &lt;template&gt;
   &lt;div&gt;
     &lt;header&gt;
       &lt;NavLinks /&gt;
     &lt;/header&gt;
     &lt;main&gt;
-      &lt;component
-        :is=&quot;response.body&quot;
-        :response=&quot;response&quot;
-      /&gt;
+      &lt;component :is=&quot;$curi.response.body&quot; /&gt;
     &lt;/main&gt;
   &lt;/div&gt;
 &lt;/template&gt;
@@ -270,18 +262,12 @@ export default books;</pre><p>Then, in <code class="language-jsx"><!-- -->&lt;<!
     props: [&#x27;response&#x27;],
     components: { NavLinks }
   };
-&lt;/script&gt;</pre><div class="note"><strong>Note:</strong> <!-- -->There are a number of ways that you can decide to pass props to your route components. The one thing to keep in mind is that <em>all</em> of your route components will receive the same set of props. You can either be very specific and only pass the props that are necessary (e.g. <code class="language-jsx"><!-- -->&lt;<!-- -->component :params=&quot;response.params&quot;<!-- -->&gt;</code>) or you can just pass the entire response object (e.g. <code class="language-jsx"><!-- -->&lt;<!-- -->component :response=&quot;response&quot;<!-- -->&gt;</code>) so you don&#x27;t have to worry about updating this every time one of your route components needs another prop from the response.</div><p>Next, we just need to update our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component so that it can access its<!-- --> <code class="language-javascript">params</code> prop and figure out which book to render content for.</p><pre class="language-html">&lt;!-- components/Book.vue --&gt;
+&lt;/script&gt;</pre><p>Next, we just need to update our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component to access the<!-- --> <code class="language-javascript">params</code> object and figure out which book to render content for.</p><pre class="language-html">&lt;!-- components/Book.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;book&#x27;&gt;
-    Book {{response.params.id}}
+    Book {{$curi.response.params.id}}
   &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-  export default {
-    props: [&#x27;response&#x27;]
-  };
-&lt;/script&gt;</pre></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/06-pages-vue#review">#</a></h2><p>After completing this tutorial, we now have a semi-functional website that renders basic content for each of our pages.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/06-pages-vue-complete">06-pages-vue-complete</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/06-pages-vue-complete" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/06-pages-vue#next">#</a></h2><p>At this point, we have a website with a number of pages. It isn&#x27;t particularly useful yet, but at least we can navigate between pages. Next we will take a step back from Vue and look at how we can implement data loading with with<!-- --> <a href="/tutorial/07-load">Part 7: The Load Function</a>.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a class="active" href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-load">Part 7: The Load Function</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
+&lt;/template&gt;</pre></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/06-pages-vue#review">#</a></h2><p>After completing this tutorial, we now have a semi-functional website that renders basic content for each of our pages.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/06-pages-vue-complete">06-pages-vue-complete</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/06-pages-vue-complete" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/06-pages-vue#next">#</a></h2><p>At this point, we have a website with a number of pages. It isn&#x27;t particularly useful yet, but at least we can navigate between pages. Next we will take a step back from Vue and look at how we can implement data loading with with<!-- --> <a href="/tutorial/07-loading-data">Part 7: Loading Data</a>.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a class="active" href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-loading-data">Part 7: Loading Data</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
