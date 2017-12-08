@@ -19,7 +19,6 @@ export {
 export {
   Route,
   RouteDescriptor,
-  Title,
   ParamParser,
   ParamParsers
 } from './route';

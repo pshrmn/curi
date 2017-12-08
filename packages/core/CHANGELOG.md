@@ -1,3 +1,7 @@
+## Next
+
+* Add `set.title`, remove `route.title`.
+
 ## 1.0.0-beta.21
 
 * `match.response` instead of `match.finish`.

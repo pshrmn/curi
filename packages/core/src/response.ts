@@ -1,5 +1,5 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import { InternalRoute, ParamParsers, RouteProps } from './route';
+import { InternalRoute, ParamParsers } from './route';
 import matchRoute, { Match } from './utils/match';
 import { RawParams, Params, Addons } from './interface';
 
@@ -10,6 +10,7 @@ export interface ResponseProps {
   status: number;
   body: any;
   data: any;
+  title: string;
   error?: any;
   redirectTo?: ToArgument;
 }
@@ -94,7 +95,8 @@ export function createResponse(
     partials,
     status: route != null ? 200 : 404,
     body: undefined,
-    data: undefined
+    data: undefined,
+    title: ''
   };
 
   return loadRoute(route, props);
@@ -159,6 +161,10 @@ function responseSetters(props: ResponseProps) {
 
     body(body: any): void {
       props.body = body;
+    },
+
+    title(title: string): void {
+      props.title = title;
     }
   };
 }
@@ -171,18 +177,13 @@ function routeProperties(route: InternalRoute, props: ResponseProps) {
   };
 }
 
-function missProps(): RouteProps {
-  return {
-    title: ''
-  };
-}
-
 function freezeResponse(route: InternalRoute, props: ResponseProps): Response {
   const response: Response = Object.assign(
-    {},
-    props,
-    { key: props.location.key },
-    route ? route.responseProps(props) : missProps()
+    {
+      key: props.location.key,
+      name: route ? route.public.name : undefined
+    },
+    props
   );
 
   return response;

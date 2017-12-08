@@ -8,6 +8,7 @@ export interface ResponseProps {
     status: number;
     body: any;
     data: any;
+    title: string;
     error?: any;
     redirectTo?: ToArgument;
 }

@@ -6,16 +6,9 @@ import once from './utils/once';
 import { EveryMatchFn, InitialMatchFn, ResponseMatchFn } from './interface';
 import { ResponseProps } from './response';
 
-export type Title = string | ((params?: object, data?: any) => string);
-
 export type ParamParser = (input: string) => any;
 export interface ParamParsers {
   [key: string]: ParamParser;
-}
-
-export interface RouteProps {
-  title: string;
-  name?: string;
 }
 
 export interface MatchFns {
@@ -31,7 +24,6 @@ export interface RouteDescriptor {
   params?: ParamParsers;
   children?: Array<RouteDescriptor>;
   match?: MatchFns;
-  title?: Title;
   extra?: { [key: string]: any };
 }
 
@@ -58,14 +50,6 @@ export interface InternalRoute {
   children: Array<InternalRoute>;
   match: InternalMatch;
   paramParsers: ParamParsers;
-  responseProps: (props: ResponseProps) => RouteProps;
-}
-
-function generateTitle(title: Title, props: ResponseProps): string {
-  if (!title) {
-    return '';
-  }
-  return typeof title === 'function' ? title(props.params, props.data) : title;
 }
 
 const createRoute = (options: RouteDescriptor): InternalRoute => {
@@ -75,7 +59,6 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     pathOptions = {},
     children: descriptorChildren = [],
     match = {},
-    title,
     extra,
     params: paramParsers
   } = options;
@@ -112,13 +95,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       mustBeExact
     },
     children,
-    paramParsers,
-    responseProps: function(props: ResponseProps): RouteProps {
-      return {
-        name,
-        title: generateTitle(title, props)
-      };
-    }
+    paramParsers
   };
 };
 

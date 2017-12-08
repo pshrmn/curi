@@ -1,14 +1,8 @@
 import { RegExpOptions, Key } from 'path-to-regexp';
 import { EveryMatchFn, InitialMatchFn, ResponseMatchFn } from './interface';
-import { ResponseProps } from './response';
-export declare type Title = string | ((params?: object, data?: any) => string);
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
     [key: string]: ParamParser;
-}
-export interface RouteProps {
-    title: string;
-    name?: string;
 }
 export interface MatchFns {
     initial?: InitialMatchFn;
@@ -22,7 +16,6 @@ export interface RouteDescriptor {
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
     match?: MatchFns;
-    title?: Title;
     extra?: {
         [key: string]: any;
     };
@@ -46,7 +39,6 @@ export interface InternalRoute {
     children: Array<InternalRoute>;
     match: InternalMatch;
     paramParsers: ParamParsers;
-    responseProps: (props: ResponseProps) => RouteProps;
 }
 declare const createRoute: (options: RouteDescriptor) => InternalRoute;
 export default createRoute;

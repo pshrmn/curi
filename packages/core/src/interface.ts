@@ -41,6 +41,7 @@ export interface ResponseSetters {
   data: (data: any) => void;
   status: (status: number) => void;
   body: (body: any) => void;
+  title: (title: string) => void;
 }
 
 export interface ResponseBuilder {

@@ -398,12 +398,16 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it('is the route.title value route.title is a string', done => {
+        it('is the value set by calling set.title in match.response', done => {
           const routes = [
             {
               name: 'State',
               path: ':state',
-              title: 'A State'
+              match: {
+                response: ({ set }) => {
+                  set.title('A State');
+                }
+              }
             }
           ];
           const history = InMemory({ locations: ['/VA'] });
@@ -411,30 +415,6 @@ describe('route matching/response generation', () => {
 
           config.respond(response => {
             expect(response.title).toBe('A State');
-            done();
-          });
-        });
-
-        it('calls route.title passing it the params and data when it is a function', done => {
-          const routes = [
-            {
-              name: 'State',
-              path: ':state',
-              match: {
-                response: ({ set }) => {
-                  set.data({ full: 'West Virginia' });
-                }
-              },
-              title: (params, data) => {
-                return `${params['state']} (aka ${data.full})`;
-              }
-            }
-          ];
-          const history = InMemory({ locations: ['/WV'] });
-          const config = createConfig(history, routes);
-
-          config.respond(response => {
-            expect(response.title).toBe('WV (aka West Virginia)');
             done();
           });
         });
