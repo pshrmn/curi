@@ -6,17 +6,29 @@ export default [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      response: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     name: 'Product',
     path: 'paint/:color',
-    body: () => Product,
+    match: {
+      response: ({ set }) => {
+        set.body(Product);
+      }
+    },
     children: [
       {
         name: 'Product Detail',
         path: 'detail',
-        body: () => Detail
+        match: {
+          response: ({ set }) => {
+            set.body(Detail);
+          }
+        }
       }
     ]
   }

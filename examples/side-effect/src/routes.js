@@ -6,19 +6,31 @@ export default [
   {
     name: 'Home',
     path: '',
-    body: () => Home,
+    match: {
+      response: ({ set }) => {
+        set.body(Home);
+      }
+    },
     title: 'Home'
   },
   {
     name: 'Contact',
     path: 'contact',
-    body: () => Contact,
+    match: {
+      response: ({ set }) => {
+        set.body(Contact);
+      }
+    },
     title: 'Contact',
     children: [
       {
         name: 'Method',
         path: ':method',
-        body: () => Method,
+        match: {
+          response: ({ set }) => {
+            set.body(Method);
+          }
+        },
         title: (params) => `Contact via ${params.method}`
       }
     ]

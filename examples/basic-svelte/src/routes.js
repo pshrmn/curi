@@ -7,24 +7,40 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      response: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     name: 'Contact',
     path: 'contact',
-    body: () => Contact,
+    match: {
+      response: ({ set }) => {
+        set.body(Contact);
+      }
+    },
     children: [
       {
         name: 'Method',
         path: ':method',
-        body: () => Method
+        match: {
+          response: ({ set }) => {
+            set.body(Method);
+          }
+        }
       }
     ]
   },
   {
     name: 'NotFound',
     path: '(.*)',
-    body: () => NotFound
+    match: {
+      response: ({ set }) => {
+        set.body(NotFound);
+      }
+    }
   }
 ];
 

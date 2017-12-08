@@ -8,28 +8,36 @@ export default [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      response: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     name: 'Album',
     path: 'a/:id',
-    body: () => Album,
-    load: ({ params }, mods) => {
-      const { id } = params
-      // don't re-fetch data
-      const existing = dataCache.get(id);
-      if (existing) {
-        mods.setData(existing);
-        return Promise.resolve(existing);
+    match: {
+      every: ({ params }) => {
+        const { id } = params
+        // don't re-fetch data
+        const existing = dataCache.get(id);
+        return existing
+          ? Promise.resolve(existing)
+          : fakeAPI(id)
+              .then(data => {
+                dataCache.set(id, data);
+                return data;
+              });
+      },
+      response: ({ error, resolved, set }) => {
+        set.body(Album);
+        if (error) {
+          set.error(error);
+        } else {
+          set.data(resolved.every)
+        }
       }
-      return fakeAPI(id)
-        .then(data => {
-          mods.setData(data);
-          dataCache.set(id, data);
-        })
-        .catch(err => {
-          mods.setStatus(404);
-        });
     }
   }
 ];

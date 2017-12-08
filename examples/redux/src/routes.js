@@ -9,38 +9,43 @@ export default [
   {
     name: 'Home',
     path: '',
-    body: () => Home,
-    load: () => {
-      store.dispatch(
-        loadProducts(fakeData)
-      );
+    match: {
+      response: ({ set }) => {
+        store.dispatch(
+          loadProducts(fakeData)
+        );
+        set.body(Home);
+      }
     }
   },
   {
     name: 'Product',
     path: 'products/:id',
-    body: () => Product,
-    load: ({ params }, mods) => {
-      const { id } = params;
-      // "cache"
-      const existing = store.getState();
-      if (existing[id]) {
-        return;
-      }
+    match: {
+      response: ({ route, set }) => {
+        set.body(Product);
 
-      const product = fakeData[id];
-      if (product) {
-        store.dispatch(
-          loadProduct(product)
-        );
-      } else {
-        mods.setStatus(404);
+        const { id } = route.params;
+        // "cache"
+        const existing = store.getState();
+        if (!existing[id]) {
+          const product = fakeData[id];
+          if (product) {
+            store.dispatch(
+              loadProduct(product)
+            );
+          }
+        }
       }
     }
   },
   {
     name: 'Not Found',
     path: '(.*)',
-    body: () => NotFound
+    match: {
+      response: ({ set }) => {
+        set.body(NotFound);
+      }
+    }
   }
 ];

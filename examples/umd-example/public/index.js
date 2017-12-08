@@ -20,12 +20,20 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      response: ({ set }) => {
+        set.body(Home);
+      }
+    },
   },
   {
     name: 'About',
     path: 'about',
-    body: () => About
+    match: {
+      response: ({ set }) => {
+        set.body(About);
+      }
+    },
   }
 ];
 

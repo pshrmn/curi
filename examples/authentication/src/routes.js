@@ -9,42 +9,53 @@ export default [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      response: ({ set }) => {
+        set.body(Home);
+      }
+    }
   },
   {
     name: 'Protected',
     path: 'protected',
-    body: () => Protected,
-    load: (route, mods, addons) => {
-      if (!fakeAuth.authenticated()) {
-        mods.redirect({
-          pathname: addons.pathname('Login'),
-          query: { next: '/protected' }
-        }, 302);
+    match: {
+      response: ({ set, addons }) => {
+        if (!fakeAuth.authenticated()) {
+          set.redirect({
+            pathname: addons.pathname('Login'),
+            query: { next: '/protected' }
+          }, 302);
+        } else {
+          set.body(Protected);
+        }
       }
     }
   },
   {
     name: 'Login',
     path: 'login',
-    body: () => Login,
-    load: (route, mods) => {
-      if (fakeAuth.authenticated()) {
-        mods.redirect({
-          pathname: addons.pathname('Home')
-        });
+    match: {
+      response: ({ set, addons }) => {
+        if (fakeAuth.authenticated()) {
+          set.redirect({
+            pathname: addons.pathname('Home')
+          });
+        }
+        set.body(Login);
       }
     }
   },
   {
     name: 'Logout',
     path: 'logout',
-    body: () => Logout,
-    load: (route, mods) => {
-      if (!fakeAuth.authenticated()) {
-        mods.redirect({
-          pathname: addons.pathname('Home')
-        });
+    match: {
+      response: ({ set, addons }) => {
+        if (!fakeAuth.authenticated()) {
+          set.redirect({
+            pathname: addons.pathname('Home')
+          });
+        }
+        set.body(Logout);
       }
     }
   }

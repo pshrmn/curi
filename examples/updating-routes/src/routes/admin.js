@@ -5,7 +5,11 @@ export default [
   {
     name: 'Admin',
     path: 'admin',
-    body: () => Admin
+    match: {
+      response: ({ set }) => {
+        set.body(Admin);
+      }
+    },
   },
   ...routes
 ];

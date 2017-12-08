@@ -1,10 +1,6 @@
 <template>
   <div>
-    <component
-      :is="cmp"
-      :data="$curi.response.data"
-      :params="$curi.response.params"
-    />
+    <component :is="cmp" />
   </div>
 </template>
 

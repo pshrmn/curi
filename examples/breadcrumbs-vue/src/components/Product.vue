@@ -1,10 +1,15 @@
 <template>
   <div>
-    <breadcrumbs name='Product' :params="params" />
-    <h1>{{data.name}}</h1>
-    <p>
-      {{data.description}}
-    </p>
+    <breadcrumbs name='Product' :params="$curi.response.params" />
+    <div v-if='$curi.response.error'>
+      {{$curi.response.error}}
+    </div>
+    <div v-else>
+      <h1>{{$curi.response.data.name}}</h1>
+      <p>
+        {{$curi.response.data.description}}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -12,7 +17,6 @@
   import Breadcrumbs from './Breadcrumbs';
   export default {
     name: 'product',
-    props: ['data', 'params'],
     components: { breadcrumbs: Breadcrumbs }
   }
 </script>

@@ -1,10 +1,9 @@
 <template>
-  <div>Please do not contact us by {{params.method}}!</div>
+  <div>Please do not contact us by {{$curi.response.params.method}}!</div>
 </template>
 
 <script>
   export default {
-    name: 'contact-method',
-    props: ['params']
+    name: 'contact-method'
   };
 </script>

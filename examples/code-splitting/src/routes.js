@@ -1,30 +1,24 @@
-const store = {};
-
 export default [
   {
     name: 'Home',
     path: '',
-    preload: () => {
-      return import('./components/Home.js')
-        .then(home => {
-          store['Home'] = home.default;
-        });
-    },
-    body: () => {
-      return store['Home'];
+    match: {
+      initial: () => import('./components/Home.js')
+        .then(module => module.default),
+      response: ({ resolved, set }) => {
+        set.body(resolved.initial);
+      }
     }
   },
   {
     name: 'Contact',
     path: 'contact',
-    preload: () => {
-      return import('./components/Contact.js')
-        .then(contact => {
-          store['Contact'] = contact.default;
-        });
-    },
-    body: () => {
-      return store['Contact'];
+    match: {
+      initial: () => import('./components/Contact.js')
+        .then(module => module.default),
+      response: ({ resolved, set }) => {
+        set.body(resolved.initial);
+      }
     }
   }
 ];

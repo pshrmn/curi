@@ -6,16 +6,28 @@ export default [
   {
     name: 'Home',
     path: '',
-    body: () => Home
+    match: {
+      response: ({ set }) => {
+        set.body(Home);
+      }
+    },
   },
   {
     name: 'About',
     path: 'about',
-    body: () => About
+    match: {
+      response: ({ set }) => {
+        set.body(About);
+      }
+    },
   },
   {
     name: 'Not Found',
     path: '(.*)',
-    body: () => NotFound
+    match: {
+      response: ({ set }) => {
+        set.body(NotFound);
+      }
+    },
   }
 ];

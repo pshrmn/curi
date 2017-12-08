@@ -1,10 +1,7 @@
 <template>
   <div>
     <Nav />
-    <component
-      :is="cmp"
-      :params="$curi.response.params"
-    />
+    <component :is="cmp" />
   </div>
 </template>
 
