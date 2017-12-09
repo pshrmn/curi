@@ -49,7 +49,6 @@ import app from &#x27;./components/app&#x27;;
 config.respond(response =&gt; {
   const vm = new Vue({
     el: &#x27;#root&#x27;,
-    // we&#x27;ll get into the &lt;app&gt; soon
     template: &#x27;&lt;app /&gt;&#x27;,
     components: { app }
   });
@@ -153,7 +152,7 @@ const routes = [
       response: ({ set }) =&gt; {
         set.body(BookList);
       }
-    }
+    },
     children: [
       {
         name: &#x27;Book&#x27;,
@@ -209,6 +208,7 @@ export default routes;</pre><p>Now, if we load up our application, we will rende
 
 &lt;script&gt;
   import NavLinks from &#x27;./NavLinks&#x27;;
+
   export default {
     name: &#x27;app&#x27;,
     components: { NavLinks }
@@ -242,32 +242,12 @@ export default books;</pre><p>Then, in <code class="language-jsx"><!-- -->&lt;<!
     }
   };
 &lt;/script&gt;
-</pre></div><div class="section"><h2 id="book-props">Book Props<a class="header-link" href="/tutorial/06-pages-vue#book-props">#</a></h2><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s above allow us to navigate to our books, but we don&#x27;t actually have any information about which book we are supposed to be seeing. It would really help if our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> was able to access the parsed params so that it can render the information for the correct book.</p><p>The <code class="language-javascript">params</code> object is a property of our response object. We can access the response in our components using <code class="language-javascript">this.$curi.response</code>, so we don&#x27;t actually have to manually pass it as a prop.</p><pre class="language-html">&lt;!-- components/App.vue --&gt;
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;header&gt;
-      &lt;NavLinks /&gt;
-    &lt;/header&gt;
-    &lt;main&gt;
-      &lt;component :is=&quot;$curi.response.body&quot; /&gt;
-    &lt;/main&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-  import NavLinks from &#x27;./NavLinks&#x27;;
-
-  export default {
-    name: &#x27;app&#x27;,
-    props: [&#x27;response&#x27;],
-    components: { NavLinks }
-  };
-&lt;/script&gt;</pre><p>Next, we just need to update our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component to access the<!-- --> <code class="language-javascript">params</code> object and figure out which book to render content for.</p><pre class="language-html">&lt;!-- components/Book.vue --&gt;
+</pre></div><div class="section"><h2 id="book-props">Book Props<a class="header-link" href="/tutorial/06-pages-vue#book-props">#</a></h2><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s above allow us to navigate to our books, but we don&#x27;t actually have any information about which book we are supposed to be seeing. It would really help if our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> was able to access the parsed params so that it can render the information for the correct book.</p><p>The <code class="language-javascript">params</code> object is a property of our response object. We can access the response in our components using <code class="language-javascript">this.$curi.response</code>, so we don&#x27;t actually have to manually pass it as a prop.</p><p>Next, we just need to update our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component to access the<!-- --> <code class="language-javascript">params</code> object and figure out which book to render content for.</p><pre class="language-html">&lt;!-- components/Book.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;book&#x27;&gt;
     Book {{$curi.response.params.id}}
   &lt;/div&gt;
-&lt;/template&gt;</pre></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/06-pages-vue#review">#</a></h2><p>After completing this tutorial, we now have a semi-functional website that renders basic content for each of our pages.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/06-pages-vue-complete">06-pages-vue-complete</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/06-pages-vue-complete" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/06-pages-vue#next">#</a></h2><p>At this point, we have a website with a number of pages. It isn&#x27;t particularly useful yet, but at least we can navigate between pages. Next we will take a step back from Vue and look at how we can implement data loading with with<!-- --> <a href="/tutorial/07-loading-data">Part 7: Loading Data</a>.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a class="active" href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-loading-data">Part 7: Loading Data</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
+&lt;/template&gt;</pre></div><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/06-pages-vue#review">#</a></h2><p>After completing this tutorial, we now have a semi-functional website that renders basic content for each of our pages.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/07-loading-data-vue">07-loading-data-vue</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/07-loading-data-vue" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/06-pages-vue#next">#</a></h2><p>At this point, we have a website with a number of pages. It isn&#x27;t particularly useful yet, but at least we can navigate between pages. Next we will take a step back from Vue and look at how we can implement data loading with with<!-- --> <a href="/tutorial/07-loading-data">Part 7: Loading Data</a>.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a class="active" href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-loading-data">Part 7: Loading Data</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

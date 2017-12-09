@@ -14,7 +14,7 @@
     &lt;h1&gt;Available Books&lt;/h1&gt;
     &lt;div class=&#x27;books&#x27;&gt;
       &lt;div
-        v-for=&quot;book in response.data.books&quot;
+        v-for=&quot;book in $curi.response.data.books&quot;
         :key=&quot;book.id&quot;
         class=&#x27;book-item&#x27;
       &gt;
@@ -24,36 +24,29 @@
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-  export default {
-    props: [&#x27;response&#x27;]
-  };
-&lt;/script&gt;
-</pre></div><div class="section"><h2 id="book">Using Data with the Book<a class="header-link" href="/tutorial/08-render-data-vue#book">#</a></h2><p>We are already using the <code class="language-javascript">response</code> prop in <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code>. Now, instead of using <code class="language-javascript">params</code>, we will switch to using<!-- --> <code class="language-javascript">data</code>. We can also take advantage of the <code class="language-javascript">data.book</code> <!-- -->properties to expand on our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> implementation.</p><p>We also have a special case that we need to consider: what should we do when there is no matching book? In the sample data, we have books with ids that range from 0-9. What if the user navigates to <code class="language-javascript">/books/123</code>? Our <code class="language-javascript">fetchBook</code> call will reject and <code class="language-javascript">response.data</code> <!-- -->will be <code class="language-javascript">undefined</code>. For now, we should detect that and render a simple message stating that the requested book does not exist.</p><pre class="language-html">&lt;!-- components/Book.vue --&gt;
+&lt;/template&gt;</pre></div><div class="section"><h2 id="book">Using Data with the Book<a class="header-link" href="/tutorial/08-render-data-vue#book">#</a></h2><p>We are already using the <code class="language-javascript">response</code> prop in <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code>. Now, instead of using <code class="language-javascript">params</code>, we will switch to using<!-- --> <code class="language-javascript">data</code>. We can also take advantage of the <code class="language-javascript">data.book</code> <!-- -->properties to expand on our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> implementation.</p><p>We also have a special case that we need to consider: what should we do when there is no matching book? In the sample data, we have books with ids that range from 0-9. What if the user navigates to <code class="language-javascript">/books/123</code>? Our <code class="language-javascript">fetchBook</code> call will reject and <code class="language-javascript">response.data</code> <!-- -->will be <code class="language-javascript">undefined</code>. For now, we should detect that and render a simple message stating that the requested book does not exist.</p><pre class="language-html">&lt;!-- components/Book.vue --&gt;
 &lt;template&gt;
-  &lt;div v-if=&quot;book&quot; class=&#x27;book&#x27;&gt;
+  &lt;div v-if=&quot;$curi.response.error&quot; class=&#x27;book&#x27;&gt;
+    {{error}}
+  &lt;/div&gt;
+  &lt;div v-else class=&#x27;book&#x27;&gt;
     &lt;h2&gt;{{book.title}}&lt;/h2&gt;
     &lt;p&gt;By {{book.author}}&lt;/p&gt;
     &lt;p&gt;Published in {{book.published}}&lt;/p&gt;
     &lt;p&gt;This book is {{book.pages}} pages&lt;/p&gt;
   &lt;/div&gt;
-  &lt;div v-else class=&#x27;book&#x27;&gt;
-    The requested book does not exist
-  &lt;/div&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
   export default {
-    props: [&#x27;response&#x27;],
     computed: {
       book: function() {
-        return this.response.data &amp;&amp; this.response.data.book;
+        const { response } = this.$curi;
+        return !response.error &amp;&amp; response.data.book;
       }
     }
   };
-&lt;/script&gt;</pre></div><p>Now that we are using <code class="language-javascript">response.data</code> in both the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->BookList<!-- -->&gt;</code> and <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> components, we can remove the <code class="language-javascript">books.js</code> file.</p><pre class="language-bash">git rm src/books.js</pre><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/08-render-data-vue#review">#</a></h2><p>Our &quot;Book List&quot; and &quot;Book&quot; pages are now rendered using data from <code class="language-javascript">response.data</code>.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/08-render-data-vue-complete">08-render-data-vue-complete</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/08-render-data-vue-complete" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/08-render-data-vue#next">#</a></h2><p>Our book component still isn&#x27;t complete. We are building a book store after all, so we should really provide the user a way to actually &quot;buy&quot; a book. In<!-- --> <a href="/tutorial/09-nav-vue">Part 9: Forms &amp; Navigation</a>, we will add the ability to add books to a shopping cart and &quot;purchase&quot; them from our &quot;Checkout&quot; route.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-loading-data">Part 7: Loading Data</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a class="active" href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
+&lt;/script&gt;</pre></div><p>Now that we are using <code class="language-javascript">response.data</code> in both the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->BookList<!-- -->&gt;</code> and <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> components, we can remove the <code class="language-javascript">books.js</code> file.</p><pre class="language-bash">git rm src/books.js</pre><div class="section"><h2 id="review">Review<a class="header-link" href="/tutorial/08-render-data-vue#review">#</a></h2><p>Our &quot;Book List&quot; and &quot;Book&quot; pages are now rendered using data from <code class="language-javascript">response.data</code>.</p><div class="tutorial-branch"><p>You can view the complete source code for this tutorial here:<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/09-nav-vue">09-nav-vue</a>.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/pshrmn/curi-tutorial/tree/09-nav-vue" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu that allows you to switch between files.</p></div></div><div class="section"><h2 id="next">Next<a class="header-link" href="/tutorial/08-render-data-vue#next">#</a></h2><p>Our book component still isn&#x27;t complete. We are building a book store after all, so we should really provide the user a way to actually &quot;buy&quot; a book. In<!-- --> <a href="/tutorial/09-nav-vue">Part 9: Forms &amp; Navigation</a>, we will add the ability to add books to a shopping cart and &quot;purchase&quot; them from our &quot;Checkout&quot; route.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-introduction">Part 1: Introduction to Curi</a></li><li class="solo"><a href="/tutorial/02-setup">Part 2: Curi Setup</a></li><li class="solo"><a href="/tutorial/03-routes">Part 3: Curi Routes</a></li><li class="solo"><a href="/tutorial/04-hickory">Part 4: Hickory</a></li><li class="solo"><a href="/tutorial/05-config">Part 5: The Curi Configuration Object</a></li><li class="solo"><p>Part 6: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/06-pages-react">react</a></li><li><a href="/tutorial/06-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/07-loading-data">Part 7: Loading Data</a></li><li class="solo"><p>Part 8: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/08-render-data-react">react</a></li><li><a class="active" href="/tutorial/08-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 9: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/09-nav-react">react</a></li><li><a href="/tutorial/09-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/10-now-what">Part 10: Now What?</a></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
