@@ -26,7 +26,10 @@ const config = {
         exclude: /(node_modules)/,
         use: [
           {
-            loader: 'svelte-loader'
+            loader: 'svelte-loader',
+            options: {
+              store: true
+            }
           }
         ]
       }

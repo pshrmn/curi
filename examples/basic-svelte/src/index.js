@@ -3,39 +3,22 @@ import createConfig from '@curi/core';
 import { Store } from 'svelte/store';
 
 import routes from './routes';
+import app from './components/App';
 
 const history = Browser();
 const config = createConfig(history, routes);
 const store = new Store({
-  curi: { config }
+  curi: { config, response: undefined, action: undefined }
 });
 
 let view;
-const root = document.getElementById('root');
+const target = document.getElementById('root');
 
-// This function is called after every location
-// change. The response's `body` will be a Svelte
-// function, so we will call that to render the
-// route
-function render(response) {
-  if (!response) {
-    root.innerHTML = 'Loading...';
-    return;
-  }
-  if (view) {
-    view.destroy();
-  } else {
-    root.innerHTML = '';
-  }
+config.respond((response, action) => {
+  store.set({ curi: { config, response, action } });
+});
 
-  view = new response.body({
-    target: root,
-    store,
-    data: {
-      response
-    }
-  });
-}
-
-config.respond(render)
+config.respond(() => {
+  view = new app({ target, store });
+}, { once: true });
 
