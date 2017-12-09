@@ -404,7 +404,7 @@ export default routes;`
       title='Review'
       id='review'
     >
-      <CompleteBranch name='03-routes-complete' />
+      <CompleteBranch name='04-hickory' />
     </Section>
     <Section
       title='Next'

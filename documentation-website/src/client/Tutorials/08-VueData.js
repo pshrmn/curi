@@ -51,7 +51,7 @@ export default () => (
     <h1>Available Books</h1>
     <div class='books'>
       <div
-        v-for="book in response.data.books"
+        v-for="book in $curi.response.data.books"
         :key="book.id"
         class='book-item'
       >
@@ -61,14 +61,7 @@ export default () => (
       </div>
     </div>
   </div>
-</template>
-
-<script>
-  export default {
-    props: ['response']
-  };
-</script>
-`
+</template>`
         }
       </PrismBlock>
     </Section>
@@ -94,23 +87,23 @@ export default () => (
         {
 `<!-- components/Book.vue -->
 <template>
-  <div v-if="book" class='book'>
+  <div v-if="$curi.response.error" class='book'>
+    {{error}}
+  </div>
+  <div v-else class='book'>
     <h2>{{book.title}}</h2>
     <p>By {{book.author}}</p>
     <p>Published in {{book.published}}</p>
     <p>This book is {{book.pages}} pages</p>
   </div>
-  <div v-else class='book'>
-    The requested book does not exist
-  </div>
 </template>
 
 <script>
   export default {
-    props: ['response'],
     computed: {
       book: function() {
-        return this.response.data && this.response.data.book;
+        const { response } = this.$curi;
+        return !response.error && response.data.book;
       }
     }
   };
@@ -136,8 +129,8 @@ export default () => (
         Our "Book List" and "Book" pages are now rendered using data
         from <IJS>response.data</IJS>.
       </p>
-      <CompleteBranch name='08-render-data-vue-complete' />
-      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/08-render-data-vue-complete' />
+      <CompleteBranch name='09-nav-vue' />
+      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/09-nav-vue' />
     </Section>
     <Section
       title='Next'

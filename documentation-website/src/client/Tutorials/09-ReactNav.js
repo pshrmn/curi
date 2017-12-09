@@ -351,8 +351,9 @@ const routes = [
         return Promise.all([
           fetchAllBooks(),
           getCart()
-        ])
-        response: ({ resolved, set }) => {
+        ]);
+      },
+      response: ({ resolved, set }) => {
         set.body(Checkout)
         
         /*
@@ -373,14 +374,14 @@ const routes = [
           return Object.assign({}, book, { count });
         });
         set.data({ items });
-      });
+      }
     },
     children: [
       {
         name: 'Checkout Complete',
         path: 'complete',
         match: {
-          response({ set }) => {
+          response: ({ set }) => {
             set.body(CheckoutComplete);
           }
         }
@@ -512,8 +513,8 @@ class Checkout extends React.Component {
         We can now add books to our shopping cart and "buy" them from the
         checkout page.
       </p>
-      <CompleteBranch name='09-nav-react-complete' />
-      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/09-nav-react-complete' />
+      <CompleteBranch name='10-now-what-react' />
+      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/10-now-what-react' />
       <Note>
         The embedded sandbox will not work if your browser is blocking third-party
         data. If this is the case for you, you <em>could</em> disable this through

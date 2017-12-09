@@ -132,8 +132,8 @@ const Book = (props) => {
         Our "Book List" and "Book" pages are now rendered using data
         from <IJS>response.data</IJS>.
       </p>
-      <CompleteBranch name='08-render-data-react-complete' />
-      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/08-render-data-react-complete' />
+      <CompleteBranch name='09-nav-react' />
+      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/09-nav-react' />
     </Section>
     <Section
       title='Next'

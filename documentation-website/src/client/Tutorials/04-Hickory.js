@@ -154,7 +154,7 @@ const history = Browser();`
       title='Review'
       id='review'
     >
-      <CompleteBranch name='04-hickory-complete' />
+      <CompleteBranch name='05-config' />
     </Section>
     <Section
       title='Next'

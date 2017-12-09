@@ -246,7 +246,6 @@ import app from './components/app';
 config.respond(response => {
   const vm = new Vue({
     el: '#root',
-    // we'll get into the <app> soon
     template: '<app />',
     components: { app }
   });
@@ -471,7 +470,7 @@ const routes = [
       response: ({ set }) => {
         set.body(BookList);
       }
-    }
+    },
     children: [
       {
         name: 'Book',
@@ -565,6 +564,7 @@ export default routes;`
 
 <script>
   import NavLinks from './NavLinks';
+
   export default {
     name: 'app',
     components: { NavLinks }
@@ -645,31 +645,7 @@ export default books;`
         the response in our components using <IJS>this.$curi.response</IJS>, so we don't
         actually have to manually pass it as a prop.
       </p>
-      <PrismBlock lang='html'>
-      {
-`<!-- components/App.vue -->
-<template>
-  <div>
-    <header>
-      <NavLinks />
-    </header>
-    <main>
-      <component :is="$curi.response.body" />
-    </main>
-  </div>
-</template>
 
-<script>
-  import NavLinks from './NavLinks';
-
-  export default {
-    name: 'app',
-    props: ['response'],
-    components: { NavLinks }
-  };
-</script>`
-      }
-    </PrismBlock>
       <p>
         Next, we just need to update our <Cmp>Book</Cmp> component to access the{' '}
         <IJS>params</IJS> object and figure out which book to render content for.
@@ -693,8 +669,8 @@ export default books;`
         After completing this tutorial, we now have a semi-functional website
         that renders basic content for each of our pages.
       </p>
-      <CompleteBranch name='06-pages-vue-complete' />
-      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/06-pages-vue-complete' />
+      <CompleteBranch name='07-loading-data-vue' />
+      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/07-loading-data-vue' />
     </Section>
     <Section
       title='Next'

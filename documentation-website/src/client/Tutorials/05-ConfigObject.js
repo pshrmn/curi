@@ -167,7 +167,14 @@ config.respond(responseLogger, { once: true });`
       title='Review'
       id='review'
     >
-      <CompleteBranch name='05-config-complete' />
+            <p>
+        If you are following the React path:
+      </p>
+      <CompleteBranch name='06-pages-react' />
+      <p>
+        If you are following the Vue path:
+      </p>
+      <CompleteBranch name='06-pages-vue' />
     </Section>
     <Section
       title='Next'

@@ -126,8 +126,8 @@ touch public/index.html`
       <PrismBlock lang='bash'>
         {
 `touch .babelrc.js webpack.config.js
-npm install -D webpack webpack-dev-server @babel/core@next
-  @babel/preset-env@next babel-loader@next`
+npm install -D webpack webpack-dev-server @babel/core
+  @babel/preset-env babel-loader@next`
         }
       </PrismBlock>
       <PrismBlock lang='javascript'>
@@ -216,7 +216,7 @@ module.exports = config;`
       title='Review'
       id='review'
     >
-      <CompleteBranch name='02-setup-complete' />
+      <CompleteBranch name='03-routes' />
     </Section>
     <Section
       title='Next'

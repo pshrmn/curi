@@ -60,7 +60,7 @@ export default () => (
       </p>
       <PrismBlock lang='bash'>
         {
-`npm install --save-dev @babel/preset-react@next`
+`npm install --save-dev @babel/preset-react`
         }
       </PrismBlock>
       <PrismBlock lang='javascript'>
@@ -699,8 +699,8 @@ const Book = ({ response }) => (
         After completing this tutorial, we now have a semi-functional website
         that renders basic content for each of our pages.
       </p>
-      <CompleteBranch name='06-pages-react-complete' />
-      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/06-pages-react-complete' />
+      <CompleteBranch name='07-loading-data-react' />
+      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/07-loading-data-react' />
     </Section>
     <Section
       title='Next'

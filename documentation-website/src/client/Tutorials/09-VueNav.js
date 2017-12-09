@@ -170,7 +170,7 @@ export function resetCart() {
       <p>
         The <IJS>CuriPlugin</IJS> makes our configuration object available to
         all of our components as <IJS>this.$curi</IJS>. That means that we can
-        call <IJS>this.$curi.history.push</IJS> (a bit of a mouthful) to automatically
+        call <IJS>this.$curi.config.history.push</IJS> (a bit of a mouthful) to automatically
         redirect to another page.
       </p>
       <p>
@@ -218,8 +218,8 @@ export function resetCart() {
       addAndCheckout(event) {
         updateCart(this.bookID, parseInt(this.count))
           .then(() => {
-            const pathname = this.$curi.addons.pathname('Checkout');
-            this.$curi.history.push({ pathname });
+            const pathname = this.$curi.config.addons.pathname('Checkout');
+            this.$curi.config.history.push({ pathname });
           });
       }
     }
@@ -238,15 +238,15 @@ export function resetCart() {
         {
 `<!-- components/Book.vue -->
 <template>
-  <div v-if="book" class='book'>
+  <div v-if="$curi.response.error" class='book'>
+    {{error}}
+  </div>
+  <div v-else class='book'>
     <h2>{{book.title}}</h2>
     <p>By {{book.author}}</p>
     <p>Published in {{book.published}}</p>
     <p>This book is {{book.pages}} pages</p>
     <AddToCart :bookID="book.id" />
-  </div>
-  <div v-else class='book'>
-    The requested book does not exist
   </div>
 </template>
 
@@ -254,10 +254,10 @@ export function resetCart() {
   import AddToCart from './AddToCart';
 
   export default {
-    props: ['response'],
     computed: {
       book: function() {
-        return this.response.data && this.response.data.book;
+        const { response } = this.$curi;
+        return !response.error && response.data.book;
       }
     },
     components: { AddToCart }
@@ -309,7 +309,7 @@ const routes = [
         ])
       },
       response: ({ resolved, set }) => {
-        set.body(CheckoutComplete);
+        set.body(Checkout);
 
         /*
          * We will iterate over all of the items in
@@ -328,15 +328,15 @@ const routes = [
           const book = books.find(b => b.id === id);
           return Object.assign({}, book, { count });
         });
-        set.setData({ items });
-      });
+        set.data({ items });
+      }
     },
     children: [
       {
         name: 'Checkout Complete',
         path: 'complete',
         match: {
-          response({ set }) => {
+          response: ({ set }) => {
             set.body(CheckoutComplete);
           }
         }
@@ -386,7 +386,7 @@ const routes = [
           </tr>
         </thead>
         <tbody>
-          <tr v-for="book in response.data.items" :key="book.id">
+          <tr v-for="book in $curi.response.data.items" :key="book.id">
             <td>{{book.title}}</td>
             <td>{{book.count}}</td>
           </tr>
@@ -403,14 +403,13 @@ const routes = [
   import { resetCart } from '../api/shoppingCart';
 
   export default {
-    props: ['response'],
     methods: {
       purchase: function(event) {
         // when the user "purchases" their books, we just
         // reset the cart and redirect to the "Checkout Complete" page
         resetCart();
-        const pathname = this.$curi.addons.pathname('Checkout Complete');
-        this.$curi.history.push({ pathname });
+        const pathname = this.$curi.config.addons.pathname('Checkout Complete');
+        this.$curi.config.history.push({ pathname });
       }
     }
   };
@@ -430,7 +429,7 @@ const routes = [
 <template>
   <div class='checkout'>
     <h1>Checkout</h1>
-    <div v-if="response.data.items.length">
+    <div v-if="$curi.response.data.items.length">
       <table>
         <thead>
           <tr>
@@ -465,8 +464,8 @@ const routes = [
         We can now add books to our shopping cart and "buy" them from the
         checkout page.
       </p>
-      <CompleteBranch name='09-nav-vue-complete' />
-      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/09-nav-vue-complete' />
+      <CompleteBranch name='10-now-what-vue' />
+      <CodeSandboxDemo id='github/pshrmn/curi-tutorial/tree/10-now-what-vue' />
       <Note>
         The embedded sandbox will not work if your browser is blocking third-party
         data. If this is the case for you, you <em>could</em> disable this through

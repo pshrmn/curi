@@ -240,7 +240,7 @@ const routes = [
       response: ({ set }) => {
         set.body(BookList);
       }
-    }
+    },
     children: [
       {
         name: 'Book',
@@ -298,9 +298,9 @@ const routes = [
     every: () => fetchAllBooks(),
     response: ({ resolved, set }) => {
       set.body(BookList);
-      set.data(resolved.every);
+      set.data({ books: resolved.every });
     }
-  }
+  },
   children: [
     {
       name: 'Book',
@@ -372,11 +372,11 @@ const routes = [
       <p>
         If you are following the React path:
       </p>
-      <CompleteBranch name='07-loading-data-react-complete' />
+      <CompleteBranch name='08-render-data-react' />
       <p>
         If you are following the Vue path:
       </p>
-      <CompleteBranch name='07-loading-data-vue-complete' />
+      <CompleteBranch name='08-render-data-vue' />
     </Section>
     <Section
       title='Next'
