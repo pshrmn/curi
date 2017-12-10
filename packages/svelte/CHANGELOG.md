@@ -1,3 +1,7 @@
+## Next
+
+* Removed source maps from `dist`
+
 ## 1.0.0-beta.1
 
 * Include Svelte `.html` components in `dist` folder so users can import them instead of the pre-built modules. (`import Link from '@curi/svelte/dist/Link.html'`)

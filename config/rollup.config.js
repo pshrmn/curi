@@ -6,7 +6,7 @@ import resolve from 'rollup-plugin-node-resolve';
 
 const config = {
   input: 'src/index.ts',
-  sourcemap: true,
+  sourcemap: false,
   plugins: [
     typescript({
       useTsconfigDeclarationDir: true

@@ -1,3 +1,7 @@
+## Next
+
+* Removed source maps from `dist`
+
 ## 1.0.0-beta.13
 
 * `<Navigator>` no longer subscribes to Curi. Instead, the user should subscribe themselves and pass the `response` to the `<Navigator>`. In addition to the `response` prop, the `<Navigator>` also now accepts an `action` prop.

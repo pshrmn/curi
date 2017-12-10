@@ -1,3 +1,7 @@
+## Next
+
+* Removed source maps from `dist`
+
 ## 1.0.0-beta.1
 
 * Switch to `config.respond` from `config.subscribe`.

@@ -1,5 +1,6 @@
 ## Next
 
+* Removed source maps from `dist`
 * Add `set.title`, remove `route.title`.
 
 ## 1.0.0-beta.21

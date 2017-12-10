@@ -1,3 +1,7 @@
+## Next
+
+* Removed source maps from `dist`
+
 ## 1.0.0-beta.6
 
 * Update to use the new `match.every` API.
