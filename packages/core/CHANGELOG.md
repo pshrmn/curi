@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.22
 
 * Pass the configuration option to response handlers.
 * Removed source maps from `dist`
