@@ -1,5 +1,6 @@
 ## Next
 
+* Add a `delimiter` option (defaults to an empty string `''`).
 * Removed source maps from `dist`
 
 ## 1.0.0-beta.6
