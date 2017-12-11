@@ -86,7 +86,7 @@ function createConfig(
 
   const responseHandlers: Array<ResponseHandler> = [];
   const oneTimers: Array<ResponseHandler> = [];
-  let previous: [Response, Action] = [] as [Response, Action];
+  let previous: [Response, Action, CuriConfig] = [] as [Response, Action, CuriConfig];
 
   function respond(
     fn: ResponseHandler,
@@ -122,23 +122,23 @@ function createConfig(
 
   function emit(response: Response, action: Action): void {
     beforeSideEffects.forEach(fn => {
-      fn(response, action);
+      fn(response, action, curi);
     });
 
     responseHandlers.forEach(fn => {
       if (fn != null) {
-        fn(response, action);
+        fn(response, action, curi);
       }
     });
     // calling one time responseHandlers after regular responseHandlers
     // ensures that those are called prior to the one time fns
     while (oneTimers.length) {
       const fn = oneTimers.pop();
-      fn(response, action);
+      fn(response, action, curi);
     }
 
     afterSideEffects.forEach(fn => {
-      fn(response, action);
+      fn(response, action, curi);
     });
   }
 
@@ -174,7 +174,7 @@ function createConfig(
       cache.set(response);
     }
     emit(response, action);
-    previous = [response, action];
+    previous = [response, action, curi];
 
     if (response.redirectTo) {
       history.replace(response.redirectTo);
@@ -185,12 +185,14 @@ function createConfig(
   setupRoutesAndAddons(routeArray);
   history.respondWith(navigationHandler);
 
-  return {
+  const curi: CuriConfig = {
     addons: registeredAddons,
     history,
     respond,
     refresh: setupRoutesAndAddons
   };
+
+  return curi;
 }
 
 export default createConfig;

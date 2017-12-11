@@ -1,5 +1,6 @@
 ## Next
 
+* Pass the configuration option to response handlers.
 * Removed source maps from `dist`
 * Add `set.title`, remove `route.title`.
 

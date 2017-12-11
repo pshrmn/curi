@@ -1,6 +1,7 @@
 import { HickoryLocation, Action } from '@hickory/root';
 import { Route } from './route';
 import { Response } from './response';
+import { CuriConfig } from './curi';
 export declare type AddonRegister = (route: Route, parent?: any) => any;
 export declare type AddonGet = (name: string, ...rest: Array<any>) => any;
 export interface Addon {
@@ -12,7 +13,7 @@ export interface Addon {
 export declare type Addons = {
     [key: string]: AddonGet;
 };
-export declare type ResponseHandler = (response: Response, action?: Action) => void;
+export declare type ResponseHandler = (response: Response, action?: Action, config?: CuriConfig) => void;
 export declare type RemoveResponseHandler = () => void;
 export interface SideEffect {
     fn: ResponseHandler;

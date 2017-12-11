@@ -217,6 +217,25 @@ describe('createConfig', () => {
           });
           config.respond(responseHandler);
         });
+
+        it('passes response, action, and config object to side effect', done => {
+          const routes = [{ name: 'All', path: ':all*' }];
+          const responseHandler = jest.fn();
+          const sideEffect = function(response, action, config) {
+            expect(response).toMatchObject({
+              name: 'All',
+              location: { pathname: '/' }
+            });
+            expect(action).toBe('PUSH');
+            expect(config).toBe(config);
+            done();
+          };
+
+          const config = createConfig(history, routes, {
+            sideEffects: [{ fn: sideEffect, after: true }]
+          });
+          config.respond(responseHandler);
+        });
       });
 
       describe('cache', () => {
@@ -452,6 +471,22 @@ describe('createConfig', () => {
           config.respond(responseHandler);
         });
       });
+    });
+
+    it('passes response, action, and config object to response handler', done => {
+      const routes = [{ name: 'All', path: ':all*' }];
+      const responseHandler = function(response, action, config) {
+        expect(response).toMatchObject({
+          name: 'All',
+          location: { pathname: '/' }
+        });
+        expect(action).toBe('PUSH');
+        expect(config).toBe(config);
+        done();
+      };
+
+      const config = createConfig(history, routes);
+      config.respond(responseHandler);
     });
 
     it('notifies response handlers of new response and action when location changes', done => {
