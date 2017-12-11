@@ -1,3 +1,7 @@
+## 1.0.0-beta.8
+
+* Updated TypeScript type to include `delimiter`.
+
 ## 1.0.0-beta.7
 
 * Add a `delimiter` option (defaults to an empty string `''`).
