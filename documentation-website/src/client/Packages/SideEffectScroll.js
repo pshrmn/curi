@@ -33,6 +33,12 @@ export default ({ name, version, globalName }) => (
         title='createScrollSideEffect'
         id='createScrollSideEffect'
       >
+        <p>
+          When registering the side effect, you should pass the <IJS>after: true</IJS>
+          {' '}option. This should make the side effect run after your application
+          has re-rendered (although this is not guaranteed if your application is
+          rendered asynchronously).
+        </p>
         <PrismBlock lang='javascript'>      
           {
 `import createConfig from '@curi/core';
@@ -41,7 +47,7 @@ import createScrollSideEffect from '@curi/side-effect-scroll';
 const scrollTo = createScrollSideEffect();
 
 const config = createConfig(history, routes, {
-  sideEffects: [scrollTo]
+  sideEffects: [{ fn: scrollTo, after: true }]
 });`
           }
         </PrismBlock>

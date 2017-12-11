@@ -29,10 +29,13 @@ export default ({ name, version, globalName }) => (
 `import createConfig from '@curi/core';
 import createTitleSideEffect from '@curi/side-effect-title';
 
-const setTitle = createTitleSideEffect({ suffix: '| My Site' });
+const setTitle = createTitleSideEffect({
+  suffix: 'My Site',
+  delimiter: '|'
+});
 
 const config = createConfig(history, routes, {
-  sideEffects: [setTitle]
+  sideEffects: [{ fn: setTitle }]
 });`
           }
         </PrismBlock>
@@ -47,15 +50,58 @@ const config = createConfig(history, routes, {
           You can provide a prefix and/or a suffix string that will be included before/after the title.
         </p>
 
+        <PrismBlock lang='javascript'>
+          {
+`const prefixedTitle = createTitleSideEffect({ prefix: 'Before'});
+// response.title = 'Middle'
+// document.title = 'Before Middle';
+
+const suffixedTitle = createTitleSideEffect({ suffix: 'After'});
+// response.title = 'Middle'
+// document.title = 'Middle After';`
+          }
+        </PrismBlock>
+        <p>
+          A <IJS>delimiter</IJS> can be specified for joining the <IJS>prefix</IJS>
+          {' '}and <IJS>suffix</IJS> to the title string. Spaces will be placed between
+          the prefix, title, and suffix strings and the delimiters.
+        </p>
+        <PrismBlock lang='javascript'>
+          {
+`const prefixedTitle = createTitleSideEffect({
+  prefix: 'Before',
+  suffix: 'After',
+  delimiter: '&'
+});
+// response.title = 'Middle'
+// document.title = 'Before & Middle & After';`
+          }
+        </PrismBlock>
         <PrismBlock lang='javascript'>      
           {
-`const prefixedTitle = createTitleSideEffect({ prefix: 'Before |'});
+`const prefixedTitle = createTitleSideEffect({ prefix: 'Before'});
 // response.title = 'Middle'
-// document.title = 'Before | Middle';
+// document.title = 'Before Middle';
 
-const suffixedTitle = createTitleSideEffect({ suffix: '| After'});
+const suffixedTitle = createTitleSideEffect({ suffix: 'After'});
 // response.title = 'Middle'
-// document.title = 'Middle | After';`
+// document.title = 'Middle After';`
+          }
+        </PrismBlock>
+        <p>
+          A <IJS>delimiter</IJS> can be specified for joining the <IJS>prefix</IJS>
+          {' '}and <IJS>suffix</IJS> to the title string. Spaces will be placed between
+          the prefix, title, and suffix strings and the delimiters.
+        </p>
+        <PrismBlock lang='javascript'>      
+          {
+`const prefixedTitle = createTitleSideEffect({
+  prefix: 'Before',
+  suffix: 'After',
+  delimiter: '&'
+});
+// response.title = 'Middle'
+// document.title = 'Before & Middle & After';`
           }
         </PrismBlock>
       </Section>
