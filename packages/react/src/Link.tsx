@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import invariant from 'invariant';
 import { CuriContext } from './interface';
 import { CuriConfig, Response } from '@curi/core';
+import { HickoryLocation } from '@hickory/root';
 
 const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   return (
@@ -13,8 +14,9 @@ const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
 };
 
 export interface ActiveLink {
-  merge: (props: object) => object;
+  merge(props: object): object;
   partial?: boolean;
+  extra?(l: HickoryLocation, d: object): boolean;
 }
 
 export interface LinkProps
@@ -108,8 +110,10 @@ class Link extends React.Component<LinkProps, LinkState> {
     let anchorProps = rest;
     const Anchor: React.ReactType = anchor ? anchor : 'a';
     if (active) {
-      const { partial, merge } = active;
-      const isActive = curi.addons.active(to, response, params, partial);
+      const { partial, merge, extra } = active;
+      const isActive =
+        curi.addons.active(to, response, params, partial) &&
+        (extra ? extra(response.location, details) : true);
       if (isActive) {
         anchorProps = merge(anchorProps);
       }

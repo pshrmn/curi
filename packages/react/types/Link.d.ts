@@ -3,9 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CuriContext } from './interface';
 import { CuriConfig, Response } from '@curi/core';
+import { HickoryLocation } from '@hickory/root';
 export interface ActiveLink {
-    merge: (props: object) => object;
+    merge(props: object): object;
     partial?: boolean;
+    extra?(l: HickoryLocation, d: object): boolean;
 }
 export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     to: string;

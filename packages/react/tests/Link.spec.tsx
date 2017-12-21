@@ -211,120 +211,190 @@ describe('<Link>', () => {
   });
 
   describe('active', () => {
-    it('throws if attempting to use when @curi/addon-active is not "installed"', () => {
-      const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
-      const fakeResponse = {};
-      function merge(props) {
-        props.className += ' active';
-        return props;
-      }
+    describe('without @curi/addon-active', () => {
+      it('throws on mount', () => {
+        const history = InMemory();
+        const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
+        const fakeResponse = {};
+        function merge(props) {
+          props.className += ' active';
+          return props;
+        }
 
-      expect(() => {
+        expect(() => {
+          const wrapper = shallow(
+            <Link to="Test" active={{ merge }}>
+              Test
+            </Link>,
+            { context: { curi: { config, response: fakeResponse } } }
+          );
+        }).toThrow(
+          'You are attempting to use the "active" prop, but have not included the "active" ' +
+            'addon (@curi/addon-active) in your Curi configuration object.'
+        );
+      });
+
+      it('throws if adding active prop on re-render', () => {
+        const history = InMemory();
+        const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
+        const fakeResponse = {};
+        function merge(props) {
+          props.className += ' active';
+          return props;
+        }
+
+        const wrapper = shallow(<Link to="Test">Test</Link>, {
+          context: { curi: { config, response: fakeResponse } }
+        });
+
+        expect(() => {
+          wrapper.setProps({ active: { merge } });
+        }).toThrow(
+          'You are attempting to use the "active" prop, but have not included the "active" ' +
+            'addon (@curi/addon-active) in your Curi configuration object.'
+        );
+      });
+    });
+
+    describe('merge', () => {
+      it("does not call merge if the <Link>'s props do not match the current response's", () => {
+        const history = InMemory();
+        const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+          addons: [createActiveAddon()]
+        });
+        const fakeResponse = { name: 'Other' };
+        function merge(props) {
+          props.className += ' active';
+          return props;
+        }
+
         const wrapper = shallow(
-          <Link to="Test" active={{ merge }}>
+          <Link to="Test" className="test" active={{ merge }}>
             Test
           </Link>,
           { context: { curi: { config, response: fakeResponse } } }
         );
-      }).toThrow(
-        'You are attempting to use the "active" prop, but have not included the "active" ' +
-          'addon (@curi/addon-active) in your Curi configuration object.'
-      );
-    });
-
-    it("does nothing if the <Link>'s props do not match the current response's", () => {
-      const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
-        addons: [createActiveAddon()]
+        const link = wrapper.find('a');
+        expect(link.prop('className')).toBe('test');
       });
-      const fakeResponse = { name: 'Other' };
-      function merge(props) {
-        props.className += ' active';
-        return props;
-      }
 
-      const wrapper = shallow(
-        <Link to="Test" className="test" active={{ merge }}>
-          Test
-        </Link>,
-        { context: { curi: { config, response: fakeResponse } } }
-      );
-      const link = wrapper.find('a');
-      expect(link.prop('className')).toBe('test');
-    });
-
-    it("calls merge function when <Link>'s props match the current response's", () => {
-      const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
-        addons: [createActiveAddon()]
-      });
-      const fakeResponse = { name: 'Test', params: {} };
-      function merge(props) {
-        props.className += ' active';
-        return props;
-      }
-
-      const wrapper = shallow(
-        <Link to="Test" className="test" active={{ merge }}>
-          Test
-        </Link>,
-        { context: { curi: { config, response: fakeResponse } } }
-      );
-      const link = wrapper.find('a');
-      expect(link.prop('className')).toBe('test active');
-    });
-
-    it('works with partial matches', () => {
-      const history = InMemory();
-      const config = createConfig(
-        history,
-        [
-          {
-            name: 'Test',
-            path: 'test',
-            children: [{ name: 'Nested', path: 'nested' }]
-          }
-        ],
-        {
+      it("calls merge function when <Link>'s props match the current response's", () => {
+        const history = InMemory();
+        const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
           addons: [createActiveAddon()]
+        });
+        const fakeResponse = { name: 'Test', params: {} };
+        function merge(props) {
+          props.className += ' active';
+          return props;
         }
-      );
-      const fakeResponse = { name: 'Nested', partials: ['Test'], params: {} };
-      function merge(props) {
-        props.className += ' active';
-        return props;
-      }
 
-      const wrapper = shallow(
-        <Link to="Test" className="test" active={{ partial: true, merge }}>
-          Test
-        </Link>,
-        { context: { curi: { config, response: fakeResponse } } }
-      );
-      const link = wrapper.find('a');
-      expect(link.prop('className')).toBe('test active');
+        const wrapper = shallow(
+          <Link to="Test" className="test" active={{ merge }}>
+            Test
+          </Link>,
+          { context: { curi: { config, response: fakeResponse } } }
+        );
+        const link = wrapper.find('a');
+        expect(link.prop('className')).toBe('test active');
+      });
     });
 
-    it('throws if adding active prop on re-render and @curi/addon-active is not installed', () => {
-      const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
-      const fakeResponse = {};
-      function merge(props) {
-        props.className += ' active';
-        return props;
-      }
+    describe('partial', () => {
+      it('works with partial matches', () => {
+        const history = InMemory();
+        const config = createConfig(
+          history,
+          [
+            {
+              name: 'Test',
+              path: 'test',
+              children: [{ name: 'Nested', path: 'nested' }]
+            }
+          ],
+          {
+            addons: [createActiveAddon()]
+          }
+        );
+        const fakeResponse = { name: 'Nested', partials: ['Test'], params: {} };
+        function merge(props) {
+          props.className += ' active';
+          return props;
+        }
 
-      const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: { config, response: fakeResponse } }
+        const wrapper = shallow(
+          <Link to="Test" className="test" active={{ partial: true, merge }}>
+            Test
+          </Link>,
+          { context: { curi: { config, response: fakeResponse } } }
+        );
+        const link = wrapper.find('a');
+        expect(link.prop('className')).toBe('test active');
+      });
+    });
+
+    describe('extra', () => {
+      it('uses extra function to run additional active checks', () => {
+        const history = InMemory();
+        const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+          addons: [createActiveAddon()]
+        });
+        const fakeResponse = {
+          name: 'Test',
+          params: {},
+          location: { query: 'test=ing' }
+        };
+        function merge(props) {
+          props.className = 'active';
+          return props;
+        }
+
+        function extra(location, details = {}) {
+          return location.query === details['query'];
+        }
+
+        const wrapper = shallow(
+          <Link
+            to="Test"
+            details={{ query: 'test=ing' }}
+            active={{ merge, extra }}
+          >
+            Test
+          </Link>,
+          { context: { curi: { config, response: fakeResponse } } }
+        );
+        const link = wrapper.find('a');
+        expect(link.prop('className')).toBe('active');
       });
 
-      expect(() => {
-        wrapper.setProps({ active: { merge } });
-      }).toThrow(
-        'You are attempting to use the "active" prop, but have not included the "active" ' +
-          'addon (@curi/addon-active) in your Curi configuration object.'
-      );
+      it('active is false when pathname matches, but extra returns false', () => {
+        const history = InMemory();
+        const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+          addons: [createActiveAddon()]
+        });
+        const fakeResponse = {
+          name: 'Test',
+          params: {},
+          location: { query: 'test=ing' }
+        };
+        function merge(props) {
+          props.className = 'active';
+          return props;
+        }
+
+        function extra(location, details = {}) {
+          return location.query === details['query'];
+        }
+
+        const wrapper = shallow(
+          <Link to="Test" active={{ merge, extra }}>
+            Test
+          </Link>,
+          { context: { curi: { config, response: fakeResponse } } }
+        );
+        const link = wrapper.find('a');
+        expect(link.prop('className')).toBeUndefined();
+      });
     });
   });
 
