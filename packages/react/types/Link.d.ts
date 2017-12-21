@@ -13,7 +13,7 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
     details?: object;
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     active?: ActiveLink;
-    anchor?: React.ComponentClass | React.StatelessComponent;
+    anchor?: React.ReactType;
     target?: string;
     curi?: CuriConfig;
     response?: Response;

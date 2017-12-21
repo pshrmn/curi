@@ -24,7 +24,7 @@ export interface LinkProps
   details?: object;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   active?: ActiveLink;
-  anchor?: React.ComponentClass | React.StatelessComponent;
+  anchor?: React.ReactType;
   target?: string;
   curi?: CuriConfig;
   response?: Response;
@@ -106,10 +106,7 @@ class Link extends React.Component<LinkProps, LinkState> {
     const curi = this.props.curi || this.context.curi.config;
     const response = this.props.response || this.context.curi.response;
     let anchorProps = rest;
-    const Anchor:
-      | React.ComponentClass
-      | React.StatelessComponent
-      | string = anchor ? anchor : 'a';
+    const Anchor: React.ReactType = anchor ? anchor : 'a';
     if (active) {
       const { partial, merge } = active;
       const isActive = curi.addons.active(to, response, params, partial);

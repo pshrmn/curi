@@ -1,5 +1,6 @@
 ## Next
 
+* Simpler `<Link anchor>` type.
 * Removed source maps from `dist`
 
 ## 1.0.0-beta.13
