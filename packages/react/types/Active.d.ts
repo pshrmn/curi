@@ -3,12 +3,15 @@ import React from 'react';
 import { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import { CuriConfig, Response } from '@curi/core';
+import { HickoryLocation } from '@hickory/root';
 export interface ActiveProps {
     children: ReactElement<any>;
     name: string;
     params?: object;
     partial?: boolean;
-    merge: (props: object) => object;
+    merge(props: object): object;
+    extra?(l: HickoryLocation, d: object): boolean;
+    details?: object;
     curi?: CuriConfig;
     response?: Response;
 }

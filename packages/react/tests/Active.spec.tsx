@@ -2,6 +2,7 @@ import 'jest';
 import React from 'react';
 import { shallow } from 'enzyme';
 import InMemory from '@hickory/in-memory';
+import { HickoryLocation } from '@hickory/root';
 import createConfig, { Response } from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
 import Active from '../src/Active';
@@ -210,6 +211,67 @@ describe('<Active>', () => {
         { context: { curi: { config, response: fakeResponse } } }
       );
       expect(wrapper.prop('className')).toBe('not-a-test');
+    });
+  });
+
+  describe('extra', () => {
+    it('does nothing when not provided', () => {
+      const fakeResponse = { name: 'Home', params: {}, partials: [] };
+      const Test = () => null;
+      const merge = jest.fn();
+
+      const wrapper = shallow(
+        <Active name="Home" merge={merge}>
+          <Test />
+        </Active>,
+        { context: { curi: { config, response: fakeResponse } } }
+      );
+      expect(merge.mock.calls.length).toBe(1);
+    });
+
+    it('passes current location and details to the extra function', () => {
+      const fakeResponse: Response = {
+        name: 'Home',
+        params: {},
+        partials: [],
+        location: { pathname: '/', query: 'test=ing' }
+      } as Response;
+      const Test = () => null;
+      const merge = jest.fn();
+      const details = { query: 'test=ing' };
+      const extra = jest.fn((loc: HickoryLocation, deets: object): boolean => {
+        expect(loc).toBe(fakeResponse.location);
+        expect(deets).toBe(details);
+        return true;
+      });
+
+      const wrapper = shallow(
+        <Active name="Home" merge={merge} extra={extra} details={details}>
+          <Test />
+        </Active>,
+        { context: { curi: { config, response: fakeResponse } } }
+      );
+      expect(extra.mock.calls.length).toBe(1);
+    });
+
+    it('component is not active if extra returns false', () => {
+      const fakeResponse: Response = {
+        name: 'Home',
+        params: {},
+        partials: [],
+        location: { pathname: '/', query: 'test=ing' }
+      } as Response;
+      const Test = () => null;
+      const merge = jest.fn();
+      const extra = () => false;
+
+      const wrapper = shallow(
+        <Active name="Home" merge={merge} extra={extra}>
+          <Test />
+        </Active>,
+        { context: { curi: { config, response: fakeResponse } } }
+      );
+      expect(merge.mock.calls.length).toBe(0);
     });
   });
 });
