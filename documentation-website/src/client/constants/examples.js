@@ -55,6 +55,11 @@ const examples = [
     description: 'Load a route in a modal (the Pinterest model)'
   },
   {
+    name: 'Multiple Body Components',
+    slug: 'multi-body',
+    description: 'Attach multiple components to a route'
+  },
+  {
     name: 'Redux',
     slug: 'redux',
     description: 'Integrate Redux, React, and Curi (easily!)'

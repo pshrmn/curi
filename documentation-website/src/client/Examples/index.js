@@ -9,6 +9,7 @@ import BreadcrumbsVue from './BreadcrumbsVue';
 import CodeSplitting from './CodeSplitting';
 import DataLoading from './DataLoading';
 import Modal from './Modal';
+import MultiBody from './MultiBody';
 import Redux from './Redux';
 import ScriptTags from './ScriptTags';
 import ServerRendering from './ServerRendering';
@@ -27,6 +28,7 @@ export default {
   'code-splitting': CodeSplitting,
   'data-loading': DataLoading,
   'modal': Modal,
+  'multi-body': MultiBody,
   'redux': Redux,
   'script-tags': ScriptTags,
   'server-rendering': ServerRendering,
