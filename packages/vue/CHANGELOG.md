@@ -1,5 +1,6 @@
 ## Next
 
+* Add an `extra` prop to the `active` object passed to `<curi-link>`s. This function will be passed the current location and the link's `details`, returning a boolean that is `true` when the link should be active. This allows for making the link active based on the `query`/`hash` properties.
 * Removed source maps from `dist`
 
 ## 1.0.0-beta.10

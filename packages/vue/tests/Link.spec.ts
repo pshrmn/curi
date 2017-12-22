@@ -135,90 +135,208 @@ describe('Link component', () => {
       });
     });
 
-    it('merges active props when the location is active', done => {
-      const Vue = createLocalVue();
+    describe('merge', () => {
+      it('merges active props when the location is active', done => {
+        const Vue = createLocalVue();
 
-      installCuri(Vue, config);
-      config.respond(
-        (response, action) => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: 'Place',
-              params: { name: 'somewhere' },
-              text: 'somewhere',
-              active: { merge }
-            }
-          });
-          expect(wrapper.hasClass('active')).toBe(true);
-          done();
-        },
-        { once: true }
-      );
+        installCuri(Vue, config);
+        config.respond(
+          (response, action) => {
+            const wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Place',
+                params: { name: 'somewhere' },
+                text: 'somewhere',
+                active: { merge }
+              }
+            });
+            expect(wrapper.hasClass('active')).toBe(true);
+            done();
+          },
+          { once: true }
+        );
+      });
+
+      it('does not merge active props when the location is not active', done => {
+        const Vue = createLocalVue();
+
+        installCuri(Vue, config);
+        config.respond(
+          (response, action) => {
+            const wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Place',
+                params: { name: 'nowhere' },
+                text: 'nowhere',
+                active: { merge }
+              }
+            });
+            expect(wrapper.hasClass('active')).toBe(false);
+            done();
+          },
+          { once: true }
+        );
+      });
     });
 
-    it('does not merge active props when the location is not active', done => {
-      const Vue = createLocalVue();
+    describe('partial', () => {
+      it('merges active props for partial matches when active.partial = true', done => {
+        const Vue = createLocalVue();
 
-      installCuri(Vue, config);
-      config.respond(
-        (response, action) => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: 'Place',
-              params: { name: 'nowhere' },
-              text: 'nowhere',
-              active: { merge }
-            }
-          });
-          expect(wrapper.hasClass('active')).toBe(false);
-          done();
-        },
-        { once: true }
-      );
+        installCuri(Vue, config);
+        config.respond(
+          (response, action) => {
+            const wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Places',
+                text: 'Places',
+                active: { merge, partial: true }
+              }
+            });
+            expect(wrapper.hasClass('active')).toBe(true);
+            done();
+          },
+          { once: true }
+        );
+      });
+
+      it('does not merge active props for partial matches when active.partial is falsy', done => {
+        const Vue = createLocalVue();
+
+        installCuri(Vue, config);
+        config.respond(
+          (response, action) => {
+            const wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Places',
+                text: 'Places',
+                active: { merge }
+              }
+            });
+            expect(wrapper.hasClass('active')).toBe(false);
+            done();
+          },
+          { once: true }
+        );
+      });
     });
 
-    it('merges active props for partial matches when active.partial = true', done => {
-      const Vue = createLocalVue();
+    describe('extra', () => {
+      let history, config;
+      const routes = [
+        {
+          name: 'Places',
+          path: 'place',
+          children: [{ name: 'Place', path: ':name' }]
+        }
+      ];
 
-      installCuri(Vue, config);
-      config.respond(
-        (response, action) => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: 'Places',
-              text: 'Places',
-              active: { merge, partial: true }
-            }
-          });
-          expect(wrapper.hasClass('active')).toBe(true);
+      function merge(props) {
+        props.class = 'active';
+        return props;
+      }
+
+      beforeEach(() => {
+        history = InMemory({
+          locations: ['/place/somewhere?test=ing']
+        });
+
+        config = createConfig(history, routes, {
+          addons: [createActiveAddon()]
+        });
+      });
+
+      it('calls the extra function, passing it the location and details', done => {
+        const Vue = createLocalVue();
+
+        const details = { query: 'test=ing' };
+
+        function extra(loc, deets) {
+          expect(loc).toBe(history.location);
+          expect(deets).toBe(details);
           done();
-        },
-        { once: true }
-      );
-    });
+          return true;
+        }
 
-    it('does not merge active props for partial matches when active.partial is falsy', done => {
-      const Vue = createLocalVue();
+        installCuri(Vue, config);
+        config.respond(
+          (response, action) => {
+            const wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Place',
+                params: { name: 'somewhere' },
+                text: 'somewhere',
+                details,
+                active: { merge, extra }
+              }
+            });
+          },
+          { once: true }
+        );
+      });
 
-      installCuri(Vue, config);
-      config.respond(
-        (response, action) => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: 'Places',
-              text: 'Places',
-              active: { merge }
-            }
-          });
-          expect(wrapper.hasClass('active')).toBe(false);
-          done();
-        },
-        { once: true }
-      );
+      it('sets active when extra returns true', done => {
+        const Vue = createLocalVue();
+
+        const details = { query: 'test=ing' };
+
+        function extra() {
+          return true;
+        }
+
+        installCuri(Vue, config);
+        config.respond(
+          (response, action) => {
+            const wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Place',
+                params: { name: 'somewhere' },
+                text: 'somewhere',
+                details,
+                active: { merge, extra }
+              }
+            });
+            expect(wrapper.hasClass('active')).toBe(true);
+            done();
+          },
+          { once: true }
+        );
+      });
+
+      it('does not set active when extra returns false', done => {
+        const Vue = createLocalVue();
+
+        const details = { query: 'test=ing' };
+
+        function extra() {
+          return false;
+        }
+
+        installCuri(Vue, config);
+        config.respond(
+          (response, action) => {
+            const wrapper = shallow(Link, {
+              localVue: Vue,
+              propsData: {
+                to: 'Place',
+                params: { name: 'somewhere' },
+                text: 'somewhere',
+                details,
+                active: { merge, extra }
+              }
+            });
+            expect(wrapper.hasClass('active')).not.toBe(true);
+            done();
+          },
+          { once: true }
+        );
+      });
     });
 
     describe('location changes', () => {

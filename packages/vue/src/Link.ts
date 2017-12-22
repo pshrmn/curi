@@ -5,6 +5,7 @@ import warning from 'warning';
 export interface ActiveLink {
   merge(props: object): object;
   partial?: boolean;
+  extra?(l: HickoryLocation, d: object): boolean;
 }
 
 export interface LinkComponent extends Vue {
@@ -48,11 +49,16 @@ const Link: ComponentOptions<LinkComponent> = {
         return false;
       }
 
-      return this.$curi.config.addons.active(
-        this.to,
-        this.$curi.response,
-        this.params,
-        !!this.active.partial
+      return (
+        this.$curi.config.addons.active(
+          this.to,
+          this.$curi.response,
+          this.params,
+          !!this.active.partial
+        ) &&
+        (this.active.extra
+          ? this.active.extra(this.$curi.response.location, this.details)
+          : true)
       );
     }
   },
