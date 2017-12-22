@@ -29,10 +29,10 @@ export default ({ name }) => (
 
   // 3. Wait for the response to be generated
   config.respond((response, action) => {
-    // 4. Generate the HTML markup by rendering a <Navigator> and
+    // 4. Generate the HTML markup by rendering a <CuriBase> and
     // passing it the response
     const markup = renderToString(
-      <Navigator
+      <CuriBase
         response={response}
         action={action}
         config={config}

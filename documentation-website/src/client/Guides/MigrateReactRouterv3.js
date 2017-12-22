@@ -383,9 +383,9 @@ const config = create1Config(history, routes);`
       >
         <p>
           With Curi, we need to re-render our application every time that the location changes. We will do this by combining the{' '}
-          <IJS>respond</IJS> function from our config object and the <Cmp>Navigator</Cmp> component, which comes from
+          <IJS>respond</IJS> function from our config object and the <Cmp>CuriBase</Cmp> component, which comes from
           the <IJS>@curi/react</IJS> package. The response handler passed to <IJS>config.respond</IJS> will be called every time
-          the location changes, so we can re-render inside of that. The <Cmp>Navigator</Cmp> places the new <IJS>response</IJS> and{' '}
+          the location changes, so we can re-render inside of that. The <Cmp>CuriBase</Cmp> places the new <IJS>response</IJS> and{' '}
           <IJS>action</IJS> (alongside the <IJS>config</IJS> object) on React's <IJS>context</IJS>, so child components will be able
           to automatically access those values. It also expects a <IJS>render</IJS> prop, which is a render function it will call to
           render the application.
@@ -394,7 +394,7 @@ const config = create1Config(history, routes);`
           {
 `config.respond((response, action) => {
   ReactDOM.render((
-    <Navigator
+    <CuriBase
       response={response}
       action={action}
       config={config}
@@ -439,13 +439,13 @@ const config = create1Config(history, routes);`
         </p>
         <p>
           We also said above that there was no need for the <Cmp>App</Cmp> component with Curi. If you want to have an <Cmp>App</Cmp>
-          {' '}component, you can render it either inside of the render function or as a parent of your <Cmp>Navigator</Cmp>. This can
+          {' '}component, you can render it either inside of the render function or as a parent of your <Cmp>CuriBase</Cmp>. This can
           be useful for rendering content that is unrelated to specific routes, like a page header or menu.
         </p>
         <p>
           Rendering the <Cmp>App</Cmp> inside of the render function is necessary if any of the components rendered by the <Cmp>App</Cmp>
           {' '}are location aware components, since they need to access the Curi configuration object (through React’s context, which
-          the <Cmp>Navigator</Cmp> provides)
+          the <Cmp>CuriBase</Cmp> provides)
         </p>
         <PrismBlock lang='jsx'>
           {

@@ -46,7 +46,7 @@ export default ({ name }) => (
       </PrismBlock>
 
       <p>
-        Then, in your render function (the <Cmp>Navigator</Cmp>'s children prop), you would check the
+        Then, in your render function (the <Cmp>CuriBase</Cmp>'s children prop), you would check the
         if the response's <IJS>redirectTo</IJS> property is set. If it is, you could manually redirect using{' '}
         <IJS>config.history</IJS> or just render a <Cmp>Redirect</Cmp> and that will be handled
         for you.

@@ -63,7 +63,7 @@ const BookList = ({ response }) => (
         }
       </PrismBlock>
       <Note>
-        If our <IJS>render</IJS> function (passed to the <Cmp>Navigator</Cmp>)
+        If our <IJS>render</IJS> function (passed to the <Cmp>CuriBase</Cmp>)
         had just passed the <IJS>params</IJS> instead of the whole{' '}
         <IJS>response</IJS>, we would have to modify that function to also
         pass along the <IJS>data</IJS>. Since we pass the entire{' '}

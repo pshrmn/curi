@@ -27,16 +27,16 @@ export default ({ name, version, globalName }) => (
   >
     <APIBlock>
       <Section
-        title={<Cmp>Navigator</Cmp>}
-        id='Navigator'
+        title={<Cmp>CuriBase</Cmp>}
+        id='CuriBase'
       >
         <p>
-          The <Cmp>Navigator</Cmp> component places values on React's <IJS>context</IJS> so that
+          The <Cmp>CuriBase</Cmp> component places values on React's <IJS>context</IJS> so that
           child components can access them.
         </p>
         <PrismBlock lang='javascript'>
           {
-`import { Navigator } from '@curi/react';`
+`import { CuriBase } from '@curi/react';`
           }
         </PrismBlock>
 
@@ -46,7 +46,7 @@ export default ({ name, version, globalName }) => (
 
 config.respond((response, action) => {
   ReactDOM.render((
-    <Navigator
+    <CuriBase
       response={response}
       action={action}
       config={config}
@@ -62,13 +62,13 @@ config.respond((response, action) => {
         <Section
           tag='h3'
           title='Props'
-          id='Navigator-props'
+          id='CuriBase-props'
         >
 
           <Subsection
             tag='h4'
             title='config'
-            id='Navigator-config'
+            id='CuriBase-config'
           >
             <p>
               A configuration object (created by calling curi's createConfig function).
@@ -78,10 +78,10 @@ config.respond((response, action) => {
           <Subsection
             tag='h4'
             title='render'
-            id='Navigator-render'
+            id='CuriBase-render'
           >
             <p>
-              A render function. This will be called whenever the <Cmp>Navigator</Cmp>
+              A render function. This will be called whenever the <Cmp>CuriBase</Cmp>
               {' '}renders. The function will be passed the current response object and the config object it
               was passed as a prop. The function must return a React element.
             </p>
@@ -90,10 +90,10 @@ config.respond((response, action) => {
           <Subsection
             tag='h4'
             title='response'
-            id='Navigator-response'
+            id='CuriBase-response'
           >
             <p>
-              A response object. You can pass your <Cmp>Navigator</Cmp> a response object and
+              A response object. You can pass your <Cmp>CuriBase</Cmp> a response object and
               it will use that instead of subscribing to the configuration object. This is ideal for server-side
               rendering.
             </p>
@@ -102,7 +102,7 @@ config.respond((response, action) => {
           <Subsection
             tag='h4'
             title='action'
-            id='Navigator-action'
+            id='CuriBase-action'
           >
             <p>
               The `action` from the most recent navigation.
@@ -400,8 +400,8 @@ const config = createConfig(history, routes, {
             <Link
               to='Package'
               params={{ package: 'react' }}
-              details={{ hash: 'Navigator' }}
-            ><Cmp>Navigator</Cmp></Link> as an ancestor of your <Cmp>Active</Cmp>
+              details={{ hash: 'CuriBase' }}
+            ><Cmp>CuriBase</Cmp></Link> as an ancestor of your <Cmp>Active</Cmp>
             components in order to ensure that those exist.
           </p>
         </Section>

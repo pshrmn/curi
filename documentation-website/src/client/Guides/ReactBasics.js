@@ -22,12 +22,12 @@ export default ({ name }) => (
       Curi provides a number of React components through the{' '}
       <Link to='Package' params={{ package: 'react' }}><IJS>@curi/react</IJS></Link> package.
       To get started, there are only two components that you need to be aware of:{' '}
-      <Cmp>Navigator</Cmp> and <Cmp>Link</Cmp>.
+      <Cmp>CuriBase</Cmp> and <Cmp>Link</Cmp>.
     </p>
 
     <Section
-      title='The Navigator'
-      id='navigator'
+      title='The CuriBase'
+      id='CuriBase'
     >
       <PrismBlock lang='bash'>
         {`npm install @curi/react`}
@@ -37,8 +37,8 @@ export default ({ name }) => (
         <Link
           to='Package'
           params={{ package: 'react' }}
-          details={{ hash: 'Navigator' }}
-        >Navigator</Link> component is responsible for placing values on React's <IJS>context</IJS>
+          details={{ hash: 'CuriBase' }}
+        >CuriBase</Link> component is responsible for placing values on React's <IJS>context</IJS>
         {' '}so that child components can access them. To do this, you pass it a Curi configuration
         object, a <IJS>response</IJS> object, and an <IJS>action</IJS> string. You should re-render
         this whenever the a new response is emitted, so it makes sense to render this inside of a
@@ -47,17 +47,17 @@ export default ({ name }) => (
 
       <PrismBlock lang='javascript'>
         {
-`import { Navigator } from '@curi/react';
+`import { CuriBase } from '@curi/react';
 
 const config = createConfig(history, routes);
 ReactDOM.render((
-  <Navigator config={config} ... />
+  <CuriBase config={config} ... />
 ), holder);`
         }
       </PrismBlock>
 
       <p>
-        In addition to the configuration object, the Navigator also takes a{' '}
+        In addition to the configuration object, the CuriBase also takes a{' '}
         <IJS>render</IJS> prop. That is a function that returns the React elements that
         make up your application. The render function will receive two arguments:{' '}
         <IJS>response</IJS> and <IJS>config</IJS>. Response is a response object and config
@@ -74,7 +74,7 @@ function render(response, config) {
 }
 
 ReactDOM.render((
-  <Navigator config={config} render={render} />
+  <CuriBase config={config} render={render} />
 ), holder);`
         }
       </PrismBlock>
@@ -82,8 +82,8 @@ ReactDOM.render((
       <p>
         You <em>can</em> define your render function inline, but typically it is easier to
         define the function in its own module and import it wherever you are rendering your
-        Navigator. Inlining would also mean that the function gets recreated every time that
-        the Navigator is re-rendered by its parent, which is not ideal.
+        CuriBase. Inlining would also mean that the function gets recreated every time that
+        the CuriBase is re-rendered by its parent, which is not ideal.
       </p>
 
       <p>
@@ -167,8 +167,8 @@ const routes = [
         <Link
           to='Package'
           params={{ package: 'react' }}
-          details={{ hash: 'Navigator' }}
-        >Navigator</Link> API docs to learn more about the other props.
+          details={{ hash: 'CuriBase' }}
+        >CuriBase</Link> API docs to learn more about the other props.
       </Note>
     </Section>
 

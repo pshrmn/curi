@@ -252,7 +252,7 @@ function render(response) {
 
 // react
 function render(response) {
-  // This function should be a property of the <Navigator> and
+  // This function should be a property of the <CuriBase> and
   // it should return a React element
   const Body = response.body || defaultBody;
   return React.createElement(Body, { params: response.params });

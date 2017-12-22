@@ -32,7 +32,7 @@ export default () => (
         </li>
         <li>
           Installing the <IJS>@curi/react</IJS> package and learning about
-          some of the components it provides (<Cmp>Navigator</Cmp> and{' '}
+          some of the components it provides (<Cmp>CuriBase</Cmp> and{' '}
           <Cmp>Link</Cmp>).
         </li>
         <li>
@@ -83,7 +83,7 @@ module.exports = {
     >
       <p>
         The <IJS>@curi/react</IJS> package provides React components that know how to interact
-        with Curi. For this tutorial, we will only be using two: <Cmp>Navigator</Cmp> and{' '}
+        with Curi. For this tutorial, we will only be using two: <Cmp>CuriBase</Cmp> and{' '}
         <Cmp>Link</Cmp>. However, there are a number of other ones that you might find useful.
         You can read more about them in the{' '}
         <Link
@@ -110,16 +110,16 @@ module.exports = {
         </PrismBlock>
       </Subsection>
       <Subsection
-        title={<span>The <Cmp>Navigator</Cmp> Component</span>}
-        id='Navigator'
+        title={<span>The <Cmp>CuriBase</Cmp> Component</span>}
+        id='CuriBase'
       >
         <PrismBlock lang='javascript'>
           {
-`import { Navigator } from '@curi/react';`
+`import { CuriBase } from '@curi/react';`
           }
         </PrismBlock>
         <p>
-          The <Cmp>Navigator</Cmp> is responsible for rendering the website whenever the
+          The <Cmp>CuriBase</Cmp> is responsible for rendering the website whenever the
           location changes. It expects four props: <IJS>response</IJS>, <IJS>action</IJS>,
           <IJS>config</IJS>, and <IJS>render</IJS>.
         </p>
@@ -152,13 +152,13 @@ module.exports = {
 `// index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Navigator } from '@curi/react';
+import { CuriBase } from '@curi/react';
 
 // ...
 
 config.respond((response, action) => {
   ReactDOM.render((
-    <Navigator
+    <CuriBase
       response={response}
       action={action}
       config={config}
@@ -171,7 +171,7 @@ config.respond((response, action) => {
           }
         </PrismBlock>
         <p>
-          The <Cmp>Navigator</Cmp> also adds a <IJS>curi</IJS> object to React's context.
+          The <Cmp>CuriBase</Cmp> also adds a <IJS>curi</IJS> object to React's context.
           This object has <IJS>config</IJS>, <IJS>response</IJS>, and <IJS>action</IJS>
           {' '}properties. A number of the other components exported by <IJS>@curi/react</IJS>
           {' '}rely on these variables to render/function.
@@ -252,7 +252,7 @@ config.respond((response, action) => {
     >
       <p>
         Let's go back to that <IJS>render</IJS> function that we pass to the{' '}
-        <Cmp>Navigator</Cmp>. In the sample code above, we just returned{' '}
+        <Cmp>CuriBase</Cmp>. In the sample code above, we just returned{' '}
         <IJS>null</IJS>. Of course, for our website we want to return the actual
         elements that make up a page. How should we do this? Let's take a look at
         the properties of our response object.
@@ -476,7 +476,7 @@ import renderFunction from './render';
 let root = document.getElementById('root');
 config.respond((response, action) => {
   ReactDOM.render((
-    <Navigator
+    <CuriBase
       response={response}
       action={action}
       config={config}
@@ -545,8 +545,8 @@ export default NavLinks;`
       <p>
         That is simple enough, but where should we render this?
         Our <Cmp>Link</Cmp> components rely on the context variables
-        that are provided by the <Cmp>Navigator</Cmp>. This means that
-        our <Cmp>NavLinks</Cmp> needs to be a child of the <Cmp>Navigator</Cmp>.
+        that are provided by the <Cmp>CuriBase</Cmp>. This means that
+        our <Cmp>NavLinks</Cmp> needs to be a child of the <Cmp>CuriBase</Cmp>.
       </p>
       <p>
         The easiest way for us to do that would be to modify our{' '}

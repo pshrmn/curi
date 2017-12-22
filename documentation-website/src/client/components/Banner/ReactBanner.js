@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 
 import Browser from '@hickory/browser';
 import createConfig from '@curi/core';
-import { Navigator } from '@curi/react';
+import { CuriBase } from '@curi/react';
 
 // create your history object
 const history = Browser();
@@ -29,7 +29,7 @@ const root = document.getElementById('root');
 // that will be called whenever the location changes
 config.respond((response, action) => {
   ReactDOM.render((
-    <Navigator
+    <CuriBase
       response={response}
       action={action}
       config={config}

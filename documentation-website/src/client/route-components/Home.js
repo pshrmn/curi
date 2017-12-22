@@ -390,7 +390,7 @@ function requestHandler(req, resp) {
     // your rendering library, but here we'll
     use React
     const markup = renderToString(
-      <Navigator
+      <CuriBase
         response={response}
         action={action}
         config={config}
