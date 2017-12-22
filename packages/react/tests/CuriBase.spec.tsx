@@ -4,10 +4,10 @@ import { shallow, mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import createConfig from '@curi/core';
 import InMemory from '@hickory/in-memory';
-import Navigator from '../src/Navigator';
+import CuriBase from '../src/CuriBase';
 import { Response } from '@curi/core';
 
-describe('<Navigator>', () => {
+describe('<CuriBase>', () => {
   it('calls render function when it renders', () => {
     const history = InMemory();
     const config = createConfig(history, []);
@@ -16,7 +16,7 @@ describe('<Navigator>', () => {
       return null;
     });
     const wrapper = shallow(
-      <Navigator
+      <CuriBase
         response={{} as Response}
         action="PUSH"
         config={config}
@@ -52,7 +52,7 @@ describe('<Navigator>', () => {
     ];
     config.respond((response, action) => {
       const wrapper = shallow(
-        <Navigator
+        <CuriBase
           response={response}
           action={action}
           config={config}
@@ -81,7 +81,7 @@ describe('<Navigator>', () => {
 
     config.respond((response, action) => {
       const wrapper = shallow(
-        <Navigator
+        <CuriBase
           response={response}
           action={action}
           config={config}
@@ -106,7 +106,7 @@ describe('<Navigator>', () => {
     const config = createConfig(history, routes);
     config.respond((response, action) => {
       const wrapper = shallow(
-        <Navigator
+        <CuriBase
           response={response}
           action={action}
           config={config}
@@ -148,7 +148,7 @@ describe('<Navigator>', () => {
 
       config.respond((response, action) => {
         const wrapper = mount(
-          <Navigator
+          <CuriBase
             response={response}
             action={action}
             config={config}
@@ -170,7 +170,7 @@ describe('<Navigator>', () => {
 
       config.respond((response, action) => {
         const wrapper = mount(
-          <Navigator
+          <CuriBase
             response={response}
             action={action}
             config={config}
@@ -192,7 +192,7 @@ describe('<Navigator>', () => {
 
       config.respond((response, action) => {
         const wrapper = mount(
-          <Navigator
+          <CuriBase
             response={response}
             action={action}
             config={config}

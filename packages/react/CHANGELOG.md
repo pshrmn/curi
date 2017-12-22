@@ -1,5 +1,6 @@
 ## Next
 
+* Rename `<Navigator>` to `<CuriBase>`. 
 * Add `extra` and `details` props to the `<Active>` component.
 * Add an `extra` function to the `<Link active>` object, which is a function that can add additional active checking using the current location and the details passed to the `<Link>`. This allows you to mark a link as active based on its `query` and/or `hash`.
 * Simpler `<Link anchor>` type.

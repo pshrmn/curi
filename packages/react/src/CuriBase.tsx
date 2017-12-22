@@ -4,7 +4,7 @@ import { CuriConfig, Response } from '@curi/core';
 import { CuriContext } from './interface';
 import { Action } from '@hickory/root';
 
-export interface NavigatorProps {
+export interface CuriBaseProps {
   config: CuriConfig;
   render: (
     r: Response,
@@ -15,7 +15,7 @@ export interface NavigatorProps {
   action: Action;
 }
 
-class Navigator extends React.Component<NavigatorProps> {
+class CuriBase extends React.Component<CuriBaseProps> {
   static childContextTypes = {
     curi: PropTypes.shape({
       config: PropTypes.object,
@@ -43,4 +43,4 @@ class Navigator extends React.Component<NavigatorProps> {
   }
 }
 
-export default Navigator;
+export default CuriBase;
