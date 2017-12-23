@@ -1,8 +1,8 @@
 import React from 'react';
-import BaseExample from './base/BaseExample';
+import BaseExample from '../base/BaseExample';
 import { Link } from '@curi/react';
-import { Section } from '../components/Sections';
-import { InlineJS as IJS } from '../components/PrismBlocks';
+import { Section } from '../../components/Sections';
+import { InlineJS as IJS } from '../../components/PrismBlocks';
 
 export default ({ name }) => (
   <BaseExample>

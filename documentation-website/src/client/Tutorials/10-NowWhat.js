@@ -64,7 +64,7 @@ export default () => (
         use these, <IJS>response.data</IJS> is a convenience, not a requirement. You
         can even continue to use <IJS>match.response</IJS> with a global store. Instead of
         calling <IJS>set.data</IJS>, you could just dispatch the data to your store. You
-        can check out the <Link to='Example' params={{ slug: 'redux' }}>Redux example</Link>
+        can check out the <Link to='Example' params={{ category: 'react', slug: 'redux' }}>Redux example</Link>
         {' '}to see how this might be implemented.
       </li>
       <li>

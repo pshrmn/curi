@@ -1,10 +1,10 @@
 import React from 'react';
-import BaseExample from './base/BaseExample';
-import { Section } from '../components/Sections';
+import BaseExample from '../base/BaseExample';
+import { Section } from '../../components/Sections';
 import {
   InlineJS as IJS,
   PrismBlock
-} from '../components/PrismBlocks';
+} from '../../components/PrismBlocks';
 
 export default ({ name }) => (
   <BaseExample>

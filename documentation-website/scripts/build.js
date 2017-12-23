@@ -7,12 +7,20 @@ const createApp = require('../src/server/app');
 const routes = require('../src/client/routes').default;
 const packages = require('../src/client/constants/packages').default;
 const guides = require('../src/client/constants/guides').default;
-const examples = require('../src/client/constants/examples').default;
+const EXAMPLES = require('../src/client/constants/examples').default;
 const tutorialsByName = require('../src/client/constants/tutorials').byName;
 
 const packageNames = packages.map(p => ({ package: p.name }));
 const guideNames = guides.map(p => ({ slug: p.slug }));
-const exampleNames = examples.map(p => ({ slug: p.slug }));
+const categories = EXAMPLES.all();
+const exampleParams = Object.keys(categories)
+  .map(key => categories[key])
+  .reduce((acc, category) => {
+    const params = category.map(e => ({ category: e.category, slug: e.slug }));
+    acc = acc.concat(params);
+    return acc;
+  }, []);
+
 const tutorialNames = Object.keys(tutorialsByName).map(name => ({ name }));
 
 updatePackageVersions();
@@ -36,7 +44,7 @@ server = app.listen('8000', () => {
       'Examples': {
         children: {
           'Example': {
-            params: exampleNames
+            params: exampleParams
           }
         }
       },

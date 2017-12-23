@@ -12,9 +12,5 @@ export default () => (
       package <a href="https://github.com/pshrmn/curi/tree/master/examples">on GitHub</a>.
     </p>
     <ExampleTiles />
-    <p>
-      You can see the source code for all of the examples on{' '}
-      <a href="https://github.com/pshrmn/curi/tree/master/examples">GitHub</a>.
-    </p>
   </div>
 );

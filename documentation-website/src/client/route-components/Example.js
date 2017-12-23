@@ -10,6 +10,6 @@ export default ({ params, data }) => {
       </div>
     );
   }
-  const Component = ExampleComponents[params.slug];
+  const Component = ExampleComponents[params.category][params.slug];
   return <Component name={data.name} />
 };

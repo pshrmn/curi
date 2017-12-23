@@ -1,7 +1,7 @@
 import React from 'react';
-import BaseExample from './base/BaseExample';
-import { Section } from '../components/Sections';
-import CodeSandboxDemo from '../components/CodeSandboxDemo';
+import BaseExample from '../base/BaseExample';
+import { Section } from '../../components/Sections';
+import CodeSandboxDemo from '../../components/CodeSandboxDemo';
 
 export default ({ name }) => (
   <BaseExample>

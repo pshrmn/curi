@@ -165,7 +165,7 @@ export default ({ name }) => (
       route setup prior to actually rendering the route. Please remember, however, that
       your application will not be re-rendering until after the fetching has resolved.
       If you have a long running load function, you may wish to implement some sort of
-      loading display. The <Link to='Example' params={{ slug: 'data-loading' }}>
+      loading display. The <Link to='Example' params={{ category: 'react', slug: 'data-loading' }}>
         data loading example
       </Link> shows one approach to how to do this.
     </p>

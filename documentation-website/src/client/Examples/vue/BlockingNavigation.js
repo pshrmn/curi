@@ -1,11 +1,11 @@
 import React from 'react';
-import BaseExample from './base/BaseExample';
+import BaseExample from '../base/BaseExample';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../components/PrismBlocks';
-import { Section } from '../components/Sections';
-import CodeSandboxDemo from '../components/CodeSandboxDemo';
+} from '../../components/PrismBlocks';
+import { Section } from '../../components/Sections';
+import CodeSandboxDemo from '../../components/CodeSandboxDemo';
 
 export default ({ name }) => (
   <BaseExample>
@@ -20,7 +20,7 @@ export default ({ name }) => (
         site.
       </p>
       <p>
-        When you want to do this, you can use the <Cmp>Block</Cmp> component
+        When you want to do this, you can use the <Cmp>curi-block</Cmp> component
         from react-curi to display a user confirmation that requires user input before navigation
         will occur.
       </p>
@@ -30,7 +30,7 @@ export default ({ name }) => (
       title='Live Demo'
       id='demo'
     >
-      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/blocking-navigation' />
+      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/blocking-navigation-vue' />
     </Section>
 
     <Section
@@ -38,7 +38,7 @@ export default ({ name }) => (
       id='source'
     >
       If you want to run this code locally, the source code is available on GitHub{' '}
-      <a href='https://github.com/pshrmn/curi/tree/master/examples/blocking-navigation'>here</a>.
+      <a href='https://github.com/pshrmn/curi/tree/master/examples/blocking-navigation-vue'>here</a>.
     </Section>
   </BaseExample>
 );

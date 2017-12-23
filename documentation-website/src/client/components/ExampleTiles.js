@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link } from '@curi/react';
 
-import examples from '../constants/examples';
+import EXAMPLES from '../constants/examples';
+import { Section } from './Sections';
 import styleActive from '../utils/styleActive';
 
-export default () => (
+const Category = ({ name, examples }) => (
   <ul className='tiles'>
     {
       examples.map(example => (
-        <li key={example.slug} className='tile'>
+        <li key={`${example.category}/${example.slug}`} className='tile'>
           <Link
             to='Example'
-            params={{ slug: example.slug }}
+            params={{ category: example.category, slug: example.slug }}
             active={{ merge: styleActive }}
           >
             <h2>{example.name}</h2>
@@ -21,4 +22,33 @@ export default () => (
       ))
     }
   </ul>
-);
+)
+
+export default () => {
+  const examples = EXAMPLES.all();
+  const categories = Object.keys(examples);
+  return (
+    <div>
+      <ul>
+        {
+          categories.map(key => (
+            <li key={key}>
+              <Link details={{ hash: key }}>{key}</Link>
+            </li>
+          ))
+        }
+      </ul>
+      {
+        categories.map(key => (
+          <Section
+            title={key}
+            id={key}
+            key={key}
+          >
+            <Category name={key} examples={examples[key]} />
+          </Section>
+        ))
+      }
+    </div>
+  );
+}

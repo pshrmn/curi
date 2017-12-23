@@ -8,7 +8,7 @@ import ExampleList from './route-components/ExampleList';
 import { byName as tutorialsByName } from './constants/tutorials';
 import { byName as guidesByName } from './constants/guides';
 import { byName as packagesByName } from './constants/packages';
-import { byName as examplesByName } from './constants/examples';
+import EXAMPLES from './constants/examples';
 
 function caught(error) {
   console.error('Failed to load module for:', name, err);
@@ -100,14 +100,15 @@ export default [
     children: [
       {
         name: 'Example',
-        path: ':slug/',
+        path: ':category/:slug/',
         match: {
           initial: () => 
             import(/* webpackChunkName: 'example' */'./route-components/Example')
               .then(module => module.default, caught),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
-            const example = examplesByName[route.params.slug];
+            const { category, slug } = route.params;
+            const example = EXAMPLES.find(category, slug);
             if (example) {
               set.data(example);
             }

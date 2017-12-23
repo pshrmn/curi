@@ -74,7 +74,6 @@ module.exports = function generateStaticFiles(routes, params) {
             }
           )
           console.log(p);
-          
         })
         .catch(err => {
           throw Error(err);
