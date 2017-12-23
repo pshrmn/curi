@@ -390,6 +390,11 @@ const config = create1Config(history, routes);`
           to automatically access those values. It also expects a <IJS>render</IJS> prop, which is a render function it will call to
           render the application.
         </p>
+        <Note>
+          The <IJS>action</IJS> prop is optional, so you only need to pass it to the <Cmp>CuriBase</Cmp>
+          {' '}if you are using it in your application. If you do not pass it, <IJS>context.curi.action</IJS>
+          {' '}will be <IJS>"POP"</IJS>.
+        </Note>
         <PrismBlock lang='jsx'>
           {
 `config.respond((response, action) => {

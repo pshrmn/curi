@@ -45,37 +45,35 @@ export default ({ name }) => (
         response handler (the function passed to <IJS>config.respond</IJS>).
       </p>
 
-      <PrismBlock lang='javascript'>
+      <p>
+        The CuriBase also takes a <IJS>render</IJS> prop. That is a function that returns
+        the React elements that make up your application. The render function will receive
+        three arguments: <IJS>response</IJS>, <IJS>action</IJS>, and <IJS>config</IJS>.
+        Response is a response object, action is an action string, and config is your configuration
+        object. The response object is the most important of these there. The others may occasionally
+        be useful or you may never use them.
+      </p>
+
+      <PrismBlock lang='jsx'>
         {
 `import { CuriBase } from '@curi/react';
 
 const config = createConfig(history, routes);
-ReactDOM.render((
-  <CuriBase config={config} ... />
-), holder);`
-        }
-      </PrismBlock>
-
-      <p>
-        In addition to the configuration object, the CuriBase also takes a{' '}
-        <IJS>render</IJS> prop. That is a function that returns the React elements that
-        make up your application. The render function will receive two arguments:{' '}
-        <IJS>response</IJS> and <IJS>config</IJS>. Response is a response object and config
-        is your configuration object (which can be useful to have access to, but you may
-        also never have a reason to use it).
-      </p>
-
-      <PrismBlock lang='javascript'>
-        {
-`const config = createConfig(history, routes);
 
 function render(response, config) {
   // return a React element (or null)
 }
 
-ReactDOM.render((
-  <CuriBase config={config} render={render} />
-), holder);`
+config.respond((response, action) => {
+  ReactDOM.render((
+    <CuriBase
+      config={config}
+      response={response}
+      action={action}
+      render={render}
+    />
+  ), holder);
+});`
         }
       </PrismBlock>
 
@@ -191,7 +189,7 @@ const routes = [
         you with an easy way to do this by rendering anchor (<Cmp>a</Cmp>) elements.
       </p>
 
-      <PrismBlock lang='javascript'>
+      <PrismBlock lang='jsx'>
         {
 `import { Link } from '@curi/react'
 <Link to='Home'>Home</Link>`
@@ -222,7 +220,7 @@ const routes = [
         URI pathnames for you.
       </p>
 
-      <PrismBlock lang='javascript'>
+      <PrismBlock lang='jsx'>
         {
 `<Link to='About'>About</Link>
 // <a href="/about">About</a>`
@@ -236,7 +234,7 @@ const routes = [
         should also include the params for any parent routes.
       </p>
 
-      <PrismBlock lang='javascript'>
+      <PrismBlock lang='jsx'>
         {
 `{
   name: 'Album',
@@ -263,7 +261,7 @@ const routes = [
         and <IJS>state</IJS>.
       </p>
 
-      <PrismBlock lang='javascript'>
+      <PrismBlock lang='jsx'>
         {
 `<Link
   to='Song'
@@ -286,7 +284,7 @@ const routes = [
         in-app navigation without reloading the page.
       </p>
 
-      <PrismBlock lang='javascript'>
+      <PrismBlock lang='jsx'>
         {
 `// if you render this, clicking it will reload the page
 <a href="/about">About</a>

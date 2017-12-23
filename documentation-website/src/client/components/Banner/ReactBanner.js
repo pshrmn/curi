@@ -27,11 +27,10 @@ const config = createConfig(history, routes);
 const root = document.getElementById('root');
 // subscribe to the config object with a function
 // that will be called whenever the location changes
-config.respond((response, action) => {
+config.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      action={action}
       config={config}
       render={response => {
         return <response.body />;

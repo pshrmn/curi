@@ -44,11 +44,10 @@ export default ({ name, version, globalName }) => (
           {
 `const config = createConfig(history, routes);
 
-config.respond((response, action) => {
+config.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      action={action}
       config={config}
       render={response => {
         return response.body ? <response.body /> : null;
@@ -105,7 +104,8 @@ config.respond((response, action) => {
             id='CuriBase-action'
           >
             <p>
-              The `action` from the most recent navigation.
+              The <IJS>action</IJS> from the most recent navigation (the second argument
+              passed to <IJS>config.respond</IJS> callbacks). This prop is optional.
             </p>
           </Subsection>
         </Section>

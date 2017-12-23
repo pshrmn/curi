@@ -385,14 +385,13 @@ function requestHandler(req, resp) {
   });
   const config = createConfig(history, routes);
 
-  config.respond((response, action) => {
+  config.respond((response) => {
     // render the markup. This will vary based on
     // your rendering library, but here we'll
     use React
     const markup = renderToString(
       <CuriBase
         response={response}
-        action={action}
         config={config}
         render={render}
       />

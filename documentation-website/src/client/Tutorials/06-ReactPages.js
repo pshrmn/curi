@@ -120,7 +120,7 @@ module.exports = {
         </PrismBlock>
         <p>
           The <Cmp>CuriBase</Cmp> is responsible for rendering the website whenever the
-          location changes. It expects four props: <IJS>response</IJS>, <IJS>action</IJS>,
+          location changes. It can take four props: <IJS>response</IJS>, <IJS>action</IJS>,
           <IJS>config</IJS>, and <IJS>render</IJS>.
         </p>
         <ol>
@@ -128,7 +128,7 @@ module.exports = {
             <IJS>response</IJS> is a Curi response object.
           </li>
           <li>
-          <IJS>action</IJS> is the action type of the last navigation.
+          <IJS>action</IJS> (optional) is the action type of the last navigation.
           </li>
           <li>
             <IJS>config</IJS> is our Curi configuration object.
@@ -143,9 +143,8 @@ module.exports = {
           </li>
         </ol>
         <p>
-          In order to get the <IJS>response</IJS> and <IJS>action</IJS> props, we need
-          to subscribe to our Curi configuration object. That will allow us to always
-          have the latest response and action values.
+          In order to set the <IJS>response</IJS> prop, we need to subscribe to our Curi
+          configuration object. That will allow us to always have the latest response object.
         </p>
         <PrismBlock lang='jsx'>
           {
@@ -156,13 +155,12 @@ import { CuriBase } from '@curi/react';
 
 // ...
 
-config.respond((response, action) => {
+config.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      action={action}
       config={config}
-      render={(response, action, config) => {
+      render={response => {
         return null;
       }}
     />
@@ -474,11 +472,10 @@ export default routes;`
 import renderFunction from './render';
 
 let root = document.getElementById('root');
-config.respond((response, action) => {
+config.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      action={action}
       config={config}
       render={renderFunction}
     />

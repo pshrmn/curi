@@ -34,7 +34,6 @@ export default ({ name }) => (
     const markup = renderToString(
       <CuriBase
         response={response}
-        action={action}
         config={config}
         render={renderFunction}
       />
