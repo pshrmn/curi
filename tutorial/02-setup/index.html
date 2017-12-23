@@ -55,7 +55,7 @@ const config = {
   }
 }
 
-module.exports = config;</pre><p>We also need to create the <code class="language-javascript">index.html</code> file. This just needs to include the DOM element that we will render our application in and a <code class="language-jsx"><!-- -->&lt;<!-- -->script<!-- -->&gt;</code> that loads our bundled application. You can copy the code below into your <code class="language-javascript">public/index.html</code> file.</p><pre class="language-html">&lt;!doctype html&gt;
+module.exports = config;</pre><p>We also need to create the <code class="language-javascript">index.html</code> file. This just needs to include the DOM element that we will render our application in and a<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->script<!-- -->&gt;</code> that loads our bundled application. You can copy the code below into your <code class="language-javascript">public/index.html</code> file.</p><pre class="language-html">&lt;!doctype html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
@@ -64,7 +64,7 @@ module.exports = config;</pre><p>We also need to create the <code class="languag
     &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
     &lt;script src=&quot;/js/bundle.js&quot;&gt;&lt;/script&gt;
   &lt;/body&gt;
-&lt;/html&gt;</pre><p>Finally, we just need to add a script to our<!-- --> <code class="language-javascript">package.json</code> file in order to build our bundle.</p><pre class="language-javascript">// package.json
+&lt;/html&gt;</pre><p>Finally, we just need to add a script to our <code class="language-javascript">package.json</code> <!-- -->file in order to build our bundle.</p><pre class="language-javascript">// package.json
 {
   // ...,
   &quot;scripts&quot;: {
