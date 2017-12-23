@@ -38,13 +38,13 @@ export default ({ name }) => (
     </Section>
 
     <Section title="Live Demo" id="demo">
-      <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/transitions" />
+      <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/transitions" />
     </Section>
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
       GitHub{' '}
-      <a href="https://github.com/pshrmn/curi/tree/master/examples/transitions">
+      <a href="https://github.com/pshrmn/curi/tree/master/examples/react/transitions">
         here
       </a>.
     </Section>

@@ -22,7 +22,7 @@ export default ({ name }) => (
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
       GitHub{' '}
-      <a href="https://github.com/pshrmn/curi/tree/master/examples/code-splitting">
+      <a href="https://github.com/pshrmn/curi/tree/master/examples/misc/code-splitting">
         here
       </a>.
     </Section>
