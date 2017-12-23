@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Browser from '@hickory/browser';
 import createConfig from '@curi/core'
-import { Navigator } from '@curi/react';
+import { CuriBase } from '@curi/react';
 import { parse, stringify } from 'qs';
 
 import routes from './routes';
@@ -14,11 +14,10 @@ const history = Browser({
 const config = createConfig(history, routes);
 const root = document.getElementById('root');
 
-config.respond((response, action) => {
+config.respond((response) => {
   ReactDOM.render((
-    <Navigator
+    <CuriBase
       response={response}
-      action={action}
       config={config}
       render={renderFunction}
     />

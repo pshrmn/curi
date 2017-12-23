@@ -55,7 +55,7 @@ function render(response) {
 
 config.respond((response, action) => {
   ReactDOM.render((
-    h(CuriReact.Navigator, {
+    h(CuriReact.CuriBase, {
       response: response,
       action: action,
       config: config,

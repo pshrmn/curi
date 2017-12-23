@@ -1,4 +1,4 @@
-import { Navigator } from '@curi/react';
+import { CuriBase } from '@curi/react';
 import { connect } from 'react-redux';
 
 export default connect(
@@ -7,4 +7,4 @@ export default connect(
     action: curi.action,
     config: curi.config
   })
-)(Navigator);
+)(CuriBase);

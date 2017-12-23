@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigator } from '@curi/react';
+import { CuriBase } from '@curi/react';
 
 import Nav from './Nav';
 import { baseRoutes, adminRoutes } from '../routes';
@@ -25,7 +25,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Navigator
+      <CuriBase
         {...this.props}
         render={(response) => {
           const { body: Body } = response;

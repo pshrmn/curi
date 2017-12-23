@@ -13,10 +13,10 @@ function catchAll(req, res) {
   // 3. Wait for the initial location's response to finish
   config.ready()
     .then(response => {
-      // 4. Generate the HTML markup by rendering a <Navigator> and
+      // 4. Generate the HTML markup by rendering a <CuriBase> and
       // passing it the response
       const markup = renderToString(
-        <Navigator response={response} config={config} children={renderFunction} />
+        <CuriBase response={response} config={config} render={renderFunction} />
       );
       // 5. Insert the markup into the page's html and send it
       res.send(renderFullPage(markup));

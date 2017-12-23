@@ -5,7 +5,7 @@ import Browser from '@hickory/browser';
 import createConfig from '@curi/core'
 import { syncResponses } from '@curi/redux';
 
-import ConnectedNavigator from './components/ConnectedNavigator';
+import ConnectedBase from './components/ConnectedBase';
 import store from './reduxStuff';
 import routes from './routes';
 import renderFunction from './renderFunction';
@@ -18,7 +18,7 @@ syncResponses(store, config);
 config.respond(() => {
   ReactDOM.render((
     <Provider store={store}>
-      <ConnectedNavigator render={renderFunction} />
+      <ConnectedBase render={renderFunction} />
     </Provider>
   ), root);
 }, { once: true });

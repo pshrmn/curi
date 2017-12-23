@@ -2,7 +2,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import InMemory from '@hickory/in-memory';
 import createConfig from '@curi/core';
-import { Navigator } from '@curi/react';
+import { CuriBase } from '@curi/react';
 import routes from './src/routes';
 import renderFunction from './src/renderFunction';
 
@@ -10,11 +10,10 @@ export default function(req, res) {
   const history = InMemory({ locations: [ req.url ]})
   const config = createConfig(history, routes);
  
-  config.respond((response, action) => {
+  config.respond((response) => {
     const markup = renderToString(
-      <Navigator
+      <CuriBase
         response={response}
-        action={action}
         config={config}
         render={renderFunction}
       />

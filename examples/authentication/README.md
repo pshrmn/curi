@@ -21,7 +21,7 @@ const routes = [
 ];
 ```
 
-Then, in your render function (the `<Navigator>`'s `children` prop), you would check the if the response's `redirectTo` property is set. If it is, you could manually redirect using `config.history` or just render a `<Redirect>` and that will be handled for you.
+Then, in your render function (the `<CuriBase>`'s `render` prop), you would check the if the response's `redirectTo` property is set. If it is, you could manually redirect using `config.history` or just render a `<Redirect>` and that will be handled for you.
 
 ```js
 function render(response, config) {
