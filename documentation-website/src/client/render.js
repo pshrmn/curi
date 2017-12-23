@@ -15,4 +15,4 @@ export default function render(response, action, config) {
       </div>
     );
   }
-};
+}

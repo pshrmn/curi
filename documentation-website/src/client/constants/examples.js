@@ -10,7 +10,8 @@ const examples = {
       name: 'Authentication',
       category: 'react',
       slug: 'authentication',
-      description: 'Automatically redirect to a login page when attempting to access private content'
+      description:
+        'Automatically redirect to a login page when attempting to access private content'
     },
     {
       name: 'Blocking Navigation',
@@ -100,7 +101,8 @@ const examples = {
       name: 'Server Rendering',
       category: 'misc',
       slug: 'server-rendering',
-      description: 'Render your application on the server using Node (this example uses Express)'
+      description:
+        'Render your application on the server using Node (this example uses Express)'
     },
     {
       name: 'Side Effects',

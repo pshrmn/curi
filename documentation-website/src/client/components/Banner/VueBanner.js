@@ -2,9 +2,8 @@ import React from 'react';
 import { PrismBlock } from '../PrismBlocks';
 
 const VueBanner = () => (
-  <PrismBlock lang='javascript'>
-    {
-`import Vue from 'vue';
+  <PrismBlock lang="javascript">
+    {`import Vue from 'vue';
 
 import Browser from '@hickory/browser';
 import { installCuri } from '@curi/vue';
@@ -35,8 +34,7 @@ config.respond(() => {
     template: '<app />',
     components: { app: App }
   });
-}, { once: true });`
-    }
+}, { once: true });`}
   </PrismBlock>
 );
 

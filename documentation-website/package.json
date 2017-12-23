@@ -7,6 +7,7 @@
     "build": "npm run generate",
     "dev": "npm run webpack:dev -- --watch & cross-env BABEL_ENV=serve node ./src/server",
     "generate": "cross-env BABEL_ENV=serve node ./scripts/build",
+    "prettier": "prettier --single-quote --write \"src/**/*.js\"",
     "webpack:dev": "cross-env BABEL_ENV=build webpack",
     "webpack:build": "cross-env BABEL_ENV=build webpack --optimize-minimize"
   },
@@ -49,6 +50,7 @@
     "node-sass": "^4.5.3",
     "path-to-regexp": "^2.1.0",
     "postcss-loader": "^2.0.8",
+    "prettier": "^1.9.2",
     "request-promise-native": "^1.0.5",
     "sass-loader": "^6.0.6",
     "source-map-loader": "^0.2.3",

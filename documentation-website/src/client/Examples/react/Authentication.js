@@ -11,14 +11,11 @@ import CodeSandboxDemo from '../../components/CodeSandboxDemo';
 export default ({ name }) => (
   <BaseExample>
     <h1>{name}</h1>
-    <Section
-      title='Explanation'
-      id='explanation'
-    >
+    <Section title="Explanation" id="explanation">
       <p>
         Sometimes you will want to redirect based on the results of your{' '}
-        <IJS>match.every</IJS> function. For instance, you might see that a
-        user is not authenticated and shouldn't be able to view a page.
+        <IJS>match.every</IJS> function. For instance, you might see that a user
+        is not authenticated and shouldn't be able to view a page.
       </p>
 
       <p>
@@ -26,9 +23,8 @@ export default ({ name }) => (
         the response by calling its redirect method.
       </p>
 
-      <PrismBlock lang='javascript'>
-        {
-`const routes = [
+      <PrismBlock lang="javascript">
+        {`const routes = [
   // ...,
   {
     name: 'Protected',
@@ -41,44 +37,37 @@ export default ({ name }) => (
       }
     }
   }
-];`
-        }
+];`}
       </PrismBlock>
 
       <p>
-        Then, in your render function (the <Cmp>CuriBase</Cmp>'s children prop), you would check the
-        if the response's <IJS>redirectTo</IJS> property is set. If it is, you could manually redirect using{' '}
-        <IJS>config.history</IJS> or just render a <Cmp>Redirect</Cmp> and that will be handled
-        for you.
+        Then, in your render function (the <Cmp>CuriBase</Cmp>'s children prop),
+        you would check the if the response's <IJS>redirectTo</IJS> property is
+        set. If it is, you could manually redirect using{' '}
+        <IJS>config.history</IJS> or just render a <Cmp>Redirect</Cmp> and that
+        will be handled for you.
       </p>
 
-      <PrismBlock lang='javascript'>
-        {
-
-`function render(response, config) {
+      <PrismBlock lang="javascript">
+        {`function render(response, config) {
   if (response.redirectTo) {
     return <Redirect to={response.redirectTo} />
   }
   // ...
-}`
-        }
+}`}
       </PrismBlock>
-
     </Section>
 
-    <Section
-      title='Live Demo'
-      id='demo'
-    >
-      <CodeSandboxDemo id='github/pshrmn/curi/tree/master/examples/authentication' />
+    <Section title="Live Demo" id="demo">
+      <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/authentication" />
     </Section>
 
-    <Section
-      title='On GitHub'
-      id='source'
-    >
-      If you want to run this code locally, the source code is available on GitHub{' '}
-      <a href='https://github.com/pshrmn/curi/tree/master/examples/authentication'>here</a>.
+    <Section title="On GitHub" id="source">
+      If you want to run this code locally, the source code is available on
+      GitHub{' '}
+      <a href="https://github.com/pshrmn/curi/tree/master/examples/authentication">
+        here
+      </a>.
     </Section>
   </BaseExample>
 );

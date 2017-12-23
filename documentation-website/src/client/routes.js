@@ -21,7 +21,7 @@ export default [
     path: '',
     match: {
       response: ({ set }) => {
-        set.body(Home)
+        set.body(Home);
       }
     },
     title: 'Curi'
@@ -30,9 +30,11 @@ export default [
     name: 'Tutorial',
     path: 'tutorial/:name',
     match: {
-      initial: () => 
-        import(/* webpackChunkName: 'tutorial' */'./route-components/Tutorial')
-          .then(module => module.default, caught),
+      initial: () =>
+        import(/* webpackChunkName: 'tutorial' */ './route-components/Tutorial').then(
+          module => module.default,
+          caught
+        ),
       response: ({ resolved, set }) => {
         set.body(resolved.initial);
       }
@@ -46,11 +48,13 @@ export default [
     name: 'Guide',
     path: 'guides/:slug/',
     match: {
-      initial: () => 
-        import(/* webpackChunkName: 'guide' */'./route-components/Guide')
-          .then(module => module.default, caught),
+      initial: () =>
+        import(/* webpackChunkName: 'guide' */ './route-components/Guide').then(
+          module => module.default,
+          caught
+        ),
       response: ({ route, resolved, set }) => {
-        set.body(resolved.initial)
+        set.body(resolved.initial);
         const guide = guidesByName[route.params.slug];
         if (guide) {
           set.data(guide);
@@ -73,9 +77,11 @@ export default [
         name: 'Package',
         path: '@curi/:package/',
         match: {
-          initial: () => 
-            import(/* webpackChunkName: 'package' */'./route-components/Package')
-              .then(module => module.default, caught),
+          initial: () =>
+            import(/* webpackChunkName: 'package' */ './route-components/Package').then(
+              module => module.default,
+              caught
+            ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
             const pkg = packagesByName[route.params.package];
@@ -84,7 +90,7 @@ export default [
             }
           }
         },
-        title: (params) => `@curi/${params.package}`
+        title: params => `@curi/${params.package}`
       }
     ]
   },
@@ -102,9 +108,11 @@ export default [
         name: 'Example',
         path: ':category/:slug/',
         match: {
-          initial: () => 
-            import(/* webpackChunkName: 'example' */'./route-components/Example')
-              .then(module => module.default, caught),
+          initial: () =>
+            import(/* webpackChunkName: 'example' */ './route-components/Example').then(
+              module => module.default,
+              caught
+            ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
             const { category, slug } = route.params;

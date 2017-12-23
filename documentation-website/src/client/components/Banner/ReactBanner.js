@@ -2,9 +2,8 @@ import React from 'react';
 import { PrismBlock } from '../PrismBlocks';
 
 const ReactBanner = () => (
-  <PrismBlock lang='jsx'>
-    {
-`import React from 'react';
+  <PrismBlock lang="jsx">
+    {`import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Browser from '@hickory/browser';
@@ -37,8 +36,7 @@ config.respond((response) => {
       }}
     />
   ), root);
-});`
-    }
+});`}
   </PrismBlock>
 );
 

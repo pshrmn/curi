@@ -17,10 +17,10 @@ function getDir(name) {
 }
 
 const BasePackage = ({ name, version, globalName, children, about }) => (
-  <div className='package'>
-    <div className='content'>
+  <div className="package">
+    <div className="content">
       <h1>@curi/{name}</h1>
-      <div className='package-info'>
+      <div className="package-info">
         <div>v{version}</div>
         <GitHubLink name={name} dir={getDir(name)} />
         <NPMLink name={name} />
@@ -29,7 +29,7 @@ const BasePackage = ({ name, version, globalName, children, about }) => (
       <Installation name={name} version={version} globalName={globalName} />
       {children || null}
     </div>
-    <div className='sidebar'>
+    <div className="sidebar">
       <h2>Packages</h2>
       <PackageLinks />
     </div>

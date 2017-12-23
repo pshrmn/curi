@@ -8,7 +8,8 @@ const guides = [
   {
     name: 'Getting Started',
     slug: 'getting-started',
-    description: 'Learn the basic concepts that you\'ll need to know to setup your project',
+    description:
+      "Learn the basic concepts that you'll need to know to setup your project",
     type: 'basic'
   },
   {
@@ -26,19 +27,22 @@ const guides = [
   {
     name: 'Using Addons',
     slug: 'addons',
-    description: 'Learn how to use addons to interact with your routes in your project',
+    description:
+      'Learn how to use addons to interact with your routes in your project',
     type: 'advanced'
   },
   {
     name: 'Using Side Effects',
     slug: 'side-effects',
-    description: 'Learn how to use side effect functions to trigger behavior after navigation',
+    description:
+      'Learn how to use side effect functions to trigger behavior after navigation',
     type: 'advanced'
   },
   {
     name: 'Response Caching',
     slug: 'response-caching',
-    description: 'Learn how to cache responses to prevent recreating duplicate responses',
+    description:
+      'Learn how to cache responses to prevent recreating duplicate responses',
     type: 'advanced'
   },
   {
@@ -50,7 +54,8 @@ const guides = [
   {
     name: 'Loading Route Data',
     slug: 'loading',
-    description: 'Learn how to load data for a route and modify the response object',
+    description:
+      'Learn how to load data for a route and modify the response object',
     type: 'advanced'
   },
   {
@@ -62,7 +67,8 @@ const guides = [
   {
     name: 'Migrate from React Router v2/3 to Curi',
     slug: 'migrate-rrv3',
-    descriptioni: 'Learn how to migrate an application from React Router v2 or v3 to Curi',
+    descriptioni:
+      'Learn how to migrate an application from React Router v2 or v3 to Curi',
     type: 'migration'
   }
 ];
@@ -75,7 +81,6 @@ export const groupedGuides = guides.reduce((acc, curr) => {
   }
   return acc;
 }, {});
-
 
 export const byName = guides.reduce((acc, curr) => {
   acc[curr.slug] = curr;

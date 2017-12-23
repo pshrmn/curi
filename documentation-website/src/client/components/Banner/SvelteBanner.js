@@ -2,9 +2,8 @@ import React from 'react';
 import { PrismBlock } from '../PrismBlocks';
 
 const SvelteBanner = () => (
-  <PrismBlock lang='javascript'>
-    {
-`import Browser from '@hickory/browser';
+  <PrismBlock lang="javascript">
+    {`import Browser from '@hickory/browser';
 import createConfig from '@curi/core';
 import { setConfig } from '@curi/svelte';
 
@@ -41,8 +40,7 @@ config.respond((response) => {
     target: root,
     data: { response }
   });
-});`
-    }
+});`}
   </PrismBlock>
 );
 

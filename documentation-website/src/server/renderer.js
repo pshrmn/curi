@@ -7,28 +7,31 @@ import createActiveAddon from '@curi/addon-active';
 import routes from '../client/routes';
 import renderFunction from '../client/render';
 
-export default function createHandler(debug=false) {
+export default function createHandler(debug = false) {
   return function(req, res) {
     const history = InMemory({
-      locations: [ req.url ]
+      locations: [req.url]
     });
 
     const config = createConfig(history, routes, {
       addons: [createActiveAddon()]
     });
 
-    config.respond((response, action) => {
-      const markup = renderToString(
-        <CuriBase
-          response={response}
-          action={action}
-          config={config}
-          render={renderFunction}
-        />
-      );
-      res.send(renderFullPage(markup, response.title, debug));
-    }, { once: true });
-  }
+    config.respond(
+      (response, action) => {
+        const markup = renderToString(
+          <CuriBase
+            response={response}
+            action={action}
+            config={config}
+            render={renderFunction}
+          />
+        );
+        res.send(renderFullPage(markup, response.title, debug));
+      },
+      { once: true }
+    );
+  };
 }
 
 function renderFullPage(html, title, debug) {
@@ -43,8 +46,12 @@ function renderFullPage(html, title, debug) {
   </head>
   <body>
     <div id="root">${html}</div>
-    <script src="https://unpkg.com/react@16.0.0/umd/react.${debug ? 'development' : 'production.min'}.js"></script>
-    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.${debug ? 'development' : 'production.min'}.js"></script>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.${
+      debug ? 'development' : 'production.min'
+    }.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.${
+      debug ? 'development' : 'production.min'
+    }.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

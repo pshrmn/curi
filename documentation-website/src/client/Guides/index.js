@@ -11,15 +11,15 @@ import ReactBasics from './ReactBasics';
 import MigrateReactRouterv3 from './MigrateReactRouterv3';
 
 export default {
-  'installation': Installation,
+  installation: Installation,
   'getting-started': GettingStarted,
-  'routes': AllAboutRoutes,
-  'responses': RenderingWithResponses,
-  'addons': UsingAddons,
+  routes: AllAboutRoutes,
+  responses: RenderingWithResponses,
+  addons: UsingAddons,
   'side-effects': UsingSideEffects,
   'response-caching': ResponseCaching,
   'code-splitting': CodeSplitting,
-  'loading': Loading,
-  'react': ReactBasics,
+  loading: Loading,
+  react: ReactBasics,
   'migrate-rrv3': MigrateReactRouterv3
 };

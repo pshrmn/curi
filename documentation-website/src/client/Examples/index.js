@@ -20,7 +20,6 @@ import BreadcrumbsVue from './vue/Breadcrumbs';
 // svelte
 import BasicSvelte from './svelte/Basic';
 
-
 export default {
   misc: {
     'code-splitting': CodeSplitting,
@@ -30,22 +29,21 @@ export default {
   },
   react: {
     'active-links': ActiveLinks,
-    'authentication': Authentication,
+    authentication: Authentication,
     'blocking-navigation': BlockingNavigation,
-    'breadcrumbs': Breadcrumbs,
+    breadcrumbs: Breadcrumbs,
     'data-loading': DataLoading,
-    'modal': Modal,
+    modal: Modal,
     'multi-body': MultiBody,
-    'redux': Redux,
-    'transitions': Transitions
+    redux: Redux,
+    transitions: Transitions
   },
   svelte: {
-    'basic': BasicSvelte
+    basic: BasicSvelte
   },
   vue: {
-    'basic': BasicVue,
+    basic: BasicVue,
     'blocking-navigation': BlockingNavigationVue,
-    'breadcrumbs': BreadcrumbsVue
+    breadcrumbs: BreadcrumbsVue
   }
-}
-
+};

@@ -20,12 +20,13 @@ const config = createConfig(history, routes, {
 });
 
 config.respond((response, action) => {
-  ReactDOM.hydrate((
+  ReactDOM.hydrate(
     <CuriBase
       response={response}
       action={action}
       config={config}
       render={renderFunction}
-    />
-  ), document.getElementById('root'));
+    />,
+    document.getElementById('root')
+  );
 });
