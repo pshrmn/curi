@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Browser from '@hickory/browser';
 import createConfig from '@curi/core';
-import { Navigator } from '@curi/react';
+import { CuriBase } from '@curi/react';
 import createTitleSideEffect from '@curi/side-effect-title';
 import createScrollSideEffect from '@curi/side-effect-scroll';
 import createActiveAddon from '@curi/addon-active';
@@ -21,7 +21,7 @@ const config = createConfig(history, routes, {
 
 config.respond((response, action) => {
   ReactDOM.hydrate((
-    <Navigator
+    <CuriBase
       response={response}
       action={action}
       config={config}

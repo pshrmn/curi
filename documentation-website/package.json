@@ -19,7 +19,7 @@
   "dependencies": {
     "@curi/addon-active": "^1.0.0-beta.5",
     "@curi/core": "^1.0.0-beta.21",
-    "@curi/react": "^1.0.0-beta.13",
+    "@curi/react": "^1.0.0-beta.14",
     "@curi/side-effect-scroll": "^1.0.0-beta.5",
     "@curi/side-effect-title": "^1.0.0-beta.5",
     "@hickory/browser": "^1.0.0-beta.5",

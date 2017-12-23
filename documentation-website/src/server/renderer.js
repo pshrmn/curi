@@ -2,7 +2,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import InMemory from '@hickory/in-memory';
 import createConfig from '@curi/core';
-import { Navigator } from '@curi/react';
+import { CuriBase } from '@curi/react';
 import createActiveAddon from '@curi/addon-active';
 import routes from '../client/routes';
 import renderFunction from '../client/render';
@@ -19,7 +19,7 @@ export default function createHandler(debug=false) {
 
     config.respond((response, action) => {
       const markup = renderToString(
-        <Navigator
+        <CuriBase
           response={response}
           action={action}
           config={config}
