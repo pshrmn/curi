@@ -9,5 +9,5 @@ export default {
   "side-effect-scroll": "1.0.0-beta.6",
   "side-effect-title": "1.0.0-beta.8",
   "svelte": "1.0.0-beta.1",
-  "vue": "1.0.0-beta.10"
+  "vue": "1.0.0-beta.11"
 };
