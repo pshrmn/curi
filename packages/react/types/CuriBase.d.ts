@@ -8,11 +8,14 @@ export interface CuriBaseProps {
     config: CuriConfig;
     render: (r: Response, action: string, c?: CuriConfig) => React.ReactElement<any>;
     response: Response;
-    action: Action;
+    action?: Action;
 }
 declare class CuriBase extends React.Component<CuriBaseProps> {
     static childContextTypes: {
         curi: PropTypes.Requireable<any>;
+    };
+    static defaultProps: {
+        action: string;
     };
     getChildContext(): CuriContext;
     render(): React.ReactElement<any>;

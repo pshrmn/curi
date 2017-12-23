@@ -18,12 +18,28 @@ describe('<CuriBase>', () => {
     const wrapper = shallow(
       <CuriBase
         response={{} as Response}
-        action="PUSH"
         config={config}
         render={fn}
       />
     );
     expect(fn.mock.calls.length).toBe(1);
+  });
+
+  it('defaults to action="POP" if not provided', () => {
+    const history = InMemory();
+    const config = createConfig(history, []);
+    const fakeConfig = { subscribe: () => {} };
+    const fn = jest.fn((response, action) => {
+      expect(action).toBe('POP');
+      return null;
+    });
+    const wrapper = shallow(
+      <CuriBase
+        response={{} as Response}
+        config={config}
+        render={fn}
+      />
+    );
   });
 
   it('passes the render function the response prop', done => {
@@ -50,11 +66,10 @@ describe('<CuriBase>', () => {
       'data',
       'title'
     ];
-    config.respond((response, action) => {
+    config.respond((response) => {
       const wrapper = shallow(
         <CuriBase
           response={response}
-          action={action}
           config={config}
           render={fn}
         />
@@ -104,11 +119,10 @@ describe('<CuriBase>', () => {
     });
 
     const config = createConfig(history, routes);
-    config.respond((response, action) => {
+    config.respond((response) => {
       const wrapper = shallow(
         <CuriBase
           response={response}
-          action={action}
           config={config}
           render={fn}
         />
@@ -146,11 +160,10 @@ describe('<CuriBase>', () => {
       ];
       const config = createConfig(history, routes);
 
-      config.respond((response, action) => {
+      config.respond((response) => {
         const wrapper = mount(
           <CuriBase
             response={response}
-            action={action}
             config={config}
             render={response => <ConfigReporter />}
           />
@@ -168,11 +181,10 @@ describe('<CuriBase>', () => {
       ];
       const config = createConfig(history, routes);
 
-      config.respond((response, action) => {
+      config.respond((response) => {
         const wrapper = mount(
           <CuriBase
             response={response}
-            action={action}
             config={config}
             render={response => <ConfigReporter />}
           />

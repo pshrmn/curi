@@ -12,7 +12,7 @@ export interface CuriBaseProps {
     c?: CuriConfig
   ) => React.ReactElement<any>;
   response: Response;
-  action: Action;
+  action?: Action;
 }
 
 class CuriBase extends React.Component<CuriBaseProps> {
@@ -22,6 +22,10 @@ class CuriBase extends React.Component<CuriBaseProps> {
       response: PropTypes.object,
       action: PropTypes.string
     })
+  };
+
+  static defaultProps = {
+    action: 'POP'
   };
 
   getChildContext(): CuriContext {
