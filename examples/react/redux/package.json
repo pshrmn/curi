@@ -1,5 +1,6 @@
 {
   "name": "curi-redux-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Use redux with curi",
   "main": "index.js",

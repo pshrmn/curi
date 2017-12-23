@@ -1,5 +1,6 @@
 {
   "name": "curi-server-rendering-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Server rendering with curi",
   "main": "index.js",

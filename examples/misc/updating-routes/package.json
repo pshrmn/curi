@@ -1,5 +1,6 @@
 {
   "name": "curi-updating-routes-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Update the known routes of a Curi application",
   "main": "index.js",

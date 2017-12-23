@@ -1,5 +1,6 @@
 {
   "name": "curi-active-links-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Style links differently when they are active",
   "main": "index.js",

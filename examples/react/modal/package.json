@@ -1,5 +1,6 @@
 {
   "name": "curi-modal-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Render a modal (pinterest/twitter)",
   "main": "index.js",

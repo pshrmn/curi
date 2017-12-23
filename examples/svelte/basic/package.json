@@ -1,5 +1,6 @@
 {
   "name": "curi-basic-svelte-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Add Curi routing to a Svelte application",
   "main": "index.js",

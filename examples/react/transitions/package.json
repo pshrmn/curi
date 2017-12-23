@@ -1,5 +1,6 @@
 {
   "name": "curi-transitions-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Animate transitions betweeen locations",
   "main": "index.js",

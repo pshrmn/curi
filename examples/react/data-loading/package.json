@@ -1,5 +1,6 @@
 {
   "name": "curi-data-loading-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Prefetch data before navigating",
   "main": "index.js",

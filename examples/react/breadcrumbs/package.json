@@ -1,5 +1,6 @@
 {
   "name": "curi-breadcrumbs-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Render breadcrumb links",
   "main": "index.js",

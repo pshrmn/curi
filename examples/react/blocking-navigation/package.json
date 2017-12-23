@@ -1,5 +1,6 @@
 {
   "name": "curi-blocking-navigation-example",
+  "private": true,
   "version": "0.1.0",
   "description": "Use the <Block> component to prevent transitions",
   "main": "index.js",
