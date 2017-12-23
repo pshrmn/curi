@@ -10,13 +10,18 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      Curi aims to be easy to setup. To get started, you just need to create a
-      Hickory history object and an array of route objects. Pass those as
-      arguments to the <IJS>createConfig</IJS> function to create your
-      configuration object. Then, subscribe to the configuration object using{' '}
-      <IJS>config.respond()</IJS>. The function you pass to{' '}
-      <IJS>config.respond</IJS> will be called every time the location changes.
-      You can use this to (re-)render your application based on the response.
+      Curi aims to be easy to setup. The one thing that all Curi projects have
+      in common is a configuration object. You create a configuration object by
+      passing a Hickory history object and an array of route objects to the{' '}
+      <IJS>createConfig</IJS> function (the default export from{' '}
+      <IJS>@curi/core</IJS>.
+    </p>
+    <p>
+      In order to re-render your application after navigation, you can subscribe
+      to your configuration object using its <IJS>respond</IJS> method.{' '}
+      <IJS>respond</IJS> takes a callback function that will be passed{' '}
+      <IJS>response</IJS> and <IJS>action</IJS> arguments, which you can use to
+      render.
     </p>
 
     <Section title="The History Object" id="history-object">
@@ -63,6 +68,7 @@ browserHistory.push({ pathname: '/guides/installation' });
 browserHistory.push({ pathname: '/guides/confirming-navigation' });
 
 // the navigate method will choose whether to push or replace for you
+// this behavior mimics how anchors (<a>) navigate
 browserHistory.navigate({ pathname: '/guides/getting-started' });
 `}
       </PrismBlock>
