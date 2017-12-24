@@ -114,7 +114,7 @@ const examples = {
       name: 'Twitch Clone',
       category: 'full',
       slug: 'twitch',
-      description: 'A clone of Twitch.tv build with Curi + Vue'
+      description: 'A clone of Twitch.tv built with Curi + Vue'
     }
   ],
   misc: [
