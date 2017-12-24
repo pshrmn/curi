@@ -14,6 +14,12 @@ const examples = {
         'Automatically redirect to a login page when attempting to access private content'
     },
     {
+      name: 'Basic',
+      category: 'react',
+      slug: 'basic',
+      description: 'A simple Curi app rendered using React'
+    },
+    {
       name: 'Blocking Navigation',
       category: 'react',
       slug: 'blocking-navigation',
@@ -58,6 +64,19 @@ const examples = {
   ],
   vue: [
     {
+      name: 'Active Links',
+      category: 'vue',
+      slug: 'active-links',
+      description: 'Style links when they match the current location'
+    },
+    {
+      name: 'Authentication',
+      category: 'vue',
+      slug: 'authentication',
+      description:
+        'Automatically redirect to a login page when attempting to access private content'
+    },
+    {
       name: 'Basic',
       category: 'vue',
       slug: 'basic',
@@ -74,6 +93,12 @@ const examples = {
       category: 'vue',
       slug: 'blocking-navigation',
       description: 'Prevent navigation away from a half-filled form'
+    },
+    {
+      name: 'Transitions',
+      category: 'vue',
+      slug: 'transitions',
+      description: 'Transition between routes'
     }
   ],
   svelte: [
