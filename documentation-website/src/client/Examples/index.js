@@ -23,6 +23,8 @@ import BreadcrumbsVue from './vue/Breadcrumbs';
 import TransitionsVue from './vue/Transitions';
 // svelte
 import BasicSvelte from './svelte/Basic';
+// full
+import TwitchFull from './full/Twitch';
 
 export default {
   misc: {
@@ -53,5 +55,8 @@ export default {
     'blocking-navigation': BlockingNavigationVue,
     breadcrumbs: BreadcrumbsVue,
     transitions: TransitionsVue
+  },
+  full: {
+    twitch: TwitchFull
   }
 };
