@@ -512,101 +512,103 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it('uses route.paramParsers to parse params', done => {
-          const history = InMemory({ locations: ['/123'] });
-          const routes = [
-            {
-              name: 'number',
-              path: ':num',
-              params: {
-                num: n => parseInt(n, 10)
+        describe('parsing params', () => {
+          it('uses route.params to parse params', done => {
+            const history = InMemory({ locations: ['/123'] });
+            const routes = [
+              {
+                name: 'number',
+                path: ':num',
+                params: {
+                  num: n => parseInt(n, 10)
+                }
               }
-            }
-          ];
-          const config = createConfig(history, routes);
-          config.respond(response => {
-            expect(response.params).toEqual({ num: 123 });
-            done();
+            ];
+            const config = createConfig(history, routes);
+            config.respond(response => {
+              expect(response.params).toEqual({ num: 123 });
+              done();
+            });
           });
-        });
-
-        it('parsers params from parent routes', done => {
-          const history = InMemory({ locations: ['/123/456'] });
-          const routes = [
-            {
-              name: 'first',
-              path: ':first',
-              children: [
-                {
-                  name: 'second',
-                  path: ':second',
-                  params: {
-                    second: n => parseInt(n, 10)
+  
+          it('parses params from parent routes', done => {
+            const history = InMemory({ locations: ['/123/456'] });
+            const routes = [
+              {
+                name: 'first',
+                path: ':first',
+                children: [
+                  {
+                    name: 'second',
+                    path: ':second',
+                    params: {
+                      second: n => parseInt(n, 10)
+                    }
+                  }
+                ],
+                params: {
+                  first: n => parseInt(n, 10)
+                }
+              }
+            ];
+            const config = createConfig(history, routes);
+            config.respond(response => {
+              expect(response.params).toEqual({
+                first: 123,
+                second: 456
+              });
+              done();
+            });
+          });
+  
+          it('uses string for any params not in route.params', done => {
+            const history = InMemory({ locations: ['/123/456'] });
+            const routes = [
+              {
+                name: 'combo',
+                path: ':first/:second',
+                params: {
+                  first: n => parseInt(n, 10)
+                }
+              }
+            ];
+            const config = createConfig(history, routes);
+            config.respond(response => {
+              expect(response.params).toEqual({
+                first: 123,
+                second: '456'
+              });
+              done();
+            });
+          });
+  
+          it('falls back to string value if param parser throws', done => {
+            const originalError = console.error;
+            const errorMock = jest.fn();
+            console.error = errorMock;
+  
+            const history = InMemory({ locations: ['/123'] });
+            const routes = [
+              {
+                name: 'number',
+                path: ':num',
+                params: {
+                  num: n => {
+                    throw new Error('This will fail.');
                   }
                 }
-              ],
-              params: {
-                first: n => parseInt(n, 10)
               }
-            }
-          ];
-          const config = createConfig(history, routes);
-          config.respond(response => {
-            expect(response.params).toEqual({
-              first: 123,
-              second: 456
+            ];
+            const config = createConfig(history, routes);
+            config.respond(response => {
+              expect(response.params).toEqual({
+                num: '123'
+              });
+              expect(errorMock.mock.calls.length).toBe(1);
+              expect(errorMock.mock.calls[0][0].message).toBe('This will fail.');
+              console.error = originalError;
+              done();
             });
-            done();
-          });
-        });
-
-        it('uses string for any params not in route.paramParsers', done => {
-          const history = InMemory({ locations: ['/123/456'] });
-          const routes = [
-            {
-              name: 'combo',
-              path: ':first/:second',
-              params: {
-                first: n => parseInt(n, 10)
-              }
-            }
-          ];
-          const config = createConfig(history, routes);
-          config.respond(response => {
-            expect(response.params).toEqual({
-              first: 123,
-              second: '456'
-            });
-            done();
-          });
-        });
-
-        it('falls back to string value if param parser throws', done => {
-          const originalError = console.error;
-          const errorMock = jest.fn();
-          console.error = errorMock;
-
-          const history = InMemory({ locations: ['/123'] });
-          const routes = [
-            {
-              name: 'number',
-              path: ':num',
-              params: {
-                num: n => {
-                  throw new Error('This will fail.');
-                }
-              }
-            }
-          ];
-          const config = createConfig(history, routes);
-          config.respond(response => {
-            expect(response.params).toEqual({
-              num: '123'
-            });
-            expect(errorMock.mock.calls.length).toBe(1);
-            expect(errorMock.mock.calls[0][0].message).toBe('This will fail.');
-            console.error = originalError;
-            done();
           });
         });
       });

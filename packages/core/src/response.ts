@@ -1,39 +1,16 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
 
 import matchRoute from './utils/match';
+import parseParams from './utils/parseParams';
 
-import { InternalRoute, ParamParsers, Match } from './types/route';
+import { InternalRoute, Match } from './types/route';
 import { Addons } from './types/addon';
 import {
   Response,
   PendingResponse,
   ResponseProps,
-  RawParams,
   Params
 } from './types/response';
-
-function parseParams(params: RawParams, fns: ParamParsers): Params {
-  if (!fns) {
-    return params;
-  }
-  const output: Params = {};
-  // For each param, attempt to parse it. However, if that
-  // fails, fall back to the string value.
-  for (let key in params) {
-    let value = params[key];
-    let fn = fns[key];
-    if (fn) {
-      try {
-        value = fn(value);
-      } catch (e) {
-        console.error(e);
-        value = params[key];
-      }
-    }
-    output[key] = value;
-  }
-  return output;
-}
 
 export function createResponse(
   location: HickoryLocation,
