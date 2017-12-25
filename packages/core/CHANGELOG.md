@@ -1,3 +1,7 @@
+## Next
+
+* Add a `sync` option to Curi (default `false`) that generates responses synchronously when `true`. In synchronous mode, the `initial` and `every` match functions are disabled.
+
 ## 1.0.0-beta.27
 
 * Update `set.redirect` to take an options object.

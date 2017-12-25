@@ -74,6 +74,11 @@ const router = curi(history, routes, options);`}
                 <IJS>redirectTo</IJS> property will not be emitted to response
                 handlers (but they will still trigger automatic redirects).
               </li>
+              <li>
+                sync - When <IJS>true</IJS>, responses will be generated
+                synchronously. <IJS>match.initial</IJS> and <IJS>match.every</IJS>
+                {' '}are disabled in synchronous mode. (default <IJS>false</IJS>)
+              </li>
             </ul>
           </Subsection>
         </Section>

@@ -4,7 +4,7 @@ import matchRoute from './utils/match';
 import parseParams from './utils/parseParams';
 import routeProperties from './utils/routeProperties';
 
-import { InternalRoute, Match } from './types/route';
+import { InternalRoute, Match, MatchedRoute } from './types/route';
 import {
   Response,
   PendingResponse,
@@ -12,10 +12,11 @@ import {
   Params
 } from './types/response';
 
-export default function createResponse(
+
+function matchLocation(
   location: HickoryLocation,
   routes: Array<InternalRoute>
-): Promise<PendingResponse> {
+): MatchedRoute {
   let matches: Array<Match> = [];
   let partials: Array<string> = [];
   let params: Params = {};
@@ -45,7 +46,25 @@ export default function createResponse(
     data: undefined,
     title: ''
   };
+  return { route, props };
+}
 
+export function createResponse(
+  location: HickoryLocation,
+  routes: Array<InternalRoute>
+): PendingResponse {
+  return {
+    ...matchLocation(location, routes),
+    resolved: null,
+    error: null
+  };
+}
+
+export function asyncCreateResponse(
+  location: HickoryLocation,
+  routes: Array<InternalRoute>
+): Promise<PendingResponse> {
+  const { route, props } = matchLocation(location, routes);
   return loadRoute(route, props);
 }
 
@@ -67,7 +86,7 @@ function loadRoute(
     match.initial ? match.initial() : undefined,
     match.every ? match.every(routeProperties(route, props)) : undefined
   ]).then(
-    ([initial, every]) => {
+    ([ initial, every ]) => {
       return {
         route,
         props,

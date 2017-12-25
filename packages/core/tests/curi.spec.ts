@@ -388,6 +388,40 @@ describe("curi", () => {
           });
         });
       });
+
+      describe('sync', () => {
+        it('does synchronous matching when sync = true', () => {
+          const routes = [{ name: 'Home', path: '' }];
+          const createFakeAddon = () => ({
+            name: 'fake',
+            register: () => {},
+            reset: () => {},
+            get: () => {}
+          });
+          const router = curi(history, routes, { sync: true });
+          const after = jest.fn();
+          router.respond(r => {
+            expect(after.mock.calls.length).toBe(0);
+          });
+          after();
+        });
+
+        it('does synchronous matching when sync = false (default)', () => {
+          const routes = [{ name: 'Home', path: '' }];
+          const createFakeAddon = () => ({
+            name: 'fake',
+            register: () => {},
+            reset: () => {},
+            get: () => {}
+          });
+          const router = curi(history, routes);
+          const after = jest.fn();
+          router.respond(r => {
+            expect(after.mock.calls.length).toBe(1);
+          });
+          after();
+        });
+      });
     });
   });
 

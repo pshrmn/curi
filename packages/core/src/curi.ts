@@ -1,8 +1,8 @@
-import registerRoutes from "./utils/registerRoutes";
-import pathnameAddon from "./addons/pathname";
-import createResponse from "./createResponse";
-import finishResponse from "./finishResponse";
-import createRoute from "./route";
+import registerRoutes from './utils/registerRoutes';
+import pathnameAddon from './addons/pathname';
+import finishResponse from './finishResponse';
+import { createResponse, asyncCreateResponse } from './createResponse';
+import createRoute from './route';
 
 import { History, PendingNavigation } from "@hickory/root";
 
@@ -32,7 +32,8 @@ function createRouter(
     sideEffects = [],
     cache,
     pathnameOptions,
-    emitRedirects = true
+    emitRedirects = true,
+    sync = false
   } = options as RouterOptions;
 
   const beforeSideEffects: Array<ResponseHandler> = [];
@@ -146,14 +147,24 @@ function createRouter(
       }
     }
 
-    createResponse(pendingNav.location, routes).then(pendingResponse => {
+    if (sync) {
+      const pendingResponse = createResponse(pendingNav.location, routes);
       if (pendingNav.cancelled) {
         return;
       }
       pendingNav.finish();
       const response = finishResponse(pendingResponse, registeredAddons);
       cacheAndEmit(response, navigation);
-    });
+    } else {
+      asyncCreateResponse(pendingNav.location, routes).then(pendingResponse => {
+        if (pendingNav.cancelled) {
+          return;
+        }
+        pendingNav.finish();
+        const response = finishResponse(pendingResponse, registeredAddons);
+        cacheAndEmit(response, navigation);
+      });
+    }
   }
 
   function cacheAndEmit(response: Response, navigation: Navigation) {
