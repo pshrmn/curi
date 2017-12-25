@@ -9,38 +9,19 @@ import {
   PendingNavigation,
   Action
 } from '@hickory/root';
-import { PathFunctionOptions } from 'path-to-regexp';
-import { RouteDescriptor, InternalRoute } from './route';
-import { Response, PendingResponse } from './response';
+
+import { RouteDescriptor, InternalRoute } from './types/route';
+import { Response, PendingResponse } from './types/response';
+import { Addon, Addons } from './types/addon';
 import {
-  Addon,
-  Addons,
+  CuriConfig,
+  ConfigOptions,
   SideEffect,
   ResponseHandler,
+  RespondOptions,
   RemoveResponseHandler,
   Cache
-} from './interface';
-
-export interface ConfigOptions {
-  addons?: Array<Addon>;
-  sideEffects?: Array<SideEffect>;
-  cache?: Cache;
-  pathnameOptions?: PathFunctionOptions;
-}
-
-export interface ResponseHandlerOptions {
-  once?: boolean;
-}
-
-export interface CuriConfig {
-  refresh: (routeArray: Array<RouteDescriptor>) => void;
-  respond: (
-    fn: ResponseHandler,
-    options?: ResponseHandlerOptions
-  ) => RemoveResponseHandler;
-  addons: Addons;
-  history: History;
-}
+} from './types/curi';
 
 function createConfig(
   history: History,
@@ -86,11 +67,15 @@ function createConfig(
 
   const responseHandlers: Array<ResponseHandler> = [];
   const oneTimers: Array<ResponseHandler> = [];
-  let previous: [Response, Action, CuriConfig] = [] as [Response, Action, CuriConfig];
+  let previous: [Response, Action, CuriConfig] = [] as [
+    Response,
+    Action,
+    CuriConfig
+  ];
 
   function respond(
     fn: ResponseHandler,
-    options?: ResponseHandlerOptions
+    options?: RespondOptions
   ): RemoveResponseHandler {
     if (typeof fn !== 'function') {
       throw new Error(

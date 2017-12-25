@@ -1,56 +1,17 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import PathToRegexp, { RegExpOptions, Key } from 'path-to-regexp';
+import PathToRegexp from 'path-to-regexp';
 
 import once from './utils/once';
 
-import { EveryMatchFn, InitialMatchFn, ResponseMatchFn } from './interface';
-import { ResponseProps } from './response';
-
-export type ParamParser = (input: string) => any;
-export interface ParamParsers {
-  [key: string]: ParamParser;
-}
-
-export interface MatchFns {
-  initial?: InitialMatchFn;
-  every?: EveryMatchFn;
-  response?: ResponseMatchFn;
-}
-
-export interface RouteDescriptor {
-  name: string;
-  path: string;
-  pathOptions?: RegExpOptions;
-  params?: ParamParsers;
-  children?: Array<RouteDescriptor>;
-  match?: MatchFns;
-  extra?: { [key: string]: any };
-}
-
-/*
- * These are the route properties that will be available
- * to addons
- */
-export interface Route {
-  name: string;
-  path: string;
-  keys: Array<string | number>;
-  match: MatchFns;
-  extra: { [key: string]: any };
-}
-
-export interface InternalMatch {
-  mustBeExact: boolean;
-  re: RegExp;
-  keys: Array<Key>;
-}
-
-export interface InternalRoute {
-  public: Route;
-  children: Array<InternalRoute>;
-  match: InternalMatch;
-  paramParsers: ParamParsers;
-}
+import {
+  RouteDescriptor,
+  InternalRoute,
+  EveryMatchFn,
+  InitialMatchFn,
+  ResponseMatchFn
+} from './types/route';
+import { ResponseProps } from './types/response';
+import { Key } from 'path-to-regexp';
 
 const createRoute = (options: RouteDescriptor): InternalRoute => {
   const {

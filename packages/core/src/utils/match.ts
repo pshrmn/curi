@@ -1,11 +1,7 @@
 import { join, stripLeadingSlash, withLeadingSlash } from './path';
-import { InternalRoute } from '../route';
-import { Params, RawParams } from '../interface';
 
-export interface Match {
-  route: InternalRoute;
-  params: Params;
-}
+import { InternalRoute, Match } from '../types/route';
+import { Params, RawParams } from '../types/response';
 
 export default function matchRoute(
   route: InternalRoute,

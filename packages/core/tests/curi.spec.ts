@@ -1,8 +1,7 @@
 import 'jest';
 import createConfig from '../src/curi';
 import InMemory from '@hickory/in-memory';
-import { Addon } from '../src/interface';
-import { Response } from '../src/response';
+import { Addon, Response } from '../src/types';
 
 describe('createConfig', () => {
   let history;

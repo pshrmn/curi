@@ -183,7 +183,7 @@ describe('route matching/response generation', () => {
       });
 
       describe('body', () => {
-        it('is undefined if it isn\'t set in match.response', done => {
+        it("is undefined if it isn't set in match.response", done => {
           const history = InMemory({ locations: ['/test'] });
           const routes = [
             {
@@ -197,7 +197,7 @@ describe('route matching/response generation', () => {
             done();
           });
         });
-    
+
         it('is the value set with set.body', done => {
           const history = InMemory({ locations: ['/test'] });
           const body = () => 'anybody out there?';
@@ -279,7 +279,7 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is set by calling set.redirect in the matching match.response", done => {
+        it('is set by calling set.redirect in the matching match.response', done => {
           const routes = [
             {
               name: '302 Route',
@@ -303,7 +303,7 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is set to 301 by default when calling set.redirect in match.response", done => {
+        it('is set to 301 by default when calling set.redirect in match.response', done => {
           const routes = [
             {
               name: '301 Route',
@@ -344,7 +344,7 @@ describe('route matching/response generation', () => {
           });
         });
 
-        it("is the value set by calling set.data in match.response", done => {
+        it('is the value set by calling set.data in match.response', done => {
           const routes = [
             {
               name: 'A Route',
@@ -837,8 +837,6 @@ describe('route matching/response generation', () => {
 
       describe('resolved', () => {
         describe('initial', () => {
-
-
           it('receives the data resolved by match.initial', done => {
             const spy = jest.fn(({ resolved }) => {
               expect(resolved.initial).toMatchObject({ test: 'ing' });
@@ -888,16 +886,19 @@ describe('route matching/response generation', () => {
               }
             ];
             const config = createConfig(history, routes);
-            config.respond(() => {
-              history.push('/another-one');
-            }, { once: true });
+            config.respond(
+              () => {
+                history.push('/another-one');
+              },
+              { once: true }
+            );
           });
 
           it('resolved.initial is undefined if there is no match.initial function', done => {
             const spy = jest.fn(({ resolved }) => {
               expect(resolved.initial).toBeUndefined();
             });
-  
+
             const CatchAll = {
               name: 'Catch All',
               path: ':anything',
@@ -905,7 +906,7 @@ describe('route matching/response generation', () => {
                 response: spy
               }
             };
-  
+
             const history = InMemory({ locations: ['/hello?one=two'] });
             const config = createConfig(history, [CatchAll]);
             config.respond(
@@ -922,7 +923,7 @@ describe('route matching/response generation', () => {
             const spy = jest.fn(({ resolved }) => {
               expect(resolved.every).toMatchObject({ test: 'ing' });
             });
-  
+
             const CatchAll = {
               name: 'Catch All',
               path: ':anything',
@@ -931,7 +932,7 @@ describe('route matching/response generation', () => {
                 response: spy
               }
             };
-  
+
             const history = InMemory({ locations: ['/hello?one=two'] });
             const config = createConfig(history, [CatchAll]);
             config.respond(
@@ -946,7 +947,7 @@ describe('route matching/response generation', () => {
             const spy = jest.fn(({ resolved }) => {
               expect(resolved.every).toBeUndefined();
             });
-  
+
             const CatchAll = {
               name: 'Catch All',
               path: ':anything',
@@ -954,7 +955,7 @@ describe('route matching/response generation', () => {
                 response: spy
               }
             };
-  
+
             const history = InMemory({ locations: ['/hello?one=two'] });
             const config = createConfig(history, [CatchAll]);
             config.respond(
@@ -978,13 +979,13 @@ describe('route matching/response generation', () => {
               }
             });
           });
-  
+
           const CatchAll = {
             name: 'Catch All',
             path: ':anything',
             match: { response: spy }
           };
-  
+
           const history = InMemory({ locations: ['/hello?one=two'] });
           const config = createConfig(history, [CatchAll]);
           config.respond(
@@ -1009,13 +1010,13 @@ describe('route matching/response generation', () => {
               })
             );
           });
-  
+
           const CatchAll = {
             name: 'Catch All',
             path: ':anything',
             match: { response: spy }
           };
-  
+
           const history = InMemory({ locations: ['/hello?one=two'] });
           const config = createConfig(history, [CatchAll]);
           config.respond(
@@ -1032,13 +1033,13 @@ describe('route matching/response generation', () => {
           const spy = jest.fn(({ addons }) => {
             expect(typeof addons.pathname).toBe('function');
           });
-  
+
           const CatchAll = {
             name: 'Catch All',
             path: ':anything',
             match: { response: spy }
           };
-  
+
           const history = InMemory({ locations: ['/hello?one=two'] });
           const config = createConfig(history, [CatchAll]);
           config.respond(
@@ -1048,7 +1049,7 @@ describe('route matching/response generation', () => {
             { once: true }
           );
         });
-  
+
         it('can use registered addons', done => {
           const routes = [
             {

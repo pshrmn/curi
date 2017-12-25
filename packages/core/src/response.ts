@@ -1,46 +1,16 @@
 import { HickoryLocation, ToArgument } from '@hickory/root';
-import { InternalRoute, ParamParsers } from './route';
-import matchRoute, { Match } from './utils/match';
-import { RawParams, Params, Addons } from './interface';
 
-export interface ResponseProps {
-  location: HickoryLocation;
-  params: Params;
-  partials: Array<string>;
-  status: number;
-  body: any;
-  data: any;
-  title: string;
-  error?: any;
-  redirectTo?: ToArgument;
-}
+import matchRoute from './utils/match';
 
-export interface ResolvedObject {
-  initial: any;
-  every: any;
-}
-
-export interface PendingResponse {
-  error?: any;
-  resolved?: ResolvedObject;
-  route: InternalRoute;
-  props: ResponseProps;
-}
-
-// this is a response object that will be emited
-export interface Response {
-  key: string;
-  location: HickoryLocation;
-  status: number;
-  data: any;
-  title: string;
-  body: any;
-  name?: string;
-  partials?: Array<string>;
-  params?: Params;
-  error?: any;
-  redirectTo?: any;
-}
+import { InternalRoute, ParamParsers, Match } from './types/route';
+import { Addons } from './types/addon';
+import {
+  Response,
+  PendingResponse,
+  ResponseProps,
+  RawParams,
+  Params
+} from './types/response';
 
 function parseParams(params: RawParams, fns: ParamParsers): Params {
   if (!fns) {
@@ -120,7 +90,7 @@ function loadRoute(
     match.initial ? match.initial() : undefined,
     match.every ? match.every(routeProperties(route, props)) : undefined
   ]).then(
-    ([ initial, every ]) => {
+    ([initial, every]) => {
       return {
         route,
         props,

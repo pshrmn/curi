@@ -1,6 +1,6 @@
 import 'jest';
-import createRoute, { Route } from '../src/route';
-import { Addon } from '../src/interface';
+import createRoute from '../src/route';
+import { Route, Addon } from '../src/types';
 import createConfig from '../src/curi';
 import InMemory from '@hickory/in-memory';
 

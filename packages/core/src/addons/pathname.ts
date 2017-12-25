@@ -3,8 +3,9 @@ import PathToRegexp, {
   PathFunctionOptions
 } from 'path-to-regexp';
 import { withLeadingSlash, join } from '../utils/path';
-import { Addon } from '../interface';
-import { Route } from '../route';
+
+import { Addon } from '../types/addon';
+import { Route } from '../types/route';
 
 function createPathnameAddon(options?: PathFunctionOptions): Addon {
   let knownPaths: { [key: string]: string } = {};
