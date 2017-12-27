@@ -3,7 +3,7 @@ import createConfig from '@curi/core';
 import { Store } from 'svelte/store';
 
 import routes from './routes';
-import app from './components/App';
+import app from './components/App.html';
 
 const history = Browser();
 const config = createConfig(history, routes);
