@@ -1,5 +1,6 @@
 ## Next
 
+* Bump Svelte version (`1.48` had breaking changes)
 * Removed source maps from `dist`
 
 ## 1.0.0-beta.1
