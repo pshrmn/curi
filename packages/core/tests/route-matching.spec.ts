@@ -530,7 +530,7 @@ describe('route matching/response generation', () => {
               done();
             });
           });
-  
+
           it('parses params from parent routes', done => {
             const history = InMemory({ locations: ['/123/456'] });
             const routes = [
@@ -560,7 +560,7 @@ describe('route matching/response generation', () => {
               done();
             });
           });
-  
+
           it('uses string for any params not in route.params', done => {
             const history = InMemory({ locations: ['/123/456'] });
             const routes = [
@@ -581,12 +581,12 @@ describe('route matching/response generation', () => {
               done();
             });
           });
-  
+
           it('falls back to string value if param parser throws', done => {
             const originalError = console.error;
             const errorMock = jest.fn();
             console.error = errorMock;
-  
+
             const history = InMemory({ locations: ['/123'] });
             const routes = [
               {
@@ -605,7 +605,9 @@ describe('route matching/response generation', () => {
                 num: '123'
               });
               expect(errorMock.mock.calls.length).toBe(1);
-              expect(errorMock.mock.calls[0][0].message).toBe('This will fail.');
+              expect(errorMock.mock.calls[0][0].message).toBe(
+                'This will fail.'
+              );
               console.error = originalError;
               done();
             });

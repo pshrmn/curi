@@ -1,6 +1,7 @@
 import registerRoutes from './utils/registerRoutes';
 import pathnameAddon from './addons/pathname';
-import { createResponse, finishResponse } from './response';
+import createResponse from './createResponse';
+import finishResponse from './finishResponse';
 import createRoute from './route';
 
 import {

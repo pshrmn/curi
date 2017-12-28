@@ -2,9 +2,9 @@ import { HickoryLocation, ToArgument } from '@hickory/root';
 
 import matchRoute from './utils/match';
 import parseParams from './utils/parseParams';
+import routeProperties from './utils/routeProperties';
 
 import { InternalRoute, Match } from './types/route';
-import { Addons } from './types/addon';
 import {
   Response,
   PendingResponse,
@@ -12,7 +12,7 @@ import {
   Params
 } from './types/response';
 
-export function createResponse(
+export default function createResponse(
   location: HickoryLocation,
   routes: Array<InternalRoute>
 ): Promise<PendingResponse> {
@@ -85,70 +85,4 @@ function loadRoute(
       };
     }
   );
-}
-
-function responseSetters(props: ResponseProps) {
-  return {
-    redirect(to: ToArgument, code: number = 301): void {
-      props.status = code;
-      props.redirectTo = to;
-    },
-
-    error(err: any): void {
-      props.error = err;
-    },
-
-    status(code: number): void {
-      props.status = code;
-    },
-
-    data(data: any): void {
-      props.data = data;
-    },
-
-    body(body: any): void {
-      props.body = body;
-    },
-
-    title(title: string): void {
-      props.title = title;
-    }
-  };
-}
-
-function routeProperties(route: InternalRoute, props: ResponseProps) {
-  return {
-    params: props.params,
-    location: props.location,
-    name: route.public.name
-  };
-}
-
-function freezeResponse(route: InternalRoute, props: ResponseProps): Response {
-  const response: Response = Object.assign(
-    {
-      key: props.location.key,
-      name: route ? route.public.name : undefined
-    },
-    props
-  );
-
-  return response;
-}
-
-export function finishResponse(
-  pending: PendingResponse,
-  addons: Addons
-): Response {
-  const { error, resolved, route, props } = pending;
-  if (route && route.public.match.response) {
-    route.public.match.response({
-      error,
-      resolved,
-      route: routeProperties(route, props),
-      set: responseSetters(props),
-      addons
-    });
-  }
-  return freezeResponse(route, props);
 }
