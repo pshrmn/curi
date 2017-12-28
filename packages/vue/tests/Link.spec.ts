@@ -36,7 +36,7 @@ describe('Link component', () => {
         text: 'Jamaica'
       }
     });
-    expect(wrapper.hasAttribute('href', '/place/Jamaica')).toBe(true);
+    expect(wrapper.attributes().href).toBe('/place/Jamaica');
   });
 
   describe('active', () => {
@@ -100,7 +100,7 @@ describe('Link component', () => {
                 active: { merge }
               }
             });
-            expect(wrapper.hasClass('active')).toBe(false);
+            expect(wrapper.classes()).not.toContain('active');
             console.error = warn;
             done();
           },
@@ -151,7 +151,7 @@ describe('Link component', () => {
                 active: { merge }
               }
             });
-            expect(wrapper.hasClass('active')).toBe(true);
+            expect(wrapper.classes()).toContain('active');
             done();
           },
           { once: true }
@@ -173,7 +173,7 @@ describe('Link component', () => {
                 active: { merge }
               }
             });
-            expect(wrapper.hasClass('active')).toBe(false);
+            expect(wrapper.classes()).not.toContain('active');
             done();
           },
           { once: true }
@@ -196,7 +196,7 @@ describe('Link component', () => {
                 active: { merge, partial: true }
               }
             });
-            expect(wrapper.hasClass('active')).toBe(true);
+            expect(wrapper.classes()).toContain('active');
             done();
           },
           { once: true }
@@ -217,7 +217,7 @@ describe('Link component', () => {
                 active: { merge }
               }
             });
-            expect(wrapper.hasClass('active')).toBe(false);
+            expect(wrapper.classes()).not.toContain('active');
             done();
           },
           { once: true }
@@ -302,7 +302,7 @@ describe('Link component', () => {
                 active: { merge, extra }
               }
             });
-            expect(wrapper.hasClass('active')).toBe(true);
+            expect(wrapper.classes()).toContain('active');
             done();
           },
           { once: true }
@@ -331,7 +331,7 @@ describe('Link component', () => {
                 active: { merge, extra }
               }
             });
-            expect(wrapper.hasClass('active')).not.toBe(true);
+            expect(wrapper.classes()).not.toContain('active');
             done();
           },
           { once: true }
@@ -356,11 +356,11 @@ describe('Link component', () => {
                 active: { merge }
               }
             });
-            expect(wrapper.hasClass('active')).toBe(true);
+            expect(wrapper.classes()).toContain('active');
             config.history.push('/place/nowhere');
           } else {
             Vue.nextTick(() => {
-              expect(wrapper.hasClass('active')).toBe(false);
+              expect(wrapper.classes()).not.toContain('active');
               done();
             });
           }

@@ -47,7 +47,7 @@
     "typescript": "^2.6.1",
     "vue": "^2.5.2",
     "vue-template-compiler": "^2.5.2",
-    "vue-test-utils": "^1.0.0-beta.3"
+    "vue-test-utils": "^1.0.0-beta.9"
   },
   "dependencies": {
     "@curi/core": "^1.0.0-beta.22",
