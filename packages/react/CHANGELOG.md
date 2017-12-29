@@ -1,3 +1,7 @@
+## Next
+
+* Export types from root.
+
 ## 1.0.0-beta.14
 
 * Make passing the `action` to `<CuriBase>` optional (it will default to `POP`).
