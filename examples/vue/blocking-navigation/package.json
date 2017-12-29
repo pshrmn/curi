@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@curi/core": "^1.0.0-beta.21",
-    "@curi/vue": "^1.0.0-beta.10",
+    "@curi/vue": "^1.0.0-beta.12",
     "@hickory/browser": "^1.0.0-beta.5",
     "vue": "^2.5.9"
   }
