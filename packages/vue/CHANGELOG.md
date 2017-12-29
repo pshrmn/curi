@@ -1,3 +1,8 @@
+## Next
+
+* The `CuriPlugin` now expects to receive a reactive object. If you use `installCuri`, this requires no changes. If you manually install the plugin (using `Vue.use`), you can use the new `reactiveCuri` function to create a reactive object.
+* Export all TypeScript types.
+
 ## 1.0.0-beta.11
 
 * Add an `extra` prop to the `active` object passed to `<curi-link>`s. This function will be passed the current location and the link's `details`, returning a boolean that is `true` when the link should be active. This allows for making the link active based on the `query`/`hash` properties.

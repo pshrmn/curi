@@ -1,7 +1,7 @@
 import { PluginObject } from 'vue';
-import { CuriPluginObject } from './interface';
+import { ReactiveCuriProps } from './interface';
 export interface CuriPluginOptions {
-    curi: CuriPluginObject;
+    curi: ReactiveCuriProps;
 }
 declare const CuriPlugin: PluginObject<CuriPluginOptions>;
 export default CuriPlugin;

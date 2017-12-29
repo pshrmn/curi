@@ -1,12 +1,12 @@
 import { CuriConfig, Response } from '@curi/core';
 import { Action } from '@hickory/root';
-export interface CuriPluginObject {
+export interface ReactiveCuriProps {
     config: CuriConfig;
     response: Response;
     action: Action;
 }
 declare module 'vue/types/vue' {
     interface Vue {
-        $curi: CuriPluginObject;
+        $curi: ReactiveCuriProps;
     }
 }
