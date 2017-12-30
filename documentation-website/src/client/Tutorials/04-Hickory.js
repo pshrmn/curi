@@ -130,15 +130,14 @@ const history = Browser();`}
       </p>
     </Section>
     <Section title="Review" id="review">
-      <CompleteBranch name="05-config" />
+      <CompleteBranch name="05-router" />
     </Section>
     <Section title="Next" id="next">
       <p>
         With both our routes and history object, we are now ready for{' '}
-        <Link to="Tutorial" params={{ name: '05-config' }}>
+        <Link to="Tutorial" params={{ name: '05-router' }}>
           Part 5
-        </Link>, where we will create the core of Curi, our configuration
-        object.
+        </Link>, where we will create the core of Curi, our router.
       </p>
     </Section>
   </BaseTutorial>

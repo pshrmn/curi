@@ -361,7 +361,7 @@ export default routes;`}
         <p>
           One last thing to note about routes is that their order in the routes
           array is important. Curi will iterate over them in (depth-first)
-          order. This means that with the above config, Curi will first check if{' '}
+          order. This means that with the above router, Curi will first check if{' '}
           <IJS>''</IJS> matches the pathname, if it does not, it will move on to{' '}
           <IJS>'contact'</IJS>, so on and so forth. If no other routes match,
           then we know that our "Not Found" route will.

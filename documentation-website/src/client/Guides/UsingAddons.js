@@ -12,8 +12,8 @@ export default ({ name }) => (
     <p>
       Add-ons in Curi allow you to interact with a registered route using its
       name. A registered route is generally any route that is in the array of
-      routes that you used to create your configuration object. However, some
-      add-ons only register routes that meet some criteria.
+      routes that you used to create your router. However, some add-ons only
+      register routes that meet some criteria.
     </p>
 
     <p>Add-ons are objects with three properties: name, register, and get.</p>
@@ -29,9 +29,9 @@ export default ({ name }) => (
   register: function(route, parentData) {...},
 
   // this is the function that will be added to your
-  // config object's add-ons property. For example, with
+  // router object's add-ons property. For example, with
   // this add-on, the get function will be called when
-  // you call config.addons.MyAddon('...')
+  // you call router.addons.MyAddon('...')
   get: function(route) {...},
   reset: function() {...}
 }`}
@@ -40,7 +40,7 @@ export default ({ name }) => (
     <p>
       However, when you import them, you are actually importing an add-on
       factory function. You need to call the function to create the add-on that
-      you will pass to your Curi configuration
+      you will pass to your Curi router.
     </p>
 
     <PrismBlock lang="javascript">
@@ -51,32 +51,31 @@ export default ({ name }) => (
 
     <Section title="Adding add-ons" id="adding">
       <p>
-        As stated above, whenever you include add-ons in your configuration
-        object, you do not pass the actual add-on object. Instead, you pass an
-        add-on instance (multiple configuration objects would each have their
-        own instance of the add-on), which can be useful for server-side
-        rendering.
+        As stated above, whenever you include add-ons in your router object, you
+        do not pass the actual add-on object. Instead, you pass an add-on
+        instance (multiple routers would each have their own instance of the
+        add-on), which can be useful for server-side rendering.
       </p>
 
       <p>
-        Addons are provided to the <IJS>createConfig</IJS> call as an array
-        using the addons property of the options object (the third argument to{' '}
-        <IJS>createConfig</IJS>).
+        Addons are provided to the <IJS>curi</IJS> call as an array using the
+        addons property of the options object (the third argument to{' '}
+        <IJS>curi</IJS>).
       </p>
 
       <PrismBlock lang="javascript">
-        {`const config = createConfig(history, routes, {
+        {`const router = curi(history, routes, {
   addons: [createMyAddon()]
 });`}
       </PrismBlock>
 
       <p>
-        The add-on will be added to the configuration object's addons property.
-        To call an add-on, you simply use its name.
+        The add-on will be added to the router's addons property. To call an
+        add-on, you simply use its name.
       </p>
 
       <PrismBlock lang="javascript">
-        {`const myValue = config.addons.myAddon('Some Route', ...);`}
+        {`const myValue = router.addons.myAddon('Some Route', ...);`}
       </PrismBlock>
     </Section>
 
@@ -106,7 +105,7 @@ export default ({ name }) => (
         about each route, get is a function that will receive a route's name
         (and possibly other arguments) and perform some task using the related
         route, and reset is a function that will reset the add-on's internal
-        state (this is used if you call <IJS>config.refresh</IJS>).
+        state (this is used if you call <IJS>router.refresh</IJS>).
       </p>
 
       <PrismBlock lang="javascript">
@@ -129,22 +128,22 @@ export default ({ name }) => (
 
       <p>
         That is all there is to creating a basic add-on. Now, you just need to
-        make sure to pass it to your configuration object and you will be able
-        to call your add-on's get function from your configuration object.
+        make sure to pass it to your router and you will be able to call your
+        add-on's get function from your router.
       </p>
 
       <PrismBlock lang="javascript">
-        {`import createConfig from '@curi/core';
+        {`import curi from '@curi/core';
 import myAddonFactory from './myAddon'
 
 const routes = [{ name: 'Home', path: '' }];
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   addons: [myAddonFactory()]
 });
 
-config.addons.MyFirstAddon('Home'); // true
-config.addons.MyFirstAddon('Elsewhere'); // false`}
+router.addons.MyFirstAddon('Home'); // true
+router.addons.MyFirstAddon('Elsewhere'); // false`}
       </PrismBlock>
 
       <Subsection title="Slightly more advanced" id="Slightly-more-advanced">

@@ -17,9 +17,8 @@ export default () => (
     <h1>Part 9: Forms & Programmatic Navigation</h1>
     <p>
       In this tutorial, we are going to be using another property of our Curi
-      configuration object: <IJS>history</IJS>. This property is the Hickory
-      history instance. We will use it to perform navigation between pages in
-      our website.
+      router: <IJS>history</IJS>. This property is the Hickory history instance.
+      We will use it to perform navigation between pages in our website.
     </p>
     <div>
       <p>In this tutorial, we will be doing the following:</p>
@@ -154,15 +153,15 @@ export function resetCart() {
         </a>. For this tutorial, we will be using <IJS>push</IJS>.
       </p>
       <p>
-        The <IJS>CuriPlugin</IJS> makes our configuration object available to
-        all of our components as <IJS>this.$curi</IJS>. That means that we can
-        call <IJS>this.$curi.config.history.push</IJS> (a bit of a mouthful) to
+        The <IJS>CuriPlugin</IJS> makes our router available to all of our
+        components as <IJS>this.$curi</IJS>. That means that we can call{' '}
+        <IJS>this.$curi.router.history.push</IJS> (a bit of a mouthful) to
         automatically redirect to another page.
       </p>
       <p>
-        We can also access all of our Curi <IJS>addons</IJS> from our
-        configuration object, so we will use <IJS>curi.addons.pathname</IJS> to
-        generate the pathname for the location that we wan to redirect to.
+        We can also access all of our Curi <IJS>addons</IJS> from our router, so
+        we will use <IJS>curi.addons.pathname</IJS> to generate the pathname for
+        the location that we wan to redirect to.
       </p>
       <p>
         When the user clicks either of the buttons, we will want to use the{' '}
@@ -203,8 +202,8 @@ export function resetCart() {
       addAndCheckout(event) {
         updateCart(this.bookID, parseInt(this.count))
           .then(() => {
-            const pathname = this.$curi.config.addons.pathname('Checkout');
-            this.$curi.config.history.push({ pathname });
+            const pathname = this.$curi.router.addons.pathname('Checkout');
+            this.$curi.router.history.push({ pathname });
           });
       }
     }
@@ -345,7 +344,7 @@ const routes = [
       </p>
       <p>
         We will once again be taking advantage of <IJS>this.$curi</IJS> to
-        access our Curi configuration object from within a component.
+        access our Curi router from within a component.
       </p>
       <PrismBlock lang="html">
         {`<!-- components/Checkout.vue -->
@@ -383,8 +382,8 @@ const routes = [
         // when the user "purchases" their books, we just
         // reset the cart and redirect to the "Checkout Complete" page
         resetCart();
-        const pathname = this.$curi.config.addons.pathname('Checkout Complete');
-        this.$curi.config.history.push({ pathname });
+        const pathname = this.$curi.router.addons.pathname('Checkout Complete');
+        this.$curi.router.history.push({ pathname });
       }
     }
   };

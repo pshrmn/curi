@@ -4,8 +4,8 @@ import { PrismBlock } from '../PrismBlocks';
 const SvelteBanner = () => (
   <PrismBlock lang="javascript">
     {`import Browser from '@hickory/browser';
-import createConfig from '@curi/core';
-import { setConfig } from '@curi/svelte';
+import curi from '@curi/core';
+import { Store } from 'svelte/store';
 
 // create your history object
 const history = Browser();
@@ -17,30 +17,27 @@ const routes = [
   ...
 ];
 
-// create your Curi configuration object
-const config = createConfig(history, routes);
+// create your Curi router
+const router = curi(history, routes);
 
-// Use setConfig so that the @curi/svelte components
-// can interact with the configuration object.
-setConfig(config);
+// create a Svelte store so that components can access the router
+const store = new Store({
+  curi: { router, response: undefined, action: undefined }
+});
 
 let view;
 const root = document.getElementById('root');
 
-// subscribe to the config object with a function
-// that will be called whenever the location changes
-config.respond((response) => {
-  if (view) {
-    view.destroy();
-  } else {
-    root.innerHTML = '';
-  }
+// setup a subscriber that will update the store when
+// the location changes.
+router.respond((response, action) => {
+  store.set({ curi: { router, response, action } });
+});
 
-  view = new response.body({
-    target: root,
-    data: { response }
-  });
-});`}
+// add a one time subscriber for the initial render
+router.respond(() => {
+  view = new app({ target, store });
+}, { once: true });`}
   </PrismBlock>
 );
 

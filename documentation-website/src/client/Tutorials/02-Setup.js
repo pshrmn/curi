@@ -91,14 +91,14 @@ touch public/index.html`}
       <p>
         We can start by installing the necessary packages as well as adding
         configuration files for both Babel and Webpack. We will be using Babel
-        7, so we can use a JavaScript file instead of JSON for our Babel config.
+        7, so we can use a JavaScript file instead of JSON for our Babel router.
       </p>
       <p>
         We will also be using <IJS>webpack-dev-server</IJS> in place of setting
         up a server. This allows us to have live reloading in development.
       </p>
       <PrismBlock lang="bash">
-        {`touch .babelrc.js webpack.config.js
+        {`touch .babelrc.js webpack.router.js
 npm install -D webpack webpack-dev-server @babel/core
   @babel/preset-env babel-loader@next`}
       </PrismBlock>
@@ -113,10 +113,10 @@ module.exports = {
 };`}
       </PrismBlock>
       <PrismBlock lang="javascript">
-        {`// webpack.config.js
+        {`// webpack.router.js
 const path = require('path');
 
-const config = {
+const router = {
   context: path.resolve(__dirname, 'src'),
   entry: './index.js',
   output: {
@@ -137,7 +137,7 @@ const config = {
   }
 }
 
-module.exports = config;`}
+module.exports = router;`}
       </PrismBlock>
       <p>
         We also need to create the <IJS>index.html</IJS> file. This just needs

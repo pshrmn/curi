@@ -21,12 +21,12 @@ export default ({ name, version, globalName }) => (
         <p>
           curi-addon-ancestors has one, default export function (so you can
           import it with whatever name you want to. It is an add-on factory that
-          will add an <IJS>ancestors</IJS> function to your configuration
-          object's add-on property.
+          will add an <IJS>ancestors</IJS> function to your router object's
+          add-on property.
         </p>
 
         <PrismBlock lang="javascript">
-          {`import createConfig from '@curi/core';
+          {`import curi from '@curi/core';
 import createAncestorsAddon from '@curi/addon-ancestors';
 
 const routes = [
@@ -41,7 +41,7 @@ const routes = [
   }
 ];
 
-const config = createConfig(history,routes, {
+const router = curi(history,routes, {
   addons: [createAncestorsAddon()]
 });`}
         </PrismBlock>
@@ -55,7 +55,7 @@ const config = createConfig(history,routes, {
         </p>
 
         <PrismBlock lang="javascript">
-          {`const parent = config.addons.ancestors('Child', 1);
+          {`const parent = router.addons.ancestors('Child', 1);
 // parent === 'Parent'
 `}
         </PrismBlock>

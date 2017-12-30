@@ -2,7 +2,7 @@ import Introduction from './01-Introduction';
 import Setup from './02-Setup';
 import Routes from './03-Routes';
 import Hickory from './04-Hickory';
-import Config from './05-ConfigObject';
+import Router from './05-Router';
 import ReactPages from './06-ReactPages';
 import VuePages from './06-VuePages';
 import Loading from './07-Loading-Data';
@@ -17,7 +17,7 @@ export default {
   '02-setup': Setup,
   '03-routes': Routes,
   '04-hickory': Hickory,
-  '05-config': Config,
+  '05-router': Router,
   '06-pages-react': ReactPages,
   '06-pages-vue': VuePages,
   '07-loading-data': Loading,

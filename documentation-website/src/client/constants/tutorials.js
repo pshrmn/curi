@@ -16,8 +16,8 @@ const tutorials = [
     displayName: 'Part 4: Hickory'
   },
   {
-    name: '05-config',
-    displayName: 'Part 5: The Curi Configuration Object'
+    name: '05-router',
+    displayName: 'Part 5: The Curi router'
   },
   {
     name: '06-pages',

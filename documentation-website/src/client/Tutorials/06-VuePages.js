@@ -16,9 +16,9 @@ export default () => (
   <BaseTutorial>
     <h1>Part 6: Vue Pages</h1>
     <p>
-      Now that we have our configuration object ready to go, we can think about
-      what our pages should look like. This tutorial will be rendering our
-      website using Vue. If you prefer to use React, you should check out the{' '}
+      Now that we have our router ready to go, we can think about what our pages
+      should look like. This tutorial will be rendering our website using Vue.
+      If you prefer to use React, you should check out the{' '}
       <Link to="Tutorial" params={{ name: '06-pages-react' }}>
         Part 6: React Pages
       </Link>{' '}
@@ -55,8 +55,8 @@ export default () => (
         {`npm install --save-dev vue-loader vue-template-compiler`}
       </PrismBlock>
       <PrismBlock lang="javascript">
-        {`// webpack.config.js
-const config = {
+        {`// webpack.router.js
+const router = {
   // ...,
   resolve: {
     extensions: ['.js', '.vue'],
@@ -107,27 +107,27 @@ const config = {
       <Subsection title="The Plugin" id="plugin">
         <p>
           The <IJS>CuriPlugin</IJS> exported by <IJS>@curi/vue</IJS>, should be
-          registered with Vue after the Curi configuration object has been
-          created. The plugin does a couple things. First, it will make your
-          Curi configuration object and new responses/actions accessible to
-          every component as through the <IJS>this.$curi</IJS> object. Second,
-          it will register Curi specific components. For this tutorial, the only
-          component that we care about is <Cmp>curi-link</Cmp>.
+          registered with Vue after the Curi router has been created. The plugin
+          does a couple things. First, it will make your Curi router and new
+          responses/actions accessible to every component as through the{' '}
+          <IJS>this.$curi</IJS> object. Second, it will register Curi specific
+          components. For this tutorial, the only component that we care about
+          is <Cmp>curi-link</Cmp>.
         </p>
         <p>
           Instead of having to register the plugin manually (via{' '}
           <IJS>Vue.use</IJS>), <IJS>@curi/vue</IJS> also exports an{' '}
           <IJS>installCuri</IJS> function that will handle that for you. The
-          install function will also subscribe to your Curi configuration object
-          to handle new responses.
+          install function will also subscribe to your Curi router to handle new
+          responses.
         </p>
         <PrismBlock lang="javascript">
           {`// index.js
 import Vue from 'vue';
 import { installCuri } from '@curi/vue';
 
-const config = createConfig(history, routes);
-installCuri(Vue, config);`}
+const router = curi(history, routes);
+installCuri(Vue, router);`}
         </PrismBlock>
       </Subsection>
 
@@ -188,15 +188,15 @@ installCuri(Vue, config);`}
 
     <Section title="The Response" id="response">
       <p>
-        Being able to access the Curi configuration object is nice, but what we
-        really need is to access the response objects that are emitted by Curi
-        whenever the location changes. We <em>could</em> use the{' '}
-        <IJS>config.respond</IJS> method that we covered in the{' '}
-        <Link to="Tutorial" params={{ name: '05-config' }}>
-          configuration object
+        Being able to access the Curi router is nice, but what we really need is
+        to access the response objects that are emitted by Curi whenever the
+        location changes. We <em>could</em> use the <IJS>router.respond</IJS>{' '}
+        method that we covered in the{' '}
+        <Link to="Tutorial" params={{ name: '05-router' }}>
+          router
         </Link>{' '}
         tutorial, but <IJS>installCuri</IJS> takes care of that step for us.{' '}
-        <IJS>installCuri</IJS> calls <IJS>config.respond</IJS> and in the
+        <IJS>installCuri</IJS> calls <IJS>router.respond</IJS> and in the
         response handler, it updates the reactive <IJS>response</IJS> and{' '}
         <IJS>action</IJS> properties of <IJS>this.$curi</IJS> whenever a new
         response is emitted.
@@ -205,7 +205,7 @@ installCuri(Vue, config);`}
       <p>
         While we do not have to manually subscribe to all responses, we do need
         to listen for the first response to be emitted so that we can render the
-        application. The second argument to <IJS>config.respond</IJS> is an
+        application. The second argument to <IJS>router.respond</IJS> is an
         options object. If we pass the options <IJS>{`{ once: true }`}</IJS>,
         then that function will only be called after the initial response is
         emitted.
@@ -220,7 +220,7 @@ installCuri(Vue, config);`}
         {`// index.js
 import app from './components/app';
 
-config.respond(response => {
+router.respond(response => {
   const vm = new Vue({
     el: '#root',
     template: '<app />',
@@ -232,10 +232,10 @@ config.respond(response => {
 
     <Section title="The App" id="app">
       <p>
-        At this point we have the ability to access our configuration object
-        throughout our components and we are passing response objects to some{' '}
-        <Cmp>app</Cmp> component that we haven't actually written yet. We should
-        write those components now.
+        At this point we have the ability to access our router throughout our
+        components and we are passing response objects to some <Cmp>app</Cmp>{' '}
+        component that we haven't actually written yet. We should write those
+        components now.
       </p>
 
       <p>

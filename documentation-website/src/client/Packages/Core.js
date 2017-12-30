@@ -11,27 +11,27 @@ export default ({ name, version, globalName }) => (
     globalName={globalName}
     about={
       <p>
-        The core Curi package provides the function that creates Curi
-        configuration objects. While you can pick and choose between the other
-        Curi packages, every application that uses Curi for its
-        routing/navigation <em>must</em> use <IJS>@curi/core</IJS>.
+        The core Curi package provides the function that creates Curi routers.
+        While you can pick and choose between the other Curi packages, every
+        application that uses Curi for its routing/navigation <em>must</em> use{' '}
+        <IJS>@curi/core</IJS>.
       </p>
     }
   >
     <APIBlock>
-      <Section tag="h3" title="createConfig" id="createConfig">
+      <Section tag="h3" title="curi" id="curi">
         <p>
           The Curi package has one export, which is a function that returns a
-          Curi configuration object. It is a default export, so you can name it
-          whatever you like when importing it. Throughout the documentation, it
-          is imported as <IJS>createConfig</IJS> for consistency and because
-          that is what the function does.
+          Curi router. It is a default export, so you can name it whatever you
+          like when importing it. Throughout the documentation, it is imported
+          as <IJS>curi</IJS> for consistency and because that is what the
+          function does.
         </p>
 
         <PrismBlock lang="javascript">
-          {`import createConfig from '@curi/core';
+          {`import curi from '@curi/core';
 
-const config = createConfig(history, routes, options);`}
+const router = curi(history, routes, options);`}
         </PrismBlock>
 
         <Section tag="h4" title="Arguments" id="arguments">
@@ -46,7 +46,7 @@ const config = createConfig(history, routes, options);`}
           <Subsection tag="h5" title="options" id="options">
             <p>
               An optional object with additional properties that can be passed
-              to your configuration object.
+              to your router.
             </p>
             <ul>
               <li>
@@ -74,14 +74,10 @@ const config = createConfig(history, routes, options);`}
           </Subsection>
         </Section>
 
-        <Section
-          tag="h4"
-          title="Configuration Object Properties"
-          id="properties"
-        >
+        <Section tag="h4" title="router Properties" id="properties">
           <p>
-            The configuration object has a number of properties for you to use
-            when rendering your application.
+            The router has a number of properties for you to use when rendering
+            your application.
           </p>
 
           <Subsection tag="h5" title="respond(fn, options)" id="respond">
@@ -93,12 +89,12 @@ const config = createConfig(history, routes, options);`}
             </p>
             <p>
               If the best-matched route has either a <IJS>match.initial</IJS> or{' '}
-              <IJS>match.every</IJS> loading function, the configuration object
-              will not call the subscribed functions until the loading functions
-              have all resolved.
+              <IJS>match.every</IJS> loading function, the router will not call
+              the subscribed functions until the loading functions have all
+              resolved.
             </p>
             <PrismBlock lang="javascript">
-              {`config.respond((response) => {
+              {`router.respond((response) => {
   // render the application based on the response
 });`}
             </PrismBlock>
@@ -107,24 +103,23 @@ const config = createConfig(history, routes, options);`}
               <PrismBlock lang="javascript">
                 {`{ once: true } // default false
 // When true, the response handler function will only be called once. When
-// once is true, config.respond does not return an unsubscribe function.`}
+// once is true, router.respond does not return an unsubscribe function.`}
               </PrismBlock>
             </Subsection>
           </Subsection>
 
           <Subsection tag="h5" title="addons" id="addons">
             <p>
-              You can access all of the configuration object's add-ons through
-              the addons property. This allows you to call an add-on's get
-              method directly.
+              You can access all of the router's add-ons through the addons
+              property. This allows you to call an add-on's get method directly.
             </p>
             <p>
               For example, with the builtin pathname add-on, you can do the
               following:
             </p>
             <PrismBlock lang="javascript">
-              {`const config = createConfig(history, [{ name: 'User', path: 'user/:id' }]);
-const userPathname = config.addons.pathname('User', { id: '12345' });
+              {`const router = curi(history, [{ name: 'User', path: 'user/:id' }]);
+const userPathname = router.addons.pathname('User', { id: '12345' });
 // userPathname === '/user/12345'`}
             </PrismBlock>
           </Subsection>
@@ -132,10 +127,9 @@ const userPathname = config.addons.pathname('User', { id: '12345' });
           <Subsection tag="h5" title="history" id="history-property">
             <p>
               You can access the history object that you passed to{' '}
-              <IJS>createConfig</IJS> through the configuration object's history
-              property. This allows you to just pass the configuration object
-              throughout your project instead of both that and the history
-              object.
+              <IJS>curi</IJS> through the router's history property. This allows
+              you to just pass the router throughout your project instead of
+              both that and the history object.
             </p>
           </Subsection>
         </Section>

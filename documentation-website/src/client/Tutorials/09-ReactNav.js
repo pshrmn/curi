@@ -17,9 +17,8 @@ export default () => (
     <h1>Part 9: Forms & Programmatic Navigation</h1>
     <p>
       In this tutorial, we are going to be using another property of our Curi
-      configuration object: <IJS>history</IJS>. This property is our Hickory
-      history instance. We will use it to perform navigation between pages in
-      our website.
+      router: <IJS>history</IJS>. This property is our Hickory history instance.
+      We will use it to perform navigation between pages in our website.
     </p>
     <div>
       <p>In this tutorial, we will be doing the following:</p>
@@ -179,18 +178,17 @@ export default AddToCart;`}
         </a>. For this tutorial, we will be using <IJS>push</IJS>.
       </p>
       <p>
-        In order to access the configuration object from within our component we
-        will use the <IJS>curious</IJS> higher order component from{' '}
-        <IJS>@curi/react</IJS>. A component that is wrapped by{' '}
-        <IJS>curious</IJS> will have the Curi configuration object injected as a
-        prop called <IJS>curi</IJS>. That means that we can call{' '}
-        <IJS>this.props.curi.history.push</IJS> (a bit of a mouthful) to
+        In order to access the router from within our component we will use the{' '}
+        <IJS>curious</IJS> higher order component from <IJS>@curi/react</IJS>. A
+        component that is wrapped by <IJS>curious</IJS> will have the Curi
+        router injected as a prop called <IJS>curi</IJS>. That means that we can
+        call <IJS>this.props.curi.history.push</IJS> (a bit of a mouthful) to
         automatically redirect to another page.
       </p>
       <p>
-        We can also access all of our Curi <IJS>addons</IJS> from our
-        configuration object, so we will use <IJS>curi.addons.pathname</IJS> to
-        generate the pathname for the location that we wan to redirect to.
+        We can also access all of our Curi <IJS>addons</IJS> from our router, so
+        we will use <IJS>curi.addons.pathname</IJS> to generate the pathname for
+        the location that we wan to redirect to.
       </p>
       <p>
         When the user clicks either of the buttons, we will want to use the{' '}
@@ -388,8 +386,7 @@ export default CheckoutComplete;`}
       </p>
       <p>
         We will once again be taking advantage of the <IJS>curious</IJS> higher
-        order component to access our Curi configuration object from within a
-        component.
+        order component to access our Curi router from within a component.
       </p>
       <PrismBlock lang="jsx">
         {`// components/Checkout.js

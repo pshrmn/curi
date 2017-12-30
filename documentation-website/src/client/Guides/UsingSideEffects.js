@@ -11,10 +11,9 @@ export default ({ name }) => (
 
     <p>
       Curi side effects are essentially permament subscribers (response
-      handlers) to your configuration object. They can be considered slightly
-      more convenient than response handlers since you don't have to subscribe
-      to your configuration object to set them up. However, you also cannot
-      remove them.
+      handlers) to your router. They can be considered slightly more convenient
+      than response handlers since you don't have to subscribe to your router to
+      set them up. However, you also cannot remove them.
     </p>
 
     <p>
@@ -32,14 +31,14 @@ export default ({ name }) => (
 
     <Section title="Adding Side Effects" id="adding">
       <p>
-        You add side effect functions to your configuration object by adding a{' '}
+        You add side effect functions to your router by adding a{' '}
         <IJS>sideEffects</IJS> array to the options object (the third agument)
-        of <IJS>createConfig</IJS>. A side effect is an object with an{' '}
-        <IJS>fn</IJS> property whose values is a response handler function.
+        of <IJS>curi</IJS>. A side effect is an object with an <IJS>fn</IJS>{' '}
+        property whose values is a response handler function.
       </p>
 
       <PrismBlock lang="javascript">
-        {`const config = createConfig(history, routes, {
+        {`const router = curi(history, routes, {
   sideEffects: [{ fn: logResponse }]
 });`}
       </PrismBlock>
@@ -47,7 +46,7 @@ export default ({ name }) => (
       <p>
         Side effects can also have an <IJS>after</IJS> property. By default,
         side effect functions will be called before any response handler
-        functions (the ones added with <IJS>config.respond</IJS>). However, you
+        functions (the ones added with <IJS>router.respond</IJS>). However, you
         might prefer for a side effect to be run after the response handlers. To
         do that, you just need to include <IJS>after: true</IJS> in your side
         effect object. If you do no provide this property, this will default to{' '}
@@ -55,7 +54,7 @@ export default ({ name }) => (
       </p>
 
       <PrismBlock lang="javascript">
-        {`const config = createConfig(history, routes, {
+        {`const router = curi(history, routes, {
   sideEffects: [{ fn: logResponse, after: true }]
 });`}
       </PrismBlock>
@@ -93,7 +92,7 @@ export default ({ name }) => (
   console.log('Navigating to', response.location);
 }
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   sideEffects: [{ fn: mySideEffect }]
 });`}
       </PrismBlock>
@@ -129,8 +128,8 @@ const config = createConfig(history, routes, {
     <div>
       <h2>Next</h2>
       <p>
-        <IJS>createConfig</IJS>'s options object has three arguments. We have
-        covered the first two, so finally we will cover the cache option in the{' '}
+        <IJS>curi</IJS>'s options object has three arguments. We have covered
+        the first two, so finally we will cover the cache option in the{' '}
         <Link to="Guide" params={{ slug: 'response-caching' }}>
           response caching
         </Link>{' '}

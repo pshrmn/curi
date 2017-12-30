@@ -24,7 +24,7 @@ export default ({ name, version, globalName }) => (
       <Section tag="h3" title={<Cmp>Link</Cmp>} id="link">
         <p>
           In order for the components provided by this package to work, they
-          need to have access to your Curi config object.
+          need to have access to your Curi router object.
         </p>
 
         <PrismBlock lang="html">
@@ -46,44 +46,55 @@ export default ({ name, version, globalName }) => (
       <p>
         The components exported by <IJS>@curi/svelte</IJS> rely on Svelte's
         store. The store should include a <IJS>curi</IJS> property that has a{' '}
-        <IJS>config</IJS> property. Future releases might also include{' '}
-        <IJS>response</IJS> and <IJS>action</IJS> properties, but for now{' '}
-        <IJS>config</IJS> is the only required property.
+        <IJS>router</IJS> property.
       </p>
       <PrismBlock lang="javascript">
         {`import { Store } from 'svelte/store';
 
-const config = createConfig(history, routes);
+const router = curi(history, routes);
 const store = new Store({
-  curi: { config }
+  curi: { router }
 });`}
       </PrismBlock>
       <p>
-        As far as rendering your application goes, you should use the{' '}
-        <IJS>respond</IJS> method provided by the Curi configuration object to
-        re-render whenever a new response is emitted.
+        Add a subscriber
       </p>
+      <PrismBlock lang='javascript'>
+        {
+`// setup a subscriber that will update the store when
+// the location changes.
+router.respond((response, action) => {
+  store.set({ curi: { router, response, action } });
+});`
+        }
+      </PrismBlock>
+      <p>
+        As far as rendering your application goes, you should should have a
+        base component that has any global layout and uses the response to
+        render the correct component(s). Setup a one time subscriber to render
+        this component.
+      </p>
+      <PrismBlock lang='html'>
+        {
+`<Nav />
+<:Component {$curi.response.body}></:Component>
 
-      <PrismBlock lang="javascript">
-        {`const config = createConfig(history, routes);
-
-const store = new Store({
-  curi: { config }
-});
-
-const root = document.getElementById('root');
-let view;
-
-config.respond(response => {
-  if (view) {
-    view.destroy();
+<script>
+	import Nav from './Nav.html';
+  export default {
+	  components: { Nav }
   }
-  view = new response.body({
-    target: root,
-    store,
-    data: response
-  });
-});`}
+</script>`
+        }
+      </PrismBlock>
+      <PrismBlock lang="javascript">
+        {
+`import app from './components/app';
+
+// use a one time subscriber for the initial render
+config.respond(() => {
+  view = new app({ target, store });
+}, { once: true });`}
       </PrismBlock>
     </Section>
   </BasePackage>

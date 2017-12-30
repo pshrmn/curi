@@ -7,7 +7,7 @@ const VueBanner = () => (
 
 import Browser from '@hickory/browser';
 import { installCuri } from '@curi/vue';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import App from './components/App';
 
 // create your history object
@@ -20,15 +20,15 @@ const routes = [
   ...
 ];
 
-// create your Curi configuration object
-const config = createConfig(history, routes);
+// create your Curi router
+const router = curi(history, routes);
 
 // install the CuriPlugin to your Vue instance
-installCuri(Vue, config);
+installCuri(Vue, router);
 
-// use the "once: true" option of config.respond
+// use the "once: true" option of router.respond
 // for the initial render
-config.respond(() => {
+router.respond(() => {
   const vm = new Vue({
     el: '#root',
     template: '<app />',

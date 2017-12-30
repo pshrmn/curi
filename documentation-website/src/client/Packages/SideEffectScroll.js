@@ -42,12 +42,12 @@ export default ({ name, version, globalName }) => (
           guaranteed if your application is rendered asynchronously).
         </p>
         <PrismBlock lang="javascript">
-          {`import createConfig from '@curi/core';
+          {`import curi from '@curi/core';
 import createScrollSideEffect from '@curi/side-effect-scroll';
 
 const scrollTo = createScrollSideEffect();
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   sideEffects: [{ fn: scrollTo, after: true }]
 });`}
         </PrismBlock>

@@ -33,17 +33,17 @@ export default ({ name, version, globalName }) => (
       <Section tag="h3" title="syncResponses" id="syncResponses">
         <p>
           <IJS>syncResponses</IJS> is responsible for linking your Redux store
-          with your Curi configuration object. It subscribes to location changes
-          emitted from your configuration object with a function that will
-          dispatch a "location changed" event to the Redux store. It will also
-          add your Curi configuration object to the store.
+          with your Curi router. It subscribes to location changes emitted from
+          your router with a function that will dispatch a "location changed"
+          event to the Redux store. It will also add your Curi router to the
+          store.
         </p>
         <PrismBlock lang="javascript">
-          {`const config = createConfig(history, routes);
+          {`const router = curi(history, routes);
 const store = createStore(reducer);
 
-syncResponses(store, config);
-// whenever navigation happens, the config object will now
+syncResponses(store, router);
+// whenever navigation happens, the router object will now
 // pass the response and action to your Redux store.
 `}
         </PrismBlock>
@@ -51,20 +51,20 @@ syncResponses(store, config);
 
       <Section tag="h3" title="curiReducer" id="curiReducer">
         <p>
-          The <IJS>curiReducer</IJS> keeps track of your Curi configuration
-          object, the latest response object, and the latest action string in
-          your Redux store.
+          The <IJS>curiReducer</IJS> keeps track of your Curi router object, the
+          latest response object, and the latest action string in your Redux
+          store.
         </p>
         <PrismBlock lang="javascript">
-          {`const config = createConfig(history, routes);
+          {`const router = curi(history, routes);
 const reducer = combineReducers({
-  curi: config,
+  curi: router,
   ...
 });
 const store = createStore(reducer);
-syncResponses(store, config);
+syncResponses(store, router);
 const { curi } = store.getState();
-// curi = { config, response, action }`}
+// curi = { router, response, action }`}
         </PrismBlock>
       </Section>
     </APIBlock>

@@ -38,35 +38,35 @@ export default ({ name }) => (
         </Link>{' '}
         component is responsible for placing values on React's{' '}
         <IJS>context</IJS> so that child components can access them. To do this,
-        you pass it a Curi configuration object, a <IJS>response</IJS> object,
-        and an <IJS>action</IJS> string. You should re-render this whenever the
-        a new response is emitted, so it makes sense to render this inside of a
-        response handler (the function passed to <IJS>config.respond</IJS>).
+        you pass it a Curi router, a <IJS>response</IJS> object, and an{' '}
+        <IJS>action</IJS> string. You should re-render this whenever the a new
+        response is emitted, so it makes sense to render this inside of a
+        response handler (the function passed to <IJS>router.respond</IJS>).
       </p>
 
       <p>
         The CuriBase also takes a <IJS>render</IJS> prop. That is a function
         that returns the React elements that make up your application. The
         render function will receive three arguments: <IJS>response</IJS>,{' '}
-        <IJS>action</IJS>, and <IJS>config</IJS>. Response is a response object,
-        action is an action string, and config is your configuration object. The
-        response object is the most important of these there. The others may
-        occasionally be useful or you may never use them.
+        <IJS>action</IJS>, and <IJS>router</IJS>. Response is a response object,
+        action is an action string, and router is your router. The response
+        object is the most important of these there. The others may occasionally
+        be useful or you may never use them.
       </p>
 
       <PrismBlock lang="jsx">
         {`import { CuriBase } from '@curi/react';
 
-const config = createConfig(history, routes);
+const router = curi(history, routes);
 
-function render(response, config) {
+function render(response, router) {
   // return a React element (or null)
 }
 
-config.respond((response, action) => {
+router.respond((response, action) => {
   ReactDOM.render((
     <CuriBase
-      config={config}
+      router={router}
       response={response}
       action={action}
       render={render}

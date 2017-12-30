@@ -24,15 +24,15 @@ export default ({ name, version, globalName }) => (
         <p>
           curi-addon-prefetch has one, default export function (so you can
           import it with whatever name you want to. It is an add-on factory that
-          will add an <IJS>prefetch</IJS> function to your configuration
-          object's add-on property.
+          will add an <IJS>prefetch</IJS> function to your router object's
+          add-on property.
         </p>
 
         <PrismBlock lang="javascript">
-          {`import createConfig from '@curi/core';
+          {`import curi from '@curi/core';
 import prefetch from '@curi/addon-prefetch';
 
-const config = createConfig(history, routes, { addons: [prefetch()] });
+const router = curi(history, routes, { addons: [prefetch()] });
 `}
         </PrismBlock>
 
@@ -52,7 +52,7 @@ const config = createConfig(history, routes, { addons: [prefetch()] });
 
         <PrismBlock lang="javascript">
           {`// call a route's load function manually
-config.addons.prefetch('User', { id: 2 })`}
+router.addons.prefetch('User', { id: 2 })`}
         </PrismBlock>
         <p>
           This add-on will only register routes that have a load function in

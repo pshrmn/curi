@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Browser from '@hickory/browser';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import { CuriBase } from '@curi/react';
 import createTitleSideEffect from '@curi/side-effect-title';
 import createScrollSideEffect from '@curi/side-effect-scroll';
@@ -14,17 +14,17 @@ const scrollTo = createScrollSideEffect();
 
 const history = Browser();
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   addons: [createActiveAddon()],
   sideEffects: [{ fn: setTitle }, { fn: scrollTo }]
 });
 
-config.respond((response, action) => {
+router.respond((response, action) => {
   ReactDOM.hydrate(
     <CuriBase
       response={response}
       action={action}
-      config={config}
+      config={router}
       render={renderFunction}
     />,
     document.getElementById('root')

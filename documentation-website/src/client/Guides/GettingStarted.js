@@ -11,17 +11,15 @@ export default ({ name }) => (
 
     <p>
       Curi aims to be easy to setup. The one thing that all Curi projects have
-      in common is a configuration object. You create a configuration object by
-      passing a Hickory history object and an array of route objects to the{' '}
-      <IJS>createConfig</IJS> function (the default export from{' '}
-      <IJS>@curi/core</IJS>.
+      in common is a router. You create a router by passing a Hickory history
+      object and an array of route objects to the <IJS>curi</IJS> function (the
+      default export from <IJS>@curi/core</IJS>.
     </p>
     <p>
       In order to re-render your application after navigation, you can subscribe
-      to your configuration object using its <IJS>respond</IJS> method.{' '}
-      <IJS>respond</IJS> takes a callback function that will be passed{' '}
-      <IJS>response</IJS> and <IJS>action</IJS> arguments, which you can use to
-      render.
+      to your router using its <IJS>respond</IJS> method. <IJS>respond</IJS>{' '}
+      takes a callback function that will be passed <IJS>response</IJS> and{' '}
+      <IJS>action</IJS> arguments, which you can use to render.
     </p>
 
     <Section title="The History Object" id="history-object">
@@ -111,29 +109,26 @@ browserHistory.navigate({ pathname: '/guides/getting-started' });
       </p>
     </Section>
 
-    <Section title="The Configuration Object" id="configuration-object">
+    <Section title="The router" id="router-object">
       <p>
         Once you have your Hickory history object and your routes array, you
         just need to pass them to the default export from the Curi package
-        (which we will name <IJS>createConfig</IJS> here).
+        (which we will name <IJS>curi</IJS> here).
       </p>
       <PrismBlock lang="javascript">
-        {`import createConfig from 'curi';
+        {`import curi from 'curi';
 import Browser from '@hickory/browser';
 import routes from './routes';
 
 const history = Browser();
-const config = createConfig(history, routes);
+const router = curi(history, routes);
 `}
       </PrismBlock>
 
-      <Subsection
-        title="Other configuration options"
-        id="other-configuration-options"
-      >
+      <Subsection title="Other router options" id="other-router-options">
         <p>
-          The <IJS>createConfig</IJS> function can also take an optional third
-          argument, which is an options object. You can use this to pass{' '}
+          The <IJS>curi</IJS> function can also take an optional third argument,
+          which is an options object. You can use this to pass{' '}
           <Link to="Guide" params={{ slug: 'addons' }}>
             add-ons
           </Link>,{' '}
@@ -146,10 +141,10 @@ const config = createConfig(history, routes);
           <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp">
             <IJS>pathnameOptions</IJS>
           </a>{' '}
-          object to your configuration object.
+          object to your router.
         </p>
         <PrismBlock lang="javascript">
-          {`const config = createConfig(history, routes, {
+          {`const router = curi(history, routes, {
   addons: [...],
   sideEffects: [...],
   cache: cacheObject,
@@ -165,13 +160,13 @@ const config = createConfig(history, routes);
         Hickory. Curi uses that location object's pathname property to match
         against all of your routes. When it finds one that matches, it uses that
         route object to create a response object. You can subscribe to a Curi
-        configuration object with a response handler function. When a new
-        response is created, your response handler function will be called with
-        the response and the action type of the navigation.
+        router with a response handler function. When a new response is created,
+        your response handler function will be called with the response and the
+        action type of the navigation.
       </p>
       <PrismBlock lang="javascript">
-        {`const config = createConfig(history, routes);
-config.response((response, action) => {
+        {`const router = curi(history, routes);
+router.response((response, action) => {
   // whenever the location changes, this function is called
   // you can use this function to re-render your application
   // using the new response object
@@ -180,14 +175,14 @@ config.response((response, action) => {
       </PrismBlock>
 
       <p>
-        Responses are generated asynchronously. A Curi configuration object has
-        a <IJS>response</IJS> function that you can use to register a function
-        to be called whenever a new response is generated.
+        Responses are generated asynchronously. A Curi router has a{' '}
+        <IJS>response</IJS> function that you can use to register a function to
+        be called whenever a new response is generated.
       </p>
       <PrismBlock lang="javascript">
-        {`const config = createConfig(history, routes);
+        {`const router = curi(history, routes);
 // wait to render until a response is generated
-config.respond((response, action) => {
+router.respond((response, action) => {
   // now we can render using the response
 });`}
       </PrismBlock>

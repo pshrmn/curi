@@ -36,13 +36,13 @@ export default ({ name, version, globalName }) => (
         </PrismBlock>
 
         <PrismBlock lang="jsx">
-          {`const config = createConfig(history, routes);
+          {`const router = curi(history, routes);
 
-config.respond((response) => {
+router.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      config={config}
+      router={router}
       render={response => {
         return response.body ? <response.body /> : null;
       }}
@@ -52,18 +52,15 @@ config.respond((response) => {
         </PrismBlock>
 
         <Section tag="h3" title="Props" id="CuriBase-props">
-          <Subsection tag="h4" title="config" id="CuriBase-config">
-            <p>
-              A configuration object (created by calling curi's createConfig
-              function).
-            </p>
+          <Subsection tag="h4" title="router" id="CuriBase-router">
+            <p>A router (created by calling curi's curi function).</p>
           </Subsection>
 
           <Subsection tag="h4" title="render" id="CuriBase-render">
             <p>
               A render function. This will be called whenever the{' '}
               <Cmp>CuriBase</Cmp> renders. The function will be passed the
-              current response object and the config object it was passed as a
+              current response object and the router object it was passed as a
               prop. The function must return a React element.
             </p>
           </Subsection>
@@ -72,14 +69,14 @@ config.respond((response) => {
             <p>
               A response object. You can pass your <Cmp>CuriBase</Cmp> a
               response object and it will use that instead of subscribing to the
-              configuration object. This is ideal for server-side rendering.
+              router. This is ideal for server-side rendering.
             </p>
           </Subsection>
 
           <Subsection tag="h4" title="action" id="CuriBase-action">
             <p>
               The <IJS>action</IJS> from the most recent navigation (the second
-              argument passed to <IJS>config.respond</IJS> callbacks). This prop
+              argument passed to <IJS>router.respond</IJS> callbacks). This prop
               is optional.
             </p>
           </Subsection>
@@ -90,7 +87,7 @@ config.respond((response) => {
         <p>
           A <Cmp>Link</Cmp> allows you to navigate within your application using
           an anchor element (<Cmp>a</Cmp>). When the rendered element is
-          clicked, instead of reloading the page it will use your configuration
+          clicked, instead of reloading the page it will use your router
           object's history object to navigate.
         </p>
         <PrismBlock lang="javascript">
@@ -207,8 +204,8 @@ config.respond((response) => {
               <Link to="Package" params={{ package: 'addon-active' }}>
                 @curi/addon-active
               </Link>{' '}
-              add-on in your Curi configuration object. If you do not, an error
-              will be thrown.
+              add-on in your Curi router. If you do not, an error will be
+              thrown.
             </Note>
           </Subsection>
         </Section>
@@ -295,13 +292,13 @@ const Users = (props) => (
             <Link to="Package" params={{ package: 'addon-active' }}>
               @curi/addon-active
             </Link>{' '}
-            being added to your configuration object.
+            being added to your router.
           </p>
 
           <PrismBlock lang="javascript">
             {`import createActiveAddon from '@curi/active-addon';
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   addons: [createActiveAddon]
 });`}
           </PrismBlock>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import InMemory from '@hickory/in-memory';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import { CuriBase } from '@curi/react';
 import createActiveAddon from '@curi/addon-active';
 import routes from '../client/routes';
@@ -13,17 +13,17 @@ export default function createHandler(debug = false) {
       locations: [req.url]
     });
 
-    const config = createConfig(history, routes, {
+    const router = curi(history, routes, {
       addons: [createActiveAddon()]
     });
 
-    config.respond(
+    router.respond(
       (response, action) => {
         const markup = renderToString(
           <CuriBase
             response={response}
             action={action}
-            config={config}
+            config={router}
             render={renderFunction}
           />
         );

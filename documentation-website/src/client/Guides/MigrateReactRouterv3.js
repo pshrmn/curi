@@ -16,11 +16,11 @@ export default ({ name }) => (
 
     <p>
       The Curi router is somewhat similar to React Router versions 2 and 3, so
-      migration is fairly easy. For instance, both use a centralized route
-      configuration. Both configurations are made up of route objects (although
-      with React Router some of these are disguised as JSX with <Cmp>Route</Cmp>{' '}
-      components). With both, routes can be nested, allowing child routes to
-      build off of the paths from their parent routes.
+      migration is fairly easy. For instance, both use a centralized router.
+      Both routers are made up of route objects (although with React Router some
+      of these are disguised as JSX with <Cmp>Route</Cmp> components). With
+      both, routes can be nested, allowing child routes to build off of the
+      paths from their parent routes.
     </p>
     <p>
       Migration from React Router v2/3 to Curi should not require a complete
@@ -302,17 +302,17 @@ export default ({ name }) => (
       </Subsection>
       <p>
         Once your routes have been defined, you can move on to creating your
-        Curi configuration object.
+        Curi router.
       </p>
     </Section>
 
-    <Section title="Creating the Configuration" id="creating-the-configuration">
+    <Section title="Creating the router" id="creating-the-router">
       <p>
-        With React Router, you create your configuration by rendering a{' '}
+        With React Router, you create your router by rendering a{' '}
         <Cmp>Router</Cmp>. That either takes the <Cmp>Route</Cmp> components as
         props or the route objects through its <IJS>routes</IJS> prop. The{' '}
         <Cmp>Router</Cmp> also takes a <IJS>history</IJS> prop, which is either
-        one of the pre-configured objects (<IJS>browserHistory</IJS> or{' '}
+        one of the pre-routerured objects (<IJS>browserHistory</IJS> or{' '}
         <IJS>hashHistory</IJS>) or one that you create yourself.
       </p>
       <PrismBlock lang="jsx">
@@ -323,9 +323,10 @@ ReactDOM.render((
 ), holder);`}
       </PrismBlock>
       <p>
-        With Curi, the configuration object is created prior to rendering. It
-        takes a Hickory history object, your routes array, and possibly an
-        options object. <a href="https://github.com/pshrmn/hickory">Hickory</a>{' '}
+        With Curi, the router is created prior to rendering. It takes a Hickory
+        history object, your routes array, and possibly an options object. <a href="https://github.com/pshrmn/hickory">
+          Hickory
+        </a>{' '}
         is similar to the <IJS>history</IJS> package used by React Router, but
         has a slight modified API (easier navigation blocking and navigation
         that imitates how anchors work) and more convenient location objects
@@ -333,25 +334,24 @@ ReactDOM.render((
         create a <IJS>search</IJS> string).
       </p>
       <PrismBlock lang="javascript">
-        {`import createConfig from '@curi/core';
+        {`import curi from '@curi/core';
 import Browser from '@hickory/browser';
 const history = Browser();
 const routes = [...];
-const config = create1Config(history, routes);`}
+const router = create1router(history, routes);`}
       </PrismBlock>
     </Section>
 
     <Section title="Rendering" id="rendering">
       <p>
-        At this point, our Curi configuration object isn’t actually quite ready
-        to render. Curi creates response objects asynchronously, so if we render
-        right away, we might not have a response object to render with. We can
-        work around this by rendering nothing (<IJS>null</IJS>) at first, but
-        instead we should usually just wait for our initial response to be
-        ready.
+        At this point, our Curi router isn’t actually quite ready to render.
+        Curi creates response objects asynchronously, so if we render right
+        away, we might not have a response object to render with. We can work
+        around this by rendering nothing (<IJS>null</IJS>) at first, but instead
+        we should usually just wait for our initial response to be ready.
       </p>
       <PrismBlock lang="javascript">
-        {`config.respond((response, action) => {
+        {`router.respond((response, action) => {
   // now our first response has resolved, so we
   // know that we will render with an actual response
 });`}
@@ -366,8 +366,8 @@ const config = create1Config(history, routes);`}
           React Router uses the <Cmp>Router</Cmp> component to subscribe to
           location changes. Each time that the location changes, it walks over
           its routes and determines which route(s!) match. React Router starts
-          by rendering the root component. In the above configuration, that is
-          the <Cmp>App</Cmp>. Next, our <IJS>inbox</IJS> route also matches, so
+          by rendering the root component. In the above router, that is the{' '}
+          <Cmp>App</Cmp>. Next, our <IJS>inbox</IJS> route also matches, so
           React Router also renders our <Cmp>Inbox</Cmp> component. Finally, the
           URI <IJS>/inbox/test-message-please-ignore</IJS> also matches our <IJS
           >
@@ -401,12 +401,12 @@ const config = create1Config(history, routes);`}
         <p>
           With Curi, we need to re-render our application every time that the
           location changes. We will do this by combining the <IJS>respond</IJS>{' '}
-          function from our config object and the <Cmp>CuriBase</Cmp> component,
+          function from our router object and the <Cmp>CuriBase</Cmp> component,
           which comes from the <IJS>@curi/react</IJS> package. The response
-          handler passed to <IJS>config.respond</IJS> will be called every time
+          handler passed to <IJS>router.respond</IJS> will be called every time
           the location changes, so we can re-render inside of that. The{' '}
           <Cmp>CuriBase</Cmp> places the new <IJS>response</IJS> and{' '}
-          <IJS>action</IJS> (alongside the <IJS>config</IJS> object) on React's{' '}
+          <IJS>action</IJS> (alongside the <IJS>router</IJS> object) on React's{' '}
           <IJS>context</IJS>, so child components will be able to automatically
           access those values. It also expects a <IJS>render</IJS> prop, which
           is a render function it will call to render the application.
@@ -418,12 +418,12 @@ const config = create1Config(history, routes);`}
           <IJS>"POP"</IJS>.
         </Note>
         <PrismBlock lang="jsx">
-          {`config.respond((response, action) => {
+          {`router.respond((response, action) => {
   ReactDOM.render((
     <CuriBase
       response={response}
       action={action}
-      config={config}
+      router={router}
       render={response => { return ...; }}
     />
   ), holder);
@@ -432,9 +432,9 @@ const config = create1Config(history, routes);`}
         <p>
           So what should your render function look like? The render function
           will receive two arguments: <IJS>response</IJS>, the new response
-          object, and <IJS>config</IJS>, our Curi configuration object. We will
-          ignore config here because the response is what we really want, the
-          config is just there for convenience.
+          object, and <IJS>router</IJS>, our Curi router. We will ignore router
+          here because the response is what we really want, the router is just
+          there for convenience.
         </p>
         <p>
           Earlier, we added <IJS>body</IJS> properties to each of the routes and
@@ -477,9 +477,8 @@ const config = create1Config(history, routes);`}
         <p>
           Rendering the <Cmp>App</Cmp> inside of the render function is
           necessary if any of the components rendered by the <Cmp>App</Cmp> are
-          location aware components, since they need to access the Curi
-          configuration object (through React’s context, which the{' '}
-          <Cmp>CuriBase</Cmp> provides)
+          location aware components, since they need to access the Curi router
+          (through React’s context, which the <Cmp>CuriBase</Cmp> provides)
         </p>
         <PrismBlock lang="jsx">
           {`function render(response) {
@@ -581,9 +580,9 @@ function render(response) {
   activeClassName='active'
 >Home</Link>
 // Curi
-// You need to add @curi/addon-active to your config object
+// You need to add @curi/addon-active to your router object
 import createActiveAddon from '@curi/addon-active';
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   createActiveAddon
 });
 
@@ -617,8 +616,8 @@ function merge(props) {
 export default curious(SomeComponent);`}
       </PrismBlock>
       <p>
-        <IJS>curious</IJS> will inject the Curi configuration object and the
-        current response object into the wrapped component.
+        <IJS>curious</IJS> will inject the Curi router and the current response
+        object into the wrapped component.
       </p>
     </Section>
 

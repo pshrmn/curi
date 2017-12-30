@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 
-export default function render(response, action, config) {
+export default function render(response, action, router) {
   if (!response || !response.body) {
     return null;
   } else {

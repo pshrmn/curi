@@ -25,20 +25,20 @@ export default ({ name }) => (
       <p>
         A side effect function just does something using its arguments. It is a
         response handler, but unlike ones assigned using{' '}
-        <IJS>config.response</IJS>, side effects cannot be removed.
+        <IJS>router.response</IJS>, side effects cannot be removed.
       </p>
 
       <p>
         You pass any side effect functions that you want to use to the{' '}
-        <IJS>createConfig</IJS> call, using the <IJS>sideEffects</IJS> property
-        of the options object.
+        <IJS>curi</IJS> call, using the <IJS>sideEffects</IJS> property of the
+        options object.
       </p>
 
       <PrismBlock lang="javascript">
-        {`import createConfig from 'curi';
+        {`import curi from 'curi';
 import mySideEffect from './mySideEffect';
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   sideEffects: [mySideEffect]
 });`}
       </PrismBlock>

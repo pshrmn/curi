@@ -9,9 +9,9 @@ export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
     <p>
-      The cache option passed to <IJS>createConfig</IJS> allows you to save
-      response objects. The actual caching mechanism is left up to you. It only
-      has two requirements:
+      The cache option passed to <IJS>curi</IJS> allows you to save response
+      objects. The actual caching mechanism is left up to you. It only has two
+      requirements:
     </p>
     <ul>
       <li>
@@ -42,7 +42,7 @@ export default ({ name }) => (
 
 const myCache = createSimpleCache();
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   cache: myCache
 });`}
     </PrismBlock>

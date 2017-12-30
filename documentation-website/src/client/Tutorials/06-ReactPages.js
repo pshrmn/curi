@@ -16,9 +16,9 @@ export default () => (
   <BaseTutorial>
     <h1>Part 6: React Pages</h1>
     <p>
-      Now that we have our configuration object ready to go, we can think about
-      what our pages should look like. This tutorial will be rendering our
-      website using React. If you prefer to use Vue, you should check out the{' '}
+      Now that we have our router ready to go, we can think about what our pages
+      should look like. This tutorial will be rendering our website using React.
+      If you prefer to use Vue, you should check out the{' '}
       <Link to="Tutorial" params={{ name: '06-pages-vue' }}>
         Part 6: Vue Pages
       </Link>{' '}
@@ -112,7 +112,7 @@ module.exports = {
           The <Cmp>CuriBase</Cmp> is responsible for rendering the website
           whenever the location changes. It can take four props:{' '}
           <IJS>response</IJS>, <IJS>action</IJS>,
-          <IJS>config</IJS>, and <IJS>render</IJS>.
+          <IJS>router</IJS>, and <IJS>render</IJS>.
         </p>
         <ol>
           <li>
@@ -123,22 +123,22 @@ module.exports = {
             navigation.
           </li>
           <li>
-            <IJS>config</IJS> is our Curi configuration object.
+            <IJS>router</IJS> is our Curi router.
           </li>
           <li>
             <IJS>render</IJS> is a function that will be called whenever a new
             response is emitted (and during the initial render) and returns the
             React element(s) that make up your website. It will receive three
             arguments: the new <IJS>response</IJS> object, the navigation's{' '}
-            <IJS>action</IJS> and the Curi config object. The second two can be
+            <IJS>action</IJS> and the Curi router object. The second two can be
             useful occasionally, but the <IJS>response</IJS> is what we really
             need for rendering.
           </li>
         </ol>
         <p>
           In order to set the <IJS>response</IJS> prop, we need to subscribe to
-          our Curi configuration object. That will allow us to always have the
-          latest response object.
+          our Curi router. That will allow us to always have the latest response
+          object.
         </p>
         <PrismBlock lang="jsx">
           {`// index.js
@@ -148,11 +148,11 @@ import { CuriBase } from '@curi/react';
 
 // ...
 
-config.respond((response) => {
+router.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      config={config}
+      router={router}
       render={response => {
         return null;
       }}
@@ -162,7 +162,7 @@ config.respond((response) => {
         </PrismBlock>
         <p>
           The <Cmp>CuriBase</Cmp> also adds a <IJS>curi</IJS> object to React's
-          context. This object has <IJS>config</IJS>, <IJS>response</IJS>, and{' '}
+          context. This object has <IJS>router</IJS>, <IJS>response</IJS>, and{' '}
           <IJS>action</IJS> properties. A number of the other components
           exported by <IJS>@curi/react</IJS> rely on these variables to
           render/function.
@@ -447,11 +447,11 @@ export default routes;`}
 import renderFunction from './render';
 
 let root = document.getElementById('root');
-config.respond((response) => {
+router.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      config={config}
+      router={router}
       render={renderFunction}
     />
   ), root);

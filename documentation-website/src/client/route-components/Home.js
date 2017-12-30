@@ -312,8 +312,8 @@ history.navigate({ pathname: '/album/934' });`}
             {`const routes = [
   { name: 'Album', path: 'a/:albumID' }
 ];
-const config = createConfig(history, routes);
-const pathname = config.addons.pathname(
+const router = curi(history, routes);
+const pathname = router.addons.pathname(
   'Album',
   { albumID: '3490' }
 );
@@ -380,16 +380,16 @@ function requestHandler(req, resp) {
   const history = InMemory({
     locations: [req.url]
   });
-  const config = createConfig(history, routes);
+  const router = curi(history, routes);
 
-  config.respond((response) => {
+  router.respond((response) => {
     // render the markup. This will vary based on
     // your rendering library, but here we'll
     use React
     const markup = renderToString(
       <CuriBase
         response={response}
-        config={config}
+        router={router}
         render={render}
       />
     );

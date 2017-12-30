@@ -24,14 +24,13 @@ export default ({ name, version, globalName }) => (
         <p>
           curi-addon-active has one, default export function (so you can import
           it with whatever name you want to. It is an add-on factory that will
-          add an <IJS>active</IJS> function to your configuration object's
-          add-on property.
+          add an <IJS>active</IJS> function to your router's add-on property.
         </p>
         <PrismBlock lang="javascript">
-          {`import createConfig from '@curi/core';
+          {`import curi from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   addons: [createActiveAddon()]
 });`}
         </PrismBlock>
@@ -43,7 +42,7 @@ const config = createConfig(history, routes, {
           an ancestor route of the current route.
         </p>
         <PrismBlock lang="javascript">
-          {`const isActive = config.addons.active('Some Route', response, { id: 10 });`}
+          {`const isActive = router.addons.active('Some Route', response, { id: 10 });`}
         </PrismBlock>
       </Section>
     </APIBlock>

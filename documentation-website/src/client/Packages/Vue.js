@@ -26,14 +26,14 @@ export default ({ name, version, globalName }) => (
       <p>
         The <IJS>installCuri</IJS> will install a Vue plugin that adds Curi
         support to your Vue instance. This will also automatically subscribe to
-        your Curi configuration object so that your application will re-render
-        whenever a new response is emitted.
+        your Curi router so that your application will re-render whenever a new
+        response is emitted.
       </p>
       <PrismBlock lang="javascript">
         {`import { installCuri } from '@curi/vue';
 
-const config = createConfig(history, routes);
-installCuri(Vue, config);`}
+const router = curi(history, routes);
+installCuri(Vue, router);`}
       </PrismBlock>
       <Section tag="h3" title="CuriPlugin" id="curiplugin">
         <p>
@@ -44,16 +44,16 @@ installCuri(Vue, config);`}
           What does the plugin do? First, it will register <Cmp>curi-link</Cmp>{' '}
           and <Cmp>curi-block</Cmp> components with Vue. You can use these
           components anywhere within your application. Second, it makes your
-          configuration object and any response/action properties reactive Vue
-          properties. These values are grouped under the <IJS>$curi</IJS>{' '}
-          variable as <IJS>$curi.config</IJS>, <IJS>$curi.response</IJS>, and{' '}
+          router and any response/action properties reactive Vue properties.
+          These values are grouped under the <IJS>$curi</IJS> variable as{' '}
+          <IJS>$curi.router</IJS>, <IJS>$curi.response</IJS>, and{' '}
           <IJS>$curi.action</IJS>.
         </p>
         <PrismBlock lang="javascript">
           {`import { CuriPlugin } from '@curi/vue';
 
-const config = createConfig(history, routes);
-Vue.use(CuriPlugin, { config });`}
+const router = curi(history, routes);
+Vue.use(CuriPlugin, { router });`}
         </PrismBlock>
 
         <Subsection tag="h4" title="Components" id="components">
@@ -186,15 +186,15 @@ export default function renderFunction(h) {
       </PrismBlock>
 
       <p>
-        While <IJS>installCuri</IJS> subscribes to your config object, you will
+        While <IJS>installCuri</IJS> subscribes to your router object, you will
         still need to wait for it to emit its first update before you can
         render. To do that, you can pass the <IJS>{`{ once: true }`}</IJS>{' '}
-        option to a <IJS>config.respond</IJS> call.
+        option to a <IJS>router.respond</IJS> call.
       </p>
 
       <PrismBlock lang="javascript">
         {`
-config.respond(() => {
+router.respond(() => {
   const vm = new Vue({
     el: '#app',
       

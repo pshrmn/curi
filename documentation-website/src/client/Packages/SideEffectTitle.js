@@ -26,7 +26,7 @@ export default ({ name, version, globalName }) => (
         id="createTitleSideEffect"
       >
         <PrismBlock lang="javascript">
-          {`import createConfig from '@curi/core';
+          {`import curi from '@curi/core';
 import createTitleSideEffect from '@curi/side-effect-title';
 
 const setTitle = createTitleSideEffect({
@@ -34,7 +34,7 @@ const setTitle = createTitleSideEffect({
   delimiter: '|'
 });
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   sideEffects: [{ fn: setTitle }]
 });`}
         </PrismBlock>

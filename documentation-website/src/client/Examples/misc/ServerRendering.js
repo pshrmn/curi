@@ -18,17 +18,17 @@ export default ({ name }) => (
   // 1. Create a memory history using the requested location
   const history = InMemory({ locations: [req.url]});
 
-  // 2. Create a config
-  const config = createConfig(history, routes);
+  // 2. Create a router
+  const router = curi(history, routes);
 
   // 3. Wait for the response to be generated
-  config.respond((response, action) => {
+  router.respond((response, action) => {
     // 4. Generate the HTML markup by rendering a <CuriBase> and
     // passing it the response
     const markup = renderToString(
       <CuriBase
         response={response}
-        config={config}
+        router={router}
         render={renderFunction}
       />
     );

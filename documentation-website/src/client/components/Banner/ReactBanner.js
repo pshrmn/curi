@@ -7,7 +7,7 @@ const ReactBanner = () => (
 import ReactDOM from 'react-dom';
 
 import Browser from '@hickory/browser';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import { CuriBase } from '@curi/react';
 
 // create your history object
@@ -20,17 +20,17 @@ const routes = [
   ...
 ];
 
-// create your Curi configuration object
-const config = createConfig(history, routes);
+// create your Curi router
+const router = curi(history, routes);
 
 const root = document.getElementById('root');
-// subscribe to the config object with a function
+// subscribe to the router object with a function
 // that will be called whenever the location changes
-config.respond((response) => {
+router.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      config={config}
+      router={router}
       render={response => {
         return <response.body />;
       }}
