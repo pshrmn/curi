@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.2
 
 * Switch to `router` from `config`.
 * Removed source maps from `dist`

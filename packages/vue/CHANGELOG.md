@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.13
 
 * Refer to Curi router as `router` not `config`.
 

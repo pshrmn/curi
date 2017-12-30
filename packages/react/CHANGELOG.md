@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.15
 
 * Refer to the Curi router as `router` instead of `config`.
 * `curious` injects `router` prop instead of `curi`.

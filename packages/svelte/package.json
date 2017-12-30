@@ -1,6 +1,6 @@
 {
   "name": "@curi/svelte",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "Curi integration with Svelte",
   "main": "dist/curi-svelte.common.js",
   "module": "dist/curi-svelte.es.js",
@@ -29,10 +29,10 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "@curi/core": "^1.0.0-beta.22"
+    "@curi/core": "^1.0.0-beta.23"
   },
   "devDependencies": {
-    "@curi/core": "^1.0.0-beta.22",
+    "@curi/core": "^1.0.0-beta.23",
     "@hickory/in-memory": "^1.0.0-beta.3",
     "babel-core": "7.0.0-beta.0",
     "babel-jest": "^21.0.2",
