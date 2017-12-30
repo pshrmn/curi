@@ -25,10 +25,10 @@ const guides = [
     type: 'basic'
   },
   {
-    name: 'Using Addons',
+    name: 'Using Add-ons',
     slug: 'addons',
     description:
-      'Learn how to use addons to interact with your routes in your project',
+      'Learn how to use add-ons to interact with your routes in your project',
     type: 'advanced'
   },
   {

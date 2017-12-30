@@ -319,10 +319,10 @@ const routes = [
 
           <Subsection tag="h6" title="addons" id="response-addons">
             <p>
-              The addons that have been registered with Curi are available to
+              The add-ons that have been registered with Curi are available to
               the <IJS>response</IJS> function. This includes the built-in{' '}
-              <IJS>pathname</IJS> addon, which you might find useful if you need
-              to redirect in a <IJS>response</IJS> function.
+              <IJS>pathname</IJS> add-on, which you might find useful if you
+              need to redirect in a <IJS>response</IJS> function.
             </p>
             <PrismBlock lang="javascript">
               {`// set a permanent redirect
@@ -417,7 +417,7 @@ const routes = [
         <p>
           If you have any additional properties that you want attached to a
           route, use the <IJS>extra</IJS> property. You will be able to use{' '}
-          <IJS>route.extra</IJS> in any custom addons or when a route matches
+          <IJS>route.extra</IJS> in any custom add-ons or when a route matches
           via <IJS>response.route.extra</IJS>.
         </p>
 

@@ -207,7 +207,7 @@ config.respond((response) => {
               <Link to="Package" params={{ package: 'addon-active' }}>
                 @curi/addon-active
               </Link>{' '}
-              addon in your Curi configuration object. If you do not, an error
+              add-on in your Curi configuration object. If you do not, an error
               will be thrown.
             </Note>
           </Subsection>
@@ -291,7 +291,7 @@ const Users = (props) => (
           </PrismBlock>
 
           <p>
-            This relies on the active addon from{' '}
+            This relies on the active add-on from{' '}
             <Link to="Package" params={{ package: 'addon-active' }}>
               @curi/addon-active
             </Link>{' '}

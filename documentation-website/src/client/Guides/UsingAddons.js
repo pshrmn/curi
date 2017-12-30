@@ -10,27 +10,27 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      Addons in Curi allow you to interact with a registered route using its
+      Add-ons in Curi allow you to interact with a registered route using its
       name. A registered route is generally any route that is in the array of
       routes that you used to create your configuration object. However, some
-      addons only register routes that meet some criteria.
+      add-ons only register routes that meet some criteria.
     </p>
 
-    <p>Addons are objects with three properties: name, register, and get.</p>
+    <p>Add-ons are objects with three properties: name, register, and get.</p>
 
     <PrismBlock lang="javascript">
       {`{
-  // the string you will use to call the addon
+  // the string you will use to call the add-on
   name: 'MyAddon',
 
   // a function used internally to register routes
-  // with the addon. You only need to use this when
-  // writing your own addons
+  // with the add-on. You only need to use this when
+  // writing your own add-ons
   register: function(route, parentData) {...},
 
   // this is the function that will be added to your
-  // config object's addons property. For example, with
-  // this addon, the get function will be called when
+  // config object's add-ons property. For example, with
+  // this add-on, the get function will be called when
   // you call config.addons.MyAddon('...')
   get: function(route) {...},
   reset: function() {...}
@@ -38,9 +38,9 @@ export default ({ name }) => (
     </PrismBlock>
 
     <p>
-      However, when you import them, you are actually importing an addon factory
-      function. You need to call the function to create the addon that you will
-      pass to your Curi configuration
+      However, when you import them, you are actually importing an add-on
+      factory function. You need to call the function to create the add-on that
+      you will pass to your Curi configuration
     </p>
 
     <PrismBlock lang="javascript">
@@ -49,12 +49,13 @@ export default ({ name }) => (
 }`}
     </PrismBlock>
 
-    <Section title="Adding addons" id="adding">
+    <Section title="Adding add-ons" id="adding">
       <p>
-        As stated above, whenever you include addons in your configuration
-        object, you do not pass the actual addon object. Instead, you pass an
-        addon instance (multiple configuration objects would each have their own
-        instance of the addon), which can be useful for server-side rendering.
+        As stated above, whenever you include add-ons in your configuration
+        object, you do not pass the actual add-on object. Instead, you pass an
+        add-on instance (multiple configuration objects would each have their
+        own instance of the add-on), which can be useful for server-side
+        rendering.
       </p>
 
       <p>
@@ -70,8 +71,8 @@ export default ({ name }) => (
       </PrismBlock>
 
       <p>
-        The addon will be added to the configuration object's addons property.
-        To call an addon, you simply use its name.
+        The add-on will be added to the configuration object's addons property.
+        To call an add-on, you simply use its name.
       </p>
 
       <PrismBlock lang="javascript">
@@ -81,14 +82,14 @@ export default ({ name }) => (
 
     <Section title="Creating Addons" id="creating">
       <p>
-        You may find yourself wanting to add a custom addon to your application.
-        There are just a few steps that you should follow in order to write your
-        own addon.
+        You may find yourself wanting to add a custom add-on to your
+        application. There are just a few steps that you should follow in order
+        to write your own add-on.
       </p>
 
       <p>
-        Remember that you need to export a function that will create the addon
-        object, not the actual addon object.
+        Remember that you need to export a function that will create the add-on
+        object, not the actual add-on object.
       </p>
 
       <PrismBlock lang="javascript">
@@ -100,12 +101,12 @@ export default ({ name }) => (
       <p>
         The function should return an object with four properties:{' '}
         <IJS>name</IJS>, <IJS>register</IJS>, <IJS>get</IJS>, and{' '}
-        <IJS>reset</IJS>. name is a unique identifier for the addon, register is
-        a function that will be used for your addon to store information about
-        each route, get is a function that will receive a route's name (and
-        possibly other arguments) and perform some task using the related route,
-        and reset is a function that will reset the addon's internal state (this
-        is used if you call <IJS>config.refresh</IJS>).
+        <IJS>reset</IJS>. name is a unique identifier for the add-on, register
+        is a function that will be used for your add-on to store information
+        about each route, get is a function that will receive a route's name
+        (and possibly other arguments) and perform some task using the related
+        route, and reset is a function that will reset the add-on's internal
+        state (this is used if you call <IJS>config.refresh</IJS>).
       </p>
 
       <PrismBlock lang="javascript">
@@ -127,9 +128,9 @@ export default ({ name }) => (
       </PrismBlock>
 
       <p>
-        That is all there is to creating a basic addon. Now, you just need to
+        That is all there is to creating a basic add-on. Now, you just need to
         make sure to pass it to your configuration object and you will be able
-        to call your addon's get function from your configuration object.
+        to call your add-on's get function from your configuration object.
       </p>
 
       <PrismBlock lang="javascript">
@@ -148,13 +149,13 @@ config.addons.MyFirstAddon('Elsewhere'); // false`}
 
       <Subsection title="Slightly more advanced" id="Slightly-more-advanced">
         <p>
-          You might want to write an addon that uses data from parent routes
-          when registering a route. For example, the built-in pathname addon
+          You might want to write an add-on that uses data from parent routes
+          when registering a route. For example, the built-in pathname add-on
           joins a route's path with it parent path(s).
         </p>
 
         <p>
-          If you want your addon to provide similar functionality, all you have
+          If you want your add-on to provide similar functionality, all you have
           to do is have the register function return the data that should be
           passed to its child routes. Then, when any children of that route are
           registered, they will be passed the return value from their parent as

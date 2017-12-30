@@ -302,9 +302,9 @@ history.navigate({ pathname: '/album/934' });`}
           <div className="description">
             <p>
               Of course, you never have to actually generate pathnames yourself.
-              Curi's built-in <IJS>pathname</IJS> addon will generate pathnames
+              Curi's built-in <IJS>pathname</IJS> add-on will generate pathnames
               given the name of a route (and any of that route's parameters).
-              This addon is used by the various link components to generate{' '}
+              This add-on is used by the various link components to generate{' '}
               <IJS>anchor</IJS> attributes.
             </p>
           </div>

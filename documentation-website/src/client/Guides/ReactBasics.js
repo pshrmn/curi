@@ -216,7 +216,7 @@ const routes = [
         render an anchor whose <IJS>href</IJS> attribute is <IJS>/about</IJS>.
         The great thing about this is that you don't have to know the URI of the
         route that you want to navigate to, only its name. Curi (using the
-        built-in <IJS>pathname</IJS> addon), handles creating URI pathnames for
+        built-in <IJS>pathname</IJS> add-on), handles creating URI pathnames for
         you.
       </p>
 

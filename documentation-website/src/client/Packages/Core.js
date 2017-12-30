@@ -50,8 +50,8 @@ const config = createConfig(history, routes, options);`}
             </p>
             <ul>
               <li>
-                addons - An array of addon instances. The pathname addon is
-                included by default, but any other addons that you wish to use
+                addons - An array of add-on instances. The pathname add-on is
+                included by default, but any other add-ons that you wish to use
                 should be provided in this array.
               </li>
               <li>
@@ -114,12 +114,12 @@ const config = createConfig(history, routes, options);`}
 
           <Subsection tag="h5" title="addons" id="addons">
             <p>
-              You can access all of the configuration object's addons through
-              the addons property. This allows you to call an addon's get method
-              directly.
+              You can access all of the configuration object's add-ons through
+              the addons property. This allows you to call an add-on's get
+              method directly.
             </p>
             <p>
-              For example, with the builtin pathname addon, you can do the
+              For example, with the builtin pathname add-on, you can do the
               following:
             </p>
             <PrismBlock lang="javascript">

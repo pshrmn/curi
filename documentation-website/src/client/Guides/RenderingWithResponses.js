@@ -241,9 +241,9 @@ function render(response) {
       <h2>Next</h2>
       <p>
         Let's take a moment to go back to our configuration object and look at
-        what Curi's addons are for in the{' '}
+        what Curi's add-ons are for in the{' '}
         <Link to="Guide" params={{ slug: 'addons' }}>
-          Using Addons
+          Using Add-ons
         </Link>{' '}
         guide.
       </p>

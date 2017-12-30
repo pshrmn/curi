@@ -11,7 +11,7 @@ export default ({ name, version, globalName }) => (
     globalName={globalName}
     about={
       <p>
-        This addon allows you to get the names of ancestor routes. This can be
+        This add-on allows you to get the names of ancestor routes. This can be
         useful for generating breadcrumb links.
       </p>
     }
@@ -20,9 +20,9 @@ export default ({ name, version, globalName }) => (
       <Section tag="h3" title="createAncestorsAddon" id="createAncestorsAddon">
         <p>
           curi-addon-ancestors has one, default export function (so you can
-          import it with whatever name you want to. It is an addon factory that
+          import it with whatever name you want to. It is an add-on factory that
           will add an <IJS>ancestors</IJS> function to your configuration
-          object's addon property.
+          object's add-on property.
         </p>
 
         <PrismBlock lang="javascript">
@@ -47,10 +47,10 @@ const config = createConfig(history,routes, {
         </PrismBlock>
 
         <p>
-          The ancestors addon takes the name of the route and the ancestor
+          The ancestors add-on takes the name of the route and the ancestor
           "level" that you want to get. 1 refers to the route's parent, 2 is its
           grandparent, etc. If the provided value is not a positive integer or
-          if there is no ancestor at the requested level, the addon will return
+          if there is no ancestor at the requested level, the add-on will return
           undefined.
         </p>
 

@@ -135,7 +135,7 @@ const config = createConfig(history, routes);
           The <IJS>createConfig</IJS> function can also take an optional third
           argument, which is an options object. You can use this to pass{' '}
           <Link to="Guide" params={{ slug: 'addons' }}>
-            addons
+            add-ons
           </Link>,{' '}
           <Link to="Guide" params={{ slug: 'side-effects' }}>
             side effects
