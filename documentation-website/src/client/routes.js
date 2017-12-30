@@ -22,9 +22,9 @@ export default [
     match: {
       response: ({ set }) => {
         set.body(Home);
+        set.title('Curi');
       }
-    },
-    title: 'Curi'
+    }
   },
   {
     name: 'Tutorial',
@@ -35,13 +35,13 @@ export default [
           module => module.default,
           caught
         ),
-      response: ({ resolved, set }) => {
+      response: ({ route, resolved, set }) => {
         set.body(resolved.initial);
+        const tutorial = tutorialsByName[route.params.name];
+        if (tutorial) {
+          set.title(`Tutorial ${tutorial.displayName}`);
+        }
       }
-    },
-    title: ({ name }) => {
-      const data = tutorialsByName[name];
-      return !data ? 'Tutorial Not Found' : `Tutorial ${data.displayName}`;
     }
   },
   {
@@ -58,10 +58,10 @@ export default [
         const guide = guidesByName[route.params.slug];
         if (guide) {
           set.data(guide);
+          set.title(`${guide.name} Guide`);
         }
       }
-    },
-    title: (params, data) => `${data ? data.name : 'Unknown'} Guide`
+    }
   },
   {
     name: 'Packages',
@@ -69,9 +69,9 @@ export default [
     match: {
       response: ({ set }) => {
         set.body(PackageList);
+        set.title('Curi Packages');
       }
     },
-    title: 'Curi Packages',
     children: [
       {
         name: 'Package',
@@ -85,12 +85,12 @@ export default [
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
             const pkg = packagesByName[route.params.package];
+            set.title(`@curi/${route.params.package}`);
             if (pkg) {
               set.data(pkg);
             }
           }
-        },
-        title: params => `@curi/${params.package}`
+        }
       }
     ]
   },
@@ -100,9 +100,9 @@ export default [
     match: {
       response: ({ set }) => {
         set.body(ExampleList);
+        set.title('Examples');
       }
     },
-    title: 'Examples',
     children: [
       {
         name: 'Example',
@@ -119,10 +119,10 @@ export default [
             const example = EXAMPLES.find(category, slug);
             if (example) {
               set.data(example);
+              set.title(`${example.name} Example`);
             }
           }
-        },
-        title: (params, data) => `${data ? data.name : 'Unknown'} Example`
+        }
       }
     ]
   }

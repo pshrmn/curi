@@ -23,7 +23,7 @@ export default function createHandler(debug = false) {
           <CuriBase
             response={response}
             action={action}
-            config={router}
+            router={router}
             render={renderFunction}
           />
         );

@@ -24,7 +24,7 @@ router.respond((response, action) => {
     <CuriBase
       response={response}
       action={action}
-      config={router}
+      router={router}
       render={renderFunction}
     />,
     document.getElementById('root')
