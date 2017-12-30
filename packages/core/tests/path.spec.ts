@@ -1,5 +1,5 @@
 import 'jest';
-import createConfig from '../src/curi';
+import curi from '../src/curi';
 import InMemory from '@hickory/in-memory';
 
 describe('route.pathOptions matching', () => {
@@ -16,8 +16,8 @@ describe('route.pathOptions matching', () => {
           path: '(.*)'
         }
       ];
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         expect(response.name).toBe('Test');
         done();
       });
@@ -35,8 +35,8 @@ describe('route.pathOptions matching', () => {
           path: '(.*)'
         }
       ];
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         expect(response.name).toBe('Test');
         done();
       });
@@ -54,8 +54,8 @@ describe('route.pathOptions matching', () => {
           path: '(.*)'
         }
       ];
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         expect(response.name).toBe('Not Found');
         done();
       });
@@ -76,8 +76,8 @@ describe('route.pathOptions matching', () => {
           path: '(.*)'
         }
       ];
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         expect(response.name).toBe('Not Found');
         done();
       });
@@ -96,8 +96,8 @@ describe('route.pathOptions matching', () => {
           path: '(.*)'
         }
       ];
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         expect(response.name).toBe('Not Found');
         done();
       });
@@ -116,8 +116,8 @@ describe('route.pathOptions matching', () => {
           path: '(.*)'
         }
       ];
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         expect(response.name).toBe('Test');
         done();
       });

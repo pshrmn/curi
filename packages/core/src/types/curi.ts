@@ -8,7 +8,7 @@ import { Response } from './response';
 export type ResponseHandler = (
   response: Response,
   action?: Action,
-  config?: CuriConfig
+  router?: CuriRouter
 ) => void;
 export interface RespondOptions {
   once?: boolean;
@@ -25,14 +25,14 @@ export interface Cache {
   get: (location: HickoryLocation) => Response;
 }
 
-export interface ConfigOptions {
+export interface RouterOptions {
   addons?: Array<Addon>;
   sideEffects?: Array<SideEffect>;
   cache?: Cache;
   pathnameOptions?: PathFunctionOptions;
 }
 
-export interface CuriConfig {
+export interface CuriRouter {
   refresh: (routeArray: Array<RouteDescriptor>) => void;
   respond: (
     fn: ResponseHandler,

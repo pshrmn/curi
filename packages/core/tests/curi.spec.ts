@@ -1,9 +1,9 @@
 import 'jest';
-import createConfig from '../src/curi';
+import curi from '../src/curi';
 import InMemory from '@hickory/in-memory';
 import { Addon, Response } from '../src/types';
 
-describe('createConfig', () => {
+describe('curi', () => {
   let history;
 
   beforeEach(() => {
@@ -19,11 +19,11 @@ describe('createConfig', () => {
         { name: 'About', path: 'about' },
         { name: 'Contact', path: 'contact' }
       ];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
 
       const names = ['Home', 'About', 'Contact'];
       names.forEach(n => {
-        expect(config.addons.pathname(n)).toBeDefined();
+        expect(router.addons.pathname(n)).toBeDefined();
       });
     });
 
@@ -40,10 +40,10 @@ describe('createConfig', () => {
           ]
         }
       ];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
       const names = ['Email', 'Phone'];
       names.forEach(n => {
-        expect(config.addons.pathname(n)).toBeDefined();
+        expect(router.addons.pathname(n)).toBeDefined();
       });
     });
 
@@ -55,18 +55,18 @@ describe('createConfig', () => {
         reset: () => {},
         get: () => {}
       });
-      const config = createConfig(history, routes, {
+      const router = curi(history, routes, {
         addons: [createFakeAddon()]
       });
-      expect(config.addons.fake).toBeDefined();
+      expect(router.addons.fake).toBeDefined();
     });
 
     describe('options', () => {
       describe('addons', () => {
         it('includes pathname addon by default', () => {
           const routes = [{ name: 'Home', path: '' }];
-          const config = createConfig(history, routes);
-          expect(config.addons.pathname).toBeDefined();
+          const router = curi(history, routes);
+          expect(router.addons.pathname).toBeDefined();
         });
 
         it('includes pathname addon even when other addons are provided', () => {
@@ -83,10 +83,10 @@ describe('createConfig', () => {
           };
 
           const routes = [{ name: 'Home', path: '' }];
-          const config = createConfig(history, routes, {
+          const router = curi(history, routes, {
             addons: [createFirstAddon()]
           });
-          expect(config.addons.pathname).toBeDefined();
+          expect(router.addons.pathname).toBeDefined();
         });
 
         it('registers all of the routes with all of the addons', () => {
@@ -137,7 +137,7 @@ describe('createConfig', () => {
             }
           ];
 
-          const config = createConfig(history, routes, {
+          const router = curi(history, routes, {
             addons: [createFirstAddon(), createSecondAddon()]
           });
           const expected = {
@@ -171,10 +171,10 @@ describe('createConfig', () => {
           const routes = [{ name: 'All', path: ':all+' }];
           const sideEffect = jest.fn();
 
-          const config = createConfig(history, routes, {
+          const router = curi(history, routes, {
             sideEffects: [{ fn: sideEffect }]
           });
-          config.respond(response => {
+          router.respond(response => {
             expect(sideEffect.mock.calls.length).toBe(1);
             expect(sideEffect.mock.calls[0][0]).toBe(response);
             expect(sideEffect.mock.calls[0][1]).toBe('PUSH');
@@ -188,7 +188,7 @@ describe('createConfig', () => {
           const sideEffect1 = jest.fn();
           const sideEffect2 = jest.fn();
 
-          const config = createConfig(history, routes, {
+          const router = curi(history, routes, {
             sideEffects: [
               { fn: sideEffect1, after: false },
               { fn: sideEffect2 }
@@ -196,7 +196,7 @@ describe('createConfig', () => {
           });
 
           expect.assertions(2);
-          config.respond(response => {
+          router.respond(response => {
             expect(sideEffect1.mock.calls.length).toBe(1);
             expect(sideEffect2.mock.calls.length).toBe(1);
             done();
@@ -211,29 +211,29 @@ describe('createConfig', () => {
             done();
           };
 
-          const config = createConfig(history, routes, {
+          const router = curi(history, routes, {
             sideEffects: [{ fn: sideEffect, after: true }]
           });
-          config.respond(responseHandler);
+          router.respond(responseHandler);
         });
 
-        it('passes response, action, and config object to side effect', done => {
+        it('passes response, action, and router object to side effect', done => {
           const routes = [{ name: 'All', path: ':all*' }];
           const responseHandler = jest.fn();
-          const sideEffect = function(response, action, config) {
+          const sideEffect = function(response, action, router) {
             expect(response).toMatchObject({
               name: 'All',
               location: { pathname: '/' }
             });
             expect(action).toBe('PUSH');
-            expect(config).toBe(config);
+            expect(router).toBe(router);
             done();
           };
 
-          const config = createConfig(history, routes, {
+          const router = curi(history, routes, {
             sideEffects: [{ fn: sideEffect, after: true }]
           });
-          config.respond(responseHandler);
+          router.respond(responseHandler);
         });
       });
 
@@ -262,7 +262,7 @@ describe('createConfig', () => {
             };
           };
 
-          const config = createConfig(history, routes, {
+          const router = curi(history, routes, {
             cache: createSimpleCache()
           });
 
@@ -289,7 +289,7 @@ describe('createConfig', () => {
               fn(response);
             }
           }
-          config.respond(responseHandler);
+          router.respond(responseHandler);
         });
 
         it('generates new response for same key on subsequent calls if cache is not provided', done => {
@@ -304,7 +304,7 @@ describe('createConfig', () => {
               }
             }
           ];
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
 
           let calls = 0;
           let randomValue;
@@ -327,7 +327,7 @@ describe('createConfig', () => {
             steps[calls++](response);
           }
 
-          config.respond(responseHandler);
+          router.respond(responseHandler);
         });
       });
     });
@@ -356,18 +356,18 @@ describe('createConfig', () => {
         { name: 'Contacto', path: 'contacto' }
       ];
 
-      const config = createConfig(history, englishRoutes);
+      const router = curi(history, englishRoutes);
 
-      config.refresh(spanishRoutes);
+      router.refresh(spanishRoutes);
 
       const englishNames = ['Home', 'About', 'Contact'];
       englishNames.forEach(n => {
-        expect(config.addons.pathname(n)).toBeUndefined();
+        expect(router.addons.pathname(n)).toBeUndefined();
       });
 
       const spanishNames = ['Casa', 'Acerca De', 'Contacto'];
       spanishNames.forEach(n => {
-        expect(config.addons.pathname(n)).toBeDefined();
+        expect(router.addons.pathname(n)).toBeDefined();
       });
     });
   });
@@ -380,9 +380,9 @@ describe('createConfig', () => {
         });
         const routes = [{ name: 'Home', path: '' }];
         const sub = jest.fn();
-        const config = createConfig(history, routes);
+        const router = curi(history, routes);
 
-        config.respond(sub);
+        router.respond(sub);
         expect(sub.mock.calls.length).toBe(0);
       });
 
@@ -392,9 +392,9 @@ describe('createConfig', () => {
         });
         const routes = [{ name: 'Home', path: '' }];
         const sub = jest.fn();
-        const config = createConfig(history, routes);
+        const router = curi(history, routes);
         setTimeout(() => {
-          config.respond(sub);
+          router.respond(sub);
           expect(sub.mock.calls.length).toBe(1);
           done();
         }, 50);
@@ -419,13 +419,13 @@ describe('createConfig', () => {
               called = true;
               // trigger another navigation to verify that the once sub
               // is not called again
-              config.history.push('/another-one');
+              router.history.push('/another-one');
             }
           });
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
 
-          config.respond(oneTime, { once: true });
-          config.respond(responseHandler);
+          router.respond(oneTime, { once: true });
+          router.respond(responseHandler);
         });
 
         it('calls the response handler function immediately if a response has already resolved', done => {
@@ -434,9 +434,9 @@ describe('createConfig', () => {
           });
           const routes = [{ name: 'Home', path: '' }];
           const oneTime = jest.fn();
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
           setTimeout(() => {
-            config.respond(oneTime, { once: true });
+            router.respond(oneTime, { once: true });
             expect(oneTime.mock.calls.length).toBe(1);
             expect(oneTime.mock.calls[0][0].location.pathname).toBe('/');
             done();
@@ -461,31 +461,31 @@ describe('createConfig', () => {
               expect(responseHandler.mock.calls.length).toBe(1);
               // trigger another navigation to verify that the once sub
               // is not called again
-              config.history.push('/another-one');
+              router.history.push('/another-one');
             }
           });
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
 
-          config.respond(oneTime, { once: true });
-          config.respond(responseHandler);
+          router.respond(oneTime, { once: true });
+          router.respond(responseHandler);
         });
       });
     });
 
-    it('passes response, action, and config object to response handler', done => {
+    it('passes response, action, and router object to response handler', done => {
       const routes = [{ name: 'All', path: ':all*' }];
-      const responseHandler = function(response, action, config) {
+      const responseHandler = function(response, action, router) {
         expect(response).toMatchObject({
           name: 'All',
           location: { pathname: '/' }
         });
         expect(action).toBe('PUSH');
-        expect(config).toBe(config);
+        expect(router).toBe(router);
         done();
       };
 
-      const config = createConfig(history, routes);
-      config.respond(responseHandler);
+      const router = curi(history, routes);
+      router.respond(responseHandler);
     });
 
     it('notifies response handlers of new response and action when location changes', done => {
@@ -508,8 +508,8 @@ describe('createConfig', () => {
         done();
       };
 
-      const config = createConfig(history, routes);
-      config.respond(check);
+      const router = curi(history, routes);
+      router.respond(check);
       history.push('/contact/mail');
     });
 
@@ -541,8 +541,8 @@ describe('createConfig', () => {
         done();
       };
 
-      const config = createConfig(history, routes);
-      config.respond(check);
+      const router = curi(history, routes);
+      router.respond(check);
       history.push('/contact/phone');
     });
 
@@ -569,22 +569,22 @@ describe('createConfig', () => {
         done();
       };
 
-      const config = createConfig(history, routes);
-      config.respond(check);
+      const router = curi(history, routes);
+      router.respond(check);
       history.push('/contact/phone');
       history.push('/contact/mail');
     });
 
     it('returns a function to unsubscribe when called', done => {
-      const config = createConfig(history, [{ name: 'Home', path: '' }]);
+      const router = curi(history, [{ name: 'Home', path: '' }]);
 
       const sub1 = jest.fn();
       const sub2 = jest.fn();
 
       // wait for the first response to be generated to ensure that both
       // response handler functions are called when subscribing
-      const unsub1 = config.respond(sub1);
-      const unsub2 = config.respond(sub2);
+      const unsub1 = router.respond(sub1);
+      const unsub2 = router.respond(sub2);
 
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(0);
@@ -601,7 +601,7 @@ describe('createConfig', () => {
 
     it('throws an error if passing a non-function to respond', () => {
       // adding this test for coverage, but TypeScript doesn't like it
-      const config = createConfig(history, [{ name: 'Home', path: '' }]);
+      const router = curi(history, [{ name: 'Home', path: '' }]);
       const nonFuncs = [
         null,
         undefined,
@@ -612,7 +612,7 @@ describe('createConfig', () => {
       ];
       nonFuncs.forEach(nf => {
         expect(() => {
-          config.respond(nf);
+          router.respond(nf);
         }).toThrow('The first argument passed to "respond" must be a function');
       });
     });
@@ -638,14 +638,14 @@ describe('createConfig', () => {
         done();
       });
 
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
 
       let hasEmitted = false;
       const responseHandler = () => {
         hasEmitted = true;
       };
 
-      config.respond(responseHandler);
+      router.respond(responseHandler);
     });
   });
 });

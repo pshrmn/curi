@@ -15,8 +15,8 @@ import { RouteDescriptor, InternalRoute } from './types/route';
 import { Response, PendingResponse } from './types/response';
 import { Addon, Addons } from './types/addon';
 import {
-  CuriConfig,
-  ConfigOptions,
+  CuriRouter,
+  RouterOptions,
   SideEffect,
   ResponseHandler,
   RespondOptions,
@@ -24,17 +24,17 @@ import {
   Cache
 } from './types/curi';
 
-function createConfig(
+function createRouter(
   history: History,
   routeArray: Array<RouteDescriptor>,
-  options: ConfigOptions = {}
-): CuriConfig {
+  options: RouterOptions = {}
+): CuriRouter {
   const {
     addons: userAddons = [],
     sideEffects = [],
     cache,
     pathnameOptions
-  } = options as ConfigOptions;
+  } = options as RouterOptions;
 
   const beforeSideEffects: Array<ResponseHandler> = [];
   const afterSideEffects: Array<ResponseHandler> = [];
@@ -68,10 +68,10 @@ function createConfig(
 
   const responseHandlers: Array<ResponseHandler> = [];
   const oneTimers: Array<ResponseHandler> = [];
-  let previous: [Response, Action, CuriConfig] = [] as [
+  let previous: [Response, Action, CuriRouter] = [] as [
     Response,
     Action,
-    CuriConfig
+    CuriRouter
   ];
 
   function respond(
@@ -171,7 +171,7 @@ function createConfig(
   setupRoutesAndAddons(routeArray);
   history.respondWith(navigationHandler);
 
-  const curi: CuriConfig = {
+  const curi: CuriRouter = {
     addons: registeredAddons,
     history,
     respond,
@@ -181,4 +181,4 @@ function createConfig(
   return curi;
 }
 
-export default createConfig;
+export default createRouter;

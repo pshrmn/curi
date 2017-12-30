@@ -1,3 +1,3 @@
 export * from './types';
-import createConfig from './curi';
-export default createConfig;
+import curi from './curi';
+export default curi;

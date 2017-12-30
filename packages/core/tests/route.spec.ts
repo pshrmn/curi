@@ -1,7 +1,7 @@
 import 'jest';
 import createRoute from '../src/route';
 import { Route, Addon } from '../src/types';
-import createConfig from '../src/curi';
+import curi from '../src/curi';
 import InMemory from '@hickory/in-memory';
 
 function PropertyReporter(): Addon {
@@ -37,10 +37,10 @@ describe('public route properties', () => {
           path: 'test'
         }
       ];
-      const config = createConfig(history, routes, {
+      const router = curi(history, routes, {
         addons: [PropertyReporter()]
       });
-      const routeProperties = config.addons.properties('Test');
+      const routeProperties = router.addons.properties('Test');
       expect(routeProperties.name).toBe('Test');
     });
   });
@@ -54,10 +54,10 @@ describe('public route properties', () => {
           path: 'test'
         }
       ];
-      const config = createConfig(history, routes, {
+      const router = curi(history, routes, {
         addons: [PropertyReporter()]
       });
-      const routeProperties = config.addons.properties('Test');
+      const routeProperties = router.addons.properties('Test');
       expect(routeProperties.path).toBe('test');
     });
   });
@@ -71,10 +71,10 @@ describe('public route properties', () => {
           path: ':one/:two/:three'
         }
       ];
-      const config = createConfig(history, routes, {
+      const router = curi(history, routes, {
         addons: [PropertyReporter()]
       });
-      const routeProperties = config.addons.properties('Test');
+      const routeProperties = router.addons.properties('Test');
       expect(routeProperties.keys).toEqual(['one', 'two', 'three']);
     });
 
@@ -86,10 +86,10 @@ describe('public route properties', () => {
           path: 'one/two/three'
         }
       ];
-      const config = createConfig(history, routes, {
+      const router = curi(history, routes, {
         addons: [PropertyReporter()]
       });
-      const routeProperties = config.addons.properties('Test');
+      const routeProperties = router.addons.properties('Test');
       expect(routeProperties.keys).toEqual([]);
     });
   });
@@ -109,10 +109,10 @@ describe('public route properties', () => {
             }
           }
         ];
-        const config = createConfig(history, routes, {
+        const router = curi(history, routes, {
           addons: [PropertyReporter()]
         });
-        const routeProperties = config.addons.properties('Test');
+        const routeProperties = router.addons.properties('Test');
         expect(routeProperties.match.initial).toBeDefined();
       });
 
@@ -124,10 +124,10 @@ describe('public route properties', () => {
             path: 'test'
           }
         ];
-        const config = createConfig(history, routes, {
+        const router = curi(history, routes, {
           addons: [PropertyReporter()]
         });
-        const routeProperties = config.addons.properties('Test');
+        const routeProperties = router.addons.properties('Test');
         expect(routeProperties.match.initial).toBeUndefined();
       });
     });
@@ -144,10 +144,10 @@ describe('public route properties', () => {
             match: { every: matchTest }
           }
         ];
-        const config = createConfig(history, routes, {
+        const router = curi(history, routes, {
           addons: [PropertyReporter()]
         });
-        const routeProperties = config.addons.properties('Test');
+        const routeProperties = router.addons.properties('Test');
         expect(routeProperties.match.every).toBe(matchTest);
       });
 
@@ -159,10 +159,10 @@ describe('public route properties', () => {
             path: 'test'
           }
         ];
-        const config = createConfig(history, routes, {
+        const router = curi(history, routes, {
           addons: [PropertyReporter()]
         });
-        const routeProperties = config.addons.properties('Test');
+        const routeProperties = router.addons.properties('Test');
         expect(routeProperties.match.every).toBeUndefined();
       });
     });
@@ -179,10 +179,10 @@ describe('public route properties', () => {
             match: { response: matchTest }
           }
         ];
-        const config = createConfig(history, routes, {
+        const router = curi(history, routes, {
           addons: [PropertyReporter()]
         });
-        const routeProperties = config.addons.properties('Test');
+        const routeProperties = router.addons.properties('Test');
         expect(routeProperties.match.response).toBe(matchTest);
       });
 
@@ -194,10 +194,10 @@ describe('public route properties', () => {
             path: 'test'
           }
         ];
-        const config = createConfig(history, routes, {
+        const router = curi(history, routes, {
           addons: [PropertyReporter()]
         });
-        const routeProperties = config.addons.properties('Test');
+        const routeProperties = router.addons.properties('Test');
         expect(routeProperties.match.response).toBeUndefined();
       });
     });
@@ -217,10 +217,10 @@ describe('public route properties', () => {
           extra
         }
       ];
-      const config = createConfig(history, routes, {
+      const router = curi(history, routes, {
         addons: [PropertyReporter()]
       });
-      const routeProperties = config.addons.properties('Test');
+      const routeProperties = router.addons.properties('Test');
       expect(routeProperties.extra).toBe(extra);
     });
   });

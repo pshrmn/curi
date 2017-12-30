@@ -13,8 +13,8 @@ export {
 } from './route';
 export { Response, RawParams, Params } from './response';
 export {
-  CuriConfig,
-  ConfigOptions,
+  CuriRouter,
+  RouterOptions,
   ResponseHandler,
   RemoveResponseHandler,
   SideEffect,

@@ -1,5 +1,5 @@
 import 'jest';
-import createConfig from '../src/curi';
+import curi from '../src/curi';
 import InMemory from '@hickory/in-memory';
 
 describe('route matching/response generation', () => {
@@ -12,8 +12,8 @@ describe('route matching/response generation', () => {
           path: 'test'
         }
       ];
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         expect(response.name).toBe('Test');
         done();
       });
@@ -31,8 +31,8 @@ describe('route matching/response generation', () => {
           path: '(.*)'
         }
       ];
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         expect(response.name).toBe('Not Found');
         done();
       });
@@ -53,8 +53,8 @@ describe('route matching/response generation', () => {
             ]
           }
         ];
-        const config = createConfig(history, routes);
-        config.respond(response => {
+        const router = curi(history, routes);
+        router.respond(response => {
           expect(response.name).toBe('City');
           expect(response.partials).toEqual(['State']);
           done();
@@ -76,8 +76,8 @@ describe('route matching/response generation', () => {
             ]
           }
         ];
-        const config = createConfig(history, routes);
-        config.respond(response => {
+        const router = curi(history, routes);
+        router.respond(response => {
           expect(response.name).toBe('City');
           expect(response.partials).toEqual(['State']);
           done();
@@ -102,8 +102,8 @@ describe('route matching/response generation', () => {
             path: '(.*)'
           }
         ];
-        const config = createConfig(history, routes);
-        config.respond(response => {
+        const router = curi(history, routes);
+        router.respond(response => {
           expect(response.name).toBe('Not Found');
           expect(response.partials).toEqual([]);
           done();
@@ -124,8 +124,8 @@ describe('route matching/response generation', () => {
           path: '(.*)'
         }
       ];
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         expect(response.name).toBe('State');
         done();
       });
@@ -151,8 +151,8 @@ describe('route matching/response generation', () => {
       const history = InMemory({
         locations: ['/contact']
       });
-      const config = createConfig(history, routes);
-      config.respond(response => {
+      const router = curi(history, routes);
+      router.respond(response => {
         done();
       });
     });
@@ -162,8 +162,8 @@ describe('route matching/response generation', () => {
         it('is the key property from the location', done => {
           const routes = [];
           const history = InMemory({ locations: ['/other-page'] });
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.key).toBe(history.location.key);
             done();
           });
@@ -174,8 +174,8 @@ describe('route matching/response generation', () => {
         it('is the location used to match routes', done => {
           const routes = [];
           const history = InMemory({ locations: ['/other-page'] });
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.location).toBe(history.location);
             done();
           });
@@ -191,8 +191,8 @@ describe('route matching/response generation', () => {
               path: 'test'
             }
           ];
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.body).toBeUndefined();
             done();
           });
@@ -212,8 +212,8 @@ describe('route matching/response generation', () => {
               }
             }
           ];
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.body).toBe(body);
             done();
           });
@@ -233,8 +233,8 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/contact'] });
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.status).toBe(200);
             done();
           });
@@ -252,8 +252,8 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/other-page'] });
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.status).toBe(404);
             done();
           });
@@ -272,8 +272,8 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/'] });
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.status).toBe(451);
             done();
           });
@@ -292,9 +292,9 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/'] });
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
           let firstCall = true;
-          config.respond(response => {
+          router.respond(response => {
             if (firstCall) {
               expect(response.status).toBe(302);
               firstCall = false;
@@ -316,9 +316,9 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/'] });
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
           let firstCall = true;
-          config.respond(response => {
+          router.respond(response => {
             if (firstCall) {
               expect(response.status).toBe(301);
               firstCall = false;
@@ -337,8 +337,8 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/'] });
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.data).toBeUndefined();
             done();
           });
@@ -357,8 +357,8 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/'] });
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.data).toMatchObject({ test: 'value' });
             done();
           });
@@ -374,9 +374,9 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/'] });
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
 
-          config.respond(response => {
+          router.respond(response => {
             expect(response.title).toBe('');
             done();
           });
@@ -390,9 +390,9 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/AZ'] });
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
 
-          config.respond(response => {
+          router.respond(response => {
             expect(response.title).toBe('');
             done();
           });
@@ -411,9 +411,9 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/VA'] });
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
 
-          config.respond(response => {
+          router.respond(response => {
             expect(response.title).toBe('A State');
             done();
           });
@@ -427,8 +427,8 @@ describe('route matching/response generation', () => {
             path: 'a-route'
           };
           const history = InMemory({ locations: ['/a-route'] });
-          const config = createConfig(history, [Route]);
-          config.respond(response => {
+          const router = curi(history, [Route]);
+          router.respond(response => {
             expect(response.name).toBe('A Route');
             done();
           });
@@ -440,8 +440,8 @@ describe('route matching/response generation', () => {
             path: 'a-route'
           };
           const history = InMemory({ locations: ['/'] });
-          const config = createConfig(history, [Route]);
-          config.respond(response => {
+          const router = curi(history, [Route]);
+          router.respond(response => {
             expect(response.name).toBeUndefined();
             done();
           });
@@ -463,8 +463,8 @@ describe('route matching/response generation', () => {
               ]
             }
           ];
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.partials).toEqual(['State']);
             done();
           });
@@ -486,8 +486,8 @@ describe('route matching/response generation', () => {
               ]
             }
           ];
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.params).toEqual({
               state: 'MT',
               city: 'Bozeman'
@@ -505,8 +505,8 @@ describe('route matching/response generation', () => {
               children: [{ name: 'Two', path: ':id' }]
             }
           ];
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.params['id']).toBe('2');
             done();
           });
@@ -524,8 +524,8 @@ describe('route matching/response generation', () => {
                 }
               }
             ];
-            const config = createConfig(history, routes);
-            config.respond(response => {
+            const router = curi(history, routes);
+            router.respond(response => {
               expect(response.params).toEqual({ num: 123 });
               done();
             });
@@ -551,8 +551,8 @@ describe('route matching/response generation', () => {
                 }
               }
             ];
-            const config = createConfig(history, routes);
-            config.respond(response => {
+            const router = curi(history, routes);
+            router.respond(response => {
               expect(response.params).toEqual({
                 first: 123,
                 second: 456
@@ -572,8 +572,8 @@ describe('route matching/response generation', () => {
                 }
               }
             ];
-            const config = createConfig(history, routes);
-            config.respond(response => {
+            const router = curi(history, routes);
+            router.respond(response => {
               expect(response.params).toEqual({
                 first: 123,
                 second: '456'
@@ -599,8 +599,8 @@ describe('route matching/response generation', () => {
                 }
               }
             ];
-            const config = createConfig(history, routes);
-            config.respond(response => {
+            const router = curi(history, routes);
+            router.respond(response => {
               expect(response.params).toEqual({
                 num: '123'
               });
@@ -621,8 +621,8 @@ describe('route matching/response generation', () => {
           const history = InMemory({
             locations: ['/contact']
           });
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.error).toBeUndefined();
             done();
           });
@@ -641,8 +641,8 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/'] });
-          const config = createConfig(history, routes);
-          config.respond(response => {
+          const router = curi(history, routes);
+          router.respond(response => {
             expect(response.error).toBe('woops');
             done();
           });
@@ -663,9 +663,9 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/'] });
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
           let firstCall = true;
-          config.respond(response => {
+          router.respond(response => {
             if (firstCall) {
               expect(response.redirectTo).toBe('/somewhere');
               firstCall = false;
@@ -697,9 +697,9 @@ describe('route matching/response generation', () => {
             match: { initial, every }
           }
         ];
-        const config = createConfig(history, routes);
+        const router = curi(history, routes);
         let firstCall = true;
-        config.respond(() => {
+        router.respond(() => {
           if (firstCall) {
             firstCall = false;
             expect(initialCount).toBe(1);
@@ -734,8 +734,8 @@ describe('route matching/response generation', () => {
         };
 
         const history = InMemory({ locations: ['/hello?one=two'] });
-        const config = createConfig(history, [CatchAll]);
-        config.respond(
+        const router = curi(history, [CatchAll]);
+        router.respond(
           response => {
             done();
           },
@@ -785,7 +785,7 @@ describe('route matching/response generation', () => {
         ];
 
         const history = InMemory({ locations: ['/first'] });
-        const config = createConfig(history, routes);
+        const router = curi(history, routes);
         history.push('/second');
       });
 
@@ -805,8 +805,8 @@ describe('route matching/response generation', () => {
           };
 
           const history = InMemory({ locations: ['/hello?one=two'] });
-          const config = createConfig(history, [CatchAll]);
-          config.respond(
+          const router = curi(history, [CatchAll]);
+          router.respond(
             response => {
               done();
             },
@@ -829,8 +829,8 @@ describe('route matching/response generation', () => {
           };
 
           const history = InMemory({ locations: ['/hello?one=two'] });
-          const config = createConfig(history, [CatchAll]);
-          config.respond(
+          const router = curi(history, [CatchAll]);
+          router.respond(
             response => {
               done();
             },
@@ -856,8 +856,8 @@ describe('route matching/response generation', () => {
             };
 
             const history = InMemory({ locations: ['/hello?one=two'] });
-            const config = createConfig(history, [CatchAll]);
-            config.respond(
+            const router = curi(history, [CatchAll]);
+            router.respond(
               response => {
                 done();
               },
@@ -889,8 +889,8 @@ describe('route matching/response generation', () => {
                 }
               }
             ];
-            const config = createConfig(history, routes);
-            config.respond(
+            const router = curi(history, routes);
+            router.respond(
               () => {
                 history.push('/another-one');
               },
@@ -912,8 +912,8 @@ describe('route matching/response generation', () => {
             };
 
             const history = InMemory({ locations: ['/hello?one=two'] });
-            const config = createConfig(history, [CatchAll]);
-            config.respond(
+            const router = curi(history, [CatchAll]);
+            router.respond(
               response => {
                 done();
               },
@@ -938,8 +938,8 @@ describe('route matching/response generation', () => {
             };
 
             const history = InMemory({ locations: ['/hello?one=two'] });
-            const config = createConfig(history, [CatchAll]);
-            config.respond(
+            const router = curi(history, [CatchAll]);
+            router.respond(
               response => {
                 done();
               },
@@ -961,8 +961,8 @@ describe('route matching/response generation', () => {
             };
 
             const history = InMemory({ locations: ['/hello?one=two'] });
-            const config = createConfig(history, [CatchAll]);
-            config.respond(
+            const router = curi(history, [CatchAll]);
+            router.respond(
               response => {
                 done();
               },
@@ -991,8 +991,8 @@ describe('route matching/response generation', () => {
           };
 
           const history = InMemory({ locations: ['/hello?one=two'] });
-          const config = createConfig(history, [CatchAll]);
-          config.respond(
+          const router = curi(history, [CatchAll]);
+          router.respond(
             response => {
               done();
             },
@@ -1022,8 +1022,8 @@ describe('route matching/response generation', () => {
           };
 
           const history = InMemory({ locations: ['/hello?one=two'] });
-          const config = createConfig(history, [CatchAll]);
-          config.respond(
+          const router = curi(history, [CatchAll]);
+          router.respond(
             response => {
               done();
             },
@@ -1045,8 +1045,8 @@ describe('route matching/response generation', () => {
           };
 
           const history = InMemory({ locations: ['/hello?one=two'] });
-          const config = createConfig(history, [CatchAll]);
-          config.respond(
+          const router = curi(history, [CatchAll]);
+          router.respond(
             response => {
               done();
             },
@@ -1072,9 +1072,9 @@ describe('route matching/response generation', () => {
             }
           ];
           const history = InMemory({ locations: ['/old/1'] });
-          const config = createConfig(history, routes);
+          const router = curi(history, routes);
           let firstCall = true;
-          config.respond(response => {
+          router.respond(response => {
             if (firstCall) {
               expect(response.redirectTo).toBe('/new/1');
               firstCall = false;

@@ -1,3 +1,7 @@
+## Next
+
+* Refer to Curi as a router, not just "config" (`CuriConfig` is now `CuriRouter`, etc.).
+
 ## 1.0.0-beta.22
 
 * Pass the configuration option to response handlers.
