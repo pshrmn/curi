@@ -2,7 +2,7 @@ import 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import InMemory from '@hickory/in-memory';
 import CuriBase from '../src/CuriBase';
 import { Response } from '@curi/core';
@@ -10,35 +10,27 @@ import { Response } from '@curi/core';
 describe('<CuriBase>', () => {
   it('calls render function when it renders', () => {
     const history = InMemory();
-    const config = createConfig(history, []);
-    const fakeConfig = { subscribe: () => {} };
+    const router = curi(history, []);
+    const fakerouter = { subscribe: () => {} };
     const fn = jest.fn(() => {
       return null;
     });
     const wrapper = shallow(
-      <CuriBase
-        response={{} as Response}
-        config={config}
-        render={fn}
-      />
+      <CuriBase response={{} as Response} router={router} render={fn} />
     );
     expect(fn.mock.calls.length).toBe(1);
   });
 
   it('defaults to action="POP" if not provided', () => {
     const history = InMemory();
-    const config = createConfig(history, []);
-    const fakeConfig = { subscribe: () => {} };
+    const router = curi(history, []);
+    const fakerouter = { subscribe: () => {} };
     const fn = jest.fn((response, action) => {
       expect(action).toBe('POP');
       return null;
     });
     const wrapper = shallow(
-      <CuriBase
-        response={{} as Response}
-        config={config}
-        render={fn}
-      />
+      <CuriBase response={{} as Response} router={router} render={fn} />
     );
   });
 
@@ -54,7 +46,7 @@ describe('<CuriBase>', () => {
       return null;
     });
 
-    const config = createConfig(history, routes);
+    const router = curi(history, routes);
     const properties = [
       'key',
       'location',
@@ -66,13 +58,9 @@ describe('<CuriBase>', () => {
       'data',
       'title'
     ];
-    config.respond((response) => {
+    router.respond(response => {
       const wrapper = shallow(
-        <CuriBase
-          response={response}
-          config={config}
-          render={fn}
-        />
+        <CuriBase response={response} router={router} render={fn} />
       );
       expect(Object.keys(receivedResponse).length).toEqual(properties.length);
       properties.forEach(key => {
@@ -92,14 +80,14 @@ describe('<CuriBase>', () => {
       return null;
     });
 
-    const config = createConfig(history, routes);
+    const router = curi(history, routes);
 
-    config.respond((response, action) => {
+    router.respond((response, action) => {
       const wrapper = shallow(
         <CuriBase
           response={response}
           action={action}
-          config={config}
+          router={router}
           render={fn}
         />
       );
@@ -108,7 +96,7 @@ describe('<CuriBase>', () => {
     });
   });
 
-  it('passes the render function the config object', done => {
+  it('passes the render function the router object', done => {
     const history = InMemory();
     const routes = [
       { name: 'Home', path: '', pathOptions: { end: true } },
@@ -118,16 +106,12 @@ describe('<CuriBase>', () => {
       return null;
     });
 
-    const config = createConfig(history, routes);
-    config.respond((response) => {
+    const router = curi(history, routes);
+    router.respond(response => {
       const wrapper = shallow(
-        <CuriBase
-          response={response}
-          config={config}
-          render={fn}
-        />
+        <CuriBase response={response} router={router} render={fn} />
       );
-      expect(fn.mock.calls[0][2]).toBe(config);
+      expect(fn.mock.calls[0][2]).toBe(router);
       done();
     });
   });
@@ -139,36 +123,36 @@ describe('<CuriBase>', () => {
       receivedContext = undefined;
     });
 
-    const ConfigReporter: React.StatelessComponent = (props, context) => {
+    const RouterReporter: React.StatelessComponent = (props, context) => {
       receivedContext = context;
       return null;
     };
 
-    ConfigReporter.contextTypes = {
+    RouterReporter.contextTypes = {
       curi: PropTypes.shape({
-        config: PropTypes.object,
+        router: PropTypes.object,
         response: PropTypes.object,
         action: PropTypes.string
       })
     };
 
-    it('places the curi config on the context as "context.curi.config"', done => {
+    it('places the curi router on the context as "context.curi.router"', done => {
       const history = InMemory();
       const routes = [
         { name: 'Home', path: '', pathOptions: { end: true } },
         { name: 'About', path: 'about' }
       ];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
 
-      config.respond((response) => {
+      router.respond(response => {
         const wrapper = mount(
           <CuriBase
             response={response}
-            config={config}
-            render={response => <ConfigReporter />}
+            router={router}
+            render={response => <RouterReporter />}
           />
         );
-        expect(receivedContext.curi.config).toBe(config);
+        expect(receivedContext.curi.router).toBe(router);
         done();
       });
     });
@@ -179,14 +163,14 @@ describe('<CuriBase>', () => {
         { name: 'Home', path: '', pathOptions: { end: true } },
         { name: 'About', path: 'about' }
       ];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
 
-      config.respond((response) => {
+      router.respond(response => {
         const wrapper = mount(
           <CuriBase
             response={response}
-            config={config}
-            render={response => <ConfigReporter />}
+            router={router}
+            render={response => <RouterReporter />}
           />
         );
         expect(receivedContext.curi.response).toBe(response);
@@ -200,15 +184,15 @@ describe('<CuriBase>', () => {
         { name: 'Home', path: '', pathOptions: { end: true } },
         { name: 'About', path: 'about' }
       ];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
 
-      config.respond((response, action) => {
+      router.respond((response, action) => {
         const wrapper = mount(
           <CuriBase
             response={response}
             action={action}
-            config={config}
-            render={response => <ConfigReporter />}
+            router={router}
+            render={response => <RouterReporter />}
           />
         );
         expect(receivedContext.curi.action).toBe(action);

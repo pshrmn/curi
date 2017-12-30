@@ -4,24 +4,24 @@ import { shallow, mount } from 'enzyme';
 import curious from '../src/curious';
 
 describe('curious', () => {
-  it('passes the config object as the "curi" prop to wrapped component', () => {
-    const fakeConfig = { history: {} };
+  it('passes the router object as the "router" prop to wrapped component', () => {
+    const fakeRouter = { history: {} };
     const fakeResponse = { name: 'Home', status: 200 };
     const TestComponent = curious(() => null);
 
     const wrapper = shallow(<TestComponent />, {
-      context: { curi: { config: fakeConfig, response: fakeResponse } }
+      context: { curi: { router: fakeRouter, response: fakeResponse } }
     });
-    expect(wrapper.prop('curi')).toBe(fakeConfig);
+    expect(wrapper.prop('router')).toBe(fakeRouter);
   });
 
   it('passes the response object as the "response" prop to wrapped component', () => {
-    const fakeConfig = { history: {} };
+    const fakeRouter = { history: {} };
     const fakeResponse = { name: 'Home', status: 200 };
     const TestComponent = curious(() => null);
 
     const wrapper = shallow(<TestComponent />, {
-      context: { curi: { config: fakeConfig, response: fakeResponse } }
+      context: { curi: { router: fakeRouter, response: fakeResponse } }
     });
     expect(wrapper.prop('response')).toBe(fakeResponse);
   });
@@ -38,7 +38,7 @@ describe('curious', () => {
   });
 
   it('passes internalRef prop as ref of wrapped component', () => {
-    const fakeConfig = { history: {} };
+    const fakeRouter = { history: {} };
     const fakeResponse = { name: 'Home', status: 200 };
     class TestComponent extends React.Component {
       render() {
@@ -49,7 +49,7 @@ describe('curious', () => {
 
     let ref;
     const wrapper = mount(<Wrapped internalRef={node => (ref = node)} />, {
-      context: { curi: { config: fakeConfig, response: fakeResponse } }
+      context: { curi: { router: fakeRouter, response: fakeResponse } }
     });
     expect(ref).toBeInstanceOf(TestComponent);
     const wrappedTest = wrapper.find(TestComponent);

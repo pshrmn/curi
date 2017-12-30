@@ -1,12 +1,12 @@
 /// <reference types="react" />
 import React from 'react';
-import { CuriConfig, Response } from '@curi/core';
+import { CuriRouter, Response } from '@curi/core';
 export interface CuriousProps {
     internalRef?: (node: any) => void;
     children?: any;
 }
 export interface CuriousComponent {
-    curi?: CuriConfig;
+    router?: CuriRouter;
     response?: Response;
     ref?: (node: any) => void;
 }

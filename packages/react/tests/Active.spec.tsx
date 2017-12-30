@@ -3,13 +3,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import InMemory from '@hickory/in-memory';
 import { HickoryLocation } from '@hickory/root';
-import createConfig, { Response } from '@curi/core';
+import curi, { Response } from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
 import Active from '../src/Active';
 
 describe('<Active>', () => {
   let history;
-  let config;
+  let router;
   const routes = [
     { name: 'Home', path: '' },
     {
@@ -21,7 +21,7 @@ describe('<Active>', () => {
 
   beforeEach(() => {
     history = InMemory();
-    config = createConfig(history, routes, {
+    router = curi(history, routes, {
       addons: [createActiveAddon()]
     });
   });
@@ -32,7 +32,7 @@ describe('<Active>', () => {
     }
     const Test = () => null;
 
-    it('can get the config/response values from props', () => {
+    it('can get the router/response values from props', () => {
       const fakeResponse = {
         name: 'Home',
         params: {},
@@ -40,7 +40,7 @@ describe('<Active>', () => {
       } as Response;
 
       const wrapper = shallow(
-        <Active name="Home" merge={merge} curi={config} response={fakeResponse}>
+        <Active name="Home" merge={merge} curi={router} response={fakeResponse}>
           <Test />
         </Active>
       );
@@ -59,7 +59,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <Test />
         </Active>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       expect(wrapper.type()).toBe(Test);
       expect(wrapper.prop('className')).toBe('not-a-test');
@@ -78,16 +78,16 @@ describe('<Active>', () => {
       } as Response;
 
       const wrapper = shallow(
-        <Active name="Home" merge={merge} curi={config} response={propResponse}>
+        <Active name="Home" merge={merge} curi={router} response={propResponse}>
           <Test />
         </Active>,
-        { context: { curi: { config, response: contextResponse } } }
+        { context: { curi: { router, response: contextResponse } } }
       );
       expect(wrapper.type()).toBe(Test);
       expect(wrapper.prop('className')).toBe('not-a-test');
     });
 
-    it('errors if it cannot access a curi config', () => {
+    it('errors if it cannot access a curi router', () => {
       const err = console.error;
       console.error = () => {};
 
@@ -104,8 +104,8 @@ describe('<Active>', () => {
   });
 
   describe('no active addon', () => {
-    it('warns if attempting to use in a Curi config without the "active" addon', () => {
-      const config = createConfig(history, routes);
+    it('warns if attempting to use in a Curi router without the "active" addon', () => {
+      const router = curi(history, routes);
       const fakeResponse = { name: 'Fake', params: {}, partials: [] };
       const Test = () => null;
       function merge(props) {
@@ -117,11 +117,11 @@ describe('<Active>', () => {
           <Active name="Home" merge={merge}>
             <Test />
           </Active>,
-          { context: { curi: { config, response: fakeResponse } } }
+          { context: { curi: { router, response: fakeResponse } } }
         );
       }).toThrow(
         'You are attempting to use the "active" prop, but have not included the "active" ' +
-          'addon (curi-addon-active) in your Curi configuration object.'
+          'addon (curi-addon-active) in your Curi router.'
       );
     });
   });
@@ -138,7 +138,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <Test />
         </Active>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       expect(wrapper.type()).toBe(Test);
     });
@@ -154,7 +154,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <Test />
         </Active>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       expect(merge.mock.calls.length).toBe(0);
     });
@@ -168,7 +168,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <Test />
         </Active>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       expect(merge.mock.calls.length).toBe(1);
     });
@@ -185,7 +185,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <div className="test" />
         </Active>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       expect(wrapper.prop('className')).toBe('not-a-test');
     });
@@ -208,7 +208,7 @@ describe('<Active>', () => {
         <Active name="Contact" partial={true} merge={merge}>
           <div className="test" />
         </Active>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       expect(wrapper.prop('className')).toBe('not-a-test');
     });
@@ -224,7 +224,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge}>
           <Test />
         </Active>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       expect(merge.mock.calls.length).toBe(1);
     });
@@ -249,7 +249,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge} extra={extra} details={details}>
           <Test />
         </Active>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       expect(extra.mock.calls.length).toBe(1);
     });
@@ -269,7 +269,7 @@ describe('<Active>', () => {
         <Active name="Home" merge={merge} extra={extra}>
           <Test />
         </Active>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       expect(merge.mock.calls.length).toBe(0);
     });

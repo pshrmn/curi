@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ConfirmationFunction } from '@hickory/root';
-import { CuriConfig } from '@curi/core';
+import { CuriRouter } from '@curi/core';
 
 export interface BlockProps {
   active?: boolean;
   confirm: ConfirmationFunction;
-  curi?: CuriConfig;
+  curi?: CuriRouter;
 }
 
 class Block extends React.Component<BlockProps> {
   static contextTypes = {
     curi: PropTypes.shape({
-      config: PropTypes.object
+      router: PropTypes.object
     })
   };
 
@@ -21,12 +21,12 @@ class Block extends React.Component<BlockProps> {
   };
 
   on() {
-    const curi = this.props.curi || this.context.curi.config;
+    const curi = this.props.curi || this.context.curi.router;
     curi.history.confirmWith(this.props.confirm);
   }
 
   off() {
-    const curi = this.props.curi || this.context.curi.config;
+    const curi = this.props.curi || this.context.curi.router;
     curi.history.removeConfirmation();
   }
 

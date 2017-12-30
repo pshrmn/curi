@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CuriContext } from './interface';
-import { CuriConfig, Response } from '@curi/core';
+import { CuriRouter, Response } from '@curi/core';
 import { HickoryLocation } from '@hickory/root';
 export interface ActiveLink {
     merge(props: object): object;
@@ -17,7 +17,7 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
     active?: ActiveLink;
     anchor?: React.ReactType;
     target?: string;
-    curi?: CuriConfig;
+    curi?: CuriRouter;
     response?: Response;
 }
 export interface LinkState {

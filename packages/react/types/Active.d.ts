@@ -2,7 +2,7 @@
 import React from 'react';
 import { ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import { CuriConfig, Response } from '@curi/core';
+import { CuriRouter, Response } from '@curi/core';
 import { HickoryLocation } from '@hickory/root';
 export interface ActiveProps {
     children: ReactElement<any>;
@@ -12,7 +12,7 @@ export interface ActiveProps {
     merge(props: object): object;
     extra?(l: HickoryLocation, d: object): boolean;
     details?: object;
-    curi?: CuriConfig;
+    curi?: CuriRouter;
     response?: Response;
 }
 declare class Active extends React.Component<ActiveProps, {}> {

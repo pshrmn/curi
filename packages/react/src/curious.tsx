@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import hoist from 'hoist-non-react-statics';
 import { CuriContext } from './interface';
-import { CuriConfig, Response } from '@curi/core';
+import { CuriRouter, Response } from '@curi/core';
 
 export interface CuriousProps {
   internalRef?: (node: any) => void;
@@ -10,7 +10,7 @@ export interface CuriousProps {
 }
 
 export interface CuriousComponent {
-  curi?: CuriConfig;
+  router?: CuriRouter;
   response?: Response;
   ref?: (node: any) => void;
 }
@@ -25,7 +25,7 @@ export default function curious(
     const { internalRef, ...rest } = props;
     return (
       <WrappedComponent
-        curi={context.curi.config}
+        router={context.curi.router}
         response={context.curi.response}
         {...rest}
         ref={internalRef}
@@ -38,7 +38,7 @@ export default function curious(
 
   CuriousComponent.contextTypes = {
     curi: PropTypes.shape({
-      config: PropTypes.object.isRequired,
+      router: PropTypes.object.isRequired,
       response: PropTypes.object.isRequired,
       action: PropTypes.string
     }).isRequired

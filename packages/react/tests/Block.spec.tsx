@@ -2,7 +2,7 @@ import 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Block from '../src/Block';
-import createConfig, { CuriConfig } from '@curi/core';
+import curi from '@curi/core';
 import InMemory from '@hickory/in-memory';
 
 describe('Block', () => {
@@ -16,9 +16,9 @@ describe('Block', () => {
   // overwrite with jest
   history.confirmWith = confirmWith;
   history.removeConfirmation = removeConfirmation;
-  const config = createConfig(history, []);
+  const router = curi(history, []);
   const fakeContext = {
-    curi: { config }
+    curi: { router }
   };
 
   afterEach(() => {
@@ -30,7 +30,7 @@ describe('Block', () => {
     it('can use curi from props', () => {
       const confirm = jest.fn();
       const wrapper = shallow(
-        <Block active={true} confirm={confirm} curi={config} />,
+        <Block active={true} confirm={confirm} curi={router} />,
         { lifecycleExperimental: true }
       );
       expect(confirmWith.mock.calls.length).toBe(1);
@@ -49,17 +49,17 @@ describe('Block', () => {
 
     it('prefers props over context', () => {
       const confirm = jest.fn();
-      // a second config object to be passed through the context
+      // a second router object to be passed through the context
       const secondHistory = InMemory();
       const secondConfirmWith = jest.fn();
       secondHistory.confirmWith = secondConfirmWith;
-      const secondConfig = createConfig(secondHistory, []);
+      const secondrouter = curi(secondHistory, []);
       const fakeContext = {
-        curi: secondConfig
+        curi: secondrouter
       };
 
       const wrapper = shallow(
-        <Block active={true} confirm={confirm} curi={config} />,
+        <Block active={true} confirm={confirm} curi={router} />,
         {
           context: fakeContext,
           lifecycleExperimental: true
@@ -70,7 +70,7 @@ describe('Block', () => {
       expect(confirmWith.mock.calls[0][0]).toBe(confirm);
     });
 
-    it('errors if it cannot access a curi config', () => {
+    it('errors if it cannot access a curi router', () => {
       const err = console.error;
       console.error = () => {};
 

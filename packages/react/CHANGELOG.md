@@ -1,5 +1,7 @@
 ## Next
 
+* Refer to the Curi router as `router` instead of `config`.
+* `curious` injects `router` prop instead of `curi`.
 * Export types from root.
 
 ## 1.0.0-beta.14

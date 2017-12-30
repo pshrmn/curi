@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'invariant';
 import { CuriContext } from './interface';
-import { CuriConfig, Response } from '@curi/core';
+import { CuriRouter, Response } from '@curi/core';
 import { HickoryLocation } from '@hickory/root';
 
 const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
@@ -28,7 +28,7 @@ export interface LinkProps
   active?: ActiveLink;
   anchor?: React.ReactType;
   target?: string;
-  curi?: CuriConfig;
+  curi?: CuriRouter;
   response?: Response;
 }
 
@@ -39,7 +39,7 @@ export interface LinkState {
 class Link extends React.Component<LinkProps, LinkState> {
   static contextTypes = {
     curi: PropTypes.shape({
-      config: PropTypes.object,
+      router: PropTypes.object,
       response: PropTypes.object
     })
   };
@@ -51,7 +51,7 @@ class Link extends React.Component<LinkProps, LinkState> {
 
     if (canNavigate(event) && !this.props.target) {
       event.preventDefault();
-      const curi = this.props.curi || this.context.curi.config;
+      const curi = this.props.curi || this.context.curi.router;
       const { pathname } = this.state;
       const { to, params, details = {} } = this.props;
       const location = { ...details, pathname };
@@ -61,7 +61,7 @@ class Link extends React.Component<LinkProps, LinkState> {
 
   createPathname(props: LinkProps, context: CuriContext) {
     const { to, params } = props;
-    const curi = props.curi || context.curi.config;
+    const curi = props.curi || context.curi.router;
     const response = props.response || context.curi.response;
     const pathname =
       to != null
@@ -87,11 +87,11 @@ class Link extends React.Component<LinkProps, LinkState> {
   }
 
   verifyActiveAddon() {
-    const curi = this.props.curi || this.context.curi.config;
+    const curi = this.props.curi || this.context.curi.router;
     invariant(
       curi.addons.active,
       'You are attempting to use the "active" prop, but have not included the "active" ' +
-        'addon (@curi/addon-active) in your Curi configuration object.'
+        'addon (@curi/addon-active) in your Curi router.'
     );
   }
 
@@ -105,7 +105,7 @@ class Link extends React.Component<LinkProps, LinkState> {
       anchor,
       ...rest
     } = this.props;
-    const curi = this.props.curi || this.context.curi.config;
+    const curi = this.props.curi || this.context.curi.router;
     const response = this.props.response || this.context.curi.response;
     let anchorProps = rest;
     const Anchor: React.ReactType = anchor ? anchor : 'a';

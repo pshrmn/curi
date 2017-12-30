@@ -2,7 +2,7 @@ import 'jest';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import InMemory from '@hickory/in-memory';
-import createConfig, { Response } from '@curi/core';
+import curi, { Response } from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
 import Link from '../src/Link';
 
@@ -10,14 +10,14 @@ describe('<Link>', () => {
   describe('curi and response', () => {
     it('can get them from the props', () => {
       const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: '' }], {
+      const router = curi(history, [{ name: 'Test', path: '' }], {
         addons: [createActiveAddon()]
       });
       const fakeResponse = { name: 'Test', params: {} } as Response;
       const wrapper = shallow(
         <Link
           to="Test"
-          curi={config}
+          curi={router}
           active={{ merge: props => ({ ...props, className: 'active' }) }}
           response={fakeResponse}
         >
@@ -31,7 +31,7 @@ describe('<Link>', () => {
 
     it('can get them from the context', () => {
       const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: '' }], {
+      const router = curi(history, [{ name: 'Test', path: '' }], {
         addons: [createActiveAddon()]
       });
       const fakeResponse = { name: 'Test', params: {} } as Response;
@@ -42,7 +42,7 @@ describe('<Link>', () => {
         >
           Test
         </Link>,
-        { context: { curi: { config, response: fakeResponse } } }
+        { context: { curi: { router, response: fakeResponse } } }
       );
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/');
@@ -51,7 +51,7 @@ describe('<Link>', () => {
 
     it('prefers props over context', () => {
       const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: '' }], {
+      const router = curi(history, [{ name: 'Test', path: '' }], {
         addons: [createActiveAddon()]
       });
       const propResponse = { name: 'Test', params: {} } as Response;
@@ -59,20 +59,20 @@ describe('<Link>', () => {
       const wrapper = shallow(
         <Link
           to="Test"
-          curi={config}
+          curi={router}
           active={{ merge: props => ({ ...props, className: 'active' }) }}
           response={propResponse}
         >
           Test
         </Link>,
-        { context: { curi: { config, response: contextResponse } } }
+        { context: { curi: { router, response: contextResponse } } }
       );
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/');
       expect(a.prop('className')).toBe('active');
     });
 
-    it('errors if it cannot access a curi config', () => {
+    it('errors if it cannot access a curi router', () => {
       const err = console.error;
       console.error = () => {};
 
@@ -87,9 +87,9 @@ describe('<Link>', () => {
   describe('anchor', () => {
     it('renders an <a> by default', () => {
       const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const router = curi(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: { config } }
+        context: { curi: { router } }
       });
       const a = wrapper.find('a');
       expect(a.exists()).toBe(true);
@@ -97,7 +97,7 @@ describe('<Link>', () => {
 
     it('when provided, it renders the component instead of an anchor', () => {
       const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const router = curi(history, [{ name: 'Test', path: '' }]);
       const StyledAnchor = props => (
         <a style={{ color: 'orange' }} {...props} />
       );
@@ -107,7 +107,7 @@ describe('<Link>', () => {
           Test
         </Link>,
         {
-          context: { curi: { config } }
+          context: { curi: { router } }
         }
       );
       const a = wrapper.find('a');
@@ -119,9 +119,9 @@ describe('<Link>', () => {
   describe('to', () => {
     it("sets the href attribute using the named route's path", () => {
       const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const router = curi(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: { config } }
+        context: { curi: { router } }
       });
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/');
@@ -131,9 +131,9 @@ describe('<Link>', () => {
       const history = InMemory({
         locations: ['/the-initial-location']
       });
-      const config = createConfig(history, []);
+      const router = curi(history, []);
       const wrapper = shallow(<Link to={null}>Test</Link>, {
-        context: { curi: { config, response: { location: history.location } } }
+        context: { curi: { router, response: { location: history.location } } }
       });
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/the-initial-location');
@@ -143,16 +143,14 @@ describe('<Link>', () => {
   describe('params', () => {
     it('uses params to generate the href', () => {
       const history = InMemory();
-      const config = createConfig(history, [
-        { name: 'Park', path: '/park/:name' }
-      ]);
+      const router = curi(history, [{ name: 'Park', path: '/park/:name' }]);
       const params = { name: 'Glacier' };
       const wrapper = shallow(
         <Link to="Park" params={params}>
           Test
         </Link>,
         {
-          context: { curi: { config } }
+          context: { curi: { router } }
         }
       );
       const a = wrapper.find('a');
@@ -161,16 +159,14 @@ describe('<Link>', () => {
 
     it('updates href when props change', () => {
       const history = InMemory();
-      const config = createConfig(history, [
-        { name: 'Park', path: '/park/:name' }
-      ]);
+      const router = curi(history, [{ name: 'Park', path: '/park/:name' }]);
       const params = { name: 'Glacier' };
       const wrapper = shallow(
         <Link to="Park" params={params}>
           Test
         </Link>,
         {
-          context: { curi: { config } }
+          context: { curi: { router } }
         }
       );
       let a = wrapper.find('a');
@@ -185,12 +181,12 @@ describe('<Link>', () => {
   describe('details', () => {
     it('merges the details prop with the generated pathname when navigating', () => {
       const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
+      const router = curi(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
         <Link to="Test" details={{ query: 'one=two', hash: '#hashtag' }}>
           Test
         </Link>,
-        { context: { curi: { config } } }
+        { context: { curi: { router } } }
       );
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/test?one=two#hashtag');
@@ -198,12 +194,12 @@ describe('<Link>', () => {
 
     it('providing a pathname in details does not overwrite the generated pathname', () => {
       const history = InMemory();
-      const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
+      const router = curi(history, [{ name: 'Test', path: 'test' }]);
       const wrapper = shallow(
         <Link to="Test" details={{ pathname: '/not-a-test' }}>
           Test
         </Link>,
-        { context: { curi: { config } } }
+        { context: { curi: { router } } }
       );
       const a = wrapper.find('a');
       expect(a.prop('href')).toBe('/test');
@@ -214,7 +210,7 @@ describe('<Link>', () => {
     describe('without @curi/addon-active', () => {
       it('throws on mount', () => {
         const history = InMemory();
-        const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
+        const router = curi(history, [{ name: 'Test', path: 'test' }]);
         const fakeResponse = {};
         function merge(props) {
           props.className += ' active';
@@ -226,17 +222,17 @@ describe('<Link>', () => {
             <Link to="Test" active={{ merge }}>
               Test
             </Link>,
-            { context: { curi: { config, response: fakeResponse } } }
+            { context: { curi: { router, response: fakeResponse } } }
           );
         }).toThrow(
           'You are attempting to use the "active" prop, but have not included the "active" ' +
-            'addon (@curi/addon-active) in your Curi configuration object.'
+            'addon (@curi/addon-active) in your Curi router.'
         );
       });
 
       it('throws if adding active prop on re-render', () => {
         const history = InMemory();
-        const config = createConfig(history, [{ name: 'Test', path: 'test' }]);
+        const router = curi(history, [{ name: 'Test', path: 'test' }]);
         const fakeResponse = {};
         function merge(props) {
           props.className += ' active';
@@ -244,14 +240,14 @@ describe('<Link>', () => {
         }
 
         const wrapper = shallow(<Link to="Test">Test</Link>, {
-          context: { curi: { config, response: fakeResponse } }
+          context: { curi: { router, response: fakeResponse } }
         });
 
         expect(() => {
           wrapper.setProps({ active: { merge } });
         }).toThrow(
           'You are attempting to use the "active" prop, but have not included the "active" ' +
-            'addon (@curi/addon-active) in your Curi configuration object.'
+            'addon (@curi/addon-active) in your Curi router.'
         );
       });
     });
@@ -259,7 +255,7 @@ describe('<Link>', () => {
     describe('merge', () => {
       it("does not call merge if the <Link>'s props do not match the current response's", () => {
         const history = InMemory();
-        const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+        const router = curi(history, [{ name: 'Test', path: 'test' }], {
           addons: [createActiveAddon()]
         });
         const fakeResponse = { name: 'Other' };
@@ -272,7 +268,7 @@ describe('<Link>', () => {
           <Link to="Test" className="test" active={{ merge }}>
             Test
           </Link>,
-          { context: { curi: { config, response: fakeResponse } } }
+          { context: { curi: { router, response: fakeResponse } } }
         );
         const link = wrapper.find('a');
         expect(link.prop('className')).toBe('test');
@@ -280,7 +276,7 @@ describe('<Link>', () => {
 
       it("calls merge function when <Link>'s props match the current response's", () => {
         const history = InMemory();
-        const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+        const router = curi(history, [{ name: 'Test', path: 'test' }], {
           addons: [createActiveAddon()]
         });
         const fakeResponse = { name: 'Test', params: {} };
@@ -293,7 +289,7 @@ describe('<Link>', () => {
           <Link to="Test" className="test" active={{ merge }}>
             Test
           </Link>,
-          { context: { curi: { config, response: fakeResponse } } }
+          { context: { curi: { router, response: fakeResponse } } }
         );
         const link = wrapper.find('a');
         expect(link.prop('className')).toBe('test active');
@@ -303,7 +299,7 @@ describe('<Link>', () => {
     describe('partial', () => {
       it('works with partial matches', () => {
         const history = InMemory();
-        const config = createConfig(
+        const router = curi(
           history,
           [
             {
@@ -326,7 +322,7 @@ describe('<Link>', () => {
           <Link to="Test" className="test" active={{ partial: true, merge }}>
             Test
           </Link>,
-          { context: { curi: { config, response: fakeResponse } } }
+          { context: { curi: { router, response: fakeResponse } } }
         );
         const link = wrapper.find('a');
         expect(link.prop('className')).toBe('test active');
@@ -336,7 +332,7 @@ describe('<Link>', () => {
     describe('extra', () => {
       it('uses extra function to run additional active checks', () => {
         const history = InMemory();
-        const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+        const router = curi(history, [{ name: 'Test', path: 'test' }], {
           addons: [createActiveAddon()]
         });
         const fakeResponse = {
@@ -361,7 +357,7 @@ describe('<Link>', () => {
           >
             Test
           </Link>,
-          { context: { curi: { config, response: fakeResponse } } }
+          { context: { curi: { router, response: fakeResponse } } }
         );
         const link = wrapper.find('a');
         expect(link.prop('className')).toBe('active');
@@ -369,7 +365,7 @@ describe('<Link>', () => {
 
       it('active is false when pathname matches, but extra returns false', () => {
         const history = InMemory();
-        const config = createConfig(history, [{ name: 'Test', path: 'test' }], {
+        const router = curi(history, [{ name: 'Test', path: 'test' }], {
           addons: [createActiveAddon()]
         });
         const fakeResponse = {
@@ -390,7 +386,7 @@ describe('<Link>', () => {
           <Link to="Test" active={{ merge, extra }}>
             Test
           </Link>,
-          { context: { curi: { config, response: fakeResponse } } }
+          { context: { curi: { router, response: fakeResponse } } }
         );
         const link = wrapper.find('a');
         expect(link.prop('className')).toBeUndefined();
@@ -404,9 +400,9 @@ describe('<Link>', () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const router = curi(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: { config } }
+        context: { curi: { router } }
       });
       const leftClickEvent = {
         defaultPrevented: false,
@@ -428,13 +424,13 @@ describe('<Link>', () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const router = curi(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(
         <Link to="Test" details={{ hash: 'thing' }}>
           Test
         </Link>,
         {
-          context: { curi: { config } }
+          context: { curi: { router } }
         }
       );
       const leftClickEvent = {
@@ -462,13 +458,13 @@ describe('<Link>', () => {
         const mockNavigate = jest.fn();
         history.navigate = mockNavigate;
         const onClick = jest.fn();
-        const config = createConfig(history, [{ name: 'Test', path: '' }]);
+        const router = curi(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(
           <Link to="Test" onClick={onClick}>
             Test
           </Link>,
           {
-            context: { curi: { config } }
+            context: { curi: { router } }
           }
         );
         const leftClickEvent = {
@@ -494,13 +490,13 @@ describe('<Link>', () => {
         const onClick = jest.fn(event => {
           event.preventDefault();
         });
-        const config = createConfig(history, [{ name: 'Test', path: '' }]);
+        const router = curi(history, [{ name: 'Test', path: '' }]);
         const wrapper = shallow(
           <Link to="Test" onClick={onClick}>
             Test
           </Link>,
           {
-            context: { curi: { config } }
+            context: { curi: { router } }
           }
         );
         const leftClickEvent = {
@@ -525,9 +521,9 @@ describe('<Link>', () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const router = curi(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: { config } }
+        context: { curi: { router } }
       });
       const modifiedClickEvent = {
         defaultPrevented: false,
@@ -554,9 +550,9 @@ describe('<Link>', () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const config = createConfig(history, [{ name: 'Test', path: '' }]);
+      const router = curi(history, [{ name: 'Test', path: '' }]);
       const wrapper = shallow(<Link to="Test">Test</Link>, {
-        context: { curi: { config } }
+        context: { curi: { router } }
       });
       const preventedEvent = {
         defaultPrevented: true,
