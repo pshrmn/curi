@@ -389,7 +389,50 @@ describe("curi", () => {
     });
   });
 
-  describe("refresh", () => {
+  describe('current', () => {
+    it('initial value is an object with null response and action properties', () => {
+      const router = curi(history, []);
+      expect(router.current()).toMatchObject({
+        response: null,
+        action: null
+      });
+    });
+
+    it('response and action are the last resolved response and navigation action', () => {
+      const router = curi(history, [{ name: 'Home', path: '' }]);
+      router.respond(
+        (response, action) => {
+          expect(router.current()).toMatchObject({
+            response,
+            action
+          });
+        },
+        { once: true }
+      );
+    });
+
+    it('updates properties when a new response is resolved', done => {
+      const router = curi(history, [
+        { name: 'Home', path: '' },
+        { name: 'About', path: 'about' }
+      ]);
+      let calls = 0;
+      router.respond((response, action) => {
+        calls++;
+        expect(router.current()).toMatchObject({
+          response,
+          action
+        });
+        if (calls === 2) {
+          done();
+        } else {
+          router.history.push('/about');
+        }
+      });
+    });
+  });
+
+  describe('refresh', () => {
     const err = console.error;
 
     beforeEach(() => {

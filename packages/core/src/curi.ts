@@ -21,8 +21,9 @@ import {
   ResponseHandler,
   RespondOptions,
   RemoveResponseHandler,
-  Cache
-} from "./types/curi";
+  Cache,
+  CurrentResponse
+} from './types/curi';
 
 function createRouter(
   history: History,
@@ -69,11 +70,11 @@ function createRouter(
 
   const responseHandlers: Array<ResponseHandler> = [];
   const oneTimers: Array<ResponseHandler> = [];
-  let previous: [Response, Action, CuriRouter] = [] as [
-    Response,
-    Action,
-    CuriRouter
-  ];
+
+  const mostRecent: CurrentResponse = {
+    response: null,
+    action: null
+  };
 
   function respond(
     fn: ResponseHandler,
@@ -88,16 +89,14 @@ function createRouter(
     const { once = false } = options || {};
 
     if (once) {
-      if (previous.length) {
-        fn.apply(null, previous);
+      if (mostRecent.response) {
+        fn.call(null, mostRecent.response, mostRecent.action, curi);
       } else {
         oneTimers.push(fn);
       }
     } else {
-      // Always call response handler immediately if a previous
-      // response/action exists.
-      if (previous.length) {
-        fn.apply(null, previous);
+      if (mostRecent.response) {
+        fn.call(null, mostRecent.response, mostRecent.action, curi);
       }
 
       const newLength = responseHandlers.push(fn);
@@ -162,7 +161,8 @@ function createRouter(
     }
 
     if (!response.redirectTo || emitRedirects) {
-      previous = [response, action, curi];
+      mostRecent.response = response;
+      mostRecent.action = action;
       emit(response, action);
     }
 
@@ -179,7 +179,13 @@ function createRouter(
     addons: registeredAddons,
     history,
     respond,
-    refresh: setupRoutesAndAddons
+    refresh: setupRoutesAndAddons,
+    current() {
+      return {
+        response: mostRecent.response,
+        action: mostRecent.action
+      };
+    }
   };
 
   return curi;

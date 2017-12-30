@@ -23,9 +23,14 @@ export interface RouterOptions {
     pathnameOptions?: PathFunctionOptions;
     emitRedirects?: boolean;
 }
+export interface CurrentResponse {
+    response: Response;
+    action: Action;
+}
 export interface CuriRouter {
     refresh: (routeArray: Array<RouteDescriptor>) => void;
     respond: (fn: ResponseHandler, options?: RespondOptions) => RemoveResponseHandler;
     addons: Addons;
     history: History;
+    current(): CurrentResponse;
 }
