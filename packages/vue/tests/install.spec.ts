@@ -1,32 +1,32 @@
 import 'jest';
 import { createLocalVue, shallow } from 'vue-test-utils';
 import installCuri from '../src/install';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import InMemory from '@hickory/in-memory';
 
 describe('installCuri', () => {
-  it('installs the CuriPlugin with the provided config object', done => {
+  it('installs the CuriPlugin with the provided router object', done => {
     const Vue = createLocalVue();
 
     const history = InMemory();
     const routes = [];
-    const config = createConfig(history, routes);
+    const router = curi(history, routes);
 
     const FakeComponent = {
       render: function(h) {
         return h('div');
       }
     };
-    installCuri(Vue, config);
+    installCuri(Vue, router);
 
-    config.respond(
+    router.respond(
       (response, action) => {
         const wrapper = shallow(FakeComponent, {
           localVue: Vue
         });
 
         expect(wrapper.vm.$curi).toMatchObject({
-          config,
+          router,
           response,
           action
         });
@@ -41,7 +41,7 @@ describe('installCuri', () => {
 
     const history = InMemory();
     const routes = [];
-    const config = createConfig(history, routes);
+    const router = curi(history, routes);
 
     let renderCount = 0;
     const FakeComponent = {
@@ -68,14 +68,14 @@ describe('installCuri', () => {
       }
     };
 
-    installCuri(Vue, config);
+    installCuri(Vue, router);
 
-    config.respond(
+    router.respond(
       (response, action) => {
         const wrapper = shallow(FakeComponent, {
           localVue: Vue
         });
-        config.history.replace('/another-one');
+        router.history.replace('/another-one');
       },
       { once: true }
     );

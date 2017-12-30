@@ -1,4 +1,3 @@
-import { CuriConfig } from '@curi/core';
 import Vue, { PluginObject, VueConstructor } from 'vue';
 
 import Link from './Link';

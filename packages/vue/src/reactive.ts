@@ -1,12 +1,12 @@
 import Vue from 'vue';
 
-import { CuriConfig } from '@curi/core';
+import { CuriRouter } from '@curi/core';
 import { ReactiveCuriProps } from './interface';
 
-export default function reactive(config: CuriConfig) {
+export default function reactive(router: CuriRouter) {
   return new Vue({
     data: {
-      config,
+      router,
       response: null,
       action: null
     } as ReactiveCuriProps

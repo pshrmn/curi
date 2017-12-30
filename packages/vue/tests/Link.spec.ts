@@ -1,7 +1,7 @@
 import 'jest';
 import { createLocalVue, shallow } from 'vue-test-utils';
 import InMemory from '@hickory/in-memory';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
 import installCuri from '../src/install';
 import Link from '../src/Link';
@@ -10,10 +10,10 @@ describe('Link component', () => {
   const history = InMemory();
 
   const routes = [{ name: 'Place', path: 'place/:name' }];
-  const config = createConfig(history, routes);
+  const router = curi(history, routes);
 
   const Vue = createLocalVue();
-  installCuri(Vue, config);
+  installCuri(Vue, router);
 
   it('renders an anchor element', () => {
     const wrapper = shallow(Link, {
@@ -40,7 +40,7 @@ describe('Link component', () => {
   });
 
   describe('active', () => {
-    let history, config;
+    let history, router;
     const routes = [
       {
         name: 'Places',
@@ -59,7 +59,7 @@ describe('Link component', () => {
         locations: ['/place/somewhere']
       });
 
-      config = createConfig(history, routes, {
+      router = curi(history, routes, {
         addons: [createActiveAddon()]
       });
     });
@@ -76,7 +76,7 @@ describe('Link component', () => {
           children: [{ name: 'Place', path: ':name' }]
         }
       ];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
       function merge(props) {
         props.class = 'active';
         return props;
@@ -88,8 +88,8 @@ describe('Link component', () => {
         const warn = console.error;
         console.error = jest.fn();
 
-        installCuri(Vue, config);
-        config.respond(
+        installCuri(Vue, router);
+        router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -114,8 +114,8 @@ describe('Link component', () => {
         const warns = console.error;
         console.error = jest.fn();
 
-        installCuri(Vue, config);
-        config.respond(
+        installCuri(Vue, router);
+        router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -139,8 +139,8 @@ describe('Link component', () => {
       it('merges active props when the location is active', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, config);
-        config.respond(
+        installCuri(Vue, router);
+        router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -161,8 +161,8 @@ describe('Link component', () => {
       it('does not merge active props when the location is not active', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, config);
-        config.respond(
+        installCuri(Vue, router);
+        router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -185,8 +185,8 @@ describe('Link component', () => {
       it('merges active props for partial matches when active.partial = true', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, config);
-        config.respond(
+        installCuri(Vue, router);
+        router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -206,8 +206,8 @@ describe('Link component', () => {
       it('does not merge active props for partial matches when active.partial is falsy', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, config);
-        config.respond(
+        installCuri(Vue, router);
+        router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -226,7 +226,7 @@ describe('Link component', () => {
     });
 
     describe('extra', () => {
-      let history, config;
+      let history, router;
       const routes = [
         {
           name: 'Places',
@@ -245,7 +245,7 @@ describe('Link component', () => {
           locations: ['/place/somewhere?test=ing']
         });
 
-        config = createConfig(history, routes, {
+        router = curi(history, routes, {
           addons: [createActiveAddon()]
         });
       });
@@ -262,8 +262,8 @@ describe('Link component', () => {
           return true;
         }
 
-        installCuri(Vue, config);
-        config.respond(
+        installCuri(Vue, router);
+        router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -289,8 +289,8 @@ describe('Link component', () => {
           return true;
         }
 
-        installCuri(Vue, config);
-        config.respond(
+        installCuri(Vue, router);
+        router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -318,8 +318,8 @@ describe('Link component', () => {
           return false;
         }
 
-        installCuri(Vue, config);
-        config.respond(
+        installCuri(Vue, router);
+        router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
@@ -343,9 +343,9 @@ describe('Link component', () => {
       it('recomputes active using new response', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, config);
+        installCuri(Vue, router);
         let wrapper;
-        config.respond((response, action) => {
+        router.respond((response, action) => {
           if (!wrapper) {
             wrapper = shallow(Link, {
               localVue: Vue,
@@ -357,7 +357,7 @@ describe('Link component', () => {
               }
             });
             expect(wrapper.classes()).toContain('active');
-            config.history.push('/place/nowhere');
+            router.history.push('/place/nowhere');
           } else {
             Vue.nextTick(() => {
               expect(wrapper.classes()).not.toContain('active');
@@ -375,10 +375,10 @@ describe('Link component', () => {
     history.navigate = mockNavigate;
 
     const routes = [{ name: 'Place', path: 'place/:name' }];
-    const config = createConfig(history, routes);
+    const router = curi(history, routes);
 
     const Vue = createLocalVue();
-    installCuri(Vue, config);
+    installCuri(Vue, router);
 
     afterEach(() => {
       mockNavigate.mockReset();

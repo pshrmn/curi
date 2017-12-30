@@ -1,7 +1,7 @@
 import 'jest';
 import { createLocalVue, shallow } from 'vue-test-utils';
 import InMemory from '@hickory/in-memory';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import installCuri from '../src/install';
 import Block from '../src/Block';
 
@@ -13,10 +13,10 @@ describe('Block component', () => {
   history.removeConfirmation = mockRemoveConfirmation;
 
   const routes = [{ name: 'Place', path: '/place/:name' }];
-  const config = createConfig(history, routes);
+  const router = curi(history, routes);
 
   const Vue = createLocalVue();
-  installCuri(Vue, config);
+  installCuri(Vue, router);
 
   afterEach(() => {
     mockConfirmWith.mockReset();

@@ -1,3 +1,7 @@
+## Next
+
+* Refer to Curi router as `router` not `config`.
+
 ## 1.0.0-beta.12
 
 * The `CuriPlugin` now expects to receive a reactive object. If you use `installCuri`, this requires no changes. If you manually install the plugin (using `Vue.use`), you can use the new `reactiveCuri` function to create a reactive object.

@@ -1,7 +1,7 @@
-import { CuriConfig, Response } from '@curi/core';
+import { CuriRouter, Response } from '@curi/core';
 import { Action } from '@hickory/root';
 export interface ReactiveCuriProps {
-    config: CuriConfig;
+    router: CuriRouter;
     response: Response;
     action: Action;
 }

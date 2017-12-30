@@ -25,10 +25,10 @@ const Block: ComponentOptions<BlockComponent> = {
 
   methods: {
     on: function() {
-      this.$curi.config.history.confirmWith(this.confirm);
+      this.$curi.router.history.confirmWith(this.confirm);
     },
     off: function() {
-      this.$curi.config.history.removeConfirmation();
+      this.$curi.router.history.removeConfirmation();
     },
     update: function() {
       this.off();
