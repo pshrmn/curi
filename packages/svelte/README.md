@@ -7,8 +7,6 @@
 
 A package to integrate Curi routing with [Svelte](https://github.com/sveltejs/svelte).
 
-This is currently quite basic (only providing a `<Link>` component and `setConfig`/`getConfig` functions to work with your Curi configuration object).
-
 ## Installation
 
 ```sh

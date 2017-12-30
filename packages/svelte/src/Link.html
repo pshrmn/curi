@@ -23,11 +23,11 @@
 			location: (to, params, details, $curi) => {
 				return Object.assign({},
 					details,
-					{ pathname: $curi.config.addons.pathname(to, params) }
+					{ pathname: $curi.router.addons.pathname(to, params) }
 				);
 			},
 			href: (location, $curi) => {
-				return $curi.config.history.toHref(location);
+				return $curi.router.history.toHref(location);
 			}
 		},
 		methods: {
@@ -35,7 +35,7 @@
 				const can = canNavigate(event);
 				if (can) {
 					event.preventDefault();
-					$curi.config.history.navigate(location);
+					$curi.router.history.navigate(location);
 				}
 			}
 		}

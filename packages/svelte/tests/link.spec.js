@@ -1,5 +1,5 @@
 import InMemory from '@hickory/in-memory';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import { Store } from 'svelte/store';
 import simulant from 'simulant';
 import { Link } from '../dist/curi-svelte.es.js';
@@ -8,10 +8,10 @@ describe('<Link>', () => {
   it('renders an anchor with expected pathname', () => {
     const history = InMemory();
     const routes = [{ name: 'Home', path: '' }];
-    const config = createConfig(history, routes);
+    const router = curi(history, routes);
 
     const store = new Store({
-      curi: { config }
+      curi: { router }
     });
 
     const node = document.createElement('div');
@@ -31,9 +31,9 @@ describe('<Link>', () => {
   it('uses params attribute to generate pathname', () => {
     const history = InMemory();
     const routes = [{ name: 'User', path: 'u/:id' }];
-    const config = createConfig(history, routes);
+    const router = curi(history, routes);
     const store = new Store({
-      curi: { config }
+      curi: { router }
     });
 
     const node = document.createElement('div');
@@ -53,9 +53,9 @@ describe('<Link>', () => {
   it('appends details to end of URI', () => {
     const history = InMemory();
     const routes = [{ name: 'Home', path: '' }];
-    const config = createConfig(history, routes);
+    const router = curi(history, routes);
     const store = new Store({
-      curi: { config }
+      curi: { router }
     });
 
     const node = document.createElement('div');
@@ -77,9 +77,9 @@ describe('<Link>', () => {
       const history = InMemory();
       history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
       const store = new Store({
-        curi: { config }
+        curi: { router }
       });
 
       const node = document.createElement('div');
@@ -102,9 +102,9 @@ describe('<Link>', () => {
       const history = InMemory();
       history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
       const store = new Store({
-        curi: { config }
+        curi: { router }
       });
 
       const node = document.createElement('div');
@@ -130,9 +130,9 @@ describe('<Link>', () => {
       const history = InMemory();
       history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
       const store = new Store({
-        curi: { config }
+        curi: { router }
       });
 
       const node = document.createElement('div');
@@ -156,9 +156,9 @@ describe('<Link>', () => {
       const history = InMemory();
       history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
-      const config = createConfig(history, routes);
+      const router = curi(history, routes);
       const store = new Store({
-        curi: { config }
+        curi: { router }
       });
 
       const node = document.createElement('div');

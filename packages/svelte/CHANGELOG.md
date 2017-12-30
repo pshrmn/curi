@@ -1,3 +1,7 @@
+## Next
+
+* `$curi.router` not `$curi.config`.
+
 ## 1.0.0-beta.2
 
 * Bump Svelte version (`1.48` had breaking changes)
