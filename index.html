@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div><div class="banner"><h1>Curi</h1><p>A universal JavaScript single-page application router.</p><div class="banner-buttons"><button class="active">Any</button><button class="">React</button><button class="">Vue</button><button class="">Svelte</button></div><pre class="language-javascript">import Browser from &#x27;@hickory/browser&#x27;;
-import createConfig from &#x27;@curi/core&#x27;;
+import curi from &#x27;@curi/core&#x27;;
 
 // create your history object
 const history = Browser();
@@ -21,12 +21,12 @@ const routes = [
   ...
 ];
 
-// create your Curi configuration object
-const config = createConfig(history, routes);
+// create your Curi router
+const router = curi(history, routes);
 
-// subscribe to the config object with a function
+// subscribe to the router object with a function
 // that will be called whenever the location changes
-config.respond((response, action) =&gt; {
+router.respond((response, action) =&gt; {
   // handle any rendering inside of this function
 });</pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> <!-- -->guide.</p></div><div class="features"><h2>Features</h2><div class="feature"><h3>Framework Integration</h3><p>While Curi is a universal router, it still has to be integrated with whichever framework you are using to render your application. Currently, there are packages to easily use Curi with React and Vue applications (as well as one that provides basic Svelte support).</p><div class="code"><div class="description"><p>You can attach a <code class="language-javascript">body</code> property to response object. Generally, this attached value should be a function or component (this would vary based on how your framework renders), but it can be anything you want it to be.</p></div><pre class="language-javascript">// routes.js
 import User from &#x27;./components/User&#x27;;
@@ -115,11 +115,11 @@ import Hash from &#x27;@hickory/hash&#x27;;
 import InMemory form &#x27;@hickory/in-memory&#x27;;</pre></div><div class="code"><div class="description"><p>Programmatically navigate using <code class="language-javascript">push</code>,<!-- --> <code class="language-javascript">replace</code>, and <code class="language-javascript">navigate</code> (a combination of push and replace that replicates how anchors work).</p></div><pre class="language-javascript">const history = Browser();
 history.push({ pathname: &#x27;/login&#x27; });
 history.replace({ pathname: &#x27;/profile&#x27; });
-history.navigate({ pathname: &#x27;/album/934&#x27; });</pre></div><div class="code"><div class="description"><p>Of course, you never have to actually generate pathnames yourself. Curi&#x27;s built-in <code class="language-javascript">pathname</code> addon will generate pathnames given the name of a route (and any of that route&#x27;s parameters). This addon is used by the various link components to generate<!-- --> <code class="language-javascript">anchor</code> attributes.</p></div><pre class="language-javascript">const routes = [
+history.navigate({ pathname: &#x27;/album/934&#x27; });</pre></div><div class="code"><div class="description"><p>Of course, you never have to actually generate pathnames yourself. Curi&#x27;s built-in <code class="language-javascript">pathname</code> add-on will generate pathnames given the name of a route (and any of that route&#x27;s parameters). This add-on is used by the various link components to generate<!-- --> <code class="language-javascript">anchor</code> attributes.</p></div><pre class="language-javascript">const routes = [
   { name: &#x27;Album&#x27;, path: &#x27;a/:albumID&#x27; }
 ];
-const config = createConfig(history, routes);
-const pathname = config.addons.pathname(
+const router = curi(history, routes);
+const pathname = router.addons.pathname(
   &#x27;Album&#x27;,
   { albumID: &#x27;3490&#x27; }
 );
@@ -145,16 +145,16 @@ function requestHandler(req, resp) {
   const history = InMemory({
     locations: [req.url]
   });
-  const config = createConfig(history, routes);
+  const router = curi(history, routes);
 
-  config.respond((response) =&gt; {
+  router.respond((response) =&gt; {
     // render the markup. This will vary based on
     // your rendering library, but here we&#x27;ll
     use React
     const markup = renderToString(
       &lt;CuriBase
         response={response}
-        config={config}
+        router={router}
         render={render}
       /&gt;
     );

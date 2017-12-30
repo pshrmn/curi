@@ -3,33 +3,33 @@
   <head>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Using Addons Guide | Curi Documentation</title>
+    <title>Using Add-ons Guide | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Using Addons</h1><p>Addons in Curi allow you to interact with a registered route using its name. A registered route is generally any route that is in the array of routes that you used to create your configuration object. However, some addons only register routes that meet some criteria.</p><p>Addons are objects with three properties: name, register, and get.</p><pre class="language-javascript">{
-  // the string you will use to call the addon
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Using Add-ons</h1><p>Add-ons in Curi allow you to interact with a registered route using its name. A registered route is generally any route that is in the array of routes that you used to create your router. However, some add-ons only register routes that meet some criteria.</p><p>Add-ons are objects with three properties: name, register, and get.</p><pre class="language-javascript">{
+  // the string you will use to call the add-on
   name: &#x27;MyAddon&#x27;,
 
   // a function used internally to register routes
-  // with the addon. You only need to use this when
-  // writing your own addons
+  // with the add-on. You only need to use this when
+  // writing your own add-ons
   register: function(route, parentData) {...},
 
   // this is the function that will be added to your
-  // config object&#x27;s addons property. For example, with
-  // this addon, the get function will be called when
-  // you call config.addons.MyAddon(&#x27;...&#x27;)
+  // router object&#x27;s add-ons property. For example, with
+  // this add-on, the get function will be called when
+  // you call router.addons.MyAddon(&#x27;...&#x27;)
   get: function(route) {...},
   reset: function() {...}
-}</pre><p>However, when you import them, you are actually importing an addon factory function. You need to call the function to create the addon that you will pass to your Curi configuration</p><pre class="language-javascript">function myAddonFactory() {
+}</pre><p>However, when you import them, you are actually importing an add-on factory function. You need to call the function to create the add-on that you will pass to your Curi router.</p><pre class="language-javascript">function myAddonFactory() {
   return { name: ..., register: ..., get: ..., };
-}</pre><div class="section"><h2 id="adding">Adding addons<a class="header-link" href="/guides/addons/#adding">#</a></h2><p>As stated above, whenever you include addons in your configuration object, you do not pass the actual addon object. Instead, you pass an addon instance (multiple configuration objects would each have their own instance of the addon), which can be useful for server-side rendering.</p><p>Addons are provided to the <code class="language-javascript">createConfig</code> call as an array using the addons property of the options object (the third argument to<!-- --> <code class="language-javascript">createConfig</code>).</p><pre class="language-javascript">const config = createConfig(history, routes, {
+}</pre><div class="section"><h2 id="adding">Adding add-ons<a class="header-link" href="/guides/addons/#adding">#</a></h2><p>As stated above, whenever you include add-ons in your router object, you do not pass the actual add-on object. Instead, you pass an add-on instance (multiple routers would each have their own instance of the add-on), which can be useful for server-side rendering.</p><p>Addons are provided to the <code class="language-javascript">curi</code> call as an array using the addons property of the options object (the third argument to<!-- --> <code class="language-javascript">curi</code>).</p><pre class="language-javascript">const router = curi(history, routes, {
   addons: [createMyAddon()]
-});</pre><p>The addon will be added to the configuration object&#x27;s addons property. To call an addon, you simply use its name.</p><pre class="language-javascript">const myValue = config.addons.myAddon(&#x27;Some Route&#x27;, ...);</pre></div><div class="section"><h2 id="creating">Creating Addons<a class="header-link" href="/guides/addons/#creating">#</a></h2><p>You may find yourself wanting to add a custom addon to your application. There are just a few steps that you should follow in order to write your own addon.</p><p>Remember that you need to export a function that will create the addon object, not the actual addon object.</p><pre class="language-javascript">export default function myAddonFactory() {
+});</pre><p>The add-on will be added to the router&#x27;s addons property. To call an add-on, you simply use its name.</p><pre class="language-javascript">const myValue = router.addons.myAddon(&#x27;Some Route&#x27;, ...);</pre></div><div class="section"><h2 id="creating">Creating Addons<a class="header-link" href="/guides/addons/#creating">#</a></h2><p>You may find yourself wanting to add a custom add-on to your application. There are just a few steps that you should follow in order to write your own add-on.</p><p>Remember that you need to export a function that will create the add-on object, not the actual add-on object.</p><pre class="language-javascript">export default function myAddonFactory() {
   ...
-}</pre><p>The function should return an object with four properties:<!-- --> <code class="language-javascript">name</code>, <code class="language-javascript">register</code>, <code class="language-javascript">get</code>, and<!-- --> <code class="language-javascript">reset</code>. name is a unique identifier for the addon, register is a function that will be used for your addon to store information about each route, get is a function that will receive a route&#x27;s name (and possibly other arguments) and perform some task using the related route, and reset is a function that will reset the addon&#x27;s internal state (this is used if you call <code class="language-javascript">config.refresh</code>).</p><pre class="language-javascript">export default function myAddonFactory() {
+}</pre><p>The function should return an object with four properties:<!-- --> <code class="language-javascript">name</code>, <code class="language-javascript">register</code>, <code class="language-javascript">get</code>, and<!-- --> <code class="language-javascript">reset</code>. name is a unique identifier for the add-on, register is a function that will be used for your add-on to store information about each route, get is a function that will receive a route&#x27;s name (and possibly other arguments) and perform some task using the related route, and reset is a function that will reset the add-on&#x27;s internal state (this is used if you call <code class="language-javascript">router.refresh</code>).</p><pre class="language-javascript">export default function myAddonFactory() {
   let knownRoutes = {};
   return {
     name: &#x27;MyFirstAddon&#x27;,
@@ -43,17 +43,17 @@
       knownRoutes = {};
     }
   };
-}</pre><p>That is all there is to creating a basic addon. Now, you just need to make sure to pass it to your configuration object and you will be able to call your addon&#x27;s get function from your configuration object.</p><pre class="language-javascript">import createConfig from &#x27;@curi/core&#x27;;
+}</pre><p>That is all there is to creating a basic add-on. Now, you just need to make sure to pass it to your router and you will be able to call your add-on&#x27;s get function from your router.</p><pre class="language-javascript">import curi from &#x27;@curi/core&#x27;;
 import myAddonFactory from &#x27;./myAddon&#x27;
 
 const routes = [{ name: &#x27;Home&#x27;, path: &#x27;&#x27; }];
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   addons: [myAddonFactory()]
 });
 
-config.addons.MyFirstAddon(&#x27;Home&#x27;); // true
-config.addons.MyFirstAddon(&#x27;Elsewhere&#x27;); // false</pre><div class="subsection"><h3 id="Slightly-more-advanced">Slightly more advanced<a class="header-link" href="/guides/addons/#Slightly-more-advanced">#</a></h3><p>You might want to write an addon that uses data from parent routes when registering a route. For example, the built-in pathname addon joins a route&#x27;s path with it parent path(s).</p><p>If you want your addon to provide similar functionality, all you have to do is have the register function return the data that should be passed to its child routes. Then, when any children of that route are registered, they will be passed the return value from their parent as the second argument of the register function.</p><pre class="language-javascript">function ParentFactory() {
+router.addons.MyFirstAddon(&#x27;Home&#x27;); // true
+router.addons.MyFirstAddon(&#x27;Elsewhere&#x27;); // false</pre><div class="subsection"><h3 id="Slightly-more-advanced">Slightly more advanced<a class="header-link" href="/guides/addons/#Slightly-more-advanced">#</a></h3><p>You might want to write an add-on that uses data from parent routes when registering a route. For example, the built-in pathname add-on joins a route&#x27;s path with it parent path(s).</p><p>If you want your add-on to provide similar functionality, all you have to do is have the register function return the data that should be passed to its child routes. Then, when any children of that route are registered, they will be passed the return value from their parent as the second argument of the register function.</p><pre class="language-javascript">function ParentFactory() {
   let routeTree = {};
   return {
     name: &#x27;routeParent&#x27;,
@@ -70,7 +70,7 @@ config.addons.MyFirstAddon(&#x27;Elsewhere&#x27;); // false</pre><div class="sub
       routeTree = {};
     }
   }
-}</pre></div></div><div><h2>Next</h2><p>Next on the list are side effects, which you can learn more about in the<!-- --> <a href="/guides/side-effects/">Using Side Effects</a> <!-- -->guide.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/routes/">All About Routes</a></li><li class="solo"><a href="/guides/responses/">Rendering with Responses</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class="active" href="/guides/addons/">Using Addons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
+}</pre></div></div><div><h2>Next</h2><p>Next on the list are side effects, which you can learn more about in the<!-- --> <a href="/guides/side-effects/">Using Side Effects</a> <!-- -->guide.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/routes/">All About Routes</a></li><li class="solo"><a href="/guides/responses/">Rendering with Responses</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class="active" href="/guides/addons/">Using Add-ons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
