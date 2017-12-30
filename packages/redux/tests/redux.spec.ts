@@ -1,5 +1,5 @@
 import 'jest';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import InMemory from '@hickory/in-memory';
 import { createStore, combineReducers } from 'redux';
 
@@ -10,16 +10,16 @@ import {
   ADD_CURI,
   CuriState
 } from '../src';
-import { Response, CuriConfig } from '@curi/core';
+import { Response, CuriRouter } from '@curi/core';
 import { Action as HickoryAction } from '@hickory/root';
 import { Action, Store } from 'redux';
 
 describe('syncResponses', () => {
-  let history, config, store;
+  let history, router, store;
 
   beforeEach(() => {
     history = InMemory({ locations: ['/'] });
-    config = createConfig(history, [
+    router = curi(history, [
       { name: 'Home', path: '' },
       { name: 'One', path: 'one' }
     ]);
@@ -32,8 +32,8 @@ describe('syncResponses', () => {
   });
 
   it('dispatches response and action to store whenever the location changes', done => {
-    syncResponses(store, config);
-    config.respond(() => {
+    syncResponses(store, router);
+    router.respond(() => {
       // this Redux subscriber will be called when the response for
       // the push (below) is emitted.
       store.subscribe(() => {
@@ -47,25 +47,25 @@ describe('syncResponses', () => {
     });
   });
 
-  it('makes the curi config object available from the store', done => {
-    config.respond(() => {
+  it('makes the curi router object available from the store', done => {
+    router.respond(() => {
       const { curi: before } = store.getState();
-      expect(before.config).toBe(null);
-      syncResponses(store, config);
+      expect(before.router).toBe(null);
+      syncResponses(store, router);
 
       const { curi: after } = store.getState();
-      expect(after.config).toBe(config);
+      expect(after.router).toBe(router);
       done();
     });
   });
 });
 
 describe('curiReducer', () => {
-  let history, config;
+  let history, router;
 
   beforeEach(() => {
     history = InMemory({ locations: ['/'] });
-    config = createConfig(history, [
+    router = curi(history, [
       { name: 'Home', path: '' },
       { name: 'One', path: 'one' }
     ]);
@@ -80,7 +80,7 @@ describe('curiReducer', () => {
       const store: Store<any> = createStore(reducer);
       const { curi } = store.getState();
       expect(curi).toMatchObject({
-        config: null,
+        router: null,
         response: null,
         action: null
       });
@@ -88,12 +88,12 @@ describe('curiReducer', () => {
   });
 
   describe('ADD_CURI', () => {
-    it('returns the provided curi config for ADD_CURI actions', () => {
+    it('returns the provided curi router for ADD_CURI actions', () => {
       const output = curiReducer(undefined, {
         type: ADD_CURI,
-        curi: config
+        router
       } as Action);
-      expect(output.config).toBe(config);
+      expect(output.router).toBe(router);
     });
   });
 
@@ -115,19 +115,19 @@ describe('curiReducer', () => {
   });
 
   describe('other actions', () => {
-    it('returns current config/response/action for other actions', () => {
-      const fakeConfig = {} as CuriConfig;
+    it('returns current router/response/action for other actions', () => {
+      const fakerouter = {} as CuriRouter;
       const fakeResponse = { key: 'test' } as Response;
       const output = curiReducer(
         {
-          config: fakeConfig,
+          router: fakerouter,
           response: fakeResponse,
           action: 'POP'
         } as CuriState,
         { type: 'UNKNOWN' }
       );
       expect(output).toMatchObject({
-        config: fakeConfig,
+        router: fakerouter,
         response: fakeResponse,
         action: 'POP'
       });

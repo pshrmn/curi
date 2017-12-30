@@ -1,4 +1,4 @@
-import { CuriConfig, Response } from '@curi/core';
+import { CuriRouter, Response } from '@curi/core';
 import { Store, Action as ReduxAction } from 'redux';
 import { Action as HickoryAction } from '@hickory/root';
 export declare const LOCATION_CHANGE = "@@curi/LOCATION_CHANGE";
@@ -8,12 +8,12 @@ export interface ResponseAction extends ReduxAction {
     action: HickoryAction;
 }
 export interface CuriAction extends ReduxAction {
-    curi: CuriConfig;
+    router: CuriRouter;
 }
 export interface CuriState {
-    config: CuriConfig;
+    router: CuriRouter;
     response: Response;
     action: HickoryAction;
 }
 export declare const curiReducer: (state: CuriState, action: ReduxAction) => CuriState;
-export declare const syncResponses: (store: Store<any>, curi: CuriConfig) => void;
+export declare const syncResponses: (store: Store<any>, router: CuriRouter) => void;
