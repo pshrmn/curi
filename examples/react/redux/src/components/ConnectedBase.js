@@ -5,6 +5,6 @@ export default connect(
   ({ curi }) => ({
     response: curi.response,
     action: curi.action,
-    config: curi.config
+    router: curi.router
   })
 )(CuriBase);

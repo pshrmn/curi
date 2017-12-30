@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Browser from '@hickory/browser';
-import createConfig from '@curi/core'
+import curi from '@curi/core'
 import { CuriBase } from '@curi/react';
 import createTitleSideEffect from '@curi/side-effect-title';
 
@@ -10,16 +10,16 @@ import renderFunction from './renderFunction';
 
 const setTitle = createTitleSideEffect({ suffix: '| Middleware Example' });
 const history = Browser();
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   sideEffects: [{ fn: setTitle }]
 });
 const root = document.getElementById('root');
 
-config.respond((response) => {
+router.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      config={config}
+      router={router}
       render={renderFunction}
     />
   ), root);

@@ -4,7 +4,7 @@ import { Redirect } from '@curi/react';
 import Nav from './components/Nav';
 import NotFound from './components/NotFound';
 
-function render(response, action, config) {
+function render(response, action, router) {
   if (!response || response.redirectTo) {
     return null;
   }
@@ -15,7 +15,7 @@ function render(response, action, config) {
       <Nav />
       {
         response.body
-          ? <response.body params={params} history={config.history} location={location} />
+          ? <response.body params={params} history={router.history} location={location} />
           : <NotFound />
       }
     </div>

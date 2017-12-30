@@ -7,23 +7,19 @@ function catchAll(req, res) {
   // 1. Create a memory history using the requested location
   const history = InMemory({ locations: [req.url]});
 
-  // 2. Create a config
-  const config = createConfig(history, routes);
+  // 2. Create a router
+  const router = curi(history, routes);
 
   // 3. Wait for the initial location's response to finish
-  config.ready()
-    .then(response => {
-      // 4. Generate the HTML markup by rendering a <CuriBase> and
-      // passing it the response
-      const markup = renderToString(
-        <CuriBase response={response} config={config} render={renderFunction} />
-      );
-      // 5. Insert the markup into the page's html and send it
-      res.send(renderFullPage(markup));
-    })
-    .catch(err => {
-      // 6. You should also handle any errors that might occur
-    });
+  router.response(response => {
+    // 4. Generate the HTML markup by rendering a <CuriBase> and
+    // passing it the response
+    const markup = renderToString(
+      <CuriBase response={response} router={router} render={renderFunction} />
+    );
+    // 5. Insert the markup into the page's html and send it
+    res.send(renderFullPage(markup));
+  });
 }
 ```
 
@@ -32,7 +28,7 @@ The above example is very basic. Some other things that you might need to consid
 * redirects — You should redirect instead of rendering markup when `redirectTo` is set.
 
 ```js
-config.ready()
+router.ready()
   .then(response => {
     if (response.redirectTo) {
       res.redirect(response.redirectTo);

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Browser from '@hickory/browser';
-import createConfig from '@curi/core'
+import curi from '@curi/core'
 import { syncResponses } from '@curi/redux';
 
 import ConnectedBase from './components/ConnectedBase';
@@ -11,11 +11,11 @@ import routes from './routes';
 import renderFunction from './renderFunction';
 
 const history = Browser();
-const config = createConfig(history, routes);
+const router = curi(history, routes);
 const root = document.getElementById('root');
 
-syncResponses(store, config);
-config.respond(() => {
+syncResponses(store, router);
+router.respond(() => {
   ReactDOM.render((
     <Provider store={store}>
       <ConnectedBase render={renderFunction} />

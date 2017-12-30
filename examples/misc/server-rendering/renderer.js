@@ -1,20 +1,20 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import InMemory from '@hickory/in-memory';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import { CuriBase } from '@curi/react';
 import routes from './src/routes';
 import renderFunction from './src/renderFunction';
 
 export default function(req, res) {
   const history = InMemory({ locations: [ req.url ]})
-  const config = createConfig(history, routes);
+  const router = curi(history, routes);
  
-  config.respond((response) => {
+  router.respond((response) => {
     const markup = renderToString(
       <CuriBase
         response={response}
-        config={config}
+        router={router}
         render={renderFunction}
       />
     );

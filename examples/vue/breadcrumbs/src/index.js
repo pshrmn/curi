@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import { installCuri } from '@curi/vue';
 import Browser from '@hickory/browser';
 import createAncestorsAddon from '@curi/addon-ancestors';
@@ -35,13 +35,13 @@ function createTitleTextAddon() {
 }
 
 const history = Browser();
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   addons: [createAncestorsAddon(), createTitleTextAddon()]
 });
 
-installCuri(Vue, config);
+installCuri(Vue, router);
 
-config.respond(() => {
+router.respond(() => {
   const vm = new Vue({
     el: '#root',
     template: '<app />',

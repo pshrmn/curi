@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Browser from '@hickory/browser';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import { CuriBase } from '@curi/react';
 import createActiveAddon from '@curi/addon-active';
 
@@ -10,17 +10,17 @@ import renderFunction from './renderFunction';
 
 const history = Browser();
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   addons: [createActiveAddon()]
 });
 const root = document.getElementById('root');
 
-config.respond((response, action) => {
+router.respond((response, action) => {
   ReactDOM.render((
     <CuriBase
       response={response}
       action={action}
-      config={config}
+      router={router}
       render={renderFunction}
     />
   ), root);

@@ -37,7 +37,7 @@ const routes = [
   }
 ];
 
-const config = Curi(hashHistory, routes);
+const router = Curi(hashHistory, routes);
 const root = document.getElementById('root');
 
 function render(response) {
@@ -53,12 +53,12 @@ function render(response) {
   );
 }
 
-config.respond((response, action) => {
+router.respond((response, action) => {
   ReactDOM.render((
     h(CuriReact.CuriBase, {
       response: response,
       action: action,
-      config: config,
+      router: router,
       render: render
     })
   ), root);

@@ -2,10 +2,10 @@ import React from 'react';
 import { Link, curious } from '@curi/react';
 import Breadcrumbs from './Breadcrumbs';
 
-const Category = ({ params, data:products, curi }) => (
+const Category = ({ params, data:products, router }) => (
   <div>
-    <h1>{params.category}</h1>
     <Breadcrumbs name='Category' params={params} />
+    <h1>{params.category}</h1>
     <p>List of products</p>
     <ul>
       {
@@ -14,7 +14,7 @@ const Category = ({ params, data:products, curi }) => (
           return (
             <li key={p.id}>
               <Link to='Product' params={productParams}>
-                {curi.addons.title('Product', { name: p.name })}
+                {router.addons.title('Product', { name: p.name })}
               </Link>
             </li>
           );

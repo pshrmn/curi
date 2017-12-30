@@ -17,7 +17,7 @@
     name: 'products',
     methods: {
       title(category) {
-        return this.$curi.config.addons.title('Category', { category });
+        return this.$curi.router.addons.title('Category', { category });
       }
     }
   }

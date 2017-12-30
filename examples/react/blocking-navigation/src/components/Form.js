@@ -58,7 +58,7 @@ class Form extends React.Component {
     return (
       <form>
         <Block
-          when={dirty}
+          active={dirty}
           confirm={confirm}
         />
         <p>

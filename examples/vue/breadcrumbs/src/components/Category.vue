@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>{{$curi.response.params.category}}</h1>
     <breadcrumbs name='Category' :params="$curi.response.params" />
+    <h1>{{$curi.response.params.category}}</h1>
     <p>List of products</p>
     <ul>
       <li v-for="product in $curi.response.data" :key="product.id">
@@ -21,7 +21,7 @@
     name: 'contact-method',
     methods: {
       title(name) {
-        return this.$curi.config.addons.title('Product', { name });
+        return this.$curi.router.addons.title('Product', { name });
       },
       linkParams(productID) {
         return { ...this.$curi.response.params, productID };

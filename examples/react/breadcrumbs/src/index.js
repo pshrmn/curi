@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Browser from '@hickory/browser';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import { CuriBase } from '@curi/react';
 import createAncestorsAddon from '@curi/addon-ancestors';
 import routes from './routes';
@@ -34,16 +34,16 @@ function createTitleTextAddon() {
 }
 
 const history = Browser();
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   addons: [createAncestorsAddon(), createTitleTextAddon()]
 });
 const root = document.getElementById('root');
 
-config.respond((response) => {
+router.respond((response) => {
   ReactDOM.render((
     <CuriBase
       response={response}
-      config={config}
+      router={router}
       render={renderFunction}
     />
   ), root);

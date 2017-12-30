@@ -9,9 +9,9 @@ export default [
     match: {
       response: ({ set }) => {
         set.body(Home);
+        set.title('Home');
       }
-    },
-    title: 'Home'
+    }
   },
   {
     name: 'Contact',
@@ -19,19 +19,19 @@ export default [
     match: {
       response: ({ set }) => {
         set.body(Contact);
+        set.title('Contact');
       }
     },
-    title: 'Contact',
     children: [
       {
         name: 'Method',
         path: ':method',
         match: {
-          response: ({ set }) => {
+          response: ({ route, set }) => {
             set.body(Method);
+            set.title(`Contact via ${route.params.method}`);
           }
-        },
-        title: (params) => `Contact via ${params.method}`
+        }
       }
     ]
   }

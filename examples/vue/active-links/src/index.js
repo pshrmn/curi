@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Browser from '@hickory/browser';
-import createConfig from '@curi/core';
+import curi from '@curi/core';
 import { installCuri } from '@curi/vue';
 import createActiveAddon from '@curi/addon-active';
 
@@ -9,12 +9,12 @@ import App from './components/App';
 
 const history = Browser();
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   addons: [createActiveAddon()]
 });
-installCuri(Vue, config);
+installCuri(Vue, router);
 
-config.respond((response, action) => {
+router.respond((response, action) => {
   const vm = new Vue({
     el: '#root',
     template: '<app />',

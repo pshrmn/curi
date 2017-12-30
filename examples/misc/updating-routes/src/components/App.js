@@ -14,12 +14,12 @@ class App extends React.Component {
   }
 
   login() {
-    this.props.config.refresh(adminRoutes);
+    this.props.router.refresh(adminRoutes);
     this.setState({ admin: true });
   }
 
   logout() {
-    this.props.config.refresh(baseRoutes);
+    this.props.router.refresh(baseRoutes);
     this.setState({ admin: false });
   }
 

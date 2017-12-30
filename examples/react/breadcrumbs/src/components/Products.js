@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, curious } from '@curi/react';
 
-const Products = ({ data, curi }) => (
+const Products = ({ data, router }) => (
   <div>
     <h1>Products Page</h1>
     <h2>Categories</h2>
@@ -10,7 +10,7 @@ const Products = ({ data, curi }) => (
         data.map(category => (
           <li key={category}>
             <Link to='Category' params={{ category }}>
-              {curi.addons.title('Category', { category })}
+              {router.addons.title('Category', { category })}
             </Link>
           </li>
         ))

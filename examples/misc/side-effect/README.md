@@ -6,13 +6,13 @@ Side effects are pretty straightforward. Once a response has completed (any `pre
 
 A side effect function just does something using its arguments. It is basically a subscriber, but a permanent one (cannot be removed).
 
-You pass any side effect functions that you want to use to the `createConfig` call, using the `sideEffects` property of the `options` object.
+You pass any side effect functions that you want to use to the `curi` call, using the `sideEffects` property of the `options` object.
 
 ```js
-import createConfig from 'curi';
+import curi from 'curi';
 import mySideEffect from './mySideEffect';
 
-const config = createConfig(history, routes, {
+const router = curi(history, routes, {
   sideEffects: [mySideEffect]
 });
 ```
