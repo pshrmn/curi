@@ -43,7 +43,7 @@ export default ({ name, version, globalName }) => (
 const store = createStore(reducer);
 
 syncResponses(store, router);
-// whenever navigation happens, the router object will now
+// whenever navigation happens, the router will now
 // pass the response and action to your Redux store.
 `}
         </PrismBlock>
@@ -51,14 +51,13 @@ syncResponses(store, router);
 
       <Section tag="h3" title="curiReducer" id="curiReducer">
         <p>
-          The <IJS>curiReducer</IJS> keeps track of your Curi router object, the
-          latest response object, and the latest action string in your Redux
-          store.
+          The <IJS>curiReducer</IJS> keeps track of your Curi router, the latest
+          response object, and the latest action string in your Redux store.
         </p>
         <PrismBlock lang="javascript">
           {`const router = curi(history, routes);
 const reducer = combineReducers({
-  curi: router,
+  curi: curiReducer,
   ...
 });
 const store = createStore(reducer);

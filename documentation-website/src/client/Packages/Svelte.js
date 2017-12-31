@@ -6,7 +6,7 @@ import {
   InlineComponent as Cmp,
   PrismBlock
 } from '../components/PrismBlocks';
-import { Section } from '../components/Sections';
+import { Section, Subsection } from '../components/Sections';
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -39,6 +39,22 @@ export default ({ name, version, globalName }) => (
   }
 </script>`}
         </PrismBlock>
+        <Subsection title="Props" id="link-props">
+          <ul>
+            <li>
+              <IJS>to</IJS> - the name of the route to link to
+            </li>
+            <li>
+              <IJS>params</IJS> - any route params for the linked route
+            </li>
+            <li>
+              <IJS>details</IJS> - additional location information (<IJS>
+                query
+              </IJS>, <IJS>hash</IJS>, <IJS>state</IJS> for the linked
+              location).
+            </li>
+          </ul>
+        </Subsection>
       </Section>
     </APIBlock>
 
@@ -57,39 +73,34 @@ const store = new Store({
 });`}
       </PrismBlock>
       <p>
-        Add a subscriber
+        Add a subscriber to the router to update the store whenever a new
+        response is emitted.
       </p>
-      <PrismBlock lang='javascript'>
-        {
-`// setup a subscriber that will update the store when
-// the location changes.
-router.respond((response, action) => {
+      <PrismBlock lang="javascript">
+        {`router.respond((response, action) => {
   store.set({ curi: { router, response, action } });
-});`
-        }
+});`}
       </PrismBlock>
       <p>
-        As far as rendering your application goes, you should should have a
-        base component that has any global layout and uses the response to
-        render the correct component(s). Setup a one time subscriber to render
-        this component.
+        As far as rendering your application goes, you should should have a base
+        component that has any global layout and uses the response to render the
+        correct component(s). Setup a one time subscriber to render this
+        component and make sure to pass the store to the component.
       </p>
-      <PrismBlock lang='html'>
-        {
-`<Nav />
+      <PrismBlock lang="html">
+        {`<NavLinks />
 <:Component {$curi.response.body}></:Component>
 
 <script>
-	import Nav from './Nav.html';
+  import NavLinks from './NavLinks.html';
+
   export default {
-	  components: { Nav }
-  }
-</script>`
-        }
+	  components: { NavLinks }
+  };
+</script>`}
       </PrismBlock>
       <PrismBlock lang="javascript">
-        {
-`import app from './components/app';
+        {`import app from './components/app';
 
 // use a one time subscriber for the initial render
 config.respond(() => {

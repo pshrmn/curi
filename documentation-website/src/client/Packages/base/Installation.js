@@ -4,10 +4,10 @@ import { Section } from '../../components/Sections';
 
 const NPM = ({ name }) => (
   <div>
-    <p>
-      You can install the <IJS>{name}</IJS> package from NPM.
-    </p>
-    <PrismBlock lang="bash">{`npm install @curi/${name}`}</PrismBlock>
+    <PrismBlock lang="bash">
+      {`npm install @curi/${name}
+yarn add @curi/${name}`}
+    </PrismBlock>
   </div>
 );
 
@@ -15,8 +15,8 @@ const Unpkg = ({ name, version, globalName }) => (
   <div>
     <p>
       If you prefer to use script tags, <a href="https://unpkg.com">Unpkg</a>{' '}
-      will always have the latest version of <IJS>{name}</IJS> available for
-      you.
+      will always have the latest version of <IJS>@curi/{name}</IJS> available
+      for you.
     </p>
     <PrismBlock lang="markup">
       {`<script src="https://unpkg.com/@curi/${name}@${version}/dist/curi-${name}.js" />`}

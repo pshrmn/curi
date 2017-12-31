@@ -101,7 +101,7 @@ router.respond((response) => {
           be automatically generated for you.
         </p>
 
-        <PrismBlock lang="javascript">
+        <PrismBlock lang="jsx">
           {`<Link to='User' params={{ id: 16 }}>User 16</Link>
 // <a href='/user/16'>User 16</a>`}
         </PrismBlock>
@@ -117,7 +117,7 @@ router.respond((response) => {
               include path parameters, you can specify them using the params
               prop.
             </p>
-            <PrismBlock lang="javascript">
+            <PrismBlock lang="jsx">
               {`// User route is { name: 'User', path: '/user/:id' }
 <Link to='User' params={{ id: 16 }}>User 16</Link>`}
             </PrismBlock>
@@ -130,7 +130,7 @@ router.respond((response) => {
               (query, hash, and state). You can provide these values using the
               details prop.
             </p>
-            <PrismBlock lang="javascript">
+            <PrismBlock lang="jsx">
               {`<Link
   to='Products'
   params={{ type: 'vacuums' }}
@@ -181,7 +181,7 @@ router.respond((response) => {
               function can modify these props however it likes. It must return
               the resulting props object.
             </p>
-            <PrismBlock lang="javascript">
+            <PrismBlock lang="jsx">
               {`function mergeActive(props) {
   props.className = 'active';
   return props;
@@ -196,7 +196,7 @@ router.respond((response) => {
               routes can also be "active". This is done using the response
               object's partials property.
             </p>
-            <PrismBlock lang="javascript">
+            <PrismBlock lang="jsx">
               {`<Link to='Users' active={{ partial: true, merge: mergeActive }}>Users</Link>`}
             </PrismBlock>
             <Note>
@@ -377,6 +377,10 @@ const router = curi(history, routes, {
       </Section>
 
       <Section title={<IJS>curious()</IJS>} id="curious">
+        <p>
+          A higher order component that will inject the Curi router and the
+          current response object as props of the wrapped component.
+        </p>
         <PrismBlock lang="javascript">
           {`import { curious } from '@curi/react';`}
         </PrismBlock>
@@ -384,9 +388,7 @@ const router = curi(history, routes, {
         <PrismBlock lang="javascript">
           {`class MyComponent extends React.Component {
   render() {
-    // because this component is wrapped with curious,
-    // you can access this.props.curi and
-    // this.props.response
+    const { router, response } = this.props;
   }
 }
 

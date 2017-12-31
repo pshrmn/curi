@@ -22,10 +22,9 @@ export default ({ name, version, globalName }) => (
       <Section tag="h3" title="curi" id="curi">
         <p>
           The Curi package has one export, which is a function that returns a
-          Curi router. It is a default export, so you can name it whatever you
-          like when importing it. Throughout the documentation, it is imported
-          as <IJS>curi</IJS> for consistency and because that is what the
-          function does.
+          router. It is a default export, so you can name it whatever you like
+          when importing it. Throughout the documentation, it is imported as{' '}
+          <IJS>curi</IJS>.
         </p>
 
         <PrismBlock lang="javascript">
@@ -74,7 +73,7 @@ const router = curi(history, routes, options);`}
           </Subsection>
         </Section>
 
-        <Section tag="h4" title="router Properties" id="properties">
+        <Section tag="h4" title="Router Properties" id="properties">
           <p>
             The router has a number of properties for you to use when rendering
             your application.
