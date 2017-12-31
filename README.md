@@ -57,6 +57,13 @@ While you can use vanilla JavaScript to render your application, most modern app
 ||A Vue plugin that adds Curi routing support to a Vue application. This is currently experimental and in addition to the plugin, just adds `<Link>` and `<Redirect>` components. So far it seems to work well, but is missing a lot of the functionality that the React packages provide.|
 |[@curi/svelte](/packages/svelte)|[![npm][@curi/svelte-version-badge]][npm-@curi/svelte]|[Documentation](https://curi.js.org/packages/@curi/svelte/)|[Source](/packages/svelte/src)|
 
+#### State
+
+|Name|About|Documentation|Source|
+|---|---|---|---|
+|[@curi/redux](/packages/redux)|[![npm][@curi/redux-version-badge]][npm-@curi/redux]|[Documentation](https://curi.js.org/packages/@curi/redux/)|[Source](/packages/redux/src)|
+||A complement to `@curi/react`, `@curi/redux` can be used to have Redux pass response/location information to your components.|
+
 [build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg
 [build]: https://travis-ci.org/pshrmn/curi
 

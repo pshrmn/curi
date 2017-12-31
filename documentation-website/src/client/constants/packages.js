@@ -47,7 +47,7 @@ const packages = [
     name: 'redux',
     version: versions['redux'],
     globalName: 'CuriRedux',
-    type: 'redux'
+    type: 'state'
   },
   {
     name: 'svelte',
