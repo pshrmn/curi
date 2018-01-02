@@ -109,25 +109,20 @@ const router = {
           The <IJS>CuriPlugin</IJS> exported by <IJS>@curi/vue</IJS>, should be
           registered with Vue after the Curi router has been created. The plugin
           does a couple things. First, it will make your Curi router and new
-          responses/actions accessible to every component as through the{' '}
+          responses/actions accessible to every component. The router will be
+          accessible as <IJS>this.$router</IJS> while through the{' '}
+          <IJS>response</IJS> and <IJS>action</IJS> are grouped under the{' '}
           <IJS>this.$curi</IJS> object. Second, it will register Curi specific
           components. For this tutorial, the only component that we care about
           is <Cmp>curi-link</Cmp>.
         </p>
-        <p>
-          Instead of having to register the plugin manually (via{' '}
-          <IJS>Vue.use</IJS>), <IJS>@curi/vue</IJS> also exports an{' '}
-          <IJS>installCuri</IJS> function that will handle that for you. The
-          install function will also subscribe to your Curi router to handle new
-          responses.
-        </p>
         <PrismBlock lang="javascript">
           {`// index.js
 import Vue from 'vue';
-import { installCuri } from '@curi/vue';
+import { CuriPlugin } from '@curi/vue';
 
 const router = curi(history, routes);
-installCuri(Vue, router);`}
+Vue.use(CuriPlugin, { router });`}
         </PrismBlock>
       </Subsection>
 
@@ -195,8 +190,8 @@ installCuri(Vue, router);`}
         <Link to="Tutorial" params={{ name: '05-router' }}>
           router
         </Link>{' '}
-        tutorial, but <IJS>installCuri</IJS> takes care of that step for us.{' '}
-        <IJS>installCuri</IJS> calls <IJS>router.respond</IJS> and in the
+        tutorial, but the <IJS>CuriPlugin</IJS> takes care of that step for us.{' '}
+        <IJS>CuriPlugin</IJS> calls <IJS>router.respond</IJS> and in the
         response handler, it updates the reactive <IJS>response</IJS> and{' '}
         <IJS>action</IJS> properties of <IJS>this.$curi</IJS> whenever a new
         response is emitted.

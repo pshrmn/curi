@@ -154,8 +154,8 @@ export function resetCart() {
       </p>
       <p>
         The <IJS>CuriPlugin</IJS> makes our router available to all of our
-        components as <IJS>this.$curi</IJS>. That means that we can call{' '}
-        <IJS>this.$curi.router.history.push</IJS> (a bit of a mouthful) to
+        components as <IJS>this.$router</IJS>. That means that we can call{' '}
+        <IJS>this.$router.history.push</IJS> (a bit of a mouthful) to
         automatically redirect to another page.
       </p>
       <p>
@@ -202,8 +202,8 @@ export function resetCart() {
       addAndCheckout(event) {
         updateCart(this.bookID, parseInt(this.count))
           .then(() => {
-            const pathname = this.$curi.router.addons.pathname('Checkout');
-            this.$curi.router.history.push({ pathname });
+            const pathname = this.$router.addons.pathname('Checkout');
+            this.$router.history.push({ pathname });
           });
       }
     }
@@ -382,8 +382,8 @@ const routes = [
         // when the user "purchases" their books, we just
         // reset the cart and redirect to the "Checkout Complete" page
         resetCart();
-        const pathname = this.$curi.router.addons.pathname('Checkout Complete');
-        this.$curi.router.history.push({ pathname });
+        const pathname = this.$router.addons.pathname('Checkout Complete');
+        this.$router.history.push({ pathname });
       }
     }
   };

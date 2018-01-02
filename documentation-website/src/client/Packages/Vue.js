@@ -14,65 +14,34 @@ export default ({ name, version, globalName }) => (
     name={name}
     version={version}
     globalName={globalName}
-    about={
-      <p>
-        This package enables you to use Curi alongside VueJS. This is more of a
-        proof of concept than a fleshed out routing solution and only provides
-        bare routing functionality.
-      </p>
-    }
+    about={<p>This package enables you to use Curi alongside VueJS.</p>}
   >
     <APIBlock>
-      <Section tag="h3" title="installCuri" id="installCuri">
-        <p>
-          The <IJS>installCuri</IJS> will install a Vue plugin that adds Curi
-          support to your Vue instance. This will also automatically subscribe
-          to your Curi router so that your application will re-render whenever a
-          new response is emitted.
-        </p>
-        <PrismBlock lang="javascript">
-          {`import { installCuri } from '@curi/vue';
-
-const router = curi(history, routes);
-installCuri(Vue, router);`}
-        </PrismBlock>
-      </Section>
-      <Section tag="h3" title="reactiveCuri" id="reactiveCuri">
-        <Note>
-          This is only necessary if you don't use <IJS>installCuri</IJS>.
-        </Note>
-        <p>
-          If you prefer to use <IJS>Vue.use</IJS> to manually install the{' '}
-          <IJS>CuriPlugin</IJS>, you will need to make sure that the{' '}
-          <IJS>curi</IJS> options object is reactive. The{' '}
-          <IJS>reactiveCuri</IJS> function will do this for you.
-        </p>
-        <PrismBlock lang="javascript">
-          {`import { reactiveCuri } from '@curi/vue';
-
-const router = curi(history, routes);
-Vue.use(CuriPlugin, { curi: reactiveCuri(router) });`}
-        </PrismBlock>
-      </Section>
       <Section tag="h3" title="CuriPlugin" id="curiplugin">
-        <p>
-          If you would prefer to install the Curi Vue plugin yourself, you can
-          also import it directly.
-        </p>
-        <p>
-          What does the plugin do? First, it will register <Cmp>curi-link</Cmp>{' '}
-          and <Cmp>curi-block</Cmp> components with Vue. You can use these
-          components anywhere within your application. Second, it makes your
-          router and any response/action properties reactive Vue properties.
-          These values are grouped under the <IJS>$curi</IJS> variable as{' '}
-          <IJS>$curi.router</IJS>, <IJS>$curi.response</IJS>, and{' '}
-          <IJS>$curi.action</IJS>.
-        </p>
+        <p>What does the plugin do?</p>
+        <ol>
+          <li>
+            First, it will register <Cmp>curi-link</Cmp> and{' '}
+            <Cmp>curi-block</Cmp> components with Vue. You can use these
+            components anywhere within your application.
+          </li>
+          <li>
+            Second, it makes your router globally available to Vue components as{' '}
+            <IJS>$router</IJS>.
+          </li>
+          <li>
+            Finally, it makes responses and actions available to components
+            through the <IJS>$curi</IJS> property. <IJS>$curi</IJS> is
+            responsive, so when a new response is emitted,{' '}
+            <IJS>$curi.response</IJS> and <IJS>$curi.action</IJS> will
+            automatically be updated.
+          </li>
+        </ol>
         <PrismBlock lang="javascript">
-          {`import { CuriPlugin, reactiveCuri } from '@curi/vue';
+          {`import { CuriPlugin } from '@curi/vue';
 
 const router = curi(history, routes);
-Vue.use(CuriPlugin, { curi: reactiveCuri(router) });`}
+Vue.use(CuriPlugin, { router });`}
         </PrismBlock>
       </Section>
 
@@ -201,8 +170,8 @@ export default function renderFunction(h) {
       </PrismBlock>
 
       <p>
-        While <IJS>installCuri</IJS> subscribes to your router object, you will
-        still need to wait for it to emit its first update before you can
+        While the <IJS>CuriPlugin</IJS> subscribes to your router object, you
+        will still need to wait for it to emit its first update before you can
         render. To do that, you can pass the <IJS>{`{ once: true }`}</IJS>{' '}
         option to a <IJS>router.respond</IJS> call.
       </p>
