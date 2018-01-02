@@ -61,15 +61,17 @@ export default ({ name, version, globalName }) => (
     <Section title="Usage" id="usage">
       <p>
         The components exported by <IJS>@curi/svelte</IJS> rely on Svelte's
-        store. The store should include a <IJS>curi</IJS> property that has a{' '}
-        <IJS>router</IJS> property.
+        store. The store should include a <IJS>router</IJS> property for
+        accessing the Curi router and a <IJS>curi</IJS> property for accessing
+        the latest <IJS>response</IJS> and <IJS>action</IJS> values.
       </p>
       <PrismBlock lang="javascript">
         {`import { Store } from 'svelte/store';
 
 const router = curi(history, routes);
 const store = new Store({
-  curi: { router }
+  router,
+  curi: { response: null, action: null }
 });`}
       </PrismBlock>
       <p>
@@ -78,7 +80,7 @@ const store = new Store({
       </p>
       <PrismBlock lang="javascript">
         {`router.respond((response, action) => {
-  store.set({ curi: { router, response, action } });
+  store.set({ curi: { response, action } });
 });`}
       </PrismBlock>
       <p>

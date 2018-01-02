@@ -20,9 +20,11 @@ const routes = [
 // create your Curi router
 const router = curi(history, routes);
 
-// create a Svelte store so that components can access the router
+// create a Svelte store so that components can access
+// the router, responses, and actions
 const store = new Store({
-  curi: { router, response: undefined, action: undefined }
+  router,
+  curi: { response: undefined, action: undefined }
 });
 
 let view;
@@ -31,7 +33,7 @@ const root = document.getElementById('root');
 // setup a subscriber that will update the store when
 // the location changes.
 router.respond((response, action) => {
-  store.set({ curi: { router, response, action } });
+  store.set({ curi: { response, action } });
 });
 
 // add a one time subscriber for the initial render
