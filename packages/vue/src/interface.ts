@@ -3,7 +3,6 @@ import { CuriRouter, Response } from '@curi/core';
 import { Action } from '@hickory/root';
 
 export interface ReactiveCuriProps {
-  router: CuriRouter;
   response: Response;
   action: Action;
 }
@@ -11,5 +10,6 @@ export interface ReactiveCuriProps {
 declare module 'vue/types/vue' {
   interface Vue {
     $curi: ReactiveCuriProps;
+    $router: CuriRouter;
   }
 }

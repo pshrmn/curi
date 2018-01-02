@@ -24,9 +24,8 @@ describe('installCuri', () => {
         const wrapper = shallow(FakeComponent, {
           localVue: Vue
         });
-
+        expect(wrapper.vm.$router).toBe(router);
         expect(wrapper.vm.$curi).toMatchObject({
-          router,
           response,
           action
         });

@@ -33,14 +33,14 @@ const Link: ComponentOptions<LinkComponent> = {
 
   computed: {
     location: function() {
-      const pathname = this.$curi.router.addons.pathname(this.to, this.params);
+      const pathname = this.$router.addons.pathname(this.to, this.params);
       return { pathname, ...this.details };
     },
     href: function() {
-      return this.$curi.router.history.toHref(this.location);
+      return this.$router.history.toHref(this.location);
     },
     isActive: function() {
-      if (!this.$curi.router.addons.active) {
+      if (!this.$router.addons.active) {
         warning(
           !this.active,
           'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -50,7 +50,7 @@ const Link: ComponentOptions<LinkComponent> = {
       }
 
       return (
-        this.$curi.router.addons.active(
+        this.$router.addons.active(
           this.to,
           this.$curi.response,
           this.params,
@@ -71,7 +71,7 @@ const Link: ComponentOptions<LinkComponent> = {
 
       if (canNavigate(event)) {
         event.preventDefault();
-        this.$curi.router.history.navigate(this.location);
+        this.$router.history.navigate(this.location);
       }
     }
   },

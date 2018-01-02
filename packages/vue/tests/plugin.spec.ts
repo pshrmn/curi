@@ -20,14 +20,14 @@ describe('CuriPlugin', () => {
       };
       router.respond(
         (response, action) => {
-          const curi = reactiveCuri(router);
-          Vue.use(CuriPlugin, { curi });
+          const curi = reactiveCuri();
+          Vue.use(CuriPlugin, { curi, router });
 
           const wrapper = shallow(FakeComponent, {
             localVue: Vue
           });
 
-          expect(wrapper.vm.$curi.router).toBe(router);
+          expect(wrapper.vm.$router).toBe(router);
           expect(wrapper.vm.$curi.response).toBe(null);
           expect(wrapper.vm.$curi.action).toBe(null);
 
@@ -67,8 +67,8 @@ describe('CuriPlugin', () => {
         const FakeComponent = makeFake(done);
 
         let wrapper;
-        const curi = reactiveCuri(router);
-        Vue.use(CuriPlugin, { curi });
+        const curi = reactiveCuri();
+        Vue.use(CuriPlugin, { curi, router });
 
         router.respond((response, action) => {
           curi.response = response;
@@ -88,8 +88,8 @@ describe('CuriPlugin', () => {
         const FakeComponent = makeFake(done);
 
         let wrapper;
-        const curi = reactiveCuri(router);
-        Vue.use(CuriPlugin, { curi });
+        const curi = reactiveCuri();
+        Vue.use(CuriPlugin, { curi, router });
 
         router.respond((response, action) => {
           curi.response = response;
@@ -115,6 +115,7 @@ describe('CuriPlugin', () => {
     it('Registers the Link component as <curi-link>', () => {
       const Vue = createLocalVue();
       Vue.use(CuriPlugin, {
+        router,
         curi: { router, response: null, action: null }
       });
       expect(Vue.options.components['curi-link']).toBeDefined();
@@ -125,6 +126,7 @@ describe('CuriPlugin', () => {
     it('Registers the Block component as <curi-block>', () => {
       const Vue = createLocalVue();
       Vue.use(CuriPlugin, {
+        router,
         curi: { router, response: null, action: null }
       });
       expect(Vue.options.components['curi-block']).toBeDefined();
