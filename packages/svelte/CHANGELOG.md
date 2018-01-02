@@ -1,3 +1,7 @@
+## Next
+
+* Keep router on its own in the store as `$router`.
+
 ## 1.0.0-beta.3
 
 * `$curi.router` not `$curi.config`.

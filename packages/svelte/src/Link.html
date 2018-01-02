@@ -1,4 +1,4 @@
-<a href="{{href}}" on:click="handleClick(event, location, $curi)">
+<a href="{{href}}" on:click="handleClick(event, location, $router)">
 	<slot></slot>
 </a>
 
@@ -20,22 +20,22 @@
 			};
 		},
 		computed: {
-			location: (to, params, details, $curi) => {
+			location: (to, params, details, $router) => {
 				return Object.assign({},
 					details,
-					{ pathname: $curi.router.addons.pathname(to, params) }
+					{ pathname: $router.addons.pathname(to, params) }
 				);
 			},
-			href: (location, $curi) => {
-				return $curi.router.history.toHref(location);
+			href: (location, $router) => {
+				return $router.history.toHref(location);
 			}
 		},
 		methods: {
-			handleClick(event, location, $curi) {
+			handleClick(event, location, $router) {
 				const can = canNavigate(event);
 				if (can) {
 					event.preventDefault();
-					$curi.router.history.navigate(location);
+					$router.history.navigate(location);
 				}
 			}
 		}

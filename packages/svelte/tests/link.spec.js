@@ -10,9 +10,7 @@ describe('<Link>', () => {
     const routes = [{ name: 'Home', path: '' }];
     const router = curi(history, routes);
 
-    const store = new Store({
-      curi: { router }
-    });
+    const store = new Store({ router });
 
     const node = document.createElement('div');
     const link = new Link({
@@ -32,9 +30,7 @@ describe('<Link>', () => {
     const history = InMemory();
     const routes = [{ name: 'User', path: 'u/:id' }];
     const router = curi(history, routes);
-    const store = new Store({
-      curi: { router }
-    });
+    const store = new Store({ router });
 
     const node = document.createElement('div');
     const link = new Link({
@@ -54,9 +50,7 @@ describe('<Link>', () => {
     const history = InMemory();
     const routes = [{ name: 'Home', path: '' }];
     const router = curi(history, routes);
-    const store = new Store({
-      curi: { router }
-    });
+    const store = new Store({ router });
 
     const node = document.createElement('div');
     const link = new Link({
@@ -78,9 +72,7 @@ describe('<Link>', () => {
       history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
       const router = curi(history, routes);
-      const store = new Store({
-        curi: { router }
-      });
+      const store = new Store({ router });
 
       const node = document.createElement('div');
       const link = new Link({
@@ -103,9 +95,7 @@ describe('<Link>', () => {
       history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
       const router = curi(history, routes);
-      const store = new Store({
-        curi: { router }
-      });
+      const store = new Store({ router });
 
       const node = document.createElement('div');
       const link = new Link({
@@ -131,9 +121,7 @@ describe('<Link>', () => {
       history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
       const router = curi(history, routes);
-      const store = new Store({
-        curi: { router }
-      });
+      const store = new Store({ router });
 
       const node = document.createElement('div');
       const link = new Link({
@@ -157,9 +145,7 @@ describe('<Link>', () => {
       history.navigate = jest.fn();
       const routes = [{ name: 'User', path: 'u/:id' }];
       const router = curi(history, routes);
-      const store = new Store({
-        curi: { router }
-      });
+      const store = new Store({ router });
 
       const node = document.createElement('div');
       const link = new Link({
