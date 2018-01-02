@@ -16,7 +16,7 @@
       onClick: function(e) {
         this.$store.commit('login');
         const { query } = this.$curi.response.location;
-        this.$curi.router.history.replace(query.next || '/');
+        this.$router.history.replace(query.next || '/');
       }
     }
   };

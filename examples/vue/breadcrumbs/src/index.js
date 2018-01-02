@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import curi from '@curi/core';
-import { installCuri } from '@curi/vue';
+import { CuriPlugin } from '@curi/vue';
 import Browser from '@hickory/browser';
 import createAncestorsAddon from '@curi/addon-ancestors';
 
@@ -39,7 +39,7 @@ const router = curi(history, routes, {
   addons: [createAncestorsAddon(), createTitleTextAddon()]
 });
 
-installCuri(Vue, router);
+Vue.use(CuriPlugin, { router });
 
 router.respond(() => {
   const vm = new Vue({

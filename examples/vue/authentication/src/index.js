@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Browser from '@hickory/browser';
 import curi from '@curi/core'
-import { installCuri } from '@curi/vue';
+import { CuriPlugin } from '@curi/vue';
 import { parse, stringify } from 'qs';
 
 import routes from './routes';
@@ -13,7 +13,7 @@ const history = Browser({
 });
 const router = curi(history, routes);
 
-installCuri(Vue, router);
+Vue.use(CuriPlugin, { router });
 
 router.respond((response, action) => {
   const vm = new Vue({

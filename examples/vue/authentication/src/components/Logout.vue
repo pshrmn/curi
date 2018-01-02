@@ -15,7 +15,7 @@
     methods: {
       onClick: function(e) {
         this.$store.commit('logout');
-        this.$curi.router.history.replace('/');
+        this.$router.history.replace('/');
       }
     }
   };

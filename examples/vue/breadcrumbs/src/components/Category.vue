@@ -21,7 +21,7 @@
     name: 'contact-method',
     methods: {
       title(name) {
-        return this.$curi.router.addons.title('Product', { name });
+        return this.$router.addons.title('Product', { name });
       },
       linkParams(productID) {
         return { ...this.$curi.response.params, productID };
