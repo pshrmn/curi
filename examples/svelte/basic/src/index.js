@@ -8,14 +8,15 @@ import app from './components/App.html';
 const history = Browser();
 const router = curi(history, routes);
 const store = new Store({
-  curi: { router, response: undefined, action: undefined }
+  router,
+  curi: { response: undefined, action: undefined }
 });
 
 let view;
 const target = document.getElementById('root');
 
 router.respond((response, action) => {
-  store.set({ curi: { router, response, action } });
+  store.set({ curi: { response, action } });
 });
 
 router.respond(() => {
