@@ -1,3 +1,8 @@
+## Next
+
+* Make router globally available as `$router`.
+* Drop `installCuri` and `reactiveCuri`. When it is installed, `CuriPlugin` creates a reactive `$curi` object to update `response`/`action`.
+
 ## 1.0.0-beta.13
 
 * Refer to Curi router as `router` not `config`.

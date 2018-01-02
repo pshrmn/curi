@@ -4,10 +4,9 @@ import Link from './Link';
 import Block from './Block';
 
 import { CuriRouter } from '@curi/core';
-import { ReactiveCuriProps } from './interface';
+import { ReactiveResponse } from './interface';
 
 export interface CuriPluginOptions {
-  curi: ReactiveCuriProps;
   router: CuriRouter;
 }
 
@@ -16,9 +15,20 @@ const CuriPlugin: PluginObject<CuriPluginOptions> = {
     _Vue.component(Link.name, Link);
     _Vue.component(Block.name, Block);
 
+    // create a reactive object so that components will receive
+    // the new response/action when a new response is emitted
+    const reactive: ReactiveResponse = new Vue({
+      data: { response: null, action: null }
+    });
+
+    options.router.respond((response, action) => {
+      reactive.response = response;
+      reactive.action = action;
+    });
+
     _Vue.mixin({
       beforeCreate: function() {
-        this.$curi = options.curi;
+        this.$curi = reactive;
       }
     });
 

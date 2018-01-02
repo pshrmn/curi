@@ -3,7 +3,7 @@ import { createLocalVue, shallow } from 'vue-test-utils';
 import InMemory from '@hickory/in-memory';
 import curi from '@curi/core';
 import createActiveAddon from '@curi/addon-active';
-import installCuri from '../src/install';
+import CuriPlugin from '../src/plugin';
 import Link from '../src/Link';
 
 describe('Link component', () => {
@@ -13,7 +13,7 @@ describe('Link component', () => {
   const router = curi(history, routes);
 
   const Vue = createLocalVue();
-  installCuri(Vue, router);
+  Vue.use(CuriPlugin, { router });
 
   it('renders an anchor element', () => {
     const wrapper = shallow(Link, {
@@ -88,7 +88,7 @@ describe('Link component', () => {
         const warn = console.error;
         console.error = jest.fn();
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
@@ -114,7 +114,7 @@ describe('Link component', () => {
         const warns = console.error;
         console.error = jest.fn();
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
@@ -139,7 +139,7 @@ describe('Link component', () => {
       it('merges active props when the location is active', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
@@ -161,7 +161,7 @@ describe('Link component', () => {
       it('does not merge active props when the location is not active', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
@@ -185,7 +185,7 @@ describe('Link component', () => {
       it('merges active props for partial matches when active.partial = true', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
@@ -206,7 +206,7 @@ describe('Link component', () => {
       it('does not merge active props for partial matches when active.partial is falsy', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
@@ -262,7 +262,7 @@ describe('Link component', () => {
           return true;
         }
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
@@ -289,7 +289,7 @@ describe('Link component', () => {
           return true;
         }
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
@@ -318,7 +318,7 @@ describe('Link component', () => {
           return false;
         }
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         router.respond(
           (response, action) => {
             const wrapper = shallow(Link, {
@@ -343,7 +343,7 @@ describe('Link component', () => {
       it('recomputes active using new response', done => {
         const Vue = createLocalVue();
 
-        installCuri(Vue, router);
+        Vue.use(CuriPlugin, { router });
         let wrapper;
         router.respond((response, action) => {
           if (!wrapper) {
@@ -378,7 +378,7 @@ describe('Link component', () => {
     const router = curi(history, routes);
 
     const Vue = createLocalVue();
-    installCuri(Vue, router);
+    Vue.use(CuriPlugin, { router });
 
     afterEach(() => {
       mockNavigate.mockReset();

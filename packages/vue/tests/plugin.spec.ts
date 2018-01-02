@@ -3,15 +3,32 @@ import { createLocalVue, shallow, mount } from 'vue-test-utils';
 import curi from '@curi/core';
 import InMemory from '@hickory/in-memory';
 import CuriPlugin from '../src/plugin';
-import reactiveCuri from '../src/reactive';
 
 describe('CuriPlugin', () => {
   const history = InMemory();
   const routes = [];
   const router = curi(history, routes);
 
+  describe('$router', () => {
+    it('Adds the router to global Vue vars as $router', () => {
+      const Vue = createLocalVue();
+      const FakeComponent = {
+        render: function(h) {
+          return h('div');
+        }
+      };
+      Vue.use(CuriPlugin, { router });
+
+      const wrapper = shallow(FakeComponent, {
+        localVue: Vue
+      });
+
+      expect(wrapper.vm.$router).toBe(router);
+    });
+  });
+
   describe('$curi', () => {
-    it('Adds a mixin that sets $curi property for all components', done => {
+    it('Adds $curi property to all components', done => {
       const Vue = createLocalVue();
       const FakeComponent = {
         render: function(h) {
@@ -20,16 +37,14 @@ describe('CuriPlugin', () => {
       };
       router.respond(
         (response, action) => {
-          const curi = reactiveCuri();
-          Vue.use(CuriPlugin, { curi, router });
+          Vue.use(CuriPlugin, { router });
 
           const wrapper = shallow(FakeComponent, {
             localVue: Vue
           });
 
-          expect(wrapper.vm.$router).toBe(router);
-          expect(wrapper.vm.$curi.response).toBe(null);
-          expect(wrapper.vm.$curi.action).toBe(null);
+          expect(wrapper.vm.$curi.response).toBe(response);
+          expect(wrapper.vm.$curi.action).toBe(action);
 
           done();
         },
@@ -67,13 +82,9 @@ describe('CuriPlugin', () => {
         const FakeComponent = makeFake(done);
 
         let wrapper;
-        const curi = reactiveCuri();
-        Vue.use(CuriPlugin, { curi, router });
+        Vue.use(CuriPlugin, { router });
 
         router.respond((response, action) => {
-          curi.response = response;
-          curi.action = action;
-
           if (!wrapper) {
             wrapper = shallow(FakeComponent, {
               localVue: Vue
@@ -88,12 +99,9 @@ describe('CuriPlugin', () => {
         const FakeComponent = makeFake(done);
 
         let wrapper;
-        const curi = reactiveCuri();
-        Vue.use(CuriPlugin, { curi, router });
+        Vue.use(CuriPlugin, { router });
 
         router.respond((response, action) => {
-          curi.response = response;
-          curi.action = action;
           if (!wrapper) {
             wrapper = mount(
               {

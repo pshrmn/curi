@@ -2,7 +2,7 @@ import 'jest';
 import { createLocalVue, shallow } from 'vue-test-utils';
 import InMemory from '@hickory/in-memory';
 import curi from '@curi/core';
-import installCuri from '../src/install';
+import CuriPlugin from '../src/plugin';
 import Block from '../src/Block';
 
 describe('Block component', () => {
@@ -16,7 +16,7 @@ describe('Block component', () => {
   const router = curi(history, routes);
 
   const Vue = createLocalVue();
-  installCuri(Vue, router);
+  Vue.use(CuriPlugin, { router });
 
   afterEach(() => {
     mockConfirmWith.mockReset();
