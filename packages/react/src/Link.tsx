@@ -28,7 +28,7 @@ export interface LinkProps
   active?: ActiveLink;
   anchor?: React.ReactType;
   target?: string;
-  curi?: CuriRouter;
+  router?: CuriRouter;
   response?: Response;
 }
 
@@ -51,21 +51,21 @@ class Link extends React.Component<LinkProps, LinkState> {
 
     if (canNavigate(event) && !this.props.target) {
       event.preventDefault();
-      const curi = this.props.curi || this.context.curi.router;
+      const router = this.props.router || this.context.curi.router;
       const { pathname } = this.state;
       const { to, params, details = {} } = this.props;
       const location = { ...details, pathname };
-      curi.history.navigate(location);
+      router.history.navigate(location);
     }
   };
 
   createPathname(props: LinkProps, context: CuriContext) {
     const { to, params } = props;
-    const curi = props.curi || context.curi.router;
+    const router = props.router || context.curi.router;
     const response = props.response || context.curi.response;
     const pathname =
       to != null
-        ? curi.addons.pathname(to, params)
+        ? router.addons.pathname(to, params)
         : response.location.pathname;
     this.setState(() => ({
       pathname
@@ -87,9 +87,9 @@ class Link extends React.Component<LinkProps, LinkState> {
   }
 
   verifyActiveAddon() {
-    const curi = this.props.curi || this.context.curi.router;
+    const router = this.props.router || this.context.curi.router;
     invariant(
-      curi.addons.active,
+      router.addons.active,
       'You are attempting to use the "active" prop, but have not included the "active" ' +
         'addon (@curi/addon-active) in your Curi router.'
     );
@@ -105,14 +105,14 @@ class Link extends React.Component<LinkProps, LinkState> {
       anchor,
       ...rest
     } = this.props;
-    const curi = this.props.curi || this.context.curi.router;
+    const router = this.props.router || this.context.curi.router;
     const response = this.props.response || this.context.curi.response;
     let anchorProps = rest;
     const Anchor: React.ReactType = anchor ? anchor : 'a';
     if (active) {
       const { partial, merge, extra } = active;
       const isActive =
-        curi.addons.active(to, response, params, partial) &&
+      router.addons.active(to, response, params, partial) &&
         (extra ? extra(response.location, details) : true);
       if (isActive) {
         anchorProps = merge(anchorProps);
@@ -120,7 +120,7 @@ class Link extends React.Component<LinkProps, LinkState> {
     }
 
     const { pathname } = this.state;
-    const href: string = curi.history.toHref({ ...details, pathname });
+    const href: string = router.history.toHref({ ...details, pathname });
 
     return <Anchor {...anchorProps} onClick={this.clickHandler} href={href} />;
   }

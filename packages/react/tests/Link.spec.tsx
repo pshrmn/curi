@@ -7,7 +7,7 @@ import createActiveAddon from '@curi/addon-active';
 import Link from '../src/Link';
 
 describe('<Link>', () => {
-  describe('curi and response', () => {
+  describe('router and response', () => {
     it('can get them from the props', () => {
       const history = InMemory();
       const router = curi(history, [{ name: 'Test', path: '' }], {
@@ -17,7 +17,7 @@ describe('<Link>', () => {
       const wrapper = shallow(
         <Link
           to="Test"
-          curi={router}
+          router={router}
           active={{ merge: props => ({ ...props, className: 'active' }) }}
           response={fakeResponse}
         >
@@ -59,7 +59,7 @@ describe('<Link>', () => {
       const wrapper = shallow(
         <Link
           to="Test"
-          curi={router}
+          router={router}
           active={{ merge: props => ({ ...props, className: 'active' }) }}
           response={propResponse}
         >

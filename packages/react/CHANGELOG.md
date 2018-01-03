@@ -1,3 +1,7 @@
+## Next
+
+* Rename `<Link>`'s `curi` prop to `router`.
+
 ## 1.0.0-beta.15
 
 * Refer to the Curi router as `router` instead of `config`.

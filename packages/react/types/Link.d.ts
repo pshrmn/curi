@@ -17,7 +17,7 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
     active?: ActiveLink;
     anchor?: React.ReactType;
     target?: string;
-    curi?: CuriRouter;
+    router?: CuriRouter;
     response?: Response;
 }
 export interface LinkState {
