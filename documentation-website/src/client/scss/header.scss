@@ -17,6 +17,11 @@ header {
       color: $light-gray;
       font-size: 1.1em;
       text-decoration: none;
+
+      &.active {
+        font-weight: normal;
+        color: $bright-orange;
+      }
     }
   }
 }

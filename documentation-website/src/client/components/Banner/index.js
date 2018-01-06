@@ -23,31 +23,19 @@ class Banner extends React.Component {
     } else if (lib === 'Svelte') {
       BannerComponent = SvelteBanner;
     }
+    const banners = ['Any', 'React', 'Vue', 'Svelte'];
     return (
       <div className="banner">
-        <h1>Curi</h1>
-        <p>A universal JavaScript single-page application router.</p>
+        <h2>A JavaScript router that doesn't care how you render.</h2>
         <div className="banner-buttons">
-          <BannerButton
-            name="Any"
-            setActive={this.setActive}
-            active={lib === 'Any'}
-          />
-          <BannerButton
-            name="React"
-            setActive={this.setActive}
-            active={lib === 'React'}
-          />
-          <BannerButton
-            name="Vue"
-            setActive={this.setActive}
-            active={lib === 'Vue'}
-          />
-          <BannerButton
-            name="Svelte"
-            setActive={this.setActive}
-            active={lib === 'Svelte'}
-          />
+          {banners.map(b => (
+            <BannerButton
+              key={b}
+              name={b}
+              setActive={this.setActive}
+              active={lib === b}
+            />
+          ))}
         </div>
         <BannerComponent />
         <p>

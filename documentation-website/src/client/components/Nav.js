@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from '@curi/react';
+import styleActive from '../utils/styleActive';
 
 export default () => (
   <nav>
@@ -10,20 +11,32 @@ export default () => (
         </Link>
       </li>
       <li>
-        <Link to="Packages">Packages</Link>
+        <Link to="Packages" active={{ merge: styleActive, partial: true }}>
+          Packages
+        </Link>
       </li>
       <li>
-        <Link to="Tutorial" params={{ name: '01-introduction' }}>
+        <Link
+          to="Tutorial"
+          params={{ name: '01-introduction' }}
+          active={{ merge: styleActive }}
+        >
           Tutorial
         </Link>
       </li>
       <li>
-        <Link to="Guide" params={{ slug: 'getting-started' }}>
+        <Link
+          to="Guide"
+          params={{ slug: 'getting-started' }}
+          active={{ merge: styleActive, partial: true }}
+        >
           Guides
         </Link>
       </li>
       <li>
-        <Link to="Examples">Examples</Link>
+        <Link to="Examples" active={{ merge: styleActive, partial: true }}>
+          Examples
+        </Link>
       </li>
       <li>
         <a href="https://github.com/pshrmn/curi">GitHub</a>

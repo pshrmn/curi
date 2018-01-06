@@ -19,6 +19,10 @@
     border-bottom: 1px solid $dark-gray;
   }
 
+  .active {
+    font-weight: bold;
+  }
+
   @import './list.scss';
 }
 .section, .subsection {
