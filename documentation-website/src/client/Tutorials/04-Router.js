@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch } from './base/Branch';
+import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 5: The Curi router</h1>
+    <h1>Part 4: The Curi Router</h1>
     <p>
       Curi uses a centralized router to handle routing. Essentially, whenever
       the location changes (and when your application first loads), the router
@@ -18,8 +18,7 @@ export default () => (
       contains a bunch of properties that are useful for rendering your
       application.
     </p>
-    <div>
-      <p>In this tutorial, we will be doing the following:</p>
+    <Outline>
       <ul>
         <li>Creating a Curi router using our routes and history object.</li>
         <li>
@@ -27,8 +26,8 @@ export default () => (
           works.
         </li>
       </ul>
-    </div>
-    <TutorialBranch name="05-router" />
+    </Outline>
+    <TutorialBranch name="04-router" />
     <Section title="Installation" id="installation" type="aside">
       <p>
         If you skipped the setup, you should install <IJS>@curi/core</IJS> now.
@@ -64,11 +63,11 @@ export default () => (
       </ol>
       <p>
         Using the routes that we defined in the{' '}
-        <Link to="Tutorial" params={{ name: '03-routes' }}>
+        <Link to="Tutorial" params={{ name: '02-routes' }}>
           Routes Tutorial
         </Link>{' '}
         and the{' '}
-        <Link to="Tutorial" params={{ name: '04-hickory' }}>
+        <Link to="Tutorial" params={{ name: '03-hickory' }}>
           Hickory history object
         </Link>, we are ready to create our router.
       </p>
@@ -141,9 +140,9 @@ router.respond(responseLogger, { once: true });`}
 
     <Section title="Review" id="review">
       <p>If you are following the React path:</p>
-      <CompleteBranch name="06-pages-react" />
+      <CompleteBranch name="05-pages-react" />
       <p>If you are following the Vue path:</p>
-      <CompleteBranch name="06-pages-vue" />
+      <CompleteBranch name="05-pages-vue" />
     </Section>
     <Section title="Next" id="next">
       <p>
@@ -153,13 +152,13 @@ router.respond(responseLogger, { once: true });`}
       </p>
       <p>
         If you are following along using React, continue on to{' '}
-        <Link to="Tutorial" params={{ name: '06-pages-react' }}>
+        <Link to="Tutorial" params={{ name: '05-pages-react' }}>
           Part 6: React Pages
         </Link>
       </p>
       <p>
         If you are following along using Vue, you instead you should go to{' '}
-        <Link to="Tutorial" params={{ name: '06-pages-vue' }}>
+        <Link to="Tutorial" params={{ name: '05-pages-vue' }}>
           Part 6: Vue Pages
         </Link>
       </p>

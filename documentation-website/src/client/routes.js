@@ -4,6 +4,7 @@ import React from 'react';
 import Home from './route-components/Home';
 import PackageList from './route-components/PackageList';
 import ExampleList from './route-components/ExampleList';
+import TutorialBase from './route-components/TutorialBase';
 
 import { byName as tutorialsByName } from './constants/tutorials';
 import { byName as guidesByName } from './constants/guides';
@@ -27,22 +28,34 @@ export default [
     }
   },
   {
-    name: 'Tutorial',
-    path: 'tutorial/:name',
+    name: 'Tutorials',
+    path: 'tutorial',
     match: {
-      initial: () =>
-        import(/* webpackChunkName: 'tutorial' */ './route-components/Tutorial').then(
-          module => module.default,
-          caught
-        ),
-      response: ({ route, resolved, set }) => {
-        set.body(resolved.initial);
-        const tutorial = tutorialsByName[route.params.name];
-        if (tutorial) {
-          set.title(`Tutorial ${tutorial.displayName}`);
+      response: ({ set }) => {
+        set.body(TutorialBase);
+        set.title('Tutorial');
+      }
+    },
+    children: [
+      {
+        name: 'Tutorial',
+        path: ':name',
+        match: {
+          initial: () =>
+            import(/* webpackChunkName: 'tutorial' */ './route-components/Tutorial').then(
+              module => module.default,
+              caught
+            ),
+          response: ({ route, resolved, set }) => {
+            set.body(resolved.initial);
+            const tutorial = tutorialsByName[route.params.name];
+            if (tutorial) {
+              set.title(`Tutorial ${tutorial.displayName}`);
+            }
+          }
         }
       }
-    }
+    ]
   },
   {
     name: 'Guide',

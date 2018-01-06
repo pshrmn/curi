@@ -28,10 +28,17 @@ export const TutorialBranches = ({ names }) => (
 export const CompleteBranch = ({ name }) => (
   <div className="tutorial-branch">
     <p>
-      You can view the complete source code for this tutorial here:{' '}
+      You can view the completed source code for this tutorial{' '}
       <a href={`https://github.com/pshrmn/curi-tutorial/tree/${name}`}>
-        {name}
+        on GitHub
       </a>.
     </p>
+  </div>
+);
+
+export const Outline = ({ children }) => (
+  <div className="tutorial-outline">
+    <p>In this tutorial, we will be doing the following:</p>
+    {children}
   </div>
 );

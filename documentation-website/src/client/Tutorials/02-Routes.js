@@ -2,27 +2,26 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch } from './base/Branch';
+import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 3: Curi Routes</h1>
+    <h1>Part 2: Curi Routes</h1>
     <p>
       Now that we have our project setup, it is time to start thinking about the
       route structure of our website.
     </p>
-    <div>
-      <p>In this tutorial, we will be doing the following:</p>
+    <Outline>
       <ul>
         <li>Deciding what pages our website will contain.</li>
         <li>Learning about basic route properties.</li>
         <li>Creating route objects for each of our website's pages.</li>
       </ul>
-    </div>
-    <TutorialBranch name="03-routes" />
+    </Outline>
+    <TutorialBranch name="02-routes" />
     <Section title="Pages" id="pages">
       <p>
         We should start by identifying the pages that we want to have in our
@@ -375,13 +374,13 @@ export default routes;`}
       </Subsection>
     </Section>
     <Section title="Review" id="review">
-      <CompleteBranch name="04-hickory" />
+      <CompleteBranch name="03-hickory" />
     </Section>
     <Section title="Next" id="next">
       <p>
         Now that our routes are defined, it is time to talk about history in{' '}
-        <Link to="Tutorial" params={{ name: '04-hickory' }}>
-          Part 4: Hickory
+        <Link to="Tutorial" params={{ name: '03-hickory' }}>
+          Part 3: Hickory
         </Link>
       </p>
     </Section>

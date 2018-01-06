@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch } from './base/Branch';
+import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -13,10 +13,9 @@ import { Section } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 2: Setting up Curi</h1>
+    <h1>Part 1: Setting up Curi</h1>
     <p>Setup is never exciting, but a little bit of it is necessary.</p>
-    <div>
-      <p>In this tutorial, we will be doing the following:</p>
+    <Outline>
       <ul>
         <li>
           Initializing our project and installing the packages (from NPM) that
@@ -31,8 +30,8 @@ export default () => (
         </li>
         <li>Setting up Babel/Webpack.</li>
       </ul>
-    </div>
-    <TutorialBranch name="02-setup" />
+    </Outline>
+    <TutorialBranch name="01-setup" />
     <Section title="The Basics" id="basics">
       <p>
         In the terminal, navigate to the parent directory where you want to keep
@@ -177,13 +176,13 @@ module.exports = router;`}
       </Note>
     </Section>
     <Section title="Review" id="review">
-      <CompleteBranch name="03-routes" />
+      <CompleteBranch name="02-routes" />
     </Section>
     <Section title="Next" id="next">
       <p>
         With our project setup, we are now ready to continue the tutorial with{' '}
-        <Link to="Tutorial" params={{ name: '03-routes' }}>
-          Part 3: Routes
+        <Link to="Tutorial" params={{ name: '02-routes' }}>
+          Part 2: Routes
         </Link>.
       </p>
     </Section>

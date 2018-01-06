@@ -2,22 +2,21 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranches, CompleteBranch } from './base/Branch';
+import { TutorialBranches, CompleteBranch, Outline } from './base/Branch';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 7: Loading Data</h1>
+    <h1>Part 6: Loading Data</h1>
     <p>
       In the previous tutorial, we wrote mocked book data in <IJS>books.js</IJS>{' '}
       to have some data to load, but it was just filler. We imported the data as
       an array, whereas in a "real" website, we would most likely make a request
       to our server which would return our data.
     </p>
-    <div>
-      <p>In this tutorial, we will be doing the following:</p>
+    <Outline>
       <ul>
         <li>Writing a fake API to simulate data requests.</li>
         <li>
@@ -25,9 +24,9 @@ export default () => (
           routes and updating their <IJS>match.response</IJS> functions.
         </li>
       </ul>
-    </div>
+    </Outline>
     <TutorialBranches
-      names={['07-loading-data-react', '07-loading-data-vue']}
+      names={['06-loading-data-react', '06-loading-data-vue']}
     />
     <Section title="Fake API" id="api">
       <p>
@@ -348,9 +347,9 @@ const routes = [
     </Section>
     <Section title="Review" id="review">
       <p>If you are following the React path:</p>
-      <CompleteBranch name="08-render-data-react" />
+      <CompleteBranch name="07-render-data-react" />
       <p>If you are following the Vue path:</p>
-      <CompleteBranch name="08-render-data-vue" />
+      <CompleteBranch name="07-render-data-vue" />
     </Section>
     <Section title="Next" id="next">
       <p>
@@ -360,14 +359,14 @@ const routes = [
       </p>
       <p>
         If you are using React, continue with{' '}
-        <Link to="Tutorial" params={{ name: '08-render-data-react' }}>
-          Part 8: Rendering Data with React
+        <Link to="Tutorial" params={{ name: '07-render-data-react' }}>
+          Part 7: Rendering Data with React
         </Link>.
       </p>
       <p>
         If you are using Vue, continue with{' '}
-        <Link to="Tutorial" params={{ name: '08-render-data-vue' }}>
-          Part 8: Rendering Data with Vue
+        <Link to="Tutorial" params={{ name: '07-render-data-vue' }}>
+          Part 7: Rendering Data with Vue
         </Link>.
       </p>
     </Section>

@@ -48,8 +48,12 @@ server = app.listen('8000', () => {
           }
         }
       },
-      'Tutorial': {
-        params: tutorialNames
+      'Tutorials': {
+        children: {
+          'Tutorial': {
+            params: tutorialNames
+          }
+        }
       }
     }
   )

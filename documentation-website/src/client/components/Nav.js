@@ -16,11 +16,7 @@ export default () => (
         </Link>
       </li>
       <li>
-        <Link
-          to="Tutorial"
-          params={{ name: '01-introduction' }}
-          active={{ merge: styleActive }}
-        >
+        <Link to="Tutorials" active={{ merge: styleActive, partial: true }}>
           Tutorial
         </Link>
       </li>

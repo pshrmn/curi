@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch } from './base/Branch';
+import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -14,18 +14,17 @@ import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 6: React Pages</h1>
+    <h1>Part 5: React Pages</h1>
     <p>
       Now that we have our router ready to go, we can think about what our pages
       should look like. This tutorial will be rendering our website using React.
       If you prefer to use Vue, you should check out the{' '}
-      <Link to="Tutorial" params={{ name: '06-pages-vue' }}>
-        Part 6: Vue Pages
+      <Link to="Tutorial" params={{ name: '05-pages-vue' }}>
+        Part 5: Vue Pages
       </Link>{' '}
       tutorial.
     </p>
-    <div>
-      <p>In this tutorial, we will be doing the following:</p>
+    <Outline>
       <ul>
         <li>Modifying our Babel configuration to support React.</li>
         <li>
@@ -42,8 +41,8 @@ export default () => (
           website.
         </li>
       </ul>
-    </div>
-    <TutorialBranch name="06-pages-react" />
+    </Outline>
+    <TutorialBranch name="05-pages-react" />
     <Section title="Babel" id="babel">
       <p>
         Before we dive in, let's make sure that our build scripts can handle
@@ -275,7 +274,7 @@ response: {
 
       <p>
         In{' '}
-        <Link to="Tutorial" params={{ name: '03-routes' }}>
+        <Link to="Tutorial" params={{ name: '02-routes' }}>
           Part 3
         </Link>{' '}
         of this tutorial, we added <IJS>match.response</IJS> functions that set
@@ -647,8 +646,8 @@ const Book = ({ response }) => (
         After completing this tutorial, we now have a semi-functional website
         that renders basic content for each of our pages.
       </p>
-      <CompleteBranch name="07-loading-data-react" />
-      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/07-loading-data-react" />
+      <CompleteBranch name="06-loading-data-react" />
+      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/06-loading-data-react" />
     </Section>
     <Section title="Next" id="next">
       <p>
@@ -656,8 +655,8 @@ const Book = ({ response }) => (
         particularly useful yet, but at least we can navigate between pages.
         Next we will take a step back from React and learn how to implement data
         loading with{' '}
-        <Link to="Tutorial" params={{ name: '07-loading-data' }}>
-          Part 7: Loading Data
+        <Link to="Tutorial" params={{ name: '06-loading-data' }}>
+          Part 6: Loading Data
         </Link>.
       </p>
     </Section>

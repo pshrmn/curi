@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch } from './base/Branch';
+import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -14,23 +14,22 @@ import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 8: Rendering Data with Vue</h1>
+    <h1>Part 7: Rendering Data with Vue</h1>
     <p>
       Now that our responses have <IJS>data</IJS>, we should update our{' '}
       <Cmp>BookList</Cmp> and <Cmp>Book</Cmp> components to use that. Accessing
       the <IJS>data</IJS> is really easy because it is a property of our{' '}
       <IJS>response</IJS> object.
     </p>
-    <div>
-      <p>In this tutorial, we will be doing the following:</p>
+    <Outline>
       <ul>
         <li>
           Updating our <Cmp>BookList</Cmp> and <Cmp>Book</Cmp> components to
           render using <IJS>response.data</IJS>.
         </li>
       </ul>
-    </div>
-    <TutorialBranch name="08-render-data-vue" />
+    </Outline>
+    <TutorialBranch name="07-render-data-vue" />
     <Section title="Using Data with the Book List" id="book-list">
       <p>
         Currently, in our <IJS>BookList.vue</IJS> file, we are importing the
@@ -111,16 +110,16 @@ export default () => (
         Our "Book List" and "Book" pages are now rendered using data from{' '}
         <IJS>response.data</IJS>.
       </p>
-      <CompleteBranch name="09-nav-vue" />
-      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/09-nav-vue" />
+      <CompleteBranch name="08-nav-vue" />
+      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/08-nav-vue" />
     </Section>
     <Section title="Next" id="next">
       <p>
         Our book component still isn't complete. We are building a book store
         after all, so we should really provide the user a way to actually "buy"
         a book. In{' '}
-        <Link to="Tutorial" params={{ name: '09-nav-vue' }}>
-          Part 9: Forms & Navigation
+        <Link to="Tutorial" params={{ name: '08-nav-vue' }}>
+          Part 8: Forms & Navigation
         </Link>, we will add the ability to add books to a shopping cart and
         "purchase" them from our "Checkout" route.
       </p>

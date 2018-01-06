@@ -1,46 +1,42 @@
 const tutorials = [
   {
-    name: '01-introduction',
-    displayName: 'Part 1: Introduction to Curi'
+    name: '01-setup',
+    displayName: 'Part 1: Curi Setup'
   },
   {
-    name: '02-setup',
-    displayName: 'Part 2: Curi Setup'
+    name: '02-routes',
+    displayName: 'Part 2: Curi Routes'
   },
   {
-    name: '03-routes',
-    displayName: 'Part 3: Curi Routes'
+    name: '03-hickory',
+    displayName: 'Part 3: Hickory'
   },
   {
-    name: '04-hickory',
-    displayName: 'Part 4: Hickory'
+    name: '04-router',
+    displayName: 'Part 4: The Curi router'
   },
   {
-    name: '05-router',
-    displayName: 'Part 5: The Curi router'
-  },
-  {
-    name: '06-pages',
-    displayName: 'Part 6: Rendering Pages',
+    name: '05-pages',
+    displayName: 'Part 5: Rendering Pages',
     frameworks: ['react', 'vue']
   },
   {
-    name: '07-loading-data',
-    displayName: 'Part 7: Loading Data'
+    name: '06-loading-data',
+    displayName: 'Part 6: Loading Data'
   },
   {
-    name: '08-render-data',
-    displayName: 'Part 8: Rendering Data',
+    name: '07-render-data',
+    displayName: 'Part 7: Rendering Data',
     frameworks: ['react', 'vue']
   },
   {
-    name: '09-nav',
-    displayName: 'Part 9: Forms & Programmatic Navigation',
+    name: '08-nav',
+    displayName: 'Part 8: Forms & Programmatic Navigation',
     frameworks: ['react', 'vue']
   },
   {
-    name: '10-now-what',
-    displayName: 'Part 10: Now What?'
+    name: '09-now-what',
+    displayName: 'Part 9: Now What?'
   }
 ];
 

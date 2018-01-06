@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch } from './base/Branch';
+import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
@@ -14,14 +14,13 @@ import CodeSandboxDemo from '../components/CodeSandboxDemo';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 9: Forms & Programmatic Navigation</h1>
+    <h1>Part 8: Forms & Programmatic Navigation</h1>
     <p>
       In this tutorial, we are going to be using another property of our Curi
       router: <IJS>history</IJS>. This property is our Hickory history instance.
       We will use it to perform navigation between pages in our website.
     </p>
-    <div>
-      <p>In this tutorial, we will be doing the following:</p>
+    <Outline>
       <ul>
         <li>
           Creating another fake API, this time for getting/setting items in our
@@ -40,8 +39,8 @@ export default () => (
           another location.
         </li>
       </ul>
-    </div>
-    <TutorialBranch name="09-nav-react" />
+    </Outline>
+    <TutorialBranch name="08-nav-react" />
     <Section id="A Little Babel" title="babel">
       <p>
         Up until now, we have used stateless functional React components. In
@@ -473,8 +472,8 @@ class Checkout extends React.Component {
         We can now add books to our shopping cart and "buy" them from the
         checkout page.
       </p>
-      <CompleteBranch name="10-now-what-react" />
-      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/10-now-what-react" />
+      <CompleteBranch name="09-now-what-react" />
+      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/09-now-what-react" />
       <Note>
         The embedded sandbox will not work if your browser is blocking
         third-party data. If this is the case for you, you <em>could</em>{' '}
@@ -486,8 +485,8 @@ class Checkout extends React.Component {
       <p>
         With that, we have considered pretty much everything you need to know to
         get started building your website with Curi. We have one last part,{' '}
-        <Link to="Tutorial" params={{ name: '10-now-what' }}>
-          Part 10: Now What?
+        <Link to="Tutorial" params={{ name: '09-now-what' }}>
+          Part 9: Now What?
         </Link>, that gives some suggestions on what you can do with your new
         knowledge.
       </p>

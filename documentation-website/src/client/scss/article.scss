@@ -71,6 +71,13 @@
     border: 1px solid $bright-orange;
     padding: 5px;
   }
+
+  .tutorial-outline {
+    border: 1px solid $border-blue;
+    padding: 5px;
+    margin: 5px 0;
+    background: $light-blue;
+  }
 }
 
 @media only screen and (min-width: $largeScreen) {

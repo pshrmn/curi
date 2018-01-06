@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from '@curi/react';
 
 import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch } from './base/Branch';
+import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
 import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section, Subsection } from '../components/Sections';
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 4: Hickory</h1>
+    <h1>Part 3: Hickory</h1>
     <p>
       One thing that all modern JavaScript routers have in common is that they
       use the{' '}
@@ -20,14 +20,13 @@ export default () => (
       <a href="https://github.com/pshrmn/hickory">Hickory</a>, which will
       interact with the History API for us.
     </p>
-    <div>
-      <p>In this tutorial, we will be doing the following:</p>
+    <Outline>
       <ul>
         <li>Learning about the Hickory package and location objects.</li>
         <li>Creating the Hickory history object for our website.</li>
       </ul>
-    </div>
-    <TutorialBranch name="04-hickory" />
+    </Outline>
+    <TutorialBranch name="03-hickory" />
     <Section title="About Hickory" id="about">
       <p>
         Hickory creates "history" objects that allow you to navigate between
@@ -63,7 +62,7 @@ export default () => (
     <Section title="Installation" id="installation">
       <p>
         If you have following along with these tutorials since the{' '}
-        <Link to="Tutorial" params={{ name: '02-setup' }}>
+        <Link to="Tutorial" params={{ name: '01-setup' }}>
           setup tutorial
         </Link>, then you should already have the <IJS>@hickory/browser</IJS>{' '}
         package installed. If not, you should install it now.
@@ -130,13 +129,13 @@ const history = Browser();`}
       </p>
     </Section>
     <Section title="Review" id="review">
-      <CompleteBranch name="05-router" />
+      <CompleteBranch name="04-router" />
     </Section>
     <Section title="Next" id="next">
       <p>
         With both our routes and history object, we are now ready for{' '}
-        <Link to="Tutorial" params={{ name: '05-router' }}>
-          Part 5
+        <Link to="Tutorial" params={{ name: '04-router' }}>
+          Part 4
         </Link>, where we will create the core of Curi, our router.
       </p>
     </Section>

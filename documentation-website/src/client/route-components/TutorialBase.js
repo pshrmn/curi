@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from '@curi/react';
 
-import BaseTutorial from './base/BaseTutorial';
 import { InlineJS as IJS } from '../components/PrismBlocks';
 import { Note } from '../components/Messages';
 import { Section } from '../components/Sections';
+import TutorialLinks from '../Tutorials/base/TutorialLinks';
 
-const TutorialList = () => (
-  <BaseTutorial>
-    <h1>Part 1: Introduction to Curi</h1>
+export default () => (
+  <div>
+    <h1>Curi Tutorial</h1>
     <p>
-      In this set of tutorials, we will be building a single page application
+      In this set of tutorials, we will be building a single-page application
       from scratch using Curi. The application will be a website for a book
-      store. Users will be able to browse through books and "purchase" ones that
-      they want.
+      store where users will be able to browse through books and "purchase" ones
+      that they want.
     </p>
     <Note>
       We will only be building the front end. Any time that we would need to add
@@ -28,7 +28,7 @@ const TutorialList = () => (
       </p>
       <ol>
         <li>
-          Curi is an asynchronous single page application router.
+          Curi is an asynchronous single-page application router.
           <ol style={{ listStyleType: 'upper-roman' }}>
             <li>
               Being a single page application router means that with Curi, you
@@ -90,15 +90,8 @@ const TutorialList = () => (
       </ol>
     </Section>
 
-    <Section title="Next" id="next">
-      <p>
-        Let's dive in to the tutorials with{' '}
-        <Link to="Tutorial" params={{ name: '02-setup' }}>
-          Part 2: Setting up Curi
-        </Link>.
-      </p>
+    <Section title="List of Tutorials" id="list">
+      <TutorialLinks />
     </Section>
-  </BaseTutorial>
+  </div>
 );
-
-export default TutorialList;
