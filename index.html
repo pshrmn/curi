@@ -8,7 +8,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial/01-introduction">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div><div class="banner"><h1>Curi</h1><p>A universal JavaScript single-page application router.</p><div class="banner-buttons"><button class="active">Any</button><button class="">React</button><button class="">Vue</button><button class="">Svelte</button></div><pre class="language-javascript">import Browser from &#x27;@hickory/browser&#x27;;
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div><div class="banner"><h2>A JavaScript router that doesn&#x27;t care how you render.</h2><div class="banner-buttons"><button class="active">Any</button><button class="">React</button><button class="">Vue</button><button class="">Svelte</button></div><pre class="language-javascript">import Browser from &#x27;@hickory/browser&#x27;;
 import curi from &#x27;@curi/core&#x27;;
 
 // create your history object
@@ -28,142 +28,7 @@ const router = curi(history, routes);
 // that will be called whenever the location changes
 router.respond((response, action) =&gt; {
   // handle any rendering inside of this function
-});</pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> <!-- -->guide.</p></div><div class="features"><h2>Features</h2><div class="feature"><h3>Framework Integration</h3><p>While Curi is a universal router, it still has to be integrated with whichever framework you are using to render your application. Currently, there are packages to easily use Curi with React and Vue applications (as well as one that provides basic Svelte support).</p><div class="code"><div class="description"><p>You can attach a <code class="language-javascript">body</code> property to response object. Generally, this attached value should be a function or component (this would vary based on how your framework renders), but it can be anything you want it to be.</p></div><pre class="language-javascript">// routes.js
-import User from &#x27;./components/User&#x27;;
-
-const routes = [
-  // ...
-  {
-    name: &#x27;User&#x27;,
-    path: &#x27;u/:userID&#x27;,
-    match: {
-      response: ({ set }) =&gt; {
-        set.body(User);
-      }
-    }
-  }
-];</pre></div><p>Links are used for navigating between locations within an application. Links handle URI formatting for you, all you have to do is know the name (and parameters) of the route that you want to link to.</p><div class="code"><div class="description"><p>The <code class="language-javascript">@curi/react</code> package provides a <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> <!-- -->component for rendering links in React applications.</p></div><pre class="language-jsx">import Link from &#x27;@curi/react-link&#x27;;
-
-const NavLinks = () =&gt; (
-  &lt;div&gt;
-    &lt;Link to=&#x27;Home&#x27;&gt;Home&lt;/Link&gt;
-    &lt;Link to=&#x27;User&#x27; params={{ userID: 4 }}&gt;
-      User Four
-    &lt;/Link&gt;
-  &lt;/div&gt;
-);</pre></div><div class="code"><div class="description"><p>With Vue, you register Curi using a Vue plugin from the<!-- --> <code class="language-javascript">@curi/vue</code> package. That plugin will make the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code> component available to use in your application.</p></div><pre class="language-html">&lt;!-- NavLinks.html --&gt;
-&lt;div&gt;
-  &lt;curi-link to=&#x27;Home&#x27;&gt;Home&lt;/curi-link&gt;
-  &lt;curi-link to=&#x27;User&#x27; :params=&quot;{ userID: 4 }&quot;&gt;
-    User Four
-  &lt;/curi-link&gt;
-&lt;/div&gt;</pre></div></div><div class="feature"><h3>Response Objects</h3><p>Whenever the location changes (and on initial load), Curi will generate a response object with data based on the matching route. The properties of this object are what you can use to render your application. You can learn more about these in the<!-- --> <a href="/guides/responses/">rendering with responses</a> <!-- -->guide.</p><div class="code"><div class="description"><p>The <code class="language-javascript">body</code> property is the return value from the matching route&#x27;s <code class="language-javascript">body</code> function.</p></div><pre class="language-javascript">{
-  key: &#x27;123&#x27;,
-  location: { pathname: &#x27;/u/456&#x27;, ... },
-  status: 200,
-  name: &#x27;User&#x27;,
-  body: function() { return ... },
-  params: { userID: &#x27;456&#x27; },
-  ...
-}</pre></div><div class="code"><div class="description"><p><code class="language-javascript">data</code> can contain values that you load using a route&#x27;s<!-- --> <code class="language-javascript">match.every</code> function. The response won&#x27;t be be generated until after the <code class="language-javascript">match.every</code> function has resolved, so if you use this property, you don&#x27;t have to render a bunch of loading spinners or empty content while waiting for the data to be loaded.</p></div><pre class="language-javascript">{
-  ...,
-  data: {
-    username: &#x27;curi&#x27;,
-    id: &#x27;234235&#x27;,
-    color: &#x27;#222233&#x27;
-  }
-}</pre></div></div><div class="feature"><h3>Expressive Route Matching with <code class="language-javascript">path-to-regexp</code></h3><p>Curi uses<!-- --> <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a> <!-- -->to define route paths. This allows you to define route parameters that will be parsed from the URI and added to the response object (when the route matches).</p><div class="code"><div class="description"><p>In the accompanying example code, when the <code class="language-javascript">User</code> route matches, the response object&#x27;s <code class="language-javascript">params</code> object will have an <code class="language-javascript">id</code> property whose value is parsed from the URI.</p><p><code class="language-javascript">path-to-regexp</code> offers a number of matching options, which you can learn more about from<!-- --> <a href="https://github.com/pillarjs/path-to-regexp">its documentation</a>.</p></div><pre class="language-javascript">const routes = [
-  {
-    name: &#x27;User&#x27;,
-    // when the User route matches, the &quot;id&quot;
-    // value will be parsed from the pathname
-    // and placed in the &quot;params&quot; property of
-    // the response
-    path: &#x27;u/:id&#x27;
-  }
-];</pre></div></div><div class="feature"><h3>Route Nesting</h3><div class="code"><div class="description"><p>For nested routes, you only have to define the additional URI segments. Those will automatically be joined with any ancestor routes for you. If any ancestor routes have path parameters, those will be included in the response&#x27;s <code class="language-javascript">params</code> object.</p></div><pre class="language-javascript">const routes = [
-  {
-    name: &#x27;Album&#x27;,
-    path: &#x27;a/:albumID&#x27;,
-    match: {
-      response: ({ set }) =&gt; {
-        set.body(Album);
-      }
-    },
-    children: [
-      {
-        name: &#x27;Song&#x27;,
-        path: &#x27;:songID&#x27;,
-        match: {
-          response: ({ set }) =&gt; {
-            set.body(Song);
-          }
-        }
-      }
-    ]
-  }
-]</pre></div><div class="code"><div class="description"><p>Given the above example routes, when a user visits the URI<!-- --> <code class="language-javascript">/a/4815/162342</code>, we will get the following response object. The <code class="language-javascript">partials</code> array contains the ancestor route<!-- --> <code class="language-javascript">&quot;Song&quot;</code>, which makes it easy to identify &quot;active&quot; ancestor routes.</p></div><pre class="language-javascript">// pathname = &#x27;/a/4815/162342&#x27;
-{
-  body: Song,
-  params: { albumID: &#x27;4815&#x27;, songID: &#x27;162342&#x27; },
-  name: &#x27;Song&#x27;,
-  partials: [&#x27;Album&#x27;],
-  ...
-}
-</pre></div></div><div class="feature"><h3>Navigation Powered by <code class="language-javascript">hickory</code></h3><p>Curi integrates with the<!-- --> <a href="https://github.com/pshrmn/hickory"><code class="language-javascript">hickory</code></a> <!-- -->package to make navigation within your application very easy.</p><div class="code"><div class="description"><p>Choose between the <code class="language-javascript">browser</code>, <code class="language-javascript">hash</code>, and<!-- --> <code class="language-javascript">in-memory</code> history types (depending on your environment).</p></div><pre class="language-javascript">import Browser from &#x27;@hickory/browser&#x27;;
-import Hash from &#x27;@hickory/hash&#x27;;
-import InMemory form &#x27;@hickory/in-memory&#x27;;</pre></div><div class="code"><div class="description"><p>Programmatically navigate using <code class="language-javascript">push</code>,<!-- --> <code class="language-javascript">replace</code>, and <code class="language-javascript">navigate</code> (a combination of push and replace that replicates how anchors work).</p></div><pre class="language-javascript">const history = Browser();
-history.push({ pathname: &#x27;/login&#x27; });
-history.replace({ pathname: &#x27;/profile&#x27; });
-history.navigate({ pathname: &#x27;/album/934&#x27; });</pre></div><div class="code"><div class="description"><p>Of course, you never have to actually generate pathnames yourself. Curi&#x27;s built-in <code class="language-javascript">pathname</code> add-on will generate pathnames given the name of a route (and any of that route&#x27;s parameters). This add-on is used by the various link components to generate<!-- --> <code class="language-javascript">anchor</code> attributes.</p></div><pre class="language-javascript">const routes = [
-  { name: &#x27;Album&#x27;, path: &#x27;a/:albumID&#x27; }
-];
-const router = curi(history, routes);
-const pathname = router.addons.pathname(
-  &#x27;Album&#x27;,
-  { albumID: &#x27;3490&#x27; }
-);
-history.navigate({ pathname });</pre></div></div><div class="feature"><h3>Code Splitting</h3><div class="code"><div class="description"><p>Use the <code class="language-javascript">match.initial</code> and <code class="language-javascript">match.response</code> <!-- -->functions to add code splitting at your routes.</p><p><strong>Note:</strong> This relies on a bundler like Webpack.</p><p>You can learn more about this with the<!-- --> <a href="/guides/code-splitting/">code splitting</a> <!-- -->guide.</p></div><pre class="language-javascript">const routes = [
-  {
-    name: &#x27;User&#x27;,
-    path: &#x27;users/:userID&#x27;,
-    match: {
-      initial: () =&gt; (
-        import(&#x27;./components/User&#x27;)
-          .then(module =&gt; module.default)
-      ),
-      response: ({ resolved, set }) =&gt; {
-        set.body(resolved.initial);
-      }
-    }
-  }
-  ...,
-]</pre></div></div><div class="feature"><h3>Server Side Rendering</h3><div class="code"><div class="description"><p>Server side rendering is pretty much the same as client side rendering. The main difference is that you will use an in-memory history instead of a browser history.</p></div><pre class="language-jsx">import InMemory from &#x27;@hickory/in-memory&#x27;;
-
-function requestHandler(req, resp) {
-  // create a history using the requested location
-  const history = InMemory({
-    locations: [req.url]
-  });
-  const router = curi(history, routes);
-
-  router.respond((response) =&gt; {
-    // render the markup. This will vary based on
-    // your rendering library, but here we&#x27;ll
-    use React
-    const markup = renderToString(
-      &lt;CuriBase
-        response={response}
-        router={router}
-        render={render}
-      /&gt;
-    );
-
-    // insert the generated HTML into the full
-    // HTML of the page and send the response
-    res.send(fullPageHtml(markup));
-  }, { once: true });
-}</pre></div></div></div></div></main></div></div>
+});</pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> <!-- -->guide.</p></div><div class="features"><div class="feature"><h3>Frameworks</h3><p>While Curi is a generic router, it also provides packages to integrate with popular frameworks.</p><ul><li><a href="/packages/@curi/react/">React</a></li><li><a href="/packages/@curi/vue/">Vue</a></li><li><a href="/packages/@curi/svelte/">Svelte</a></li></ul></div><div class="feature"><h3>Responses</h3><p><a href="/guides/responses/">Response objects</a> <!-- -->are used to describe the route that matches a location. These can easily be customized to fit your needs.</p></div><div class="feature"><h3>Route Matching</h3><p>Curi uses<!-- --> <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a> <!-- -->to define route paths using simple but expressive strings.</p></div><div class="feature"><h3>Navigation</h3><p>Curi uses the<!-- --> <a href="https://github.com/pshrmn/hickory"><code class="language-javascript">hickory</code></a> <!-- -->package to make navigation within your application very easy, whether it runs in a browser or anywhere else.</p></div><div class="feature"><h3>Server Side Rendering</h3><p>Server side rendering with Curi is pretty much the same as client side rendering. The main difference is that you will use an in-memory history instead of a browser history.</p></div></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

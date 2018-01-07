@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial Part 1: Curi Setup | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a class="active" href="/tutorial">Tutorial</a></li><li><a href="/guides/getting-started/">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="tutorial"><div class="content"><h1>Part 1: Setting up Curi</h1><p>Setup is never exciting, but a little bit of it is necessary.</p><div class="tutorial-outline"><p>In this tutorial, we will be doing the following:</p><ul><li>Initializing our project and installing the packages (from NPM) that are necessary to get started.</li><li>Creating directories for our source and public files, as well as adding some empty files for future use.</li><li>Setting up a simple Express server to serve our website contents.</li><li>Setting up Babel/Webpack.</li></ul></div><div class="tutorial-branch"><p>If you are following along using the<!-- --> <a href="https://github.com/pshrmn/curi-tutorial">tutorial repo</a>, please checkout the <code class="language-javascript">01-setup</code> branch.</p><pre class="language-bash">git checkout 01-setup</pre></div><div class="section" id="basics"><h2>The Basics<a class="header-link" href="/tutorial/01-setup#basics">#</a></h2><p>In the terminal, navigate to the parent directory where you want to keep the code for your website and create a new directory for the website. We can then navigate into our new directory.</p><pre class="language-bash"># if you&#x27;re using the tutorial repo, you should skip
+# this because you&#x27;ll be using the repo folder
+mkdir curi-bookstore
+cd curi-bookstore</pre><p>Inside of the directory, run <code class="language-javascript">npm init</code> to generate a<!-- --> <code class="language-javascript">package.json</code> file. Then, we can install the most important package for Curi: <code class="language-javascript">@curi/core</code>. We should also install<!-- --> <code class="language-javascript">@hickory/browser</code>, which we&#x27;ll cover later on.</p><pre class="language-bash">npm init
+npm install @curi/core @hickory/browser</pre></div><div class="section" id="structure"><h2>File Structure<a class="header-link" href="/tutorial/01-setup#structure">#</a></h2><p>We should also get some of the directories/files for our website setup. You can restructure your application however you want, but the approach used in this project can serve as a good starting point.</p><pre class="language-bash">mkdir src
+touch src/index.js src/routes.js
+mkdir -p public/js
+touch public/index.html</pre><p>The above commands will leave us with the following project structure:</p><pre class="language-undefined">curi-bookstore/
++- src/
+|  +- index.js
+|  +- routes.js
++- public/
+|  +- index.html
+|  +- js/
++- package.json</pre></div><div class="section" id="building"><h2>Building the Site<a class="header-link" href="/tutorial/01-setup#building">#</a></h2><p>We will be using Babel/Webpack to build our project. We won&#x27;t be diving into the details of how these work, but will provide the code necessary to get this setup.</p><p>We can start by installing the necessary packages as well as adding configuration files for both Babel and Webpack. We will be using Babel 7, so we can use a JavaScript file instead of JSON for our Babel router.</p><p>We will also be using <code class="language-javascript">webpack-dev-server</code> in place of setting up a server. This allows us to have live reloading in development.</p><pre class="language-bash">touch .babelrc.js webpack.router.js
+npm install -D webpack webpack-dev-server @babel/core
+  @babel/preset-env babel-loader@next</pre><pre class="language-javascript">// .babelrc.js
+module.exports = {
+  presets: [
+    [&#x27;@babel/env&#x27;,{
+      modules: false
+    }]
+  ]
+};</pre><pre class="language-javascript">// webpack.router.js
+const path = require(&#x27;path&#x27;);
+
+const router = {
+  context: path.resolve(__dirname, &#x27;src&#x27;),
+  entry: &#x27;./index.js&#x27;,
+  output: {
+    path: path.resolve(__dirname, &#x27;public&#x27;),
+    filename: &#x27;js/bundle.js&#x27;
+  },
+  module: {
+    rules: [
+      {
+        test: /.js$/,
+        use: &#x27;babel-loader&#x27;
+      }
+    ]
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, &#x27;public&#x27;),
+    historyApiFallback: true
+  }
+}
+
+module.exports = router;</pre><p>We also need to create the <code class="language-javascript">index.html</code> file. This just needs to include the DOM element that we will render our application in and a<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->script<!-- -->&gt;</code> that loads our bundled application. You can copy the code below into your <code class="language-javascript">public/index.html</code> file.</p><pre class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script src=&quot;/js/bundle.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre><p>Finally, we just need to add a script to our <code class="language-javascript">package.json</code> <!-- -->file in order to build our bundle.</p><pre class="language-javascript">// package.json
+{
+  // ...,
+  &quot;scripts&quot;: {
+    &quot;dev&quot;: &quot;webpack-dev-server&quot;
+  }
+}</pre><div class="note"><strong>Note:</strong> <!-- -->If you&#x27;re building this from scratch, you should also add a<!-- --> <code class="language-javascript">.gitignore</code> file and ignore the <code class="language-javascript">node_modules/</code> <!-- -->directory.</div></div><div class="section" id="review"><h2>Review<a class="header-link" href="/tutorial/01-setup#review">#</a></h2><div class="tutorial-branch"><p>You can view the completed source code for this tutorial<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/02-routes">on GitHub</a>.</p></div></div><div class="section" id="next"><h2>Next<a class="header-link" href="/tutorial/01-setup#next">#</a></h2><p>With our project setup, we are now ready to continue the tutorial with<!-- --> <a href="/tutorial/02-routes">Part 2: Routes</a>.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a class="active" href="/tutorial/01-setup">Part 1: Curi Setup</a></li><li class="solo"><a href="/tutorial/02-routes">Part 2: Curi Routes</a></li><li class="solo"><a href="/tutorial/03-hickory">Part 3: Hickory</a></li><li class="solo"><a href="/tutorial/04-router">Part 4: The Curi router</a></li><li class="solo"><p>Part 5: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/05-pages-react">react</a></li><li><a href="/tutorial/05-pages-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/06-loading-data">Part 6: Loading Data</a></li><li class="solo"><p>Part 7: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/07-render-data-react">react</a></li><li><a href="/tutorial/07-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 8: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/08-nav-react">react</a></li><li><a href="/tutorial/08-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/09-now-what">Part 9: Now What?</a></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
