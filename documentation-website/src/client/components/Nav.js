@@ -21,11 +21,7 @@ export default () => (
         </Link>
       </li>
       <li>
-        <Link
-          to="Guide"
-          params={{ slug: 'getting-started' }}
-          active={{ merge: styleActive, partial: true }}
-        >
+        <Link to="Guides" active={{ merge: styleActive, partial: true }}>
           Guides
         </Link>
       </li>

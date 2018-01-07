@@ -38,8 +38,12 @@ server = app.listen('8000', () => {
           }
         }
       },
-      'Guide': {
-        params: guideNames
+      'Guides': {
+        children: {
+          'Guide': {
+            params: guideNames
+          }
+        }
       },
       'Examples': {
         children: {

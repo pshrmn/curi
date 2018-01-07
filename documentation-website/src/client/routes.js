@@ -12,7 +12,7 @@ import { byName as packagesByName } from './constants/packages';
 import EXAMPLES from './constants/examples';
 
 function caught(error) {
-  console.error('Failed to load module for:', name, err);
+  console.error('Failed to load module for:', name, error);
   return () => <div>Sorry, something went wrong...</div>;
 }
 
@@ -58,23 +58,38 @@ export default [
     ]
   },
   {
-    name: 'Guide',
-    path: 'guides/:slug/',
+    name: 'Guides',
+    path: 'guides',
     match: {
-      initial: () =>
-        import(/* webpackChunkName: 'guide' */ './route-components/Guide').then(
-          module => module.default,
-          caught
-        ),
-      response: ({ route, resolved, set }) => {
-        set.body(resolved.initial);
-        const guide = guidesByName[route.params.slug];
-        if (guide) {
-          set.data(guide);
-          set.title(`${guide.name} Guide`);
+      response: ({ set, addons }) => {
+        const defaultGuide = addons.pathname('Guide', {
+          slug: 'getting-started'
+        });
+        set.redirect(defaultGuide);
+        set.title('Guides');
+      }
+    },
+    children: [
+      {
+        name: 'Guide',
+        path: ':slug/',
+        match: {
+          initial: () =>
+            import(/* webpackChunkName: 'guide' */ './route-components/Guide').then(
+              module => module.default,
+              caught
+            ),
+          response: ({ route, resolved, set }) => {
+            set.body(resolved.initial);
+            const guide = guidesByName[route.params.slug];
+            if (guide) {
+              set.data(guide);
+              set.title(`${guide.name} Guide`);
+            }
+          }
         }
       }
-    }
+    ]
   },
   {
     name: 'Packages',
