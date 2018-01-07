@@ -5,7 +5,6 @@ header {
 
   nav {
     color: $light-gray;
-    padding: 10px;
 
     ul {
       list-style: none;
@@ -17,9 +16,15 @@ header {
       color: $light-gray;
       font-size: 1.1em;
       text-decoration: none;
+      display: flex;
+      height: 50px;
+      align-items: center;
+
+      &:hover {
+        color: $bright-orange;
+      }
 
       &.active {
-        font-weight: normal;
         color: $bright-orange;
       }
     }
@@ -35,7 +40,6 @@ header {
  
   header {
     nav {
-      padding: 10px 0 10px 10px;
       width: $largeScreen;
       margin: 0 auto;
 
@@ -46,6 +50,14 @@ header {
 
         li {
           margin-right: 20px;
+        }
+      }
+
+      a {
+        border-bottom: 3px solid $purple;
+
+        &.active {
+          border-bottom-color: $bright-orange;
         }
       }
     }
