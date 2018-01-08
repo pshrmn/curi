@@ -406,7 +406,7 @@ describe("curi", () => {
           after();
         });
 
-        it('does synchronous matching when sync = false (default)', () => {
+        it('does asynchronous matching when sync = false (default)', () => {
           const routes = [{ name: 'Home', path: '' }];
           const createFakeAddon = () => ({
             name: 'fake',
