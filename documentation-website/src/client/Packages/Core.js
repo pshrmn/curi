@@ -118,15 +118,18 @@ const router = curi(history, routes, options);`}
               You can access all of the router's add-ons through the addons
               property. This allows you to call an add-on's get method directly.
             </p>
-            <p>
-              For example, with the builtin pathname add-on, you can do the
-              following:
-            </p>
-            <PrismBlock lang="javascript">
-              {`const router = curi(history, [{ name: 'User', path: 'user/:id' }]);
+            <Subsection tag="h6" title="pathname" id="pathname-addon">
+              <p>
+                Curi includes one built-in add-on: <IJS>pathname</IJS>, which
+                you can use to generate location pathnames with the name of the
+                route and an optional object containing any necessary params.
+              </p>
+              <PrismBlock lang="javascript">
+                {`const router = curi(history, [{ name: 'User', path: 'user/:id' }]);
 const userPathname = router.addons.pathname('User', { id: '12345' });
 // userPathname === '/user/12345'`}
-            </PrismBlock>
+              </PrismBlock>
+            </Subsection>
           </Subsection>
 
           <Subsection tag="h5" title="history" id="history-property">
