@@ -39,7 +39,7 @@ class Link extends React.Component<LinkProps, LinkState> {
     })
   };
 
-  clickHandler = (event: GestureResponderEvent) => {
+  pressHandler = (event: GestureResponderEvent) => {
     if (this.props.onPress) {
       this.props.onPress(event);
     }
@@ -114,7 +114,7 @@ class Link extends React.Component<LinkProps, LinkState> {
       }
     }
 
-    return <Anchor {...anchorProps} onPress={this.clickHandler} />;
+    return <Anchor {...anchorProps} onPress={this.pressHandler} />;
   }
 }
 

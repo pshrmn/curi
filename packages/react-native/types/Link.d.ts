@@ -29,7 +29,7 @@ declare class Link extends React.Component<LinkProps, LinkState> {
   static contextTypes: {
     curi: PropTypes.Requireable<any>;
   };
-  clickHandler: (event: GestureResponderEvent) => void;
+  pressHandler: (event: GestureResponderEvent) => void;
   createPathname(props: LinkProps, context: CuriContext): void;
   componentWillMount(): void;
   componentWillReceiveProps(
