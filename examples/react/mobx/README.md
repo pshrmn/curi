@@ -1,29 +1,5 @@
-# Redux
+# MobX
 
-[CodeSandbox demo](https://codesandbox.io/s/github/pshrmn/curi/tree/master/examples/react/redux)
+[CodeSandbox demo](https://codesandbox.io/s/github/pshrmn/curi/tree/master/examples/react/mobx)
 
-Redux is straightforward to integrate with a `curi` project.
-
-You will most likely want to export your `store` from its own module so that it can be imported throughout your project. Then, any routes that need data to be loaded prior to rendering would dispatch to the store from their `load` function.
-
-```js
-import store from './store';
-import setData from './actions';
-const routes = [
-  // ...,
-  {
-    name: 'Data',
-    path: 'data/:id'
-    value: Data,
-    load: (resp) => {
-      const { id } = resp.params;
-      // get the data associated with the id
-      return fetch(`/api/data/${id}`)
-        .then(data => {
-          store.dispatch(setData(data));
-        });
-    }
-  }
-  // ...
-];
-```
+MobX integration with Curi is pretty easy. The `@curi/mobx` package provides a class store that will automatically subscribe to your router and update the store when responses are emitted. Then, you can just hook up the `<CuriBase>` component to your MobX store for automatic re-renders.
