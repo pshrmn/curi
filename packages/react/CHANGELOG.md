@@ -1,5 +1,6 @@
 ## Next
 
+* Add `responsive` and `router` props to `<Curious>`, letting it listen for emitted responses.
 * Switch from `curious` higher-order component to `<Curious>` with a render function.
 * Rename `<Link>`'s `curi` prop to `router`.
 

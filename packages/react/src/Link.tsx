@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import invariant from 'invariant';
-import { CuriContext } from './interface';
-import { CuriRouter, Response } from '@curi/core';
-import { HickoryLocation } from '@hickory/root';
+import React from "react";
+import PropTypes from "prop-types";
+import invariant from "invariant";
+import { CuriContext } from "./interface";
+import { CuriRouter, Response } from "@curi/core";
+import { HickoryLocation } from "@hickory/root";
 
 const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   return (
@@ -91,7 +91,7 @@ class Link extends React.Component<LinkProps, LinkState> {
     invariant(
       router.addons.active,
       'You are attempting to use the "active" prop, but have not included the "active" ' +
-        'addon (@curi/addon-active) in your Curi router.'
+        "addon (@curi/addon-active) in your Curi router."
     );
   }
 
@@ -108,11 +108,11 @@ class Link extends React.Component<LinkProps, LinkState> {
     const router = this.props.router || this.context.curi.router;
     const response = this.props.response || this.context.curi.response;
     let anchorProps = rest;
-    const Anchor: React.ReactType = anchor ? anchor : 'a';
+    const Anchor: React.ReactType = anchor ? anchor : "a";
     if (active) {
       const { partial, merge, extra } = active;
       const isActive =
-      router.addons.active(to, response, params, partial) &&
+        router.addons.active(to, response, params, partial) &&
         (extra ? extra(response.location, details) : true);
       if (isActive) {
         anchorProps = merge(anchorProps);
