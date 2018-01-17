@@ -37,12 +37,12 @@
     "@curi/core": "^1.0.0-beta.23"
   },
   "devDependencies": {
-    "@types/jest": "^21.1.8",
+    "@types/jest": "^22.0.1",
     "@types/node": "^8.0.53",
-    "jest": "^21.2.1",
-    "prettier": "^1.8.2",
+    "jest": "^22.1.1",
+    "prettier": "^1.10.2",
     "rimraf": "^2.6.2",
-    "rollup": "^0.50.0",
+    "rollup": "^0.54.0",
     "ts-jest": "^21.2.3",
     "typescript": "^2.6.1"
   }
