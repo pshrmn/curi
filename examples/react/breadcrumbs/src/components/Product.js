@@ -1,13 +1,11 @@
-import React from 'react';
-import Breadcrumbs from './Breadcrumbs';
+import React from "react";
+import Breadcrumbs from "./Breadcrumbs";
 
-const Product = ({ data, params}) => (
+const Product = ({ response: { data, params } }) => (
   <div>
-    <Breadcrumbs name='Product' params={params} />
+    <Breadcrumbs name="Product" params={params} />
     <h1>{data.name}</h1>
-    <p>
-      {data.description}
-    </p>
+    <p>{data.description}</p>
   </div>
 );
 

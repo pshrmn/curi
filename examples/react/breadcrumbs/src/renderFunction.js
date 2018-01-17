@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-function render(response) {
+function render(response, action, router) {
   if (!response) {
     return null;
   }
-  const { body:Body, params, data } = response;
+  const { body: Body, params, data } = response;
 
-  return <Body params={params} data={data} />
+  return <Body response={response} router={router} />;
 }
 
 export default render;
