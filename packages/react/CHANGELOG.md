@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.16
 
 * Add `responsive` and `router` props to `<Curious>`, letting it listen for emitted responses.
 * Switch from `curious` higher-order component to `<Curious>` with a render function.
