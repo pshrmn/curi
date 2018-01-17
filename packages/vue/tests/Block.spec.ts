@@ -1,18 +1,18 @@
-import 'jest';
-import { createLocalVue, shallow } from 'vue-test-utils';
-import InMemory from '@hickory/in-memory';
-import curi from '@curi/core';
-import CuriPlugin from '../src/plugin';
-import Block from '../src/Block';
+import "jest";
+import { createLocalVue, shallow } from "@vue/test-utils";
+import InMemory from "@hickory/in-memory";
+import curi from "@curi/core";
+import CuriPlugin from "../src/plugin";
+import Block from "../src/Block";
 
-describe('Block component', () => {
+describe("Block component", () => {
   const history = InMemory();
   const mockConfirmWith = jest.fn();
   const mockRemoveConfirmation = jest.fn();
   history.confirmWith = mockConfirmWith;
   history.removeConfirmation = mockRemoveConfirmation;
 
-  const routes = [{ name: 'Place', path: '/place/:name' }];
+  const routes = [{ name: "Place", path: "/place/:name" }];
   const router = curi(history, routes);
 
   const Vue = createLocalVue();
@@ -23,7 +23,7 @@ describe('Block component', () => {
     mockRemoveConfirmation.mockReset();
   });
 
-  it('renders undefined', () => {
+  it("renders undefined", () => {
     const wrapper = shallow(Block, {
       localVue: Vue,
       propsData: {
@@ -36,7 +36,7 @@ describe('Block component', () => {
     expect(wrapper.isEmpty()).toBe(true);
   });
 
-  it('if active=true when mounting, adds block', () => {
+  it("if active=true when mounting, adds block", () => {
     const confirm = jest.fn();
     const wrapper = shallow(Block, {
       localVue: Vue,
@@ -50,7 +50,7 @@ describe('Block component', () => {
     expect(mockConfirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
-  it('defaults to active=true', () => {
+  it("defaults to active=true", () => {
     const confirm = jest.fn();
     const wrapper = shallow(Block, {
       localVue: Vue,
@@ -62,7 +62,7 @@ describe('Block component', () => {
     expect(mockConfirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
-  it('if active=false when mounting, does not add block', () => {
+  it("if active=false when mounting, does not add block", () => {
     const confirm = jest.fn();
     const wrapper = shallow(Block, {
       localVue: Vue,
@@ -74,7 +74,7 @@ describe('Block component', () => {
     expect(mockConfirmWith.mock.calls.length).toBe(0);
   });
 
-  it('removes block if active goes true->false while updating', done => {
+  it("removes block if active goes true->false while updating", done => {
     const confirm = jest.fn();
     const wrapper = shallow(Block, {
       localVue: Vue,
@@ -91,7 +91,7 @@ describe('Block component', () => {
     });
   });
 
-  it('adds block if active goes false->true while updating', done => {
+  it("adds block if active goes false->true while updating", done => {
     const confirm = jest.fn();
     const wrapper = shallow(Block, {
       localVue: Vue,
@@ -108,7 +108,7 @@ describe('Block component', () => {
     });
   });
 
-  it('re-adds block if either prop changes', done => {
+  it("re-adds block if either prop changes", done => {
     const confirm1 = jest.fn();
     const confirm2 = jest.fn();
 
@@ -127,7 +127,7 @@ describe('Block component', () => {
     });
   });
 
-  it('unblocks before destroying', () => {
+  it("unblocks before destroying", () => {
     const confirm = jest.fn();
     const wrapper = shallow(Block, {
       localVue: Vue,

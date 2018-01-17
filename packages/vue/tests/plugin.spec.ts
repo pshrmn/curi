@@ -1,20 +1,20 @@
-import 'jest';
-import { createLocalVue, shallow, mount } from 'vue-test-utils';
-import curi from '@curi/core';
-import InMemory from '@hickory/in-memory';
-import CuriPlugin from '../src/plugin';
+import "jest";
+import { createLocalVue, shallow, mount } from "@vue/test-utils";
+import curi from "@curi/core";
+import InMemory from "@hickory/in-memory";
+import CuriPlugin from "../src/plugin";
 
-describe('CuriPlugin', () => {
+describe("CuriPlugin", () => {
   const history = InMemory();
   const routes = [];
   const router = curi(history, routes);
 
-  describe('$router', () => {
-    it('Adds the router to global Vue vars as $router', () => {
+  describe("$router", () => {
+    it("Adds the router to global Vue vars as $router", () => {
       const Vue = createLocalVue();
       const FakeComponent = {
         render: function(h) {
-          return h('div');
+          return h("div");
         }
       };
       Vue.use(CuriPlugin, { router });
@@ -27,12 +27,12 @@ describe('CuriPlugin', () => {
     });
   });
 
-  describe('$curi', () => {
-    it('Adds $curi property to all components', done => {
+  describe("$curi", () => {
+    it("Adds $curi property to all components", done => {
       const Vue = createLocalVue();
       const FakeComponent = {
         render: function(h) {
-          return h('div');
+          return h("div");
         }
       };
       router.respond(
@@ -52,18 +52,18 @@ describe('CuriPlugin', () => {
       );
     });
 
-    describe('reactive properties', () => {
+    describe("reactive properties", () => {
       function makeFake(done) {
         return {
           render: function(h) {
             // need to include response to trigger re-render
-            return h('div', {}, this.$curi.response.location.pathname);
+            return h("div", {}, this.$curi.response.location.pathname);
           },
           mounted: function() {
-            expect(this.$curi.response.location.pathname).toBe('/');
+            expect(this.$curi.response.location.pathname).toBe("/");
           },
           updated: function() {
-            expect(this.$curi.response.location.pathname).toBe('/another-one');
+            expect(this.$curi.response.location.pathname).toBe("/another-one");
             done();
           }
         };
@@ -77,7 +77,7 @@ describe('CuriPlugin', () => {
         router = curi(history, routes);
       });
 
-      it('re-renders when updating curi object', done => {
+      it("re-renders when updating curi object", done => {
         const Vue = createLocalVue();
         const FakeComponent = makeFake(done);
 
@@ -89,12 +89,12 @@ describe('CuriPlugin', () => {
             wrapper = shallow(FakeComponent, {
               localVue: Vue
             });
-            router.history.push('/another-one');
+            router.history.push("/another-one");
           }
         });
       });
 
-      it('re-renders nested components', done => {
+      it("re-renders nested components", done => {
         const Vue = createLocalVue();
         const FakeComponent = makeFake(done);
 
@@ -105,39 +105,39 @@ describe('CuriPlugin', () => {
           if (!wrapper) {
             wrapper = mount(
               {
-                template: '<div><FakeComponent /></div>',
+                template: "<div><FakeComponent /></div>",
                 components: { FakeComponent }
               },
               {
                 localVue: Vue
               }
             );
-            router.history.push('/another-one');
+            router.history.push("/another-one");
           }
         });
       });
     });
   });
 
-  describe('<curi-link>', () => {
-    it('Registers the Link component as <curi-link>', () => {
+  describe("<curi-link>", () => {
+    it("Registers the Link component as <curi-link>", () => {
       const Vue = createLocalVue();
       Vue.use(CuriPlugin, {
         router,
         curi: { router, response: null, action: null }
       });
-      expect(Vue.options.components['curi-link']).toBeDefined();
+      expect(Vue.options.components["curi-link"]).toBeDefined();
     });
   });
 
-  describe('<curi-block>', () => {
-    it('Registers the Block component as <curi-block>', () => {
+  describe("<curi-block>", () => {
+    it("Registers the Block component as <curi-block>", () => {
       const Vue = createLocalVue();
       Vue.use(CuriPlugin, {
         router,
         curi: { router, response: null, action: null }
       });
-      expect(Vue.options.components['curi-block']).toBeDefined();
+      expect(Vue.options.components["curi-block"]).toBeDefined();
     });
   });
 });
