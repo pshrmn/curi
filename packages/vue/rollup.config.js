@@ -1,11 +1,11 @@
-import config from '../../config/rollup.config.js';
+import config from "../../config/rollup.config.js";
 
 export default Object.assign({}, config, {
-  name: 'CuriVue',
-  external: [
-    'vue'
-  ],
-  globals: {
-    vue: 'Vue'
+  external: ["vue"],
+  output: {
+    name: "CuriVue",
+    globals: {
+      vue: "Vue"
+    }
   }
 });
