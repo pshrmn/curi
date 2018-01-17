@@ -61,6 +61,7 @@ export default class Curious extends React.Component<
   }
 
   componentWillUnmount() {
+    /* istanbul ignore else */
     if (this.stopResponding) {
       this.stopResponding();
     }

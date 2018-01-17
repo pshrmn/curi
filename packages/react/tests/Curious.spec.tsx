@@ -213,5 +213,34 @@ describe("<Curious>", () => {
         );
       });
     });
+
+    it("unsubscribes when unmounting", () => {
+      let unsubscriber;
+      const fakeRouter = {
+        respond: jest.fn(() => {
+          unsubscriber = jest.fn();
+          return unsubscriber;
+        })
+      };
+      const fakeResponse = { name: "Home", status: 200 };
+
+      const wrapper = shallow(
+        <Curious
+          responsive={true}
+          render={({ router }) => {
+            expect(router).toBe(fakeRouter);
+            return null;
+          }}
+        />,
+        {
+          context: { curi: { router: fakeRouter, response: fakeResponse } }
+        }
+      );
+      expect(fakeRouter.respond.mock.calls.length).toBe(1);
+      expect(unsubscriber.mock.calls.length).toBe(0);
+
+      wrapper.unmount();
+      expect(unsubscriber.mock.calls.length).toBe(1);
+    });
   });
 });
