@@ -1,15 +1,15 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BasePackage from './base/BasePackage';
-import APIBlock from './base/APIBlock';
+import BasePackage from "./base/BasePackage";
+import APIBlock from "./base/APIBlock";
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../components/PrismBlocks';
-import { Note, Warning } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
+} from "../components/PrismBlocks";
+import { Note, Warning } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -28,7 +28,7 @@ export default ({ name, version, globalName }) => (
     <APIBlock>
       <Section title={<Cmp>CuriBase</Cmp>} id="CuriBase">
         <p>
-          The <Cmp>CuriBase</Cmp> component places values on React's{' '}
+          The <Cmp>CuriBase</Cmp> component places values on React's{" "}
           <IJS>context</IJS> so that child components can access them.
         </p>
         <PrismBlock lang="javascript">
@@ -58,7 +58,7 @@ router.respond((response) => {
 
           <Subsection tag="h4" title="render" id="CuriBase-render">
             <p>
-              A render function. This will be called whenever the{' '}
+              A render function. This will be called whenever the{" "}
               <Cmp>CuriBase</Cmp> renders. The function will be passed the
               current response object and the router object it was passed as a
               prop. The function must return a React element.
@@ -155,7 +155,7 @@ router.respond((response) => {
               navigate.
             </p>
             <Warning>
-              You can provide any component that you want, but you{' '}
+              You can provide any component that you want, but you{" "}
               <em>should</em> stick with an anchor (or a component that renders
               an anchor). There are accessibility issues that will occur when
               you use other DOM elements as links. The component's prop type is
@@ -169,7 +169,7 @@ router.respond((response) => {
               The active prop gives you an opportunity to style the element
               rendered by the <Cmp>Link</Cmp> when it is "active". Being active
               means that the <Cmp>Link</Cmp>'s route parameters are the same as
-              the current response's route parameters. This{' '}
+              the current response's route parameters. This{" "}
               <strong>does not</strong> take into account any query parameters
               or the hash.
             </p>
@@ -200,10 +200,10 @@ router.respond((response) => {
               {`<Link to='Users' active={{ partial: true, merge: mergeActive }}>Users</Link>`}
             </PrismBlock>
             <Note>
-              If you use the active prop, you have to include the{' '}
-              <Link to="Package" params={{ package: 'addon-active' }}>
+              If you use the active prop, you have to include the{" "}
+              <Link to="Package" params={{ package: "addon-active" }}>
                 @curi/addon-active
-              </Link>{' '}
+              </Link>{" "}
               add-on in your Curi router. If you do not, an error will be
               thrown.
             </Note>
@@ -214,7 +214,7 @@ router.respond((response) => {
       <Section title={<Cmp>Active</Cmp>} id="Active">
         <p>
           The <Cmp>Active</Cmp> component allows you to style its child
-          component as "active" when the location that <Cmp>Active</Cmp>{' '}
+          component as "active" when the location that <Cmp>Active</Cmp>{" "}
           describe matches the current location.
         </p>
         <PrismBlock lang="javascript">
@@ -241,7 +241,7 @@ router.respond((response) => {
 
           <Subsection tag="h4" title="children" id="Active-children">
             <p>
-              A React element that will have its props updated when the{' '}
+              A React element that will have its props updated when the{" "}
               <Cmp>Active</Cmp> component is "active".
             </p>
           </Subsection>
@@ -288,10 +288,10 @@ const Users = (props) => (
           </PrismBlock>
 
           <p>
-            This relies on the active add-on from{' '}
-            <Link to="Package" params={{ package: 'addon-active' }}>
+            This relies on the active add-on from{" "}
+            <Link to="Package" params={{ package: "addon-active" }}>
               @curi/addon-active
-            </Link>{' '}
+            </Link>{" "}
             being added to your router.
           </p>
 
@@ -306,14 +306,14 @@ const router = curi(history, routes, {
           <p>
             While not strictly a requirement, the <Cmp>Active</Cmp> relies on
             the <IJS>curi</IJS> and <IJS>curiResponse</IJS> context variables
-            existing, so your application should have a{' '}
+            existing, so your application should have a{" "}
             <Link
               to="Package"
-              params={{ package: 'react' }}
-              details={{ hash: 'CuriBase' }}
+              params={{ package: "react" }}
+              details={{ hash: "CuriBase" }}
             >
               <Cmp>CuriBase</Cmp>
-            </Link>{' '}
+            </Link>{" "}
             as an ancestor of your <Cmp>Active</Cmp>
             components in order to ensure that those exist.
           </p>
@@ -324,7 +324,7 @@ const router = curi(history, routes, {
         <p>
           The <Cmp>Block</Cmp> component lets you prevent navigation until a
           user has confirmed that they want to navigate. This can be useful when
-          the user attempts to navigate away from a partially filled form. This{' '}
+          the user attempts to navigate away from a partially filled form. This{" "}
           <strong>will not</strong> prevent the user from navigating to another
           site, it only works for navigation within the application.
         </p>
@@ -376,48 +376,73 @@ const router = curi(history, routes, {
         </Section>
       </Section>
 
-      <Section title={<IJS>curious()</IJS>} id="curious">
+      <Section title={<Cmp>Curious</Cmp>} id="Curious">
         <p>
-          A higher order component that will inject the Curi router and the
-          current response object as props of the wrapped component.
+          A component with a <IJS>render</IJS> function to pass{" "}
+          <IJS>router</IJS>, <IJS>response</IJS>, and <IJS>action</IJS> props to
+          componeonts.
         </p>
         <PrismBlock lang="javascript">
-          {`import { curious } from '@curi/react';`}
+          {`import { Curious } from '@curi/react';`}
         </PrismBlock>
 
-        <PrismBlock lang="javascript">
+        <PrismBlock lang="jsx">
           {`class MyComponent extends React.Component {
   render() {
-    const { router, response } = this.props;
+    return (
+      <Curious render={({ router, response, action }) => {
+        // pass these props to any components that need them
+        return (
+          <ThingThatNeedsResponse response={response} />
+        );
+      }} />
+    )
   }
 }
 
-export default curious(MyComponent);`}
+export default MyComponent;`}
         </PrismBlock>
 
         <Section tag="h3" title="Props" id="curious-props">
-          <Subsection tag="h4" title="internalRef" id="curious-internalRef">
-            <p>
-              A ref function that you can use to access the wrapped component.
-            </p>
+          <Subsection tag="h4" title="render" id="curious-render">
+            A function that returns a React element. This function will receive
+            an object with <IJS>router</IJS>, <IJS>response</IJS> and{" "}
+            <IJS>action</IJS> properties that you can pass to components.
             <PrismBlock lang="jsx">
-              {`const WrappedComponent = curious(MyComponent);
-
-<WrappedComponent internalRef={node => ref = node} />`}
+              {`<Curious render={({ router, response, action }) => {...} />`}
             </PrismBlock>
           </Subsection>
 
-          <Subsection tag="h4" title="Other Props" id="curious-other-props">
+          <Subsection tag="h4" title="responsive" id="curious-responsive">
             <p>
-              Any other props that you pass to the wrapped component will be
-              available to the base component.
+              By default, the <Cmp>Curious</Cmp> component will call its{" "}
+              <IJS>render</IJS> function whenever a re-render propagates to it.
+              However, if you have navigation blocks in your application (<IJS>
+                React.PureComponent
+              </IJS>{" "}
+              or <IJS>shouldComponentUpdate</IJS>), you can use{" "}
+              <IJS>{`responsive=\{true\}`}</IJS> to trigger re-renders.
             </p>
-
             <PrismBlock lang="jsx">
-              {`const WrappedComponent = curious(MyComponent);
+              {`<Curious responsive={true} {...} />`}
+            </PrismBlock>
+          </Subsection>
 
-<WrappedComponent one='two' red='blue' />
-// MyComponent's props: { curi: {...}, response: {...}, one: 'two', red: 'blue' }`}
+          <Subsection tag="h4" title="router" id="curious-router">
+            <p>
+              By default, the <Cmp>Curious</Cmp> component will grab the props
+              it passes to the <IJS>render</IJS> function from React's{" "}
+              <IJS>context</IJS>. However, you might want to make your root Curi
+              component (<Cmp>CuriBase</Cmp>) automatically listen for
+              responses. In order to do this, you can pass <Cmp>Curious</Cmp> a{" "}
+              <IJS>router</IJS> and it will listen using that.
+            </p>
+            <PrismBlock lang="jsx">
+              {`<Curious
+  responsive={true}
+  router={router}
+  render={props => <CuriBase render={render} {...props} />}
+/>`}
             </PrismBlock>
           </Subsection>
         </Section>
