@@ -5,7 +5,7 @@
   "commands": {
     "bootstrap": {
       "hoist": "**",
-      "nohoist": ["ts-jest", "svelte", "react-native"]
+      "nohoist": ["ts-jest", "svelte", "react-native", "babel-jest"]
     }
   }
 }
