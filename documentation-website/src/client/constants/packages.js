@@ -1,65 +1,71 @@
-import versions from './versions';
+import versions from "./versions";
 
 const packages = [
   {
-    name: 'core',
-    version: versions['core'],
-    globalName: 'Curi',
-    type: 'core'
+    name: "core",
+    version: versions["core"],
+    globalName: "Curi",
+    type: "core"
   },
   {
-    name: 'addon-active',
-    version: versions['addon-active'],
-    globalName: 'CuriAddonActive',
-    type: 'addon'
+    name: "addon-active",
+    version: versions["addon-active"],
+    globalName: "CuriAddonActive",
+    type: "addon"
   },
   {
-    name: 'addon-ancestors',
-    version: versions['addon-ancestors'],
-    globalName: 'CuriAddonAncestors',
-    type: 'addon'
+    name: "addon-ancestors",
+    version: versions["addon-ancestors"],
+    globalName: "CuriAddonAncestors",
+    type: "addon"
   },
   {
-    name: 'addon-prefetch',
-    version: versions['addon-prefetch'],
-    globalName: 'CuriAddonPrefetch',
-    type: 'addon'
+    name: "addon-prefetch",
+    version: versions["addon-prefetch"],
+    globalName: "CuriAddonPrefetch",
+    type: "addon"
   },
   {
-    name: 'side-effect-title',
-    version: versions['side-effect-title'],
-    globalName: 'CuriSideEffectTitle',
-    type: 'side-effect'
+    name: "side-effect-title",
+    version: versions["side-effect-title"],
+    globalName: "CuriSideEffectTitle",
+    type: "side-effect"
   },
   {
-    name: 'side-effect-scroll',
-    version: versions['side-effect-scroll'],
-    globalName: 'CuriSideEffectScroll',
-    type: 'side-effect'
+    name: "side-effect-scroll",
+    version: versions["side-effect-scroll"],
+    globalName: "CuriSideEffectScroll",
+    type: "side-effect"
   },
   {
-    name: 'react',
-    version: versions['react'],
-    globalName: 'CuriReact',
-    type: 'renderer'
+    name: "react",
+    version: versions["react"],
+    globalName: "CuriReact",
+    type: "renderer"
   },
   {
-    name: 'redux',
-    version: versions['redux'],
-    globalName: 'CuriRedux',
-    type: 'state'
+    name: "react-native",
+    version: versions["react-native"],
+    globalName: "CuriReactNative",
+    type: "renderer"
   },
   {
-    name: 'svelte',
-    version: versions['svelte'],
-    globalName: 'CuriSvelte',
-    type: 'renderer'
+    name: "redux",
+    version: versions["redux"],
+    globalName: "CuriRedux",
+    type: "state"
   },
   {
-    name: 'vue',
-    version: versions['vue'],
-    globalName: 'CuriVue',
-    type: 'renderer'
+    name: "svelte",
+    version: versions["svelte"],
+    globalName: "CuriSvelte",
+    type: "renderer"
+  },
+  {
+    name: "vue",
+    version: versions["vue"],
+    globalName: "CuriVue",
+    type: "renderer"
   }
 ];
 

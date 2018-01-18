@@ -3,11 +3,12 @@ export default {
   "addon-active": "1.0.0-beta.5",
   "addon-ancestors": "1.0.0-beta.5",
   "addon-prefetch": "1.0.0-beta.6",
-  "core": "1.0.0-beta.23",
-  "react": "1.0.0-beta.15",
-  "redux": "1.0.0-beta.2",
+  core: "1.0.0-beta.23",
+  react: "1.0.0-beta.15",
+  "react-native": "1.0.0-alpha.1",
+  redux: "1.0.0-beta.2",
   "side-effect-scroll": "1.0.0-beta.6",
   "side-effect-title": "1.0.0-beta.8",
-  "svelte": "1.0.0-beta.4",
-  "vue": "1.0.0-beta.14"
+  svelte: "1.0.0-beta.4",
+  vue: "1.0.0-beta.14"
 };
