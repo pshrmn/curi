@@ -16,6 +16,7 @@ export default ({ name, version, globalName }) => (
     name={name}
     version={version}
     globalName={globalName}
+    unpkg={false}
     about={
       <div>
         <p>

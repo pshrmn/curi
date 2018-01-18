@@ -1,22 +1,29 @@
-import React from 'react';
+import React from "react";
 
-import Installation from './Installation';
-import About from './About';
-import GitHubLink from './GitHubLink';
-import NPMLink from './NPMLink';
-import PackageLinks from './PackageLinks';
+import Installation from "./Installation";
+import About from "./About";
+import GitHubLink from "./GitHubLink";
+import NPMLink from "./NPMLink";
+import PackageLinks from "./PackageLinks";
 
 function getDir(name) {
-  if (name.indexOf('addon-') === 0) {
-    return 'addons';
-  } else if (name.indexOf('side-effect-') === 0) {
-    return 'side-effects';
+  if (name.indexOf("addon-") === 0) {
+    return "addons";
+  } else if (name.indexOf("side-effect-") === 0) {
+    return "side-effects";
   } else {
     return;
   }
 }
 
-const BasePackage = ({ name, version, globalName, children, about }) => (
+const BasePackage = ({
+  name,
+  version,
+  globalName,
+  children,
+  about,
+  unpkg = true
+}) => (
   <div className="package">
     <div className="content">
       <h1>@curi/{name}</h1>
@@ -26,7 +33,12 @@ const BasePackage = ({ name, version, globalName, children, about }) => (
         <NPMLink name={name} />
       </div>
       <About about={about} />
-      <Installation name={name} version={version} globalName={globalName} />
+      <Installation
+        name={name}
+        version={version}
+        globalName={globalName}
+        unpkg={unpkg}
+      />
       {children || null}
     </div>
     <div className="sidebar">
