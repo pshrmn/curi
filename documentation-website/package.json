@@ -51,7 +51,7 @@
     "node-sass": "^4.5.3",
     "path-to-regexp": "^2.1.0",
     "postcss-loader": "^2.0.8",
-    "prettier": "^1.9.2",
+    "prettier": "^1.10.2",
     "request-promise-native": "^1.0.5",
     "sass-loader": "^6.0.6",
     "source-map-loader": "^0.2.3",
