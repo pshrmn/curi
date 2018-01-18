@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../components/PrismBlocks';
-import { Link } from '@curi/react';
-import Banner from '../components/Banner';
+} from "../components/PrismBlocks";
+import { Link } from "@curi/react";
+import Banner from "../components/Banner";
 
 export default () => (
   <div>
@@ -20,18 +20,23 @@ export default () => (
         </p>
         <ul>
           <li>
-            <Link to="Package" params={{ package: 'react' }}>
+            <Link to="Package" params={{ package: "react" }}>
               React
             </Link>
           </li>
           <li>
-            <Link to="Package" params={{ package: 'vue' }}>
+            <Link to="Package" params={{ package: "vue" }}>
               Vue
             </Link>
           </li>
           <li>
-            <Link to="Package" params={{ package: 'svelte' }}>
+            <Link to="Package" params={{ package: "svelte" }}>
               Svelte
+            </Link>
+          </li>
+          <li>
+            <Link to="Package" params={{ package: "react-native" }}>
+              React Native
             </Link>
           </li>
         </ul>
@@ -40,9 +45,9 @@ export default () => (
       <div className="feature">
         <h3>Responses</h3>
         <p>
-          <Link to="Guide" params={{ slug: 'responses' }}>
+          <Link to="Guide" params={{ slug: "responses" }}>
             Response objects
-          </Link>{' '}
+          </Link>{" "}
           are used to describe the route that matches a location. These can
           easily be customized to fit your needs.
         </p>
@@ -51,10 +56,10 @@ export default () => (
       <div className="feature">
         <h3>Route Matching</h3>
         <p>
-          Curi uses{' '}
+          Curi uses{" "}
           <a href="https://github.com/pillarjs/path-to-regexp">
             path-to-regexp
-          </a>{' '}
+          </a>{" "}
           to define route paths using simple but expressive strings.
         </p>
       </div>
@@ -62,10 +67,10 @@ export default () => (
       <div className="feature">
         <h3>Navigation</h3>
         <p>
-          Curi uses the{' '}
+          Curi uses the{" "}
           <a href="https://github.com/pshrmn/hickory">
             <IJS>hickory</IJS>
-          </a>{' '}
+          </a>{" "}
           package to make navigation within your application very easy, whether
           it runs in a browser or anywhere else.
         </p>
