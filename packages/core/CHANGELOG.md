@@ -1,3 +1,7 @@
+## Next
+
+* Add `options.emitRedirects` (default `true`). When `false`, a response with a `redirectTo` property will not be emitted to subscribers. Instead, the automatic redirect will occur and the result of that navigation will emitted.
+
 ## 1.0.0-beta.23
 
 * Refer to Curi as a router, not just "config" (`CuriConfig` is now `CuriRouter`, etc.).

@@ -330,6 +330,62 @@ describe('curi', () => {
           router.respond(responseHandler);
         });
       });
+
+      describe('emitRedirects', () => {
+        it('emits redirects by default', done => {
+          const routes = [
+            {
+              name: 'Start',
+              path: '',
+              match: {
+                response: ({ set }) => {
+                  set.redirect('/other');
+                }
+              }
+            },
+            {
+              name: 'Other',
+              path: 'other'
+            }
+          ];
+          const router = curi(history, routes);
+
+          let firstCall = true;;
+          router.respond(r => {
+            if (firstCall) {
+              expect(r.name).toBe('Start');
+              firstCall = false;
+              done();
+            }
+          });
+        });
+
+        it('does not emit redirects when emitRedirects = false', done => {
+          const routes = [
+            {
+              name: 'Start',
+              path: '',
+              match: {
+                response: ({ set }) => {
+                  set.redirect('/other');
+                }
+              }
+            },
+            {
+              name: 'Other',
+              path: 'other'
+            }
+          ];
+
+          const router = curi(history, routes, {
+            emitRedirects: false
+          });
+          router.respond(r => {
+            expect(r.name).toBe('Other');
+            done();
+          });
+        });
+      });
     });
   });
 

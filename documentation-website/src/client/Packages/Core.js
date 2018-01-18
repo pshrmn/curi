@@ -69,6 +69,12 @@ const router = curi(history, routes, options);`}
                 that will be used to encode the string created when generating a
                 pathname from a route and its params.
               </li>
+              <li>
+                emitRedirects - When <IJS>false</IJS> (default is <IJS>true</IJS>),
+                response objects with the <IJS>redirectTo</IJS> property will not
+                be emitted to response handlers (but they will still trigger
+                automatic redirects).
+              </li>
             </ul>
           </Subsection>
         </Section>

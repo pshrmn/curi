@@ -30,6 +30,7 @@ export interface RouterOptions {
   sideEffects?: Array<SideEffect>;
   cache?: Cache;
   pathnameOptions?: PathFunctionOptions;
+  emitRedirects?: boolean;
 }
 
 export interface CuriRouter {

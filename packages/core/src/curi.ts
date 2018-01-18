@@ -33,7 +33,8 @@ function createRouter(
     addons: userAddons = [],
     sideEffects = [],
     cache,
-    pathnameOptions
+    pathnameOptions,
+    emitRedirects = true
   } = options as RouterOptions;
 
   const beforeSideEffects: Array<ResponseHandler> = [];
@@ -159,8 +160,11 @@ function createRouter(
     if (cache) {
       cache.set(response);
     }
-    emit(response, action);
-    previous = [response, action, curi];
+
+    if (!response.redirectTo || emitRedirects) {
+      emit(response, action);
+      previous = [response, action, curi];
+    }
 
     if (response.redirectTo) {
       history.replace(response.redirectTo);
