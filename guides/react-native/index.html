@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Native Tips Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorial</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>React Native Tips</h1><p></p><div class="note"><strong>Note:</strong> <!-- -->This guide assumes that you are already familiar with React Native.</div><div class="section" id="back-button"><h2>Back Button<a class="header-link" href="/guides/react-native/#back-button">#</a></h2>To add back button support, you just need to use your <code class="language-javascript">history</code> <!-- -->object (which you can use directly or access through your router).<pre class="language-javascript">import { BackHandler } from &#x27;react-native&#x27;;
+
+// create your router
+const router = curi(history, routes);
+
+BackHandler.addEventListener(&quot;hardwareBackPress&quot;, () =&gt; {
+  // close the app when pressing back button on initial screen
+  if (router.history.index === 0) {
+    return false;
+  }
+  router.history.go(-1);
+  return true;
+});</pre></div><div class="section" id="components"><h2>Components<a class="header-link" href="/guides/react-native/#components">#</a></h2><p>The<!-- --> <a href="/packages/@curi/react-native/"><code class="language-javascript">@curi/react-native</code></a> <!-- -->package is quite similar to the<!-- --> <a href="/packages/@curi/react/"><code class="language-javascript">@curi/react</code></a> <!-- -->package. In fact, Curi&#x27;s React Native package just re-exports most of the components from the React package.</p><div class="subsection" id="components-link"><h3><code class="language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code><a class="header-link" href="/guides/react-native/#components-link">#</a></h3><p>The main difference is that they have different <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> <!-- -->components. While the React package&#x27;s <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> renders an anchor by default, the React Native <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code> renders a<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->TouchableHighlight<!-- -->&gt;</code> by default.</p></div><div class="subsection" id="components-base"><h3>Base<a class="header-link" href="/guides/react-native/#components-base">#</a></h3><p>With React Native, components need to setup any subscribers themselves. That means that we have to make the <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> <!-- -->reactive. There are a couple of different approaches to accomplishing this.</p><div class="subsection" id="components-base-curious"><h4><code class="language-jsx">&lt;<!-- -->Curious<!-- -->&gt;</code><a class="header-link" href="/guides/react-native/#components-base-curious">#</a></h4><p>The &quot;vanilla&quot; way to make <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> reactive is to wrap it in a <code class="language-jsx"><!-- -->&lt;<!-- -->Curious<!-- -->&gt;</code> component and use that component&#x27;s<!-- --> <code class="language-javascript">render</code> function to render the <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code>.</p><pre class="language-jsx">import { Curious, CuriBase } from &#x27;@curi/react-native&#x27;;
+
+import router from &#x27;./router&#x27;;
+import render from &#x27;./render&#x27;;
+
+const App = () =&gt; (
+  &lt;Curious
+    router={router}
+    responsive={true}
+    render={props =&gt; &lt;CuriBase {...props} render={render} /&gt;
+  /&gt;
+);</pre></div><div class="subsection" id="components-base-redux"><h4>Redux<a class="header-link" href="/guides/react-native/#components-base-redux">#</a></h4><p>If you are using Redux in your application, you can use the<!-- --> <a href="/packages/@curi/redux/"><code class="language-javascript">@curi/redux</code></a> <!-- -->package to add Curi data to your store and just wrap<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> in <code class="language-javascript">connect</code> to inject the relevant props.</p><pre class="language-javascript">import { syncResponses, curiReducer } from &#x27;@curi/redux&#x27;;
+import { connect } from &#x27;react-redux&#x27;;
+import { CuriBase } from &#x27;@curi/react-native&#x27;;
+
+const router = curi(history, routes);
+const reducers = combineReducers({
+  curi: curiReducer,
+  ...
+});
+const store = createStore(reducers)
+syncResponses(store, router);
+
+const ConnectedBase = connect(
+  ({ curi }) =&gt; ({
+    router: curi.router,
+    response: curi.response,
+    action: curi.action
+  })
+)(CuriBase);</pre></div><div class="subsection" id="components-base-mobx"><h4>MobX<a class="header-link" href="/guides/react-native/#components-base-mobx">#</a></h4><p>The store provided by the<!-- --> <a href="/packages/@curi/mobx/"><code class="language-javascript">@curi/mobx</code></a> <!-- -->package combined with the <code class="language-jsx"><!-- -->&lt;<!-- -->Provider<!-- -->&gt;</code>, <code class="language-javascript">inject</code>, and <code class="language-javascript">observer</code> from <code class="language-javascript">mobx-react</code> makes</p><pre class="language-jsx">import { CuriStore } from &#x27;@curi/mobx&#x27;;
+import { CuriBase } from &#x27;@curi/react-native&#x27;;
+import { Provider, inject, observer } from &#x27;mobx-react&#x27;;
+
+import router from &#x27;./router&#x27;;
+import render from &#x27;./render&#x27;;
+
+const curiStore = CuriStore(router);
+
+const ResponsiveBase = inject(({ curi }) =&gt; ({
+  router: curi.router,
+  response: curi.response,
+  action: curi.action
+}))(observer(CuriBase));
+
+const App = () =&gt; (
+  &lt;Provider curi={curiStore}&gt;
+    &lt;ResponsiveBase render={render} /&gt;
+  &lt;/Provider&gt;
+);</pre></div></div></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/routes/">All About Routes</a></li><li class="solo"><a href="/guides/responses/">Rendering with Responses</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Add-ons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li><li class="solo"><a class="active" href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
