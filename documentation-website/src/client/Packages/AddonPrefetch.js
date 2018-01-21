@@ -1,9 +1,9 @@
-import React from 'react';
-import BasePackage from './base/BasePackage';
-import APIBlock from './base/APIBlock';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
+import React from "react";
+import BasePackage from "./base/BasePackage";
+import APIBlock from "./base/APIBlock";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -29,7 +29,7 @@ export default ({ name, version, globalName }) => (
     <APIBlock>
       <Section tag="h3" title="createPrefetchAddon" id="createPrefetchAddon">
         <p>
-          The default export function is an add-on factory that will add an{' '}
+          The default export function is an add-on factory that will add an{" "}
           <IJS>prefetch</IJS> function to your router object's add-on property.
         </p>
 
@@ -42,30 +42,30 @@ const router = curi(history, routes, { addons: [prefetch()] });
         </PrismBlock>
 
         <p>
-          The prefetch add-on allows you to call a route's load function
-          manually. Why would you want to do this? Preloading data can give your
-          users a faster navigation time when navigating to a page whose data
-          has already been loaded.
+          The prefetch add-on allows you to call a route's{" "}
+          <IJS>match.every</IJS> function manually. Why would you want to do
+          this? Prefetching data means that when users navigate, the new page
+          will be full rendered faster because we already have the data.
         </p>
 
         <Subsection title="Arguments" id="arguments">
           <PrismBlock lang="javascript">
             {`// call a route's load function manually
-router.addons.prefetch('User', { id: 2 })`}
+router.addons.prefetch('User', { params: { id: 2 }})`}
           </PrismBlock>
           <ul>
             <li>
-              <IJS>name</IJS> - the name of the route whose{' '}
+              <IJS>name</IJS> - the name of the route whose{" "}
               <IJS>match.every</IJS> function should be called.
             </li>
             <li>
-              <IJS>props</IJS> - route props that are used by the{' '}
-              <IJS>match.every</IJS> function (the same ones that a{' '}
+              <IJS>props</IJS> - route props that are used by the{" "}
+              <IJS>match.every</IJS> function (the same ones that a{" "}
               <IJS>match.every</IJS> function expects).
             </li>
           </ul>
           <p>
-            This add-on will only register routes that have a{' '}
+            This add-on will only register routes that have a{" "}
             <IJS>match.every</IJS> function.
           </p>
         </Subsection>
