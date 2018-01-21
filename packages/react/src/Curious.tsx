@@ -43,7 +43,7 @@ export default class Curious extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.responsive) {
+    if (this.props.responsive || this.props.router) {
       const router = this.props.router || this.context.curi.router;
       this.stopResponding = router.respond(
         (response: Response, action: Action) => {
@@ -71,11 +71,12 @@ export default class Curious extends React.Component<
     const { curi } = this.context;
     const router = this.props.router || curi.router;
     // when "responsive", try to use the state, fall back to context
-    // if available
-    const response = this.props.responsive
+    // if available (useful for initial render)
+    const isResponsive = this.props.responsive || this.props.router;
+    const response = isResponsive
       ? this.state.response || (curi && curi.response)
       : curi.response;
-    const action = this.props.responsive
+    const action = isResponsive
       ? this.state.action || (curi && curi.action)
       : curi.action;
     return this.props.render({ router, response, action });

@@ -164,14 +164,13 @@ describe("<Curious>", () => {
     });
 
     describe("router prop", () => {
-      it("subscribes using router prop", done => {
+      it("subscribes using router prop without responsive prop", done => {
         let renderCount = 0;
         router.respond(
           response => {
             // initial render
             const wrapper = mount(
               <Curious
-                responsive={true}
                 router={router}
                 render={({ response }) => {
                   if (renderCount++ === 0) {
@@ -195,7 +194,6 @@ describe("<Curious>", () => {
           response => {
             const wrapper = shallow(
               <Curious
-                responsive={true}
                 router={router}
                 render={({ response, action }) => {
                   if (firstCall) {

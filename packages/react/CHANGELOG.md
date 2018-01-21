@@ -1,3 +1,7 @@
+## Next
+
+* `<Curious>` subscribes when given `router` prop (`responsive` not necessary).
+
 ## 1.0.0-beta.16
 
 * Add `responsive` and `router` props to `<Curious>`, letting it listen for emitted responses.
