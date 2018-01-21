@@ -24,6 +24,13 @@ export default ({ name, version, globalName }) => (
           components that you can use for rendering your React Native
           application.
         </p>
+        <p>
+          For more information on using Curi with React Native, please check out
+          the{" "}
+          <Link to="Guide" params={{ slug: "react-native" }}>
+            React Native guide
+          </Link>.
+        </p>
       </div>
     }
   >
