@@ -58,6 +58,10 @@ export default class Curious extends React.Component<
       nextProps.responsive === this.props.responsive,
       'The "responsive" prop of <Curious> cannot be changed.'
     );
+    warning(
+      nextProps.router === this.props.router,
+      'The "router" prop of <Curious> cannot be changed.'
+    );
   }
 
   componentWillUnmount() {

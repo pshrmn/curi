@@ -1,5 +1,6 @@
 ## Next
 
+* `<Curious>` warns if trying to pass a new `router` prop.
 * `<Curious>` subscribes when given `router` prop (`responsive` not necessary).
 
 ## 1.0.0-beta.16

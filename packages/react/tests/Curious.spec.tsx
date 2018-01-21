@@ -210,6 +210,35 @@ describe("<Curious>", () => {
           { once: true }
         );
       });
+
+      it("warns when trying to change the router prop", done => {
+        const oError = console.error;
+        console.error = jest.fn();
+        const firstRouter = curi(history, routes);
+        const secondRouter = curi(history, routes);
+        router.respond(
+          response => {
+            // initial render
+            const wrapper = mount(
+              <Curious
+                router={firstRouter}
+                render={({ response }) => <div>{response.name}</div>}
+              />,
+              {
+                context: { curi: { router, response } }
+              }
+            );
+
+            wrapper.setProps({ router: secondRouter });
+            expect(console.error.mock.calls[0][0]).toBe(
+              'Warning: The "router" prop of <Curious> cannot be changed.'
+            );
+            console.error = oError;
+            done();
+          },
+          { once: true }
+        );
+      });
     });
 
     it("unsubscribes when unmounting", () => {
