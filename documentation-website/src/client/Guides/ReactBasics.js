@@ -1,102 +1,86 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseGuide from './base/BaseGuide';
+import BaseGuide from "./base/BaseGuide";
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section } from '../components/Sections';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
 
+    <PrismBlock lang="bash">{`npm install @curi/react`}</PrismBlock>
     <Note>This guide assumes that you are already familiar with React.</Note>
 
     <p>
-      Curi provides a number of React components through the{' '}
-      <Link to="Package" params={{ package: 'react' }}>
+      Curi provides a number of React components through the{" "}
+      <Link to="Package" params={{ package: "react" }}>
         <IJS>@curi/react</IJS>
-      </Link>{' '}
+      </Link>{" "}
       package. To get started, there are only two components that you need to be
       aware of: <Cmp>CuriBase</Cmp> and <Cmp>Link</Cmp>.
     </p>
 
-    <Section title="The CuriBase" id="CuriBase">
-      <PrismBlock lang="bash">{`npm install @curi/react`}</PrismBlock>
+    <Section title={<Cmp>CuriBase</Cmp>} id="CuriBase">
       <p>
-        The{' '}
+        In order for other components to access router-related variables, we
+        need to make them available through React's <IJS>context</IJS>. The{" "}
         <Link
           to="Package"
-          params={{ package: 'react' }}
-          details={{ hash: 'CuriBase' }}
+          params={{ package: "react" }}
+          details={{ hash: "CuriBase" }}
         >
-          CuriBase
-        </Link>{' '}
-        component is responsible for placing values on React's{' '}
-        <IJS>context</IJS> so that child components can access them. To do this,
-        you pass it a Curi router, a <IJS>response</IJS> object, and an{' '}
-        <IJS>action</IJS> string. You should re-render this whenever the a new
-        response is emitted, so it makes sense to render this inside of a
-        response handler (the function passed to <IJS>router.respond</IJS>).
-      </p>
-
-      <p>
-        The CuriBase also takes a <IJS>render</IJS> prop. That is a function
-        that returns the React elements that make up your application. The
-        render function will receive three arguments: <IJS>response</IJS>,{' '}
-        <IJS>action</IJS>, and <IJS>router</IJS>. Response is a response object,
-        action is an action string, and router is your router. The response
-        object is the most important of these there. The others may occasionally
-        be useful or you may never use them.
+          <Cmp>CuriBase</Cmp>
+        </Link>{" "}
+        component is responsible for doing this. You pass it a <IJS>router</IJS>,
+        a <IJS>response</IJS> object, and an <IJS>action</IJS> string and other
+        components in your application will be able to easily access them.
       </p>
 
       <PrismBlock lang="jsx">
         {`import { CuriBase } from '@curi/react';
 
-const router = curi(history, routes);
-
-function render(response, router) {
-  // return a React element (or null)
-}
-
-router.respond((response, action) => {
-  ReactDOM.render((
-    <CuriBase
-      router={router}
-      response={response}
-      action={action}
-      render={render}
-    />
-  ), holder);
-});`}
+<CuriBase
+  router={router}
+  response={response}
+  action={action}
+  render={render}
+/>`}
       </PrismBlock>
 
-      <p>
-        You <em>can</em> define your render function inline, but typically it is
-        easier to define the function in its own module and import it wherever
-        you are rendering your CuriBase. Inlining would also mean that the
-        function gets recreated every time that the CuriBase is re-rendered by
-        its parent, which is not ideal.
-      </p>
+      <Subsection title="The render prop" id="render-prop">
+        <p>
+          The <Cmp>CuriBase</Cmp> also expects a <IJS>render</IJS> prop, which
+          is a function that will be called every time the <Cmp>CuriBase</Cmp>{" "}
+          is re-rendered. The <IJS>render</IJS> function should return the React
+          elements that make up your application.
+        </p>
+        <p>
+          The render function receives three arguments to help you render your
+          application: <IJS>response</IJS>, <IJS>action</IJS>, and{" "}
+          <IJS>router</IJS>. The <IJS>response</IJS> object is the most
+          important of these, while the others may occasionally be useful or you
+          may never use them.
+        </p>
 
-      <p>
-        The primary property of the response object that you will find useful is{' '}
-        <IJS>body</IJS>. The body property is the value set by calling{' '}
-        <IJS>set.body()</IJS> in the route's <IJS>match.response</IJS> function.
-        Since this is a React guide, this value should be a React component that
-        will render the contents of the page for a specific route. For example,
-        a <Cmp>Home</Cmp> component might render the contents of your homepage
-        while an <Cmp>About</Cmp> component might render a page describing your
-        application.
-      </p>
+        <Note>
+          The <Cmp>CuriBase</Cmp> does <strong>not</strong> automatically update
+          when new responses are emitted. There are a couple of strategies for
+          re-rendering new responses that will be covered later.
+        </Note>
 
-      <PrismBlock lang="javascript">
-        {`import Home from './components/Home';
-import About from './components/About';
+        <p>
+          In our routes, we can attach a <IJS>body</IJS> property to response
+          objects, which we can then use in a <IJS>render</IJS> function.
+        </p>
+
+        <PrismBlock lang="javascript">
+          {`import Home from './components/Home';
 
 const routes = [
   {
@@ -108,84 +92,151 @@ const routes = [
       }
     }
   },
-  {
-    name: 'About',
-    path: 'about',
-    match: {
-      response: ({ set }) => {
-        set.body(About);
-      }
-    }
-  }
+  ...
 ]`}
-      </PrismBlock>
-
-      <p>
-        When the body property of a response is <IJS>undefined</IJS>, that means
-        that none of your routes matched the new location and you should render
-        some sort of 404/page not found component. You may also want to add a
-        catch all route (one whose path is <IJS>(.*)</IJS>) so that you can
-        expect to always have a <IJS>body</IJS> property on the response.
-      </p>
-      <PrismBlock lang="javascript">
-        {`function render(response) {
+        </PrismBlock>
+        <PrismBlock lang="javascript">
+          {`function render(response) {
   const { body:Body } = response;
   return <Body />;
 }`}
-      </PrismBlock>
-      <Note>
-        We rename "body" to "Body" so that the JSX is{' '}
-        <a href="https://facebook.github.io/react/docs/jsx-in-depth.html#user-defined-components-must-be-capitalized">
-          transformed properly
-        </a>.
-      </Note>
+        </PrismBlock>
+        <Note>
+          We rename "body" to "Body" so that the JSX is{" "}
+          <a href="https://facebook.github.io/react/docs/jsx-in-depth.html#user-defined-components-must-be-capitalized">
+            transformed properly
+          </a>.
+        </Note>
 
-      <p>
-        You can review all of the response properties in the{' '}
-        <Link
-          to="Guide"
-          params={{ slug: 'responses' }}
-          details={{ hash: 'properties' }}
-        >
-          Rendering with Responses
-        </Link>{' '}
-        guide. The other ones that you will most likely be interested in are
-        <IJS>params</IJS> and <IJS>data</IJS>.
-      </p>
+        <p>
+          When no routes match, the body property of a response is{" "}
+          <IJS>undefined</IJS>. To deal with this, you should either render some
+          sort of 404/page not found component or add a catch all route (a route
+          whose path is <IJS>"(.*)"</IJS>) so that you can expect to always have
+          a <IJS>body</IJS> property on the response.
+        </p>
 
-      <PrismBlock lang="javascript">
-        {`function render(response) {
+        <p>
+          Finally, you can pass any props that you want to the <Cmp>Body</Cmp>{" "}
+          component. Generally speaking, it is useful to pass the entire{" "}
+          <IJS>response</IJS> object. You can review all of the response
+          properties in the{" "}
+          <Link
+            to="Guide"
+            params={{ slug: "responses" }}
+            details={{ hash: "properties" }}
+          >
+            Rendering with Responses
+          </Link>{" "}
+          guide. The other ones that you will most likely be interested in are
+          <IJS>params</IJS> and <IJS>data</IJS>.
+        </p>
+
+        <PrismBlock lang="javascript">
+          {`function render(response) {
   const { body:Body, params, data } = response;
-  return <Body params={params} data={data} />;
+  return <Body response={response} />;
 }`}
-      </PrismBlock>
+        </PrismBlock>
+      </Subsection>
 
-      <Note>
-        This does not cover all of the Link props. Please check out the{' '}
-        <Link
-          to="Package"
-          params={{ package: 'react' }}
-          details={{ hash: 'CuriBase' }}
-        >
-          CuriBase
-        </Link>{' '}
-        API docs to learn more about the other props.
-      </Note>
+      <Subsection title="Re-rendering" id="re-rendering">
+        <p>
+          As noted above, the <Cmp>CuriBase</Cmp> does not automatically update
+          when a new response is emitted. Here are a few strategies for
+          re-rendering your application when a new response is emitted.
+        </p>
+        <Subsection tag="h4" title="Use the router" id="use-the-router">
+          <p>
+            The easiest solution is to just use <IJS>router.respond</IJS> to
+            re-call <IJS>ReactDOM.render</IJS>.
+          </p>
+          <PrismBlock lang="jsx">
+            {`router.respond((response, action) => {
+  ReactDOM.render((
+    <CuriBase
+      router={router}
+      response={response}
+      action={action}
+      render={render}
+    />
+  ), holder);
+});`}
+          </PrismBlock>
+        </Subsection>
+        <Subsection tag="h4" title={<Cmp>Curious</Cmp>} id="use-curious">
+          <p>
+            If you prefer not to call <IJS>ReactDOM.render</IJS> multiple times,
+            you can use the <Cmp>Curious</Cmp> component to listen for new
+            responses and re-render when the are emitted.
+          </p>
+          <PrismBlock lang="jsx">
+            {`import { CuriBase, Curious } from '@curi/react';
+
+// the props passed to <Curious>'s render function
+// is an object with router, response, and action properties
+<Curious
+  router={router}
+  responsive={true}
+  render={props => <CuriBase {...props} render={render} />}
+/>`}
+          </PrismBlock>
+        </Subsection>
+        <Subsection tag="h4" title="Use the stores" id="use-stores">
+          <p>
+            If you are using either a Redux or MobX store and are connecting
+            them to your router (using the respective <IJS>@curi/redux</IJS> and{" "}
+            <IJS>@curi/mobx</IJS> packages), then you can just use the
+            higher-order components from those stores to inject the props into
+            the <Cmp>CuriBase</Cmp>.
+          </p>
+          <PrismBlock lang="jsx">
+            {`import { CuriBase } from '@curi/react';
+
+// redux
+import { connect } from 'react-redux';
+const CuriReduxBase = connect(
+  ({ curi }) => ({
+    router: curi.router,
+    response: curi.response,
+    action: curi.action
+  })
+)(CuriBase);
+// usage with <Provider> from react-redux
+<Provider store={store}>
+  <CuriReduxBase render={render} />
+</Provider>
+
+// mobx
+const CuriMobXBase = inject(
+  ({ curi }) => ({
+    router: curi.router,
+    response: curi.response,
+    action: curi.action
+  })
+)(observer(CuriBase));
+// usage with <Provider> from mobx-react
+<Provider curi={curiStore}>
+  <CuriMobXBase render={render} />
+</Provider>`}
+          </PrismBlock>
+        </Subsection>
+      </Subsection>
     </Section>
 
-    <Section title="The Link" id="link">
+    <Section title={<Cmp>Link</Cmp>} id="link">
       <PrismBlock lang="bash">{`npm install @curi/react`}</PrismBlock>
 
       <p>
         A single page application isn't very useful if you cannot navigate
-        between locations. The{' '}
+        between locations. The{" "}
         <Link
           to="Package"
-          params={{ package: 'react' }}
-          details={{ hash: 'Link' }}
+          params={{ package: "react" }}
+          details={{ hash: "Link" }}
         >
-          Link
-        </Link>{' '}
+          <Cmp>Link</Cmp>
+        </Link>{" "}
         component provides you with an easy way to do this by rendering anchor (<Cmp
         >
           a
@@ -198,9 +249,9 @@ const routes = [
       </PrismBlock>
 
       <p>
-        The most important prop of the Link is <IJS>to</IJS>. This value should
-        be the name of the route that you want to navigate to. For instance,
-        take about following route:
+        The most important prop of the <Cmp>Link</Cmp> is <IJS>to</IJS>. This
+        value should be the name of the route that you want to navigate to. For
+        instance, take about following route:
       </p>
 
       <PrismBlock lang="javascript">
@@ -212,12 +263,11 @@ const routes = [
 `}
       </PrismBlock>
       <p>
-        If you were to render a Link whose to property is "About", then it would
-        render an anchor whose <IJS>href</IJS> attribute is <IJS>/about</IJS>.
-        The great thing about this is that you don't have to know the URI of the
-        route that you want to navigate to, only its name. Curi (using the
-        built-in <IJS>pathname</IJS> add-on), handles creating URI pathnames for
-        you.
+        If you were to render a Link whose to property is <IJS>"About"</IJS>,
+        then it would render an anchor whose <IJS>href</IJS> attribute is{" "}
+        <IJS>/about</IJS>. The great thing about this is that you don't have to
+        know the URI of the route that you want to navigate to, only its name
+        because Curi handles creating URI pathnames for you.
       </p>
 
       <PrismBlock lang="jsx">
@@ -227,7 +277,7 @@ const routes = [
 
       <p>
         That works well enough for simple paths, but what about paths that
-        include params? For that, you need to pass an object using the{' '}
+        include params? For that, you need to pass an object using the{" "}
         <IJS>params</IJS> property. This object's keys should be the same as the
         route's expected params. The params object should also include the
         params for any parent routes.
@@ -247,14 +297,16 @@ const routes = [
   ]
 }
 
-<Link to='Song' params={{ albumID: 2390, songID: 7 }}>Some Song on Some Album</Link>
+<Link to='Song' params={{ albumID: 2390, songID: 7 }}>
+  Some Song on Some Album
+</Link>
 // <a href="/a/2390/7>Some Song on Some Album</a>`}
       </PrismBlock>
 
       <p>
         If you want to attach additional location information to a Link, you can
         do so using the <IJS>details</IJS> prop. This is an object that has any
-        other location properties that you want to link to. These would be{' '}
+        other location properties that you want to link to. These would be{" "}
         <IJS>query</IJS>, <IJS>hash</IJS>, and <IJS>state</IJS>.
       </p>
 
@@ -270,40 +322,53 @@ const routes = [
       </PrismBlock>
 
       <p>
-        The <IJS>children</IJS> prop has been used, but not mentioned. The
-        contents of the children prop will simply be passed as the children of
-        the anchor, the same as if you were to use a regular anchor. Using a
-        regular anchor would not work here, though. You could hand code the URI
-        to link to, which is half of what the Link does, but clicking the anchor
-        would cause a full page reload. The Link uses calls the{' '}
-        <IJS>navigate</IJS> method from your Hickory history object to allow for
-        in-app navigation without reloading the page.
+        The <IJS>children</IJS> prop will simply be passed as the children of
+        the anchor, the same as if you were to use a regular anchor.
       </p>
+      <Subsection title="Why not an anchor?" id="why-link">
+        <p>
+          We use a <Cmp>Link</Cmp> because a regular anchor would not work here.
+          Clicking the anchor would cause a full page reload. The{" "}
+          <Cmp>Link</Cmp> uses calls the <IJS>navigate</IJS> method from your
+          Hickory history object to allow for in-app navigation without
+          reloading the page.
+        </p>
 
-      <PrismBlock lang="jsx">
-        {`// if you render this, clicking it will reload the page
+        <PrismBlock lang="jsx">
+          {`// if you render this, clicking it will reload the page
 <a href="/about">About</a>
 
 // while rendering this will not cause a reload
 <Link to='About'>About</Link>
 `}
-      </PrismBlock>
-      <p>
-        Both of the above elements render the same thing to the page, an anchor
-        element, but the "magic" is the Link's usage of your history object.
-      </p>
+        </PrismBlock>
+        <p>
+          Both of the above elements render the same thing to the page, an
+          anchor element, but the "magic" is the Link's usage of your history
+          object.
+        </p>
+      </Subsection>
 
       <Note>
-        This does not cover all of the Link props. Please check out the{' '}
+        This does not cover all of the Link props. Please check out the{" "}
         <Link
           to="Package"
-          params={{ package: 'react' }}
-          details={{ hash: 'Link' }}
+          params={{ package: "react" }}
+          details={{ hash: "Link" }}
         >
           Link
-        </Link>{' '}
+        </Link>{" "}
         API docs to learn more about the other props.
       </Note>
     </Section>
+    <p>
+      The above guide should cover what you need to know to get started with
+      using Curi and React. However, there are also more React components that
+      you might find useful. You can read more about them in the{" "}
+      <Link to="Package" params={{ package: "react" }}>
+        <IJS>@curi/react</IJS>
+      </Link>{" "}
+      documentation.
+    </p>
   </BaseGuide>
 );
