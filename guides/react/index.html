@@ -49,7 +49,6 @@ const routes = [
 // is an object with router, response, and action properties
 &lt;Curious
   router={router}
-  responsive={true}
   render={props =&gt; &lt;CuriBase {...props} render={render} /&gt;}
 /&gt;</pre></div><div class="subsection" id="use-stores"><h4>Use the stores<a class="header-link" href="/guides/react/#use-stores">#</a></h4><p>If you are using either a Redux or MobX store and are connecting them to your router (using the respective <code class="language-javascript">@curi/redux</code> and<!-- --> <code class="language-javascript">@curi/mobx</code> packages), then you can just use the higher-order components from those stores to inject the props into the <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code>.</p><pre class="language-jsx">import { CuriBase } from &#x27;@curi/react&#x27;;
 

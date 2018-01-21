@@ -28,7 +28,6 @@ import render from &#x27;./render&#x27;;
 const App = () =&gt; (
   &lt;Curious
     router={router}
-    responsive={true}
     render={props =&gt; &lt;CuriBase {...props} render={render} /&gt;
   /&gt;
 );</pre></div><div class="subsection" id="components-base-redux"><h4>Redux<a class="header-link" href="/guides/react-native/#components-base-redux">#</a></h4><p>If you are using Redux in your application, you can use the<!-- --> <a href="/packages/@curi/redux/"><code class="language-javascript">@curi/redux</code></a> <!-- -->package to add Curi data to your store and just wrap<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> in <code class="language-javascript">connect</code> to inject the relevant props.</p><pre class="language-javascript">import { syncResponses, curiReducer } from &#x27;@curi/redux&#x27;;
