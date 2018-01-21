@@ -29,18 +29,18 @@ There are also a number of [examples](/examples) that you can learn from. Many o
 
 |Name|About|Documentation|Source|
 |---|---|---|---|
-|[@curi/addon-active](/packages/addons/addon-active)|[![npm][@curi/addon-active-version-badge]][npm-@curi/addon-active]|[Documentation](https://curi.js.org/packages/@curi/addon-active/)|[Source](/packages/addons/addon-active/src/index.js)|
+|[@curi/addon-active](/packages/addons/addon-active)|[![npm][@curi/addon-active-version-badge]][npm-@curi/addon-active]|[Documentation](https://curi.js.org/packages/@curi/addon-active/)|[Source](/packages/addons/addon-active/src)|
 ||The `active` addon allows you to determine if a route is "active" (its `name`/`params` match the current response's `name`/`params`).. This can be useful for giving an element a specific style when it is "active".|
-|[@curi/addon-ancestors](/packages/addons/addon-ancestors)|[![npm][@curi/addon-ancestors-version-badge]][npm-@curi/addon-ancestors]|[Documentation](https://curi.js.org/packages/@curi/addon-ancestors/)|[Source](/packages/addons/addon-ancestors/src/index.js)|
+|[@curi/addon-ancestors](/packages/addons/addon-ancestors)|[![npm][@curi/addon-ancestors-version-badge]][npm-@curi/addon-ancestors]|[Documentation](https://curi.js.org/packages/@curi/addon-ancestors/)|[Source](/packages/addons/addon-ancestors/src)|
 ||The `ancestors` addon allows you to get the names of ancestor routes for a particular route. You can either get the ancestor at a specific level (the parent route is 1 level up, the gradnparent route is 2, etc.) or you can get a list of all ancestor routes (the list is ordered from furthest to closest).|
 
 #### Side Effects:
 
 |Name|About|Documentation|Source|
 |---|---|---|---|
-|[@curi/side-effect-title](/packages/side-effects/side-effect-title)|[![npm][@curi/side-effect-title-version-badge]][npm-@curi/side-effect-title]|[Documentation](https://curi.js.org/packages/@curi/side-effect-title/)|[Source](/packages/side-effects/side-effect-title/src/index.js)|
+|[@curi/side-effect-title](/packages/side-effects/side-effect-title)|[![npm][@curi/side-effect-title-version-badge]][npm-@curi/side-effect-title]|[Documentation](https://curi.js.org/packages/@curi/side-effect-title/)|[Source](/packages/side-effects/side-effect-title/src)|
 ||The `title` side effect exports a side effect factory. The factory returns a function that will use a response object's `title` property to set `document.title`.|
-|[@curi/side-effect-scroll](/packages/side-effects/side-effect-scroll)|[![npm][@curi/side-effect-scroll-version-badge]][npm-@curi/side-effect-scroll]|[Documentation](https://curi.js.org/packages/@curi/side-effect-scroll/)|[Source](/packages/side-effects/side-effect-scroll/src/index.js)|
+|[@curi/side-effect-scroll](/packages/side-effects/side-effect-scroll)|[![npm][@curi/side-effect-scroll-version-badge]][npm-@curi/side-effect-scroll]|[Documentation](https://curi.js.org/packages/@curi/side-effect-scroll/)|[Source](/packages/side-effects/side-effect-scroll/src)|
 ||The `scroll` side effect exports a side effect factory. The factory returns a function that will scroll to the top of the page when you push/replace a location, but will let the browser restore the scroll location when popping (forward/back buttons) to a location.|
 
 #### Renderers
