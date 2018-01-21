@@ -177,7 +177,6 @@ const routes = [
 // is an object with router, response, and action properties
 <Curious
   router={router}
-  responsive={true}
   render={props => <CuriBase {...props} render={render} />}
 />`}
           </PrismBlock>

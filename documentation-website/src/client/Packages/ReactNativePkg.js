@@ -434,9 +434,12 @@ export default MyComponent;`}
               responses. In order to do this, you can pass <Cmp>Curious</Cmp> a{" "}
               <IJS>router</IJS> and it will listen using that.
             </p>
+            <Note>
+              If you pass a <IJS>router</IJS> prop to <Cmp>Curious</Cmp>, you do
+              not have to pass it the <IJS>responsive</IJS> prop.
+            </Note>
             <PrismBlock lang="jsx">
               {`<Curious
-  responsive={true}
   router={router}
   render={props => <CuriBase render={render} {...props} />}
 />`}

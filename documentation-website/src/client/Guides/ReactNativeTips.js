@@ -83,7 +83,6 @@ import render from './render';
 const App = () => (
   <Curious
     router={router}
-    responsive={true}
     render={props => <CuriBase {...props} render={render} />
   />
 );`}
