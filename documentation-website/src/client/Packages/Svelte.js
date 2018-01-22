@@ -1,12 +1,12 @@
-import React from 'react';
-import BasePackage from './base/BasePackage';
-import APIBlock from './base/APIBlock';
+import React from "react";
+import BasePackage from "./base/BasePackage";
+import APIBlock from "./base/APIBlock";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
   PrismBlock
-} from '../components/PrismBlocks';
-import { Section, Subsection } from '../components/Sections';
+} from "../components/PrismBlocks";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -15,7 +15,7 @@ export default ({ name, version, globalName }) => (
     globalName={globalName}
     about={
       <p>
-        This package enables you to use Curi alongside Svelte.{' '}
+        This package enables you to use Curi alongside Svelte.{" "}
         <strong>This package relies on the Svelte store.</strong>
       </p>
     }
@@ -63,7 +63,7 @@ export default ({ name, version, globalName }) => (
         The components exported by <IJS>@curi/svelte</IJS> rely on Svelte's
         store. The store should include a <IJS>router</IJS> property for
         accessing the Curi router and a <IJS>curi</IJS> property for accessing
-        the latest <IJS>response</IJS> and <IJS>action</IJS> values.
+        the latest <IJS>response</IJS> and <IJS>navigation</IJS> values.
       </p>
       <PrismBlock lang="javascript">
         {`import { Store } from 'svelte/store';
@@ -71,7 +71,7 @@ export default ({ name, version, globalName }) => (
 const router = curi(history, routes);
 const store = new Store({
   router,
-  curi: { response: null, action: null }
+  curi: { response: null, navigation: null }
 });`}
       </PrismBlock>
       <p>
@@ -79,8 +79,8 @@ const store = new Store({
         response is emitted.
       </p>
       <PrismBlock lang="javascript">
-        {`router.respond((response, action) => {
-  store.set({ curi: { response, action } });
+        {`router.respond((response, navigation) => {
+  store.set({ curi: { response, navigation } });
 });`}
       </PrismBlock>
       <p>

@@ -118,23 +118,24 @@ const router = curi(history, routes, options);`}
             <p>
               While <IJS>router.respond</IJS> is used to listen for new
               responses, the <IJS>router.current</IJS> method is a synchronous
-              way to see the current <IJS>response</IJS> and <IJS>action</IJS>.
+              way to see the current <IJS>response</IJS> and{" "}
+              <IJS>navigation</IJS>.
             </p>
             <Note>
               If you call <IJS>router.current</IJS> before the initial response
-              has been emitted, the <IJS>response</IJS> and <IJS>action</IJS>{" "}
-              properties will be <IJS>null</IJS>.
+              has been emitted, the <IJS>response</IJS> and{" "}
+              <IJS>navigation</IJS> properties will be <IJS>null</IJS>.
             </Note>
             <PrismBlock lang="javascript">
               {`const router = curi(history, routes);
 const tooSoon = router.current();
 // tooSoon.response === null
-// tooSoon.action === null
+// tooSoon.navigation === null
 
-router.respond((response, action) => {
+router.respond((response, navigation) => {
   const justRight = router.current();
   // justRight.response === response
-  // justRight.action === action
+  // justRight.navigation === navigation
 });`}
             </PrismBlock>
           </Subsection>

@@ -1,7 +1,7 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
-import { Section } from '../../components/Sections';
-import { InlineJS as IJS, PrismBlock } from '../../components/PrismBlocks';
+import React from "react";
+import BaseExample from "../base/BaseExample";
+import { Section } from "../../components/Sections";
+import { InlineJS as IJS, PrismBlock } from "../../components/PrismBlocks";
 
 export default ({ name }) => (
   <BaseExample>
@@ -22,7 +22,7 @@ export default ({ name }) => (
   const router = curi(history, routes);
 
   // 3. Wait for the response to be generated
-  router.respond((response, action) => {
+  router.respond((response, navigation) => {
     // 4. Generate the HTML markup by rendering a <CuriBase> and
     // passing it the response
     const markup = renderToString(
@@ -53,8 +53,8 @@ export default ({ name }) => (
         </li>
         <li>
           Code splitting — In order to use dynamic imports on the server, you
-          will probably need to use a Babel plugin like{' '}
-          <IJS>dynamic-import-node</IJS>. Unfortunately,{' '}
+          will probably need to use a Babel plugin like{" "}
+          <IJS>dynamic-import-node</IJS>. Unfortunately,{" "}
           <IJS>dynamic-import-node</IJS> breaks Webpack's code splitting. In
           order for your code to be split into multiple bundles, you should
           ensure that <IJS>dynamic-import-node</IJS> isn't being run when
@@ -83,7 +83,7 @@ export default ({ name }) => (
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/misc/server-rendering">
         here
       </a>.

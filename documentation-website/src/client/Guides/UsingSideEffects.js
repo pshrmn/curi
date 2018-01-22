@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseGuide from './base/BaseGuide';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Section, Subsection } from '../components/Sections';
+import BaseGuide from "./base/BaseGuide";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name }) => (
   <BaseGuide>
@@ -19,8 +19,8 @@ export default ({ name }) => (
     <p>
       Whenever a new response is generated, all of the side effect functions
       will be called. They will be given two arguments: the new response object
-      and the action that was used to trigger the navigation (POP, PUSH, or
-      REPLACE).
+      and an object with navigation information (the navigation action the
+      previous response).
     </p>
 
     <PrismBlock lang="javascript">
@@ -31,9 +31,9 @@ export default ({ name }) => (
 
     <Section title="Adding Side Effects" id="adding">
       <p>
-        You add side effect functions to your router by adding a{' '}
+        You add side effect functions to your router by adding a{" "}
         <IJS>sideEffects</IJS> array to the options object (the third agument)
-        of <IJS>curi</IJS>. A side effect is an object with an <IJS>fn</IJS>{' '}
+        of <IJS>curi</IJS>. A side effect is an object with an <IJS>fn</IJS>{" "}
         property whose values is a response handler function.
       </p>
 
@@ -49,7 +49,7 @@ export default ({ name }) => (
         functions (the ones added with <IJS>router.respond</IJS>). However, you
         might prefer for a side effect to be run after the response handlers. To
         do that, you just need to include <IJS>after: true</IJS> in your side
-        effect object. If you do no provide this property, this will default to{' '}
+        effect object. If you do no provide this property, this will default to{" "}
         <IJS>false</IJS>.
       </p>
 
@@ -63,12 +63,12 @@ export default ({ name }) => (
         <p>Curi has two "official" side effect packages:</p>
         <ul>
           <li>
-            <Link to="Package" params={{ package: 'side-effect-title' }}>
+            <Link to="Package" params={{ package: "side-effect-title" }}>
               @curi/side-effect-title
             </Link>
           </li>
           <li>
-            <Link to="Package" params={{ package: 'side-effect-scroll' }}>
+            <Link to="Package" params={{ package: "side-effect-scroll" }}>
               @curi/side-effect-scroll
             </Link>
           </li>
@@ -79,7 +79,7 @@ export default ({ name }) => (
     <Section title="Creating Side Effects" id="creating">
       <p>
         Side effects are just simple functions that receive a response object
-        and an action string and do something with them. One thing that they
+        and a navigation object and do something with them. One thing that they
         should not do, however, is to modify the response.
       </p>
 
@@ -88,7 +88,7 @@ export default ({ name }) => (
         object.
       </p>
       <PrismBlock lang="javascript">
-        {`function mySideEffect(response, action) {
+        {`function mySideEffect(response, navigation) {
   console.log('Navigating to', response.location);
 }
 
@@ -108,7 +108,7 @@ const router = curi(history, routes, {
   const logger = setupMyLogger(options);
 
   // and return the actual side effect function
-  return sideEffect(response, action) {
+  return sideEffect(response, navigation) {
     logger(response);
   }
 }`}
@@ -116,10 +116,10 @@ const router = curi(history, routes, {
 
       <p>
         That really is all there is required to know in order to write your own
-        side effects. You may want to review the{' '}
-        <Link to="Guide" params={{ slug: 'responses' }}>
+        side effects. You may want to review the{" "}
+        <Link to="Guide" params={{ slug: "responses" }}>
           response
-        </Link>{' '}
+        </Link>{" "}
         properties to know which properties you should expect a response to
         have, but other than that they are pretty simple.
       </p>
@@ -129,10 +129,10 @@ const router = curi(history, routes, {
       <h2>Next</h2>
       <p>
         <IJS>curi</IJS>'s options object has three arguments. We have covered
-        the first two, so finally we will cover the cache option in the{' '}
-        <Link to="Guide" params={{ slug: 'response-caching' }}>
+        the first two, so finally we will cover the cache option in the{" "}
+        <Link to="Guide" params={{ slug: "response-caching" }}>
           response caching
-        </Link>{' '}
+        </Link>{" "}
         guide.
       </p>
     </div>

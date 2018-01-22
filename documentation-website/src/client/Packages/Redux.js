@@ -1,15 +1,15 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BasePackage from './base/BasePackage';
-import APIBlock from './base/APIBlock';
+import BasePackage from "./base/BasePackage";
+import APIBlock from "./base/APIBlock";
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../components/PrismBlocks';
-import { Section } from '../components/Sections';
-import { Note } from '../components/Messages';
+} from "../components/PrismBlocks";
+import { Section } from "../components/Sections";
+import { Note } from "../components/Messages";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -44,7 +44,7 @@ const store = createStore(reducer);
 
 syncResponses(store, router);
 // whenever navigation happens, the router will now
-// pass the response and action to your Redux store.
+// pass the response and navigation to your Redux store.
 `}
         </PrismBlock>
       </Section>
@@ -52,7 +52,7 @@ syncResponses(store, router);
       <Section tag="h3" title="curiReducer" id="curiReducer">
         <p>
           The <IJS>curiReducer</IJS> keeps track of your Curi router, the latest
-          response object, and the latest action string in your Redux store.
+          response object, and the latest navigation object in your Redux store.
         </p>
         <PrismBlock lang="javascript">
           {`const router = curi(history, routes);
@@ -63,7 +63,7 @@ const reducer = combineReducers({
 const store = createStore(reducer);
 syncResponses(store, router);
 const { curi } = store.getState();
-// curi = { router, response, action }`}
+// curi = { router, response, navigation }`}
         </PrismBlock>
       </Section>
     </APIBlock>

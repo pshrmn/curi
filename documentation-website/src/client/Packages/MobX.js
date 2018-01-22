@@ -43,14 +43,14 @@ const curiStore = new CuriStore(router);`}
           <IJS>mobx-react</IJS> to make your store available to components. You
           would then use the <IJS>inject</IJS> higher-order component to inject
           the Curi props into components. For example, you would inject the{" "}
-          <IJS>router</IJS>, <IJS>response</IJS>, and <IJS>action</IJS> props
-          into your <Cmp>CuriBase</Cmp>.
+          <IJS>router</IJS>, <IJS>response</IJS>, and <IJS>navigation</IJS>{" "}
+          props into your <Cmp>CuriBase</Cmp>.
         </p>
         <PrismBlock lang="javascript">
           {`const ReactiveBase = inject(({ curi }) => ({
   router: curi.router,
   response: curi.response,
-  action: curi.action
+  navigation: curi.navigation
 }))(observer(CuriBase));`}
         </PrismBlock>
         <PrismBlock lang="jsx">

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
+import BaseTutorial from "./base/BaseTutorial";
+import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default () => (
   <BaseTutorial>
@@ -62,12 +62,12 @@ export default () => (
         </li>
       </ol>
       <p>
-        Using the routes that we defined in the{' '}
-        <Link to="Tutorial" params={{ name: '02-routes' }}>
+        Using the routes that we defined in the{" "}
+        <Link to="Tutorial" params={{ name: "02-routes" }}>
           Routes Tutorial
-        </Link>{' '}
-        and the{' '}
-        <Link to="Tutorial" params={{ name: '03-hickory' }}>
+        </Link>{" "}
+        and the{" "}
+        <Link to="Tutorial" params={{ name: "03-hickory" }}>
           Hickory history object
         </Link>, we are ready to create our router.
       </p>
@@ -95,14 +95,14 @@ const router = curi(history, routes);`}
       <p>
         What does a response handler function look like? It can take two
         arguments. The first will be the <IJS>response</IJS> object generated
-        for the new location. The second is the <IJS>action</IJS> type from the
-        navigation (<IJS>'PUSH'</IJS>,
-        <IJS>'POP'</IJS>, and <IJS>'REPLACE'</IJS>).
+        for the new location. The second is the <IJS>navigation</IJS> object,
+        which has properties related to the last navigation (the navigation's{" "}
+        <IJS>action</IJS> string and the <IJS>previous</IJS> response object).
       </p>
       <PrismBlock lang="javascript">
-        {`function responseLogger(response, action) {
+        {`function responseLogger(response, navigation) {
   console.log("RESPONSE:", response);
-  console.log("ACTION", action)
+  console.log("NAVIGATION", navigation)
 }
 router.respond(responseLogger);`}
       </PrismBlock>
@@ -111,7 +111,7 @@ router.respond(responseLogger);`}
         responding to new responses.
       </p>
       <PrismBlock lang="javascript">
-        {`function responseLogger(response, action) {
+        {`function responseLogger(response, navigation) {
   console.log("I will be called for every response until I unsubscribe");
 }
 const stopResponding = router.respond(responseLogger);
@@ -131,7 +131,7 @@ stopResponding();
         handler will only be called one time.
       </p>
       <PrismBlock lang="javascript">
-        {`function responseLogger(response, action) {
+        {`function responseLogger(response, navigation) {
   console.log("I will only be called once");
 }
 router.respond(responseLogger, { once: true });`}
@@ -151,14 +151,14 @@ router.respond(responseLogger, { once: true });`}
         everyone, the next tutorial is framework specific.
       </p>
       <p>
-        If you are following along using React, continue on to{' '}
-        <Link to="Tutorial" params={{ name: '05-pages-react' }}>
+        If you are following along using React, continue on to{" "}
+        <Link to="Tutorial" params={{ name: "05-pages-react" }}>
           Part 6: React Pages
         </Link>
       </p>
       <p>
-        If you are following along using Vue, you instead you should go to{' '}
-        <Link to="Tutorial" params={{ name: '05-pages-vue' }}>
+        If you are following along using Vue, you instead you should go to{" "}
+        <Link to="Tutorial" params={{ name: "05-pages-vue" }}>
           Part 6: Vue Pages
         </Link>
       </p>

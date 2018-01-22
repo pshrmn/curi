@@ -1,5 +1,5 @@
-import React from 'react';
-import { PrismBlock } from '../PrismBlocks';
+import React from "react";
+import { PrismBlock } from "../PrismBlocks";
 
 const SvelteBanner = () => (
   <PrismBlock lang="javascript">
@@ -21,10 +21,10 @@ const routes = [
 const router = curi(history, routes);
 
 // create a Svelte store so that components can access
-// the router, responses, and actions
+// the router, responses, and navigations
 const store = new Store({
   router,
-  curi: { response: undefined, action: undefined }
+  curi: { response: undefined, navigation: undefined }
 });
 
 let view;
@@ -32,8 +32,8 @@ const root = document.getElementById('root');
 
 // setup a subscriber that will update the store when
 // the location changes.
-router.respond((response, action) => {
-  store.set({ curi: { response, action } });
+router.respond((response, navigation) => {
+  store.set({ curi: { response, navigation } });
 });
 
 // add a one time subscriber for the initial render

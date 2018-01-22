@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseGuide from './base/BaseGuide';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Section, Subsection } from '../components/Sections';
+import BaseGuide from "./base/BaseGuide";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name }) => (
   <BaseGuide>
@@ -17,14 +17,14 @@ export default ({ name }) => (
     </p>
     <p>
       In order to re-render your application after navigation, you can subscribe
-      to your router using its <IJS>respond</IJS> method. <IJS>respond</IJS>{' '}
-      takes a callback function that will be passed <IJS>response</IJS> and{' '}
-      <IJS>action</IJS> arguments, which you can use to render.
+      to your router using its <IJS>respond</IJS> method. <IJS>respond</IJS>{" "}
+      takes a callback function that will be passed <IJS>response</IJS> and{" "}
+      <IJS>navigation</IJS> arguments, which you can use to render.
     </p>
 
     <Section title="The History Object" id="history-object">
       <p>
-        Curi's navigation is powered by the{' '}
+        Curi's navigation is powered by the{" "}
         <a href="https://github.com/pshrmn/hickory">Hickory</a> package. You
         just need to pick which type of Hickory history object is right for your
         application.
@@ -75,8 +75,8 @@ browserHistory.navigate({ pathname: '/guides/getting-started' });
     <Section title="The Routes Array" id="routes-array">
       <p>Routes are objects with two required properties: name and path.</p>
       <p>
-        Paths can be any valid{' '}
-        <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a>{' '}
+        Paths can be any valid{" "}
+        <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a>{" "}
         string. It is just important that you do not begin the string with a
         forward slash (/). Forward slashes are fine anywhere else in the path. (<IJS
         >
@@ -101,10 +101,10 @@ browserHistory.navigate({ pathname: '/guides/getting-started' });
       </PrismBlock>
       <p>
         How route matching works and the other route properties are explained
-        more in-depth in the{' '}
-        <Link to="Guide" params={{ slug: 'routes' }}>
+        more in-depth in the{" "}
+        <Link to="Guide" params={{ slug: "routes" }}>
           All About Routes
-        </Link>{' '}
+        </Link>{" "}
         guide.
       </p>
     </Section>
@@ -128,19 +128,19 @@ const router = curi(history, routes);
       <Subsection title="Other router options" id="other-router-options">
         <p>
           The <IJS>curi</IJS> function can also take an optional third argument,
-          which is an options object. You can use this to pass{' '}
-          <Link to="Guide" params={{ slug: 'addons' }}>
+          which is an options object. You can use this to pass{" "}
+          <Link to="Guide" params={{ slug: "addons" }}>
             add-ons
-          </Link>,{' '}
-          <Link to="Guide" params={{ slug: 'side-effects' }}>
+          </Link>,{" "}
+          <Link to="Guide" params={{ slug: "side-effects" }}>
             side effects
-          </Link>, a{' '}
-          <Link to="Guide" params={{ slug: 'response-caching' }}>
+          </Link>, a{" "}
+          <Link to="Guide" params={{ slug: "response-caching" }}>
             cache
-          </Link>, and a{' '}
+          </Link>, and a{" "}
           <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp">
             <IJS>pathnameOptions</IJS>
-          </a>{' '}
+          </a>{" "}
           object to your router.
         </p>
         <PrismBlock lang="javascript">
@@ -161,12 +161,12 @@ const router = curi(history, routes);
         against all of your routes. When it finds one that matches, it uses that
         route object to create a response object. You can subscribe to a Curi
         router with a response handler function. When a new response is created,
-        your response handler function will be called with the response and the
-        action type of the navigation.
+        your response handler function will be called with the response object
+        and an object with additional navigation data.
       </p>
       <PrismBlock lang="javascript">
         {`const router = curi(history, routes);
-router.response((response, action) => {
+router.response((response, navigation) => {
   // whenever the location changes, this function is called
   // you can use this function to re-render your application
   // using the new response object
@@ -175,14 +175,14 @@ router.response((response, action) => {
       </PrismBlock>
 
       <p>
-        Responses are generated asynchronously. A Curi router has a{' '}
+        Responses are generated asynchronously. A Curi router has a{" "}
         <IJS>response</IJS> function that you can use to register a function to
         be called whenever a new response is generated.
       </p>
       <PrismBlock lang="javascript">
         {`const router = curi(history, routes);
 // wait to render until a response is generated
-router.respond((response, action) => {
+router.respond((response, navigation) => {
   // now we can render using the response
 });`}
       </PrismBlock>
@@ -190,10 +190,10 @@ router.respond((response, action) => {
         Your location-based rendering will be centered around these response
         objects, so you should be familiar with the different properties that
         will be available to you. We will get into more details about responses
-        in the{' '}
-        <Link to="Guide" params={{ slug: 'responses' }}>
+        in the{" "}
+        <Link to="Guide" params={{ slug: "responses" }}>
           Rendering with Responses
-        </Link>{' '}
+        </Link>{" "}
         guide, but for now we will just go over how a route maps to a response.
       </p>
       <PrismBlock lang="javascript">
@@ -250,10 +250,10 @@ const routes = [
     <h2>Next</h2>
     <p>
       Now that you know the core of how Curi works, let's take a closer look at
-      routes with the{' '}
-      <Link to="Guide" params={{ slug: 'routes' }}>
+      routes with the{" "}
+      <Link to="Guide" params={{ slug: "routes" }}>
         All About Routes
-      </Link>{' '}
+      </Link>{" "}
       guide.
     </p>
   </BaseGuide>
