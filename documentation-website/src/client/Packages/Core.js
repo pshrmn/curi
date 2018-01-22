@@ -1,8 +1,9 @@
-import React from 'react';
-import BasePackage from './base/BasePackage';
-import APIBlock from './base/APIBlock';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Section, Subsection } from '../components/Sections';
+import React from "react";
+import BasePackage from "./base/BasePackage";
+import APIBlock from "./base/APIBlock";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Section, Subsection } from "../components/Sections";
+import { Note } from "../components/Messages";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -13,7 +14,7 @@ export default ({ name, version, globalName }) => (
       <p>
         The core Curi package provides the function that creates Curi routers.
         While you can pick and choose between the other Curi packages, every
-        application that uses Curi for its routing/navigation <em>must</em> use{' '}
+        application that uses Curi for its routing/navigation <em>must</em> use{" "}
         <IJS>@curi/core</IJS>.
       </p>
     }
@@ -23,7 +24,7 @@ export default ({ name, version, globalName }) => (
         <p>
           The Curi package has one export, which is a function that returns a
           router. It is a default export, so you can name it whatever you like
-          when importing it. Throughout the documentation, it is imported as{' '}
+          when importing it. Throughout the documentation, it is imported as{" "}
           <IJS>curi</IJS>.
         </p>
 
@@ -49,31 +50,31 @@ const router = curi(history, routes, options);`}
             </p>
             <ul>
               <li>
-                addons - An array of add-on instances. The pathname add-on is
-                included by default, but any other add-ons that you wish to use
-                should be provided in this array.
+                <IJS>addons</IJS> - An array of add-on instances. The pathname
+                add-on is included by default, but any other add-ons that you
+                wish to use should be provided in this array.
               </li>
               <li>
-                middleware - An array of middleware functions. These are
-                functions that will be able to interact with/modify response
+                <IJS>middleware</IJS> - An array of middleware functions. These
+                are functions that will be able to interact with/modify response
                 objects before they are emitted to subscribed functions.
               </li>
               <li>
-                cache - An object with get/set properties. This allows you to
-                cache old responses, preventing any <IJS>match.every</IJS>{' '}
-                functions from being re-called when navigating to an
-                already-visited location.
+                <IJS>cache</IJS> - An object with get/set properties. This
+                allows you to cache old responses, preventing any{" "}
+                <IJS>match.every</IJS> functions from being re-called when
+                navigating to an already-visited location.
               </li>
               <li>
-                pathnameOptions - An object with an <IJS>encode</IJS> function
-                that will be used to encode the string created when generating a
-                pathname from a route and its params.
+                <IJS>pathnameOptions</IJS> - An object with an <IJS>encode</IJS>{" "}
+                function that will be used to encode the string created when
+                generating a pathname from a route and its params.
               </li>
               <li>
-                emitRedirects - When <IJS>false</IJS> (default is <IJS>true</IJS>),
-                response objects with the <IJS>redirectTo</IJS> property will not
-                be emitted to response handlers (but they will still trigger
-                automatic redirects).
+                <IJS>emitRedirects</IJS> - When <IJS>false</IJS> (default is{" "}
+                <IJS>true</IJS>), response objects with the{" "}
+                <IJS>redirectTo</IJS> property will not be emitted to response
+                handlers (but they will still trigger automatic redirects).
               </li>
             </ul>
           </Subsection>
@@ -93,7 +94,7 @@ const router = curi(history, routes, options);`}
               response is generated.
             </p>
             <p>
-              If the best-matched route has either a <IJS>match.initial</IJS> or{' '}
+              If the best-matched route has either a <IJS>match.initial</IJS> or{" "}
               <IJS>match.every</IJS> loading function, the router will not call
               the subscribed functions until the loading functions have all
               resolved.
@@ -111,6 +112,31 @@ const router = curi(history, routes, options);`}
 // once is true, router.respond does not return an unsubscribe function.`}
               </PrismBlock>
             </Subsection>
+          </Subsection>
+
+          <Subsection tag="h5" title="current" id="current-property">
+            <p>
+              While <IJS>router.respond</IJS> is used to listen for new
+              responses, the <IJS>router.current</IJS> method is a synchronous
+              way to see the current <IJS>response</IJS> and <IJS>action</IJS>.
+            </p>
+            <Note>
+              If you call <IJS>router.current</IJS> before the initial response
+              has been emitted, the <IJS>response</IJS> and <IJS>action</IJS>{" "}
+              properties will be <IJS>null</IJS>.
+            </Note>
+            <PrismBlock lang="javascript">
+              {`const router = curi(history, routes);
+const tooSoon = router.current();
+// tooSoon.response === null
+// tooSoon.action === null
+
+router.respond((response, action) => {
+  const justRight = router.current();
+  // justRight.response === response
+  // justRight.action === action
+});`}
+            </PrismBlock>
           </Subsection>
 
           <Subsection tag="h5" title="addons" id="addons">
@@ -134,7 +160,7 @@ const userPathname = router.addons.pathname('User', { id: '12345' });
 
           <Subsection tag="h5" title="history" id="history-property">
             <p>
-              You can access the history object that you passed to{' '}
+              You can access the history object that you passed to{" "}
               <IJS>curi</IJS> through the router's history property. This allows
               you to just pass the router throughout your project instead of
               both that and the history object.
