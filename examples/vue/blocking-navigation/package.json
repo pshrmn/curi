@@ -20,8 +20,8 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.23",
-    "@curi/vue": "^1.0.0-beta.14",
+    "@curi/core": "^1.0.0-beta.24",
+    "@curi/vue": "^1.0.0-beta.15",
     "@hickory/browser": "^1.0.0-beta.5",
     "vue": "^2.5.9"
   }

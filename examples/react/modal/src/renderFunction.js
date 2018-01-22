@@ -1,12 +1,12 @@
-import React from 'react';
-import Nav from './components/Nav';
-import Cacher from './components/Cacher';
+import React from "react";
+import Nav from "./components/Nav";
+import Cacher from "./components/Cacher";
 
-function render(response, action, router) {
+function render(response, navigation, router) {
   if (!response) {
     return null;
   }
-  const { location, params, body:Body } = response;
+  const { location, params, body: Body } = response;
   return (
     <div>
       <Nav />

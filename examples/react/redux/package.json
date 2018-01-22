@@ -17,9 +17,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.23",
-    "@curi/react": "^1.0.0-beta.16",
-    "@curi/redux": "^1.0.0-beta.2",
+    "@curi/core": "^1.0.0-beta.24",
+    "@curi/react": "^1.0.0-beta.18",
+    "@curi/redux": "^1.0.0-beta.3",
     "@hickory/browser": "^1.0.0-beta.5",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",

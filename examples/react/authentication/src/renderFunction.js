@@ -1,10 +1,10 @@
-import React from 'react';
-import { Redirect } from '@curi/react';
+import React from "react";
+import { Redirect } from "@curi/react";
 
-import Nav from './components/Nav';
-import NotFound from './components/NotFound';
+import Nav from "./components/Nav";
+import NotFound from "./components/NotFound";
 
-function render(response, action, router) {
+function render(response, navigation, router) {
   if (!response || response.redirectTo) {
     return null;
   }
@@ -13,11 +13,15 @@ function render(response, action, router) {
   return (
     <div>
       <Nav />
-      {
-        response.body
-          ? <response.body params={params} history={router.history} location={location} />
-          : <NotFound />
-      }
+      {response.body ? (
+        <response.body
+          params={params}
+          history={router.history}
+          location={location}
+        />
+      ) : (
+        <NotFound />
+      )}
     </div>
   );
 }

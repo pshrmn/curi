@@ -11,11 +11,16 @@ function catchAll(req, res) {
   const router = curi(history, routes);
 
   // 3. Wait for the initial location's response to finish
-  router.response(response => {
+  router.response((response, navigation) => {
     // 4. Generate the HTML markup by rendering a <CuriBase> and
     // passing it the response
     const markup = renderToString(
-      <CuriBase response={response} router={router} render={renderFunction} />
+      <CuriBase
+        router={router}
+        response={response}
+        navigation={navigation}
+        render={renderFunction}
+      />
     );
     // 5. Insert the markup into the page's html and send it
     res.send(renderFullPage(markup));
