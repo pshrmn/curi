@@ -14,7 +14,7 @@ describe("<Curious>", () => {
     it("passes router", () => {
       const fakeRouter = { history: {} };
       const fakeResponse = { name: "Home", status: 200 };
-
+      const fakeNavigation = { action: "PUSH" };
       const wrapper = shallow(
         <Curious
           render={({ router }) => {
@@ -23,7 +23,13 @@ describe("<Curious>", () => {
           }}
         />,
         {
-          context: { curi: { router: fakeRouter, response: fakeResponse } }
+          context: {
+            curi: {
+              router: fakeRouter,
+              response: fakeResponse,
+              navigation: fakeNavigation
+            }
+          }
         }
       );
     });
@@ -31,7 +37,7 @@ describe("<Curious>", () => {
     it("passes response", () => {
       const fakeRouter = { history: {} };
       const fakeResponse = { name: "Home", status: 200 };
-
+      const fakeNavigation = { action: "PUSH" };
       const wrapper = shallow(
         <Curious
           render={({ response }) => {
@@ -40,20 +46,26 @@ describe("<Curious>", () => {
           }}
         />,
         {
-          context: { curi: { router: fakeRouter, response: fakeResponse } }
+          context: {
+            curi: {
+              router: fakeRouter,
+              response: fakeResponse,
+              navigation: fakeNavigation
+            }
+          }
         }
       );
     });
 
-    it("passes action", () => {
+    it("passes navigation", () => {
       const fakeRouter = { history: {} };
       const fakeResponse = { name: "Home", status: 200 };
-      const fakeAction = "POP";
+      const fakeNavigation = { action: "POP" };
 
       const wrapper = shallow(
         <Curious
-          render={({ action }) => {
-            expect(action).toBe(fakeAction);
+          render={({ navigation }) => {
+            expect(navigation).toBe(fakeNavigation);
             return null;
           }}
         />,
@@ -62,7 +74,7 @@ describe("<Curious>", () => {
             curi: {
               router: fakeRouter,
               response: fakeResponse,
-              action: fakeAction
+              navigation: fakeNavigation
             }
           }
         }
@@ -82,9 +94,9 @@ describe("<Curious>", () => {
       router = curi(history, routes);
     });
 
-    it("passes response/action/router from context on initial render", () => {
+    it("passes response/navigation/router from context on initial render", () => {
       router.respond(
-        (response, action) => {
+        (response, navigation) => {
           // initial render
           const wrapper = mount(
             <Curious
@@ -92,16 +104,16 @@ describe("<Curious>", () => {
               render={({
                 router: routerProp,
                 response: responseProp,
-                action: actionProp
+                navigation: navigationProp
               }) => {
                 expect(routerProp).toBe(router);
                 expect(responseProp).toBe(response);
-                expect(actionProp).toBe(action);
+                expect(navigationProp).toBe(navigation);
                 return null;
               }}
             />,
             {
-              context: { curi: { router, response, action } }
+              context: { curi: { router, response, navigation } }
             }
           );
         },
@@ -111,7 +123,7 @@ describe("<Curious>", () => {
 
     it("re-calls render when responses are emitted", done => {
       router.respond(
-        response => {
+        (response, navigation) => {
           // initial render
           const wrapper = mount(
             <Curious
@@ -119,7 +131,7 @@ describe("<Curious>", () => {
               render={({ response }) => <div>{response.name}</div>}
             />,
             {
-              context: { curi: { router, response } }
+              context: { curi: { router, response, navigation } }
             }
           );
           expect(wrapper.text()).toBe("Home");
@@ -139,7 +151,7 @@ describe("<Curious>", () => {
       const oError = console.error;
       console.error = jest.fn();
       router.respond(
-        response => {
+        (response, navigation) => {
           // initial render
           const wrapper = mount(
             <Curious
@@ -147,13 +159,13 @@ describe("<Curious>", () => {
               render={({ response }) => <div>{response.name}</div>}
             />,
             {
-              context: { curi: { router, response } }
+              context: { curi: { router, response, navigation } }
             }
           );
           expect(wrapper.text()).toBe("Home");
 
           wrapper.setProps({ responsive: false });
-          expect(console.error.mock.calls[0][0]).toBe(
+          expect((console.error as jest.Mock).mock.calls[0][0]).toBe(
             'Warning: The "responsive" prop of <Curious> cannot be changed.'
           );
           console.error = oError;
@@ -184,16 +196,16 @@ describe("<Curious>", () => {
         );
       });
 
-      it("initial response/action are null when router hasn't resolved first response", done => {
+      it("initial response/navigation are null when router hasn't resolved first response", done => {
         let firstCall = true;
         const router = curi(history, routes);
         const wrapper = shallow(
           <Curious
             router={router}
-            render={({ response, action }) => {
+            render={({ response, navigation }) => {
               if (firstCall) {
                 expect(response).toBe(null);
-                expect(action).toBe(null);
+                expect(navigation).toBe(null);
                 done();
                 firstCall = false;
               }
@@ -221,7 +233,7 @@ describe("<Curious>", () => {
             );
 
             wrapper.setProps({ router: secondRouter });
-            expect(console.error.mock.calls[0][0]).toBe(
+            expect((console.error as jest.Mock).mock.calls[0][0]).toBe(
               'Warning: The "router" prop of <Curious> cannot be changed.'
             );
             console.error = oError;
@@ -240,9 +252,12 @@ describe("<Curious>", () => {
           unsubscriber = jest.fn();
           return unsubscriber;
         }),
-        current: () => ({ response: fakeResponse, action: "PUSH" })
+        current: () => ({
+          response: fakeResponse,
+          navigation: { action: "PUSH" }
+        })
       };
-
+      const fakeNavigation = { action: "REPLACE" };
       const wrapper = shallow(
         <Curious
           responsive={true}
@@ -252,7 +267,13 @@ describe("<Curious>", () => {
           }}
         />,
         {
-          context: { curi: { router: fakeRouter, response: fakeResponse } }
+          context: {
+            curi: {
+              router: fakeRouter,
+              response: fakeResponse,
+              navigation: fakeNavigation
+            }
+          }
         }
       );
       expect(fakeRouter.respond.mock.calls.length).toBe(1);

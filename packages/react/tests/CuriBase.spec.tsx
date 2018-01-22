@@ -1,44 +1,37 @@
-import 'jest';
-import React from 'react';
-import { shallow, mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import curi from '@curi/core';
-import InMemory from '@hickory/in-memory';
-import CuriBase from '../src/CuriBase';
-import { Response } from '@curi/core';
+import "jest";
+import React from "react";
+import { shallow, mount } from "enzyme";
+import PropTypes from "prop-types";
+import curi from "@curi/core";
+import InMemory from "@hickory/in-memory";
+import CuriBase from "../src/CuriBase";
+import { Response, Navigation } from "@curi/core";
 
-describe('<CuriBase>', () => {
-  it('calls render function when it renders', () => {
+describe("<CuriBase>", () => {
+  it("calls render function when it renders", () => {
     const history = InMemory();
     const router = curi(history, []);
     const fakerouter = { subscribe: () => {} };
+    const fakeNavigation = { action: "POP" };
     const fn = jest.fn(() => {
       return null;
     });
     const wrapper = shallow(
-      <CuriBase response={{} as Response} router={router} render={fn} />
+      <CuriBase
+        router={router}
+        response={{} as Response}
+        navigation={fakeNavigation as Navigation}
+        render={fn}
+      />
     );
     expect(fn.mock.calls.length).toBe(1);
   });
 
-  it('defaults to action="POP" if not provided', () => {
-    const history = InMemory();
-    const router = curi(history, []);
-    const fakerouter = { subscribe: () => {} };
-    const fn = jest.fn((response, action) => {
-      expect(action).toBe('POP');
-      return null;
-    });
-    const wrapper = shallow(
-      <CuriBase response={{} as Response} router={router} render={fn} />
-    );
-  });
-
-  it('passes the render function the response prop', done => {
+  it("passes the render function the response prop", done => {
     const history = InMemory();
     const routes = [
-      { name: 'Home', path: '', pathOptions: { end: true } },
-      { name: 'About', path: 'about' }
+      { name: "Home", path: "", pathOptions: { end: true } },
+      { name: "About", path: "about" }
     ];
     let receivedResponse;
     const fn = jest.fn(response => {
@@ -48,19 +41,24 @@ describe('<CuriBase>', () => {
 
     const router = curi(history, routes);
     const properties = [
-      'key',
-      'location',
-      'status',
-      'name',
-      'partials',
-      'params',
-      'body',
-      'data',
-      'title'
+      "key",
+      "location",
+      "status",
+      "name",
+      "partials",
+      "params",
+      "body",
+      "data",
+      "title"
     ];
-    router.respond(response => {
+    router.respond((response, navigation) => {
       const wrapper = shallow(
-        <CuriBase response={response} router={router} render={fn} />
+        <CuriBase
+          response={response}
+          navigation={navigation}
+          router={router}
+          render={fn}
+        />
       );
       expect(Object.keys(receivedResponse).length).toEqual(properties.length);
       properties.forEach(key => {
@@ -70,11 +68,11 @@ describe('<CuriBase>', () => {
     });
   });
 
-  it('passes the render function the action prop', done => {
+  it("passes the render function the navigation prop", done => {
     const history = InMemory();
     const routes = [
-      { name: 'Home', path: '', pathOptions: { end: true } },
-      { name: 'About', path: 'about' }
+      { name: "Home", path: "", pathOptions: { end: true } },
+      { name: "About", path: "about" }
     ];
     const fn = jest.fn(() => {
       return null;
@@ -82,25 +80,27 @@ describe('<CuriBase>', () => {
 
     const router = curi(history, routes);
 
-    router.respond((response, action) => {
+    router.respond((response, navigation) => {
       const wrapper = shallow(
         <CuriBase
           response={response}
-          action={action}
+          navigation={navigation}
           router={router}
           render={fn}
         />
       );
-      expect(fn.mock.calls[0][1]).toBe('PUSH');
+      expect(fn.mock.calls[0][1]).toMatchObject({
+        action: "PUSH"
+      });
       done();
     });
   });
 
-  it('passes the render function the router object', done => {
+  it("passes the render function the router object", done => {
     const history = InMemory();
     const routes = [
-      { name: 'Home', path: '', pathOptions: { end: true } },
-      { name: 'About', path: 'about' }
+      { name: "Home", path: "", pathOptions: { end: true } },
+      { name: "About", path: "about" }
     ];
     const fn = jest.fn(() => {
       return null;
@@ -116,7 +116,7 @@ describe('<CuriBase>', () => {
     });
   });
 
-  describe('context', () => {
+  describe("context", () => {
     let receivedContext;
 
     beforeEach(() => {
@@ -132,23 +132,24 @@ describe('<CuriBase>', () => {
       curi: PropTypes.shape({
         router: PropTypes.object,
         response: PropTypes.object,
-        action: PropTypes.string
+        navigation: PropTypes.object
       })
     };
 
     it('places the curi router on the context as "context.curi.router"', done => {
       const history = InMemory();
       const routes = [
-        { name: 'Home', path: '', pathOptions: { end: true } },
-        { name: 'About', path: 'about' }
+        { name: "Home", path: "", pathOptions: { end: true } },
+        { name: "About", path: "about" }
       ];
       const router = curi(history, routes);
 
-      router.respond(response => {
+      router.respond((response, navigation) => {
         const wrapper = mount(
           <CuriBase
-            response={response}
             router={router}
+            response={response}
+            navigation={navigation}
             render={response => <RouterReporter />}
           />
         );
@@ -160,16 +161,17 @@ describe('<CuriBase>', () => {
     it('places the current response on the context as "context.curi.response"', done => {
       const history = InMemory();
       const routes = [
-        { name: 'Home', path: '', pathOptions: { end: true } },
-        { name: 'About', path: 'about' }
+        { name: "Home", path: "", pathOptions: { end: true } },
+        { name: "About", path: "about" }
       ];
       const router = curi(history, routes);
 
-      router.respond(response => {
+      router.respond((response, navigation) => {
         const wrapper = mount(
           <CuriBase
-            response={response}
             router={router}
+            response={response}
+            navigation={navigation}
             render={response => <RouterReporter />}
           />
         );
@@ -178,24 +180,24 @@ describe('<CuriBase>', () => {
       });
     });
 
-    it('places the current action on the context as "context.curi.action"', done => {
+    it('places the current navigation on the context as "context.curi.navigation"', done => {
       const history = InMemory();
       const routes = [
-        { name: 'Home', path: '', pathOptions: { end: true } },
-        { name: 'About', path: 'about' }
+        { name: "Home", path: "", pathOptions: { end: true } },
+        { name: "About", path: "about" }
       ];
       const router = curi(history, routes);
 
-      router.respond((response, action) => {
+      router.respond((response, navigation) => {
         const wrapper = mount(
           <CuriBase
             response={response}
-            action={action}
+            navigation={navigation}
             router={router}
             render={response => <RouterReporter />}
           />
         );
-        expect(receivedContext.curi.action).toBe(action);
+        expect(receivedContext.curi.navigation).toBe(navigation);
         done();
       });
     });

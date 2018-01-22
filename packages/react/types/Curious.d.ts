@@ -1,9 +1,8 @@
 /// <reference types="react" />
-import React from "react";
-import PropTypes from "prop-types";
-import { CuriContext } from "./interface";
-import { CuriRouter, Response } from "@curi/core";
-import { Action } from "@hickory/root";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { CuriContext } from './interface';
+import { CuriRouter, Response, Navigation } from '@curi/core';
 export interface CuriousProps {
     render(p: CuriousRenderProps): React.ReactElement<any>;
     router?: CuriRouter;
@@ -12,11 +11,11 @@ export interface CuriousProps {
 export interface CuriousRenderProps {
     router: CuriRouter;
     response: Response;
-    action: Action;
+    navigation: Navigation;
 }
 export interface CuriousState {
     response: Response;
-    action: Action;
+    navigation: Navigation;
 }
 export default class Curious extends React.Component<CuriousProps, CuriousState> {
     stopResponding: () => void;

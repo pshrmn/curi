@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import warning from "warning";
 
 import { CuriContext } from "./interface";
-import { CuriRouter, Response } from "@curi/core";
-import { Action } from "@hickory/root";
+import { CuriRouter, Response, Navigation } from "@curi/core";
 
 export interface CuriousProps {
   render(p: CuriousRenderProps): React.ReactElement<any>;
@@ -15,12 +14,12 @@ export interface CuriousProps {
 export interface CuriousRenderProps {
   router: CuriRouter;
   response: Response;
-  action: Action;
+  navigation: Navigation;
 }
 
 export interface CuriousState {
   response: Response;
-  action: Action;
+  navigation: Navigation;
 }
 
 export default class Curious extends React.Component<
@@ -34,7 +33,7 @@ export default class Curious extends React.Component<
     curi: PropTypes.shape({
       router: PropTypes.object.isRequired,
       response: PropTypes.object.isRequired,
-      action: PropTypes.string
+      navigation: PropTypes.object.isRequired
     })
   };
 
@@ -44,17 +43,17 @@ export default class Curious extends React.Component<
     this.isResponsive = !!(this.props.responsive || this.props.router);
     if (this.isResponsive) {
       let response: Response;
-      let action: Action;
+      let navigation: Navigation;
 
       if (this.props.router) {
         const initial = this.props.router.current();
         response = initial.response;
-        action = initial.action;
+        navigation = initial.navigation;
       } else {
         response = this.context.curi.response;
-        action = this.context.curi.action;
+        navigation = this.context.curi.navigation;
       }
-      this.state = { response, action };
+      this.state = { response, navigation };
     }
   }
 
@@ -62,8 +61,8 @@ export default class Curious extends React.Component<
     if (this.props.responsive || this.props.router) {
       const router = this.props.router || this.context.curi.router;
       this.stopResponding = router.respond(
-        (response: Response, action: Action) => {
-          this.setState({ response, action });
+        (response: Response, navigation: Navigation) => {
+          this.setState({ response, navigation });
         }
       );
     }
@@ -91,7 +90,9 @@ export default class Curious extends React.Component<
     const { curi } = this.context;
     const router = this.props.router || curi.router;
     const response = this.isResponsive ? this.state.response : curi.response;
-    const action = this.isResponsive ? this.state.action : curi.action;
-    return this.props.render({ router, response, action });
+    const navigation = this.isResponsive
+      ? this.state.navigation
+      : curi.navigation;
+    return this.props.render({ router, response, navigation });
   }
 }
