@@ -18,7 +18,7 @@ export interface SideEffect {
 }
 export interface Cache {
     set: (response: Response) => void;
-    get: (location: HickoryLocation) => Response;
+    get: (location: HickoryLocation, action: Action) => Response;
 }
 export interface RouterOptions {
     addons?: Array<Addon>;

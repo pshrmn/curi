@@ -144,7 +144,7 @@ function createRouter(
     };
 
     if (cache) {
-      const cachedResponse = cache.get(pendingNav.location);
+      const cachedResponse = cache.get(pendingNav.location, pendingNav.action);
       if (cachedResponse != null) {
         cacheAndEmit(cachedResponse, navigation);
       }
