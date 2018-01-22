@@ -1,5 +1,6 @@
 ## Next
 
+* Expose the last generated `response` and `action` through `current` function.
 * (Internal) Set `previous` before emitting so nested response handlers are called with newest response.
 * Add `options.emitRedirects` (default `true`). When `false`, a response with a `redirectTo` property will not be emitted to subscribers. Instead, the automatic redirect will occur and the result of that navigation will emitted.
 

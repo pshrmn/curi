@@ -173,12 +173,8 @@ describe("<Curious>", () => {
               <Curious
                 router={router}
                 render={({ response }) => {
-                  if (renderCount++ === 0) {
-                    expect(response).toBe(undefined);
-                  } else {
-                    expect(response.name).toBe("Home");
-                    done();
-                  }
+                  expect(response.name).toBe("Home");
+                  done();
                   return null;
                 }}
               />
@@ -188,26 +184,22 @@ describe("<Curious>", () => {
         );
       });
 
-      it("initial response/action are undefined when there is no context fallback", done => {
+      it("initial response/action are null when router hasn't resolved first response", done => {
         let firstCall = true;
-        router.respond(
-          response => {
-            const wrapper = shallow(
-              <Curious
-                router={router}
-                render={({ response, action }) => {
-                  if (firstCall) {
-                    expect(response).toBeUndefined();
-                    expect(action).toBeUndefined();
-                    done();
-                    firstCall = false;
-                  }
-                  return null;
-                }}
-              />
-            );
-          },
-          { once: true }
+        const router = curi(history, routes);
+        const wrapper = shallow(
+          <Curious
+            router={router}
+            render={({ response, action }) => {
+              if (firstCall) {
+                expect(response).toBe(null);
+                expect(action).toBe(null);
+                done();
+                firstCall = false;
+              }
+              return null;
+            }}
+          />
         );
       });
 
@@ -216,17 +208,16 @@ describe("<Curious>", () => {
         console.error = jest.fn();
         const firstRouter = curi(history, routes);
         const secondRouter = curi(history, routes);
-        router.respond(
+        firstRouter.respond(
           response => {
             // initial render
             const wrapper = mount(
               <Curious
                 router={firstRouter}
-                render={({ response }) => <div>{response.name}</div>}
-              />,
-              {
-                context: { curi: { router, response } }
-              }
+                render={({ response }) => {
+                  return <div>{response.name}</div>;
+                }}
+              />
             );
 
             wrapper.setProps({ router: secondRouter });
@@ -243,13 +234,14 @@ describe("<Curious>", () => {
 
     it("unsubscribes when unmounting", () => {
       let unsubscriber;
+      const fakeResponse = { name: "Home", status: 200 };
       const fakeRouter = {
         respond: jest.fn(() => {
           unsubscriber = jest.fn();
           return unsubscriber;
-        })
+        }),
+        current: () => ({ response: fakeResponse, action: "PUSH" })
       };
-      const fakeResponse = { name: "Home", status: 200 };
 
       const wrapper = shallow(
         <Curious

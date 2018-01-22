@@ -1,3 +1,7 @@
+## Next
+
+* `<Curious>` sets initial `response`/`action` when responsive.
+
 ## 1.0.0-alpha.2
 
 * Use `@curi/react` `v1.0.0-beta.17`.

@@ -33,6 +33,11 @@ export interface RouterOptions {
   emitRedirects?: boolean;
 }
 
+export interface CurrentResponse {
+  response: Response;
+  action: Action;
+}
+
 export interface CuriRouter {
   refresh: (routeArray: Array<RouteDescriptor>) => void;
   respond: (
@@ -41,4 +46,5 @@ export interface CuriRouter {
   ) => RemoveResponseHandler;
   addons: Addons;
   history: History;
+  current(): CurrentResponse;
 }
