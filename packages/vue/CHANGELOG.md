@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.15
 
 * Switch from `action` to `navigation` (which contains an `action` as well as the previous `response`).
 

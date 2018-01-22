@@ -1,5 +1,5 @@
-import { CuriRouter, Response, Navigation } from '@curi/core';
-import { Store, Action } from 'redux';
+import { CuriRouter, Response, Navigation } from "@curi/core";
+import { Store, Action } from "redux";
 export declare const LOCATION_CHANGE = "@@curi/LOCATION_CHANGE";
 export declare const ADD_CURI = "@@curi/ADD_CURI";
 export interface ResponseAction extends Action {

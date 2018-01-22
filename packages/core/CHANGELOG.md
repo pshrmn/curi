@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.24
 
 * Response handlers are provided a `Navigation` object instead of an `Action` string. The `Navigation` contains properties related to a navigation but that aren't directly associated with the new `Response`. These are `action` (the navigation type) and `previous` (the previous `Response`).
 * Expose the last generated `response` and `action` through `current` function.

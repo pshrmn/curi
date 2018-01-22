@@ -1,4 +1,4 @@
-import { CuriRouter, Response, Navigation } from '@curi/core';
+import { CuriRouter, Response, Navigation } from "@curi/core";
 export interface CuriContext {
     curi: CuriProps;
 }

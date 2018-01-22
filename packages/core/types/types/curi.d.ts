@@ -1,8 +1,8 @@
-import { History, HickoryLocation, Action } from '@hickory/root';
-import { PathFunctionOptions } from 'path-to-regexp';
-import { Addon, Addons } from './addon';
-import { RouteDescriptor } from './route';
-import { Response } from './response';
+import { History, HickoryLocation, Action } from "@hickory/root";
+import { PathFunctionOptions } from "path-to-regexp";
+import { Addon, Addons } from "./addon";
+import { RouteDescriptor } from "./route";
+import { Response } from "./response";
 export interface Navigation {
     action: Action;
     previous: Response;

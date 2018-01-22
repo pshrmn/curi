@@ -1,9 +1,9 @@
 /// <reference types="react" />
-import React from 'react';
-import PropTypes from 'prop-types';
-import { CuriContext } from './interface';
-import { CuriRouter, Response } from '@curi/core';
-import { HickoryLocation } from '@hickory/root';
+import React from "react";
+import PropTypes from "prop-types";
+import { CuriContext } from "./interface";
+import { CuriRouter, Response } from "@curi/core";
+import { HickoryLocation } from "@hickory/root";
 export interface ActiveLink {
     merge(props: object): object;
     partial?: boolean;
