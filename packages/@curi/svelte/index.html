@@ -18,14 +18,14 @@ yarn add @curi/svelte</pre></div><div><p>If you prefer to use script tags, <a hr
   export default {
     components: { Link }
   }
-&lt;/script&gt;</pre><div class="subsection" id="link-props"><h3>Props<a class="header-link" href="/packages/@curi/svelte/#link-props">#</a></h3><ul><li><code class="language-javascript">to</code> - the name of the route to link to</li><li><code class="language-javascript">params</code> - any route params for the linked route</li><li><code class="language-javascript">details</code> - additional location information (<code class="language-javascript">query</code>, <code class="language-javascript">hash</code>, <code class="language-javascript">state</code> for the linked location).</li></ul></div></div></div><div class="section" id="usage"><h2>Usage<a class="header-link" href="/packages/@curi/svelte/#usage">#</a></h2><p>The components exported by <code class="language-javascript">@curi/svelte</code> rely on Svelte&#x27;s store. The store should include a <code class="language-javascript">router</code> property for accessing the Curi router and a <code class="language-javascript">curi</code> property for accessing the latest <code class="language-javascript">response</code> and <code class="language-javascript">action</code> values.</p><pre class="language-javascript">import { Store } from &#x27;svelte/store&#x27;;
+&lt;/script&gt;</pre><div class="subsection" id="link-props"><h3>Props<a class="header-link" href="/packages/@curi/svelte/#link-props">#</a></h3><ul><li><code class="language-javascript">to</code> - the name of the route to link to</li><li><code class="language-javascript">params</code> - any route params for the linked route</li><li><code class="language-javascript">details</code> - additional location information (<code class="language-javascript">query</code>, <code class="language-javascript">hash</code>, <code class="language-javascript">state</code> for the linked location).</li></ul></div></div></div><div class="section" id="usage"><h2>Usage<a class="header-link" href="/packages/@curi/svelte/#usage">#</a></h2><p>The components exported by <code class="language-javascript">@curi/svelte</code> rely on Svelte&#x27;s store. The store should include a <code class="language-javascript">router</code> property for accessing the Curi router and a <code class="language-javascript">curi</code> property for accessing the latest <code class="language-javascript">response</code> and <code class="language-javascript">navigation</code> values.</p><pre class="language-javascript">import { Store } from &#x27;svelte/store&#x27;;
 
 const router = curi(history, routes);
 const store = new Store({
   router,
-  curi: { response: null, action: null }
-});</pre><p>Add a subscriber to the router to update the store whenever a new response is emitted.</p><pre class="language-javascript">router.respond((response, action) =&gt; {
-  store.set({ curi: { response, action } });
+  curi: { response: null, navigation: null }
+});</pre><p>Add a subscriber to the router to update the store whenever a new response is emitted.</p><pre class="language-javascript">router.respond((response, navigation) =&gt; {
+  store.set({ curi: { response, navigation } });
 });</pre><p>As far as rendering your application goes, you should should have a base component that has any global layout and uses the response to render the correct component(s). Setup a one time subscriber to render this component and make sure to pass the store to the component.</p><pre class="language-html">&lt;NavLinks /&gt;
 &lt;:Component {$curi.response.body}&gt;&lt;/:Component&gt;
 

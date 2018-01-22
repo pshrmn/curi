@@ -8,14 +8,14 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorial</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>React Basics</h1><pre class="language-bash">npm install @curi/react</pre><div class="note"><strong>Note:</strong> <!-- -->This guide assumes that you are already familiar with React.</div><p>Curi provides a number of React components through the<!-- --> <a href="/packages/@curi/react/"><code class="language-javascript">@curi/react</code></a> <!-- -->package. To get started, there are only two components that you need to be aware of: <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> and <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>.</p><div class="section" id="CuriBase"><h2><code class="language-jsx">&lt;<!-- -->CuriBase<!-- -->&gt;</code><a class="header-link" href="/guides/react/#CuriBase">#</a></h2><p>In order for other components to access router-related variables, we need to make them available through React&#x27;s <code class="language-javascript">context</code>. The<!-- --> <a href="/packages/@curi/react/#CuriBase"><code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code></a> <!-- -->component is responsible for doing this. You pass it a <code class="language-javascript">router</code>, a <code class="language-javascript">response</code> object, and an <code class="language-javascript">action</code> string and other components in your application will be able to easily access them.</p><pre class="language-jsx">import { CuriBase } from &#x27;@curi/react&#x27;;
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorial</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>React Basics</h1><pre class="language-bash">npm install @curi/react</pre><div class="note"><strong>Note:</strong> <!-- -->This guide assumes that you are already familiar with React.</div><p>Curi provides a number of React components through the<!-- --> <a href="/packages/@curi/react/"><code class="language-javascript">@curi/react</code></a> <!-- -->package. To get started, there are only two components that you need to be aware of: <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> and <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>.</p><div class="section" id="CuriBase"><h2><code class="language-jsx">&lt;<!-- -->CuriBase<!-- -->&gt;</code><a class="header-link" href="/guides/react/#CuriBase">#</a></h2><p>In order for other components to access router-related variables, we need to make them available through React&#x27;s <code class="language-javascript">context</code>. The<!-- --> <a href="/packages/@curi/react/#CuriBase"><code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code></a> <!-- -->component is responsible for doing this. You pass it a <code class="language-javascript">router</code>, a <code class="language-javascript">response</code> object, and a <code class="language-javascript">navigation</code> object and then other components in your application will be able to easily access them.</p><pre class="language-jsx">import { CuriBase } from &#x27;@curi/react&#x27;;
 
 &lt;CuriBase
   router={router}
   response={response}
-  action={action}
+  navigation={navigation}
   render={render}
-/&gt;</pre><div class="subsection" id="render-prop"><h3>The render prop<a class="header-link" href="/guides/react/#render-prop">#</a></h3><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> also expects a <code class="language-javascript">render</code> prop, which is a function that will be called every time the <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> <!-- -->is re-rendered. The <code class="language-javascript">render</code> function should return the React elements that make up your application.</p><p>The render function receives three arguments to help you render your application: <code class="language-javascript">response</code>, <code class="language-javascript">action</code>, and<!-- --> <code class="language-javascript">router</code>. The <code class="language-javascript">response</code> object is the most important of these, while the others may occasionally be useful or you may never use them.</p><div class="note"><strong>Note:</strong> <!-- -->The <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> does <strong>not</strong> automatically update when new responses are emitted. There are a couple of strategies for re-rendering new responses that will be covered later.</div><p>In our routes, we can attach a <code class="language-javascript">body</code> property to response objects, which we can then use in a <code class="language-javascript">render</code> function.</p><pre class="language-javascript">import Home from &#x27;./components/Home&#x27;;
+/&gt;</pre><div class="subsection" id="render-prop"><h3>The render prop<a class="header-link" href="/guides/react/#render-prop">#</a></h3><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> also expects a <code class="language-javascript">render</code> prop, which is a function that will be called every time the <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> <!-- -->is re-rendered. The <code class="language-javascript">render</code> function should return the React elements that make up your application.</p><p>The render function receives three arguments to help you render your application: <code class="language-javascript">response</code>, <code class="language-javascript">navigation</code>, and<!-- --> <code class="language-javascript">router</code>. The <code class="language-javascript">response</code> object is the most important of these, while the others may occasionally be useful or you may never use them.</p><div class="note"><strong>Note:</strong> <!-- -->The <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> does <strong>not</strong> automatically update when new responses are emitted. There are a couple of strategies for re-rendering new responses that will be covered later.</div><p>In our routes, we can attach a <code class="language-javascript">body</code> property to response objects, which we can then use in a <code class="language-javascript">render</code> function.</p><pre class="language-javascript">import Home from &#x27;./components/Home&#x27;;
 
 const routes = [
   {
@@ -34,19 +34,19 @@ const routes = [
 }</pre><div class="note"><strong>Note:</strong> <!-- -->We rename &quot;body&quot; to &quot;Body&quot; so that the JSX is<!-- --> <a href="https://facebook.github.io/react/docs/jsx-in-depth.html#user-defined-components-must-be-capitalized">transformed properly</a>.</div><p>When no routes match, the body property of a response is<!-- --> <code class="language-javascript">undefined</code>. To deal with this, you should either render some sort of 404/page not found component or add a catch all route (a route whose path is <code class="language-javascript">&quot;(.*)&quot;</code>) so that you can expect to always have a <code class="language-javascript">body</code> property on the response.</p><p>Finally, you can pass any props that you want to the <code class="language-jsx"><!-- -->&lt;<!-- -->Body<!-- -->&gt;</code> <!-- -->component. Generally speaking, it is useful to pass the entire<!-- --> <code class="language-javascript">response</code> object. You can review all of the response properties in the<!-- --> <a href="/guides/responses/#properties">Rendering with Responses</a> <!-- -->guide. The other ones that you will most likely be interested in are<code class="language-javascript">params</code> and <code class="language-javascript">data</code>.</p><pre class="language-javascript">function render(response) {
   const { body:Body, params, data } = response;
   return &lt;Body response={response} /&gt;;
-}</pre></div><div class="subsection" id="re-rendering"><h3>Re-rendering<a class="header-link" href="/guides/react/#re-rendering">#</a></h3><p>As noted above, the <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> does not automatically update when a new response is emitted. Here are a few strategies for re-rendering your application when a new response is emitted.</p><div class="subsection" id="use-the-router"><h4>Use the router<a class="header-link" href="/guides/react/#use-the-router">#</a></h4><p>The easiest solution is to just use <code class="language-javascript">router.respond</code> to re-call <code class="language-javascript">ReactDOM.render</code>.</p><pre class="language-jsx">router.respond((response, action) =&gt; {
+}</pre></div><div class="subsection" id="re-rendering"><h3>Re-rendering<a class="header-link" href="/guides/react/#re-rendering">#</a></h3><p>As noted above, the <code class="language-jsx"><!-- -->&lt;<!-- -->CuriBase<!-- -->&gt;</code> does not automatically update when a new response is emitted. Here are a few strategies for re-rendering your application when a new response is emitted.</p><div class="subsection" id="use-the-router"><h4>Use the router<a class="header-link" href="/guides/react/#use-the-router">#</a></h4><p>The easiest solution is to just use <code class="language-javascript">router.respond</code> to re-call <code class="language-javascript">ReactDOM.render</code>.</p><pre class="language-jsx">router.respond((response, navigation) =&gt; {
   ReactDOM.render((
     &lt;CuriBase
       router={router}
       response={response}
-      action={action}
+      navigation={navigation}
       render={render}
     /&gt;
   ), holder);
 });</pre></div><div class="subsection" id="use-curious"><h4><code class="language-jsx">&lt;<!-- -->Curious<!-- -->&gt;</code><a class="header-link" href="/guides/react/#use-curious">#</a></h4><p>If you prefer not to call <code class="language-javascript">ReactDOM.render</code> multiple times, you can use the <code class="language-jsx"><!-- -->&lt;<!-- -->Curious<!-- -->&gt;</code> component to listen for new responses and re-render when the are emitted.</p><pre class="language-jsx">import { CuriBase, Curious } from &#x27;@curi/react&#x27;;
 
 // the props passed to &lt;Curious&gt;&#x27;s render function
-// is an object with router, response, and action properties
+// is an object with router, response, and navigation properties
 &lt;Curious
   router={router}
   render={props =&gt; &lt;CuriBase {...props} render={render} /&gt;}
@@ -58,7 +58,7 @@ const CuriReduxBase = connect(
   ({ curi }) =&gt; ({
     router: curi.router,
     response: curi.response,
-    action: curi.action
+    navigation: curi.navigation
   })
 )(CuriBase);
 // usage with &lt;Provider&gt; from react-redux
@@ -71,7 +71,7 @@ const CuriMobXBase = inject(
   ({ curi }) =&gt; ({
     router: curi.router,
     response: curi.response,
-    action: curi.action
+    navigation: curi.navigation
   })
 )(observer(CuriBase));
 // usage with &lt;Provider&gt; from mobx-react

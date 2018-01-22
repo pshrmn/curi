@@ -16,7 +16,7 @@
   const router = curi(history, routes);
 
   // 3. Wait for the response to be generated
-  router.respond((response, action) =&gt; {
+  router.respond((response, navigation) =&gt; {
     // 4. Generate the HTML markup by rendering a &lt;CuriBase&gt; and
     // passing it the response
     const markup = renderToString(

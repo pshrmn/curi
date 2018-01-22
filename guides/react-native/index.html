@@ -46,7 +46,7 @@ const ConnectedBase = connect(
   ({ curi }) =&gt; ({
     router: curi.router,
     response: curi.response,
-    action: curi.action
+    navigation: curi.navigation
   })
 )(CuriBase);</pre></div><div class="subsection" id="components-base-mobx"><h4>MobX<a class="header-link" href="/guides/react-native/#components-base-mobx">#</a></h4><p>The store provided by the<!-- --> <a href="/packages/@curi/mobx/"><code class="language-javascript">@curi/mobx</code></a> <!-- -->package combined with the <code class="language-jsx"><!-- -->&lt;<!-- -->Provider<!-- -->&gt;</code>, <code class="language-javascript">inject</code>, and <code class="language-javascript">observer</code> from <code class="language-javascript">mobx-react</code> makes</p><pre class="language-jsx">import { CuriStore } from &#x27;@curi/mobx&#x27;;
 import { CuriBase } from &#x27;@curi/react-native&#x27;;
@@ -60,7 +60,7 @@ const curiStore = CuriStore(router);
 const ResponsiveBase = inject(({ curi }) =&gt; ({
   router: curi.router,
   response: curi.response,
-  action: curi.action
+  navigation: curi.navigation
 }))(observer(CuriBase));
 
 const App = () =&gt; (

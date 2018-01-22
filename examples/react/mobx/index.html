@@ -17,7 +17,7 @@ import { inject, observer } from &quot;mobx-react&quot;;
 const ReactiveBase = inject(({ curi }) =&gt; ({
   router: curi.router,
   response: curi.response,
-  action: curi.action
+  navigation: curi.navigation
 }))(observer(CuriBase));
 
 ReactDOM.render((
