@@ -1,7 +1,7 @@
 ## Next
 
+* Response handlers are provided a `Navigation` object instead of an `Action` string. The `Navigation` contains properties related to a navigation but that aren't directly associated with the new `Response`. These are `action` (the navigation type) and `previous` (the previous `Response`).
 * Expose the last generated `response` and `action` through `current` function.
-* (Internal) Set `previous` before emitting so nested response handlers are called with newest response.
 * Add `options.emitRedirects` (default `true`). When `false`, a response with a `redirectTo` property will not be emitted to subscribers. Instead, the automatic redirect will occur and the result of that navigation will emitted.
 
 ## 1.0.0-beta.23

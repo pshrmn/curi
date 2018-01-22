@@ -1,13 +1,18 @@
-import { History, HickoryLocation, Action } from '@hickory/root';
-import { PathFunctionOptions } from 'path-to-regexp';
+import { History, HickoryLocation, Action } from "@hickory/root";
+import { PathFunctionOptions } from "path-to-regexp";
 
-import { Addon, Addons } from './addon';
-import { RouteDescriptor } from './route';
-import { Response } from './response';
+import { Addon, Addons } from "./addon";
+import { RouteDescriptor } from "./route";
+import { Response } from "./response";
+
+export interface Navigation {
+  action: Action;
+  previous: Response;
+}
 
 export type ResponseHandler = (
   response: Response,
-  action?: Action,
+  navigation?: Navigation,
   router?: CuriRouter
 ) => void;
 export interface RespondOptions {
@@ -35,7 +40,7 @@ export interface RouterOptions {
 
 export interface CurrentResponse {
   response: Response;
-  action: Action;
+  navigation: Navigation;
 }
 
 export interface CuriRouter {
