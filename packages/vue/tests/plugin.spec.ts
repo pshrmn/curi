@@ -36,7 +36,7 @@ describe("CuriPlugin", () => {
         }
       };
       router.respond(
-        (response, action) => {
+        (response, navigation) => {
           Vue.use(CuriPlugin, { router });
 
           const wrapper = shallow(FakeComponent, {
@@ -44,7 +44,7 @@ describe("CuriPlugin", () => {
           });
 
           expect(wrapper.vm.$curi.response).toBe(response);
-          expect(wrapper.vm.$curi.action).toBe(action);
+          expect(wrapper.vm.$curi.navigation).toBe(navigation);
 
           done();
         },
@@ -84,7 +84,7 @@ describe("CuriPlugin", () => {
         let wrapper;
         Vue.use(CuriPlugin, { router });
 
-        router.respond((response, action) => {
+        router.respond((response, navigation) => {
           if (!wrapper) {
             wrapper = shallow(FakeComponent, {
               localVue: Vue
@@ -101,7 +101,7 @@ describe("CuriPlugin", () => {
         let wrapper;
         Vue.use(CuriPlugin, { router });
 
-        router.respond((response, action) => {
+        router.respond((response, navigation) => {
           if (!wrapper) {
             wrapper = mount(
               {
@@ -124,7 +124,7 @@ describe("CuriPlugin", () => {
       const Vue = createLocalVue();
       Vue.use(CuriPlugin, {
         router,
-        curi: { router, response: null, action: null }
+        curi: { router, response: null, navigation: null }
       });
       expect(Vue.options.components["curi-link"]).toBeDefined();
     });
@@ -135,7 +135,7 @@ describe("CuriPlugin", () => {
       const Vue = createLocalVue();
       Vue.use(CuriPlugin, {
         router,
-        curi: { router, response: null, action: null }
+        curi: { router, response: null, navigation: null }
       });
       expect(Vue.options.components["curi-block"]).toBeDefined();
     });

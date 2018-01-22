@@ -1,16 +1,16 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
+import BaseTutorial from "./base/BaseTutorial";
+import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
   PrismBlock
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
-import CodeSandboxDemo from '../components/CodeSandboxDemo';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
+import CodeSandboxDemo from "../components/CodeSandboxDemo";
 
 export default () => (
   <BaseTutorial>
@@ -18,17 +18,17 @@ export default () => (
     <p>
       Now that we have our router ready to go, we can think about what our pages
       should look like. This tutorial will be rendering our website using Vue.
-      If you prefer to use React, you should check out the{' '}
-      <Link to="Tutorial" params={{ name: '05-pages-react' }}>
+      If you prefer to use React, you should check out the{" "}
+      <Link to="Tutorial" params={{ name: "05-pages-react" }}>
         Part 5: React Pages
-      </Link>{' '}
+      </Link>{" "}
       tutorial.
     </p>
     <Outline>
       <ul>
         <li>Modifying our Webpack configuration to support Vue.</li>
         <li>
-          Installing the <IJS>@curi/vue</IJS> package, learning about the{' '}
+          Installing the <IJS>@curi/vue</IJS> package, learning about the{" "}
           <IJS>CuriPlugin</IJS> and one of the components it provides (<Cmp>
             curi-link
           </Cmp>).
@@ -87,11 +87,11 @@ const router = {
         The <IJS>@curi/vue</IJS> package exports a Vue plugin, which provides
         components that know how to interact with Curi. For this tutorial, we
         will only be using one: <Cmp>curi-link</Cmp>. You can read more about
-        the package in the{' '}
+        the package in the{" "}
         <Link
           to="Package"
-          params={{ package: 'vue' }}
-          details={{ hash: 'API' }}
+          params={{ package: "vue" }}
+          details={{ hash: "API" }}
         >
           <IJS>@curi/vue</IJS> documentation
         </Link>.
@@ -108,9 +108,9 @@ const router = {
           The <IJS>CuriPlugin</IJS> exported by <IJS>@curi/vue</IJS>, should be
           registered with Vue after the Curi router has been created. The plugin
           does a couple things. First, it will make your Curi router and new
-          responses/actions accessible to every component. The router will be
-          accessible as <IJS>this.$router</IJS> while through the{' '}
-          <IJS>response</IJS> and <IJS>action</IJS> are grouped under the{' '}
+          responses/navigations accessible to every component. The router will
+          be accessible as <IJS>this.$router</IJS> while through the{" "}
+          <IJS>response</IJS> and <IJS>navigation</IJS> are grouped under the{" "}
           <IJS>this.$curi</IJS> object. Second, it will register Curi specific
           components. For this tutorial, the only component that we care about
           is <Cmp>curi-link</Cmp>.
@@ -158,7 +158,7 @@ Vue.use(CuriPlugin, { router });`}
         </PrismBlock>
         <p>
           If you need to pass any other location properties (<IJS>query</IJS>,
-          <IJS>hash</IJS>, or <IJS>state</IJS>), you can provide them using the{' '}
+          <IJS>hash</IJS>, or <IJS>state</IJS>), you can provide them using the{" "}
           <IJS>details</IJS> prop.
         </p>
         <PrismBlock lang="jsx">
@@ -184,15 +184,15 @@ Vue.use(CuriPlugin, { router });`}
       <p>
         Being able to access the Curi router is nice, but what we really need is
         to access the response objects that are emitted by Curi whenever the
-        location changes. We <em>could</em> use the <IJS>router.respond</IJS>{' '}
-        method that we covered in the{' '}
-        <Link to="Tutorial" params={{ name: '04-router' }}>
+        location changes. We <em>could</em> use the <IJS>router.respond</IJS>{" "}
+        method that we covered in the{" "}
+        <Link to="Tutorial" params={{ name: "04-router" }}>
           router
-        </Link>{' '}
-        tutorial, but the <IJS>CuriPlugin</IJS> takes care of that step for us.{' '}
+        </Link>{" "}
+        tutorial, but the <IJS>CuriPlugin</IJS> takes care of that step for us.{" "}
         <IJS>CuriPlugin</IJS> calls <IJS>router.respond</IJS> and in the
-        response handler, it updates the reactive <IJS>response</IJS> and{' '}
-        <IJS>action</IJS> properties of <IJS>this.$curi</IJS> whenever a new
+        response handler, it updates the reactive <IJS>response</IJS> and{" "}
+        <IJS>navigation</IJS> properties of <IJS>this.$curi</IJS> whenever a new
         response is emitted.
       </p>
 
@@ -227,14 +227,14 @@ router.respond(response => {
     <Section title="The App" id="app">
       <p>
         At this point we have the ability to access our router throughout our
-        components and we are passing response objects to some <Cmp>app</Cmp>{' '}
+        components and we are passing response objects to some <Cmp>app</Cmp>{" "}
         component that we haven't actually written yet. We should write those
         components now.
       </p>
 
       <p>
         Our <Cmp>app</Cmp> component will be responsible for rendering our
-        website based on the response object. To start, let's add a{' '}
+        website based on the response object. To start, let's add a{" "}
         <IJS>components</IJS> directory to our <IJS>src</IJS> directory.
       </p>
 
@@ -275,23 +275,23 @@ router.respond(response => {
 }`}
       </PrismBlock>
       <Note>
-        The{' '}
+        The{" "}
         <Link
           to="Guide"
-          params={{ slug: 'responses' }}
-          details={{ hash: 'properties' }}
+          params={{ slug: "responses" }}
+          details={{ hash: "properties" }}
         >
           Rendering with Responses
-        </Link>{' '}
+        </Link>{" "}
         guide goes into more detail about each of the properties of a response
         object.
       </Note>
 
       <p>
-        In{' '}
-        <Link to="Tutorial" params={{ name: '02-routes' }}>
+        In{" "}
+        <Link to="Tutorial" params={{ name: "02-routes" }}>
           Part 3
-        </Link>{' '}
+        </Link>{" "}
         of this tutorial, we added <IJS>match.response</IJS> functions that set
         the <IJS>body</IJS> property for each of our routes. There, we just used
         a placeholder string, but now we can actually set the component for each
@@ -374,8 +374,8 @@ export default {
 </template>`}
       </PrismBlock>
       <p>
-        All of these components should be imported in our <IJS>routes.js</IJS>{' '}
-        and set using <IJS>set.body</IJS> in their respective{' '}
+        All of these components should be imported in our <IJS>routes.js</IJS>{" "}
+        and set using <IJS>set.body</IJS> in their respective{" "}
         <IJS>match.response</IJS> functions.
       </p>
       <PrismBlock lang="javascript">
@@ -464,7 +464,7 @@ export default routes;`}
         page.
       </p>
       <p>
-        We will use a <Cmp>nav</Cmp> element as the parent for our{' '}
+        We will use a <Cmp>nav</Cmp> element as the parent for our{" "}
         <Cmp>NavLinks</Cmp>. Inside of that is a <Cmp>ul</Cmp> and then each of
         our routes will be <Cmp>Link</Cmp>s wrapped in <Cmp>li</Cmp>s.
       </p>
@@ -490,7 +490,7 @@ export default routes;`}
 </template>`}
       </PrismBlock>
       <p>
-        Let's import and render that the <Cmp>NavLinks</Cmp> in our{' '}
+        Let's import and render that the <Cmp>NavLinks</Cmp> in our{" "}
         <Cmp>app</Cmp>. We'll also add some wrapper elements to keep our content
         organized.
       </p>
@@ -579,13 +579,13 @@ export default books;`}
       </p>
       <p>
         The <IJS>params</IJS> object is a property of our response object. We
-        can access the response in our components using{' '}
+        can access the response in our components using{" "}
         <IJS>this.$curi.response</IJS>, so we don't actually have to manually
         pass it as a prop.
       </p>
 
       <p>
-        Next, we just need to update our <Cmp>Book</Cmp> component to access the{' '}
+        Next, we just need to update our <Cmp>Book</Cmp> component to access the{" "}
         <IJS>params</IJS> object and figure out which book to render content
         for.
       </p>
@@ -611,8 +611,8 @@ export default books;`}
         At this point, we have a website with a number of pages. It isn't
         particularly useful yet, but at least we can navigate between pages.
         Next we will take a step back from Vue and look at how we can implement
-        data loading with with{' '}
-        <Link to="Tutorial" params={{ name: '06-loading-data' }}>
+        data loading with with{" "}
+        <Link to="Tutorial" params={{ name: "06-loading-data" }}>
           Part 6: Loading Data
         </Link>.
       </p>

@@ -167,7 +167,7 @@ describe("curi", () => {
       });
 
       describe("sideEffects", () => {
-        it("calls side effect methods after a response is generated, passing them response and action", done => {
+        it("calls side effect methods after a response is generated, passing them response and navigation", done => {
           const routes = [{ name: "All", path: ":all+" }];
           const sideEffect = jest.fn();
 
@@ -177,7 +177,9 @@ describe("curi", () => {
           router.respond(response => {
             expect(sideEffect.mock.calls.length).toBe(1);
             expect(sideEffect.mock.calls[0][0]).toBe(response);
-            expect(sideEffect.mock.calls[0][1]).toBe("PUSH");
+            expect(sideEffect.mock.calls[0][1]).toMatchObject({
+              action: "PUSH"
+            });
             done();
           });
         });
@@ -217,15 +219,17 @@ describe("curi", () => {
           router.respond(responseHandler);
         });
 
-        it("passes response, action, and router object to side effect", done => {
+        it("passes response, navigation, and router object to side effect", done => {
           const routes = [{ name: "All", path: ":all*" }];
           const responseHandler = jest.fn();
-          const sideEffect = function(response, action, router) {
+          const sideEffect = function(response, navigation, router) {
             expect(response).toMatchObject({
               name: "All",
               location: { pathname: "/" }
             });
-            expect(action).toBe("PUSH");
+            expect(navigation).toMatchObject({
+              action: "PUSH"
+            });
             expect(router).toBe(router);
             done();
           };
@@ -389,50 +393,50 @@ describe("curi", () => {
     });
   });
 
-  describe('current', () => {
-    it('initial value is an object with null response and action properties', () => {
+  describe("current", () => {
+    it("initial value is an object with null response and navigation properties", () => {
       const router = curi(history, []);
       expect(router.current()).toMatchObject({
         response: null,
-        action: null
+        navigation: null
       });
     });
 
-    it('response and action are the last resolved response and navigation action', () => {
-      const router = curi(history, [{ name: 'Home', path: '' }]);
+    it("response and navigation are the last resolved response and navigation", () => {
+      const router = curi(history, [{ name: "Home", path: "" }]);
       router.respond(
-        (response, action) => {
+        (response, navigation) => {
           expect(router.current()).toMatchObject({
             response,
-            action
+            navigation
           });
         },
         { once: true }
       );
     });
 
-    it('updates properties when a new response is resolved', done => {
+    it("updates properties when a new response is resolved", done => {
       const router = curi(history, [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' }
+        { name: "Home", path: "" },
+        { name: "About", path: "about" }
       ]);
       let calls = 0;
-      router.respond((response, action) => {
+      router.respond((response, navigation) => {
         calls++;
         expect(router.current()).toMatchObject({
           response,
-          action
+          navigation
         });
         if (calls === 2) {
           done();
         } else {
-          router.history.push('/about');
+          router.history.push("/about");
         }
       });
     });
   });
 
-  describe('refresh', () => {
+  describe("refresh", () => {
     const err = console.error;
 
     beforeEach(() => {
@@ -508,11 +512,14 @@ describe("curi", () => {
 
         const router = curi(history, routes);
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             router.respond(nestedHandler);
-            const [nestedResponse, nestedAction] = nestedHandler.mock.calls[0];
+            const [
+              nestedResponse,
+              nestedNavigation
+            ] = nestedHandler.mock.calls[0];
             expect(nestedResponse).toBe(response);
-            expect(nestedAction).toBe(action);
+            expect(nestedNavigation).toBe(navigation);
             done();
           },
           { once: true }
@@ -591,14 +598,16 @@ describe("curi", () => {
       });
     });
 
-    it("passes response, action, and router object to response handler", done => {
+    it("passes response, navigation, and router object to response handler", done => {
       const routes = [{ name: "All", path: ":all*" }];
-      const responseHandler = function(response, action, router) {
+      const responseHandler = function(response, navigation, router) {
         expect(response).toMatchObject({
           name: "All",
           location: { pathname: "/" }
         });
-        expect(action).toBe("PUSH");
+        expect(navigation).toMatchObject({
+          action: "PUSH"
+        });
         expect(router).toBe(router);
         done();
       };
@@ -607,7 +616,7 @@ describe("curi", () => {
       router.respond(responseHandler);
     });
 
-    it("notifies response handlers of new response and action when location changes", done => {
+    it("notifies response handlers of new response and navigation when location changes", done => {
       const How = { name: "How", path: ":method" };
       const routes = [
         { name: "Home", path: "" },
@@ -615,7 +624,7 @@ describe("curi", () => {
         { name: "Contact", path: "contact", children: [How] }
       ];
 
-      const check = (response, action) => {
+      const check = (response, navigation) => {
         expect(response).toMatchObject({
           name: "How",
           partials: ["Contact"],
@@ -623,7 +632,9 @@ describe("curi", () => {
             method: "mail"
           }
         });
-        expect(action).toBe("PUSH");
+        expect(navigation).toMatchObject({
+          action: "PUSH"
+        });
         done();
       };
 

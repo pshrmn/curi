@@ -1,16 +1,16 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
+import BaseTutorial from "./base/BaseTutorial";
+import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
   PrismBlock
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
-import CodeSandboxDemo from '../components/CodeSandboxDemo';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
+import CodeSandboxDemo from "../components/CodeSandboxDemo";
 
 export default () => (
   <BaseTutorial>
@@ -18,10 +18,10 @@ export default () => (
     <p>
       Now that we have our router ready to go, we can think about what our pages
       should look like. This tutorial will be rendering our website using React.
-      If you prefer to use Vue, you should check out the{' '}
-      <Link to="Tutorial" params={{ name: '05-pages-vue' }}>
+      If you prefer to use Vue, you should check out the{" "}
+      <Link to="Tutorial" params={{ name: "05-pages-vue" }}>
         Part 5: Vue Pages
-      </Link>{' '}
+      </Link>{" "}
       tutorial.
     </p>
     <Outline>
@@ -74,14 +74,14 @@ module.exports = {
     >
       <p>
         The <IJS>@curi/react</IJS> package provides React components that know
-        how to interact with Curi. For this tutorial, we will only be using two:{' '}
+        how to interact with Curi. For this tutorial, we will only be using two:{" "}
         <Cmp>CuriBase</Cmp> and <Cmp>Link</Cmp>. However, there are a number of
         other ones that you might find useful. You can read more about them in
-        the{' '}
+        the{" "}
         <Link
           to="Package"
-          params={{ package: 'react' }}
-          details={{ hash: 'API' }}
+          params={{ package: "react" }}
+          details={{ hash: "API" }}
         >
           <IJS>@curi/react</IJS> documentation
         </Link>.
@@ -89,7 +89,7 @@ module.exports = {
       <Subsection title="Installation" id="installation">
         <p>
           Let's start by installing the <IJS>@curi/react</IJS> package. If you
-          haven't already, you should also install the <IJS>react</IJS> and{' '}
+          haven't already, you should also install the <IJS>react</IJS> and{" "}
           <IJS>react-dom</IJS> packages.
         </p>
         <PrismBlock lang="bash">
@@ -109,8 +109,8 @@ module.exports = {
         </PrismBlock>
         <p>
           The <Cmp>CuriBase</Cmp> is responsible for rendering the website
-          whenever the location changes. It can take four props:{' '}
-          <IJS>response</IJS>, <IJS>action</IJS>,
+          whenever the location changes. It can take four props:{" "}
+          <IJS>response</IJS>, <IJS>navigation</IJS>,
           <IJS>router</IJS>, and <IJS>render</IJS>.
         </p>
         <ol>
@@ -118,7 +118,7 @@ module.exports = {
             <IJS>response</IJS> is a Curi response object.
           </li>
           <li>
-            <IJS>action</IJS> (optional) is the action type of the last
+            <IJS>navigation</IJS> is an object with data about the latest
             navigation.
           </li>
           <li>
@@ -128,10 +128,10 @@ module.exports = {
             <IJS>render</IJS> is a function that will be called whenever a new
             response is emitted (and during the initial render) and returns the
             React element(s) that make up your website. It will receive three
-            arguments: the new <IJS>response</IJS> object, the navigation's{' '}
-            <IJS>action</IJS> and the Curi router object. The second two can be
-            useful occasionally, but the <IJS>response</IJS> is what we really
-            need for rendering.
+            arguments: the new <IJS>response</IJS> object, the{" "}
+            <IJS>navigation</IJS> and the Curi router object. The second two can
+            be useful occasionally, but the <IJS>response</IJS> is what we
+            really need for rendering.
           </li>
         </ol>
         <p>
@@ -161,8 +161,8 @@ router.respond((response) => {
         </PrismBlock>
         <p>
           The <Cmp>CuriBase</Cmp> also adds a <IJS>curi</IJS> object to React's
-          context. This object has <IJS>router</IJS>, <IJS>response</IJS>, and{' '}
-          <IJS>action</IJS> properties. A number of the other components
+          context. This object has <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
+          <IJS>navigation</IJS> properties. A number of the other components
           exported by <IJS>@curi/react</IJS> rely on these variables to
           render/function.
         </p>
@@ -209,8 +209,8 @@ router.respond((response) => {
 // <a href='/books/1357'>Some Book</a>`}
         </PrismBlock>
         <p>
-          If you need to pass any other location properties (<IJS>query</IJS>,{' '}
-          <IJS>hash</IJS>, or <IJS>state</IJS>), you can provide them using the{' '}
+          If you need to pass any other location properties (<IJS>query</IJS>,{" "}
+          <IJS>hash</IJS>, or <IJS>state</IJS>), you can provide them using the{" "}
           <IJS>details</IJS> prop.
         </p>
         <PrismBlock lang="jsx">
@@ -234,8 +234,8 @@ router.respond((response) => {
 
     <Section title="The render function" id="render-function">
       <p>
-        Let's go back to that <IJS>render</IJS> function that we pass to the{' '}
-        <Cmp>CuriBase</Cmp>. In the sample code above, we just returned{' '}
+        Let's go back to that <IJS>render</IJS> function that we pass to the{" "}
+        <Cmp>CuriBase</Cmp>. In the sample code above, we just returned{" "}
         <IJS>null</IJS>. Of course, for our website we want to return the actual
         elements that make up a page. How should we do this? Let's take a look
         at the properties of our response object.
@@ -260,23 +260,23 @@ response: {
 */`}
       </PrismBlock>
       <Note>
-        The{' '}
+        The{" "}
         <Link
           to="Guide"
-          params={{ slug: 'responses' }}
-          details={{ hash: 'properties' }}
+          params={{ slug: "responses" }}
+          details={{ hash: "properties" }}
         >
           Rendering with Responses
-        </Link>{' '}
+        </Link>{" "}
         guide goes into more detail about each of the properties of a response
         object.
       </Note>
 
       <p>
-        In{' '}
-        <Link to="Tutorial" params={{ name: '02-routes' }}>
+        In{" "}
+        <Link to="Tutorial" params={{ name: "02-routes" }}>
           Part 3
-        </Link>{' '}
+        </Link>{" "}
         of this tutorial, we added <IJS>match.response</IJS> functions that set
         the <IJS>body</IJS> property for each of our routes. There, we just used
         a placeholder string, but now we can actually set the component for each
@@ -295,7 +295,7 @@ response: {
         later on.
       </p>
       <p>
-        Let's create a <IJS>components</IJS> directory inside of our{' '}
+        Let's create a <IJS>components</IJS> directory inside of our{" "}
         <IJS>src</IJS> directory. Then, we can add files for each route in
         there.
       </p>
@@ -436,7 +436,7 @@ const routes = [
 export default routes;`}
       </PrismBlock>
       <p>
-        Our <IJS>render</IJS> function is now able to use{' '}
+        Our <IJS>render</IJS> function is now able to use{" "}
         <IJS>response.body</IJS>. This is also a good time to separate the
         render function from the component. This isn't absolutely necessary, but
         can help keep the code cleaner.
@@ -462,9 +462,9 @@ export default function(response) {
 }`}
       </PrismBlock>
       <p>
-        Now, if we load up our application, we will render our home page (the{' '}
+        Now, if we load up our application, we will render our home page (the{" "}
         <IJS>Home</IJS> component). Unfortunately, there is no way to navigate
-        to any of our other pages. In order to do this, we will need to add some{' '}
+        to any of our other pages. In order to do this, we will need to add some{" "}
         <Cmp>Link</Cmp>s to our application.
       </p>
     </Section>
@@ -478,7 +478,7 @@ export default function(response) {
         page.
       </p>
       <p>
-        We will use a <Cmp>nav</Cmp> element as the parent for our{' '}
+        We will use a <Cmp>nav</Cmp> element as the parent for our{" "}
         <Cmp>NavLinks</Cmp>. Inside of that is a <Cmp>ul</Cmp> and then each of
         our routes will be <Cmp>Link</Cmp>s wrapped in <Cmp>li</Cmp>s.
       </p>
@@ -508,16 +508,16 @@ const NavLinks = () => (
 export default NavLinks;`}
       </PrismBlock>
       <p>
-        That is simple enough, but where should we render this? Our{' '}
+        That is simple enough, but where should we render this? Our{" "}
         <Cmp>Link</Cmp> components rely on the context variables that are
-        provided by the <Cmp>CuriBase</Cmp>. This means that our{' '}
+        provided by the <Cmp>CuriBase</Cmp>. This means that our{" "}
         <Cmp>NavLinks</Cmp> needs to be a child of the <Cmp>CuriBase</Cmp>.
       </p>
       <p>
-        The easiest way for us to do that would be to modify our{' '}
-        <IJS>render</IJS> function. Instead of just returning the{' '}
+        The easiest way for us to do that would be to modify our{" "}
+        <IJS>render</IJS> function. Instead of just returning the{" "}
         <IJS>response.body</IJS> component, we can return a <Cmp>div</Cmp> that
-        wraps both <IJS>response.body</IJS> and our <Cmp>NavLinks</Cmp>{' '}
+        wraps both <IJS>response.body</IJS> and our <Cmp>NavLinks</Cmp>{" "}
         component.
       </p>
       <PrismBlock lang="jsx">
@@ -598,7 +598,7 @@ const BookList = () => (
       </p>
       <p>
         The <IJS>params</IJS> object is a property of our response object. That
-        means that if we pass our response object as a prop to the{' '}
+        means that if we pass our response object as a prop to the{" "}
         <Cmp>Body</Cmp>, we can access these params in our route components.
       </p>
       <PrismBlock lang="jsx">
@@ -621,7 +621,7 @@ export default function(response) {
         There are a number of ways that you can decide to pass props to your
         route components. The one thing to keep in mind is that <em>all</em> of
         your route components will receive the same set of props. You can either
-        be very specific and only pass the props that are necessary (e.g.{' '}
+        be very specific and only pass the props that are necessary (e.g.{" "}
         <Cmp>Body params={`{params}`}</Cmp>) or you can just pass the entire
         response object (e.g. <Cmp>Body response={`{response}`}</Cmp>) so you
         don't have to worry about updating this every time one of your route
@@ -654,8 +654,8 @@ const Book = ({ response }) => (
         At this point, we have a website with a number of pages. It isn't
         particularly useful yet, but at least we can navigate between pages.
         Next we will take a step back from React and learn how to implement data
-        loading with{' '}
-        <Link to="Tutorial" params={{ name: '06-loading-data' }}>
+        loading with{" "}
+        <Link to="Tutorial" params={{ name: "06-loading-data" }}>
           Part 6: Loading Data
         </Link>.
       </p>

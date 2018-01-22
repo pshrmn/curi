@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { CuriRouter, Response } from '@curi/core';
-import { CuriContext } from './interface';
-import { Action } from '@hickory/root';
+import React from "react";
+import PropTypes from "prop-types";
+import { CuriRouter, Response, Navigation } from "@curi/core";
+import { CuriContext } from "./interface";
 
 export interface CuriBaseProps {
   router: CuriRouter;
   render: (
     r: Response,
-    action: string,
+    navigation: Navigation,
     c?: CuriRouter
   ) => React.ReactElement<any>;
   response: Response;
-  action?: Action;
+  navigation: Navigation;
 }
 
 class CuriBase extends React.Component<CuriBaseProps> {
@@ -20,12 +19,8 @@ class CuriBase extends React.Component<CuriBaseProps> {
     curi: PropTypes.shape({
       router: PropTypes.object,
       response: PropTypes.object,
-      action: PropTypes.string
+      navigation: PropTypes.object
     })
-  };
-
-  static defaultProps = {
-    action: 'POP'
   };
 
   getChildContext(): CuriContext {
@@ -33,7 +28,7 @@ class CuriBase extends React.Component<CuriBaseProps> {
       curi: {
         router: this.props.router,
         response: this.props.response,
-        action: this.props.action
+        navigation: this.props.navigation
       }
     };
   }
@@ -41,7 +36,7 @@ class CuriBase extends React.Component<CuriBaseProps> {
   render(): React.ReactElement<any> {
     return this.props.render(
       this.props.response,
-      this.props.action,
+      this.props.navigation,
       this.props.router
     );
   }

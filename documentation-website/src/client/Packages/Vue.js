@@ -1,13 +1,13 @@
-import React from 'react';
-import BasePackage from './base/BasePackage';
-import APIBlock from './base/APIBlock';
+import React from "react";
+import BasePackage from "./base/BasePackage";
+import APIBlock from "./base/APIBlock";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
   PrismBlock
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -21,19 +21,19 @@ export default ({ name, version, globalName }) => (
         <p>What does the plugin do?</p>
         <ol>
           <li>
-            First, it will register <Cmp>curi-link</Cmp> and{' '}
+            First, it will register <Cmp>curi-link</Cmp> and{" "}
             <Cmp>curi-block</Cmp> components with Vue. You can use these
             components anywhere within your application.
           </li>
           <li>
-            Second, it makes your router globally available to Vue components as{' '}
+            Second, it makes your router globally available to Vue components as{" "}
             <IJS>$router</IJS>.
           </li>
           <li>
-            Finally, it makes responses and actions available to components
+            Finally, it makes responses and navigations available to components
             through the <IJS>$curi</IJS> property. <IJS>$curi</IJS> is
-            responsive, so when a new response is emitted,{' '}
-            <IJS>$curi.response</IJS> and <IJS>$curi.action</IJS> will
+            responsive, so when a new response is emitted,{" "}
+            <IJS>$curi.response</IJS> and <IJS>$curi.navigation</IJS> will
             automatically be updated.
           </li>
         </ol>
@@ -52,19 +52,19 @@ Vue.use(CuriPlugin, { router });`}
         </p>
         <ul>
           <li>
-            <IJS>to</IJS> - The name of the route to navigate to.{' '}
+            <IJS>to</IJS> - The name of the route to navigate to.{" "}
             <em>This is required</em>.
           </li>
           <li>
             <IJS>params</IJS> - An object containing the key-value params for
-            the route. For example, if you are linking to a route with the path{' '}
-            <IJS>album/:title</IJS>, the params object should have a{' '}
+            the route. For example, if you are linking to a route with the path{" "}
+            <IJS>album/:title</IJS>, the params object should have a{" "}
             <IJS>title</IJS> property.
           </li>
           <li>
             <IJS>details</IJS> - An object containing additional location
-            properties that should be used for generating the anchor's{' '}
-            <IJS>href</IJS>. These additional properties may be <IJS>query</IJS>,{' '}
+            properties that should be used for generating the anchor's{" "}
+            <IJS>href</IJS>. These additional properties may be <IJS>query</IJS>,{" "}
             <IJS>hash</IJS>, and <IJS>state</IJS> (which isn't actually part of
             the <IJS>href</IJS>).
           </li>
@@ -90,7 +90,7 @@ Vue.use(CuriPlugin, { router });`}
           user attempts to leave your application, they will not be blocked.
         </p>
         <p>
-          The <Cmp>curi-block</Cmp> expects two props: <IJS>action</IJS> and{' '}
+          The <Cmp>curi-block</Cmp> expects two props: <IJS>active</IJS> and{" "}
           <IJS>confirm</IJS>.
         </p>
         <ul>
@@ -172,7 +172,7 @@ export default function renderFunction(h) {
       <p>
         While the <IJS>CuriPlugin</IJS> subscribes to your router object, you
         will still need to wait for it to emit its first update before you can
-        render. To do that, you can pass the <IJS>{`{ once: true }`}</IJS>{' '}
+        render. To do that, you can pass the <IJS>{`{ once: true }`}</IJS>{" "}
         option to a <IJS>router.respond</IJS> call.
       </p>
 

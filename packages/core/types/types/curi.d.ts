@@ -3,7 +3,11 @@ import { PathFunctionOptions } from 'path-to-regexp';
 import { Addon, Addons } from './addon';
 import { RouteDescriptor } from './route';
 import { Response } from './response';
-export declare type ResponseHandler = (response: Response, action?: Action, router?: CuriRouter) => void;
+export interface Navigation {
+    action: Action;
+    previous: Response;
+}
+export declare type ResponseHandler = (response: Response, navigation?: Navigation, router?: CuriRouter) => void;
 export interface RespondOptions {
     once?: boolean;
 }
@@ -25,7 +29,7 @@ export interface RouterOptions {
 }
 export interface CurrentResponse {
     response: Response;
-    action: Action;
+    navigation: Navigation;
 }
 export interface CuriRouter {
     refresh: (routeArray: Array<RouteDescriptor>) => void;

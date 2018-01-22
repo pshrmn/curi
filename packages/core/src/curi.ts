@@ -22,8 +22,9 @@ import {
   RespondOptions,
   RemoveResponseHandler,
   Cache,
-  CurrentResponse
-} from './types/curi';
+  CurrentResponse,
+  Navigation
+} from "./types/curi";
 
 function createRouter(
   history: History,
@@ -73,7 +74,7 @@ function createRouter(
 
   const mostRecent: CurrentResponse = {
     response: null,
-    action: null
+    navigation: null
   };
 
   function respond(
@@ -90,13 +91,13 @@ function createRouter(
 
     if (once) {
       if (mostRecent.response) {
-        fn.call(null, mostRecent.response, mostRecent.action, curi);
+        fn.call(null, mostRecent.response, mostRecent.navigation, curi);
       } else {
         oneTimers.push(fn);
       }
     } else {
       if (mostRecent.response) {
-        fn.call(null, mostRecent.response, mostRecent.action, curi);
+        fn.call(null, mostRecent.response, mostRecent.navigation, curi);
       }
 
       const newLength = responseHandlers.push(fn);
@@ -106,25 +107,25 @@ function createRouter(
     }
   }
 
-  function emit(response: Response, action: Action): void {
+  function emit(response: Response, navigation: Navigation): void {
     beforeSideEffects.forEach(fn => {
-      fn(response, action, curi);
+      fn(response, navigation, curi);
     });
 
     responseHandlers.forEach(fn => {
       if (fn != null) {
-        fn(response, action, curi);
+        fn(response, navigation, curi);
       }
     });
     // calling one time responseHandlers after regular responseHandlers
     // ensures that those are called prior to the one time fns
     while (oneTimers.length) {
       const fn = oneTimers.pop();
-      fn(response, action, curi);
+      fn(response, navigation, curi);
     }
 
     afterSideEffects.forEach(fn => {
-      fn(response, action, curi);
+      fn(response, navigation, curi);
     });
   }
 
@@ -137,10 +138,15 @@ function createRouter(
     }
     activeResponse = pendingNav;
 
+    const navigation = {
+      action: pendingNav.action,
+      previous: mostRecent.response
+    };
+
     if (cache) {
       const cachedResponse = cache.get(pendingNav.location);
       if (cachedResponse != null) {
-        cacheAndEmit(cachedResponse, pendingNav.action);
+        cacheAndEmit(cachedResponse, navigation);
       }
     }
 
@@ -150,11 +156,11 @@ function createRouter(
       }
       pendingNav.finish();
       const response = finishResponse(pendingResponse, registeredAddons);
-      cacheAndEmit(response, pendingNav.action);
+      cacheAndEmit(response, navigation);
     });
   }
 
-  function cacheAndEmit(response: Response, action: Action) {
+  function cacheAndEmit(response: Response, navigation: Navigation) {
     activeResponse = undefined;
     if (cache) {
       cache.set(response);
@@ -162,8 +168,8 @@ function createRouter(
 
     if (!response.redirectTo || emitRedirects) {
       mostRecent.response = response;
-      mostRecent.action = action;
-      emit(response, action);
+      mostRecent.navigation = navigation;
+      emit(response, navigation);
     }
 
     if (response.redirectTo) {
@@ -183,7 +189,7 @@ function createRouter(
     current() {
       return {
         response: mostRecent.response,
-        action: mostRecent.action
+        navigation: mostRecent.navigation
       };
     }
   };

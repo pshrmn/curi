@@ -1,6 +1,9 @@
 ## Next
 
-* `<Curious>` sets initial `response`/`action` when responsive.
+* Switch from `action` to `navigation` (which contains an `action` as well as the previous `response`).
+  * Make `navigation` a required prop of the `<CuriBase>` (`action` was optional).
+  * `<Curious>` injects `navigation`, not `action`.
+* `<Curious>` sets initial `response`/`navigation` when responsive.
 
 ## 1.0.0-beta.17
 

@@ -90,7 +90,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -116,7 +116,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -141,7 +141,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -163,7 +163,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -187,7 +187,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -208,7 +208,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -264,7 +264,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -291,7 +291,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -320,7 +320,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         router.respond(
-          (response, action) => {
+          (response, navigation) => {
             const wrapper = shallow(Link, {
               localVue: Vue,
               propsData: {
@@ -345,7 +345,7 @@ describe("Link component", () => {
 
         Vue.use(CuriPlugin, { router });
         let wrapper;
-        router.respond((response, action) => {
+        router.respond((response, navigation) => {
           if (!wrapper) {
             wrapper = shallow(Link, {
               localVue: Vue,

@@ -1,10 +1,10 @@
-import Vue, { PluginObject, VueConstructor } from 'vue';
+import Vue, { PluginObject, VueConstructor } from "vue";
 
-import Link from './Link';
-import Block from './Block';
+import Link from "./Link";
+import Block from "./Block";
 
-import { CuriRouter } from '@curi/core';
-import { ReactiveResponse } from './interface';
+import { CuriRouter } from "@curi/core";
+import { ReactiveResponse } from "./interface";
 
 export interface CuriPluginOptions {
   router: CuriRouter;
@@ -16,14 +16,14 @@ const CuriPlugin: PluginObject<CuriPluginOptions> = {
     _Vue.component(Block.name, Block);
 
     // create a reactive object so that components will receive
-    // the new response/action when a new response is emitted
+    // the new response/navigation when a new response is emitted
     const reactive: ReactiveResponse = new Vue({
-      data: { response: null, action: null }
+      data: { response: null, navigation: null }
     });
 
-    options.router.respond((response, action) => {
+    options.router.respond((response, navigation) => {
       reactive.response = response;
-      reactive.action = action;
+      reactive.navigation = navigation;
     });
 
     _Vue.mixin({
@@ -32,7 +32,7 @@ const CuriPlugin: PluginObject<CuriPluginOptions> = {
       }
     });
 
-    Object.defineProperty(_Vue.prototype, '$router', {
+    Object.defineProperty(_Vue.prototype, "$router", {
       get() {
         return options.router;
       }

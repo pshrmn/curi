@@ -76,11 +76,11 @@ export default ({ name, version, globalName }) => (
             </p>
           </Subsection>
 
-          <Subsection tag="h4" title="action" id="CuriBase-action">
+          <Subsection tag="h4" title="navigation" id="CuriBase-navigation">
             <p>
-              The <IJS>action</IJS> from the most recent navigation (the second
-              argument passed to <IJS>router.respond</IJS> callbacks). This prop
-              is optional.
+              The <IJS>navigation</IJS> object describing the most recent
+              navigation (the second argument passed to{" "}
+              <IJS>router.respond</IJS> callbacks).
             </p>
           </Subsection>
         </Section>
@@ -376,8 +376,8 @@ const router = curi(history, routes, {
       <Section title={<Cmp>Curious</Cmp>} id="Curious">
         <p>
           A component with a <IJS>render</IJS> function to pass{" "}
-          <IJS>router</IJS>, <IJS>response</IJS>, and <IJS>action</IJS> props to
-          componeonts.
+          <IJS>router</IJS>, <IJS>response</IJS>, and <IJS>navigation</IJS>{" "}
+          props to componeonts.
         </p>
         <PrismBlock lang="javascript">
           {`import { Curious } from '@curi/react-native';`}
@@ -387,7 +387,7 @@ const router = curi(history, routes, {
           {`class MyComponent extends React.Component {
   render() {
     return (
-      <Curious render={({ router, response, action }) => {
+      <Curious render={({ router, response, navigation }) => {
         // pass these props to any components that need them
         return (
           <ThingThatNeedsResponse response={response} />
@@ -404,9 +404,9 @@ export default MyComponent;`}
           <Subsection tag="h4" title="render" id="curious-render">
             A function that returns a React element. This function will receive
             an object with <IJS>router</IJS>, <IJS>response</IJS> and{" "}
-            <IJS>action</IJS> properties that you can pass to components.
+            <IJS>navigation</IJS> properties that you can pass to components.
             <PrismBlock lang="jsx">
-              {`<Curious render={({ router, response, action }) => {...} />`}
+              {`<Curious render={({ router, response, navigation }) => {...} />`}
             </PrismBlock>
           </Subsection>
 

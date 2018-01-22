@@ -38,8 +38,9 @@ export default ({ name }) => (
           <Cmp>CuriBase</Cmp>
         </Link>{" "}
         component is responsible for doing this. You pass it a <IJS>router</IJS>,
-        a <IJS>response</IJS> object, and an <IJS>action</IJS> string and other
-        components in your application will be able to easily access them.
+        a <IJS>response</IJS> object, and a <IJS>navigation</IJS> object and
+        then other components in your application will be able to easily access
+        them.
       </p>
 
       <PrismBlock lang="jsx">
@@ -48,7 +49,7 @@ export default ({ name }) => (
 <CuriBase
   router={router}
   response={response}
-  action={action}
+  navigation={navigation}
   render={render}
 />`}
       </PrismBlock>
@@ -62,7 +63,7 @@ export default ({ name }) => (
         </p>
         <p>
           The render function receives three arguments to help you render your
-          application: <IJS>response</IJS>, <IJS>action</IJS>, and{" "}
+          application: <IJS>response</IJS>, <IJS>navigation</IJS>, and{" "}
           <IJS>router</IJS>. The <IJS>response</IJS> object is the most
           important of these, while the others may occasionally be useful or you
           may never use them.
@@ -152,12 +153,12 @@ const routes = [
             re-call <IJS>ReactDOM.render</IJS>.
           </p>
           <PrismBlock lang="jsx">
-            {`router.respond((response, action) => {
+            {`router.respond((response, navigation) => {
   ReactDOM.render((
     <CuriBase
       router={router}
       response={response}
-      action={action}
+      navigation={navigation}
       render={render}
     />
   ), holder);
@@ -174,7 +175,7 @@ const routes = [
             {`import { CuriBase, Curious } from '@curi/react';
 
 // the props passed to <Curious>'s render function
-// is an object with router, response, and action properties
+// is an object with router, response, and navigation properties
 <Curious
   router={router}
   render={props => <CuriBase {...props} render={render} />}
@@ -198,7 +199,7 @@ const CuriReduxBase = connect(
   ({ curi }) => ({
     router: curi.router,
     response: curi.response,
-    action: curi.action
+    navigation: curi.navigation
   })
 )(CuriBase);
 // usage with <Provider> from react-redux
@@ -211,7 +212,7 @@ const CuriMobXBase = inject(
   ({ curi }) => ({
     router: curi.router,
     response: curi.response,
-    action: curi.action
+    navigation: curi.navigation
   })
 )(observer(CuriBase));
 // usage with <Provider> from mobx-react

@@ -1,5 +1,5 @@
-import React from 'react';
-import { PrismBlock } from '../PrismBlocks';
+import React from "react";
+import { PrismBlock } from "../PrismBlocks";
 
 const GenericBanner = () => (
   <PrismBlock lang="javascript">
@@ -21,7 +21,7 @@ const router = curi(history, routes);
 
 // subscribe to the router object with a function
 // that will be called whenever the location changes
-router.respond((response, action) => {
+router.respond((response, navigation) => {
   // handle any rendering inside of this function
 });`}
   </PrismBlock>

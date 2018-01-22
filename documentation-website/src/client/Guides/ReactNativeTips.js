@@ -115,7 +115,7 @@ const ConnectedBase = connect(
   ({ curi }) => ({
     router: curi.router,
     response: curi.response,
-    action: curi.action
+    navigation: curi.navigation
   })
 )(CuriBase);`}
           </PrismBlock>
@@ -142,7 +142,7 @@ const curiStore = CuriStore(router);
 const ResponsiveBase = inject(({ curi }) => ({
   router: curi.router,
   response: curi.response,
-  action: curi.action
+  navigation: curi.navigation
 }))(observer(CuriBase));
 
 const App = () => (
