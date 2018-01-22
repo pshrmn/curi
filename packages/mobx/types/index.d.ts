@@ -1,9 +1,8 @@
-import { CuriRouter, Response } from "@curi/core";
-import { Action } from "@hickory/root";
+import { CuriRouter, Response, Navigation } from "@curi/core";
 export default class CuriStore {
     router: CuriRouter;
     response: Response;
-    action: Action;
+    navigation: Navigation;
     constructor(router: CuriRouter);
-    update(response: Response, action: Action): void;
+    update(response: Response, navigation: Navigation): void;
 }

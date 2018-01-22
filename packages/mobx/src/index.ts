@@ -1,26 +1,25 @@
 import { observable, action as mobxAction } from "mobx";
 
-import { CuriRouter, Response } from "@curi/core";
-import { Action } from "@hickory/root";
+import { CuriRouter, Response, Navigation } from "@curi/core";
 
 export default class CuriStore {
   router: CuriRouter;
   @observable response: Response;
-  @observable action: Action;
+  @observable navigation: Navigation;
 
   constructor(router: CuriRouter) {
     this.router = router;
     this.response = null;
-    this.action = null;
+    this.navigation = null;
 
-    router.respond((response: Response, action: Action) => {
-      this.update(response, action);
+    router.respond((response: Response, navigation: Navigation) => {
+      this.update(response, navigation);
     });
   }
 
   @mobxAction.bound
-  update(response: Response, action: Action) {
+  update(response: Response, navigation: Navigation) {
     this.response = response;
-    this.action = action;
+    this.navigation = navigation;
   }
 }
