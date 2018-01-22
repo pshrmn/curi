@@ -1,11 +1,11 @@
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import InMemory from '@hickory/in-memory';
-import curi from '@curi/core';
-import { CuriBase } from '@curi/react';
-import createActiveAddon from '@curi/addon-active';
-import routes from '../client/routes';
-import renderFunction from '../client/render';
+import React from "react";
+import { renderToString } from "react-dom/server";
+import InMemory from "@hickory/in-memory";
+import curi from "@curi/core";
+import { CuriBase } from "@curi/react";
+import createActiveAddon from "@curi/addon-active";
+import routes from "../client/routes";
+import renderFunction from "../client/render";
 
 export default function createHandler(debug = false) {
   return function(req, res) {
@@ -18,11 +18,11 @@ export default function createHandler(debug = false) {
     });
 
     router.respond(
-      (response, action) => {
+      (response, navigation) => {
         const markup = renderToString(
           <CuriBase
             response={response}
-            action={action}
+            navigation={navigation}
             router={router}
             render={renderFunction}
           />
@@ -47,10 +47,10 @@ function renderFullPage(html, title, debug) {
   <body>
     <div id="root">${html}</div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.${
-      debug ? 'development' : 'production.min'
+      debug ? "development" : "production.min"
     }.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.${
-      debug ? 'development' : 'production.min'
+      debug ? "development" : "production.min"
     }.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
