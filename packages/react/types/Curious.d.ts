@@ -20,6 +20,7 @@ export interface CuriousState {
 }
 export default class Curious extends React.Component<CuriousProps, CuriousState> {
     stopResponding: () => void;
+    isResponsive: boolean;
     static contextTypes: {
         curi: PropTypes.Requireable<any>;
     };

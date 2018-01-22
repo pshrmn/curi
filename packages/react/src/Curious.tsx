@@ -28,6 +28,7 @@ export default class Curious extends React.Component<
   CuriousState
 > {
   stopResponding: () => void;
+  isResponsive: boolean;
 
   static contextTypes = {
     curi: PropTypes.shape({
@@ -39,7 +40,22 @@ export default class Curious extends React.Component<
 
   constructor(props: CuriousProps, context: CuriContext) {
     super(props, context);
-    this.state = { response: undefined, action: undefined };
+
+    this.isResponsive = !!(this.props.responsive || this.props.router);
+    if (this.isResponsive) {
+      let response: Response;
+      let action: Action;
+
+      if (this.props.router) {
+        const initial = this.props.router.current();
+        response = initial.response;
+        action = initial.action;
+      } else {
+        response = this.context.curi.response;
+        action = this.context.curi.action;
+      }
+      this.state = { response, action };
+    }
   }
 
   componentDidMount() {
@@ -74,15 +90,8 @@ export default class Curious extends React.Component<
   render() {
     const { curi } = this.context;
     const router = this.props.router || curi.router;
-    // when "responsive", try to use the state, fall back to context
-    // if available (useful for initial render)
-    const isResponsive = this.props.responsive || this.props.router;
-    const response = isResponsive
-      ? this.state.response || (curi && curi.response)
-      : curi.response;
-    const action = isResponsive
-      ? this.state.action || (curi && curi.action)
-      : curi.action;
+    const response = this.isResponsive ? this.state.response : curi.response;
+    const action = this.isResponsive ? this.state.action : curi.action;
     return this.props.render({ router, response, action });
   }
 }
