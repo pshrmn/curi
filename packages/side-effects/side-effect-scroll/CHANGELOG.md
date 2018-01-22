@@ -1,5 +1,6 @@
 ## Next
 
+* Expect a `Navigation` instead of an `Action`.
 * Removed source maps from `dist`
 
 ## 1.0.0-beta.6

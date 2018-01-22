@@ -1,8 +1,8 @@
-import { ResponseHandler, Response } from '@curi/core';
+import { ResponseHandler, Response, Navigation } from "@curi/core";
 
 function createScrollSideEffect(): ResponseHandler {
-  return function(response: Response, action: string): void {
-    if (action === 'POP') {
+  return function(response: Response, navigation: Navigation): void {
+    if (navigation.action === "POP") {
       return;
     }
 
@@ -10,7 +10,7 @@ function createScrollSideEffect(): ResponseHandler {
     // so we use setTimeout to push this onto the event loop
     setTimeout(() => {
       const { hash } = response.location;
-      if (hash !== '') {
+      if (hash !== "") {
         const element = document.getElementById(hash);
         if (element && element.scrollIntoView) {
           element.scrollIntoView();
