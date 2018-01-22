@@ -1,56 +1,56 @@
-import 'jest';
-import curi from '../src/curi';
-import InMemory from '@hickory/in-memory';
-import { Addon, Response } from '../src/types';
+import "jest";
+import curi from "../src/curi";
+import InMemory from "@hickory/in-memory";
+import { Addon, Response } from "../src/types";
 
-describe('curi', () => {
+describe("curi", () => {
   let history;
 
   beforeEach(() => {
     history = InMemory();
   });
 
-  describe('constructor', () => {
+  describe("constructor", () => {
     // these tests rely on the fact that the pathname generator
     // is a default addon
-    it('registers routes', () => {
+    it("registers routes", () => {
       const routes = [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' },
-        { name: 'Contact', path: 'contact' }
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
+        { name: "Contact", path: "contact" }
       ];
       const router = curi(history, routes);
 
-      const names = ['Home', 'About', 'Contact'];
+      const names = ["Home", "About", "Contact"];
       names.forEach(n => {
         expect(router.addons.pathname(n)).toBeDefined();
       });
     });
 
-    it('registers nested routes', () => {
+    it("registers nested routes", () => {
       const routes = [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' },
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
         {
-          name: 'Contact',
-          path: 'contact',
+          name: "Contact",
+          path: "contact",
           children: [
-            { name: 'Email', path: 'email' },
-            { name: 'Phone', path: 'phone' }
+            { name: "Email", path: "email" },
+            { name: "Phone", path: "phone" }
           ]
         }
       ];
       const router = curi(history, routes);
-      const names = ['Email', 'Phone'];
+      const names = ["Email", "Phone"];
       names.forEach(n => {
         expect(router.addons.pathname(n)).toBeDefined();
       });
     });
 
-    it('makes addons available through return object', () => {
-      const routes = [{ name: 'Home', path: '' }];
+    it("makes addons available through return object", () => {
+      const routes = [{ name: "Home", path: "" }];
       const createFakeAddon = () => ({
-        name: 'fake',
+        name: "fake",
         register: () => {},
         reset: () => {},
         get: () => {}
@@ -61,19 +61,19 @@ describe('curi', () => {
       expect(router.addons.fake).toBeDefined();
     });
 
-    describe('options', () => {
-      describe('addons', () => {
-        it('includes pathname addon by default', () => {
-          const routes = [{ name: 'Home', path: '' }];
+    describe("options", () => {
+      describe("addons", () => {
+        it("includes pathname addon by default", () => {
+          const routes = [{ name: "Home", path: "" }];
           const router = curi(history, routes);
           expect(router.addons.pathname).toBeDefined();
         });
 
-        it('includes pathname addon even when other addons are provided', () => {
+        it("includes pathname addon even when other addons are provided", () => {
           const firstAddonCache = {};
           const createFirstAddon = () => {
             return {
-              name: 'first',
+              name: "first",
               register: (route, extra) => {
                 firstAddonCache[route.name] = route.path;
               },
@@ -82,21 +82,21 @@ describe('curi', () => {
             };
           };
 
-          const routes = [{ name: 'Home', path: '' }];
+          const routes = [{ name: "Home", path: "" }];
           const router = curi(history, routes, {
             addons: [createFirstAddon()]
           });
           expect(router.addons.pathname).toBeDefined();
         });
 
-        it('registers all of the routes with all of the addons', () => {
+        it("registers all of the routes with all of the addons", () => {
           // this might be a bit convoluted, but it ensures that the addons
           // are registered as expected
           const firstAddonCache = {};
           const secondAddonCache = {};
           const createFirstAddon = () => {
             return {
-              name: 'first',
+              name: "first",
               register: (route, extra) => {
                 firstAddonCache[route.name] = route.path;
               },
@@ -107,9 +107,9 @@ describe('curi', () => {
 
           const createSecondAddon = () => {
             return {
-              name: 'second',
+              name: "second",
               register: (route, extra) => {
-                secondAddonCache[route.name] = `${extra ? extra : 'None'} + ${
+                secondAddonCache[route.name] = `${extra ? extra : "None"} + ${
                   route.name
                 }`;
                 return route.name;
@@ -121,19 +121,19 @@ describe('curi', () => {
 
           const routes = [
             {
-              name: 'Grandparent',
-              path: 'grandparent',
+              name: "Grandparent",
+              path: "grandparent",
               children: [
                 {
-                  name: 'Parent',
-                  path: 'parent',
-                  children: [{ name: 'Child', path: 'child' }]
+                  name: "Parent",
+                  path: "parent",
+                  children: [{ name: "Child", path: "child" }]
                 }
               ]
             },
             {
-              name: 'Cousin',
-              path: 'cousin'
+              name: "Cousin",
+              path: "cousin"
             }
           ];
 
@@ -142,23 +142,23 @@ describe('curi', () => {
           });
           const expected = {
             Grandparent: {
-              first: 'grandparent',
-              second: 'None + Grandparent'
+              first: "grandparent",
+              second: "None + Grandparent"
             },
             Parent: {
-              first: 'parent',
-              second: 'Grandparent + Parent'
+              first: "parent",
+              second: "Grandparent + Parent"
             },
             Child: {
-              first: 'child',
-              second: 'Parent + Child'
+              first: "child",
+              second: "Parent + Child"
             },
             Cousin: {
-              first: 'cousin',
-              second: 'None + Cousin'
+              first: "cousin",
+              second: "None + Cousin"
             }
           };
-          const keys = ['Grandparent', 'Parent', 'Child', 'Cousin'];
+          const keys = ["Grandparent", "Parent", "Child", "Cousin"];
           keys.forEach(key => {
             expect(firstAddonCache[key]).toBe(expected[key].first);
             expect(secondAddonCache[key]).toBe(expected[key].second);
@@ -166,9 +166,9 @@ describe('curi', () => {
         });
       });
 
-      describe('sideEffects', () => {
-        it('calls side effect methods after a response is generated, passing them response and action', done => {
-          const routes = [{ name: 'All', path: ':all+' }];
+      describe("sideEffects", () => {
+        it("calls side effect methods after a response is generated, passing them response and action", done => {
+          const routes = [{ name: "All", path: ":all+" }];
           const sideEffect = jest.fn();
 
           const router = curi(history, routes, {
@@ -177,13 +177,13 @@ describe('curi', () => {
           router.respond(response => {
             expect(sideEffect.mock.calls.length).toBe(1);
             expect(sideEffect.mock.calls[0][0]).toBe(response);
-            expect(sideEffect.mock.calls[0][1]).toBe('PUSH');
+            expect(sideEffect.mock.calls[0][1]).toBe("PUSH");
             done();
           });
         });
 
         it('calls side effects WITHOUT "after: true" property before response handlers', done => {
-          const routes = [{ name: 'All', path: ':all+' }];
+          const routes = [{ name: "All", path: ":all+" }];
 
           const sideEffect1 = jest.fn();
           const sideEffect2 = jest.fn();
@@ -204,7 +204,7 @@ describe('curi', () => {
         });
 
         it('calls side effects WITH "after: true" property after response handlers', done => {
-          const routes = [{ name: 'All', path: ':all+' }];
+          const routes = [{ name: "All", path: ":all+" }];
           const responseHandler = jest.fn();
           const sideEffect = function() {
             expect(responseHandler.mock.calls.length).toBe(1);
@@ -217,15 +217,15 @@ describe('curi', () => {
           router.respond(responseHandler);
         });
 
-        it('passes response, action, and router object to side effect', done => {
-          const routes = [{ name: 'All', path: ':all*' }];
+        it("passes response, action, and router object to side effect", done => {
+          const routes = [{ name: "All", path: ":all*" }];
           const responseHandler = jest.fn();
           const sideEffect = function(response, action, router) {
             expect(response).toMatchObject({
-              name: 'All',
-              location: { pathname: '/' }
+              name: "All",
+              location: { pathname: "/" }
             });
-            expect(action).toBe('PUSH');
+            expect(action).toBe("PUSH");
             expect(router).toBe(router);
             done();
           };
@@ -237,12 +237,12 @@ describe('curi', () => {
         });
       });
 
-      describe('cache', () => {
-        it('returns cached response for same key on subsequent calls if cache is provided', done => {
+      describe("cache", () => {
+        it("returns cached response for same key on subsequent calls if cache is provided", done => {
           const routes = [
             {
-              name: 'All',
-              path: '(.*)',
+              name: "All",
+              path: "(.*)",
               match: {
                 response: ({ set }) => {
                   set.data(Math.random());
@@ -271,7 +271,7 @@ describe('curi', () => {
           const steps = [
             r => {
               randomValue = r.data;
-              history.push('/new-location');
+              history.push("/new-location");
             },
             r => {
               expect(r.data).not.toEqual(randomValue);
@@ -292,11 +292,11 @@ describe('curi', () => {
           router.respond(responseHandler);
         });
 
-        it('generates new response for same key on subsequent calls if cache is not provided', done => {
+        it("generates new response for same key on subsequent calls if cache is not provided", done => {
           const routes = [
             {
-              name: 'All',
-              path: '(.*)',
+              name: "All",
+              path: "(.*)",
               match: {
                 response: ({ set }) => {
                   set.data(Math.random());
@@ -311,7 +311,7 @@ describe('curi', () => {
           const steps = [
             r => {
               randomValue = r.data;
-              history.push('/new-location');
+              history.push("/new-location");
             },
             r => {
               expect(r.data).not.toEqual(randomValue);
@@ -331,49 +331,49 @@ describe('curi', () => {
         });
       });
 
-      describe('emitRedirects', () => {
-        it('emits redirects by default', done => {
+      describe("emitRedirects", () => {
+        it("emits redirects by default", done => {
           const routes = [
             {
-              name: 'Start',
-              path: '',
+              name: "Start",
+              path: "",
               match: {
                 response: ({ set }) => {
-                  set.redirect('/other');
+                  set.redirect("/other");
                 }
               }
             },
             {
-              name: 'Other',
-              path: 'other'
+              name: "Other",
+              path: "other"
             }
           ];
           const router = curi(history, routes);
 
-          let firstCall = true;;
+          let firstCall = true;
           router.respond(r => {
             if (firstCall) {
-              expect(r.name).toBe('Start');
+              expect(r.name).toBe("Start");
               firstCall = false;
               done();
             }
           });
         });
 
-        it('does not emit redirects when emitRedirects = false', done => {
+        it("does not emit redirects when emitRedirects = false", done => {
           const routes = [
             {
-              name: 'Start',
-              path: '',
+              name: "Start",
+              path: "",
               match: {
                 response: ({ set }) => {
-                  set.redirect('/other');
+                  set.redirect("/other");
                 }
               }
             },
             {
-              name: 'Other',
-              path: 'other'
+              name: "Other",
+              path: "other"
             }
           ];
 
@@ -381,7 +381,7 @@ describe('curi', () => {
             emitRedirects: false
           });
           router.respond(r => {
-            expect(r.name).toBe('Other');
+            expect(r.name).toBe("Other");
             done();
           });
         });
@@ -389,7 +389,7 @@ describe('curi', () => {
     });
   });
 
-  describe('refresh', () => {
+  describe("refresh", () => {
     const err = console.error;
 
     beforeEach(() => {
@@ -400,41 +400,41 @@ describe('curi', () => {
       console.error = err;
     });
 
-    it('resets and replaces registered routes', () => {
+    it("resets and replaces registered routes", () => {
       const englishRoutes = [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' },
-        { name: 'Contact', path: 'contact' }
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
+        { name: "Contact", path: "contact" }
       ];
       const spanishRoutes = [
-        { name: 'Casa', path: '' },
-        { name: 'Acerca De', path: 'acerca-de' },
-        { name: 'Contacto', path: 'contacto' }
+        { name: "Casa", path: "" },
+        { name: "Acerca De", path: "acerca-de" },
+        { name: "Contacto", path: "contacto" }
       ];
 
       const router = curi(history, englishRoutes);
 
       router.refresh(spanishRoutes);
 
-      const englishNames = ['Home', 'About', 'Contact'];
+      const englishNames = ["Home", "About", "Contact"];
       englishNames.forEach(n => {
         expect(router.addons.pathname(n)).toBeUndefined();
       });
 
-      const spanishNames = ['Casa', 'Acerca De', 'Contacto'];
+      const spanishNames = ["Casa", "Acerca De", "Contacto"];
       spanishNames.forEach(n => {
         expect(router.addons.pathname(n)).toBeDefined();
       });
     });
   });
 
-  describe('respond', () => {
-    describe('initial call', () => {
-      it('does not immediately calls response handler when there is not a response', () => {
+  describe("respond", () => {
+    describe("initial call", () => {
+      it("does not immediately calls response handler when there is not a response", () => {
         const history = InMemory({
-          locations: ['/']
+          locations: ["/"]
         });
-        const routes = [{ name: 'Home', path: '' }];
+        const routes = [{ name: "Home", path: "" }];
         const sub = jest.fn();
         const router = curi(history, routes);
 
@@ -442,11 +442,11 @@ describe('curi', () => {
         expect(sub.mock.calls.length).toBe(0);
       });
 
-      it('immediately calls response handler when there is already a response', done => {
+      it("immediately calls response handler when there is already a response", done => {
         const history = InMemory({
-          locations: ['/']
+          locations: ["/"]
         });
-        const routes = [{ name: 'Home', path: '' }];
+        const routes = [{ name: "Home", path: "" }];
         const sub = jest.fn();
         const router = curi(history, routes);
         setTimeout(() => {
@@ -455,15 +455,35 @@ describe('curi', () => {
           done();
         }, 50);
       });
+
+      it("uses new response if router.respond is called within response handler", done => {
+        const history = InMemory({
+          locations: ["/"]
+        });
+        const routes = [{ name: "Home", path: "" }];
+        const nestedHandler = jest.fn();
+
+        const router = curi(history, routes);
+        router.respond(
+          (response, action) => {
+            router.respond(nestedHandler);
+            const [nestedResponse, nestedAction] = nestedHandler.mock.calls[0];
+            expect(nestedResponse).toBe(response);
+            expect(nestedAction).toBe(action);
+            done();
+          },
+          { once: true }
+        );
+      });
     });
 
-    describe('response handler options', () => {
-      describe('once', () => {
-        it('calls the response handler function only one time', done => {
+    describe("response handler options", () => {
+      describe("once", () => {
+        it("calls the response handler function only one time", done => {
           const history = InMemory({
-            locations: ['/']
+            locations: ["/"]
           });
-          const routes = [{ name: 'Home', path: '' }];
+          const routes = [{ name: "Home", path: "" }];
           const oneTime = jest.fn();
           let called = false;
           const responseHandler = jest.fn(() => {
@@ -475,7 +495,7 @@ describe('curi', () => {
               called = true;
               // trigger another navigation to verify that the once sub
               // is not called again
-              router.history.push('/another-one');
+              router.history.push("/another-one");
             }
           });
           const router = curi(history, routes);
@@ -484,26 +504,26 @@ describe('curi', () => {
           router.respond(responseHandler);
         });
 
-        it('calls the response handler function immediately if a response has already resolved', done => {
+        it("calls the response handler function immediately if a response has already resolved", done => {
           const history = InMemory({
-            locations: ['/']
+            locations: ["/"]
           });
-          const routes = [{ name: 'Home', path: '' }];
+          const routes = [{ name: "Home", path: "" }];
           const oneTime = jest.fn();
           const router = curi(history, routes);
           setTimeout(() => {
             router.respond(oneTime, { once: true });
             expect(oneTime.mock.calls.length).toBe(1);
-            expect(oneTime.mock.calls[0][0].location.pathname).toBe('/');
+            expect(oneTime.mock.calls[0][0].location.pathname).toBe("/");
             done();
           }, 50);
         });
 
-        it('when subscribed, the function is called AFTER regular response handlers', done => {
+        it("when subscribed, the function is called AFTER regular response handlers", done => {
           const history = InMemory({
-            locations: ['/']
+            locations: ["/"]
           });
-          const routes = [{ name: 'Home', path: '' }];
+          const routes = [{ name: "Home", path: "" }];
           const oneTime = jest.fn();
           let called = false;
           const responseHandler = jest.fn(() => {
@@ -517,7 +537,7 @@ describe('curi', () => {
               expect(responseHandler.mock.calls.length).toBe(1);
               // trigger another navigation to verify that the once sub
               // is not called again
-              router.history.push('/another-one');
+              router.history.push("/another-one");
             }
           });
           const router = curi(history, routes);
@@ -528,14 +548,14 @@ describe('curi', () => {
       });
     });
 
-    it('passes response, action, and router object to response handler', done => {
-      const routes = [{ name: 'All', path: ':all*' }];
+    it("passes response, action, and router object to response handler", done => {
+      const routes = [{ name: "All", path: ":all*" }];
       const responseHandler = function(response, action, router) {
         expect(response).toMatchObject({
-          name: 'All',
-          location: { pathname: '/' }
+          name: "All",
+          location: { pathname: "/" }
         });
-        expect(action).toBe('PUSH');
+        expect(action).toBe("PUSH");
         expect(router).toBe(router);
         done();
       };
@@ -544,43 +564,43 @@ describe('curi', () => {
       router.respond(responseHandler);
     });
 
-    it('notifies response handlers of new response and action when location changes', done => {
-      const How = { name: 'How', path: ':method' };
+    it("notifies response handlers of new response and action when location changes", done => {
+      const How = { name: "How", path: ":method" };
       const routes = [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' },
-        { name: 'Contact', path: 'contact', children: [How] }
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
+        { name: "Contact", path: "contact", children: [How] }
       ];
 
       const check = (response, action) => {
         expect(response).toMatchObject({
-          name: 'How',
-          partials: ['Contact'],
+          name: "How",
+          partials: ["Contact"],
           params: {
-            method: 'mail'
+            method: "mail"
           }
         });
-        expect(action).toBe('PUSH');
+        expect(action).toBe("PUSH");
         done();
       };
 
       const router = curi(history, routes);
       router.respond(check);
-      history.push('/contact/mail');
+      history.push("/contact/mail");
     });
 
-    it('notifies response handlers after promises have resolved', done => {
+    it("notifies response handlers after promises have resolved", done => {
       let promiseResolved = false;
       const routes = [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' },
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
         {
-          name: 'Contact',
-          path: 'contact',
+          name: "Contact",
+          path: "contact",
           children: [
             {
-              name: 'How',
-              path: ':method',
+              name: "How",
+              path: ":method",
               match: {
                 every: () => {
                   promiseResolved = true;
@@ -599,20 +619,20 @@ describe('curi', () => {
 
       const router = curi(history, routes);
       router.respond(check);
-      history.push('/contact/phone');
+      history.push("/contact/phone");
     });
 
-    it('does not emit responses for cancelled navigation', done => {
+    it("does not emit responses for cancelled navigation", done => {
       const routes = [
-        { name: 'Home', path: '' },
-        { name: 'About', path: 'about' },
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
         {
-          name: 'Contact',
-          path: 'contact',
+          name: "Contact",
+          path: "contact",
           children: [
             {
-              name: 'How',
-              path: ':method',
+              name: "How",
+              path: ":method",
               match: {
                 initial: () => Promise.resolve()
               }
@@ -621,18 +641,18 @@ describe('curi', () => {
         }
       ];
       const check = response => {
-        expect(response.params.method).toBe('mail');
+        expect(response.params.method).toBe("mail");
         done();
       };
 
       const router = curi(history, routes);
       router.respond(check);
-      history.push('/contact/phone');
-      history.push('/contact/mail');
+      history.push("/contact/phone");
+      history.push("/contact/mail");
     });
 
-    it('returns a function to unsubscribe when called', done => {
-      const router = curi(history, [{ name: 'Home', path: '' }]);
+    it("returns a function to unsubscribe when called", done => {
+      const router = curi(history, [{ name: "Home", path: "" }]);
 
       const sub1 = jest.fn();
       const sub2 = jest.fn();
@@ -645,7 +665,7 @@ describe('curi', () => {
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(0);
       unsub1();
-      history.push({ pathname: '/next' });
+      history.push({ pathname: "/next" });
 
       // need to wait for the response handlers to actually be called
       process.nextTick(() => {
@@ -655,16 +675,16 @@ describe('curi', () => {
       });
     });
 
-    it('throws an error if passing a non-function to respond', () => {
+    it("throws an error if passing a non-function to respond", () => {
       // adding this test for coverage, but TypeScript doesn't like it
-      const router = curi(history, [{ name: 'Home', path: '' }]);
+      const router = curi(history, [{ name: "Home", path: "" }]);
       const nonFuncs = [
         null,
         undefined,
-        'test',
+        "test",
         123,
         [1, 2, 3],
-        { key: 'value' }
+        { key: "value" }
       ];
       nonFuncs.forEach(nf => {
         expect(() => {
@@ -674,16 +694,16 @@ describe('curi', () => {
     });
   });
 
-  describe('response.redirectTo', () => {
-    it('triggers a history.replace call AFTER emitting response', done => {
+  describe("response.redirectTo", () => {
+    it("triggers a history.replace call AFTER emitting response", done => {
       let callPosition = 0;
       const routes = [
         {
-          name: 'A Route',
-          path: '',
+          name: "A Route",
+          path: "",
           match: {
             response: ({ set }) => {
-              set.redirect('/somewhere-else', 301);
+              set.redirect("/somewhere-else", 301);
             }
           }
         }

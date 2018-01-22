@@ -1,5 +1,6 @@
 ## Next
 
+* (Internal) Set `previous` before emitting so nested response handlers are called with newest response.
 * Add `options.emitRedirects` (default `true`). When `false`, a response with a `redirectTo` property will not be emitted to subscribers. Instead, the automatic redirect will occur and the result of that navigation will emitted.
 
 ## 1.0.0-beta.23
@@ -61,7 +62,7 @@
 
 ## 1.0.0-beta.11
 
-* Pass addons to `createConfig` instead of addon factories. This allows addons to be configurable.  The `options` passed to `createConfig` can now accept a `pathnameOptions` object. This can be used to change how the `pathname` addon encodes the generated pathname. If this is not provided, the default function (`encodeURIComponent`) will be used to encode pathnames. Addons now also expect a `reset` property, which is a function that should reset the addon to its initial state.
+* Pass addons to `createConfig` instead of addon factories. This allows addons to be configurable. The `options` passed to `createConfig` can now accept a `pathnameOptions` object. This can be used to change how the `pathname` addon encodes the generated pathname. If this is not provided, the default function (`encodeURIComponent`) will be used to encode pathnames. Addons now also expect a `reset` property, which is a function that should reset the addon to its initial state.
 
 ## 1.0.0-beta.10
 
@@ -80,16 +81,18 @@
 
 * Rework how redirect works. <del>Routes can now have a `redirect` function. This function should return an object with two properties: `to` which is the string/location object to redirect to and `status` (optional) which is the status code number for the redirect type. `redirect` has been removed from the `LoadModifiers` so that redirecting is only done with `route.redirect`.</del> When a `RedirectResponse` is created, Curi will automatically call `history.replace` with the string/location returned by calling `route.redirect`. Subscribers will still be called, so render functions should detect when the response has a `redirectTo` property and respond properly. Redirect responses now support the `body` property, so while a redirect render should be very short, you _can_ render a redirect.
 * Rewrite `SideEffect` as an interface with two properties: `fn` which is a subscriber function and `after` which is a boolean. When `after` is `false`, the subscriber function will be run before any functions subscribed with `config.subscribe`. When `after` is `true`, the function will be called after any `config.subscribe` functions.
+
 ```js
 createConfig(history, routes, {
   sideEffects: [
     // run before any subscribers
     { fn: PreSideEffect },
     // run after any subscribers
-    { fn: PostSideEffect, after: true}
+    { fn: PostSideEffect, after: true }
   ]
-})
+});
 ```
+
 * Don't emit response when there is an error generating a response. The error will be logged (using `console.error`). It is up to the user to make sure that their `load`/`preload` functions catch any errors.
 * Fix bug where route with no children and path option `end=false` would match non-exact paths.
 
@@ -117,8 +120,8 @@ createConfig(history, routes, {
 ## 0.11.0
 
 * Drop `middleware`, add `sideEffects`. The main reason for middleware was because history doesn't
-support query parsing, but now that Curi uses Hickory, it is unnecessary. Most of the remaining use
-cases seemed to be side effects, so just making that explicit. If there is a need for modifying the response, then that can be looked at, but for the time being there doesn't appear to be a good reason to add this.
+  support query parsing, but now that Curi uses Hickory, it is unnecessary. Most of the remaining use
+  cases seemed to be side effects, so just making that explicit. If there is a need for modifying the response, then that can be looked at, but for the time being there doesn't appear to be a good reason to add this.
 
 * Only pass a subset of the `ResponseCreator` methods to route `load` functions. These are the only ones that a developer should be using, so only pass these. The other ones could break the response, so don't give access to those.
 

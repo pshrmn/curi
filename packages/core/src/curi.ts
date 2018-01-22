@@ -1,19 +1,19 @@
-import registerRoutes from './utils/registerRoutes';
-import pathnameAddon from './addons/pathname';
-import createResponse from './createResponse';
-import finishResponse from './finishResponse';
-import createRoute from './route';
+import registerRoutes from "./utils/registerRoutes";
+import pathnameAddon from "./addons/pathname";
+import createResponse from "./createResponse";
+import finishResponse from "./finishResponse";
+import createRoute from "./route";
 
 import {
   History,
   HickoryLocation,
   PendingNavigation,
   Action
-} from '@hickory/root';
+} from "@hickory/root";
 
-import { RouteDescriptor, InternalRoute } from './types/route';
-import { Response, PendingResponse } from './types/response';
-import { Addon, Addons } from './types/addon';
+import { RouteDescriptor, InternalRoute } from "./types/route";
+import { Response, PendingResponse } from "./types/response";
+import { Addon, Addons } from "./types/addon";
 import {
   CuriRouter,
   RouterOptions,
@@ -22,7 +22,7 @@ import {
   RespondOptions,
   RemoveResponseHandler,
   Cache
-} from './types/curi';
+} from "./types/curi";
 
 function createRouter(
   history: History,
@@ -79,7 +79,7 @@ function createRouter(
     fn: ResponseHandler,
     options?: RespondOptions
   ): RemoveResponseHandler {
-    if (typeof fn !== 'function') {
+    if (typeof fn !== "function") {
       throw new Error(
         'The first argument passed to "respond" must be a function'
       );
@@ -162,8 +162,8 @@ function createRouter(
     }
 
     if (!response.redirectTo || emitRedirects) {
-      emit(response, action);
       previous = [response, action, curi];
+      emit(response, action);
     }
 
     if (response.redirectTo) {
