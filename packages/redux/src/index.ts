@@ -1,34 +1,33 @@
-import { CuriRouter, Response } from '@curi/core';
-import { Store, Action as ReduxAction } from 'redux';
-import { Action as HickoryAction } from '@hickory/root';
+import { CuriRouter, Response, Navigation } from "@curi/core";
+import { Store, Action } from "redux";
 
-export const LOCATION_CHANGE = '@@curi/LOCATION_CHANGE';
-export const ADD_CURI = '@@curi/ADD_CURI';
+export const LOCATION_CHANGE = "@@curi/LOCATION_CHANGE";
+export const ADD_CURI = "@@curi/ADD_CURI";
 
-export interface ResponseAction extends ReduxAction {
+export interface ResponseAction extends Action {
   response: Response;
-  action: HickoryAction;
+  navigation: Navigation;
 }
 
-export interface CuriAction extends ReduxAction {
+export interface CuriAction extends Action {
   router: CuriRouter;
 }
 
 export interface CuriState {
   router: CuriRouter;
   response: Response;
-  action: HickoryAction;
+  navigation: Navigation;
 }
 
 const INITIAL_STATE: CuriState = {
   router: null,
   response: null,
-  action: null
+  navigation: null
 };
 
 export const curiReducer = (
   state: CuriState = INITIAL_STATE,
-  action: ReduxAction
+  action: Action
 ): CuriState => {
   switch (action.type) {
     case ADD_CURI:
@@ -38,7 +37,7 @@ export const curiReducer = (
     case LOCATION_CHANGE:
       return Object.assign({}, state, {
         response: (<ResponseAction>action).response,
-        action: (<ResponseAction>action).action
+        navigation: (<ResponseAction>action).navigation
       });
     default:
       return state;
@@ -51,11 +50,11 @@ export const syncResponses = (store: Store<any>, router: CuriRouter): void => {
     router
   });
 
-  router.respond((response, action) => {
+  router.respond((response, navigation) => {
     store.dispatch({
       type: LOCATION_CHANGE,
       response,
-      action
+      navigation
     });
   });
 };

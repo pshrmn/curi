@@ -1,7 +1,7 @@
-import 'jest';
-import curi from '@curi/core';
-import InMemory from '@hickory/in-memory';
-import { createStore, combineReducers } from 'redux';
+import "jest";
+import curi from "@curi/core";
+import InMemory from "@hickory/in-memory";
+import { createStore, combineReducers } from "redux";
 
 import {
   syncResponses,
@@ -9,19 +9,18 @@ import {
   LOCATION_CHANGE,
   ADD_CURI,
   CuriState
-} from '../src';
-import { Response, CuriRouter } from '@curi/core';
-import { Action as HickoryAction } from '@hickory/root';
-import { Action, Store } from 'redux';
+} from "../src";
+import { Response, CuriRouter, Navigation } from "@curi/core";
+import { Action, Store } from "redux";
 
-describe('syncResponses', () => {
+describe("syncResponses", () => {
   let history, router, store;
 
   beforeEach(() => {
-    history = InMemory({ locations: ['/'] });
+    history = InMemory({ locations: ["/"] });
     router = curi(history, [
-      { name: 'Home', path: '' },
-      { name: 'One', path: 'one' }
+      { name: "Home", path: "" },
+      { name: "One", path: "one" }
     ]);
 
     const reducer = combineReducers({
@@ -31,23 +30,25 @@ describe('syncResponses', () => {
     store = createStore(reducer);
   });
 
-  it('dispatches response and action to store whenever the location changes', done => {
+  it("dispatches response and navigation to store whenever the location changes", done => {
     syncResponses(store, router);
     router.respond(() => {
       // this Redux subscriber will be called when the response for
       // the push (below) is emitted.
       store.subscribe(() => {
-        const { response, action } = store.getState().curi;
-        expect(response.name).toBe('One');
-        expect(action).toBe('PUSH');
+        const { response, navigation } = store.getState().curi;
+        expect(response.name).toBe("One");
+        expect(navigation).toMatchObject({
+          action: "PUSH"
+        });
         done();
       });
 
-      history.push({ pathname: '/one' });
+      history.push({ pathname: "/one" });
     });
   });
 
-  it('makes the curi router object available from the store', done => {
+  it("makes the curi router object available from the store", done => {
     router.respond(() => {
       const { curi: before } = store.getState();
       expect(before.router).toBe(null);
@@ -60,19 +61,19 @@ describe('syncResponses', () => {
   });
 });
 
-describe('curiReducer', () => {
+describe("curiReducer", () => {
   let history, router;
 
   beforeEach(() => {
-    history = InMemory({ locations: ['/'] });
+    history = InMemory({ locations: ["/"] });
     router = curi(history, [
-      { name: 'Home', path: '' },
-      { name: 'One', path: 'one' }
+      { name: "Home", path: "" },
+      { name: "One", path: "one" }
     ]);
   });
 
-  describe('default state', () => {
-    it('returns object with null properties', () => {
+  describe("default state", () => {
+    it("returns object with null properties", () => {
       const reducer = combineReducers({
         curi: curiReducer
       });
@@ -82,13 +83,13 @@ describe('curiReducer', () => {
       expect(curi).toMatchObject({
         router: null,
         response: null,
-        action: null
+        navigation: null
       });
     });
   });
 
-  describe('ADD_CURI', () => {
-    it('returns the provided curi router for ADD_CURI actions', () => {
+  describe("ADD_CURI", () => {
+    it("returns the provided curi router for ADD_CURI actions", () => {
       const output = curiReducer(undefined, {
         type: ADD_CURI,
         router
@@ -97,39 +98,39 @@ describe('curiReducer', () => {
     });
   });
 
-  describe('LOCATION_CHANGE', () => {
-    it('sets the response and action from LOCATION_CHANGE actions', () => {
-      const response = { key: 'test' } as Response;
-      const action = 'POP' as HickoryAction;
+  describe("LOCATION_CHANGE", () => {
+    it("sets the response and navigation from LOCATION_CHANGE actions", () => {
+      const response = { key: "test" } as Response;
+      const navigation = { action: "POP" } as Navigation;
       const output = curiReducer(
         {} as CuriState,
         {
           type: LOCATION_CHANGE,
           response,
-          action
+          navigation
         } as Action
       );
       expect(output.response).toBe(response);
-      expect(output.action).toBe(action);
+      expect(output.navigation).toBe(navigation);
     });
   });
 
-  describe('other actions', () => {
-    it('returns current router/response/action for other actions', () => {
+  describe("other actions", () => {
+    it("returns current router/response/navigation for other actions", () => {
       const fakerouter = {} as CuriRouter;
-      const fakeResponse = { key: 'test' } as Response;
+      const fakeResponse = { key: "test" } as Response;
       const output = curiReducer(
         {
           router: fakerouter,
           response: fakeResponse,
-          action: 'POP'
+          navigation: { action: "POP" }
         } as CuriState,
-        { type: 'UNKNOWN' }
+        { type: "UNKNOWN" }
       );
       expect(output).toMatchObject({
         router: fakerouter,
         response: fakeResponse,
-        action: 'POP'
+        navigation: { action: "POP" }
       });
     });
   });
