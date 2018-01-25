@@ -52,7 +52,7 @@ export default () => (
       <PrismBlock lang="bash">
         {`npm install --save-dev @babel/preset-react`}
       </PrismBlock>
-      <PrismBlock lang="javascript">
+      <PrismBlock lang="javascript" data-line="7-8">
         {`// .babelrc.js
 module.exports = {
   presets: [
@@ -106,7 +106,7 @@ module.exports = {
       >
         <PrismBlock lang="javascript">
           {`// src/index.js
-            import { CuriBase } from '@curi/react';`}
+import { CuriBase } from '@curi/react';`}
         </PrismBlock>
         <p>
           The <Cmp>CuriBase</Cmp> is responsible for rendering the website
@@ -140,7 +140,7 @@ module.exports = {
           our Curi router. That will allow us to always have the latest response
           object.
         </p>
-        <PrismBlock lang="jsx">
+        <PrismBlock lang="jsx" data-line="2-4, 9-18">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -367,7 +367,7 @@ export default NotFound;`}
         We can now update our <IJS>set.body()</IJS> calls to set the actual
         components as the <IJS>body</IJS> property of responses.
       </p>
-      <PrismBlock lang="javascript">
+      <PrismBlock lang="javascript" data-line="2-7,15,24,33,42,51,62">
         {`// src/routes.js
 import Home from './components/Home';
 import Contact from './components/Contact';
@@ -444,6 +444,12 @@ export default routes;`}
         can help keep the code cleaner.
       </p>
       <PrismBlock lang="jsx">
+        {`// src/render.js
+export default function(response) {
+  return <response.body />;
+}`}
+      </PrismBlock>
+      <PrismBlock lang="jsx" data-line="2,11">
         {`// src/index.js
 import renderFunction from './render';
 
@@ -457,12 +463,7 @@ router.respond((response, navigation) => {
       render={renderFunction}
     />
   ), root);
-});
-
-// render.js
-export default function(response) {
-  return <response.body />;
-}`}
+});`}
       </PrismBlock>
       <p>
         Now, if we load up our application, we will render our home page (the{" "}

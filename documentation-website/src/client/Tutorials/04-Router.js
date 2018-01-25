@@ -73,7 +73,7 @@ export default () => (
       </p>
       <PrismBlock lang="javascript">
         {`// src/index.js
-          import curi from '@curi/core';
+import curi from '@curi/core';
 import Browser from '@hickory/browser';
 
 import routes from './routes';
