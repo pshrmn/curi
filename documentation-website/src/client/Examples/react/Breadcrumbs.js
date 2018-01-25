@@ -1,7 +1,7 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
-import { Section } from '../../components/Sections';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
+import React from "react";
+import BaseExample from "../base/BaseExample";
+import { Section } from "../../components/Sections";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default ({ name }) => (
   <BaseExample>
@@ -21,7 +21,7 @@ export default ({ name }) => (
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/react/breadcrumbs">
         here
       </a>.

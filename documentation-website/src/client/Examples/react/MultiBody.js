@@ -1,9 +1,9 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
-import { Section } from '../../components/Sections';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
-import { InlineJS as IJS, PrismBlock } from '../../components/PrismBlocks';
-import { Note } from '../../components/Messages';
+import React from "react";
+import BaseExample from "../base/BaseExample";
+import { Section } from "../../components/Sections";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
+import { InlineJS as IJS, PrismBlock } from "../../components/PrismBlocks";
+import { Note } from "../../components/Messages";
 
 export default ({ name }) => (
   <BaseExample>
@@ -35,7 +35,7 @@ export default ({ name }) => (
       <Note>
         One thing to remember when attaching multiple components to a route is
         that all of your routes should have the same root structure. Otherwise,
-        you will have to adapt your render function to deal with different{' '}
+        you will have to adapt your render function to deal with different{" "}
         <IJS>response.body</IJS> layouts.
       </Note>
       <PrismBlock lang="javascript">
@@ -67,7 +67,7 @@ const routes = [
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/react/multi-body">
         here
       </a>.

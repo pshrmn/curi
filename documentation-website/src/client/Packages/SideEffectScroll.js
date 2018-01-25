@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BasePackage from './base/BasePackage';
-import APIBlock from './base/APIBlock';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Section } from '../components/Sections';
+import BasePackage from "./base/BasePackage";
+import APIBlock from "./base/APIBlock";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Section } from "../components/Sections";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -14,7 +14,7 @@ export default ({ name, version, globalName }) => (
     about={
       <div>
         <p>
-          Hickory, the history package that Curi uses, uses the{' '}
+          Hickory, the history package that Curi uses, uses the{" "}
           <IJS>pushState</IJS> and <IJS>replaceState</IJS> methods for
           navigation. Unfortunately, these do not trigger scrolling to the top
           of the page when you navigate. This package provides a side effect
@@ -36,7 +36,7 @@ export default ({ name, version, globalName }) => (
         id="createScrollSideEffect"
       >
         <p>
-          When registering the side effect, you should pass the{' '}
+          When registering the side effect, you should pass the{" "}
           <IJS>after: true</IJS> option. This should make the side effect run
           after your application has re-rendered (although this is not
           guaranteed if your application is rendered asynchronously).

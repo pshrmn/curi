@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import { InlineJS as IJS } from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section } from '../components/Sections';
-import TutorialLinks from '../Tutorials/base/TutorialLinks';
+import { InlineJS as IJS } from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section } from "../components/Sections";
+import TutorialLinks from "../Tutorials/base/TutorialLinks";
 
 export default () => (
   <div>
@@ -23,13 +23,13 @@ export default () => (
 
     <Section title="What is Curi?" id="what">
       <p>
-        Before we get started, let's quickly define what Curi <em>is</em> and{' '}
+        Before we get started, let's quickly define what Curi <em>is</em> and{" "}
         <em>is not</em>.
       </p>
       <ol>
         <li>
           Curi is an asynchronous single-page application router.
-          <ol style={{ listStyleType: 'upper-roman' }}>
+          <ol style={{ listStyleType: "upper-roman" }}>
             <li>
               Being a single page application router means that with Curi, you
               can navigate to pages within your application without sending
@@ -52,7 +52,7 @@ export default () => (
           Curi is not framework specific. It does not matter to Curi how you
           render your application; Curi is only concerned with navigation and
           route matching. That said, there are a couple official framework
-          specific packages (e.g. <IJS>@curi/react</IJS> and{' '}
+          specific packages (e.g. <IJS>@curi/react</IJS> and{" "}
           <IJS>@curi/vue</IJS>) that provide integration with Curi, but these
           are not required for you to be able to use Curi.
         </li>
@@ -79,7 +79,7 @@ export default () => (
         <li>
           Again, if you plan to follow along locally, you should be comfortable
           with basic terminal (command line) usage. Nothing crazy, just commands
-          like <IJS>cd</IJS>, <IJS>touch</IJS>, <IJS>mkdir</IJS> and running{' '}
+          like <IJS>cd</IJS>, <IJS>touch</IJS>, <IJS>mkdir</IJS> and running{" "}
           <IJS>npm</IJS> commands.
         </li>
         <li>

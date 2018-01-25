@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import GuideComponents from '../Guides';
+import GuideComponents from "../Guides";
 
 export default ({ params, data }) => {
   if (!data) {

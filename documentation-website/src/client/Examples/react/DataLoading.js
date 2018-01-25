@@ -1,8 +1,8 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
-import { PrismBlock, InlineJS as IJS } from '../../components/PrismBlocks';
-import { Section } from '../../components/Sections';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
+import React from "react";
+import BaseExample from "../base/BaseExample";
+import { PrismBlock, InlineJS as IJS } from "../../components/PrismBlocks";
+import { Section } from "../../components/Sections";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default ({ name }) => (
   <BaseExample>
@@ -24,7 +24,7 @@ export default ({ name }) => (
         will run across the top of your page. There are many possible solutions,
         but this one is very easy to use, so it works well for our example. The
         basis of what we will do is to tell <IJS>nprogress</IJS> to start when
-        the user clicks a link, and then when we re-render, we tell{' '}
+        the user clicks a link, and then when we re-render, we tell{" "}
         <IJS>nprogress</IJS> that we are done loading.
       </p>
 
@@ -51,7 +51,7 @@ nprogress.done();
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/react/data-loading">
         here
       </a>.

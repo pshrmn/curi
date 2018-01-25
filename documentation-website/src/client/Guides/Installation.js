@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseGuide from './base/BaseGuide';
-import { PrismBlock } from '../components/PrismBlocks';
-import { Section } from '../components/Sections';
+import BaseGuide from "./base/BaseGuide";
+import { PrismBlock } from "../components/PrismBlocks";
+import { Section } from "../components/Sections";
 
 export default ({ name }) => (
   <BaseGuide>
@@ -17,7 +17,7 @@ export default ({ name }) => (
     <PrismBlock lang="bash">npm install @hickory/browser @curi/core</PrismBlock>
 
     <p>
-      If you prefer to use script tags, you can use{' '}
+      If you prefer to use script tags, you can use{" "}
       <a href="https://unpkg.com">Unpkg</a> to load Curi and Hickory.
     </p>
 
@@ -33,22 +33,22 @@ export default ({ name }) => (
       </p>
       <p>
         If you need a general ES2015 polyfill, you can check out the one
-        provided by Babel's{' '}
+        provided by Babel's{" "}
         <a href="https://babeljs.io/docs/usage/polyfill/#usage-in-browser">
           babel-polyfill
-        </a>{' '}
+        </a>{" "}
         package. If you only need a Promise polyfill, then you should check out
-        the{' '}
-        <a href="https://github.com/stefanpenner/es6-promise">es6-promise</a>{' '}
+        the{" "}
+        <a href="https://github.com/stefanpenner/es6-promise">es6-promise</a>{" "}
         package.
       </p>
     </Section>
 
     <h2>Next</h2>
     <p>
-      <Link to="Guide" params={{ slug: 'getting-started' }}>
+      <Link to="Guide" params={{ slug: "getting-started" }}>
         Get started
-      </Link>{' '}
+      </Link>{" "}
       with Curi.
     </p>
   </BaseGuide>

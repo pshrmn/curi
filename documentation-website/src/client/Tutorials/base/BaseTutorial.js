@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import TutorialLinks from './TutorialLinks';
+import TutorialLinks from "./TutorialLinks";
 
 export default ({ children }) => (
   <div className="tutorial">

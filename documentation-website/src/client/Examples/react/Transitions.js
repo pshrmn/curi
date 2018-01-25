@@ -1,12 +1,12 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
+import React from "react";
+import BaseExample from "../base/BaseExample";
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../../components/PrismBlocks';
-import { Section } from '../../components/Sections';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
+} from "../../components/PrismBlocks";
+import { Section } from "../../components/Sections";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default ({ name }) => (
   <BaseExample>
@@ -21,7 +21,7 @@ export default ({ name }) => (
       <p>
         All that this does is to render a <Cmp>CSSTransitionGroup</Cmp> around
         the response's body. The only other thing that you need to do is to set
-        a key on the rendered component, which is necessary for{' '}
+        a key on the rendered component, which is necessary for{" "}
         <Cmp>CSSTransitionGroup</Cmp> to know which of its children are
         entering/leaving/staying.
       </p>
@@ -43,7 +43,7 @@ export default ({ name }) => (
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/react/transitions">
         here
       </a>.

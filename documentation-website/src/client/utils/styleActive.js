@@ -1,4 +1,4 @@
 export default function(props) {
-  props.className = 'active';
+  props.className = "active";
   return props;
 }

@@ -1,12 +1,12 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
+import React from "react";
+import BaseExample from "../base/BaseExample";
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../../components/PrismBlocks';
-import { Section } from '../../components/Sections';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
+} from "../../components/PrismBlocks";
+import { Section } from "../../components/Sections";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default ({ name }) => (
   <BaseExample>
@@ -36,7 +36,7 @@ export default ({ name }) => (
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/vue/transitions">
         here
       </a>.

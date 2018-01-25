@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from '@curi/react';
-import styleActive from '../utils/styleActive';
+import React from "react";
+import { Link } from "@curi/react";
+import styleActive from "../utils/styleActive";
 
 export default () => (
   <nav>

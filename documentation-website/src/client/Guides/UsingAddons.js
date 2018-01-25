@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseGuide from './base/BaseGuide';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Section, Subsection } from '../components/Sections';
+import BaseGuide from "./base/BaseGuide";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name }) => (
   <BaseGuide>
@@ -59,7 +59,7 @@ export default ({ name }) => (
 
       <p>
         Addons are provided to the <IJS>curi</IJS> call as an array using the
-        addons property of the options object (the third argument to{' '}
+        addons property of the options object (the third argument to{" "}
         <IJS>curi</IJS>).
       </p>
 
@@ -98,8 +98,8 @@ export default ({ name }) => (
       </PrismBlock>
 
       <p>
-        The function should return an object with four properties:{' '}
-        <IJS>name</IJS>, <IJS>register</IJS>, <IJS>get</IJS>, and{' '}
+        The function should return an object with four properties:{" "}
+        <IJS>name</IJS>, <IJS>register</IJS>, <IJS>get</IJS>, and{" "}
         <IJS>reset</IJS>. name is a unique identifier for the add-on, register
         is a function that will be used for your add-on to store information
         about each route, get is a function that will receive a route's name
@@ -186,10 +186,10 @@ router.addons.MyFirstAddon('Elsewhere'); // false`}
     <div>
       <h2>Next</h2>
       <p>
-        Next on the list are side effects, which you can learn more about in the{' '}
-        <Link to="Guide" params={{ slug: 'side-effects' }}>
+        Next on the list are side effects, which you can learn more about in the{" "}
+        <Link to="Guide" params={{ slug: "side-effects" }}>
           Using Side Effects
-        </Link>{' '}
+        </Link>{" "}
         guide.
       </p>
     </div>

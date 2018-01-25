@@ -1,48 +1,48 @@
-import React from 'react';
+import React from "react";
 
 // components that are not code split
-import Home from './route-components/Home';
-import PackageList from './route-components/PackageList';
-import ExampleList from './route-components/ExampleList';
-import TutorialBase from './route-components/TutorialBase';
+import Home from "./route-components/Home";
+import PackageList from "./route-components/PackageList";
+import ExampleList from "./route-components/ExampleList";
+import TutorialBase from "./route-components/TutorialBase";
 
-import { byName as tutorialsByName } from './constants/tutorials';
-import { byName as guidesByName } from './constants/guides';
-import { byName as packagesByName } from './constants/packages';
-import EXAMPLES from './constants/examples';
+import { byName as tutorialsByName } from "./constants/tutorials";
+import { byName as guidesByName } from "./constants/guides";
+import { byName as packagesByName } from "./constants/packages";
+import EXAMPLES from "./constants/examples";
 
 function caught(error) {
-  console.error('Failed to load module for:', name, error);
+  console.error("Failed to load module for:", name, error);
   return () => <div>Sorry, something went wrong...</div>;
 }
 
 export default [
   {
-    name: 'Home',
-    path: '',
+    name: "Home",
+    path: "",
     match: {
       response: ({ set }) => {
         set.body(Home);
-        set.title('Curi');
+        set.title("Curi");
       }
     }
   },
   {
-    name: 'Tutorials',
-    path: 'tutorial',
+    name: "Tutorials",
+    path: "tutorial",
     match: {
       response: ({ set }) => {
         set.body(TutorialBase);
-        set.title('Tutorial');
+        set.title("Tutorial");
       }
     },
     children: [
       {
-        name: 'Tutorial',
-        path: ':name',
+        name: "Tutorial",
+        path: ":name",
         match: {
           initial: () =>
-            import(/* webpackChunkName: 'tutorial' */ './route-components/Tutorial').then(
+            import(/* webpackChunkName: 'tutorial' */ "./route-components/Tutorial").then(
               module => module.default,
               caught
             ),
@@ -58,24 +58,24 @@ export default [
     ]
   },
   {
-    name: 'Guides',
-    path: 'guides',
+    name: "Guides",
+    path: "guides",
     match: {
       response: ({ set, addons }) => {
-        const defaultGuide = addons.pathname('Guide', {
-          slug: 'getting-started'
+        const defaultGuide = addons.pathname("Guide", {
+          slug: "getting-started"
         });
         set.redirect(defaultGuide);
-        set.title('Guides');
+        set.title("Guides");
       }
     },
     children: [
       {
-        name: 'Guide',
-        path: ':slug/',
+        name: "Guide",
+        path: ":slug/",
         match: {
           initial: () =>
-            import(/* webpackChunkName: 'guide' */ './route-components/Guide').then(
+            import(/* webpackChunkName: 'guide' */ "./route-components/Guide").then(
               module => module.default,
               caught
             ),
@@ -92,21 +92,21 @@ export default [
     ]
   },
   {
-    name: 'Packages',
-    path: 'packages',
+    name: "Packages",
+    path: "packages",
     match: {
       response: ({ set }) => {
         set.body(PackageList);
-        set.title('Curi Packages');
+        set.title("Curi Packages");
       }
     },
     children: [
       {
-        name: 'Package',
-        path: '@curi/:package/',
+        name: "Package",
+        path: "@curi/:package/",
         match: {
           initial: () =>
-            import(/* webpackChunkName: 'package' */ './route-components/Package').then(
+            import(/* webpackChunkName: 'package' */ "./route-components/Package").then(
               module => module.default,
               caught
             ),
@@ -123,21 +123,21 @@ export default [
     ]
   },
   {
-    name: 'Examples',
-    path: 'examples',
+    name: "Examples",
+    path: "examples",
     match: {
       response: ({ set }) => {
         set.body(ExampleList);
-        set.title('Examples');
+        set.title("Examples");
       }
     },
     children: [
       {
-        name: 'Example',
-        path: ':category/:slug/',
+        name: "Example",
+        path: ":category/:slug/",
         match: {
           initial: () =>
-            import(/* webpackChunkName: 'example' */ './route-components/Example').then(
+            import(/* webpackChunkName: 'example' */ "./route-components/Example").then(
               module => module.default,
               caught
             ),

@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 export default ({ name, dir }) => (
   <a
     href={`https://github.com/pshrmn/curi/tree/master/packages/${
-      dir ? dir + '/' : ''
+      dir ? dir + "/" : ""
     }${name}`}
   >
     <img

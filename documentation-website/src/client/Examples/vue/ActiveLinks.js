@@ -1,11 +1,11 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
+import React from "react";
+import BaseExample from "../base/BaseExample";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../../components/PrismBlocks';
-import { Section } from '../../components/Sections';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
+} from "../../components/PrismBlocks";
+import { Section } from "../../components/Sections";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default ({ name }) => (
   <BaseExample>
@@ -13,7 +13,7 @@ export default ({ name }) => (
     <Section title="Explanation" id="explanation">
       <p>
         You may want to style a link differently when it is "active" (based on
-        the current response object). You can do so using the active prop of{' '}
+        the current response object). You can do so using the active prop of{" "}
         <Cmp>Link</Cmp>.
       </p>
 
@@ -25,7 +25,7 @@ export default ({ name }) => (
 
       <p>
         You can also pass a <IJS>partial</IJS> property to the active object.
-        partial should be a boolean, and when it is true (the Link's{' '}
+        partial should be a boolean, and when it is true (the Link's{" "}
         <IJS>to</IJS> property is in the response's partials array) it can be
         "active" if its params match the response's params.
       </p>
@@ -37,7 +37,7 @@ export default ({ name }) => (
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/vue/active-links">
         here
       </a>.

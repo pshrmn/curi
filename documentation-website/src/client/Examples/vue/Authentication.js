@@ -1,19 +1,19 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
+import React from "react";
+import BaseExample from "../base/BaseExample";
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../../components/PrismBlocks';
-import { Section } from '../../components/Sections';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
+} from "../../components/PrismBlocks";
+import { Section } from "../../components/Sections";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default ({ name }) => (
   <BaseExample>
     <h1>{name}</h1>
     <Section title="Explanation" id="explanation">
       <p>
-        Sometimes you will want to redirect based on the results of your{' '}
+        Sometimes you will want to redirect based on the results of your{" "}
         <IJS>match.every</IJS> function. For instance, you might see that a user
         is not authenticated and shouldn't be able to view a page.
       </p>
@@ -47,7 +47,7 @@ export default ({ name }) => (
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/vue/authentication">
         here
       </a>.

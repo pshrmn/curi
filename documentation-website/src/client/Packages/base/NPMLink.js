@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default ({ name }) => (
   <a href={`https://npmjs.com/package/@curi/${name}`}>

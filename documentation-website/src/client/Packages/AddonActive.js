@@ -1,8 +1,8 @@
-import React from 'react';
-import BasePackage from './base/BasePackage';
-import APIBlock from './base/APIBlock';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Section, Subsection } from '../components/Sections';
+import React from "react";
+import BasePackage from "./base/BasePackage";
+import APIBlock from "./base/APIBlock";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -27,7 +27,7 @@ export default ({ name, version, globalName }) => (
         </p>
         <p>
           The addon returns a boolean, <IJS>true</IJS> when a route is "active"
-          (it matches the response's <IJS>location</IJS>) and <IJS>false</IJS>{' '}
+          (it matches the response's <IJS>location</IJS>) and <IJS>false</IJS>{" "}
           when it is not.
         </p>
         <PrismBlock lang="javascript">

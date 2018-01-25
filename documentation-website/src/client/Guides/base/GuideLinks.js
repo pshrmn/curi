@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import { groupedGuides } from '../../constants/guides';
-import styleActive from '../../utils/styleActive';
+import { groupedGuides } from "../../constants/guides";
+import styleActive from "../../utils/styleActive";
 
 const GroupGuides = ({ guides, withDescription }) => (
   <ul className="link-list">
     {guides.map(g => (
-      <li key={g.name} className={withDescription ? 'with' : 'solo'}>
+      <li key={g.name} className={withDescription ? "with" : "solo"}>
         <Link
           to="Guide"
           params={{ slug: g.slug }}

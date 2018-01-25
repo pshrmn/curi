@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseGuide from './base/BaseGuide';
+import BaseGuide from "./base/BaseGuide";
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section } from '../components/Sections';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section } from "../components/Sections";
 
 export default ({ name }) => (
   <BaseGuide>
@@ -16,9 +16,9 @@ export default ({ name }) => (
 
     <p>
       In the code splitting guide, we used the <IJS>match.initial</IJS> property
-      of routes. Routes also have <IJS>match.every</IJS> and{' '}
+      of routes. Routes also have <IJS>match.every</IJS> and{" "}
       <IJS>match.response</IJS> properties. While <IJS>initial</IJS>is only
-      called the first time a route matches, <IJS>every</IJS> and{' '}
+      called the first time a route matches, <IJS>every</IJS> and{" "}
       <IJS>response</IJS> are called every time a route matches.
     </p>
 
@@ -44,12 +44,12 @@ export default ({ name }) => (
 
       <p>
         The <IJS>every</IJS> function will be passed a "route" object that
-        contains <IJS>params</IJS>, <IJS>location</IJS> and <IJS>name</IJS>{' '}
+        contains <IJS>params</IJS>, <IJS>location</IJS> and <IJS>name</IJS>{" "}
         properties. Between those properties, you should be able to create any
         data API requests.
       </p>
       <p>
-        Just like the <IJS>match.initial</IJS> function, <IJS>match.every</IJS>{' '}
+        Just like the <IJS>match.initial</IJS> function, <IJS>match.every</IJS>{" "}
         is expected to return a Promise.
       </p>
       <PrismBlock lang="javascript">
@@ -63,7 +63,7 @@ export default ({ name }) => (
       </PrismBlock>
 
       <p>
-        Now, when we navigate to <IJS>/recipe/chocolate-chip-cookies</IJS>, our{' '}
+        Now, when we navigate to <IJS>/recipe/chocolate-chip-cookies</IJS>, our{" "}
         <IJS>every</IJS> function will call the fake API function to load the
         recipe. The function will resolve with the loaded data.
       </p>
@@ -72,7 +72,7 @@ export default ({ name }) => (
     <Section title="response" id="response">
       <p>
         While <IJS>match.every</IJS> starts our data loading, it doesn't
-        actually do anything. Instead, we should handle any loaded data with the{' '}
+        actually do anything. Instead, we should handle any loaded data with the{" "}
         <IJS>match.response</IJS> function.
       </p>
 
@@ -82,28 +82,28 @@ export default ({ name }) => (
         route is resolving, the user may navigate again, which overrides the
         current navigation. We cannot cancel the <IJS>every</IJS> function for
         the current navigation, so if it performs any side effects, our
-        application is stuck with them. To avoid this, the <IJS>response</IJS>{' '}
+        application is stuck with them. To avoid this, the <IJS>response</IJS>{" "}
         function is not called until we know that the current navigation will
         complete.
       </p>
 
       <p>
         The <IJS>response</IJS> function will receive an object with a number of
-        properties. These are covered in detail in the{' '}
+        properties. These are covered in detail in the{" "}
         <Link
           to="Guide"
-          params={{ slug: 'routes' }}
-          details={{ hash: 'response' }}
+          params={{ slug: "routes" }}
+          details={{ hash: "response" }}
         >
           All About Routes
-        </Link>{' '}
+        </Link>{" "}
         guide.
       </p>
 
       <p>
-        Here, we will be using the <IJS>resolved</IJS> and <IJS>set</IJS>{' '}
+        Here, we will be using the <IJS>resolved</IJS> and <IJS>set</IJS>{" "}
         properties. We will use <IJS>set.data</IJS> to attach the data loaded
-        from our API to our response. Calling <IJS>set.data</IJS> will set the{' '}
+        from our API to our response. Calling <IJS>set.data</IJS> will set the{" "}
         <IJS>data</IJS> property of the response object.
       </p>
 
@@ -123,14 +123,14 @@ export default ({ name }) => (
 
       <p>
         If at some point in time we decide that we want to change our URI
-        pathname structure, we can also use the <IJS>match.response</IJS>{' '}
+        pathname structure, we can also use the <IJS>match.response</IJS>{" "}
         function to redirect.
       </p>
 
       <p>
         By calling the <IJS>set.redirect</IJS> method, you can specify the URI
         that we should redirect to. As always, with Curi you aren't expected to
-        have to manually generate pathnames. Instead, you can use{' '}
+        have to manually generate pathnames. Instead, you can use{" "}
         <IJS>addons.pathname</IJS>.
       </p>
 
@@ -158,10 +158,10 @@ export default ({ name }) => (
       do any route setup prior to actually rendering the route. Please remember,
       however, that your application will not be re-rendering until after the
       fetching has resolved. If you have a long running load function, you may
-      wish to implement some sort of loading display. The{' '}
-      <Link to="Example" params={{ category: 'react', slug: 'data-loading' }}>
+      wish to implement some sort of loading display. The{" "}
+      <Link to="Example" params={{ category: "react", slug: "data-loading" }}>
         data loading example
-      </Link>{' '}
+      </Link>{" "}
       shows one approach to how to do this.
     </p>
   </BaseGuide>

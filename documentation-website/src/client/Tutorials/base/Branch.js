@@ -1,10 +1,10 @@
-import React from 'react';
-import { InlineJS as IJS, PrismBlock } from '../../components/PrismBlocks';
+import React from "react";
+import { InlineJS as IJS, PrismBlock } from "../../components/PrismBlocks";
 
 export const TutorialBranch = ({ name }) => (
   <div className="tutorial-branch">
     <p>
-      If you are following along using the{' '}
+      If you are following along using the{" "}
       <a href="https://github.com/pshrmn/curi-tutorial">tutorial repo</a>,
       please checkout the <IJS>{name}</IJS> branch.
     </p>
@@ -15,12 +15,12 @@ export const TutorialBranch = ({ name }) => (
 export const TutorialBranches = ({ names }) => (
   <div className="tutorial-branch">
     <p>
-      If you are following along using the{' '}
+      If you are following along using the{" "}
       <a href="https://github.com/pshrmn/curi-tutorial">tutorial repo</a>,
       please checkout the appropriate branch for your rendering framework.
     </p>
     <PrismBlock lang="bash">
-      {names.map(n => `git checkout ${n}`).join('\n')}
+      {names.map(n => `git checkout ${n}`).join("\n")}
     </PrismBlock>
   </div>
 );
@@ -28,7 +28,7 @@ export const TutorialBranches = ({ names }) => (
 export const CompleteBranch = ({ name }) => (
   <div className="tutorial-branch">
     <p>
-      You can view the completed source code for this tutorial{' '}
+      You can view the completed source code for this tutorial{" "}
       <a href={`https://github.com/pshrmn/curi-tutorial/tree/${name}`}>
         on GitHub
       </a>.

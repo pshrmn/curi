@@ -1,5 +1,5 @@
-import React from 'react';
-import { PrismCode } from 'react-prism';
+import React from "react";
+import { PrismCode } from "react-prism";
 
 export const InlineJS = ({ children }) => (
   <PrismCode className="language-javascript">{children}</PrismCode>

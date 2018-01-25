@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseGuide from './base/BaseGuide';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
+import BaseGuide from "./base/BaseGuide";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name }) => (
   <BaseGuide>
@@ -67,7 +67,7 @@ export default ({ name }) => (
 }`}
       </PrismBlock>
       <p>
-        Another possibility happens when you use the <IJS>pathOptions</IJS>{' '}
+        Another possibility happens when you use the <IJS>pathOptions</IJS>{" "}
         object to set <IJS>end: false</IJS>. When you do that, then a route the
         partially matches will consider itself matched.
       </p>
@@ -104,10 +104,10 @@ export default ({ name }) => (
         <p>
           A path-to-regexp style string. This should <strong>not</strong> have a
           leading slash. The string will be passed to path-to-regexp to generate
-          a regular expression. Any{' '}
+          a regular expression. Any{" "}
           <a href="https://github.com/pillarjs/path-to-regexp#parameters">
             parameters
-          </a>{' '}
+          </a>{" "}
           will be identified so that they can be parsed out when matching
           against a location's pathname.
         </p>
@@ -120,15 +120,15 @@ export default ({ name }) => (
 
       <Subsection title="pathOptions" id="pathOptions">
         <p>
-          If you need to provide different path options than{' '}
+          If you need to provide different path options than{" "}
           <a href="https://github.com/pillarjs/path-to-regexp#usage">
             the defaults
-          </a>{' '}
-          used by path-to-regexp, you should specify them with a{' '}
+          </a>{" "}
+          used by path-to-regexp, you should specify them with a{" "}
           <IJS>pathOptions</IJS> object.
         </p>
         <Note>
-          If a route has a children array property, it will{' '}
+          If a route has a children array property, it will{" "}
           <strong>always</strong> have the <IJS>end</IJS> path option set to
           false.
         </Note>
@@ -140,8 +140,8 @@ export default ({ name }) => (
           will be called when a route matches.
         </p>
         <p>
-          While not required (like the <IJS>name</IJS> and <IJS>path</IJS>{' '}
-          properties), you will almost always want to have a{' '}
+          While not required (like the <IJS>name</IJS> and <IJS>path</IJS>{" "}
+          properties), you will almost always want to have a{" "}
           <IJS>match.response</IJS> property on your routes.
         </p>
         <Subsection tag="h5" title="initial" id="initial">
@@ -193,24 +193,24 @@ const user = {
           <p>
             You should not perform side effects in <IJS>every</IJS> because it
             is possible that navigating to the route might be cancelled.
-            Instead, side effects should be performed in{' '}
+            Instead, side effects should be performed in{" "}
             <IJS>match.response</IJS>.
           </p>
         </Subsection>
 
         <Subsection tag="h5" title="response" id="response">
           <p>
-            A function that will be called right before a response is emitted.{' '}
+            A function that will be called right before a response is emitted.{" "}
             <IJS>response</IJS> will be passed an object with a number of
             properties. The <IJS>response</IJS> function gives you an
             opportunity to modify the response object that will be emitted,
-            including using the data that was loaded in either the{' '}
+            including using the data that was loaded in either the{" "}
             <IJS>initial</IJS> or <IJS>every</IJS> functions.
           </p>
           <Subsection tag="h6" title="error" id="response-error">
             <p>
               If either the <IJS>initial</IJS> or <IJS>every</IJS> functions
-              reject with an error, that error will be passed to the{' '}
+              reject with an error, that error will be passed to the{" "}
               <IJS>response</IJS> function.
             </p>
             <PrismBlock lang="javascript">
@@ -233,9 +233,9 @@ const user = {
           </Subsection>
           <Subsection tag="h6" title="resolved" id="response-resolved">
             <p>
-              <IJS>resolved</IJS> is the value that was resolved by the{' '}
-              <IJS>every</IJS> function. If a route does not have a{' '}
-              <IJS>match.every</IJS> function, then this property will be{' '}
+              <IJS>resolved</IJS> is the value that was resolved by the{" "}
+              <IJS>every</IJS> function. If a route does not have a{" "}
+              <IJS>match.every</IJS> function, then this property will be{" "}
               <IJS>undefined</IJS>.
             </p>
             <PrismBlock lang="javascript">
@@ -257,9 +257,9 @@ const user = {
           </Subsection>
           <Subsection tag="h6" title="route" id="response-route">
             <p>
-              This is the same object that is passed to the <IJS>every</IJS>{' '}
-              function and contains three properties: the parsed{' '}
-              <IJS>params</IJS>, the <IJS>location</IJS>, and the{' '}
+              This is the same object that is passed to the <IJS>every</IJS>{" "}
+              function and contains three properties: the parsed{" "}
+              <IJS>params</IJS>, the <IJS>location</IJS>, and the{" "}
               <IJS>name</IJS> of the matched route.
             </p>
           </Subsection>
@@ -283,7 +283,7 @@ const user = {
                 a redirect response, it should redirect to the new location
                 (using your history object) instead of re-rendering. If you do
                 not provide a code, then 301 will be used. Setting the status
-                code is mostly important for rendering on the server. The{' '}
+                code is mostly important for rendering on the server. The{" "}
                 <IJS>to</IJS> argument should be a string or a location object.
                 Once the response has been created, Curi will automatically
                 redirect to the <IJS>to</IJS> location.
@@ -320,7 +320,7 @@ const routes = [
           <Subsection tag="h6" title="addons" id="response-addons">
             <p>
               The add-ons that have been registered with Curi are available to
-              the <IJS>response</IJS> function. This includes the built-in{' '}
+              the <IJS>response</IJS> function. This includes the built-in{" "}
               <IJS>pathname</IJS> add-on, which you might find useful if you
               need to redirect in a <IJS>response</IJS> function.
             </p>
@@ -353,9 +353,9 @@ const routes = [
           You can use the title property of a route to specify a title string
           that should be set on the response when that route matches. This can
           either be a string or a function. If it is a string, then
-          <IJS>response.title</IJS> will be set to the value of{' '}
+          <IJS>response.title</IJS> will be set to the value of{" "}
           <IJS>route.title</IJS>. If it is a function, it will be called (and
-          passed the <IJS>response.params</IJS> and <IJS>response.data</IJS>{' '}
+          passed the <IJS>response.params</IJS> and <IJS>response.data</IJS>{" "}
           values) to generate the title string.
         </p>
         <p>
@@ -392,7 +392,7 @@ const routes = [
         <p>
           When <IJS>path-to-regexp</IJS> matches your paths, all parameters are
           extracted as strings. However, you might have some route params to be
-          other types. You can provide functions to transform params using the{' '}
+          other types. You can provide functions to transform params using the{" "}
           <IJS>route.params</IJS> object. To transform a param, its name should
           be the string value from the path. The paired value should be a
           function that takes a string (the value from the pathname) and returns
@@ -416,14 +416,14 @@ const routes = [
       <Subsection title="extra" id="extra">
         <p>
           If you have any additional properties that you want attached to a
-          route, use the <IJS>extra</IJS> property. You will be able to use{' '}
+          route, use the <IJS>extra</IJS> property. You will be able to use{" "}
           <IJS>route.extra</IJS> in any custom add-ons or when a route matches
           via <IJS>response.route.extra</IJS>.
         </p>
 
         <p>
           You can attach anything you want to <IJS>extra</IJS> or you may never
-          find yourself needing to use this. One possible use case for{' '}
+          find yourself needing to use this. One possible use case for{" "}
           <IJS>extra</IJS> is that you could specify entrance/exit animation
           types. One route might want to fade in, while another might slide in.
         </p>
@@ -454,10 +454,10 @@ const routes = [
       <p>
         Now that you know how to setup your routes, we can get to the good part:
         actually rendering your application using response objects. Check out
-        the{' '}
-        <Link to="Guide" params={{ slug: 'responses' }}>
+        the{" "}
+        <Link to="Guide" params={{ slug: "responses" }}>
           Rendering with Responses
-        </Link>{' '}
+        </Link>{" "}
         guide to learn how.
       </p>
     </div>

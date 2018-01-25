@@ -1,11 +1,8 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
-import { InlineJS as IJS } from '../../components/PrismBlocks';
-import { Section } from '../../components/Sections';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
-
-const slug = 'modal';
-const name = 'Modal';
+import React from "react";
+import BaseExample from "../base/BaseExample";
+import { InlineJS as IJS } from "../../components/PrismBlocks";
+import { Section } from "../../components/Sections";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default ({ name }) => (
   <BaseExample>
@@ -42,7 +39,7 @@ export default ({ name }) => (
       <p>
         Second, you will also have to implement some mechanism to render the
         base layer (under the modal) using the previous location. In a React
-        application, you can do this by storing the previous{' '}
+        application, you can do this by storing the previous{" "}
         <IJS>props.children</IJS>.
       </p>
 
@@ -55,7 +52,7 @@ export default ({ name }) => (
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/react/modal">
         here
       </a>.

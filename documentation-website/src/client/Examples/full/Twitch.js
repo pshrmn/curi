@@ -1,12 +1,12 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
+import React from "react";
+import BaseExample from "../base/BaseExample";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../../components/PrismBlocks';
-import { Note } from '../../components/Messages';
-import { Section } from '../../components/Sections';
+} from "../../components/PrismBlocks";
+import { Note } from "../../components/Messages";
+import { Section } from "../../components/Sections";
 
 export default ({ name }) => (
   <BaseExample>

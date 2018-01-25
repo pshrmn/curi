@@ -1,24 +1,24 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
+import BaseTutorial from "./base/BaseTutorial";
+import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
   PrismBlock
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
-import CodeSandboxDemo from '../components/CodeSandboxDemo';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
+import CodeSandboxDemo from "../components/CodeSandboxDemo";
 
 export default () => (
   <BaseTutorial>
     <h1>Part 7: Rendering Data with Vue</h1>
     <p>
-      Now that our responses have <IJS>data</IJS>, we should update our{' '}
+      Now that our responses have <IJS>data</IJS>, we should update our{" "}
       <Cmp>BookList</Cmp> and <Cmp>Book</Cmp> components to use that. Accessing
-      the <IJS>data</IJS> is really easy because it is a property of our{' '}
+      the <IJS>data</IJS> is really easy because it is a property of our{" "}
       <IJS>response</IJS> object.
     </p>
     <Outline>
@@ -33,7 +33,7 @@ export default () => (
     <Section title="Using Data with the Book List" id="book-list">
       <p>
         Currently, in our <IJS>BookList.vue</IJS> file, we are importing the
-        books from a file. Now, we can remove that import and instead use the{' '}
+        books from a file. Now, we can remove that import and instead use the{" "}
         <IJS>response</IJS> prop to access our data. Since we also have better
         data, we can now use each book's title for the link text.
       </p>
@@ -60,15 +60,15 @@ export default () => (
     <Section title="Using Data with the Book" id="book">
       <p>
         We are already using the <IJS>response</IJS> prop in <Cmp>Book</Cmp>.
-        Now, instead of using <IJS>params</IJS>, we will switch to using{' '}
-        <IJS>data</IJS>. We can also take advantage of the <IJS>data.book</IJS>{' '}
+        Now, instead of using <IJS>params</IJS>, we will switch to using{" "}
+        <IJS>data</IJS>. We can also take advantage of the <IJS>data.book</IJS>{" "}
         properties to expand on our <Cmp>Book</Cmp> implementation.
       </p>
       <p>
         We also have a special case that we need to consider: what should we do
         when there is no matching book? In the sample data, we have books with
-        ids that range from 0-9. What if the user navigates to{' '}
-        <IJS>/books/123</IJS>? Our <IJS>fetchBook</IJS> call will reject and{' '}
+        ids that range from 0-9. What if the user navigates to{" "}
+        <IJS>/books/123</IJS>? Our <IJS>fetchBook</IJS> call will reject and{" "}
         <IJS>response.data</IJS> will be <IJS>undefined</IJS>. For now, we
         should detect that and render a simple message stating that the
         requested book does not exist.
@@ -100,14 +100,14 @@ export default () => (
       </PrismBlock>
     </Section>
     <p>
-      Now that we are using <IJS>response.data</IJS> in both the{' '}
-      <Cmp>BookList</Cmp> and <Cmp>Book</Cmp> components, we can remove the{' '}
+      Now that we are using <IJS>response.data</IJS> in both the{" "}
+      <Cmp>BookList</Cmp> and <Cmp>Book</Cmp> components, we can remove the{" "}
       <IJS>books.js</IJS> file.
     </p>
     <PrismBlock lang="bash">{`git rm src/books.js`}</PrismBlock>
     <Section title="Review" id="review">
       <p>
-        Our "Book List" and "Book" pages are now rendered using data from{' '}
+        Our "Book List" and "Book" pages are now rendered using data from{" "}
         <IJS>response.data</IJS>.
       </p>
       <CompleteBranch name="08-nav-vue" />
@@ -117,8 +117,8 @@ export default () => (
       <p>
         Our book component still isn't complete. We are building a book store
         after all, so we should really provide the user a way to actually "buy"
-        a book. In{' '}
-        <Link to="Tutorial" params={{ name: '08-nav-vue' }}>
+        a book. In{" "}
+        <Link to="Tutorial" params={{ name: "08-nav-vue" }}>
           Part 8: Forms & Navigation
         </Link>, we will add the ability to add books to a shopping cart and
         "purchase" them from our "Checkout" route.

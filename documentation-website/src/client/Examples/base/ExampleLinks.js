@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import EXAMPLES from '../../constants/examples';
-import styleActive from '../../utils/styleActive';
+import EXAMPLES from "../../constants/examples";
+import styleActive from "../../utils/styleActive";
 
 const Category = ({ name, examples }) => (
   <ul className="link-list">

@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BasePackage from './base/BasePackage';
-import APIBlock from './base/APIBlock';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Section } from '../components/Sections';
+import BasePackage from "./base/BasePackage";
+import APIBlock from "./base/APIBlock";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Section } from "../components/Sections";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -41,10 +41,10 @@ const router = curi(history, routes, {
 
         <p>
           In order for this to work, you will need to set title properties on
-          your routes. You can learn more about <IJS>route.title</IJS> in the{' '}
-          <Link to="Guide" params={{ slug: 'routes' }}>
+          your routes. You can learn more about <IJS>route.title</IJS> in the{" "}
+          <Link to="Guide" params={{ slug: "routes" }}>
             all about routes
-          </Link>{' '}
+          </Link>{" "}
           guide.
         </p>
 
@@ -63,7 +63,7 @@ const suffixedTitle = createTitleSideEffect({ suffix: 'After'});
 // document.title = 'Middle After';`}
         </PrismBlock>
         <p>
-          A <IJS>delimiter</IJS> can be specified for joining the{' '}
+          A <IJS>delimiter</IJS> can be specified for joining the{" "}
           <IJS>prefix</IJS> and <IJS>suffix</IJS> to the title string. Spaces
           will be placed between the prefix, title, and suffix strings and the
           delimiters.
@@ -87,7 +87,7 @@ const suffixedTitle = createTitleSideEffect({ suffix: 'After'});
 // document.title = 'Middle After';`}
         </PrismBlock>
         <p>
-          A <IJS>delimiter</IJS> can be specified for joining the{' '}
+          A <IJS>delimiter</IJS> can be specified for joining the{" "}
           <IJS>prefix</IJS> and <IJS>suffix</IJS> to the title string. Spaces
           will be placed between the prefix, title, and suffix strings and the
           delimiters.

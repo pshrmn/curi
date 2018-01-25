@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
+import BaseTutorial from "./base/BaseTutorial";
+import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default () => (
   <BaseTutorial>
@@ -71,13 +71,13 @@ export default () => (
       <p>
         At their core, routes are a way to describe the valid pathnames for our
         website. With Curi, routes are simply JavaScript objects with some known
-        properties. The two most important properties of a route object are{' '}
-        <IJS>name</IJS> and <IJS>path</IJS>. The <IJS>name</IJS> is a{' '}
+        properties. The two most important properties of a route object are{" "}
+        <IJS>name</IJS> and <IJS>path</IJS>. The <IJS>name</IJS> is a{" "}
         <strong>unique</strong> string that you will use to identify a
-        particular route. The <IJS>path</IJS> is a{' '}
+        particular route. The <IJS>path</IJS> is a{" "}
         <a href="https://github.com/pillarjs/path-to-regexp">
           <IJS>path-to-regexp</IJS>
-        </a>{' '}
+        </a>{" "}
         formatted string.
       </p>
       <Note>
@@ -87,10 +87,10 @@ export default () => (
         matching will be handled internally by Curi, so you only have to care
         about formatting path strings. Further along in this tutorial, we will
         cover the basics of how to do this. However, for advanced usage, you
-        should check out the documention in the{' '}
+        should check out the documention in the{" "}
         <a href="https://github.com/pillarjs/path-to-regexp">
           <IJS>path-to-regexp</IJS>
-        </a>{' '}
+        </a>{" "}
         GitHub repo.
       </Note>
       <p>
@@ -100,7 +100,7 @@ export default () => (
       <PrismBlock lang="javascript">{`const routes = [];`}</PrismBlock>
       <p>
         The first route that we will define is for our homepage. We can name it
-        anything we want, but we'll just call it "Home". For the home page's{' '}
+        anything we want, but we'll just call it "Home". For the home page's{" "}
         <IJS>path</IJS>, we will use an empty string (<IJS>''</IJS>).
       </p>
       <p>
@@ -126,7 +126,7 @@ export default () => (
 ];`}
       </PrismBlock>
       <p>
-        Now, if a user visits{' '}
+        Now, if a user visits{" "}
         <IJS>https://&lt;our website domain&gt;/checkout</IJS>, our checkout
         page will match (and likewise for <IJS>/contact</IJS> and our contact
         page).
@@ -139,7 +139,7 @@ export default () => (
       <Subsection title="Path Params" id="path-params" type="aside">
         <p>
           With <IJS>path-to-regexp</IJS>, when you create a path string, it is
-          normally interpreted literally. That means that the the path{' '}
+          normally interpreted literally. That means that the the path{" "}
           <IJS>'products/hat'</IJS> will only match the location whose pathname
           is <IJS>/products/hat</IJS>. What if we also have a shirt? And socks?
           And shorts? Do you want to define a path for each individual product?
@@ -156,9 +156,9 @@ export default () => (
         <p>
           Using the above path, we will capture the portion of the pathname that
           comes after <IJS>product/</IJS> and store it in an object using the
-          key "name". When you visit <IJS>'/products/hat'</IJS>,{' '}
-          <IJS>path-to-regexp</IJS> will match and return the params object{' '}
-          <IJS>{`{ name: 'hat' }`}</IJS>. Likewise, <IJS>'/products/shirt'</IJS>{' '}
+          key "name". When you visit <IJS>'/products/hat'</IJS>,{" "}
+          <IJS>path-to-regexp</IJS> will match and return the params object{" "}
+          <IJS>{`{ name: 'hat' }`}</IJS>. Likewise, <IJS>'/products/shirt'</IJS>{" "}
           and <IJS>'/products/shorts'</IJS> will capture "shirt" and "shorts" as
           the name param.
         </p>
@@ -171,13 +171,13 @@ export default () => (
       <Subsection title="Route Children" id="children" type="aside">
         <p>
           Sometimes, you will have routes whose <IJS>path</IJS> extends the path
-          of another route. For example, you might have a route whose path is{' '}
-          <IJS>'parent'</IJS> and a child route with the path{' '}
+          of another route. For example, you might have a route whose path is{" "}
+          <IJS>'parent'</IJS> and a child route with the path{" "}
           <IJS>'parent/child'</IJS>.
         </p>
         <p>
           Using the <IJS>children</IJS> property of route objects, you can
-          attach an array of child routes to a parent route. The <IJS>path</IJS>{' '}
+          attach an array of child routes to a parent route. The <IJS>path</IJS>{" "}
           of each child route will extend the parent route's <IJS>path</IJS>.
           That means that using the parent/child paths from above, we can define
           the parent route to have the path <IJS>'parent'</IJS> and a child
@@ -203,7 +203,7 @@ export default () => (
         our book list/book routes.
       </p>
       <p>
-        For this tutorial, we will identify books from a pathname using their{' '}
+        For this tutorial, we will identify books from a pathname using their{" "}
         <IJS>id</IJS>. We can name this anything we want, but "id" is simple and
         to the point.
       </p>
@@ -228,36 +228,36 @@ export default () => (
       <Subsection title="route.match" id="route-match">
         <p>
           We don't need it quite yet, but we should quickly cover another one of
-          the properties of a route: <IJS>match</IJS>. The <IJS>match</IJS>{' '}
+          the properties of a route: <IJS>match</IJS>. The <IJS>match</IJS>{" "}
           property is where we can provide functions that will be called when
-          the route matches. There are three valid functions: <IJS>initial</IJS>,{' '}
+          the route matches. There are three valid functions: <IJS>initial</IJS>,{" "}
           <IJS>every</IJS>, and <IJS>response</IJS>.
         </p>
         <p>
           We won't be using the <IJS>initial</IJS> function, but you can read
-          more about it in the{' '}
-          <Link to="Guide" params={{ slug: 'code-splitting' }}>
+          more about it in the{" "}
+          <Link to="Guide" params={{ slug: "code-splitting" }}>
             Code Splitting
-          </Link>{' '}
+          </Link>{" "}
           guide. The <IJS>every</IJS> function will be used later on, but for
           now, we only care about the <IJS>response</IJS> function.
         </p>
         <p>
           The <IJS>response</IJS> function gives us an opportunity to set some
-          properties on the response object before it is emitted.{' '}
+          properties on the response object before it is emitted.{" "}
           <IJS>response</IJS> receives an object with are a bunch of properties
-          (which you can read about{' '}
+          (which you can read about{" "}
           <Link
             to="Guide"
-            params={{ slug: 'routes' }}
-            details={{ hash: 'response' }}
+            params={{ slug: "routes" }}
+            details={{ hash: "response" }}
           >
             here
           </Link>), but right now we only care about the <IJS>set</IJS> object.
         </p>
         <p>
           The <IJS>set</IJS> object has functions that can be called to modify
-          the response object. For example, calling <IJS>set.body('Hi!')</IJS>{' '}
+          the response object. For example, calling <IJS>set.body('Hi!')</IJS>{" "}
           will set the <IJS>body</IJS> property of the response to "Hi!". Let's
           go ahead and add <IJS>match.response</IJS> functions to each of our
           routes. We don't really have anything to set as the body, so we'll
@@ -328,8 +328,8 @@ export default () => (
           everything using the path string <IJS>(.*)</IJS>.
         </p>
         <Note>
-          <IJS>(.*)</IJS> uses another of the special <IJS>path-to-regexp</IJS>{' '}
-          formats. If you provide a regular expression within parentheses,{' '}
+          <IJS>(.*)</IJS> uses another of the special <IJS>path-to-regexp</IJS>{" "}
+          formats. If you provide a regular expression within parentheses,{" "}
           <IJS>path-to-regexp</IJS> will only match content that is matched by
           the regular expression. This can also be paired with a named path
           param (e.g. <IJS>{`:id(\\d\{4\})`}</IJS>), but is not necessary.
@@ -360,8 +360,8 @@ export default routes;`}
         <p>
           One last thing to note about routes is that their order in the routes
           array is important. Curi will iterate over them in (depth-first)
-          order. This means that with the above router, Curi will first check if{' '}
-          <IJS>''</IJS> matches the pathname, if it does not, it will move on to{' '}
+          order. This means that with the above router, Curi will first check if{" "}
+          <IJS>''</IJS> matches the pathname, if it does not, it will move on to{" "}
           <IJS>'contact'</IJS>, so on and so forth. If no other routes match,
           then we know that our "Not Found" route will.
         </p>
@@ -378,8 +378,8 @@ export default routes;`}
     </Section>
     <Section title="Next" id="next">
       <p>
-        Now that our routes are defined, it is time to talk about history in{' '}
-        <Link to="Tutorial" params={{ name: '03-hickory' }}>
+        Now that our routes are defined, it is time to talk about history in{" "}
+        <Link to="Tutorial" params={{ name: "03-hickory" }}>
           Part 3: Hickory
         </Link>
       </p>

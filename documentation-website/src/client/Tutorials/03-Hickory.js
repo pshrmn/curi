@@ -1,22 +1,22 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
+import BaseTutorial from "./base/BaseTutorial";
+import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default () => (
   <BaseTutorial>
     <h1>Part 3: Hickory</h1>
     <p>
       One thing that all modern JavaScript routers have in common is that they
-      use the{' '}
+      use the{" "}
       <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">
         History API
-      </a>{' '}
-      to perform in-app navigation. Curi uses a package called{' '}
+      </a>{" "}
+      to perform in-app navigation. Curi uses a package called{" "}
       <a href="https://github.com/pshrmn/hickory">Hickory</a>, which will
       interact with the History API for us.
     </p>
@@ -44,13 +44,13 @@ export default () => (
     </Section>
     <Section title="Choose your own Hickory" id="choose">
       <p>
-        Hickory is split into three packages: <IJS>@hickory/browser</IJS>,{' '}
+        Hickory is split into three packages: <IJS>@hickory/browser</IJS>,{" "}
         <IJS>@hickory/hash</IJS>, and <IJS>@hickory/in-memory</IJS>. You can
         read about the differences between them and figure out which is right
-        for you in this{' '}
+        for you in this{" "}
         <a href="https://github.com/pshrmn/hickory/blob/master/docs/about/choosing.md">
           Choosing Your History Type
-        </a>{' '}
+        </a>{" "}
         guide.
       </p>
       <p>
@@ -61,10 +61,10 @@ export default () => (
     </Section>
     <Section title="Installation" id="installation">
       <p>
-        If you have following along with these tutorials since the{' '}
-        <Link to="Tutorial" params={{ name: '01-setup' }}>
+        If you have following along with these tutorials since the{" "}
+        <Link to="Tutorial" params={{ name: "01-setup" }}>
           setup tutorial
-        </Link>, then you should already have the <IJS>@hickory/browser</IJS>{' '}
+        </Link>, then you should already have the <IJS>@hickory/browser</IJS>{" "}
         package installed. If not, you should install it now.
       </p>
       <PrismBlock lang="bash">{`npm install @hickory/browser`}</PrismBlock>
@@ -74,7 +74,7 @@ export default () => (
         In order to use Hickory in our application, we just need to import it
         and call the imported function. There are a number of configuration
         options that you can provide, but we don't need any of those right now.
-        If you want to learn more about those, please check out the{' '}
+        If you want to learn more about those, please check out the{" "}
         <a href="https://github.com/pshrmn/hickory/tree/master/docs">
           Hickory documentation
         </a>.
@@ -92,8 +92,8 @@ const history = Browser();`}
       </p>
       <p>
         When you load a page, Hickory will parse the URI to generate a
-        location's <IJS>pathname</IJS>, <IJS>query</IJS>, and <IJS>hash</IJS>{' '}
-        properties. The pathname property of a location is the only thing that{' '}
+        location's <IJS>pathname</IJS>, <IJS>query</IJS>, and <IJS>hash</IJS>{" "}
+        properties. The pathname property of a location is the only thing that{" "}
         <IJS>path-to-regexp</IJS> uses for matching locations.
       </p>
       <PrismBlock lang="javascript">
@@ -107,7 +107,7 @@ const history = Browser();`}
 }`}
       </PrismBlock>
       <p>
-        Besides the properties parsed from the URI, locations also have a{' '}
+        Besides the properties parsed from the URI, locations also have a{" "}
         <IJS>key</IJS> property that can be used to uniquely identify a
         location, a <IJS>rawPathname</IJS> property (you probably won't need
         this, but it is useful when dealing with pathnames that contain encoded
@@ -133,8 +133,8 @@ const history = Browser();`}
     </Section>
     <Section title="Next" id="next">
       <p>
-        With both our routes and history object, we are now ready for{' '}
-        <Link to="Tutorial" params={{ name: '04-router' }}>
+        With both our routes and history object, we are now ready for{" "}
+        <Link to="Tutorial" params={{ name: "04-router" }}>
           Part 4
         </Link>, where we will create the core of Curi, our router.
       </p>

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import TutorialComponents from '../Tutorials';
+import TutorialComponents from "../Tutorials";
 
 export default ({ params }) => {
   const Component = TutorialComponents[params.name];

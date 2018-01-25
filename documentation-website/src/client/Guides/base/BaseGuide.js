@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import GuideLinks from './GuideLinks';
+import GuideLinks from "./GuideLinks";
 
 export default ({ children }) => (
   <div className="guide">

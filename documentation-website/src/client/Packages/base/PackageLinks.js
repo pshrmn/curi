@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import { groupedPackages } from '../../constants/packages';
-import styleActive from '../../utils/styleActive';
+import { groupedPackages } from "../../constants/packages";
+import styleActive from "../../utils/styleActive";
 
 const GroupPackages = ({ packages, withDescription }) => (
   <ul className="link-list">
     {packages.map(p => (
-      <li key={p.name} className={withDescription ? 'with' : 'solo'}>
+      <li key={p.name} className={withDescription ? "with" : "solo"}>
         <Link
           to="Package"
           params={{ package: p.name }}

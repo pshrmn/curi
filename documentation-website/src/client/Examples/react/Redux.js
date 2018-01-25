@@ -1,8 +1,8 @@
-import React from 'react';
-import BaseExample from '../base/BaseExample';
-import { Section } from '../../components/Sections';
-import CodeSandboxDemo from '../../components/CodeSandboxDemo';
-import { InlineJS as IJS, PrismBlock } from '../../components/PrismBlocks';
+import React from "react";
+import BaseExample from "../base/BaseExample";
+import { Section } from "../../components/Sections";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
+import { InlineJS as IJS, PrismBlock } from "../../components/PrismBlocks";
 
 export default ({ name }) => (
   <BaseExample>
@@ -49,7 +49,7 @@ const routes = [
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
-      GitHub{' '}
+      GitHub{" "}
       <a href="https://github.com/pshrmn/curi/tree/master/examples/react/redux">
         here
       </a>.

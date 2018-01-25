@@ -1,15 +1,15 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
+import BaseTutorial from "./base/BaseTutorial";
+import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
   PrismBlock
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section } from '../components/Sections';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section } from "../components/Sections";
 
 export default () => (
   <BaseTutorial>
@@ -45,9 +45,9 @@ mkdir curi-bookstore
 cd curi-bookstore`}
       </PrismBlock>
       <p>
-        Inside of the directory, run <IJS>npm init</IJS> to generate a{' '}
+        Inside of the directory, run <IJS>npm init</IJS> to generate a{" "}
         <IJS>package.json</IJS> file. Then, we can install the most important
-        package for Curi: <IJS>@curi/core</IJS>. We should also install{' '}
+        package for Curi: <IJS>@curi/core</IJS>. We should also install{" "}
         <IJS>@hickory/browser</IJS>, which we'll cover later on.
       </p>
       <PrismBlock lang="bash">
@@ -140,7 +140,7 @@ module.exports = router;`}
       </PrismBlock>
       <p>
         We also need to create the <IJS>index.html</IJS> file. This just needs
-        to include the DOM element that we will render our application in and a{' '}
+        to include the DOM element that we will render our application in and a{" "}
         <Cmp>script</Cmp> that loads our bundled application. You can copy the
         code below into your <IJS>public/index.html</IJS> file.
       </p>
@@ -157,7 +157,7 @@ module.exports = router;`}
 </html>`}
       </PrismBlock>
       <p>
-        Finally, we just need to add a script to our <IJS>package.json</IJS>{' '}
+        Finally, we just need to add a script to our <IJS>package.json</IJS>{" "}
         file in order to build our bundle.
       </p>
       <PrismBlock lang="javascript">
@@ -170,8 +170,8 @@ module.exports = router;`}
 }`}
       </PrismBlock>
       <Note>
-        If you're building this from scratch, you should also add a{' '}
-        <IJS>.gitignore</IJS> file and ignore the <IJS>node_modules/</IJS>{' '}
+        If you're building this from scratch, you should also add a{" "}
+        <IJS>.gitignore</IJS> file and ignore the <IJS>node_modules/</IJS>{" "}
         directory.
       </Note>
     </Section>
@@ -180,8 +180,8 @@ module.exports = router;`}
     </Section>
     <Section title="Next" id="next">
       <p>
-        With our project setup, we are now ready to continue the tutorial with{' '}
-        <Link to="Tutorial" params={{ name: '02-routes' }}>
+        With our project setup, we are now ready to continue the tutorial with{" "}
+        <Link to="Tutorial" params={{ name: "02-routes" }}>
           Part 2: Routes
         </Link>.
       </p>

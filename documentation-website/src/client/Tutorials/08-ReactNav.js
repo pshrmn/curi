@@ -1,16 +1,16 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseTutorial from './base/BaseTutorial';
-import { TutorialBranch, CompleteBranch, Outline } from './base/Branch';
+import BaseTutorial from "./base/BaseTutorial";
+import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
   PrismBlock
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
-import CodeSandboxDemo from '../components/CodeSandboxDemo';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
+import CodeSandboxDemo from "../components/CodeSandboxDemo";
 
 export default () => (
   <BaseTutorial>
@@ -44,7 +44,7 @@ export default () => (
     <Section id="A Little Babel" title="babel">
       <p>
         Up until now, we have used stateless functional React components. In
-        this tutorial, we will be using classes (extending{' '}
+        this tutorial, we will be using classes (extending{" "}
         <IJS>React.Component</IJS>). To help us, we will be taking advantage of
         some class properties, so we need to install the propert Babel plugin to
         support this and add it to our Babel configuration.
@@ -128,7 +128,7 @@ export function resetCart() {
       <p>
         We can start by creating a component with renders a <Cmp>select</Cmp>.
         Users can buy 1-4 copies of a book (an arbitrary restriction), so we
-        need an <Cmp>option</Cmp> for each possible value. We should also add an{' '}
+        need an <Cmp>option</Cmp> for each possible value. We should also add an{" "}
         <IJS>onChange</IJS> handler to update the <Cmp>select</Cmp> when the
         user changes the value.
       </p>
@@ -169,15 +169,15 @@ export default AddToCart;`}
         How will we redirect? So far, all navigation within the website has been
         performed using <Cmp>Link</Cmp>s. However, sometimes you might want to
         navigate programmatically. To do this, we can take advantage of our
-        Hickory history object. The history object has <IJS>push</IJS>,{' '}
+        Hickory history object. The history object has <IJS>push</IJS>,{" "}
         <IJS>replace</IJS>, and <IJS>update</IJS> methods that we can call to
-        trigger navigation. You can read about each of these in the{' '}
+        trigger navigation. You can read about each of these in the{" "}
         <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#methods">
           Hickory documentation
         </a>. For this tutorial, we will be using <IJS>push</IJS>.
       </p>
       <p>
-        In order to access the router from within our component we will use the{' '}
+        In order to access the router from within our component we will use the{" "}
         <IJS>curious</IJS> higher order component from <IJS>@curi/react</IJS>. A
         component that is wrapped by <IJS>curious</IJS> will have the Curi
         router injected as a prop called <IJS>curi</IJS>. That means that we can
@@ -190,7 +190,7 @@ export default AddToCart;`}
         the location that we wan to redirect to.
       </p>
       <p>
-        When the user clicks either of the buttons, we will want to use the{' '}
+        When the user clicks either of the buttons, we will want to use the{" "}
         <IJS>updateCart</IJS> API method to add the book to the shopping cart.
         The <Cmp>AddToCart</Cmp> component doesn't inherently know which book it
         is for, so we will need to pass it the <IJS>id</IJS> of the book as a
@@ -249,8 +249,8 @@ class AddToCart extends React.Component {
 export default curious(AddToCart);`}
       </PrismBlock>
       <p>
-        Now, we can modify our <Cmp>Book</Cmp> component to render the{' '}
-        <Cmp>AddToCart</Cmp> component. Remember that we need to pass it a{' '}
+        Now, we can modify our <Cmp>Book</Cmp> component to render the{" "}
+        <Cmp>AddToCart</Cmp> component. Remember that we need to pass it a{" "}
         <IJS>bookID</IJS> prop so that we can know which book to add to the
         shopping cart.
       </p>
@@ -294,7 +294,7 @@ export default Book;`}
       </p>
       <p>
         Let's start out in our <IJS>routes.js</IJS> file. We want our "Checkout"
-        page to know which books are in the shopping cart. We can use the{' '}
+        page to know which books are in the shopping cart. We can use the{" "}
         <IJS>match.every</IJS> function of the "Checkout" route to load all of
         the books and our shopping cart. We can merge the two together to create
         an array of items in the cart.
@@ -361,7 +361,7 @@ const routes = [
 ];`}
       </PrismBlock>
       <p>
-        Before we update our <Cmp>Checkout</Cmp> component, let's write the{' '}
+        Before we update our <Cmp>Checkout</Cmp> component, let's write the{" "}
         <Cmp>CheckoutComplete</Cmp> component. This should just be a simple
         component thanking the user for their purchase.
       </p>
@@ -476,7 +476,7 @@ class Checkout extends React.Component {
       <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/09-now-what-react" />
       <Note>
         The embedded sandbox will not work if your browser is blocking
-        third-party data. If this is the case for you, you <em>could</em>{' '}
+        third-party data. If this is the case for you, you <em>could</em>{" "}
         disable this through your browser's settings, but a better solution is
         to click the "Edit on CodeSandbox" button to view the sandbox there.
       </Note>
@@ -484,8 +484,8 @@ class Checkout extends React.Component {
     <Section title="Next" id="next">
       <p>
         With that, we have considered pretty much everything you need to know to
-        get started building your website with Curi. We have one last part,{' '}
-        <Link to="Tutorial" params={{ name: '09-now-what' }}>
+        get started building your website with Curi. We have one last part,{" "}
+        <Link to="Tutorial" params={{ name: "09-now-what" }}>
           Part 9: Now What?
         </Link>, that gives some suggestions on what you can do with your new
         knowledge.

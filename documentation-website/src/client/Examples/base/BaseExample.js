@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import ExampleLinks from './ExampleLinks';
+import ExampleLinks from "./ExampleLinks";
 
 export default ({ children }) => (
   <div className="example">

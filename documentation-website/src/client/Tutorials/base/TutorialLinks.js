@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import styleActive from '../../utils/styleActive';
-import tutorials from '../../constants/tutorials';
+import styleActive from "../../utils/styleActive";
+import tutorials from "../../constants/tutorials";
 
 const SingleTutorial = ({ tutorial }) => (
   <li key={tutorial.name} className="solo">

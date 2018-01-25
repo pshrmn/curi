@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-const Sectional = ({ title, id, children, tag: Tag, type = 'section' }) => (
+const Sectional = ({ title, id, children, tag: Tag, type = "section" }) => (
   <div className={type} id={id}>
     <Tag>
       {title}
@@ -13,10 +13,10 @@ const Sectional = ({ title, id, children, tag: Tag, type = 'section' }) => (
   </div>
 );
 
-export const Section = ({ tag = 'h2', ...rest }) => (
+export const Section = ({ tag = "h2", ...rest }) => (
   <Sectional type="section" tag={tag} {...rest} />
 );
 
-export const Subsection = ({ tag = 'h3', ...rest }) => (
+export const Subsection = ({ tag = "h3", ...rest }) => (
   <Sectional type="subsection" tag={tag} {...rest} />
 );

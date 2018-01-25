@@ -1,5 +1,5 @@
-import React from 'react';
-import { PrismBlock } from '../PrismBlocks';
+import React from "react";
+import { PrismBlock } from "../PrismBlocks";
 
 const VueBanner = () => (
   <PrismBlock lang="javascript">

@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseGuide from './base/BaseGuide';
+import BaseGuide from "./base/BaseGuide";
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default ({ name }) => (
   <BaseGuide>
@@ -94,10 +94,10 @@ export default ({ name }) => (
 
     <Section title="The Body Property" id="body-property">
       <p>
-        The body property of a response is the value set by the matched route's{' '}
+        The body property of a response is the value set by the matched route's{" "}
         <IJS>match.response</IJS> function, using <IJS>set.body()</IJS>. This
         value can be anything you want it to be, but it should usually be a
-        function/component. Here, we will assume that each of your routes have{' '}
+        function/component. Here, we will assume that each of your routes have{" "}
         <IJS>body</IJS> properties that return a function.
       </p>
       <PrismBlock lang="javascript">
@@ -114,11 +114,11 @@ export default ({ name }) => (
       <p>
         The response's <IJS>body</IJS> function should take other response
         properties as its arguments. Which ones will vary based on your
-        application, but if you are using path parameters, then the{' '}
+        application, but if you are using path parameters, then the{" "}
         <IJS>params</IJS> object should be one of these. If you are doing data
         loading in your routes (using the
         <IJS>match.every</IJS> property), then you will probably also want to
-        pass the data property (which is attached to the response in the{' '}
+        pass the data property (which is attached to the response in the{" "}
         <IJS>match.response</IJS> function) to your body function.
       </p>
       <Note>
@@ -129,7 +129,7 @@ export default ({ name }) => (
       <p>
         As stated above, the body property does not have to be a function. You
         may want to pass extra data for each route, in which case it might be
-        convenient for the route's <IJS>set.body</IJS> call to set the{' '}
+        convenient for the route's <IJS>set.body</IJS> call to set the{" "}
         <IJS>body</IJS> as an object. This can be useful if you want to have
         multiple render functions (where each one would manipulate a different
         part of your application).
@@ -241,10 +241,10 @@ function render(response) {
       <h2>Next</h2>
       <p>
         Let's take a moment to go back to our router and look at what Curi's
-        add-ons are for in the{' '}
-        <Link to="Guide" params={{ slug: 'addons' }}>
+        add-ons are for in the{" "}
+        <Link to="Guide" params={{ slug: "addons" }}>
           Using Add-ons
-        </Link>{' '}
+        </Link>{" "}
         guide.
       </p>
     </div>

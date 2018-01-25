@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import { Link } from '@curi/react';
-import ReactBanner from './ReactBanner';
-import VueBanner from './VueBanner';
-import GenericBanner from './GenericBanner';
-import SvelteBanner from './SvelteBanner';
+import { Link } from "@curi/react";
+import ReactBanner from "./ReactBanner";
+import VueBanner from "./VueBanner";
+import GenericBanner from "./GenericBanner";
+import SvelteBanner from "./SvelteBanner";
 
 class Banner extends React.Component {
-  state = { lib: 'Any' };
+  state = { lib: "Any" };
 
   setActive = lib => {
     this.setState({ lib });
@@ -16,14 +16,14 @@ class Banner extends React.Component {
   render() {
     const { lib } = this.state;
     let BannerComponent = GenericBanner;
-    if (lib === 'React') {
+    if (lib === "React") {
       BannerComponent = ReactBanner;
-    } else if (lib === 'Vue') {
+    } else if (lib === "Vue") {
       BannerComponent = VueBanner;
-    } else if (lib === 'Svelte') {
+    } else if (lib === "Svelte") {
       BannerComponent = SvelteBanner;
     }
-    const banners = ['Any', 'React', 'Vue', 'Svelte'];
+    const banners = ["Any", "React", "Vue", "Svelte"];
     return (
       <div className="banner">
         <h2>A JavaScript router that doesn't care how you render.</h2>
@@ -39,10 +39,10 @@ class Banner extends React.Component {
         </div>
         <BannerComponent />
         <p>
-          Ready to learn more? Check out the{' '}
-          <Link to="Guide" params={{ slug: 'getting-started' }}>
+          Ready to learn more? Check out the{" "}
+          <Link to="Guide" params={{ slug: "getting-started" }}>
             getting started
-          </Link>{' '}
+          </Link>{" "}
           guide.
         </p>
       </div>
@@ -52,7 +52,7 @@ class Banner extends React.Component {
 
 const BannerButton = ({ name, active, setActive }) => (
   <button
-    className={active ? 'active' : ''}
+    className={active ? "active" : ""}
     onClick={() => {
       setActive(name);
     }}

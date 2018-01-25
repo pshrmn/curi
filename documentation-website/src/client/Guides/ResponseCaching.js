@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseGuide from './base/BaseGuide';
-import { InlineJS as IJS, PrismBlock } from '../components/PrismBlocks';
-import { Section } from '../components/Sections';
+import BaseGuide from "./base/BaseGuide";
+import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
+import { Section } from "../components/Sections";
 
 export default ({ name }) => (
   <BaseGuide>

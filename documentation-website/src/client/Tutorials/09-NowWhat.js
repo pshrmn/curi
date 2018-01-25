@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
-import BaseTutorial from './base/BaseTutorial';
+import BaseTutorial from "./base/BaseTutorial";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp,
   PrismBlock
-} from '../components/PrismBlocks';
-import { Note } from '../components/Messages';
-import { Section, Subsection } from '../components/Sections';
+} from "../components/PrismBlocks";
+import { Note } from "../components/Messages";
+import { Section, Subsection } from "../components/Sections";
 
 export default () => (
   <BaseTutorial>
@@ -20,7 +20,7 @@ export default () => (
     </p>
     <p>
       Thanks for following along! If you have any questions or comments, you can
-      reach out to me on Twitter{' '}
+      reach out to me on Twitter{" "}
       <a href="https://twitter.com/pshrmn">@pshrmn</a>. Any feedback is
       appreciated!
     </p>
@@ -45,40 +45,40 @@ export default () => (
         of contact.
       </li>
       <li>
-        You can try using a Curi{' '}
-        <Link to="Guide" params={{ slug: 'side-effects' }}>
+        You can try using a Curi{" "}
+        <Link to="Guide" params={{ slug: "side-effects" }}>
           side effect
-        </Link>{' '}
-        with the website. You could use{' '}
-        <Link to="Package" params={{ package: 'side-effect-title' }}>
+        </Link>{" "}
+        with the website. You could use{" "}
+        <Link to="Package" params={{ package: "side-effect-title" }}>
           <IJS>@curi/side-effect-title</IJS>
-        </Link>{' '}
+        </Link>{" "}
         and the <IJS>route.title</IJS> property to update the title whenever you
         navigate.
       </li>
       <li>
-        If you're concerned about the bundle size, you could check out the{' '}
-        <Link to="Guide" params={{ slug: 'code-splitting' }}>
+        If you're concerned about the bundle size, you could check out the{" "}
+        <Link to="Guide" params={{ slug: "code-splitting" }}>
           code splitting guide
-        </Link>{' '}
+        </Link>{" "}
         and break up the bundle using <IJS>route.match.initial</IJS>.
       </li>
       <li>
         While we used <IJS>response.data</IJS> to pass data to our components,
         you might prefer a global store like Redux or Vuex. You could rewrite
         the application to use these, <IJS>response.data</IJS> is a convenience,
-        not a requirement. You can even continue to use{' '}
-        <IJS>match.response</IJS> with a global store. Instead of calling{' '}
+        not a requirement. You can even continue to use{" "}
+        <IJS>match.response</IJS> with a global store. Instead of calling{" "}
         <IJS>set.data</IJS>, you could just dispatch the data to your store. You
-        can check out the{' '}
-        <Link to="Example" params={{ category: 'react', slug: 'redux' }}>
+        can check out the{" "}
+        <Link to="Example" params={{ category: "react", slug: "redux" }}>
           Redux example
-        </Link>{' '}
+        </Link>{" "}
         to see how this might be implemented.
       </li>
       <li>
-        You can explore the other response methods available in{' '}
-        <IJS>match.response</IJS>. For example, you could use the{' '}
+        You can explore the other response methods available in{" "}
+        <IJS>match.response</IJS>. For example, you could use the{" "}
         <IJS>redirect</IJS> function to automatically redirect when the user
         attempt to navigate to a "Book" page that doesn't exist (e.g. there is
         no book whose <IJS>id</IJS> equals <IJS>params.id</IJS>).
@@ -87,15 +87,15 @@ export default () => (
         We only had ten books in our data, but what if there were hundreds? You
         could implement pagination on the "Book List" page. Query params could
         be included in the location to only display certain books. If you're
-        feeling adventurous, you could pass a{' '}
+        feeling adventurous, you could pass a{" "}
         <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
           <IJS>query</IJS> object
-        </a>{' '}
+        </a>{" "}
         to your history object to use query objects instead of strings.
       </li>
       <li>
-        You can read through the{' '}
-        <Link to="Guide" params={{ slug: 'getting-started' }}>
+        You can read through the{" "}
+        <Link to="Guide" params={{ slug: "getting-started" }}>
           guides
         </Link>, browse the <Link to="Examples">examples</Link>, and check out
         the available Curi <Link to="Packages">packages</Link>. This tutorial
