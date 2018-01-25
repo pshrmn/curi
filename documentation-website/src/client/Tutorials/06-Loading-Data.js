@@ -52,7 +52,7 @@ touch src/api/books.js`}
         should return a Promise.
       </p>
       <PrismBlock lang="javascript">
-        {`// api/books.js
+        {`// src/api/books.js
 export function fetchAllBooks() {
   return new Promise((resolve, reject) => {
 
@@ -61,7 +61,7 @@ export function fetchAllBooks() {
 
 export function fetchBook(id) {
   return new Promise((resolve, reject) => {
-  
+
   });
 }`}
       </PrismBlock>
@@ -71,7 +71,7 @@ export function fetchBook(id) {
         copy the list from below.
       </p>
       <PrismBlock lang="javascript">
-        {`// api/books.js
+        {`// src/api/books.js
 const books = [
   {
     id: 0,
@@ -154,7 +154,7 @@ const books = [
         found, it should reject with an error message.
       </p>
       <PrismBlock lang="javascript">
-        {`// api/books.js
+        {`// src/api/books.js
 const books = [...];
 
 export function fetchAllBooks() {
@@ -214,7 +214,7 @@ export function fetchBook(id) {
           one, calling their respective API functions that we defined above.
         </p>
         <PrismBlock lang="javascript">
-          {`// routes.js
+          {`// src/routes.js
 import { fetchAllBooks, fetchBook } from './api/books';
 const routes = [
   // ...,
@@ -273,7 +273,7 @@ const routes = [
           <IJS>error</IJS> property and the <IJS>set.error</IJS> function.
         </p>
         <PrismBlock lang="javascript">
-          {`// routes.js
+          {`// src/routes.js
 import { fetchAllBooks, fetchBook } from './api/books';
 const routes = [
 // ...,

@@ -116,7 +116,7 @@ const router = {
           is <Cmp>curi-link</Cmp>.
         </p>
         <PrismBlock lang="javascript">
-          {`// index.js
+          {`// src/index.js
 import Vue from 'vue';
 import { CuriPlugin } from '@curi/vue';
 
@@ -211,7 +211,7 @@ Vue.use(CuriPlugin, { router });`}
         the Vue instance.
       </p>
       <PrismBlock lang="javascript">
-        {`// index.js
+        {`// src/index.js
 import app from './components/app';
 
 router.respond(response => {
@@ -326,7 +326,7 @@ export default {
       </p>
 
       <PrismBlock lang="html">
-        {`<!-- components/Home.vue -->
+        {`<!-- src/components/Home.vue -->
 <template>
   <div class='home'>
     Welcome to our book store!
@@ -334,7 +334,7 @@ export default {
 </template>`}
       </PrismBlock>
       <PrismBlock lang="html">
-        {`<!-- components/Contact.vue -->
+        {`<!-- src/components/Contact.vue -->
 <template>
   <div class='contact'>
     You can contact us by fax at 1-206-555-0123.
@@ -342,7 +342,7 @@ export default {
 </template>`}
       </PrismBlock>
       <PrismBlock lang="html">
-        {`<!-- components/BookList.vue -->
+        {`<!-- src/components/BookList.vue -->
 <template>
   <div class='book-list'>
     Available Books
@@ -350,7 +350,7 @@ export default {
 </template>`}
       </PrismBlock>
       <PrismBlock lang="html">
-        {`<!-- components/Book.vue -->
+        {`<!-- src/components/Book.vue -->
 <template>
   <div class='book'>
     Book
@@ -358,7 +358,7 @@ export default {
 </template>`}
       </PrismBlock>
       <PrismBlock lang="html">
-        {`<!-- components/Checkout.vue -->
+        {`<!-- src/components/Checkout.vue -->
 <template>
   <div class='checkout'>
     Checkout
@@ -366,7 +366,7 @@ export default {
 </template>`}
       </PrismBlock>
       <PrismBlock lang="html">
-        {`<!-- components/NotFound.vue -->
+        {`<!-- src/components/NotFound.vue -->
 <template>
   <div class='not-found'>
     Page not found
@@ -379,7 +379,7 @@ export default {
         <IJS>match.response</IJS> functions.
       </p>
       <PrismBlock lang="javascript">
-        {`// routes.js
+        {`// src/routes.js
 import Home from './components/Home';
 import Contact from './components/Contact';
 import BookList from './components/BookList';
@@ -469,7 +469,7 @@ export default routes;`}
         our routes will be <Cmp>Link</Cmp>s wrapped in <Cmp>li</Cmp>s.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/NavLinks.vue -->
+        {`<!-- src/components/NavLinks.vue -->
 <template>
   <nav>
     <ul>
@@ -495,7 +495,7 @@ export default routes;`}
         organized.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/App.vue -->
+        {`<!-- src/components/App.vue -->
 <template>
   <div>
     <header>
@@ -530,7 +530,7 @@ export default routes;`}
         placeholder list in a module called <IJS>books.js</IJS>.
       </p>
       <PrismBlock lang="jsx">
-        {` // books.js
+        {` // src/books.js
 const books = [
   { id: 0 },
   { id: 1 },
@@ -544,7 +544,7 @@ export default books;`}
         links to our books.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/BookList.vue -->
+        {`<!-- src/components/BookList.vue -->
 <template>
   <div class='book-list'>
     <h1>Available Books</h1>
@@ -590,7 +590,7 @@ export default books;`}
         for.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/Book.vue -->
+        {`<!-- src/components/Book.vue -->
 <template>
   <div class='book'>
     Book {{$curi.response.params.id}}

@@ -80,7 +80,8 @@ export default () => (
         </a>.
       </p>
       <PrismBlock lang="javascript">
-        {`import Browser from '@hickory/browser';
+        {`// src/index.js
+          import Browser from '@hickory/browser';
 const history = Browser();`}
       </PrismBlock>
     </Section>

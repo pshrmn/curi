@@ -54,7 +54,7 @@ export default () => (
         and the third will reset the shopping cart.
       </p>
       <PrismBlock lang="javascript">
-        {`// api/shoppingCart.js
+        {`// src/api/shoppingCart.js
 function saveCart(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -111,7 +111,7 @@ export function resetCart() {
         need an <Cmp>option</Cmp> for each possible value.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/AddToCart.vue -->
+        {`<!-- src/components/AddToCart.vue -->
 <template>
   <form>
     <select v-model="count">
@@ -170,7 +170,7 @@ export function resetCart() {
         prop when we render it.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/AddToCart.vue -->
+        {`<!-- src/components/AddToCart.vue -->
 <template>
   <form>
     <select v-model="count">
@@ -217,7 +217,7 @@ export function resetCart() {
         shopping cart.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/Book.vue -->
+        {`<!-- src/components/Book.vue -->
 <template>
   <div v-if="$curi.response.error" class='book'>
     {{error}}
@@ -267,7 +267,7 @@ export function resetCart() {
         user has "purchased" their books.
       </p>
       <PrismBlock lang="javascript">
-        {`// routes.js
+        {`// src/routes.js
 import CheckoutComplete from './components/CheckoutComplete';
 
 import { getCart } from './api/shoppingCart';
@@ -296,7 +296,7 @@ const routes = [
          * We then assign that array of objects as
          * the "items" property of our response's
          * data object.
-         */ 
+         */
         const [ books, cart ] = resolved.every;
         const items = Object.keys(cart).map(key => {
           const id = parseInt(key, 10);
@@ -328,7 +328,7 @@ const routes = [
         component thanking the user for their purchase.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/CheckoutComplete.vue -->
+        {`<!-- src/components/CheckoutComplete.vue -->
 <template>
   <div className='checkout-complete'>
     Thanks for your purchase!
@@ -346,7 +346,7 @@ const routes = [
         access our Curi router from within a component.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/Checkout.vue -->
+        {`<!-- src/components/Checkout.vue -->
 <template>
   <div class='checkout'>
     <h1>Checkout</h1>
@@ -395,7 +395,7 @@ const routes = [
         message stating that the cart is empty when the list's length is zero.
       </p>
       <PrismBlock lang="html">
-        {`<!-- component/Checkout.vue -->
+        {`<!-- src/component/Checkout.vue -->
 <template>
   <div class='checkout'>
     <h1>Checkout</h1>
