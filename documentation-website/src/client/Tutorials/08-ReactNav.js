@@ -74,7 +74,7 @@ module.exports = {
         and the third will reset the shopping cart.
       </p>
       <PrismBlock lang="javascript">
-        {`// api/shoppingCart.js
+        {`// src/api/shoppingCart.js
 function saveCart(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -133,7 +133,7 @@ export function resetCart() {
         user changes the value.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/AddToCart.js
+        {`// src/components/AddToCart.js
 import React from 'react';
 
 class AddToCart extends React.Component {
@@ -152,7 +152,7 @@ class AddToCart extends React.Component {
           <option value='3'>3</option>
           <option value='4'>4</option>
         </select>
-      </form>    
+      </form>
     );
   }
 }
@@ -197,7 +197,7 @@ export default AddToCart;`}
         prop when we render it.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/AddToCart.js
+        {`// src/components/AddToCart.js
 import React from 'react';
 import { curious } from '@curi/react';
 
@@ -241,7 +241,7 @@ class AddToCart extends React.Component {
         <button type="button" onClick={this.addAndCheckout}>
           Add To Cart and Checkout
         </button>
-      </form>    
+      </form>
     );
   }
 }
@@ -255,7 +255,7 @@ export default curious(AddToCart);`}
         shopping cart.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/Book.js
+        {`// src/components/Book.js
 import React from 'react';
 
 import AddToCart from './AddToCart';
@@ -305,7 +305,7 @@ export default Book;`}
         user has "purchased" their books.
       </p>
       <PrismBlock lang="javascript">
-        {`// routes.js
+        {`// src/routes.js
 import CheckoutComplete from './components/CheckoutComplete';
 
 import { getCart } from './api/shoppingCart';
@@ -324,7 +324,7 @@ const routes = [
       },
       response: ({ resolved, set }) => {
         set.body(Checkout)
-        
+
         /*
          * We will iterate over all of the items in
          * our shopping cart and find the matching
@@ -334,7 +334,7 @@ const routes = [
          * We then assign that array of objects as
          * the "items" property of our response's
          * data object.
-         */ 
+         */
         const [ books, cart ] = resolved.every;
         const items = Object.keys(cart).map(key => {
           const id = parseInt(key, 10);
@@ -366,7 +366,7 @@ const routes = [
         component thanking the user for their purchase.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/CheckoutComplete.js
+        {`// src/components/CheckoutComplete.js
 import React from 'react';
 
 const CheckoutComplete = () => (
@@ -388,7 +388,7 @@ export default CheckoutComplete;`}
         order component to access our Curi router from within a component.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/Checkout.js
+        {`// src/components/Checkout.js
 import React from 'react';
 import { curious } from '@curi/react';
 
@@ -447,7 +447,7 @@ export default curious(Checkout);`}
         message stating that the cart is empty when the list's length is zero.
       </p>
       <PrismBlock lang="jsx">
-        {`// component/Checkout.js
+        {`// src/component/Checkout.js
 class Checkout extends React.Component {
   // ...
   render() {

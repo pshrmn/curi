@@ -105,7 +105,8 @@ module.exports = {
         id="CuriBase"
       >
         <PrismBlock lang="javascript">
-          {`import { CuriBase } from '@curi/react';`}
+          {`// src/index.js
+            import { CuriBase } from '@curi/react';`}
         </PrismBlock>
         <p>
           The <Cmp>CuriBase</Cmp> is responsible for rendering the website
@@ -140,7 +141,7 @@ module.exports = {
           object.
         </p>
         <PrismBlock lang="jsx">
-          {`// index.js
+          {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { CuriBase } from '@curi/react';
@@ -202,7 +203,7 @@ router.respond((response, navigation) => {
           using the <IJS>params</IJS> prop.
         </p>
         <PrismBlock lang="jsx">
-          {`// { name: 'Book', path: ':id' }
+          {`{ name: 'Book', path: ':id' }
 // (inherits 'books' path from parent route)
 <Link to='Book' params={{ id: 1357 }}>
   Some Book
@@ -302,7 +303,7 @@ response: {
       </p>
       <PrismBlock lang="bash">{`mkdir -p src/components`}</PrismBlock>
       <PrismBlock lang="jsx">
-        {`// components/Home.js
+        {`// src/components/Home.js
 import React from 'react';
 const Home = () => (
   <div className='home'>
@@ -312,7 +313,7 @@ const Home = () => (
 export default Home;`}
       </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// components/Contact.js
+        {`// src/components/Contact.js
 import React from 'react';
 const Contact = () => (
   <div className='contact'>
@@ -322,7 +323,7 @@ const Contact = () => (
 export default Contact;`}
       </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// components/BookList.js
+        {`// src/components/BookList.js
 import React from 'react';
 const BookList = () => (
   <div className='book-list'>
@@ -332,7 +333,7 @@ const BookList = () => (
 export default BookList;`}
       </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// components/Book.js
+        {`// src/components/Book.js
 import React from 'react';
 const Book = () => (
   <div className='book'>
@@ -342,7 +343,7 @@ const Book = () => (
 export default Book;`}
       </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// components/Checkout.js
+        {`// src/components/Checkout.js
 import React from 'react';
 const Checkout = () => (
   <div className='checkout'>
@@ -352,7 +353,7 @@ const Checkout = () => (
 export default Checkout;`}
       </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// components/NotFound.js
+        {`// src/components/NotFound.js
 import React from 'react';
 const NotFound = () => (
   <div className='not-found'>
@@ -367,7 +368,7 @@ export default NotFound;`}
         components as the <IJS>body</IJS> property of responses.
       </p>
       <PrismBlock lang="javascript">
-        {`// routes.js
+        {`// src/routes.js
 import Home from './components/Home';
 import Contact from './components/Contact';
 import BookList from './components/BookList';
@@ -443,7 +444,7 @@ export default routes;`}
         can help keep the code cleaner.
       </p>
       <PrismBlock lang="jsx">
-        {`// index.js
+        {`// src/index.js
 import renderFunction from './render';
 
 let root = document.getElementById('root');
@@ -485,7 +486,7 @@ export default function(response) {
         our routes will be <Cmp>Link</Cmp>s wrapped in <Cmp>li</Cmp>s.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/NavLinks.js
+        {`// src/components/NavLinks.js
 import React from 'react';
 import { Link } from '@curi/react';
 
@@ -523,7 +524,7 @@ export default NavLinks;`}
         component.
       </p>
       <PrismBlock lang="jsx">
-        {`// render.js
+        {`// src/render.js
 import NavLinks from './components/NavLinks.js';
 
 export default function(response) {
@@ -555,7 +556,7 @@ export default function(response) {
         placeholder list in a module called <IJS>books.js</IJS>.
       </p>
       <PrismBlock lang="jsx">
-        {` // books.js
+        {` // src/books.js
 const books = [
   { id: 0 },
   { id: 1 },
@@ -569,7 +570,7 @@ export default books;`}
         generate links to our books.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/BookList.js
+        {`// src/components/BookList.js
 import { Link } from '@curi/react';
 
 import books from '../books';
@@ -604,7 +605,7 @@ const BookList = () => (
         <Cmp>Body</Cmp>, we can access these params in our route components.
       </p>
       <PrismBlock lang="jsx">
-        {`// render.js
+        {`// src/render.js
 export default function(response) {
   const { body: Body } = response;
   return (
@@ -635,7 +636,7 @@ export default function(response) {
         render content for.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/Book.js
+        {`// src/components/Book.js
 const Book = ({ response }) => (
   <div className='book'>
     Book {response.params.id}

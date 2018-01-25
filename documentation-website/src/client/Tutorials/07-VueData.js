@@ -38,7 +38,7 @@ export default () => (
         data, we can now use each book's title for the link text.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/BookList.vue -->
+        {`<!-- src/components/BookList.vue -->
 <template>
   <div class='book-list'>
     <h1>Available Books</h1>
@@ -74,7 +74,7 @@ export default () => (
         requested book does not exist.
       </p>
       <PrismBlock lang="html">
-        {`<!-- components/Book.vue -->
+        {`<!-- src/components/Book.vue -->
 <template>
   <div v-if="$curi.response.error" class='book'>
     {{error}}

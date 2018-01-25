@@ -97,7 +97,8 @@ export default () => (
         All of the base routes of our application should be placed in an array.
         Nested routes will be defined using a property of their parent route.
       </p>
-      <PrismBlock lang="javascript">{`const routes = [];`}</PrismBlock>
+      <PrismBlock lang="javascript">{`// src/routes.js
+        const routes = [];`}</PrismBlock>
       <p>
         The first route that we will define is for our homepage. We can name it
         anything we want, but we'll just call it "Home". For the home page's{" "}

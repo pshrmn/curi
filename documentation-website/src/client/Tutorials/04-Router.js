@@ -72,7 +72,8 @@ export default () => (
         </Link>, we are ready to create our router.
       </p>
       <PrismBlock lang="javascript">
-        {`import curi from '@curi/core';
+        {`// src/index.js
+          import curi from '@curi/core';
 import Browser from '@hickory/browser';
 
 import routes from './routes';

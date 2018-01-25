@@ -38,7 +38,7 @@ export default () => (
         data, we can now use each book's title for the link text.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/BookList.js
+        {`// src/components/BookList.js
 const BookList = ({ response }) => (
   <div className='book-list'>
     <h1>Available Books</h1>
@@ -79,7 +79,7 @@ const BookList = ({ response }) => (
         render a simple message stating that the requested book does not exist.
       </p>
       <PrismBlock lang="jsx">
-        {`// components/Book.js
+        {`// src/components/Book.js
 const Book = (props) => {
   const { data } = props.response;
   if (!data) {
