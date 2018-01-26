@@ -170,7 +170,7 @@ export default ({ name }) => (
           will want to use your history's replace function to redirect.
         </p>
         <PrismBlock lang="javascript">
-          {`function render(response) {
+          {`function render({ response }) {
   // assuming that your history object is in scope
   if (response.redirectTo) {
     history.replace(response.redirectTo)
@@ -200,7 +200,7 @@ const routes = [
 ];
 
 // or have a default body function
-function render(response) {
+function render({ response }) {
   //...
   const body = response.body || function defaultBody() {...}
   body(response.params);
@@ -221,13 +221,13 @@ function render(response) {
           {`// vanilla JavaScript
 const root = document.getElementById('root');
 
-function render(response) {
+function render({ response }) {
   // call the body function to return content
   root.innerHTML = response.body(response.params, response.data);
 }
 
 // react
-function render(response) {
+function render({ response }) {
   // This function should be a property of the <CuriBase> and
   // it should return a React element
   const Body = response.body || defaultBody;

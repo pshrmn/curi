@@ -27,7 +27,7 @@ export default ({ name }) => (
       </p>
 
       <PrismBlock lang="jsx">
-        {`function render(response) {
+        {`function render({ response }) {
   return (
     <CSSTransitionGroup>
       <response.body key={response.location.pathname} />

@@ -419,7 +419,7 @@ const router = create1router(history, routes);`}
       response={response}
       navigation={navigation}
       router={router}
-      render={response => { return ...; }}
+      render={({ response }) => { return ...; }}
     />
   ), holder);
 });`}
@@ -439,7 +439,7 @@ const router = create1router(history, routes);`}
           component as <IJS>response.body</IJS>.
         </p>
         <PrismBlock lang="jsx">
-          {`function render(response) {
+          {`function render({ response }) {
   const { body:Body } = response;
   return <Body />;
 }`}
@@ -476,7 +476,7 @@ const router = create1router(history, routes);`}
           (through React’s context, which the <Cmp>CuriBase</Cmp> provides)
         </p>
         <PrismBlock lang="jsx">
-          {`function render(response) {
+          {`function render({ response }) {
   const { body:Body } = response;
   return (
     <App>
@@ -485,7 +485,7 @@ const router = create1router(history, routes);`}
   );
 }
 // or
-function render(response) {
+function render({ response }) {
   const { body:Body } = response;
   return (
     <div>
@@ -501,7 +501,7 @@ function render(response) {
           pass them to the <Cmp>Body</Cmp> component that you render.
         </p>
         <PrismBlock lang="jsx">
-          {`function render(response) {
+          {`function render({ response }) {
   const { body:Body, data, params } = response;
   return <Body data={data} params={params} />;
 }`}

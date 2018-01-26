@@ -154,7 +154,7 @@ router.respond((response, navigation) => {
       router={router}
       response={response}
       navigation={navigation}
-      render={response => {
+      render={({ response }) => {
         return null;
       }}
     />
@@ -243,7 +243,7 @@ router.respond((response, navigation) => {
         at the properties of our response object.
       </p>
       <PrismBlock lang="jsx">
-        {`function render(response) {
+        {`function render({ response }) {
   console.log('response:', response);
   return null;
 }
@@ -445,7 +445,7 @@ export default routes;`}
       </p>
       <PrismBlock lang="jsx">
         {`// src/render.js
-export default function(response) {
+export default function({ response }) {
   return <response.body />;
 }`}
       </PrismBlock>
@@ -528,7 +528,7 @@ export default NavLinks;`}
         {`// src/render.js
 import NavLinks from './components/NavLinks.js';
 
-export default function(response) {
+export default function({ response }) {
   const { body: Body } = response;
   return (
     <div>
@@ -607,7 +607,7 @@ const BookList = () => (
       </p>
       <PrismBlock lang="jsx">
         {`// src/render.js
-export default function(response) {
+export default function({ response }) {
   const { body: Body } = response;
   return (
     <div>

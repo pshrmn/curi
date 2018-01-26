@@ -62,11 +62,11 @@ export default ({ name }) => (
           elements that make up your application.
         </p>
         <p>
-          The render function receives three arguments to help you render your
-          application: <IJS>response</IJS>, <IJS>navigation</IJS>, and{" "}
-          <IJS>router</IJS>. The <IJS>response</IJS> object is the most
-          important of these, while the others may occasionally be useful or you
-          may never use them.
+          The render function receives an object with three properties to help
+          you render your application: <IJS>response</IJS>,{" "}
+          <IJS>navigation</IJS>, and <IJS>router</IJS>. The <IJS>response</IJS>{" "}
+          object is the most important of these, while the others may
+          occasionally be useful or you may never use them.
         </p>
 
         <Note>
@@ -97,7 +97,7 @@ const routes = [
 ]`}
         </PrismBlock>
         <PrismBlock lang="javascript">
-          {`function render(response) {
+          {`function render({ response }) {
   const { body:Body } = response;
   return <Body />;
 }`}
@@ -134,7 +134,7 @@ const routes = [
         </p>
 
         <PrismBlock lang="javascript">
-          {`function render(response) {
+          {`function render({ response }) {
   const { body:Body, params, data } = response;
   return <Body response={response} />;
 }`}
