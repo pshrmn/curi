@@ -31,7 +31,7 @@ router.respond((response) => {
     <CuriBase
       response={response}
       router={router}
-      render={response => {
+      render={({ response }) => {
         return <response.body />;
       }}
     />

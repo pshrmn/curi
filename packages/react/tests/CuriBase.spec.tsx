@@ -27,92 +27,48 @@ describe("<CuriBase>", () => {
     expect(fn.mock.calls.length).toBe(1);
   });
 
-  it("passes the render function the response prop", done => {
-    const history = InMemory();
-    const routes = [
-      { name: "Home", path: "", pathOptions: { end: true } },
-      { name: "About", path: "about" }
-    ];
-    let receivedResponse;
-    const fn = jest.fn(response => {
-      receivedResponse = response;
-      return null;
-    });
-
-    const router = curi(history, routes);
-    const properties = [
-      "key",
-      "location",
-      "status",
-      "name",
-      "partials",
-      "params",
-      "body",
-      "data",
-      "title"
-    ];
-    router.respond((response, navigation) => {
-      const wrapper = shallow(
-        <CuriBase
-          response={response}
-          navigation={navigation}
-          router={router}
-          render={fn}
-        />
-      );
-      expect(Object.keys(receivedResponse).length).toEqual(properties.length);
-      properties.forEach(key => {
-        expect(receivedResponse.hasOwnProperty(key)).toBe(true);
+  describe("render prop", () => {
+    it("passes an object with response, navigation, and router properties to fn", done => {
+      const history = InMemory();
+      const routes = [
+        { name: "Home", path: "", pathOptions: { end: true } },
+        { name: "About", path: "about" }
+      ];
+      const fn = jest.fn(({ response, navigation, router: routerProp }) => {
+        expect(Object.keys(response).length).toEqual(properties.length);
+        properties.forEach(key => {
+          expect(response.hasOwnProperty(key)).toBe(true);
+        });
+        expect(navigation).toMatchObject({
+          action: "PUSH"
+        });
+        expect(routerProp).toBe(router);
+        done();
+        return null;
       });
-      done();
-    });
-  });
 
-  it("passes the render function the navigation prop", done => {
-    const history = InMemory();
-    const routes = [
-      { name: "Home", path: "", pathOptions: { end: true } },
-      { name: "About", path: "about" }
-    ];
-    const fn = jest.fn(() => {
-      return null;
-    });
-
-    const router = curi(history, routes);
-
-    router.respond((response, navigation) => {
-      const wrapper = shallow(
-        <CuriBase
-          response={response}
-          navigation={navigation}
-          router={router}
-          render={fn}
-        />
-      );
-      expect(fn.mock.calls[0][1]).toMatchObject({
-        action: "PUSH"
+      const router = curi(history, routes);
+      const properties = [
+        "key",
+        "location",
+        "status",
+        "name",
+        "partials",
+        "params",
+        "body",
+        "data",
+        "title"
+      ];
+      router.respond((response, navigation) => {
+        const wrapper = shallow(
+          <CuriBase
+            response={response}
+            navigation={navigation}
+            router={router}
+            render={fn}
+          />
+        );
       });
-      done();
-    });
-  });
-
-  it("passes the render function the router object", done => {
-    const history = InMemory();
-    const routes = [
-      { name: "Home", path: "", pathOptions: { end: true } },
-      { name: "About", path: "about" }
-    ];
-    const fn = jest.fn(() => {
-      return null;
-    });
-
-    const router = curi(history, routes);
-    router.respond(response => {
-      const wrapper = shallow(
-        <CuriBase response={response} router={router} render={fn} />
-      );
-      expect(fn.mock.calls[0][2]).toBe(router);
-      done();
     });
   });
 

@@ -1,3 +1,7 @@
+## Next
+
+* `<CuriBase render>` passes a single `CuriProps` object to the `render` function instead of three arguments.
+
 ## 1.0.0-alpha.3
 
 * Switch from `action` to `navigation` (which contains an `action` as well as the previous `response`).
