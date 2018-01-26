@@ -1,15 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { CuriRouter, Response, Navigation } from "@curi/core";
-import { CuriContext } from "./interface";
+import { CuriContext, CuriProps } from "./interface";
 
 export interface CuriBaseProps {
   router: CuriRouter;
-  render: (
-    r: Response,
-    navigation: Navigation,
-    c?: CuriRouter
-  ) => React.ReactElement<any>;
+  render: (props: CuriProps) => React.ReactElement<any>;
   response: Response;
   navigation: Navigation;
 }
@@ -34,11 +30,8 @@ class CuriBase extends React.Component<CuriBaseProps> {
   }
 
   render(): React.ReactElement<any> {
-    return this.props.render(
-      this.props.response,
-      this.props.navigation,
-      this.props.router
-    );
+    const { response, navigation, router } = this.props;
+    return this.props.render({ response, navigation, router });
   }
 }
 
