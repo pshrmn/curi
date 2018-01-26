@@ -26,7 +26,7 @@ const router = {
       }
     ]
   }
-};</pre></div><div class="section" id="package"><h2><span>The <code class="language-javascript">@curi/vue</code> Package</span><a class="header-link" href="/tutorial/05-pages-vue#package">#</a></h2><p>The <code class="language-javascript">@curi/vue</code> package exports a Vue plugin, which provides components that know how to interact with Curi. For this tutorial, we will only be using one: <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>. You can read more about the package in the<!-- --> <a href="/packages/@curi/vue/#API"><code class="language-javascript">@curi/vue</code> documentation</a>.</p><div class="subsection" id="installation"><h3>Installation<a class="header-link" href="/tutorial/05-pages-vue#installation">#</a></h3><p>Let&#x27;s start by installing the <code class="language-javascript">@curi/vue</code> package as well as Vue.</p><pre class="language-bash">npm install @curi/vue vue</pre></div><div class="subsection" id="plugin"><h3>The Plugin<a class="header-link" href="/tutorial/05-pages-vue#plugin">#</a></h3><p>The <code class="language-javascript">CuriPlugin</code> exported by <code class="language-javascript">@curi/vue</code>, should be registered with Vue after the Curi router has been created. The plugin does a couple things. First, it will make your Curi router and new responses/navigations accessible to every component. The router will be accessible as <code class="language-javascript">this.$router</code> while through the<!-- --> <code class="language-javascript">response</code> and <code class="language-javascript">navigation</code> are grouped under the<!-- --> <code class="language-javascript">this.$curi</code> object. Second, it will register Curi specific components. For this tutorial, the only component that we care about is <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>.</p><pre class="language-javascript">// index.js
+};</pre></div><div class="section" id="package"><h2><span>The <code class="language-javascript">@curi/vue</code> Package</span><a class="header-link" href="/tutorial/05-pages-vue#package">#</a></h2><p>The <code class="language-javascript">@curi/vue</code> package exports a Vue plugin, which provides components that know how to interact with Curi. For this tutorial, we will only be using one: <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>. You can read more about the package in the<!-- --> <a href="/packages/@curi/vue/#API"><code class="language-javascript">@curi/vue</code> documentation</a>.</p><div class="subsection" id="installation"><h3>Installation<a class="header-link" href="/tutorial/05-pages-vue#installation">#</a></h3><p>Let&#x27;s start by installing the <code class="language-javascript">@curi/vue</code> package as well as Vue.</p><pre class="language-bash">npm install @curi/vue vue</pre></div><div class="subsection" id="plugin"><h3>The Plugin<a class="header-link" href="/tutorial/05-pages-vue#plugin">#</a></h3><p>The <code class="language-javascript">CuriPlugin</code> exported by <code class="language-javascript">@curi/vue</code>, should be registered with Vue after the Curi router has been created. The plugin does a couple things. First, it will make your Curi router and new responses/navigations accessible to every component. The router will be accessible as <code class="language-javascript">this.$router</code> while through the<!-- --> <code class="language-javascript">response</code> and <code class="language-javascript">navigation</code> are grouped under the<!-- --> <code class="language-javascript">this.$curi</code> object. Second, it will register Curi specific components. For this tutorial, the only component that we care about is <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>.</p><pre class="language-javascript">// src/index.js
 import Vue from &#x27;vue&#x27;;
 import { CuriPlugin } from &#x27;@curi/vue&#x27;;
 
@@ -43,7 +43,7 @@ Vue.use(CuriPlugin, { router });</pre></div><div class="subsection" id="Link"><h
 // &lt;a href=&#x27;/contact#email&gt;Contact by Email&lt;/a&gt;</pre><div class="note"><strong>Note:</strong> <!-- -->If you want to navigate outside of the application, use an anchor not a <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>.<pre class="language-jsx">// interal
 &lt;curi-link to=&#x27;Contact&#x27;&gt;Contact&lt;/curi-link&gt;
 // external
-&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</pre></div></div></div><div class="section" id="response"><h2>The Response<a class="header-link" href="/tutorial/05-pages-vue#response">#</a></h2><p>Being able to access the Curi router is nice, but what we really need is to access the response objects that are emitted by Curi whenever the location changes. We <em>could</em> use the <code class="language-javascript">router.respond</code> <!-- -->method that we covered in the<!-- --> <a href="/tutorial/04-router">router</a> <!-- -->tutorial, but the <code class="language-javascript">CuriPlugin</code> takes care of that step for us.<!-- --> <code class="language-javascript">CuriPlugin</code> calls <code class="language-javascript">router.respond</code> and in the response handler, it updates the reactive <code class="language-javascript">response</code> and<!-- --> <code class="language-javascript">navigation</code> properties of <code class="language-javascript">this.$curi</code> whenever a new response is emitted.</p><p>While we do not have to manually subscribe to all responses, we do need to listen for the first response to be emitted so that we can render the application. The second argument to <code class="language-javascript">router.respond</code> is an options object. If we pass the options <code class="language-javascript">{ once: true }</code>, then that function will only be called after the initial response is emitted.</p><p>Inside of the response handler function, we just need to render our root application component. All of our Curi related data will be available through <code class="language-javascript">this.$curi</code>, so we don&#x27;t have to attach any data to the Vue instance.</p><pre class="language-javascript">// index.js
+&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</pre></div></div></div><div class="section" id="response"><h2>The Response<a class="header-link" href="/tutorial/05-pages-vue#response">#</a></h2><p>Being able to access the Curi router is nice, but what we really need is to access the response objects that are emitted by Curi whenever the location changes. We <em>could</em> use the <code class="language-javascript">router.respond</code> <!-- -->method that we covered in the<!-- --> <a href="/tutorial/04-router">router</a> <!-- -->tutorial, but the <code class="language-javascript">CuriPlugin</code> takes care of that step for us.<!-- --> <code class="language-javascript">CuriPlugin</code> calls <code class="language-javascript">router.respond</code> and in the response handler, it updates the reactive <code class="language-javascript">response</code> and<!-- --> <code class="language-javascript">navigation</code> properties of <code class="language-javascript">this.$curi</code> whenever a new response is emitted.</p><p>While we do not have to manually subscribe to all responses, we do need to listen for the first response to be emitted so that we can render the application. The second argument to <code class="language-javascript">router.respond</code> is an options object. If we pass the options <code class="language-javascript">{ once: true }</code>, then that function will only be called after the initial response is emitted.</p><p>Inside of the response handler function, we just need to render our root application component. All of our Curi related data will be available through <code class="language-javascript">this.$curi</code>, so we don&#x27;t have to attach any data to the Vue instance.</p><pre class="language-javascript">// src/index.js
 import app from &#x27;./components/app&#x27;;
 
 router.respond(response =&gt; {
@@ -79,37 +79,37 @@ router.respond(response =&gt; {
 export default {
   name: &#x27;app&#x27;
 };
-&lt;/script&gt;</pre><p>We&#x27;ll expand on that later on, but for now, let&#x27;s go ahead and define the components for each of our routes.</p></div><div class="section" id="route-components"><h2>The Route Components<a class="header-link" href="/tutorial/05-pages-vue#route-components">#</a></h2><p>To refresh your memory, we have &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, &quot;Book&quot;, &quot;Checkout&quot;, and &quot;Not Found&quot; pages that we will need to create components for. We can write some barebones components and add some more content later on.</p><pre class="language-html">&lt;!-- components/Home.vue --&gt;
+&lt;/script&gt;</pre><p>We&#x27;ll expand on that later on, but for now, let&#x27;s go ahead and define the components for each of our routes.</p></div><div class="section" id="route-components"><h2>The Route Components<a class="header-link" href="/tutorial/05-pages-vue#route-components">#</a></h2><p>To refresh your memory, we have &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, &quot;Book&quot;, &quot;Checkout&quot;, and &quot;Not Found&quot; pages that we will need to create components for. We can write some barebones components and add some more content later on.</p><pre class="language-html">&lt;!-- src/components/Home.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;home&#x27;&gt;
     Welcome to our book store!
   &lt;/div&gt;
-&lt;/template&gt;</pre><pre class="language-html">&lt;!-- components/Contact.vue --&gt;
+&lt;/template&gt;</pre><pre class="language-html">&lt;!-- src/components/Contact.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;contact&#x27;&gt;
     You can contact us by fax at 1-206-555-0123.
   &lt;/div&gt;
-&lt;/template&gt;</pre><pre class="language-html">&lt;!-- components/BookList.vue --&gt;
+&lt;/template&gt;</pre><pre class="language-html">&lt;!-- src/components/BookList.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;book-list&#x27;&gt;
     Available Books
   &lt;/div&gt;
-&lt;/template&gt;</pre><pre class="language-html">&lt;!-- components/Book.vue --&gt;
+&lt;/template&gt;</pre><pre class="language-html">&lt;!-- src/components/Book.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;book&#x27;&gt;
     Book
   &lt;/div&gt;
-&lt;/template&gt;</pre><pre class="language-html">&lt;!-- components/Checkout.vue --&gt;
+&lt;/template&gt;</pre><pre class="language-html">&lt;!-- src/components/Checkout.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;checkout&#x27;&gt;
     Checkout
   &lt;/div&gt;
-&lt;/template&gt;</pre><pre class="language-html">&lt;!-- components/NotFound.vue --&gt;
+&lt;/template&gt;</pre><pre class="language-html">&lt;!-- src/components/NotFound.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;not-found&#x27;&gt;
     Page not found
   &lt;/div&gt;
-&lt;/template&gt;</pre><p>All of these components should be imported in our <code class="language-javascript">routes.js</code> <!-- -->and set using <code class="language-javascript">set.body</code> in their respective<!-- --> <code class="language-javascript">match.response</code> functions.</p><pre class="language-javascript">// routes.js
+&lt;/template&gt;</pre><p>All of these components should be imported in our <code class="language-javascript">routes.js</code> <!-- -->and set using <code class="language-javascript">set.body</code> in their respective<!-- --> <code class="language-javascript">match.response</code> functions.</p><pre class="language-javascript">// src/routes.js
 import Home from &#x27;./components/Home&#x27;;
 import Contact from &#x27;./components/Contact&#x27;;
 import BookList from &#x27;./components/BookList&#x27;;
@@ -176,7 +176,7 @@ const routes = [
   }
 ];
 
-export default routes;</pre><p>Now, if we load up our application, we will render our home page. Unfortunately, there is no way to navigate to any of our other pages. We will need to add some <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s to our application.</p></div><div class="section" id="nav-menu"><h2>A Navigation Menu<a class="header-link" href="/tutorial/05-pages-vue#nav-menu">#</a></h2><p>We can write a simple <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> menu component to add navigation to our application. From this menu, we only need to be able to navigate to our &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, and &quot;Checkout&quot; routes. Navigation to individual books will be done from the book list page.</p><p>We will use a <code class="language-jsx"><!-- -->&lt;<!-- -->nav<!-- -->&gt;</code> element as the parent for our<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code>. Inside of that is a <code class="language-jsx"><!-- -->&lt;<!-- -->ul<!-- -->&gt;</code> and then each of our routes will be <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s wrapped in <code class="language-jsx"><!-- -->&lt;<!-- -->li<!-- -->&gt;</code>s.</p><pre class="language-html">&lt;!-- components/NavLinks.vue --&gt;
+export default routes;</pre><p>Now, if we load up our application, we will render our home page. Unfortunately, there is no way to navigate to any of our other pages. We will need to add some <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s to our application.</p></div><div class="section" id="nav-menu"><h2>A Navigation Menu<a class="header-link" href="/tutorial/05-pages-vue#nav-menu">#</a></h2><p>We can write a simple <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> menu component to add navigation to our application. From this menu, we only need to be able to navigate to our &quot;Home&quot;, &quot;Contact&quot;, &quot;Book List&quot;, and &quot;Checkout&quot; routes. Navigation to individual books will be done from the book list page.</p><p>We will use a <code class="language-jsx"><!-- -->&lt;<!-- -->nav<!-- -->&gt;</code> element as the parent for our<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code>. Inside of that is a <code class="language-jsx"><!-- -->&lt;<!-- -->ul<!-- -->&gt;</code> and then each of our routes will be <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s wrapped in <code class="language-jsx"><!-- -->&lt;<!-- -->li<!-- -->&gt;</code>s.</p><pre class="language-html">&lt;!-- src/components/NavLinks.vue --&gt;
 &lt;template&gt;
   &lt;nav&gt;
     &lt;ul&gt;
@@ -194,7 +194,7 @@ export default routes;</pre><p>Now, if we load up our application, we will rende
       &lt;/li&gt;
     &lt;/ul&gt;
   &lt;/nav&gt;
-&lt;/template&gt;</pre><p>Let&#x27;s import and render that the <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> in our<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code>. We&#x27;ll also add some wrapper elements to keep our content organized.</p><pre class="language-html">&lt;!-- components/App.vue --&gt;
+&lt;/template&gt;</pre><p>Let&#x27;s import and render that the <code class="language-jsx"><!-- -->&lt;<!-- -->NavLinks<!-- -->&gt;</code> in our<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->app<!-- -->&gt;</code>. We&#x27;ll also add some wrapper elements to keep our content organized.</p><pre class="language-html">&lt;!-- src/components/App.vue --&gt;
 &lt;template&gt;
   &lt;div&gt;
     &lt;header&gt;
@@ -213,14 +213,14 @@ export default routes;</pre><p>Now, if we load up our application, we will rende
     name: &#x27;app&#x27;,
     components: { NavLinks }
   };
-&lt;/script&gt;</pre><p>At this point, we can navigate between most of our routes. However, we still need to add navigation to our books.</p></div><div class="section" id="param-navigation"><h2>Navigating to Our Books<a class="header-link" href="/tutorial/05-pages-vue#param-navigation">#</a></h2><p>Our &quot;Book&quot; route is different than all of our other routes because the book path includes an <code class="language-javascript">id</code> param. This means that we need to actually have &quot;id&quot; values to pass to our <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s. Later on, we&#x27;ll generate some better data, but for now we can just generate a placeholder list in a module called <code class="language-javascript">books.js</code>.</p><pre class="language-jsx"> // books.js
+&lt;/script&gt;</pre><p>At this point, we can navigate between most of our routes. However, we still need to add navigation to our books.</p></div><div class="section" id="param-navigation"><h2>Navigating to Our Books<a class="header-link" href="/tutorial/05-pages-vue#param-navigation">#</a></h2><p>Our &quot;Book&quot; route is different than all of our other routes because the book path includes an <code class="language-javascript">id</code> param. This means that we need to actually have &quot;id&quot; values to pass to our <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s. Later on, we&#x27;ll generate some better data, but for now we can just generate a placeholder list in a module called <code class="language-javascript">books.js</code>.</p><pre class="language-jsx"> // src/books.js
 const books = [
   { id: 0 },
   { id: 1 },
   { id: 2 },
   { id: 3 }
 ];
-export default books;</pre><p>Then, in <code class="language-jsx"><!-- -->&lt;<!-- -->BookList<!-- -->&gt;</code> we can iterate over this list to generate links to our books.</p><pre class="language-html">&lt;!-- components/BookList.vue --&gt;
+export default books;</pre><p>Then, in <code class="language-jsx"><!-- -->&lt;<!-- -->BookList<!-- -->&gt;</code> we can iterate over this list to generate links to our books.</p><pre class="language-html">&lt;!-- src/components/BookList.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;book-list&#x27;&gt;
     &lt;h1&gt;Available Books&lt;/h1&gt;
@@ -242,7 +242,7 @@ export default books;</pre><p>Then, in <code class="language-jsx"><!-- -->&lt;<!
     }
   };
 &lt;/script&gt;
-</pre></div><div class="section" id="book-props"><h2>Book Props<a class="header-link" href="/tutorial/05-pages-vue#book-props">#</a></h2><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s above allow us to navigate to our books, but we don&#x27;t actually have any information about which book we are supposed to be seeing. It would really help if our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> was able to access the parsed params so that it can render the information for the correct book.</p><p>The <code class="language-javascript">params</code> object is a property of our response object. We can access the response in our components using<!-- --> <code class="language-javascript">this.$curi.response</code>, so we don&#x27;t actually have to manually pass it as a prop.</p><p>Next, we just need to update our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component to access the<!-- --> <code class="language-javascript">params</code> object and figure out which book to render content for.</p><pre class="language-html">&lt;!-- components/Book.vue --&gt;
+</pre></div><div class="section" id="book-props"><h2>Book Props<a class="header-link" href="/tutorial/05-pages-vue#book-props">#</a></h2><p>The <code class="language-jsx"><!-- -->&lt;<!-- -->curi-link<!-- -->&gt;</code>s above allow us to navigate to our books, but we don&#x27;t actually have any information about which book we are supposed to be seeing. It would really help if our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> was able to access the parsed params so that it can render the information for the correct book.</p><p>The <code class="language-javascript">params</code> object is a property of our response object. We can access the response in our components using<!-- --> <code class="language-javascript">this.$curi.response</code>, so we don&#x27;t actually have to manually pass it as a prop.</p><p>Next, we just need to update our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component to access the<!-- --> <code class="language-javascript">params</code> object and figure out which book to render content for.</p><pre class="language-html">&lt;!-- src/components/Book.vue --&gt;
 &lt;template&gt;
   &lt;div class=&#x27;book&#x27;&gt;
     Book {{$curi.response.params.id}}

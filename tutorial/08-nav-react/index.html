@@ -13,7 +13,7 @@ module.exports = {
   // ...,
   plugins: [&#x27;@babel/proposal-class-properties&#x27;]
 };
-</pre></div><div class="section" id="API"><h2>The (Fake) API<a class="header-link" href="/tutorial/08-nav-react#API">#</a></h2><p>Since we do not have a backend to store the books that a user wants to purchase, we will simulate this using <code class="language-javascript">localStorage</code>. This will be done by maintaining an object whose keys are book <code class="language-javascript">id</code>s and whose values is how many of that book should be purchased.</p><p>Our API should export three methods: the first will get the current state of the shopping cart, the second will update the shopping cart, and the third will reset the shopping cart.</p><pre class="language-javascript">// api/shoppingCart.js
+</pre></div><div class="section" id="API"><h2>The (Fake) API<a class="header-link" href="/tutorial/08-nav-react#API">#</a></h2><p>Since we do not have a backend to store the books that a user wants to purchase, we will simulate this using <code class="language-javascript">localStorage</code>. This will be done by maintaining an object whose keys are book <code class="language-javascript">id</code>s and whose values is how many of that book should be purchased.</p><p>Our API should export three methods: the first will get the current state of the shopping cart, the second will update the shopping cart, and the third will reset the shopping cart.</p><pre class="language-javascript">// src/api/shoppingCart.js
 function saveCart(cart) {
   localStorage.setItem(&#x27;cart&#x27;, JSON.stringify(cart));
 }
@@ -43,7 +43,7 @@ export function updateCart(bookID, count) {
 export function resetCart() {
   const cart = {};
   saveCart(cart);
-}</pre><div class="note"><strong>Note:</strong> <!-- -->We are using <code class="language-javascript">localStorage</code>, which is synchronous, but our API functions return Promises to simulate having to make these requests to the server.</div><p>We will need to access this API in two places. Our &quot;Book&quot; pages need to use <code class="language-javascript">updateCart</code> in order to add books to the shopping cart. The &quot;Checkout&quot; page need to know which books (and how many of each) are currently in the shopping cart. The page should also clear the cart out after a user has &quot;purchased&quot; the book in their shopping cart.</p></div><div class="section" id="add-books"><h2>Adding Books to the Shopping Cart<a class="header-link" href="/tutorial/08-nav-react#add-books">#</a></h2><p>On the &quot;Book&quot; page, users should be able to specify how many copies of a book they want to purchase and add those to their shopping cart. We will do this by adding a new component, <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code>.</p><p>We can start by creating a component with renders a <code class="language-jsx"><!-- -->&lt;<!-- -->select<!-- -->&gt;</code>. Users can buy 1-4 copies of a book (an arbitrary restriction), so we need an <code class="language-jsx"><!-- -->&lt;<!-- -->option<!-- -->&gt;</code> for each possible value. We should also add an<!-- --> <code class="language-javascript">onChange</code> handler to update the <code class="language-jsx"><!-- -->&lt;<!-- -->select<!-- -->&gt;</code> when the user changes the value.</p><pre class="language-jsx">// components/AddToCart.js
+}</pre><div class="note"><strong>Note:</strong> <!-- -->We are using <code class="language-javascript">localStorage</code>, which is synchronous, but our API functions return Promises to simulate having to make these requests to the server.</div><p>We will need to access this API in two places. Our &quot;Book&quot; pages need to use <code class="language-javascript">updateCart</code> in order to add books to the shopping cart. The &quot;Checkout&quot; page need to know which books (and how many of each) are currently in the shopping cart. The page should also clear the cart out after a user has &quot;purchased&quot; the book in their shopping cart.</p></div><div class="section" id="add-books"><h2>Adding Books to the Shopping Cart<a class="header-link" href="/tutorial/08-nav-react#add-books">#</a></h2><p>On the &quot;Book&quot; page, users should be able to specify how many copies of a book they want to purchase and add those to their shopping cart. We will do this by adding a new component, <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code>.</p><p>We can start by creating a component with renders a <code class="language-jsx"><!-- -->&lt;<!-- -->select<!-- -->&gt;</code>. Users can buy 1-4 copies of a book (an arbitrary restriction), so we need an <code class="language-jsx"><!-- -->&lt;<!-- -->option<!-- -->&gt;</code> for each possible value. We should also add an<!-- --> <code class="language-javascript">onChange</code> handler to update the <code class="language-jsx"><!-- -->&lt;<!-- -->select<!-- -->&gt;</code> when the user changes the value.</p><pre class="language-jsx">// src/components/AddToCart.js
 import React from &#x27;react&#x27;;
 
 class AddToCart extends React.Component {
@@ -62,14 +62,14 @@ class AddToCart extends React.Component {
           &lt;option value=&#x27;3&#x27;&gt;3&lt;/option&gt;
           &lt;option value=&#x27;4&#x27;&gt;4&lt;/option&gt;
         &lt;/select&gt;
-      &lt;/form&gt;    
+      &lt;/form&gt;
     );
   }
 }
 
-export default AddToCart;</pre><p>Next, we need to add a button to add the book to the shopping cart. We&#x27;re actually going to add two buttons. The first will just add the book/count to the shopping cart. The second will add the book/count to the shopping cart and then redirect to the &quot;Checkout&quot; page.</p><p>How will we redirect? So far, all navigation within the website has been performed using <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s. However, sometimes you might want to navigate programmatically. To do this, we can take advantage of our Hickory history object. The history object has <code class="language-javascript">push</code>,<!-- --> <code class="language-javascript">replace</code>, and <code class="language-javascript">update</code> methods that we can call to trigger navigation. You can read about each of these in the<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#methods">Hickory documentation</a>. For this tutorial, we will be using <code class="language-javascript">push</code>.</p><p>In order to access the router from within our component we will use the<!-- --> <code class="language-javascript">curious</code> higher order component from <code class="language-javascript">@curi/react</code>. A component that is wrapped by <code class="language-javascript">curious</code> will have the Curi router injected as a prop called <code class="language-javascript">curi</code>. That means that we can call <code class="language-javascript">this.props.curi.history.push</code> (a bit of a mouthful) to automatically redirect to another page.</p><p>We can also access all of our Curi <code class="language-javascript">addons</code> from our router, so we will use <code class="language-javascript">curi.addons.pathname</code> to generate the pathname for the location that we wan to redirect to.</p><p>When the user clicks either of the buttons, we will want to use the<!-- --> <code class="language-javascript">updateCart</code> API method to add the book to the shopping cart. The <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code> component doesn&#x27;t inherently know which book it is for, so we will need to pass it the <code class="language-javascript">id</code> of the book as a prop when we render it.</p><pre class="language-jsx">// components/AddToCart.js
+export default AddToCart;</pre><p>Next, we need to add a button to add the book to the shopping cart. We&#x27;re actually going to add two buttons. The first will just add the book/count to the shopping cart. The second will add the book/count to the shopping cart and then redirect to the &quot;Checkout&quot; page.</p><p>How will we redirect? So far, all navigation within the website has been performed using <code class="language-jsx"><!-- -->&lt;<!-- -->Link<!-- -->&gt;</code>s. However, sometimes you might want to navigate programmatically. To do this, we can take advantage of our Hickory history object. The history object has <code class="language-javascript">push</code>,<!-- --> <code class="language-javascript">replace</code>, and <code class="language-javascript">update</code> methods that we can call to trigger navigation. You can read about each of these in the<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#methods">Hickory documentation</a>. For this tutorial, we will be using <code class="language-javascript">push</code>.</p><p>In order to access the router from within our component we will use the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->Curious<!-- -->&gt;</code> component from <code class="language-javascript">@curi/react</code>.<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->Curious<!-- -->&gt;</code> helps you to inject the Curi props (<code class="language-javascript">router</code>,<!-- --> <code class="language-javascript">response</code>, and <code class="language-javascript">navigation</code>) into a component. That means that we can inject our <code class="language-javascript">router</code> and call<!-- --> <code class="language-javascript">router.history.push</code> (a bit of a mouthful) to automatically redirect to another page.</p><p>We can also access all of our Curi <code class="language-javascript">addons</code> from our router, so we will use <code class="language-javascript">curi.addons.pathname</code> to generate the pathname for the location that we wan to redirect to.</p><p>When the user clicks either of the buttons, we will want to use the<!-- --> <code class="language-javascript">updateCart</code> API method to add the book to the shopping cart. The <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code> component doesn&#x27;t inherently know which book it is for, so we will need to pass it the <code class="language-javascript">id</code> of the book as a prop when we render it.</p><pre class="language-jsx">// src/components/AddToCart.js
 import React from &#x27;react&#x27;;
-import { curious } from &#x27;@curi/react&#x27;;
+import { Curious } from &#x27;@curi/react&#x27;;
 
 import { updateCart } from &#x27;../api/shoppingCart&#x27;;
 
@@ -86,13 +86,13 @@ class AddToCart extends React.Component {
   }
 
   addAndCheckout = () =&gt; {
-    const { curi, bookID } = this.props;
+    const { router, bookID } = this.props;
     updateCart(bookID, this.state.count)
       .then(() =&gt; {
         // generate the pathname for the Checkout route and then
         // navigate to there automatically
-        const pathname = curi.addons.pathname(&#x27;Checkout&#x27;);
-        curi.history.push({ pathname });
+        const pathname = router.addons.pathname(&#x27;Checkout&#x27;);
+        router.history.push({ pathname });
       });
   }
 
@@ -111,12 +111,16 @@ class AddToCart extends React.Component {
         &lt;button type=&quot;button&quot; onClick={this.addAndCheckout}&gt;
           Add To Cart and Checkout
         &lt;/button&gt;
-      &lt;/form&gt;    
+      &lt;/form&gt;
     );
   }
 }
 
-export default curious(AddToCart);</pre><p>Now, we can modify our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component to render the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code> component. Remember that we need to pass it a<!-- --> <code class="language-javascript">bookID</code> prop so that we can know which book to add to the shopping cart.</p><pre class="language-jsx">// components/Book.js
+export default props =&gt; (
+  &lt;Curious render={({ router }) =&gt; (
+    &lt;AddToCart router={router} {...props} /&gt;
+  )} /&gt;
+);</pre><p>Now, we can modify our <code class="language-jsx"><!-- -->&lt;<!-- -->Book<!-- -->&gt;</code> component to render the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->AddToCart<!-- -->&gt;</code> component. Remember that we need to pass it a<!-- --> <code class="language-javascript">bookID</code> prop so that we can know which book to add to the shopping cart.</p><pre class="language-jsx">// src/components/Book.js
 import React from &#x27;react&#x27;;
 
 import AddToCart from &#x27;./AddToCart&#x27;;
@@ -142,7 +146,7 @@ const Book = (props) =&gt; {
   );
 };
 
-export default Book;</pre></div><div class="section" id="checkout"><h2>The Checkout Page<a class="header-link" href="/tutorial/08-nav-react#checkout">#</a></h2><p>Now that we can add books to our shopping cart, we also should give the user the ability to buy them. Of course, this isn&#x27;t a real store website that we are building, so instead of asking for payment and shipping information, we will just redirect the user once they &quot;purchase&quot; their books.</p><p>Let&#x27;s start out in our <code class="language-javascript">routes.js</code> file. We want our &quot;Checkout&quot; page to know which books are in the shopping cart. We can use the<!-- --> <code class="language-javascript">match.every</code> function of the &quot;Checkout&quot; route to load all of the books and our shopping cart. We can merge the two together to create an array of items in the cart.</p><p>While we&#x27;re at it, we should also add one more route to our website. This will be a &quot;Checkout Complete&quot; route that we redirect to after a user has &quot;purchased&quot; their books.</p><pre class="language-javascript">// routes.js
+export default Book;</pre></div><div class="section" id="checkout"><h2>The Checkout Page<a class="header-link" href="/tutorial/08-nav-react#checkout">#</a></h2><p>Now that we can add books to our shopping cart, we also should give the user the ability to buy them. Of course, this isn&#x27;t a real store website that we are building, so instead of asking for payment and shipping information, we will just redirect the user once they &quot;purchase&quot; their books.</p><p>Let&#x27;s start out in our <code class="language-javascript">routes.js</code> file. We want our &quot;Checkout&quot; page to know which books are in the shopping cart. We can use the<!-- --> <code class="language-javascript">match.every</code> function of the &quot;Checkout&quot; route to load all of the books and our shopping cart. We can merge the two together to create an array of items in the cart.</p><p>While we&#x27;re at it, we should also add one more route to our website. This will be a &quot;Checkout Complete&quot; route that we redirect to after a user has &quot;purchased&quot; their books.</p><pre class="language-javascript">// src/routes.js
 import CheckoutComplete from &#x27;./components/CheckoutComplete&#x27;;
 
 import { getCart } from &#x27;./api/shoppingCart&#x27;;
@@ -161,7 +165,7 @@ const routes = [
       },
       response: ({ resolved, set }) =&gt; {
         set.body(Checkout)
-        
+
         /*
          * We will iterate over all of the items in
          * our shopping cart and find the matching
@@ -171,7 +175,7 @@ const routes = [
          * We then assign that array of objects as
          * the &quot;items&quot; property of our response&#x27;s
          * data object.
-         */ 
+         */
         const [ books, cart ] = resolved.every;
         const items = Object.keys(cart).map(key =&gt; {
           const id = parseInt(key, 10);
@@ -195,7 +199,7 @@ const routes = [
     ]
   }
   // ...
-];</pre><p>Before we update our <code class="language-jsx"><!-- -->&lt;<!-- -->Checkout<!-- -->&gt;</code> component, let&#x27;s write the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->CheckoutComplete<!-- -->&gt;</code> component. This should just be a simple component thanking the user for their purchase.</p><pre class="language-jsx">// components/CheckoutComplete.js
+];</pre><p>Before we update our <code class="language-jsx"><!-- -->&lt;<!-- -->Checkout<!-- -->&gt;</code> component, let&#x27;s write the<!-- --> <code class="language-jsx"><!-- -->&lt;<!-- -->CheckoutComplete<!-- -->&gt;</code> component. This should just be a simple component thanking the user for their purchase.</p><pre class="language-jsx">// src/components/CheckoutComplete.js
 import React from &#x27;react&#x27;;
 
 const CheckoutComplete = () =&gt; (
@@ -204,9 +208,9 @@ const CheckoutComplete = () =&gt; (
   &lt;/div&gt;
 );
 
-export default CheckoutComplete;</pre><p>We aren&#x27;t going to get too fancy with displaying the items in our shopping cart. We can just place them all in a <code class="language-jsx"><!-- -->&lt;<!-- -->table<!-- -->&gt;</code> so that they are neatly organized. Then, we will just need to add a button to &quot;purchase&quot; the books.</p><p>We will once again be taking advantage of the <code class="language-javascript">curious</code> higher order component to access our Curi router from within a component.</p><pre class="language-jsx">// components/Checkout.js
+export default CheckoutComplete;</pre><p>We aren&#x27;t going to get too fancy with displaying the items in our shopping cart. We can just place them all in a <code class="language-jsx"><!-- -->&lt;<!-- -->table<!-- -->&gt;</code> so that they are neatly organized. Then, we will just need to add a button to &quot;purchase&quot; the books.</p><p>We will once again be taking advantage of the <code class="language-javascript">Curious</code> <!-- -->component to access our Curi router from within a component.</p><pre class="language-jsx">// src/components/Checkout.js
 import React from &#x27;react&#x27;;
-import { curious } from &#x27;@curi/react&#x27;;
+import { Curious } from &#x27;@curi/react&#x27;;
 
 import { resetCart } from &#x27;../api/shoppingCart&#x27;;
 
@@ -216,9 +220,9 @@ class Checkout extends React.Component {
     // when the user &quot;purchases&quot; their books, we just
     // reset the cart and redirect to the &quot;Checkout Complete&quot; page
     resetCart();
-    const { curi } = this.props;
-    const pathname = curi.addons.pathname(&#x27;Checkout Complete&#x27;);
-    curi.history.push({ pathname });
+    const { router } = this.props;
+    const pathname = router.addons.pathname(&#x27;Checkout Complete&#x27;);
+    router.history.push({ pathname });
   }
 
   render() {
@@ -254,7 +258,11 @@ class Checkout extends React.Component {
   }
 }
 
-export default curious(Checkout);</pre><p>One last thing to consider about our <code class="language-jsx"><!-- -->&lt;<!-- -->Checkout<!-- -->&gt;</code> component is what we should display when there are no items in the shopping cart. We can just check our <code class="language-javascript">response.data.items</code> array and display a message stating that the cart is empty when the list&#x27;s length is zero.</p><pre class="language-jsx">// component/Checkout.js
+export default props =&gt; (
+  &lt;Curious render={({ router }) =&gt; (
+    &lt;Checkout router={router} {...props} /&gt;
+  )} /&gt;
+);</pre><p>One last thing to consider about our <code class="language-jsx"><!-- -->&lt;<!-- -->Checkout<!-- -->&gt;</code> component is what we should display when there are no items in the shopping cart. We can just check our <code class="language-javascript">response.data.items</code> array and display a message stating that the cart is empty when the list&#x27;s length is zero.</p><pre class="language-jsx">// src/component/Checkout.js
 class Checkout extends React.Component {
   // ...
   render() {
