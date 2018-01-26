@@ -48,7 +48,7 @@ export default ({ name, version, globalName }) => (
           {`<CuriBase
   response={response}
   router={router}
-  render={response => {
+  render={({ response }) => {
     return response.body ? <response.body /> : null;
   }}
 />`}
@@ -62,9 +62,9 @@ export default ({ name, version, globalName }) => (
           <Subsection tag="h4" title="render" id="CuriBase-render">
             <p>
               A render function. This will be called whenever the{" "}
-              <Cmp>CuriBase</Cmp> renders. The function will be passed the
-              current response object and the router object it was passed as a
-              prop. The function must return a React element.
+              <Cmp>CuriBase</Cmp> renders. The function will be passed an object
+              with three properties: <IJS>response</IJS>, <IJS>navigation</IJS>,
+              and <IJS>router</IJS>. The function must return a React element.
             </p>
           </Subsection>
 
