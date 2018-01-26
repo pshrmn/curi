@@ -11,9 +11,11 @@ import { byName as guidesByName } from "./constants/guides";
 import { byName as packagesByName } from "./constants/packages";
 import EXAMPLES from "./constants/examples";
 
-function caught(error) {
-  console.error("Failed to load module for:", name, error);
-  return () => <div>Sorry, something went wrong...</div>;
+function catchImportError(name) {
+  return function caught(error) {
+    console.error("Failed to load module for:", name, error);
+    return () => <div>Sorry, something went wrong...</div>;
+  };
 }
 
 export default [
@@ -44,7 +46,7 @@ export default [
           initial: () =>
             import(/* webpackChunkName: 'tutorial' */ "./route-components/Tutorial").then(
               module => module.default,
-              caught
+              catchImportError("tutorial")
             ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
@@ -77,7 +79,7 @@ export default [
           initial: () =>
             import(/* webpackChunkName: 'guide' */ "./route-components/Guide").then(
               module => module.default,
-              caught
+              catchImportError("guide")
             ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
@@ -108,7 +110,7 @@ export default [
           initial: () =>
             import(/* webpackChunkName: 'package' */ "./route-components/Package").then(
               module => module.default,
-              caught
+              catchImportError("package")
             ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
@@ -139,7 +141,7 @@ export default [
           initial: () =>
             import(/* webpackChunkName: 'example' */ "./route-components/Example").then(
               module => module.default,
-              caught
+              catchImportError("example")
             ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);

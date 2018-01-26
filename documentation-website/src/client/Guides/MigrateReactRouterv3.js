@@ -10,7 +10,6 @@ import {
 import { Note } from "../components/Messages";
 import { Section, Subsection } from "../components/Sections";
 
-dcd17a8;
 export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
