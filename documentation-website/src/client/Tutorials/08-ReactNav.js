@@ -178,11 +178,12 @@ export default AddToCart;`}
       </p>
       <p>
         In order to access the router from within our component we will use the{" "}
-        <IJS>curious</IJS> higher order component from <IJS>@curi/react</IJS>. A
-        component that is wrapped by <IJS>curious</IJS> will have the Curi
-        router injected as a prop called <IJS>curi</IJS>. That means that we can
-        call <IJS>this.props.curi.history.push</IJS> (a bit of a mouthful) to
-        automatically redirect to another page.
+        <Cmp>Curious</Cmp> component from <IJS>@curi/react</IJS>.{" "}
+        <Cmp>Curious</Cmp> helps you to inject the Curi props (<IJS>router</IJS>,{" "}
+        <IJS>response</IJS>, and <IJS>navigation</IJS>) into a component. That
+        means that we can inject our <IJS>router</IJS> and call{" "}
+        <IJS>router.history.push</IJS> (a bit of a mouthful) to automatically
+        redirect to another page.
       </p>
       <p>
         We can also access all of our Curi <IJS>addons</IJS> from our router, so
@@ -199,7 +200,7 @@ export default AddToCart;`}
       <PrismBlock lang="jsx">
         {`// src/components/AddToCart.js
 import React from 'react';
-import { curious } from '@curi/react';
+import { Curious } from '@curi/react';
 
 import { updateCart } from '../api/shoppingCart';
 
@@ -216,13 +217,13 @@ class AddToCart extends React.Component {
   }
 
   addAndCheckout = () => {
-    const { curi, bookID } = this.props;
+    const { router, bookID } = this.props;
     updateCart(bookID, this.state.count)
       .then(() => {
         // generate the pathname for the Checkout route and then
         // navigate to there automatically
-        const pathname = curi.addons.pathname('Checkout');
-        curi.history.push({ pathname });
+        const pathname = router.addons.pathname('Checkout');
+        router.history.push({ pathname });
       });
   }
 
@@ -246,7 +247,11 @@ class AddToCart extends React.Component {
   }
 }
 
-export default curious(AddToCart);`}
+export default props => (
+  <Curious render={({ router }) => (
+    <AddToCart router={router} {...props} />
+  )} />
+);`}
       </PrismBlock>
       <p>
         Now, we can modify our <Cmp>Book</Cmp> component to render the{" "}
@@ -384,13 +389,13 @@ export default CheckoutComplete;`}
         "purchase" the books.
       </p>
       <p>
-        We will once again be taking advantage of the <IJS>curious</IJS> higher
-        order component to access our Curi router from within a component.
+        We will once again be taking advantage of the <IJS>Curious</IJS>{" "}
+        component to access our Curi router from within a component.
       </p>
       <PrismBlock lang="jsx">
         {`// src/components/Checkout.js
 import React from 'react';
-import { curious } from '@curi/react';
+import { Curious } from '@curi/react';
 
 import { resetCart } from '../api/shoppingCart';
 
@@ -400,9 +405,9 @@ class Checkout extends React.Component {
     // when the user "purchases" their books, we just
     // reset the cart and redirect to the "Checkout Complete" page
     resetCart();
-    const { curi } = this.props;
-    const pathname = curi.addons.pathname('Checkout Complete');
-    curi.history.push({ pathname });
+    const { router } = this.props;
+    const pathname = router.addons.pathname('Checkout Complete');
+    router.history.push({ pathname });
   }
 
   render() {
@@ -438,7 +443,11 @@ class Checkout extends React.Component {
   }
 }
 
-export default curious(Checkout);`}
+export default props => (
+  <Curious render={({ router }) => (
+    <Checkout router={router} {...props} />
+  )} />
+);`}
       </PrismBlock>
       <p>
         One last thing to consider about our <Cmp>Checkout</Cmp> component is
