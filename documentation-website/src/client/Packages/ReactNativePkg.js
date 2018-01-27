@@ -56,7 +56,7 @@ export default ({ name, version, globalName }) => (
 
         <Section tag="h3" title="Props" id="CuriBase-props">
           <Subsection tag="h4" title="router" id="CuriBase-router">
-            <p>A router (created by calling curi's curi function).</p>
+            <p>A Curi router.</p>
           </Subsection>
 
           <Subsection tag="h4" title="render" id="CuriBase-render">
@@ -81,6 +81,45 @@ export default ({ name, version, globalName }) => (
               The <IJS>navigation</IJS> object describing the most recent
               navigation (the second argument passed to{" "}
               <IJS>router.respond</IJS> callbacks).
+            </p>
+          </Subsection>
+        </Section>
+      </Section>
+
+      <Section title={<Cmp>ResponsiveBase</Cmp>} id="ResponsiveBase">
+        <p>
+          The <Cmp>ResponsiveBase</Cmp> is a convenience component that combines
+          the <Cmp>CuriBase</Cmp> and <Cmp>Curious</Cmp> components. The{" "}
+          <Cmp>Curious</Cmp> component will inject the necessary props into the{" "}
+          <Cmp>CuriBase</Cmp> so that they are available to components
+          throughout your application. You just need to provide the{" "}
+          <IJS>router</IJS> and <IJS>render</IJS> props.
+        </p>
+
+        <Note>
+          If you are using <IJS>@curi/redux</IJS> or <IJS>@curi/mobx</IJS>, you
+          should wrap the <Cmp>CuriBase</Cmp>, not <Cmp>ResponsiveBase</Cmp>.
+        </Note>
+
+        <PrismBlock lang="javascript">
+          {`import { ResponsiveBase } from '@curi/react-native';`}
+        </PrismBlock>
+
+        <PrismBlock lang="jsx">
+          {`<ResponsiveBase router={router} render={render} />`}
+        </PrismBlock>
+        <Section tag="h3" title="Props" id="ResponsiveBase-props">
+          <Subsection tag="h4" title="router" id="ResponsiveBase-router">
+            <p>A Curi router.</p>
+          </Subsection>
+
+          <Subsection tag="h4" title="render" id="ResponsiveBase-render">
+            <p>
+              A render function. This will be called whenever the{" "}
+              <Cmp>ResponsiveBase</Cmp> renders. The function will be passed an
+              object with three properties: <IJS>response</IJS>,{" "}
+              <IJS>navigation</IJS>, and <IJS>router</IJS>. The function must
+              return a React element.
             </p>
           </Subsection>
         </Section>

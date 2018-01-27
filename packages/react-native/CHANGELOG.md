@@ -1,5 +1,6 @@
 ## Next
 
+* Add a `<ResponsiveBase>` component. This is just a `<CuriBase>` wrapped in a `<Curious>`.
 * `<Curious>` does not initially call response handler (prevents extra render).
 * `<CuriBase render>` passes a single `CuriProps` object to the `render` function instead of three arguments.
 

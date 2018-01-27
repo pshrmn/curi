@@ -3,9 +3,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { CuriRouter, Response, Navigation } from "@curi/core";
 import { CuriContext, CuriProps } from "./interface";
+export declare type CuriRenderFn = (props: CuriProps) => React.ReactElement<any>;
 export interface CuriBaseProps {
     router: CuriRouter;
-    render: (props: CuriProps) => React.ReactElement<any>;
+    render: CuriRenderFn;
     response: Response;
     navigation: Navigation;
 }

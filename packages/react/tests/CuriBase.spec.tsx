@@ -11,7 +11,6 @@ describe("<CuriBase>", () => {
   it("calls render function when it renders", () => {
     const history = InMemory();
     const router = curi(history, []);
-    const fakerouter = { subscribe: () => {} };
     const fakeNavigation = { action: "POP" };
     const fn = jest.fn(() => {
       return null;
