@@ -10,6 +10,7 @@ export interface Navigation {
 export declare type ResponseHandler = (response: Response, navigation?: Navigation, router?: CuriRouter) => void;
 export interface RespondOptions {
     once?: boolean;
+    initial?: boolean;
 }
 export declare type RemoveResponseHandler = () => void;
 export interface SideEffect {

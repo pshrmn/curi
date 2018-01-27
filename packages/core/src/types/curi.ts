@@ -17,6 +17,7 @@ export type ResponseHandler = (
 ) => void;
 export interface RespondOptions {
   once?: boolean;
+  initial?: boolean;
 }
 export type RemoveResponseHandler = () => void;
 

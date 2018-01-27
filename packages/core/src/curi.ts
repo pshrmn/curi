@@ -87,16 +87,16 @@ function createRouter(
       );
     }
 
-    const { once = false } = options || {};
+    const { once = false, initial = true } = options || {};
 
     if (once) {
-      if (mostRecent.response) {
+      if (mostRecent.response && initial) {
         fn.call(null, mostRecent.response, mostRecent.navigation, curi);
       } else {
         oneTimers.push(fn);
       }
     } else {
-      if (mostRecent.response) {
+      if (mostRecent.response && initial) {
         fn.call(null, mostRecent.response, mostRecent.navigation, curi);
       }
 
