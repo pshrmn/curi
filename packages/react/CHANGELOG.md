@@ -1,5 +1,6 @@
 ## Next
 
+* `<Curious>` does not initially call response handler (prevents extra render).
 * `<CuriBase render>` passes a single `CuriProps` object to the `render` function instead of three arguments.
 
 ## 1.0.0-beta.18

@@ -63,7 +63,8 @@ export default class Curious extends React.Component<
       this.stopResponding = router.respond(
         (response: Response, navigation: Navigation) => {
           this.setState({ response, navigation });
-        }
+        },
+        { initial: false }
       );
     }
   }

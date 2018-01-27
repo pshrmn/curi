@@ -147,6 +147,23 @@ describe("<Curious>", () => {
       );
     });
 
+    it("prevents extra setState/render when mounting", done => {
+      const fn = jest.fn(() => {
+        return null;
+      });
+      router.respond(
+        (response, navigation) => {
+          // initial render
+          const wrapper = mount(<Curious responsive={true} render={fn} />, {
+            context: { curi: { router, response, navigation } }
+          });
+          expect(fn.mock.calls.length).toBe(1);
+          done();
+        },
+        { once: true }
+      );
+    });
+
     it("warns when trying to change the responsive prop", done => {
       const oError = console.error;
       console.error = jest.fn();
