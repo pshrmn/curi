@@ -1,3 +1,7 @@
+## Next
+
+* Side effect receives `ResponseHandlerProps`.
+
 ## 1.0.0-beta.7
 
 * Expect a `Navigation` instead of an `Action`.

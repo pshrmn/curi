@@ -1,3 +1,7 @@
+## Next
+
+* Side effect receives `ResponseHandlerProps`.
+
 ## 1.0.0-beta.8
 
 * Updated TypeScript type to include `delimiter`.
@@ -26,4 +30,3 @@
 ## 1.0.0-beta.1
 
 * Getting close to where this should be ready for release, so switching to beta version.
-

@@ -1,7 +1,7 @@
-import { ResponseHandler, Response, Navigation } from "@curi/core";
+import { ResponseHandler, ResponseHandlerProps } from "@curi/core";
 
 function createScrollSideEffect(): ResponseHandler {
-  return function(response: Response, navigation: Navigation): void {
+  return function({ response, navigation }: ResponseHandlerProps): void {
     if (navigation.action === "POP") {
       return;
     }
