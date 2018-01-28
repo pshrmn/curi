@@ -1,3 +1,7 @@
+## Next
+
+* Add `initial` property to response handler options (default is `true`). When `false`, the response handler will not be called until a new response is emitted.
+
 ## 1.0.0-beta.24
 
 * Response handlers are provided a `Navigation` object instead of an `Action` string. The `Navigation` contains properties related to a navigation but that aren't directly associated with the new `Response`. These are `action` (the navigation type) and `previous` (the previous `Response`).
