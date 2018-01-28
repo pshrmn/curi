@@ -1,6 +1,6 @@
 ## Next
 
-* (Internal) Router's response handler receives `ResponseHandlerProps` object.
+* (Internal) Router's response handler receives `Emitted` object.
 
 ## 1.0.0-beta.19
 

@@ -2,9 +2,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { CuriContext } from "./interface";
-import { CuriRouter, ResponseHandlerProps, Response, Navigation } from "@curi/core";
+import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
 export interface CuriousProps {
-    render(p: ResponseHandlerProps): React.ReactElement<any>;
+    render(p: Emitted): React.ReactElement<any>;
     router?: CuriRouter;
     responsive?: boolean;
 }

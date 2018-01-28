@@ -1,6 +1,6 @@
 import "jest";
 import createScrollSideEffect from "../src";
-import { ResponseHandlerProps } from "@curi/core";
+import { Emitted } from "@curi/core";
 
 jest.useFakeTimers();
 
@@ -34,7 +34,7 @@ describe("createScrollSideEffect", () => {
         action: "POP",
         previous: {}
       }
-    } as ResponseHandlerProps);
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(0);
@@ -48,7 +48,7 @@ describe("createScrollSideEffect", () => {
         action: "PUSH",
         previous: {}
       }
-    } as ResponseHandlerProps);
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(1);
@@ -62,7 +62,7 @@ describe("createScrollSideEffect", () => {
         action: "REPLACE",
         previous: {}
       }
-    } as ResponseHandlerProps);
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(1);
@@ -80,7 +80,7 @@ describe("createScrollSideEffect", () => {
         action: "REPLACE",
         previous: {}
       }
-    } as ResponseHandlerProps);
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(0);
@@ -97,7 +97,7 @@ describe("createScrollSideEffect", () => {
         action: "REPLACE",
         previous: {}
       }
-    } as ResponseHandlerProps);
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(1);
@@ -112,7 +112,7 @@ describe("createScrollSideEffect", () => {
         action: "REPLACE",
         previous: {}
       }
-    } as ResponseHandlerProps);
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(1);

@@ -1,11 +1,11 @@
 import "jest";
 import createTitleSideEffect from "../src";
-import { ResponseHandlerProps } from "@curi/core";
+import { Emitted } from "@curi/core";
 
 describe("createTitleSideEffect", () => {
   const fakeResponse = {
     response: { title: "Test Title; Please Ignore" }
-  } as ResponseHandlerProps;
+  } as Emitted;
 
   it("returned function sets document.title using response.title", () => {
     const sideEffect = createTitleSideEffect();
@@ -15,7 +15,7 @@ describe("createTitleSideEffect", () => {
 
   it("sets document.title to empty string if response has no title", () => {
     const sideEffect = createTitleSideEffect();
-    const fakeResponse = { response: {} } as ResponseHandlerProps;
+    const fakeResponse = { response: {} } as Emitted;
     const queryResponse = sideEffect(fakeResponse);
     expect(document.title).toBe("");
   });

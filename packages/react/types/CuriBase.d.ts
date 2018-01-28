@@ -1,9 +1,9 @@
 /// <reference types="react" />
 import React from "react";
 import PropTypes from "prop-types";
-import { CuriRouter, ResponseHandlerProps, Response, Navigation } from "@curi/core";
+import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
 import { CuriContext } from "./interface";
-export declare type CuriRenderFn = (props: ResponseHandlerProps) => React.ReactElement<any>;
+export declare type CuriRenderFn = (props: Emitted) => React.ReactElement<any>;
 export interface CuriBaseProps {
     router: CuriRouter;
     render: CuriRenderFn;

@@ -1,6 +1,6 @@
 ## Next
 
-* (Internal) Response handler receives `ResponseHandlerProps` object.
+* (Internal) Response handler receives `Emitted` object.
 
 ## 1.0.0-alpha.1
 

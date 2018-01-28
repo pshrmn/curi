@@ -1,9 +1,4 @@
-import {
-  CuriRouter,
-  ResponseHandlerProps,
-  Response,
-  Navigation
-} from "@curi/core";
+import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
 import { Store, Action } from "redux";
 
 export const LOCATION_CHANGE = "@@curi/LOCATION_CHANGE";
@@ -55,7 +50,7 @@ export const syncResponses = (store: Store<any>, router: CuriRouter): void => {
     router
   });
 
-  router.respond(({ response, navigation }: ResponseHandlerProps) => {
+  router.respond(({ response, navigation }: Emitted) => {
     store.dispatch({
       type: LOCATION_CHANGE,
       response,

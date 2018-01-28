@@ -1,6 +1,6 @@
 ## Next
 
-* Pass a `ResponseHandlerProps` object to response handlers. This object has `response`, `navigation`, and `router` properties.
+* Pass a `Emitted` object to response handlers. This object has `response`, `navigation`, and `router` properties.
 
 ## 1.0.0-beta.25
 

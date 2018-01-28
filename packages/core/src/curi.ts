@@ -19,7 +19,7 @@ import {
   RouterOptions,
   SideEffect,
   ResponseHandler,
-  ResponseHandlerProps,
+  Emitted,
   RespondOptions,
   RemoveResponseHandler,
   Cache,
@@ -109,25 +109,25 @@ function createRouter(
   }
 
   function emit(response: Response, navigation: Navigation): void {
-    const handlerProps: ResponseHandlerProps = { response, navigation, router };
+    const resp: Emitted = { response, navigation, router };
     beforeSideEffects.forEach(fn => {
-      fn(handlerProps);
+      fn(resp);
     });
 
     responseHandlers.forEach(fn => {
       if (fn != null) {
-        fn(handlerProps);
+        fn(resp);
       }
     });
     // calling one time responseHandlers after regular responseHandlers
     // ensures that those are called prior to the one time fns
     while (oneTimers.length) {
       const fn = oneTimers.pop();
-      fn(handlerProps);
+      fn(resp);
     }
 
     afterSideEffects.forEach(fn => {
-      fn(handlerProps);
+      fn(resp);
     });
   }
 

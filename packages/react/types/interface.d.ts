@@ -1,4 +1,4 @@
-import { ResponseHandlerProps } from "@curi/core";
+import { Emitted } from "@curi/core";
 export interface CuriContext {
-    curi: ResponseHandlerProps;
+    curi: Emitted;
 }

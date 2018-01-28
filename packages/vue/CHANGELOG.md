@@ -1,6 +1,6 @@
 ## Next
 
-* (Internal) `CuriPlugin`'s response handler receives `ResponseHandlerProps`.
+* (Internal) `CuriPlugin`'s response handler receives `Emitted`.
 
 ## 1.0.0-beta.15
 

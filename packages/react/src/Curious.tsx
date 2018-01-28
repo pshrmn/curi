@@ -2,16 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import warning from "warning";
 
-import { CuriContext } from "./interface";
-import {
-  CuriRouter,
-  ResponseHandlerProps,
-  Response,
-  Navigation
-} from "@curi/core";
+import { CuriProps, CuriContext } from "./interface";
+import { CuriRouter, Response, Navigation } from "@curi/core";
 
 export interface CuriousProps {
-  render(p: ResponseHandlerProps): React.ReactElement<any>;
+  render(p: CuriProps): React.ReactElement<any>;
   router?: CuriRouter;
   responsive?: boolean;
 }
@@ -60,7 +55,7 @@ export default class Curious extends React.Component<
     if (this.props.responsive || this.props.router) {
       const router = this.props.router || this.context.curi.router;
       this.stopResponding = router.respond(
-        ({ response, navigation }: ResponseHandlerProps) => {
+        ({ response, navigation }: Emitted) => {
           this.setState({ response, navigation });
         },
         { initial: false }

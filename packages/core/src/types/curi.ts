@@ -10,13 +10,13 @@ export interface Navigation {
   previous: Response;
 }
 
-export interface ResponseHandlerProps {
+export interface Emitted {
   response: Response;
   navigation: Navigation;
   router: CuriRouter;
 }
 
-export type ResponseHandler = (props?: ResponseHandlerProps) => void;
+export type ResponseHandler = (props?: Emitted) => void;
 
 export interface RespondOptions {
   once?: boolean;

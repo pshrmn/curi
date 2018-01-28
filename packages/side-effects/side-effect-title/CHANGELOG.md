@@ -1,6 +1,6 @@
 ## Next
 
-* Side effect receives `ResponseHandlerProps`.
+* Side effect receives `Emitted`.
 
 ## 1.0.0-beta.8
 
