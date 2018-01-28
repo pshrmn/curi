@@ -32,7 +32,7 @@ const root = document.getElementById('root');
 
 // setup a subscriber that will update the store when
 // the location changes.
-router.respond((response, navigation) => {
+router.respond(({ response, navigation }) => {
   store.set({ curi: { response, navigation } });
 });
 

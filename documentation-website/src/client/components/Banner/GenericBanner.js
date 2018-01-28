@@ -21,7 +21,7 @@ const router = curi(history, routes);
 
 // subscribe to the router object with a function
 // that will be called whenever the location changes
-router.respond((response, navigation) => {
+router.respond(() => {
   // handle any rendering inside of this function
 });`}
   </PrismBlock>

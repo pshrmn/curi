@@ -94,14 +94,15 @@ const router = curi(history, routes);`}
         created.
       </p>
       <p>
-        What does a response handler function look like? It can take two
-        arguments. The first will be the <IJS>response</IJS> object generated
-        for the new location. The second is the <IJS>navigation</IJS> object,
-        which has properties related to the last navigation (the navigation's{" "}
-        <IJS>action</IJS> string and the <IJS>previous</IJS> response object).
+        What does a response handler function look like? It receives an object
+        with three properties: <IJS>response</IJS>, <IJS>navigation</IJS>, and{" "}
+        <IJS>router</IJS>. The <IJS>response</IJS> contains information about
+        the route that matched the new location, the <IJS>navigation</IJS>{" "}
+        contains navigation data that doesn't belong in a <IJS>response</IJS>,
+        and the <IJS>router</IJS> is your Curi router.
       </p>
       <PrismBlock lang="javascript">
-        {`function responseLogger(response, navigation) {
+        {`function responseLogger({ response, navigation }) {
   console.log("RESPONSE:", response);
   console.log("NAVIGATION", navigation)
 }
@@ -112,7 +113,7 @@ router.respond(responseLogger);`}
         responding to new responses.
       </p>
       <PrismBlock lang="javascript">
-        {`function responseLogger(response, navigation) {
+        {`function responseLogger() {
   console.log("I will be called for every response until I unsubscribe");
 }
 const stopResponding = router.respond(responseLogger);
@@ -122,17 +123,17 @@ stopResponding();
 // after unsubscribing, any new navigation will not be logged`}
       </PrismBlock>
       <p>
-        While most response handlers should be subscribers (that is to say, you
-        want them to be called every time a new response is generated), you
-        might sometimes want to only call a response handler once. For example,
-        a response handler might be a "ready" function that you only want called
-        once you know that a response exists. To do that, you can use the second
-        argument to <IJS>router.respond</IJS>, which is an options object. When
-        the <IJS>once</IJS> object is <IJS>true</IJS>, then that response
-        handler will only be called one time.
+        By default, response handlers are subscribers (that is to say, they will
+        be called every time a new response is generated). You might sometimes
+        want to only call a response handler once. For example, a response
+        handler might be a "ready" function that you only want called once you
+        know that an initial response exists. To do that, you can use the second
+        argument to <IJS>router.respond</IJS>, which is an <IJS>options</IJS>{" "}
+        object. When the <IJS>once</IJS> object is <IJS>true</IJS>, then that
+        response handler will only be called one time.
       </p>
       <PrismBlock lang="javascript">
-        {`function responseLogger(response, navigation) {
+        {`function responseLogger() {
   console.log("I will only be called once");
 }
 router.respond(responseLogger, { once: true });`}

@@ -38,10 +38,11 @@ export default ({ name, version, globalName }) => (
         <PrismBlock lang="jsx">
           {`const router = curi(history, routes);
 
-router.respond((response) => {
+router.respond(({ response, navigation }) => {
   ReactDOM.render((
     <CuriBase
       response={response}
+      navigation={navigation}
       router={router}
       render={({ response }) => {
         return response.body ? <response.body /> : null;

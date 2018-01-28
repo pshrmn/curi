@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 
 import Browser from '@hickory/browser';
 import curi from '@curi/core';
-import { CuriBase } from '@curi/react';
+import { ResponsiveBase } from '@curi/react';
 
 // create your history object
 const history = Browser();
@@ -26,10 +26,9 @@ const router = curi(history, routes);
 const root = document.getElementById('root');
 // subscribe to the router object with a function
 // that will be called whenever the location changes
-router.respond((response) => {
+router.respond(() => {
   ReactDOM.render((
-    <CuriBase
-      response={response}
+    <ResponsiveBase
       router={router}
       render={({ response }) => {
         return <response.body />;

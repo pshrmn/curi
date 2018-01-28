@@ -351,7 +351,7 @@ const router = create1router(history, routes);`}
         we should usually just wait for our initial response to be ready.
       </p>
       <PrismBlock lang="javascript">
-        {`router.respond((response, navigation) => {
+        {`router.respond(({ response, navigation }) => {
   // now our first response has resolved, so we
   // know that we will render with an actual response
 });`}
@@ -413,7 +413,7 @@ const router = create1router(history, routes);`}
           application.
         </p>
         <PrismBlock lang="jsx">
-          {`router.respond((response, navigation) => {
+          {`router.respond(({ response, navigation }) => {
   ReactDOM.render((
     <CuriBase
       response={response}

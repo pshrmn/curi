@@ -79,7 +79,7 @@ const store = new Store({
         response is emitted.
       </p>
       <PrismBlock lang="javascript">
-        {`router.respond((response, navigation) => {
+        {`router.respond(({ response, navigation }) => {
   store.set({ curi: { response, navigation } });
 });`}
       </PrismBlock>
