@@ -7,18 +7,10 @@ const SvelteBanner = () => (
 import curi from '@curi/core';
 import { Store } from 'svelte/store';
 
-// create your history object
 const history = Browser();
-
-// define your routes
-const routes = [
-  { name: 'Home', path: '', ... },
-  { name: 'User', path: 'u/:userID', ... },
-  ...
-];
-
-// create your Curi router
+const routes = [...];
 const router = curi(history, routes);
+const target = document.getElementById('root');
 
 // create a Svelte store so that components can access
 // the router, responses, and navigations
@@ -27,18 +19,15 @@ const store = new Store({
   curi: { response: undefined, navigation: undefined }
 });
 
-let view;
-const root = document.getElementById('root');
-
-// setup a subscriber that will update the store when
+// setup a response handler that will update the store when
 // the location changes.
 router.respond(({ response, navigation }) => {
   store.set({ curi: { response, navigation } });
 });
 
-// add a one time subscriber for the initial render
+// add a one time response handler for the initial render
 router.respond(() => {
-  view = new app({ target, store });
+  const view = new app({ target, store });
 }, { once: true });`}
   </PrismBlock>
 );

@@ -10,22 +10,13 @@ import Browser from '@hickory/browser';
 import curi from '@curi/core';
 import { ResponsiveBase } from '@curi/react';
 
-// create your history object
 const history = Browser();
-
-// define your routes
-const routes = [
-  { name: 'Home', path: '', ... },
-  { name: 'User', path: 'u/:userID', ... },
-  ...
-];
-
-// create your Curi router
+const routes = [...];
 const router = curi(history, routes);
 
 const root = document.getElementById('root');
-// subscribe to the router object with a function
-// that will be called whenever the location changes
+// add a one-time response handler to wait
+// for the initial response
 router.respond(() => {
   ReactDOM.render((
     <ResponsiveBase
@@ -35,7 +26,7 @@ router.respond(() => {
       }}
     />
   ), root);
-});`}
+}, { once: true });`}
   </PrismBlock>
 );
 

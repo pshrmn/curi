@@ -19,8 +19,8 @@ const routes = [
 // create your Curi router
 const router = curi(history, routes);
 
-// subscribe to the router object with a function
-// that will be called whenever the location changes
+// setup a response handler to be called when
+// responses are emitted
 router.respond(() => {
   // handle any rendering inside of this function
 });`}

@@ -10,24 +10,15 @@ import { CuriPlugin } from '@curi/vue';
 import curi from '@curi/core';
 import App from './components/App';
 
-// create your history object
 const history = Browser();
-
-// define your routes
-const routes = [
-  { name: 'Home', path: '', ... },
-  { name: 'User', path: 'u/:userID', ... },
-  ...
-];
-
-// create your Curi router
+const routes = [...];
 const router = curi(history, routes);
 
 // install the CuriPlugin on your Vue instance
 Vue.use(CuriPlugin, { router });
 
-// use the "once: true" option of router.respond
-// for the initial render
+// use a one-time response handler to wait for
+// the initial response
 router.respond(() => {
   const vm = new Vue({
     el: '#root',
