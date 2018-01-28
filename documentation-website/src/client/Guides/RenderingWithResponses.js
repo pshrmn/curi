@@ -158,63 +158,60 @@ export default ({ name }) => (
         JavaScript, a render function would manually update the DOM.
       </p>
 
-      <Subsection title="Rendering Redirects" id="rendering-redirects">
-        <p>
-          The first thing you should do in your render function is to check if
-          the response has a <IJS>redirectTo</IJS> property. If it does, then
-          you should redirect to the new location instead of rendering.
-        </p>
-        <p>
-          curi-react and curi-vue both provide components that will do this for
-          you, but you can also just use your history object to redirect. You
-          will want to use your history's replace function to redirect.
-        </p>
-        <PrismBlock lang="javascript">
-          {`function render({ response }) {
-  // assuming that your history object is in scope
-  if (response.redirectTo) {
-    history.replace(response.redirectTo)
-  }
-}`}
-        </PrismBlock>
-      </Subsection>
-
       <Subsection title="Rendering HTML" id="rendering-HTML">
         <p>
-          Once we have verified that we don't have to redirect, we are ready to
-          render the content using the response. There is still one thing to
-          verify: that our response actually has a body property. If none of
-          your routes match, then the response will not have a body property.
-          You can rememdy this by adding a wildcard route to the end of your
-          routes array, but this is not necessary. You can also just have a
-          default function that will be used when there is no body property.
+          We are now ready to render the content of our application using the{" "}
+          <IJS>response</IJS>. There is still one thing to verify: that our{" "}
+          <IJS>response</IJS> actually has a <IJS>body</IJS> property. If none
+          of your routes match, then the response will not have a{" "}
+          <IJS>body</IJS> property. You can provide a function that will be used
+          when there is no <IJS>body</IJS> property, but a better remedy is to
+          add a wildcard route to the end of your routes array
         </p>
         <PrismBlock lang="javascript">
-          {`// use a wildcard route
+          {`// a "not found" body function
+function render({ response }) {
+  //...
+  const body = response.body || function notFound() {...}
+  body(response.params);
+}
+
+// use a wildcard route
 const routes = [
   // ...,
   {
     name: 'Not Found',
-    path: '(.*)'
+    path: '(.*)',
+    match: {
+      response({ set }) {
+        set.body(NotFound);
+      }
+    }
   }
-];
-
-// or have a default body function
-function render({ response }) {
-  //...
-  const body = response.body || function defaultBody() {...}
-  body(response.params);
-}`}
+];`}
         </PrismBlock>
 
         <p>
           Now that we have our body function, we just need to call it. The exact
           behavior will vary based on how you are rendering your application.
-          For a React application, we would just pass the body function to
-          React's <IJS>createElement</IJS> function (or use JSX). For vanilla
-          JavaScript, our body function probably returns an HTML string, so we
-          would assign the returned value to the DOM node that holds our
-          application.
+        </p>
+        <p>
+          For a React application, we would just return JSX (or use React's{" "}
+          <IJS>createElement</IJS> function).
+        </p>
+
+        <PrismBlock lang="javascript">
+          {`function render({ response }) {
+  const Body = response.body;
+  return <Body response={response} />
+  // return React.createElement(Body, { response });
+}`}
+        </PrismBlock>
+
+        <p>
+          For vanilla JavaScript, our body function probably returns an HTML
+          string, so we would assign the returned value to the DOM node that
+          holds our application.
         </p>
 
         <PrismBlock lang="javascript">
@@ -223,15 +220,7 @@ const root = document.getElementById('root');
 
 function render({ response }) {
   // call the body function to return content
-  root.innerHTML = response.body(response.params, response.data);
-}
-
-// react
-function render({ response }) {
-  // This function should be a property of the <CuriBase> and
-  // it should return a React element
-  const Body = response.body || defaultBody;
-  return React.createElement(Body, { params: response.params });
+  root.innerHTML = response.body(response);
 }`}
         </PrismBlock>
       </Subsection>

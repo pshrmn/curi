@@ -55,11 +55,12 @@ const BookList = ({ response }) => (
 );`}
       </PrismBlock>
       <Note>
-        If our <IJS>render</IJS> function (passed to the <Cmp>CuriBase</Cmp>)
-        had just passed the <IJS>params</IJS> instead of the whole{" "}
-        <IJS>response</IJS>, we would have to modify that function to also pass
-        along the <IJS>data</IJS>. Since we pass the entire <IJS>response</IJS>,
-        we do not have to worry about updating that function.
+        If our <IJS>render</IJS> function (passed to the{" "}
+        <Cmp>ResponsiveBase</Cmp>) had just passed the <IJS>params</IJS> instead
+        of the whole <IJS>response</IJS>, we would have to modify that function
+        to also pass along the <IJS>data</IJS>. Since we pass the entire{" "}
+        <IJS>response</IJS>, we do not have to worry about updating that
+        function.
       </Note>
     </Section>
     <Section title="Using Data with the Book" id="book">

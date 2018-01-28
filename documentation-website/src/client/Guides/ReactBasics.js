@@ -23,57 +23,46 @@ export default ({ name }) => (
         <IJS>@curi/react</IJS>
       </Link>{" "}
       package. To get started, there are only two components that you need to be
-      aware of: <Cmp>CuriBase</Cmp> and <Cmp>Link</Cmp>.
+      aware of: <Cmp>ResponsiveBase</Cmp> and <Cmp>Link</Cmp>.
     </p>
 
-    <Section title={<Cmp>CuriBase</Cmp>} id="CuriBase">
+    <Section title={<Cmp>ResponsiveBase</Cmp>} id="ResponsiveBase">
       <p>
         In order for other components to access router-related variables, we
         need to make them available through React's <IJS>context</IJS>. The{" "}
         <Link
           to="Package"
           params={{ package: "react" }}
-          details={{ hash: "CuriBase" }}
+          details={{ hash: "ResponsiveBase" }}
         >
-          <Cmp>CuriBase</Cmp>
+          <Cmp>ResponsiveBase</Cmp>
         </Link>{" "}
-        component is responsible for doing this. You pass it a <IJS>router</IJS>,
-        a <IJS>response</IJS> object, and a <IJS>navigation</IJS> object and
-        then other components in your application will be able to easily access
-        them.
+        component is responsible for doing this. You pass it two props: a Curi{" "}
+        <IJS>router</IJS> and a <IJS>render</IJS> function. The{" "}
+        <IJS>router</IJS> will listen for new responses to be emitted and call
+        the <IJS>render</IJS> function to re-render your application.
       </p>
 
       <PrismBlock lang="jsx">
-        {`import { CuriBase } from '@curi/react';
+        {`import { ResponsiveBase } from '@curi/react';
 
-<CuriBase
-  router={router}
-  response={response}
-  navigation={navigation}
-  render={render}
-/>`}
+<ResponsiveBase router={router} render={render} />`}
       </PrismBlock>
 
       <Subsection title="The render prop" id="render-prop">
         <p>
-          The <Cmp>CuriBase</Cmp> also expects a <IJS>render</IJS> prop, which
-          is a function that will be called every time the <Cmp>CuriBase</Cmp>{" "}
-          is re-rendered. The <IJS>render</IJS> function should return the React
-          elements that make up your application.
+          The <IJS>render</IJS> prop is a function that will be called every
+          time the <Cmp>ResponsiveBase</Cmp> is rendered. The <IJS>render</IJS>{" "}
+          function should return the React elements that make up your
+          application.
         </p>
         <p>
-          The render function receives an object with three properties to help
-          you render your application: <IJS>response</IJS>,{" "}
+          The <IJS>render</IJS> function receives an object with three
+          properties to help you render your application: <IJS>response</IJS>,{" "}
           <IJS>navigation</IJS>, and <IJS>router</IJS>. The <IJS>response</IJS>{" "}
           object is the most important of these, while the others may
           occasionally be useful or you may never use them.
         </p>
-
-        <Note>
-          The <Cmp>CuriBase</Cmp> does <strong>not</strong> automatically update
-          when new responses are emitted. There are a couple of strategies for
-          re-rendering new responses that will be covered later.
-        </Note>
 
         <p>
           In our routes, we can attach a <IJS>body</IJS> property to response
@@ -111,11 +100,26 @@ const routes = [
 
         <p>
           When no routes match, the body property of a response is{" "}
-          <IJS>undefined</IJS>. To deal with this, you should either render some
-          sort of 404/page not found component or add a catch all route (a route
-          whose path is <IJS>"(.*)"</IJS>) so that you can expect to always have
-          a <IJS>body</IJS> property on the response.
+          <IJS>undefined</IJS>. The best way to deal with this is with a catch
+          all route.
         </p>
+
+        <PrismBlock lang="javascript">
+          {`import NotFound from './components/NotFound';
+
+const routes = [
+  // ...,
+  {
+    name: 'Not Found',
+    path: '(.*)' // this path matches EVERY pathname
+    match: {
+      response({ set }) {
+        set.body(NotFound);
+      }
+    }
+  }
+];`}
+        </PrismBlock>
 
         <p>
           Finally, you can pass any props that you want to the <Cmp>Body</Cmp>{" "}
@@ -129,104 +133,19 @@ const routes = [
           >
             Rendering with Responses
           </Link>{" "}
-          guide. The other ones that you will most likely be interested in are
-          <IJS>params</IJS> and <IJS>data</IJS>.
+          guide.
         </p>
 
         <PrismBlock lang="javascript">
           {`function render({ response }) {
-  const { body:Body, params, data } = response;
+  const { body:Body } = response;
   return <Body response={response} />;
 }`}
         </PrismBlock>
       </Subsection>
-
-      <Subsection title="Re-rendering" id="re-rendering">
-        <p>
-          As noted above, the <Cmp>CuriBase</Cmp> does not automatically update
-          when a new response is emitted. Here are a few strategies for
-          re-rendering your application when a new response is emitted.
-        </p>
-        <Subsection tag="h4" title="Use the router" id="use-the-router">
-          <p>
-            The easiest solution is to just use <IJS>router.respond</IJS> to
-            re-call <IJS>ReactDOM.render</IJS>.
-          </p>
-          <PrismBlock lang="jsx">
-            {`router.respond(({ response, navigation }) => {
-  ReactDOM.render((
-    <CuriBase
-      router={router}
-      response={response}
-      navigation={navigation}
-      render={render}
-    />
-  ), holder);
-});`}
-          </PrismBlock>
-        </Subsection>
-        <Subsection tag="h4" title={<Cmp>Curious</Cmp>} id="use-curious">
-          <p>
-            If you prefer not to call <IJS>ReactDOM.render</IJS> multiple times,
-            you can use the <Cmp>Curious</Cmp> component to listen for new
-            responses and re-render when the are emitted.
-          </p>
-          <PrismBlock lang="jsx">
-            {`import { CuriBase, Curious } from '@curi/react';
-
-// the props passed to <Curious>'s render function
-// is an object with router, response, and navigation properties
-<Curious
-  router={router}
-  render={props => <CuriBase {...props} render={render} />}
-/>`}
-          </PrismBlock>
-        </Subsection>
-        <Subsection tag="h4" title="Use the stores" id="use-stores">
-          <p>
-            If you are using either a Redux or MobX store and are connecting
-            them to your router (using the respective <IJS>@curi/redux</IJS> and{" "}
-            <IJS>@curi/mobx</IJS> packages), then you can just use the
-            higher-order components from those stores to inject the props into
-            the <Cmp>CuriBase</Cmp>.
-          </p>
-          <PrismBlock lang="jsx">
-            {`import { CuriBase } from '@curi/react';
-
-// redux
-import { connect } from 'react-redux';
-const CuriReduxBase = connect(
-  ({ curi }) => ({
-    router: curi.router,
-    response: curi.response,
-    navigation: curi.navigation
-  })
-)(CuriBase);
-// usage with <Provider> from react-redux
-<Provider store={store}>
-  <CuriReduxBase render={render} />
-</Provider>
-
-// mobx
-const CuriMobXBase = inject(
-  ({ curi }) => ({
-    router: curi.router,
-    response: curi.response,
-    navigation: curi.navigation
-  })
-)(observer(CuriBase));
-// usage with <Provider> from mobx-react
-<Provider curi={curiStore}>
-  <CuriMobXBase render={render} />
-</Provider>`}
-          </PrismBlock>
-        </Subsection>
-      </Subsection>
     </Section>
 
     <Section title={<Cmp>Link</Cmp>} id="link">
-      <PrismBlock lang="bash">{`npm install @curi/react`}</PrismBlock>
-
       <p>
         A single page application isn't very useful if you cannot navigate
         between locations. The{" "}

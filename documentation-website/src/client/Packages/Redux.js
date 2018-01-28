@@ -67,5 +67,29 @@ const { curi } = store.getState();
         </PrismBlock>
       </Section>
     </APIBlock>
+    <Section title="Usage" id="usage">
+      <p>
+        Instead of using the <Cmp>ResponsiveBase</Cmp> or <Cmp>CuriBase</Cmp>,
+        you should wrap the <Cmp>CuriBase</Cmp> in a <IJS>connect</IJS>{" "}
+        higher-order component so that Redux can re-render your application when
+        your store receives a new <IJS>response</IJS>.
+      </p>
+      <PrismBlock lang="jsx">
+        {`import { CuriBase } from '@curi/react';
+import { connect } form 'react-redux';
+
+const ConnectedBase = connect(
+  ({ curi }) => ({
+    router: curi.router,
+    response: curi.response,
+    navigation: curi.navigation
+  })
+)(CuriBase);
+
+ReactDOM.render((
+  <ConnectedBase render={render} />
+), holder);`}
+      </PrismBlock>
+    </Section>
   </BasePackage>
 );

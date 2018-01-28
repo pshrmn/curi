@@ -338,7 +338,7 @@ ReactDOM.render((
 import Browser from '@hickory/browser';
 const history = Browser();
 const routes = [...];
-const router = create1router(history, routes);`}
+const router = curi(history, routes);`}
       </PrismBlock>
     </Section>
 
@@ -351,7 +351,7 @@ const router = create1router(history, routes);`}
         we should usually just wait for our initial response to be ready.
       </p>
       <PrismBlock lang="javascript">
-        {`router.respond(({ response, navigation }) => {
+        {`router.respond(({ response }) => {
   // now our first response has resolved, so we
   // know that we will render with an actual response
 });`}
@@ -365,12 +365,14 @@ const router = create1router(history, routes);`}
         <p>
           React Router uses the <Cmp>Router</Cmp> component to subscribe to
           location changes. Each time that the location changes, it walks over
-          its routes and determines which route(s!) match. React Router starts
-          by rendering the root component. In the above router, that is the{" "}
-          <Cmp>App</Cmp>. Next, our <IJS>inbox</IJS> route also matches, so
-          React Router also renders our <Cmp>Inbox</Cmp> component. Finally, the
-          URI <IJS>/inbox/test-message-please-ignore</IJS> also matches our <IJS
-          >
+          its routes and determines which route(s!) match.
+        </p>
+        <p>
+          React Router starts by rendering the root component. In the above
+          router, that is the <Cmp>App</Cmp>. Next, our <IJS>inbox</IJS> route
+          also matches, so React Router also renders our <Cmp>Inbox</Cmp>{" "}
+          component. Finally, the URI{" "}
+          <IJS>/inbox/test-message-please-ignore</IJS> also matches our <IJS>
             :message
           </IJS>{" "}
           route (which is concatenated with its parents to form the path{" "}
@@ -399,37 +401,41 @@ const router = create1router(history, routes);`}
       </Subsection>
       <Subsection title="Curi" id="rendering-with-curi">
         <p>
-          With Curi, we need to re-render our application every time that the
-          location changes. We will do this by combining the <IJS>respond</IJS>{" "}
-          function from our router object and the <Cmp>CuriBase</Cmp> component,
-          which comes from the <IJS>@curi/react</IJS> package. The response
-          handler passed to <IJS>router.respond</IJS> will be called every time
-          the location changes, so we can re-render inside of that. The{" "}
-          <Cmp>CuriBase</Cmp> places the new <IJS>response</IJS> and{" "}
-          <IJS>navigation</IJS> (alongside the <IJS>router</IJS> object) on
-          React's <IJS>context</IJS>, so child components will be able to
-          automatically access those values. It also expects a <IJS>render</IJS>{" "}
-          prop, which is a render function it will call to render the
-          application.
+          With Curi, we also need to re-render our application every time that
+          the location changes. We will do this using the{" "}
+          <Cmp>ResponsiveBase</Cmp> component, which comes from the{" "}
+          <IJS>@curi/react</IJS> package.
+        </p>
+        <p>
+          The <Cmp>ResponsiveBase</Cmp> takes a <IJS>router</IJS> prop, which it
+          will use to listen for the router to emit new responses (by internally
+          calling <IJS>router.respond</IJS>) The <Cmp>ResponsiveBase</Cmp>{" "}
+          places the new <IJS>response</IJS> and <IJS>navigation</IJS>{" "}
+          (alongside the <IJS>router</IJS> object) on React's <IJS>context</IJS>{" "}
+          so that child components will be able to access those values.{" "}
+          <Cmp>ResponsiveBase</Cmp> also expects a <IJS>render</IJS> prop, which
+          is a function that actually renders your application.
+        </p>
+        <p>
+          We will also use <IJS>router.respond</IJS> so that the application is
+          not rendered until the initial response has been emitted. The{" "}
+          <IJS>once</IJS> option is provided because we only need this callback
+          function to be called the first time a <IJS>response</IJS> is emitted.
         </p>
         <PrismBlock lang="jsx">
-          {`router.respond(({ response, navigation }) => {
+          {`router.respond(() => {
   ReactDOM.render((
-    <CuriBase
-      response={response}
-      navigation={navigation}
-      router={router}
-      render={({ response }) => { return ...; }}
-    />
+    <ResponsiveBase router={router} render={render} />
   ), holder);
-});`}
+}, { once: true });`}
         </PrismBlock>
         <p>
           So what should your render function look like? The render function
-          will receive two arguments: <IJS>response</IJS>, the new response
-          object, and <IJS>router</IJS>, our Curi router. We will ignore router
-          here because the response is what we really want, the router is just
-          there for convenience.
+          will receive an object with three properties: <IJS>response</IJS>, the
+          new response object, <IJS>navigation</IJS>, an object with additional
+          information about the navigation, and <IJS>router</IJS>, your Curi
+          router. We will ignore the <IJS>navigation</IJS> and <IJS>router</IJS>{" "}
+          here because the <IJS>response</IJS> is what we really want.
         </p>
         <p>
           Earlier, we added <IJS>body</IJS> properties to each of the routes and
@@ -448,32 +454,38 @@ const router = create1router(history, routes);`}
           That isn’t perfect because it doesn’t consider what happens when there
           is no body (which happens if none of the routes match the location or
           you don't set it in a route's <IJS>match.response</IJS> function).
-          Wildcard routes (<IJS>(.*)</IJS>) can be useful here or you can just
-          return something else when there is no <IJS>response.body</IJS>{" "}
-          property.
+        </p>
+        <Note>
+          Wildcard routes (<IJS>{`{ path: '(.*)' }`}</IJS>) can be used to
+          easily display a not found page for any location not matched by other
+          routes.
+        </Note>
+        <p>
+          Let’s get back to our <IJS>response</IJS> object. In the React Router
+          section, we had three components that were rendered: <Cmp>App</Cmp>,
+          <Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>. With Curi, only the most
+          accurately matched route actually matches. That means that for the URI{" "}
+          <IJS>/inbox/test-message-please-ignore</IJS>, the <IJS>"Message"</IJS>{" "}
+          route will match, but its parent route, <IJS>"Inbox"</IJS> will not.
+          The <IJS>response.body</IJS> will be the <Cmp>Message</Cmp> component,
+          so that is what our <IJS>render</IJS> function will render. We don’t
+          render <Cmp>Inbox</Cmp> because we did not match the <IJS>inbox</IJS>{" "}
+          route.
         </p>
         <p>
-          Let’s get back to our response object. In the React Router section, we
-          had three components that were rendered: <Cmp>App</Cmp>,
-          <Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>. With Curi, only the best
-          matched route matches. That means that for the URI{" "}
-          <IJS>/inbox/test-message-please-ignore</IJS>,our{" "}
-          <IJS>response.body</IJS> will be the <Cmp>Message</Cmp> component. We
-          don’t render <Cmp>Inbox</Cmp> because we did not match the{" "}
-          <IJS>inbox</IJS> route.
-        </p>
-        <p>
-          We also said above that there was no need for the <Cmp>App</Cmp>{" "}
+          It was mentioned above that there is no need for the <Cmp>App</Cmp>{" "}
           component with Curi. If you want to have an <Cmp>App</Cmp> component,
-          you can render it either inside of the render function or as a parent
-          of your <Cmp>CuriBase</Cmp>. This can be useful for rendering content
-          that is unrelated to specific routes, like a page header or menu.
+          you can render it either inside of the <IJS>render</IJS> function or
+          as a parent of your <Cmp>ResponsiveBase</Cmp>. This can be useful for
+          rendering content that is unrelated to specific routes, like a page
+          header or menu.
         </p>
         <p>
           Rendering the <Cmp>App</Cmp> inside of the render function is
           necessary if any of the components rendered by the <Cmp>App</Cmp> are
           location aware components, since they need to access the Curi router
-          (through React’s context, which the <Cmp>CuriBase</Cmp> provides)
+          (through React’s context, which the <Cmp>ResponsiveBase</Cmp>{" "}
+          provides)
         </p>
         <PrismBlock lang="jsx">
           {`function render({ response }) {

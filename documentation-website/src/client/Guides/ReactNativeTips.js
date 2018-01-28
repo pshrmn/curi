@@ -60,31 +60,33 @@ BackHandler.addEventListener("hardwareBackPress", () => {
       <Subsection title="Base" id="components-base">
         <p>
           With React Native, components need to setup any subscribers
-          themselves. That means that we have to make the <Cmp>CuriBase</Cmp>{" "}
-          reactive. There are a couple of different approaches to accomplishing
-          this.
+          themselves. There are a couple of different approaches to
+          accomplishing this.
+        </p>
+        <p>
+          The important thing to know here is that Curi needs to place some
+          variables on React's <IJS>context</IJS> so that nested components can
+          easily access them. It does this using a <Cmp>CuriBase</Cmp>{" "}
+          component.
         </p>
         <Subsection
           tag="h4"
-          title={<Cmp>Curious</Cmp>}
-          id="components-base-curious"
+          title={<Cmp>ResponsiveBase</Cmp>}
+          id="components-base-responsivebase"
         >
           <p>
-            The "vanilla" way to make <Cmp>CuriBase</Cmp> reactive is to wrap it
-            in a <Cmp>Curious</Cmp> component and use that component's{" "}
-            <IJS>render</IJS> function to render the <Cmp>CuriBase</Cmp>.
+            <IJS>@curi/react</IJS> provides a <Cmp>ResponsiveBase</Cmp>{" "}
+            component that will listen for new responses and re-render your
+            application. It renders a <Cmp>CuriBase</Cmp> internally.
           </p>
           <PrismBlock lang="jsx">
-            {`import { Curious, CuriBase } from '@curi/react-native';
+            {`import { ResponsiveBase } from '@curi/react-native';
 
 import router from './router';
 import render from './render';
 
 const App = () => (
-  <Curious
-    router={router}
-    render={props => <CuriBase {...props} render={render} />
-  />
+  <ResponsiveBase router={router} render={render} />
 );`}
           </PrismBlock>
         </Subsection>
@@ -94,9 +96,10 @@ const App = () => (
             <Link to="Package" params={{ package: "redux" }}>
               <IJS>@curi/redux</IJS>
             </Link>{" "}
-            package to add Curi data to your store and just wrap{" "}
-            <Cmp>CuriBase</Cmp> in <IJS>connect</IJS> to inject the relevant
-            props.
+            package to add Curi data to your store and automatically update your
+            store when new responses are emitted. You can then wrap a{" "}
+            <Cmp>CuriBase</Cmp> in <IJS>connect</IJS> to re-render your
+            application when new responses are added to the store.
           </p>
           <PrismBlock lang="javascript">
             {`import { syncResponses, curiReducer } from '@curi/redux';
@@ -127,7 +130,8 @@ const ConnectedBase = connect(
               <IJS>@curi/mobx</IJS>
             </Link>{" "}
             package combined with the <Cmp>Provider</Cmp>, <IJS>inject</IJS>,
-            and <IJS>observer</IJS> from <IJS>mobx-react</IJS> makes
+            and <IJS>observer</IJS> from <IJS>mobx-react</IJS> can be used to
+            sync Curi and MobX.
           </p>
           <PrismBlock lang="jsx">
             {`import { CuriStore } from '@curi/mobx';
@@ -139,7 +143,7 @@ import render from './render';
 
 const curiStore = CuriStore(router);
 
-const ResponsiveBase = inject(({ curi }) => ({
+const ConnectedBase = inject(({ curi }) => ({
   router: curi.router,
   response: curi.response,
   navigation: curi.navigation
@@ -147,7 +151,7 @@ const ResponsiveBase = inject(({ curi }) => ({
 
 const App = () => (
   <Provider curi={curiStore}>
-    <ResponsiveBase render={render} />
+    <ConnectedBase render={render} />
   </Provider>
 );`}
           </PrismBlock>
