@@ -2,7 +2,7 @@ export { ActiveProps } from "./Active";
 export { BlockProps } from "./Block";
 export { CuriBaseProps } from "./CuriBase";
 export { CuriousProps } from "./Curious";
-export { CuriContext } from "./interface";
+export { CuriContext, CuriRenderFn } from "./interface";
 export { LinkProps, LinkState, ActiveLink } from "./Link";
 export { ResponsiveProps } from "./ResponsiveBase";
 import Active from "./Active";

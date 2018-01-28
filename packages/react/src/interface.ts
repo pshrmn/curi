@@ -1,7 +1,8 @@
+import React from "react";
 import { Emitted } from "@curi/core";
 
-export type CuriProps = Emitted;
-
 export interface CuriContext {
-  curi: CuriProps;
+  curi: Emitted;
 }
+
+export type CuriRenderFn = (props: Emitted) => React.ReactElement<any>;

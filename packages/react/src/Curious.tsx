@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import warning from "warning";
 
-import { CuriProps, CuriContext } from "./interface";
-import { CuriRouter, Response, Navigation } from "@curi/core";
+import { CuriRenderFn, CuriContext } from "./interface";
+import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
 
 export interface CuriousProps {
-  render(p: CuriProps): React.ReactElement<any>;
+  render: CuriRenderFn;
   router?: CuriRouter;
   responsive?: boolean;
 }
