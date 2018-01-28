@@ -148,7 +148,7 @@ import { CuriBase } from '@curi/react';
 
 // ...
 
-router.respond((response, navigation) => {
+router.respond(({ response, navigation }) => {
   ReactDOM.render((
     <CuriBase
       router={router}
@@ -454,7 +454,7 @@ export default function({ response }) {
 import renderFunction from './render';
 
 let root = document.getElementById('root');
-router.respond((response, navigation) => {
+router.respond(({ response, navigation }) => {
   ReactDOM.render((
     <CuriBase
       router={router}

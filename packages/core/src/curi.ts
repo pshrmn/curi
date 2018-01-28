@@ -19,6 +19,7 @@ import {
   RouterOptions,
   SideEffect,
   ResponseHandler,
+  Emitted,
   RespondOptions,
   RemoveResponseHandler,
   Cache,
@@ -91,13 +92,13 @@ function createRouter(
 
     if (once) {
       if (mostRecent.response && initial) {
-        fn.call(null, mostRecent.response, mostRecent.navigation, curi);
+        fn.call(null, { ...mostRecent, router });
       } else {
         oneTimers.push(fn);
       }
     } else {
       if (mostRecent.response && initial) {
-        fn.call(null, mostRecent.response, mostRecent.navigation, curi);
+        fn.call(null, { ...mostRecent, router });
       }
 
       const newLength = responseHandlers.push(fn);
@@ -108,24 +109,25 @@ function createRouter(
   }
 
   function emit(response: Response, navigation: Navigation): void {
+    const resp: Emitted = { response, navigation, router };
     beforeSideEffects.forEach(fn => {
-      fn(response, navigation, curi);
+      fn(resp);
     });
 
     responseHandlers.forEach(fn => {
       if (fn != null) {
-        fn(response, navigation, curi);
+        fn(resp);
       }
     });
     // calling one time responseHandlers after regular responseHandlers
     // ensures that those are called prior to the one time fns
     while (oneTimers.length) {
       const fn = oneTimers.pop();
-      fn(response, navigation, curi);
+      fn(resp);
     }
 
     afterSideEffects.forEach(fn => {
-      fn(response, navigation, curi);
+      fn(resp);
     });
   }
 
@@ -181,7 +183,7 @@ function createRouter(
   setupRoutesAndAddons(routeArray);
   history.respondWith(navigationHandler);
 
-  const curi: CuriRouter = {
+  const router: CuriRouter = {
     addons: registeredAddons,
     history,
     respond,
@@ -194,7 +196,7 @@ function createRouter(
     }
   };
 
-  return curi;
+  return router;
 }
 
 export default createRouter;

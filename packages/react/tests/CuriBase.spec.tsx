@@ -58,7 +58,7 @@ describe("<CuriBase>", () => {
         "data",
         "title"
       ];
-      router.respond((response, navigation) => {
+      router.respond(({ response, navigation }) => {
         const wrapper = shallow(
           <CuriBase
             response={response}

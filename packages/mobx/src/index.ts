@@ -1,6 +1,6 @@
 import { observable, action as mobxAction } from "mobx";
 
-import { CuriRouter, Response, Navigation } from "@curi/core";
+import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
 
 export default class CuriStore {
   router: CuriRouter;
@@ -12,7 +12,7 @@ export default class CuriStore {
     this.response = null;
     this.navigation = null;
 
-    router.respond((response: Response, navigation: Navigation) => {
+    router.respond(({ response, navigation }: Emitted) => {
       this.update(response, navigation);
     });
   }

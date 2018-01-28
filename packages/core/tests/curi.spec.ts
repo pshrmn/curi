@@ -174,12 +174,10 @@ describe("curi", () => {
           const router = curi(history, routes, {
             sideEffects: [{ fn: sideEffect }]
           });
-          router.respond(response => {
+          router.respond(({ response, navigation }) => {
             expect(sideEffect.mock.calls.length).toBe(1);
-            expect(sideEffect.mock.calls[0][0]).toBe(response);
-            expect(sideEffect.mock.calls[0][1]).toMatchObject({
-              action: "PUSH"
-            });
+            expect(sideEffect.mock.calls[0][0].response).toBe(response);
+            expect(sideEffect.mock.calls[0][0].navigation).toBe(navigation);
             done();
           });
         });
@@ -198,7 +196,7 @@ describe("curi", () => {
           });
 
           expect.assertions(2);
-          router.respond(response => {
+          router.respond(({ response }) => {
             expect(sideEffect1.mock.calls.length).toBe(1);
             expect(sideEffect2.mock.calls.length).toBe(1);
             done();
@@ -222,7 +220,7 @@ describe("curi", () => {
         it("passes response, navigation, and router object to side effect", done => {
           const routes = [{ name: "All", path: ":all*" }];
           const responseHandler = jest.fn();
-          const sideEffect = function(response, navigation, router) {
+          const sideEffect = function({ response, navigation, router }) {
             expect(response).toMatchObject({
               name: "All",
               location: { pathname: "/" }
@@ -287,7 +285,7 @@ describe("curi", () => {
             }
           ];
 
-          function responseHandler(response) {
+          function responseHandler({ response }) {
             let fn = steps[calls++];
             if (fn) {
               fn(response);
@@ -327,7 +325,7 @@ describe("curi", () => {
             }
           ];
 
-          function responseHandler(response) {
+          function responseHandler({ response }) {
             steps[calls++](response);
           }
 
@@ -355,9 +353,9 @@ describe("curi", () => {
           const router = curi(history, routes);
 
           let firstCall = true;
-          router.respond(r => {
+          router.respond(({ response }) => {
             if (firstCall) {
-              expect(r.name).toBe("Start");
+              expect(response.name).toBe("Start");
               firstCall = false;
               done();
             }
@@ -384,8 +382,8 @@ describe("curi", () => {
           const router = curi(history, routes, {
             emitRedirects: false
           });
-          router.respond(r => {
-            expect(r.name).toBe("Other");
+          router.respond(({ response }) => {
+            expect(response.name).toBe("Other");
             done();
           });
         });
@@ -405,7 +403,7 @@ describe("curi", () => {
     it("response and navigation are the last resolved response and navigation", () => {
       const router = curi(history, [{ name: "Home", path: "" }]);
       router.respond(
-        (response, navigation) => {
+        ({ response, navigation }) => {
           expect(router.current()).toMatchObject({
             response,
             navigation
@@ -421,7 +419,7 @@ describe("curi", () => {
         { name: "About", path: "about" }
       ]);
       let calls = 0;
-      router.respond((response, navigation) => {
+      router.respond(({ response, navigation }) => {
         calls++;
         expect(router.current()).toMatchObject({
           response,
@@ -509,12 +507,12 @@ describe("curi", () => {
           const nestedHandler = jest.fn();
           const router = curi(history, routes);
           router.respond(
-            (response, navigation) => {
+            ({ response, navigation }) => {
               router.respond(nestedHandler);
-              const [
-                nestedResponse,
-                nestedNavigation
-              ] = nestedHandler.mock.calls[0];
+              const {
+                response: nestedResponse,
+                navigation: nestedNavigation
+              } = nestedHandler.mock.calls[0][0];
               expect(nestedResponse).toBe(response);
               expect(nestedNavigation).toBe(navigation);
               done();
@@ -574,7 +572,9 @@ describe("curi", () => {
             () => {
               router.respond(oneTime, { once: true });
               expect(oneTime.mock.calls.length).toBe(1);
-              expect(oneTime.mock.calls[0][0].location.pathname).toBe("/");
+              expect(oneTime.mock.calls[0][0].response.location.pathname).toBe(
+                "/"
+              );
               done();
             },
             { once: true }
@@ -637,7 +637,7 @@ describe("curi", () => {
 
     it("passes response, navigation, and router object to response handler", done => {
       const routes = [{ name: "All", path: ":all*" }];
-      const responseHandler = function(response, navigation, router) {
+      const responseHandler = function({ response, navigation, router }) {
         expect(response).toMatchObject({
           name: "All",
           location: { pathname: "/" }
@@ -661,7 +661,7 @@ describe("curi", () => {
         { name: "Contact", path: "contact", children: [How] }
       ];
 
-      const check = (response, navigation) => {
+      const check = ({ response, navigation }) => {
         expect(response).toMatchObject({
           name: "How",
           partials: ["Contact"],
@@ -731,7 +731,7 @@ describe("curi", () => {
           ]
         }
       ];
-      const check = response => {
+      const check = ({ response }) => {
         expect(response.params.method).toBe("mail");
         done();
       };

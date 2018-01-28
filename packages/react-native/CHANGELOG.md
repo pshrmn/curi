@@ -1,3 +1,7 @@
+## Next
+
+* (Internal) Router's response handler receives `Emitted` object.
+
 ## 1.0.0-alpha.4
 
 * Add a `<ResponsiveBase>` component. This is just a `<CuriBase>` wrapped in a `<Curious>`.

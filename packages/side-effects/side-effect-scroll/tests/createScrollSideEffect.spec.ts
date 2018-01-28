@@ -1,6 +1,6 @@
 import "jest";
 import createScrollSideEffect from "../src";
-import { Response } from "@curi/core";
+import { Emitted } from "@curi/core";
 
 jest.useFakeTimers();
 
@@ -28,10 +28,13 @@ describe("createScrollSideEffect", () => {
 
   it("does not scroll after POP", () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect(<Response>{ location: {} }, {
-      action: "POP",
-      previous: {} as Response
-    });
+    sideEffect({
+      response: { location: {} },
+      navigation: {
+        action: "POP",
+        previous: {}
+      }
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(0);
@@ -39,10 +42,13 @@ describe("createScrollSideEffect", () => {
 
   it("scrolls to 0 after PUSH", () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect(<Response>{ location: {} }, {
-      action: "PUSH",
-      previous: {} as Response
-    });
+    sideEffect({
+      response: { location: {} },
+      navigation: {
+        action: "PUSH",
+        previous: {}
+      }
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(1);
@@ -50,10 +56,13 @@ describe("createScrollSideEffect", () => {
 
   it("scrolls to 0 after REPLACE", () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect(<Response>{ location: {} }, {
-      action: "REPLACE",
-      previous: {} as Response
-    });
+    sideEffect({
+      response: { location: {} },
+      navigation: {
+        action: "REPLACE",
+        previous: {}
+      }
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(1);
@@ -65,10 +74,13 @@ describe("createScrollSideEffect", () => {
     document.body.appendChild(div);
 
     const sideEffect = createScrollSideEffect();
-    sideEffect(<Response>{ location: { hash: "test" } }, {
-      action: "REPLACE",
-      previous: {} as Response
-    });
+    sideEffect({
+      response: { location: { hash: "test" } },
+      navigation: {
+        action: "REPLACE",
+        previous: {}
+      }
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(0);
@@ -79,10 +91,13 @@ describe("createScrollSideEffect", () => {
 
   it("scrolls to top if there is location.hash but no matching element", () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect(<Response>{ location: { hash: "test" } }, {
-      action: "REPLACE",
-      previous: {} as Response
-    });
+    sideEffect({
+      response: { location: { hash: "test" } },
+      navigation: {
+        action: "REPLACE",
+        previous: {}
+      }
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(1);
@@ -91,10 +106,13 @@ describe("createScrollSideEffect", () => {
 
   it("scrolls to top if location.hash is empty string", () => {
     const sideEffect = createScrollSideEffect();
-    sideEffect(<Response>{ location: { hash: "" } }, {
-      action: "REPLACE",
-      previous: {} as Response
-    });
+    sideEffect({
+      response: { location: { hash: "" } },
+      navigation: {
+        action: "REPLACE",
+        previous: {}
+      }
+    } as Emitted);
 
     jest.runAllTimers();
     expect(mockScroll.mock.calls.length).toBe(1);

@@ -1,3 +1,7 @@
+## Next
+
+* Pass an `Emitted` object to response handlers. This object has `response`, `navigation`, and `router` properties.
+
 ## 1.0.0-beta.25
 
 * Add `initial` property to response handler options (default is `true`). When `false`, the response handler will not be called until a new response is emitted.

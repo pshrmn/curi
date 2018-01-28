@@ -22,7 +22,7 @@ export default ({ name }) => (
       <p>
         A side effect function just does something using its arguments. It is a
         response handler, but unlike ones assigned using{" "}
-        <IJS>router.response</IJS>, side effects cannot be removed.
+        <IJS>router.respond</IJS>, side effects cannot be removed.
       </p>
 
       <p>

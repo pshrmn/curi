@@ -36,7 +36,7 @@ describe("@curi/mobx", () => {
     it("updates response/navigation when a new response is emitted", done => {
       history.replace("/one");
       let firstResponse;
-      router.respond((response, navigation) => {
+      router.respond(({ response, navigation }) => {
         if (!firstResponse) {
           firstResponse = response;
         } else {

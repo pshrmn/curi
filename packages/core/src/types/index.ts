@@ -16,6 +16,7 @@ export {
   CuriRouter,
   RouterOptions,
   ResponseHandler,
+  Emitted,
   RemoveResponseHandler,
   SideEffect,
   Cache,

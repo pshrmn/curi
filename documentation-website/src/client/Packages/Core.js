@@ -100,7 +100,7 @@ const router = curi(history, routes, options);`}
               resolved.
             </p>
             <PrismBlock lang="javascript">
-              {`router.respond((response) => {
+              {`router.respond(({ response }) => {
   // render the application based on the response
 });`}
             </PrismBlock>
@@ -132,7 +132,7 @@ const tooSoon = router.current();
 // tooSoon.response === null
 // tooSoon.navigation === null
 
-router.respond((response, navigation) => {
+router.respond(({ response, navigation }) => {
   const justRight = router.current();
   // justRight.response === response
   // justRight.navigation === navigation

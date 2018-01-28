@@ -24,7 +24,7 @@ export default ({ name }) => (
     </p>
 
     <PrismBlock lang="javascript">
-      {`function logResponse(response) {
+      {`function logResponse({ response }) {
   // call your logging API to record the response
 }`}
     </PrismBlock>
@@ -88,8 +88,9 @@ export default ({ name }) => (
         object.
       </p>
       <PrismBlock lang="javascript">
-        {`function mySideEffect(response, navigation) {
+        {`function mySideEffect({ response, navigation }) {
   console.log('Navigating to', response.location);
+  console.log('Navigation action:', navigation.action);
 }
 
 const router = curi(history, routes, {
@@ -108,7 +109,7 @@ const router = curi(history, routes, {
   const logger = setupMyLogger(options);
 
   // and return the actual side effect function
-  return sideEffect(response, navigation) {
+  return sideEffect({ response }) {
     logger(response);
   }
 }`}

@@ -1,4 +1,4 @@
-import { ResponseHandler } from '@curi/core';
+import { ResponseHandler } from "@curi/core";
 export interface TitleOptions {
     prefix?: string;
     suffix?: string;

@@ -214,7 +214,7 @@ Vue.use(CuriPlugin, { router });`}
         {`// src/index.js
 import app from './components/app';
 
-router.respond(response => {
+router.respond(() => {
   const vm = new Vue({
     el: '#root',
     template: '<app />',

@@ -1,3 +1,7 @@
+## Next
+
+* (Internal) Router resposne handler receives `Emitted` object.
+
 ## 1.0.0-beta.3
 
 * Switch from `action` to `navigation` (which contains an `action` as well as the previous `response`).

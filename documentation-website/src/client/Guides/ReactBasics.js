@@ -153,7 +153,7 @@ const routes = [
             re-call <IJS>ReactDOM.render</IJS>.
           </p>
           <PrismBlock lang="jsx">
-            {`router.respond((response, navigation) => {
+            {`router.respond(({ response, navigation }) => {
   ReactDOM.render((
     <CuriBase
       router={router}

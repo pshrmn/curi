@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import React from "react";
 import { CuriRouter } from "@curi/core";
-import { CuriRenderFn } from "./CuriBase";
+import { CuriRenderFn } from "./interface";
 export interface ResponsiveProps {
     router: CuriRouter;
     render: CuriRenderFn;

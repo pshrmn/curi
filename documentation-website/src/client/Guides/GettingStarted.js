@@ -4,6 +4,7 @@ import { Link } from "@curi/react";
 import BaseGuide from "./base/BaseGuide";
 import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
 import { Section, Subsection } from "../components/Sections";
+import { Note } from "../components/Messages";
 
 export default ({ name }) => (
   <BaseGuide>
@@ -161,12 +162,18 @@ const router = curi(history, routes);
         against all of your routes. When it finds one that matches, it uses that
         route object to create a response object. You can subscribe to a Curi
         router with a response handler function. When a new response is created,
-        your response handler function will be called with the response object
-        and an object with additional navigation data.
+        your response handler function will be passed an object that contains a
+        response object, an object with additional navigation data, and your
+        router.
       </p>
+      <Note>
+        Response handlers are passed the router so you can define them in a
+        separate module from the <IJS>router.respond</IJS> call and still
+        reference the router.
+      </Note>
       <PrismBlock lang="javascript">
         {`const router = curi(history, routes);
-router.response((response, navigation) => {
+router.respond(({ response, navigation, router }) => {
   // whenever the location changes, this function is called
   // you can use this function to re-render your application
   // using the new response object
@@ -176,21 +183,22 @@ router.response((response, navigation) => {
 
       <p>
         Responses are generated asynchronously. A Curi router has a{" "}
-        <IJS>response</IJS> function that you can use to register a function to
-        be called whenever a new response is generated.
+        <IJS>respond</IJS> function that you can use to register a response
+        handler function, which will be called whenever a new response is
+        generated.
       </p>
       <PrismBlock lang="javascript">
         {`const router = curi(history, routes);
 // wait to render until a response is generated
-router.respond((response, navigation) => {
-  // now we can render using the response
+router.respond(({ response, navigation, router }) => {
+  // now we can render using the response,
+  // navigation, and router
 });`}
       </PrismBlock>
       <p>
-        Your location-based rendering will be centered around these response
-        objects, so you should be familiar with the different properties that
-        will be available to you. We will get into more details about responses
-        in the{" "}
+        Your rendering will be centered around these response objects, so you
+        should be familiar with the different properties that will be available
+        to you. We will get into more details about responses in the{" "}
         <Link to="Guide" params={{ slug: "responses" }}>
           Rendering with Responses
         </Link>{" "}

@@ -96,7 +96,7 @@ describe("<Curious>", () => {
 
     it("passes response/navigation/router from context on initial render", () => {
       router.respond(
-        (response, navigation) => {
+        ({ response, navigation }) => {
           // initial render
           const wrapper = mount(
             <Curious
@@ -123,7 +123,7 @@ describe("<Curious>", () => {
 
     it("re-calls render when responses are emitted", done => {
       router.respond(
-        (response, navigation) => {
+        ({ response, navigation }) => {
           // initial render
           const wrapper = mount(
             <Curious
@@ -152,7 +152,7 @@ describe("<Curious>", () => {
         return null;
       });
       router.respond(
-        (response, navigation) => {
+        ({ response, navigation }) => {
           // initial render
           const wrapper = mount(<Curious responsive={true} render={fn} />, {
             context: { curi: { router, response, navigation } }
@@ -168,7 +168,7 @@ describe("<Curious>", () => {
       const oError = console.error;
       console.error = jest.fn();
       router.respond(
-        (response, navigation) => {
+        ({ response, navigation }) => {
           // initial render
           const wrapper = mount(
             <Curious
@@ -196,7 +196,7 @@ describe("<Curious>", () => {
       it("subscribes using router prop without responsive prop", done => {
         let renderCount = 0;
         router.respond(
-          response => {
+          ({ response }) => {
             // initial render
             const wrapper = mount(
               <Curious
@@ -238,7 +238,7 @@ describe("<Curious>", () => {
         const firstRouter = curi(history, routes);
         const secondRouter = curi(history, routes);
         firstRouter.respond(
-          response => {
+          ({ response }) => {
             // initial render
             const wrapper = mount(
               <Curious

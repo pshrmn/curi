@@ -1,11 +1,8 @@
-import { CuriRouter, Response, Navigation } from "@curi/core";
+import React from "react";
+import { Emitted } from "@curi/core";
 
 export interface CuriContext {
-  curi: CuriProps;
+  curi: Emitted;
 }
 
-export interface CuriProps {
-  router: CuriRouter;
-  response: Response;
-  navigation: Navigation;
-}
+export type CuriRenderFn = (props: Emitted) => React.ReactElement<any>;

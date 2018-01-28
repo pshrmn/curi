@@ -22,13 +22,14 @@ export default ({ name }) => (
   const router = curi(history, routes);
 
   // 3. Wait for the response to be generated
-  router.respond((response, navigation) => {
+  router.respond(({ response, navigation }) => {
     // 4. Generate the HTML markup by rendering a <CuriBase> and
     // passing it the response
     const markup = renderToString(
       <CuriBase
         response={response}
         router={router}
+        navigation={navigation}
         render={renderFunction}
       />
     );

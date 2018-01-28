@@ -1,4 +1,4 @@
-import { ResponseHandler, Response } from '@curi/core';
+import { ResponseHandler, Emitted } from "@curi/core";
 
 export interface TitleOptions {
   prefix?: string;
@@ -7,18 +7,18 @@ export interface TitleOptions {
 }
 
 function createTitleSideEffect(options?: TitleOptions): ResponseHandler {
-  const { prefix = '', suffix = '', delimiter = '' } = options || {};
+  const { prefix = "", suffix = "", delimiter = "" } = options || {};
 
-  return function(response: Response) {
+  return function({ response }: Emitted) {
     const parts: Array<string> = [];
-    if (prefix !== '') {
+    if (prefix !== "") {
       parts.push(prefix, delimiter);
     }
     parts.push(response.title);
-    if (suffix !== '') {
+    if (suffix !== "") {
       parts.push(delimiter, suffix);
     }
-    document.title = parts.join(' ');
+    document.title = parts.join(" ");
   };
 }
 

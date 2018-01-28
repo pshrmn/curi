@@ -27,7 +27,7 @@ describe("<ResponsiveBase>", () => {
       });
 
       router.respond(
-        response => {
+        () => {
           const wrapper = mount(<ResponsiveBase router={router} render={fn} />);
           history.push("/about");
           pushedHistory = true;
@@ -52,7 +52,7 @@ describe("<ResponsiveBase>", () => {
 
       const router = curi(history, routes);
       router.respond(
-        (response, navigation) => {
+        () => {
           const wrapper = mount(<ResponsiveBase router={router} render={fn} />);
         },
         { once: true }
@@ -79,7 +79,7 @@ describe("<ResponsiveBase>", () => {
       };
 
       router.respond(
-        (response, navigation) => {
+        ({ response, navigation }) => {
           emittedResponse = response;
           emittedNavigation = navigation;
           const wrapper = mount(

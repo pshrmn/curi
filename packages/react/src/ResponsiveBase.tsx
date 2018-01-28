@@ -3,8 +3,7 @@ import CuriBase from "./CuriBase";
 import Curious from "./Curious";
 
 import { CuriRouter } from "@curi/core";
-import { CuriProps } from "./interface";
-import { CuriRenderFn } from "./CuriBase";
+import { CuriRenderFn } from "./interface";
 
 export interface ResponsiveProps {
   router: CuriRouter;
