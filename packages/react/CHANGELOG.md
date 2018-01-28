@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.19
 
 * Add a `<ResponsiveBase>` component. This is just a `<CuriBase>` wrapped in a `<Curious>`.
 * `<Curious>` does not initially call response handler (prevents extra render).
