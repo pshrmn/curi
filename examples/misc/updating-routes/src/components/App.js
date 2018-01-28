@@ -1,8 +1,8 @@
-import React from 'react';
-import { CuriBase } from '@curi/react';
+import React from "react";
+import { ResponsiveBase } from "@curi/react";
 
-import Nav from './Nav';
-import { baseRoutes, adminRoutes } from '../routes';
+import Nav from "./Nav";
+import { baseRoutes, adminRoutes } from "../routes";
 
 class App extends React.Component {
   constructor(props) {
@@ -19,15 +19,18 @@ class App extends React.Component {
   }
 
   logout() {
-    this.props.router.refresh(baseRoutes);
+    const { router } = this.props;
+    router.refresh(baseRoutes);
     this.setState({ admin: false });
+    const pathname = router.addons.pathname("Home");
+    router.history.push(pathname);
   }
 
   render() {
     return (
-      <CuriBase
+      <ResponsiveBase
         {...this.props}
-        render={(response) => {
+        render={({ response }) => {
           const { body: Body } = response;
           return (
             <div>
@@ -38,7 +41,7 @@ class App extends React.Component {
               />
               <Body />
             </div>
-          );        
+          );
         }}
       />
     );

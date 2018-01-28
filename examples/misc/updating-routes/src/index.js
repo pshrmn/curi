@@ -11,8 +11,5 @@ const router = curi(history, baseRoutes);
 const root = document.getElementById("root");
 
 router.respond((response, navigation) => {
-  ReactDOM.render(
-    <App response={response} navigation={navigation} router={router} />,
-    root
-  );
+  ReactDOM.render(<App router={router} />, root);
 });

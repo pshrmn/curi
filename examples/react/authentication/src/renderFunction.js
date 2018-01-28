@@ -4,12 +4,11 @@ import { Redirect } from "@curi/react";
 import Nav from "./components/Nav";
 import NotFound from "./components/NotFound";
 
-function render(response, navigation, router) {
+function render({ response, router }) {
   if (!response || response.redirectTo) {
     return null;
   }
   const { location, params } = response;
-
   return (
     <div>
       <Nav />

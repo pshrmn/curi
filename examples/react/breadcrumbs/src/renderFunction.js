@@ -1,6 +1,6 @@
 import React from "react";
 
-function render(response, navigation, router) {
+function render({ response, router }) {
   if (!response) {
     return null;
   }

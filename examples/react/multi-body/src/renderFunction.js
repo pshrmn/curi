@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-export default function(response) {
+export default function({ response }) {
   if (!response) {
     return null;
   }
   const { Main, Menu } = response.body;
   return (
     <div>
-      { Menu ? <Menu /> : null }
-      { Main ? <Main params={response.params} /> : null }
+      {Menu ? <Menu /> : null}
+      {Main ? <Main params={response.params} /> : null}
     </div>
-  )
+  );
 }

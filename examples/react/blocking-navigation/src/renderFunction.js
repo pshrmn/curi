@@ -1,10 +1,10 @@
-import Nav from './components/Nav';
+import Nav from "./components/Nav";
 
-function render(response) {
+function render({ response }) {
   if (!response) {
     return null;
   }
-  const { body:Body } = response;
+  const { body: Body } = response;
   return (
     <div>
       <Nav />

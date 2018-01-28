@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Browser from "@hickory/browser";
 import curi from "@curi/core";
-import { CuriBase } from "@curi/react";
+import { ResponsiveBase } from "@curi/react";
 import createActiveAddon from "@curi/addon-active";
 
 import routes from "./routes";
@@ -15,14 +15,12 @@ const router = curi(history, routes, {
 });
 const root = document.getElementById("root");
 
-router.respond((response, navigation) => {
-  ReactDOM.render(
-    <CuriBase
-      router={router}
-      response={response}
-      navigation={navigation}
-      render={renderFunction}
-    />,
-    root
-  );
-});
+router.respond(
+  () => {
+    ReactDOM.render(
+      <ResponsiveBase router={router} render={renderFunction} />,
+      root
+    );
+  },
+  { once: true }
+);
