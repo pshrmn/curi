@@ -21,7 +21,7 @@ const CuriPlugin: PluginObject<CuriPluginOptions> = {
       data: { response: null, navigation: null }
     });
 
-    options.router.respond((response, navigation) => {
+    options.router.respond(({ response, navigation }) => {
       reactive.response = response;
       reactive.navigation = navigation;
     });

@@ -36,7 +36,7 @@ describe("CuriPlugin", () => {
         }
       };
       router.respond(
-        (response, navigation) => {
+        ({ response, navigation }) => {
           Vue.use(CuriPlugin, { router });
 
           const wrapper = shallow(FakeComponent, {
@@ -84,7 +84,7 @@ describe("CuriPlugin", () => {
         let wrapper;
         Vue.use(CuriPlugin, { router });
 
-        router.respond((response, navigation) => {
+        router.respond(() => {
           if (!wrapper) {
             wrapper = shallow(FakeComponent, {
               localVue: Vue
@@ -101,7 +101,7 @@ describe("CuriPlugin", () => {
         let wrapper;
         Vue.use(CuriPlugin, { router });
 
-        router.respond((response, navigation) => {
+        router.respond(() => {
           if (!wrapper) {
             wrapper = mount(
               {
