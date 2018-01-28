@@ -21,6 +21,36 @@ export default ({ name, version, globalName }) => (
     }
   >
     <APIBlock>
+      <Section tag="h3" title="curiStore" id="curiStore">
+        <p>
+          <IJS>@curi/svelte</IJS> components rely on being able to access router
+          related values (<IJS>router</IJS>, <IJS>response</IJS>, and{" "}
+          <IJS>navigation</IJS>) from a Svelte store. While you can set this up
+          manually, the <IJS>curiStore</IJS> will handle this for you.
+        </p>
+        <p>
+          This will setup a response handler to automatically update the store
+          when new responses are emitted by the router.
+        </p>
+        <PrismBlock lang="javascript">
+          {`import { curiStore } from '@curi/svelte';
+
+const router = curi(history, routes);
+const store = curiStore(router);`}
+        </PrismBlock>
+        <p>
+          If you already have a store, you can pass it to <IJS>curiStore</IJS>{" "}
+          and the Curi values will be added to it.
+        </p>
+        <PrismBlock lang="javascript">
+          {`import { curiStore } from '@curi/svelte';
+import { Store } from 'svelte/store';
+
+const router = curi(history, routes);
+const store = new Store({...});
+curiStore(router, store);`}
+        </PrismBlock>
+      </Section>
       <Section tag="h3" title={<Cmp>Link</Cmp>} id="link">
         <p>
           In order for the components provided by this package to work, they
@@ -60,37 +90,16 @@ export default ({ name, version, globalName }) => (
 
     <Section title="Usage" id="usage">
       <p>
-        The components exported by <IJS>@curi/svelte</IJS> rely on Svelte's
-        store. The store should include a <IJS>router</IJS> property for
-        accessing the Curi router and a <IJS>curi</IJS> property for accessing
-        the latest <IJS>response</IJS> and <IJS>navigation</IJS> values.
-      </p>
-      <PrismBlock lang="javascript">
-        {`import { Store } from 'svelte/store';
-
-const router = curi(history, routes);
-const store = new Store({
-  router,
-  curi: { response: null, navigation: null }
-});`}
-      </PrismBlock>
-      <p>
-        Add an observer to the router to update the store whenever a new
-        response is emitted.
-      </p>
-      <PrismBlock lang="javascript">
-        {`router.respond(({ response, navigation }) => {
-  store.set({ curi: { response, navigation } });
-});`}
-      </PrismBlock>
-      <p>
-        As far as rendering your application goes, you should should have a base
-        component that has any global layout and uses the response to render the
-        correct component(s). Setup a response handler for the initial render of
-        this component and make sure to pass the store to the component.
+        For rendering your application, you should should have a base component
+        that has any global layout and uses the response to render the correct
+        component(s). Assuming you setup your store using <IJS>curiStore</IJS>,
+        the components can access the router using <IJS>$router</IJS> and the
+        response and navigation using <IJS>$curi.response</IJS> and{" "}
+        <IJS>$curi.navigation</IJS>.
       </p>
       <PrismBlock lang="html">
-        {`<NavLinks />
+        {`<!-- components/App.html -->
+<NavLinks />
 <:Component {$curi.response.body}></:Component>
 
 <script>
@@ -101,11 +110,22 @@ const store = new Store({
   };
 </script>`}
       </PrismBlock>
+      <p>
+        In your index file, setup a one time response handler to render this
+        component, making sure to pass the store to the component.
+      </p>
       <PrismBlock lang="javascript">
         {`import app from './components/app';
 
+<<<<<<< f66433545eb3c02adc118a5eb8642a9afaf866f5
 // use a response handler for the initial render
 config.respond(() => {
+=======
+const store = curiStore(router);
+
+// use a one time subscriber for the initial render
+router.respond(() => {
+>>>>>>> (docs) @curi/svelte curiStore [ci skip]
   view = new app({ target, store });
 });`}
       </PrismBlock>
