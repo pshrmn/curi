@@ -7,7 +7,12 @@ export interface Navigation {
     action: Action;
     previous: Response;
 }
-export declare type ResponseHandler = (response: Response, navigation?: Navigation, router?: CuriRouter) => void;
+export interface ResponseHandlerProps {
+    response: Response;
+    navigation: Navigation;
+    router: CuriRouter;
+}
+export declare type ResponseHandler = (props?: ResponseHandlerProps) => void;
 export interface RespondOptions {
     once?: boolean;
     initial?: boolean;

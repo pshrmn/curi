@@ -1,17 +1,10 @@
-import { HickoryLocation, ToArgument } from '@hickory/root';
-import PathToRegexp from 'path-to-regexp';
+import { HickoryLocation, ToArgument } from "@hickory/root";
+import PathToRegexp from "path-to-regexp";
 
-import once from './utils/once';
+import once from "./utils/once";
 
-import {
-  RouteDescriptor,
-  InternalRoute,
-  EveryMatchFn,
-  InitialMatchFn,
-  ResponseMatchFn
-} from './types/route';
-import { ResponseProps } from './types/response';
-import { Key } from 'path-to-regexp';
+import { RouteDescriptor, InternalRoute } from "./types/route";
+import { Key } from "path-to-regexp";
 
 const createRoute = (options: RouteDescriptor): InternalRoute => {
   const {
