@@ -50,7 +50,7 @@
     "rollup-plugin-svelte": "^3.1.0",
     "rollup-plugin-uglify": "^2.0.1",
     "simulant": "^0.2.2",
-    "svelte": "^1.49.3",
+    "svelte": "^1.54.0",
     "svelte-cli": "^1.4.0"
   },
   "jest": {
