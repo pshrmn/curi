@@ -1,16 +1,12 @@
 export { ActiveProps } from "./Active";
 export { BlockProps } from "./Block";
-export { CuriBaseProps } from "./CuriBase";
-export { CuriousProps } from "./Curious";
-export { CuriContext, CuriRenderFn } from "./interface";
-export { LinkProps, LinkState, ActiveLink } from "./Link";
-export { ResponsiveProps } from "./ResponsiveBase";
+export { LinkProps, ActiveLink } from "./Link";
+export { CuriProviderProps, CuriRenderFn } from "./CuriProvider";
 
 import Active from "./Active";
 import Block from "./Block";
-import Curious from "./Curious";
+import CuriProvider from "./CuriProvider";
 import Link from "./Link";
-import CuriBase from "./CuriBase";
-import ResponsiveBase from "./ResponsiveBase";
+import { Consumer as Curious } from "./Context";
 
-export { Active, Block, Curious, Link, CuriBase, ResponsiveBase };
+export { Active, Block, CuriProvider, Link, Curious };

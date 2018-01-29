@@ -1,7 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import invariant from "invariant";
-import { CuriContext } from "./interface";
+
+import { Consumer } from "./Context";
+
 import { CuriRouter, Response } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
@@ -28,66 +29,57 @@ export interface LinkProps
   active?: ActiveLink;
   anchor?: React.ReactType;
   target?: string;
-  router?: CuriRouter;
-  response?: Response;
+}
+
+export interface BaseLinkProps extends LinkProps {
+  router: CuriRouter;
+  response: Response;
 }
 
 export interface LinkState {
   pathname: string;
 }
 
-class Link extends React.Component<LinkProps, LinkState> {
-  static contextTypes = {
-    curi: PropTypes.shape({
-      router: PropTypes.object,
-      response: PropTypes.object
-    })
-  };
-
+class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   clickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    if (this.props.onClick) {
-      this.props.onClick(event);
+    const { onClick, router, target, to, params, details = {} } = this.props;
+    if (onClick) {
+      onClick(event);
     }
 
-    if (canNavigate(event) && !this.props.target) {
+    if (canNavigate(event) && !target) {
       event.preventDefault();
-      const router = this.props.router || this.context.curi.router;
       const { pathname } = this.state;
-      const { to, params, details = {} } = this.props;
       const location = { ...details, pathname };
       router.history.navigate(location);
     }
   };
 
-  createPathname(props: LinkProps, context: CuriContext) {
-    const { to, params } = props;
-    const router = props.router || context.curi.router;
-    const response = props.response || context.curi.response;
+  createPathname(props: BaseLinkProps) {
+    const { to, params, router, response } = props;
     const pathname =
       to != null
         ? router.addons.pathname(to, params)
         : response.location.pathname;
-    this.setState(() => ({
-      pathname
-    }));
+    this.setState({ pathname });
   }
 
   componentWillMount() {
-    this.createPathname(this.props, this.context);
+    this.createPathname(this.props);
     if (this.props.active) {
       this.verifyActiveAddon();
     }
   }
 
-  componentWillReceiveProps(nextProps: LinkProps, nextContext: CuriContext) {
-    this.createPathname(nextProps, nextContext);
+  componentWillReceiveProps(nextProps: BaseLinkProps) {
+    this.createPathname(nextProps);
     if (nextProps.active) {
       this.verifyActiveAddon();
     }
   }
 
   verifyActiveAddon() {
-    const router = this.props.router || this.context.curi.router;
+    const router = this.props.router;
     invariant(
       router.addons.active,
       'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -95,7 +87,7 @@ class Link extends React.Component<LinkProps, LinkState> {
     );
   }
 
-  render(): React.ReactElement<any> {
+  render(): React.ReactNode {
     const {
       to,
       params,
@@ -103,10 +95,10 @@ class Link extends React.Component<LinkProps, LinkState> {
       onClick,
       active,
       anchor,
+      router,
+      response,
       ...rest
     } = this.props;
-    const router = this.props.router || this.context.curi.router;
-    const response = this.props.response || this.context.curi.response;
     let anchorProps = rest;
     const Anchor: React.ReactType = anchor ? anchor : "a";
     if (active) {
@@ -125,5 +117,13 @@ class Link extends React.Component<LinkProps, LinkState> {
     return <Anchor {...anchorProps} onClick={this.clickHandler} href={href} />;
   }
 }
+
+const Link = (props: LinkProps): React.ReactElement<any> => (
+  <Consumer>
+    {({ router, response }) => (
+      <BaseLink {...props} router={router} response={response} />
+    )}
+  </Consumer>
+);
 
 export default Link;

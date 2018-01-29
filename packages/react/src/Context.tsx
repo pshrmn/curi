@@ -1,3 +1,4 @@
+/// <reference types="../typings/react-broadcast" />
 import React from "react";
 import { createContext } from "react-broadcast";
 
@@ -6,3 +7,5 @@ const { Provider, Consumer } = createContext({
   response: null,
   navigation: null
 });
+
+export { Provider, Consumer };
