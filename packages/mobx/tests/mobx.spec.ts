@@ -36,17 +36,20 @@ describe("@curi/mobx", () => {
     it("updates response/navigation when a new response is emitted", done => {
       history.replace("/one");
       let firstResponse;
-      router.respond(({ response, navigation }) => {
-        if (!firstResponse) {
-          firstResponse = response;
-        } else {
-          // cannot compare actual objects since MobX makes responses reactive
-          expect(store.response.name).toBe("One");
-          expect(store.navigation.action).toBe("REPLACE");
-          expect(store.navigation.previous.name).toBe(firstResponse.name);
-          done();
-        }
-      });
+      router.respond(
+        ({ response, navigation }) => {
+          if (!firstResponse) {
+            firstResponse = response;
+          } else {
+            // cannot compare actual objects since MobX makes responses reactive
+            expect(store.response.name).toBe("One");
+            expect(store.navigation.action).toBe("REPLACE");
+            expect(store.navigation.previous.name).toBe(firstResponse.name);
+            done();
+          }
+        },
+        { observe: true }
+      );
     });
   });
 });
