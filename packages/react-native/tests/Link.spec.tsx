@@ -27,23 +27,20 @@ describe("<Link>", () => {
       const history = InMemory();
       const router = curi(history, [{ name: "Test", path: "" }]);
 
-      router.respond(
-        () => {
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Test">
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.findByType(TouchableHighlight);
-          expect(anchor).toBeDefined();
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test">
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        expect(anchor).toBeDefined();
+        done();
+      });
     });
 
     it("when provided, it renders the component instead of an anchor", done => {
@@ -53,23 +50,20 @@ describe("<Link>", () => {
         <TouchableHighlight style={{ borderColor: "orange" }} {...props} />
       );
 
-      router.respond(
-        () => {
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Test" anchor={StyledAnchor}>
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.find(StyledAnchor);
-          expect(anchor).toBeDefined();
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test" anchor={StyledAnchor}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.find(StyledAnchor);
+        expect(anchor).toBeDefined();
+        done();
+      });
     });
   });
 
@@ -80,26 +74,23 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
       const routes = [];
       const router = curi(history, routes);
-      router.respond(
-        () => {
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to={null}>
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.findByType(TouchableHighlight);
-          anchor.props.onPress(fakeEvent());
-          expect(mockNavigate.mock.calls[0][0].pathname).toBe(
-            "/the-initial-location"
-          );
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to={null}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        anchor.props.onPress(fakeEvent());
+        expect(mockNavigate.mock.calls[0][0].pathname).toBe(
+          "/the-initial-location"
+        );
+        done();
+      });
     });
   });
 
@@ -111,24 +102,21 @@ describe("<Link>", () => {
 
       const router = curi(history, [{ name: "Park", path: "/park/:name" }]);
       const params = { name: "Glacier" };
-      router.respond(
-        () => {
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Park" params={params}>
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.findByType(TouchableHighlight);
-          anchor.props.onPress(fakeEvent());
-          expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Park" params={params}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        anchor.props.onPress(fakeEvent());
+        expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
+        done();
+      });
     });
 
     it("updates location to navigate to when props change", done => {
@@ -138,40 +126,37 @@ describe("<Link>", () => {
 
       const router = curi(history, [{ name: "Park", path: "/park/:name" }]);
 
-      router.respond(
-        () => {
-          const params = { name: "Glacier" };
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Park" params={params}>
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.findByType(TouchableHighlight);
-          anchor.props.onPress(fakeEvent());
-          expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
+      router.respond(() => {
+        const params = { name: "Glacier" };
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Park" params={params}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        anchor.props.onPress(fakeEvent());
+        expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
 
-          const newParams = { name: "Yellowstone" };
-          tree.update(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Park" params={newParams}>
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          anchor.props.onPress(fakeEvent());
-          expect(mockNavigate.mock.calls[1][0].pathname).toBe(
-            "/park/Yellowstone"
-          );
-          done();
-        },
-        { once: true }
-      );
+        const newParams = { name: "Yellowstone" };
+        tree.update(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Park" params={newParams}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        anchor.props.onPress(fakeEvent());
+        expect(mockNavigate.mock.calls[1][0].pathname).toBe(
+          "/park/Yellowstone"
+        );
+        done();
+      });
     });
   });
 
@@ -183,28 +168,25 @@ describe("<Link>", () => {
 
       const router = curi(history, [{ name: "Test", path: "test" }]);
 
-      router.respond(
-        () => {
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Test" details={{ query: "one=two", hash: "hashtag" }}>
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.findByType(TouchableHighlight);
-          anchor.props.onPress(fakeEvent());
-          expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-            pathname: "/test",
-            query: "one=two",
-            hash: "hashtag"
-          });
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test" details={{ query: "one=two", hash: "hashtag" }}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        anchor.props.onPress(fakeEvent());
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          pathname: "/test",
+          query: "one=two",
+          hash: "hashtag"
+        });
+        done();
+      });
     });
 
     it("providing a pathname in details does not overwrite the generated pathname", done => {
@@ -213,24 +195,21 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "test" }]);
-      router.respond(
-        () => {
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Test" details={{ pathname: "/not-a-test" }}>
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.findByType(TouchableHighlight);
-          anchor.props.onPress(fakeEvent());
-          expect(mockNavigate.mock.calls[0][0].pathname).toBe("/test");
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test" details={{ pathname: "/not-a-test" }}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        anchor.props.onPress(fakeEvent());
+        expect(mockNavigate.mock.calls[0][0].pathname).toBe("/test");
+        done();
+      });
     });
   });
 
@@ -253,62 +232,56 @@ describe("<Link>", () => {
       it("throws on mount", done => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }]);
-        router.respond(
-          () => {
-            expect(() => {
-              const tree = renderer.create(
-                <CuriProvider router={router}>
-                  {() => (
-                    <Link to="Test" active={{ merge }}>
-                      <Text>Test</Text>
-                    </Link>
-                  )}
-                </CuriProvider>
-              );
-            }).toThrow(
-              'You are attempting to use the "active" prop, but have not included the "active" ' +
-                "addon (@curi/addon-active) in your Curi router."
+        router.respond(() => {
+          expect(() => {
+            const tree = renderer.create(
+              <CuriProvider router={router}>
+                {() => (
+                  <Link to="Test" active={{ merge }}>
+                    <Text>Test</Text>
+                  </Link>
+                )}
+              </CuriProvider>
             );
-            done();
-          },
-          { once: true }
-        );
+          }).toThrow(
+            'You are attempting to use the "active" prop, but have not included the "active" ' +
+              "addon (@curi/addon-active) in your Curi router."
+          );
+          done();
+        });
       });
 
       it("throws if adding active prop on re-render", done => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }]);
 
-        router.respond(
-          () => {
-            const tree = renderer.create(
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test">
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          expect(() => {
+            tree.update(
               <CuriProvider router={router}>
                 {() => (
-                  <Link to="Test">
+                  <Link to="Test" active={{ merge }}>
                     <Text>Test</Text>
                   </Link>
                 )}
               </CuriProvider>
             );
-            expect(() => {
-              tree.update(
-                <CuriProvider router={router}>
-                  {() => (
-                    <Link to="Test" active={{ merge }}>
-                      <Text>Test</Text>
-                    </Link>
-                  )}
-                </CuriProvider>
-              );
-            }).toThrow(
-              'You are attempting to use the "active" prop, but have not included the "active" ' +
-                "addon (@curi/addon-active) in your Curi router."
-            );
+          }).toThrow(
+            'You are attempting to use the "active" prop, but have not included the "active" ' +
+              "addon (@curi/addon-active) in your Curi router."
+          );
 
-            done();
-          },
-          { once: true }
-        );
+          done();
+        });
       });
     });
 
@@ -318,27 +291,24 @@ describe("<Link>", () => {
         const router = curi(history, [{ name: "Test", path: "test" }], {
           addons: [createActiveAddon()]
         });
-        router.respond(
-          () => {
-            const tree = renderer.create(
-              <CuriProvider router={router}>
-                {() => (
-                  <Link
-                    to="Test"
-                    style={{ borderColor: "blue" }}
-                    active={{ merge }}
-                  >
-                    <Text>Test</Text>
-                  </Link>
-                )}
-              </CuriProvider>
-            );
-            const anchor = tree.root.findByType(TouchableHighlight);
-            expect(anchor.props.style).toMatchObject({ borderColor: "blue" });
-            done();
-          },
-          { once: true }
-        );
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link
+                  to="Test"
+                  style={{ borderColor: "blue" }}
+                  active={{ merge }}
+                >
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          expect(anchor.props.style).toMatchObject({ borderColor: "blue" });
+          done();
+        });
       });
 
       it("calls merge function when <Link>'s props match the current response's", done => {
@@ -347,28 +317,25 @@ describe("<Link>", () => {
           addons: [createActiveAddon()]
         });
 
-        router.respond(
-          () => {
-            const tree = renderer.create(
-              <CuriProvider router={router}>
-                {() => (
-                  <Link
-                    to="Test"
-                    style={{ borderColor: "blue" }}
-                    active={{ merge }}
-                  >
-                    <Text>Test</Text>
-                  </Link>
-                )}
-              </CuriProvider>
-            );
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link
+                  to="Test"
+                  style={{ borderColor: "blue" }}
+                  active={{ merge }}
+                >
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
 
-            const anchor = tree.root.findByType(TouchableHighlight);
-            expect(anchor.props.style).toMatchObject({ borderColor: "red" });
-            done();
-          },
-          { once: true }
-        );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          expect(anchor.props.style).toMatchObject({ borderColor: "red" });
+          done();
+        });
       });
     });
 
@@ -389,31 +356,28 @@ describe("<Link>", () => {
           }
         );
 
-        router.respond(
-          () => {
-            const tree = renderer.create(
-              <CuriProvider router={router}>
-                {() => (
-                  <Link
-                    to="Test"
-                    style={{ backgroundColor: "green" }}
-                    active={{ partial: true, merge }}
-                  >
-                    <Text>Test</Text>
-                  </Link>
-                )}
-              </CuriProvider>
-            );
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link
+                  to="Test"
+                  style={{ backgroundColor: "green" }}
+                  active={{ partial: true, merge }}
+                >
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
 
-            const anchor = tree.root.findByType(TouchableHighlight);
-            expect(anchor.props.style).toMatchObject({
-              backgroundColor: "green",
-              borderColor: "red"
-            });
-            done();
-          },
-          { once: true }
-        );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          expect(anchor.props.style).toMatchObject({
+            backgroundColor: "green",
+            borderColor: "red"
+          });
+          done();
+        });
       });
     });
 
@@ -428,28 +392,25 @@ describe("<Link>", () => {
           addons: [createActiveAddon()]
         });
 
-        router.respond(
-          () => {
-            const tree = renderer.create(
-              <CuriProvider router={router}>
-                {() => (
-                  <Link
-                    to="Test"
-                    details={{ query: "test=ing" }}
-                    active={{ merge, extra }}
-                  >
-                    <Text>Test</Text>
-                  </Link>
-                )}
-              </CuriProvider>
-            );
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link
+                  to="Test"
+                  details={{ query: "test=ing" }}
+                  active={{ merge, extra }}
+                >
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
 
-            const anchor = tree.root.findByType(TouchableHighlight);
-            expect(anchor.props.style).toMatchObject({ borderColor: "red" });
-            done();
-          },
-          { once: true }
-        );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          expect(anchor.props.style).toMatchObject({ borderColor: "red" });
+          done();
+        });
       });
 
       it("active is false when pathname matches, but extra returns false", done => {
@@ -458,24 +419,21 @@ describe("<Link>", () => {
           addons: [createActiveAddon()]
         });
 
-        router.respond(
-          () => {
-            const tree = renderer.create(
-              <CuriProvider router={router}>
-                {() => (
-                  <Link to="Test" active={{ merge, extra }}>
-                    <Text>Test</Text>
-                  </Link>
-                )}
-              </CuriProvider>
-            );
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test" active={{ merge, extra }}>
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
 
-            const anchor = tree.root.findByType(TouchableHighlight);
-            expect(anchor.props.style).toBeUndefined();
-            done();
-          },
-          { once: true }
-        );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          expect(anchor.props.style).toBeUndefined();
+          done();
+        });
       });
     });
   });
@@ -488,24 +446,21 @@ describe("<Link>", () => {
 
       const router = curi(history, [{ name: "Test", path: "" }]);
 
-      router.respond(
-        () => {
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Test">
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.findByType(TouchableHighlight);
-          anchor.props.onPress(fakeEvent());
-          expect(mockNavigate.mock.calls.length).toBe(1);
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test">
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        anchor.props.onPress(fakeEvent());
+        expect(mockNavigate.mock.calls.length).toBe(1);
+        done();
+      });
     });
 
     it("includes details in location passed to history.navigate", done => {
@@ -515,28 +470,25 @@ describe("<Link>", () => {
 
       const router = curi(history, [{ name: "Test", path: "" }]);
 
-      router.respond(
-        () => {
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Test" details={{ hash: "thing" }}>
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.findByType(TouchableHighlight);
-          anchor.props.onPress(fakeEvent());
-          const mockLocation = mockNavigate.mock.calls[0][0];
-          expect(mockLocation).toMatchObject({
-            pathname: "/",
-            hash: "thing"
-          });
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test" details={{ hash: "thing" }}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        anchor.props.onPress(fakeEvent());
+        const mockLocation = mockNavigate.mock.calls[0][0];
+        expect(mockLocation).toMatchObject({
+          pathname: "/",
+          hash: "thing"
+        });
+        done();
+      });
     });
 
     describe("onPress", () => {
@@ -547,26 +499,23 @@ describe("<Link>", () => {
         const onPress = jest.fn();
         const router = curi(history, [{ name: "Test", path: "" }]);
 
-        router.respond(
-          () => {
-            const tree = renderer.create(
-              <CuriProvider router={router}>
-                {() => (
-                  <Link to="Test" onPress={onPress}>
-                    <Text>Test</Text>
-                  </Link>
-                )}
-              </CuriProvider>
-            );
-            const anchor = tree.root.findByType(TouchableHighlight);
-            anchor.props.onPress(fakeEvent());
-            expect(mockNavigate.mock.calls.length).toBe(1);
-            expect(onPress.mock.calls.length).toBe(1);
-            expect(mockNavigate.mock.calls.length).toBe(1);
-            done();
-          },
-          { once: true }
-        );
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test" onPress={onPress}>
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          anchor.props.onPress(fakeEvent());
+          expect(mockNavigate.mock.calls.length).toBe(1);
+          expect(onPress.mock.calls.length).toBe(1);
+          expect(mockNavigate.mock.calls.length).toBe(1);
+          done();
+        });
       });
 
       it("does not call history.navigate if onPress prevents default", done => {
@@ -577,25 +526,22 @@ describe("<Link>", () => {
           event.preventDefault();
         });
         const router = curi(history, [{ name: "Test", path: "" }]);
-        router.respond(
-          () => {
-            const tree = renderer.create(
-              <CuriProvider router={router}>
-                {() => (
-                  <Link to="Test" onPress={onPress}>
-                    <Text>Test</Text>
-                  </Link>
-                )}
-              </CuriProvider>
-            );
-            const anchor = tree.root.findByType(TouchableHighlight);
-            anchor.props.onPress(fakeEvent());
-            expect(onPress.mock.calls.length).toBe(1);
-            expect(mockNavigate.mock.calls.length).toBe(0);
-            done();
-          },
-          { once: true }
-        );
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test" onPress={onPress}>
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          anchor.props.onPress(fakeEvent());
+          expect(onPress.mock.calls.length).toBe(1);
+          expect(mockNavigate.mock.calls.length).toBe(0);
+          done();
+        });
       });
     });
 
@@ -606,24 +552,21 @@ describe("<Link>", () => {
 
       const router = curi(history, [{ name: "Test", path: "" }]);
 
-      router.respond(
-        () => {
-          const tree = renderer.create(
-            <CuriProvider router={router}>
-              {() => (
-                <Link to="Test">
-                  <Text>Test</Text>
-                </Link>
-              )}
-            </CuriProvider>
-          );
-          const anchor = tree.root.findByType(TouchableHighlight);
-          anchor.props.onPress(fakeEvent({ defaultPrevented: true }));
-          expect(mockNavigate.mock.calls.length).toBe(0);
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test">
+                <Text>Test</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        anchor.props.onPress(fakeEvent({ defaultPrevented: true }));
+        expect(mockNavigate.mock.calls.length).toBe(0);
+        done();
+      });
     });
   });
 });

@@ -125,19 +125,16 @@ describe("<Active>", () => {
       const router = curi(history, routes, {
         addons: [createActiveAddon()]
       });
-      router.respond(
-        () => {
-          const wrapper = render(router, () => (
-            <Active name="Contact" partial={true} merge={merge}>
-              <div className="test" />
-            </Active>
-          ));
-          const div = wrapper.find("div");
-          expect(div.prop("className")).toBe("not-a-test");
-          done();
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const wrapper = render(router, () => (
+          <Active name="Contact" partial={true} merge={merge}>
+            <div className="test" />
+          </Active>
+        ));
+        const div = wrapper.find("div");
+        expect(div.prop("className")).toBe("not-a-test");
+        done();
+      });
     });
   });
 
