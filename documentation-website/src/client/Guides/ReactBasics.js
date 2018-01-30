@@ -23,41 +23,42 @@ export default ({ name }) => (
         <IJS>@curi/react</IJS>
       </Link>{" "}
       package. To get started, there are only two components that you need to be
-      aware of: <Cmp>ResponsiveBase</Cmp> and <Cmp>Link</Cmp>.
+      aware of: <Cmp>CuriProvider</Cmp> and <Cmp>Link</Cmp>.
     </p>
 
-    <Section title={<Cmp>ResponsiveBase</Cmp>} id="ResponsiveBase">
+    <Section title={<Cmp>CuriProvider</Cmp>} id="CuriProvider">
       <p>
         In order for other components to access router-related variables, we
         need to make them available through React's <IJS>context</IJS>. The{" "}
         <Link
           to="Package"
           params={{ package: "react" }}
-          details={{ hash: "ResponsiveBase" }}
+          details={{ hash: "CuriProvider" }}
         >
-          <Cmp>ResponsiveBase</Cmp>
+          <Cmp>CuriProvider</Cmp>
         </Link>{" "}
         component is responsible for doing this. You pass it two props: a Curi{" "}
-        <IJS>router</IJS> and a <IJS>render</IJS> function. The{" "}
+        <IJS>router</IJS> and a <IJS>children</IJS> render function. The{" "}
         <IJS>router</IJS> will listen for new responses to be emitted and call
-        the <IJS>render</IJS> function to re-render your application.
+        the render function to re-render your application.
       </p>
 
       <PrismBlock lang="jsx">
-        {`import { ResponsiveBase } from '@curi/react';
+        {`import { CuriProvider } from '@curi/react';
 
-<ResponsiveBase router={router} render={render} />`}
+<CuriProvider router={router}>
+  {render}
+</CuriProvider>`}
       </PrismBlock>
 
-      <Subsection title="The render prop" id="render-prop">
+      <Subsection title="The render function" id="render-fn">
         <p>
-          The <IJS>render</IJS> prop is a function that will be called every
-          time the <Cmp>ResponsiveBase</Cmp> is rendered. The <IJS>render</IJS>{" "}
-          function should return the React elements that make up your
-          application.
+          The <IJS>children</IJS> prop is a function that will be called every
+          time the <Cmp>CuriProvider</Cmp> is rendered. The render function
+          should return the React elements that make up your application.
         </p>
         <p>
-          The <IJS>render</IJS> function receives an object with three
+          The <IJS>children</IJS> render function receives an object with three
           properties to help you render your application: <IJS>response</IJS>,{" "}
           <IJS>navigation</IJS>, and <IJS>router</IJS>. The <IJS>response</IJS>{" "}
           object is the most important of these, while the others may

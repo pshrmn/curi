@@ -23,16 +23,12 @@ export default ({ name }) => (
 
   // 3. Wait for the response to be generated
   router.respond(({ response, navigation }) => {
-    // 4. Generate the HTML markup by rendering a <CuriBase> and
-    // passing it the response. You can also use a <ResponsiveBase>
-    // here, but that will just render a <CuriBase> itself.
+    // 4. Generate the HTML markup by rendering a <CuriProvider> and
+    // passing it the router.
     const markup = renderToString(
-      <CuriBase
-        response={response}
-        router={router}
-        navigation={navigation}
-        render={renderFunction}
-      />
+      <CuriProvider router={router}>
+        {renderFunction}
+      </CuriProvider>
     );
     // 5. Insert the markup into the page's html and send it
     res.send(renderFullPage(markup));
