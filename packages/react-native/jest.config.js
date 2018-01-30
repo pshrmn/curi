@@ -15,7 +15,6 @@ module.exports = {
   moduleNameMapper: {
     "^React$": "<rootDir>/../../node_modules/react"
   },
-  setupFiles: ["<rootDir>/tests/setup/enzyme.js"],
   mapCoverage: true,
   collectCoverageFrom: ["src/*.tsx"]
 };
