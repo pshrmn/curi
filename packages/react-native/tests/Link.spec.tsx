@@ -30,14 +30,13 @@ describe("<Link>", () => {
       router.respond(
         () => {
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Test">
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.findByType(TouchableHighlight);
           expect(anchor).toBeDefined();
@@ -57,14 +56,13 @@ describe("<Link>", () => {
       router.respond(
         () => {
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Test" anchor={StyledAnchor}>
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.find(StyledAnchor);
           expect(anchor).toBeDefined();
@@ -85,14 +83,13 @@ describe("<Link>", () => {
       router.respond(
         () => {
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to={null}>
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.findByType(TouchableHighlight);
           anchor.props.onPress(fakeEvent());
@@ -117,14 +114,13 @@ describe("<Link>", () => {
       router.respond(
         () => {
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Park" params={params}>
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.findByType(TouchableHighlight);
           anchor.props.onPress(fakeEvent());
@@ -146,14 +142,13 @@ describe("<Link>", () => {
         () => {
           const params = { name: "Glacier" };
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Park" params={params}>
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.findByType(TouchableHighlight);
           anchor.props.onPress(fakeEvent());
@@ -161,14 +156,13 @@ describe("<Link>", () => {
 
           const newParams = { name: "Yellowstone" };
           tree.update(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Park" params={newParams}>
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           anchor.props.onPress(fakeEvent());
           expect(mockNavigate.mock.calls[1][0].pathname).toBe(
@@ -192,14 +186,13 @@ describe("<Link>", () => {
       router.respond(
         () => {
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Test" details={{ query: "one=two", hash: "hashtag" }}>
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.findByType(TouchableHighlight);
           anchor.props.onPress(fakeEvent());
@@ -223,14 +216,13 @@ describe("<Link>", () => {
       router.respond(
         () => {
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Test" details={{ pathname: "/not-a-test" }}>
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.findByType(TouchableHighlight);
           anchor.props.onPress(fakeEvent());
@@ -265,14 +257,13 @@ describe("<Link>", () => {
           () => {
             expect(() => {
               const tree = renderer.create(
-                <CuriProvider
-                  router={router}
-                  render={() => (
+                <CuriProvider router={router}>
+                  {() => (
                     <Link to="Test" active={{ merge }}>
                       <Text>Test</Text>
                     </Link>
                   )}
-                />
+                </CuriProvider>
               );
             }).toThrow(
               'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -291,25 +282,23 @@ describe("<Link>", () => {
         router.respond(
           () => {
             const tree = renderer.create(
-              <CuriProvider
-                router={router}
-                render={() => (
+              <CuriProvider router={router}>
+                {() => (
                   <Link to="Test">
                     <Text>Test</Text>
                   </Link>
                 )}
-              />
+              </CuriProvider>
             );
             expect(() => {
               tree.update(
-                <CuriProvider
-                  router={router}
-                  render={() => (
+                <CuriProvider router={router}>
+                  {() => (
                     <Link to="Test" active={{ merge }}>
                       <Text>Test</Text>
                     </Link>
                   )}
-                />
+                </CuriProvider>
               );
             }).toThrow(
               'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -332,9 +321,8 @@ describe("<Link>", () => {
         router.respond(
           () => {
             const tree = renderer.create(
-              <CuriProvider
-                router={router}
-                render={() => (
+              <CuriProvider router={router}>
+                {() => (
                   <Link
                     to="Test"
                     style={{ borderColor: "blue" }}
@@ -343,7 +331,7 @@ describe("<Link>", () => {
                     <Text>Test</Text>
                   </Link>
                 )}
-              />
+              </CuriProvider>
             );
             const anchor = tree.root.findByType(TouchableHighlight);
             expect(anchor.props.style).toMatchObject({ borderColor: "blue" });
@@ -362,9 +350,8 @@ describe("<Link>", () => {
         router.respond(
           () => {
             const tree = renderer.create(
-              <CuriProvider
-                router={router}
-                render={() => (
+              <CuriProvider router={router}>
+                {() => (
                   <Link
                     to="Test"
                     style={{ borderColor: "blue" }}
@@ -373,7 +360,7 @@ describe("<Link>", () => {
                     <Text>Test</Text>
                   </Link>
                 )}
-              />
+              </CuriProvider>
             );
 
             const anchor = tree.root.findByType(TouchableHighlight);
@@ -405,9 +392,8 @@ describe("<Link>", () => {
         router.respond(
           () => {
             const tree = renderer.create(
-              <CuriProvider
-                router={router}
-                render={() => (
+              <CuriProvider router={router}>
+                {() => (
                   <Link
                     to="Test"
                     style={{ backgroundColor: "green" }}
@@ -416,7 +402,7 @@ describe("<Link>", () => {
                     <Text>Test</Text>
                   </Link>
                 )}
-              />
+              </CuriProvider>
             );
 
             const anchor = tree.root.findByType(TouchableHighlight);
@@ -445,9 +431,8 @@ describe("<Link>", () => {
         router.respond(
           () => {
             const tree = renderer.create(
-              <CuriProvider
-                router={router}
-                render={() => (
+              <CuriProvider router={router}>
+                {() => (
                   <Link
                     to="Test"
                     details={{ query: "test=ing" }}
@@ -456,7 +441,7 @@ describe("<Link>", () => {
                     <Text>Test</Text>
                   </Link>
                 )}
-              />
+              </CuriProvider>
             );
 
             const anchor = tree.root.findByType(TouchableHighlight);
@@ -476,14 +461,13 @@ describe("<Link>", () => {
         router.respond(
           () => {
             const tree = renderer.create(
-              <CuriProvider
-                router={router}
-                render={() => (
+              <CuriProvider router={router}>
+                {() => (
                   <Link to="Test" active={{ merge, extra }}>
                     <Text>Test</Text>
                   </Link>
                 )}
-              />
+              </CuriProvider>
             );
 
             const anchor = tree.root.findByType(TouchableHighlight);
@@ -507,14 +491,13 @@ describe("<Link>", () => {
       router.respond(
         () => {
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Test">
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.findByType(TouchableHighlight);
           anchor.props.onPress(fakeEvent());
@@ -535,14 +518,13 @@ describe("<Link>", () => {
       router.respond(
         () => {
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Test" details={{ hash: "thing" }}>
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.findByType(TouchableHighlight);
           anchor.props.onPress(fakeEvent());
@@ -568,14 +550,13 @@ describe("<Link>", () => {
         router.respond(
           () => {
             const tree = renderer.create(
-              <CuriProvider
-                router={router}
-                render={() => (
+              <CuriProvider router={router}>
+                {() => (
                   <Link to="Test" onPress={onPress}>
                     <Text>Test</Text>
                   </Link>
                 )}
-              />
+              </CuriProvider>
             );
             const anchor = tree.root.findByType(TouchableHighlight);
             anchor.props.onPress(fakeEvent());
@@ -599,14 +580,13 @@ describe("<Link>", () => {
         router.respond(
           () => {
             const tree = renderer.create(
-              <CuriProvider
-                router={router}
-                render={() => (
+              <CuriProvider router={router}>
+                {() => (
                   <Link to="Test" onPress={onPress}>
                     <Text>Test</Text>
                   </Link>
                 )}
-              />
+              </CuriProvider>
             );
             const anchor = tree.root.findByType(TouchableHighlight);
             anchor.props.onPress(fakeEvent());
@@ -629,14 +609,13 @@ describe("<Link>", () => {
       router.respond(
         () => {
           const tree = renderer.create(
-            <CuriProvider
-              router={router}
-              render={() => (
+            <CuriProvider router={router}>
+              {() => (
                 <Link to="Test">
                   <Text>Test</Text>
                 </Link>
               )}
-            />
+            </CuriProvider>
           );
           const anchor = tree.root.findByType(TouchableHighlight);
           anchor.props.onPress(fakeEvent({ defaultPrevented: true }));
