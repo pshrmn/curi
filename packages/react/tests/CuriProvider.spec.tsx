@@ -5,7 +5,7 @@ import curi from "@curi/core";
 import InMemory from "@hickory/in-memory";
 
 import CuriProvider from "../src/CuriProvider";
-import { Consumer as Curious } from "../src/Context";
+import Curious from "../src/Curious";
 
 import { Response, Navigation } from "@curi/core";
 

@@ -1,11 +1,12 @@
 /// <reference types="../typings/react-broadcast" />
 import React from "react";
-import { createContext } from "react-broadcast";
+import { createContext, Context } from "react-broadcast";
+import { Emitted } from "@curi/core";
 
-const { Provider, Consumer } = createContext({
+const key: Emitted = {
   router: null,
   response: null,
   navigation: null
-});
+};
 
-export { Provider, Consumer };
+export default createContext<Emitted>(key);

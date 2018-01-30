@@ -3,15 +3,14 @@ declare module "react-broadcast" {
     value: any;
     children: React.ReactNode;
   }
-  export interface ConsumerProps {
-    children: (value: any) => React.ReactNode
+  export interface ConsumerProps<T> {
+    children: (value: T) => React.ReactNode
   }
-
-  
-  export interface Context {
+   
+  export interface Context<T> {
     Provider: React.ComponentClass<ProviderProps>;
-    Consumer: React.ComponentClass<ConsumerProps>;
+    Consumer: React.ComponentClass<ConsumerProps<T>>;
   }
 
-  export function createContext(value: any): Context;
+  export function createContext<T>(value: any): Context<T>;
 }

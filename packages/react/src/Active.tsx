@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactElement } from "react";
 import invariant from "invariant";
-import { Consumer } from "./Context";
+import CuriContext from "./Context";
 
 import { CuriRouter, Response } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
@@ -51,11 +51,11 @@ const BaseActive = (props: BaseActiveProps) => {
 };
 
 const Active = (props: ActiveProps): React.ReactElement<any> => (
-  <Consumer>
+  <CuriContext.Consumer>
     {({ router, response }) => (
       <BaseActive {...props} router={router} response={response} />
     )}
-  </Consumer>
+  </CuriContext.Consumer>
 );
 
 export default Active;
