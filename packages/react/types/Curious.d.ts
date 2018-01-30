@@ -1,8 +1,7 @@
 /// <reference types="react" />
+/// <reference types="../typings/react-broadcast" />
 import React from "react";
 import { Emitted } from "@curi/core";
-export interface CuriousProps {
-    children: (props: Emitted) => React.ReactNode;
-}
-declare const Curious: (props: CuriousProps) => JSX.Element;
+import { ConsumerProps } from 'react-broadcast';
+declare const Curious: React.ComponentClass<ConsumerProps<Emitted>>;
 export default Curious;
