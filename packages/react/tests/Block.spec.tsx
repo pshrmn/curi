@@ -1,11 +1,12 @@
 import "jest";
 import React from "react";
 import { shallow, mount } from "enzyme";
-import Block from "../src/Block";
+import renderer from "react-test-renderer";
+
 import curi from "@curi/core";
 import InMemory from "@hickory/in-memory";
-
 import CuriProvider from "../src/CuriProvider";
+import Block from "../src/Block";
 
 function render(router, fn) {
   return mount(<CuriProvider router={router}>{fn}</CuriProvider>);
@@ -74,16 +75,21 @@ describe("Block", () => {
     );
   });
 
-  it.skip("removes block if active goes true->false while updating", done => {
-    // need to figure out how to set props
+  it("removes block if active goes true->false while updating", done => {
     const confirm = jest.fn();
     router.respond(
       () => {
-        const wrapper = render(router, () => (
-          <Block active={true} confirm={confirm} />
-        ));
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => <Block active={true} confirm={confirm} />}
+          </CuriProvider>
+        );
         expect(removeConfirmation.mock.calls.length).toBe(0);
-        wrapper.setProps({ active: false });
+        tree.update(
+          <CuriProvider router={router}>
+            {() => <Block active={false} confirm={confirm} />}
+          </CuriProvider>
+        );
         expect(removeConfirmation.mock.calls.length).toBe(1);
         done();
       },
@@ -91,15 +97,21 @@ describe("Block", () => {
     );
   });
 
-  it.skip("adds block if active goes false->true while updating", done => {
+  it("adds block if active goes false->true while updating", done => {
     const confirm = jest.fn();
     router.respond(
       () => {
-        const wrapper = render(router, () => (
-          <Block active={false} confirm={confirm} />
-        ));
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => <Block active={false} confirm={confirm} />}
+          </CuriProvider>
+        );
         expect(confirmWith.mock.calls.length).toBe(0);
-        wrapper.setProps({ active: true });
+        tree.update(
+          <CuriProvider router={router}>
+            {() => <Block active={true} confirm={confirm} />}
+          </CuriProvider>
+        );
         expect(confirmWith.mock.calls.length).toBe(1);
         done();
       },
@@ -107,17 +119,23 @@ describe("Block", () => {
     );
   });
 
-  it.skip("resets on block on updates if confirm function", done => {
+  it("resets block on updates if confirm function changes", done => {
     const confirm = jest.fn();
     const confirm2 = jest.fn();
     router.respond(
       () => {
-        const wrapper = render(router, () => (
-          <Block active={true} confirm={confirm} />
-        ));
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => <Block active={true} confirm={confirm} />}
+          </CuriProvider>
+        );
         expect(confirmWith.mock.calls.length).toBe(1);
         expect(removeConfirmation.mock.calls.length).toBe(0);
-        wrapper.setProps({ active: true, confirm: confirm2 });
+        tree.update(
+          <CuriProvider router={router}>
+            {() => <Block active={true} confirm={confirm2} />}
+          </CuriProvider>
+        );
         expect(confirmWith.mock.calls.length).toBe(2);
         expect(removeConfirmation.mock.calls.length).toBe(1);
 
@@ -127,16 +145,23 @@ describe("Block", () => {
     );
   });
 
-  it.skip("does not reset block if both active and message stay the same", done => {
+  it("does not reset block if both active and confirm stay the same", done => {
     const confirm = jest.fn();
     router.respond(
       () => {
-        const wrapper = render(router, () => (
-          <Block active={true} confirm={confirm} />
-        ));
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => <Block active={true} confirm={confirm} />}
+          </CuriProvider>
+        );
+
         expect(confirmWith.mock.calls.length).toBe(1);
         expect(removeConfirmation.mock.calls.length).toBe(0);
-        wrapper.setProps({ active: true, message: "This is a test" });
+        tree.update(
+          <CuriProvider router={router}>
+            {() => <Block active={true} confirm={confirm} />}
+          </CuriProvider>
+        );
         expect(confirmWith.mock.calls.length).toBe(1);
         expect(removeConfirmation.mock.calls.length).toBe(0);
         done();

@@ -1,6 +1,7 @@
 import "jest";
 import React from "react";
 import { shallow, mount } from "enzyme";
+import renderer from "react-test-renderer";
 import InMemory from "@hickory/in-memory";
 import curi, { Response } from "@curi/core";
 import createActiveAddon from "@curi/addon-active";
@@ -31,7 +32,6 @@ describe("<Link>", () => {
       const StyledAnchor = props => (
         <a style={{ color: "orange" }} {...props} />
       );
-      // need to mount here so that the styled anchor also renders
       const wrapper = render(router, () => (
         <Link anchor={StyledAnchor} to="Test">
           Test
@@ -87,20 +87,36 @@ describe("<Link>", () => {
       expect(a.prop("href")).toBe("/park/Glacier");
     });
 
-    it.skip("updates href when props change", () => {
-      // figure out how to update these props
-      const params = { name: "Glacier" };
-      const wrapper = render(router, () => (
-        <Link to="Park" params={params}>
-          Test
-        </Link>
-      ));
-      let a = wrapper.find("a");
-      expect(a.prop("href")).toBe("/park/Glacier");
-
-      wrapper.setProps({ params: { name: "Yellowstone" } });
-      a = wrapper.find("a");
-      expect(a.prop("href")).toBe("/park/Yellowstone");
+    it("updates href when props change", done => {
+      router.respond(
+        () => {
+          const params = { name: "Glacier" };
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Park" params={params}>
+                  Test
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          let a = tree.root.findByType("a");
+          expect(a.props.href).toBe("/park/Glacier");
+          const newParams = { name: "Yellowstone" };
+          tree.update(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Park" params={newParams}>
+                  Test
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          expect(a.props.href).toBe("/park/Yellowstone");
+          done();
+        },
+        { once: true }
+      );
     });
   });
 
@@ -153,13 +169,16 @@ describe("<Link>", () => {
     }
 
     describe("without @curi/addon-active", () => {
+      const realError = console.error;
+      console.error = jest.fn();
+
+      afterAll(() => {
+        console.error = realError;
+      });
+
       it("throws on mount", done => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }]);
-
-        const realError = console.error;
-        console.error = jest.fn();
-
         router.respond(
           () => {
             expect(() => {
@@ -172,27 +191,40 @@ describe("<Link>", () => {
               'You are attempting to use the "active" prop, but have not included the "active" ' +
                 "addon (@curi/addon-active) in your Curi router."
             );
-            console.error = realError;
             done();
           },
           { once: true }
         );
       });
 
-      it.skip("throws if adding active prop on re-render", () => {
-        // another test to figure out updating props
+      it("throws if adding active prop on re-render", done => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }]);
 
-        const wrapper = shallow(<Link to="Test">Test</Link>, {
-          context: { curi: { router, response: fakeResponse } }
-        });
-
-        expect(() => {
-          wrapper.setProps({ active: { merge } });
-        }).toThrow(
-          'You are attempting to use the "active" prop, but have not included the "active" ' +
-            "addon (@curi/addon-active) in your Curi router."
+        router.respond(
+          () => {
+            const tree = renderer.create(
+              <CuriProvider router={router}>
+                {() => <Link to="Test">Test</Link>}
+              </CuriProvider>
+            );
+            expect(() => {
+              tree.update(
+                <CuriProvider router={router}>
+                  {() => (
+                    <Link to="Test" active={{ merge }}>
+                      Test
+                    </Link>
+                  )}
+                </CuriProvider>
+              );
+            }).toThrow(
+              'You are attempting to use the "active" prop, but have not included the "active" ' +
+                "addon (@curi/addon-active) in your Curi router."
+            );
+            done();
+          },
+          { once: true }
         );
       });
     });
