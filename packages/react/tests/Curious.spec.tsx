@@ -6,7 +6,7 @@ import { shallow, mount } from "enzyme";
 import InMemory from "@hickory/in-memory";
 import curi from "@curi/core";
 
-import { Consumer as Curious } from "../src/Context";
+import Curious from "../src/Curious";
 import CuriProvider from "../src/CuriProvider";
 
 function render(router, fn) {

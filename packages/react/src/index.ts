@@ -2,11 +2,12 @@ export { ActiveProps } from "./Active";
 export { BlockProps } from "./Block";
 export { LinkProps, ActiveLink } from "./Link";
 export { CuriProviderProps, CuriRenderFn } from "./CuriProvider";
+export { CuriousProps } from "./Curious";
 
 import Active from "./Active";
 import Block from "./Block";
 import CuriProvider from "./CuriProvider";
 import Link from "./Link";
-import { Consumer as Curious } from "./Context";
+import Curious from "./Curious";
 
 export { Active, Block, CuriProvider, Link, Curious };

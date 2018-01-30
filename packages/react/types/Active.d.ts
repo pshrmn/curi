@@ -1,8 +1,8 @@
 /// <reference types="react" />
-import React from 'react';
-import { ReactElement } from 'react';
-import { CuriRouter, Response } from '@curi/core';
-import { HickoryLocation } from '@hickory/root';
+import React from "react";
+import { ReactElement } from "react";
+import { CuriRouter, Response } from "@curi/core";
+import { HickoryLocation } from "@hickory/root";
 export interface ActiveProps {
     children: ReactElement<any>;
     name: string;

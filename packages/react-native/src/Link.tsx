@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import invariant from "invariant";
 import { TouchableHighlight } from "react-native";
+import { Curious } from "@curi/react";
 
 import { GestureResponderEvent } from "react-native";
-import { CuriRouter, Response } from "@curi/core";
-import { CuriContext } from "@curi/react";
+import { Emitted, CuriRouter, Response } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
 export interface ActiveLink {
@@ -22,42 +22,35 @@ export interface LinkProps {
   active?: ActiveLink;
   anchor?: React.ReactType;
   target?: string;
-  router?: CuriRouter;
-  response?: Response;
   style?: any;
+}
+
+export interface BaseLinkProps extends LinkProps {
+  router: CuriRouter;
+  response: Response;
 }
 
 export interface LinkState {
   pathname: string;
 }
 
-class Link extends React.Component<LinkProps, LinkState> {
-  static contextTypes = {
-    curi: PropTypes.shape({
-      router: PropTypes.object,
-      response: PropTypes.object
-    })
-  };
-
+class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   pressHandler = (event: GestureResponderEvent) => {
-    if (this.props.onPress) {
-      this.props.onPress(event);
+    const { onPress, router, to, params, details = {} } = this.props;
+    if (onPress) {
+      onPress(event);
     }
 
     if (!event.defaultPrevented) {
       event.preventDefault();
-      const router = this.props.router || this.context.curi.router;
       const { pathname } = this.state;
-      const { to, params, details = {} } = this.props;
       const location = { ...details, pathname };
       router.history.navigate(location);
     }
   };
 
-  createPathname(props: LinkProps, context: CuriContext) {
-    const { to, params } = props;
-    const router = props.router || context.curi.router;
-    const response = props.response || context.curi.response;
+  createPathname(props: BaseLinkProps) {
+    const { to, params, router, response } = props;
     const pathname =
       to != null
         ? router.addons.pathname(to, params)
@@ -68,23 +61,22 @@ class Link extends React.Component<LinkProps, LinkState> {
   }
 
   componentWillMount() {
-    this.createPathname(this.props, this.context);
+    this.createPathname(this.props);
     if (this.props.active) {
       this.verifyActiveAddon();
     }
   }
 
-  componentWillReceiveProps(nextProps: LinkProps, nextContext: CuriContext) {
-    this.createPathname(nextProps, nextContext);
+  componentWillReceiveProps(nextProps: BaseLinkProps) {
+    this.createPathname(nextProps);
     if (nextProps.active) {
       this.verifyActiveAddon();
     }
   }
 
   verifyActiveAddon() {
-    const router = this.props.router || this.context.curi.router;
     invariant(
-      router.addons.active,
+      this.props.router.addons.active,
       'You are attempting to use the "active" prop, but have not included the "active" ' +
         "addon (@curi/addon-active) in your Curi router."
     );
@@ -97,13 +89,13 @@ class Link extends React.Component<LinkProps, LinkState> {
       details,
       onPress,
       active,
-      anchor,
+      anchor: Anchor = TouchableHighlight,
+      router,
+      response,
       ...rest
     } = this.props;
-    const router = this.props.router || this.context.curi.router;
-    const response = this.props.response || this.context.curi.response;
+
     let anchorProps = rest;
-    const Anchor: React.ReactType = anchor ? anchor : TouchableHighlight;
     if (active) {
       const { partial, merge, extra } = active;
       const isActive =
@@ -117,5 +109,13 @@ class Link extends React.Component<LinkProps, LinkState> {
     return <Anchor {...anchorProps} onPress={this.pressHandler} />;
   }
 }
+
+const Link = (props: LinkProps) => (
+  <Curious>
+    {({ router, response }: Emitted) => (
+      <BaseLink {...props} router={router} response={response} />
+    )}
+  </Curious>
+);
 
 export default Link;
