@@ -90,18 +90,20 @@ function createRouter(
 
     const { observe = false, initial = true } = options || {};
 
-    if (mostRecent.response && initial) {
-      fn.call(null, { ...mostRecent, router });
-      return;
-    }
-
     if (observe) {
+      if (mostRecent.response && initial) {
+        fn.call(null, { ...mostRecent, router });
+      }
       const newLength = responseHandlers.push(fn);
       return () => {
         responseHandlers[newLength - 1] = null;
       };
     } else {
-      oneTimers.push(fn);
+      if (mostRecent.response && initial) {
+        fn.call(null, { ...mostRecent, router });
+      } else {
+        oneTimers.push(fn);
+      }
     }
   }
 
