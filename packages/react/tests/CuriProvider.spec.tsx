@@ -20,7 +20,9 @@ describe("<CuriProvider>", () => {
       const fn = jest.fn(() => {
         return null;
       });
-      const wrapper = shallow(<CuriProvider router={router} render={fn} />);
+      const wrapper = shallow(
+        <CuriProvider router={router}>{fn}</CuriProvider>
+      );
       expect(fn.mock.calls.length).toBe(1);
     });
 
@@ -41,7 +43,9 @@ describe("<CuriProvider>", () => {
 
       router.respond(
         () => {
-          const wrapper = mount(<CuriProvider router={router} render={fn} />);
+          const wrapper = mount(
+            <CuriProvider router={router}>{fn}</CuriProvider>
+          );
           history.push("/about");
           pushedHistory = true;
         },
@@ -66,7 +70,9 @@ describe("<CuriProvider>", () => {
       const router = curi(history, routes);
       router.respond(
         () => {
-          const wrapper = mount(<CuriProvider router={router} render={fn} />);
+          const wrapper = mount(
+            <CuriProvider router={router}>{fn}</CuriProvider>
+          );
         },
         { once: true }
       );
@@ -97,7 +103,9 @@ describe("<CuriProvider>", () => {
           emittedResponse = response;
           emittedNavigation = navigation;
           const wrapper = mount(
-            <CuriProvider router={router} render={() => <ContextLogger />} />
+            <CuriProvider router={router}>
+              {() => <ContextLogger />}
+            </CuriProvider>
           );
         },
         { once: true }

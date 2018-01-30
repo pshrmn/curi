@@ -8,7 +8,7 @@ import Link from "../src/Link";
 import CuriProvider from "../src/CuriProvider";
 
 function render(router, fn) {
-  return mount(<CuriProvider router={router} render={fn} />);
+  return mount(<CuriProvider router={router}>{fn}</CuriProvider>);
 }
 
 describe("<Link>", () => {

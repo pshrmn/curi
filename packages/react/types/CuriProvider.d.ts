@@ -3,7 +3,7 @@ import React from "react";
 import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
 export declare type CuriRenderFn = (props: Emitted) => React.ReactNode;
 export interface CuriProviderProps {
-    render: CuriRenderFn;
+    children: CuriRenderFn;
     router?: CuriRouter;
 }
 export interface CuriProviderState {

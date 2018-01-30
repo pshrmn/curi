@@ -9,7 +9,7 @@ import CuriProvider from "../src/CuriProvider";
 import Active from "../src/Active";
 
 function render(router, fn) {
-  return mount(<CuriProvider router={router} render={fn} />);
+  return mount(<CuriProvider router={router}>{fn}</CuriProvider>);
 }
 
 describe("<Active>", () => {

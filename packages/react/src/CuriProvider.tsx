@@ -8,7 +8,7 @@ import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
 export type CuriRenderFn = (props: Emitted) => React.ReactNode;
 
 export interface CuriProviderProps {
-  render: CuriRenderFn;
+  children: CuriRenderFn;
   router?: CuriRouter;
 }
 
@@ -56,7 +56,7 @@ class CuriProvider extends React.Component<
     const { response, navigation } = this.state;
     const value = { router, response, navigation };
 
-    return <Provider value={value}>{this.props.render(value)}</Provider>;
+    return <Provider value={value}>{this.props.children(value)}</Provider>;
   }
 }
 
