@@ -697,18 +697,21 @@ describe("route matching/response generation", () => {
         ];
         const router = curi(history, routes);
         let firstCall = true;
-        router.respond(() => {
-          if (firstCall) {
-            firstCall = false;
-            expect(initialCount).toBe(1);
-            expect(everyCount).toBe(1);
-            history.push("/another-one");
-          } else {
-            expect(initialCount).toBe(1);
-            expect(everyCount).toBe(2);
-            done();
-          }
-        });
+        router.respond(
+          () => {
+            if (firstCall) {
+              firstCall = false;
+              expect(initialCount).toBe(1);
+              expect(everyCount).toBe(1);
+              history.push("/another-one");
+            } else {
+              expect(initialCount).toBe(1);
+              expect(everyCount).toBe(2);
+              done();
+            }
+          },
+          { observe: true }
+        );
       });
     });
 
@@ -868,12 +871,9 @@ describe("route matching/response generation", () => {
               }
             ];
             const router = curi(history, routes);
-            router.respond(
-              () => {
-                history.push("/another-one");
-              },
-              { once: true }
-            );
+            router.respond(() => {
+              history.push("/another-one");
+            });
           });
 
           it("resolved.initial is undefined if there is no match.initial function", done => {

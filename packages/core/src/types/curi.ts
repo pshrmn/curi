@@ -19,7 +19,7 @@ export interface Emitted {
 export type ResponseHandler = (props?: Emitted) => void;
 
 export interface RespondOptions {
-  once?: boolean;
+  observe?: boolean;
   initial?: boolean;
 }
 export type RemoveResponseHandler = () => void;

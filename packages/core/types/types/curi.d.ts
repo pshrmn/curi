@@ -14,7 +14,7 @@ export interface Emitted {
 }
 export declare type ResponseHandler = (props?: Emitted) => void;
 export interface RespondOptions {
-    once?: boolean;
+    observe?: boolean;
     initial?: boolean;
 }
 export declare type RemoveResponseHandler = () => void;
