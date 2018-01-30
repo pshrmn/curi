@@ -1,6 +1,6 @@
-export { LinkProps, LinkState, ActiveLink } from "./Link";
+export { LinkProps, ActiveLink } from "./Link";
 
-export { Active, Block, CuriBase, Curious } from "@curi/react";
+export { Active, Block, CuriProvider, Curious } from "@curi/react";
 
 import Link from "./Link";
 

@@ -29,12 +29,12 @@ export default () => (
         <li>Modifying our Babel configuration to support React.</li>
         <li>
           Installing the <IJS>@curi/react</IJS> package and learning about some
-          of the components it provides (<Cmp>ResponsiveBase</Cmp> and{" "}
+          of the components it provides (<Cmp>CuriProvider</Cmp> and{" "}
           <Cmp>Link</Cmp>).
         </li>
         <li>
-          Defining the <IJS>render</IJS> function that will render the contents
-          of the website.
+          Defining the render function that will render the contents of the
+          website.
         </li>
         <li>Creating page components for each of the routes.</li>
         <li>
@@ -76,9 +76,9 @@ module.exports = {
       <p>
         The <IJS>@curi/react</IJS> package provides React components that know
         how to interact with Curi. For this tutorial, we will only be using two:{" "}
-        <Cmp>ResponsiveBase</Cmp> and <Cmp>Link</Cmp>. However, there are a
-        number of other ones that you might find useful. You can read more about
-        them in the{" "}
+        <Cmp>CuriProvider</Cmp> and <Cmp>Link</Cmp>. However, there are a number
+        of other ones that you might find useful. You can read more about them
+        in the{" "}
         <Link
           to="Package"
           params={{ package: "react" }}
@@ -100,75 +100,73 @@ module.exports = {
       <Subsection
         title={
           <span>
-            The <Cmp>ResponsiveBase</Cmp> Component
+            The <Cmp>CuriProvider</Cmp> Component
           </span>
         }
-        id="ResponsiveBase"
+        id="CuriProvider"
       >
         <PrismBlock lang="javascript">
           {`// src/index.js
-import { ResponsiveBase } from '@curi/react';`}
+import { CuriProvider } from '@curi/react';`}
         </PrismBlock>
         <p>
-          The <Cmp>ResponsiveBase</Cmp> is responsible for rendering the website
+          The <Cmp>CuriProvider</Cmp> is responsible for rendering the website
           whenever the location changes. It takes two props: <IJS>router</IJS>{" "}
-          and <IJS>render</IJS>.
+          and <IJS>children</IJS>.
         </p>
         <ol>
           <li>
             <IJS>router</IJS> is our Curi router.
           </li>
           <li>
-            <IJS>render</IJS> is a function that will be called whenever a new
-            response is emitted (and during the initial render) and returns the
-            React element(s) that make up your website. It will receive an
-            object with three properties: the new <IJS>response</IJS> object,
-            the <IJS>navigation</IJS> and the Curi <IJS>router</IJS> object. The
-            second two can be useful occasionally, but the <IJS>response</IJS>{" "}
-            is what we really need for rendering.
+            <IJS>children</IJS> is a render function that will be called
+            whenever a new response is emitted (and during the initial render)
+            and returns the React element(s) that make up your website. It will
+            receive an object with three properties: the new <IJS>response</IJS>{" "}
+            object, the <IJS>navigation</IJS> and the Curi <IJS>router</IJS>{" "}
+            object. The second two can be useful occasionally, but the{" "}
+            <IJS>response</IJS> is what we really need for rendering.
           </li>
         </ol>
         <p>
-          The <Cmp>ResponsiveBase</Cmp> will listen for new responses to be
+          The <Cmp>CuriProvider</Cmp> will listen for new responses to be
           emitted by the router, but we should also delay our initial render
           until we know that the router has emitted its first response. This can
           be skipped, but we would have to render a loading screen.
         </p>
         <p>
           We will pass the <IJS>{`{ once: true }`}</IJS> option to{" "}
-          <IJS>router.respond</IJS> because the <Cmp>ResponsiveBase</Cmp> will
+          <IJS>router.respond</IJS> because the <Cmp>CuriProvider</Cmp> will
           take over listening for new responses.
         </p>
         <PrismBlock lang="jsx" data-line="2-4, 9-14, 15">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ResponsiveBase } from '@curi/react';
+import { CuriProvider } from '@curi/react';
 
 // ...
 
 router.respond(() => {
   ReactDOM.render((
-    <ResponsiveBase
-      router={router}
-      render={() => null}
-    />
+    <CuriProvider router={router}>
+      {() => null}
+    </CuriProvider>
   ), document.getElementById('root'));
 }, { once: true });`}
         </PrismBlock>
         <Note>
-          An invisible but important function of the <Cmp>ResponsiveBase</Cmp>{" "}
-          is that it adds a <IJS>curi</IJS> object to React's context. This
-          object has <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
-          <IJS>navigation</IJS> properties, which a number of the other
-          components exported by <IJS>@curi/react</IJS> rely on these variables
-          to render/function.
+          An invisible but important function of the <Cmp>CuriProvider</Cmp> is
+          that it adds a Curi values to React's context. These are the{" "}
+          <IJS>router</IJS>, the current <IJS>response</IJS>, and the current{" "}
+          <IJS>navigation</IJS>. A number of the other components exported by{" "}
+          <IJS>@curi/react</IJS> rely on these variables to render/function.
         </Note>
         <p>
-          The above <IJS>render</IJS> function isn't very interesting because
-          our application is rendering nothing (<IJS>null</IJS>). We'll come
-          back to that in a minute, but first we should learn about the other
-          React component that we'll be using.
+          The above render function isn't very interesting because our
+          application is rendering nothing (<IJS>null</IJS>). We'll come back to
+          that in a minute, but first we should learn about the other React
+          component that we'll be using.
         </p>
       </Subsection>
 
@@ -232,8 +230,8 @@ router.respond(() => {
 
     <Section title="The render function" id="render-function">
       <p>
-        Let's go back to that <IJS>render</IJS> function that we pass to the{" "}
-        <Cmp>ResponsiveBase</Cmp>. In the sample code above, we just returned{" "}
+        Let's go back to that render function that we pass to the{" "}
+        <Cmp>CuriProvider</Cmp>. In the sample code above, we just returned{" "}
         <IJS>null</IJS>. Of course, for our website we want to return the actual
         elements that make up a page. How should we do this? Let's take a look
         at the properties of our response object.
@@ -434,10 +432,9 @@ const routes = [
 export default routes;`}
       </PrismBlock>
       <p>
-        Our <IJS>render</IJS> function is now able to use{" "}
-        <IJS>response.body</IJS>. This is also a good time to separate the
-        render function from the component. This isn't absolutely necessary, but
-        can help keep the code cleaner.
+        Our render function is now able to use <IJS>response.body</IJS>. This is
+        also a good time to separate the render function from the component.
+        This isn't absolutely necessary, but can help keep the code cleaner.
       </p>
       <PrismBlock lang="jsx">
         {`// src/render.js
@@ -452,10 +449,9 @@ import renderFunction from './render';
 let root = document.getElementById('root');
 router.respond(() => {
   ReactDOM.render((
-    <ResponsiveBase
-      router={router}
-      render={renderFunction}
-    />
+    <CuriProvider router={router}>
+      {renderFunction}
+    </CuriProvider>
   ), root);
 }, { once: true });`}
       </PrismBlock>
@@ -508,15 +504,14 @@ export default NavLinks;`}
       <p>
         That is simple enough, but where should we render this? Our{" "}
         <Cmp>Link</Cmp> components rely on the context variables that are
-        provided by the <Cmp>ResponsiveBase</Cmp>. This means that our{" "}
-        <Cmp>NavLinks</Cmp> needs to be a child of the <Cmp>ResponsiveBase</Cmp>.
+        provided by the <Cmp>CuriProvider</Cmp>. This means that our{" "}
+        <Cmp>NavLinks</Cmp> needs to be a child of the <Cmp>CuriProvider</Cmp>.
       </p>
       <p>
-        The easiest way for us to do that would be to modify our{" "}
-        <IJS>render</IJS> function. Instead of just returning the{" "}
-        <IJS>response.body</IJS> component, we can return a <Cmp>div</Cmp> that
-        wraps both <IJS>response.body</IJS> and our <Cmp>NavLinks</Cmp>{" "}
-        component.
+        The easiest way for us to do that would be to modify our render
+        function. Instead of just returning the <IJS>response.body</IJS>{" "}
+        component, we can return a <Cmp>div</Cmp> that wraps both{" "}
+        <IJS>response.body</IJS> and our <Cmp>NavLinks</Cmp> component.
       </p>
       <PrismBlock lang="jsx">
         {`// src/render.js

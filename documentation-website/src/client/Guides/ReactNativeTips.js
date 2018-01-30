@@ -56,106 +56,36 @@ BackHandler.addEventListener("hardwareBackPress", () => {
           anchor by default, the React Native <Cmp>Link</Cmp> renders a{" "}
           <Cmp>TouchableHighlight</Cmp> by default.
         </p>
+        <Note>
+          Don't forget to wrap the <Cmp>Link</Cmp>'s text in a <Cmp>Text</Cmp>!
+        </Note>
+        <PrismBlock lang="jsx">
+          {`import { Link } from '@curi/react-native';
+
+<Link to='Home'>
+  <Text>Home</Text>
+</Link>`}
+        </PrismBlock>
       </Subsection>
-      <Subsection title="Base" id="components-base">
+      <Subsection title={<Cmp>CuriProvider</Cmp>} id="componentsCuriProvider">
         <p>
-          With React Native, components need to setup any subscribers
-          themselves. There are a couple of different approaches to
-          accomplishing this.
+          <IJS>@curi/react</IJS> provides a <Cmp>CuriProvider</Cmp> component
+          that will listen for new responses and re-render your application.
         </p>
-        <p>
-          The important thing to know here is that Curi needs to place some
-          variables on React's <IJS>context</IJS> so that nested components can
-          easily access them. It does this using a <Cmp>CuriBase</Cmp>{" "}
-          component.
-        </p>
-        <Subsection
-          tag="h4"
-          title={<Cmp>ResponsiveBase</Cmp>}
-          id="components-base-responsivebase"
-        >
-          <p>
-            <IJS>@curi/react</IJS> provides a <Cmp>ResponsiveBase</Cmp>{" "}
-            component that will listen for new responses and re-render your
-            application. It renders a <Cmp>CuriBase</Cmp> internally.
-          </p>
-          <PrismBlock lang="jsx">
-            {`import { ResponsiveBase } from '@curi/react-native';
+        <PrismBlock lang="jsx">
+          {`import { CuriProvider } from '@curi/react-native';
 
 import router from './router';
-import render from './render';
 
 const App = () => (
-  <ResponsiveBase router={router} render={render} />
+  <CuriProvider router={router}>
+    {({ response }) => {
+      const { body:Body } = response;
+      return <Body response={response} />;
+    }}
+  </CuriProvider>
 );`}
-          </PrismBlock>
-        </Subsection>
-        <Subsection tag="h4" title="Redux" id="components-base-redux">
-          <p>
-            If you are using Redux in your application, you can use the{" "}
-            <Link to="Package" params={{ package: "redux" }}>
-              <IJS>@curi/redux</IJS>
-            </Link>{" "}
-            package to add Curi data to your store and automatically update your
-            store when new responses are emitted. You can then wrap a{" "}
-            <Cmp>CuriBase</Cmp> in <IJS>connect</IJS> to re-render your
-            application when new responses are added to the store.
-          </p>
-          <PrismBlock lang="javascript">
-            {`import { syncResponses, curiReducer } from '@curi/redux';
-import { connect } from 'react-redux';
-import { CuriBase } from '@curi/react-native';
-
-const router = curi(history, routes);
-const reducers = combineReducers({
-  curi: curiReducer,
-  ...
-});
-const store = createStore(reducers)
-syncResponses(store, router);
-
-const ConnectedBase = connect(
-  ({ curi }) => ({
-    router: curi.router,
-    response: curi.response,
-    navigation: curi.navigation
-  })
-)(CuriBase);`}
-          </PrismBlock>
-        </Subsection>
-        <Subsection tag="h4" title="MobX" id="components-base-mobx">
-          <p>
-            The store provided by the{" "}
-            <Link to="Package" params={{ package: "mobx" }}>
-              <IJS>@curi/mobx</IJS>
-            </Link>{" "}
-            package combined with the <Cmp>Provider</Cmp>, <IJS>inject</IJS>,
-            and <IJS>observer</IJS> from <IJS>mobx-react</IJS> can be used to
-            sync Curi and MobX.
-          </p>
-          <PrismBlock lang="jsx">
-            {`import { CuriStore } from '@curi/mobx';
-import { CuriBase } from '@curi/react-native';
-import { Provider, inject, observer } from 'mobx-react';
-
-import router from './router';
-import render from './render';
-
-const curiStore = CuriStore(router);
-
-const ConnectedBase = inject(({ curi }) => ({
-  router: curi.router,
-  response: curi.response,
-  navigation: curi.navigation
-}))(observer(CuriBase));
-
-const App = () => (
-  <Provider curi={curiStore}>
-    <ConnectedBase render={render} />
-  </Provider>
-);`}
-          </PrismBlock>
-        </Subsection>
+        </PrismBlock>
       </Subsection>
     </Section>
   </BaseGuide>

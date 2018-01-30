@@ -1,16 +1,31 @@
 import "jest";
 import React from "react";
 import { shallow, mount } from "enzyme";
-import PropTypes from "prop-types";
 import curi from "@curi/core";
 import InMemory from "@hickory/in-memory";
-import ResponsiveBase from "../src/ResponsiveBase";
+
+import CuriProvider from "../src/CuriProvider";
+import Curious from "../src/Curious";
+
 import { Response, Navigation } from "@curi/core";
 
-describe("<ResponsiveBase>", () => {
+describe("<CuriProvider>", () => {
   const routes = [{ name: "Home", path: "" }, { name: "About", path: "about" }];
 
   describe("render", () => {
+    it("calls render function when it renders", () => {
+      const history = InMemory();
+      const router = curi(history, []);
+
+      const fn = jest.fn(() => {
+        return null;
+      });
+      const wrapper = shallow(
+        <CuriProvider router={router}>{fn}</CuriProvider>
+      );
+      expect(fn.mock.calls.length).toBe(1);
+    });
+
     it("re-calls render prop when the location changes", done => {
       const history = InMemory();
       const router = curi(history, routes);
@@ -28,7 +43,9 @@ describe("<ResponsiveBase>", () => {
 
       router.respond(
         () => {
-          const wrapper = mount(<ResponsiveBase router={router} render={fn} />);
+          const wrapper = mount(
+            <CuriProvider router={router}>{fn}</CuriProvider>
+          );
           history.push("/about");
           pushedHistory = true;
         },
@@ -53,7 +70,9 @@ describe("<ResponsiveBase>", () => {
       const router = curi(history, routes);
       router.respond(
         () => {
-          const wrapper = mount(<ResponsiveBase router={router} render={fn} />);
+          const wrapper = mount(
+            <CuriProvider router={router}>{fn}</CuriProvider>
+          );
         },
         { once: true }
       );
@@ -61,29 +80,32 @@ describe("<ResponsiveBase>", () => {
   });
 
   describe("context", () => {
-    it("sets response, navigation, and router on context.curi", done => {
+    it("makes response, navigation, and router available to <Curious>", done => {
       let emittedResponse;
       let emittedNavigation;
       const history = InMemory();
       const router = curi(history, routes);
 
-      const ContextLogger: React.ComponentType = (props, context) => {
-        expect(context.curi.response).toBe(emittedResponse);
-        expect(context.curi.router).toBe(router);
-        expect(context.curi.navigation).toBe(emittedNavigation);
-        done();
-        return null;
-      };
-      ContextLogger.contextTypes = {
-        curi: PropTypes.object
-      };
+      const ContextLogger: React.ComponentType = () => (
+        <Curious>
+          {value => {
+            expect(value.response).toBe(emittedResponse);
+            expect(value.router).toBe(router);
+            expect(value.navigation).toBe(emittedNavigation);
+            done();
+            return null;
+          }}
+        </Curious>
+      );
 
       router.respond(
         ({ response, navigation }) => {
           emittedResponse = response;
           emittedNavigation = navigation;
           const wrapper = mount(
-            <ResponsiveBase router={router} render={() => <ContextLogger />} />
+            <CuriProvider router={router}>
+              {() => <ContextLogger />}
+            </CuriProvider>
           );
         },
         { once: true }

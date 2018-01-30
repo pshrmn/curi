@@ -25,106 +25,60 @@ export default ({ name, version, globalName }) => (
       </div>
     }
   >
+    <Warning>
+      This package is using the new React context API, which is unstable, so
+      this package is technically "experimental" until that is finalized. It is
+      currently built on top of the <IJS>react-broadcast</IJS> package, which
+      simulates the new context API using the old context. This means that it
+      works with any version of React that <IJS>react-broadcast</IJS> supports,
+      but in the future will be restricted to React versions that support the
+      new context API (17+).
+    </Warning>
     <APIBlock>
-      <Section title={<Cmp>ResponsiveBase</Cmp>} id="ResponsiveBase">
+      <Section title={<Cmp>CuriProvider</Cmp>} id="CuriProvider">
         <p>
-          The <Cmp>ResponsiveBase</Cmp> is the root Curi component for an
-          application, which combines the <Cmp>CuriBase</Cmp> and{" "}
-          <Cmp>Curious</Cmp> components. The <Cmp>ResponsiveBase</Cmp>{" "}
-          automatically re-renders your application when new responses are
-          emitted by the router.
+          The <Cmp>CuriProvider</Cmp> is the root Curi component for an
+          application. It is responsible for making routing related props
+          accessible to descendant components.
         </p>
         <Note>
-          If you are using <IJS>@curi/redux</IJS> or <IJS>@curi/mobx</IJS>, you
-          should wrap the <Cmp>CuriBase</Cmp>, not <Cmp>ResponsiveBase</Cmp>.
+          All of the other components provided by <IJS>@curi/react</IJS> must be
+          descendants of a <Cmp>CuriProvider</Cmp>.
         </Note>
+        <p>
+          This component will listen for new responses to be emitted by your{" "}
+          <IJS>router</IJS> and will automatically re-render your application
+          when this happens.
+        </p>
 
         <PrismBlock lang="javascript">
-          {`import { ResponsiveBase } from '@curi/react';`}
+          {`import { CuriProvider } from '@curi/react';`}
         </PrismBlock>
 
         <PrismBlock lang="jsx">
           {`router.respond(() => {
   ReactDOM.render((
-    <Provider store={store}>
-      <ResponsiveBase router={router} render={render} />
-    </Provider>
+    <CuriProvider router={router}>
+      {({ response }) => {
+        const { body:Body } = response;
+        return <Body response={response} />;
+      }}
+    </CuriProvider>
   ), holder);
 }, { once: true });`}
         </PrismBlock>
-        <Section tag="h3" title="Props" id="ResponsiveBase-props">
-          <Subsection tag="h4" title="router" id="ResponsiveBase-router">
+        <Section tag="h3" title="Props" id="CuriProvider-props">
+          <Subsection tag="h4" title="router" id="CuriProvider-router">
             <p>A Curi router.</p>
           </Subsection>
 
-          <Subsection tag="h4" title="render" id="ResponsiveBase-render">
+          <Subsection tag="h4" title="children" id="CuriProvider-render">
             <p>
               A render function. This will be called whenever the{" "}
-              <Cmp>ResponsiveBase</Cmp> renders. The function will be passed an
+              <Cmp>CuriProvider</Cmp> renders. The function will be passed an
               object with three properties: <IJS>response</IJS>,{" "}
               <IJS>navigation</IJS>, and <IJS>router</IJS>. The function must
               return a React element.
-            </p>
-          </Subsection>
-        </Section>
-      </Section>
-
-      <Section title={<Cmp>CuriBase</Cmp>} id="CuriBase">
-        <p>
-          The <Cmp>CuriBase</Cmp> component places values on React's{" "}
-          <IJS>context</IJS> so that child components can access them. This
-          component does not subscribe to the <IJS>router</IJS>, so it needs to
-          manually be given the new <IJS>response</IJS> and{" "}
-          <IJS>navigation</IJS> when they are emitted by the router.
-        </p>
-        <PrismBlock lang="javascript">
-          {`import { CuriBase } from '@curi/react';`}
-        </PrismBlock>
-
-        <PrismBlock lang="jsx">
-          {`const router = curi(history, routes);
-
-router.respond(({ response, navigation }) => {
-  ReactDOM.render((
-    <CuriBase
-      response={response}
-      navigation={navigation}
-      router={router}
-      render={({ response }) => {
-        return response.body ? <response.body /> : null;
-      }}
-    />
-  ), holder);
-});`}
-        </PrismBlock>
-
-        <Section tag="h3" title="Props" id="CuriBase-props">
-          <Subsection tag="h4" title="router" id="CuriBase-router">
-            <p>A Curi router.</p>
-          </Subsection>
-
-          <Subsection tag="h4" title="render" id="CuriBase-render">
-            <p>
-              A render function. This will be called whenever the{" "}
-              <Cmp>CuriBase</Cmp> renders. The function will be passed an object
-              with three properties: <IJS>response</IJS>, <IJS>navigation</IJS>,
-              and <IJS>router</IJS>. The function must return a React element.
-            </p>
-          </Subsection>
-
-          <Subsection tag="h4" title="response" id="CuriBase-response">
-            <p>
-              A response object. You can pass your <Cmp>CuriBase</Cmp> a
-              response object and it will use that instead of subscribing to the
-              router. This is ideal for server-side rendering.
-            </p>
-          </Subsection>
-
-          <Subsection tag="h4" title="navigation" id="CuriBase-navigation">
-            <p>
-              The <IJS>navigation</IJS> object describing the most recent
-              navigation (the second argument passed to{" "}
-              <IJS>router.respond</IJS> callbacks).
             </p>
           </Subsection>
         </Section>
@@ -216,36 +170,62 @@ router.respond(({ response, navigation }) => {
               The active prop gives you an opportunity to style the element
               rendered by the <Cmp>Link</Cmp> when it is "active". Being active
               means that the <Cmp>Link</Cmp>'s route parameters are the same as
-              the current response's route parameters. This{" "}
-              <strong>does not</strong> take into account any query parameters
-              or the hash.
+              the current response's route parameters.
             </p>
-            <p>
-              The active prop is an object with two properties. The first one,
-              merge is required. The merge property must be a function. That
-              function's argument is the props object that will be passed used
-              to render the element rendered by the <Cmp>Link</Cmp>. The merge
-              function can modify these props however it likes. It must return
-              the resulting props object.
-            </p>
-            <PrismBlock lang="jsx">
-              {`function mergeActive(props) {
+
+            <p>The active prop is an object with a few properties.</p>
+            <ol>
+              <li>
+                <p>
+                  <IJS>merge</IJS> (required) - The <IJS>merge</IJS> property
+                  must be a function. That function's argument is the props
+                  object that will be passed used to render the element rendered
+                  by the <Cmp>Link</Cmp>. The merge function can modify these
+                  props however it likes. It must return the resulting props
+                  object.
+                </p>
+                <PrismBlock lang="jsx">
+                  {`function merge(props) {
   props.className = 'active';
   return props;
 }
 
-<Link to='Home' active={{ merge: mergeActive }}>Home</Link>`}
-            </PrismBlock>
-            <p>
-              The second property of the active object is partial. By default,
-              only <Cmp>Link</Cmp>s that match the response object's name can be
-              considered "active". However, when partial is true, any parent
-              routes can also be "active". This is done using the response
-              object's partials property.
-            </p>
-            <PrismBlock lang="jsx">
-              {`<Link to='Users' active={{ partial: true, merge: mergeActive }}>Users</Link>`}
-            </PrismBlock>
+<Link to='Home' active={{ merge }}>Home</Link>`}
+                </PrismBlock>
+              </li>
+              <li>
+                <p>
+                  <IJS>partial</IJS> (optional) - By default, only{" "}
+                  <Cmp>Link</Cmp>s that match the response object's name can be
+                  considered "active". However, when partial is true, any parent
+                  routes can also be "active". This is done using the response
+                  object's partials property.
+                </p>
+                <PrismBlock lang="jsx">
+                  {`<Link to='Users' active={{ partial: true, merge }}>Users</Link>`}
+                </PrismBlock>
+              </li>
+              <li>
+                <p>
+                  <IJS>extra</IJS> (optional) - Curi only uses a location's{" "}
+                  <IJS>pathname</IJS> to determine whether or not it is active.
+                  If you want to use a location's <IJS>query</IJS> or{" "}
+                  <IJS>hash</IJS>, you can pass an <IJS>extra</IJS> function.
+                  This will be passed two arguments: the first is the{" "}
+                  <IJS>location</IJS> and the second is the <IJS>details</IJS>{" "}
+                  object you passed to the <Cmp>Link</Cmp>. This function should
+                  return a boolean to indicate whether or not it should be
+                  active based on these values. This will only be called if the{" "}
+                  <IJS>pathname</IJS> is also active.
+                </p>
+                <PrismBlock lang="jsx">
+                  {`function sameHash(location, details) {
+  return location.hash === details.hash;
+}
+<Link to='Users' active={{ extra: sameHash, merge }}>Users</Link>`}
+                </PrismBlock>
+              </li>
+            </ol>
             <Note>
               If you use the active prop, you have to include the{" "}
               <Link to="Package" params={{ package: "addon-active" }}>
@@ -254,6 +234,44 @@ router.respond(({ response, navigation }) => {
               add-on in your Curi router. If you do not, an error will be
               thrown.
             </Note>
+          </Subsection>
+        </Section>
+      </Section>
+
+      <Section title={<Cmp>Curious</Cmp>} id="Curious">
+        <p>
+          A component whose <IJS>children</IJS> is a render function that will
+          be passed <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
+          <IJS>navigation</IJS> props.
+        </p>
+        <PrismBlock lang="javascript">
+          {`import { Curious } from '@curi/react';`}
+        </PrismBlock>
+
+        <PrismBlock lang="jsx">
+          {`class MyComponent extends React.Component {
+  render() {
+    return (
+      <Curious>
+        {({ router, response, navigation }) => {
+          // pass these props to any components that need them
+          return (
+            <ThingThatNeedsResponse response={response} />
+          );
+        }}
+      </Curious>
+    )
+  }
+}
+
+export default MyComponent;`}
+        </PrismBlock>
+
+        <Section tag="h3" title="Props" id="curious-props">
+          <Subsection tag="h4" title="children" id="curious-children">
+            A function that returns a React element. This function will receive
+            an object with <IJS>router</IJS>, <IJS>response</IJS> and{" "}
+            <IJS>navigation</IJS> properties that you can pass to components.
           </Subsection>
         </Section>
       </Section>
@@ -309,6 +327,27 @@ router.respond(({ response, navigation }) => {
               "active" route.
             </p>
           </Subsection>
+
+          <Subsection tag="h4" title="details" id="Active-details">
+            <p>
+              An object with additional location properties (<IJS>query</IJS>{" "}
+              and <IJS>hash</IJS>) that will be used in the <IJS>extra</IJS>{" "}
+              function. This is a separate prop so that you can re-use an{" "}
+              <IJS>extra</IJS> function across <Cmp>Active</Cmp> components.
+            </p>
+          </Subsection>
+
+          <Subsection tag="h4" title="extra" id="Active-extra">
+            <p>
+              A function that will receive the current <IJS>location</IJS> and
+              the <IJS>details</IJS> that you passed to the <Cmp>Active</Cmp>.
+              This allows you to determine if the location is active based on
+              location properties other than the <IJS>pathname</IJS> . The
+              function should return a boolean to indicate whether or not the
+              the location is active. This will only be called if the{" "}
+              <IJS>pathname</IJS> is also active.
+            </p>
+          </Subsection>
         </Section>
 
         <Section tag="h3" title="Usage" id="Active-usage">
@@ -349,21 +388,6 @@ const router = curi(history, routes, {
   addons: [createActiveAddon]
 });`}
           </PrismBlock>
-
-          <p>
-            While not strictly a requirement, the <Cmp>Active</Cmp> relies on
-            the <IJS>curi</IJS> and <IJS>curiResponse</IJS> context variables
-            existing, so your application should have a{" "}
-            <Link
-              to="Package"
-              params={{ package: "react" }}
-              details={{ hash: "CuriBase" }}
-            >
-              <Cmp>CuriBase</Cmp>
-            </Link>{" "}
-            as an ancestor of your <Cmp>Active</Cmp>
-            components in order to ensure that those exist.
-          </p>
         </Section>
       </Section>
 
@@ -417,82 +441,6 @@ const router = curi(history, routes, {
       failure();
     }
   }}
-/>`}
-            </PrismBlock>
-          </Subsection>
-        </Section>
-      </Section>
-
-      <Section title={<Cmp>Curious</Cmp>} id="Curious">
-        <p>
-          A component with a <IJS>render</IJS> function to pass{" "}
-          <IJS>router</IJS>, <IJS>response</IJS>, and <IJS>navigation</IJS>{" "}
-          props to componeonts.
-        </p>
-        <PrismBlock lang="javascript">
-          {`import { Curious } from '@curi/react';`}
-        </PrismBlock>
-
-        <PrismBlock lang="jsx">
-          {`class MyComponent extends React.Component {
-  render() {
-    return (
-      <Curious render={({ router, response, navigation }) => {
-        // pass these props to any components that need them
-        return (
-          <ThingThatNeedsResponse response={response} />
-        );
-      }} />
-    )
-  }
-}
-
-export default MyComponent;`}
-        </PrismBlock>
-
-        <Section tag="h3" title="Props" id="curious-props">
-          <Subsection tag="h4" title="render" id="curious-render">
-            A function that returns a React element. This function will receive
-            an object with <IJS>router</IJS>, <IJS>response</IJS> and{" "}
-            <IJS>navigation</IJS> properties that you can pass to components.
-            <PrismBlock lang="jsx">
-              {`<Curious render={({ router, response, navigation }) => {...} />`}
-            </PrismBlock>
-          </Subsection>
-
-          <Subsection tag="h4" title="responsive" id="curious-responsive">
-            <p>
-              By default, the <Cmp>Curious</Cmp> component will call its{" "}
-              <IJS>render</IJS> function whenever a re-render propagates to it.
-              However, if you have navigation blocks in your application (<IJS>
-                React.PureComponent
-              </IJS>{" "}
-              or <IJS>shouldComponentUpdate</IJS>), you can use{" "}
-              <IJS>{`responsive=\{true\}`}</IJS> to trigger re-renders.
-            </p>
-            <PrismBlock lang="jsx">
-              {`<Curious responsive={true} {...} />`}
-            </PrismBlock>
-          </Subsection>
-
-          <Subsection tag="h4" title="router" id="curious-router">
-            <p>
-              By default, the <Cmp>Curious</Cmp> component will grab the props
-              it passes to the <IJS>render</IJS> function from React's{" "}
-              <IJS>context</IJS>. However, you might want to make your root Curi
-              component (<Cmp>CuriBase</Cmp>) automatically listen for
-              responses. In order to do this, you can pass <Cmp>Curious</Cmp> a{" "}
-              <IJS>router</IJS> and it will listen using that.
-            </p>
-            <Note>
-              If you pass a <IJS>router</IJS> prop to <Cmp>Curious</Cmp>, you do
-              not have to pass it the <IJS>responsive</IJS> prop. This is what
-              the <Cmp>ResponsiveBase</Cmp> component does.
-            </Note>
-            <PrismBlock lang="jsx">
-              {`<Curious
-  router={router}
-  render={props => <CuriBase render={render} {...props} />}
 />`}
             </PrismBlock>
           </Subsection>

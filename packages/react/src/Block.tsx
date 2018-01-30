@@ -1,33 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ConfirmationFunction } from '@hickory/root';
-import { CuriRouter } from '@curi/core';
+import React from "react";
+import CuriContext from "./Context";
+
+import { ConfirmationFunction } from "@hickory/root";
+import { CuriRouter } from "@curi/core";
 
 export interface BlockProps {
   active?: boolean;
   confirm: ConfirmationFunction;
-  curi?: CuriRouter;
 }
 
-class Block extends React.Component<BlockProps> {
-  static contextTypes = {
-    curi: PropTypes.shape({
-      router: PropTypes.object
-    })
-  };
+export interface BaseBlockProps extends BlockProps {
+  router: CuriRouter;
+}
 
+class BaseBlock extends React.Component<BaseBlockProps> {
   static defaultProps = {
     active: true
   };
 
   on() {
-    const curi = this.props.curi || this.context.curi.router;
-    curi.history.confirmWith(this.props.confirm);
+    this.props.router.history.confirmWith(this.props.confirm);
   }
 
   off() {
-    const curi = this.props.curi || this.context.curi.router;
-    curi.history.removeConfirmation();
+    this.props.router.history.removeConfirmation();
   }
 
   componentDidMount() {
@@ -36,7 +32,7 @@ class Block extends React.Component<BlockProps> {
     }
   }
 
-  componentDidUpdate(prevProps: BlockProps) {
+  componentDidUpdate(prevProps: BaseBlockProps) {
     if (
       this.props.active === prevProps.active &&
       this.props.confirm === prevProps.confirm
@@ -57,5 +53,11 @@ class Block extends React.Component<BlockProps> {
     return null;
   }
 }
+
+const Block = (props: BlockProps): React.ReactElement<any> => (
+  <CuriContext.Consumer>
+    {({ router }) => <BaseBlock {...props} router={router} />}
+  </CuriContext.Consumer>
+);
 
 export default Block;

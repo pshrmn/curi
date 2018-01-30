@@ -1,5 +1,6 @@
 ## Next
 
+* Use `react-broadcast` to simulate new context API. This removes the `<ResponsiveBase>` and `<CuriBase>` components in favor of a single `<CuriProvider>`. The `<Curious>` prop also now just expects a `children` render function prop.
 * (Internal) Router's response handler receives `Emitted` object.
 
 ## 1.0.0-beta.19

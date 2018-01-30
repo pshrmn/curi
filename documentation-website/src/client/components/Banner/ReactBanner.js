@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 
 import Browser from '@hickory/browser';
 import curi from '@curi/core';
-import { ResponsiveBase } from '@curi/react';
+import { CuriProvider } from '@curi/react';
 
 const history = Browser();
 const routes = [...];
@@ -19,12 +19,11 @@ const root = document.getElementById('root');
 // for the initial response
 router.respond(() => {
   ReactDOM.render((
-    <ResponsiveBase
-      router={router}
-      render={({ response }) => {
+    <CuriProvider router={router}>
+      {({ response }) => {
         return <response.body />;
       }}
-    />
+    </CuriProvider>
   ), root);
 }, { once: true });`}
   </PrismBlock>

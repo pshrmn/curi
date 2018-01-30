@@ -403,18 +403,18 @@ const router = curi(history, routes);`}
         <p>
           With Curi, we also need to re-render our application every time that
           the location changes. We will do this using the{" "}
-          <Cmp>ResponsiveBase</Cmp> component, which comes from the{" "}
+          <Cmp>CuriProvider</Cmp> component, which comes from the{" "}
           <IJS>@curi/react</IJS> package.
         </p>
         <p>
-          The <Cmp>ResponsiveBase</Cmp> takes a <IJS>router</IJS> prop, which it
+          The <Cmp>CuriProvider</Cmp> takes a <IJS>router</IJS> prop, which it
           will use to listen for the router to emit new responses (by internally
-          calling <IJS>router.respond</IJS>) The <Cmp>ResponsiveBase</Cmp>{" "}
-          places the new <IJS>response</IJS> and <IJS>navigation</IJS>{" "}
-          (alongside the <IJS>router</IJS> object) on React's <IJS>context</IJS>{" "}
-          so that child components will be able to access those values.{" "}
-          <Cmp>ResponsiveBase</Cmp> also expects a <IJS>render</IJS> prop, which
-          is a function that actually renders your application.
+          calling <IJS>router.respond</IJS>) The <Cmp>CuriProvider</Cmp> places
+          the new <IJS>response</IJS> and <IJS>navigation</IJS> (alongside the{" "}
+          <IJS>router</IJS> object) on React's <IJS>context</IJS> so that child
+          components will be able to access those values.{" "}
+          <Cmp>CuriProvider</Cmp> also expects a render function as its{" "}
+          <IJS>children</IJS> prop.
         </p>
         <p>
           We will also use <IJS>router.respond</IJS> so that the application is
@@ -425,7 +425,9 @@ const router = curi(history, routes);`}
         <PrismBlock lang="jsx">
           {`router.respond(() => {
   ReactDOM.render((
-    <ResponsiveBase router={router} render={render} />
+    <CuriProvider router={router}>
+      {({ response }) => {...}}
+    </CuriProvider>
   ), holder);
 }, { once: true });`}
         </PrismBlock>
@@ -476,7 +478,7 @@ const router = curi(history, routes);`}
           It was mentioned above that there is no need for the <Cmp>App</Cmp>{" "}
           component with Curi. If you want to have an <Cmp>App</Cmp> component,
           you can render it either inside of the <IJS>render</IJS> function or
-          as a parent of your <Cmp>ResponsiveBase</Cmp>. This can be useful for
+          as a parent of your <Cmp>CuriProvider</Cmp>. This can be useful for
           rendering content that is unrelated to specific routes, like a page
           header or menu.
         </p>
@@ -484,8 +486,7 @@ const router = curi(history, routes);`}
           Rendering the <Cmp>App</Cmp> inside of the render function is
           necessary if any of the components rendered by the <Cmp>App</Cmp> are
           location aware components, since they need to access the Curi router
-          (through React’s context, which the <Cmp>ResponsiveBase</Cmp>{" "}
-          provides)
+          (through React’s context, which the <Cmp>CuriProvider</Cmp> provides)
         </p>
         <PrismBlock lang="jsx">
           {`function render({ response }) {

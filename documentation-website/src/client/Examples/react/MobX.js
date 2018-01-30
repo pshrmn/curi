@@ -25,18 +25,11 @@ export default ({ name }) => (
         {`import { CuriStore } from '@curi/mobx'
 const curiStore = new CuriStore(router);
 
-import { CuriBase } from "@curi/react";
-import { inject, observer } from "mobx-react";
-
-const ReactiveBase = inject(({ curi }) => ({
-  router: curi.router,
-  response: curi.response,
-  navigation: curi.navigation
-}))(observer(CuriBase));
-
 ReactDOM.render((
   <Provider curi={curiStore}>
-    <ReactiveBase render={render} />
+    <CuriProvider router={router}>
+      {render}
+    </CuriProvider>
   </Provider>
 ), holder);
 `}

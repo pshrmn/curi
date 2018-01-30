@@ -38,28 +38,6 @@ export default ({ name, version, globalName }) => (
           {`const router = curi(history, routes);
 const curiStore = new CuriStore(router);`}
         </PrismBlock>
-        <p>
-          With React, you can use the <Cmp>Provider</Cmp> from{" "}
-          <IJS>mobx-react</IJS> to make your store available to components. You
-          would then use the <IJS>inject</IJS> higher-order component to inject
-          the Curi props into components. For example, you would inject the{" "}
-          <IJS>router</IJS>, <IJS>response</IJS>, and <IJS>navigation</IJS>{" "}
-          props into your <Cmp>CuriBase</Cmp>.
-        </p>
-        <PrismBlock lang="javascript">
-          {`const ReactiveBase = inject(({ curi }) => ({
-  router: curi.router,
-  response: curi.response,
-  navigation: curi.navigation
-}))(observer(CuriBase));`}
-        </PrismBlock>
-        <PrismBlock lang="jsx">
-          {`ReactDOM.render((
-  <Provider curi={curiStore}>
-    <ReactiveBase render={...}/>
-  </Provider>
-), holder);`}
-        </PrismBlock>
       </Section>
     </APIBlock>
   </BasePackage>
