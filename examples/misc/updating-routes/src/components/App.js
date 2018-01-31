@@ -1,5 +1,5 @@
 import React from "react";
-import { ResponsiveBase } from "@curi/react";
+import { CuriProvider } from "@curi/react";
 
 import Nav from "./Nav";
 import { baseRoutes, adminRoutes } from "../routes";
@@ -28,9 +28,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <ResponsiveBase
-        {...this.props}
-        render={({ response }) => {
+      <CuriProvider router={this.props.router}>
+        {({ response }) => {
           const { body: Body } = response;
           return (
             <div>
@@ -43,7 +42,7 @@ class App extends React.Component {
             </div>
           );
         }}
-      />
+      </CuriProvider>
     );
   }
 }

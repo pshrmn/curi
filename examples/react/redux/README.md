@@ -2,6 +2,8 @@
 
 [CodeSandbox demo](https://codesandbox.io/s/github/pshrmn/curi/tree/master/examples/react/redux)
 
+**Note:** This may no longer be necessary.
+
 Redux is straightforward to integrate with a `curi` project.
 
 You will most likely want to export your `store` from its own module so that it can be imported throughout your project. Then, any routes that need data to be loaded prior to rendering would dispatch to the store from their `load` function.

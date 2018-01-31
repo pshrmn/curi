@@ -15,13 +15,13 @@ const store = new Store({
 let view;
 const target = document.getElementById("root");
 
-router.respond((response, navigation) => {
-  store.set({ curi: { response, navigation } });
-});
-
 router.respond(
-  () => {
-    view = new app({ target, store });
+  ({ response, navigation }) => {
+    store.set({ curi: { response, navigation } });
   },
-  { once: true }
+  { observe: true }
 );
+
+router.respond(() => {
+  view = new app({ target, store });
+});

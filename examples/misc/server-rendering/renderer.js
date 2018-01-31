@@ -2,7 +2,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import InMemory from "@hickory/in-memory";
 import curi from "@curi/core";
-import { CuriBase } from "@curi/react";
+import { CuriProvider } from "@curi/react";
 import routes from "./src/routes";
 import renderFunction from "./src/renderFunction";
 
@@ -10,20 +10,12 @@ export default function(req, res) {
   const history = InMemory({ locations: [req.url] });
   const router = curi(history, routes);
 
-  router.respond(
-    (response, navigation) => {
-      const markup = renderToString(
-        <CuriBase
-          router={router}
-          response={response}
-          navigation={navigation}
-          render={renderFunction}
-        />
-      );
-      res.send(renderFullPage(markup));
-    },
-    { once: true }
-  );
+  router.respond(() => {
+    const markup = renderToString(
+      <CuriProvider router={router}>{renderFunction}</CuriProvider>
+    );
+    res.send(renderFullPage(markup));
+  });
 }
 
 function renderFullPage(html) {

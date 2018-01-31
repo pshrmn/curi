@@ -1,11 +1,11 @@
-import Vue from 'vue';
-import curi from '@curi/core';
-import { CuriPlugin } from '@curi/vue';
-import Browser from '@hickory/browser';
-import createAncestorsAddon from '@curi/addon-ancestors';
+import Vue from "vue";
+import curi from "@curi/core";
+import { CuriPlugin } from "@curi/vue";
+import Browser from "@hickory/browser";
+import createAncestorsAddon from "@curi/addon-ancestors";
 
-import App from './components/App';
-import routes from './routes';
+import App from "./components/App";
+import routes from "./routes";
 
 /*
  * A simple addon that will enable adding a dynamic title
@@ -19,8 +19,8 @@ import routes from './routes';
 function createTitleTextAddon() {
   let routes = {};
   return {
-    name: 'title',
-    register: (route) => {
+    name: "title",
+    register: route => {
       let { name, extra } = route;
       routes[name] = extra && extra.title;
     },
@@ -31,7 +31,7 @@ function createTitleTextAddon() {
     reset: () => {
       routes = {};
     }
-  }
+  };
 }
 
 const history = Browser();
@@ -43,8 +43,8 @@ Vue.use(CuriPlugin, { router });
 
 router.respond(() => {
   const vm = new Vue({
-    el: '#root',
-    template: '<app />',
+    el: "#root",
+    template: "<app />",
     components: { app: App }
   });
-}, { once: true });
+});

@@ -10,6 +10,6 @@ const history = Browser();
 const router = curi(history, baseRoutes);
 const root = document.getElementById("root");
 
-router.respond((response, navigation) => {
+router.respond(() => {
   ReactDOM.render(<App router={router} />, root);
 });
