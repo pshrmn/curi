@@ -2,7 +2,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import InMemory from "@hickory/in-memory";
 import curi from "@curi/core";
-import { CuriBase } from "@curi/react";
+import { CuriProvider } from "@curi/react";
 import createActiveAddon from "@curi/addon-active";
 import routes from "../client/routes";
 import renderFunction from "../client/render";
@@ -17,20 +17,12 @@ export default function createHandler(debug = false) {
       addons: [createActiveAddon()]
     });
 
-    router.respond(
-      (response, navigation) => {
-        const markup = renderToString(
-          <CuriBase
-            response={response}
-            navigation={navigation}
-            router={router}
-            render={renderFunction}
-          />
-        );
-        res.send(renderFullPage(markup, response.title, debug));
-      },
-      { once: true }
-    );
+    router.respond(({ response }) => {
+      const markup = renderToString(
+        <CuriProvider router={router}>{renderFunction}</CuriProvider>
+      );
+      res.send(renderFullPage(markup, response.title, debug));
+    });
   };
 }
 

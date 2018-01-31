@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./components/Header";
 
-export default function render(response, navigation, router) {
+export default function render({ response }) {
   const { body: Body, params, data } = response;
   return (
     <div>
