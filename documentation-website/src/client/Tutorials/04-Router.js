@@ -83,23 +83,35 @@ const router = curi(history, routes);`}
       </PrismBlock>
     </Section>
 
-    <Section title="Observer Model" id="observer" type="aside">
+    <Section title="Observe" id="observer" type="aside">
       <p>
-        In order to let your application know about location changes, Curi uses
-        an observer model to emit responses. A piece of code that wants to know
-        about the current response passes a callback function (referred to here
-        as a response handler) to <IJS>router.respond</IJS>. If a response
-        already exists, then the response handler will be called immediately. If
-        the initial response hasn't resolved, then the response handler will be
-        called once it does.
+        The Curi router uses the{" "}
+        <a href="https://en.wikipedia.org/wiki/Observer_pattern">
+          observer pattern
+        </a>. Callback functions (referred to here as response handlers) are
+        registered with the router. Whenever the user navigates inside your
+        application, the router will craete a new response object and call the
+        response handlers.
       </p>
       <p>
-        What does a response handler function look like? It receives an object
-        with three properties: <IJS>response</IJS>, <IJS>navigation</IJS>, and{" "}
-        <IJS>router</IJS>. The <IJS>response</IJS> contains information about
-        the route that matched the new location, the <IJS>navigation</IJS>{" "}
-        contains navigation data that doesn't belong in a <IJS>response</IJS>,
-        and the <IJS>router</IJS> is your Curi router.
+        Registration is done using the router's <IJS>respond</IJS> method. If a
+        response already exists when <IJS>router.respond</IJS> is called, then
+        the response handler will be called immediately. If the initial response
+        hasn't resolved, then the response handler will be called once it does.
+      </p>
+      <p>
+        A response handler receives an object with three properties:{" "}
+        <IJS>response</IJS>, <IJS>navigation</IJS>, and <IJS>router</IJS>. The{" "}
+        <Link
+          to="Guide"
+          params={{ slug: "responses" }}
+          details={{ hash: "properties" }}
+        >
+          <IJS>response</IJS>
+        </Link>{" "}
+        contains information about the route that matched the new location, the{" "}
+        <IJS>navigation</IJS> contains navigation data that doesn't belong in a{" "}
+        <IJS>response</IJS>, and the <IJS>router</IJS> is your Curi router.
       </p>
       <PrismBlock lang="javascript">
         {`function responseLogger({ response, navigation, router }) {
@@ -110,28 +122,25 @@ const router = curi(history, routes);`}
 router.respond(responseLogger);`}
       </PrismBlock>
       <Note>
-        By default, the response handler will only be called one time. However,
-        your application should be updated for <em>every</em> response.{" "}
-        <IJS>router.respond</IJS> supports a second argument, which is an
-        options object. One of these options is <IJS>observe</IJS>.{" "}
-        <IJS>observe</IJS> defaults to <IJS>false</IJS>, but when you set it to{" "}
-        <IJS>true</IJS>, the response handler will be called every time a new
-        response is emitted. This will also return a function so that you can
-        stop observing. You probably won't need to use this because the various
-        packages (<IJS>@curi/react</IJS>, <IJS>@curi/vue</IJS>, etc. handle this
-        for you).
+        By default, the response handler will only be called one time. This is
+        useful for setup functions that you only want to call once. However, a
+        response handler can also be registered to be called every time a new
+        response is emitted by using the <IJS>{`{ observe: true }`}</IJS>{" "}
+        option. In general, you shouldn't have to do this yourself about this
+        because the rendering packages like <IJS>@curi/react</IJS> and{" "}
+        <IJS>@curi/vue</IJS> will set this up automatically.
         <PrismBlock lang="javascript">
           {`function responseLogger() {
-    console.log("I will be called for every response");
-  }
-  const stopResponding = router.respond(
-    responseLogger,
-    { observe: true }
-  );
-  // any navigation that happens now will be logged
-  // ...
-  stopResponding();
-  // after unsubscribing, any new navigation will not be logged`}
+  console.log("I will be called for every response");
+}
+const stopResponding = router.respond(
+  responseLogger,
+  { observe: true }
+);
+// any navigation that happens now will be logged
+// ...
+stopResponding();
+// response are no longer logged`}
         </PrismBlock>
       </Note>
     </Section>
@@ -151,13 +160,13 @@ router.respond(responseLogger);`}
       <p>
         If you are following along using React, continue on to{" "}
         <Link to="Tutorial" params={{ name: "05-pages-react" }}>
-          Part 6: React Pages
+          Part 5: React Pages
         </Link>
       </p>
       <p>
         If you are following along using Vue, you instead you should go to{" "}
         <Link to="Tutorial" params={{ name: "05-pages-vue" }}>
-          Part 6: Vue Pages
+          Part 5: Vue Pages
         </Link>
       </p>
     </Section>

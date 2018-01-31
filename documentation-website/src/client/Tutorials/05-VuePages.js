@@ -106,23 +106,49 @@ const router = {
       <Subsection title="The Plugin" id="plugin">
         <p>
           The <IJS>CuriPlugin</IJS> exported by <IJS>@curi/vue</IJS>, should be
-          registered with Vue after the Curi router has been created. The plugin
-          does a couple things. First, it will make your Curi router and new
-          responses/navigations accessible to every component. The router will
-          be accessible as <IJS>this.$router</IJS> while through the{" "}
-          <IJS>response</IJS> and <IJS>navigation</IJS> are grouped under the{" "}
-          <IJS>this.$curi</IJS> object. Second, it will register Curi specific
-          components. For this tutorial, the only component that we care about
-          is <Cmp>curi-link</Cmp>.
+          registered with Vue after the Curi router has been created. We will
+          register the plugin and (later) create our Vue instance in a{" "}
+          <Link
+            to="Tutorial"
+            params={{ name: "04-router" }}
+            details={{ hash: "observer" }}
+          >
+            response handler
+          </Link>.
         </p>
+        <Note>
+          The organization here is all a matter of taste, but I like to move all
+          of the rendering to a <IJS>render.js</IJS> file. That file can export
+          a response handler, which we can import and pass to{" "}
+          <IJS>router.respond</IJS> in the index file. One benefit of this is
+          that you aren't mixing React and component imports up with the router
+          setup imports in <IJS>index.js</IJS>
+        </Note>
+        <PrismBlock lang="bash">{`touch src/render.js`}</PrismBlock>
         <PrismBlock lang="javascript">
-          {`// src/index.js
+          {`// src/render.js
 import Vue from 'vue';
 import { CuriPlugin } from '@curi/vue';
 
-const router = curi(history, routes);
-Vue.use(CuriPlugin, { router });`}
+export default ({ router }) => (
+  Vue.use(CuriPlugin, { router });
+);`}
         </PrismBlock>
+        <p>The plugin does a couple things.</p>
+        <ol>
+          <li>
+            The plugin will make your Curi router and new responses/navigations
+            accessible to every component. The router will be accessible as{" "}
+            <IJS>this.$router</IJS> while the <IJS>response</IJS> and{" "}
+            <IJS>navigation</IJS> objects are grouped under the{" "}
+            <IJS>this.$curi</IJS> object.
+          </li>
+          <li>
+            The plugin will register Curi specific components so that they can
+            be rendered anywhere in your application. For this tutorial, the
+            only component that we care about is <Cmp>curi-link</Cmp>.
+          </li>
+        </ol>
       </Subsection>
 
       <Subsection
@@ -135,13 +161,12 @@ Vue.use(CuriPlugin, { router });`}
       >
         <p>
           The <Cmp>curi-link</Cmp> component renders anchor (<Cmp>a</Cmp>)
-          elements. However, unlike an anchor, we don't actually have to write
-          the URI that we want to navigate to (the <IJS>href</IJS>). Instead,
-          you use the <IJS>to</IJS> prop to pass the name of the route that you
-          want to navigate to.
+          elements. However, instead of having to write a URL, you use the{" "}
+          <IJS>to</IJS> prop to pass the name of the route that you want to
+          navigate to.
         </p>
         <PrismBlock lang="jsx">
-          {`<curi-link to='Home'>Home</curi-link>
+          {`<curi-link to="Home">Home</curi-link>
 // <a href='/'>Home</a>`}
         </PrismBlock>
         <p>
@@ -151,7 +176,7 @@ Vue.use(CuriPlugin, { router });`}
         <PrismBlock lang="jsx">
           {`// { name: 'Book', path: ':id' }
 // (inherits 'books' path from parent route)
-<curi-link to='Book' params={{ id: 1357 }}>
+<curi-link to="Book" :params="{ id: 1357 }">
   Some Book
 </curi-link>
 // <a href='/books/1357'>Some Book</a>`}
@@ -162,17 +187,24 @@ Vue.use(CuriPlugin, { router });`}
           <IJS>details</IJS> prop.
         </p>
         <PrismBlock lang="jsx">
-          {`<curi-link to='Contact' details={{ hash: 'email' }}>
+          {`<curi-link to="Contact" :details="{ hash: 'email' }">
   Contact by Email
 </curi-link>
 // <a href='/contact#email>Contact by Email</a>`}
         </PrismBlock>
+        <p>
+          Sometimes using <IJS>to</IJS>, <IJS>params</IJS>, and{" "}
+          <IJS>details</IJS> means that you type more characters than just
+          writing a URL, but it also means you don't have to worry about string
+          concatenation and typos (Curi will throw an error if you try linking
+          to a route that does not exist).
+        </p>
         <Note>
           If you want to navigate outside of the application, use an anchor not
           a <Cmp>curi-link</Cmp>.
           <PrismBlock lang="jsx">
-            {`// interal
-<curi-link to='Contact'>Contact</curi-link>
+            {`// internal
+<curi-link to="Contact">Contact</curi-link>
 // external
 <a href="https://github.com">GitHub</a>`}
           </PrismBlock>
@@ -185,36 +217,39 @@ Vue.use(CuriPlugin, { router });`}
         Being able to access the Curi router is nice, but what we really need is
         to access the response objects that are emitted by Curi whenever the
         location changes. The <IJS>CuriPlugin</IJS> takes care of that step for
-        us. <IJS>CuriPlugin</IJS> sets up an observer using{" "}
-        <IJS>router.respond</IJS>. Whenever a new response is emitted, that
-        response handler updates the reactive <IJS>response</IJS> and{" "}
-        <IJS>navigation</IJS> properties of <IJS>this.$curi</IJS>.
+        us. <IJS>CuriPlugin</IJS> sets up a response handler to observe the
+        router. Whenever a new response is emitted, that response handler
+        updates the reactive <IJS>response</IJS> and <IJS>navigation</IJS>{" "}
+        properties of <IJS>this.$curi</IJS>.
       </p>
 
       <p>
-        While we do not have to manually observe the router to be informed of
-        new responses, we do need to listen for the first response to be emitted
-        so that we can render the application. We can do this by passing a
-        response handler that creates our Vue instance to{" "}
-        <IJS>router.respond</IJS>.
+        Inside of the response handler function in the <IJS>render.js</IJS>{" "}
+        file, we just need to render our root application component. All of our
+        Curi related data will be available through <IJS>this.$curi</IJS>, so we
+        don't have to attach any data to the Vue instance.
       </p>
-      <p>
-        Inside of the response handler function, we just need to render our root
-        application component. All of our Curi related data will be available
-        through <IJS>this.$curi</IJS>, so we don't have to attach any data to
-        the Vue instance.
-      </p>
-      <PrismBlock lang="javascript">
-        {`// src/index.js
+      <Note>
+        You don't have to use a response handler to create your Vue instance,
+        but if you do not, then you might render before the initial response has
+        been created and you will need to render a loading screen.
+      </Note>
+      <PrismBlock lang="javascript" data-line="6,10-14">
+        {`// src/render.js
+import Vue from 'vue';
+import { CuriPlugin } from '@curi/vue';
+
+// we'll create this next
 import app from './components/app';
 
-router.respond(() => {
+export default ({ router }) => (
+  Vue.use(CuriPlugin, { router });
   const vm = new Vue({
     el: '#root',
     template: '<app />',
     components: { app }
   });
-});`}
+);`}
       </PrismBlock>
     </Section>
 
@@ -257,7 +292,7 @@ router.respond(() => {
       </p>
       <PrismBlock lang="javascript">
         {`{
- body: undefined,
+ body: 'Home',
  data: undefined,
  error: undefined,
  key: '1.0',
