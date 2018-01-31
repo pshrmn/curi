@@ -1,15 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import Browser from "@hickory/browser";
 import curi from "@curi/core";
 
-import App from "./components/App";
 import { baseRoutes } from "./routes";
+import renderApp from "./render";
 
 const history = Browser();
 const router = curi(history, baseRoutes);
-const root = document.getElementById("root");
-
-router.respond(() => {
-  ReactDOM.render(<App router={router} />, root);
-});
+router.respond(renderApp);

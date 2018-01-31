@@ -1,31 +1,32 @@
-import Home from './components/Home';
-import Contact from './components/Contact';
-import Method from './components/Method';
+import Home from "./components/Home";
+import Contact from "./components/Contact";
+import Method from "./components/Method";
+import NotFound from "./components/NotFound";
 
 export default [
   {
-    name: 'Home',
-    path: '',
+    name: "Home",
+    path: "",
     match: {
       response: ({ set }) => {
         set.body(Home);
-        set.title('Home');
+        set.title("Home");
       }
     }
   },
   {
-    name: 'Contact',
-    path: 'contact',
+    name: "Contact",
+    path: "contact",
     match: {
       response: ({ set }) => {
         set.body(Contact);
-        set.title('Contact');
+        set.title("Contact");
       }
     },
     children: [
       {
-        name: 'Method',
-        path: ':method',
+        name: "Method",
+        path: ":method",
         match: {
           response: ({ route, set }) => {
             set.body(Method);
@@ -34,5 +35,14 @@ export default [
         }
       }
     ]
+  },
+  {
+    name: "Not Found",
+    path: "(.*)",
+    match: {
+      response: ({ set }) => {
+        set.body(NotFound);
+      }
+    }
   }
-]
+];

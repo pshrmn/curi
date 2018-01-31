@@ -1,19 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import Browser from "@hickory/browser";
 import curi from "@curi/core";
-import { CuriProvider } from "@curi/react";
+import NProgress from "nprogress";
 
 import routes from "./routes";
-import renderFunction from "./renderFunction";
+import renderApp from "./render";
 
 const history = Browser();
 const router = curi(history, routes);
-const root = document.getElementById("root");
+router.respond(renderApp);
 
-router.respond(() => {
-  ReactDOM.render(
-    <CuriProvider router={router}>{renderFunction}</CuriProvider>,
-    root
-  );
-});
+// whenever we re-render, finish the progress bar
+router.respond(
+  () => {
+    NProgress.done();
+  },
+  { observe: true }
+);

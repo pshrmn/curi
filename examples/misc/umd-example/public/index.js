@@ -39,7 +39,7 @@ const routes = [
 const router = Curi(hashHistory, routes);
 const root = document.getElementById("root");
 
-function render(response) {
+function render({ response }) {
   if (!response || response.status === 404) {
     return h("div", null, "The page you were looking for does not exist");
   }
@@ -47,14 +47,6 @@ function render(response) {
   return h("div", null, h(Nav), h(Body));
 }
 
-router.respond((response, navigation) => {
-  ReactDOM.render(
-    h(CuriReact.CuriBase, {
-      response: response,
-      navigation: navigation,
-      router: router,
-      render: render
-    }),
-    root
-  );
+router.respond(({ router }) => {
+  ReactDOM.render(h(CuriReact.CuriProvider, { router: router }, render), root);
 });
