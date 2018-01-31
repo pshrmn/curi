@@ -184,25 +184,19 @@ Vue.use(CuriPlugin, { router });`}
       <p>
         Being able to access the Curi router is nice, but what we really need is
         to access the response objects that are emitted by Curi whenever the
-        location changes. We <em>could</em> use the <IJS>router.respond</IJS>{" "}
-        method that we covered in the{" "}
-        <Link to="Tutorial" params={{ name: "04-router" }}>
-          router
-        </Link>{" "}
-        tutorial, but the <IJS>CuriPlugin</IJS> takes care of that step for us.{" "}
-        <IJS>CuriPlugin</IJS> calls <IJS>router.respond</IJS> and in the
-        response handler, it updates the reactive <IJS>response</IJS> and{" "}
-        <IJS>navigation</IJS> properties of <IJS>this.$curi</IJS> whenever a new
-        response is emitted.
+        location changes. The <IJS>CuriPlugin</IJS> takes care of that step for
+        us. <IJS>CuriPlugin</IJS> sets up an observer using{" "}
+        <IJS>router.respond</IJS>. Whenever a new response is emitted, that
+        response handler updates the reactive <IJS>response</IJS> and{" "}
+        <IJS>navigation</IJS> properties of <IJS>this.$curi</IJS>.
       </p>
 
       <p>
-        While we do not have to manually subscribe to all responses, we do need
-        to listen for the first response to be emitted so that we can render the
-        application. The second argument to <IJS>router.respond</IJS> is an
-        options object. If we pass the options <IJS>{`{ once: true }`}</IJS>,
-        then that function will only be called after the initial response is
-        emitted.
+        While we do not have to manually observe the router to be informed of
+        new responses, we do need to listen for the first response to be emitted
+        so that we can render the application. We can do this by passing a
+        response handler that creates our Vue instance to{" "}
+        <IJS>router.respond</IJS>.
       </p>
       <p>
         Inside of the response handler function, we just need to render our root
@@ -220,7 +214,7 @@ router.respond(() => {
     template: '<app />',
     components: { app }
   });
-}, { once: true });`}
+});`}
       </PrismBlock>
     </Section>
 

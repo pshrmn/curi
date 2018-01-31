@@ -36,9 +36,9 @@ export default () => (
         browser's forward and back buttons.
       </p>
       <p>
-        Hickory uses a single-subscriber model so that whenever navigation to a
-        new location happens, the subscribed method will be called. Curi will
-        subscribe to your history object to create new responses whenever the
+        Hickory uses a single-observer model so that whenever navigation to a
+        new location happens, the observer method will be called. Curi will
+        observe your history object to create new responses whenever the
         location changes.
       </p>
     </Section>

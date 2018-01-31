@@ -129,15 +129,12 @@ import { CuriProvider } from '@curi/react';`}
           </li>
         </ol>
         <p>
-          The <Cmp>CuriProvider</Cmp> will listen for new responses to be
-          emitted by the router, but we should also delay our initial render
-          until we know that the router has emitted its first response. This can
-          be skipped, but we would have to render a loading screen.
-        </p>
-        <p>
-          We will pass the <IJS>{`{ once: true }`}</IJS> option to{" "}
-          <IJS>router.respond</IJS> because the <Cmp>CuriProvider</Cmp> will
-          take over listening for new responses.
+          The <Cmp>CuriProvider</Cmp> will setup a response handler to trigger a
+          re-render when new responses are emitted by the router. We should also
+          delay our initial render until the router has emitted its first
+          response. We can do this by calling <IJS>ReactDOM.render</IJS> in a
+          response handler that is passed to <IJS>router.respond</IJS>. This can
+          be skipped, but then we would have to render a loading screen.
         </p>
         <PrismBlock lang="jsx" data-line="2-4, 9-14, 15">
           {`// src/index.js
@@ -153,7 +150,7 @@ router.respond(() => {
       {() => null}
     </CuriProvider>
   ), document.getElementById('root'));
-}, { once: true });`}
+});`}
         </PrismBlock>
         <Note>
           An invisible but important function of the <Cmp>CuriProvider</Cmp> is
@@ -453,7 +450,7 @@ router.respond(() => {
       {renderFunction}
     </CuriProvider>
   ), root);
-}, { once: true });`}
+});`}
       </PrismBlock>
       <p>
         Now, if we load up our application, we will render our home page (the{" "}

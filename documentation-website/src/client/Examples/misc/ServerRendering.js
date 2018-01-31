@@ -32,7 +32,7 @@ export default ({ name }) => (
     );
     // 5. Insert the markup into the page's html and send it
     res.send(renderFullPage(markup));
-  }, { once: true });
+  });
 }`}
       </PrismBlock>
 

@@ -25,7 +25,7 @@ router.respond(() => {
     template: '<app />',
     components: { app: App }
   });
-}, { once: true });`}
+});`}
   </PrismBlock>
 );
 

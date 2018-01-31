@@ -417,10 +417,8 @@ const router = curi(history, routes);`}
           <IJS>children</IJS> prop.
         </p>
         <p>
-          We will also use <IJS>router.respond</IJS> so that the application is
-          not rendered until the initial response has been emitted. The{" "}
-          <IJS>once</IJS> option is provided because we only need this callback
-          function to be called the first time a <IJS>response</IJS> is emitted.
+          We will also use <IJS>router.respond</IJS> to wait for the initial
+          response to be emitted before rendering.
         </p>
         <PrismBlock lang="jsx">
           {`router.respond(() => {
@@ -429,7 +427,7 @@ const router = curi(history, routes);`}
       {({ response }) => {...}}
     </CuriProvider>
   ), holder);
-}, { once: true });`}
+});`}
         </PrismBlock>
         <p>
           So what should your render function look like? The render function

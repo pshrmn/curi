@@ -55,9 +55,7 @@ const router = curi(history, routes, options);`}
                 wish to use should be provided in this array.
               </li>
               <li>
-                <IJS>middleware</IJS> - An array of middleware functions. These
-                are functions that will be able to interact with/modify response
-                objects before they are emitted to subscribed functions.
+                <IJS>sideEffects</IJS> - An array of side-effect objects.
               </li>
               <li>
                 <IJS>cache</IJS> - An object with get/set properties. This
@@ -96,7 +94,7 @@ const router = curi(history, routes, options);`}
             <p>
               If the best-matched route has either a <IJS>match.initial</IJS> or{" "}
               <IJS>match.every</IJS> loading function, the router will not call
-              the subscribed functions until the loading functions have all
+              the response handler functions until the match functions have all
               resolved.
             </p>
             <PrismBlock lang="javascript">
@@ -107,9 +105,13 @@ const router = curi(history, routes, options);`}
 
             <Subsection tag="h6" title="options" id="respond-options">
               <PrismBlock lang="javascript">
-                {`{ once: true } // default false
-// When true, the response handler function will only be called once. When
-// once is true, router.respond does not return an unsubscribe function.`}
+                {`{ observe: true } // default false
+// When true, the response handler function will be called for all future
+// responses that are emitted by the router.
+
+{ initial: false } // default true
+// When false, the response handler will not be called until the
+// next response is emitted.`}
               </PrismBlock>
             </Subsection>
           </Subsection>

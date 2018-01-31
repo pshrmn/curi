@@ -17,10 +17,11 @@ export default ({ name }) => (
       default export from <IJS>@curi/core</IJS>.
     </p>
     <p>
-      In order to re-render your application after navigation, you can subscribe
-      to your router using its <IJS>respond</IJS> method. <IJS>respond</IJS>{" "}
-      takes a callback function that will be passed <IJS>response</IJS> and{" "}
-      <IJS>navigation</IJS> arguments, which you can use to render.
+      In order to re-render your application after navigation, you can observe
+      your router for responses using its <IJS>respond</IJS> method.{" "}
+      <IJS>respond</IJS> takes a callback function that will be passed{" "}
+      <IJS>response</IJS> and <IJS>navigation</IJS> arguments, which you can use
+      to render.
     </p>
 
     <Section title="The History Object" id="history-object">
@@ -160,11 +161,11 @@ const router = curi(history, routes);
         Whenever navigation happens, a new location object is created by
         Hickory. Curi uses that location object's pathname property to match
         against all of your routes. When it finds one that matches, it uses that
-        route object to create a response object. You can subscribe to a Curi
-        router with a response handler function. When a new response is created,
-        your response handler function will be passed an object that contains a
-        response object, an object with additional navigation data, and your
-        router.
+        route object to create a response object. You can give your Curi router
+        response handlers to be called whenever a new response is created. When
+        a new response is created, your response handler function will be passed
+        an object that contains a response object, an object with additional
+        navigation data, and your router.
       </p>
       <Note>
         Response handlers are passed the router so you can define them in a

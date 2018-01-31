@@ -25,7 +25,7 @@ router.respond(() => {
       }}
     </CuriProvider>
   ), root);
-}, { once: true });`}
+});`}
   </PrismBlock>
 );
 

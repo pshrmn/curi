@@ -10,10 +10,9 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      Curi side effects are essentially permament subscribers (response
-      handlers) to your router. They can be considered slightly more convenient
-      than response handlers since you don't have to subscribe to your router to
-      set them up. However, you also cannot remove them.
+      Curi side effects are essentially permament observers (response handlers)
+      of your router, but you can specify whether they should be run before or
+      after response handlers that were setup using <IJS>router.respond</IJS>.
     </p>
 
     <p>
