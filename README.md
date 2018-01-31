@@ -22,7 +22,7 @@ There are also a number of [examples](/examples) that you can learn from. Many o
 
 |Name|About|Documentation|Source|
 |---|---|---|---|
-|[@curi/core](/packages/core)|[![npm][@curi/version-badge]][npm-curi]|[Documentation](https://curi.js.org/packages/@curi/curi/)|[Source](/packages/core/src)|
+|[@curi/core](/packages/core)|[![npm][@curi/core-version-badge]][npm-@curi/core]|[Documentation](https://curi.js.org/packages/@curi/curi/)|[Source](/packages/core/src)|
 ||The core package provides the core routing functionality for the application. It is used to create a configuration object using a `history` object and a `routes` array.|
 
 #### Addons:
@@ -51,11 +51,11 @@ While you can use vanilla JavaScript to render your application, most modern app
 |---|---|---|---|
 |[@curi/react](/packages/react)|[![npm][@curi/react-version-badge]][npm-@curi/react]|[Documentation](https://curi.js.org/packages/@curi/react/)|[Source](/packages/react/src)|
 ||`@curi/react` provides a communication layer between the `curi` configuration object and your React application.|
-|[@curi/redux](/packages/redux)|[![npm][@curi/redux-version-badge]][npm-@curi/redux]|[Documentation](https://curi.js.org/packages/@curi/redux/)|[Source](/packages/redux/src)|
-||A complement to `@curi/react`, `@curi/redux` can be used to have Redux pass response/location information to your components.|
 |[@curi/vue](/packages/vue)|[![npm][@curi/vue-version-badge]][npm-@curi/vue]|[Documentation](https://curi.js.org/packages/@curi/vue/)|[Source](/packages/vue/src)|
 ||A Vue plugin that adds Curi routing support to a Vue application. This is currently experimental and in addition to the plugin, just adds `<Link>` and `<Redirect>` components. So far it seems to work well, but is missing a lot of the functionality that the React packages provide.|
 |[@curi/svelte](/packages/svelte)|[![npm][@curi/svelte-version-badge]][npm-@curi/svelte]|[Documentation](https://curi.js.org/packages/@curi/svelte/)|[Source](/packages/svelte/src)|
+|[@curi/react-native](/packages/react-native)|[![npm][@curi/react-native-version-badge]][npm-@curi/react-native]|[Documentation](https://curi.js.org/packages/@curi/react-native/)|[Source](/packages/react-native/src)|
+||`@curi/react` provides a communication layer between the `curi` configuration object and your React application.|
 
 #### State
 
@@ -63,12 +63,14 @@ While you can use vanilla JavaScript to render your application, most modern app
 |---|---|---|---|
 |[@curi/redux](/packages/redux)|[![npm][@curi/redux-version-badge]][npm-@curi/redux]|[Documentation](https://curi.js.org/packages/@curi/redux/)|[Source](/packages/redux/src)|
 ||A complement to `@curi/react`, `@curi/redux` can be used to have Redux pass response/location information to your components.|
+|[@curi/mobx](/packages/mobx)|[![npm][@curi/mobx-version-badge]][npm-@curi/mobx]|[Documentation](https://curi.js.org/packages/@curi/mobx/)|[Source](/packages/mobx/src)|
+||A complement to `@curi/react`, `@curi/mobx` can be used to have MobX pass response/location information to your components.|
 
 [build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg
 [build]: https://travis-ci.org/pshrmn/curi
 
-[@curi/version-badge]: https://img.shields.io/npm/v/curi.svg
-[npm-curi]: https://npmjs.com/package/curi
+[@curi/core-version-badge]: https://img.shields.io/npm/v/@curi/core.svg
+[npm-@curi/core]: https://npmjs.com/package/@curi/core
 
 [@curi/addon-prefetch-version-badge]: https://img.shields.io/npm/v/@curi/addon-prefetch.svg
 [npm-@curi/addon-prefetch]: https://npmjs.com/package/@curi/addon-prefetch
@@ -88,11 +90,17 @@ While you can use vanilla JavaScript to render your application, most modern app
 [@curi/react-version-badge]: https://img.shields.io/npm/v/@curi/react.svg
 [npm-@curi/react]: https://npmjs.com/package/@curi/react
 
-[@curi/redux-version-badge]: https://img.shields.io/npm/v/@curi/redux.svg
-[npm-@curi/redux]: https://npmjs.com/package/@curi/redux
+[@curi/react-native-version-badge]: https://img.shields.io/npm/v/@curi/react-native.svg
+[npm-@curi/react-native]: https://npmjs.com/package/@curi/react-native
 
 [@curi/vue-version-badge]: https://img.shields.io/npm/v/@curi/vue.svg
 [npm-@curi/vue]: https://npmjs.com/package/@curi/vue
 
 [@curi/svelte-version-badge]: https://img.shields.io/npm/v/@curi/svelte.svg
 [npm-@curi/svelte]: https://npmjs.com/package/@curi/svelte
+
+[@curi/redux-version-badge]: https://img.shields.io/npm/v/@curi/redux.svg
+[npm-@curi/redux]: https://npmjs.com/package/@curi/redux
+
+[@curi/mobx-version-badge]: https://img.shields.io/npm/v/@curi/mobx.svg
+[npm-@curi/mobx]: https://npmjs.com/package/@curi/mobx
