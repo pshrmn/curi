@@ -15,8 +15,9 @@ export default ({ name }) => (
         JavaScript object. Then, any response handler functions are called and
         passed that JavaScript object . Side effects are basically permanent
         response handlers (they cannot be removed). Side effects can either be
-        run before (default) or after subscribed response handlers. They receive
-        the new response and an object with information about the navigation.
+        run before (default) or after response handler that were set using{" "}
+        <IJS>router.respond</IJS>. They receive the new response and an object
+        with information about the navigation.
       </p>
 
       <p>

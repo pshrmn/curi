@@ -50,11 +50,14 @@ export const syncResponses = (store: Store<any>, router: CuriRouter): void => {
     router
   });
 
-  router.respond(({ response, navigation }: Emitted) => {
-    store.dispatch({
-      type: LOCATION_CHANGE,
-      response,
-      navigation
-    });
-  });
+  router.respond(
+    ({ response, navigation }: Emitted) => {
+      store.dispatch({
+        type: LOCATION_CHANGE,
+        response,
+        navigation
+      });
+    },
+    { observe: true }
+  );
 };

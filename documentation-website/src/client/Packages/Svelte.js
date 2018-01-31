@@ -75,7 +75,7 @@ const store = new Store({
 });`}
       </PrismBlock>
       <p>
-        Add a subscriber to the router to update the store whenever a new
+        Add an observer to the router to update the store whenever a new
         response is emitted.
       </p>
       <PrismBlock lang="javascript">
@@ -86,8 +86,8 @@ const store = new Store({
       <p>
         As far as rendering your application goes, you should should have a base
         component that has any global layout and uses the response to render the
-        correct component(s). Setup a one time subscriber to render this
-        component and make sure to pass the store to the component.
+        correct component(s). Setup a response handler for the initial render of
+        this component and make sure to pass the store to the component.
       </p>
       <PrismBlock lang="html">
         {`<NavLinks />
@@ -104,10 +104,10 @@ const store = new Store({
       <PrismBlock lang="javascript">
         {`import app from './components/app';
 
-// use a one time subscriber for the initial render
+// use a response handler for the initial render
 config.respond(() => {
   view = new app({ target, store });
-}, { once: true });`}
+});`}
       </PrismBlock>
     </Section>
   </BasePackage>

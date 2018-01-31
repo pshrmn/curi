@@ -170,10 +170,10 @@ export default function renderFunction(h) {
       </PrismBlock>
 
       <p>
-        While the <IJS>CuriPlugin</IJS> subscribes to your router object, you
-        will still need to wait for it to emit its first update before you can
-        render. To do that, you can pass the <IJS>{`{ once: true }`}</IJS>{" "}
-        option to a <IJS>router.respond</IJS> call.
+        While the <IJS>CuriPlugin</IJS> observes your router for new responses,
+        you will still need to wait for it to emit its first response before you
+        can render. This can be done by calling your rendering code in a
+        callback function passed to <IJS>router.respond</IJS>.
       </p>
 
       <PrismBlock lang="javascript">
@@ -192,7 +192,7 @@ router.respond(() => {
       return h(this.$curi.response.body)
     }
   });
-}, { once: true });`}
+});`}
       </PrismBlock>
     </Section>
   </BasePackage>

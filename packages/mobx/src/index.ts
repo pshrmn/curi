@@ -12,9 +12,12 @@ export default class CuriStore {
     this.response = null;
     this.navigation = null;
 
-    router.respond(({ response, navigation }: Emitted) => {
-      this.update(response, navigation);
-    });
+    router.respond(
+      ({ response, navigation }: Emitted) => {
+        this.update(response, navigation);
+      },
+      { observe: true }
+    );
   }
 
   @mobxAction.bound

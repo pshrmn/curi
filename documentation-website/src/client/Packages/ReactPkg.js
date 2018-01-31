@@ -65,7 +65,7 @@ export default ({ name, version, globalName }) => (
       }}
     </CuriProvider>
   ), holder);
-}, { once: true });`}
+});`}
         </PrismBlock>
         <Section tag="h3" title="Props" id="CuriProvider-props">
           <Subsection tag="h4" title="router" id="CuriProvider-router">

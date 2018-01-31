@@ -41,16 +41,13 @@ describe("<CuriProvider>", () => {
         return null;
       });
 
-      router.respond(
-        () => {
-          const wrapper = mount(
-            <CuriProvider router={router}>{fn}</CuriProvider>
-          );
-          history.push("/about");
-          pushedHistory = true;
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const wrapper = mount(
+          <CuriProvider router={router}>{fn}</CuriProvider>
+        );
+        history.push("/about");
+        pushedHistory = true;
+      });
     });
 
     it("passes { response, navigation, router } to render prop", done => {
@@ -68,14 +65,11 @@ describe("<CuriProvider>", () => {
       });
 
       const router = curi(history, routes);
-      router.respond(
-        () => {
-          const wrapper = mount(
-            <CuriProvider router={router}>{fn}</CuriProvider>
-          );
-        },
-        { once: true }
-      );
+      router.respond(() => {
+        const wrapper = mount(
+          <CuriProvider router={router}>{fn}</CuriProvider>
+        );
+      });
     });
   });
 
@@ -98,18 +92,13 @@ describe("<CuriProvider>", () => {
         </Curious>
       );
 
-      router.respond(
-        ({ response, navigation }) => {
-          emittedResponse = response;
-          emittedNavigation = navigation;
-          const wrapper = mount(
-            <CuriProvider router={router}>
-              {() => <ContextLogger />}
-            </CuriProvider>
-          );
-        },
-        { once: true }
-      );
+      router.respond(({ response, navigation }) => {
+        emittedResponse = response;
+        emittedNavigation = navigation;
+        const wrapper = mount(
+          <CuriProvider router={router}>{() => <ContextLogger />}</CuriProvider>
+        );
+      });
     });
   });
 });

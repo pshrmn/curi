@@ -88,23 +88,22 @@ function createRouter(
       );
     }
 
-    const { once = false, initial = true } = options || {};
+    const { observe = false, initial = true } = options || {};
 
-    if (once) {
+    if (observe) {
+      if (mostRecent.response && initial) {
+        fn.call(null, { ...mostRecent, router });
+      }
+      const newLength = responseHandlers.push(fn);
+      return () => {
+        responseHandlers[newLength - 1] = null;
+      };
+    } else {
       if (mostRecent.response && initial) {
         fn.call(null, { ...mostRecent, router });
       } else {
         oneTimers.push(fn);
       }
-    } else {
-      if (mostRecent.response && initial) {
-        fn.call(null, { ...mostRecent, router });
-      }
-
-      const newLength = responseHandlers.push(fn);
-      return () => {
-        responseHandlers[newLength - 1] = null;
-      };
     }
   }
 

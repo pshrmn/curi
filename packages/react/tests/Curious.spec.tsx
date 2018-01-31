@@ -23,21 +23,18 @@ describe("<Curious>", () => {
   });
 
   it("passes router, response, and navigation to children function", done => {
-    router.respond(
-      ({ response, navigation }) => {
-        const wrapper = render(router, () => (
-          <Curious>
-            {value => {
-              expect(value.router).toBe(router);
-              expect(value.response).toBe(response);
-              expect(value.navigation).toBe(navigation);
-              done();
-              return null;
-            }}
-          </Curious>
-        ));
-      },
-      { once: true }
-    );
+    router.respond(({ response, navigation }) => {
+      const wrapper = render(router, () => (
+        <Curious>
+          {value => {
+            expect(value.router).toBe(router);
+            expect(value.response).toBe(response);
+            expect(value.navigation).toBe(navigation);
+            done();
+            return null;
+          }}
+        </Curious>
+      ));
+    });
   });
 });

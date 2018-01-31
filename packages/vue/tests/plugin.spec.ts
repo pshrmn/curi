@@ -35,21 +35,18 @@ describe("CuriPlugin", () => {
           return h("div");
         }
       };
-      router.respond(
-        ({ response, navigation }) => {
-          Vue.use(CuriPlugin, { router });
+      router.respond(({ response, navigation }) => {
+        Vue.use(CuriPlugin, { router });
 
-          const wrapper = shallow(FakeComponent, {
-            localVue: Vue
-          });
+        const wrapper = shallow(FakeComponent, {
+          localVue: Vue
+        });
 
-          expect(wrapper.vm.$curi.response).toBe(response);
-          expect(wrapper.vm.$curi.navigation).toBe(navigation);
+        expect(wrapper.vm.$curi.response).toBe(response);
+        expect(wrapper.vm.$curi.navigation).toBe(navigation);
 
-          done();
-        },
-        { once: true }
-      );
+        done();
+      });
     });
 
     describe("reactive properties", () => {
@@ -101,25 +98,28 @@ describe("CuriPlugin", () => {
         let wrapper;
         Vue.use(CuriPlugin, { router });
 
-        router.respond(() => {
-          if (!wrapper) {
-            wrapper = mount(
-              {
-                template: "<div><FakeComponent /></div>",
-                components: { FakeComponent }
-              },
-              {
-                localVue: Vue
-              }
-            );
-            router.history.push("/another-one");
-          }
-        });
+        router.respond(
+          () => {
+            if (!wrapper) {
+              wrapper = mount(
+                {
+                  template: "<div><FakeComponent /></div>",
+                  components: { FakeComponent }
+                },
+                {
+                  localVue: Vue
+                }
+              );
+              router.history.push("/another-one");
+            }
+          },
+          { observe: true }
+        );
       });
     });
   });
 
-  describe("<curi-link>", () => {
+  describe("registering components components", () => {
     it("Registers the Link component as <curi-link>", () => {
       const Vue = createLocalVue();
       Vue.use(CuriPlugin, {
@@ -128,9 +128,7 @@ describe("CuriPlugin", () => {
       });
       expect(Vue.options.components["curi-link"]).toBeDefined();
     });
-  });
 
-  describe("<curi-block>", () => {
     it("Registers the Block component as <curi-block>", () => {
       const Vue = createLocalVue();
       Vue.use(CuriPlugin, {

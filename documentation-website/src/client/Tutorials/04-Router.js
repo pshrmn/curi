@@ -83,15 +83,15 @@ const router = curi(history, routes);`}
       </PrismBlock>
     </Section>
 
-    <Section title="Subscriber Model" id="subscriber" type="aside">
+    <Section title="Observer Model" id="observer" type="aside">
       <p>
         In order to let your application know about location changes, Curi uses
-        a subscriber model. Whenever a location change happens, Curi will create
-        a new response and then emit this response to all of its subscribed
-        functions. These subscribed functions are called response handlers since
-        they handle the new respond. Using <IJS>router.respond</IJS>, we can
-        give Curi a response handler to call when a new response has been
-        created.
+        an observer model to emit responses. A piece of code that wants to know
+        about the current response passes a callback function (referred to here
+        as a response handler) to <IJS>router.respond</IJS>. If a response
+        already exists, then the response handler will be called immediately. If
+        the initial response hasn't resolved, then the response handler will be
+        called once it does.
       </p>
       <p>
         What does a response handler function look like? It receives an object
@@ -102,42 +102,38 @@ const router = curi(history, routes);`}
         and the <IJS>router</IJS> is your Curi router.
       </p>
       <PrismBlock lang="javascript">
-        {`function responseLogger({ response, navigation }) {
-  console.log("RESPONSE:", response);
-  console.log("NAVIGATION", navigation)
+        {`function responseLogger({ response, navigation, router }) {
+  console.log("[response]", response);
+  console.log("[navigation]", navigation);
+  console.log("[router]", router);
 }
 router.respond(responseLogger);`}
       </PrismBlock>
-      <p>
-        <IJS>curi.respond</IJS> will return a function that you can use to stop
-        responding to new responses.
-      </p>
-      <PrismBlock lang="javascript">
-        {`function responseLogger() {
-  console.log("I will be called for every response until I unsubscribe");
-}
-const stopResponding = router.respond(responseLogger);
-// any navigation that happens now will be logged
-// ...
-stopResponding();
-// after unsubscribing, any new navigation will not be logged`}
-      </PrismBlock>
-      <p>
-        By default, response handlers are subscribers (that is to say, they will
-        be called every time a new response is generated). You might sometimes
-        want to only call a response handler once. For example, a response
-        handler might be a "ready" function that you only want called once you
-        know that an initial response exists. To do that, you can use the second
-        argument to <IJS>router.respond</IJS>, which is an <IJS>options</IJS>{" "}
-        object. When the <IJS>once</IJS> object is <IJS>true</IJS>, then that
-        response handler will only be called one time.
-      </p>
-      <PrismBlock lang="javascript">
-        {`function responseLogger() {
-  console.log("I will only be called once");
-}
-router.respond(responseLogger, { once: true });`}
-      </PrismBlock>
+      <Note>
+        By default, the response handler will only be called one time. However,
+        your application should be updated for <em>every</em> response.{" "}
+        <IJS>router.respond</IJS> supports a second argument, which is an
+        options object. One of these options is <IJS>observe</IJS>.{" "}
+        <IJS>observe</IJS> defaults to <IJS>false</IJS>, but when you set it to{" "}
+        <IJS>true</IJS>, the response handler will be called every time a new
+        response is emitted. This will also return a function so that you can
+        stop observing. You probably won't need to use this because the various
+        packages (<IJS>@curi/react</IJS>, <IJS>@curi/vue</IJS>, etc. handle this
+        for you).
+        <PrismBlock lang="javascript">
+          {`function responseLogger() {
+    console.log("I will be called for every response");
+  }
+  const stopResponding = router.respond(
+    responseLogger,
+    { observe: true }
+  );
+  // any navigation that happens now will be logged
+  // ...
+  stopResponding();
+  // after unsubscribing, any new navigation will not be logged`}
+        </PrismBlock>
+      </Note>
     </Section>
 
     <Section title="Review" id="review">

@@ -33,7 +33,7 @@ class CuriProvider extends React.Component<
       ({ response, navigation }: Emitted) => {
         this.setState({ response, navigation });
       },
-      { initial: false }
+      { observe: true, initial: false }
     );
   }
 

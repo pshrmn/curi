@@ -23,12 +23,12 @@ const store = new Store({
 // the location changes.
 router.respond(({ response, navigation }) => {
   store.set({ curi: { response, navigation } });
-});
+}, { observe: true });
 
 // add a one time response handler for the initial render
 router.respond(() => {
   const view = new app({ target, store });
-}, { once: true });`}
+});`}
   </PrismBlock>
 );
 
