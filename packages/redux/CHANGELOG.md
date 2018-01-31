@@ -1,5 +1,6 @@
-## Next
+## 1.0.0-beta.3
 
+* (Internal) Synced response handler uses `router.respond(fn, { observe: true })`.
 * (Internal) Router resposne handler receives `Emitted` object.
 
 ## 1.0.0-beta.3

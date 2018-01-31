@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.26
 
 * Replace `once` option with `observe`, which is `false` by default (reverses previous default behavior).
 * Pass an `Emitted` object to response handlers. This object has `response`, `navigation`, and `router` properties.

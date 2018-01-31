@@ -1,6 +1,6 @@
 {
   "name": "@curi/redux",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "Redux integration for Curi",
   "main": "dist/curi-redux.common.js",
   "module": "dist/curi-redux.es.js",
@@ -31,7 +31,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.25",
+    "@curi/core": "^1.0.0-beta.26",
     "@hickory/root": "^1.0.0-beta.6",
     "redux": "^3.7.2"
   },

@@ -1,5 +1,6 @@
-## Next
+## 1.0.0-beta.16
 
+* (Internal) `CuriPlugin`'s response handler uses `router.response(fn, { observe: true })`.
 * (Internal) `CuriPlugin`'s response handler receives `Emitted`.
 
 ## 1.0.0-beta.15

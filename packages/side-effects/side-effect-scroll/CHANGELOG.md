@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.8
 
 * Side effect receives `Emitted`.
 

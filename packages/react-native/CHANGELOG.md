@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.1
 
 * (Internal) `<CuriProvider>` uses `router.respond(fn, { observe: true })`.
 * Use `react-broadcast` to simulate new context API. This removes the `<ResponsiveBase>` and `<CuriBase>` components in favor of a single `<CuriProvider>`. The `<Curious>` prop also now just expects a `children` render function prop.

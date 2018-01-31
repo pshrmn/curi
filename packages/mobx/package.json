@@ -1,6 +1,6 @@
 {
   "name": "@curi/mobx",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "MobX integration for Curi",
   "main": "dist/curi-mobx.common.js",
   "module": "dist/curi-mobx.es.js",
@@ -31,7 +31,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.25",
+    "@curi/core": "^1.0.0-beta.26",
     "@hickory/root": "^1.0.0-beta.6",
     "mobx": "^3.4.1"
   },

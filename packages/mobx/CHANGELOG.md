@@ -1,5 +1,6 @@
-## Next
+## 1.0.0-alpha.2
 
+* (Internal) `CuriStore` uses `router.respond(fn, { observe: true })`.
 * (Internal) Response handler receives `Emitted` object.
 
 ## 1.0.0-alpha.1
