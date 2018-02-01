@@ -574,6 +574,16 @@ describe("curi", () => {
       });
 
       describe("{ observe: true }", () => {
+        it("has response, immediate call", done => {
+          const sub = jest.fn();
+          const router = curi(history, routes);
+          router.respond(() => {
+            router.respond(sub, { observe: true });
+            expect(sub.mock.calls.length).toBe(1);
+            done();
+          });
+        });
+
         it("is re-called for new responses", done => {
           const everyTime = jest.fn();
           let called = false;
