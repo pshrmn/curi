@@ -780,6 +780,55 @@ describe("curi", () => {
     });
   });
 
+  describe("createLocation", () => {
+    const routes = [
+      { name: "Home", path: "" },
+      { name: "User", path: "u/:id" }
+    ];
+
+    it("returns a partial location", () => {
+      const router = curi(history, routes);
+      const location = router.createLocation({ name: "Home" });
+      expect(location).toHaveProperty("pathname");
+      expect(location).toHaveProperty("hash");
+      expect(location).toHaveProperty("query");
+      expect(location).toHaveProperty("state");
+    });
+
+    it('uses the "name" prop to generate the location\'s pathname', () => {
+      const router = curi(history, routes);
+      const location = router.createLocation({ name: "Home" });
+      expect(location).toMatchObject({ pathname: "/" });
+    });
+
+    it('uses the "params" prop to generate the location\'s pathname', () => {
+      const router = curi(history, routes);
+      const location = router.createLocation({
+        name: "User",
+        params: { id: 7 }
+      });
+      expect(location).toMatchObject({ pathname: "/u/7" });
+    });
+
+    it('passes the "query", "hash", and "state" props to location', () => {
+      const router = curi(history, routes);
+      const state = { state: true };
+      const query = "test=ing";
+      const hash = "test";
+      const location = router.createLocation({
+        name: "Home",
+        query,
+        hash,
+        state
+      });
+      expect(location).toMatchObject({
+        query,
+        hash,
+        state
+      });
+    });
+  });
+
   describe("response.redirectTo", () => {
     it("triggers a history.replace call AFTER emitting response", done => {
       let callPosition = 0;
