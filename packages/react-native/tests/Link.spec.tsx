@@ -10,6 +10,8 @@ import createActiveAddon from "@curi/addon-active";
 import { TouchableHighlight, Text } from "react-native";
 import Link from "../src/Link";
 
+import { LinkMethod } from "../src/Link";
+
 // play nice
 function fakeEvent(props = {}) {
   return {
@@ -439,27 +441,119 @@ describe("<Link>", () => {
   });
 
   describe("pressing a link", () => {
-    it("calls history.navigate", done => {
-      const history = InMemory();
-      const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
+    describe("navigation method", () => {
+      let history, mockNavigate, mockPush, mockReplace;
 
-      const router = curi(history, [{ name: "Test", path: "" }]);
+      beforeEach(() => {
+        history = InMemory();
+        history.navigate = mockNavigate = jest.fn();
+        history.push = mockPush = jest.fn();
+        history.replace = mockReplace = jest.fn();
+      });
 
-      router.respond(() => {
-        const tree = renderer.create(
-          <CuriProvider router={router}>
-            {() => (
-              <Link to="Test">
-                <Text>Test</Text>
-              </Link>
-            )}
-          </CuriProvider>
-        );
-        const anchor = tree.root.findByType(TouchableHighlight);
-        anchor.props.onPress(fakeEvent());
-        expect(mockNavigate.mock.calls.length).toBe(1);
-        done();
+      it("[default] calls history.navigate", done => {
+        const router = curi(history, [{ name: "Test", path: "" }]);
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test">
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          anchor.props.onPress(fakeEvent());
+          expect(mockNavigate.mock.calls.length).toBe(1);
+          expect(mockPush.mock.calls.length).toBe(0);
+          expect(mockReplace.mock.calls.length).toBe(0);
+          done();
+        });
+      });
+
+      it("[navigate] calls history.navigate", done => {
+        const router = curi(history, [{ name: "Test", path: "" }]);
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test" method="navigate">
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          anchor.props.onPress(fakeEvent());
+          expect(mockNavigate.mock.calls.length).toBe(1);
+          expect(mockPush.mock.calls.length).toBe(0);
+          expect(mockReplace.mock.calls.length).toBe(0);
+          done();
+        });
+      });
+
+      it("[push] calls history.push", done => {
+        const router = curi(history, [{ name: "Test", path: "" }]);
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test" method="push">
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          anchor.props.onPress(fakeEvent());
+          expect(mockNavigate.mock.calls.length).toBe(0);
+          expect(mockPush.mock.calls.length).toBe(1);
+          expect(mockReplace.mock.calls.length).toBe(0);
+          done();
+        });
+      });
+
+      it("[replace] calls history.replace", done => {
+        const router = curi(history, [{ name: "Test", path: "" }]);
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test" method="replace">
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          anchor.props.onPress(fakeEvent());
+          expect(mockNavigate.mock.calls.length).toBe(0);
+          expect(mockPush.mock.calls.length).toBe(0);
+          expect(mockReplace.mock.calls.length).toBe(1);
+          done();
+        });
+      });
+
+      it("[unknown] calls history.navigate", done => {
+        const router = curi(history, [{ name: "Test", path: "" }]);
+        router.respond(() => {
+          const tree = renderer.create(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test" method={"whatchamacallit" as LinkMethod}>
+                  <Text>Test</Text>
+                </Link>
+              )}
+            </CuriProvider>
+          );
+          const anchor = tree.root.findByType(TouchableHighlight);
+          anchor.props.onPress(fakeEvent());
+          expect(mockNavigate.mock.calls.length).toBe(1);
+          expect(mockPush.mock.calls.length).toBe(0);
+          expect(mockReplace.mock.calls.length).toBe(0);
+          done();
+        });
       });
     });
 

@@ -14,6 +14,8 @@ export interface ActiveLink {
   extra?(l: HickoryLocation, d: object): boolean;
 }
 
+export type LinkMethod = "navigate" | "push" | "replace";
+
 export interface LinkProps {
   to: string;
   params?: object;
@@ -23,6 +25,7 @@ export interface LinkProps {
   anchor?: React.ReactType;
   target?: string;
   style?: any;
+  method?: LinkMethod;
 }
 
 export interface BaseLinkProps extends LinkProps {
@@ -36,7 +39,14 @@ export interface LinkState {
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   pressHandler = (event: GestureResponderEvent) => {
-    const { onPress, router, to, params, details = {} } = this.props;
+    const {
+      onPress,
+      router,
+      to,
+      params,
+      details = {},
+      method = "navigate"
+    } = this.props;
     if (onPress) {
       onPress(event);
     }
@@ -45,7 +55,13 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       event.preventDefault();
       const { pathname } = this.state;
       const location = { ...details, pathname };
-      router.history.navigate(location);
+      let fn = router.history.navigate;
+      if (method === "push") {
+        fn = router.history.push;
+      } else if (method === "replace") {
+        fn = router.history.replace;
+      }
+      fn(location);
     }
   };
 
@@ -92,6 +108,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       anchor: Anchor = TouchableHighlight,
       router,
       response,
+      method,
       ...rest
     } = this.props;
 

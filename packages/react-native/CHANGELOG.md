@@ -1,3 +1,7 @@
+## Next
+
+* Add `method` prop to `<Link>` to specify which `history` navigation method to use for navigation. Options are `navigate`, `push`, and `replace` (defaults to `navigate`).
+
 ## 1.0.0-beta.1
 
 * (Internal) `<CuriProvider>` uses `router.respond(fn, { observe: true })`.

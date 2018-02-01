@@ -8,6 +8,7 @@ export interface ActiveLink {
     partial?: boolean;
     extra?(l: HickoryLocation, d: object): boolean;
 }
+export declare type LinkMethod = 'navigate' | 'push' | 'replace';
 export interface LinkProps {
     to: string;
     params?: object;
@@ -17,6 +18,7 @@ export interface LinkProps {
     anchor?: React.ReactType;
     target?: string;
     style?: any;
+    method?: LinkMethod;
 }
 export interface BaseLinkProps extends LinkProps {
     router: CuriRouter;
