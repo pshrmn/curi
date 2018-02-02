@@ -1,15 +1,21 @@
-import routeProperties from './utils/routeProperties';
+import routeProperties from "./utils/routeProperties";
 
-import { ToArgument } from '@hickory/root';
-import { InternalRoute } from './types/route';
-import { Addons } from './types/addon';
-import { Response, PendingResponse, ResponseProps } from './types/response';
+import { InternalRoute, RedirectProps } from "./types/route";
+import { Addons } from "./types/addon";
+import { Response, PendingResponse, ResponseProps } from "./types/response";
 
-function responseSetters(props: ResponseProps) {
+function responseSetters(props: ResponseProps, addons: Addons) {
   return {
-    redirect(to: ToArgument, code: number = 301): void {
-      props.status = code;
-      props.redirectTo = to;
+    redirect(redProps: RedirectProps): void {
+      const { name, params, query, hash, state, status = 301 } = redProps;
+      props.status = status;
+      const pathname = addons.pathname(name, params);
+      props.redirectTo = {
+        pathname,
+        query,
+        hash,
+        state
+      };
     },
 
     error(err: any): void {
@@ -56,7 +62,7 @@ export default function finishResponse(
       error,
       resolved,
       route: routeProperties(route, props),
-      set: responseSetters(props),
+      set: responseSetters(props, addons),
       addons
     });
   }

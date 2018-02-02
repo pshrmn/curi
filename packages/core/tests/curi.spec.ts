@@ -341,7 +341,7 @@ describe("curi", () => {
               path: "",
               match: {
                 response: ({ set }) => {
-                  set.redirect("/other");
+                  set.redirect({ name: "Other" });
                 }
               }
             },
@@ -369,7 +369,7 @@ describe("curi", () => {
               path: "",
               match: {
                 response: ({ set }) => {
-                  set.redirect("/other");
+                  set.redirect({ name: "Other" });
                 }
               }
             },
@@ -838,9 +838,13 @@ describe("curi", () => {
           path: "",
           match: {
             response: ({ set }) => {
-              set.redirect("/somewhere-else", 301);
+              set.redirect({ name: "B Route", status: 301 });
             }
           }
+        },
+        {
+          name: "B Route",
+          path: "somewhere-else"
         }
       ];
 

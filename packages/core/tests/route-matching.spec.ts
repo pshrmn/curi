@@ -280,16 +280,20 @@ describe("route matching/response generation", () => {
         it("is set by calling set.redirect in the matching match.response", done => {
           const routes = [
             {
+              name: "New",
+              path: "new"
+            },
+            {
               name: "302 Route",
-              path: "",
+              path: "old",
               match: {
                 response: ({ set }) => {
-                  set.redirect("/somewhere", 302);
+                  set.redirect({ name: "New", status: 302 });
                 }
               }
             }
           ];
-          const history = InMemory({ locations: ["/"] });
+          const history = InMemory({ locations: ["/old"] });
           const router = curi(history, routes);
           let firstCall = true;
           router.respond(({ response }) => {
@@ -304,16 +308,20 @@ describe("route matching/response generation", () => {
         it("is set to 301 by default when calling set.redirect in match.response", done => {
           const routes = [
             {
+              name: "New",
+              path: "new"
+            },
+            {
               name: "301 Route",
-              path: "",
+              path: "old",
               match: {
                 response: ({ set }) => {
-                  set.redirect("/somewhere");
+                  set.redirect({ name: "New" });
                 }
               }
             }
           ];
-          const history = InMemory({ locations: ["/"] });
+          const history = InMemory({ locations: ["/old"] });
           const router = curi(history, routes);
           let firstCall = true;
           router.respond(({ response }) => {
@@ -655,9 +663,16 @@ describe("route matching/response generation", () => {
               path: "",
               match: {
                 response: ({ set }) => {
-                  set.redirect("/somewhere", 301);
+                  set.redirect({
+                    name: "B Route",
+                    status: 301
+                  });
                 }
               }
+            },
+            {
+              name: "B Route",
+              path: "b"
             }
           ];
           const history = InMemory({ locations: ["/"] });
@@ -665,7 +680,7 @@ describe("route matching/response generation", () => {
           let firstCall = true;
           router.respond(({ response }) => {
             if (firstCall) {
-              expect(response.redirectTo).toBe("/somewhere");
+              expect(response.redirectTo).toMatchObject({ pathname: "/b" });
               firstCall = false;
               done();
             }
@@ -1009,8 +1024,7 @@ describe("route matching/response generation", () => {
               path: "old/:id",
               match: {
                 response: ({ route, set, addons }) => {
-                  const pathname = addons.pathname("New", route.params);
-                  set.redirect(pathname);
+                  set.redirect({ name: "New", params: route.params });
                 }
               }
             },
@@ -1024,7 +1038,7 @@ describe("route matching/response generation", () => {
           let firstCall = true;
           router.respond(({ response }) => {
             if (firstCall) {
-              expect(response.redirectTo).toBe("/new/1");
+              expect(response.redirectTo).toMatchObject({ pathname: "/new/1" });
               firstCall = false;
               done();
             }

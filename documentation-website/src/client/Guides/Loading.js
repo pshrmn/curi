@@ -128,10 +128,8 @@ export default ({ name }) => (
       </p>
 
       <p>
-        By calling the <IJS>set.redirect</IJS> method, you can specify the URI
-        that we should redirect to. As always, with Curi you aren't expected to
-        have to manually generate pathnames. Instead, you can use{" "}
-        <IJS>addons.pathname</IJS>.
+        By calling the <IJS>set.redirect</IJS> method, you can specify the route
+        that we should redirect to.
       </p>
 
       <PrismBlock lang="javascript">
@@ -139,11 +137,14 @@ export default ({ name }) => (
   name: 'Old Recipe',
   path: 'r/:id',
   match: {
-    response: ({ route, set, addons }) => {
-      const pathname = addons.pathname('Recipe', route.params);
+    response: ({ route, set }) => {
       // destructure the current location to preserve
       // query/hash values
-      set.redirect({ ...route.location, pathname });
+      set.redirect({
+        name: 'Recipe',
+        params: route.params,
+        ...route.location
+      });
     }
   }
 }`}
