@@ -33,11 +33,13 @@ const Link: ComponentOptions<LinkComponent> = {
 
   computed: {
     location: function() {
-      return this.$router.createLocation({
-        name: this.to,
-        params: this.params,
-        ...this.details
-      });
+      const pathname = this.to
+        ? this.$router.addons.pathname(this.to, this.params)
+        : this.$curi.response.location.pathname;
+      return {
+        ...this.details,
+        pathname
+      };
     },
     href: function() {
       return this.$router.history.toHref(this.location);

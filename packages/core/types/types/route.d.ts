@@ -1,7 +1,7 @@
-import { RegExpOptions, Key } from 'path-to-regexp';
-import { Params } from './response';
-import { Addons } from './addon';
-import { LocationDetails } from '@hickory/root';
+import { RegExpOptions, Key } from "path-to-regexp";
+import { Params } from "./response";
+import { Addons } from "./addon";
+import { LocationDetails } from "@hickory/root";
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
     [key: string]: ParamParser;

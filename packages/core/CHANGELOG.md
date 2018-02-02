@@ -1,7 +1,5 @@
 ## Next
 
-* Add a `location` method to the `router` object, which will create a location object that can be used in navigation.
-
 ## 1.0.0-beta.26
 
 * Replace `once` option with `observe`, which is `false` by default (reverses previous default behavior).

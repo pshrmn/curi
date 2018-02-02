@@ -61,12 +61,14 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   };
 
   setLocation(props: BaseLinkProps) {
-    const { router, to, params, details } = props;
-    const location = router.createLocation({
-      name: to,
-      params,
-      ...details
-    });
+    const { router, response, to, params, details } = props;
+    const pathname = to
+      ? router.addons.pathname(to, params)
+      : response.location.pathname;
+    const location = {
+      ...details,
+      pathname
+    };
     this.setState({ location });
   }
 
