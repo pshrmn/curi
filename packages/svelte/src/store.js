@@ -4,18 +4,21 @@ function curiStore(router, store) {
   if (!store) {
     store = new Store({
       router,
-      curi: { response: undefined, navigation: undefined }
+      curi: router.current()
     });
   } else {
     store.set({
       router,
-      curi: { response: undefined, navigation: undefined }
+      curi: router.current()
     });
   }
 
-  router.respond(({ response, navigation }) => {
-    store.set({ curi: { response, navigation } });
-  });
+  router.respond(
+    ({ response, navigation }) => {
+      store.set({ curi: { response, navigation } });
+    },
+    { observe: true }
+  );
 
   return store;
 }
