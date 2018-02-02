@@ -1,6 +1,7 @@
 import { RegExpOptions, Key } from 'path-to-regexp';
 import { Params } from './response';
 import { Addons } from './addon';
+import { LocationDetails } from '@hickory/root';
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
     [key: string]: ParamParser;
@@ -10,9 +11,14 @@ export interface RouteProps {
     location: object;
     name: string;
 }
+export interface RedirectProps extends LocationDetails {
+    name: string;
+    params?: Params;
+    status?: number;
+}
 export interface ResponseSetters {
     error: (err: any) => void;
-    redirect: (to: any, status?: number) => void;
+    redirect: (props: RedirectProps) => void;
     data: (data: any) => void;
     status: (status: number) => void;
     body: (body: any) => void;
