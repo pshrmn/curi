@@ -158,7 +158,7 @@ function createRouter(
         return;
       }
       pendingNav.finish();
-      const response = finishResponse(pendingResponse, registeredAddons);
+      const response = finishResponse(pendingResponse, router);
       cacheAndEmit(response, navigation);
     });
   }

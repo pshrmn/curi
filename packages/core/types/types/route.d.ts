@@ -1,6 +1,6 @@
 import { RegExpOptions, Key } from 'path-to-regexp';
+import { CuriRouter } from './curi';
 import { Params } from './response';
-import { Addons } from './addon';
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
     [key: string]: ParamParser;
@@ -23,7 +23,7 @@ export interface ResponseBuilder {
     resolved: any;
     route: RouteProps;
     set: ResponseSetters;
-    addons: Addons;
+    router: CuriRouter;
 }
 export declare type EveryMatchFn = (route?: RouteProps) => Promise<any>;
 export declare type InitialMatchFn = () => Promise<any>;
