@@ -21,9 +21,11 @@
 		},
 		computed: {
 			location: (to, params, details, $router) => {
-				return Object.assign({},
-					details,
-					{ pathname: $router.addons.pathname(to, params) }
+				return $router.createLocation(
+					Object.assign({
+						name: to,
+						params
+					}, details)
 				);
 			},
 			href: (location, $router) => {

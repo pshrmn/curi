@@ -1,5 +1,5 @@
 import Vue, { ComponentOptions } from 'vue';
-import { HickoryLocation } from '@hickory/root';
+import { HickoryLocation, LocationDetails } from '@hickory/root';
 export interface ActiveLink {
     merge(props: object): object;
     partial?: boolean;
@@ -8,7 +8,7 @@ export interface ActiveLink {
 export interface LinkComponent extends Vue {
     to: string;
     params?: object;
-    details?: object;
+    details?: LocationDetails;
     location: HickoryLocation;
     href: string;
     active: ActiveLink;

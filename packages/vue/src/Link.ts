@@ -1,6 +1,6 @@
-import Vue, { CreateElement, ComponentOptions } from 'vue';
-import { HickoryLocation } from '@hickory/root';
-import warning from 'warning';
+import Vue, { CreateElement, ComponentOptions } from "vue";
+import { HickoryLocation, LocationDetails } from "@hickory/root";
+import warning from "warning";
 
 export interface ActiveLink {
   merge(props: object): object;
@@ -11,7 +11,7 @@ export interface ActiveLink {
 export interface LinkComponent extends Vue {
   to: string;
   params?: object;
-  details?: object;
+  details?: LocationDetails;
   location: HickoryLocation;
   href: string;
   active: ActiveLink;
@@ -27,14 +27,17 @@ const canNavigate = (event: MouseEvent) => {
 };
 
 const Link: ComponentOptions<LinkComponent> = {
-  name: 'curi-link',
+  name: "curi-link",
 
-  props: ['to', 'params', 'details', 'active', 'click'],
+  props: ["to", "params", "details", "active", "click"],
 
   computed: {
     location: function() {
-      const pathname = this.$router.addons.pathname(this.to, this.params);
-      return { pathname, ...this.details };
+      return this.$router.createLocation({
+        name: this.to,
+        params: this.params,
+        ...this.details
+      });
     },
     href: function() {
       return this.$router.history.toHref(this.location);
@@ -44,7 +47,7 @@ const Link: ComponentOptions<LinkComponent> = {
         warning(
           !this.active,
           'You are attempting to use the "active" prop, but have not included the "active" ' +
-            'addon (@curi/addon-active) in your Curi router.'
+            "addon (@curi/addon-active) in your Curi router."
         );
         return false;
       }
@@ -84,7 +87,7 @@ const Link: ComponentOptions<LinkComponent> = {
     if (this.active && this.isActive) {
       props = this.active.merge(props);
     }
-    return h('a', props, this.$slots.default);
+    return h("a", props, this.$slots.default);
   }
 };
 

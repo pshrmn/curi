@@ -1,18 +1,19 @@
 import PathToRegexp, {
   PathFunction,
   PathFunctionOptions
-} from 'path-to-regexp';
-import { withLeadingSlash, join } from '../utils/path';
+} from "path-to-regexp";
+import { withLeadingSlash, join } from "../utils/path";
 
-import { Addon } from '../types/addon';
-import { Route } from '../types/route';
+import { Addon } from "../types/addon";
+import { Route } from "../types/route";
+import { Params } from "../types/response";
 
 function createPathnameAddon(options?: PathFunctionOptions): Addon {
   let knownPaths: { [key: string]: string } = {};
   let cache: { [key: string]: PathFunction } = {};
 
   return {
-    name: 'pathname',
+    name: "pathname",
     register: (route: Route, parent: string): string => {
       const { name, path } = route;
       if (knownPaths[name] !== undefined) {
@@ -20,8 +21,8 @@ function createPathnameAddon(options?: PathFunctionOptions): Addon {
           'A pathname with the name "' +
             name +
             '" already exists. Each route should' +
-            'have a unique name. By registering a pathname with a name that already exists, ' +
-            'you are overwriting the existing pathname. This may break your application.'
+            "have a unique name. By registering a pathname with a name that already exists, " +
+            "you are overwriting the existing pathname. This may break your application."
         );
       }
 
@@ -32,7 +33,7 @@ function createPathnameAddon(options?: PathFunctionOptions): Addon {
       knownPaths[name] = base ? join(base, path) : path;
       return name;
     },
-    get: (name: string, params: object): string => {
+    get: (name: string, params: Params): string => {
       if (knownPaths[name] == null) {
         console.error(
           `Could not generate pathname for ${name} because it is not registered.`

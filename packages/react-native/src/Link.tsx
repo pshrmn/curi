@@ -6,7 +6,11 @@ import { Curious } from "@curi/react";
 
 import { GestureResponderEvent } from "react-native";
 import { Emitted, CuriRouter, Response } from "@curi/core";
-import { HickoryLocation } from "@hickory/root";
+import {
+  HickoryLocation,
+  PartialLocation,
+  LocationDetails
+} from "@hickory/root";
 
 export interface ActiveLink {
   merge(props: object): object;
@@ -19,7 +23,7 @@ export type LinkMethod = "navigate" | "push" | "replace";
 export interface LinkProps {
   to: string;
   params?: object;
-  details?: object;
+  details?: LocationDetails;
   onPress?: (e: GestureResponderEvent) => void;
   active?: ActiveLink;
   anchor?: React.ReactType;
@@ -34,57 +38,47 @@ export interface BaseLinkProps extends LinkProps {
 }
 
 export interface LinkState {
-  pathname: string;
+  location: PartialLocation;
 }
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   pressHandler = (event: GestureResponderEvent) => {
-    const {
-      onPress,
-      router,
-      to,
-      params,
-      details = {},
-      method = "navigate"
-    } = this.props;
+    const { onPress, router, method = "navigate" } = this.props;
     if (onPress) {
       onPress(event);
     }
 
     if (!event.defaultPrevented) {
       event.preventDefault();
-      const { pathname } = this.state;
-      const location = { ...details, pathname };
       let fn = router.history.navigate;
       if (method === "push") {
         fn = router.history.push;
       } else if (method === "replace") {
         fn = router.history.replace;
       }
-      fn(location);
+      fn(this.state.location);
     }
   };
 
-  createPathname(props: BaseLinkProps) {
-    const { to, params, router, response } = props;
-    const pathname =
-      to != null
-        ? router.addons.pathname(to, params)
-        : response.location.pathname;
-    this.setState(() => ({
-      pathname
-    }));
+  setLocation(props: BaseLinkProps) {
+    const { router, to, params, details } = props;
+    const location = router.createLocation({
+      name: to,
+      params,
+      ...details
+    });
+    this.setState({ location });
   }
 
   componentWillMount() {
-    this.createPathname(this.props);
+    this.setLocation(this.props);
     if (this.props.active) {
       this.verifyActiveAddon();
     }
   }
 
   componentWillReceiveProps(nextProps: BaseLinkProps) {
-    this.createPathname(nextProps);
+    this.setLocation(nextProps);
     if (nextProps.active) {
       this.verifyActiveAddon();
     }
