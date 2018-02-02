@@ -117,15 +117,10 @@ curiStore(router, store);`}
       <PrismBlock lang="javascript">
         {`import app from './components/app';
 
-<<<<<<< f66433545eb3c02adc118a5eb8642a9afaf866f5
-// use a response handler for the initial render
-config.respond(() => {
-=======
 const store = curiStore(router);
 
 // use a one time subscriber for the initial render
 router.respond(() => {
->>>>>>> (docs) @curi/svelte curiStore [ci skip]
   view = new app({ target, store });
 });`}
       </PrismBlock>
