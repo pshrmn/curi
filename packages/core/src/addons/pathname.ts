@@ -18,11 +18,11 @@ function createPathnameAddon(options?: PathFunctionOptions): Addon {
       const { name, path } = route;
       if (knownPaths[name] !== undefined) {
         console.warn(
-          'A pathname with the name "' +
+          'A route with the name "' +
             name +
             '" already exists. Each route should' +
-            "have a unique name. By registering a pathname with a name that already exists, " +
-            "you are overwriting the existing pathname. This may break your application."
+            "have a unique name. By registering a route with a name that already exists, " +
+            "you are overwriting the existing one. This may break your application."
         );
       }
 
