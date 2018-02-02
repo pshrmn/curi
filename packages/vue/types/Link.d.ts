@@ -1,5 +1,5 @@
-import Vue, { ComponentOptions } from 'vue';
-import { HickoryLocation, LocationDetails } from '@hickory/root';
+import Vue, { ComponentOptions } from "vue";
+import { HickoryLocation, LocationDetails } from "@hickory/root";
 export interface ActiveLink {
     merge(props: object): object;
     partial?: boolean;

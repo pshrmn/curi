@@ -9,7 +9,10 @@ const config = {
   input: "src/index.js",
   output: {
     name: "CuriSvelte",
-    sourcemap: true
+    sourcemap: true,
+    globals: {
+      "svelte/store": "svelte"
+    }
   },
   plugins: [
     svelte({
@@ -26,7 +29,8 @@ const config = {
     commonjs({
       include: /node_modules/
     })
-  ]
+  ],
+  external: ["svelte/store"]
 };
 
 if (process.env.NODE_ENV === "production") {

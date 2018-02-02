@@ -1,3 +1,7 @@
+## Next
+
+* Add `curiStore` function to automatically sync router and store. This can create a new store or update an existing store.
+
 ## 1.0.0-beta.4
 
 * Keep router on its own in the store as `$router`.
