@@ -1,5 +1,6 @@
 ## Next
 
+* Pass `router` to `match.response` instead of `addons`. Addons are still available through the `router`.
 * Add a `location` method to the `router` object, which will create a location object that can be used in navigation.
 
 ## 1.0.0-beta.26

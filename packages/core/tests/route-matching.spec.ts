@@ -985,10 +985,10 @@ describe("route matching/response generation", () => {
         });
       });
 
-      describe("addons", () => {
-        it("receives the registered addons object", done => {
-          const spy = jest.fn(({ addons }) => {
-            expect(typeof addons.pathname).toBe("function");
+      describe("router", () => {
+        it("receives the router object", done => {
+          const spy = jest.fn(({ router: routerProp }) => {
+            expect(routerProp).toBe(router);
             done();
           });
 
@@ -1000,35 +1000,6 @@ describe("route matching/response generation", () => {
 
           const history = InMemory({ locations: ["/hello?one=two"] });
           const router = curi(history, [CatchAll]);
-        });
-
-        it("can use registered addons", done => {
-          const routes = [
-            {
-              name: "Old",
-              path: "old/:id",
-              match: {
-                response: ({ route, set, addons }) => {
-                  const pathname = addons.pathname("New", route.params);
-                  set.redirect(pathname);
-                }
-              }
-            },
-            {
-              name: "New",
-              path: "new/:id"
-            }
-          ];
-          const history = InMemory({ locations: ["/old/1"] });
-          const router = curi(history, routes);
-          let firstCall = true;
-          router.respond(({ response }) => {
-            if (firstCall) {
-              expect(response.redirectTo).toBe("/new/1");
-              firstCall = false;
-              done();
-            }
-          });
         });
       });
     });

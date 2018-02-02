@@ -1,3 +1,3 @@
-import { Addons } from './types/addon';
+import { CuriRouter } from './types/curi';
 import { Response, PendingResponse } from './types/response';
-export default function finishResponse(pending: PendingResponse, addons: Addons): Response;
+export default function finishResponse(pending: PendingResponse, router: CuriRouter): Response;

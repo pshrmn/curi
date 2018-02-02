@@ -1,9 +1,9 @@
-import routeProperties from './utils/routeProperties';
+import routeProperties from "./utils/routeProperties";
 
-import { ToArgument } from '@hickory/root';
-import { InternalRoute } from './types/route';
-import { Addons } from './types/addon';
-import { Response, PendingResponse, ResponseProps } from './types/response';
+import { ToArgument } from "@hickory/root";
+import { InternalRoute } from "./types/route";
+import { CuriRouter } from "./types/curi";
+import { Response, PendingResponse, ResponseProps } from "./types/response";
 
 function responseSetters(props: ResponseProps) {
   return {
@@ -48,7 +48,7 @@ function freezeResponse(route: InternalRoute, props: ResponseProps): Response {
 
 export default function finishResponse(
   pending: PendingResponse,
-  addons: Addons
+  router: CuriRouter
 ): Response {
   const { error, resolved, route, props } = pending;
   if (route && route.public.match.response) {
@@ -57,7 +57,7 @@ export default function finishResponse(
       resolved,
       route: routeProperties(route, props),
       set: responseSetters(props),
-      addons
+      router
     });
   }
   return freezeResponse(route, props);
