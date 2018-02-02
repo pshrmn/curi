@@ -4,7 +4,11 @@ import invariant from "invariant";
 import CuriContext from "./Context";
 
 import { CuriRouter, Response } from "@curi/core";
-import { HickoryLocation } from "@hickory/root";
+import {
+  HickoryLocation,
+  PartialLocation,
+  LocationDetails
+} from "@hickory/root";
 
 const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   return (
@@ -17,14 +21,14 @@ const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
 export interface ActiveLink {
   merge(props: object): object;
   partial?: boolean;
-  extra?(l: HickoryLocation, d: object): boolean;
+  extra?(l: HickoryLocation, d: LocationDetails): boolean;
 }
 
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   to: string;
   params?: object;
-  details?: object;
+  details?: LocationDetails;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   active?: ActiveLink;
   anchor?: React.ReactType;
@@ -37,42 +41,41 @@ export interface BaseLinkProps extends LinkProps {
 }
 
 export interface LinkState {
-  pathname: string;
+  location: PartialLocation;
 }
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   clickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    const { onClick, router, target, to, params, details = {} } = this.props;
+    const { onClick, router, target } = this.props;
     if (onClick) {
       onClick(event);
     }
 
     if (canNavigate(event) && !target) {
       event.preventDefault();
-      const { pathname } = this.state;
-      const location = { ...details, pathname };
-      router.history.navigate(location);
+      router.history.navigate(this.state.location);
     }
   };
 
-  createPathname(props: BaseLinkProps) {
-    const { to, params, router, response } = props;
-    const pathname =
-      to != null
-        ? router.addons.pathname(to, params)
-        : response.location.pathname;
-    this.setState({ pathname });
+  setLocation(props: BaseLinkProps) {
+    const { router, to, params, details } = props;
+    const location = router.createLocation({
+      name: to,
+      params,
+      ...details
+    });
+    this.setState({ location });
   }
 
   componentWillMount() {
-    this.createPathname(this.props);
+    this.setLocation(this.props);
     if (this.props.active) {
       this.verifyActiveAddon();
     }
   }
 
   componentWillReceiveProps(nextProps: BaseLinkProps) {
-    this.createPathname(nextProps);
+    this.setLocation(nextProps);
     if (nextProps.active) {
       this.verifyActiveAddon();
     }
@@ -111,8 +114,8 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       }
     }
 
-    const { pathname } = this.state;
-    const href: string = router.history.toHref({ ...details, pathname });
+    const { location } = this.state;
+    const href: string = router.history.toHref(location);
 
     return <Anchor {...anchorProps} onClick={this.clickHandler} href={href} />;
   }
