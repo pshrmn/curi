@@ -1,5 +1,6 @@
 import {
   History,
+  LocationDetails,
   HickoryLocation,
   PartialLocation,
   Action
@@ -52,12 +53,9 @@ export interface CurrentResponse {
   navigation: Navigation;
 }
 
-export interface LocationProps {
+export interface LocationProps extends LocationDetails {
   name: string;
   params?: Params;
-  state?: any;
-  query?: any;
-  hash?: string;
 }
 
 export interface CuriRouter {

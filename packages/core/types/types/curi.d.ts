@@ -1,4 +1,4 @@
-import { History, HickoryLocation, PartialLocation, Action } from "@hickory/root";
+import { History, LocationDetails, HickoryLocation, PartialLocation, Action } from "@hickory/root";
 import { PathFunctionOptions } from "path-to-regexp";
 import { Addon, Addons } from "./addon";
 import { RouteDescriptor } from "./route";
@@ -37,10 +37,9 @@ export interface CurrentResponse {
     response: Response;
     navigation: Navigation;
 }
-export interface LocationProps {
+export interface LocationProps extends LocationDetails {
     name: string;
     params?: Params;
-    details?: object;
 }
 export interface CuriRouter {
     refresh: (routeArray: Array<RouteDescriptor>) => void;
@@ -48,5 +47,5 @@ export interface CuriRouter {
     addons: Addons;
     history: History;
     current(): CurrentResponse;
-    location(options: LocationProps): PartialLocation;
+    createLocation(options: LocationProps): PartialLocation;
 }
