@@ -4,13 +4,7 @@ import createResponse from "./createResponse";
 import finishResponse from "./finishResponse";
 import createRoute from "./route";
 
-import {
-  History,
-  HickoryLocation,
-  PendingNavigation,
-  Action,
-  PartialLocation
-} from "@hickory/root";
+import { History, PendingNavigation } from "@hickory/root";
 
 import { RouteDescriptor, InternalRoute } from "./types/route";
 import { Response, PendingResponse, Params } from "./types/response";
@@ -25,8 +19,7 @@ import {
   RemoveResponseHandler,
   Cache,
   CurrentResponse,
-  Navigation,
-  LocationProps
+  Navigation
 } from "./types/curi";
 
 function createRouter(
@@ -180,18 +173,6 @@ function createRouter(
     }
   }
 
-  /*
-   * A shortcut to creating location objects without having
-   * to use the pathname addon
-   */
-  function createLocation(props: LocationProps): PartialLocation {
-    const { name, params, state, query, hash } = props;
-    const pathname = name
-      ? registeredAddons.pathname(name, params)
-      : mostRecent.response.location.pathname;
-    return { pathname, state, query, hash };
-  }
-
   // now that everything is defined, actually do the setup
   setupRoutesAndAddons(routeArray);
   history.respondWith(navigationHandler);
@@ -206,8 +187,7 @@ function createRouter(
         response: mostRecent.response,
         navigation: mostRecent.navigation
       };
-    },
-    createLocation
+    }
   };
 
   return router;

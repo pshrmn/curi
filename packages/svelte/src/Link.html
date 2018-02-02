@@ -20,13 +20,11 @@
 			};
 		},
 		computed: {
-			location: (to, params, details, $router) => {
-				return $router.createLocation(
-					Object.assign({
-						name: to,
-						params
-					}, details)
-				);
+			location: (to, params, details, $router, $curi) => {
+				const pathname = to
+					? $router.addons.pathname(to, params)
+					: $curi.response.location.pathname;
+				return Object.assign({}, details, { pathname });
 			},
 			href: (location, $router) => {
 				return $router.history.toHref(location);
