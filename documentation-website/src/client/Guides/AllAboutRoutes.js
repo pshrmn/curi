@@ -278,15 +278,15 @@ const user = {
                 set as the response's <IJS>data</IJS> property.
               </li>
               <li>
-                <IJS>redirect(to, code)</IJS> - This allows you to turn the
-                response into a redirect response. When you application receives
-                a redirect response, it should redirect to the new location
-                (using your history object) instead of re-rendering. If you do
-                not provide a code, then 301 will be used. Setting the status
-                code is mostly important for rendering on the server. The{" "}
-                <IJS>to</IJS> argument should be a string or a location object.
-                Once the response has been created, Curi will automatically
-                redirect to the <IJS>to</IJS> location.
+                <IJS>{`redirect({ name, status, ... })`}</IJS> - This allows you
+                to turn the response into a redirect response. When you
+                application receives a redirect response, it should redirect to
+                the new location (using your history object) instead of
+                re-rendering. If you do not provide a code, then 301 will be
+                used. Setting the status code is mostly important for rendering
+                on the server. The <IJS>to</IJS> argument should be a string or
+                a location object. Once the response has been created, Curi will
+                automatically redirect to the <IJS>to</IJS> location.
               </li>
               <li>
                 <IJS>error(error)</IJS> - A method to call when something goes
@@ -320,30 +320,8 @@ const routes = [
           <Subsection tag="h6" title="addons" id="response-addons">
             <p>
               The add-ons that have been registered with Curi are available to
-              the <IJS>response</IJS> function. This includes the built-in{" "}
-              <IJS>pathname</IJS> add-on, which you might find useful if you
-              need to redirect in a <IJS>response</IJS> function.
+              the <IJS>response</IJS> function.
             </p>
-            <PrismBlock lang="javascript">
-              {`// set a permanent redirect
-// navigating to /photo/123 will automatically redirect to /p/123
-const routes = [
-  {
-    name: 'Photo',
-    path: 'p/:id'
-  },
-  {
-    name: 'Old Photo',
-    path: 'photo/:id',
-    match: {
-      response: ({ route, set, addons }) => {
-        const pathname = addons.pathname('Photo', route.params);
-        set.redirect({ ...route.location, pathname }, 301);
-      }
-    }
-  }
-];`}
-            </PrismBlock>
           </Subsection>
         </Subsection>
       </Subsection>

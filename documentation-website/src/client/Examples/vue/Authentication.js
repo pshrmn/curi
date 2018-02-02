@@ -32,10 +32,15 @@ export default ({ name }) => (
     match: {
       response: ({ set }) => {
         if (!store.userIsAuthenticated) {
-          set.redirect('/login', 302);
+          set.redirect({ name: 'Login', status: 302 });
         }
       }
     }
+  },
+  {
+    name: 'Login',
+    path: 'login',
+    ...
   }
 ];`}
       </PrismBlock>
