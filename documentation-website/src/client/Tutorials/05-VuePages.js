@@ -308,9 +308,9 @@ export default ({ router }) => (
         <Link
           to="Guide"
           params={{ slug: "responses" }}
-          details={{ hash: "properties" }}
+          details={{ hash: "response-properties" }}
         >
-          Rendering with Responses
+          Response Handlers
         </Link>{" "}
         guide goes into more detail about each of the properties of a response
         object.

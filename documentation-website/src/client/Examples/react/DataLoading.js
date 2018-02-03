@@ -38,10 +38,10 @@ nprogress.done();
 
       <p>
         The example implementation can definitely be improved. Currently we are
-        calling <IJS>nprogress.done()</IJS> as a side-effect of our render
+        calling <IJS>nprogress.done()</IJS> as a side effect of our render
         function. This is not ideal, but again, this is just a minimum viable
         example. In your own application, you could add a response handler or
-        use a Curi side-effect.
+        use a Curi side effect.
       </p>
     </Section>
 

@@ -11,72 +11,134 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      Curi aims to be easy to setup. The one thing that all Curi projects have
-      in common is a router. You create a router by passing a Hickory history
-      object and an array of route objects to the <IJS>curi</IJS> function (the
-      default export from <IJS>@curi/core</IJS>.
+      This guide will cover a few basic concepts about Curi so that you can be
+      confident integrating Curi into your application.
     </p>
-    <p>
-      In order to re-render your application after navigation, you can observe
-      your router for responses using its <IJS>respond</IJS> method.{" "}
-      <IJS>respond</IJS> takes a callback function that will be passed{" "}
-      <IJS>response</IJS> and <IJS>navigation</IJS> arguments, which you can use
-      to render.
-    </p>
+
+    <Section title="The router" id="router-object">
+      <p>
+        A Curi router is created using a <IJS>history</IJS> object and a{" "}
+        <IJS>routes</IJS> array. You create the router by calling the{" "}
+        <IJS>curi</IJS> function, which is the default export from the{" "}
+        <IJS>@curi/core</IJS> package.
+      </p>
+      <PrismBlock lang="javascript">
+        {`npm install @curi/core
+        
+import curi from '@curi/core';
+import Browser from '@hickory/browser';
+import routes from './routes';
+
+const history = Browser();
+const router = curi(history, routes);
+`}
+      </PrismBlock>
+      <Note>
+        This function also accepts an <IJS>options</IJS> object. You can read
+        about its properties in the{" "}
+        <Link
+          to="Package"
+          params={{ package: "core" }}
+          details={{ hash: "options" }}
+        >
+          <IJS>@curi/core</IJS>
+        </Link>{" "}
+        documentation.
+      </Note>
+    </Section>
 
     <Section title="The History Object" id="history-object">
       <p>
-        Curi's navigation is powered by the{" "}
-        <a href="https://github.com/pshrmn/hickory">Hickory</a> package. You
-        just need to pick which type of Hickory history object is right for your
-        application.
+        The most important function of a router is to keep track of locations.
+        Curi does this using <IJS>history</IJS> objects created by your choice
+        of one of the <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
+        packages. Which Hickory package you choose depends mostly on where your
+        application will be running.
       </p>
-      <PrismBlock lang="javascript">
-        {`// Use Browser when your website has a dynamic server
+      <Subsection title="Browser" id="hickory-browser">
+        <p>
+          If you are building a website that will be hosted on a dynamic server
+          (it can respond to requests for any location), you should use the{" "}
+          <IJS>@hickory/browser</IJS> package.
+        </p>
+        <PrismBlock lang="javascript">
+          {`npm install @hickory/browser
+          
 import Browser from '@hickory/browser';
-const browserHistory = Browser();
-
-// Use Hash when your website uses a static file server
+const browserHistory = Browser();`}
+        </PrismBlock>
+      </Subsection>
+      <Subsection title="Hash" id="hickory-hash">
+        <p>
+          If you are building a website that will be hosted on a static file
+          server, you will need to use the <IJS>@hickory/hash</IJS> package. The
+          paths for your routes will be encoded in the <IJS>hash</IJS> section
+          of the URL. This isn't as "pretty" as the paths you get with{" "}
+          <IJS>@hickory/browser</IJS>, but is a necessary solution for
+          statically hosted websites.
+        </p>
+        <PrismBlock lang="javascript">
+          {`npm install @hickory/hash
+          
 import Hash from '@hickory/hash';
-const hashHistory = Hash();
+const hashHistory = Hash();`}
+        </PrismBlock>
+      </Subsection>
+      <Subsection title="In Memory" id="hickory-in-memory">
+        <p>
+          If your application is not running in a browser, you should use an
+          in-memory history. This is what you would use when building a mobile
+          application with React Native, writing a NodeJS backend for your
+          server, or when writing tests that run in NodeJS.
+        </p>
+        <PrismBlock lang="javascript">
+          {`npm install @hickory/in-memory
 
-// Use InMemory when your application doesn't run in a browser
 import InMemory from '@hickory/in-memory';
 const memoryHistory = InMemory();`}
-      </PrismBlock>
+        </PrismBlock>
+      </Subsection>
+      <Subsection title="Properties and Methods" id="props-and-methods">
+        <p>
+          Each history object has essentially the same API (<IJS>InMemory</IJS>{" "}
+          has a few extra properties). The most important properties to know are
+          the <IJS>location</IJS> object as well as the <IJS>navigate</IJS>,{" "}
+          <IJS>push</IJS>, and <IJS>replace</IJS> methods.
+        </p>
 
-      <p>
-        Each history object has essentially the same API (InMemory has a few
-        extra properties). The most important properties to know are the
-        location object as well as the navigate, push, and replace methods.
-      </p>
-
-      <p />
-
-      <PrismBlock lang="javascript">
-        {`// the location property is the current location object
+        <PrismBlock lang="javascript">
+          {`// the location property is the current location object
 browserHistory.location === {
   pathname: '/guides/getting-started',
   ...
 };
 
 // the push method will navigate to a new location
-browserHistory.push({ pathname: '/guides/installation' });
+browserHistory.push({
+  pathname: '/guides/installation'
+});
 
 // the replace method will replace the current location
 // with the provided one
-browserHistory.push({ pathname: '/guides/confirming-navigation' });
+browserHistory.replace({
+  pathname: '/guides/confirming-navigation'
+});
 
 // the navigate method will choose whether to push or replace for you
 // this behavior mimics how anchors (<a>) navigate
-browserHistory.navigate({ pathname: '/guides/getting-started' });
-`}
-      </PrismBlock>
+browserHistory.navigate({
+  pathname: '/guides/getting-started'
+});`}
+        </PrismBlock>
+      </Subsection>
     </Section>
 
     <Section title="The Routes Array" id="routes-array">
-      <p>Routes are objects with two required properties: name and path.</p>
       <p>
+        Routes are objects with two required properties: a <IJS>name</IJS>{" "}
+        string and a <IJS>path</IJS> string.
+      </p>
+      <Note>
         Paths can be any valid{" "}
         <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a>{" "}
         string. It is just important that you do not begin the string with a
@@ -84,12 +146,11 @@ browserHistory.navigate({ pathname: '/guides/getting-started' });
         >
           this/is/fine
         </IJS>, but <IJS>/this/is/not</IJS>).
-      </p>
+      </Note>
       <p>
-        The names are used to generate URIs for you. With Curi, you never have
-        to write a URI's pathname string yourself. It is required that all of
-        your routes have unique names. This is because Curi generates location
-        pathnames using route names (and params for non-static paths).
+        Route names are used to generate pathnames for you. With Curi, you never
+        have to write a pathname string yourself. This also means that all
+        routes must have unique names.
       </p>
       <PrismBlock lang="javascript">
         {`const routes = [
@@ -111,155 +172,76 @@ browserHistory.navigate({ pathname: '/guides/getting-started' });
       </p>
     </Section>
 
-    <Section title="The router" id="router-object">
-      <p>
-        Once you have your Hickory history object and your routes array, you
-        just need to pass them to the default export from the Curi package
-        (which we will name <IJS>curi</IJS> here).
-      </p>
-      <PrismBlock lang="javascript">
-        {`import curi from 'curi';
-import Browser from '@hickory/browser';
-import routes from './routes';
-
-const history = Browser();
-const router = curi(history, routes);
-`}
-      </PrismBlock>
-
-      <Subsection title="Other router options" id="other-router-options">
-        <p>
-          The <IJS>curi</IJS> function can also take an optional third argument,
-          which is an options object. You can use this to pass{" "}
-          <Link to="Guide" params={{ slug: "addons" }}>
-            add-ons
-          </Link>,{" "}
-          <Link to="Guide" params={{ slug: "side-effects" }}>
-            side effects
-          </Link>, a{" "}
-          <Link to="Guide" params={{ slug: "response-caching" }}>
-            cache
-          </Link>, and a{" "}
-          <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp">
-            <IJS>pathnameOptions</IJS>
-          </a>{" "}
-          object to your router.
-        </p>
-        <PrismBlock lang="javascript">
-          {`const router = curi(history, routes, {
-  addons: [...],
-  sideEffects: [...],
-  cache: cacheObject,
-  pathnameOptions: { encode: x => x }
-});`}
-        </PrismBlock>
-      </Subsection>
-    </Section>
-
     <Section title="Responses">
       <p>
-        Whenever navigation happens, a new location object is created by
-        Hickory. Curi uses that location object's pathname property to match
-        against all of your routes. When it finds one that matches, it uses that
-        route object to create a response object. You can give your Curi router
-        response handlers to be called whenever a new response is created. When
-        a new response is created, your response handler function will be passed
-        an object that contains a response object, an object with additional
-        navigation data, and your router.
+        Whenever navigation happens, Curi will create a <IJS>response</IJS>{" "}
+        object, which provides data based on the route that it matched. The
+        router's <IJS>respond</IJS> method is used to register callback
+        functions (called response handlers), which the router will call when a
+        new response is created.
       </p>
-      <Note>
-        Response handlers are passed the router so you can define them in a
-        separate module from the <IJS>router.respond</IJS> call and still
-        reference the router.
-      </Note>
-      <PrismBlock lang="javascript">
-        {`const router = curi(history, routes);
-router.respond(({ response, navigation, router }) => {
-  // whenever the location changes, this function is called
-  // you can use this function to re-render your application
-  // using the new response object
-});
-`}
-      </PrismBlock>
-
       <p>
-        Responses are generated asynchronously. A Curi router has a{" "}
-        <IJS>respond</IJS> function that you can use to register a response
-        handler function, which will be called whenever a new response is
-        generated.
+        Response handlers will be passed an object with three properties:{" "}
+        <IJS>response</IJS>, <IJS>navigation</IJS>, and <IJS>router</IJS>.
       </p>
       <PrismBlock lang="javascript">
-        {`const router = curi(history, routes);
-// wait to render until a response is generated
-router.respond(({ response, navigation, router }) => {
-  // now we can render using the response,
-  // navigation, and router
+        {`function responseHandler(({ response, navigation, router }) {
+  // response - contains data about the matching route
+  // navigation - contains data about the location change
+  // router - your router, useful if you want to define this
+  //   in a separate module 
 });`}
       </PrismBlock>
       <p>
-        Your rendering will be centered around these response objects, so you
-        should be familiar with the different properties that will be available
-        to you. We will get into more details about responses in the{" "}
-        <Link to="Guide" params={{ slug: "responses" }}>
-          Rendering with Responses
-        </Link>{" "}
-        guide, but for now we will just go over how a route maps to a response.
+        There are two types of response handlers, one time functions and
+        observers.
+      </p>
+      <p>
+        One time functions will be called one time, either immediately if a
+        response already exist, or once the router's initial <IJS>response</IJS>{" "}
+        is created. These are useful for setup functions in your application.
       </p>
       <PrismBlock lang="javascript">
-        {`// if you have the following routes
-const routes = [
-  ...,
-  {
-    name: 'Album',
-    path: 'photos/:albumID',
-    ...,
-    children: [
-      {
-        name: 'Photo',
-        path: ':photoID',
-        match: {
-          response: ({ set }) => {
-            set.body(Photo);
-          }
-        }
-      }
-    ]
-  }
-];
-// when the user visits the URI /photos/6789/12345
-// the following response object would be created:
-
-{
-  // The location key
-  key: '1.0',
-
-  // The location object used to generate the response.
-  location: { pathname: '/photos/6789/12345', ... },
-
-  // The value returned by the route's body function
-  body: Photo,
-
-  // The name of the best matching route
-  name: 'Photo',
-
-  // The name of ancestor routes that matched
-  // part of the location's pathname
-  partials: ['Album'],
-
-  // An object containing the values parsed
-  // from the pathname by path-to-regexp.
-  params: { photoID: 12345, albumID: 6789 },
-
-  // There are a few more properties as well. Please read
-  // the Rendering with Responses guide to see those
-}`}
+        {`router.respond(() => {
+  // I will only be called once
+});`}
+      </PrismBlock>
+      <p>
+        Observers will be called every time a response is created. These are
+        great for triggering re-renders, although the render packages (<Link
+          to="Package"
+          params={{ package: "react" }}
+        >
+          <IJS>@curi/react</IJS>
+        </Link>,{" "}
+        <Link to="Package" params={{ package: "react-native" }}>
+          <IJS>@curi/react-native</IJS>
+        </Link>,{" "}
+        <Link to="Package" params={{ package: "vue" }}>
+          <IJS>@curi/vue</IJS>
+        </Link>, and{" "}
+        <Link to="Package" params={{ package: "svelte" }}>
+          <IJS>@curi/svelte</IJS>
+        </Link>) handle this for you, so you likely won't need to use these
+        manually.
+      </p>
+      <PrismBlock lang="javascript">
+        {`const stopObserving = router.respond(() => {
+  // I will be called for every new response until the
+  // stopObserving function is called
+}, { observe: true });`}
       </PrismBlock>
     </Section>
 
     <h2>Next</h2>
     <p>
-      Now that you know the core of how Curi works, let's take a closer look at
-      routes with the{" "}
+      Rendering your application will be centered around these response objects.
+      The{" "}
+      <Link to="Guide" params={{ slug: "responses" }}>
+        Response Handlers
+      </Link>{" "}
+      guide will go into more detail about their properties, but first we should
+      take a look at how to write routes with the{" "}
       <Link to="Guide" params={{ slug: "routes" }}>
         All About Routes
       </Link>{" "}

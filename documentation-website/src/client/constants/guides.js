@@ -13,15 +13,27 @@ const guides = [
     type: "basic"
   },
   {
-    name: "All About Routes",
+    name: "Routes",
     slug: "routes",
     description: "Learn about Curi routes and their properties",
     type: "basic"
   },
   {
-    name: "Rendering with Responses",
+    name: "Response Handlers",
+    slug: "response-handlers",
+    description: "Learn how to use response handlers to react to navigation",
+    type: "basic"
+  },
+  {
+    name: "Response Objects",
     slug: "responses",
-    description: "Learn how to render your project using a response object",
+    description: "Learn about the objects created for matching routes",
+    type: "basic"
+  },
+  {
+    name: "Navigation Objects",
+    slug: "navigation-objects",
+    description: "Learn about the objects created for matching routes",
     type: "basic"
   },
   {

@@ -130,9 +130,9 @@ const routes = [
           <Link
             to="Guide"
             params={{ slug: "responses" }}
-            details={{ hash: "properties" }}
+            details={{ hash: "response-properties" }}
           >
-            Rendering with Responses
+            Response Handlers
           </Link>{" "}
           guide.
         </p>

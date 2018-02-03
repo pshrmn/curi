@@ -55,7 +55,7 @@ const router = curi(history, routes, options);`}
                 wish to use should be provided in this array.
               </li>
               <li>
-                <IJS>sideEffects</IJS> - An array of side-effect objects.
+                <IJS>sideEffects</IJS> - An array of side effect objects.
               </li>
               <li>
                 <IJS>cache</IJS> - An object with get/set properties. This
