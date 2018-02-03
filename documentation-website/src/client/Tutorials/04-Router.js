@@ -105,7 +105,7 @@ const router = curi(history, routes);`}
         <Link
           to="Guide"
           params={{ slug: "responses" }}
-          details={{ hash: "properties" }}
+          details={{ hash: "response-properties" }}
         >
           <IJS>response</IJS>
         </Link>{" "}

@@ -45,11 +45,15 @@ export default () => (
       <div className="feature">
         <h3>Responses</h3>
         <p>
-          <Link to="Guide" params={{ slug: "responses" }}>
-            Response objects
+          <Link
+            to="Guide"
+            params={{ slug: "responses" }}
+            details={{ hash: "response-properties" }}
+          >
+            Response
           </Link>{" "}
-          are used to describe the route that matches a location. These can
-          easily be customized to fit your needs.
+          objects provide data about the route that matches a location, which
+          you can use to render your application.
         </p>
       </div>
 

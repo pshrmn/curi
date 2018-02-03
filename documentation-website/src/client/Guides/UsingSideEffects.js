@@ -117,11 +117,15 @@ const router = curi(history, routes, {
       <p>
         That really is all there is required to know in order to write your own
         side effects. You may want to review the{" "}
-        <Link to="Guide" params={{ slug: "responses" }}>
-          response
+        <Link
+          to="Guide"
+          params={{ slug: "responses" }}
+          details={{ hash: "response-properties" }}
+        >
+          response properties
         </Link>{" "}
-        properties to know which properties you should expect a response to
-        have, but other than that they are pretty simple.
+        to know which properties you should expect a response to have, but other
+        than that they are pretty simple.
       </p>
     </Section>
 

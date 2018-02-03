@@ -11,9 +11,9 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      Routes are simply JavaScript objects with two required props: name and
-      path. There are also a number of other props that you can use to enhance
-      the routes. We will cover these below.
+      Routes are JavaScript objects with two required props: <IJS>name</IJS> and{" "}
+      <IJS>path</IJS>. There are also a number of other props that you can use
+      to enhance the routes, which are covered below.
     </p>
 
     <PrismBlock lang="javascript">
@@ -22,138 +22,73 @@ export default ({ name }) => (
   path: ''
 };`}
     </PrismBlock>
-
-    <Section title="Matching Routes" id="matching-routes">
-      <p>
-        First, we should cover how route matching works. Curi takes an array of
-        route objects. Whenever Curi receives a new location, it will walk over
-        the route objects in the order that they are defined in the array.
-      </p>
-      <p>
-        Sometimes a route's path with only partially match the location's
-        pathname. When this happens, the matching behavior will vary based on
-        the route's props. By default, routes perform exact matching. This means
-        that when the route only matches part of the pathname, it does not count
-        as a match.
-      </p>
-      <PrismBlock lang="javascript">
-        {`// when the pathname is '/a/Run+The+Jewels+3/Hey+Kids',
-// the Album route will partially match the pathname. However,
-// Curi looks for complete matches, so it will move on to the
-// next route
-{
-  name: 'Album',
-  path: 'a/:album'
-}`}
-      </PrismBlock>
-      <p>
-        However, if the route has children, then Curi will check if any of those
-        routes form a complete match before moving on to the next route in the
-        routes array.
-      </p>
-      <PrismBlock lang="javascript">
-        {`// when the pathname is '/a/Coloring+Book/All+Night',
-// the Album route will partially match the pathname. Then,
-// its child route Song will be tested and fully match the pathname.
-{
-  name: 'Album',
-  path: 'a/:album',
-  children: [
-    {
-      name: 'Song',
-      path: ':title'
-    }
-  ]
-}`}
-      </PrismBlock>
-      <p>
-        Another possibility happens when you use the <IJS>pathOptions</IJS>{" "}
-        object to set <IJS>end: false</IJS>. When you do that, then a route the
-        partially matches will consider itself matched.
-      </p>
-      <PrismBlock lang="javascript">
-        {`// when the pathname is '/a/Good+Kid,+M.A.A.D+City/Poetic+Justice',
-// the Album route will partially match. However, because it sets
-// end to false, the partial match will be used.
-{
-  name: 'Album',
-  path: 'a/:albumID',
-  pathOptions: {
-    end: false
-  }
-}`}
-      </PrismBlock>
-      <p>
-        If none of your routes match a pathname, then Curi will set a "404"
-        status on the response object. The <IJS>body</IJS> property of the
-        response will also be <IJS>undefined</IJS>, so it is important that your
-        application checks the response's status when it goes to render a
-        response. You can also add a wildcard route (<IJS>path: '(.*)'</IJS>) to
-        the end of your routes array, and that route will always match. You may
-        want to still manually set the status to "404" for the wildcard route,
-        but it is not required.
-      </p>
-    </Section>
-
     <Section title="Route properties" id="route-properties">
       <Subsection title="name" id="name">
-        <p>A unique identifier. This should be a string or a symbol.</p>
+        <p>A string, this must be unique for every route.</p>
+        <PrismBlock lang="javascript">
+          {`[
+  { name: 'Home' },
+  { name: 'Album' },
+  { name: 'Not Found' }
+];`}
+        </PrismBlock>
       </Subsection>
 
       <Subsection title="path" id="path">
         <p>
-          A path-to-regexp style string. This should <strong>not</strong> have a
-          leading slash. The string will be passed to path-to-regexp to generate
-          a regular expression. Any{" "}
+          A string that will be passed to{" "}
           <a href="https://github.com/pillarjs/path-to-regexp#parameters">
-            parameters
+            <IJS>path-to-regexp</IJS>
           </a>{" "}
-          will be identified so that they can be parsed out when matching
-          against a location's pathname.
+          to generate a regular expression use for matching the route to a
+          location's <IJS>pathname</IJS>.{" "}
+          <a href="https://github.com/pillarjs/path-to-regexp#parameters">
+            Path parameters
+          </a>{" "}
+          will be captured so that they can be parsed from a location's{" "}
+          <IJS>pathname</IJS> when the route matches.
         </p>
-        <Note>
-          While path-to-regexp supports arrays and RegExps, only string paths
-          are supported here. This is because the path must also be reversible
-          to create a pathname given params.
-        </Note>
-      </Subsection>
-
-      <Subsection title="pathOptions" id="pathOptions">
         <p>
-          If you need to provide different path options than{" "}
-          <a href="https://github.com/pillarjs/path-to-regexp#usage">
-            the defaults
-          </a>{" "}
-          used by path-to-regexp, you should specify them with a{" "}
-          <IJS>pathOptions</IJS> object.
+          <IJS>path</IJS> strings should <strong>not</strong> have a leading
+          slash
         </p>
+        <PrismBlock lang="javascript">
+          {`[
+  { name: 'Home', path: '' },
+  { name: 'Album', path: 'a/:albumID' },
+  { name: 'Not Found', path: '(.*)' }
+];
+// don't do this
+// { name: 'Home', path: '/' }`}
+        </PrismBlock>
         <Note>
-          If a route has a children array property, it will{" "}
-          <strong>always</strong> have the <IJS>end</IJS> path option set to
-          false.
+          <IJS>path-to-regexp</IJS> supports arrays and RegExps, but only string
+          paths are supported here. This is because the path must also be
+          reversible to create a location's pathname given the name of a route
+          and its params.
         </Note>
       </Subsection>
 
       <Subsection title="match" id="match">
         <p>
-          The <IJS>match</IJS> object is where you can attach functions that
-          will be called when a route matches.
+          The <IJS>match</IJS> object used to provide functions that will be
+          called when the route matches.
         </p>
         <p>
-          While not required (like the <IJS>name</IJS> and <IJS>path</IJS>{" "}
-          properties), you will almost always want to have a{" "}
+          While not required, you will almost always want to have a{" "}
           <IJS>match.response</IJS> property on your routes.
         </p>
         <Subsection tag="h5" title="initial" id="initial">
           <p>
-            A function that will be called the first time that a route matches.
-            This should be used for loading resources that are required for the
-            route to display properly. For example, if you are doing code
-            splitting with Webpack using <IJS>import()</IJS>, you would load the
-            modules in <IJS>initial</IJS>.
+            A function that returns a Promise. It will be called the first time
+            that a route matches.
           </p>
           <p>
-            The <IJS>initial</IJS> function must return a Promise.
+            This can be used for loading resources that are required for the
+            route to display properly, but don't change based on{" "}
+            <IJS>params</IJS>. For example, if you are doing code splitting with
+            Webpack using <IJS>import()</IJS>, you can load the modules in{" "}
+            <IJS>initial</IJS>.
           </p>
           <PrismBlock lang="javascript">
             {`const about = {
@@ -190,56 +125,62 @@ const user = {
   }
 }`}
           </PrismBlock>
-          <p>
-            You should not perform side effects in <IJS>every</IJS> because it
-            is possible that navigating to the route might be cancelled.
-            Instead, side effects should be performed in{" "}
-            <IJS>match.response</IJS>.
-          </p>
+          <Note>
+            You should not perform side effects (e.g. passing the loaded data to
+            a Redux store) in <IJS>every</IJS> because it is possible that
+            navigating to the route might be cancelled. If you must perform side
+            effects, you should do so in <IJS>match.response</IJS>.
+          </Note>
         </Subsection>
 
         <Subsection tag="h5" title="response" id="response">
           <p>
-            A function that will be called right before a response is emitted.{" "}
-            <IJS>response</IJS> will be passed an object with a number of
-            properties. The <IJS>response</IJS> function gives you an
-            opportunity to modify the response object that will be emitted,
-            including using the data that was loaded in either the{" "}
-            <IJS>initial</IJS> or <IJS>every</IJS> functions.
+            A function that will be called right before a response is emitted.
+            This function is where you can set various properties of the{" "}
+            <IJS>response</IJS> object. The <IJS>response</IJS> function will be
+            passed an object with a number of properties.
           </p>
-          <Subsection tag="h6" title="error" id="response-error">
-            <p>
-              If either the <IJS>initial</IJS> or <IJS>every</IJS> functions
-              reject with an error, that error will be passed to the{" "}
-              <IJS>response</IJS> function.
-            </p>
-            <PrismBlock lang="javascript">
-              {`// check if there was an error in every or initial
+          <PrismBlock lang="javascript">
+            {`response: ({ error, resolved, route, set, addons }) => {
+  // ...
+}`}
+          </PrismBlock>
+          <ul>
+            <Subsection tag="li" title="error" id="response-error">
+              <p>
+                If either the <IJS>initial</IJS> or <IJS>every</IJS> functions
+                reject with an error, that error will be passed to the{" "}
+                <IJS>response</IJS> function.
+              </p>
+              <PrismBlock lang="javascript">
+                {`// check if there was an error in every or initial
 const user = {
   name: 'User',
   path: ':id',
   match: {
-    every: ({ params, location }) => (
-      Promise.reject('Nope!')
-    ),
+    every: ({ params, location }) => {
+      return Promise.reject('Nope!')
+    },
     response: ({ error, set }) => {
       if (error) {
         set.error(error);
       }
     }
   }
-}`}
-            </PrismBlock>
-          </Subsection>
-          <Subsection tag="h6" title="resolved" id="response-resolved">
-            <p>
-              <IJS>resolved</IJS> is the value that was resolved by the{" "}
-              <IJS>every</IJS> function. If a route does not have a{" "}
-              <IJS>match.every</IJS> function, then this property will be{" "}
-              <IJS>undefined</IJS>.
-            </p>
-            <PrismBlock lang="javascript">
-              {`// attach resolved data to the response
+};`}
+              </PrismBlock>
+            </Subsection>
+            <Subsection tag="li" title="resolved" id="response-resolved">
+              <p>
+                <IJS>resolved</IJS> is an object with the values resolved by the{" "}
+                <IJS>initial</IJS> and <IJS>every</IJS> functions (or{" "}
+                <IJS>null</IJS> if the router has neither an <IJS>initial</IJS>{" "}
+                function nor an <IJS>every</IJS> function. If the route has one,
+                but not the other, the missing value will be{" "}
+                <IJS>undefined</IJS> on the <IJS>resolved</IJS> object.
+              </p>
+              <PrismBlock lang="javascript">
+                {`// attach resolved data to the response
 const user = {
   name: 'User',
   path: ':id',
@@ -249,57 +190,64 @@ const user = {
         .then(resp => JSON.parse(resp))
     ),
     response: ({ resolved, set }) => {
-      set.data(resolved);
+      set.data(resolved.every);
     }
   }
 }`}
-            </PrismBlock>
-          </Subsection>
-          <Subsection tag="h6" title="route" id="response-route">
-            <p>
-              This is the same object that is passed to the <IJS>every</IJS>{" "}
-              function and contains three properties: the parsed{" "}
-              <IJS>params</IJS>, the <IJS>location</IJS>, and the{" "}
-              <IJS>name</IJS> of the matched route.
-            </p>
-          </Subsection>
-          <Subsection tag="h6" title="set" id="response-set">
-            <p>
-              The <IJS>set</IJS> object contains a number of functions that you
-              can use to modify the response.
-            </p>
-            <ul>
-              <li>
-                <IJS>body(body)</IJS> - The value passed to this method will be
-                set as the response's <IJS>body</IJS> property.
-              </li>
-              <li>
-                <IJS>data(data)</IJS> - The value passed to this method will be
-                set as the response's <IJS>data</IJS> property.
-              </li>
-              <li>
-                <IJS>{`redirect({ name, status, ... })`}</IJS> - This allows you
-                to turn the response into a redirect response. When you
-                application receives a redirect response, it should redirect to
-                the new location (using your history object) instead of
-                re-rendering. If you do not provide a code, then 301 will be
-                used. Setting the status code is mostly important for rendering
-                on the server. The <IJS>to</IJS> argument should be a string or
-                a location object. Once the response has been created, Curi will
-                automatically redirect to the <IJS>to</IJS> location.
-              </li>
-              <li>
-                <IJS>error(error)</IJS> - A method to call when something goes
-                wrong. This will add an error property to the response.
-              </li>
-              <li>
-                <IJS>status(code)</IJS> - This method will set a new status for
-                the response (the default status is 200 when a route matches and
-                404 when no routes match).
-              </li>
-            </ul>
-            <PrismBlock lang="javascript">
-              {`// when the user visits /contact, the response object's body
+              </PrismBlock>
+            </Subsection>
+            <Subsection tag="li" title="route" id="response-route">
+              <p>
+                This is the same object that is passed to the <IJS>every</IJS>{" "}
+                function and contains three properties: the parsed{" "}
+                <IJS>params</IJS>, the <IJS>location</IJS>, and the{" "}
+                <IJS>name</IJS> of the matched route.
+              </p>
+            </Subsection>
+            <Subsection tag="li" title="set" id="response-set">
+              <p>
+                The <IJS>set</IJS> object contains a number of functions that
+                you can use to modify the response.
+              </p>
+              <ul>
+                <li>
+                  <IJS>body(body)</IJS> - The value passed to this method will
+                  be set as the response's <IJS>body</IJS> property.
+                </li>
+                <li>
+                  <IJS>data(data)</IJS> - The value passed to this method will
+                  be set as the response's <IJS>data</IJS> property.
+                </li>
+                <li>
+                  <IJS>{`redirect({ name, status, ... })`}</IJS> - This allows
+                  you to turn the response into a redirect response. When you
+                  application receives a redirect response, it should redirect
+                  to the new location (using your history object) instead of
+                  re-rendering. If you do not provide a code, then 301 will be
+                  used. Setting the status code is mostly important for
+                  rendering on the server. The <IJS>to</IJS> argument should be
+                  a string or a location object. Once the response has been
+                  created, Curi will automatically redirect to the <IJS>to</IJS>{" "}
+                  location.
+                </li>
+                <li>
+                  <IJS>error(error)</IJS> - A method to call when something goes
+                  wrong. This will add an error property to the response.
+                </li>
+                <li>
+                  <IJS>status(code)</IJS> - This method will set a new status
+                  for the response (the default status is 200 when a route
+                  matches and 404 when no routes match).
+                </li>
+                <li>
+                  <IJS>title(t)</IJS> - This method will set the{" "}
+                  <IJS>title</IJS> property of the response, which is used by{" "}
+                  <IJS>@curi/side-effect-title</IJS> to set the document's
+                  title.
+                </li>
+              </ul>
+              <PrismBlock lang="javascript">
+                {`// when the user visits /contact, the response object's body
 // property will be the Contact value
 import Contact from './components/Contact';
 
@@ -314,67 +262,57 @@ const routes = [
     }
   }
 ];`}
-            </PrismBlock>
-          </Subsection>
+              </PrismBlock>
+            </Subsection>
 
-          <Subsection tag="h6" title="addons" id="response-addons">
-            <p>
-              The add-ons that have been registered with Curi are available to
-              the <IJS>response</IJS> function.
-            </p>
-          </Subsection>
+            <Subsection tag="li" title="addons" id="response-addons">
+              <p>
+                The add-ons that have been registered with Curi are available to
+                the <IJS>response</IJS> function.
+              </p>
+            </Subsection>
+          </ul>
         </Subsection>
-      </Subsection>
-
-      <Subsection title="title" id="title">
-        <p>
-          You can use the title property of a route to specify a title string
-          that should be set on the response when that route matches. This can
-          either be a string or a function. If it is a string, then
-          <IJS>response.title</IJS> will be set to the value of{" "}
-          <IJS>route.title</IJS>. If it is a function, it will be called (and
-          passed the <IJS>response.params</IJS> and <IJS>response.data</IJS>{" "}
-          values) to generate the title string.
-        </p>
-        <p>
-          If a route does not have a title property, when it matches, the
-          response's title property will be an empty string.
-        </p>
-        <PrismBlock lang="javascript">
-          {`// as a string
-{
-  name: 'Contact',
-  path: 'contact',
-  title: 'How to contact us'
-}
-
-// as a function
-{
-  name: 'Contact Method',
-  path: ':method',
-  title: (params, data) => \`Contact via $\{params.method\}\`
-}`}
-        </PrismBlock>
       </Subsection>
 
       <Subsection title="children" id="children">
         <p>
-          An optional array of route objects. Any child routes will be matched
-          relative to their parent route's path. This means that if a parent
-          route's path string is 'one' and a child route's path string is 'two',
-          the child will match when the pathname is 'one/two'.
+          An optional array of route objects for creating nested routes. Any
+          child routes will be matched relative to their parent route's{" "}
+          <IJS>path</IJS>. This means that if a parent route's <IJS>path</IJS>{" "}
+          string is <IJS>'one'</IJS> and a child route's <IJS>path</IJS> string
+          is <IJS>'two'</IJS>, the child will match when the pathname is{" "}
+          <IJS>'one/two'</IJS>.
         </p>
+        <PrismBlock lang="javascript">
+          {`// '/a/Coloring+Book/All+Night' will be matched
+// by the "Song" route, with the params
+// { album: 'Coloring+Book', title: 'All+Night' }
+{
+  name: 'Album',
+  path: 'a/:album',
+  children: [
+    {
+      name: 'Song',
+      path: ':title'
+    }
+  ]
+}`}
+        </PrismBlock>
       </Subsection>
 
       <Subsection title="params" id="params">
         <p>
           When <IJS>path-to-regexp</IJS> matches your paths, all parameters are
-          extracted as strings. However, you might have some route params to be
-          other types. You can provide functions to transform params using the{" "}
-          <IJS>route.params</IJS> object. To transform a param, its name should
-          be the string value from the path. The paired value should be a
-          function that takes a string (the value from the pathname) and returns
-          a new value (transformed however you want).
+          extracted as strings. However, you might prefer for some route params
+          to be other types. You can provide functions to transform params using
+          the <IJS>route.params</IJS> object.
+        </p>
+        <p>
+          Properties of the <IJS>route.params</IJS> object are the names of
+          params to be parsed. The paired value should be a function that takes
+          a string (the value from the <IJS>pathname</IJS>) and returns a new
+          value (transformed however you want).
         </p>
         <PrismBlock lang="javascript">
           {`const routes = [
@@ -391,19 +329,27 @@ const routes = [
         </PrismBlock>
       </Subsection>
 
+      <Subsection title="pathOptions" id="pathOptions">
+        <p>
+          If you need to provide different path options than{" "}
+          <a href="https://github.com/pillarjs/path-to-regexp#usage">
+            the defaults
+          </a>{" "}
+          used by <IJS>path-to-regexp</IJS>, you can provide them with a{" "}
+          <IJS>pathOptions</IJS> object.
+        </p>
+        <Note>
+          If a route has a children array property, it will{" "}
+          <strong>always</strong> have the <IJS>end</IJS> path option set to
+          false.
+        </Note>
+      </Subsection>
+
       <Subsection title="extra" id="extra">
         <p>
           If you have any additional properties that you want attached to a
           route, use the <IJS>extra</IJS> property. You will be able to use{" "}
-          <IJS>route.extra</IJS> in any custom add-ons or when a route matches
-          via <IJS>response.route.extra</IJS>.
-        </p>
-
-        <p>
-          You can attach anything you want to <IJS>extra</IJS> or you may never
-          find yourself needing to use this. One possible use case for{" "}
-          <IJS>extra</IJS> is that you could specify entrance/exit animation
-          types. One route might want to fade in, while another might slide in.
+          <IJS>route.extra</IJS> in any custom add-ons.
         </p>
 
         <PrismBlock lang="javascript">
@@ -427,16 +373,110 @@ const routes = [
       </Subsection>
     </Section>
 
+    <Section title="Matching Routes" id="matching-routes">
+      <p>
+        Whenever Curi receives a new location, it will determine which route has
+        a <IJS>path</IJS> that matches the new location's <IJS>pathname</IJS> by
+        walking over the route objects in the order that they are defined in the
+        array. If a route has <IJS>children</IJS>, those will be checked before
+        moving to the route's nest sibling.
+      </p>
+      <p>We'll use this simple route setup to demonstrate how this works.</p>
+      <PrismBlock lang="javascript">
+        {`const routes = [
+  {
+    name: 'Home',
+    path: '',
+  },
+  {
+    name: 'Album',
+    path: 'a/:album'
+  },
+  {
+    name: 'Not Found',
+    path: '(.*)' // this matches EVERY pathname
+  }
+];`}
+      </PrismBlock>
+      <p>
+        Curi's default matching behavior looks for exact matches. This means
+        that when the route only matches part of the pathname, it does not count
+        as a match. If the user navigates to a location with the pathname{" "}
+        <IJS>"/a/red/yellow"</IJS>, the <IJS>Album</IJS> route will only
+        partially match, so Curi will move on to the next route,{" "}
+        <IJS>Not Found</IJS>, which has a catch all <IJS>path</IJS> that matches
+        every pathname.
+      </p>
+      <p>
+        However, if a route has children, then Curi will check if any of those
+        routes form a complete match before moving on to the next route in the
+        routes array.
+      </p>
+      <PrismBlock lang="javascript">
+        {`// when the pathname is '/a/Coloring+Book/All+Night',
+// the Album route will partially match the pathname. Then,
+// its child route Song will be tested and fully match the pathname.
+{
+  name: 'Album',
+  path: 'a/:album',
+  children: [
+    {
+      name: 'Song',
+      path: ':title'
+    }
+  ]
+}`}
+      </PrismBlock>
+      <p>
+        You can control whether a route does exact or partial matching with{" "}
+        <Link details={{ hash: "pathOptions" }}>
+          <IJS>pathOptions</IJS>
+        </Link>{" "}
+        property. If you set <IJS>{`{ end: false }`}</IJS>, a route that
+        partially matches will consider itself matched.
+      </p>
+      <PrismBlock lang="javascript">
+        {`// when the pathname is '/a/Good+Kid,+M.A.A.D+City/Poetic+Justice',
+// the Album route will partially match. However, because it sets
+// end to false, the partial match will be used.
+{
+  name: 'Album',
+  path: 'a/:albumID',
+  pathOptions: {
+    end: false
+  }
+}`}
+      </PrismBlock>
+      <Subsection title="No Matching Route" id="catch-all">
+        <p>
+          If none of your routes match a pathname, then Curi will set a "404"
+          status on the <IJS>response</IJS> object. The <IJS>body</IJS> property
+          of the response will also be <IJS>undefined</IJS>, so it is important
+          that your application checks the response's status when it renders.
+        </p>
+        <p>
+          A better option is to add a catch all route (<IJS>path: '(.*)'</IJS>)
+          to the end of your routes array, and that route will always match. You
+          may want to still manually set the status to "404" for the catch all
+          route in the route's <IJS>match.response</IJS> method, but it is not
+          required.
+        </p>
+        <PrismBlock lang="javascript">
+          {`{
+  name: 'Not Found',
+  path: '(.*)',
+}`}
+        </PrismBlock>
+      </Subsection>
+    </Section>
+
     <div>
       <h2>Next</h2>
       <p>
-        Now that you know how to setup your routes, we can get to the good part:
-        actually rendering your application using response objects. Check out
-        the{" "}
-        <Link to="Guide" params={{ slug: "responses" }}>
-          Rendering with Responses
-        </Link>{" "}
-        guide to learn how.
+        Now that you know how to setup your routes, we will take a look at{" "}
+        <Link to="Guide" params={{ slug: "response-handlers" }}>
+          response handlers
+        </Link>.
       </p>
     </div>
   </BaseGuide>
