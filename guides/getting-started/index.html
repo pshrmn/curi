@@ -8,108 +8,62 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorial</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Getting Started</h1><p>Curi aims to be easy to setup. The one thing that all Curi projects have in common is a router. You create a router by passing a Hickory history object and an array of route objects to the <code class="language-javascript">curi</code> function (the default export from <code class="language-javascript">@curi/core</code>.</p><p>In order to re-render your application after navigation, you can observe your router for responses using its <code class="language-javascript">respond</code> method.<!-- --> <code class="language-javascript">respond</code> takes a callback function that will be passed<!-- --> <code class="language-javascript">response</code> and <code class="language-javascript">navigation</code> arguments, which you can use to render.</p><div class="section" id="history-object"><h2>The History Object<a class="header-link" href="/guides/getting-started/#history-object">#</a></h2><p>Curi&#x27;s navigation is powered by the<!-- --> <a href="https://github.com/pshrmn/hickory">Hickory</a> package. You just need to pick which type of Hickory history object is right for your application.</p><pre><code class="language-javascript">// Use Browser when your website has a dynamic server
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorial</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Getting Started</h1><p>This guide will cover a few basic concepts about Curi so that you can be confident integrating Curi into your application.</p><div class="section" id="router-object"><h2>The router<a class="header-link" href="/guides/getting-started/#router-object">#</a></h2><p>A Curi router is created using a <code class="language-javascript">history</code> object and a<!-- --> <code class="language-javascript">routes</code> array. You create the router by calling the<!-- --> <code class="language-javascript">curi</code> function, which is the default export from the<!-- --> <code class="language-javascript">@curi/core</code> package.</p><pre><code class="language-javascript">npm install @curi/core
+        
+import curi from &#x27;@curi/core&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
-const browserHistory = Browser();
+import routes from &#x27;./routes&#x27;;
 
-// Use Hash when your website uses a static file server
+const history = Browser();
+const router = curi(history, routes);
+</code></pre><div class="note"><strong>Note:</strong> <!-- -->This function also accepts an <code class="language-javascript">options</code> object. You can read about its properties in the<!-- --> <a href="/packages/@curi/core/#options"><code class="language-javascript">@curi/core</code></a> <!-- -->documentation.</div></div><div class="section" id="history-object"><h2>The History Object<a class="header-link" href="/guides/getting-started/#history-object">#</a></h2><p>The most important function of a router is to keep track of locations. Curi does this using <code class="language-javascript">history</code> objects created by your choice of one of the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->packages. Which Hickory package you choose depends mostly on where your application will be running.</p><div class="subsection" id="hickory-browser"><h3>Browser<a class="header-link" href="/guides/getting-started/#hickory-browser">#</a></h3><p>If you are building a website that will be hosted on a dynamic server (it can respond to requests for any location), you should use the<!-- --> <code class="language-javascript">@hickory/browser</code> package.</p><pre><code class="language-javascript">npm install @hickory/browser
+          
+import Browser from &#x27;@hickory/browser&#x27;;
+const browserHistory = Browser();</code></pre></div><div class="subsection" id="hickory-hash"><h3>Hash<a class="header-link" href="/guides/getting-started/#hickory-hash">#</a></h3><p>If you are building a website that will be hosted on a static file server, you will need to use the <code class="language-javascript">@hickory/hash</code> package. The paths for your routes will be encoded in the <code class="language-javascript">hash</code> section of the URL. This isn&#x27;t as &quot;pretty&quot; as the paths you get with<!-- --> <code class="language-javascript">@hickory/browser</code>, but is a necessary solution for statically hosted websites.</p><pre><code class="language-javascript">npm install @hickory/hash
+          
 import Hash from &#x27;@hickory/hash&#x27;;
-const hashHistory = Hash();
+const hashHistory = Hash();</code></pre></div><div class="subsection" id="hickory-in-memory"><h3>In Memory<a class="header-link" href="/guides/getting-started/#hickory-in-memory">#</a></h3><p>If your application is not running in a browser, you should use an in-memory history. This is what you would use when building a mobile application with React Native, writing a NodeJS backend for your server, or when writing tests that run in NodeJS.</p><pre><code class="language-javascript">npm install @hickory/in-memory
 
-// Use InMemory when your application doesn&#x27;t run in a browser
 import InMemory from &#x27;@hickory/in-memory&#x27;;
-const memoryHistory = InMemory();</code></pre><p>Each history object has essentially the same API (InMemory has a few extra properties). The most important properties to know are the location object as well as the navigate, push, and replace methods.</p><p></p><pre><code class="language-javascript">// the location property is the current location object
+const memoryHistory = InMemory();</code></pre></div><div class="subsection" id="props-and-methods"><h3>Properties and Methods<a class="header-link" href="/guides/getting-started/#props-and-methods">#</a></h3><p>Each history object has essentially the same API (<code class="language-javascript">InMemory</code> <!-- -->has a few extra properties). The most important properties to know are the <code class="language-javascript">location</code> object as well as the <code class="language-javascript">navigate</code>,<!-- --> <code class="language-javascript">push</code>, and <code class="language-javascript">replace</code> methods.</p><pre><code class="language-javascript">// the location property is the current location object
 browserHistory.location === {
   pathname: &#x27;/guides/getting-started&#x27;,
   ...
 };
 
 // the push method will navigate to a new location
-browserHistory.push({ pathname: &#x27;/guides/installation&#x27; });
+browserHistory.push({
+  pathname: &#x27;/guides/installation&#x27;
+});
 
 // the replace method will replace the current location
 // with the provided one
-browserHistory.push({ pathname: &#x27;/guides/confirming-navigation&#x27; });
+browserHistory.replace({
+  pathname: &#x27;/guides/confirming-navigation&#x27;
+});
 
 // the navigate method will choose whether to push or replace for you
 // this behavior mimics how anchors (&lt;a&gt;) navigate
-browserHistory.navigate({ pathname: &#x27;/guides/getting-started&#x27; });
-</code></pre></div><div class="section" id="routes-array"><h2>The Routes Array<a class="header-link" href="/guides/getting-started/#routes-array">#</a></h2><p>Routes are objects with two required properties: name and path.</p><p>Paths can be any valid<!-- --> <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a> <!-- -->string. It is just important that you do not begin the string with a forward slash (/). Forward slashes are fine anywhere else in the path. (<code class="language-javascript">this/is/fine</code>, but <code class="language-javascript">/this/is/not</code>).</p><p>The names are used to generate URIs for you. With Curi, you never have to write a URI&#x27;s pathname string yourself. It is required that all of your routes have unique names. This is because Curi generates location pathnames using route names (and params for non-static paths).</p><pre><code class="language-javascript">const routes = [
+browserHistory.navigate({
+  pathname: &#x27;/guides/getting-started&#x27;
+});</code></pre></div></div><div class="section" id="routes-array"><h2>The Routes Array<a class="header-link" href="/guides/getting-started/#routes-array">#</a></h2><p>Routes are objects with two required properties: a <code class="language-javascript">name</code> <!-- -->string and a <code class="language-javascript">path</code> string.</p><div class="note"><strong>Note:</strong> <!-- -->Paths can be any valid<!-- --> <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a> <!-- -->string. It is just important that you do not begin the string with a forward slash (/). Forward slashes are fine anywhere else in the path. (<code class="language-javascript">this/is/fine</code>, but <code class="language-javascript">/this/is/not</code>).</div><p>Route names are used to generate pathnames for you. With Curi, you never have to write a pathname string yourself. This also means that all routes must have unique names.</p><pre><code class="language-javascript">const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;, // matches the pathname /
     ...
   },
   ...
-]</code></pre><p>How route matching works and the other route properties are explained more in-depth in the<!-- --> <a href="/guides/routes/">All About Routes</a> <!-- -->guide.</p></div><div class="section" id="router-object"><h2>The router<a class="header-link" href="/guides/getting-started/#router-object">#</a></h2><p>Once you have your Hickory history object and your routes array, you just need to pass them to the default export from the Curi package (which we will name <code class="language-javascript">curi</code> here).</p><pre><code class="language-javascript">import curi from &#x27;curi&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;;
-import routes from &#x27;./routes&#x27;;
-
-const history = Browser();
-const router = curi(history, routes);
-</code></pre><div class="subsection" id="other-router-options"><h3>Other router options<a class="header-link" href="/guides/getting-started/#other-router-options">#</a></h3><p>The <code class="language-javascript">curi</code> function can also take an optional third argument, which is an options object. You can use this to pass<!-- --> <a href="/guides/addons/">add-ons</a>,<!-- --> <a href="/guides/side-effects/">side effects</a>, a<!-- --> <a href="/guides/response-caching/">cache</a>, and a<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp"><code class="language-javascript">pathnameOptions</code></a> <!-- -->object to your router.</p><pre><code class="language-javascript">const router = curi(history, routes, {
-  addons: [...],
-  sideEffects: [...],
-  cache: cacheObject,
-  pathnameOptions: { encode: x =&gt; x }
-});</code></pre></div></div><div class="section"><h2>Responses<a class="header-link" href="/guides/getting-started/">#</a></h2><p>Whenever navigation happens, a new location object is created by Hickory. Curi uses that location object&#x27;s pathname property to match against all of your routes. When it finds one that matches, it uses that route object to create a response object. You can give your Curi router response handlers to be called whenever a new response is created. When a new response is created, your response handler function will be passed an object that contains a response object, an object with additional navigation data, and your router.</p><div class="note"><strong>Note:</strong> <!-- -->Response handlers are passed the router so you can define them in a separate module from the <code class="language-javascript">router.respond</code> call and still reference the router.</div><pre><code class="language-javascript">const router = curi(history, routes);
-router.respond(({ response, navigation, router }) =&gt; {
-  // whenever the location changes, this function is called
-  // you can use this function to re-render your application
-  // using the new response object
-});
-</code></pre><p>Responses are generated asynchronously. A Curi router has a<!-- --> <code class="language-javascript">respond</code> function that you can use to register a response handler function, which will be called whenever a new response is generated.</p><pre><code class="language-javascript">const router = curi(history, routes);
-// wait to render until a response is generated
-router.respond(({ response, navigation, router }) =&gt; {
-  // now we can render using the response,
-  // navigation, and router
-});</code></pre><p>Your rendering will be centered around these response objects, so you should be familiar with the different properties that will be available to you. We will get into more details about responses in the<!-- --> <a href="/guides/responses/">Rendering with Responses</a> <!-- -->guide, but for now we will just go over how a route maps to a response.</p><pre><code class="language-javascript">// if you have the following routes
-const routes = [
-  ...,
-  {
-    name: &#x27;Album&#x27;,
-    path: &#x27;photos/:albumID&#x27;,
-    ...,
-    children: [
-      {
-        name: &#x27;Photo&#x27;,
-        path: &#x27;:photoID&#x27;,
-        match: {
-          response: ({ set }) =&gt; {
-            set.body(Photo);
-          }
-        }
-      }
-    ]
-  }
-];
-// when the user visits the URI /photos/6789/12345
-// the following response object would be created:
-
-{
-  // The location key
-  key: &#x27;1.0&#x27;,
-
-  // The location object used to generate the response.
-  location: { pathname: &#x27;/photos/6789/12345&#x27;, ... },
-
-  // The value returned by the route&#x27;s body function
-  body: Photo,
-
-  // The name of the best matching route
-  name: &#x27;Photo&#x27;,
-
-  // The name of ancestor routes that matched
-  // part of the location&#x27;s pathname
-  partials: [&#x27;Album&#x27;],
-
-  // An object containing the values parsed
-  // from the pathname by path-to-regexp.
-  params: { photoID: 12345, albumID: 6789 },
-
-  // There are a few more properties as well. Please read
-  // the Rendering with Responses guide to see those
-}</code></pre></div><h2>Next</h2><p>Now that you know the core of how Curi works, let&#x27;s take a closer look at routes with the<!-- --> <a href="/guides/routes/">All About Routes</a> <!-- -->guide.</p></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a class="active" href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/routes/">All About Routes</a></li><li class="solo"><a href="/guides/responses/">Rendering with Responses</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Add-ons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li><li class="solo"><a href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
+]</code></pre><p>How route matching works and the other route properties are explained more in-depth in the<!-- --> <a href="/guides/routes/">All About Routes</a> <!-- -->guide.</p></div><div class="section"><h2>Responses<a class="header-link" href="/guides/getting-started/">#</a></h2><p>Whenever navigation happens, Curi will create a <code class="language-javascript">response</code> <!-- -->object, which provides data based on the route that it matched. The router&#x27;s <code class="language-javascript">respond</code> method is used to register callback functions (called response handlers), which the router will call when a new response is created.</p><p>Response handlers will be passed an object with three properties:<!-- --> <code class="language-javascript">response</code>, <code class="language-javascript">navigation</code>, and <code class="language-javascript">router</code>.</p><pre><code class="language-javascript">function responseHandler(({ response, navigation, router }) {
+  // response - contains data about the matching route
+  // navigation - contains data about the location change
+  // router - your router, useful if you want to define this
+  //   in a separate module 
+});</code></pre><p>There are two types of response handlers, one time functions and observers.</p><p>One time functions will be called one time, either immediately if a response already exist, or once the router&#x27;s initial <code class="language-javascript">response</code> <!-- -->is created. These are useful for setup functions in your application.</p><pre><code class="language-javascript">router.respond(() =&gt; {
+  // I will only be called once
+});</code></pre><p>Observers will be called every time a response is created. These are great for triggering re-renders, although the render packages (<a href="/packages/@curi/react/"><code class="language-javascript">@curi/react</code></a>,<!-- --> <a href="/packages/@curi/react-native/"><code class="language-javascript">@curi/react-native</code></a>,<!-- --> <a href="/packages/@curi/vue/"><code class="language-javascript">@curi/vue</code></a>, and<!-- --> <a href="/packages/@curi/svelte/"><code class="language-javascript">@curi/svelte</code></a>) handle this for you, so you likely won&#x27;t need to use these manually.</p><pre><code class="language-javascript">const stopObserving = router.respond(() =&gt; {
+  // I will be called for every new response until the
+  // stopObserving function is called
+}, { observe: true });</code></pre></div><h2>Next</h2><p>Rendering your application will be centered around these response objects. The<!-- --> <a href="/guides/responses/">Response Handlers</a> <!-- -->guide will go into more detail about their properties, but first we should take a look at how to write routes with the<!-- --> <a href="/guides/routes/">All About Routes</a> <!-- -->guide.</p></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a class="active" href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/routes/">Routes</a></li><li class="solo"><a href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a href="/guides/responses/">Response Objects</a></li><li class="solo"><a href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Add-ons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li><li class="solo"><a href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

@@ -3,43 +3,25 @@
   <head>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>All About Routes Guide | Curi Documentation</title>
+    <title>Routes Guide | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorial</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>All About Routes</h1><p>Routes are simply JavaScript objects with two required props: name and path. There are also a number of other props that you can use to enhance the routes. We will cover these below.</p><pre><code class="language-javascript">{
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorial</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Routes</h1><p>Routes are JavaScript objects with two required props: <code class="language-javascript">name</code> and<!-- --> <code class="language-javascript">path</code>. There are also a number of other props that you can use to enhance the routes, which are covered below.</p><pre><code class="language-javascript">{
   name: &#x27;Home&#x27;,
   path: &#x27;&#x27;
-};</code></pre><div class="section" id="matching-routes"><h2>Matching Routes<a class="header-link" href="/guides/routes/#matching-routes">#</a></h2><p>First, we should cover how route matching works. Curi takes an array of route objects. Whenever Curi receives a new location, it will walk over the route objects in the order that they are defined in the array.</p><p>Sometimes a route&#x27;s path with only partially match the location&#x27;s pathname. When this happens, the matching behavior will vary based on the route&#x27;s props. By default, routes perform exact matching. This means that when the route only matches part of the pathname, it does not count as a match.</p><pre><code class="language-javascript">// when the pathname is &#x27;/a/Run+The+Jewels+3/Hey+Kids&#x27;,
-// the Album route will partially match the pathname. However,
-// Curi looks for complete matches, so it will move on to the
-// next route
-{
-  name: &#x27;Album&#x27;,
-  path: &#x27;a/:album&#x27;
-}</code></pre><p>However, if the route has children, then Curi will check if any of those routes form a complete match before moving on to the next route in the routes array.</p><pre><code class="language-javascript">// when the pathname is &#x27;/a/Coloring+Book/All+Night&#x27;,
-// the Album route will partially match the pathname. Then,
-// its child route Song will be tested and fully match the pathname.
-{
-  name: &#x27;Album&#x27;,
-  path: &#x27;a/:album&#x27;,
-  children: [
-    {
-      name: &#x27;Song&#x27;,
-      path: &#x27;:title&#x27;
-    }
-  ]
-}</code></pre><p>Another possibility happens when you use the <code class="language-javascript">pathOptions</code> <!-- -->object to set <code class="language-javascript">end: false</code>. When you do that, then a route the partially matches will consider itself matched.</p><pre><code class="language-javascript">// when the pathname is &#x27;/a/Good+Kid,+M.A.A.D+City/Poetic+Justice&#x27;,
-// the Album route will partially match. However, because it sets
-// end to false, the partial match will be used.
-{
-  name: &#x27;Album&#x27;,
-  path: &#x27;a/:albumID&#x27;,
-  pathOptions: {
-    end: false
-  }
-}</code></pre><p>If none of your routes match a pathname, then Curi will set a &quot;404&quot; status on the response object. The <code class="language-javascript">body</code> property of the response will also be <code class="language-javascript">undefined</code>, so it is important that your application checks the response&#x27;s status when it goes to render a response. You can also add a wildcard route (<code class="language-javascript">path: &#x27;(.*)&#x27;</code>) to the end of your routes array, and that route will always match. You may want to still manually set the status to &quot;404&quot; for the wildcard route, but it is not required.</p></div><div class="section" id="route-properties"><h2>Route properties<a class="header-link" href="/guides/routes/#route-properties">#</a></h2><div class="subsection" id="name"><h3>name<a class="header-link" href="/guides/routes/#name">#</a></h3><p>A unique identifier. This should be a string or a symbol.</p></div><div class="subsection" id="path"><h3>path<a class="header-link" href="/guides/routes/#path">#</a></h3><p>A path-to-regexp style string. This should <strong>not</strong> have a leading slash. The string will be passed to path-to-regexp to generate a regular expression. Any<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#parameters">parameters</a> <!-- -->will be identified so that they can be parsed out when matching against a location&#x27;s pathname.</p><div class="note"><strong>Note:</strong> <!-- -->While path-to-regexp supports arrays and RegExps, only string paths are supported here. This is because the path must also be reversible to create a pathname given params.</div></div><div class="subsection" id="pathOptions"><h3>pathOptions<a class="header-link" href="/guides/routes/#pathOptions">#</a></h3><p>If you need to provide different path options than<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#usage">the defaults</a> <!-- -->used by path-to-regexp, you should specify them with a<!-- --> <code class="language-javascript">pathOptions</code> object.</p><div class="note"><strong>Note:</strong> <!-- -->If a route has a children array property, it will<!-- --> <strong>always</strong> have the <code class="language-javascript">end</code> path option set to false.</div></div><div class="subsection" id="match"><h3>match<a class="header-link" href="/guides/routes/#match">#</a></h3><p>The <code class="language-javascript">match</code> object is where you can attach functions that will be called when a route matches.</p><p>While not required (like the <code class="language-javascript">name</code> and <code class="language-javascript">path</code> <!-- -->properties), you will almost always want to have a<!-- --> <code class="language-javascript">match.response</code> property on your routes.</p><div class="subsection" id="initial"><h5>initial<a class="header-link" href="/guides/routes/#initial">#</a></h5><p>A function that will be called the first time that a route matches. This should be used for loading resources that are required for the route to display properly. For example, if you are doing code splitting with Webpack using <code class="language-javascript">import()</code>, you would load the modules in <code class="language-javascript">initial</code>.</p><p>The <code class="language-javascript">initial</code> function must return a Promise.</p><pre><code class="language-javascript">const about = {
+};</code></pre><div class="section" id="route-properties"><h2>Route properties<a class="header-link" href="/guides/routes/#route-properties">#</a></h2><div class="subsection" id="name"><h3>name<a class="header-link" href="/guides/routes/#name">#</a></h3><p>A string, this must be unique for every route.</p><pre><code class="language-javascript">[
+  { name: &#x27;Home&#x27; },
+  { name: &#x27;Album&#x27; },
+  { name: &#x27;Not Found&#x27; }
+];</code></pre></div><div class="subsection" id="path"><h3>path<a class="header-link" href="/guides/routes/#path">#</a></h3><p>A string that will be passed to<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#parameters"><code class="language-javascript">path-to-regexp</code></a> <!-- -->to generate a regular expression use for matching the route to a location&#x27;s <code class="language-javascript">pathname</code>.<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#parameters">Path parameters</a> <!-- -->will be captured so that they can be parsed from a location&#x27;s<!-- --> <code class="language-javascript">pathname</code> when the route matches.</p><p><code class="language-javascript">path</code> strings should <strong>not</strong> have a leading slash</p><pre><code class="language-javascript">[
+  { name: &#x27;Home&#x27;, path: &#x27;&#x27; },
+  { name: &#x27;Album&#x27;, path: &#x27;a/:albumID&#x27; },
+  { name: &#x27;Not Found&#x27;, path: &#x27;(.*)&#x27; }
+];
+// don&#x27;t do this
+// { name: &#x27;Home&#x27;, path: &#x27;/&#x27; }</code></pre><div class="note"><strong>Note:</strong> <code class="language-javascript">path-to-regexp</code> supports arrays and RegExps, but only string paths are supported here. This is because the path must also be reversible to create a location&#x27;s pathname given the name of a route and its params.</div></div><div class="subsection" id="match"><h3>match<a class="header-link" href="/guides/routes/#match">#</a></h3><p>The <code class="language-javascript">match</code> object used to provide functions that will be called when the route matches.</p><p>While not required, you will almost always want to have a<!-- --> <code class="language-javascript">match.response</code> property on your routes.</p><div class="subsection" id="initial"><h5>initial<a class="header-link" href="/guides/routes/#initial">#</a></h5><p>A function that returns a Promise. It will be called the first time that a route matches.</p><p>This can be used for loading resources that are required for the route to display properly, but don&#x27;t change based on<!-- --> <code class="language-javascript">params</code>. For example, if you are doing code splitting with Webpack using <code class="language-javascript">import()</code>, you can load the modules in<!-- --> <code class="language-javascript">initial</code>.</p><pre><code class="language-javascript">const about = {
   name: &#x27;About&#x27;,
   path: &#x27;about&#x27;,
   match: {
@@ -54,21 +36,23 @@ const user = {
       fetch(`/api/users/${params.id}`)
         .then(resp =&gt; JSON.parse(resp))
   }
-}</code></pre><p>You should not perform side effects in <code class="language-javascript">every</code> because it is possible that navigating to the route might be cancelled. Instead, side effects should be performed in<!-- --> <code class="language-javascript">match.response</code>.</p></div><div class="subsection" id="response"><h5>response<a class="header-link" href="/guides/routes/#response">#</a></h5><p>A function that will be called right before a response is emitted.<!-- --> <code class="language-javascript">response</code> will be passed an object with a number of properties. The <code class="language-javascript">response</code> function gives you an opportunity to modify the response object that will be emitted, including using the data that was loaded in either the<!-- --> <code class="language-javascript">initial</code> or <code class="language-javascript">every</code> functions.</p><div class="subsection" id="response-error"><h6>error<a class="header-link" href="/guides/routes/#response-error">#</a></h6><p>If either the <code class="language-javascript">initial</code> or <code class="language-javascript">every</code> functions reject with an error, that error will be passed to the<!-- --> <code class="language-javascript">response</code> function.</p><pre><code class="language-javascript">// check if there was an error in every or initial
+}</code></pre><div class="note"><strong>Note:</strong> <!-- -->You should not perform side effects (e.g. passing the loaded data to a Redux store) in <code class="language-javascript">every</code> because it is possible that navigating to the route might be cancelled. If you must perform side effects, you should do so in <code class="language-javascript">match.response</code>.</div></div><div class="subsection" id="response"><h5>response<a class="header-link" href="/guides/routes/#response">#</a></h5><p>A function that will be called right before a response is emitted. This function is where you can set various properties of the<!-- --> <code class="language-javascript">response</code> object. The <code class="language-javascript">response</code> function will be passed an object with a number of properties.</p><pre><code class="language-javascript">response: ({ error, resolved, route, set, addons }) =&gt; {
+  // ...
+}</code></pre><ul><div class="subsection" id="response-error"><li>error<a class="header-link" href="/guides/routes/#response-error">#</a></li><p>If either the <code class="language-javascript">initial</code> or <code class="language-javascript">every</code> functions reject with an error, that error will be passed to the<!-- --> <code class="language-javascript">response</code> function.</p><pre><code class="language-javascript">// check if there was an error in every or initial
 const user = {
   name: &#x27;User&#x27;,
   path: &#x27;:id&#x27;,
   match: {
-    every: ({ params, location }) =&gt; (
-      Promise.reject(&#x27;Nope!&#x27;)
-    ),
+    every: ({ params, location }) =&gt; {
+      return Promise.reject(&#x27;Nope!&#x27;)
+    },
     response: ({ error, set }) =&gt; {
       if (error) {
         set.error(error);
       }
     }
   }
-}</code></pre></div><div class="subsection" id="response-resolved"><h6>resolved<a class="header-link" href="/guides/routes/#response-resolved">#</a></h6><p><code class="language-javascript">resolved</code> is the value that was resolved by the<!-- --> <code class="language-javascript">every</code> function. If a route does not have a<!-- --> <code class="language-javascript">match.every</code> function, then this property will be<!-- --> <code class="language-javascript">undefined</code>.</p><pre><code class="language-javascript">// attach resolved data to the response
+};</code></pre></div><div class="subsection" id="response-resolved"><li>resolved<a class="header-link" href="/guides/routes/#response-resolved">#</a></li><p><code class="language-javascript">resolved</code> is an object with the values resolved by the<!-- --> <code class="language-javascript">initial</code> and <code class="language-javascript">every</code> functions (or<!-- --> <code class="language-javascript">null</code> if the router has neither an <code class="language-javascript">initial</code> <!-- -->function nor an <code class="language-javascript">every</code> function. If the route has one, but not the other, the missing value will be<!-- --> <code class="language-javascript">undefined</code> on the <code class="language-javascript">resolved</code> object.</p><pre><code class="language-javascript">// attach resolved data to the response
 const user = {
   name: &#x27;User&#x27;,
   path: &#x27;:id&#x27;,
@@ -78,10 +62,10 @@ const user = {
         .then(resp =&gt; JSON.parse(resp))
     ),
     response: ({ resolved, set }) =&gt; {
-      set.data(resolved);
+      set.data(resolved.every);
     }
   }
-}</code></pre></div><div class="subsection" id="response-route"><h6>route<a class="header-link" href="/guides/routes/#response-route">#</a></h6><p>This is the same object that is passed to the <code class="language-javascript">every</code> <!-- -->function and contains three properties: the parsed<!-- --> <code class="language-javascript">params</code>, the <code class="language-javascript">location</code>, and the<!-- --> <code class="language-javascript">name</code> of the matched route.</p></div><div class="subsection" id="response-set"><h6>set<a class="header-link" href="/guides/routes/#response-set">#</a></h6><p>The <code class="language-javascript">set</code> object contains a number of functions that you can use to modify the response.</p><ul><li><code class="language-javascript">body(body)</code> - The value passed to this method will be set as the response&#x27;s <code class="language-javascript">body</code> property.</li><li><code class="language-javascript">data(data)</code> - The value passed to this method will be set as the response&#x27;s <code class="language-javascript">data</code> property.</li><li><code class="language-javascript">redirect(to, code)</code> - This allows you to turn the response into a redirect response. When you application receives a redirect response, it should redirect to the new location (using your history object) instead of re-rendering. If you do not provide a code, then 301 will be used. Setting the status code is mostly important for rendering on the server. The<!-- --> <code class="language-javascript">to</code> argument should be a string or a location object. Once the response has been created, Curi will automatically redirect to the <code class="language-javascript">to</code> location.</li><li><code class="language-javascript">error(error)</code> - A method to call when something goes wrong. This will add an error property to the response.</li><li><code class="language-javascript">status(code)</code> - This method will set a new status for the response (the default status is 200 when a route matches and 404 when no routes match).</li></ul><pre><code class="language-javascript">// when the user visits /contact, the response object&#x27;s body
+}</code></pre></div><div class="subsection" id="response-route"><li>route<a class="header-link" href="/guides/routes/#response-route">#</a></li><p>This is the same object that is passed to the <code class="language-javascript">every</code> <!-- -->function and contains three properties: the parsed<!-- --> <code class="language-javascript">params</code>, the <code class="language-javascript">location</code>, and the<!-- --> <code class="language-javascript">name</code> of the matched route.</p></div><div class="subsection" id="response-set"><li>set<a class="header-link" href="/guides/routes/#response-set">#</a></li><p>The <code class="language-javascript">set</code> object contains a number of functions that you can use to modify the response.</p><ul><li><code class="language-javascript">body(body)</code> - The value passed to this method will be set as the response&#x27;s <code class="language-javascript">body</code> property.</li><li><code class="language-javascript">data(data)</code> - The value passed to this method will be set as the response&#x27;s <code class="language-javascript">data</code> property.</li><li><code class="language-javascript">redirect({ name, status, ... })</code> - This allows you to turn the response into a redirect response. When you application receives a redirect response, it should redirect to the new location (using your history object) instead of re-rendering. If you do not provide a code, then 301 will be used. Setting the status code is mostly important for rendering on the server. The <code class="language-javascript">to</code> argument should be a string or a location object. Once the response has been created, Curi will automatically redirect to the <code class="language-javascript">to</code> <!-- -->location.</li><li><code class="language-javascript">error(error)</code> - A method to call when something goes wrong. This will add an error property to the response.</li><li><code class="language-javascript">status(code)</code> - This method will set a new status for the response (the default status is 200 when a route matches and 404 when no routes match).</li><li><code class="language-javascript">title(t)</code> - This method will set the<!-- --> <code class="language-javascript">title</code> property of the response, which is used by<!-- --> <code class="language-javascript">@curi/side-effect-title</code> to set the document&#x27;s title.</li></ul><pre><code class="language-javascript">// when the user visits /contact, the response object&#x27;s body
 // property will be the Contact value
 import Contact from &#x27;./components/Contact&#x27;;
 
@@ -95,36 +79,19 @@ const routes = [
       }
     }
   }
-];</code></pre></div><div class="subsection" id="response-addons"><h6>addons<a class="header-link" href="/guides/routes/#response-addons">#</a></h6><p>The add-ons that have been registered with Curi are available to the <code class="language-javascript">response</code> function. This includes the built-in<!-- --> <code class="language-javascript">pathname</code> add-on, which you might find useful if you need to redirect in a <code class="language-javascript">response</code> function.</p><pre><code class="language-javascript">// set a permanent redirect
-// navigating to /photo/123 will automatically redirect to /p/123
-const routes = [
-  {
-    name: &#x27;Photo&#x27;,
-    path: &#x27;p/:id&#x27;
-  },
-  {
-    name: &#x27;Old Photo&#x27;,
-    path: &#x27;photo/:id&#x27;,
-    match: {
-      response: ({ route, set, addons }) =&gt; {
-        const pathname = addons.pathname(&#x27;Photo&#x27;, route.params);
-        set.redirect({ ...route.location, pathname }, 301);
-      }
+];</code></pre></div><div class="subsection" id="response-addons"><li>addons<a class="header-link" href="/guides/routes/#response-addons">#</a></li><p>The add-ons that have been registered with Curi are available to the <code class="language-javascript">response</code> function.</p></div></ul></div></div><div class="subsection" id="children"><h3>children<a class="header-link" href="/guides/routes/#children">#</a></h3><p>An optional array of route objects for creating nested routes. Any child routes will be matched relative to their parent route&#x27;s<!-- --> <code class="language-javascript">path</code>. This means that if a parent route&#x27;s <code class="language-javascript">path</code> <!-- -->string is <code class="language-javascript">&#x27;one&#x27;</code> and a child route&#x27;s <code class="language-javascript">path</code> string is <code class="language-javascript">&#x27;two&#x27;</code>, the child will match when the pathname is<!-- --> <code class="language-javascript">&#x27;one/two&#x27;</code>.</p><pre><code class="language-javascript">// &#x27;/a/Coloring+Book/All+Night&#x27; will be matched
+// by the &quot;Song&quot; route, with the params
+// { album: &#x27;Coloring+Book&#x27;, title: &#x27;All+Night&#x27; }
+{
+  name: &#x27;Album&#x27;,
+  path: &#x27;a/:album&#x27;,
+  children: [
+    {
+      name: &#x27;Song&#x27;,
+      path: &#x27;:title&#x27;
     }
-  }
-];</code></pre></div></div></div><div class="subsection" id="title"><h3>title<a class="header-link" href="/guides/routes/#title">#</a></h3><p>You can use the title property of a route to specify a title string that should be set on the response when that route matches. This can either be a string or a function. If it is a string, then<code class="language-javascript">response.title</code> will be set to the value of<!-- --> <code class="language-javascript">route.title</code>. If it is a function, it will be called (and passed the <code class="language-javascript">response.params</code> and <code class="language-javascript">response.data</code> <!-- -->values) to generate the title string.</p><p>If a route does not have a title property, when it matches, the response&#x27;s title property will be an empty string.</p><pre><code class="language-javascript">// as a string
-{
-  name: &#x27;Contact&#x27;,
-  path: &#x27;contact&#x27;,
-  title: &#x27;How to contact us&#x27;
-}
-
-// as a function
-{
-  name: &#x27;Contact Method&#x27;,
-  path: &#x27;:method&#x27;,
-  title: (params, data) =&gt; `Contact via ${params.method}`
-}</code></pre></div><div class="subsection" id="children"><h3>children<a class="header-link" href="/guides/routes/#children">#</a></h3><p>An optional array of route objects. Any child routes will be matched relative to their parent route&#x27;s path. This means that if a parent route&#x27;s path string is &#x27;one&#x27; and a child route&#x27;s path string is &#x27;two&#x27;, the child will match when the pathname is &#x27;one/two&#x27;.</p></div><div class="subsection" id="params"><h3>params<a class="header-link" href="/guides/routes/#params">#</a></h3><p>When <code class="language-javascript">path-to-regexp</code> matches your paths, all parameters are extracted as strings. However, you might have some route params to be other types. You can provide functions to transform params using the<!-- --> <code class="language-javascript">route.params</code> object. To transform a param, its name should be the string value from the path. The paired value should be a function that takes a string (the value from the pathname) and returns a new value (transformed however you want).</p><pre><code class="language-javascript">const routes = [
+  ]
+}</code></pre></div><div class="subsection" id="params"><h3>params<a class="header-link" href="/guides/routes/#params">#</a></h3><p>When <code class="language-javascript">path-to-regexp</code> matches your paths, all parameters are extracted as strings. However, you might prefer for some route params to be other types. You can provide functions to transform params using the <code class="language-javascript">route.params</code> object.</p><p>Properties of the <code class="language-javascript">route.params</code> object are the names of params to be parsed. The paired value should be a function that takes a string (the value from the <code class="language-javascript">pathname</code>) and returns a new value (transformed however you want).</p><pre><code class="language-javascript">const routes = [
   {
     name: &#x27;Number&#x27;,
     path: &#x27;number/:num&#x27;,
@@ -134,7 +101,7 @@ const routes = [
   }
 ]
 // when the user visits /number/1,
-// response.params will be { num: 1 } instead of { num: &quot;1&quot; }</code></pre></div><div class="subsection" id="extra"><h3>extra<a class="header-link" href="/guides/routes/#extra">#</a></h3><p>If you have any additional properties that you want attached to a route, use the <code class="language-javascript">extra</code> property. You will be able to use<!-- --> <code class="language-javascript">route.extra</code> in any custom add-ons or when a route matches via <code class="language-javascript">response.route.extra</code>.</p><p>You can attach anything you want to <code class="language-javascript">extra</code> or you may never find yourself needing to use this. One possible use case for<!-- --> <code class="language-javascript">extra</code> is that you could specify entrance/exit animation types. One route might want to fade in, while another might slide in.</p><pre><code class="language-javascript">const routes = [
+// response.params will be { num: 1 } instead of { num: &quot;1&quot; }</code></pre></div><div class="subsection" id="pathOptions"><h3>pathOptions<a class="header-link" href="/guides/routes/#pathOptions">#</a></h3><p>If you need to provide different path options than<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#usage">the defaults</a> <!-- -->used by <code class="language-javascript">path-to-regexp</code>, you can provide them with a<!-- --> <code class="language-javascript">pathOptions</code> object.</p><div class="note"><strong>Note:</strong> <!-- -->If a route has a children array property, it will<!-- --> <strong>always</strong> have the <code class="language-javascript">end</code> path option set to false.</div></div><div class="subsection" id="extra"><h3>extra<a class="header-link" href="/guides/routes/#extra">#</a></h3><p>If you have any additional properties that you want attached to a route, use the <code class="language-javascript">extra</code> property. You will be able to use<!-- --> <code class="language-javascript">route.extra</code> in any custom add-ons.</p><pre><code class="language-javascript">const routes = [
   {
     name: &#x27;A Route&#x27;,
     path: &#x27;a-route&#x27;,
@@ -149,7 +116,44 @@ const routes = [
       enter: &#x27;slide-right&#x27;
     }
   }
-];</code></pre></div></div><div><h2>Next</h2><p>Now that you know how to setup your routes, we can get to the good part: actually rendering your application using response objects. Check out the<!-- --> <a href="/guides/responses/">Rendering with Responses</a> <!-- -->guide to learn how.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class="active" href="/guides/routes/">All About Routes</a></li><li class="solo"><a href="/guides/responses/">Rendering with Responses</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Add-ons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li><li class="solo"><a href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
+];</code></pre></div></div><div class="section" id="matching-routes"><h2>Matching Routes<a class="header-link" href="/guides/routes/#matching-routes">#</a></h2><p>Whenever Curi receives a new location, it will determine which route has a <code class="language-javascript">path</code> that matches the new location&#x27;s <code class="language-javascript">pathname</code> by walking over the route objects in the order that they are defined in the array. If a route has <code class="language-javascript">children</code>, those will be checked before moving to the route&#x27;s nest sibling.</p><p>We&#x27;ll use this simple route setup to demonstrate how this works.</p><pre><code class="language-javascript">const routes = [
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+  },
+  {
+    name: &#x27;Album&#x27;,
+    path: &#x27;a/:album&#x27;
+  },
+  {
+    name: &#x27;Not Found&#x27;,
+    path: &#x27;(.*)&#x27; // this matches EVERY pathname
+  }
+];</code></pre><p>Curi&#x27;s default matching behavior looks for exact matches. This means that when the route only matches part of the pathname, it does not count as a match. If the user navigates to a location with the pathname<!-- --> <code class="language-javascript">&quot;/a/red/yellow&quot;</code>, the <code class="language-javascript">Album</code> route will only partially match, so Curi will move on to the next route,<!-- --> <code class="language-javascript">Not Found</code>, which has a catch all <code class="language-javascript">path</code> that matches every pathname.</p><p>However, if a route has children, then Curi will check if any of those routes form a complete match before moving on to the next route in the routes array.</p><pre><code class="language-javascript">// when the pathname is &#x27;/a/Coloring+Book/All+Night&#x27;,
+// the Album route will partially match the pathname. Then,
+// its child route Song will be tested and fully match the pathname.
+{
+  name: &#x27;Album&#x27;,
+  path: &#x27;a/:album&#x27;,
+  children: [
+    {
+      name: &#x27;Song&#x27;,
+      path: &#x27;:title&#x27;
+    }
+  ]
+}</code></pre><p>You can control whether a route does exact or partial matching with<!-- --> <a href="/guides/routes/#pathOptions"><code class="language-javascript">pathOptions</code></a> <!-- -->property. If you set <code class="language-javascript">{ end: false }</code>, a route that partially matches will consider itself matched.</p><pre><code class="language-javascript">// when the pathname is &#x27;/a/Good+Kid,+M.A.A.D+City/Poetic+Justice&#x27;,
+// the Album route will partially match. However, because it sets
+// end to false, the partial match will be used.
+{
+  name: &#x27;Album&#x27;,
+  path: &#x27;a/:albumID&#x27;,
+  pathOptions: {
+    end: false
+  }
+}</code></pre><div class="subsection" id="catch-all"><h3>No Matching Route<a class="header-link" href="/guides/routes/#catch-all">#</a></h3><p>If none of your routes match a pathname, then Curi will set a &quot;404&quot; status on the <code class="language-javascript">response</code> object. The <code class="language-javascript">body</code> property of the response will also be <code class="language-javascript">undefined</code>, so it is important that your application checks the response&#x27;s status when it renders.</p><p>A better option is to add a catch all route (<code class="language-javascript">path: &#x27;(.*)&#x27;</code>) to the end of your routes array, and that route will always match. You may want to still manually set the status to &quot;404&quot; for the catch all route in the route&#x27;s <code class="language-javascript">match.response</code> method, but it is not required.</p><pre><code class="language-javascript">{
+  name: &#x27;Not Found&#x27;,
+  path: &#x27;(.*)&#x27;,
+}</code></pre></div></div><div><h2>Next</h2><p>Now that you know how to setup your routes, we will take a look at<!-- --> <a href="/guides/response-handlers/">response handlers</a>.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class="active" href="/guides/routes/">Routes</a></li><li class="solo"><a href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a href="/guides/responses/">Response Objects</a></li><li class="solo"><a href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Add-ons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li><li class="solo"><a href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
