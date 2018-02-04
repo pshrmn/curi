@@ -21,6 +21,7 @@ import AuthenticationVue from "./vue/Authentication";
 import BasicVue from "./vue/Basic";
 import BlockingNavigationVue from "./vue/BlockingNavigation";
 import BreadcrumbsVue from "./vue/Breadcrumbs";
+import ModalVue from "./vue/Modal";
 import TransitionsVue from "./vue/Transitions";
 // svelte
 import BasicSvelte from "./svelte/Basic";
@@ -56,6 +57,7 @@ export default {
     basic: BasicVue,
     "blocking-navigation": BlockingNavigationVue,
     breadcrumbs: BreadcrumbsVue,
+    modal: ModalVue,
     transitions: TransitionsVue
   },
   full: {

@@ -1,0 +1,35 @@
+{
+  "name": "curi-modal-example",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Render a modal (pinterest/twitter)",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack"
+  },
+  "keywords": [
+    "curi",
+    "modal",
+    "pinterest",
+    "twitter"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.9",
+    "vue-loader": "^13.5.0",
+    "vue-template-compiler": "^2.5.9",
+    "webpack": "^2.5.1"
+  },
+  "dependencies": {
+    "@curi/core": "^1.0.0-beta.26",
+    "@curi/vue": "^1.0.0-beta.16",
+    "@hickory/browser": "^1.0.0-beta.5",
+    "vue": "^2.5.9"
+  }
+}

@@ -101,6 +101,12 @@ const examples = {
       description: "Prevent navigation away from a half-filled form"
     },
     {
+      name: "Modal Routes",
+      category: "vue",
+      slug: "modal",
+      description: "Load a route in a modal (the Pinterest model)"
+    },
+    {
       name: "Transitions",
       category: "vue",
       slug: "transitions",
