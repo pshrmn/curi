@@ -1,18 +1,23 @@
-import React from 'react';
+import React from "react";
+import { Curious } from "@curi/react";
 
-const Modal = (props) => (
-  <div className='modal'>
-    {props.children}
-    <button
-      type='button'
-      onClick={(e) => {
-        e.preventDefault();
-        props.history.go(-1);
-      }}
-    >
-      Close
-    </button>
-  </div>
+const Modal = ({ children }) => (
+  <Curious>
+    {({ router }) => (
+      <div className="modal">
+        {children}
+        <button
+          type="button"
+          onClick={e => {
+            e.preventDefault();
+            router.history.go(-1);
+          }}
+        >
+          Close
+        </button>
+      </div>
+    )}
+  </Curious>
 );
 
 export default Modal;

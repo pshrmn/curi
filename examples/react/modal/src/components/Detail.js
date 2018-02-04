@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 
-const Detail = ({ params }) => (
+const Detail = ({ response }) => (
   <div>
-    <div style={{
-      width: '80%',
-      height: '25%',
-      minHeight: 200,
-      background: params.color || '#666'
-    }}></div>
-    <p>
-      Previewing paint color {params.color}
-    </p>
+    <div
+      style={{
+        width: "80%",
+        height: "25%",
+        minHeight: 200,
+        background: response.params.color || "#666"
+      }}
+    />
+    <p>Previewing paint color {response.params.color}</p>
   </div>
 );
 

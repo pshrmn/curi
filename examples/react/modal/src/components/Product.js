@@ -1,22 +1,24 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react";
 
 const Preview = ({ color }) => (
-  <div style={{
-    width: 20,
-    height: 20,
-    background: color || '#666'
-  }}></div>
-)
+  <div
+    style={{
+      width: 20,
+      height: 20,
+      background: color || "#666"
+    }}
+  />
+);
 
-const Product = ({ params, location }) => (
+const Product = ({ response }) => (
   <div>
-    Paint color: {location.state.name || 'Unknown'}
-    <Preview color={params.color} />
+    Paint color: {response.location.state.name || "Unknown"}
+    <Preview color={response.params.color} />
     <Link
-      to='Product Detail'
-      params={params}
-      details={{ state: { modal: true, name: 'Dark Slate Blue' } }}
+      to="Product Detail"
+      params={response.params}
+      details={{ state: { modal: true, name: "Dark Slate Blue" } }}
     >
       Detail View
     </Link>
