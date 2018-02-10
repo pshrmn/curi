@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.2
 
 * Add `method` prop to `<Link>` to specify which `history` navigation method to use for navigation. Options are `navigate`, `push`, and `replace` (defaults to `navigate`).
 
