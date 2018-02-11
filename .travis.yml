@@ -7,4 +7,4 @@ cache:
   - node_modules
 branches:
   only:
-  - dev
+  - master
