@@ -25,7 +25,7 @@
   "devDependencies": {
     "gzip-size": "^3.0.0",
     "husky": "^0.14.3",
-    "lerna": "^2.5.1",
+    "lerna": "^2.9.0",
     "prettier": "^1.10.2",
     "pretty-bytes": "^4.0.2",
     "pretty-quick": "^1.2.2",
