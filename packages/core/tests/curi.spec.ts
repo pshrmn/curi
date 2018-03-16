@@ -240,6 +240,31 @@ describe("curi", () => {
       });
 
       describe("cache", () => {
+        it("passes the new location and action to the cache", done => {
+          const routes = [
+            {
+              name: "All",
+              path: "(.*)",
+              match: {
+                response: ({ set }) => {
+                  set.data(Math.random());
+                }
+              }
+            }
+          ];
+          const fakeCache = {
+            get: jest.fn(() => null),
+            set: () => {}
+          };
+          const router = curi(history, routes, { cache: fakeCache });
+          router.respond((response, navigation) => {
+            const [firstCall] = fakeCache.get.mock.calls;
+            expect(firstCall[0]).toBe(response.location);
+            expect(firstCall[1]).toBe(navigation.action);
+            done();
+          });
+        });
+
         it("returns cached response for same key on subsequent calls if cache is provided", done => {
           const routes = [
             {

@@ -15,13 +15,13 @@ export default ({ name }) => (
     </p>
     <ul>
       <li>
-        It provides a set function which receives a response object as its
-        argument.
+        It provides a <IJS>set</IJS> function which receives a response object
+        as its argument.
       </li>
       <li>
-        It provides a get function which receives a location object as its
-        argument and returns a response object associated with the location (if
-        one exists)
+        It provides a <IJS>get</IJS> function which receives a{" "}
+        <IJS>location</IJS> object and an <IJS>action</IJS> string and returns a
+        response object (or <IJS>null</IJS>).
       </li>
     </ul>
     <PrismBlock lang="javascript">
@@ -29,7 +29,7 @@ export default ({ name }) => (
   const cache = {};
 
   return {
-    get: location => {
+    get: (location, action) => {
       const { key } = location;
       return cache[key];
     },
@@ -49,7 +49,7 @@ const router = curi(history, routes, {
 
     <p>The above cache uses a location's key property to store values.</p>
     <p>
-      So why would you want to use a cache? When the user uses the browser's
+      Why would you want to use a cache? When the user uses the browser's
       forward/back buttons, Curi will generate a new response. This means that
       if the route has a <IJS>match.every</IJS> function, it will be re-called.
       You can mitigate this by adding a cache to that function, but you may also

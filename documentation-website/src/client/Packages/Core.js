@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@curi/react";
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
 import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
@@ -61,7 +62,11 @@ const router = curi(history, routes, options);`}
                 <IJS>cache</IJS> - An object with get/set properties. This
                 allows you to cache old responses, preventing any{" "}
                 <IJS>match.every</IJS> functions from being re-called when
-                navigating to an already-visited location.
+                navigating to an already-visited location. You can read more
+                about this in the{" "}
+                <Link to="Guide" params={{ slug: "response-caching" }}>
+                  Response Caching Guide
+                </Link>.
               </li>
               <li>
                 <IJS>pathnameOptions</IJS> - An object with an <IJS>encode</IJS>{" "}
