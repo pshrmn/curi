@@ -1,5 +1,7 @@
 ## Next
 
+* Update `set.redirect` to take an options object.
+
 ## 1.0.0-beta.26
 
 * Replace `once` option with `observe`, which is `false` by default (reverses previous default behavior).
