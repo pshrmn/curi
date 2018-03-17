@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.27
 
 * Update `set.redirect` to take an options object.
 
