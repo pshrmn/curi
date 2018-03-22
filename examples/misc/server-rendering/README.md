@@ -15,12 +15,9 @@ function catchAll(req, res) {
     // 4. Generate the HTML markup by rendering a <CuriBase> and
     // passing it the response
     const markup = renderToString(
-      <CuriBase
-        router={router}
-        response={response}
-        navigation={navigation}
-        render={renderFunction}
-      />
+      <CuriProvider router={router}>
+        {renderFunction}
+      </CuriProvider>
     );
     // 5. Insert the markup into the page's html and send it
     res.send(renderFullPage(markup));
