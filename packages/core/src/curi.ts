@@ -80,12 +80,6 @@ function createRouter(
     fn: ResponseHandler,
     options?: RespondOptions
   ): RemoveResponseHandler {
-    if (typeof fn !== "function") {
-      throw new Error(
-        'The first argument passed to "respond" must be a function'
-      );
-    }
-
     const { observe = false, initial = true } = options || {};
 
     if (observe) {
