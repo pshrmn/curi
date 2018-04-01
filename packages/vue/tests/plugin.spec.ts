@@ -81,14 +81,12 @@ describe("CuriPlugin", () => {
         let wrapper;
         Vue.use(CuriPlugin, { router });
 
-        router.respond(() => {
-          if (!wrapper) {
-            wrapper = shallow(FakeComponent, {
-              localVue: Vue
-            });
-            router.history.push("/another-one");
-          }
-        });
+        if (!wrapper) {
+          wrapper = shallow(FakeComponent, {
+            localVue: Vue
+          });
+          router.history.push("/another-one");
+        }
       });
 
       it("re-renders nested components", done => {
@@ -98,23 +96,18 @@ describe("CuriPlugin", () => {
         let wrapper;
         Vue.use(CuriPlugin, { router });
 
-        router.respond(
-          () => {
-            if (!wrapper) {
-              wrapper = mount(
-                {
-                  template: "<div><FakeComponent /></div>",
-                  components: { FakeComponent }
-                },
-                {
-                  localVue: Vue
-                }
-              );
-              router.history.push("/another-one");
+        if (!wrapper) {
+          wrapper = mount(
+            {
+              template: "<div><FakeComponent /></div>",
+              components: { FakeComponent }
+            },
+            {
+              localVue: Vue
             }
-          },
-          { observe: true }
-        );
+          );
+          router.history.push("/another-one");
+        }
       });
     });
   });
