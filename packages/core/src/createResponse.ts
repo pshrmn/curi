@@ -1,17 +1,16 @@
-import { HickoryLocation, ToArgument } from '@hickory/root';
+import { HickoryLocation, ToArgument } from "@hickory/root";
 
-import matchRoute from './utils/match';
-import parseParams from './utils/parseParams';
-import routeProperties from './utils/routeProperties';
+import matchRoute from "./utils/match";
+import parseParams from "./utils/parseParams";
+import routeProperties from "./utils/routeProperties";
 
-import { InternalRoute, Match, MatchedRoute } from './types/route';
+import { InternalRoute, Match, MatchedRoute } from "./types/route";
 import {
   Response,
   PendingResponse,
   ResponseProps,
   Params
-} from './types/response';
-
+} from "./types/response";
 
 function matchLocation(
   location: HickoryLocation,
@@ -44,7 +43,7 @@ function matchLocation(
     status: route != null ? 200 : 404,
     body: undefined,
     data: undefined,
-    title: ''
+    title: ""
   };
   return { route, props };
 }
@@ -86,12 +85,14 @@ function loadRoute(
     match.initial ? match.initial() : undefined,
     match.every ? match.every(routeProperties(route, props)) : undefined
   ]).then(
-    ([ initial, every ]) => {
+    ([initial, every]) => {
+      const resolved =
+        !match.initial && !match.every ? null : { initial, every };
       return {
         route,
         props,
         error: null,
-        resolved: { initial, every }
+        resolved
       };
     },
     err => {

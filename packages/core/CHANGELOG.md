@@ -1,6 +1,6 @@
 ## Next
 
-* Add a `sync` option to Curi (default `false`) that generates responses synchronously when `true`. In synchronous mode, the `initial` and `every` match functions are disabled.
+* If no route has a `match.initial` or `match.every` function, the router will emit in synchronous mode.
 
 ## 1.0.0-beta.27
 

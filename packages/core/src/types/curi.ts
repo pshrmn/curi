@@ -40,7 +40,6 @@ export interface RouterOptions {
   cache?: Cache;
   pathnameOptions?: PathFunctionOptions;
   emitRedirects?: boolean;
-  sync?: boolean;
 }
 
 export interface CurrentResponse {
