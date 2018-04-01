@@ -22,34 +22,25 @@ describe("@curi/mobx", () => {
       expect(store.router).toMatchObject(router);
     });
 
-    it("initializes with null response/navigation", () => {
+    it("initializes with current response/navigation", () => {
       // need to make a new router here so it hasn't resolved initial response
       const router = curi(history, [
         { name: "Home", path: "" },
         { name: "One", path: "one" }
       ]);
       const newStore = new CuriStore(router);
-      expect(newStore.response).toBe(null);
-      expect(newStore.navigation).toBe(null);
+      const { response, navigation } = router.current();
+      expect(newStore.response.name).toBe("Home");
+      expect(newStore.navigation).toMatchObject(navigation);
     });
 
-    it("updates response/navigation when a new response is emitted", done => {
+    it("updates response/navigation when a new response is emitted", () => {
+      const { response: previousResponse } = router.current();
       history.replace("/one");
-      let firstResponse;
-      router.respond(
-        ({ response, navigation }) => {
-          if (!firstResponse) {
-            firstResponse = response;
-          } else {
-            // cannot compare actual objects since MobX makes responses reactive
-            expect(store.response.name).toBe("One");
-            expect(store.navigation.action).toBe("REPLACE");
-            expect(store.navigation.previous.name).toBe(firstResponse.name);
-            done();
-          }
-        },
-        { observe: true }
-      );
+
+      expect(store.response.name).toBe("One");
+      expect(store.navigation.action).toBe("REPLACE");
+      expect(store.navigation.previous.name).toBe(previousResponse.name);
     });
   });
 });
