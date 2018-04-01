@@ -10,7 +10,7 @@ export interface ActiveLink {
 }
 export declare type LinkMethod = "navigate" | "push" | "replace";
 export interface LinkProps {
-    to: string;
+    to?: string;
     params?: object;
     details?: LocationDetails;
     onPress?: (e: GestureResponderEvent) => void;

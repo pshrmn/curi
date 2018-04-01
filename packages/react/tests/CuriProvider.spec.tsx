@@ -30,27 +30,23 @@ describe("<CuriProvider>", () => {
       const history = InMemory();
       const router = curi(history, routes);
       let pushedHistory = false;
-
+      let firstCall = true;
       const fn = jest.fn(({ response }) => {
-        if (pushedHistory) {
+        if (firstCall) {
+          expect(response.name).toBe("Home");
+          firstCall = false;
+        } else {
           expect(response.name).toBe("About");
           done();
-        } else {
-          expect(response.name).toBe("Home");
         }
         return null;
       });
 
-      router.respond(() => {
-        const wrapper = mount(
-          <CuriProvider router={router}>{fn}</CuriProvider>
-        );
-        history.push("/about");
-        pushedHistory = true;
-      });
+      const wrapper = mount(<CuriProvider router={router}>{fn}</CuriProvider>);
+      history.push("/about");
     });
 
-    it("passes { response, navigation, router } to render prop", done => {
+    it("passes { response, navigation, router } to render prop", () => {
       const history = InMemory();
       const fn = jest.fn(({ response, navigation, router: routerProp }) => {
         expect(response).toMatchObject({
@@ -60,16 +56,11 @@ describe("<CuriProvider>", () => {
           action: "PUSH"
         });
         expect(routerProp).toBe(router);
-        done();
         return null;
       });
 
       const router = curi(history, routes);
-      router.respond(() => {
-        const wrapper = mount(
-          <CuriProvider router={router}>{fn}</CuriProvider>
-        );
-      });
+      const wrapper = mount(<CuriProvider router={router}>{fn}</CuriProvider>);
     });
   });
 
