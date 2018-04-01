@@ -51,28 +51,23 @@ describe("curiStore", () => {
     });
   });
 
-  it("updates store when new response/navigation are emitted", done => {
+  it("updates store when new response/navigation are emitted", () => {
     let firstCall = true;
-    let store;
-    router.respond(
-      ({ response, navigation }) => {
-        if (firstCall) {
-          firstCall = false;
-          // create store and verify values
-          store = curiStore(router);
-          expect(store.get("curi")).toMatchObject({
-            response,
-            navigation
-          });
-          // push a new location
-          history.push("/about");
-        } else {
-          const { response: aboutResponse } = store.get("curi");
-          expect(aboutResponse).toBe(response);
-          done();
-        }
-      },
-      { observe: true }
-    );
+    const store = curiStore(router);
+    const {
+      response: initialResponse,
+      navigation: initialNavigation
+    } = router.current();
+    expect(store.get("curi")).toMatchObject({
+      response: initialResponse,
+      navigation: initialNavigation
+    });
+
+    history.push("/about");
+
+    const { response: currentResponse } = router.current();
+    const { response: aboutResponse } = store.get("curi");
+    expect(aboutResponse).toBe(currentResponse);
+    expect(aboutResponse.name).toBe("About");
   });
 });
