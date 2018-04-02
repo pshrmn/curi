@@ -79,53 +79,47 @@ describe("Link component", () => {
         console.error = realError;
       });
 
-      it("is always non-active", done => {
+      it("is always non-active", () => {
         const Vue = createLocalVue();
         const history = InMemory({
           locations: ["/place/somewhere"]
         });
         const router = curi(history, routes);
         Vue.use(CuriPlugin, { router });
-        router.respond(() => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: "Place",
-              params: { name: "somewhere" },
-              text: "somewhere",
-              active: { merge }
-            }
-          });
-          expect(wrapper.classes()).not.toContain("active");
-          done();
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Place",
+            params: { name: "somewhere" },
+            text: "somewhere",
+            active: { merge }
+          }
         });
+        expect(wrapper.classes()).not.toContain("active");
       });
 
-      it("calls console.error", done => {
+      it("calls console.error", () => {
         const Vue = createLocalVue();
         const history = InMemory({
           locations: ["/place/somewhere"]
         });
         const router = curi(history, routes);
         Vue.use(CuriPlugin, { router });
-        router.respond(() => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: "Place",
-              params: { name: "somewhere" },
-              text: "somewhere",
-              active: { merge }
-            }
-          });
-          expect(console.error.mock.calls.length).toBe(1);
-          done();
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Place",
+            params: { name: "somewhere" },
+            text: "somewhere",
+            active: { merge }
+          }
         });
+        expect(console.error.mock.calls.length).toBe(1);
       });
     });
 
     describe("merge", () => {
-      it("merges active props when the location is active", done => {
+      it("merges active props when the location is active", () => {
         const Vue = createLocalVue();
         const history = InMemory({
           locations: ["/place/somewhere"]
@@ -135,22 +129,19 @@ describe("Link component", () => {
           addons: [createActiveAddon()]
         });
         Vue.use(CuriPlugin, { router });
-        router.respond(() => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: "Place",
-              params: { name: "somewhere" },
-              text: "somewhere",
-              active: { merge }
-            }
-          });
-          expect(wrapper.classes()).toContain("active");
-          done();
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Place",
+            params: { name: "somewhere" },
+            text: "somewhere",
+            active: { merge }
+          }
         });
+        expect(wrapper.classes()).toContain("active");
       });
 
-      it("does not merge active props when the location is not active", done => {
+      it("does not merge active props when the location is not active", () => {
         const Vue = createLocalVue();
         const history = InMemory({
           locations: ["/place/somewhere"]
@@ -160,24 +151,21 @@ describe("Link component", () => {
           addons: [createActiveAddon()]
         });
         Vue.use(CuriPlugin, { router });
-        router.respond(() => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: "Place",
-              params: { name: "nowhere" },
-              text: "nowhere",
-              active: { merge }
-            }
-          });
-          expect(wrapper.classes()).not.toContain("active");
-          done();
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Place",
+            params: { name: "nowhere" },
+            text: "nowhere",
+            active: { merge }
+          }
         });
+        expect(wrapper.classes()).not.toContain("active");
       });
     });
 
     describe("partial", () => {
-      it("merges active props for partial matches when active.partial = true", done => {
+      it("merges active props for partial matches when active.partial = true", () => {
         const Vue = createLocalVue();
         const history = InMemory({
           locations: ["/place/somewhere"]
@@ -187,21 +175,18 @@ describe("Link component", () => {
           addons: [createActiveAddon()]
         });
         Vue.use(CuriPlugin, { router });
-        router.respond(() => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: "Places",
-              text: "Places",
-              active: { merge, partial: true }
-            }
-          });
-          expect(wrapper.classes()).toContain("active");
-          done();
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Places",
+            text: "Places",
+            active: { merge, partial: true }
+          }
         });
+        expect(wrapper.classes()).toContain("active");
       });
 
-      it("does not merge active props for partial matches when active.partial is falsy", done => {
+      it("does not merge active props for partial matches when active.partial is falsy", () => {
         const Vue = createLocalVue();
         const history = InMemory({
           locations: ["/place/somewhere"]
@@ -211,18 +196,15 @@ describe("Link component", () => {
           addons: [createActiveAddon()]
         });
         Vue.use(CuriPlugin, { router });
-        router.respond(() => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: "Places",
-              text: "Places",
-              active: { merge }
-            }
-          });
-          expect(wrapper.classes()).not.toContain("active");
-          done();
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Places",
+            text: "Places",
+            active: { merge }
+          }
         });
+        expect(wrapper.classes()).not.toContain("active");
       });
     });
 
@@ -246,21 +228,19 @@ describe("Link component", () => {
         }
 
         Vue.use(CuriPlugin, { router });
-        router.respond(() => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: "Place",
-              params: { name: "somewhere" },
-              text: "somewhere",
-              details,
-              active: { merge, extra }
-            }
-          });
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Place",
+            params: { name: "somewhere" },
+            text: "somewhere",
+            details,
+            active: { merge, extra }
+          }
         });
       });
 
-      it("sets active when extra returns true", done => {
+      it("sets active when extra returns true", () => {
         const Vue = createLocalVue();
         const history = InMemory({
           locations: ["/place/somewhere?test=ing"]
@@ -276,23 +256,20 @@ describe("Link component", () => {
         }
 
         Vue.use(CuriPlugin, { router });
-        router.respond(() => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: "Place",
-              params: { name: "somewhere" },
-              text: "somewhere",
-              details,
-              active: { merge, extra }
-            }
-          });
-          expect(wrapper.classes()).toContain("active");
-          done();
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Place",
+            params: { name: "somewhere" },
+            text: "somewhere",
+            details,
+            active: { merge, extra }
+          }
         });
+        expect(wrapper.classes()).toContain("active");
       });
 
-      it("does not set active when extra returns false", done => {
+      it("does not set active when extra returns false", () => {
         const Vue = createLocalVue();
         const history = InMemory({
           locations: ["/place/somewhere?test=ing"]
@@ -308,20 +285,17 @@ describe("Link component", () => {
         }
 
         Vue.use(CuriPlugin, { router });
-        router.respond(() => {
-          const wrapper = shallow(Link, {
-            localVue: Vue,
-            propsData: {
-              to: "Place",
-              params: { name: "somewhere" },
-              text: "somewhere",
-              details,
-              active: { merge, extra }
-            }
-          });
-          expect(wrapper.classes()).not.toContain("active");
-          done();
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Place",
+            params: { name: "somewhere" },
+            text: "somewhere",
+            details,
+            active: { merge, extra }
+          }
         });
+        expect(wrapper.classes()).not.toContain("active");
       });
     });
 
@@ -335,30 +309,21 @@ describe("Link component", () => {
           addons: [createActiveAddon()]
         });
         Vue.use(CuriPlugin, { router });
-        let wrapper;
-        router.respond(
-          () => {
-            if (!wrapper) {
-              wrapper = shallow(Link, {
-                localVue: Vue,
-                propsData: {
-                  to: "Place",
-                  params: { name: "somewhere" },
-                  text: "somewhere",
-                  active: { merge }
-                }
-              });
-              expect(wrapper.classes()).toContain("active");
-              router.history.push("/place/nowhere");
-            } else {
-              Vue.nextTick(() => {
-                expect(wrapper.classes()).not.toContain("active");
-                done();
-              });
-            }
-          },
-          { observe: true }
-        );
+        const wrapper = shallow(Link, {
+          localVue: Vue,
+          propsData: {
+            to: "Place",
+            params: { name: "somewhere" },
+            text: "somewhere",
+            active: { merge }
+          }
+        });
+        expect(wrapper.classes()).toContain("active");
+        router.history.push("/place/nowhere");
+        Vue.nextTick(() => {
+          expect(wrapper.classes()).not.toContain("active");
+          done();
+        });
       });
     });
   });

@@ -116,7 +116,7 @@ describe("Block component", () => {
       localVue: Vue,
       propsData: {
         active: true,
-        confirm1
+        confirm: confirm1
       }
     });
     expect(mockConfirmWith.mock.calls.length).toBe(1);

@@ -1,8 +1,9 @@
 import registerRoutes from "./utils/registerRoutes";
 import pathnameAddon from "./addons/pathname";
-import createResponse from "./createResponse";
 import finishResponse from "./finishResponse";
+import { createResponse, asyncCreateResponse } from "./createResponse";
 import createRoute from "./route";
+import hasAsyncRoute from "./utils/async";
 
 import { History, PendingNavigation } from "@hickory/root";
 
@@ -35,6 +36,8 @@ function createRouter(
     emitRedirects = true
   } = options as RouterOptions;
 
+  let sync = true;
+
   const beforeSideEffects: Array<ResponseHandler> = [];
   const afterSideEffects: Array<ResponseHandler> = [];
   sideEffects.forEach(se => {
@@ -53,7 +56,7 @@ function createRouter(
 
   function setupRoutesAndAddons(routeArray: Array<RouteDescriptor>): void {
     routes = routeArray.map(createRoute);
-
+    sync = !hasAsyncRoute(routes);
     for (let key in registeredAddons) {
       delete registeredAddons[key];
     }
@@ -77,19 +80,13 @@ function createRouter(
     fn: ResponseHandler,
     options?: RespondOptions
   ): RemoveResponseHandler {
-    if (typeof fn !== "function") {
-      throw new Error(
-        'The first argument passed to "respond" must be a function'
-      );
-    }
-
     const { observe = false, initial = true } = options || {};
 
     if (observe) {
+      const newLength = responseHandlers.push(fn);
       if (mostRecent.response && initial) {
         fn.call(null, { ...mostRecent, router });
       }
-      const newLength = responseHandlers.push(fn);
       return () => {
         responseHandlers[newLength - 1] = null;
       };
@@ -146,14 +143,21 @@ function createRouter(
       }
     }
 
-    createResponse(pendingNav.location, routes).then(pendingResponse => {
-      if (pendingNav.cancelled) {
-        return;
-      }
+    if (sync) {
+      const pendingResponse = createResponse(pendingNav.location, routes);
       pendingNav.finish();
       const response = finishResponse(pendingResponse, registeredAddons);
       cacheAndEmit(response, navigation);
-    });
+    } else {
+      asyncCreateResponse(pendingNav.location, routes).then(pendingResponse => {
+        if (pendingNav.cancelled) {
+          return;
+        }
+        pendingNav.finish();
+        const response = finishResponse(pendingResponse, registeredAddons);
+        cacheAndEmit(response, navigation);
+      });
+    }
   }
 
   function cacheAndEmit(response: Response, navigation: Navigation) {

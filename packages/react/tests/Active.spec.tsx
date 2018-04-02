@@ -115,7 +115,7 @@ describe("<Active>", () => {
   });
 
   describe("partial", () => {
-    it("works for partial matches when partial=true", done => {
+    it("works for partial matches when partial=true", () => {
       const Test = () => null;
       function merge(props) {
         props.className = "not-a-test";
@@ -125,16 +125,14 @@ describe("<Active>", () => {
       const router = curi(history, routes, {
         addons: [createActiveAddon()]
       });
-      router.respond(() => {
-        const wrapper = render(router, () => (
-          <Active name="Contact" partial={true} merge={merge}>
-            <div className="test" />
-          </Active>
-        ));
-        const div = wrapper.find("div");
-        expect(div.prop("className")).toBe("not-a-test");
-        done();
-      });
+
+      const wrapper = render(router, () => (
+        <Active name="Contact" partial={true} merge={merge}>
+          <div className="test" />
+        </Active>
+      ));
+      const div = wrapper.find("div");
+      expect(div.prop("className")).toBe("not-a-test");
     });
   });
 

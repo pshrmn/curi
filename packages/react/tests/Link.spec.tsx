@@ -50,17 +50,14 @@ describe("<Link>", () => {
       expect(a.prop("href")).toBe("/");
     });
 
-    it("uses the pathname from current response's location if 'to' is not provided", done => {
+    it("uses the pathname from current response's location if 'to' is not provided", () => {
       const history = InMemory({
         locations: ["/the-initial-location"]
       });
       const router = curi(history, []);
-      router.respond(() => {
-        const wrapper = render(router, () => <Link to={null}>Test</Link>);
-        const a = wrapper.find("a");
-        expect(a.prop("href")).toBe("/the-initial-location");
-        done();
-      });
+      const wrapper = render(router, () => <Link to={null}>Test</Link>);
+      const a = wrapper.find("a");
+      expect(a.prop("href")).toBe("/the-initial-location");
     });
   });
 
@@ -84,65 +81,56 @@ describe("<Link>", () => {
       expect(a.prop("href")).toBe("/park/Glacier");
     });
 
-    it("updates href when props change", done => {
-      router.respond(() => {
-        const params = { name: "Glacier" };
-        const tree = renderer.create(
-          <CuriProvider router={router}>
-            {() => (
-              <Link to="Park" params={params}>
-                Test
-              </Link>
-            )}
-          </CuriProvider>
-        );
-        let a = tree.root.findByType("a");
-        expect(a.props.href).toBe("/park/Glacier");
-        const newParams = { name: "Yellowstone" };
-        tree.update(
-          <CuriProvider router={router}>
-            {() => (
-              <Link to="Park" params={newParams}>
-                Test
-              </Link>
-            )}
-          </CuriProvider>
-        );
-        expect(a.props.href).toBe("/park/Yellowstone");
-        done();
-      });
+    it("updates href when props change", () => {
+      const params = { name: "Glacier" };
+      const tree = renderer.create(
+        <CuriProvider router={router}>
+          {() => (
+            <Link to="Park" params={params}>
+              Test
+            </Link>
+          )}
+        </CuriProvider>
+      );
+      let a = tree.root.findByType("a");
+      expect(a.props.href).toBe("/park/Glacier");
+      const newParams = { name: "Yellowstone" };
+      tree.update(
+        <CuriProvider router={router}>
+          {() => (
+            <Link to="Park" params={newParams}>
+              Test
+            </Link>
+          )}
+        </CuriProvider>
+      );
+      expect(a.props.href).toBe("/park/Yellowstone");
     });
   });
 
   describe("details", () => {
-    it("merges the details prop with the generated pathname when navigating", done => {
+    it("merges the details prop with the generated pathname when navigating", () => {
       const history = InMemory();
       const router = curi(history, [{ name: "Test", path: "test" }]);
-      router.respond(() => {
-        const wrapper = render(router, () => (
-          <Link to="Test" details={{ query: "one=two", hash: "#hashtag" }}>
-            Test
-          </Link>
-        ));
-        const a = wrapper.find("a");
-        expect(a.prop("href")).toBe("/test?one=two#hashtag");
-        done();
-      });
+      const wrapper = render(router, () => (
+        <Link to="Test" details={{ query: "one=two", hash: "#hashtag" }}>
+          Test
+        </Link>
+      ));
+      const a = wrapper.find("a");
+      expect(a.prop("href")).toBe("/test?one=two#hashtag");
     });
 
-    it("providing a pathname in details does not overwrite the generated pathname", done => {
+    it("providing a pathname in details does not overwrite the generated pathname", () => {
       const history = InMemory();
       const router = curi(history, [{ name: "Test", path: "test" }]);
-      router.respond(() => {
-        const wrapper = render(router, () => (
-          <Link to="Test" details={{ pathname: "/not-a-test" }}>
-            Test
-          </Link>
-        ));
-        const a = wrapper.find("a");
-        expect(a.prop("href")).toBe("/test");
-        done();
-      });
+      const wrapper = render(router, () => (
+        <Link to="Test" details={{ pathname: "/not-a-test" }}>
+          Test
+        </Link>
+      ));
+      const a = wrapper.find("a");
+      expect(a.prop("href")).toBe("/test");
     });
   });
 
@@ -164,93 +152,79 @@ describe("<Link>", () => {
         console.error = realError;
       });
 
-      it("throws on mount", done => {
+      it("throws on mount", () => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }]);
-        router.respond(() => {
-          expect(() => {
-            const wrapper = render(router, () => (
-              <Link to="Test" active={{ merge }}>
-                Test
-              </Link>
-            ));
-          }).toThrow(
-            'You are attempting to use the "active" prop, but have not included the "active" ' +
-              "addon (@curi/addon-active) in your Curi router."
-          );
-          done();
-        });
+        expect(() => {
+          const wrapper = render(router, () => (
+            <Link to="Test" active={{ merge }}>
+              Test
+            </Link>
+          ));
+        }).toThrow(
+          'You are attempting to use the "active" prop, but have not included the "active" ' +
+            "addon (@curi/addon-active) in your Curi router."
+        );
       });
 
-      it("throws if adding active prop on re-render", done => {
+      it("throws if adding active prop on re-render", () => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }]);
 
-        router.respond(() => {
-          const tree = renderer.create(
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => <Link to="Test">Test</Link>}
+          </CuriProvider>
+        );
+        expect(() => {
+          tree.update(
             <CuriProvider router={router}>
-              {() => <Link to="Test">Test</Link>}
+              {() => (
+                <Link to="Test" active={{ merge }}>
+                  Test
+                </Link>
+              )}
             </CuriProvider>
           );
-          expect(() => {
-            tree.update(
-              <CuriProvider router={router}>
-                {() => (
-                  <Link to="Test" active={{ merge }}>
-                    Test
-                  </Link>
-                )}
-              </CuriProvider>
-            );
-          }).toThrow(
-            'You are attempting to use the "active" prop, but have not included the "active" ' +
-              "addon (@curi/addon-active) in your Curi router."
-          );
-          done();
-        });
+        }).toThrow(
+          'You are attempting to use the "active" prop, but have not included the "active" ' +
+            "addon (@curi/addon-active) in your Curi router."
+        );
       });
     });
 
     describe("merge", () => {
-      it("does not call merge if the <Link>'s props do not match the current response's", done => {
+      it("does not call merge if the <Link>'s props do not match the current response's", () => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }], {
           addons: [createActiveAddon()]
         });
-
-        router.respond(() => {
-          const wrapper = render(router, () => (
-            <Link to="Test" className="test" active={{ merge }}>
-              Test
-            </Link>
-          ));
-          const link = wrapper.find("a");
-          expect(link.prop("className")).toBe("test");
-          done();
-        });
+        const wrapper = render(router, () => (
+          <Link to="Test" className="test" active={{ merge }}>
+            Test
+          </Link>
+        ));
+        const link = wrapper.find("a");
+        expect(link.prop("className")).toBe("test");
       });
 
-      it("calls merge function when <Link>'s props match the current response's", done => {
+      it("calls merge function when <Link>'s props match the current response's", () => {
         const history = InMemory({ locations: ["/test"] });
         const router = curi(history, [{ name: "Test", path: "test" }], {
           addons: [createActiveAddon()]
         });
-
-        router.respond(() => {
-          const wrapper = render(router, () => (
-            <Link to="Test" className="test" active={{ merge }}>
-              Test
-            </Link>
-          ));
-          const link = wrapper.find("a");
-          expect(link.prop("className")).toBe("test active");
-          done();
-        });
+        const wrapper = render(router, () => (
+          <Link to="Test" className="test" active={{ merge }}>
+            Test
+          </Link>
+        ));
+        const link = wrapper.find("a");
+        expect(link.prop("className")).toBe("test active");
       });
     });
 
     describe("partial", () => {
-      it("works with partial matches", done => {
+      it("works with partial matches", () => {
         const history = InMemory({ locations: ["/test/nested"] });
         const router = curi(
           history,
@@ -265,21 +239,18 @@ describe("<Link>", () => {
             addons: [createActiveAddon()]
           }
         );
-        router.respond(() => {
-          const wrapper = render(router, () => (
-            <Link to="Test" className="test" active={{ partial: true, merge }}>
-              Test
-            </Link>
-          ));
-          const link = wrapper.find("a");
-          expect(link.prop("className")).toBe("test active");
-          done();
-        });
+        const wrapper = render(router, () => (
+          <Link to="Test" className="test" active={{ partial: true, merge }}>
+            Test
+          </Link>
+        ));
+        const link = wrapper.find("a");
+        expect(link.prop("className")).toBe("test active");
       });
     });
 
     describe("extra", () => {
-      it("uses extra function to run additional active checks", done => {
+      it("uses extra function to run additional active checks", () => {
         const history = InMemory({ locations: ["/test?test=ing"] });
         const router = curi(history, [{ name: "Test", path: "test" }], {
           addons: [createActiveAddon()]
@@ -288,24 +259,20 @@ describe("<Link>", () => {
         function extra(location, details = {}) {
           return location.query === details["query"];
         }
-
-        router.respond(() => {
-          const wrapper = render(router, () => (
-            <Link
-              to="Test"
-              details={{ query: "test=ing" }}
-              active={{ merge, extra }}
-            >
-              Test
-            </Link>
-          ));
-          const link = wrapper.find("a");
-          expect(link.prop("className")).toBe("active");
-          done();
-        });
+        const wrapper = render(router, () => (
+          <Link
+            to="Test"
+            details={{ query: "test=ing" }}
+            active={{ merge, extra }}
+          >
+            Test
+          </Link>
+        ));
+        const link = wrapper.find("a");
+        expect(link.prop("className")).toBe("active");
       });
 
-      it("active is false when pathname matches, but extra returns false", done => {
+      it("active is false when pathname matches, but extra returns false", () => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }], {
           addons: [createActiveAddon()]
@@ -314,56 +281,79 @@ describe("<Link>", () => {
         function extra(location, details = {}) {
           return location.query === details["query"];
         }
-
-        router.respond(() => {
-          const wrapper = render(router, () => (
-            <Link to="Test" active={{ merge, extra }}>
-              Test
-            </Link>
-          ));
-          const link = wrapper.find("a");
-          expect(link.prop("className")).toBeUndefined();
-          done();
-        });
+        const wrapper = render(router, () => (
+          <Link to="Test" active={{ merge, extra }}>
+            Test
+          </Link>
+        ));
+        const link = wrapper.find("a");
+        expect(link.prop("className")).toBeUndefined();
       });
     });
   });
 
   describe("clicking a link", () => {
-    it("calls history.navigate", done => {
+    it("calls history.navigate", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
-      router.respond(() => {
-        const wrapper = render(router, () => <Link to="Test">Test</Link>);
-        const leftClickEvent = {
-          defaultPrevented: false,
-          preventDefault() {
-            this.defaultPrevented = true;
-          },
-          metaKey: null,
-          altKey: null,
-          ctrlKey: null,
-          shiftKey: null,
-          button: 0
-        };
-        wrapper.find("a").simulate("click", leftClickEvent);
-        expect(mockNavigate.mock.calls.length).toBe(1);
-        done();
+      const wrapper = render(router, () => <Link to="Test">Test</Link>);
+      const leftClickEvent = {
+        defaultPrevented: false,
+        preventDefault() {
+          this.defaultPrevented = true;
+        },
+        metaKey: null,
+        altKey: null,
+        ctrlKey: null,
+        shiftKey: null,
+        button: 0
+      };
+      wrapper.find("a").simulate("click", leftClickEvent);
+      expect(mockNavigate.mock.calls.length).toBe(1);
+    });
+
+    it("includes details in location passed to history.navigate", () => {
+      const history = InMemory();
+      const mockNavigate = jest.fn();
+      history.navigate = mockNavigate;
+
+      const router = curi(history, [{ name: "Test", path: "" }]);
+      const wrapper = render(router, () => (
+        <Link to="Test" details={{ hash: "thing" }}>
+          Test
+        </Link>
+      ));
+      const leftClickEvent = {
+        defaultPrevented: false,
+        preventDefault() {
+          this.defaultPrevented = true;
+        },
+        metaKey: null,
+        altKey: null,
+        ctrlKey: null,
+        shiftKey: null,
+        button: 0
+      };
+      wrapper.find("a").simulate("click", leftClickEvent);
+      const mockLocation = mockNavigate.mock.calls[0][0];
+      expect(mockLocation).toMatchObject({
+        pathname: "/",
+        hash: "thing"
       });
     });
 
-    it("includes details in location passed to history.navigate", done => {
-      const history = InMemory();
-      const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
-
-      const router = curi(history, [{ name: "Test", path: "" }]);
-      router.respond(() => {
+    describe("onClick", () => {
+      it("calls onClick prop func if provided", () => {
+        const history = InMemory();
+        const mockNavigate = jest.fn();
+        history.navigate = mockNavigate;
+        const onClick = jest.fn();
+        const router = curi(history, [{ name: "Test", path: "" }]);
         const wrapper = render(router, () => (
-          <Link to="Test" details={{ hash: "thing" }}>
+          <Link to="Test" onClick={onClick}>
             Test
           </Link>
         ));
@@ -379,48 +369,11 @@ describe("<Link>", () => {
           button: 0
         };
         wrapper.find("a").simulate("click", leftClickEvent);
-        const mockLocation = mockNavigate.mock.calls[0][0];
-        expect(mockLocation).toMatchObject({
-          pathname: "/",
-          hash: "thing"
-        });
-        done();
-      });
-    });
-
-    describe("onClick", () => {
-      it("calls onClick prop func if provided", done => {
-        const history = InMemory();
-        const mockNavigate = jest.fn();
-        history.navigate = mockNavigate;
-        const onClick = jest.fn();
-        const router = curi(history, [{ name: "Test", path: "" }]);
-
-        router.respond(() => {
-          const wrapper = render(router, () => (
-            <Link to="Test" onClick={onClick}>
-              Test
-            </Link>
-          ));
-          const leftClickEvent = {
-            defaultPrevented: false,
-            preventDefault() {
-              this.defaultPrevented = true;
-            },
-            metaKey: null,
-            altKey: null,
-            ctrlKey: null,
-            shiftKey: null,
-            button: 0
-          };
-          wrapper.find("a").simulate("click", leftClickEvent);
-          expect(onClick.mock.calls.length).toBe(1);
-          expect(mockNavigate.mock.calls.length).toBe(1);
-          done();
-        });
+        expect(onClick.mock.calls.length).toBe(1);
+        expect(mockNavigate.mock.calls.length).toBe(1);
       });
 
-      it("does not call history.navigate if onClick prevents default", done => {
+      it("does not call history.navigate if onClick prevents default", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
         history.navigate = mockNavigate;
@@ -428,40 +381,12 @@ describe("<Link>", () => {
           event.preventDefault();
         });
         const router = curi(history, [{ name: "Test", path: "" }]);
-        router.respond(() => {
-          const wrapper = render(router, () => (
-            <Link to="Test" onClick={onClick}>
-              Test
-            </Link>
-          ));
-          const leftClickEvent = {
-            defaultPrevented: false,
-            preventDefault() {
-              this.defaultPrevented = true;
-            },
-            metaKey: null,
-            altKey: null,
-            ctrlKey: null,
-            shiftKey: null,
-            button: 0
-          };
-          wrapper.find("a").simulate("click", leftClickEvent);
-          expect(onClick.mock.calls.length).toBe(1);
-          expect(mockNavigate.mock.calls.length).toBe(0);
-          done();
-        });
-      });
-    });
-
-    it("doesn't call history.navigate for modified clicks", done => {
-      const history = InMemory();
-      const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
-
-      const router = curi(history, [{ name: "Test", path: "" }]);
-      router.respond(() => {
-        const wrapper = render(router, () => <Link to="Test">Test</Link>);
-        const modifiedClickEvent = {
+        const wrapper = render(router, () => (
+          <Link to="Test" onClick={onClick}>
+            Test
+          </Link>
+        ));
+        const leftClickEvent = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -472,41 +397,59 @@ describe("<Link>", () => {
           shiftKey: null,
           button: 0
         };
-        const modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
-        modifiers.forEach(m => {
-          const eventCopy = Object.assign({}, modifiedClickEvent);
-          eventCopy[m] = true;
-          wrapper.find("a").simulate("click", eventCopy);
-          expect(mockNavigate.mock.calls.length).toBe(0);
-        });
-        done();
+        wrapper.find("a").simulate("click", leftClickEvent);
+        expect(onClick.mock.calls.length).toBe(1);
+        expect(mockNavigate.mock.calls.length).toBe(0);
       });
     });
 
-    it("doesn't call history.navigate if event.preventDefault has been called", done => {
+    it("doesn't call history.navigate for modified clicks", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
-
-      router.respond(() => {
-        const wrapper = render(router, () => <Link to="Test">Test</Link>);
-        const preventedEvent = {
-          defaultPrevented: true,
-          preventDefault() {
-            this.defaultPrevented = true;
-          },
-          metaKey: null,
-          altKey: null,
-          ctrlKey: null,
-          shiftKey: null,
-          button: 0
-        };
-        wrapper.find("a").simulate("click", preventedEvent);
+      const wrapper = render(router, () => <Link to="Test">Test</Link>);
+      const modifiedClickEvent = {
+        defaultPrevented: false,
+        preventDefault() {
+          this.defaultPrevented = true;
+        },
+        metaKey: null,
+        altKey: null,
+        ctrlKey: null,
+        shiftKey: null,
+        button: 0
+      };
+      const modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
+      modifiers.forEach(m => {
+        const eventCopy = Object.assign({}, modifiedClickEvent);
+        eventCopy[m] = true;
+        wrapper.find("a").simulate("click", eventCopy);
         expect(mockNavigate.mock.calls.length).toBe(0);
-        done();
       });
+    });
+
+    it("doesn't call history.navigate if event.preventDefault has been called", () => {
+      const history = InMemory();
+      const mockNavigate = jest.fn();
+      history.navigate = mockNavigate;
+
+      const router = curi(history, [{ name: "Test", path: "" }]);
+      const wrapper = render(router, () => <Link to="Test">Test</Link>);
+      const preventedEvent = {
+        defaultPrevented: true,
+        preventDefault() {
+          this.defaultPrevented = true;
+        },
+        metaKey: null,
+        altKey: null,
+        ctrlKey: null,
+        shiftKey: null,
+        button: 0
+      };
+      wrapper.find("a").simulate("click", preventedEvent);
+      expect(mockNavigate.mock.calls.length).toBe(0);
     });
   });
 });

@@ -8,7 +8,7 @@ export interface ActiveLink {
     extra?(l: HickoryLocation, d: LocationDetails): boolean;
 }
 export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-    to: string;
+    to?: string;
     params?: object;
     details?: LocationDetails;
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;

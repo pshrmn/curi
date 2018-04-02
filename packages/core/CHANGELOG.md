@@ -1,3 +1,7 @@
+## Next
+
+* If no route has a `match.initial` or `match.every` function, the router will emit in synchronous mode.
+
 ## 1.0.0-beta.27
 
 * Update `set.redirect` to take an options object.
