@@ -145,10 +145,6 @@ function createRouter(
 
     if (sync) {
       const pendingResponse = createResponse(pendingNav.location, routes);
-      // TODO: is it possible to cancel a synchronous navigation before it has finished?
-      if (pendingNav.cancelled) {
-        return;
-      }
       pendingNav.finish();
       const response = finishResponse(pendingResponse, registeredAddons);
       cacheAndEmit(response, navigation);
