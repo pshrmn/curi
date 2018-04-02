@@ -10,7 +10,7 @@
     "generate": "cross-env BABEL_ENV=serve node ./scripts/build",
     "prettier": "prettier --single-quote --write \"src/**/*.js\"",
     "webpack:dev": "cross-env BABEL_ENV=build webpack",
-    "webpack:build": "cross-env BABEL_ENV=build webpack --optimize-minimize"
+    "webpack:build": "cross-env BABEL_ENV=build webpack -p"
   },
   "repository": {
     "type": "git",
