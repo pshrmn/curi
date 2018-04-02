@@ -14,10 +14,7 @@ export default () => (
       <div className="feature">
         <h3>Frameworks</h3>
 
-        <p>
-          While Curi is a generic router, it also provides packages to integrate
-          with popular frameworks.
-        </p>
+        <p>Curi provides packages to render with popular frameworks.</p>
         <ul>
           <li>
             <Link to="Package" params={{ package: "react" }}>
@@ -43,6 +40,16 @@ export default () => (
       </div>
 
       <div className="feature">
+        <h3>Sync or Async</h3>
+        <p>
+          Curi does synchronous route matching by default, but can easily{" "}
+          <Link to="Guide" params={{ slug: "sync-or-async" }}>
+            switch to asynchronous matching
+          </Link>, which enables code-splitting and preloading data.
+        </p>
+      </div>
+
+      <div className="feature">
         <h3>Responses</h3>
         <p>
           <Link
@@ -52,8 +59,8 @@ export default () => (
           >
             Response
           </Link>{" "}
-          objects provide data about the route that matches a location, which
-          you can use to render your application.
+          objects provide data about the route that matches a location and are
+          used to render your application.
         </p>
       </div>
 
@@ -75,17 +82,16 @@ export default () => (
           <a href="https://github.com/pshrmn/hickory">
             <IJS>hickory</IJS>
           </a>{" "}
-          package to make navigation within your application very easy, whether
-          it runs in a browser or anywhere else.
+          package to power navigation anywhere you can run JavaScript.
         </p>
       </div>
 
       <div className="feature">
         <h3>Server Side Rendering</h3>
         <p>
-          Server side rendering with Curi is pretty much the same as client side
-          rendering. The main difference is that you will use an in-memory
-          history instead of a browser history.
+          Server side rendering with Curi is as easy as client side rendering.
+          The main difference is that you will swap the browser history with an
+          in-memory history.
         </p>
       </div>
     </div>

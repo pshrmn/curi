@@ -3,7 +3,7 @@ import { Link } from "@curi/react";
 
 import BaseGuide from "./base/BaseGuide";
 import { InlineJS as IJS, PrismBlock } from "../components/PrismBlocks";
-import { Note } from "../components/Messages";
+import { Note, Warning } from "../components/Messages";
 import { Section, Subsection } from "../components/Sections";
 
 export default ({ name }) => (
@@ -61,12 +61,12 @@ export default ({ name }) => (
 // don't do this
 // { name: 'Home', path: '/' }`}
         </PrismBlock>
-        <Note>
+        <Warning>
           <IJS>path-to-regexp</IJS> supports arrays and RegExps, but only string
-          paths are supported here. This is because the path must also be
-          reversible to create a location's pathname given the name of a route
-          and its params.
-        </Note>
+          paths are supported here. This is because Curi needs to generate
+          pathnames given a route name, which <IJS>path-to-regexp</IJS> can only
+          do with strings.
+        </Warning>
       </Subsection>
 
       <Subsection title="match" id="match">

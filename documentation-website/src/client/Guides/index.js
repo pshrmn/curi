@@ -12,10 +12,12 @@ import Loading from "./Loading";
 import ReactBasics from "./ReactBasics";
 import ReactNativeTips from "./ReactNativeTips";
 import MigrateReactRouterv3 from "./MigrateReactRouterv3";
+import SyncAsync from "./SyncAsync";
 
 export default {
   installation: Installation,
   "getting-started": GettingStarted,
+  "sync-or-async": SyncAsync,
   routes: AllAboutRoutes,
   "response-handlers": ResponseHandlers,
   responses: Responses,

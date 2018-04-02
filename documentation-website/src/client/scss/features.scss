@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 .features {
   max-width: 1000px;
@@ -7,14 +7,14 @@
   padding-top: 15px;
   display: flex;
   flex-flow: row wrap;
+  justify-content: space-around;
 }
 
 .feature {
   background: $gray;
   padding: 15px;
   margin-bottom: 15px;
-  width: 250px;
-  margin-right: 15px;
+  width: 275px;
 }
 
 @media only screen and (min-width: $largeScreen) {

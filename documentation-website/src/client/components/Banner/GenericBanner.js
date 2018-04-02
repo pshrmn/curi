@@ -17,13 +17,7 @@ const routes = [
 ];
 
 // create your Curi router
-const router = curi(history, routes);
-
-// setup a response handler to be called when
-// responses are emitted
-router.respond(() => {
-  // handle any rendering inside of this function
-});`}
+const router = curi(history, routes);`}
   </PrismBlock>
 );
 

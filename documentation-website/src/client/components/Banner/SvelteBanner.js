@@ -15,14 +15,10 @@ const target = document.getElementById('root');
 // create and synchronize a Svelte store
 // with your router
 const store = curiStore(router);
-
 // You can also re-use an existing store
 // curiStore(router, store);
 
-// add a one time response handler for the initial render
-router.respond(() => {
-  const view = new app({ target, store });
-});`}
+const view = new app({ target, store });`}
   </PrismBlock>
 );
 

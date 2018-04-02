@@ -13,6 +13,12 @@ const guides = [
     type: "basic"
   },
   {
+    name: "Sync or Async",
+    slug: "sync-or-async",
+    description: "Match routes synchronously or asynchronously",
+    type: "basic"
+  },
+  {
     name: "Routes",
     slug: "routes",
     description: "Learn about Curi routes and their properties",

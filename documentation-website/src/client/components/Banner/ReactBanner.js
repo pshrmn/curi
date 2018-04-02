@@ -14,18 +14,13 @@ const history = Browser();
 const routes = [...];
 const router = curi(history, routes);
 
-const root = document.getElementById('root');
-// add a one-time response handler to wait
-// for the initial response
-router.respond(() => {
-  ReactDOM.render((
-    <CuriProvider router={router}>
-      {({ response }) => {
-        return <response.body />;
-      }}
-    </CuriProvider>
-  ), root);
-});`}
+ReactDOM.render((
+  <CuriProvider router={router}>
+    {({ response }) => {
+      return <response.body />;
+    }}
+  </CuriProvider>
+), document.getElementById('root'));`}
   </PrismBlock>
 );
 
