@@ -85,10 +85,10 @@ describe("Link component", () => {
 
     describe("without the @curi/addon-active addon", () => {
       const realError = console.error;
-      console.error = jest.fn();
+      const mockError = (console.error = jest.fn());
 
       afterEach(() => {
-        console.error.mockReset();
+        mockError.mockReset();
       });
 
       afterAll(() => {
@@ -130,7 +130,7 @@ describe("Link component", () => {
             active: { merge }
           }
         });
-        expect(console.error.mock.calls.length).toBe(1);
+        expect(mockError.mock.calls.length).toBe(1);
       });
     });
 
