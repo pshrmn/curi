@@ -1,6 +1,6 @@
-## Next
+## 1.0.0-beta.27
 
-* If no route has a `match.initial` or `match.every` function, the router will emit in synchronous mode.
+* If no route has a `match.initial` or `match.every` function, the router will emit in synchronous mode. In synchronous mode, `router.respond` is not necessary for delaying the initial render.
 
 ## 1.0.0-beta.27
 
