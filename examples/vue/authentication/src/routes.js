@@ -1,15 +1,15 @@
-import Home from './components/Home';
-import Protected from './components/Protected';
-import Login from './components/Login';
-import Logout from './components/Logout';
-import NotFound from './components/NotFound';
+import Home from "./components/Home";
+import Protected from "./components/Protected";
+import Login from "./components/Login";
+import Logout from "./components/Logout";
+import NotFound from "./components/NotFound";
 
-import store from './store';
+import store from "./store";
 
 export default [
   {
-    name: 'Home',
-    path: '',
+    name: "Home",
+    path: "",
     match: {
       response: ({ set }) => {
         set.body(Home);
@@ -17,15 +17,18 @@ export default [
     }
   },
   {
-    name: 'Protected',
-    path: 'protected',
+    name: "Protected",
+    path: "protected",
     match: {
-      response: ({ set, addons }) => {
+      response: ({ set }) => {
         if (!store.state.user) {
-          set.redirect({
-            pathname: addons.pathname('Login'),
-            query: { next: '/protected' }
-          }, 302);
+          set.redirect(
+            {
+              name: "Login",
+              query: { next: "/protected" }
+            },
+            302
+          );
         } else {
           set.body(Protected);
         }
@@ -33,13 +36,13 @@ export default [
     }
   },
   {
-    name: 'Login',
-    path: 'login',
+    name: "Login",
+    path: "login",
     match: {
-      response: ({ set, addons }) => {
+      response: ({ set }) => {
         if (store.state.user) {
           set.redirect({
-            pathname: addons.pathname('Home')
+            name: "Home"
           });
         } else {
           set.body(Login);
@@ -48,13 +51,13 @@ export default [
     }
   },
   {
-    name: 'Logout',
-    path: 'logout',
+    name: "Logout",
+    path: "logout",
     match: {
-      response: ({ set, addons }) => {
+      response: ({ set }) => {
         if (!store.state.user) {
           set.redirect({
-            pathname: addons.pathname('Home')
+            name: "Home"
           });
         } else {
           set.body(Logout);
@@ -63,12 +66,12 @@ export default [
     }
   },
   {
-    name: 'Not Found',
-    path: '(.*)',
+    name: "Not Found",
+    path: "(.*)",
     match: {
       response: ({ set }) => {
         set.body(NotFound);
       }
     }
   }
-]
+];

@@ -20,11 +20,11 @@ export default [
     name: "Protected",
     path: "protected",
     match: {
-      response: ({ set, addons }) => {
+      response: ({ set }) => {
         if (!fakeAuth.authenticated()) {
           set.redirect(
             {
-              pathname: addons.pathname("Login"),
+              name: "Login",
               query: { next: "/protected" }
             },
             302
@@ -39,10 +39,10 @@ export default [
     name: "Login",
     path: "login",
     match: {
-      response: ({ set, addons }) => {
+      response: ({ set }) => {
         if (fakeAuth.authenticated()) {
           set.redirect({
-            pathname: addons.pathname("Home")
+            name: "Home"
           });
         }
         set.body(Login);
@@ -53,10 +53,10 @@ export default [
     name: "Logout",
     path: "logout",
     match: {
-      response: ({ set, addons }) => {
+      response: ({ set }) => {
         if (!fakeAuth.authenticated()) {
           set.redirect({
-            pathname: addons.pathname("Home")
+            name: "Home"
           });
         }
         set.body(Logout);

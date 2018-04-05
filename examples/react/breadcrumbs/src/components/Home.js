@@ -1,5 +1,4 @@
-import React from 'react';
-import { Redirect } from '@curi/react';
+import React from "react";
 
 const Home = () => <div>You will be redirected shortly</div>;
 
