@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial Part 5: Loading Data | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a class="active" href="/tutorial">Tutorial</a></li><li><a href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="tutorial"><div class="content"><h1>Part 5: Loading Data</h1><p>In the previous tutorial, we wrote mocked book data in <code class="language-javascript">books.js</code> <!-- -->to have some data to load, but it was just filler. We imported the data as an array, whereas in a &quot;real&quot; website, we would most likely make a request to our server, which would return our data.</p><div class="tutorial-outline"><p>In this tutorial, we will be doing the following:</p><ul><li>Writing a fake API to simulate data requests.</li><li>Adding <code class="language-javascript">match.every</code> functions to our &quot;Book List&quot; and &quot;Book&quot; routes and updating their <code class="language-javascript">match.response</code> functions.</li></ul></div><div class="tutorial-branch"><p>If you are following along using the<!-- --> <a href="https://github.com/pshrmn/curi-tutorial">tutorial repo</a>, please checkout the appropriate branch for your rendering framework.</p><pre><code class="language-bash">git checkout 05-loading-data-react
+git checkout 05-loading-data-vue</code></pre></div><div class="section" id="api"><h2>A Fake API<a class="header-link" href="/tutorial/05-loading-data#api">#</a></h2><p>There are a number of ways that we might make a request to the server, but in this tutorial we will simulate using the<!-- --> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a>. The <code class="language-javascript">fetch</code> function makes a request to the server and returns a Promise that will resolve with the server&#x27;s response.</p><p>Let&#x27;s create an <code class="language-javascript">api</code> directory and start writing our fake fetch functions.</p><pre><code class="language-bash">mkdir -p src/api
+touch src/api/books.js</code></pre><p>We&#x27;ll need to write two functions. The first will fetch all of our books (useful for the book list route) and the second will fetch a specific book given an <code class="language-javascript">id</code> (useful for the book route). Since we are emulating how <code class="language-javascript">fetch</code> works, both of our functions should return a Promise.</p><pre><code class="language-javascript">// api/books.js
+export function fetchAllBooks() {
+  return new Promise((resolve, reject) =&gt; {
+
+  });
+}
+
+export function fetchBook(id) {
+  return new Promise((resolve, reject) =&gt; {
+
+  });
+}</code></pre><p>We need some actual data for our fetch functions to return, so let&#x27;s write an array of book objects. You can make up your own data or just copy the list from below.</p><pre><code class="language-javascript">// api/books.js
+const books = [
+  {
+    id: 0,
+    title: &#x27;Harry Potter and the Deathly Hollows&#x27;,
+    author: &#x27;J.K. Rowling&#x27;,
+    published: &#x27;2007&#x27;,
+    pages: 759
+  },
+  {
+    id: 1,
+    title: &#x27;The Name of the Wind&#x27;,
+    author: &#x27;Patrick Rothfuss&#x27;,
+    published: &#x27;2007&#x27;,
+    pages: 662
+  },
+  {
+    id: 2,
+    title: &quot;The Wise Man&#x27;s Fear&quot;,
+    author: &#x27;Patrick Rothfuss&#x27;,
+    published: &#x27;2011&#x27;,
+    pages: 994
+  },
+  {
+    id: 3,
+    title: &#x27;The Way of Kings&#x27;,
+    author: &#x27;Brandon Sanderson&#x27;,
+    published: &#x27;2010&#x27;,
+    pages: 1007
+  },
+  {
+    id: 4,
+    title: &#x27;A Storm of Swords&#x27;,
+    author: &#x27;George R.R. Martin&#x27;,
+    published: &#x27;2003&#x27;,
+    pages: 1177
+  },
+  {
+    id: 5,
+    title: &#x27;Clockwork Princess&#x27;,
+    author: &#x27;Cassandra Clare&#x27;,
+    published: &#x27;2013&#x27;,
+    pages: 567
+  },
+  {
+    id: 6,
+    title: &#x27;Words of Radiance&#x27;,
+    author: &#x27;Brandon Sanderson&#x27;,
+    published: &#x27;2014&#x27;,
+    pages: 1087
+  },
+  {
+    id: 7,
+    title: &#x27;Collected Fictions&#x27;,
+    author: &#x27;Jorge Luis Borges&#x27;,
+    published: &#x27;1999&#x27;,
+    pages: 565
+  },
+  {
+    id: 8,
+    title: &#x27;Heir of Fire&#x27;,
+    author: &#x27;Sarah J. Maas&#x27;,
+    published: &#x27;2014&#x27;,
+    pages: 565
+  },
+  {
+    id: 9,
+    title: &#x27;The House of Hades&#x27;,
+    author: &#x27;Rick Riordan&#x27;,
+    published: &#x27;2013&#x27;,
+    pages: 597
+  }
+];
+
+// ...</code></pre><p>With this data, we can now finish our data fetching functions. Our<!-- --> <code class="language-javascript">fetchAllBooks</code> function should just resolve with the books array. <code class="language-javascript">fetchBook</code> should search the books array for the book with the requested id. If it finds a matching book object, the function should resolve with that book object. If the requested book is not found, it should reject with an error message.</p><pre data-line="6,12-17"><code class="language-javascript">// api/books.js
+const books = [...];
+
+export function fetchAllBooks() {
+  return new Promise((resolve, reject) =&gt; {
+    resolve(books);
+  });
+}
+
+export function fetchBook(id) {
+  return new Promise((resolve, reject) =&gt; {
+    const book = books.find(book =&gt; book.id === id);
+    if (book) {
+      resolve(book);
+    } else {
+      reject(`Could not find the requested book: ${id}`);
+    }
+  });
+}</code></pre></div><div class="section" id="async"><h2>Async<a class="header-link" href="/tutorial/05-loading-data#async">#</a></h2><p>Up until this point, Curi has been acting as a synchronous router. This means that no other code is being run after navigation starts until a new response is ready. However, some of the most interesting uses of Curi are only available when Curi does asynchronous matching.</p><p>How do we make Curi asynchronous? By adding <code class="language-javascript">match.initial</code> or<!-- --> <code class="language-javascript">match.every</code>properties to our routes. If even one route has either of these properties, then all routes will be matched asynchronously.</p><p>We will now be adding <code class="language-javascript">match.every</code> methods to some of the routes, so Curi will now be matching routes asynchronously. First, there is one small change that we have to make to our index file.</p><div class="subsection" id="response-handler"><h3>Response Handler<a class="header-link" href="/tutorial/05-loading-data#response-handler">#</a></h3><p>The problem with being async is that we don&#x27;t know when the initial response will be ready. What happens if we render before the initial response is ready? We could write our app to know how to handle this, but a better solution is probably to just wait for the initial response. We can do this using a response handler.</p><p>The Curi router object has a method called <code class="language-javascript">respond</code>. This is used to register observer functions (response handler) that will be called whenever the router creates a new response (either at initialization or after navigation). Most of the time, response handlers are registered for you. However, we will want to run one here ourselves.</p><p>In order to wait for the initial response before rendering, we just need to call any rendering in a response handler, which gets passed to<!-- --> <code class="language-javascript">router.respond</code>.</p><pre><code class="language-javascript">// index.js
+
+// React
+router.respond(() =&gt; {
+  ReactDOM.render(...);
+});
+
+// Vue
+router.respond(() =&gt; {
+  const vm = new Vue({
+    el: &#x27;#root&#x27;,
+    template: &#x27;&lt;app /&gt;&#x27;,
+    components: { app }
+  });
+})</code></pre></div><div class="subsection" id="every"><h3>match.every<a class="header-link" href="/tutorial/05-loading-data#every">#</a></h3><p><code class="language-javascript">match.every</code> is a function that will be called every time that a route matches. This makes it a great option for data loading. The function will be passed route related props (the <code class="language-javascript">params</code> <!-- -->object, the <code class="language-javascript">location</code>, and the <code class="language-javascript">name</code> of the matched route), which it can use to formulate any API calls.</p><p><code class="language-javascript">match.every</code> functions are expected to return a Promise. Curi uses <code class="language-javascript">Promise.all</code> to wait for your<!-- --> <code class="language-javascript">match.every</code> and<!-- --> <a href="/guides/routes/#initial"><code class="language-javascript">match.initial</code> functions</a> <!-- -->to resolve before it emits a response.</p><p>We have two routes that we need to load data in: &quot;Book List&quot; and &quot;Book&quot;. We should add <code class="language-javascript">match.every</code> functions to each one, calling their respective API functions that we defined above.</p><pre data-line="2,10,19,21"><code class="language-javascript">// routes.js
+import { fetchAllBooks, fetchBook } from &#x27;./api/books&#x27;;
+
+const routes = [
+  // ...,
+  {
+    name: &#x27;Book List&#x27;,
+    path: &#x27;books&#x27;,
+    match: {
+      every: () =&gt; fetchAllBooks(),
+      response: ({ set }) =&gt; {
+        set.body(BookList);
+      }
+    },
+    children: [
+      {
+        name: &#x27;Book&#x27;,
+        path: &#x27;:id&#x27;,
+        params: { id: n =&gt; parseInt(n, 10) },
+        match: {
+          every: ({ params }) =&gt; fetchBook(params.id),
+          response: ({ set }) =&gt; {
+            set.body(Book);
+          }
+        }
+      }
+    ]
+  }
+  // ...
+];</code></pre><div class="note"><strong>Note:</strong> <!-- -->In the above &quot;Book&quot; route, we introduce the <code class="language-javascript">route.params</code> <!-- -->property. This is an object whose keys are path <code class="language-javascript">param</code> names and whose values are functions that will parse the param string to return a new value. For example, the above function takes the input string and returns that string parsed as an integer.</div></div><div class="subsection" id="response"><h3>match.response<a class="header-link" href="/tutorial/05-loading-data#response">#</a></h3><p>We want to attach our loaded data to the response so that we can use it when we render.</p><p>The <code class="language-javascript">resolved</code> object passed to <code class="language-javascript">match.response</code> <!-- -->contains the values resolved by the route&#x27;s <code class="language-javascript">match.initial</code> <!-- -->and <code class="language-javascript">match.every</code> functions. <code class="language-javascript">set.data</code> will attach the data it is given to the response object. We can combine these two to set the response&#x27;s <code class="language-javascript">data</code> to be the data resolved in<!-- --> <code class="language-javascript">match.every</code>.</p><p>It is also possible that someone might request a book that does not exist, to deal with that, we will use the <code class="language-javascript">error</code> property and the <code class="language-javascript">set.error</code> function.</p><div class="note"><strong>Note:</strong> <!-- -->You can view all of the properties passed to the<!-- --> <code class="language-javascript">match.response</code> function in the<!-- --> <a href="/guides/routes/#response">All About Routes</a> <!-- -->guide.</div><pre data-line="10,12,22,24-28"><code class="language-javascript">// routes.js
+import { fetchAllBooks, fetchBook } from &#x27;./api/books&#x27;;
+const routes = [
+  // ...,
+  {
+    name: &#x27;Book List&#x27;,
+    path: &#x27;books&#x27;,
+    match: {
+      every: () =&gt; fetchAllBooks(),
+      response: ({ resolved, set }) =&gt; {
+        set.body(BookList);
+        set.data({ books: resolved.every });
+      }
+    },
+    children: [
+      {
+        name: &#x27;Book&#x27;,
+        path: &#x27;:id&#x27;,
+        params: { id: n =&gt; parseInt(n, 10) },
+        match: {
+          every: ({ params }) =&gt; fetchBook(params.id),
+          response: ({ error, resolved, set }) =&gt; {
+            set.body(Book);
+            if (error) {
+              set.error(error);
+            } else {
+              set.data({ book: resolved.every });
+            }
+          }
+        }
+      }
+    ]
+  }
+  // ...
+];</code></pre><div class="note"><strong>Note:</strong> <!-- -->If you do not catch errors in your <code class="language-javascript">every</code> function, you still get the opportunity to deal with them using the <code class="language-javascript">error</code> <!-- -->property passed to <code class="language-javascript">match.response</code>. However, if you do not handle the error there, you may end up with unexpected errors in your website.</div></div><p>Now, when a user visits the <code class="language-javascript">/books</code> URI, the response generated by Curi will look like this:</p><pre><code class="language-javascript">{
+  name: &#x27;Book List&#x27;,
+  data: {
+    books: [/*...*/]
+  },
+  // ...
+}</code></pre><p>Likewise, visiting <code class="language-javascript">/books/0</code> will generate a response whose<!-- --> <code class="language-javascript">data</code> property is a book object.</p><pre><code class="language-javascript">{
+  name: &#x27;Book&#x27;,
+  params: { id: 0 }
+  data: {
+    book: { title: &#x27;...&#x27;, /*...*/ }
+  },
+  // ...
+}</code></pre></div><div class="section" id="review"><h2>Review<a class="header-link" href="/tutorial/05-loading-data#review">#</a></h2><p>If you are following the React path:</p><div class="tutorial-branch"><p>You can view the completed source code for this tutorial<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/06-render-data-react">on GitHub</a>.</p></div><p>If you are following the Vue path:</p><div class="tutorial-branch"><p>You can view the completed source code for this tutorial<!-- --> <a href="https://github.com/pshrmn/curi-tutorial/tree/06-render-data-vue">on GitHub</a>.</p></div></div><div class="section" id="next"><h2>Next<a class="header-link" href="/tutorial/05-loading-data#next">#</a></h2><p>Now that we are loading data for our routes, we should modify our &quot;Book List&quot; and &quot;Book&quot; pages to render using this data. Once again, we will break this down for React and Vue users.</p><p>If you are using React, continue with<!-- --> <a href="/tutorial/06-render-data-react">Part 6: Rendering Data with React</a>.</p><p>If you are using Vue, continue with<!-- --> <a href="/tutorial/06-render-data-vue">Part 6: Rendering Data with Vue</a>.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul class="link-list"><li class="solo"><a href="/tutorial/01-setup">Part 1: Curi Setup</a></li><li class="solo"><a href="/tutorial/02-routes">Part 2: Curi Routes</a></li><li class="solo"><a href="/tutorial/03-router">Part 3: The Curi Router</a></li><li class="solo"><p>Part 4: Rendering Pages</p><ul class="frameworks"><li><a href="/tutorial/04-pages-react">react</a></li><li><a href="/tutorial/04-pages-vue">vue</a></li></ul></li><li class="solo"><a class="active" href="/tutorial/05-loading-data">Part 5: Loading Data</a></li><li class="solo"><p>Part 6: Rendering Data</p><ul class="frameworks"><li><a href="/tutorial/06-render-data-react">react</a></li><li><a href="/tutorial/06-render-data-vue">vue</a></li></ul></li><li class="solo"><p>Part 7: Forms &amp; Programmatic Navigation</p><ul class="frameworks"><li><a href="/tutorial/07-nav-react">react</a></li><li><a href="/tutorial/07-nav-vue">vue</a></li></ul></li><li class="solo"><a href="/tutorial/08-now-what">Part 8: Now What?</a></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
