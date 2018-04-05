@@ -6,7 +6,6 @@ import { CuriProvider } from "@curi/react";
 import createAncestorsAddon from "@curi/addon-ancestors";
 
 import routes from "./routes";
-import NavLinks from "./components/NavLinks";
 
 /*
  * A simple addon that will enable adding a dynamic title
