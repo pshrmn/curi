@@ -14,7 +14,7 @@ import CodeSandboxDemo from "../components/CodeSandboxDemo";
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 8: Forms & Programmatic Navigation</h1>
+    <h1>Part 7: Forms & Programmatic Navigation</h1>
     <p>
       In this tutorial, we are going to be using another property of our Curi
       router: <IJS>history</IJS>. This property is our Hickory history instance.
@@ -40,14 +40,14 @@ export default () => (
         </li>
       </ul>
     </Outline>
-    <TutorialBranch name="08-nav-react" />
+    <TutorialBranch name="07-nav-react" />
     <Section id="A Little Babel" title="babel">
       <p>
         Up until now, we have used stateless functional React components. In
         this tutorial, we will be using classes (extending{" "}
-        <IJS>React.Component</IJS>). To help us, we will be taking advantage of
-        some class properties, so we need to install the propert Babel plugin to
-        support this and add it to our Babel configuration.
+        <IJS>React.Component</IJS>). We will be taking advantage of some class
+        properties, so we need to install the class property Babel plugin and
+        add it to our Babel configuration.
       </p>
       <PrismBlock lang="bash">
         {`npm install --save-dev @babel/plugin-proposal-class-properties`}
@@ -61,7 +61,7 @@ module.exports = {
 `}
       </PrismBlock>
     </Section>
-    <Section title="The (Fake) API" id="API">
+    <Section title="Another Fake API" id="API">
       <p>
         Since we do not have a backend to store the books that a user wants to
         purchase, we will simulate this using <IJS>localStorage</IJS>. This will
@@ -73,8 +73,9 @@ module.exports = {
         state of the shopping cart, the second will update the shopping cart,
         and the third will reset the shopping cart.
       </p>
+      <PrismBlock lang="bash">{`touch src/api/shoppingCart.js`}</PrismBlock>
       <PrismBlock lang="javascript">
-        {`// src/api/shoppingCart.js
+        {`// api/shoppingCart.js
 function saveCart(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -132,8 +133,9 @@ export function resetCart() {
         <IJS>onChange</IJS> handler to update the <Cmp>select</Cmp> when the
         user changes the value.
       </p>
+      <PrismBlock lang="bash">{`touch src/components/AddToCart.js`}</PrismBlock>
       <PrismBlock lang="jsx">
-        {`// src/components/AddToCart.js
+        {`// components/AddToCart.js
 import React from 'react';
 
 class AddToCart extends React.Component {
@@ -181,14 +183,17 @@ export default AddToCart;`}
         <Cmp>Curious</Cmp> component from <IJS>@curi/react</IJS>.{" "}
         <Cmp>Curious</Cmp> helps you to inject the Curi props (<IJS>router</IJS>,{" "}
         <IJS>response</IJS>, and <IJS>navigation</IJS>) into a component. That
-        means that we can inject our <IJS>router</IJS> and call{" "}
-        <IJS>router.history.push</IJS> (a bit of a mouthful) to automatically
-        redirect to another page.
+        means that we can inject our <IJS>router</IJS> into a component and call{" "}
+        <IJS>router.history.push</IJS> to automatically redirect to another
+        page.
       </p>
       <p>
-        We can also access all of our Curi <IJS>addons</IJS> from our router, so
-        we will use <IJS>curi.addons.pathname</IJS> to generate the pathname for
-        the location that we wan to redirect to.
+        We can also access all of our Curi{" "}
+        <Link to="Guide" params={{ slug: "addons" }}>
+          <IJS>addons</IJS>
+        </Link>{" "}
+        from our router, so we will use <IJS>curi.addons.pathname</IJS> to
+        generate the pathname for the location that we wan to redirect to.
       </p>
       <p>
         When the user clicks either of the buttons, we will want to use the{" "}
@@ -197,15 +202,14 @@ export default AddToCart;`}
         is for, so we will need to pass it the <IJS>id</IJS> of the book as a
         prop when we render it.
       </p>
-      <PrismBlock lang="jsx">
-        {`// src/components/AddToCart.js
+      <PrismBlock lang="jsx" data-line="3,5,10-12,18-27,38-44,49-53">
+        {`// components/AddToCart.js
 import React from 'react';
 import { Curious } from '@curi/react';
 
 import { updateCart } from '../api/shoppingCart';
 
 class AddToCart extends React.Component {
-
   state = { count: 1 }
 
   updateSelect = (event) => {
@@ -259,8 +263,8 @@ export default props => (
         <IJS>bookID</IJS> prop so that we can know which book to add to the
         shopping cart.
       </p>
-      <PrismBlock lang="jsx">
-        {`// src/components/Book.js
+      <PrismBlock lang="jsx" data-line="4,22">
+        {`// components/Book.js
 import React from 'react';
 
 import AddToCart from './AddToCart';
@@ -292,10 +296,9 @@ export default Book;`}
     <Section title="The Checkout Page" id="checkout">
       <p>
         Now that we can add books to our shopping cart, we also should give the
-        user the ability to buy them. Of course, this isn't a real store website
-        that we are building, so instead of asking for payment and shipping
-        information, we will just redirect the user once they "purchase" their
-        books.
+        user the ability to buy them. This isn't a real store website that we
+        are building, so instead of asking for payment and shipping information,
+        we will just redirect the user once they "purchase" their books.
       </p>
       <p>
         Let's start out in our <IJS>routes.js</IJS> file. We want our "Checkout"
@@ -309,8 +312,9 @@ export default Book;`}
         This will be a "Checkout Complete" route that we redirect to after a
         user has "purchased" their books.
       </p>
-      <PrismBlock lang="javascript">
-        {`// src/routes.js
+      <PrismBlock lang="bash">{`touch src/components/CheckoutComplete.js`}</PrismBlock>
+      <PrismBlock lang="javascript" data-line="2,4,12-17,21-38,41-51">
+        {`// routes.js
 import CheckoutComplete from './components/CheckoutComplete';
 
 import { getCart } from './api/shoppingCart';
@@ -361,7 +365,7 @@ const routes = [
         }
       }
     ]
-  }
+  },
   // ...
 ];`}
       </PrismBlock>
@@ -371,7 +375,7 @@ const routes = [
         component thanking the user for their purchase.
       </p>
       <PrismBlock lang="jsx">
-        {`// src/components/CheckoutComplete.js
+        {`// components/CheckoutComplete.js
 import React from 'react';
 
 const CheckoutComplete = () => (
@@ -393,7 +397,7 @@ export default CheckoutComplete;`}
         component to access our Curi router from within a component.
       </p>
       <PrismBlock lang="jsx">
-        {`// src/components/Checkout.js
+        {`// components/Checkout.js
 import React from 'react';
 import { Curious } from '@curi/react';
 
@@ -455,8 +459,8 @@ export default props => (
         can just check our <IJS>response.data.items</IJS> array and display a
         message stating that the cart is empty when the list's length is zero.
       </p>
-      <PrismBlock lang="jsx">
-        {`// src/component/Checkout.js
+      <PrismBlock lang="jsx" data-line="6-15">
+        {`// component/Checkout.js
 class Checkout extends React.Component {
   // ...
   render() {
@@ -481,8 +485,8 @@ class Checkout extends React.Component {
         We can now add books to our shopping cart and "buy" them from the
         checkout page.
       </p>
-      <CompleteBranch name="09-now-what-react" />
-      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/09-now-what-react" />
+      <CompleteBranch name="08-now-what-react" />
+      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/08-now-what-react" />
       <Note>
         The embedded sandbox will not work if your browser is blocking
         third-party data. If this is the case for you, you <em>could</em>{" "}
@@ -494,8 +498,8 @@ class Checkout extends React.Component {
       <p>
         With that, we have considered pretty much everything you need to know to
         get started building your website with Curi. We have one last part,{" "}
-        <Link to="Tutorial" params={{ name: "09-now-what" }}>
-          Part 9: Now What?
+        <Link to="Tutorial" params={{ name: "08-now-what" }}>
+          Part 8: Now What?
         </Link>, that gives some suggestions on what you can do with your new
         knowledge.
       </p>

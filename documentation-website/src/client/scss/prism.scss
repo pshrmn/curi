@@ -51,7 +51,19 @@ pre[class*="language-"] {
 
 .aside {
   :not(pre) > code[class*="language-"] {
-    background: $white;
+    background: $green;
+  }
+}
+
+.tutorial-outline {
+  :not(pre) > code[class*="language-"] {
+    background: $blue;
+  }
+}
+
+.tutorial-branch {
+  :not(pre) > code[class*="language-"] {
+    background: $orange;
   }
 }
 

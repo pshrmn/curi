@@ -14,11 +14,12 @@ import CodeSandboxDemo from "../components/CodeSandboxDemo";
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 8: Forms & Programmatic Navigation</h1>
+    <h1>Part 7: Forms & Programmatic Navigation</h1>
     <p>
       In this tutorial, we are going to be using another property of our Curi
-      router: <IJS>history</IJS>. This property is the Hickory history instance.
-      We will use it to perform navigation between pages in our website.
+      router: <IJS>history</IJS>. This property is the Hickory history instance
+      that we created in Part 3. We will use it to perform navigation between
+      pages in our website.
     </p>
     <Outline>
       <ul>
@@ -40,21 +41,22 @@ export default () => (
         </li>
       </ul>
     </Outline>
-    <TutorialBranch name="08-nav-vue" />
-    <Section title="The (Fake) API" id="API">
+    <TutorialBranch name="07-nav-vue" />
+    <Section title="Another Fake API" id="API">
       <p>
         Since we do not have a backend to store the books that a user wants to
-        purchase, we will simulate this using <IJS>localStorage</IJS>. This will
-        be done by maintaining an object whose keys are book <IJS>id</IJS>s and
-        whose values is how many of that book should be purchased.
+        purchase, we will simulate this using <IJS>localStorage</IJS>. We will
+        maintain an object whose keys are book <IJS>id</IJS>s and whose values
+        are how many of that book should be purchased.
       </p>
       <p>
-        Our API should export three methods: the first will get the current
+        The API should export three methods: the first will get the current
         state of the shopping cart, the second will update the shopping cart,
         and the third will reset the shopping cart.
       </p>
+      <PrismBlock lang="bash">{`touch src/api/shoppingCart.js`}</PrismBlock>
       <PrismBlock lang="javascript">
-        {`// src/api/shoppingCart.js
+        {`// api/shoppingCart.js
 function saveCart(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -110,6 +112,7 @@ export function resetCart() {
         Users can buy 1-4 copies of a book (an arbitrary restriction), so we
         need an <Cmp>option</Cmp> for each possible value.
       </p>
+      <PrismBlock lang="bash">{`touch src/components/AddToCart.vue`}</PrismBlock>
       <PrismBlock lang="html">
         {`<!-- src/components/AddToCart.vue -->
 <template>
@@ -154,13 +157,16 @@ export function resetCart() {
       <p>
         The <IJS>CuriPlugin</IJS> makes our router available to all of our
         components as <IJS>this.$router</IJS>. That means that we can call{" "}
-        <IJS>this.$router.history.push</IJS> (a bit of a mouthful) to
-        automatically redirect to another page.
+        <IJS>this.$router.history.push</IJS> to automatically redirect to
+        another page.
       </p>
       <p>
-        We can also access all of our Curi <IJS>addons</IJS> from our router, so
-        we will use <IJS>curi.addons.pathname</IJS> to generate the pathname for
-        the location that we wan to redirect to.
+        We can also access all of our Curi{" "}
+        <Link to="Guide" params={{ slug: "addons" }}>
+          <IJS>addons</IJS>
+        </Link>{" "}
+        from our router, so we will use <IJS>curi.addons.pathname</IJS> to
+        generate the pathname for the location that we wan to redirect to.
       </p>
       <p>
         When the user clicks either of the buttons, we will want to use the{" "}
@@ -169,7 +175,7 @@ export function resetCart() {
         is for, so we will need to pass it the <IJS>id</IJS> of the book as a
         prop when we render it.
       </p>
-      <PrismBlock lang="html">
+      <PrismBlock lang="html" data-line="10-15,20,23,29-40">
         {`<!-- src/components/AddToCart.vue -->
 <template>
   <form>
@@ -179,8 +185,12 @@ export function resetCart() {
       <option value="3">3</option>
       <option value="4">4</option>
     </select>
-    <button type="button" v-on:click="addToCart">Add To Cart</button>
-    <button type="button" v-on:click="addAndCheckout">Add To Cart and Checkout</button>
+    <button type="button" v-on:click="addToCart">
+      Add To Cart
+    </button>
+    <button type="button" v-on:click="addAndCheckout">
+      Add To Cart and Checkout
+    </button>
   </form>
 </template>
 
@@ -216,7 +226,7 @@ export function resetCart() {
         <IJS>bookID</IJS> prop so that we can know which book to add to the
         shopping cart.
       </p>
-      <PrismBlock lang="html">
+      <PrismBlock lang="html" data-line="11,16,25">
         {`<!-- src/components/Book.vue -->
 <template>
   <div v-if="$curi.response.error" class='book'>
@@ -249,10 +259,9 @@ export function resetCart() {
     <Section title="The Checkout Page" id="checkout">
       <p>
         Now that we can add books to our shopping cart, we also should give the
-        user the ability to buy them. Of course, this isn't a real store website
-        that we are building, so instead of asking for payment and shipping
-        information, we will just redirect the user once they "purchase" their
-        books.
+        user the ability to buy them. This isn't a real store website that we
+        are building, so instead of asking for payment and shipping information,
+        we will just redirect the user once they "purchase" their books.
       </p>
       <p>
         Let's start out in our <IJS>routes.js</IJS> file. We want our "Checkout"
@@ -266,8 +275,8 @@ export function resetCart() {
         This will be a "Checkout Complete" route that we redirect to after a
         user has "purchased" their books.
       </p>
-      <PrismBlock lang="javascript">
-        {`// src/routes.js
+      <PrismBlock lang="javascript" data-line="2,4,12-17,21-38,41-51">
+        {`// routes.js
 import CheckoutComplete from './components/CheckoutComplete';
 
 import { getCart } from './api/shoppingCart';
@@ -318,7 +327,7 @@ const routes = [
         }
       }
     ]
-  }
+  },
   // ...
 ];`}
       </PrismBlock>
@@ -327,6 +336,7 @@ const routes = [
         <Cmp>CheckoutComplete</Cmp> component. This should just be a simple
         component thanking the user for their purchase.
       </p>
+      <PrismBlock lang="bash">{`touch src/components/CheckoutComplete.vue`}</PrismBlock>
       <PrismBlock lang="html">
         {`<!-- src/components/CheckoutComplete.vue -->
 <template>
@@ -345,7 +355,7 @@ const routes = [
         We will once again be taking advantage of <IJS>this.$curi</IJS> to
         access our Curi router from within a component.
       </p>
-      <PrismBlock lang="html">
+      <PrismBlock lang="html" data-line="4-23,27-41">
         {`<!-- src/components/Checkout.vue -->
 <template>
   <div class='checkout'>
@@ -394,7 +404,7 @@ const routes = [
         can just check our <IJS>response.data.items</IJS> array and display a
         message stating that the cart is empty when the list's length is zero.
       </p>
-      <PrismBlock lang="html">
+      <PrismBlock lang="html" data-line="24-26">
         {`<!-- src/component/Checkout.vue -->
 <template>
   <div class='checkout'>
@@ -430,8 +440,8 @@ const routes = [
         We can now add books to our shopping cart and "buy" them from the
         checkout page.
       </p>
-      <CompleteBranch name="09-now-what-vue" />
-      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/09-now-what-vue" />
+      <CompleteBranch name="08-now-what-vue" />
+      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/08-now-what-vue" />
       <Note>
         The embedded sandbox will not work if your browser is blocking
         third-party data. If this is the case for you, you <em>could</em>{" "}
@@ -443,8 +453,8 @@ const routes = [
       <p>
         With that, we have considered pretty much everything you need to know to
         get started building your website with Curi. We have one last part,{" "}
-        <Link to="Tutorial" params={{ name: "09-now-what" }}>
-          Part 9: Now What?
+        <Link to="Tutorial" params={{ name: "08-now-what" }}>
+          Part 8: Now What?
         </Link>, that gives some suggestions on what you can do with your new
         knowledge.
       </p>

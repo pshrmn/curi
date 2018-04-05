@@ -73,7 +73,7 @@ export default ({ name }) => (
           but
         </Note>
       </Subsection>
-      <Subsection title="A Render Function" id="render-function">
+      <Subsection title="Rendering" id="rendering">
         <p>
           You could manually re-render your application by using a response
           handler that observes the router for every response (by passing the{" "}

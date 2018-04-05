@@ -14,13 +14,13 @@ import CodeSandboxDemo from "../components/CodeSandboxDemo";
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 5: React Pages</h1>
+    <h1>Part 4: React Pages</h1>
     <p>
       Now that we have our router ready to go, we can think about what our pages
       should look like. This tutorial will be rendering our website using React.
       If you prefer to use Vue, you should check out the{" "}
-      <Link to="Tutorial" params={{ name: "05-pages-vue" }}>
-        Part 5: Vue Pages
+      <Link to="Tutorial" params={{ name: "04-pages-vue" }}>
+        Part 4: Vue Pages
       </Link>{" "}
       tutorial.
     </p>
@@ -32,10 +32,7 @@ export default () => (
           of the components it provides (<Cmp>CuriProvider</Cmp> and{" "}
           <Cmp>Link</Cmp>).
         </li>
-        <li>
-          Defining the render function that will render the contents of the
-          website.
-        </li>
+        <li>Render our app using React.</li>
         <li>Creating page components for each of the routes.</li>
         <li>
           Adding links so that users can navigate between locations in the
@@ -43,7 +40,7 @@ export default () => (
         </li>
       </ul>
     </Outline>
-    <TutorialBranch name="05-pages-react" />
+    <TutorialBranch name="04-pages-react" />
     <Section title="Babel" id="babel">
       <p>
         Before we dive in, let's make sure that our build scripts can handle
@@ -75,10 +72,10 @@ module.exports = {
     >
       <p>
         The <IJS>@curi/react</IJS> package provides React components that know
-        how to interact with Curi. For this tutorial, we will only be using two:{" "}
-        <Cmp>CuriProvider</Cmp> and <Cmp>Link</Cmp>. However, there are a number
-        of other ones that you might find useful. You can read more about them
-        in the{" "}
+        how to interact with Curi. We will only be using two,{" "}
+        <Cmp>CuriProvider</Cmp> and <Cmp>Link</Cmp>, but there are a number of
+        other ones that you might find useful. You can read more about them in
+        the{" "}
         <Link
           to="Package"
           params={{ package: "react" }}
@@ -89,9 +86,8 @@ module.exports = {
       </p>
       <Subsection title="Installation" id="installation">
         <p>
-          Let's start by installing the <IJS>@curi/react</IJS> package. If you
-          haven't already, you should also install the <IJS>react</IJS> and{" "}
-          <IJS>react-dom</IJS> packages.
+          Let's start by installing the <IJS>@curi/react</IJS> package, as well
+          as the <IJS>react</IJS> and <IJS>react-dom</IJS> packages.
         </p>
         <PrismBlock lang="bash">
           {`npm install @curi/react react react-dom`}
@@ -105,110 +101,74 @@ module.exports = {
         }
         id="CuriProvider"
       >
+        <p>
+          The first Curi component we will use is the <Cmp>CuriProvider</Cmp>.
+          It is responsible for rendering the website whenever the location
+          changes and placing some values on React's context (the other Curi
+          components rely on the context, so they need to be rendered as
+          descendants of the <Cmp>CuriProvider</Cmp>).
+        </p>
         <PrismBlock lang="javascript">
-          {`// src/index.js
+          {`// index.js
 import { CuriProvider } from '@curi/react';`}
         </PrismBlock>
         <p>
-          The <Cmp>CuriProvider</Cmp> is responsible for rendering the website
-          whenever the location changes. It takes two props: <IJS>router</IJS>{" "}
-          and <IJS>children</IJS>.
+          The <Cmp>CuriProvider</Cmp> takes two props: <IJS>router</IJS> and{" "}
+          <IJS>children</IJS>.
         </p>
         <ol>
           <li>
-            <IJS>router</IJS> is our Curi router.
+            <IJS>router</IJS> - a Curi router.
           </li>
           <li>
-            <IJS>children</IJS> is a render function that will be called
-            whenever a new response is emitted (and during the initial render)
-            and returns the React element(s) that make up your website. It will
-            receive an object with three properties: the new <IJS>response</IJS>{" "}
+            <IJS>children</IJS> - a function that returns the React elements for
+            the page. This will be called whenever a new response is emitted
+            (and during the initial render). The argument passed to the function
+            is an object with three properties: the new <IJS>response</IJS>{" "}
             object, the <IJS>navigation</IJS> and the Curi <IJS>router</IJS>{" "}
             object. The second two can be useful occasionally, but the{" "}
             <IJS>response</IJS> is what we really need for rendering.
           </li>
         </ol>
-        <p>
-          The <Cmp>CuriProvider</Cmp> should usually be the first component you
-          render in your application, although if you are using a state
-          management library like Redux, you would wrap the{" "}
-          <IJS>react-redux</IJS> <Cmp>Provider</Cmp> around the{" "}
-          <Cmp>CuriProvider</Cmp>.
-        </p>
         <PrismBlock lang="jsx">
-          {`ReactDOM.render((
-  <CuriProvider router={router}>
-   {() => ...}
-  </CuriProvider>
-), holder);`}
+          {`<CuriProvider router={router}>
+  {({ response, navigation, router }) => (
+    <div>
+      You are here: {response.location.pathname}
+    </div>
+  )}
+</CuriProvider>`}
         </PrismBlock>
-        <Note>
-          In addition to re-rendering the application, an important function of
-          the <Cmp>CuriProvider</Cmp> is that it adds a Curi values to React's
-          context. These are the <IJS>router</IJS>, the current{" "}
-          <IJS>response</IJS>, and the current <IJS>navigation</IJS>. A number
-          of the other components exported by <IJS>@curi/react</IJS> rely on
-          these variables to render/function.
-        </Note>
       </Subsection>
       <Subsection title="Starting to render" id="starting-to-render">
         <p>
-          We should delay the app's initial render until the router has emitted
-          its first response. This is done by calling <IJS>ReactDOM.render</IJS>{" "}
-          in a{" "}
-          <Link
-            to="Tutorial"
-            params={{ name: "04-router" }}
-            details={{ hash: "observer" }}
-          >
-            response handler
-          </Link>, which will be passed to <IJS>router.respond</IJS>. Calling{" "}
-          <IJS>router.respond</IJS> can be skipped, but then we would have to
-          render a loading screen.
+          We can now use the <Cmp>CuriProvider</Cmp> to start rendering the
+          website.
         </p>
-        <Note>
-          The organization here is all a matter of taste, but I like to move all
-          of the rendering to a <IJS>render.js</IJS> file. That file can export
-          a response handler, which we can import and pass to{" "}
-          <IJS>router.respond</IJS> in the index file. One benefit of this is
-          that you aren't mixing React and component imports up with the router
-          setup imports in <IJS>index.js</IJS>
-        </Note>
-        <PrismBlock lang="bash">{`touch src/render.js`}</PrismBlock>
-        <PrismBlock lang="jsx">
-          {`// src/render.js
+        <PrismBlock lang="jsx" data-line="4-6,13-17">
+          {`// index.js
+import curi from '@curi/core';
+import Browser from '@hickory/browser';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { CuriProvider } from '@curi/react';
 
-let root = document.getElementById('root');
+import routes from './routes';
 
-export default ({ router }) => {
-  ReactDOM.render((
-    <CuriProvider router={router}>
-      {({ response }) => null}
-    </CuriProvider>
-  ), root);
-};`}
-        </PrismBlock>
-        <p>
-          Finally, we can import the response handler in the index file and pass
-          it to the router using <IJS>router.respond</IJS>. This function will
-          only be called one time; the <Cmp>CuriProvider</Cmp> will setup an
-          observer to react to any new responses.
-        </p>
-        <PrismBlock lang="jsx" data-line="2,5">
-          {`// src/index.js
-import renderApp from './render';
-// ...
+const history = Browser();
 const router = curi(history, routes);
-router.respond(renderApp);`}
+
+ReactDOM.render((
+  <CuriProvider router={router}>
+    {({ response }) => null}
+  </CuriProvider>
+), document.getElementById('root'));`}
         </PrismBlock>
         <p>
-          The above render function isn't very interesting because our
-          application is rendering nothing (<IJS>null</IJS>). We'll come back to
-          that in a minute, but first we should learn about the other React
-          component that we'll be using.
+          The above <IJS>children</IJS> function isn't very interesting because
+          our application is rendering nothing (<IJS>null</IJS>). We'll come
+          back to that in a minute, but first we should learn about the other
+          React component that we'll be using.
         </p>
       </Subsection>
 
@@ -229,20 +189,26 @@ router.respond(renderApp);`}
           prop to pass the name of the route that you want to navigate to.
         </p>
         <PrismBlock lang="jsx">
-          {`<Link to='Home'>Home</Link>
+          {`// { name: 'Home', path: '' }
+<Link to='Home'>Home</Link>
 // <a href='/'>Home</a>`}
         </PrismBlock>
         <p>
           If the route that you are navigating to has any params, you pass them
-          using the <IJS>params</IJS> prop.
+          using the <IJS>params</IJS> prop. Nested routes will also "inherit"
+          the path segments from ancestor routes. If an ancestor route has
+          params, you need to provide those as well.
         </p>
         <PrismBlock lang="jsx">
-          {`{ name: 'Book', path: ':id' }
-// (inherits 'books' path from parent route)
-<Link to='Book' params={{ id: 1357 }}>
-  Some Book
+          {`/*
+ * { name: 'Parent', path: 'parent/:pID', children: [
+ *   { name: 'Child', path: 'child/:cID' }
+ * ]}
+ */
+<Link to='Child' params={{ pID: 17, cID: 02 }}>
+  Child 02
 </Link>
-// <a href='/books/1357'>Some Book</a>`}
+// <a href='/parent/17/child/02'>Child 02</a>`}
         </PrismBlock>
         <p>
           If you need to pass any other location properties (<IJS>query</IJS>,{" "}
@@ -250,7 +216,8 @@ router.respond(renderApp);`}
           <IJS>details</IJS> prop.
         </p>
         <PrismBlock lang="jsx">
-          {`<Link to='Contact' details={{ hash: 'email' }}>
+          {`// { name: 'Contact', path: 'contact' }
+<Link to='Contact' details={{ hash: 'email' }}>
   Contact by Email
 </Link>
 // <a href='/contact#email>Contact by Email</a>`}
@@ -275,16 +242,33 @@ router.respond(renderApp);`}
       </Subsection>
     </Section>
 
-    <Section title="The render function" id="render-function">
+    <Section
+      title={
+        <span>
+          The <IJS>children</IJS> function
+        </span>
+      }
+      id="children-function"
+    >
       <p>
-        Let's go back to that render function that we pass to the{" "}
+        Let's go back to that <IJS>children</IJS> function that we pass to the{" "}
         <Cmp>CuriProvider</Cmp>. In the sample code above, we just returned{" "}
-        <IJS>null</IJS>. Of course, for our website we want to return the actual
-        elements that make up a page. How should we do this? Let's take a look
-        at the properties of a basic response object.
+        <IJS>null</IJS>. For our website we want to return the actual elements
+        that make up a page.
+      </p>
+      <p>
+        How should we do this? If we add a log statement to the{" "}
+        <IJS>children</IJS> function, we cans take a look at the properties of a
+        basic response object.
       </p>
       <PrismBlock lang="javascript">
-        {`response: {
+        {`/*
+ * {({ response }) => {
+ *   console.log(response);
+ *   return null;
+ * }}
+ */
+response: {
  body: 'Home',
  data: undefined,
  error: undefined,
@@ -320,28 +304,35 @@ router.respond(renderApp);`}
       </p>
       <p>
         Instead of returning a string, what if we passed a React component to{" "}
-        <IJS>set.body()</IJS>? Then, our render function can use the{" "}
-        <IJS>body</IJS> property of our response object to render our website.
-        We'll expand on that later on, but for now, let's go ahead and define
-        the components for each of our routes.
+        <IJS>set.body()</IJS>? Then, our <IJS>children</IJS> function can use
+        the <IJS>body</IJS> property of our response object to render our
+        website.
+      </p>
+      <p>
+        We'll expand on that later on, but for now, let's define the components
+        for each of our routes.
       </p>
     </Section>
     <Section title="The Route Components" id="route-components">
       <p>
-        To refresh your memory, we have "Home", "Contact", "Book List", "Book",
-        "Checkout", and "Not Found" pages that we will need to create components
-        for. We can write some barebones components and add some more content
-        later on.
+        To refresh your memory, we have "Home", "Book List", "Book", "Checkout",
+        and "Not Found" pages that we will need to create components for. We can
+        write some barebones components and add some more content later on.
       </p>
       <p>
         Let's create a <IJS>components</IJS> directory inside of our{" "}
         <IJS>src</IJS> directory. Then, we can add files for each route in
         there.
       </p>
-      <PrismBlock lang="bash">{`mkdir -p src/components`}</PrismBlock>
+      <PrismBlock lang="bash">
+        {`mkdir -p src/components
+touch src/components/Home.js src/components/BookList.js \\
+  src/components/Book.js src/components/Checkout.js src/components/NotFound.js`}
+      </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// src/components/Home.js
+        {`// components/Home.js
 import React from 'react';
+
 const Home = () => (
   <div className='home'>
     Welcome to our book store!
@@ -350,18 +341,9 @@ const Home = () => (
 export default Home;`}
       </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// src/components/Contact.js
+        {`// components/BookList.js
 import React from 'react';
-const Contact = () => (
-  <div className='contact'>
-    You can contact us by fax at 1-206-555-0123.
-  </div>
-);
-export default Contact;`}
-      </PrismBlock>
-      <PrismBlock lang="jsx">
-        {`// src/components/BookList.js
-import React from 'react';
+
 const BookList = () => (
   <div className='book-list'>
     Available Books
@@ -370,8 +352,9 @@ const BookList = () => (
 export default BookList;`}
       </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// src/components/Book.js
+        {`// components/Book.js
 import React from 'react';
+
 const Book = () => (
   <div className='book'>
     Book
@@ -380,8 +363,9 @@ const Book = () => (
 export default Book;`}
       </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// src/components/Checkout.js
+        {`// components/Checkout.js
 import React from 'react';
+
 const Checkout = () => (
   <div className='checkout'>
     Checkout
@@ -390,8 +374,9 @@ const Checkout = () => (
 export default Checkout;`}
       </PrismBlock>
       <PrismBlock lang="jsx">
-        {`// src/components/NotFound.js
+        {`// components/NotFound.js
 import React from 'react';
+
 const NotFound = () => (
   <div className='not-found'>
     Page not found
@@ -401,13 +386,12 @@ export default NotFound;`}
       </PrismBlock>
       <p>
         All of these components should be imported in our <IJS>routes.js</IJS>.
-        We can now update our <IJS>set.body()</IJS> calls to set the actual
+        We can update our <IJS>set.body()</IJS> calls to set the actual
         components as the <IJS>body</IJS> property of responses.
       </p>
-      <PrismBlock lang="javascript" data-line="2-7,15,24,33,42,51,62">
-        {`// src/routes.js
+      <PrismBlock lang="javascript" data-line="2-6,14,23,32,41,52">
+        {`// routes.js
 import Home from './components/Home';
-import Contact from './components/Contact';
 import BookList from './components/BookList';
 import Book from './components/Book';
 import Checkout from './components/Checkout';
@@ -420,15 +404,6 @@ const routes = [
     match: {
       response: ({ set }) => {
         set.body(Home);
-      }
-    }
-  },
-  {
-    name: 'Contact',
-    path: 'contact',
-    match: {
-      response: ({ set }) => {
-        set.body(Contact);
       }
     }
   },
@@ -475,52 +450,54 @@ const routes = [
 export default routes;`}
       </PrismBlock>
       <p>
-        Our render function is now able to use <IJS>response.body</IJS>. This is
-        also a good time to separate the render function from the component.
-        This isn't absolutely necessary, but can help keep the code cleaner.
+        Our <IJS>children</IJS> function is now able to use{" "}
+        <IJS>response.body</IJS>.
       </p>
-      <PrismBlock lang="jsx" data-line="11-14">
-        {`// src/render.js
+      <PrismBlock lang="jsx" data-line="16-17">
+        {`// index.js
+import curi from '@curi/core';
+import Browser from '@hickory/browser';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { CuriProvider } from '@curi/react';
 
-let root = document.getElementById('root');
+import routes from './routes';
 
-export default ({ router }) => {
-  ReactDOM.render((
-    <CuriProvider router={router}>
-      {({ response }) => {
-        const { body:Body } = response;
-        return <Body />;
-      }}
-    </CuriProvider>
-  ), root);
-};`}
+const history = Browser();
+const router = curi(history, routes);
+
+ReactDOM.render((
+  <CuriProvider router={router}>
+    {({ response }) => {
+      const { body:Body } = response;
+      return <Body />;
+    }}
+  </CuriProvider>
+), document.getElementById('root'));`}
       </PrismBlock>
       <p>
-        Now, if we load up our application, we will render our home page (the{" "}
+        Now, if we load our website, we will render our home page (the{" "}
         <IJS>Home</IJS> component). Unfortunately, there is no way to navigate
-        to any of our other pages. In order to do this, we will need to add some{" "}
-        <Cmp>Link</Cmp>s to our application.
+        to any of the other pages. In order to do this, we will need to add some{" "}
+        <Cmp>Link</Cmp>s to the application.
       </p>
     </Section>
 
     <Section title="A Navigation Menu" id="nav-menu">
       <p>
         We can write a simple <Cmp>NavLinks</Cmp> menu component to add
-        navigation to our application. From this menu, we only need to be able
-        to navigate to our "Home", "Contact", "Book List", and "Checkout"
-        routes. Navigation to individual books will be done from the book list
-        page.
+        navigation to the website. From this menu, we only need to be able to
+        navigate to our "Home", Book List", and "Checkout" routes. Navigation to
+        individual books will be done from the book list page.
       </p>
       <p>
         We will use a <Cmp>nav</Cmp> element as the parent for our{" "}
         <Cmp>NavLinks</Cmp>. Inside of that is a <Cmp>ul</Cmp> and then each of
         our routes will be <Cmp>Link</Cmp>s wrapped in <Cmp>li</Cmp>s.
       </p>
+      <PrismBlock lang="bash">{`touch src/components/NavLinks.js`}</PrismBlock>
       <PrismBlock lang="jsx">
-        {`// src/components/NavLinks.js
+        {`// components/NavLinks.js
 import React from 'react';
 import { Link } from '@curi/react';
 
@@ -529,9 +506,6 @@ const NavLinks = () => (
     <ul>
       <li>
         <Link to='Home'>Home</Link>
-      </li>
-      <li>
-        <Link to='Contact'>Contact Us</Link>
       </li>
       <li>
         <Link to='Book List'>Books for Sale</Link>
@@ -548,37 +522,47 @@ export default NavLinks;`}
         That is simple enough, but where should we render this? Our{" "}
         <Cmp>Link</Cmp> components rely on the context variables that are
         provided by the <Cmp>CuriProvider</Cmp>. This means that our{" "}
-        <Cmp>NavLinks</Cmp> needs to be a child of the <Cmp>CuriProvider</Cmp>.
+        <Cmp>NavLinks</Cmp> needs to be a descendant of the{" "}
+        <Cmp>CuriProvider</Cmp>.
       </p>
       <p>
-        The easiest way for us to do that would be to modify our render
-        function. Instead of just returning the <IJS>response.body</IJS>{" "}
-        component, we can return a <Cmp>div</Cmp> that wraps both{" "}
-        <IJS>response.body</IJS> and our <Cmp>NavLinks</Cmp> component.
+        The easiest way for us to do that would be to modify our{" "}
+        <IJS>children</IJS> function. Instead of just returning the{" "}
+        <IJS>response.body</IJS> component, we can return a <Cmp>div</Cmp> that
+        wraps both <IJS>response.body</IJS> and our <Cmp>NavLinks</Cmp>{" "}
+        component.
       </p>
-      <PrismBlock lang="jsx" data-line="2,9-18">
-        {`// src/render.js
+      <PrismBlock lang="jsx" data-line="9,18-27">
+        {`// index.js
+import curi from '@curi/core';
+import Browser from '@hickory/browser';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { CuriProvider } from '@curi/react';
+
+import routes from './routes';
 import NavLinks from './components/NavLinks.js';
 
-export default ({ router }) => {
-  ReactDOM.render((
-    <CuriProvider router={router}>
-      {({ response }) => {
-        const { body:Body } = response;
-        return (
-          <div>
-            <header>
-              <NavLinks />
-            </header>
-            <main>
-              <Body />
-            </main>
-          </div>
-        );
-      }}
-    </CuriProvider>
-  ), root);
-};`}
+const history = Browser();
+const router = curi(history, routes);
+
+ReactDOM.render((
+  <CuriProvider router={router}>
+    {({ response }) => {
+      const { body:Body } = response;
+      return (
+        <div>
+          <header>
+            <NavLinks />
+          </header>
+          <main>
+            <Body />
+          </main>
+        </div>
+      );
+    }}
+  </CuriProvider>
+), document.getElementById('root'));`}
       </PrismBlock>
       <p>
         With the <Cmp>NavLink</Cmp>s, we can navigate between most of our
@@ -592,10 +576,11 @@ export default ({ router }) => {
         book path includes an <IJS>id</IJS> param. This means that we need to
         actually have "id" values to pass to our <Cmp>Link</Cmp>s. Later on,
         we'll generate some better data, but for now we can just generate a
-        placeholder list in a module called <IJS>books.js</IJS>.
+        placeholder list.
       </p>
+      <PrismBlock lang="bash">{`touch src/books.js`}</PrismBlock>
       <PrismBlock lang="jsx">
-        {` // src/books.js
+        {` // books.js
 const books = [
   { id: 0 },
   { id: 1 },
@@ -608,8 +593,9 @@ export default books;`}
         In the <Cmp>BookList</Cmp> component we can iterate over this list to
         generate links to our books.
       </p>
-      <PrismBlock lang="jsx">
-        {`// src/components/BookList.js
+      <PrismBlock lang="jsx" data-line="3,5,9-18">
+        {`// components/BookList.js
+import React from 'react';
 import { Link } from '@curi/react';
 
 import books from '../books';
@@ -643,45 +629,62 @@ const BookList = () => (
         means that if we pass our response object as a prop to the{" "}
         <Cmp>Body</Cmp>, we can access these params in our route components.
       </p>
-      <PrismBlock lang="jsx" data-line="13">
-        {`// src/render.js
-export default ({ router }) => {
-  ReactDOM.render((
-    <CuriProvider router={router}>
-      {({ response }) => {
-        const { body:Body } = response;
-        return (
-          <div>
-            <header>
-              <NavLinks />
-            </header>
-            <main>
-              <Body response={response}/>
-            </main>
-          </div>
-        );
-      }}
-    </CuriProvider>
-  ), root);
-};`}
+      <PrismBlock lang="jsx" data-line="24">
+        {`// index.js
+import curi from '@curi/core';
+import Browser from '@hickory/browser';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { CuriProvider } from '@curi/react';
+
+import routes from './routes';
+import NavLinks from './components/NavLinks.js';
+
+const history = Browser();
+const router = curi(history, routes);
+
+ReactDOM.render((
+  <CuriProvider router={router}>
+    {({ response }) => {
+      const { body:Body } = response;
+      return (
+        <div>
+          <header>
+            <NavLinks />
+          </header>
+          <main>
+            <Body response={response}/>
+          </main>
+        </div>
+      );
+    }}
+  </CuriProvider>
+), document.getElementById('root'));`}
       </PrismBlock>
       <Note>
-        There are a number of ways that you can decide to pass props to your
-        route components. The one thing to keep in mind is that <em>all</em> of
-        your route components will receive the same set of props. You can either
-        be very specific and only pass the props that are necessary (e.g.{" "}
-        <Cmp>Body params={`{params}`}</Cmp>) or you can just pass the entire
-        response object (e.g. <Cmp>Body response={`{response}`}</Cmp>) so you
-        don't have to worry about updating this every time one of your route
-        components needs another prop from the response.
+        <p>
+          There are a number of ways that you can pass props to your route
+          components. The one thing to keep in mind is that <em>all</em> of your
+          route components will receive the same set of props.
+        </p>
+        <PrismBlock lang="jsx">
+          {`// only pass props that are necessary
+<Body params={response.params} />
+
+// pass the entire response so that you dont' have to
+// add props whenever you need another response property
+<Body response={response} />`}
+        </PrismBlock>
       </Note>
       <p>
         Next, we just need to update our <Cmp>Book</Cmp> component so that it
         can access its <IJS>params</IJS> prop and figure out which book to
         render content for.
       </p>
-      <PrismBlock lang="jsx">
-        {`// src/components/Book.js
+      <PrismBlock lang="jsx" data-line="4,6">
+        {`// components/Book.js
+import React from 'react';
+
 const Book = ({ response }) => (
   <div className='book'>
     Book {response.params.id}
@@ -694,8 +697,8 @@ const Book = ({ response }) => (
         After completing this tutorial, we now have a semi-functional website
         that renders basic content for each of our pages.
       </p>
-      <CompleteBranch name="06-loading-data-react" />
-      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/06-loading-data-react" />
+      <CompleteBranch name="05-loading-data-react" />
+      <CodeSandboxDemo id="github/pshrmn/curi-tutorial/tree/05-loading-data-react" />
     </Section>
     <Section title="Next" id="next">
       <p>
@@ -703,8 +706,8 @@ const Book = ({ response }) => (
         particularly useful yet, but at least we can navigate between pages.
         Next we will take a step back from React and learn how to implement data
         loading with{" "}
-        <Link to="Tutorial" params={{ name: "06-loading-data" }}>
-          Part 6: Loading Data
+        <Link to="Tutorial" params={{ name: "05-loading-data" }}>
+          Part 5: Loading Data
         </Link>.
       </p>
     </Section>

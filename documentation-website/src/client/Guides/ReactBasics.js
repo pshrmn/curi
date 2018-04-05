@@ -38,9 +38,9 @@ export default ({ name }) => (
           <Cmp>CuriProvider</Cmp>
         </Link>{" "}
         component is responsible for doing this. You pass it two props: a Curi{" "}
-        <IJS>router</IJS> and a <IJS>children</IJS> render function. The{" "}
+        <IJS>router</IJS> and a <IJS>children</IJS> function. The{" "}
         <IJS>router</IJS> will listen for new responses to be emitted and call
-        the render function to re-render your application.
+        the <IJS>children</IJS> function to re-render your application.
       </p>
 
       <PrismBlock lang="jsx">
@@ -51,14 +51,22 @@ export default ({ name }) => (
 </CuriProvider>`}
       </PrismBlock>
 
-      <Subsection title="The render function" id="render-fn">
+      <Subsection
+        title={
+          <span>
+            The <IJS>children</IJS> function
+          </span>
+        }
+        id="child-fn"
+      >
         <p>
           The <IJS>children</IJS> prop is a function that will be called every
-          time the <Cmp>CuriProvider</Cmp> is rendered. The render function
-          should return the React elements that make up your application.
+          time the <Cmp>CuriProvider</Cmp> is rendered. The <IJS>children</IJS>{" "}
+          function should return the React elements that make up your
+          application.
         </p>
         <p>
-          The <IJS>children</IJS> render function receives an object with three
+          The <IJS>children</IJS> function receives an object with three
           properties to help you render your application: <IJS>response</IJS>,{" "}
           <IJS>navigation</IJS>, and <IJS>router</IJS>. The <IJS>response</IJS>{" "}
           object is the most important of these, while the others may

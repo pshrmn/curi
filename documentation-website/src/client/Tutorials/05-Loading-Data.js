@@ -9,12 +9,12 @@ import { Section, Subsection } from "../components/Sections";
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 6: Loading Data</h1>
+    <h1>Part 5: Loading Data</h1>
     <p>
       In the previous tutorial, we wrote mocked book data in <IJS>books.js</IJS>{" "}
       to have some data to load, but it was just filler. We imported the data as
       an array, whereas in a "real" website, we would most likely make a request
-      to our server which would return our data.
+      to our server, which would return our data.
     </p>
     <Outline>
       <ul>
@@ -26,9 +26,9 @@ export default () => (
       </ul>
     </Outline>
     <TutorialBranches
-      names={["06-loading-data-react", "06-loading-data-vue"]}
+      names={["05-loading-data-react", "05-loading-data-vue"]}
     />
-    <Section title="Fake API" id="api">
+    <Section title="A Fake API" id="api">
       <p>
         There are a number of ways that we might make a request to the server,
         but in this tutorial we will simulate using the{" "}
@@ -47,12 +47,13 @@ touch src/api/books.js`}
       </PrismBlock>
       <p>
         We'll need to write two functions. The first will fetch all of our books
-        and the second will fetch a specific book given an <IJS>id</IJS>. Since
-        we are emulating how <IJS>fetch</IJS> works, both of our functions
-        should return a Promise.
+        (useful for the book list route) and the second will fetch a specific
+        book given an <IJS>id</IJS> (useful for the book route). Since we are
+        emulating how <IJS>fetch</IJS> works, both of our functions should
+        return a Promise.
       </p>
       <PrismBlock lang="javascript">
-        {`// src/api/books.js
+        {`// api/books.js
 export function fetchAllBooks() {
   return new Promise((resolve, reject) => {
 
@@ -71,7 +72,7 @@ export function fetchBook(id) {
         copy the list from below.
       </p>
       <PrismBlock lang="javascript">
-        {`// src/api/books.js
+        {`// api/books.js
 const books = [
   {
     id: 0,
@@ -143,7 +144,9 @@ const books = [
     published: '2013',
     pages: 597
   }
-];`}
+];
+
+// ...`}
       </PrismBlock>
       <p>
         With this data, we can now finish our data fetching functions. Our{" "}
@@ -153,8 +156,8 @@ const books = [
         should resolve with that book object. If the requested book is not
         found, it should reject with an error message.
       </p>
-      <PrismBlock lang="javascript">
-        {`// src/api/books.js
+      <PrismBlock lang="javascript" data-line="6,12-17">
+        {`// api/books.js
 const books = [...];
 
 export function fetchAllBooks() {
@@ -176,22 +179,70 @@ export function fetchBook(id) {
       </PrismBlock>
     </Section>
 
-    <Section title="match" id="match">
+    <Section title="Async" id="async">
       <p>
-        Do you remember before when we said that Curi is an asynchronous router?
-        Now is the time that we finally will see why. We have already added{" "}
-        <IJS>match</IJS> properties to each of our route objects, but{" "}
-        <IJS>match.response</IJS> is a synchronous function.{" "}
-        <IJS>match.every</IJS>, on the other hand, is an asynchronous function.
+        Up until this point, Curi has been acting as a synchronous router. This
+        means that no other code is being run after navigation starts until a
+        new response is ready. However, some of the most interesting uses of
+        Curi are only available when Curi does asynchronous matching.
       </p>
-      <Subsection title="every" id="every">
+      <p>
+        How do we make Curi asynchronous? By adding <IJS>match.initial</IJS> or{" "}
+        <IJS>match.every</IJS>
+        properties to our routes. If even one route has either of these
+        properties, then all routes will be matched asynchronously.
+      </p>
+      <p>
+        We will now be adding <IJS>match.every</IJS> methods to some of the
+        routes, so Curi will now be matching routes asynchronously. First, there
+        is one small change that we have to make to our index file.
+      </p>
+      <Subsection title="Response Handler" id="response-handler">
         <p>
-          <IJS>match.every</IJS> is a function that can perform data loading
-          related to a route prior to emitting a response. The function will be
-          passed route related props (the <IJS>params</IJS> object, the{" "}
-          <IJS>location</IJS>, and the <IJS>name</IJS> of the matched route),
-          which it can use to formulate any API calls. Each time that a route
-          matches, its <IJS>match.every</IJS> function will be called.
+          The problem with being async is that we don't know when the initial
+          response will be ready. What happens if we render before the initial
+          response is ready? We could write our app to know how to handle this,
+          but a better solution is probably to just wait for the initial
+          response. We can do this using a response handler.
+        </p>
+        <p>
+          The Curi router object has a method called <IJS>respond</IJS>. This is
+          used to register observer functions (response handler) that will be
+          called whenever the router creates a new response (either at
+          initialization or after navigation). Most of the time, response
+          handlers are registered for you. However, we will want to run one here
+          ourselves.
+        </p>
+        <p>
+          In order to wait for the initial response before rendering, we just
+          need to call any rendering in a response handler, which gets passed to{" "}
+          <IJS>router.respond</IJS>.
+        </p>
+        <PrismBlock lang="javascript">
+          {`// index.js
+
+// React
+router.respond(() => {
+  ReactDOM.render(...);
+});
+
+// Vue
+router.respond(() => {
+  const vm = new Vue({
+    el: '#root',
+    template: '<app />',
+    components: { app }
+  });
+})`}
+        </PrismBlock>
+      </Subsection>
+      <Subsection title="match.every" id="every">
+        <p>
+          <IJS>match.every</IJS> is a function that will be called every time
+          that a route matches. This makes it a great option for data loading.
+          The function will be passed route related props (the <IJS>params</IJS>{" "}
+          object, the <IJS>location</IJS>, and the <IJS>name</IJS> of the
+          matched route), which it can use to formulate any API calls.
         </p>
 
         <p>
@@ -205,17 +256,17 @@ export function fetchBook(id) {
           >
             <IJS>match.initial</IJS> functions
           </Link>{" "}
-          to resolve before it emits a response. Technically speaking, these
-          functions don't have to return a Promise, but it is recommended.
+          to resolve before it emits a response.
         </p>
         <p>
           We have two routes that we need to load data in: "Book List" and
-          "Book". Let's start by adding <IJS>match.every</IJS> functions to each
-          one, calling their respective API functions that we defined above.
+          "Book". We should add <IJS>match.every</IJS> functions to each one,
+          calling their respective API functions that we defined above.
         </p>
-        <PrismBlock lang="javascript">
-          {`// src/routes.js
+        <PrismBlock lang="javascript" data-line="2,10,19,21">
+          {`// routes.js
 import { fetchAllBooks, fetchBook } from './api/books';
+
 const routes = [
   // ...,
   {
@@ -246,18 +297,33 @@ const routes = [
         </PrismBlock>
         <Note>
           In the above "Book" route, we introduce the <IJS>route.params</IJS>{" "}
-          property. This is an object whose keys are path param names and whose
-          values are functions that will parse the param string to return a new
-          value. For example, the above function takes the input string and
-          returns that string parsed as an integer.
+          property. This is an object whose keys are path <IJS>param</IJS> names
+          and whose values are functions that will parse the param string to
+          return a new value. For example, the above function takes the input
+          string and returns that string parsed as an integer.
         </Note>
       </Subsection>
-      <Subsection title="response" id="response">
+      <Subsection title="match.response" id="response">
         <p>
-          While we have already used <IJS>match.response</IJS>, we have only
-          used the <IJS>set.body</IJS> function so far. If you need to review
-          them, you can view all of the properties passed to the{" "}
-          <IJS>response</IJS> function in the{" "}
+          We want to attach our loaded data to the response so that we can use
+          it when we render.
+        </p>
+        <p>
+          The <IJS>resolved</IJS> object passed to <IJS>match.response</IJS>{" "}
+          contains the values resolved by the route's <IJS>match.initial</IJS>{" "}
+          and <IJS>match.every</IJS> functions. <IJS>set.data</IJS> will attach
+          the data it is given to the response object. We can combine these two
+          to set the response's <IJS>data</IJS> to be the data resolved in{" "}
+          <IJS>match.every</IJS>.
+        </p>
+        <p>
+          It is also possible that someone might request a book that does not
+          exist, to deal with that, we will use the <IJS>error</IJS> property
+          and the <IJS>set.error</IJS> function.
+        </p>
+        <Note>
+          You can view all of the properties passed to the{" "}
+          <IJS>match.response</IJS> function in the{" "}
           <Link
             to="Guide"
             params={{ slug: "routes" }}
@@ -265,48 +331,43 @@ const routes = [
           >
             All About Routes
           </Link>{" "}
-          guide. We want to attach our loaded data to the response, so we will
-          use <IJS>resolved.every</IJS> to access the data from our{" "}
-          <IJS>every</IJS> function and <IJS>set.data</IJS> to attach the data
-          to the response object. It is also possible that someone might request
-          a book that does not exist, to deal with that, we will use the{" "}
-          <IJS>error</IJS> property and the <IJS>set.error</IJS> function.
-        </p>
-        <PrismBlock lang="javascript">
-          {`// src/routes.js
+          guide.
+        </Note>
+        <PrismBlock lang="javascript" data-line="10,12,22,24-28">
+          {`// routes.js
 import { fetchAllBooks, fetchBook } from './api/books';
 const routes = [
-// ...,
-{
-  name: 'Book List',
-  path: 'books',
-  match: {
-    every: () => fetchAllBooks(),
-    response: ({ resolved, set }) => {
-      set.body(BookList);
-      set.data({ books: resolved.every });
-    }
-  },
-  children: [
-    {
-      name: 'Book',
-      path: ':id',
-      params: { id: n => parseInt(n, 10) },
-      match: {
-        every: ({ params }) => fetchBook(params.id),
-        response: ({ error, resolved, set }) => {
-          set.body(Book);
-          if (error) {
-            set.error(error);
-          } else {
-            set.data({ book: resolved.every });
+  // ...,
+  {
+    name: 'Book List',
+    path: 'books',
+    match: {
+      every: () => fetchAllBooks(),
+      response: ({ resolved, set }) => {
+        set.body(BookList);
+        set.data({ books: resolved.every });
+      }
+    },
+    children: [
+      {
+        name: 'Book',
+        path: ':id',
+        params: { id: n => parseInt(n, 10) },
+        match: {
+          every: ({ params }) => fetchBook(params.id),
+          response: ({ error, resolved, set }) => {
+            set.body(Book);
+            if (error) {
+              set.error(error);
+            } else {
+              set.data({ book: resolved.every });
+            }
           }
         }
       }
-    }
-  ]
-}
-// ...
+    ]
+  }
+  // ...
 ];`}
         </PrismBlock>
         <Note>
@@ -318,8 +379,8 @@ const routes = [
         </Note>
       </Subsection>
       <p>
-        Now, when a user visits <IJS>/books</IJS>, the response generated by
-        Curi will look like this:
+        Now, when a user visits the <IJS>/books</IJS> URI, the response
+        generated by Curi will look like this:
       </p>
       <PrismBlock lang="javascript">
         {`{
@@ -347,9 +408,9 @@ const routes = [
     </Section>
     <Section title="Review" id="review">
       <p>If you are following the React path:</p>
-      <CompleteBranch name="07-render-data-react" />
+      <CompleteBranch name="06-render-data-react" />
       <p>If you are following the Vue path:</p>
-      <CompleteBranch name="07-render-data-vue" />
+      <CompleteBranch name="06-render-data-vue" />
     </Section>
     <Section title="Next" id="next">
       <p>
@@ -359,14 +420,14 @@ const routes = [
       </p>
       <p>
         If you are using React, continue with{" "}
-        <Link to="Tutorial" params={{ name: "07-render-data-react" }}>
-          Part 7: Rendering Data with React
+        <Link to="Tutorial" params={{ name: "06-render-data-react" }}>
+          Part 6: Rendering Data with React
         </Link>.
       </p>
       <p>
         If you are using Vue, continue with{" "}
-        <Link to="Tutorial" params={{ name: "07-render-data-vue" }}>
-          Part 7: Rendering Data with Vue
+        <Link to="Tutorial" params={{ name: "06-render-data-vue" }}>
+          Part 6: Rendering Data with Vue
         </Link>.
       </p>
     </Section>

@@ -11,8 +11,7 @@ export default ({ name }) => (
 
     <p>
       You can install the latest version of Curi from NPM. Curi has a peer
-      dependency on the Hickory package, so you should go ahead and install that
-      as well.
+      dependency on the Hickory package, so you should install that as well.
     </p>
     <PrismBlock lang="bash">npm install @hickory/browser @curi/core</PrismBlock>
 

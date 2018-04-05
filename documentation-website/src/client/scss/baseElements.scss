@@ -1,4 +1,9 @@
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: normal;
   margin: 5px 0;
 }
@@ -29,4 +34,20 @@ h5 {
 
 h6 {
   font-size: 1em;
+}
+
+table,
+th,
+td {
+  border: 1px solid $border-gray;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+}
+
+th,
+td {
+  padding: 0 10px;
 }

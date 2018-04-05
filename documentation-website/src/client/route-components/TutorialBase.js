@@ -16,78 +16,56 @@ export default () => (
         store where users will be able to browse through books and "purchase"
         ones that they want.
       </p>
+      <p>
+        There are two versions of this tutorial available. One uses React to
+        render, while the other uses Vue. A lot of the code is shared between
+        the two, so only the sections with framework-specific code are split
+        apart.
+      </p>
       <Note>
         We will only be building the front end. Any time that we would need to
         add back end code for a "real" website, we will just simulate this with
         a fake API.
       </Note>
 
-      <Section title="What is Curi?" id="what">
-        <p>
-          Before we get started, let's quickly define what Curi <em>is</em> and{" "}
-          <em>is not</em>.
-        </p>
-        <ol>
-          <li>
-            Curi is an asynchronous single-page application router. This means:
-            <ol style={{ listStyleType: "upper-roman" }}>
-              <li>
-                You can navigate to pages within your application without
-                sending requests to the server.
-              </li>
-              <li>
-                You can load data (and code) prior to rendering a new page
-                instead of rendering loading screens while you wait for data to
-                be fetched.
-              </li>
-            </ol>
-          </li>
-          <li>
-            Curi is response based. Whenever a user navigates within an
-            application, a <IJS>response</IJS> object will be created to provide
-            data about the route that matched. These are what you will use to
-            render your application.
-          </li>
-          <li>
-            Curi doesn't care how you plan to render your application7; Curi is
-            only concerned with navigation and route matching. There are some
-            official framework packages (e.g. <IJS>@curi/react</IJS> and{" "}
-            <IJS>@curi/vue</IJS>) that provide integration with Curi and those
-            frameworks, but these are helpful, not requirements.
-          </li>
-        </ol>
-      </Section>
-
       <Section title="Prerequisites" id="prereqs">
         <p>
           These tutorials aim to be quite easy to pick up without a lot of prior
-          knowledge required. However, there are a couple things you should keep
-          in mind.
+          knowledge. However, there are a few things that you should be familiar
+          with.
         </p>
         <ol>
           <li>
-            You should be familiar with JavaScript. We will be using ES6+ syntax
-            (module <IJS>import</IJS>/<IJS>export</IJS>, arrow functions,
-            Promises, etc.). You don't have to be a JavaScript master, but it
-            still helps to be familiar with ES6.
+            JavaScript - We will be using ES6+ syntax (module <IJS>import</IJS>/<IJS
+            >
+              export
+            </IJS>, arrow functions, Promises, etc.). You don't have to be a
+            JavaScript master, but it still helps to be familiar with ES6.
           </li>
           <li>
-            If you plan to follow along locally, you need to have Node/NPM
-            installed.
+            Node/NPM - If you plan to follow along locally, you will need to
+            have Node and NPM (or Yarn if you prefer) installed.
           </li>
           <li>
-            Again, if you plan to follow along locally, you should be
-            comfortable with basic terminal (command line) usage. Nothing crazy,
-            just commands like <IJS>cd</IJS>, <IJS>touch</IJS>, <IJS>mkdir</IJS>{" "}
-            and running <IJS>npm</IJS> commands.
+            Basic terminal commands - We won't do anything crazy and the
+            tutorial will always tell you what you need to run, but you should
+            be comfortable moving around and making files/directories (with{" "}
+            <IJS>cd</IJS>, <IJS>touch</IJS>, <IJS>mkdir</IJS>) as well as
+            running <IJS>npm</IJS> commands.
           </li>
           <li>
-            You should be familiar with either React or Vue. These aren't the
-            only frameworks that you can use with Curi, but they <em>are</em>{" "}
-            the only ones that this tutorial is (currently) written for.
+            React or Vue - These aren't the only frameworks that you can use
+            with Curi, but they <em>are</em> the only ones that this tutorial is
+            (currently) written for.
           </li>
         </ol>
       </Section>
+      <p>
+        Let's dive in with{" "}
+        <Link to="Tutorial" params={{ name: "01-setup" }}>
+          Part One
+        </Link>, where we will setup our project.
+      </p>
     </div>
 
     <div className="sidebar">

@@ -35,7 +35,7 @@ export default ({ name }) => (
       <Note>
         One thing to remember when attaching multiple components to a route is
         that all of your routes should have the same root structure. Otherwise,
-        you will have to adapt your render function to deal with different{" "}
+        when you render you will have to adapt your code to deal with different{" "}
         <IJS>response.body</IJS> layouts.
       </Note>
       <PrismBlock lang="javascript">

@@ -344,19 +344,6 @@ const router = curi(history, routes);`}
 
     <Section title="Rendering" id="rendering">
       <p>
-        At this point, our Curi router isn’t actually quite ready to render.
-        Curi creates response objects asynchronously, so if we render right
-        away, we might not have a response object to render with. We can work
-        around this by rendering nothing (<IJS>null</IJS>) at first, but instead
-        we should usually just wait for our initial response to be ready.
-      </p>
-      <PrismBlock lang="javascript">
-        {`router.respond(({ response }) => {
-  // now our first response has resolved, so we
-  // know that we will render with an actual response
-});`}
-      </PrismBlock>
-      <p>
         We will walk through the rendering differences between React Router and
         Curi by looking at what happens in each when we navigate to the URI{" "}
         <IJS>/inbox/test-message-please-ignore</IJS>.
@@ -413,8 +400,8 @@ const router = curi(history, routes);`}
           the new <IJS>response</IJS> and <IJS>navigation</IJS> (alongside the{" "}
           <IJS>router</IJS> object) on React's <IJS>context</IJS> so that child
           components will be able to access those values.{" "}
-          <Cmp>CuriProvider</Cmp> also expects a render function as its{" "}
-          <IJS>children</IJS> prop.
+          <Cmp>CuriProvider</Cmp> also expects a <IJS>children</IJS> function as
+          its <IJS>children</IJS> prop.
         </p>
         <p>
           We will also use <IJS>router.respond</IJS> to wait for the initial
@@ -430,19 +417,20 @@ const router = curi(history, routes);`}
 });`}
         </PrismBlock>
         <p>
-          So what should your render function look like? The render function
-          will receive an object with three properties: <IJS>response</IJS>, the
-          new response object, <IJS>navigation</IJS>, an object with additional
-          information about the navigation, and <IJS>router</IJS>, your Curi
-          router. We will ignore the <IJS>navigation</IJS> and <IJS>router</IJS>{" "}
-          here because the <IJS>response</IJS> is what we really want.
+          So what should your <IJS>children</IJS> function look like? The{" "}
+          <IJS>children</IJS> function will receive an object with three
+          properties: <IJS>response</IJS>, the new response object,{" "}
+          <IJS>navigation</IJS>, an object with additional information about the
+          navigation, and <IJS>router</IJS>, your Curi router. We will ignore
+          the <IJS>navigation</IJS> and <IJS>router</IJS> here because the{" "}
+          <IJS>response</IJS> is what we really want.
         </p>
         <p>
           Earlier, we added <IJS>body</IJS> properties to each of the routes and
           said that when a route matches, that function would be called and its
           return value would be attached to the response. That means, that
-          inside of our render function, we can access the matched route’s
-          component as <IJS>response.body</IJS>.
+          inside of our <IJS>children</IJS> function, we can access the matched
+          route’s component as <IJS>response.body</IJS>.
         </p>
         <PrismBlock lang="jsx">
           {`function render({ response }) {
@@ -481,10 +469,11 @@ const router = curi(history, routes);`}
           header or menu.
         </p>
         <p>
-          Rendering the <Cmp>App</Cmp> inside of the render function is
-          necessary if any of the components rendered by the <Cmp>App</Cmp> are
-          location aware components, since they need to access the Curi router
-          (through React’s context, which the <Cmp>CuriProvider</Cmp> provides)
+          Rendering the <Cmp>App</Cmp> inside of the <IJS>children</IJS>{" "}
+          function is necessary if any of the components rendered by the{" "}
+          <Cmp>App</Cmp> are location aware components, since they need to
+          access the Curi router (through React’s context, which the{" "}
+          <Cmp>CuriProvider</Cmp> provides)
         </p>
         <PrismBlock lang="jsx">
           {`function render({ response }) {

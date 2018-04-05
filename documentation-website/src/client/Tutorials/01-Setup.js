@@ -51,7 +51,7 @@ cd curi-bookstore`}
         <IJS>@hickory/browser</IJS>, which we'll cover later on.
       </p>
       <PrismBlock lang="bash">
-        {`npm init
+        {`npm init -f # -f will force default values
 npm install @curi/core @hickory/browser`}
       </PrismBlock>
     </Section>
@@ -63,9 +63,8 @@ npm install @curi/core @hickory/browser`}
       </p>
       <PrismBlock lang="bash">
         {`mkdir src
-touch src/index.js src/routes.js
 mkdir -p public/js
-touch public/index.html`}
+touch src/index.js src/routes.js public/index.html`}
       </PrismBlock>
       <p>
         The above commands will leave us with the following project structure:
@@ -97,7 +96,7 @@ touch public/index.html`}
         up a server. This allows us to have live reloading in development.
       </p>
       <PrismBlock lang="bash">
-        {`touch .babelrc.js webpack.router.js
+        {`touch .babelrc.js webpack.config.js
 npm install -D webpack webpack-dev-server @babel/core
   @babel/preset-env babel-loader@next`}
       </PrismBlock>
@@ -112,10 +111,10 @@ module.exports = {
 };`}
       </PrismBlock>
       <PrismBlock lang="javascript">
-        {`// webpack.router.js
+        {`// webpack.config.js
 const path = require('path');
 
-const router = {
+const config = {
   context: path.resolve(__dirname, 'src'),
   entry: './index.js',
   output: {
@@ -134,9 +133,9 @@ const router = {
     contentBase: path.resolve(__dirname, 'public'),
     historyApiFallback: true
   }
-}
+};
 
-module.exports = router;`}
+module.exports = config;`}
       </PrismBlock>
       <p>
         We also need to create the <IJS>index.html</IJS> file. This just needs
@@ -145,8 +144,8 @@ module.exports = router;`}
         code below into your <IJS>public/index.html</IJS> file.
       </p>
       <PrismBlock lang="html">
-        {`// public/index.html
-           <!doctype html>
+        {`<!--public/index.html-->
+<!doctype html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -171,7 +170,7 @@ module.exports = router;`}
 }`}
       </PrismBlock>
       <Note>
-        If you're building this from scratch, you should also add a{" "}
+        If you're building this from scratch, you will probably want to add a{" "}
         <IJS>.gitignore</IJS> file and ignore the <IJS>node_modules/</IJS>{" "}
         directory.
       </Note>

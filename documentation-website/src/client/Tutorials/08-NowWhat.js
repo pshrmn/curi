@@ -12,7 +12,7 @@ import { Section, Subsection } from "../components/Sections";
 
 export default () => (
   <BaseTutorial>
-    <h1>Part 10: Now What?</h1>
+    <h1>Part 8: Now What?</h1>
     <p>
       This is the end. You have completed all of the parts of the tutorial and
       have built a website powered by Curi. It isn't a complete site, but it

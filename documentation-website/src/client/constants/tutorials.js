@@ -8,35 +8,31 @@ const tutorials = [
     displayName: "Part 2: Curi Routes"
   },
   {
-    name: "03-hickory",
-    displayName: "Part 3: Hickory"
+    name: "03-router",
+    displayName: "Part 3: The Curi Router"
   },
   {
-    name: "04-router",
-    displayName: "Part 4: The Curi router"
-  },
-  {
-    name: "05-pages",
-    displayName: "Part 5: Rendering Pages",
+    name: "04-pages",
+    displayName: "Part 4: Rendering Pages",
     frameworks: ["react", "vue"]
   },
   {
-    name: "06-loading-data",
-    displayName: "Part 6: Loading Data"
+    name: "05-loading-data",
+    displayName: "Part 5: Loading Data"
   },
   {
-    name: "07-render-data",
-    displayName: "Part 7: Rendering Data",
+    name: "06-render-data",
+    displayName: "Part 6: Rendering Data",
     frameworks: ["react", "vue"]
   },
   {
-    name: "08-nav",
-    displayName: "Part 8: Forms & Programmatic Navigation",
+    name: "07-nav",
+    displayName: "Part 7: Forms & Programmatic Navigation",
     frameworks: ["react", "vue"]
   },
   {
-    name: "09-now-what",
-    displayName: "Part 9: Now What?"
+    name: "08-now-what",
+    displayName: "Part 8: Now What?"
   }
 ];
 

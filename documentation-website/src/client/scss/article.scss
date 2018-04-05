@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 .sidebar {
   ul {
@@ -23,9 +23,10 @@
     font-weight: bold;
   }
 
-  @import './list.scss';
+  @import "./list.scss";
 }
-.section, .subsection {
+.section,
+.subsection {
   margin-top: 15px;
 
   .header-link {
@@ -37,8 +38,8 @@
 
 .aside {
   padding: 5px 10px;
-  border-left: 2px solid $border-gray;
-  background: $light-gray;
+  border-left: 2px solid $border-green;
+  background: $light-green;
   margin-top: 15px;
 
   .header-link {
@@ -51,7 +52,6 @@
 .tutorial {
   .link-list {
     li {
-
       &.solo {
         border-bottom: 1px solid $light-gray;
       }
@@ -69,19 +69,38 @@
   .tutorial-branch {
     background: $light-orange;
     border: 1px solid $bright-orange;
-    padding: 5px;
+    padding: 10px;
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      margin: 0;
+    }
   }
 
   .tutorial-outline {
     border: 1px solid $border-blue;
-    padding: 5px;
+    padding: 10px;
     margin: 5px 0;
     background: $light-blue;
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      margin: 0;
+    }
   }
 }
 
 @media only screen and (min-width: $largeScreen) {
-  .guide, .package, .example, .tutorial {
+  .guide,
+  .package,
+  .example,
+  .tutorial {
     padding-top: 15px;
     display: flex;
     flex-flow: row-nowrap;

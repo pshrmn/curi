@@ -74,7 +74,7 @@ export default ({ name, version, globalName }) => (
 
           <Subsection tag="h4" title="children" id="CuriProvider-render">
             <p>
-              A render function. This will be called whenever the{" "}
+              A function that will be called whenever the{" "}
               <Cmp>CuriProvider</Cmp> renders. The function will be passed an
               object with three properties: <IJS>response</IJS>,{" "}
               <IJS>navigation</IJS>, and <IJS>router</IJS>. The function must
@@ -240,8 +240,8 @@ export default ({ name, version, globalName }) => (
 
       <Section title={<Cmp>Curious</Cmp>} id="Curious">
         <p>
-          A component whose <IJS>children</IJS> is a render function that will
-          be passed <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
+          A component whose <IJS>children</IJS> is a function that will be
+          passed <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
           <IJS>navigation</IJS> props.
         </p>
         <PrismBlock lang="javascript">
