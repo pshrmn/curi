@@ -23,7 +23,7 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.27",
+    "@curi/core": "^1.0.0-beta.28",
     "@curi/react": "^1.0.0-beta.20",
     "@hickory/browser": "^1.0.0-beta.5",
     "qs": "^6.4.0",

@@ -47,6 +47,4 @@ function render({ response }) {
   return h("div", null, h(Nav), h(Body));
 }
 
-router.respond(({ router }) => {
-  ReactDOM.render(h(CuriReact.CuriProvider, { router: router }, render), root);
-});
+ReactDOM.render(h(CuriReact.CuriProvider, { router: router }, render), root);

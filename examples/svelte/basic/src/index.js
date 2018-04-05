@@ -12,9 +12,6 @@ const store = new Store({
   curi: { response: undefined, navigation: undefined }
 });
 
-let view;
-const target = document.getElementById("root");
-
 router.respond(
   ({ response, navigation }) => {
     store.set({ curi: { response, navigation } });
@@ -22,6 +19,5 @@ router.respond(
   { observe: true }
 );
 
-router.respond(() => {
-  view = new app({ target, store });
-});
+const target = document.getElementById("root");
+const view = new app({ target, store });

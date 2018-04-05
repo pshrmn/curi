@@ -4,8 +4,9 @@ import Browser from "@hickory/browser";
 import curi from "@curi/core";
 import { CuriProvider } from "@curi/react";
 import createAncestorsAddon from "@curi/addon-ancestors";
+
 import routes from "./routes";
-import renderFunction from "./renderFunction";
+import NavLinks from "./components/NavLinks";
 
 /*
  * A simple addon that will enable adding a dynamic title
@@ -39,9 +40,12 @@ const router = curi(history, routes, {
 });
 const root = document.getElementById("root");
 
-router.respond(() => {
-  ReactDOM.render(
-    <CuriProvider router={router}>{renderFunction}</CuriProvider>,
-    root
-  );
-});
+ReactDOM.render(
+  <CuriProvider router={router}>
+    {({ response, router }) => {
+      const { body: Body, data } = response;
+      return <Body response={response} router={router} />;
+    }}
+  </CuriProvider>,
+  document.getElementById("root")
+);

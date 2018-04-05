@@ -1,9 +1,12 @@
-import Browser from "@hickory/browser";
+import React from "react";
+import ReactDOM from "react-dom";
 import curi from "@curi/core";
+import Browser from "@hickory/browser";
 import { parse, stringify } from "qs";
+import { CuriProvider } from "@curi/react";
 
+import NavLinks from "./components/NavLinks";
 import routes from "./routes";
-import renderApp from "./render";
 
 const history = Browser({
   query: { parse, stringify }
@@ -11,4 +14,18 @@ const history = Browser({
 const router = curi(history, routes, {
   emitRedirects: false
 });
-router.respond(renderApp);
+
+ReactDOM.render(
+  <CuriProvider router={router}>
+    {({ response, router }) => {
+      const { body: Body, location, params } = response;
+      return (
+        <div>
+          <NavLinks />
+          <Body params={params} history={router.history} location={location} />
+        </div>
+      );
+    }}
+  </CuriProvider>,
+  document.getElementById("root")
+);

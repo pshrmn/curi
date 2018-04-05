@@ -1,13 +1,33 @@
-import Browser from "@hickory/browser";
+import React from "react";
+import ReactDOM from "react-dom";
 import curi from "@curi/core";
+import Browser from "@hickory/browser";
+import { Provider } from "react-redux";
+import { CuriProvider } from "@curi/react";
 import { syncResponses } from "@curi/redux";
 
-import store from "./reduxStuff";
 import routes from "./routes";
-import renderApp from "./render";
+import store from "./reduxStuff";
+import NavLinks from "./components/NavLinks";
 
 const history = Browser();
 const router = curi(history, routes);
 
 syncResponses(store, router);
-router.respond(renderApp);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <CuriProvider router={router}>
+      {({ response }) => {
+        const { params, body: Body } = response;
+        return (
+          <div>
+            <NavLinks />
+            <Body params={params} />
+          </div>
+        );
+      }}
+    </CuriProvider>
+  </Provider>,
+  document.getElementById("root")
+);

@@ -12,12 +12,11 @@ const history = Browser();
 const router = curi(history, routes, {
   addons: [createActiveAddon()]
 });
+
 Vue.use(CuriPlugin, { router });
 
-router.respond(() => {
-  const vm = new Vue({
-    el: "#root",
-    template: "<app />",
-    components: { app: App }
-  });
+const vm = new Vue({
+  el: "#root",
+  template: "<app />",
+  components: { app: App }
 });

@@ -1,9 +1,30 @@
-import Browser from "@hickory/browser";
+import React from "react";
+import ReactDOM from "react-dom";
 import curi from "@curi/core";
+import Browser from "@hickory/browser";
+import { CuriProvider } from "@curi/react";
 
 import routes from "./routes";
-import renderApp from "./render";
+import Display from "./components/Display";
+import NavLinks from "./components/NavLinks";
 
 const history = Browser();
 const router = curi(history, routes);
-router.respond(renderApp);
+
+ReactDOM.render(
+  <CuriProvider router={router}>
+    {({ response, navigation }) => {
+      return (
+        <div>
+          <NavLinks />
+          <Display
+            response={response}
+            navigation={navigation}
+            render={response => <response.body response={response} />}
+          />
+        </div>
+      );
+    }}
+  </CuriProvider>,
+  document.getElementById("root")
+);
