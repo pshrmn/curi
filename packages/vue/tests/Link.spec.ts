@@ -38,6 +38,22 @@ describe("Link component", () => {
       expect(wrapper.attributes().href).toBe("/place/Jamaica");
     });
 
+    it('re-uses current pathname if "to" prop is not provided', () => {
+      const Vue = createLocalVue();
+      const history = InMemory({
+        locations: ["/place/somewhere"]
+      });
+      const router = curi(history, routes);
+      Vue.use(CuriPlugin, { router });
+      const wrapper = shallow(Link, {
+        localVue: Vue,
+        propsData: {
+          text: "somewhere"
+        }
+      });
+      expect(wrapper.attributes().href).toBe("/place/somewhere");
+    });
+
     it("sets the slots as the link's text", () => {
       const wrapper = shallow(Link, {
         localVue: Vue,
