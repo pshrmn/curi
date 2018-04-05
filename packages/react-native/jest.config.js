@@ -15,6 +15,5 @@ module.exports = {
   moduleNameMapper: {
     "^React$": "<rootDir>/../../node_modules/react"
   },
-  mapCoverage: true,
   collectCoverageFrom: ["src/*.tsx"]
 };
