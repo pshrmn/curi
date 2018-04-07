@@ -13,7 +13,7 @@ import { Section, Subsection } from "../components/Sections";
 
 export default () => (
   <BaseTutorial>
-    <h1>React Basics Tutorial</h1>
+    <h1>Vue Basics Tutorial</h1>
     <p>
       In this tutorial, we will be building a website for a bookstore. This will
       focus on the front-end part of the application.
@@ -22,7 +22,7 @@ export default () => (
       <ul>
         <li>Learn how to define routes and setup the Curi router.</li>
         <li>
-          Learn how to render React components based on the current location.
+          Learn how to render Vue components based on the current location.
         </li>
         <li>Learn how to navigate within the application.</li>
       </ul>
@@ -30,8 +30,8 @@ export default () => (
     <Section title="Setup" id="setup">
       <p>
         We will be using{" "}
-        <a href="https://github.com/facebook/create-react-app">
-          <IJS>create-react-app</IJS>
+        <a href="https://vuejs.org/v2/guide/installation.html#CLI">
+          <IJS>vue-cli</IJS>
         </a>{" "}
         to develop this website.
       </p>
@@ -44,31 +44,38 @@ export default () => (
       </Note>
       <p>
         Begin by opening a terminal and navigating to the directory where you
-        want to save your code. Then, we will use <IJS>npx</IJS> to create the
-        application.
+        want to save your code. Then, we will use <IJS>@vue/cli</IJS> to create
+        the application. We
       </p>
       <PrismBlock lang="bash">
-        {`npx create-react-app curi-bookstore # create the app
-cd curi-bookstore # enter the new app directory
-yarn start # start the dev server`}
+        {`# install vue-cli if it isn't already
+npm install --global @vue/cli
+# create the application
+vue create curi-bookstore
+# select the default option
+
+# enter the new app directory
+cd curi-bookstore
+# start the dev server
+yarn serve`}
       </PrismBlock>
       <p>
-        <IJS>create-react-app</IJS>'s dev server will automatically update when
-        we change files, so we can leave that running. We will still be working
-        in the terminal, so you will want to open up a new terminal window/tab
-        and navigate to the application's directory. Once you have done that,
-        there are a few packages that need to be installed.
+        The dev server will automatically update when we change files, so we can
+        leave that running. We will still be working in the terminal, so you
+        will want to open up a new terminal window/tab and navigate to the
+        application's directory. Once you have done that, there are a few
+        packages that need to be installed.
       </p>
       <PrismBlock lang="bash">
-        {`yarn add @hickory/browser @curi/core @curi/react`}
+        {`yarn add @hickory/browser @curi/core @curi/vue`}
       </PrismBlock>
       <p>
         The <IJS>@hickory/browser</IJS> package will be used to create an object
         that interacts with the browser to power navigation (e.g. updates the
         URI in the address bar when you click a link). <IJS>@curi/core</IJS>{" "}
         provides the function to actually create the router.{" "}
-        <IJS>@curi/react</IJS> gives us some React components that interact with
-        the router.
+        <IJS>@curi/vue</IJS> gives us a plugin for Vue and some Vue components
+        that interact with the router.
       </p>
     </Section>
     <Section title="History and Locations" id="history">
@@ -108,9 +115,9 @@ yarn start # start the dev server`}
       </p>
       <p>
         We can import the <IJS>Browser</IJS> function from{" "}
-        <IJS>@hickory/browser</IJS> in our index file (<IJS>src/index.js</IJS>,
-        which <IJS>create-react-app</IJS> created for us). To create a history
-        object, we just need to call that function.
+        <IJS>@hickory/browser</IJS> in our main file (<IJS>src/main.js</IJS>,
+        which <IJS>@vue/cli</IJS> created for us). To create a history object,
+        we just need to call that function.
       </p>
       <Note>
         The history object can be configured with{" "}
@@ -118,21 +125,26 @@ yarn start # start the dev server`}
           an options object
         </a>, but we will stick with the defaults.
       </Note>
-      <PrismBlock lang="jsx" data-line="4,10">
-        {`// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Browser from '@hickory/browser';
+      <PrismBlock lang="javascript" data-line="3,9">
+        {`// src/main.js
+import Vue from 'vue'
+import Browser from '@hickory/browser'
 
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import App from './App.vue'
 
-const history = Browser();
+Vue.config.productionTip = false
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();`}
+const history = Browser()
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app')`}
       </PrismBlock>
+      <Note>
+        Eslint will complain here because we haven't actually used the new{" "}
+        <IJS>history</IJS> object. We can just ignore that warning for now
+        because we'll get rid of it soon enough.
+      </Note>
     </Section>
     <Section title="Defining the Routes" id="defining-routes">
       <p>
@@ -274,54 +286,64 @@ export default [
         import the <IJS>curi</IJS> function from <IJS>@curi/core</IJS> as well
         as our routes from <IJS>src/routes.js</IJS>
       </p>
-      <PrismBlock lang="jsx" data-line="4,8,13">
-        {`// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
+      <PrismBlock lang="javascript" data-line="3,6,12">
+        {`// src/main.js
+import Vue from 'vue'
 import curi from '@curi/core';
-import Browser from '@hickory/browser';
+import Browser from '@hickory/browser'
 
-import './index.css';
 import routes from './routes';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import App from './App.vue'
 
-const history = Browser();
-const router = curi(history, routes);
+Vue.config.productionTip = false
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();`}
+const history = Browser()
+const router = curi(history, routes)
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app')`}
+      </PrismBlock>
+      <Note>
+        The Eslint warning has now moved to the <IJS>router</IJS>, but this is
+        still nothing to worry about.
+      </Note>
+      <p>
+        We will add router support to the Vue application using a plugin. This
+        plugin does a couple of things. First, it makes some Curi components
+        available within the application. The only one of these components that
+        we will be using is the <Cmp>curi-link</Cmp>. Second, it makes router
+        related values accessible to the components in the application. The
+        router is available as <IJS>this.$router</IJS> and the{" "}
+        <IJS>response</IJS> and <IJS>navigation</IJS> (we will cover these next)
+        are grouped under <IJS>this.$curi</IJS>. When the <IJS>CuriPlugin</IJS>{" "}
+        is installed, the <IJS>router</IJS> as passed in the options object.
+      </p>
+      <PrismBlock lang="javascript" data-line="5,14">
+        {`// src/main.js
+import Vue from 'vue'
+import curi from '@curi/core';
+import Browser from '@hickory/browser'
+import { CuriPlugin } from '@curi/vue'
+
+import routes from './routes';
+import App from './App.vue'
+
+Vue.config.productionTip = false
+
+const history = Browser()
+const router = curi(history, routes)
+Vue.use(CuriPlugin, { router })
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app')`}
       </PrismBlock>
     </Section>
-    <Section title="Rendering with React" id="rendering">
+    <Section title="Rendering with Vue" id="rendering">
       <p>
-        We can now render our application. To do this, we will use the{" "}
-        <Cmp>CuriProvider</Cmp> component from the <IJS>@curi/react</IJS>{" "}
-        package. This component does two things:
-      </p>
-      <ol>
-        <li>
-          It places router-related values on the context for other{" "}
-          <IJS>@curi/react</IJS> components
-        </li>
-        <li>It re-renders the application whenever the location changes.</li>
-      </ol>
-      <p>
-        The <Cmp>CuriProvider</Cmp> takes two props. The first is{" "}
-        <IJS>router</IJS>, which is the router we created above. The second is a
-        children function, passed as the children of the <Cmp>CuriProvider</Cmp>.
-        This function will receive an object that has three properties:{" "}
-        <IJS>router</IJS>, <IJS>response</IJS>, and <IJS>navigation</IJS>.
-      </p>
-      <PrismBlock lang="jsx">
-        {`<CuriProvider router={router}>
-  {({ router, response, navigation }) => {
-    return <div>This is the website</div>;
-  }}
-</CuriProvider>`}
-      </PrismBlock>
-      <p>
-        The <IJS>router</IJS> is our Curi router, but what are the other two?
+        We can now render our application. We will re-use the provide{" "}
+        <IJS>App.vue</IJS> file.
       </p>
       <Subsection title="Responses and Navigation" id="responses" type="aside">
         <p>
@@ -347,16 +369,16 @@ registerServiceWorker();`}
         </PrismBlock>
         <p>
           The router uses an observer model to let functions subscribe to be
-          called when a new response is generated. The <Cmp>CuriProvider</Cmp>{" "}
-          observes the router so that it can re-render the application whenever
-          there is a new one.
+          called when a new response is generated. The <IJS>CuriPlugin</IJS>{" "}
+          sets up an observer so that it can trigger a re-render whenever there
+          is a new one.
         </p>
         <p>
           The <IJS>navigation</IJS> object contains additional information about
           a navigation that doesn't make sense to include in the response
           object. This includes the navigation's "action" (<IJS>PUSH</IJS>,{" "}
           <IJS>POP</IJS>, or <IJS>REPLACE</IJS>) and the previous response
-          object.
+          object. This can be useful for animation and modals.
         </p>
       </Subsection>
       <p>
@@ -396,47 +418,40 @@ registerServiceWorker();`}
 }`}
       </PrismBlock>
       <p>
-        If we pass React components to <IJS>set.body()</IJS>, we can render
-        those in the <Cmp>CuriProvider</Cmp>'s children function. We haven't
-        actually defined components for our routes yet, so we should throw
-        together some placeholders.
+        If we pass Vue components to <IJS>set.body()</IJS>, we can render those
+        using <Cmp>Component :is</Cmp>.
+      </p>
+      <p>
+        We haven't actually defined components for our routes yet, so we should
+        throw together some placeholders.
       </p>
       <PrismBlock lang="bash">
-        {`mkdir -p src/components
-touch src/components/Home.js src/components/Book.js \\
-  src/components/Checkout.js src/components/NotFound.js`}
+        {`touch src/components/Home.vue src/components/Book.vue \\
+  src/components/Checkout.vue src/components/NotFound.vue`}
       </PrismBlock>
-      <PrismBlock lang="jsx">
-        {`// src/components/Home.js
-import React from 'react';
-
-export default () => (
+      <PrismBlock lang="html">
+        {`<!-- src/components/Home.vue -->
+<template>
   <div>Home</div>
-);`}
+</template>`}
       </PrismBlock>
-      <PrismBlock lang="jsx">
-        {`// src/components/Book.js
-import React from 'react';
-
-export default () => (
+      <PrismBlock lang="html">
+        {`<!-- src/components/Book.vue -->
+<template>
   <div>Book</div>
-);`}
+</template>`}
       </PrismBlock>
-      <PrismBlock lang="jsx">
-        {`// src/components/Checkout.js
-import React from 'react';
-
-export default () => (
+      <PrismBlock lang="html">
+        {`<!-- src/components/Checkout.vue -->
+<template>
   <div>Checkout</div>
-);`}
+</template>`}
       </PrismBlock>
-      <PrismBlock lang="jsx">
-        {`// src/components/NotFound.js
-import React from 'react';
-
-export default () => (
+      <PrismBlock lang="html">
+        {`<!-- src/components/NotFound.vue -->
+<template>
   <div>Not Found</div>
-);`}
+</template>`}
       </PrismBlock>
       <p>
         These components can be imported in <IJS>src/routes.js</IJS> and
@@ -489,46 +504,22 @@ export default [
 ];`}
       </PrismBlock>
       <p>
-        We can now render the <Cmp>CuriProvider</Cmp> in our index file and use{" "}
-        <IJS>response.body</IJS> to render the proper component for the matched
-        route. We will also pass the <IJS>response</IJS> as a prop to the
-        rendered component. This will be useful soon.
+        We can now update <IJS>App.vue</IJS> to render <IJS>response.body</IJS>{" "}
+        as a component, which as mentioned above is available through{" "}
+        <IJS>this.$curi</IJS>.
       </p>
 
-      <PrismBlock lang="jsx" data-line="6,15-24">
-        {`// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import curi from '@curi/core';
-import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react';
-
-import './index.css';
-import routes from './routes';
-import registerServiceWorker from './registerServiceWorker';
-
-const history = Browser();
-const router = curi(history, routes);
-
-ReactDOM.render((
-  <CuriProvider router={router}>
-    {({ response }) => {
-      const { body:Body } = response;
-      return (
-        <Body response={response} />
-      );
-    }}
-  </CuriProvider>
-), document.getElementById('root'));
-registerServiceWorker();`}
+      <PrismBlock lang="html">
+        {`<!-- src/App.vue -->
+<template>
+  <component :is="$curi.response.body" />
+</template>
+`}
       </PrismBlock>
       <p>
-        We can also remove the <Cmp>App</Cmp> component import and delete the
-        related files.
+        We can also remove the <Cmp>HelloWorld</Cmp> component.
       </p>
-      <PrismBlock lang="bash">
-        {`rm src/App.js src/App.css src/App.test.js`}
-      </PrismBlock>
+      <PrismBlock lang="bash">{`rm src/components/HelloWorld.vue`}</PrismBlock>
       <p>
         At this point in time our app is rendering, but is isn't very
         interesting because we cannot navigate between locations.
@@ -536,13 +527,14 @@ registerServiceWorker();`}
     </Section>
     <Section title="Navigating between locations" id="navigating">
       <p>
-        The <IJS>@curi/react</IJS> package provides a <Cmp>Link</Cmp> component
-        that we can use to navigate between locations within our application.
+        The <IJS>CuriPlugin</IJS> makes a <Cmp>curi-link</Cmp> component
+        available with the appliaction. We can use that to navigate between
+        locations within our application.
       </p>
       <Subsection
         title={
           <span>
-            The <Cmp>Link</Cmp> Component
+            The <Cmp>curi-link</Cmp> Component
           </span>
         }
         id="link-component"
@@ -553,40 +545,40 @@ registerServiceWorker();`}
           the link should navigate to. Instead, we specify the name of the route
           using the <IJS>to</IJS> prop.
         </p>
-        <PrismBlock lang="jsx">
-          {`// { name: "Home", path: "" }
-<Link to="Home">Home</Link>
-// <a href="/">Home</a>`}
+        <PrismBlock lang="html">
+          {`<!-- { name: "Home", path: "" } -->
+<curi-link to="Home">Home</curi-link>
+<!-- <a href="/">Home</a> -->`}
         </PrismBlock>
         <p>
-          If a route has params, we provide these to the <Cmp>Link</Cmp> as a{" "}
-          <IJS>params</IJS> object. For a nested route, we would also need to
+          If a route has params, we provide these to the <Cmp>curi-link</Cmp> as
+          a <IJS>params</IJS> object. For a nested route, we would also need to
           provide params for any ancestor routes.
         </p>
-        <PrismBlock lang="jsx">
-          {`// { name: "Book", path: "book/:id" }
-<Link to="Book" params={{ id: 7 }}>The Dark Forest</Link>
-// <a href="/book/7">The Dark Forest</a>`}
+        <PrismBlock lang="html">
+          {`<!-- { name: "Book", path: "book/:id" } -->
+<curi-link to="Book" :params="{ id: 7 }">The Dark Forest</curi-link>
+<!-- <a href="/book/7">The Dark Forest</a> -->`}
         </PrismBlock>
         <p>
-          The <Cmp>Link</Cmp> is only for in-app navigation. If you want to link
-          to pages outside of the application, use an anchor.
+          The <Cmp>curi-link</Cmp> is only for in-app navigation. If you want to
+          link to pages outside of the application, use an anchor.
         </p>
-        <PrismBlock lang="jsx">
-          {`// in-app
-<Link to="Some Route">Some Route</Link>
+        <PrismBlock lang="html">
+          {`<!-- in-app -->
+<curi-link to="Some Route">Some Route</curi-link>
 
-// out of app
+<!-- out of app -->
 <a href="https://github.com">GitHub</a>`}
         </PrismBlock>
         <p>
-          If you need to attach query or hash data to a <Cmp>Link</Cmp>, use the{" "}
-          <IJS>details</IJS> prop.
+          If you need to attach query or hash data to a <Cmp>curi-link</Cmp>,
+          use the <IJS>details</IJS> prop.
         </p>
-        <PrismBlock lang="jsx">
-          {`// { name: "Checkout", path: "checkout" }
-<Link to="Checkout" details={{ query: 'affiliate=123' }}>Checkout</Link>
-// <a href="/checkout?affiliate=123">Checkout</a>`}
+        <PrismBlock lang="html">
+          {`<!-- { name: "Checkout", path: "checkout" } -->
+<curi-link to="Checkout" :details="{ query: 'a=123' }">Checkout</curi-link>
+<!-- <a href="/checkout?a=123">Checkout</a> -->`}
         </PrismBlock>
       </Subsection>
       <Subsection title="A Navigation Menu" id="nav-menu">
@@ -594,65 +586,50 @@ registerServiceWorker();`}
           We will start with creating a navigation menu component with links to
           our home page and checkout page.
         </p>
-        <PrismBlock lang="bash">{`touch src/components/NavMenu.js`}</PrismBlock>
-        <PrismBlock lang="jsx">
-          {`// src/components/NavMenu.js
-import React from 'react';
-import { Link } from '@curi/react';
-
-export default () => (
+        <PrismBlock lang="bash">{`touch src/components/NavMenu.vue`}</PrismBlock>
+        <PrismBlock lang="html">
+          {`<!-- src/components/NavMenu.vue -->
+<template>
   <nav>
     <ul>
       <li>
-        <Link to="Home">Home</Link>
+        <curi-link to="Home">Home</curi-link>
       </li>
       <li>
-        <Link to="Checkout">Checkout</Link>
+        <curi-link to="Checkout">Checkout</curi-link>
       </li>
     </ul>
   </nav>
-);`}
+</template>`}
         </PrismBlock>
         <p>
-          We can import that in our index file and add it to our{" "}
-          <IJS>children</IJS> function. This is a good opportunity to also add
-          some structure to the elements returned by the <IJS>children</IJS>{" "}
-          function.
+          We can import that in our <IJS>App.vue</IJS> file and add it to our
+          template. This is a good opportunity to also add some structure to the
+          elements in the template.
         </p>
-        <PrismBlock lang="jsx" data-line="10,21-28">
-          {`// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import curi from '@curi/core';
-import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react';
+        <PrismBlock lang="html">
+          {`<!-- src/App.vue -->
+<template>
+  <div>
+    <header>
+      <nav-menu />
+    </header>
+    <main>
+      <component :is="$curi.response.body" />
+    </main>
+  </div>
+</template>
 
-import './index.css';
-import routes from './routes';
-import NavMenu from './components/NavMenu';
-import registerServiceWorker from './registerServiceWorker';
+<script type="src/javascript">
+  import NavMenu from './components/NavMenu';
 
-const history = Browser();
-const router = curi(history, routes);
-
-ReactDOM.render((
-  <CuriProvider router={router}>
-    {({ response }) => {
-      const { body:Body } = response;
-      return (
-        <div>
-          <header>
-            <NavMenu />
-          </header>
-          <main>
-            <Body response={response} />
-          </main>
-        </div>
-      );
-    }}
-  </CuriProvider>
-), document.getElementById('root'));
-registerServiceWorker();`}
+  export default {
+    name: 'app',
+    components: {
+      'nav-menu': NavMenu
+    }
+  };
+</script>`}
         </PrismBlock>
       </Subsection>
       <Subsection title="Linking to Books" id="book-links">
@@ -710,64 +687,67 @@ export default [
           The data can be imported in the <Cmp>Home</Cmp> component. We will
           iterate over the books with a <Cmp>Link</Cmp> to each one.
         </p>
-        <PrismBlock lang="jsx" data-line="4,7-17">
-          {`// src/components/Home.js
-import React from 'react';
-import { Link } from '@curi/react';
-
-import books from '../books';
-
-export default () => (
+        <PrismBlock lang="html">
+          {`<!-- src/components/Home.vue -->
+<template>
   <div>
     <ul>
-      {books.map(book => (
-        <li key={book.id}>
-          <Link to="Book" params={{ id: book.id }} >
-            {book.title} by {book.author}
-          </Link>
-        </li>
-      ))}
+      <li v-for="b in books" :key="b.id">
+        <curi-link to="Book" :params="{ id: b.id }">
+          {{b.title}} by {{b.author}}
+        </curi-link>
+      </li>
     </ul>
   </div>
-);`}
+</template>
+
+<script>
+  import books from '../books';
+
+  export default {
+    name: 'home',
+    data() {
+      return { books };
+    }
+  }
+</script>`}
         </PrismBlock>
         <p>
           Now that we can navigate to the books, we should fill out the UI for
-          the <Cmp>Book</Cmp> component. Up above, we passed the{" "}
-          <IJS>response</IJS> object as a prop to the <IJS>response.body</IJS>{" "}
-          component. Now, we can use that object in the <Cmp>Book</Cmp>{" "}
-          component to access the captured route params. This will allow us to
-          know which book to show.
+          the <Cmp>Book</Cmp> component. We will once again import the{" "}
+          <IJS>books.js</IJS> data. We can use <IJS>params.id</IJS> to select
+          the correct book. However, <IJS>params.id</IJS> is a string, so we
+          will need to parse it into an integer. Sometimes there won't be a
+          valid book for the <IJS>params.id</IJS>. In that case, we will also
+          want to display a message that the requested book could not be found.
         </p>
-        <p>
-          We will once again import the <IJS>books.js</IJS> data. We can use{" "}
-          <IJS>params.id</IJS> to select the correct book. However,{" "}
-          <IJS>params.id</IJS> is a string, so we will need to parse it into an
-          integer. Sometimes there won't be a valid book for the{" "}
-          <IJS>params.id</IJS>. In that case, we will also want to display a
-          message that the requested book could not be found.
-        </p>
-        <PrismBlock lang="jsx" data-line="4,6-20">
-          {`// src/components/Book.js
-import React from 'react';
+        <PrismBlock lang="html">
+          {`<!-- src/components/Book.vue -->
+<template>
+  <div v-if="book">
+    <h1>{{book.title}}</h1>
+    <h2>by {{book.author}}</h2>
+    <p>Published in {{book.published}}</p>
+    <p>{{book.pages}} pages</p>
+  </div>
+  <div v-else>
+    The requested book could not be found
+  </div>
+</template>
 
-import books from '../books';
+<script>
+  import books from '../books';
 
-export default ({ response }) => {
-  const id = parseInt(response.params.id, 10);
-  const book = books.find(b => b.id === id);
-  if (!book) {
-    return <div>The requested book could not be found</div>;
+  export default {
+    name: 'book',
+    computed: {
+      book() {
+        const id = parseInt(this.$curi.response.params.id, 10);
+        return books.find(b => b.id === id);
+      }
+    }
   }
-  return (
-    <div>
-      <h1>{book.title}</h1>
-      <h2>by {book.author}</h2>
-      <p>Published in {book.published}</p>
-      <p>{book.pages} pages</p>
-    </div>
-  );
-}`}
+</script>`}
         </PrismBlock>
       </Subsection>
     </Section>
@@ -803,56 +783,16 @@ export default {
   },
   reset() {
     cart.clear();
+    return [];
   }
 };`}
       </PrismBlock>
       <p>
-        Before we edit the <Cmp>Book</Cmp> component, we should quickly revisit
-        the <Cmp>CuriProvider</Cmp>'s <IJS>children</IJS> function. In addition
-        to passing the <IJS>response</IJS> to <IJS>response.body</IJS>, we
-        should also pass it our router. This will allow us to do programmatic
-        navigation.
-      </p>
-      <PrismBlock lang="jsx" data-line="18,26">
-        {`// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import curi from '@curi/core';
-import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react';
-
-import './index.css';
-import routes from './routes';
-import NavMenu from './components/NavMenu';
-import registerServiceWorker from './registerServiceWorker';
-
-const history = Browser();
-const router = curi(history, routes);
-
-ReactDOM.render((
-  <CuriProvider router={router}>
-    {({ response, router }) => {
-      const { body:Body } = response;
-      return (
-        <div>
-          <header>
-            <NavMenu />
-          </header>
-          <main>
-            <Body response={response} router={router} />
-          </main>
-        </div>
-      );
-    }}
-  </CuriProvider>
-), document.getElementById('root'));
-registerServiceWorker();`}
-      </PrismBlock>
-      <p>
-        We can now access our <IJS>router</IJS> in the <Cmp>Book</Cmp>{" "}
-        component. <IJS>router.history</IJS> is our Hickory history object. This
-        object can be used to navigate to a new location. This means that when
-        the user clicks a button to add a book to their shopping cart, we can
+        As stated above, we can access our <IJS>router</IJS> in the{" "}
+        <Cmp>Book</Cmp> component using <IJS>this.$router</IJS>.{" "}
+        <IJS>router.history</IJS> is our Hickory history object. This object can
+        be used to navigate to a new location. This means that when the user
+        clicks a button to add a book to their shopping cart, we can
         automatically navigate to the checkout page.
       </p>
       <Subsection title="Navigation Methods" id="nav-methods" type="aside">
@@ -894,48 +834,54 @@ history.navigate({ pathname: '/new' })
       <p>
         Curi uses add-ons to add functionality to routes. Most of the time, you
         have to include these while creating the router, but Curi has one
-        built-in add-on: <IJS>pathname</IJS>. The <Cmp>Link</Cmp> automatically
-        generates the correct pathname string using the <IJS>pathname</IJS>{" "}
-        add-on, the <IJS>to</IJS> prop (and sometimes the <IJS>params</IJS>{" "}
-        prop). We can access this add-on as <IJS>router.addons.pathname()</IJS>{" "}
-        to generate pathnames ourselves.
+        built-in add-on: <IJS>pathname</IJS>. The <Cmp>curi-link</Cmp>{" "}
+        automatically generates the correct pathname string using the{" "}
+        <IJS>pathname</IJS> add-on, the <IJS>to</IJS> prop (and sometimes the{" "}
+        <IJS>params</IJS> prop). We can access this add-on as{" "}
+        <IJS>router.addons.pathname()</IJS> to generate pathnames ourselves.
       </p>
       <p>
         We also want to import our shopping cart API so that we can add a book
         to the cart.
       </p>
-      <PrismBlock lang="jsx" data-line="5,19-28">
-        {`// src/components/Book.js
-import React from 'react';
+      <PrismBlock lang="html" data-line="8-10,19,29-35">
+        {`<!-- src/components/Book.vue -->
+<template>
+  <div v-if="book">
+    <h1>{{book.title}}</h1>
+    <h2>by {{book.author}}</h2>
+    <p>Published in {{book.published}}</p>
+    <p>{{book.pages}} pages</p>
+    <button type="button" v-on:click="onClick">
+      Add to Cart
+    </button>
+  </div>
+  <div v-else>
+    The requested book could not be found
+  </div>
+</template>
 
-import books from '../books';
-import cart from '../cart';
+<script>
+  import books from '../books';
+  import cart from '../cart';
 
-export default ({ response, router }) => {
-  const id = parseInt(response.params.id, 10);
-  const book = books.find(b => b.id === id);
-  if (!book) {
-    return <div>The requested book could not be found</div>;
+  export default {
+    name: 'book',
+    computed: {
+      book() {
+        const id = parseInt(this.$curi.response.params.id, 10);
+        return books.find(b => b.id === id);
+      }
+    },
+    methods: {
+      onClick: function() {
+        cart.add(this.book, 1);
+        const pathname = this.$router.addons.pathname('Checkout');
+        this.$router.history.push({ pathname });
+      }
+    }
   }
-  return (
-    <div>
-      <h1>{book.title}</h1>
-      <h2>by {book.author}</h2>
-      <p>Published in {book.published}</p>
-      <p>{book.pages} pages</p>
-      <button
-        type="button"
-        onClick={() => {
-          cart.add(book, 1);
-          const pathname = router.addons.pathname('Checkout');
-          router.history.push({ pathname });
-        }}
-      >
-        Add to Cart
-      </button>
-    </div>
-  );
-}`}
+</script>`}
       </PrismBlock>
       <p>
         Finally, we can update our <Cmp>Checkout</Cmp> component to display the
@@ -950,54 +896,59 @@ export default ({ response, router }) => {
         the URI, we can render a "Thanks for your purchase" message to "confirm"
         the purchase.
       </p>
-      <PrismBlock lang="jsx">
-        {`// src/components/Checkout.js
-import React from 'react';
+      <PrismBlock lang="html">
+        {`<!-- src/components/Checkout.vue -->
+<template>
+  <div v-if="books.length">
+    <h1>Checkout</h1>
+    <table>
+      <thead>
+        <th>Title</th>
+        <th>Quantity</th>
+      </thead>
+      <tbody>
+        <tr v-for="book in books" :key="book.title">
+          <td>{{book.title}}</td>
+          <td>{{book.quantity}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" v-on:click="onClick">
+      Buy
+    </button>
+  </div>
+  <div v-else-if="$curi.response.location.hash === 'thanks'">
+    Thanks for your purchase!
+  </div>
+  <div v-else>
+    The cart is currently empty
+  </div>
+</template>
 
-import cart from '../cart';
+<script>
+  import cart from '../cart';
 
-export default ({ router, response }) => {
-  const books = cart.items();  
-  if (!books.length) {
-    return response.location.hash === 'thanks'
-      ? <div>Thanks for your purchase!</div>
-      : <div>The cart is currently empty</div>;
+  export default {
+    name: 'checkout',
+    data() {
+      return {
+        books: cart.items()
+      };
+    },
+    methods: {
+      onClick: function() {
+        this.books = cart.reset();
+        const pathname = this.$router.addons.pathname('Checkout');
+        this.$router.history.replace({ pathname, hash: 'thanks' });
+      }
+    }
   }
-  return (
-    <div>
-      <h1>Checkout</h1>
-      <table>
-        <thead>
-          <th>Title</th>
-          <th>Quantity</th>
-        </thead>
-        <tbody>
-          {books.map(book => (
-            <tr key={book.title}>
-              <td>{book.title}</td>
-              <td>{book.quantity}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button
-        type="button"
-        onClick={() => {
-          cart.reset();
-          const pathname = router.addons.pathname('Checkout');
-          router.history.replace({ pathname, hash: 'thanks' });
-        }}
-      >
-        Buy
-      </button>
-    </div>
-  );
-};`}
+</script>`}
       </PrismBlock>
     </Section>
     <Section title="What's next?" id="next">
       <p>
-        We now have a functional website built with React and Curi. What should
+        We now have a functional website built with Vue and Curi. What should
         you do next? Build another site! You can also check out the{" "}
         <Link to="Guides">guides</Link> for information on advanced techniques.
       </p>

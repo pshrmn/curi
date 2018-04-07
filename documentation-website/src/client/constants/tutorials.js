@@ -2,6 +2,10 @@ const tutorials = [
   {
     name: "react-basics",
     displayName: "React Basics"
+  },
+  {
+    name: "vue-basics",
+    displayName: "Vue Basics"
   }
 ];
 
