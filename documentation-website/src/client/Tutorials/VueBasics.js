@@ -10,6 +10,7 @@ import {
 } from "../components/PrismBlocks";
 import { Note } from "../components/Messages";
 import { Section, Subsection } from "../components/Sections";
+import CodeSandboxDemo from "../components/CodeSandboxDemo";
 
 export default () => (
   <BaseTutorial>
@@ -27,6 +28,10 @@ export default () => (
         <li>Learn how to navigate within the application.</li>
       </ul>
     </Outline>
+    <Section title="Demo" id="demo">
+      <p>You can run a demo of the site we are building with CodeSandbox.</p>
+      <CodeSandboxDemo id="github/curijs/vue-basic-tutorial/tree/master/" />
+    </Section>
     <Section title="Setup" id="setup">
       <p>
         We will be using{" "}
@@ -207,9 +212,11 @@ new Vue({
       <p>The website will start with four routes.</p>
       <table>
         <thead>
-          <th>name</th>
-          <th>path</th>
-          <th>Description</th>
+          <tr>
+            <th>name</th>
+            <th>path</th>
+            <th>Description</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
@@ -903,8 +910,10 @@ history.navigate({ pathname: '/new' })
     <h1>Checkout</h1>
     <table>
       <thead>
-        <th>Title</th>
-        <th>Quantity</th>
+        <tr>
+          <th>Title</th>
+          <th>Quantity</th>
+        </tr>
       </thead>
       <tbody>
         <tr v-for="book in books" :key="book.title">
