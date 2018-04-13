@@ -41,7 +41,7 @@ export default [
     children: [
       {
         name: "Tutorial",
-        path: ":name",
+        path: ":slug",
         match: {
           initial: () =>
             import(/* webpackChunkName: 'tutorial' */ "./route-components/Tutorial").then(
@@ -50,9 +50,9 @@ export default [
             ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
-            const tutorial = tutorialsByName[route.params.name];
+            const tutorial = tutorialsByName[route.params.slug];
             if (tutorial) {
-              set.title(`Tutorial ${tutorial.displayName}`);
+              set.title(`Tutorial ${tutorial.title}`);
             }
           }
         }

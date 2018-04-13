@@ -35,8 +35,8 @@ export default () => (
     <Section title="Setup" id="setup">
       <p>
         We will be using{" "}
-        <a href="https://vuejs.org/v2/guide/installation.html#CLI">
-          <IJS>vue-cli</IJS>
+        <a href="https://github.com/vuejs/vue-cli">
+          <IJS>@vue/cli</IJS>
         </a>{" "}
         to develop this website.
       </p>

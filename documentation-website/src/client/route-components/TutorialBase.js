@@ -4,13 +4,13 @@ import { Link } from "@curi/react";
 import { InlineJS as IJS } from "../components/PrismBlocks";
 import { Note, Warning } from "../components/Messages";
 import { Section } from "../components/Sections";
-import TutorialLinks from "../Tutorials/base/TutorialLinks";
+import TutorialTiles from "../Tutorials/base/TutorialTiles";
 
 export default () => (
   <div className="tutorial">
     <div className="content">
       <h1>Curi Tutorials</h1>
-      <TutorialLinks />
+      <TutorialTiles />
     </div>
   </div>
 );

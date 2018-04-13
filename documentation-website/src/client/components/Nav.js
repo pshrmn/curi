@@ -17,7 +17,7 @@ export default () => (
       </li>
       <li>
         <Link to="Tutorials" active={{ merge: styleActive, partial: true }}>
-          Tutorial
+          Tutorials
         </Link>
       </li>
       <li>

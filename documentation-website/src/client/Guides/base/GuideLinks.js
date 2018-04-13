@@ -4,10 +4,10 @@ import { Link } from "@curi/react";
 import { groupedGuides } from "../../constants/guides";
 import styleActive from "../../utils/styleActive";
 
-const GroupGuides = ({ guides, withDescription }) => (
+const GroupGuides = ({ guides }) => (
   <ul className="link-list">
     {guides.map(g => (
-      <li key={g.name} className={withDescription ? "with" : "solo"}>
+      <li key={g.name} className="solo">
         <Link
           to="Guide"
           params={{ slug: g.slug }}
@@ -20,15 +20,12 @@ const GroupGuides = ({ guides, withDescription }) => (
   </ul>
 );
 
-export default ({ withDescription = false }) => (
+export default () => (
   <ul>
     {Object.keys(groupedGuides).map(name => (
       <li className="link-group" key={name}>
         <h3>{name}</h3>
-        <GroupGuides
-          guides={groupedGuides[name]}
-          withDescription={withDescription}
-        />
+        <GroupGuides guides={groupedGuides[name]} />
       </li>
     ))}
   </ul>
