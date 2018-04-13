@@ -496,10 +496,13 @@ export default [
 ];`}
       </PrismBlock>
       <p>
-        We can now render the <Cmp>CuriProvider</Cmp> in our index file and use{" "}
-        <IJS>response.body</IJS> to render the proper component for the matched
-        route. We will also pass the <IJS>response</IJS> as a prop to the
-        rendered component. This will be useful soon.
+        We can now render the <Cmp>CuriProvider</Cmp> in our index file. The{" "}
+        <Cmp>CuriProvider</Cmp> gets passed the Curi router using the{" "}
+        <IJS>router</IJS> prop and a render-invoked function as the component's{" "}
+        <IJS>children</IJS>. In the render-invoked function, we can use{" "}
+        <IJS>response.body</IJS> to render the component for the matched route.
+        We will also pass the <IJS>response</IJS> as a prop to the rendered
+        component, which will be useful soon.
       </p>
 
       <PrismBlock lang="jsx" data-line="6,15-24">

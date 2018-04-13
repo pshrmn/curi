@@ -400,8 +400,8 @@ const router = curi(history, routes);`}
           the new <IJS>response</IJS> and <IJS>navigation</IJS> (alongside the{" "}
           <IJS>router</IJS> object) on React's <IJS>context</IJS> so that child
           components will be able to access those values.{" "}
-          <Cmp>CuriProvider</Cmp> also expects a <IJS>children</IJS> function as
-          its <IJS>children</IJS> prop.
+          <Cmp>CuriProvider</Cmp> also expects a function as its{" "}
+          <IJS>children</IJS> prop (a render-invoked prop).
         </p>
         <p>
           We will also use <IJS>router.respond</IJS> to wait for the initial
@@ -417,12 +417,12 @@ const router = curi(history, routes);`}
 });`}
         </PrismBlock>
         <p>
-          So what should your <IJS>children</IJS> function look like? The{" "}
-          <IJS>children</IJS> function will receive an object with three
-          properties: <IJS>response</IJS>, the new response object,{" "}
-          <IJS>navigation</IJS>, an object with additional information about the
-          navigation, and <IJS>router</IJS>, your Curi router. We will ignore
-          the <IJS>navigation</IJS> and <IJS>router</IJS> here because the{" "}
+          So what should your <IJS>children</IJS> function look like? When it is
+          called, the function will receive an object with three properties:{" "}
+          <IJS>response</IJS>, the new response object, <IJS>navigation</IJS>,
+          an object with additional information about the navigation, and{" "}
+          <IJS>router</IJS>, your Curi router. We will ignore the{" "}
+          <IJS>navigation</IJS> and <IJS>router</IJS> here because the{" "}
           <IJS>response</IJS> is what we really want.
         </p>
         <p>

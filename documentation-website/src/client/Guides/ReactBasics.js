@@ -38,9 +38,9 @@ export default ({ name }) => (
           <Cmp>CuriProvider</Cmp>
         </Link>{" "}
         component is responsible for doing this. You pass it two props: a Curi{" "}
-        <IJS>router</IJS> and a <IJS>children</IJS> function. The{" "}
+        <IJS>router</IJS> and a render-invoked <IJS>children</IJS> prop. The{" "}
         <IJS>router</IJS> will listen for new responses to be emitted and call
-        the <IJS>children</IJS> function to re-render your application.
+        the <IJS>children</IJS> prop to re-render your application.
       </p>
 
       <PrismBlock lang="jsx">
@@ -54,16 +54,18 @@ export default ({ name }) => (
       <Subsection
         title={
           <span>
-            The <IJS>children</IJS> function
+            The <IJS>children</IJS> prop
           </span>
         }
         id="child-fn"
       >
         <p>
-          The <IJS>children</IJS> prop is a function that will be called every
-          time the <Cmp>CuriProvider</Cmp> is rendered. The <IJS>children</IJS>{" "}
-          function should return the React elements that make up your
-          application.
+          The <IJS>children</IJS> prop is a render-invoked prop. This means that
+          every time the <Cmp>CuriProvider</Cmp> is rendered, the{" "}
+          <IJS>children</IJS> function is called (<IJS>
+            this.props.children(...)
+          </IJS>). The <IJS>children</IJS> function should return the React
+          elements that make up your application.
         </p>
         <p>
           The <IJS>children</IJS> function receives an object with three
@@ -250,8 +252,8 @@ const routes = [
       </PrismBlock>
 
       <p>
-        The <IJS>children</IJS> prop will simply be passed as the children of
-        the anchor, the same as if you were to use a regular anchor.
+        The <IJS>children</IJS> prop will be passed as the children of the
+        anchor, the same as if you were to use a regular anchor.
       </p>
       <Subsection title="Why not an anchor?" id="why-link">
         <p>
