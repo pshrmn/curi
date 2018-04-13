@@ -15,18 +15,26 @@ const tutorials = [
   }
 ];
 
-export const groupedTutorials = tutorials.reduce((acc, curr) => {
-  if (!acc[curr.type]) {
-    acc[curr.type] = [curr];
-  } else {
-    acc[curr.type].push(curr);
+let groupedTutorials;
+
+export default {
+  find: function findTutorial(slug) {
+    return tutorials.find(g => g.slug === slug);
+  },
+  grouped: function groupTutorials() {
+    if (!groupedTutorials) {
+      groupedTutorials = tutorials.reduce((acc, curr) => {
+        if (!acc[curr.type]) {
+          acc[curr.type] = [curr];
+        } else {
+          acc[curr.type].push(curr);
+        }
+        return acc;
+      }, {});
+    }
+    return groupedTutorials;
+  },
+  all: function() {
+    return tutorials;
   }
-  return acc;
-}, {});
-
-export const byName = tutorials.reduce((acc, curr) => {
-  acc[curr.slug] = curr;
-  return acc;
-}, {});
-
-export default tutorials;
+};

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@curi/react";
 
-import { groupedPackages } from "../../constants/packages";
+import PACKAGE_API from "../../constants/packages";
 import styleActive from "../../utils/styleActive";
 
 const GroupPackages = ({ packages }) => (
@@ -20,13 +20,16 @@ const GroupPackages = ({ packages }) => (
   </ul>
 );
 
-export default () => (
-  <ul>
-    {Object.keys(groupedPackages).map(name => (
-      <li className="link-group" key={name}>
-        <h3>{name}</h3>
-        <GroupPackages packages={groupedPackages[name]} />
-      </li>
-    ))}
-  </ul>
-);
+export default () => {
+  const groups = PACKAGE_API.grouped();
+  return (
+    <ul>
+      {Object.keys(groups).map(name => (
+        <li className="link-group" key={name}>
+          <h3>{name}</h3>
+          <GroupPackages packages={groups[name]} />
+        </li>
+      ))}
+    </ul>
+  );
+};

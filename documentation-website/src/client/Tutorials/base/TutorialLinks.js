@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react";
 
 import styleActive from "../../utils/styleActive";
-import { groupedTutorials } from "../../constants/tutorials";
+import TUTORIAL_API from "../../constants/tutorials";
 
 const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
@@ -20,13 +20,16 @@ const GroupTutorials = ({ tutorials }) => (
   </ul>
 );
 
-export default () => (
-  <ul>
-    {Object.keys(groupedTutorials).map(name => (
-      <li className="link-group" key={name}>
-        <h3>{name}</h3>
-        <GroupTutorials tutorials={groupedTutorials[name]} />
-      </li>
-    ))}
-  </ul>
-);
+export default () => {
+  const groups = TUTORIAL_API.grouped();
+  return (
+    <ul>
+      {Object.keys(groups).map(name => (
+        <li className="link-group" key={name}>
+          <h3>{name}</h3>
+          <GroupTutorials tutorials={groups[name]} />
+        </li>
+      ))}
+    </ul>
+  );
+};

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@curi/react";
 
-import { groupedGuides } from "../../constants/guides";
+import GUIDE_API from "../../constants/guides";
 import styleActive from "../../utils/styleActive";
 
 const GroupGuides = ({ guides }) => (
@@ -20,13 +20,16 @@ const GroupGuides = ({ guides }) => (
   </ul>
 );
 
-export default () => (
-  <ul>
-    {Object.keys(groupedGuides).map(name => (
-      <li className="link-group" key={name}>
-        <h3>{name}</h3>
-        <GroupGuides guides={groupedGuides[name]} />
-      </li>
-    ))}
-  </ul>
-);
+export default () => {
+  const groups = GUIDE_API.grouped();
+  return (
+    <ul>
+      {Object.keys(groups).map(name => (
+        <li className="link-group" key={name}>
+          <h3>{name}</h3>
+          <GroupGuides guides={groups[name]} />
+        </li>
+      ))}
+    </ul>
+  );
+};

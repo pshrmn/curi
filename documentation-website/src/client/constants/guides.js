@@ -97,18 +97,26 @@ const guides = [
   }
 ];
 
-export const groupedGuides = guides.reduce((acc, curr) => {
-  if (!acc[curr.type]) {
-    acc[curr.type] = [curr];
-  } else {
-    acc[curr.type].push(curr);
+let groupedGuides;
+
+export default {
+  find: function findGuide(slug) {
+    return guides.find(g => g.slug === slug);
+  },
+  grouped: function groupGuides() {
+    if (!groupedGuides) {
+      groupedGuides = guides.reduce((acc, curr) => {
+        if (!acc[curr.type]) {
+          acc[curr.type] = [curr];
+        } else {
+          acc[curr.type].push(curr);
+        }
+        return acc;
+      }, {});
+    }
+    return groupedGuides;
+  },
+  all: function() {
+    return guides;
   }
-  return acc;
-}, {});
-
-export const byName = guides.reduce((acc, curr) => {
-  acc[curr.slug] = curr;
-  return acc;
-}, {});
-
-export default guides;
+};

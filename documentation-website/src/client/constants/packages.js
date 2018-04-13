@@ -75,18 +75,26 @@ const packages = [
   }
 ];
 
-export const groupedPackages = packages.reduce((acc, curr) => {
-  if (!acc[curr.type]) {
-    acc[curr.type] = [curr];
-  } else {
-    acc[curr.type].push(curr);
+let groupedPackages;
+
+export default {
+  find: function findPackage(name) {
+    return packages.find(p => p.name === name);
+  },
+  grouped: function groupPackages() {
+    if (!groupedPackages) {
+      groupedPackages = packages.reduce((acc, curr) => {
+        if (!acc[curr.type]) {
+          acc[curr.type] = [curr];
+        } else {
+          acc[curr.type].push(curr);
+        }
+        return acc;
+      }, {});
+    }
+    return groupedPackages;
+  },
+  all: function() {
+    return packages;
   }
-  return acc;
-}, {});
-
-export const byName = packages.reduce((acc, curr) => {
-  acc[curr.name] = curr;
-  return acc;
-}, {});
-
-export default packages;
+};

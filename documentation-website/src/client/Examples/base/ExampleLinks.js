@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@curi/react";
 
-import EXAMPLES from "../../constants/examples";
+import EXAMPLE_API from "../../constants/examples";
 import styleActive from "../../utils/styleActive";
 
 const Category = ({ name, examples }) => (
@@ -21,7 +21,7 @@ const Category = ({ name, examples }) => (
 );
 
 export default () => {
-  const examples = EXAMPLES.all();
+  const examples = EXAMPLE_API.all();
   const categories = Object.keys(examples);
   return (
     <div>

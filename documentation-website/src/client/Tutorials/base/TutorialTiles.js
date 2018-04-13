@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@curi/react";
 
-import { groupedTutorials } from "../../constants/tutorials";
+import TUTORIAL_API from "../../constants/tutorials";
 import { Section } from "../../components/Sections";
 import styleActive from "../../utils/styleActive";
 
@@ -23,12 +23,12 @@ const Category = ({ name, tutorials }) => (
 );
 
 export default () => {
-  const categories = Object.keys(groupedTutorials);
+  const groups = TUTORIAL_API.grouped();
   return (
     <div>
-      {categories.map(key => (
+      {Object.keys(groups).map(key => (
         <Section title={key} id={key} key={key}>
-          <Category name={key} tutorials={groupedTutorials[key]} />
+          <Category name={key} tutorials={groups[key]} />
         </Section>
       ))}
     </div>

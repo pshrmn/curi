@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "@curi/react";
 
-import EXAMPLES from "../constants/examples";
-import { Section } from "./Sections";
-import styleActive from "../utils/styleActive";
+import EXAMPLES from "../../constants/examples";
+import { Section } from "../../components/Sections";
+import styleActive from "../../utils/styleActive";
 
 const Category = ({ name, examples }) => (
   <ul className="tiles">

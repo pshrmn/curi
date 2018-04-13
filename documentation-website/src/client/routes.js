@@ -6,10 +6,10 @@ import PackageList from "./route-components/PackageList";
 import ExampleList from "./route-components/ExampleList";
 import TutorialBase from "./route-components/TutorialBase";
 
-import { byName as tutorialsByName } from "./constants/tutorials";
-import { byName as guidesByName } from "./constants/guides";
-import { byName as packagesByName } from "./constants/packages";
-import EXAMPLES from "./constants/examples";
+import TUTORIAL_API from "./constants/tutorials";
+import GUIDE_API from "./constants/guides";
+import PACKAGE_API from "./constants/packages";
+import EXAMPLE_API from "./constants/examples";
 
 function catchImportError(name) {
   return function caught(error) {
@@ -50,7 +50,7 @@ export default [
             ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
-            const tutorial = tutorialsByName[route.params.slug];
+            const tutorial = TUTORIAL_API.find(route.params.slug);
             if (tutorial) {
               set.title(`Tutorial ${tutorial.title}`);
             }
@@ -83,7 +83,7 @@ export default [
             ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
-            const guide = guidesByName[route.params.slug];
+            const guide = GUIDE_API.find(route.params.slug);
             if (guide) {
               set.data(guide);
               set.title(`${guide.name} Guide`);
@@ -114,7 +114,7 @@ export default [
             ),
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
-            const pkg = packagesByName[route.params.package];
+            const pkg = PACKAGE_API.find(route.params.package);
             set.title(`@curi/${route.params.package}`);
             if (pkg) {
               set.data(pkg);
@@ -146,7 +146,7 @@ export default [
           response: ({ route, resolved, set }) => {
             set.body(resolved.initial);
             const { category, slug } = route.params;
-            const example = EXAMPLES.find(category, slug);
+            const example = EXAMPLE_API.find(category, slug);
             if (example) {
               set.data(example);
               set.title(`${example.name} Example`);

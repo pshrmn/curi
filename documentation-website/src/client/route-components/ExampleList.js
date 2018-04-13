@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "@curi/react";
-import ExampleTiles from "../components/ExampleTiles";
+import ExampleTiles from "../Examples/base/ExampleTiles";
 
 export default () => (
   <div>
