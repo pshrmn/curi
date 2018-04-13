@@ -53,7 +53,7 @@ const routes = [
     </PrismBlock>
 
     <Note>
-      When Curi does asynchronous matching, <strong>all</strong> routes and
+      When Curi does asynchronous matching, <strong>all</strong> routes are
       matched asynchronously, not just the ones with <IJS>match.initial</IJS>/<IJS
       >
         match.every
