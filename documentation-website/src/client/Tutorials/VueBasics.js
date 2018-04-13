@@ -28,10 +28,10 @@ export default () => (
         <li>Learn how to navigate within the application.</li>
       </ul>
     </Outline>
-    <Section title="Demo" id="demo">
+    {/*<Section title="Demo" id="demo">
       <p>You can run a demo of the site we are building with CodeSandbox.</p>
       <CodeSandboxDemo id="github/curijs/vue-basic-tutorial/tree/master/" />
-    </Section>
+</Section>*/}
     <Section title="Setup" id="setup">
       <p>
         We will be using{" "}
