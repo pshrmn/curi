@@ -2,8 +2,8 @@ import React from "react";
 import { Curious, Link } from "@curi/react";
 
 const Breadcrumbs = ({ name, params }) => (
-  <Curious
-    render={({ router }) => (
+  <Curious>
+    {({ router }) => (
       <ul className="breadcrumbs">
         {router.addons
           .ancestors(name)
@@ -17,7 +17,7 @@ const Breadcrumbs = ({ name, params }) => (
           ))}
       </ul>
     )}
-  />
+  </Curious>
 );
 
 export default Breadcrumbs;
