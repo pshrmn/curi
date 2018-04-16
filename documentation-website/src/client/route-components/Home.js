@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "@curi/react";
+
 import {
   PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
 } from "../components/PrismBlocks";
-import { Link } from "@curi/react";
 import Banner from "../components/Banner";
 
 export default () => (

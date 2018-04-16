@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "@curi/react";
-import PackageLinks from "../Packages/base/PackageLinks";
+
+import PackageLinks from "../pages/Packages/base/PackageLinks";
 import { Note } from "../components/Messages";
 import { InlineJS } from "../components/PrismBlocks";
 

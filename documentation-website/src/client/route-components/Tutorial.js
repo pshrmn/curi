@@ -1,6 +1,6 @@
 import React from "react";
 
-import TutorialComponents from "../Tutorials";
+import TutorialComponents from "../pages/Tutorials";
 
 export default ({ params }) => {
   const Component = TutorialComponents[params.slug];

@@ -1,7 +1,7 @@
 import React from "react";
-import { InlineJS } from "../components/PrismBlocks";
 
-import PackageComponents from "../Packages";
+import { InlineJS } from "../components/PrismBlocks";
+import PackageComponents from "../pages/Packages";
 
 export default ({ params, data }) => {
   if (!data) {

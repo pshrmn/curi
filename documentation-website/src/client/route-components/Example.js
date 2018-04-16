@@ -1,6 +1,6 @@
 import React from "react";
 
-import ExampleComponents from "../Examples";
+import ExampleComponents from "../pages/Examples";
 
 export default ({ params, data }) => {
   if (!data) {

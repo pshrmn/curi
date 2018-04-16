@@ -4,7 +4,7 @@ import { Link } from "@curi/react";
 import { InlineJS as IJS } from "../components/PrismBlocks";
 import { Note, Warning } from "../components/Messages";
 import { Section } from "../components/Sections";
-import TutorialTiles from "../Tutorials/base/TutorialTiles";
+import TutorialTiles from "../pages/Tutorials/base/TutorialTiles";
 
 export default () => (
   <div className="tutorial">
