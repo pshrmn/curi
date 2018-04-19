@@ -1,3 +1,7 @@
+## 1.0.0-beta.21
+
+* Use the new React Context API released in React 16.3. This forces the minimum React version for `@curi/react` projects to `16.3`.
+
 ## 1.0.0-beta.20
 
 * (Internal) `<CuriProvider>` uses `router.respond(fn, { observe: true })`.

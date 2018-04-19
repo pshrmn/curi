@@ -1,3 +1,7 @@
+## 1.0.0-beta.3
+
+* Use the new React Context API released in React 16.3. This forces the minimum React version for `@curi/react` projects to `16.3`. The minimum React Native version is also bumped to `0.55`.
+
 ## 1.0.0-beta.2
 
 * Add `method` prop to `<Link>` to specify which `history` navigation method to use for navigation. Options are `navigate`, `push`, and `replace` (defaults to `navigate`).
