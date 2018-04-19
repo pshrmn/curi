@@ -83,7 +83,8 @@ describe("CuriPlugin", () => {
 
         if (!wrapper) {
           wrapper = shallow(FakeComponent, {
-            localVue: Vue
+            localVue: Vue,
+            sync: false
           });
           router.history.push("/another-one");
         }
@@ -103,7 +104,8 @@ describe("CuriPlugin", () => {
               components: { FakeComponent }
             },
             {
-              localVue: Vue
+              localVue: Vue,
+              sync: false
             }
           );
           router.history.push("/another-one");
