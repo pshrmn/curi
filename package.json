@@ -29,9 +29,9 @@
     "prettier": "^1.10.2",
     "pretty-bytes": "^4.0.2",
     "pretty-quick": "^1.2.2",
-    "rollup": "^0.54.0",
-    "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup": "^0.58.1",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-typescript2": "^0.5.2",
     "rollup-plugin-uglify": "^2.0.1"
