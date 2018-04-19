@@ -45,7 +45,7 @@
     "jest": "^22.1.1",
     "prettier": "^1.10.2",
     "rimraf": "^2.6.2",
-    "rollup": "^0.54.0",
+    "rollup": "^0.58.1",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
