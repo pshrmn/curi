@@ -1,21 +1,21 @@
-const webpack = require('webpack');
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require("webpack");
+const path = require("path");
+const MiniCSS = require("mini-css-extract-plugin");
 
 const config = {
-  context: path.join(__dirname, 'src', 'client'),
+  context: path.join(__dirname, "src", "client"),
   entry: {
-    index: ['./scss/index.scss', './index.js'],
+    index: ["./scss/index.scss", "./index.js"]
   },
   output: {
-    path: path.join(__dirname, 'gh-pages', 'static'),
-    filename: 'js/bundle.js',
-    chunkFilename: 'js/[name].bundle.js',
-    publicPath: '/static/'
+    path: path.join(__dirname, "gh-pages", "static"),
+    filename: "js/bundle.js",
+    chunkFilename: "js/[name].bundle.js",
+    publicPath: "/static/"
   },
   externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM'
+    react: "React",
+    "react-dom": "ReactDOM"
   },
   module: {
     rules: [
@@ -29,25 +29,20 @@ const config = {
         exclude: /(node_modules)/,
         use: [
           {
-            loader: 'babel-loader'
+            loader: "babel-loader"
           }
         ]
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            'postcss-loader',
-            'sass-loader'
-          ]
-        })
+        use: [MiniCSS.loader, "css-loader", "postcss-loader", "sass-loader"]
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('css/index.css')
+    new MiniCSS({
+      filename: "css/[name].css"
+    })
   ]
 };
 
