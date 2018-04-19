@@ -1,18 +1,17 @@
 import "jest";
 import React from "react";
-import { mount } from "enzyme";
+import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
-import { HickoryLocation } from "@hickory/root";
-import curi, { Response } from "@curi/core";
+import curi from "@curi/core";
 import createActiveAddon from "@curi/addon-active";
+
 import CuriProvider from "../src/CuriProvider";
 import Active from "../src/Active";
 
-function render(router, fn) {
-  return mount(<CuriProvider router={router}>{fn}</CuriProvider>);
-}
+import { HickoryLocation } from "@hickory/root";
 
 describe("<Active>", () => {
+  let node;
   let history;
   let router;
   const routes = [
@@ -25,10 +24,15 @@ describe("<Active>", () => {
   ];
 
   beforeEach(() => {
+    node = document.createElement("div");
     history = InMemory();
     router = curi(history, routes, {
       addons: [createActiveAddon()]
     });
+  });
+
+  afterEach(() => {
+    ReactDOM.unmountComponentAtNode(node);
   });
 
   describe("no active addon", () => {
@@ -43,11 +47,16 @@ describe("<Active>", () => {
       console.error = jest.fn();
 
       expect(() => {
-        render(router, () => (
-          <Active name="Home" merge={merge}>
-            <Test />
-          </Active>
-        ));
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Active name="Home" merge={merge}>
+                <Test />
+              </Active>
+            )}
+          </CuriProvider>,
+          node
+        );
       }).toThrow(
         'You are attempting to use the "active" prop, but have not included the "active" ' +
           "addon (@curi/addon-active) in your Curi router."
@@ -58,17 +67,22 @@ describe("<Active>", () => {
 
   describe("children", () => {
     it("re-renders the children element it is passed", () => {
-      const Test = () => null;
+      const Test = () => <div>Test</div>;
       function merge(props) {
         return props;
       }
 
-      const wrapper = render(router, () => (
-        <Active name="Home" merge={merge}>
-          <Test />
-        </Active>
-      ));
-      expect(wrapper.find(Test).exists()).toBe(true);
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="Home" merge={merge}>
+              <Test />
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
+      expect(node.textContent).toBe("Test");
     });
   });
 
@@ -77,11 +91,16 @@ describe("<Active>", () => {
       const Test = () => null;
       const merge = jest.fn();
 
-      const wrapper = render(router, () => (
-        <Active name="About" merge={merge}>
-          <Test />
-        </Active>
-      ));
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="About" merge={merge}>
+              <Test />
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
       expect(merge.mock.calls.length).toBe(0);
     });
 
@@ -89,11 +108,16 @@ describe("<Active>", () => {
       const Test = () => null;
       const merge = jest.fn();
 
-      const wrapper = render(router, () => (
-        <Active name="Home" merge={merge}>
-          <Test />
-        </Active>
-      ));
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="Home" merge={merge}>
+              <Test />
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
       expect(merge.mock.calls.length).toBe(1);
     });
 
@@ -104,13 +128,18 @@ describe("<Active>", () => {
         return props;
       }
 
-      const wrapper = render(router, () => (
-        <Active name="Home" merge={merge}>
-          <div className="test" />
-        </Active>
-      ));
-      const div = wrapper.find("div");
-      expect(div.prop("className")).toBe("not-a-test");
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="Home" merge={merge}>
+              <div className="test" />
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const div = node.querySelector("not-a-test");
+      expect(div).toBeDefined();
     });
   });
 
@@ -126,13 +155,18 @@ describe("<Active>", () => {
         addons: [createActiveAddon()]
       });
 
-      const wrapper = render(router, () => (
-        <Active name="Contact" partial={true} merge={merge}>
-          <div className="test" />
-        </Active>
-      ));
-      const div = wrapper.find("div");
-      expect(div.prop("className")).toBe("not-a-test");
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="Contact" partial={true} merge={merge}>
+              <div className="test" />
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const div = node.querySelector("not-a-test");
+      expect(div).toBeDefined();
     });
   });
 
@@ -141,11 +175,16 @@ describe("<Active>", () => {
       const Test = () => null;
       const merge = jest.fn();
 
-      const wrapper = render(router, () => (
-        <Active name="Home" merge={merge}>
-          <Test />
-        </Active>
-      ));
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="Home" merge={merge}>
+              <Test />
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
       expect(merge.mock.calls.length).toBe(1);
     });
 
@@ -159,11 +198,16 @@ describe("<Active>", () => {
         return true;
       });
 
-      const wrapper = render(router, () => (
-        <Active name="Home" merge={merge} extra={extra} details={details}>
-          <Test />
-        </Active>
-      ));
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="Home" merge={merge} extra={extra} details={details}>
+              <Test />
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
       expect(extra.mock.calls.length).toBe(1);
     });
 
@@ -172,11 +216,16 @@ describe("<Active>", () => {
       const merge = jest.fn();
       const extra = () => false;
 
-      const wrapper = render(router, () => (
-        <Active name="Home" merge={merge} extra={extra}>
-          <Test />
-        </Active>
-      ));
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="Home" merge={merge} extra={extra}>
+              <Test />
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
       expect(merge.mock.calls.length).toBe(0);
     });
   });

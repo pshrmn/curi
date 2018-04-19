@@ -1,5 +1,5 @@
 import React from "react";
-import CuriContext from "./Context";
+import { Curious } from "./Context";
 
 import { ConfirmationFunction } from "@hickory/root";
 import { CuriRouter } from "@curi/core";
@@ -55,9 +55,7 @@ class BaseBlock extends React.Component<BaseBlockProps> {
 }
 
 const Block = (props: BlockProps): React.ReactElement<any> => (
-  <CuriContext.Consumer>
-    {({ router }) => <BaseBlock {...props} router={router} />}
-  </CuriContext.Consumer>
+  <Curious>{({ router }) => <BaseBlock {...props} router={router} />}</Curious>
 );
 
 export default Block;

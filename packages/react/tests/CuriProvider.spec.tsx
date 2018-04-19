@@ -1,16 +1,25 @@
 import "jest";
 import React from "react";
-import { shallow, mount } from "enzyme";
+import ReactDOM from "react-dom";
 import curi from "@curi/core";
 import InMemory from "@hickory/in-memory";
 
 import CuriProvider from "../src/CuriProvider";
-import Curious from "../src/Curious";
+import { Curious } from "../src/Context";
 
 import { Response, Navigation } from "@curi/core";
 
 describe("<CuriProvider>", () => {
+  let node;
   const routes = [{ name: "Home", path: "" }, { name: "About", path: "about" }];
+
+  beforeEach(() => {
+    node = document.createElement("div");
+  });
+
+  afterEach(() => {
+    ReactDOM.unmountComponentAtNode(node);
+  });
 
   describe("render", () => {
     it("calls render function when it renders", () => {
@@ -20,9 +29,7 @@ describe("<CuriProvider>", () => {
       const fn = jest.fn(() => {
         return null;
       });
-      const wrapper = shallow(
-        <CuriProvider router={router}>{fn}</CuriProvider>
-      );
+      ReactDOM.render(<CuriProvider router={router}>{fn}</CuriProvider>, node);
       expect(fn.mock.calls.length).toBe(1);
     });
 
@@ -42,7 +49,7 @@ describe("<CuriProvider>", () => {
         return null;
       });
 
-      const wrapper = mount(<CuriProvider router={router}>{fn}</CuriProvider>);
+      ReactDOM.render(<CuriProvider router={router}>{fn}</CuriProvider>, node);
       history.push("/about");
     });
 
@@ -60,7 +67,7 @@ describe("<CuriProvider>", () => {
       });
 
       const router = curi(history, routes);
-      const wrapper = mount(<CuriProvider router={router}>{fn}</CuriProvider>);
+      ReactDOM.render(<CuriProvider router={router}>{fn}</CuriProvider>, node);
     });
   });
 
@@ -86,8 +93,11 @@ describe("<CuriProvider>", () => {
       router.respond(({ response, navigation }) => {
         emittedResponse = response;
         emittedNavigation = navigation;
-        const wrapper = mount(
-          <CuriProvider router={router}>{() => <ContextLogger />}</CuriProvider>
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => <ContextLogger />}
+          </CuriProvider>,
+          node
         );
       });
     });

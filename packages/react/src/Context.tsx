@@ -1,6 +1,4 @@
-/// <reference types="../typings/react-broadcast" />
 import React from "react";
-import { createContext, Context } from "react-broadcast";
 import { Emitted } from "@curi/core";
 
 const key: Emitted = {
@@ -9,4 +7,6 @@ const key: Emitted = {
   navigation: null
 };
 
-export default createContext<Emitted>(key);
+const { Provider, Consumer } = React.createContext<Emitted>(key);
+
+export { Provider, Consumer as Curious };

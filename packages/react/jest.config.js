@@ -9,9 +9,6 @@ module.exports = {
       module: "es6"
     }
   },
-  setupFiles: [
-    "<rootDir>/tests/setup/rAF.js",
-    "<rootDir>/tests/setup/enzyme.js"
-  ],
+  setupFiles: ["<rootDir>/tests/setup/rAF.js"],
   collectCoverageFrom: ["src/*.tsx"]
 };
