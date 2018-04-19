@@ -1,7 +1,7 @@
 import React from "react";
 import invariant from "invariant";
 
-import CuriContext from "./Context";
+import { Curious } from "./Context";
 
 import { CuriRouter, Response } from "@curi/core";
 import {
@@ -124,11 +124,11 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
 }
 
 const Link = (props: LinkProps): React.ReactElement<any> => (
-  <CuriContext.Consumer>
+  <Curious>
     {({ router, response }) => (
       <BaseLink {...props} router={router} response={response} />
     )}
-  </CuriContext.Consumer>
+  </Curious>
 );
 
 export default Link;

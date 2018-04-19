@@ -1,53 +1,72 @@
 import "jest";
 import React from "react";
-import { shallow, mount } from "enzyme";
-import renderer from "react-test-renderer";
+import ReactDOM from "react-dom";
+import { Simulate } from "react-dom/test-utils";
 import InMemory from "@hickory/in-memory";
 import curi, { Response } from "@curi/core";
 import createActiveAddon from "@curi/addon-active";
 import Link from "../src/Link";
 import CuriProvider from "../src/CuriProvider";
 
-function render(router, fn) {
-  return mount(<CuriProvider router={router}>{fn}</CuriProvider>);
-}
+import { LocationDetails } from "@hickory/in-memory";
 
 describe("<Link>", () => {
+  let node;
   let history, router;
   const routes = [{ name: "Test", path: "" }];
 
   beforeEach(() => {
+    node = document.createElement("div");
     history = InMemory();
     router = curi(history, routes);
   });
 
+  afterEach(() => {
+    ReactDOM.unmountComponentAtNode(node);
+  });
+
   describe("anchor", () => {
     it("renders an <a> by default", () => {
-      const wrapper = render(router, () => <Link to="Test">Test</Link>);
-      const a = wrapper.find("a");
-      expect(a.exists()).toBe(true);
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => <Link to="Test">Test</Link>}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
+      expect(a).toBeDefined();
     });
 
     it("renders the provided component instead of an anchor", () => {
       const StyledAnchor = props => (
         <a style={{ color: "orange" }} {...props} />
       );
-      const wrapper = render(router, () => (
-        <Link anchor={StyledAnchor} to="Test">
-          Test
-        </Link>
-      ));
-      const a = wrapper.find("a");
-      expect(a.exists()).toBe(true);
-      expect(a.prop("style")).toEqual({ color: "orange" });
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Link anchor={StyledAnchor} to="Test">
+              Test
+            </Link>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
+      expect(a).toBeDefined();
+      expect(getComputedStyle(a).color).toBe("orange");
     });
   });
 
   describe("to", () => {
     it("sets the href attribute using the named route's path", () => {
-      const wrapper = render(router, () => <Link to="Test">Test</Link>);
-      const a = wrapper.find("a");
-      expect(a.prop("href")).toBe("/");
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => <Link to="Test">Test</Link>}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/");
     });
 
     it("uses the pathname from current response's location if 'to' is not provided", () => {
@@ -55,9 +74,14 @@ describe("<Link>", () => {
         locations: ["/the-initial-location"]
       });
       const router = curi(history, []);
-      const wrapper = render(router, () => <Link to={null}>Test</Link>);
-      const a = wrapper.find("a");
-      expect(a.prop("href")).toBe("/the-initial-location");
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => <Link to={null}>Test</Link>}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/the-initial-location");
     });
   });
 
@@ -72,39 +96,48 @@ describe("<Link>", () => {
 
     it("uses params to generate the href", () => {
       const params = { name: "Glacier" };
-      const wrapper = render(router, () => (
-        <Link to="Park" params={params}>
-          Test
-        </Link>
-      ));
-      const a = wrapper.find("a");
-      expect(a.prop("href")).toBe("/park/Glacier");
-    });
-
-    it("updates href when props change", () => {
-      const params = { name: "Glacier" };
-      const tree = renderer.create(
+      ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
             <Link to="Park" params={params}>
               Test
             </Link>
           )}
-        </CuriProvider>
+        </CuriProvider>,
+        node
       );
-      let a = tree.root.findByType("a");
-      expect(a.props.href).toBe("/park/Glacier");
+      const a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/park/Glacier");
+    });
+
+    it("updates href when props change", () => {
+      const params = { name: "Glacier" };
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Link to="Park" params={params}>
+              Test
+            </Link>
+          )}
+        </CuriProvider>,
+        node
+      );
+      let a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/park/Glacier");
+
       const newParams = { name: "Yellowstone" };
-      tree.update(
+      ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
             <Link to="Park" params={newParams}>
               Test
             </Link>
           )}
-        </CuriProvider>
+        </CuriProvider>,
+        node
       );
-      expect(a.props.href).toBe("/park/Yellowstone");
+      a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/park/Yellowstone");
     });
   });
 
@@ -112,25 +145,38 @@ describe("<Link>", () => {
     it("merges the details prop with the generated pathname when navigating", () => {
       const history = InMemory();
       const router = curi(history, [{ name: "Test", path: "test" }]);
-      const wrapper = render(router, () => (
-        <Link to="Test" details={{ query: "one=two", hash: "#hashtag" }}>
-          Test
-        </Link>
-      ));
-      const a = wrapper.find("a");
-      expect(a.prop("href")).toBe("/test?one=two#hashtag");
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Link to="Test" details={{ query: "one=two", hash: "#hashtag" }}>
+              Test
+            </Link>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/test?one=two#hashtag");
     });
 
     it("providing a pathname in details does not overwrite the generated pathname", () => {
       const history = InMemory();
       const router = curi(history, [{ name: "Test", path: "test" }]);
-      const wrapper = render(router, () => (
-        <Link to="Test" details={{ pathname: "/not-a-test" }}>
-          Test
-        </Link>
-      ));
-      const a = wrapper.find("a");
-      expect(a.prop("href")).toBe("/test");
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Link
+              to="Test"
+              details={{ pathname: "/not-a-test" } as LocationDetails}
+            >
+              Test
+            </Link>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/test");
     });
   });
 
@@ -156,11 +202,16 @@ describe("<Link>", () => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }]);
         expect(() => {
-          const wrapper = render(router, () => (
-            <Link to="Test" active={{ merge }}>
-              Test
-            </Link>
-          ));
+          ReactDOM.render(
+            <CuriProvider router={router}>
+              {() => (
+                <Link to="Test" active={{ merge }}>
+                  Test
+                </Link>
+              )}
+            </CuriProvider>,
+            node
+          );
         }).toThrow(
           'You are attempting to use the "active" prop, but have not included the "active" ' +
             "addon (@curi/addon-active) in your Curi router."
@@ -171,20 +222,23 @@ describe("<Link>", () => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }]);
 
-        const tree = renderer.create(
+        ReactDOM.render(
           <CuriProvider router={router}>
             {() => <Link to="Test">Test</Link>}
-          </CuriProvider>
+          </CuriProvider>,
+          node
         );
+
         expect(() => {
-          tree.update(
+          ReactDOM.render(
             <CuriProvider router={router}>
               {() => (
                 <Link to="Test" active={{ merge }}>
                   Test
                 </Link>
               )}
-            </CuriProvider>
+            </CuriProvider>,
+            node
           );
         }).toThrow(
           'You are attempting to use the "active" prop, but have not included the "active" ' +
@@ -199,13 +253,18 @@ describe("<Link>", () => {
         const router = curi(history, [{ name: "Test", path: "test" }], {
           addons: [createActiveAddon()]
         });
-        const wrapper = render(router, () => (
-          <Link to="Test" className="test" active={{ merge }}>
-            Test
-          </Link>
-        ));
-        const link = wrapper.find("a");
-        expect(link.prop("className")).toBe("test");
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test" className="test" active={{ merge }}>
+                Test
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
+        expect(a.classList.contains("test")).toBe(true);
       });
 
       it("calls merge function when <Link>'s props match the current response's", () => {
@@ -213,13 +272,19 @@ describe("<Link>", () => {
         const router = curi(history, [{ name: "Test", path: "test" }], {
           addons: [createActiveAddon()]
         });
-        const wrapper = render(router, () => (
-          <Link to="Test" className="test" active={{ merge }}>
-            Test
-          </Link>
-        ));
-        const link = wrapper.find("a");
-        expect(link.prop("className")).toBe("test active");
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test" className="test" active={{ merge }}>
+                Test
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
+        expect(a.classList.contains("test")).toBe(true);
+        expect(a.classList.contains("active")).toBe(true);
       });
     });
 
@@ -239,13 +304,23 @@ describe("<Link>", () => {
             addons: [createActiveAddon()]
           }
         );
-        const wrapper = render(router, () => (
-          <Link to="Test" className="test" active={{ partial: true, merge }}>
-            Test
-          </Link>
-        ));
-        const link = wrapper.find("a");
-        expect(link.prop("className")).toBe("test active");
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link
+                to="Test"
+                className="test"
+                active={{ partial: true, merge }}
+              >
+                Test
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
+        expect(a.classList.contains("test")).toBe(true);
+        expect(a.classList.contains("active")).toBe(true);
       });
     });
 
@@ -259,17 +334,22 @@ describe("<Link>", () => {
         function extra(location, details = {}) {
           return location.query === details["query"];
         }
-        const wrapper = render(router, () => (
-          <Link
-            to="Test"
-            details={{ query: "test=ing" }}
-            active={{ merge, extra }}
-          >
-            Test
-          </Link>
-        ));
-        const link = wrapper.find("a");
-        expect(link.prop("className")).toBe("active");
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link
+                to="Test"
+                details={{ query: "test=ing" }}
+                active={{ merge, extra }}
+              >
+                Test
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
+        expect(a.classList.contains("active")).toBe(true);
       });
 
       it("active is false when pathname matches, but extra returns false", () => {
@@ -281,13 +361,18 @@ describe("<Link>", () => {
         function extra(location, details = {}) {
           return location.query === details["query"];
         }
-        const wrapper = render(router, () => (
-          <Link to="Test" active={{ merge, extra }}>
-            Test
-          </Link>
-        ));
-        const link = wrapper.find("a");
-        expect(link.prop("className")).toBeUndefined();
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test" active={{ merge, extra }}>
+                Test
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
+        expect(a.classList.contains("active")).toBe(false);
       });
     });
   });
@@ -299,7 +384,13 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
-      const wrapper = render(router, () => <Link to="Test">Test</Link>);
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => <Link to="Test">Test</Link>}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
       const leftClickEvent = {
         defaultPrevented: false,
         preventDefault() {
@@ -311,7 +402,7 @@ describe("<Link>", () => {
         shiftKey: null,
         button: 0
       };
-      wrapper.find("a").simulate("click", leftClickEvent);
+      Simulate.click(a, leftClickEvent);
       expect(mockNavigate.mock.calls.length).toBe(1);
     });
 
@@ -321,11 +412,17 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
-      const wrapper = render(router, () => (
-        <Link to="Test" details={{ hash: "thing" }}>
-          Test
-        </Link>
-      ));
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Link to="Test" details={{ hash: "thing" }}>
+              Test
+            </Link>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
       const leftClickEvent = {
         defaultPrevented: false,
         preventDefault() {
@@ -337,7 +434,7 @@ describe("<Link>", () => {
         shiftKey: null,
         button: 0
       };
-      wrapper.find("a").simulate("click", leftClickEvent);
+      Simulate.click(a, leftClickEvent);
       const mockLocation = mockNavigate.mock.calls[0][0];
       expect(mockLocation).toMatchObject({
         pathname: "/",
@@ -352,11 +449,17 @@ describe("<Link>", () => {
         history.navigate = mockNavigate;
         const onClick = jest.fn();
         const router = curi(history, [{ name: "Test", path: "" }]);
-        const wrapper = render(router, () => (
-          <Link to="Test" onClick={onClick}>
-            Test
-          </Link>
-        ));
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test" onClick={onClick}>
+                Test
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
         const leftClickEvent = {
           defaultPrevented: false,
           preventDefault() {
@@ -368,7 +471,7 @@ describe("<Link>", () => {
           shiftKey: null,
           button: 0
         };
-        wrapper.find("a").simulate("click", leftClickEvent);
+        Simulate.click(a, leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
         expect(mockNavigate.mock.calls.length).toBe(1);
       });
@@ -381,11 +484,17 @@ describe("<Link>", () => {
           event.preventDefault();
         });
         const router = curi(history, [{ name: "Test", path: "" }]);
-        const wrapper = render(router, () => (
-          <Link to="Test" onClick={onClick}>
-            Test
-          </Link>
-        ));
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test" onClick={onClick}>
+                Test
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
         const leftClickEvent = {
           defaultPrevented: false,
           preventDefault() {
@@ -397,7 +506,7 @@ describe("<Link>", () => {
           shiftKey: null,
           button: 0
         };
-        wrapper.find("a").simulate("click", leftClickEvent);
+        Simulate.click(a, leftClickEvent);
         expect(onClick.mock.calls.length).toBe(1);
         expect(mockNavigate.mock.calls.length).toBe(0);
       });
@@ -409,7 +518,13 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
-      const wrapper = render(router, () => <Link to="Test">Test</Link>);
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => <Link to="Test">Test</Link>}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
       const modifiedClickEvent = {
         defaultPrevented: false,
         preventDefault() {
@@ -425,7 +540,7 @@ describe("<Link>", () => {
       modifiers.forEach(m => {
         const eventCopy = Object.assign({}, modifiedClickEvent);
         eventCopy[m] = true;
-        wrapper.find("a").simulate("click", eventCopy);
+        Simulate.click(a, eventCopy);
         expect(mockNavigate.mock.calls.length).toBe(0);
       });
     });
@@ -436,7 +551,13 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
-      const wrapper = render(router, () => <Link to="Test">Test</Link>);
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => <Link to="Test">Test</Link>}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
       const preventedEvent = {
         defaultPrevented: true,
         preventDefault() {
@@ -448,7 +569,7 @@ describe("<Link>", () => {
         shiftKey: null,
         button: 0
       };
-      wrapper.find("a").simulate("click", preventedEvent);
+      Simulate.click(a, preventedEvent);
       expect(mockNavigate.mock.calls.length).toBe(0);
     });
   });

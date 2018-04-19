@@ -1,7 +1,7 @@
 import React from "react";
 import warning from "warning";
 
-import CuriContext from "./Context";
+import { Provider } from "./Context";
 
 import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
 
@@ -56,11 +56,7 @@ class CuriProvider extends React.Component<
     const { response, navigation } = this.state;
     const value = { router, response, navigation };
 
-    return (
-      <CuriContext.Provider value={value}>
-        {this.props.children(value)}
-      </CuriContext.Provider>
-    );
+    return <Provider value={value}>{this.props.children(value)}</Provider>;
   }
 }
 
