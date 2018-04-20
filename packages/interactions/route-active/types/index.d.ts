@@ -1,3 +1,3 @@
-import { Interaction } from '@curi/core';
+import { Interaction } from "@curi/core";
 declare function checkIfActive(): Interaction;
 export default checkIfActive;

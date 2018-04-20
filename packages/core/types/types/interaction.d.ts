@@ -1,4 +1,4 @@
-import { Route } from './route';
+import { Route } from "./route";
 export declare type RegisterInteraction = (route: Route, parent?: any) => any;
 export declare type GetInteraction = (name: string, ...rest: Array<any>) => any;
 export interface Interaction {
