@@ -25,14 +25,16 @@ There are also a number of [examples](/examples) that you can learn from. Many o
 |[@curi/core](/packages/core)|[![npm][@curi/core-version-badge]][npm-@curi/core]|[Documentation](https://curi.js.org/packages/@curi/curi/)|[Source](/packages/core/src)|
 ||The core package provides the core routing functionality for the application. It is used to create a configuration object using a `history` object and a `routes` array.|
 
-#### Addons:
+#### Route Interactions:
 
 |Name|About|Documentation|Source|
 |---|---|---|---|
-|[@curi/addon-active](/packages/addons/addon-active)|[![npm][@curi/addon-active-version-badge]][npm-@curi/addon-active]|[Documentation](https://curi.js.org/packages/@curi/addon-active/)|[Source](/packages/addons/addon-active/src)|
-||The `active` addon allows you to determine if a route is "active" (its `name`/`params` match the current response's `name`/`params`).. This can be useful for giving an element a specific style when it is "active".|
-|[@curi/addon-ancestors](/packages/addons/addon-ancestors)|[![npm][@curi/addon-ancestors-version-badge]][npm-@curi/addon-ancestors]|[Documentation](https://curi.js.org/packages/@curi/addon-ancestors/)|[Source](/packages/addons/addon-ancestors/src)|
-||The `ancestors` addon allows you to get the names of ancestor routes for a particular route. You can either get the ancestor at a specific level (the parent route is 1 level up, the gradnparent route is 2, etc.) or you can get a list of all ancestor routes (the list is ordered from furthest to closest).|
+|[@curi/route-active](/packages/interactions/route-active)|[![npm][@curi/route-active-version-badge]][npm-@curi/route-active]|[Documentation](https://curi.js.org/packages/@curi/addon-active/)|[Source](/packages/interactions/route-active/src)|
+||The `active` route interaction allows you to determine if a route is "active" (its `name`/`params` match the current response's `name`/`params`).. This can be useful for giving an element a specific style when it is "active".|
+|[@curi/route-ancestors](/packages/interactions/route-ancestors)|[![npm][@curi/route-ancestors-version-badge]][npm-@curi/route-ancestors]|[Documentation](https://curi.js.org/packages/@curi/route-ancestors/)|[Source](/packages/interactions/route-ancestors/src)|
+||The `ancestors` route interaction allows you to get the names of ancestor routes for a particular route. You can either get the ancestor at a specific level (the parent route is 1 level up, the gradnparent route is 2, etc.) or you can get a list of all ancestor routes (the list is ordered from furthest to closest).|
+|[@curi/route-prefetch](/packages/interactions/route-prefetch)|[![npm][@curi/route-prefetch-version-badge]][npm-@curi/route-prefetch]|[Documentation](https://curi.js.org/packages/@curi/addon-prefetch/)|[Source](/packages/interactions/route-prefetch/src)|
+||The `prefetch` route interaction allows you to call a route's `on.every()` function early so you can cache its data before a request for that route is actually made.|
 
 #### Side Effects:
 
@@ -72,14 +74,14 @@ While you can use vanilla JavaScript to render your application, most modern app
 [@curi/core-version-badge]: https://img.shields.io/npm/v/@curi/core.svg
 [npm-@curi/core]: https://npmjs.com/package/@curi/core
 
-[@curi/addon-prefetch-version-badge]: https://img.shields.io/npm/v/@curi/addon-prefetch.svg
-[npm-@curi/addon-prefetch]: https://npmjs.com/package/@curi/addon-prefetch
+[@curi/route-prefetch-version-badge]: https://img.shields.io/npm/v/@curi/route-prefetch.svg
+[npm-@curi/route-prefetch]: https://npmjs.com/package/@curi/route-prefetch
 
-[@curi/addon-active-version-badge]: https://img.shields.io/npm/v/@curi/addon-active.svg
-[npm-@curi/addon-active]: https://npmjs.com/package/@curi/addon-active
+[@curi/route-active-version-badge]: https://img.shields.io/npm/v/@curi/route-active.svg
+[npm-@curi/route-active]: https://npmjs.com/package/@curi/route-active
 
-[@curi/addon-ancestors-version-badge]: https://img.shields.io/npm/v/@curi/addon-ancestors.svg
-[npm-@curi/addon-ancestors]: https://npmjs.com/package/@curi/addon-ancestors
+[@curi/route-ancestors-version-badge]: https://img.shields.io/npm/v/@curi/route-ancestors.svg
+[npm-@curi/route-ancestors]: https://npmjs.com/package/@curi/route-ancestors
 
 [@curi/side-effect-title-version-badge]: https://img.shields.io/npm/v/@curi/side-effect-title.svg
 [npm-@curi/side-effect-title]: https://npmjs.com/package/@curi/side-effect-title
