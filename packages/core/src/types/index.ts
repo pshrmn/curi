@@ -9,7 +9,7 @@ export {
   ResponseBuilder,
   EveryMatchFn,
   InitialMatchFn,
-  ResponseMatchFn
+  OnFns
 } from "./route";
 export { Response, RawParams, Params } from "./response";
 export {
