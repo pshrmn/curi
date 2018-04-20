@@ -534,7 +534,7 @@ describe("curi", () => {
     });
   });
 
-  describe("refresh", () => {
+  describe("replaceRoutes", () => {
     const err = console.error;
 
     beforeEach(() => {
@@ -559,7 +559,7 @@ describe("curi", () => {
 
       const router = curi(history, englishRoutes);
 
-      router.refresh(spanishRoutes);
+      router.replaceRoutes(spanishRoutes);
 
       const englishNames = ["Home", "About", "Contact"];
       englishNames.forEach(n => {

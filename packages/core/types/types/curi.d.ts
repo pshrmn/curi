@@ -38,7 +38,7 @@ export interface CurrentResponse {
     navigation: Navigation;
 }
 export interface CuriRouter {
-    refresh: (routeArray: Array<RouteDescriptor>) => void;
+    replaceRoutes: (routeArray: Array<RouteDescriptor>) => void;
     respond: (fn: ResponseHandler, options?: RespondOptions) => RemoveResponseHandler;
     addons: Addons;
     history: History;

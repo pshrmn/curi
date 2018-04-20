@@ -185,7 +185,7 @@ function createRouter(
     addons: registeredAddons,
     history,
     respond,
-    refresh: setupRoutesAndAddons,
+    replaceRoutes: setupRoutesAndAddons,
     current() {
       return {
         response: mostRecent.response,
