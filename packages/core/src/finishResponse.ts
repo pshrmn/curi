@@ -45,8 +45,8 @@ export default function finishResponse(
   addons: Addons
 ): Response {
   const { async, route, response } = pending;
-  if (route && route.public.match.response) {
-    route.public.match.response({
+  if (route && route.response) {
+    route.response({
       async,
       route: routeProperties(response),
       set: responseSetters(response, addons),

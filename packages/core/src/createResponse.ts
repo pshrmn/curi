@@ -36,10 +36,10 @@ function resolveRoute(
       response
     });
   }
-  const { match } = route.public;
+  const { async } = route.public;
   return Promise.all([
-    match.initial ? match.initial() : undefined,
-    match.every ? match.every(routeProperties(response)) : undefined
+    async.initial ? async.initial() : undefined,
+    async.every ? async.every(routeProperties(response)) : undefined
   ]).then(
     ([initial, every]) => {
       return {

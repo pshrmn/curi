@@ -208,7 +208,7 @@ describe("curi", () => {
             {
               name: "All",
               path: ":all+",
-              match: {
+              async: {
                 initial: () => Promise.resolve() // force async
               }
             }
@@ -253,10 +253,8 @@ describe("curi", () => {
             {
               name: "All",
               path: "(.*)",
-              match: {
-                response: ({ set }) => {
-                  set.data(Math.random());
-                }
+              response: ({ set }) => {
+                set.data(Math.random());
               }
             }
           ];
@@ -307,10 +305,8 @@ describe("curi", () => {
             {
               name: "All",
               path: "(.*)",
-              match: {
-                response: ({ set }) => {
-                  set.data(Math.random());
-                }
+              response: ({ set }) => {
+                set.data(Math.random());
               }
             }
           ];
@@ -347,10 +343,8 @@ describe("curi", () => {
             {
               name: "Start",
               path: "",
-              match: {
-                response: ({ set }) => {
-                  set.redirect({ name: "Other" });
-                }
+              response: ({ set }) => {
+                set.redirect({ name: "Other" });
               }
             },
             {
@@ -375,10 +369,8 @@ describe("curi", () => {
             {
               name: "Start",
               path: "",
-              match: {
-                response: ({ set }) => {
-                  set.redirect({ name: "Other" });
-                }
+              response: ({ set }) => {
+                set.redirect({ name: "Other" });
               }
             },
             {
@@ -409,12 +401,12 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when a route has match.initial", () => {
+      it("does asynchronous matching when a route has async.initial", () => {
         const routes = [
           {
             name: "Home",
             path: "",
-            match: {
+            async: {
               initial: () => Promise.resolve()
             }
           }
@@ -427,12 +419,12 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when a route has match.every", () => {
+      it("does asynchronous matching when a route has async.every", () => {
         const routes = [
           {
             name: "Home",
             path: "",
-            match: {
+            async: {
               every: () => Promise.resolve()
             }
           }
@@ -445,7 +437,7 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when a nested route has match.initial/every", () => {
+      it("does asynchronous matching when a nested route has async.initial/every", () => {
         const routes = [
           {
             name: "Parent",
@@ -454,7 +446,7 @@ describe("curi", () => {
               {
                 name: "Child",
                 path: "child",
-                match: {
+                async: {
                   initial: () => Promise.resolve()
                 }
               }
@@ -488,7 +480,7 @@ describe("curi", () => {
           {
             name: "Catch All",
             path: "(.*)",
-            match: {
+            async: {
               initial: () => Promise.resolve()
             }
           }
@@ -655,7 +647,7 @@ describe("curi", () => {
             {
               name: "How",
               path: ":method",
-              match: {
+              async: {
                 every: () => {
                   promiseResolved = true;
                   return Promise.resolve(promiseResolved);
@@ -687,7 +679,7 @@ describe("curi", () => {
             {
               name: "How",
               path: ":method",
-              match: {
+              async: {
                 initial: () => Promise.resolve()
               }
             }
@@ -727,7 +719,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              match: { initial: () => Promise.resolve() }
+              async: { initial: () => Promise.resolve() }
             }
           ];
           const sub = jest.fn();
@@ -744,7 +736,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              match: { initial: () => Promise.resolve() }
+              async: { initial: () => Promise.resolve() }
             }
           ];
           const sub = jest.fn();
@@ -793,7 +785,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              match: { initial: () => Promise.resolve() }
+              async: { initial: () => Promise.resolve() }
             },
             { name: "Catch All", path: "(.*)" }
           ];
@@ -847,7 +839,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              match: { initial: () => Promise.resolve() }
+              async: { initial: () => Promise.resolve() }
             },
             { name: "Catch All", path: "(.*)" }
           ];
@@ -915,10 +907,8 @@ describe("curi", () => {
         {
           name: "A Route",
           path: "",
-          match: {
-            response: ({ set }) => {
-              set.redirect({ name: "B Route", status: 301 });
-            }
+          response: ({ set }) => {
+            set.redirect({ name: "B Route", status: 301 });
           }
         },
         {

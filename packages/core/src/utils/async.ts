@@ -1,8 +1,8 @@
 import { RouteDescriptor, InternalRoute } from "../types/route";
 
 function hasMatchFunction(route: InternalRoute): boolean {
-  const { match } = route.public;
-  return !!(match && (match.every || match.initial));
+  const { async } = route.public;
+  return !!(async && (async.every || async.initial));
 }
 
 export default function hasAsyncRoute(routes: Array<InternalRoute>): boolean {

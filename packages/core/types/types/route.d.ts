@@ -32,11 +32,10 @@ export interface ResponseBuilder {
 }
 export declare type EveryMatchFn = (route?: RouteProps) => Promise<any>;
 export declare type InitialMatchFn = () => Promise<any>;
-export declare type ResponseMatchFn = (props: ResponseBuilder) => void;
-export interface MatchFns {
+export declare type ResponseFn = (props: ResponseBuilder) => void;
+export interface AsyncFns {
     initial?: InitialMatchFn;
     every?: EveryMatchFn;
-    response?: ResponseMatchFn;
 }
 export interface RouteDescriptor {
     name: string;
@@ -44,7 +43,8 @@ export interface RouteDescriptor {
     pathOptions?: RegExpOptions;
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
-    match?: MatchFns;
+    response?: ResponseFn;
+    async?: AsyncFns;
     extra?: {
         [key: string]: any;
     };
@@ -53,7 +53,7 @@ export interface Route {
     name: string;
     path: string;
     keys: Array<string | number>;
-    match: MatchFns;
+    async: AsyncFns;
     extra: {
         [key: string]: any;
     };
@@ -66,6 +66,7 @@ export interface InternalMatch {
 export interface InternalRoute {
     public: Route;
     children: Array<InternalRoute>;
+    response: ResponseFn;
     pathMatching: InternalMatch;
     paramParsers: ParamParsers;
 }

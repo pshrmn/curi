@@ -1,5 +1,6 @@
 ## Next
 
+* Move `match.response` to top level and group `match.every` and `match.initial` under `async` object.
 * Group `initial` and `every` resolved values with `error` under `async` object.
 * Rename `router.refresh` to `router.replaceRoutes`.
 
