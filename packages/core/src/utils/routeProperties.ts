@@ -1,13 +1,10 @@
-import { InternalRoute, RouteProps } from '../types/route';
-import { ResponseProps } from '../types/response';
+import { InternalRoute, RouteProps } from "../types/route";
+import { Response } from "../types/response";
 
-export default function routeProperties(
-  route: InternalRoute,
-  props: ResponseProps
-): RouteProps {
+export default function routeProperties(base: Response): RouteProps {
   return {
-    params: props.params,
-    location: props.location,
-    name: route.public.name
+    params: base.params,
+    location: base.location,
+    name: base.name
   };
 }

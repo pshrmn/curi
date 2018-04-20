@@ -2,15 +2,15 @@ import routeProperties from "./utils/routeProperties";
 
 import { InternalRoute, RedirectProps } from "./types/route";
 import { Addons } from "./types/addon";
-import { Response, PendingResponse, ResponseProps } from "./types/response";
+import { Response, PendingResponse } from "./types/response";
 
-function responseSetters(props: ResponseProps, addons: Addons) {
+function responseSetters(base: Response, addons: Addons) {
   return {
-    redirect(redProps: RedirectProps): void {
-      const { name, params, query, hash, state, status = 301 } = redProps;
-      props.status = status;
+    redirect(redirectProps: RedirectProps): void {
+      const { name, params, query, hash, state, status = 301 } = redirectProps;
+      base.status = status;
       const pathname = addons.pathname(name, params);
-      props.redirectTo = {
+      base.redirectTo = {
         pathname,
         query,
         hash,
@@ -19,52 +19,40 @@ function responseSetters(props: ResponseProps, addons: Addons) {
     },
 
     error(err: any): void {
-      props.error = err;
+      base.error = err;
     },
 
     status(code: number): void {
-      props.status = code;
+      base.status = code;
     },
 
     data(data: any): void {
-      props.data = data;
+      base.data = data;
     },
 
     body(body: any): void {
-      props.body = body;
+      base.body = body;
     },
 
     title(title: string): void {
-      props.title = title;
+      base.title = title;
     }
   };
-}
-
-function freezeResponse(route: InternalRoute, props: ResponseProps): Response {
-  const response: Response = Object.assign(
-    {
-      key: props.location.key,
-      name: route ? route.public.name : undefined
-    },
-    props
-  );
-
-  return response;
 }
 
 export default function finishResponse(
   pending: PendingResponse,
   addons: Addons
 ): Response {
-  const { error, resolved, route, props } = pending;
+  const { error, resolved, route, base } = pending;
   if (route && route.public.match.response) {
     route.public.match.response({
       error,
       resolved,
-      route: routeProperties(route, props),
-      set: responseSetters(props, addons),
+      route: routeProperties(base),
+      set: responseSetters(base, addons),
       addons
     });
   }
-  return freezeResponse(route, props);
+  return base;
 }

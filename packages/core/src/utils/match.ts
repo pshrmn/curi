@@ -2,8 +2,8 @@ import { join, stripLeadingSlash } from "./path";
 import parseParams from "./parseParams";
 
 import { HickoryLocation } from "@hickory/root";
-import { InternalRoute, MatchingRoute, MatchedRoute } from "../types/route";
-import { Params, RawParams, ResponseProps } from "../types/response";
+import { InternalRoute, MatchingRoute, BestMatch } from "../types/route";
+import { Params, RawParams, Response } from "../types/response";
 
 function matchRoute(
   route: InternalRoute,
@@ -49,7 +49,7 @@ function matchRoute(
 export default function matchLocation(
   location: HickoryLocation,
   routes: Array<InternalRoute>
-): MatchedRoute {
+): BestMatch {
   let partials: Array<string> = [];
   let params: Params = {};
   let route: InternalRoute;
@@ -77,14 +77,16 @@ export default function matchLocation(
   }
 
   // start building the properties of the response object
-  const props: ResponseProps = {
+  const base: Response = {
     location,
+    key: location.key,
     params,
+    name: route ? route.public.name : undefined,
     partials,
     status: route != null ? 200 : 404,
     body: undefined,
     data: undefined,
     title: ""
   };
-  return { route, props };
+  return { route, base };
 }

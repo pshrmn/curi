@@ -1,7 +1,7 @@
 import { RegExpOptions, Key } from "path-to-regexp";
 import { LocationDetails } from "@hickory/root";
-import { Params, ResponseProps } from './response';
-import { Addons } from './addon';
+import { Params, Response } from "./response";
+import { Addons } from "./addon";
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
     [key: string]: ParamParser;
@@ -74,7 +74,7 @@ export interface MatchingRoute {
     route: InternalRoute;
     params: Params;
 }
-export interface MatchedRoute {
+export interface BestMatch {
     route: InternalRoute;
-    props: ResponseProps;
+    base: Response;
 }
