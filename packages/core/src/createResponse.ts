@@ -11,7 +11,7 @@ export function createResponse(
 ): PendingResponse {
   return {
     ...matchLocation(location, routes),
-    async: null
+    load: null
   };
 }
 
@@ -36,16 +36,16 @@ function resolveRoute(
       response
     });
   }
-  const { async } = route.public;
+  const { on } = route.public;
   return Promise.all([
-    async.initial ? async.initial() : undefined,
-    async.every ? async.every(routeProperties(response)) : undefined
+    on.initial ? on.initial() : undefined,
+    on.every ? on.every(routeProperties(response)) : undefined
   ]).then(
     ([initial, every]) => {
       return {
         route,
         response,
-        async: {
+        load: {
           error: null,
           initial,
           every
@@ -57,7 +57,7 @@ function resolveRoute(
       return {
         route,
         response,
-        async: {
+        load: {
           error,
           initial: null,
           every: null

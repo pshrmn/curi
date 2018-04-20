@@ -12,7 +12,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     pathOptions = {},
     children: descriptorChildren = [],
     response,
-    async = {},
+    on = {},
     extra,
     params: paramParsers
   } = options;
@@ -38,9 +38,9 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       name,
       path: path,
       keys: keys.map(key => key.name),
-      async: {
-        initial: async.initial && once(async.initial),
-        every: async.every
+      on: {
+        initial: on.initial && once(on.initial),
+        every: on.every
       },
       extra
     },

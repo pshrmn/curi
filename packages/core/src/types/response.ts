@@ -19,14 +19,14 @@ export interface Response {
   redirectTo?: ToArgument;
 }
 
-export interface AsyncResults {
+export interface LoadResults {
   error: any;
   initial: any;
   every: any;
 }
 
 export interface PendingResponse {
-  async?: AsyncResults;
+  load?: LoadResults;
   route: InternalRoute;
   response: Response;
 }

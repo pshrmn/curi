@@ -1,7 +1,7 @@
 import { RegExpOptions, Key } from "path-to-regexp";
 
 import { LocationDetails } from "@hickory/root";
-import { Params, Response, AsyncResults } from "./response";
+import { Params, Response, LoadResults } from "./response";
 import { Addons } from "./addon";
 
 export type ParamParser = (input: string) => any;
@@ -31,7 +31,7 @@ export interface ResponseSetters {
 }
 
 export interface ResponseBuilder {
-  async: AsyncResults;
+  load: LoadResults;
   route: RouteProps;
   set: ResponseSetters;
   addons: Addons;
@@ -41,7 +41,7 @@ export type EveryMatchFn = (route?: RouteProps) => Promise<any>;
 export type InitialMatchFn = () => Promise<any>;
 export type ResponseFn = (props: ResponseBuilder) => void;
 
-export interface AsyncFns {
+export interface OnFns {
   initial?: InitialMatchFn;
   every?: EveryMatchFn;
 }
@@ -53,7 +53,7 @@ export interface RouteDescriptor {
   params?: ParamParsers;
   children?: Array<RouteDescriptor>;
   response?: ResponseFn;
-  async?: AsyncFns;
+  on?: OnFns;
   extra?: { [key: string]: any };
 }
 
@@ -65,7 +65,7 @@ export interface Route {
   name: string;
   path: string;
   keys: Array<string | number>;
-  async: AsyncFns;
+  on: OnFns;
   extra: { [key: string]: any };
 }
 

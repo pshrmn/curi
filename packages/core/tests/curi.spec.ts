@@ -208,7 +208,7 @@ describe("curi", () => {
             {
               name: "All",
               path: ":all+",
-              async: {
+              on: {
                 initial: () => Promise.resolve() // force async
               }
             }
@@ -401,12 +401,12 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when a route has async.initial", () => {
+      it("does asynchronous matching when a route has on.initial", () => {
         const routes = [
           {
             name: "Home",
             path: "",
-            async: {
+            on: {
               initial: () => Promise.resolve()
             }
           }
@@ -419,12 +419,12 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when a route has async.every", () => {
+      it("does asynchronous matching when a route has on.every", () => {
         const routes = [
           {
             name: "Home",
             path: "",
-            async: {
+            on: {
               every: () => Promise.resolve()
             }
           }
@@ -437,7 +437,7 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when a nested route has async.initial/every", () => {
+      it("does asynchronous matching when a nested route has on.initial/every", () => {
         const routes = [
           {
             name: "Parent",
@@ -446,7 +446,7 @@ describe("curi", () => {
               {
                 name: "Child",
                 path: "child",
-                async: {
+                on: {
                   initial: () => Promise.resolve()
                 }
               }
@@ -474,13 +474,13 @@ describe("curi", () => {
       });
     });
 
-    describe("async", () => {
+    describe("on", () => {
       it("initial value is an object with null response and navigation properties", () => {
         const router = curi(history, [
           {
             name: "Catch All",
             path: "(.*)",
-            async: {
+            on: {
               initial: () => Promise.resolve()
             }
           }
@@ -647,7 +647,7 @@ describe("curi", () => {
             {
               name: "How",
               path: ":method",
-              async: {
+              on: {
                 every: () => {
                   promiseResolved = true;
                   return Promise.resolve(promiseResolved);
@@ -679,7 +679,7 @@ describe("curi", () => {
             {
               name: "How",
               path: ":method",
-              async: {
+              on: {
                 initial: () => Promise.resolve()
               }
             }
@@ -719,7 +719,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              async: { initial: () => Promise.resolve() }
+              on: { initial: () => Promise.resolve() }
             }
           ];
           const sub = jest.fn();
@@ -736,7 +736,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              async: { initial: () => Promise.resolve() }
+              on: { initial: () => Promise.resolve() }
             }
           ];
           const sub = jest.fn();
@@ -785,7 +785,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              async: { initial: () => Promise.resolve() }
+              on: { initial: () => Promise.resolve() }
             },
             { name: "Catch All", path: "(.*)" }
           ];
@@ -839,7 +839,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              async: { initial: () => Promise.resolve() }
+              on: { initial: () => Promise.resolve() }
             },
             { name: "Catch All", path: "(.*)" }
           ];

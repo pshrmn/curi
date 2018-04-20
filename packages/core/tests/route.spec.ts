@@ -94,9 +94,9 @@ describe("public route properties", () => {
     });
   });
 
-  describe("async", () => {
+  describe("load", () => {
     describe("initial", () => {
-      it("will be defined when a async.initial function is provided", () => {
+      it("will be defined when a on.initial function is provided", () => {
         const initialTest = () => Promise.resolve();
 
         const history = InMemory({ locations: ["/test"] });
@@ -104,7 +104,7 @@ describe("public route properties", () => {
           {
             name: "Test",
             path: "test",
-            async: {
+            on: {
               initial: initialTest
             }
           }
@@ -113,10 +113,10 @@ describe("public route properties", () => {
           addons: [PropertyReporter()]
         });
         const routeProperties = router.addons.properties("Test");
-        expect(routeProperties.async.initial).toBeDefined();
+        expect(routeProperties.on.initial).toBeDefined();
       });
 
-      it("will be undefined when async.initial fn isn't defined", () => {
+      it("will be undefined when on.initial fn isn't defined", () => {
         const history = InMemory({ locations: ["/test"] });
         const routes = [
           {
@@ -128,12 +128,12 @@ describe("public route properties", () => {
           addons: [PropertyReporter()]
         });
         const routeProperties = router.addons.properties("Test");
-        expect(routeProperties.async.initial).toBeUndefined();
+        expect(routeProperties.on.initial).toBeUndefined();
       });
     });
 
     describe("every", () => {
-      it("will be the provided async.every function", () => {
+      it("will be the provided on.every() function", () => {
         const everyTest = () => Promise.resolve();
 
         const history = InMemory({ locations: ["/test"] });
@@ -141,17 +141,17 @@ describe("public route properties", () => {
           {
             name: "Test",
             path: "test",
-            async: { every: everyTest }
+            on: { every: everyTest }
           }
         ];
         const router = curi(history, routes, {
           addons: [PropertyReporter()]
         });
         const routeProperties = router.addons.properties("Test");
-        expect(routeProperties.async.every).toBe(everyTest);
+        expect(routeProperties.on.every).toBe(everyTest);
       });
 
-      it("will be undefined when async.every isn't defined", () => {
+      it("will be undefined when on.every() isn't defined", () => {
         const history = InMemory({ locations: ["/test"] });
         const routes = [
           {
@@ -163,7 +163,7 @@ describe("public route properties", () => {
           addons: [PropertyReporter()]
         });
         const routeProperties = router.addons.properties("Test");
-        expect(routeProperties.async.every).toBeUndefined();
+        expect(routeProperties.on.every).toBeUndefined();
       });
     });
   });

@@ -138,11 +138,11 @@ describe("route matching/response generation", () => {
         {
           name: "Contact",
           path: "contact",
-          response: ({ async }) => {
-            expect(async.error).toBe("This is an error");
+          response: ({ load }) => {
+            expect(load.error).toBe("This is an error");
             done();
           },
-          async: {
+          on: {
             every: () => {
               return Promise.reject("This is an error");
             }
@@ -681,13 +681,13 @@ describe("route matching/response generation", () => {
     });
   });
 
-  describe("the async functions", () => {
+  describe("the on functions", () => {
     describe("initial", () => {
       it("will only be called once", done => {
         /*
          * This test is a bit odd to read, but it verifies that the
-         * async.initial function is only called once (while the
-         * async.every function is called on every match).
+         * on.initial function is only called once (while the
+         * on.every function is called on every match).
          */
         let initialCount = 0;
         let everyCount = 0;
@@ -698,7 +698,7 @@ describe("route matching/response generation", () => {
           {
             name: "Test",
             path: ":test",
-            async: { initial, every }
+            on: { initial, every }
           }
         ];
         const router = curi(history, routes);
@@ -738,7 +738,7 @@ describe("route matching/response generation", () => {
         const CatchAll = {
           name: "Catch All",
           path: ":anything",
-          async: { every: spy }
+          on: { every: spy }
         };
 
         const history = InMemory({ locations: ["/hello?one=two"] });
@@ -764,7 +764,7 @@ describe("route matching/response generation", () => {
             name: "First",
             path: "first",
             response: responseSpy,
-            async: {
+            on: {
               every: everySpy
             }
           },
@@ -777,7 +777,7 @@ describe("route matching/response generation", () => {
               expect(responseSpy.mock.calls.length).toBe(0);
               done();
             },
-            async: {
+            on: {
               // re-use the every spy so that this route's response
               // fn isn't call until after the first route's every
               // fn has resolved
@@ -791,13 +791,13 @@ describe("route matching/response generation", () => {
         history.push("/second");
       });
 
-      describe("async", () => {
-        it("is null when route has no async.initial/every functions", () => {
+      describe("load", () => {
+        it("is null when route has no on.initial/every functions", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            response: ({ async }) => {
-              expect(async).toBe(null);
+            response: ({ load }) => {
+              expect(load).toBe(null);
             }
           };
 
@@ -809,12 +809,12 @@ describe("route matching/response generation", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            response: ({ async }) => {
-              expect(async).toHaveProperty("error");
-              expect(async).toHaveProperty("initial");
-              expect(async).toHaveProperty("every");
+            response: ({ load }) => {
+              expect(load).toHaveProperty("error");
+              expect(load).toHaveProperty("initial");
+              expect(load).toHaveProperty("every");
             },
-            async: {
+            on: {
               initial: () => Promise.resolve(1)
             }
           };
@@ -824,9 +824,9 @@ describe("route matching/response generation", () => {
         });
 
         describe("error", () => {
-          it("receives the error rejected by async.initial", done => {
-            const spy = jest.fn(({ async }) => {
-              expect(async.error).toBe("rejected by initial");
+          it("receives the error rejected by on.initial()", done => {
+            const spy = jest.fn(({ load }) => {
+              expect(load.error).toBe("rejected by initial");
               done();
             });
 
@@ -834,7 +834,7 @@ describe("route matching/response generation", () => {
               name: "Catch All",
               path: ":anything",
               response: spy,
-              async: {
+              on: {
                 initial: () => Promise.reject("rejected by initial")
               }
             };
@@ -843,9 +843,9 @@ describe("route matching/response generation", () => {
             const router = curi(history, [CatchAll]);
           });
 
-          it("receives the error rejected by async.every", done => {
-            const spy = jest.fn(({ async }) => {
-              expect(async.error).toBe("rejected by every");
+          it("receives the error rejected by on.every()", done => {
+            const spy = jest.fn(({ load }) => {
+              expect(load.error).toBe("rejected by every");
               done();
             });
 
@@ -853,7 +853,7 @@ describe("route matching/response generation", () => {
               name: "Catch All",
               path: ":anything",
               response: spy,
-              async: {
+              on: {
                 every: () => Promise.reject("rejected by every")
               }
             };
@@ -864,9 +864,9 @@ describe("route matching/response generation", () => {
         });
 
         describe("initial", () => {
-          it("is the data resolved by async.initial", done => {
-            const spy = jest.fn(({ async }) => {
-              expect(async.initial).toMatchObject({ test: "ing" });
+          it("is the data resolved by on.initial()", done => {
+            const spy = jest.fn(({ load }) => {
+              expect(load.initial).toMatchObject({ test: "ing" });
               done();
             });
 
@@ -874,7 +874,7 @@ describe("route matching/response generation", () => {
               name: "Catch All",
               path: ":anything",
               response: spy,
-              async: {
+              on: {
                 initial: () => Promise.resolve({ test: "ing" })
               }
             };
@@ -891,16 +891,16 @@ describe("route matching/response generation", () => {
               {
                 name: "Test",
                 path: ":test",
-                response: ({ async }) => {
+                response: ({ load }) => {
                   if (!hasFinished) {
                     hasFinished = true;
-                    random = async.initial;
+                    random = load.initial;
                   } else {
-                    expect(async.initial).toBe(random);
+                    expect(load.initial).toBe(random);
                     done();
                   }
                 },
-                async: {
+                on: {
                   initial: () => {
                     return Promise.resolve(Math.random());
                   }
@@ -913,9 +913,9 @@ describe("route matching/response generation", () => {
             });
           });
 
-          it("async.initial is undefined if there is an every fn but no initial fn", done => {
-            const spy = jest.fn(({ async }) => {
-              expect(async.initial).toBeUndefined();
+          it("load.initial is undefined if there is an every fn but no initial fn", done => {
+            const spy = jest.fn(({ load }) => {
+              expect(load.initial).toBeUndefined();
               done();
             });
 
@@ -923,7 +923,7 @@ describe("route matching/response generation", () => {
               name: "Catch All",
               path: ":anything",
               response: spy,
-              async: {
+              on: {
                 every: () => Promise.resolve()
               }
             };
@@ -934,9 +934,9 @@ describe("route matching/response generation", () => {
         });
 
         describe("every", () => {
-          it("is the data resolved by async.every", done => {
-            const spy = jest.fn(({ async }) => {
-              expect(async.every).toMatchObject({ test: "ing" });
+          it("is the data resolved by on.every()", done => {
+            const spy = jest.fn(({ load }) => {
+              expect(load.every).toMatchObject({ test: "ing" });
               done();
             });
 
@@ -944,7 +944,7 @@ describe("route matching/response generation", () => {
               name: "Catch All",
               path: ":anything",
               response: spy,
-              async: {
+              on: {
                 every: () => Promise.resolve({ test: "ing" })
               }
             };
@@ -953,9 +953,9 @@ describe("route matching/response generation", () => {
             const router = curi(history, [CatchAll]);
           });
 
-          it("async.every is undefined if there is an initial fn but no every fn", done => {
+          it("load.every is undefined if there is an initial fn but no every fn", done => {
             const spy = jest.fn(opts => {
-              expect(opts.async.every).toBeUndefined();
+              expect(opts.load.every).toBeUndefined();
               done();
             });
 
@@ -963,7 +963,7 @@ describe("route matching/response generation", () => {
               name: "Catch All",
               path: ":anything",
               response: spy,
-              async: {
+              on: {
                 initial: () => Promise.resolve()
               }
             };
