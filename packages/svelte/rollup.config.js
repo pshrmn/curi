@@ -9,7 +9,7 @@ const config = {
   input: "src/index.js",
   output: {
     name: "CuriSvelte",
-    sourcemap: true,
+    sourcemap: false,
     globals: {
       "svelte/store": "svelte"
     }

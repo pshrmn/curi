@@ -1,12 +1,14 @@
-import typescript from 'rollup-plugin-typescript2';
-import uglify from 'rollup-plugin-uglify';
-import replace from 'rollup-plugin-replace';
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
+import typescript from "rollup-plugin-typescript2";
+import uglify from "rollup-plugin-uglify";
+import replace from "rollup-plugin-replace";
+import commonjs from "rollup-plugin-commonjs";
+import resolve from "rollup-plugin-node-resolve";
 
 const config = {
-  input: 'src/index.ts',
-  sourcemap: false,
+  input: "src/index.ts",
+  output: {
+    sourcemap: false
+  },
   plugins: [
     typescript({
       useTsconfigDeclarationDir: true
@@ -23,7 +25,7 @@ const config = {
   ]
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   config.plugins.push(uglify());
 }
 

@@ -1,12 +1,13 @@
 import config from "../../config/rollup.config.js";
 
-export default Object.assign({}, config, {
-  external: ["react", "prop-types"],
+export default {
+  ...config,
+  external: ["react"],
   output: {
+    ...config.output,
     name: "CuriReact",
     globals: {
-      react: "React",
-      "prop-types": "PropTypes"
+      react: "React"
     }
   }
-});
+};
