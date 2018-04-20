@@ -4,13 +4,13 @@ import { InternalRoute, RedirectProps } from "./types/route";
 import { Addons } from "./types/addon";
 import { Response, PendingResponse } from "./types/response";
 
-function responseSetters(base: Response, addons: Addons) {
+function responseSetters(response: Response, addons: Addons) {
   return {
     redirect(redirectProps: RedirectProps): void {
       const { name, params, query, hash, state, status = 301 } = redirectProps;
-      base.status = status;
+      response.status = status;
       const pathname = addons.pathname(name, params);
-      base.redirectTo = {
+      response.redirectTo = {
         pathname,
         query,
         hash,
@@ -19,23 +19,23 @@ function responseSetters(base: Response, addons: Addons) {
     },
 
     error(err: any): void {
-      base.error = err;
+      response.error = err;
     },
 
     status(code: number): void {
-      base.status = code;
+      response.status = code;
     },
 
     data(data: any): void {
-      base.data = data;
+      response.data = data;
     },
 
     body(body: any): void {
-      base.body = body;
+      response.body = body;
     },
 
     title(title: string): void {
-      base.title = title;
+      response.title = title;
     }
   };
 }
@@ -44,15 +44,15 @@ export default function finishResponse(
   pending: PendingResponse,
   addons: Addons
 ): Response {
-  const { error, resolved, route, base } = pending;
+  const { error, resolved, route, response } = pending;
   if (route && route.public.match.response) {
     route.public.match.response({
       error,
       resolved,
-      route: routeProperties(base),
-      set: responseSetters(base, addons),
+      route: routeProperties(response),
+      set: responseSetters(response, addons),
       addons
     });
   }
-  return base;
+  return response;
 }

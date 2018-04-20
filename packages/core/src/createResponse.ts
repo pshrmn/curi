@@ -20,8 +20,8 @@ export function asyncCreateResponse(
   location: HickoryLocation,
   routes: Array<InternalRoute>
 ): Promise<PendingResponse> {
-  const { route, base } = matchLocation(location, routes);
-  return resolveRoute(route, base);
+  const { route, response } = matchLocation(location, routes);
+  return resolveRoute(route, response);
 }
 
 /*
@@ -29,25 +29,25 @@ export function asyncCreateResponse(
  */
 function resolveRoute(
   route: InternalRoute,
-  base: Response
+  response: Response
 ): Promise<PendingResponse> {
   if (!route) {
     return Promise.resolve({
       route,
-      base
+      response
     });
   }
   const { match } = route.public;
   return Promise.all([
     match.initial ? match.initial() : undefined,
-    match.every ? match.every(routeProperties(base)) : undefined
+    match.every ? match.every(routeProperties(response)) : undefined
   ]).then(
     ([initial, every]) => {
       const resolved =
         !match.initial && !match.every ? null : { initial, every };
       return {
         route,
-        base,
+        response,
         error: null,
         resolved
       };
@@ -56,7 +56,7 @@ function resolveRoute(
       // when there is an uncaught error, set it on the response
       return {
         route,
-        base,
+        response,
         error: err,
         resolved: null
       };

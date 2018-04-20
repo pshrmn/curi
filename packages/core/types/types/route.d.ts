@@ -76,5 +76,5 @@ export interface MatchingRoute {
 }
 export interface BestMatch {
     route: InternalRoute;
-    base: Response;
+    response: Response;
 }

@@ -77,7 +77,7 @@ export default function matchLocation(
   }
 
   // start building the properties of the response object
-  const base: Response = {
+  const response: Response = {
     location,
     key: location.key,
     params,
@@ -88,5 +88,5 @@ export default function matchLocation(
     data: undefined,
     title: ""
   };
-  return { route, base };
+  return { route, response };
 }

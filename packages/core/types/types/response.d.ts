@@ -1,5 +1,5 @@
-import { HickoryLocation, ToArgument } from '@hickory/root';
-import { InternalRoute } from './route';
+import { HickoryLocation, ToArgument } from "@hickory/root";
+import { InternalRoute } from "./route";
 export declare type RawParams = {
     [key: string]: string;
 };
@@ -27,5 +27,5 @@ export interface PendingResponse {
     error?: any;
     resolved?: ResolvedObject;
     route: InternalRoute;
-    base: Response;
+    response: Response;
 }

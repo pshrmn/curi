@@ -28,5 +28,5 @@ export interface PendingResponse {
   error?: any;
   resolved?: ResolvedObject;
   route: InternalRoute;
-  base: Response;
+  response: Response;
 }
