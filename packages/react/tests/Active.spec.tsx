@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
 import curi from "@curi/core";
-import createActiveAddon from "@curi/addon-active";
+import activeInteraction from "@curi/route-active";
 
 import CuriProvider from "../src/CuriProvider";
 import Active from "../src/Active";
@@ -27,7 +27,7 @@ describe("<Active>", () => {
     node = document.createElement("div");
     history = InMemory();
     router = curi(history, routes, {
-      addons: [createActiveAddon()]
+      route: [activeInteraction()]
     });
   });
 
@@ -35,8 +35,8 @@ describe("<Active>", () => {
     ReactDOM.unmountComponentAtNode(node);
   });
 
-  describe("no active addon", () => {
-    it('warns if attempting to use in a Curi router without the "active" addon', () => {
+  describe("no active interaction", () => {
+    it('warns if attempting to use in a Curi router without the "active" route interaction', () => {
       const router = curi(history, routes);
       const Test = () => null;
       function merge(props) {
@@ -59,7 +59,7 @@ describe("<Active>", () => {
         );
       }).toThrow(
         'You are attempting to use the "active" prop, but have not included the "active" ' +
-          "addon (@curi/addon-active) in your Curi router."
+          "route interaction (@curi/route-active) in your Curi router."
       );
       console.error = realError;
     });
@@ -152,7 +152,7 @@ describe("<Active>", () => {
       }
       const history = InMemory({ locations: ["/contact/email"] });
       const router = curi(history, routes, {
-        addons: [createActiveAddon()]
+        route: [activeInteraction()]
       });
 
       ReactDOM.render(
