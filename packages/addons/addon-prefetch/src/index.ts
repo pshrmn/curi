@@ -1,30 +1,27 @@
-import { Addon, Route, RouteProps } from '@curi/core';
-import { HickoryLocation } from '@hickory/root';
+import { Addon, Route, RouteProps } from "@curi/core";
+import { HickoryLocation } from "@hickory/root";
 
 function createPrefetchAddon(): Addon {
   let loaders: { [key: string]: Function } = {};
 
   return {
-    name: 'prefetch',
+    name: "prefetch",
     register: (route: Route) => {
-      const { name, match } = route;
+      const { name, on } = route;
       if (loaders[name] !== undefined) {
         console.warn(
           'A load function with the name "' +
             name +
             '" already exists. Each route should' +
-            'have a unique name. By registering a function with a name that already exists, ' +
-            'you are overwriting the existing one. This may break your application.'
+            "have a unique name. By registering a function with a name that already exists, " +
+            "you are overwriting the existing one. This may break your application."
         );
       }
-      if (match && match.every) {
-        loaders[name] = match.every;
+      if (on && on.every) {
+        loaders[name] = on.every;
       }
     },
-    get: (
-      name: string,
-      props?: RouteProps
-    ) => {
+    get: (name: string, props?: RouteProps) => {
       if (loaders[name] == null) {
         return Promise.reject(
           `Could not prefetch data for ${name} because it is not registered.`
