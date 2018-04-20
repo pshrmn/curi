@@ -1,0 +1,51 @@
+{
+  "name": "@curi/route-prefetch",
+  "version": "1.0.0-beta.6",
+  "description": "A route interaction to prefetching Curi route data",
+  "main": "dist/curi-route-prefetch.common.js",
+  "module": "dist/curi-route-prefetch.es.js",
+  "typse": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "LICENSE",
+    "*.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist & rimraf types",
+    "build": "node ./scripts/build",
+    "coverage": "jest --coverage",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.ts\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/interactions/route-prefetch"
+  },
+  "keywords": [
+    "curi",
+    "prefetch",
+    "load",
+    "route",
+    "interaction"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "dependencies": {
+    "@curi/core": "^1.0.0-beta.28",
+    "@hickory/root": "^1.0.0-beta.7"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.0.1",
+    "@types/node": "^8.0.53",
+    "jest": "^22.1.1",
+    "prettier": "^1.10.2",
+    "pretty-bytes": "^4.0.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.58.1",
+    "ts-jest": "^21.2.3",
+    "typescript": "^2.6.1"
+  }
+}
