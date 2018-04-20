@@ -6,7 +6,7 @@ import renderer from "react-test-renderer";
 import InMemory from "@hickory/in-memory";
 import curi, { Response } from "@curi/core";
 import { CuriProvider } from "@curi/react";
-import createActiveAddon from "@curi/addon-active";
+import activeInteraction from "@curi/route-active";
 import { TouchableHighlight, Text } from "react-native";
 import Link from "../src/Link";
 
@@ -203,7 +203,7 @@ describe("<Link>", () => {
       return props;
     }
 
-    describe("without @curi/addon-active", () => {
+    describe("without @curi/route-active", () => {
       const realError = console.error;
       console.error = jest.fn();
 
@@ -226,7 +226,7 @@ describe("<Link>", () => {
           );
         }).toThrow(
           'You are attempting to use the "active" prop, but have not included the "active" ' +
-            "addon (@curi/addon-active) in your Curi router."
+            "route interaction (@curi/route-active) in your Curi router."
         );
       });
 
@@ -254,7 +254,7 @@ describe("<Link>", () => {
           );
         }).toThrow(
           'You are attempting to use the "active" prop, but have not included the "active" ' +
-            "addon (@curi/addon-active) in your Curi router."
+            "route interaction (@curi/route-active) in your Curi router."
         );
       });
     });
@@ -263,7 +263,7 @@ describe("<Link>", () => {
       it("does not call merge if the <Link>'s props do not match the current response's", () => {
         const history = InMemory();
         const router = curi(history, [{ name: "Test", path: "test" }], {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         const tree = renderer.create(
           <CuriProvider router={router}>
@@ -285,7 +285,7 @@ describe("<Link>", () => {
       it("calls merge function when <Link>'s props match the current response's", () => {
         const history = InMemory({ locations: ["/test"] });
         const router = curi(history, [{ name: "Test", path: "test" }], {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         const tree = renderer.create(
           <CuriProvider router={router}>
@@ -319,7 +319,7 @@ describe("<Link>", () => {
             }
           ],
           {
-            addons: [createActiveAddon()]
+            route: [activeInteraction()]
           }
         );
         const tree = renderer.create(
@@ -352,7 +352,7 @@ describe("<Link>", () => {
       it("uses extra function to run additional active checks", () => {
         const history = InMemory({ locations: ["/test?test=ing"] });
         const router = curi(history, [{ name: "Test", path: "test" }], {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         const tree = renderer.create(
           <CuriProvider router={router}>
@@ -375,7 +375,7 @@ describe("<Link>", () => {
       it("active is false when pathname matches, but extra returns false", () => {
         const history = InMemory({ locations: ["/test?test=ing"] });
         const router = curi(history, [{ name: "Test", path: "test" }], {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         const tree = renderer.create(
           <CuriProvider router={router}>

@@ -62,7 +62,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   setLocation(props: BaseLinkProps) {
     const { router, response, to, params, details } = props;
     const pathname = to
-      ? router.addons.pathname(to, params)
+      ? router.route.pathname(to, params)
       : response.location.pathname;
     const location = {
       ...details,
@@ -74,22 +74,22 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   componentWillMount() {
     this.setLocation(this.props);
     if (this.props.active) {
-      this.verifyActiveAddon();
+      this.verifyActiveInteraction();
     }
   }
 
   componentWillReceiveProps(nextProps: BaseLinkProps) {
     this.setLocation(nextProps);
     if (nextProps.active) {
-      this.verifyActiveAddon();
+      this.verifyActiveInteraction();
     }
   }
 
-  verifyActiveAddon() {
+  verifyActiveInteraction() {
     invariant(
-      this.props.router.addons.active,
+      this.props.router.route.active,
       'You are attempting to use the "active" prop, but have not included the "active" ' +
-        "addon (@curi/addon-active) in your Curi router."
+        "route interaction (@curi/route-active) in your Curi router."
     );
   }
 
@@ -111,7 +111,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
     if (active) {
       const { partial, merge, extra } = active;
       const isActive =
-        router.addons.active(to, response, params, partial) &&
+        router.route.active(to, response, params, partial) &&
         (extra ? extra(response.location, details) : true);
       if (isActive) {
         anchorProps = merge(anchorProps);
