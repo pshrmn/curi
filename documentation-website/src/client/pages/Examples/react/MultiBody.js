@@ -21,13 +21,11 @@ export default ({ name }) => (
         {`const routes = [
   {
     ...,
-    match: {
-      response({ set }) {
-        set.body({
-          main: MainComponent,
-          menu: MenuComponent
-        });
-      }
+    response({ set }) {
+      set.body({
+        main: MainComponent,
+        menu: MenuComponent
+      });
     }
   }
 ];`}
@@ -43,18 +41,14 @@ export default ({ name }) => (
 const routes = [
   {
     ...,
-    match: {
-      response({ set }) {
-        set.body(OneLayout);
-      }
+    response({ set }) {
+      set.body(OneLayout);
     }
   },
   {
     ...,
-    match: {
-      response({ set }) {
-        set.body({ another: Layout });
-      }
+    response({ set }) {
+      set.body({ another: Layout });
     }
   }
 ];`}

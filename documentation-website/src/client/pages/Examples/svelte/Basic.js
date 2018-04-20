@@ -24,9 +24,9 @@ export default ({ name }) => (
       </p>
       <p>
         The second thing is how to re-render your application when the location
-        changes. By having the route's <IJS>match.response</IJS> function set
-        Svelte render functions as the response's <IJS>body</IJS> we can just
-        call <IJS>response.body</IJS> to render our view. We will also want to
+        changes. By having the route's <IJS>response()</IJS> function set Svelte
+        render functions as the response's <IJS>body</IJS> we can just call{" "}
+        <IJS>response.body</IJS> to render our view. We will also want to
         destroy the current view before doing this. All of this should be done
         in a response handler function (<IJS>router.respond(fn)</IJS>).
       </p>

@@ -19,13 +19,13 @@ export interface Response {
     error?: any;
     redirectTo?: ToArgument;
 }
-export interface ResolvedObject {
+export interface Resolved {
+    error: any;
     initial: any;
     every: any;
 }
 export interface PendingResponse {
-    error?: any;
-    resolved?: ResolvedObject;
+    resolved: Resolved;
     route: InternalRoute;
     response: Response;
 }

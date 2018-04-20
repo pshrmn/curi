@@ -13,18 +13,17 @@ export default ({ name, version, globalName }) => (
     about={
       <p>
         The prefetch add-on can be used to make data fetching calls prior to
-        navigation by calling a route's <IJS>match.every</IJS> function. This is
-        different than calling the load function while generating the response
+        navigation by calling a route's <IJS>on.every()</IJS> function. This is
+        different than calling the function while generating the response
         because this is done without actually changing locations.
       </p>
     }
   >
     <Note>
       You should only use this if you implement some sort of caching/lookup in
-      your load functions. The <IJS>match.every</IJS> function will be re-called
-      when the user actually navigates to the route, so the benefit comes from
-      the load function using a cached value instead of sending a new request to
-      your server.
+      your functions. The <IJS>on.every()</IJS> function will be re-called when
+      the user actually navigates to the route, so the benefit comes from the
+      using a cached value instead of sending a new request to your server.
     </Note>
     <APIBlock>
       <Section tag="h3" title="createPrefetchAddon" id="createPrefetchAddon">
@@ -42,10 +41,10 @@ const router = curi(history, routes, { addons: [prefetch()] });
         </PrismBlock>
 
         <p>
-          The prefetch add-on allows you to call a route's{" "}
-          <IJS>match.every</IJS> function manually. Why would you want to do
-          this? Prefetching data means that when users navigate, the new page
-          will be full rendered faster because we already have the data.
+          The prefetch add-on allows you to call a route's <IJS>on.every()</IJS>{" "}
+          function manually. Why would you want to do this? Prefetching data
+          means that when users navigate, the new page will be full rendered
+          faster because we already have the data.
         </p>
 
         <Subsection title="Arguments" id="arguments">
@@ -56,17 +55,17 @@ router.addons.prefetch('User', { params: { id: 2 }})`}
           <ul>
             <li>
               <IJS>name</IJS> - the name of the route whose{" "}
-              <IJS>match.every</IJS> function should be called.
+              <IJS>on.every()</IJS> function should be called.
             </li>
             <li>
               <IJS>props</IJS> - route props that are used by the{" "}
-              <IJS>match.every</IJS> function (the same ones that a{" "}
-              <IJS>match.every</IJS> function expects).
+              <IJS>on.every()</IJS> function (the same ones that a{" "}
+              <IJS>on.every()</IJS> function expects).
             </li>
           </ul>
           <p>
             This add-on will only register routes that have a{" "}
-            <IJS>match.every</IJS> function.
+            <IJS>on.every()</IJS> function.
           </p>
         </Subsection>
       </Section>

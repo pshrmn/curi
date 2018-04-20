@@ -11,8 +11,7 @@ export function createResponse(
 ): PendingResponse {
   return {
     ...matchLocation(location, routes),
-    resolved: null,
-    error: null
+    resolved: null
   };
 }
 
@@ -34,31 +33,36 @@ function resolveRoute(
   if (!route) {
     return Promise.resolve({
       route,
-      response
+      response,
+      resolved: null
     });
   }
-  const { match } = route.public;
+  const { on } = route.public;
   return Promise.all([
-    match.initial ? match.initial() : undefined,
-    match.every ? match.every(routeProperties(response)) : undefined
+    on.initial ? on.initial() : undefined,
+    on.every ? on.every(routeProperties(response)) : undefined
   ]).then(
     ([initial, every]) => {
-      const resolved =
-        !match.initial && !match.every ? null : { initial, every };
       return {
         route,
         response,
-        error: null,
-        resolved
+        resolved: {
+          error: null,
+          initial,
+          every
+        }
       };
     },
-    err => {
+    error => {
       // when there is an uncaught error, set it on the response
       return {
         route,
         response,
-        error: err,
-        resolved: null
+        resolved: {
+          error,
+          initial: null,
+          every: null
+        }
       };
     }
   );

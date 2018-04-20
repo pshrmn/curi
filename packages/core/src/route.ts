@@ -11,7 +11,8 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     path,
     pathOptions = {},
     children: descriptorChildren = [],
-    match = {},
+    response,
+    on = {},
     extra,
     params: paramParsers
   } = options;
@@ -37,10 +38,9 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       name,
       path: path,
       keys: keys.map(key => key.name),
-      match: {
-        initial: match.initial && once(match.initial),
-        every: match.every,
-        response: match.response
+      on: {
+        initial: on.initial && once(on.initial),
+        every: on.every
       },
       extra
     },
@@ -49,6 +49,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       keys,
       mustBeExact
     },
+    response,
     children,
     paramParsers
   };

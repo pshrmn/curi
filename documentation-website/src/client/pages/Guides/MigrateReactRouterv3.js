@@ -134,41 +134,33 @@ export default ({ name }) => (
           (assuming we actually need it).
         </p>
         <p>
-          With Curi routes, we have a <IJS>match</IJS> property. This is an
-          object with a couple different optional function properties, but the
-          one we care about right now is <IJS>match.response</IJS>. In our{" "}
-          <IJS>match.response</IJS> function, we have a <IJS>set</IJS> object
-          that we can use to modify the response. One of the properties of this
-          object is a <IJS>body</IJS> function that we can call to set the{" "}
-          <IJS>body</IJS> property of the response. For this React application,
-          we want our <IJS>body</IJS> property to be the React component
-          associated with each route.
+          With Curi routes, we have a <IJS>response()</IJS> function.{" "}
+          <IJS>response()</IJS> is passed an object with properties to help
+          modify the response object that our application will receive. One of
+          these is a <IJS>set</IJS> object that is used to set properties of the
+          response. <IJS>set.body()</IJS> sets the <IJS>body</IJS> property of
+          the response. For this React application, we want our <IJS>body</IJS>{" "}
+          property to be the React component associated with each route.
         </p>
 
         <PrismBlock lang="javascript">
           {`const routes = [
   {
     path: '',
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-      }
+    response: ({ set }) => {
+      set.body(Home);
     }
   },
   {
     path: 'inbox',
-    match: {
-      response: ({ set }) => {
-        set.body(Inbox);
-      }
-    }
+    response: ({ set }) => {
+      set.body(Inbox);
+    },
     children: [
       {
         path: ':message',
-        match: {
-          response: ({ set }) => {
-            set.body(Message);
-          }
+        response: ({ set }) => {
+          set.body(Message);
         }
       }
     ]
@@ -178,12 +170,12 @@ export default ({ name }) => (
         <p>
           We are close to replicating our React Router routes, we just have to
           implement the <IJS>on___</IJS> methods for our <IJS>:message</IJS>{" "}
-          route. With Curi, routes have two possible loading function
-          properties: <IJS>match.initial</IJS> and <IJS>match.every</IJS>.{" "}
-          <IJS>match.initial</IJS> is useful for tasks that only need to be run
-          once per route, like the code splitting mentioned above.{" "}
-          <IJS>match.every</IJS>, on the other hand, will be called every time
-          that a route matches.
+          route. With Curi, routes can have functions that are called when they
+          match the new loaction. These are <IJS>on.initial()</IJS> and{" "}
+          <IJS>on.every()</IJS>. <IJS>on.initial()</IJS> is useful for tasks
+          that only need to be run once per route, like the code splitting
+          mentioned above. <IJS>on.every()</IJS> will be called every time that
+          a route matches, so it is ideal for data loading.
         </p>
         <p>
           With React Router, <IJS>onEnter</IJS> is called when the route first
@@ -193,17 +185,11 @@ export default ({ name }) => (
           big difference between the two is that <IJS>onChange</IJS> will
           receive the previous props, which could be used to determine which
           props changed. When converting these to Curi, we will use{" "}
-          <IJS>match.every</IJS> for both. This misses out on the ability to
+          <IJS>on.every()</IJS> for both. This misses out on the ability to
           compare props in <IJS>onChange</IJS>, but the primary purpose for
           comparing props in <IJS>onChange</IJS> was to know whether you're
           navigating to a new route or just swapping query/hash values, so a
           cache should serve the same purpose.
-        </p>
-        <p>
-          Curi routes can also have a <IJS>match.response</IJS> property which
-          you can use to modify the response object. This function will run once
-          we know that the response will be emitted, so side effects can be run
-          in here.
         </p>
         <p>
           There currently is no equivalent to <IJS>onLeave</IJS> with Curi. This
@@ -216,27 +202,23 @@ export default ({ name }) => (
           {`const routes = [
   {
     path: '',
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-      }
+    response: ({ set }) => {
+      set.body(Home);
     }
   },
   {
     path: 'inbox',
-    match: {
-      response: ({ set }) => {
-        set.body(Inbox);
-      }
-    }
+    response: ({ set }) => {
+      set.body(Inbox);
+    },
     children: [
       {
         path: ':message',
-        match: {
+        response: ({ set }) => {
+          set.body(Message);
+        },
+        on: {
           every: (route) => { return ... },
-          response: ({ set }) => {
-            set.body(Message);
-          }
         }
       }
     ]
@@ -252,7 +234,7 @@ export default ({ name }) => (
           >
             routes guide
           </Link>{" "}
-          covers all of the <IJS>match</IJS> functions and their arguments.
+          covers all of the route properties.
         </p>
         <p>
           We now have the equivalent routes implemented in Curi, but we have one
@@ -263,29 +245,25 @@ export default ({ name }) => (
   {
     name: 'Home',
     path: '',
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-      }
+    response: ({ set }) => {
+      set.body(Home);
     }
   },
   {
     name: 'Inbox',
     path: 'inbox',
-    match: {
-      response: ({ set }) => {
-        set.body(Inbox);
-      }
-    }
+    response: ({ set }) => {
+      set.body(Inbox);
+    },
     children: [
       {
         name: 'Message',
         path: ':message',
-        match: {
+        response: ({ set }) => {
+          set.body(Message);
+        },
+        on: {
           every: (route) => { return ... },
-          response: ({ set }) => {
-            set.body(Message);
-          }
         }
       }
     ]
@@ -441,7 +419,7 @@ const router = curi(history, routes);`}
         <p>
           That isn’t perfect because it doesn’t consider what happens when there
           is no body (which happens if none of the routes match the location or
-          you don't set it in a route's <IJS>match.response</IJS> function).
+          you don't set it in a route's <IJS>response()</IJS> function).
         </p>
         <Note>
           Wildcard routes (<IJS>{`{ path: '(.*)' }`}</IJS>) can be used to

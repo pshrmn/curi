@@ -1,6 +1,6 @@
 import { RegExpOptions, Key } from "path-to-regexp";
 import { LocationDetails } from "@hickory/root";
-import { Params, Response } from "./response";
+import { Params, Response, Resolved } from "./response";
 import { Addons } from "./addon";
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
@@ -25,19 +25,17 @@ export interface ResponseSetters {
     title: (title: string) => void;
 }
 export interface ResponseBuilder {
-    error: any;
-    resolved: any;
+    resolved: Resolved;
     route: RouteProps;
     set: ResponseSetters;
     addons: Addons;
 }
 export declare type EveryMatchFn = (route?: RouteProps) => Promise<any>;
 export declare type InitialMatchFn = () => Promise<any>;
-export declare type ResponseMatchFn = (props: ResponseBuilder) => void;
-export interface MatchFns {
+export declare type ResponseFn = (props: ResponseBuilder) => void;
+export interface OnFns {
     initial?: InitialMatchFn;
     every?: EveryMatchFn;
-    response?: ResponseMatchFn;
 }
 export interface RouteDescriptor {
     name: string;
@@ -45,7 +43,8 @@ export interface RouteDescriptor {
     pathOptions?: RegExpOptions;
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
-    match?: MatchFns;
+    response?: ResponseFn;
+    on?: OnFns;
     extra?: {
         [key: string]: any;
     };
@@ -54,7 +53,7 @@ export interface Route {
     name: string;
     path: string;
     keys: Array<string | number>;
-    match: MatchFns;
+    on: OnFns;
     extra: {
         [key: string]: any;
     };
@@ -67,6 +66,7 @@ export interface InternalMatch {
 export interface InternalRoute {
     public: Route;
     children: Array<InternalRoute>;
+    response: ResponseFn;
     pathMatching: InternalMatch;
     paramParsers: ParamParsers;
 }

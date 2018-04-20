@@ -1,6 +1,7 @@
 ## Next
 
-* Removed source maps from `dist`
+* Switch to `on.every()`.
+* Removed source maps from `dist`.
 
 ## 1.0.0-beta.6
 

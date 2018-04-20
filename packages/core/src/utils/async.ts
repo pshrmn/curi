@@ -1,13 +1,13 @@
 import { RouteDescriptor, InternalRoute } from "../types/route";
 
-function hasMatchFunction(route: InternalRoute): boolean {
-  const { match } = route.public;
-  return !!(match && (match.every || match.initial));
+function hasAsyncOnFunction(route: InternalRoute): boolean {
+  const { on } = route.public;
+  return !!(on && (on.every || on.initial));
 }
 
 export default function hasAsyncRoute(routes: Array<InternalRoute>): boolean {
   return routes.some(route => {
-    if (hasMatchFunction(route)) {
+    if (hasAsyncOnFunction(route)) {
       return true;
     }
     if (route.children.length) {

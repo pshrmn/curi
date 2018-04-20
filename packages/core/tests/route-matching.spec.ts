@@ -138,13 +138,13 @@ describe("route matching/response generation", () => {
         {
           name: "Contact",
           path: "contact",
-          match: {
+          response: ({ resolved }) => {
+            expect(resolved.error).toBe("This is an error");
+            done();
+          },
+          on: {
             every: () => {
               return Promise.reject("This is an error");
-            },
-            response: ({ error }) => {
-              expect(error).toBe("This is an error");
-              done();
             }
           }
         }
@@ -181,7 +181,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("body", () => {
-        it("is undefined if it isn't set in match.response", done => {
+        it("is undefined if it isn't set in response()", done => {
           const history = InMemory({ locations: ["/test"] });
           const routes = [
             {
@@ -203,10 +203,8 @@ describe("route matching/response generation", () => {
             {
               name: "Test",
               path: "test",
-              match: {
-                response: ({ set }) => {
-                  set.body(body);
-                }
+              response: ({ set }) => {
+                set.body(body);
               }
             }
           ];
@@ -257,15 +255,13 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is the value set by calling status in the matching route's match.response function", done => {
+        it("is the value set by calling status in the matching route's response() function", done => {
           const routes = [
             {
               name: "A Route",
               path: "",
-              match: {
-                response: ({ set }) => {
-                  set.status(451);
-                }
+              response: ({ set }) => {
+                set.status(451);
               }
             }
           ];
@@ -277,7 +273,7 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is set by calling set.redirect in the matching match.response", () => {
+        it("is set by calling set.redirect() in the matching response()", () => {
           const routes = [
             {
               name: "New",
@@ -286,10 +282,8 @@ describe("route matching/response generation", () => {
             {
               name: "302 Route",
               path: "old",
-              match: {
-                response: ({ set }) => {
-                  set.redirect({ name: "New", status: 302 });
-                }
+              response: ({ set }) => {
+                set.redirect({ name: "New", status: 302 });
               }
             }
           ];
@@ -306,7 +300,7 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is set to 301 by default when calling set.redirect in match.response", () => {
+        it("is set to 301 by default when calling set.redirect() in response()", () => {
           const routes = [
             {
               name: "New",
@@ -315,10 +309,8 @@ describe("route matching/response generation", () => {
             {
               name: "301 Route",
               path: "old",
-              match: {
-                response: ({ set }) => {
-                  set.redirect({ name: "New" });
-                }
+              response: ({ set }) => {
+                set.redirect({ name: "New" });
               }
             }
           ];
@@ -354,15 +346,13 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is the value set by calling set.data in match.response", done => {
+        it("is the value set by calling set.data() in response()", done => {
           const routes = [
             {
               name: "A Route",
               path: "",
-              match: {
-                response: ({ set }) => {
-                  set.data({ test: "value" });
-                }
+              response: ({ set }) => {
+                set.data({ test: "value" });
               }
             }
           ];
@@ -408,15 +398,13 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is the value set by calling set.title in match.response", done => {
+        it("is the value set by calling set.title() in response()", done => {
           const routes = [
             {
               name: "State",
               path: ":state",
-              match: {
-                response: ({ set }) => {
-                  set.title("A State");
-                }
+              response: ({ set }) => {
+                set.title("A State");
               }
             }
           ];
@@ -638,15 +626,13 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is set by calling the error method from a matched route's match.response function", done => {
+        it("is set by calling the set.error() method from a matched route's response() function", done => {
           const routes = [
             {
               name: "A Route",
               path: "",
-              match: {
-                response: ({ set }) => {
-                  set.error("woops");
-                }
+              response: ({ set }) => {
+                set.error("woops");
               }
             }
           ];
@@ -660,18 +646,16 @@ describe("route matching/response generation", () => {
       });
 
       describe("redirectTo", () => {
-        it("is set by calling the redirect function in a matching route's match.response function", () => {
+        it("is set by calling set.redirect() in a matching route's response()", () => {
           const routes = [
             {
               name: "A Route",
               path: "",
-              match: {
-                response: ({ set }) => {
-                  set.redirect({
-                    name: "B Route",
-                    status: 301
-                  });
-                }
+              response: ({ set }) => {
+                set.redirect({
+                  name: "B Route",
+                  status: 301
+                });
               }
             },
             {
@@ -697,13 +681,13 @@ describe("route matching/response generation", () => {
     });
   });
 
-  describe("the match functions", () => {
+  describe("the on functions", () => {
     describe("initial", () => {
       it("will only be called once", done => {
         /*
          * This test is a bit odd to read, but it verifies that the
-         * match.initial function is only called once (while the
-         * match.every function is called on every match).
+         * on.initial function is only called once (while the
+         * on.every function is called on every match).
          */
         let initialCount = 0;
         let everyCount = 0;
@@ -714,7 +698,7 @@ describe("route matching/response generation", () => {
           {
             name: "Test",
             path: ":test",
-            match: { initial, every }
+            on: { initial, every }
           }
         ];
         const router = curi(history, routes);
@@ -754,7 +738,7 @@ describe("route matching/response generation", () => {
         const CatchAll = {
           name: "Catch All",
           path: ":anything",
-          match: { every: spy }
+          on: { every: spy }
         };
 
         const history = InMemory({ locations: ["/hello?one=two"] });
@@ -779,25 +763,25 @@ describe("route matching/response generation", () => {
           {
             name: "First",
             path: "first",
-            match: {
-              every: everySpy,
-              response: responseSpy
+            response: responseSpy,
+            on: {
+              every: everySpy
             }
           },
           {
             name: "Second",
             path: "second",
-            match: {
+            response: () => {
+              expect(firstHasResolved).toBe(true);
+              expect(everySpy.mock.calls.length).toBe(2);
+              expect(responseSpy.mock.calls.length).toBe(0);
+              done();
+            },
+            on: {
               // re-use the every spy so that this route's response
               // fn isn't call until after the first route's every
               // fn has resolved
-              every: everySpy,
-              response: () => {
-                expect(firstHasResolved).toBe(true);
-                expect(everySpy.mock.calls.length).toBe(2);
-                expect(responseSpy.mock.calls.length).toBe(0);
-                done();
-              }
+              every: everySpy
             }
           }
         ];
@@ -807,55 +791,13 @@ describe("route matching/response generation", () => {
         history.push("/second");
       });
 
-      describe("error", () => {
-        it("receives the error rejected by match.initial", done => {
-          const spy = jest.fn(({ error }) => {
-            expect(error).toBe("rejected by initial");
-            done();
-          });
-
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            match: {
-              initial: () => Promise.reject("rejected by initial"),
-              response: spy
-            }
-          };
-
-          const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
-        });
-
-        it("receives the error rejected by match.every", done => {
-          const spy = jest.fn(({ error }) => {
-            expect(error).toBe("rejected by every");
-            done();
-          });
-
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            match: {
-              every: () => Promise.reject("rejected by every"),
-              response: spy
-            }
-          };
-
-          const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
-        });
-      });
-
       describe("resolved", () => {
-        it("is null when route has no match.initial/every functions", () => {
+        it("is null when route has no on.initial/every functions", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            match: {
-              response: ({ resolved }) => {
-                expect(resolved).toBe(null);
-              }
+            response: ({ resolved }) => {
+              expect(resolved).toBe(null);
             }
           };
 
@@ -863,25 +805,66 @@ describe("route matching/response generation", () => {
           const router = curi(history, [CatchAll]);
         });
 
-        it("is an object with initial/every properties when router is asynchronous", () => {
+        it("is an object with error/initial/every properties when router is asynchronous", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            match: {
-              initial: () => Promise.resolve(1),
-              response: ({ resolved }) => {
-                expect(resolved).toHaveProperty("initial");
-                expect(resolved).toHaveProperty("every");
-              }
+            response: ({ resolved }) => {
+              expect(resolved).toHaveProperty("error");
+              expect(resolved).toHaveProperty("initial");
+              expect(resolved).toHaveProperty("every");
+            },
+            on: {
+              initial: () => Promise.resolve(1)
             }
           };
 
           const history = InMemory({ locations: ["/hello?one=two"] });
           const router = curi(history, [CatchAll]);
+        });
+
+        describe("error", () => {
+          it("receives the error rejected by on.initial()", done => {
+            const spy = jest.fn(({ resolved }) => {
+              expect(resolved.error).toBe("rejected by initial");
+              done();
+            });
+
+            const CatchAll = {
+              name: "Catch All",
+              path: ":anything",
+              response: spy,
+              on: {
+                initial: () => Promise.reject("rejected by initial")
+              }
+            };
+
+            const history = InMemory({ locations: ["/hello?one=two"] });
+            const router = curi(history, [CatchAll]);
+          });
+
+          it("receives the error rejected by on.every()", done => {
+            const spy = jest.fn(({ resolved }) => {
+              expect(resolved.error).toBe("rejected by every");
+              done();
+            });
+
+            const CatchAll = {
+              name: "Catch All",
+              path: ":anything",
+              response: spy,
+              on: {
+                every: () => Promise.reject("rejected by every")
+              }
+            };
+
+            const history = InMemory({ locations: ["/hello?one=two"] });
+            const router = curi(history, [CatchAll]);
+          });
         });
 
         describe("initial", () => {
-          it("receives the data resolved by match.initial", done => {
+          it("is the data resolved by on.initial()", done => {
             const spy = jest.fn(({ resolved }) => {
               expect(resolved.initial).toMatchObject({ test: "ing" });
               done();
@@ -890,9 +873,9 @@ describe("route matching/response generation", () => {
             const CatchAll = {
               name: "Catch All",
               path: ":anything",
-              match: {
-                initial: () => Promise.resolve({ test: "ing" }),
-                response: spy
+              response: spy,
+              on: {
+                initial: () => Promise.resolve({ test: "ing" })
               }
             };
 
@@ -908,18 +891,18 @@ describe("route matching/response generation", () => {
               {
                 name: "Test",
                 path: ":test",
-                match: {
+                response: ({ resolved }) => {
+                  if (!hasFinished) {
+                    hasFinished = true;
+                    random = resolved.initial;
+                  } else {
+                    expect(resolved.initial).toBe(random);
+                    done();
+                  }
+                },
+                on: {
                   initial: () => {
                     return Promise.resolve(Math.random());
-                  },
-                  response: ({ resolved }) => {
-                    if (!hasFinished) {
-                      hasFinished = true;
-                      random = resolved.initial;
-                    } else {
-                      expect(resolved.initial).toBe(random);
-                      done();
-                    }
                   }
                 }
               }
@@ -930,7 +913,7 @@ describe("route matching/response generation", () => {
             });
           });
 
-          it("resolved.initial is undefined if match.every, but no match.initial, ", done => {
+          it("resolved.initial is undefined if there is an on.every() fn but no on.initial() fn", done => {
             const spy = jest.fn(({ resolved }) => {
               expect(resolved.initial).toBeUndefined();
               done();
@@ -939,9 +922,9 @@ describe("route matching/response generation", () => {
             const CatchAll = {
               name: "Catch All",
               path: ":anything",
-              match: {
-                every: () => Promise.resolve(),
-                response: spy
+              response: spy,
+              on: {
+                every: () => Promise.resolve()
               }
             };
 
@@ -951,7 +934,7 @@ describe("route matching/response generation", () => {
         });
 
         describe("every", () => {
-          it("receives the data resolved by match.every", done => {
+          it("is the data resolved by on.every()", done => {
             const spy = jest.fn(({ resolved }) => {
               expect(resolved.every).toMatchObject({ test: "ing" });
               done();
@@ -960,9 +943,9 @@ describe("route matching/response generation", () => {
             const CatchAll = {
               name: "Catch All",
               path: ":anything",
-              match: {
-                every: () => Promise.resolve({ test: "ing" }),
-                response: spy
+              response: spy,
+              on: {
+                every: () => Promise.resolve({ test: "ing" })
               }
             };
 
@@ -970,7 +953,7 @@ describe("route matching/response generation", () => {
             const router = curi(history, [CatchAll]);
           });
 
-          it("resolved.every is undefined if match.initial but no match.every", done => {
+          it("resolved.every is undefined if there is an on.initial() fn but no on.every() fn", done => {
             const spy = jest.fn(opts => {
               expect(opts.resolved.every).toBeUndefined();
               done();
@@ -979,9 +962,9 @@ describe("route matching/response generation", () => {
             const CatchAll = {
               name: "Catch All",
               path: ":anything",
-              match: {
-                initial: () => Promise.resolve(),
-                response: spy
+              response: spy,
+              on: {
+                initial: () => Promise.resolve()
               }
             };
 
@@ -1007,7 +990,7 @@ describe("route matching/response generation", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            match: { response: spy }
+            response: spy
           };
 
           const history = InMemory({ locations: ["/hello?one=two"] });
@@ -1033,7 +1016,7 @@ describe("route matching/response generation", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            match: { response: spy }
+            response: spy
           };
 
           const history = InMemory({ locations: ["/hello?one=two"] });
@@ -1051,7 +1034,7 @@ describe("route matching/response generation", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            match: { response: spy }
+            response: spy
           };
 
           const history = InMemory({ locations: ["/hello?one=two"] });
@@ -1063,10 +1046,8 @@ describe("route matching/response generation", () => {
             {
               name: "Old",
               path: "old/:id",
-              match: {
-                response: ({ route, set, addons }) => {
-                  set.redirect({ name: "New", params: route.params });
-                }
+              response: ({ route, set, addons }) => {
+                set.redirect({ name: "New", params: route.params });
               }
             },
             {
