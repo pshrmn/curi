@@ -1,5 +1,6 @@
 ## Next
 
+* Group `initial` and `every` resolved values with `error` under `async` object.
 * Rename `router.refresh` to `router.replaceRoutes`.
 
 ## 1.0.0-beta.27

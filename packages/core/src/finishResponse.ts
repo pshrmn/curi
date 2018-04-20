@@ -44,11 +44,10 @@ export default function finishResponse(
   pending: PendingResponse,
   addons: Addons
 ): Response {
-  const { error, resolved, route, response } = pending;
+  const { async, route, response } = pending;
   if (route && route.public.match.response) {
     route.public.match.response({
-      error,
-      resolved,
+      async,
       route: routeProperties(response),
       set: responseSetters(response, addons),
       addons
