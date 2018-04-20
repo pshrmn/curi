@@ -1,7 +1,11 @@
 {
   "lerna": "2.5.1",
   "version": "independent",
-  "packages": ["packages/*", "packages/addons/*", "packages/side-effects/*"],
+  "packages": [
+    "packages/*",
+    "packages/interactions/*",
+    "packages/side-effects/*"
+  ],
   "commands": {
     "bootstrap": {
       "hoist": "**",

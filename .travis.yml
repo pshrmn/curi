@@ -5,10 +5,10 @@ node_js:
 cache:
   directories:
   - node_modules
-  - packages/addons/addon-active/node_modules
-  - packages/addons/addon-ancestors/node_modules
-  - packages/addons/addon-prefetch/node_modules
   - packages/core/node_modules
+  - packages/interactions/route-active/node_modules
+  - packages/interactions/route-ancestors/node_modules
+  - packages/interactions/route-prefetch/node_modules
   - packages/mobx/node_modules
   - packages/react/node_modules
   - packages/react-native/node_modules
