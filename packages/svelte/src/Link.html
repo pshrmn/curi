@@ -22,7 +22,7 @@
 		computed: {
 			location: (to, params, details, $router, $curi) => {
 				const pathname = to
-					? $router.addons.pathname(to, params)
+					? $router.route.pathname(to, params)
 					: $curi.response.location.pathname;
 				return Object.assign({}, details, { pathname });
 			},
