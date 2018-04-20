@@ -1,2 +1,3 @@
-import { InternalRoute, Match } from '../types/route';
-export default function matchRoute(route: InternalRoute, pathname: string, matches: Array<Match>, parentPath?: string): boolean;
+import { HickoryLocation } from "@hickory/root";
+import { InternalRoute, MatchedRoute } from '../types/route';
+export default function matchLocation(location: HickoryLocation, routes: Array<InternalRoute>): MatchedRoute;

@@ -67,10 +67,10 @@ export interface InternalMatch {
 export interface InternalRoute {
     public: Route;
     children: Array<InternalRoute>;
-    match: InternalMatch;
+    pathMatching: InternalMatch;
     paramParsers: ParamParsers;
 }
-export interface Match {
+export interface MatchingRoute {
     route: InternalRoute;
     params: Params;
 }
