@@ -1,4 +1,3 @@
-import { HickoryLocation, ToArgument } from "@hickory/root";
 import PathToRegexp from "path-to-regexp";
 
 import once from "./utils/once";
@@ -18,6 +17,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
   } = options;
 
   // end defaults to true, so end has to be hardcoded for it to be false
+  // set this before setting pathOptions.end for children
   const mustBeExact = pathOptions.end == null || pathOptions.end;
 
   let children: Array<InternalRoute> = [];
@@ -28,6 +28,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     children = descriptorChildren.map(createRoute);
   }
 
+  // keys is populated by PathToRegexp
   const keys: Array<Key> = [];
   const re = PathToRegexp(path, keys, pathOptions);
 
@@ -43,7 +44,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       },
       extra
     },
-    match: {
+    pathMatching: {
       re,
       keys,
       mustBeExact

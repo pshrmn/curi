@@ -1,14 +1,16 @@
-import { HickoryLocation, ToArgument } from '@hickory/root';
-import { InternalRoute } from './route';
+import { HickoryLocation, ToArgument } from "@hickory/root";
+import { InternalRoute } from "./route";
 export declare type RawParams = {
     [key: string]: string;
 };
 export declare type Params = {
     [key: string]: any;
 };
-export interface ResponseProps {
+export interface Response {
     location: HickoryLocation;
+    key: string;
     params: Params;
+    name: string;
     partials: Array<string>;
     status: number;
     body: any;
@@ -25,18 +27,5 @@ export interface PendingResponse {
     error?: any;
     resolved?: ResolvedObject;
     route: InternalRoute;
-    props: ResponseProps;
-}
-export interface Response {
-    key: string;
-    location: HickoryLocation;
-    status: number;
-    data: any;
-    title: string;
-    body: any;
-    name?: string;
-    partials?: Array<string>;
-    params?: Params;
-    error?: any;
-    redirectTo?: any;
+    response: Response;
 }
