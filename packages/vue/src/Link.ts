@@ -34,7 +34,7 @@ const Link: ComponentOptions<LinkComponent> = {
   computed: {
     location: function() {
       const pathname = this.to
-        ? this.$router.addons.pathname(this.to, this.params)
+        ? this.$router.route.pathname(this.to, this.params)
         : this.$curi.response.location.pathname;
       return {
         ...this.details,
@@ -45,17 +45,17 @@ const Link: ComponentOptions<LinkComponent> = {
       return this.$router.history.toHref(this.location);
     },
     isActive: function() {
-      if (!this.$router.addons.active) {
+      if (!this.$router.route.active) {
         warning(
           !this.active,
           'You are attempting to use the "active" prop, but have not included the "active" ' +
-            "addon (@curi/addon-active) in your Curi router."
+            "router interaction (@curi/route-active) in your Curi router."
         );
         return false;
       }
 
       return (
-        this.$router.addons.active(
+        this.$router.route.active(
           this.to,
           this.$curi.response,
           this.params,
