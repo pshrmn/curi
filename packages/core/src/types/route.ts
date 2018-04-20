@@ -1,7 +1,7 @@
 import { RegExpOptions, Key } from "path-to-regexp";
 
 import { LocationDetails } from "@hickory/root";
-import { Params, Response, LoadResults } from "./response";
+import { Params, Response, Resolved } from "./response";
 import { Addons } from "./addon";
 
 export type ParamParser = (input: string) => any;
@@ -31,7 +31,7 @@ export interface ResponseSetters {
 }
 
 export interface ResponseBuilder {
-  load: LoadResults;
+  resolved: Resolved;
   route: RouteProps;
   set: ResponseSetters;
   addons: Addons;

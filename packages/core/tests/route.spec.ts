@@ -94,7 +94,7 @@ describe("public route properties", () => {
     });
   });
 
-  describe("load", () => {
+  describe("on", () => {
     describe("initial", () => {
       it("will be defined when a on.initial function is provided", () => {
         const initialTest = () => Promise.resolve();
