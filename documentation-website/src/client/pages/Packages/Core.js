@@ -50,9 +50,10 @@ const router = curi(history, routes, options);`}
             </p>
             <ul>
               <li>
-                <IJS>addons</IJS> - An array of add-on instances. The pathname
-                add-on is included by default, but any other add-ons that you
-                wish to use should be provided in this array.
+                <IJS>route</IJS> - An array of route interaction instances. The{" "}
+                <IJS>pathname</IJS> interaction is included by default, but any
+                other interactions that you wish to use should be provided in
+                this array.
               </li>
               <li>
                 <IJS>sideEffects</IJS> - An array of side effect objects.
@@ -142,20 +143,22 @@ router.respond(({ response, navigation }) => {
             </PrismBlock>
           </Subsection>
 
-          <Subsection tag="h5" title="addons" id="addons">
+          <Subsection tag="h5" title="route" id="router-route">
             <p>
-              You can access all of the router's add-ons through the addons
-              property. This allows you to call an add-on's get method directly.
+              You can access all of the router's route interactions through the{" "}
+              <IJS>route</IJS> property. This allows you to interact with routes
+              based on their names.
             </p>
-            <Subsection tag="h6" title="pathname" id="pathname-addon">
+            <Subsection tag="h6" title="pathname" id="pathname-interaction">
               <p>
-                Curi includes one built-in add-on: <IJS>pathname</IJS>, which
-                you can use to generate location pathnames with the name of the
-                route and an optional object containing any necessary params.
+                Curi includes one built-in interaction: <IJS>pathname</IJS>,
+                which you can use to generate location pathnames with the name
+                of the route and an optional object containing any necessary
+                params.
               </p>
               <PrismBlock lang="javascript">
                 {`const router = curi(history, [{ name: 'User', path: 'user/:id' }]);
-const userPathname = router.addons.pathname('User', { id: '12345' });
+const userPathname = router.route.pathname('User', { id: '12345' });
 // userPathname === '/user/12345'`}
               </PrismBlock>
             </Subsection>

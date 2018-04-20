@@ -60,9 +60,9 @@ export default ({ name }) => (
       <h2>Next</h2>
       <p>
         Let's take a moment to go back to our router and look at what Curi's
-        add-ons are for in the{" "}
-        <Link to="Guide" params={{ slug: "addons" }}>
-          Using Add-ons
+        route interactions are for in the{" "}
+        <Link to="Guide" params={{ slug: "route-interactions" }}>
+          Route Interactions
         </Link>{" "}
         guide.
       </p>

@@ -11,7 +11,7 @@ export default ({ name, version, globalName }) => (
     globalName={globalName}
     about={
       <p>
-        The <IJS>@curi/addon-active</IJS> package determines whether a route is
+        The <IJS>@curi/route-active</IJS> package determines whether a route is
         "active" by comparing it to the current response. This can be restricted
         to complete matches or allow partial matches so that locations that
         represent an ancestor of the current location are also considered
@@ -20,22 +20,22 @@ export default ({ name, version, globalName }) => (
     }
   >
     <APIBlock>
-      <Section tag="h3" title="createActiveAddon" id="createActiveAddon">
+      <Section tag="h3" title="active" id="active">
         <p>
-          The default export, this function is an add-on factory that will add
-          an <IJS>active</IJS> function to your router's add-on property.
+          The default export is a route interaction factory that will add an{" "}
+          <IJS>active</IJS> function to your router's <IJS>route</IJS> property.
         </p>
         <p>
-          The addon returns a boolean, <IJS>true</IJS> when a route is "active"
-          (it matches the response's <IJS>location</IJS>) and <IJS>false</IJS>{" "}
-          when it is not.
+          The interaction returns a boolean, <IJS>true</IJS> when a route is
+          "active" (it matches the response's <IJS>location</IJS>) and{" "}
+          <IJS>false</IJS> when it is not.
         </p>
         <PrismBlock lang="javascript">
           {`import curi from '@curi/core';
-import createActiveAddon from '@curi/addon-active';
+import active from '@curi/route-active';
 
 const router = curi(history, routes, {
-  addons: [createActiveAddon()]
+  route: [active()]
 });`}
         </PrismBlock>
         <Subsection title="Arguments" id="arguments">
@@ -56,7 +56,7 @@ const router = curi(history, routes, {
             </li>
           </ul>
           <PrismBlock lang="javascript">
-            {`const isActive = router.addons.active(
+            {`const isActive = router.route.active(
   'Some Route',
   response,
   { id: 10 },

@@ -12,10 +12,10 @@ export default ({ name, version, globalName }) => (
     globalName={globalName}
     about={
       <p>
-        The prefetch add-on can be used to make data fetching calls prior to
-        navigation by calling a route's <IJS>on.every()</IJS> function. This is
-        different than calling the function while generating the response
-        because this is done without actually changing locations.
+        The prefetch route interaction can be used to make data fetching calls
+        prior to navigation by calling a route's <IJS>on.every()</IJS> function.
+        This is different than calling the function while generating the
+        response because this is done without actually changing locations.
       </p>
     }
   >
@@ -26,31 +26,34 @@ export default ({ name, version, globalName }) => (
       using a cached value instead of sending a new request to your server.
     </Note>
     <APIBlock>
-      <Section tag="h3" title="createPrefetchAddon" id="createPrefetchAddon">
+      <Section tag="h3" title="prefetch" id="prefetch">
         <p>
-          The default export function is an add-on factory that will add an{" "}
-          <IJS>prefetch</IJS> function to your router object's add-on property.
+          The default export function is a route interaction factory that will
+          add an <IJS>prefetch</IJS> function to your router object's{" "}
+          <IJS>route</IJS> property.
         </p>
 
         <PrismBlock lang="javascript">
           {`import curi from '@curi/core';
-import prefetch from '@curi/addon-prefetch';
+import prefetch from '@curi/route-prefetch';
 
-const router = curi(history, routes, { addons: [prefetch()] });
+const router = curi(history, routes, {
+  route: [prefetch()]
+});
 `}
         </PrismBlock>
 
         <p>
-          The prefetch add-on allows you to call a route's <IJS>on.every()</IJS>{" "}
-          function manually. Why would you want to do this? Prefetching data
-          means that when users navigate, the new page will be full rendered
-          faster because we already have the data.
+          The prefetch route interaction allows you to call a route's{" "}
+          <IJS>on.every()</IJS> function manually. Why would you want to do
+          this? Prefetching data means that when users navigate, the new page
+          will be full rendered faster because we already have the data.
         </p>
 
         <Subsection title="Arguments" id="arguments">
           <PrismBlock lang="javascript">
             {`// call a route's load function manually
-router.addons.prefetch('User', { params: { id: 2 }})`}
+router.route.prefetch('User', { params: { id: 2 }})`}
           </PrismBlock>
           <ul>
             <li>
@@ -64,7 +67,7 @@ router.addons.prefetch('User', { params: { id: 2 }})`}
             </li>
           </ul>
           <p>
-            This add-on will only register routes that have a{" "}
+            This route interaction will only register routes that have a{" "}
             <IJS>on.every()</IJS> function.
           </p>
         </Subsection>

@@ -1,7 +1,7 @@
 import Core from "./Core";
-import AddonActive from "./AddonActive";
-import AddonAncestors from "./AddonAncestors";
-import AddonPrefetch from "./AddonPrefetch";
+import RouteActive from "./RouteActive";
+import RouteAncestors from "./RouteAncestors";
+import RoutePrefetch from "./RoutePrefetch";
 import SideEffectTitle from "./SideEffectTitle";
 import SideEffectScroll from "./SideEffectScroll";
 import ReactPkg from "./ReactPkg";
@@ -13,9 +13,9 @@ import Vue from "./Vue";
 
 export default {
   core: Core,
-  "addon-active": AddonActive,
-  "addon-ancestors": AddonAncestors,
-  "addon-prefetch": AddonPrefetch,
+  "route-active": RouteActive,
+  "route-ancestors": RouteAncestors,
+  "route-prefetch": RoutePrefetch,
   "side-effect-title": SideEffectTitle,
   "side-effect-scroll": SideEffectScroll,
   react: ReactPkg,

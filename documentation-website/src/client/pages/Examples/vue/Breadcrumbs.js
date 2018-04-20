@@ -2,6 +2,7 @@ import React from "react";
 import BaseExample from "../base/BaseExample";
 import { Section } from "../../../components/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
+import { InlineJS as IJS } from "../../../components/PrismBlocks";
 
 export default ({ name }) => (
   <BaseExample>
@@ -9,9 +10,9 @@ export default ({ name }) => (
     <Section title="Explanation" id="explanation">
       <p>
         You can easily generate breadcrumb navigation links for the current
-        route using the curi-addon-ancestors package. This allows you to get the
-        route names for the current route. Using these names you can render a
-        Link for each one (passing the parameters if necessary).
+        route using the <IJS>@curi/route-ancestors</IJS> package. This allows
+        you to get the route names for the current route. Using these names you
+        can render a Link for each one (passing the parameters if necessary).
       </p>
     </Section>
 
