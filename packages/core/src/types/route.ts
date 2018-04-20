@@ -2,14 +2,14 @@ import { RegExpOptions, Key } from "path-to-regexp";
 
 import { LocationDetails } from "@hickory/root";
 import { Params, Response, Resolved } from "./response";
-import { Addons } from "./addon";
+import { Interactions } from "./interaction";
 
 export type ParamParser = (input: string) => any;
 export interface ParamParsers {
   [key: string]: ParamParser;
 }
 
-export interface RouteProps {
+export interface MatchedRouteProps {
   params: object;
   location: object;
   name: string;
@@ -30,14 +30,13 @@ export interface ResponseSetters {
   title: (title: string) => void;
 }
 
-export interface ResponseBuilder {
+export interface ResponseBuilder extends MatchedRouteProps {
   resolved: Resolved;
-  route: RouteProps;
   set: ResponseSetters;
-  addons: Addons;
+  route: Interactions;
 }
 
-export type EveryMatchFn = (route?: RouteProps) => Promise<any>;
+export type EveryMatchFn = (matched?: MatchedRouteProps) => Promise<any>;
 export type InitialMatchFn = () => Promise<any>;
 export type ResponseFn = (props: ResponseBuilder) => void;
 
@@ -59,7 +58,7 @@ export interface RouteDescriptor {
 
 /*
  * These are the route properties that will be available
- * to addons
+ * to route interactions
  */
 export interface Route {
   name: string;

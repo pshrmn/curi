@@ -1,7 +1,7 @@
-import { InternalRoute, RouteProps } from "../types/route";
+import { InternalRoute, MatchedRouteProps } from "../types/route";
 import { Response } from "../types/response";
 
-export default function routeProperties(response: Response): RouteProps {
+export default function matchProperties(response: Response): MatchedRouteProps {
   return {
     params: response.params,
     location: response.location,

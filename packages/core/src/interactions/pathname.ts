@@ -4,11 +4,11 @@ import PathToRegexp, {
 } from "path-to-regexp";
 import { withLeadingSlash, join } from "../utils/path";
 
-import { Addon } from "../types/addon";
+import { Interaction } from "../types/interaction";
 import { Route } from "../types/route";
 import { Params } from "../types/response";
 
-function createPathnameAddon(options?: PathFunctionOptions): Addon {
+function generatePathname(options?: PathFunctionOptions): Interaction {
   let knownPaths: { [key: string]: string } = {};
   let cache: { [key: string]: PathFunction } = {};
 
@@ -52,4 +52,4 @@ function createPathnameAddon(options?: PathFunctionOptions): Addon {
   };
 }
 
-export default createPathnameAddon;
+export default generatePathname;

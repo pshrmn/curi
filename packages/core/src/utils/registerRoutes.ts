@@ -1,13 +1,13 @@
-import { InternalRoute } from '../types/route';
-import { Addon } from '../types/addon';
+import { InternalRoute } from "../types/route";
+import { Interaction } from "../types/interaction";
 
 export default function registerRoutes(
   routes: Array<InternalRoute>,
-  addon: Addon,
+  interaction: Interaction,
   parentData?: any
 ) {
   routes.forEach(route => {
-    const data = addon.register(route.public, parentData);
-    registerRoutes(route.children, addon, data);
+    const data = interaction.register(route.public, parentData);
+    registerRoutes(route.children, interaction, data);
   });
 }

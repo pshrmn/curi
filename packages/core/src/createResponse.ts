@@ -1,5 +1,5 @@
 import matchLocation from "./utils/match";
-import routeProperties from "./utils/routeProperties";
+import matchProperties from "./utils/matchProperties";
 
 import { HickoryLocation } from "@hickory/root";
 import { InternalRoute } from "./types/route";
@@ -40,7 +40,7 @@ function resolveRoute(
   const { on } = route.public;
   return Promise.all([
     on.initial ? on.initial() : undefined,
-    on.every ? on.every(routeProperties(response)) : undefined
+    on.every ? on.every(matchProperties(response)) : undefined
   ]).then(
     ([initial, every]) => {
       return {

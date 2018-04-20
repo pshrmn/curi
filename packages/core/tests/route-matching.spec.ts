@@ -722,7 +722,7 @@ describe("route matching/response generation", () => {
     });
 
     describe("every", () => {
-      it("receives the route props from the matching route", done => {
+      it("receives location, matched route name, and params", done => {
         const spy = jest.fn(route => {
           expect(route).toMatchObject({
             params: { anything: "hello" },
@@ -974,23 +974,20 @@ describe("route matching/response generation", () => {
         });
       });
 
-      describe("route", () => {
-        it("receives the route props", done => {
-          const spy = jest.fn(({ route }) => {
-            expect(route).toMatchObject({
-              params: { anything: "hello" },
-              location: {
-                pathname: "/hello",
-                query: "one=two"
-              }
-            });
-            done();
-          });
-
+      describe("location, params, name", () => {
+        it("receives location, parsed params, and matched route's name", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            response: spy
+            response: props => {
+              expect(props).toMatchObject({
+                params: { anything: "hello" },
+                location: {
+                  pathname: "/hello",
+                  query: "one=two"
+                }
+              });
+            }
           };
 
           const history = InMemory({ locations: ["/hello?one=two"] });
@@ -999,24 +996,21 @@ describe("route matching/response generation", () => {
       });
 
       describe("set", () => {
-        it("receives the response set functions", done => {
-          const spy = jest.fn(({ set }) => {
-            expect(set).toMatchObject(
-              expect.objectContaining({
-                body: expect.any(Function),
-                data: expect.any(Function),
-                status: expect.any(Function),
-                redirect: expect.any(Function),
-                error: expect.any(Function)
-              })
-            );
-            done();
-          });
-
+        it("receives the response set functions", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            response: spy
+            response: ({ set }) => {
+              expect(set).toMatchObject(
+                expect.objectContaining({
+                  body: expect.any(Function),
+                  data: expect.any(Function),
+                  status: expect.any(Function),
+                  redirect: expect.any(Function),
+                  error: expect.any(Function)
+                })
+              );
+            }
           };
 
           const history = InMemory({ locations: ["/hello?one=two"] });
@@ -1024,51 +1018,45 @@ describe("route matching/response generation", () => {
         });
       });
 
-      describe("addons", () => {
-        it("receives the registered addons object", done => {
-          const spy = jest.fn(({ addons }) => {
-            expect(typeof addons.pathname).toBe("function");
-            done();
-          });
-
+      describe("route", () => {
+        it("receives the registered route interactions object", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            response: spy
+            response: ({ route }) => {
+              expect(typeof route.pathname).toBe("function");
+            }
           };
 
           const history = InMemory({ locations: ["/hello?one=two"] });
           const router = curi(history, [CatchAll]);
         });
 
-        it("can use registered addons", () => {
+        it("can use registered interactions", () => {
+          const reverseInteraction = {
+            name: "reverse",
+            register() {},
+            get(name: string) {
+              return name
+                .split("")
+                .reverse()
+                .join("");
+            },
+            reset() {}
+          };
           const routes = [
             {
               name: "Old",
               path: "old/:id",
-              response: ({ route, set, addons }) => {
-                set.redirect({ name: "New", params: route.params });
+              response: ({ route, name, set }) => {
+                expect(route.reverse(name)).toBe("dlO");
               }
-            },
-            {
-              name: "New",
-              path: "new/:id"
             }
           ];
           const history = InMemory({ locations: ["/old/1"] });
           let firstCall = true;
-          let logger = {
-            fn: ({ response }) => {
-              if (firstCall) {
-                expect(response.redirectTo).toMatchObject({
-                  pathname: "/new/1"
-                });
-                firstCall = false;
-              }
-            }
-          };
           const router = curi(history, routes, {
-            sideEffects: [logger]
+            route: [reverseInteraction]
           });
         });
       });
