@@ -14,13 +14,13 @@ export default ({ name }) => (
     <Section title="Explanation" id="explanation">
       <p>
         Sometimes you will want to redirect based on the results of your{" "}
-        <IJS>match.every</IJS> function. For instance, you might see that a user
+        <IJS>on.every()</IJS> function. For instance, you might see that a user
         is not authenticated and shouldn't be able to view a page.
       </p>
 
       <p>
-        When this happens, your <IJS>match.response</IJS> function should modify
-        the response by calling its redirect method.
+        When this happens, the route's <IJS>response()</IJS> function should
+        modify the response by calling its redirect method.
       </p>
 
       <PrismBlock lang="javascript">
@@ -29,11 +29,9 @@ export default ({ name }) => (
   {
     name: 'Protected',
     path: 'super-secret',
-    match: {
-      response: ({ set }) => {
-        if (!store.userIsAuthenticated) {
-          set.redirect({ name: 'Login', status: 302 });
-        }
+    response: ({ set }) => {
+      if (!store.userIsAuthenticated) {
+        set.redirect({ name: 'Login', status: 302 });
       }
     }
   },

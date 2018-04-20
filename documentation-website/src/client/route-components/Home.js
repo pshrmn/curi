@@ -43,9 +43,9 @@ export default () => (
       <div className="feature">
         <h3>Sync or Async</h3>
         <p>
-          Curi does synchronous route matching by default, but can easily{" "}
+          Curi updates synchronously by default, but can easily{" "}
           <Link to="Guide" params={{ slug: "sync-or-async" }}>
-            switch to asynchronous matching
+            switch to async
           </Link>, which enables code-splitting and preloading data.
         </p>
       </div>

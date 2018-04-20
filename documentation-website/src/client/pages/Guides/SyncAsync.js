@@ -27,8 +27,8 @@ export default ({ name }) => (
 
     <p>
       By default, Curi will perform synchronous matching. If any of your routes
-      have async match methods (<IJS>match.initial</IJS> and{" "}
-      <IJS>match.every</IJS>), the router will become asynchronous.
+      have async methods (<IJS>on.initial()</IJS> and <IJS>on.every()</IJS>),
+      the router will become asynchronous.
     </p>
 
     <PrismBlock lang="javascript">
@@ -44,7 +44,7 @@ const routes = [
   {
     name: "About",
     path: "about,
-    match: {
+    on: {
       // this trigger async matching
       initial: () => import("./components/About")
     }
@@ -54,9 +54,9 @@ const routes = [
 
     <Note>
       When Curi does asynchronous matching, <strong>all</strong> routes are
-      matched asynchronously, not just the ones with <IJS>match.initial</IJS>/<IJS
+      matched asynchronously, not just the ones with <IJS>on.initial()</IJS>/<IJS
       >
-        match.every
+        on.every()
       </IJS>{" "}
       functions.
     </Note>

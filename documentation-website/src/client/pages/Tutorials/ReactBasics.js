@@ -378,27 +378,25 @@ registerServiceWorker();`}
       </p>
       <p>
         Earlier it was mentioned that response objects can be modified. This is
-        done in a route's <IJS>match.response()</IJS> function.{" "}
-        <IJS>match.response()</IJS> receives an object with a whole bunch of
-        properties that we can use to modify the response. For the time being,
-        we only care about one: <IJS>set</IJS>. This is an object with functions
-        that actually modify the response. <IJS>set.body()</IJS> will set the{" "}
-        <IJS>body</IJS> property of the response object.
+        done in a route's <IJS>response()</IJS> function. <IJS>response()</IJS>{" "}
+        receives an object with a whole bunch of properties that we can use to
+        modify the response. For the time being, we only care about one:{" "}
+        <IJS>set</IJS>. This is an object with functions that actually modify
+        the response. <IJS>set.body()</IJS> will set the <IJS>body</IJS>{" "}
+        property of the response object.
       </p>
       <PrismBlock lang="javascript">
         {`{
   name: "Home",
   path: "",
-  match: {
-    response({ set }) {
-      set.body('Home, sweet home.');
-      /*
-       * response = {
-       *   body: "Home, sweet home.",
-       *   // ...
-       * }
-       */
-    }
+  response({ set }) {
+    set.body('Home, sweet home.');
+    /*
+      * response = {
+      *   body: "Home, sweet home.",
+      *   // ...
+      * }
+      */
   }
 }`}
       </PrismBlock>
@@ -460,37 +458,29 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
-      response({ set }) {
-        set.body(Home);
-      }
+    response({ set }) {
+      set.body(Home);
     }
   },
   {
     name: "Book",
     path: "book/:id",
-    match: {
-      response({ set }) {
-        set.body(Book);
-      }
+    response({ set }) {
+      set.body(Book);
     }
   },
   {
     name: "Checkout",
     path: "checkout",
-    match: {
-      response({ set }) {
-        set.body(Checkout);
-      }
+    response({ set }) {
+      set.body(Checkout);
     }
   },
   {
     name: "Catch All",
     path: "(.*)",
-    match: {
-      response({ set }) {
-        set.body(NotFound);
-      }
+    response({ set }) {
+      set.body(NotFound);
     }
   }
 ];`}

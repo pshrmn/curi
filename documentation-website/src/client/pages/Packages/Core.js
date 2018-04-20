@@ -60,7 +60,7 @@ const router = curi(history, routes, options);`}
               <li>
                 <IJS>cache</IJS> - An object with get/set properties. This
                 allows you to cache old responses, preventing any{" "}
-                <IJS>match.every</IJS> functions from being re-called when
+                <IJS>on.every()</IJS> functions from being re-called when
                 navigating to an already-visited location.
               </li>
               <li>
@@ -92,9 +92,9 @@ const router = curi(history, routes, options);`}
               response is generated.
             </p>
             <p>
-              If the best-matched route has either a <IJS>match.initial</IJS> or{" "}
-              <IJS>match.every</IJS> loading function, the router will not call
-              the response handler functions until the match functions have all
+              If the best-matched route has either a <IJS>on.initial()</IJS> or{" "}
+              <IJS>on.every()</IJS> function, the router will not call the
+              response handler functions until the match functions have all
               resolved.
             </p>
             <PrismBlock lang="javascript">

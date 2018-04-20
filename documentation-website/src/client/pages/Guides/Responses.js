@@ -13,7 +13,7 @@ export default ({ name }) => (
       Response objects are created by the router to descibe the route that
       matches a location. Some of these properties are set automatically, while
       others can be configured using the <IJS>set</IJS> functions in a route's{" "}
-      <IJS>match.response</IJS> method.
+      <IJS>response()</IJS> method.
     </p>
     <Note>
       You can review the <IJS>set</IJS> functions in the{" "}
@@ -51,17 +51,17 @@ export default ({ name }) => (
 
   // The status code for the response.
   // This defaults to 200, but is 404 if no routes match.
-  // It can also be set with set.status and set.redirect
-  // in a route's match.response method.
+  // It can also be set with set.status() and set.redirect()
+  // in a route's response() method.
   status: 200,
 
   // This can be anything you want. It is set using
-  // the set.data in a route's match.response method.
+  // the set.data() in a route's response() method.
   // The default value is undefined.
   data: {...},
 
-  // The title string is set by calling set.title in
-  // match.response. The default value is an empty string.
+  // The title string is set by calling set.title() in
+  // response(). The default value is an empty string.
   title: 'Photo 12345',
 
   // The value set using set.body. This is where you can attach
@@ -75,7 +75,7 @@ export default ({ name }) => (
   },
   // Please see below for more information about this property
 
-  // A value set by the match.response's set.error function
+  // A value set by the response()'s set.error() function
   error: undefined
 }`}
       </PrismBlock>
@@ -88,9 +88,9 @@ export default ({ name }) => (
             params={{ slug: "routes" }}
             details={{ hash: "response-set" }}
           >
-            <IJS>set.redirect</IJS>
+            <IJS>set.redirect()</IJS>
           </Link>{" "}
-          in <IJS>match.response</IJS>, the response will have a{" "}
+          in <IJS>response()</IJS>, the response will have a{" "}
           <IJS>redirectTo</IJS> property. Curi will automatically trigger a
           redirect when it sees this.
         </p>
@@ -120,7 +120,7 @@ export default ({ name }) => (
       <p>
         The body property of a response is likely the most important property of
         a <IJS>response</IJS> because it is what you will actually render. It is
-        the value set by the matched route's <IJS>match.response</IJS> function,
+        the value set by the matched route's <IJS>response()</IJS> function,
         using{" "}
         <Link
           to="Guide"
@@ -134,18 +134,17 @@ export default ({ name }) => (
       </p>
       <PrismBlock lang="javascript">
         {`{
-  ...,
-  match: {
-    response: ({ set }) => {
-      // a function/component
-      set.body(Home);
-      // an object containing
-      // functions/componnets
-      set.body({
-        menu: HomeMenu,
-        body: Home
-      });
-    }
+  name: "Home",
+  path: "",
+  response: ({ set }) => {
+    // a function/component
+    set.body(Home);
+    // an object containing
+    // functions/componnets
+    set.body({
+      menu: HomeMenu,
+      body: Home
+    });
   }
 }`}
       </PrismBlock>

@@ -11,12 +11,11 @@ export default ({ name }) => (
       <p>
         When a user navigates to one of your routes, the re-rendering will not
         be triggered until a response has been created. If the route that
-        matches has a <IJS>match.every</IJS> function that has to make a request
-        to the server, the re-render will be delayed, possibly giving the user
-        the impression that nothing is happening. One way that you can attempt
-        to show that something is happening is by adding a loading bar to your
-        page that will demonstrate to the user that their request is going
-        through.
+        matches has a <IJS>on.every()</IJS> function that makes a request to the
+        server, the re-render will be delayed, possibly giving the user the
+        impression that nothing is happening. One way that you can attempt to
+        show that something is happening is by adding a loading bar to your page
+        that will demonstrate to the user that their request is going through.
       </p>
 
       <p>

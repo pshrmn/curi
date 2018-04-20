@@ -15,16 +15,16 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      In the code splitting guide, we used the <IJS>match.initial</IJS> property
-      of routes. Routes also have <IJS>match.every</IJS> and{" "}
-      <IJS>match.response</IJS> properties. While <IJS>initial</IJS>is only
-      called the first time a route matches, <IJS>every</IJS> and{" "}
-      <IJS>response</IJS> are called every time a route matches.
+      In the code splitting guide, we used the <IJS>on.initial()</IJS> property
+      of routes. Routes also have <IJS>on.every()</IJS> and{" "}
+      <IJS>response()</IJS> properties. While <IJS>initial</IJS>is only called
+      the first time a route matches, <IJS>on.every()</IJS> and{" "}
+      <IJS>response()</IJS> are called every time a route matches.
     </p>
 
     <Section title="every" id="every">
       <p>
-        <IJS>match.every</IJS> is where you should perform any data loading for
+        <IJS>on.every()</IJS> is where you should perform any data loading for
         the matched route.
       </p>
 
@@ -49,14 +49,14 @@ export default ({ name }) => (
         data API requests.
       </p>
       <p>
-        Just like the <IJS>match.initial</IJS> function, <IJS>match.every</IJS>{" "}
-        is expected to return a Promise.
+        Just like the <IJS>on.initial()</IJS> function, <IJS>on.every()</IJS> is
+        expected to return a Promise.
       </p>
       <PrismBlock lang="javascript">
         {`{
   name: 'Recipe',
   path: 'recipe/:id',
-  match: {
+  on: {
     every: ({ params }) => fakeAPI.getRecipe(params.id)
   }
 }`}
@@ -71,25 +71,24 @@ export default ({ name }) => (
 
     <Section title="response" id="response">
       <p>
-        While <IJS>match.every</IJS> starts our data loading, it doesn't
-        actually do anything. Instead, we should handle any loaded data with the{" "}
-        <IJS>match.response</IJS> function.
+        While <IJS>on.every()</IJS> starts our data loading, it doesn't actually
+        do anything. Instead, we should handle any loaded data with the{" "}
+        <IJS>response()</IJS> function.
       </p>
 
       <p>
-        You are probably wondering why this behavior is in a separate function.
-        The reason is that while the <IJS>every</IJS> function for a matched
-        route is resolving, the user may navigate again, which overrides the
-        current navigation. We cannot cancel the <IJS>every</IJS> function for
-        the current navigation, so if it performs any side effects, our
-        application is stuck with them. To avoid this, the <IJS>response</IJS>{" "}
-        function is not called until we know that the current navigation will
-        complete.
+        The <IJS>response()</IJS> and <IJS>on.every()</IJS> are separate because
+        while a route is resolving, the user may navigate again, which overrides
+        the current navigation. We cannot cancel the <IJS>on.every()</IJS>{" "}
+        function for the current navigation, so if it performs any side effects,
+        our application is stuck with them. To avoid this, the{" "}
+        <IJS>response()</IJS> function is not called until we know that the
+        current navigation will complete.
       </p>
 
       <p>
-        The <IJS>response</IJS> function will receive an object with a number of
-        properties. These are covered in detail in the{" "}
+        The <IJS>response()</IJS> function will receive an object with a number
+        of properties. These are covered in detail in the{" "}
         <Link
           to="Guide"
           params={{ slug: "routes" }}
@@ -111,20 +110,20 @@ export default ({ name }) => (
         {`{
   name: 'Recipe',
   path: 'recipe/:id',
-  match: {
+  response({ set, resolved }) {                                                                                                                                   : ({ resolved, set }) => {
+    set.data(resolved);
+    set.body(Recipe);
+  },
+  on: {
     every: ({ params }) => fakeAPI.getRecipe(params.id),
-    response                                                                                                                                     : ({ resolved, set }) => {
-      set.data(resolved);
-      set.body(Recipe);
-    }
   }
 }`}
       </PrismBlock>
 
       <p>
         If at some point in time we decide that we want to change our URI
-        pathname structure, we can also use the <IJS>match.response</IJS>{" "}
-        function to redirect.
+        pathname structure, we can also use the <IJS>response()</IJS> function
+        to redirect.
       </p>
 
       <p>
@@ -136,16 +135,14 @@ export default ({ name }) => (
         {`{
   name: 'Old Recipe',
   path: 'r/:id',
-  match: {
-    response: ({ route, set }) => {
-      // destructure the current location to preserve
-      // query/hash values
-      set.redirect({
-        name: 'Recipe',
-        params: route.params,
-        ...route.location
-      });
-    }
+  response: ({ route, set }) => {
+    // destructure the current location to preserve
+    // query/hash values
+    set.redirect({
+      name: 'Recipe',
+      params: route.params,
+      ...route.location
+    });
   }
 }`}
       </PrismBlock>

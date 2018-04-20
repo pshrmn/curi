@@ -46,8 +46,8 @@ export default ({ name }) => (
     <Section title="Use Cases" id="use-cases">
       <Subsection title="Setup" id="setup">
         <p>
-          If any of the routes in an application have <IJS>match.initial</IJS>{" "}
-          or <IJS>match.every</IJS> functions, Curi will create responses
+          If any of the routes in an application have <IJS>on.initial()</IJS> or{" "}
+          <IJS>on.every()</IJS> functions, Curi will create responses
           asynchronously. This means that when your application first renders,
           the initial response hasn't necessarily been created. To deal with
           this, you can use a response handler to perform any setup that needs

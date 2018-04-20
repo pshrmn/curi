@@ -147,7 +147,7 @@ const memoryHistory = InMemory();`}
         Whenever navigation happens, Curi will create a <IJS>response</IJS>{" "}
         object, which provides data about the route that it matched. The
         property values of the response object can be modified through the
-        matching route's <IJS>match.response</IJS> function.
+        matching route's <IJS>response()</IJS> function.
       </p>
       <p>
         The response object is used to render your application. The response's{" "}
@@ -162,12 +162,10 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    match: {
-      response({ set }) {
-        // set response.body to be the imported
-        // Home component
-        set.body(Home);
-      }
+    response({ set }) {
+      // set response.body to be the imported
+      // Home component
+      set.body(Home);
     }
   }
 ];
