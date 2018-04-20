@@ -1,7 +1,7 @@
 import matchLocation from "./utils/match";
 import routeProperties from "./utils/routeProperties";
 
-import { HickoryLocation, ToArgument } from "@hickory/root";
+import { HickoryLocation } from "@hickory/root";
 import { InternalRoute } from "./types/route";
 import { Response, PendingResponse, Params } from "./types/response";
 

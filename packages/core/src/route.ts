@@ -1,4 +1,3 @@
-import { HickoryLocation, ToArgument } from "@hickory/root";
 import PathToRegexp from "path-to-regexp";
 
 import once from "./utils/once";
