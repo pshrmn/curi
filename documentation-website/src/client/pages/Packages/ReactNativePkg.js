@@ -248,11 +248,11 @@ export default ({ name, version, globalName }) => (
             </ol>
             <Note>
               If you use the active prop, you have to include the{" "}
-              <Link to="Package" params={{ package: "addon-active" }}>
-                @curi/addon-active
+              <Link to="Package" params={{ package: "route-active" }}>
+                @curi/route-active
               </Link>{" "}
-              add-on in your Curi router. If you do not, an error will be
-              thrown.
+              route interaction in your Curi router. If you do not, an error
+              will be thrown.
             </Note>
           </Subsection>
         </Section>
@@ -394,18 +394,18 @@ const Users = (props) => (
           </PrismBlock>
 
           <p>
-            This relies on the active add-on from{" "}
-            <Link to="Package" params={{ package: "addon-active" }}>
-              @curi/addon-active
+            This relies on the active route interaction from{" "}
+            <Link to="Package" params={{ package: "route-active" }}>
+              @curi/route-active
             </Link>{" "}
             being added to your router.
           </p>
 
           <PrismBlock lang="javascript">
-            {`import createActiveAddon from '@curi/active-addon';
+            {`import active from '@curi/route-active';
 
 const router = curi(history, routes, {
-  addons: [createActiveAddon]
+  route: [active()]
 });`}
           </PrismBlock>
         </Section>

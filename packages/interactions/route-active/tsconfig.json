@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "lib": ["es5", "es6"],
+    "target": "es5",
+    "module": "es6",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "declaration": true,
+    "declarationDir": "types",
+    "outDir": ".build"
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
+}

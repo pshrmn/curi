@@ -2,7 +2,7 @@ import "jest";
 import { createLocalVue, shallow } from "@vue/test-utils";
 import InMemory from "@hickory/in-memory";
 import curi from "@curi/core";
-import createActiveAddon from "@curi/addon-active";
+import activeInteraction from "@curi/route-active";
 import CuriPlugin from "../src/plugin";
 import Link from "../src/Link";
 
@@ -83,7 +83,7 @@ describe("Link component", () => {
       return props;
     }
 
-    describe("without the @curi/addon-active addon", () => {
+    describe("without the @curi/route-active interaction", () => {
       const realError = console.error;
       const mockError = (console.error = jest.fn());
 
@@ -142,7 +142,7 @@ describe("Link component", () => {
         });
 
         const router = curi(history, routes, {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         Vue.use(CuriPlugin, { router });
         const wrapper = shallow(Link, {
@@ -164,7 +164,7 @@ describe("Link component", () => {
         });
 
         const router = curi(history, routes, {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         Vue.use(CuriPlugin, { router });
         const wrapper = shallow(Link, {
@@ -188,7 +188,7 @@ describe("Link component", () => {
         });
 
         const router = curi(history, routes, {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         Vue.use(CuriPlugin, { router });
         const wrapper = shallow(Link, {
@@ -209,7 +209,7 @@ describe("Link component", () => {
         });
 
         const router = curi(history, routes, {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         Vue.use(CuriPlugin, { router });
         const wrapper = shallow(Link, {
@@ -232,7 +232,7 @@ describe("Link component", () => {
         });
 
         const router = curi(history, routes, {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         const details = { query: "test=ing" };
 
@@ -263,7 +263,7 @@ describe("Link component", () => {
         });
 
         const router = curi(history, routes, {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         const details = { query: "test=ing" };
 
@@ -292,7 +292,7 @@ describe("Link component", () => {
         });
 
         const router = curi(history, routes, {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         const details = { query: "test=ing" };
 
@@ -322,7 +322,7 @@ describe("Link component", () => {
           locations: ["/place/somewhere"]
         });
         const router = curi(history, routes, {
-          addons: [createActiveAddon()]
+          route: [activeInteraction()]
         });
         Vue.use(CuriPlugin, { router });
         const wrapper = shallow(Link, {

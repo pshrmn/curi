@@ -1,10 +1,15 @@
-export { AddonRegister, AddonGet, Addon, Addons } from "./addon";
+export {
+  RegisterInteraction,
+  GetInteraction,
+  Interaction,
+  Interactions
+} from "./interaction";
 export {
   Route,
   RouteDescriptor,
   ParamParser,
   ParamParsers,
-  RouteProps,
+  MatchedRouteProps,
   ResponseSetters,
   ResponseBuilder,
   EveryMatchFn,

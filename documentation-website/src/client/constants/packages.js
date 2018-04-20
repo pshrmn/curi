@@ -8,22 +8,22 @@ const packages = [
     type: "core"
   },
   {
-    name: "addon-active",
-    version: versions["addon-active"],
-    globalName: "CuriAddonActive",
-    type: "addon"
+    name: "route-active",
+    version: versions["route-active"],
+    globalName: "CuriRouteActive",
+    type: "route"
   },
   {
-    name: "addon-ancestors",
-    version: versions["addon-ancestors"],
-    globalName: "CuriAddonAncestors",
-    type: "addon"
+    name: "route-ancestors",
+    version: versions["route-ancestors"],
+    globalName: "CuriRouteAncestors",
+    type: "route"
   },
   {
-    name: "addon-prefetch",
-    version: versions["addon-prefetch"],
-    globalName: "CuriAddonPrefetch",
-    type: "addon"
+    name: "route-prefetch",
+    version: versions["route-prefetch"],
+    globalName: "CuriRoutePrefetch",
+    type: "route"
   },
   {
     name: "side-effect-title",

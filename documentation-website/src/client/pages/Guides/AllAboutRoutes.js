@@ -140,7 +140,7 @@ const user = {
           passed an object with a number of properties.
         </p>
         <PrismBlock lang="javascript">
-          {`response: ({ resolved, route, set, addons }) => {
+          {`response: ({ set, name, params location, resolved, route }) => {
   // ...
 }`}
         </PrismBlock>
@@ -179,12 +179,22 @@ const user = {
 }`}
             </PrismBlock>
           </Subsection>
-          <Subsection tag="li" title="route" id="response-route">
+          <Subsection tag="li" title="name" id="response-name">
             <p>
-              This is the same object that is passed to the <IJS>every</IJS>{" "}
-              function and contains three properties: the parsed{" "}
-              <IJS>params</IJS>, the <IJS>location</IJS>, and the{" "}
-              <IJS>name</IJS> of the matched route.
+              The name of the matched route. This is mostly useful is{" "}
+              <IJS>response()</IJS> is defined in a separate file from where the
+              route is.
+            </p>
+          </Subsection>
+          <Subsection tag="li" title="loation" id="response-location">
+            <p>
+              The <IJS>location</IJS> that this route was matched with.
+            </p>
+          </Subsection>
+          <Subsection tag="li" title="params" id="response-params">
+            <p>
+              An object of route <IJS>params</IJS> parsed from the location's{" "}
+              <IJS>pathname</IJS>.
             </p>
           </Subsection>
           <Subsection tag="li" title="set" id="response-set">
@@ -244,10 +254,11 @@ const routes = [
             </PrismBlock>
           </Subsection>
 
-          <Subsection tag="li" title="addons" id="response-addons">
+          <Subsection tag="li" title="route" id="response-route">
             <p>
-              The add-ons that have been registered with Curi are available to
-              the <IJS>response</IJS> function.
+              The route interactions that have been registered with Curi are
+              available to the <IJS>response</IJS> function, including the
+              built-in <IJS>pathname</IJS> interaction.
             </p>
           </Subsection>
         </ul>
@@ -327,7 +338,7 @@ const routes = [
         <p>
           If you have any additional properties that you want attached to a
           route, use the <IJS>extra</IJS> property. You will be able to use{" "}
-          <IJS>route.extra</IJS> in any custom add-ons.
+          <IJS>route.extra</IJS> in any custom route interactions.
         </p>
 
         <PrismBlock lang="javascript">

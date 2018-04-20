@@ -1,5 +1,5 @@
 import registerRoutes from "./utils/registerRoutes";
-import pathnameAddon from "./addons/pathname";
+import pathnameInteraction from "./interactions/pathname";
 import finishResponse from "./finishResponse";
 import { createResponse, asyncCreateResponse } from "./createResponse";
 import createRoute from "./route";
@@ -9,7 +9,7 @@ import { History, PendingNavigation } from "@hickory/root";
 
 import { RouteDescriptor, InternalRoute } from "./types/route";
 import { Response, PendingResponse, Params } from "./types/response";
-import { Addon, Addons } from "./types/addon";
+import { Interaction, Interactions } from "./types/interaction";
 import {
   CuriRouter,
   RouterOptions,
@@ -29,7 +29,7 @@ function createRouter(
   options: RouterOptions = {}
 ): CuriRouter {
   const {
-    addons: userAddons = [],
+    route: userInteractions = [],
     sideEffects = [],
     cache,
     pathnameOptions,
@@ -49,22 +49,26 @@ function createRouter(
   });
 
   let routes: Array<InternalRoute> = [];
-  const registeredAddons: Addons = {};
+  const registeredInteractions: Interactions = {};
 
-  // add the pathname addon to the provided addons
-  const allAddons = userAddons.concat(pathnameAddon(pathnameOptions));
+  // add the pathname interaction to the provided interactions
+  const allInteractions = userInteractions.concat(
+    pathnameInteraction(pathnameOptions)
+  );
 
-  function setupRoutesAndAddons(routeArray: Array<RouteDescriptor>): void {
+  function setupRoutesAndInteractions(
+    routeArray: Array<RouteDescriptor>
+  ): void {
     routes = routeArray.map(createRoute);
     sync = !hasAsyncRoute(routes);
-    for (let key in registeredAddons) {
-      delete registeredAddons[key];
+    for (let key in registeredInteractions) {
+      delete registeredInteractions[key];
     }
 
-    allAddons.forEach(addon => {
-      addon.reset();
-      registeredAddons[addon.name] = addon.get;
-      registerRoutes(routes, addon);
+    allInteractions.forEach(interaction => {
+      interaction.reset();
+      registeredInteractions[interaction.name] = interaction.get;
+      registerRoutes(routes, interaction);
     });
   }
 
@@ -146,7 +150,7 @@ function createRouter(
     if (sync) {
       const pendingResponse = createResponse(pendingNav.location, routes);
       pendingNav.finish();
-      const response = finishResponse(pendingResponse, registeredAddons);
+      const response = finishResponse(pendingResponse, registeredInteractions);
       cacheAndEmit(response, navigation);
     } else {
       asyncCreateResponse(pendingNav.location, routes).then(pendingResponse => {
@@ -154,7 +158,10 @@ function createRouter(
           return;
         }
         pendingNav.finish();
-        const response = finishResponse(pendingResponse, registeredAddons);
+        const response = finishResponse(
+          pendingResponse,
+          registeredInteractions
+        );
         cacheAndEmit(response, navigation);
       });
     }
@@ -178,14 +185,14 @@ function createRouter(
   }
 
   // now that everything is defined, actually do the setup
-  setupRoutesAndAddons(routeArray);
+  setupRoutesAndInteractions(routeArray);
   history.respondWith(navigationHandler);
 
   const router: CuriRouter = {
-    addons: registeredAddons,
+    route: registeredInteractions,
     history,
     respond,
-    replaceRoutes: setupRoutesAndAddons,
+    replaceRoutes: setupRoutesAndInteractions,
     current() {
       return {
         response: mostRecent.response,

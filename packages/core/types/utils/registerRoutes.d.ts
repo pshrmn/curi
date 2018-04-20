@@ -1,3 +1,3 @@
-import { InternalRoute } from '../types/route';
-import { Addon } from '../types/addon';
-export default function registerRoutes(routes: Array<InternalRoute>, addon: Addon, parentData?: any): void;
+import { InternalRoute } from "../types/route";
+import { Interaction } from "../types/interaction";
+export default function registerRoutes(routes: Array<InternalRoute>, interaction: Interaction, parentData?: any): void;

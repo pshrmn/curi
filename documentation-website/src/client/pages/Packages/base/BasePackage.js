@@ -7,8 +7,8 @@ import NPMLink from "./NPMLink";
 import PackageLinks from "./PackageLinks";
 
 function getDir(name) {
-  if (name.indexOf("addon-") === 0) {
-    return "addons";
+  if (name.indexOf("route-") === 0) {
+    return "interactions";
   } else if (name.indexOf("side-effect-") === 0) {
     return "side-effects";
   } else {

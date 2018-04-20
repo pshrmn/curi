@@ -32,16 +32,16 @@ function isActive(props: BaseActiveProps) {
     response
   } = props;
   return (
-    router.addons.active(name, response, params, partial) &&
+    router.route.active(name, response, params, partial) &&
     (extra ? extra(response.location, details) : true)
   );
 }
 
 const BaseActive = (props: BaseActiveProps) => {
   invariant(
-    props.router.addons.active,
+    props.router.route.active,
     'You are attempting to use the "active" prop, but have not included the "active" ' +
-      "addon (@curi/addon-active) in your Curi router."
+      "route interaction (@curi/route-active) in your Curi router."
   );
 
   const { children, merge } = props;

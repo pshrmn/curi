@@ -130,7 +130,7 @@ const memoryHistory = InMemory();`}
         routes must have unique names.
       </p>
       <PrismBlock lang="javascript">
-        {`const pathname = router.addons.pathname("Home"); // pathname === '/'`}
+        {`const pathname = router.route.pathname("Home"); // pathname === '/'`}
       </PrismBlock>
       <p>
         How route matching works and the other route properties are explained

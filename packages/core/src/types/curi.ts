@@ -1,7 +1,7 @@
 import { History, HickoryLocation, Action } from "@hickory/root";
 import { PathFunctionOptions } from "path-to-regexp";
 
-import { Addon, Addons } from "./addon";
+import { Interaction, Interactions } from "./interaction";
 import { RouteDescriptor } from "./route";
 import { Response, Params } from "./response";
 
@@ -35,7 +35,7 @@ export interface Cache {
 }
 
 export interface RouterOptions {
-  addons?: Array<Addon>;
+  route?: Array<Interaction>;
   sideEffects?: Array<SideEffect>;
   cache?: Cache;
   pathnameOptions?: PathFunctionOptions;
@@ -53,7 +53,7 @@ export interface CuriRouter {
     fn: ResponseHandler,
     options?: RespondOptions
   ) => RemoveResponseHandler;
-  addons: Addons;
+  route: Interactions;
   history: History;
   current(): CurrentResponse;
 }

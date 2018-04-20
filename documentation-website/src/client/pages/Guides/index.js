@@ -4,7 +4,7 @@ import AllAboutRoutes from "./AllAboutRoutes";
 import ResponseHandlers from "./ResponseHandlers";
 import Responses from "./Responses";
 import NavigationObjects from "./NavigationObjects";
-import UsingAddons from "./UsingAddons";
+import RouteInteractions from "./RouteInteractions";
 import UsingSideEffects from "./UsingSideEffects";
 import ResponseCaching from "./ResponseCaching";
 import CodeSplitting from "./CodeSplitting";
@@ -22,7 +22,7 @@ export default {
   "response-handlers": ResponseHandlers,
   responses: Responses,
   "navigation-objects": NavigationObjects,
-  addons: UsingAddons,
+  "route-interactions": RouteInteractions,
   "side-effects": UsingSideEffects,
   "response-caching": ResponseCaching,
   "code-splitting": CodeSplitting,

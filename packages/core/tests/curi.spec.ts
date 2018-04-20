@@ -1,7 +1,7 @@
 import "jest";
 import curi from "../src/curi";
 import InMemory from "@hickory/in-memory";
-import { Addon, Response } from "../src/types";
+import { Interaction, Response } from "../src/types";
 
 describe("curi", () => {
   let history;
@@ -12,7 +12,7 @@ describe("curi", () => {
 
   describe("constructor", () => {
     // these tests rely on the fact that the pathname generator
-    // is a default addon
+    // is a default interaction
     it("registers routes", () => {
       const routes = [
         { name: "Home", path: "" },
@@ -23,7 +23,7 @@ describe("curi", () => {
 
       const names = ["Home", "About", "Contact"];
       names.forEach(n => {
-        expect(router.addons.pathname(n)).toBeDefined();
+        expect(router.route.pathname(n)).toBeDefined();
       });
     });
 
@@ -43,39 +43,39 @@ describe("curi", () => {
       const router = curi(history, routes);
       const names = ["Email", "Phone"];
       names.forEach(n => {
-        expect(router.addons.pathname(n)).toBeDefined();
+        expect(router.route.pathname(n)).toBeDefined();
       });
     });
 
-    it("makes addons available through return object", () => {
+    it("makes interactions available through router.route", () => {
       const routes = [{ name: "Home", path: "" }];
-      const createFakeAddon = () => ({
+      const createfakeInteraction = () => ({
         name: "fake",
         register: () => {},
         reset: () => {},
         get: () => {}
       });
       const router = curi(history, routes, {
-        addons: [createFakeAddon()]
+        route: [createfakeInteraction()]
       });
-      expect(router.addons.fake).toBeDefined();
+      expect(router.route.fake).toBeDefined();
     });
 
     describe("options", () => {
-      describe("addons", () => {
-        it("includes pathname addon by default", () => {
+      describe("interactions", () => {
+        it("includes pathname interaction by default", () => {
           const routes = [{ name: "Home", path: "" }];
           const router = curi(history, routes);
-          expect(router.addons.pathname).toBeDefined();
+          expect(router.route.pathname).toBeDefined();
         });
 
-        it("includes pathname addon even when other addons are provided", () => {
-          const firstAddonCache = {};
-          const createFirstAddon = () => {
+        it("includes pathname interaction even when other interactions are provided", () => {
+          const firstInteractionCache = {};
+          const createfirstInteraction = () => {
             return {
               name: "first",
               register: (route, extra) => {
-                firstAddonCache[route.name] = route.path;
+                firstInteractionCache[route.name] = route.path;
               },
               get(route) {},
               reset() {}
@@ -84,34 +84,34 @@ describe("curi", () => {
 
           const routes = [{ name: "Home", path: "" }];
           const router = curi(history, routes, {
-            addons: [createFirstAddon()]
+            route: [createfirstInteraction()]
           });
-          expect(router.addons.pathname).toBeDefined();
+          expect(router.route.pathname).toBeDefined();
         });
 
-        it("registers all of the routes with all of the addons", () => {
-          // this might be a bit convoluted, but it ensures that the addons
+        it("registers all of the routes with all of the interactions", () => {
+          // this might be a bit convoluted, but it ensures that the interactions
           // are registered as expected
-          const firstAddonCache = {};
-          const secondAddonCache = {};
-          const createFirstAddon = () => {
+          const firstInteractionCache = {};
+          const secondInteractionCache = {};
+          const createfirstInteraction = () => {
             return {
               name: "first",
               register: (route, extra) => {
-                firstAddonCache[route.name] = route.path;
+                firstInteractionCache[route.name] = route.path;
               },
               get(route) {},
               reset() {}
             };
           };
 
-          const createSecondAddon = () => {
+          const createsecondInteraction = () => {
             return {
               name: "second",
               register: (route, extra) => {
-                secondAddonCache[route.name] = `${extra ? extra : "None"} + ${
-                  route.name
-                }`;
+                secondInteractionCache[route.name] = `${
+                  extra ? extra : "None"
+                } + ${route.name}`;
                 return route.name;
               },
               get(route) {},
@@ -138,7 +138,7 @@ describe("curi", () => {
           ];
 
           const router = curi(history, routes, {
-            addons: [createFirstAddon(), createSecondAddon()]
+            route: [createfirstInteraction(), createsecondInteraction()]
           });
           const expected = {
             Grandparent: {
@@ -160,8 +160,8 @@ describe("curi", () => {
           };
           const keys = ["Grandparent", "Parent", "Child", "Cousin"];
           keys.forEach(key => {
-            expect(firstAddonCache[key]).toBe(expected[key].first);
-            expect(secondAddonCache[key]).toBe(expected[key].second);
+            expect(firstInteractionCache[key]).toBe(expected[key].first);
+            expect(secondInteractionCache[key]).toBe(expected[key].second);
           });
         });
       });
@@ -555,12 +555,12 @@ describe("curi", () => {
 
       const englishNames = ["Home", "About", "Contact"];
       englishNames.forEach(n => {
-        expect(router.addons.pathname(n)).toBeUndefined();
+        expect(router.route.pathname(n)).toBeUndefined();
       });
 
       const spanishNames = ["Casa", "Acerca De", "Contacto"];
       spanishNames.forEach(n => {
-        expect(router.addons.pathname(n)).toBeDefined();
+        expect(router.route.pathname(n)).toBeDefined();
       });
     });
   });

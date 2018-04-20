@@ -43,10 +43,9 @@ const guides = [
     type: "basic"
   },
   {
-    name: "Using Add-ons",
-    slug: "addons",
-    description:
-      "Learn how to use add-ons to interact with your routes in your project",
+    name: "Route Interactions",
+    slug: "route-interactions",
+    description: "Learn how to interact with your routes",
     type: "advanced"
   },
   {

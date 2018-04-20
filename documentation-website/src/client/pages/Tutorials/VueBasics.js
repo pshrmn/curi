@@ -829,13 +829,14 @@ history.navigate({ pathname: '/new' })
         </PrismBlock>
       </Subsection>
       <p>
-        Curi uses add-ons to add functionality to routes. Most of the time, you
-        have to include these while creating the router, but Curi has one
-        built-in add-on: <IJS>pathname</IJS>. The <Cmp>curi-link</Cmp>{" "}
-        automatically generates the correct pathname string using the{" "}
-        <IJS>pathname</IJS> add-on, the <IJS>to</IJS> prop (and sometimes the{" "}
-        <IJS>params</IJS> prop). We can access this add-on as{" "}
-        <IJS>router.addons.pathname()</IJS> to generate pathnames ourselves.
+        Curi uses route interactions to add functionality to routes. Most of the
+        time, you have to include these while creating the router, but Curi has
+        one built-in route interaction: <IJS>pathname</IJS>. The{" "}
+        <Cmp>curi-link</Cmp> automatically generates the correct pathname string
+        using the <IJS>pathname</IJS> route interaction, the <IJS>to</IJS> prop
+        (and sometimes the <IJS>params</IJS> prop). We can access this route
+        interaction as <IJS>router.route.pathname()</IJS> to generate pathnames
+        ourselves.
       </p>
       <p>
         We also want to import our shopping cart API so that we can add a book
@@ -873,7 +874,7 @@ history.navigate({ pathname: '/new' })
     methods: {
       onClick: function() {
         cart.add(this.book, 1);
-        const pathname = this.$router.addons.pathname('Checkout');
+        const pathname = this.$router.route.pathname('Checkout');
         this.$router.history.push({ pathname });
       }
     }
@@ -937,7 +938,7 @@ history.navigate({ pathname: '/new' })
     methods: {
       onClick: function() {
         this.books = cart.reset();
-        const pathname = this.$router.addons.pathname('Checkout');
+        const pathname = this.$router.route.pathname('Checkout');
         this.$router.history.replace({ pathname, hash: 'thanks' });
       }
     }

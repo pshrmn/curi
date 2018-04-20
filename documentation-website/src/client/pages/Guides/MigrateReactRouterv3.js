@@ -553,10 +553,10 @@ function render({ response }) {
   activeClassName='active'
 >Home</Link>
 // Curi
-// You need to add @curi/addon-active to your router object
-import createActiveAddon from '@curi/addon-active';
+// You need to add @curi/route-active to your router object
+import active from '@curi/route-active';
 const router = curi(history, routes, {
-  createActiveAddon
+  route: [active()]
 });
 
 // pass the merge function to your <Link>. The props it returns

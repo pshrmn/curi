@@ -1,0 +1,33 @@
+## Next
+
+* Moved to `@curi/route-prefetch`.
+* Switch to `on.every()`.
+* Removed source maps from `dist`.
+
+## 1.0.0-beta.6
+
+* Update to use the new `match.every` API.
+
+## 1.0.0-beta.5
+
+* Add `reset` property.
+
+## 1.0.0-beta.4
+
+* Switch to TypeScript
+
+## 1.0.0-beta.3
+
+* Switched to scoped package: `@curi/addon-prefetch`.
+
+## 1.0.0-beta.1
+
+* Getting close to where this should be ready for release, so switching to beta version.
+
+## 0.2.0
+
+* New build (uses Rollup to output a single file for each build type).
+
+## 0.1.2
+
+Updated the addon to reflect the new `route.load` arguments (`load(params, respCreator)`).

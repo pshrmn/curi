@@ -39,7 +39,7 @@
     "react": ">=16.3"
   },
   "dependencies": {
-    "@curi/addon-active": "^1.0.0-beta.5",
+    "@curi/route-active": "^1.0.0-beta.5",
     "@curi/core": "^1.0.0-beta.28",
     "@hickory/root": "^1.0.0-beta.7",
     "@types/invariant": "^2.2.29",
@@ -48,7 +48,7 @@
     "warning": "^3.0.0"
   },
   "devDependencies": {
-    "@curi/addon-active": "^1.0.0-beta.5",
+    "@curi/route-active": "^1.0.0-beta.5",
     "@curi/core": "^1.0.0-beta.28",
     "@hickory/in-memory": "^1.0.0-beta.4",
     "@types/jest": "^22.0.1",
