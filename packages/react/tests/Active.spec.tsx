@@ -144,6 +144,24 @@ describe("<Active>", () => {
         node
       );
     });
+
+    it("receives the current response object as its second argument", () => {
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="Home">
+              {(active, response) => {
+                expect(response).toMatchObject({
+                  name: "Home"
+                });
+                return null;
+              }}
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
+    });
   });
 
   describe("partial", () => {

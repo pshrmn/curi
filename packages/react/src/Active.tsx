@@ -7,7 +7,7 @@ import { CuriRouter, Response } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
 export interface ActiveProps {
-  children(active: boolean): ReactNode;
+  children(active: boolean, response?: Response): ReactNode;
   name: string;
   params?: object;
   partial?: boolean;
@@ -23,7 +23,8 @@ const Active = (props: ActiveProps): ReactNode => (
       );
 
       return props.children(
-        router.route.active(props.name, response, props.params, props.partial)
+        router.route.active(props.name, response, props.params, props.partial),
+        response
       );
     }}
   </Curious>
