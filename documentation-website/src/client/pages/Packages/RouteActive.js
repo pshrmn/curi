@@ -23,7 +23,7 @@ export default ({ name, version, globalName }) => (
       <Section tag="h3" title="active" id="active">
         <p>
           The default export is a route interaction factory that will add an{" "}
-          <IJS>active</IJS> function to your router's <IJS>route</IJS> property.
+          <IJS>active</IJS> function to the router's <IJS>route</IJS> property.
         </p>
         <p>
           The interaction returns a boolean, <IJS>true</IJS> when a route is

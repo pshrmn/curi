@@ -21,20 +21,19 @@ export default ({ name, version, globalName }) => (
         <p>What does the plugin do?</p>
         <ol>
           <li>
-            First, it will register <Cmp>curi-link</Cmp> and{" "}
-            <Cmp>curi-block</Cmp> components with Vue. You can use these
-            components anywhere within your application.
+            Register <Cmp>curi-link</Cmp> and <Cmp>curi-block</Cmp> components
+            with Vue so they can be used anywhere within your application
+            without manually importing.
           </li>
           <li>
-            Second, it makes your router globally available to Vue components as{" "}
+            Makes the Curi router globally available to Vue components as{" "}
             <IJS>$router</IJS>.
           </li>
           <li>
-            Finally, it makes responses and navigations available to components
-            through the <IJS>$curi</IJS> property. <IJS>$curi</IJS> is
-            responsive, so when a new response is emitted,{" "}
-            <IJS>$curi.response</IJS> and <IJS>$curi.navigation</IJS> will
-            automatically be updated.
+            Makes responses and navigations available to components through the{" "}
+            <IJS>$curi</IJS> property. <IJS>$curi</IJS> is responsive, so when a
+            new response is emitted, <IJS>$curi.response</IJS> and{" "}
+            <IJS>$curi.navigation</IJS> will automatically be updated.
           </li>
         </ol>
         <PrismBlock lang="javascript">
@@ -170,15 +169,14 @@ export default function renderFunction(h) {
       </PrismBlock>
 
       <p>
-        While the <IJS>CuriPlugin</IJS> observes your router for new responses,
-        you will still need to wait for it to emit its first response before you
-        can render. This can be done by calling your rendering code in a
-        callback function passed to <IJS>router.respond</IJS>.
+        If the Curi is in async mode, you will still need to wait for it to emit
+        its first response before you can render. This can be done by calling
+        your rendering code in a callback function passed to{" "}
+        <IJS>router.respond()</IJS>.
       </p>
 
       <PrismBlock lang="javascript">
-        {`
-router.respond(() => {
+        {`router.respond(() => {
   const vm = new Vue({
     el: '#app',
       
