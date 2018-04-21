@@ -16,7 +16,9 @@ export type LinkMethod = "navigate" | "push" | "replace";
 export interface LinkProps {
   to?: string;
   params?: object;
-  details?: LocationDetails;
+  hash?: string;
+  query?: any;
+  state?: any;
   onPress?: (e: GestureResponderEvent) => void;
   anchor?: React.ReactType;
   target?: string;
@@ -53,12 +55,14 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   };
 
   setLocation(props: BaseLinkProps) {
-    const { router, response, to, params, details } = props;
+    const { router, response, to, params, hash, query, state } = props;
     const pathname = to
       ? router.route.pathname(to, params)
       : response.location.pathname;
     const location = {
-      ...details,
+      hash,
+      query,
+      state,
       pathname
     };
     this.setState({ location });
@@ -76,7 +80,9 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
     const {
       to,
       params,
-      details,
+      hash,
+      query,
+      state,
       onPress,
       anchor: Anchor = TouchableHighlight,
       router,
