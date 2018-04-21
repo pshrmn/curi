@@ -1,5 +1,5 @@
 export { BlockComponent } from './Block';
-export { LinkComponent, ActiveLink } from './Link';
+export { LinkComponent } from './Link';
 export { ReactiveResponse } from './interface';
 export { CuriPluginOptions } from './plugin';
 import CuriPlugin from './plugin';

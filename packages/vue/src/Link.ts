@@ -1,20 +1,15 @@
 import Vue, { CreateElement, ComponentOptions } from "vue";
-import { HickoryLocation, LocationDetails } from "@hickory/root";
+import { HickoryLocation } from "@hickory/root";
 import warning from "warning";
-
-export interface ActiveLink {
-  merge(props: object): object;
-  partial?: boolean;
-  extra?(l: HickoryLocation, d: object): boolean;
-}
 
 export interface LinkComponent extends Vue {
   to: string;
   params?: object;
-  details?: LocationDetails;
+  hash?: string;
+  query?: any;
+  state?: any;
   location: HickoryLocation;
   href: string;
-  active: ActiveLink;
   click(e: MouseEvent): void;
 }
 
@@ -29,7 +24,7 @@ const canNavigate = (event: MouseEvent) => {
 const Link: ComponentOptions<LinkComponent> = {
   name: "curi-link",
 
-  props: ["to", "params", "details", "active", "click"],
+  props: ["to", "params", "hash", "query", "state", "click"],
 
   computed: {
     location: function() {
@@ -37,34 +32,14 @@ const Link: ComponentOptions<LinkComponent> = {
         ? this.$router.route.pathname(this.to, this.params)
         : this.$curi.response.location.pathname;
       return {
-        ...this.details,
+        hash: this.hash,
+        query: this.query,
+        state: this.state,
         pathname
       };
     },
     href: function() {
       return this.$router.history.toHref(this.location);
-    },
-    isActive: function() {
-      if (!this.$router.route.active) {
-        warning(
-          !this.active,
-          'You are attempting to use the "active" prop, but have not included the "active" ' +
-            "router interaction (@curi/route-active) in your Curi router."
-        );
-        return false;
-      }
-
-      return (
-        this.$router.route.active(
-          this.to,
-          this.$curi.response,
-          this.params,
-          !!this.active.partial
-        ) &&
-        (this.active.extra
-          ? this.active.extra(this.$curi.response.location, this.details)
-          : true)
-      );
     }
   },
 
@@ -86,9 +61,6 @@ const Link: ComponentOptions<LinkComponent> = {
       attrs: { href: this.href },
       on: { click: this.clickHandler }
     };
-    if (this.active && this.isActive) {
-      props = this.active.merge(props);
-    }
     return h("a", props, this.$slots.default);
   }
 };
