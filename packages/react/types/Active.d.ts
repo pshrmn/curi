@@ -2,15 +2,12 @@
 import React from "react";
 import { ReactElement } from "react";
 import { CuriRouter, Response } from "@curi/core";
-import { HickoryLocation } from "@hickory/root";
 export declare type ActiveChildren = (active: boolean) => ReactElement<any>;
 export interface ActiveProps {
     children: ActiveChildren;
     name: string;
     params?: object;
     partial?: boolean;
-    validate?(l: HickoryLocation, d: object): boolean;
-    details?: object;
 }
 export interface BaseActiveProps extends ActiveProps {
     router: CuriRouter;

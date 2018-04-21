@@ -13,8 +13,6 @@ export interface ActiveProps {
   name: string;
   params?: object;
   partial?: boolean;
-  validate?(l: HickoryLocation, d: object): boolean;
-  details?: object;
 }
 
 export interface BaseActiveProps extends ActiveProps {
@@ -23,19 +21,8 @@ export interface BaseActiveProps extends ActiveProps {
 }
 
 function isActive(props: BaseActiveProps) {
-  const {
-    validate,
-    partial = false,
-    name,
-    params,
-    details,
-    router,
-    response
-  } = props;
-  return (
-    router.route.active(name, response, params, partial) &&
-    (validate ? validate(response.location, details) : true)
-  );
+  const { partial = false, name, params, router, response } = props;
+  return router.route.active(name, response, params, partial);
 }
 
 const BaseActive = (props: BaseActiveProps) => {

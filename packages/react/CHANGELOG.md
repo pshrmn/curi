@@ -1,7 +1,7 @@
 ## Next
 
 * Remove `<Link active>`.
-* Update `<Active>` to use a render-invoked `children` prop. Removes the `merge` prop. Rename `extra` to `validate`.
+* Update `<Active>` to use a render-invoked `children` prop. Removes the `merge`, `details`, and `extra` props.
 
 ## 1.0.0-beta.21
 
