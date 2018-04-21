@@ -1,3 +1,8 @@
+## Next
+
+* Add `hash`, `query`, and `state` props to `<curi-link>`, remove `details`.
+* Remove `active` prop from `<curi-link>`.
+
 ## 1.0.0-beta.16
 
 * (Internal) `CuriPlugin`'s response handler uses `router.response(fn, { observe: true })`.

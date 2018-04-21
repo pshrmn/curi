@@ -2,12 +2,14 @@
 import React from "react";
 import { GestureResponderEvent } from "react-native";
 import { CuriRouter, Response } from "@curi/core";
-import { PartialLocation, LocationDetails } from "@hickory/root";
+import { PartialLocation } from "@hickory/root";
 export declare type LinkMethod = "navigate" | "push" | "replace";
 export interface LinkProps {
     to?: string;
     params?: object;
-    details?: LocationDetails;
+    hash?: string;
+    query?: any;
+    state?: any;
     onPress?: (e: GestureResponderEvent) => void;
     anchor?: React.ReactType;
     target?: string;

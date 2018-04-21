@@ -1,17 +1,13 @@
 import Vue, { ComponentOptions } from "vue";
-import { HickoryLocation, LocationDetails } from "@hickory/root";
-export interface ActiveLink {
-    merge(props: object): object;
-    partial?: boolean;
-    extra?(l: HickoryLocation, d: object): boolean;
-}
+import { HickoryLocation } from "@hickory/root";
 export interface LinkComponent extends Vue {
     to: string;
     params?: object;
-    details?: LocationDetails;
+    hash?: string;
+    query?: any;
+    state?: any;
     location: HickoryLocation;
     href: string;
-    active: ActiveLink;
     click(e: MouseEvent): void;
 }
 declare const Link: ComponentOptions<LinkComponent>;

@@ -11,7 +11,6 @@ import { TouchableHighlight, Text } from "react-native";
 import Link from "../src/Link";
 
 import { LinkMethod } from "../src/Link";
-import { LocationDetails } from "@hickory/root";
 
 // play nice
 function fakeEvent(props = {}) {
@@ -146,55 +145,6 @@ describe("<Link>", () => {
     });
   });
 
-  describe("details", () => {
-    it("merges the details prop with the generated pathname when navigating", () => {
-      const history = InMemory();
-      const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
-
-      const router = curi(history, [{ name: "Test", path: "test" }]);
-      const tree = renderer.create(
-        <CuriProvider router={router}>
-          {() => (
-            <Link to="Test" details={{ query: "one=two", hash: "hashtag" }}>
-              <Text>Test</Text>
-            </Link>
-          )}
-        </CuriProvider>
-      );
-      const anchor = tree.root.findByType(TouchableHighlight);
-      anchor.props.onPress(fakeEvent());
-      expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-        pathname: "/test",
-        query: "one=two",
-        hash: "hashtag"
-      });
-    });
-
-    it("providing a pathname in details does not overwrite the generated pathname", () => {
-      const history = InMemory();
-      const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
-
-      const router = curi(history, [{ name: "Test", path: "test" }]);
-      const tree = renderer.create(
-        <CuriProvider router={router}>
-          {() => (
-            <Link
-              to="Test"
-              details={{ pathname: "/not-a-test" } as LocationDetails}
-            >
-              <Text>Test</Text>
-            </Link>
-          )}
-        </CuriProvider>
-      );
-      const anchor = tree.root.findByType(TouchableHighlight);
-      anchor.props.onPress(fakeEvent());
-      expect(mockNavigate.mock.calls[0][0].pathname).toBe("/test");
-    });
-  });
-
   describe("pressing a link", () => {
     describe("navigation method", () => {
       let history, mockNavigate, mockPush, mockReplace;
@@ -297,7 +247,7 @@ describe("<Link>", () => {
       });
     });
 
-    it("includes details in location passed to history.navigate", () => {
+    it("includes hash, query, and state in location passed to history.navigate", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
@@ -306,7 +256,7 @@ describe("<Link>", () => {
       const tree = renderer.create(
         <CuriProvider router={router}>
           {() => (
-            <Link to="Test" details={{ hash: "thing" }}>
+            <Link to="Test" hash="thing" query="one=1" state="yo">
               <Text>Test</Text>
             </Link>
           )}
@@ -317,7 +267,9 @@ describe("<Link>", () => {
       const mockLocation = mockNavigate.mock.calls[0][0];
       expect(mockLocation).toMatchObject({
         pathname: "/",
-        hash: "thing"
+        hash: "thing",
+        query: "one=1",
+        state: "yo"
       });
     });
 

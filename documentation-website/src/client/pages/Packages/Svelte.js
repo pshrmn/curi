@@ -72,16 +72,43 @@ curiStore(router, store);`}
         <Subsection title="Props" id="link-props">
           <ul>
             <li>
-              <IJS>to</IJS> - the name of the route to link to
+              <p>
+                <IJS>to</IJS> - the name of the route to link to
+              </p>
+              <PrismBlock lang="html">
+                {`<Link to="Home">Home</Link>
+<!-- <a href="/">Home</a> -->`}
+              </PrismBlock>
             </li>
             <li>
-              <IJS>params</IJS> - any route params for the linked route
+              <p>
+                <IJS>params</IJS> - any route params for the linked route
+              </p>
+              <PrismBlock lang="html">
+                {`<Link to="User" params='{{ { userID: 5 } }}'>Profile</Link>
+<!-- <a href="/user/5">Profile</a> -->`}
+              </PrismBlock>
             </li>
             <li>
-              <IJS>details</IJS> - additional location information (<IJS>
-                query
-              </IJS>, <IJS>hash</IJS>, <IJS>state</IJS> for the linked
-              location).
+              <p>
+                <IJS>hash</IJS> - the hash for the location to link to
+              </p>
+              <PrismBlock lang="html">
+                {`<Link to="Home" hash="test">Home</Link>
+<!-- <a href="/#test">Home</a> -->`}
+              </PrismBlock>
+            </li>
+            <li>
+              <p>
+                <IJS>query</IJS> - the query for the location to link to
+              </p>
+              <PrismBlock lang="html">
+                {`<Link to="Home" query="one=1">Home</Link>
+<!-- <a href="/?one=1">Home</a> -->`}
+              </PrismBlock>
+            </li>
+            <li>
+              <IJS>state</IJS> - the state to associated with the location
             </li>
           </ul>
         </Subsection>

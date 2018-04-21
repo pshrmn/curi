@@ -16,15 +16,17 @@
 			return {
 				to: '',
 				params: {},
-				details: {}
+				hash: '',
+				query: '',
+				state: null
 			};
 		},
 		computed: {
-			location: (to, params, details, $router, $curi) => {
+			location: (to, params, hash, query, state, $router, $curi) => {
 				const pathname = to
 					? $router.route.pathname(to, params)
 					: $curi.response.location.pathname;
-				return Object.assign({}, details, { pathname });
+				return { hash, query, state, pathname };
 			},
 			href: (location, $router) => {
 				return $router.history.toHref(location);

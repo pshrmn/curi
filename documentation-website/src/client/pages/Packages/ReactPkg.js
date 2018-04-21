@@ -137,21 +137,28 @@ export default ({ name, version, globalName }) => (
             </PrismBlock>
           </Subsection>
 
-          <Subsection tag="h4" title="details" id="Link-details">
+          <Subsection
+            tag="h4"
+            title="hash, query &amp; state"
+            id="Link-hash-query-state"
+          >
             <p>
               While the pathname of the location to navigate to will be
               generated for you, this does not cover over location properties
-              (query, hash, and state). You can provide these values using the
-              details prop.
+              (query, hash, and state). The <IJS>query</IJS>, <IJS>hash</IJS>,
+              and <IJS>state</IJS> props are used to pass these values.
             </p>
             <PrismBlock lang="jsx">
               {`<Link
   to='Products'
   params={{ type: 'vacuums' }}
-  details={{ hash: 'iroomba' }}
+  hash="iroomba"
+  query="volume=loud"
+  state={{ owner: "Tom Haverford" }}
 >
   DJ Roomba
-</Link>`}
+</Link>
+// <a href="products/vacuums?volume=loud#iroomba">DJ Roomba</a>`}
             </PrismBlock>
           </Subsection>
 

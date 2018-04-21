@@ -51,21 +51,51 @@ Vue.use(CuriPlugin, { router });`}
         </p>
         <ul>
           <li>
-            <IJS>to</IJS> - The name of the route to navigate to.{" "}
-            <em>This is required</em>.
+            <p>
+              <IJS>to</IJS> - The name of the route to navigate to.{" "}
+              <em>This is required</em>.
+            </p>
+            <PrismBlock lang="html">
+              {`<curi-link to='Home'>Home</curi-link>
+<!-- <a href="/">Home</a> -->`}
+            </PrismBlock>
           </li>
           <li>
-            <IJS>params</IJS> - An object containing the key-value params for
-            the route. For example, if you are linking to a route with the path{" "}
-            <IJS>album/:title</IJS>, the params object should have a{" "}
-            <IJS>title</IJS> property.
+            <p>
+              <IJS>params</IJS> - An object containing the key-value params for
+              the route. For example, if you are linking to a route with the
+              path <IJS>album/:title</IJS>, the params object should have a{" "}
+              <IJS>title</IJS> property.
+            </p>
+            <PrismBlock lang="html">
+              {`<curi-link
+  to='Album'
+  :params="{ title: 'Coloring Book' }"
+  >
+  Coloring Book
+  </curi-link>`}
+            </PrismBlock>
           </li>
           <li>
-            <IJS>details</IJS> - An object containing additional location
-            properties that should be used for generating the anchor's{" "}
-            <IJS>href</IJS>. These additional properties may be <IJS>query</IJS>,{" "}
-            <IJS>hash</IJS>, and <IJS>state</IJS> (which isn't actually part of
-            the <IJS>href</IJS>).
+            <p>
+              <IJS>hash</IJS> - the hash for the location to link to
+            </p>
+            <PrismBlock lang="html">
+              {`<curi-link to="Home" hash="test">Home</curi-link>
+<!-- <a href="/#test">Home</a> -->`}
+            </PrismBlock>
+          </li>
+          <li>
+            <p>
+              <IJS>query</IJS> - the query for the location to link to
+            </p>
+            <PrismBlock lang="html">
+              {`<curi-link to="Home" query="one=1">Home</curi-link>
+<!-- <a href="/?one=1">Home</a> -->`}
+            </PrismBlock>
+          </li>
+          <li>
+            <IJS>state</IJS> - the state to associated with the location
           </li>
         </ul>
         <p>
@@ -77,8 +107,16 @@ Vue.use(CuriPlugin, { router });`}
   to='Album'
   :params="{ title: 'Coloring Book' }"
 >
-  Coloring Book
-</curi-link>`}
+  <div>
+    Coloring
+    <span>Book</span>
+  </div>
+</curi-link>
+<!--
+<a href="album/Coloring Book">
+  <div>Coloring <span>Book</span></div>
+</a>
+-->`}
         </PrismBlock>
       </Section>
 
