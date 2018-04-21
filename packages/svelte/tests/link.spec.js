@@ -68,7 +68,7 @@ describe("<Link>", () => {
         target: node,
         store,
         data: {
-          details: { hash: "is-a-band" }
+          hash: "is-a-band"
         }
       });
 
@@ -78,7 +78,7 @@ describe("<Link>", () => {
     });
   });
 
-  it("appends details to end of URI", () => {
+  it("appends query & hash to end of URI", () => {
     const history = InMemory();
     const routes = [{ name: "Home", path: "" }];
     const router = curi(history, routes);
@@ -90,7 +90,8 @@ describe("<Link>", () => {
       store,
       data: {
         to: "Home",
-        details: { hash: "test", query: "one=two" }
+        hash: "test",
+        query: "one=two"
       }
     });
 
