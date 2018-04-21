@@ -18,19 +18,12 @@ const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   );
 };
 
-export interface ActiveLink {
-  merge(props: object): object;
-  partial?: boolean;
-  extra?(l: HickoryLocation, d: LocationDetails): boolean;
-}
-
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   to?: string;
   params?: object;
   details?: LocationDetails;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-  active?: ActiveLink;
   anchor?: React.ReactType;
   target?: string;
 }
@@ -71,25 +64,10 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
 
   componentWillMount() {
     this.setLocation(this.props);
-    if (this.props.active) {
-      this.verifyActiveInteraction();
-    }
   }
 
   componentWillReceiveProps(nextProps: BaseLinkProps) {
     this.setLocation(nextProps);
-    if (nextProps.active) {
-      this.verifyActiveInteraction();
-    }
-  }
-
-  verifyActiveInteraction() {
-    const router = this.props.router;
-    invariant(
-      router.route.active,
-      'You are attempting to use the "active" prop, but have not included the "active" ' +
-        "route interaction (@curi/route-active) in your Curi router."
-    );
   }
 
   render(): React.ReactNode {
@@ -98,7 +76,6 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       params,
       details,
       onClick,
-      active,
       anchor,
       router,
       response,
@@ -106,15 +83,6 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
     } = this.props;
     let anchorProps = rest;
     const Anchor: React.ReactType = anchor ? anchor : "a";
-    if (active) {
-      const { partial, merge, extra } = active;
-      const isActive =
-        router.route.active(to, response, params, partial) &&
-        (extra ? extra(response.location, details) : true);
-      if (isActive) {
-        anchorProps = merge(anchorProps);
-      }
-    }
 
     const { location } = this.state;
     const href: string = router.history.toHref(location);
