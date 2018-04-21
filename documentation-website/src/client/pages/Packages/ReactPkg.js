@@ -25,22 +25,22 @@ export default ({ name, version, globalName }) => (
       </div>
     }
   >
-    <Warning>
-      This package is using the new React context API, which is unstable, so
-      this package is technically "experimental" until that is finalized. It is
-      currently built on top of the <IJS>react-broadcast</IJS> package, which
-      simulates the new context API using the old context. This means that it
-      works with any version of React that <IJS>react-broadcast</IJS> supports,
-      but in the future will be restricted to React versions that support the
-      new context API (17+).
-    </Warning>
     <APIBlock>
       <Section title={<Cmp>CuriProvider</Cmp>} id="CuriProvider">
+        <PrismBlock lang="javascript">
+          {`import { CuriProvider } from '@curi/react';`}
+        </PrismBlock>
         <p>
           The <Cmp>CuriProvider</Cmp> is the root Curi component for an
-          application. It is responsible for making routing related props
-          accessible to descendant components.
+          application. It has two jobs:
         </p>
+        <ol>
+          <li>Re-rendering the application when a new response is emitted.</li>
+          <li>
+            Placing values on the context so that the other Curi components can
+            access them.
+          </li>
+        </ol>
         <Note>
           All of the other components provided by <IJS>@curi/react</IJS> must be
           descendants of a <Cmp>CuriProvider</Cmp>.
@@ -51,21 +51,15 @@ export default ({ name, version, globalName }) => (
           when this happens.
         </p>
 
-        <PrismBlock lang="javascript">
-          {`import { CuriProvider } from '@curi/react';`}
-        </PrismBlock>
-
         <PrismBlock lang="jsx">
-          {`router.respond(() => {
-  ReactDOM.render((
-    <CuriProvider router={router}>
-      {({ response }) => {
-        const { body:Body } = response;
-        return <Body response={response} />;
-      }}
-    </CuriProvider>
-  ), holder);
-});`}
+          {`const App = () => (
+  <CuriProvider router={router}>
+    {({ response, navigation, router }) => {
+      const { body:Body } = response;
+      return <Body response={response} />;
+    }}
+  </CuriProvider>
+);`}
         </PrismBlock>
         <Section tag="h3" title="Props" id="CuriProvider-props">
           <Subsection tag="h4" title="router" id="CuriProvider-router">
@@ -74,26 +68,36 @@ export default ({ name, version, globalName }) => (
 
           <Subsection tag="h4" title="children" id="CuriProvider-render">
             <p>
-              A function that will be called whenever the{" "}
-              <Cmp>CuriProvider</Cmp> renders. The function will be passed an
-              object with three properties: <IJS>response</IJS>,{" "}
-              <IJS>navigation</IJS>, and <IJS>router</IJS>. The function must
-              return a React element.
+              <IJS>children</IJS> is a render-invoked prop that will be passed
+              an object with three properties:
             </p>
+            <ol>
+              <li>
+                <IJS>response</IJS> is the response object generated for the
+                current location.
+              </li>
+              <li>
+                <IJS>navigation</IJS> is additional information about the last
+                navigation that doesn't make sense to place in the response.
+              </li>
+              <li>
+                <IJS>router</IJS> is the Curi router.
+              </li>
+            </ol>
           </Subsection>
         </Section>
       </Section>
 
       <Section title={<Cmp>Link</Cmp>} id="Link">
+        <PrismBlock lang="javascript">
+          {`import { Link } from '@curi/react';`}
+        </PrismBlock>
         <p>
           A <Cmp>Link</Cmp> allows you to navigate within your application using
           an anchor element (<Cmp>a</Cmp>). When the rendered element is
           clicked, instead of reloading the page it will use your router
           object's history object to navigate.
         </p>
-        <PrismBlock lang="javascript">
-          {`import { Link } from '@curi/react';`}
-        </PrismBlock>
 
         <p>
           With the <Cmp>Link</Cmp>, instead of providing a URI to navigate to,
@@ -110,6 +114,15 @@ export default ({ name, version, globalName }) => (
         <Section tag="h3" title="Props" id="Link-props">
           <Subsection tag="h4" title="to" id="Link-to">
             <p>The name of the route that you want to navigate to.</p>
+            <PrismBlock lang="jsx">
+              {`// Home route is { name: "Home", path: "" }
+<Link to="Home">Home</Link>`}
+            </PrismBlock>
+            <p>
+              If <IJS>to</IJS> is not provided, the <Cmp>Link</Cmp> will re-use
+              the current location's <IJS>pathname</IJS>. This is useful for
+              linking to hashes within the current page.
+            </p>
           </Subsection>
 
           <Subsection tag="h4" title="params" id="Link-params">
@@ -140,11 +153,6 @@ export default ({ name, version, globalName }) => (
   DJ Roomba
 </Link>`}
             </PrismBlock>
-            <Note>
-              You can also include a pathname property in the details object and
-              it will overwrite the one generated from the to prop. This isn't
-              recommended, but does work.
-            </Note>
           </Subsection>
 
           <Subsection tag="h4" title="anchor" id="Link-anchor">
@@ -227,26 +235,34 @@ export default ({ name, version, globalName }) => (
               </li>
             </ol>
             <Note>
-              If you use the active prop, you have to include the{" "}
-              <Link to="Package" params={{ package: "route-active" }}>
-                @curi/route-active
-              </Link>{" "}
-              router interaction in your Curi router. If you do not, an error
-              will be thrown.
+              <p>
+                If you use the active prop, you have to include the{" "}
+                <Link to="Package" params={{ package: "route-active" }}>
+                  @curi/route-active
+                </Link>{" "}
+                route interaction in your Curi router. If you do not, an error
+                will be thrown.
+              </p>
+              <PrismBlock lang="javascript">
+                {`import active from "@curi/route-active";
+
+const router = curi(history, routes, {
+  route: [active()]
+});`}
+              </PrismBlock>
             </Note>
           </Subsection>
         </Section>
       </Section>
 
       <Section title={<Cmp>Curious</Cmp>} id="Curious">
-        <p>
-          A component whose <IJS>children</IJS> is a render-invoked prop. That
-          function will be passed an object with <IJS>router</IJS>,{" "}
-          <IJS>response</IJS>, and <IJS>navigation</IJS> properties.
-        </p>
         <PrismBlock lang="javascript">
           {`import { Curious } from '@curi/react';`}
         </PrismBlock>
+        <p>
+          A context consumer component for injecting router values into
+          components.
+        </p>
 
         <PrismBlock lang="jsx">
           {`class MyComponent extends React.Component {
@@ -269,22 +285,22 @@ export default MyComponent;`}
 
         <Section tag="h3" title="Props" id="curious-props">
           <Subsection tag="h4" title="children" id="curious-children">
-            A function that returns a React element. This function will receive
-            an object with <IJS>router</IJS>, <IJS>response</IJS> and{" "}
-            <IJS>navigation</IJS> properties that you can pass to components.
+            A render-invoked function that returns a React element. This
+            function will receive an object with <IJS>router</IJS>,{" "}
+            <IJS>response</IJS> and <IJS>navigation</IJS> properties.
           </Subsection>
         </Section>
       </Section>
 
       <Section title={<Cmp>Active</Cmp>} id="Active">
+        <PrismBlock lang="javascript">
+          {`import { Active } from '@curi/react';`}
+        </PrismBlock>
         <p>
           The <Cmp>Active</Cmp> component allows you to style its child
           component as "active" when the location that <Cmp>Active</Cmp>{" "}
           describe matches the current location.
         </p>
-        <PrismBlock lang="javascript">
-          {`import { Active } from '@curi/react';`}
-        </PrismBlock>
 
         <p>
           The <Cmp>Active</Cmp> component lets you modify its children element's
@@ -392,6 +408,9 @@ const router = curi(history, routes, {
       </Section>
 
       <Section title={<Cmp>Block</Cmp>} id="Block">
+        <PrismBlock lang="javascript">
+          {`import { Block } from '@curi/react';`}
+        </PrismBlock>
         <p>
           The <Cmp>Block</Cmp> component lets you prevent navigation until a
           user has confirmed that they want to navigate. This can be useful when
@@ -399,9 +418,6 @@ const router = curi(history, routes, {
           <strong>will not</strong> prevent the user from navigating to another
           site, it only works for navigation within the application.
         </p>
-        <PrismBlock lang="javascript">
-          {`import { Block } from '@curi/react';`}
-        </PrismBlock>
 
         <Section tag="h3" title="Props" id="Block-props">
           <Subsection tag="h4" title="active" id="Block-active">
