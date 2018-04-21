@@ -1,5 +1,7 @@
-## 1.0.0-beta.3
+## Next
 
+* Remove `<Link active>`.
+* Update `<Active>` to use a render-invoked `children` prop. Removes the `merge`, `details`, and `extra` props.
 * Use the new React Context API released in React 16.3. This forces the minimum React version for `@curi/react` projects to `16.3`. The minimum React Native version is also bumped to `0.55`.
 
 ## 1.0.0-beta.2

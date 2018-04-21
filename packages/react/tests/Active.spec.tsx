@@ -35,13 +35,9 @@ describe("<Active>", () => {
     ReactDOM.unmountComponentAtNode(node);
   });
 
-  describe("no active interaction", () => {
+  describe("no route.active()", () => {
     it('warns if attempting to use in a Curi router without the "active" route interaction', () => {
       const router = curi(history, routes);
-      const Test = () => null;
-      function merge(props) {
-        return props;
-      }
 
       const realError = console.error;
       console.error = jest.fn();
@@ -49,11 +45,7 @@ describe("<Active>", () => {
       expect(() => {
         ReactDOM.render(
           <CuriProvider router={router}>
-            {() => (
-              <Active name="Home" merge={merge}>
-                <Test />
-              </Active>
-            )}
+            {() => <Active name="Home">{active => null}</Active>}
           </CuriProvider>,
           node
         );
@@ -65,91 +57,115 @@ describe("<Active>", () => {
     });
   });
 
-  describe("children", () => {
-    it("re-renders the children element it is passed", () => {
-      const Test = () => <div>Test</div>;
-      function merge(props) {
-        return props;
-      }
-
+  describe("name", () => {
+    it('uses the "name" to determine if it is active', () => {
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Active name="Home" merge={merge}>
-              <Test />
+            <Active name="Home">
+              {active => {
+                expect(active).toBe(true);
+                return null;
+              }}
             </Active>
           )}
         </CuriProvider>,
         node
       );
-      expect(node.textContent).toBe("Test");
     });
   });
 
-  describe("merge", () => {
-    it("does not call merge function when not active", () => {
-      const Test = () => null;
-      const merge = jest.fn();
-
+  describe("params", () => {
+    it('uses the "params" to determine if it is active', () => {
+      const history = InMemory({ locations: ["/contact/email"] });
+      const router = curi(history, routes, {
+        route: [activeInteraction()]
+      });
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Active name="About" merge={merge}>
-              <Test />
+            <Active name="Method" params={{ method: "email" }}>
+              {active => {
+                expect(active).toBe(true);
+                return null;
+              }}
             </Active>
           )}
         </CuriProvider>,
         node
       );
-      expect(merge.mock.calls.length).toBe(0);
+    });
+  });
+
+  describe("children", () => {
+    it("is called when <Active> renders", () => {
+      const childrenMock = jest.fn(() => {
+        return null;
+      });
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => <Active name="Home">{childrenMock}</Active>}
+        </CuriProvider>,
+        node,
+        () => {
+          expect(childrenMock.mock.calls.length).toBe(1);
+        }
+      );
     });
 
-    it("calls merge function when active", () => {
-      const Test = () => null;
-      const merge = jest.fn();
-
+    it("children(true) if the specified route is active", () => {
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Active name="Home" merge={merge}>
-              <Test />
+            <Active name="Home">
+              {active => {
+                expect(active).toBe(true);
+                return null;
+              }}
             </Active>
           )}
         </CuriProvider>,
         node
       );
-      expect(merge.mock.calls.length).toBe(1);
     });
 
-    it("merges props into children element's props when active", () => {
-      const Test = () => null;
-      function merge(props) {
-        props.className = "not-a-test";
-        return props;
-      }
-
+    it("children(false) if the specified route is NOT active", () => {
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Active name="Home" merge={merge}>
-              <div className="test" />
+            <Active name="Contact">
+              {active => {
+                expect(active).toBe(false);
+                return null;
+              }}
             </Active>
           )}
         </CuriProvider>,
         node
       );
-      const div = node.querySelector("not-a-test");
-      expect(div).toBeDefined();
+    });
+
+    it("receives the current response object as its second argument", () => {
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Active name="Home">
+              {(active, response) => {
+                expect(response).toMatchObject({
+                  name: "Home"
+                });
+                return null;
+              }}
+            </Active>
+          )}
+        </CuriProvider>,
+        node
+      );
     });
   });
 
   describe("partial", () => {
-    it("works for partial matches when partial=true", () => {
-      const Test = () => null;
-      function merge(props) {
-        props.className = "not-a-test";
-        return props;
-      }
+    it("children(true) for partial matches when partial=true", () => {
       const history = InMemory({ locations: ["/contact/email"] });
       const router = curi(history, routes, {
         route: [activeInteraction()]
@@ -158,75 +174,16 @@ describe("<Active>", () => {
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Active name="Contact" partial={true} merge={merge}>
-              <div className="test" />
+            <Active name="Contact" partial={true}>
+              {active => {
+                expect(active).toBe(true);
+                return null;
+              }}
             </Active>
           )}
         </CuriProvider>,
         node
       );
-      const div = node.querySelector("not-a-test");
-      expect(div).toBeDefined();
-    });
-  });
-
-  describe("extra", () => {
-    it("does nothing when not provided", () => {
-      const Test = () => null;
-      const merge = jest.fn();
-
-      ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => (
-            <Active name="Home" merge={merge}>
-              <Test />
-            </Active>
-          )}
-        </CuriProvider>,
-        node
-      );
-      expect(merge.mock.calls.length).toBe(1);
-    });
-
-    it("passes current location and details to the extra function", () => {
-      const Test = () => null;
-      const merge = jest.fn();
-      const details = { query: "test=ing" };
-      const extra = jest.fn((loc: HickoryLocation, deets: object): boolean => {
-        //expect(loc).toBe(fakeResponse.location);
-        expect(deets).toBe(details);
-        return true;
-      });
-
-      ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => (
-            <Active name="Home" merge={merge} extra={extra} details={details}>
-              <Test />
-            </Active>
-          )}
-        </CuriProvider>,
-        node
-      );
-      expect(extra.mock.calls.length).toBe(1);
-    });
-
-    it("component is not active if extra returns false", () => {
-      const Test = () => null;
-      const merge = jest.fn();
-      const extra = () => false;
-
-      ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => (
-            <Active name="Home" merge={merge} extra={extra}>
-              <Test />
-            </Active>
-          )}
-        </CuriProvider>,
-        node
-      );
-      expect(merge.mock.calls.length).toBe(0);
     });
   });
 });

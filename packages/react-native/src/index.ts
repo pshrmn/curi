@@ -1,4 +1,4 @@
-export { LinkProps, ActiveLink, LinkMethod } from "./Link";
+export { LinkProps, LinkMethod } from "./Link";
 
 export { Active, Block, CuriProvider, Curious } from "@curi/react";
 
