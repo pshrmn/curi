@@ -11,12 +11,6 @@ import {
   LocationDetails
 } from "@hickory/root";
 
-export interface ActiveLink {
-  merge(props: object): object;
-  partial?: boolean;
-  extra?(l: HickoryLocation, d: object): boolean;
-}
-
 export type LinkMethod = "navigate" | "push" | "replace";
 
 export interface LinkProps {
@@ -24,7 +18,6 @@ export interface LinkProps {
   params?: object;
   details?: LocationDetails;
   onPress?: (e: GestureResponderEvent) => void;
-  active?: ActiveLink;
   anchor?: React.ReactType;
   target?: string;
   style?: any;
@@ -73,24 +66,10 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
 
   componentWillMount() {
     this.setLocation(this.props);
-    if (this.props.active) {
-      this.verifyActiveInteraction();
-    }
   }
 
   componentWillReceiveProps(nextProps: BaseLinkProps) {
     this.setLocation(nextProps);
-    if (nextProps.active) {
-      this.verifyActiveInteraction();
-    }
-  }
-
-  verifyActiveInteraction() {
-    invariant(
-      this.props.router.route.active,
-      'You are attempting to use the "active" prop, but have not included the "active" ' +
-        "route interaction (@curi/route-active) in your Curi router."
-    );
   }
 
   render(): React.ReactElement<any> {
@@ -99,7 +78,6 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       params,
       details,
       onPress,
-      active,
       anchor: Anchor = TouchableHighlight,
       router,
       response,
@@ -107,18 +85,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       ...rest
     } = this.props;
 
-    let anchorProps = rest;
-    if (active) {
-      const { partial, merge, extra } = active;
-      const isActive =
-        router.route.active(to, response, params, partial) &&
-        (extra ? extra(response.location, details) : true);
-      if (isActive) {
-        anchorProps = merge(anchorProps);
-      }
-    }
-
-    return <Anchor {...anchorProps} onPress={this.pressHandler} />;
+    return <Anchor {...rest} onPress={this.pressHandler} />;
   }
 }
 
