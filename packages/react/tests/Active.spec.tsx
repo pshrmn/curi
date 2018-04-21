@@ -169,8 +169,8 @@ describe("<Active>", () => {
     });
   });
 
-  describe("extra + details", () => {
-    it("ignores hash when extra prop is not provided", () => {
+  describe("validate + details", () => {
+    it("ignores hash when validate prop is not provided", () => {
       const history = InMemory({ locations: ["/#hash"] });
       const router = curi(history, routes, {
         route: [activeInteraction()]
@@ -190,7 +190,7 @@ describe("<Active>", () => {
       );
     });
 
-    it("ignores query when extra prop is not provided", () => {
+    it("ignores query when validate prop is not provided", () => {
       const history = InMemory({ locations: ["/?active=true"] });
       const router = curi(history, routes, {
         route: [activeInteraction()]
@@ -210,20 +210,22 @@ describe("<Active>", () => {
       );
     });
 
-    it("passes current location and details to the extra function", () => {
+    it("passes current location and details to the validate function", () => {
       const details = { query: "test=ing" };
-      const extra = jest.fn((loc: HickoryLocation, deets: object): boolean => {
-        expect(loc).toMatchObject({
-          pathname: "/"
-        });
-        expect(deets).toBe(details);
-        return true;
-      });
+      const validate = jest.fn(
+        (loc: HickoryLocation, deets: object): boolean => {
+          expect(loc).toMatchObject({
+            pathname: "/"
+          });
+          expect(deets).toBe(details);
+          return true;
+        }
+      );
 
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Active name="Home" extra={extra} details={details}>
+            <Active name="Home" validate={validate} details={details}>
               {active => {
                 expect(active).toBe(true);
                 return null;
@@ -233,19 +235,19 @@ describe("<Active>", () => {
         </CuriProvider>,
         node,
         () => {
-          expect(extra.mock.calls.length).toBe(1);
+          expect(validate.mock.calls.length).toBe(1);
         }
       );
     });
 
-    it("children(false) if extra returns false", () => {
+    it("children(false) if validate returns false", () => {
       const Test = () => null;
-      const extra = () => false;
+      const validate = () => false;
 
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Active name="Home" extra={extra}>
+            <Active name="Home" validate={validate}>
               {active => {
                 expect(active).toBe(false);
                 return null;

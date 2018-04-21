@@ -9,7 +9,7 @@ export interface ActiveProps {
     name: string;
     params?: object;
     partial?: boolean;
-    extra?(l: HickoryLocation, d: object): boolean;
+    validate?(l: HickoryLocation, d: object): boolean;
     details?: object;
 }
 export interface BaseActiveProps extends ActiveProps {
