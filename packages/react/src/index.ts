@@ -1,6 +1,6 @@
 export { ActiveProps } from "./Active";
 export { BlockProps } from "./Block";
-export { LinkProps, ActiveLink } from "./Link";
+export { LinkProps } from "./Link";
 export { CuriProviderProps, CuriRenderFn } from "./CuriProvider";
 
 import Active from "./Active";
