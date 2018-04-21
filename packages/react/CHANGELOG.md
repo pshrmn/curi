@@ -1,3 +1,7 @@
+## Next
+
+* Update `<Active>` to use a render-invoked `children` prop. Removes the `merge` prop.
+
 ## 1.0.0-beta.21
 
 * Use the new React Context API released in React 16.3. This forces the minimum React version for `@curi/react` projects to `16.3`.

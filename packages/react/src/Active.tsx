@@ -6,12 +6,13 @@ import { Curious } from "./Context";
 import { CuriRouter, Response } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
+export type ActiveChildren = (active: boolean) => ReactElement<any>;
+
 export interface ActiveProps {
-  children: ReactElement<any>;
+  children: ActiveChildren;
   name: string;
   params?: object;
   partial?: boolean;
-  merge(props: object): object;
   extra?(l: HickoryLocation, d: object): boolean;
   details?: object;
 }
@@ -44,10 +45,7 @@ const BaseActive = (props: BaseActiveProps) => {
       "route interaction (@curi/route-active) in your Curi router."
   );
 
-  const { children, merge } = props;
-  return isActive(props)
-    ? React.cloneElement(children, merge({ ...children.props }))
-    : children;
+  return props.children(isActive(props));
 };
 
 const Active = (props: ActiveProps): React.ReactElement<any> => (
