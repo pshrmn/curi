@@ -43,7 +43,7 @@ export default () => (
       <div className="feature">
         <h3>Sync or Async</h3>
         <p>
-          Curi updates synchronously by default, but can easily{" "}
+          Curi re-renders apps synchronously by default, but can easily{" "}
           <Link to="Guide" params={{ slug: "sync-or-async" }}>
             switch to async
           </Link>, which enables code-splitting and preloading data.

@@ -38,10 +38,10 @@ function renderFullPage(html, title, debug) {
   </head>
   <body>
     <div id="root">${html}</div>
-    <script src="https://unpkg.com/react@16.0.0/umd/react.${
+    <script src="https://unpkg.com/react@16.3.1/umd/react.${
       debug ? "development" : "production.min"
     }.js"></script>
-    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.${
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.${
       debug ? "development" : "production.min"
     }.js"></script>
     <script src="/static/js/prism.js"></script>

@@ -29,8 +29,8 @@ export default ({ name, version, globalName }) => (
       <Section tag="h3" title="prefetch" id="prefetch">
         <p>
           The default export function is a route interaction factory that will
-          add an <IJS>prefetch</IJS> function to your router object's{" "}
-          <IJS>route</IJS> property.
+          add an <IJS>prefetch</IJS> function to the router's <IJS>route</IJS>{" "}
+          property.
         </p>
 
         <PrismBlock lang="javascript">

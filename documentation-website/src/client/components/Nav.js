@@ -16,13 +16,13 @@ export default () => (
         </Link>
       </li>
       <li>
-        <Link to="Tutorials" active={{ merge: styleActive, partial: true }}>
-          Tutorials
+        <Link to="Guides" active={{ merge: styleActive, partial: true }}>
+          Guides
         </Link>
       </li>
       <li>
-        <Link to="Guides" active={{ merge: styleActive, partial: true }}>
-          Guides
+        <Link to="Tutorials" active={{ merge: styleActive, partial: true }}>
+          Tutorials
         </Link>
       </li>
       <li>

@@ -40,9 +40,14 @@ const router = curi(history, routes, {
         </PrismBlock>
 
         <p>
-          In order for this to work, you will need to set title properties on
-          your routes. You can learn more about <IJS>route.title</IJS> in the{" "}
-          <Link to="Guide" params={{ slug: "routes" }}>
+          In order for this to work, you will need to use <IJS>set.title()</IJS>{" "}
+          in your routes' <IJS>response()</IJS> functions. You can learn more
+          about <IJS>route.title</IJS> in the{" "}
+          <Link
+            to="Guide"
+            params={{ slug: "routes" }}
+            details={{ hash: "response-set" }}
+          >
             all about routes
           </Link>{" "}
           guide.

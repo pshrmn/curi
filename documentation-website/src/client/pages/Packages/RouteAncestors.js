@@ -21,7 +21,7 @@ export default ({ name, version, globalName }) => (
       <Section tag="h3" title="ancestors" id="ancestors">
         <p>
           The default export is a route interaction factory that will add an{" "}
-          <IJS>ancestors</IJS> function to your router object's <IJS>route</IJS>{" "}
+          <IJS>ancestors</IJS> function to the router object's <IJS>route</IJS>{" "}
           property.
         </p>
         <p>
