@@ -22,10 +22,11 @@ export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   to?: string;
   params?: object;
-  details?: LocationDetails;
+  hash?: string;
+  query?: any;
+  state?: any;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   anchor?: React.ReactType;
-  target?: string;
 }
 
 export interface BaseLinkProps extends LinkProps {
@@ -51,12 +52,14 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   };
 
   setLocation(props: BaseLinkProps) {
-    const { router, to, params, details, response } = props;
+    const { router, to, params, hash, query, state, response } = props;
     const pathname = to
       ? router.route.pathname(to, params)
       : response.location.pathname;
     const location = {
-      ...details,
+      hash,
+      query,
+      state,
       pathname
     };
     this.setState({ location });
@@ -74,7 +77,9 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
     const {
       to,
       params,
-      details,
+      hash,
+      query,
+      state,
       onClick,
       anchor,
       router,

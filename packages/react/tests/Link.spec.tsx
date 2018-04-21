@@ -141,14 +141,14 @@ describe("<Link>", () => {
     });
   });
 
-  describe("details", () => {
-    it("merges the details prop with the generated pathname when navigating", () => {
+  describe("hash & query", () => {
+    it("merges hash & query props with the pathname when creating href", () => {
       const history = InMemory();
       const router = curi(history, [{ name: "Test", path: "test" }]);
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Link to="Test" details={{ query: "one=two", hash: "#hashtag" }}>
+            <Link to="Test" query="one=two" hash="hashtag">
               Test
             </Link>
           )}
@@ -157,26 +157,6 @@ describe("<Link>", () => {
       );
       const a = node.querySelector("a");
       expect(a.getAttribute("href")).toBe("/test?one=two#hashtag");
-    });
-
-    it("providing a pathname in details does not overwrite the generated pathname", () => {
-      const history = InMemory();
-      const router = curi(history, [{ name: "Test", path: "test" }]);
-      ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => (
-            <Link
-              to="Test"
-              details={{ pathname: "/not-a-test" } as LocationDetails}
-            >
-              Test
-            </Link>
-          )}
-        </CuriProvider>,
-        node
-      );
-      const a = node.querySelector("a");
-      expect(a.getAttribute("href")).toBe("/test");
     });
   });
 
@@ -209,7 +189,7 @@ describe("<Link>", () => {
       expect(mockNavigate.mock.calls.length).toBe(1);
     });
 
-    it("includes details in location passed to history.navigate", () => {
+    it("includes hash, query, and state in location passed to history.navigate", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
@@ -218,7 +198,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Link to="Test" details={{ hash: "thing" }}>
+            <Link to="Test" hash="thing" query="one=1" state="yo">
               Test
             </Link>
           )}
@@ -241,7 +221,9 @@ describe("<Link>", () => {
       const mockLocation = mockNavigate.mock.calls[0][0];
       expect(mockLocation).toMatchObject({
         pathname: "/",
-        hash: "thing"
+        hash: "thing",
+        query: "one=1",
+        state: "yo"
       });
     });
 

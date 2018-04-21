@@ -1,14 +1,15 @@
 /// <reference types="react" />
 import React from "react";
 import { CuriRouter, Response } from "@curi/core";
-import { PartialLocation, LocationDetails } from "@hickory/root";
+import { PartialLocation } from "@hickory/root";
 export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     to?: string;
     params?: object;
-    details?: LocationDetails;
+    hash?: string;
+    query?: any;
+    state?: any;
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     anchor?: React.ReactType;
-    target?: string;
 }
 export interface BaseLinkProps extends LinkProps {
     router: CuriRouter;
