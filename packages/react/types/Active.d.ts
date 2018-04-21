@@ -1,12 +1,11 @@
 /// <reference types="react" />
 import React from "react";
-import { ReactElement } from "react";
-export declare type ActiveChildren = (active: boolean) => ReactElement<any>;
+import { ReactNode } from "react";
 export interface ActiveProps {
-    children: ActiveChildren;
+    children(active: boolean): ReactNode;
     name: string;
     params?: object;
     partial?: boolean;
 }
-declare const Active: (props: ActiveProps) => React.ReactElement<any>;
+declare const Active: (props: ActiveProps) => React.ReactNode;
 export default Active;

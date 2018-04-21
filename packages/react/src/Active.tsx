@@ -1,21 +1,19 @@
 import React from "react";
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import invariant from "invariant";
 import { Curious } from "./Context";
 
 import { CuriRouter, Response } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
-export type ActiveChildren = (active: boolean) => ReactElement<any>;
-
 export interface ActiveProps {
-  children: ActiveChildren;
+  children(active: boolean): ReactNode;
   name: string;
   params?: object;
   partial?: boolean;
 }
 
-const Active = (props: ActiveProps): React.ReactElement<any> => (
+const Active = (props: ActiveProps): ReactNode => (
   <Curious>
     {({ router, response }) => {
       invariant(
