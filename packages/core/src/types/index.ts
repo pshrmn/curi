@@ -16,7 +16,13 @@ export {
   InitialMatchFn,
   OnFns
 } from "./route";
-export { Response, RawParams, Params } from "./response";
+export {
+  Response,
+  RawParams,
+  Params,
+  MatchResponse,
+  MissResponse
+} from "./response";
 export {
   CuriRouter,
   RouterOptions,

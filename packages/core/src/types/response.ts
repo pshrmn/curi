@@ -17,7 +17,7 @@ export interface BaseResponse {
 export type MissResponse = BaseResponse;
 
 // when a route matches, the response is extended
-export interface PendingMatchResponse extends BaseResponse {
+export interface GenericResponse extends BaseResponse {
   name: string;
   params: Params;
   partials: Array<string>;
@@ -28,11 +28,11 @@ export interface PendingMatchResponse extends BaseResponse {
 }
 
 // the final response's body should match the intended shape
-export interface MatchResponse<B> extends PendingMatchResponse {
+export interface MatchResponse<B> extends GenericResponse {
   body: B;
 }
 
-export type PendingResponse = PendingMatchResponse | MissResponse;
+export type PendingResponse = GenericResponse | MissResponse;
 export type Response<B> = MatchResponse<B> | MissResponse;
 
 export interface Resolved {

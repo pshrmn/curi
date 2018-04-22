@@ -12,7 +12,7 @@ export interface BaseResponse {
     title: string;
 }
 export declare type MissResponse = BaseResponse;
-export interface PendingMatchResponse extends BaseResponse {
+export interface GenericResponse extends BaseResponse {
     name: string;
     params: Params;
     partials: Array<string>;
@@ -21,10 +21,10 @@ export interface PendingMatchResponse extends BaseResponse {
     error?: any;
     redirectTo?: ToArgument;
 }
-export interface MatchResponse<B> extends PendingMatchResponse {
+export interface MatchResponse<B> extends GenericResponse {
     body: B;
 }
-export declare type PendingResponse = PendingMatchResponse | MissResponse;
+export declare type PendingResponse = GenericResponse | MissResponse;
 export declare type Response<B> = MatchResponse<B> | MissResponse;
 export interface Resolved {
     error: any;
