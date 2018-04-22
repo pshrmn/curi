@@ -1,9 +1,4 @@
-import {
-  MatchResponse,
-  PendingMatchResponse,
-  PendingResponse,
-  Params
-} from "./types/response";
+import { MatchResponse, PendingResponse, Params } from "./types/response";
 import { BestMatch } from "./types/match";
 import { Resolved } from "./types/response";
 
