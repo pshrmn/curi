@@ -158,7 +158,7 @@ describe("route matching/response generation", () => {
     describe("properties", () => {
       describe("key", () => {
         it("is the key property from the location", done => {
-          const routes = [];
+          const routes = [{ name: "Catch All", path: "(.*)" }];
           const history = InMemory({ locations: ["/other-page"] });
           const router = curi(history, routes);
           router.respond(({ response }) => {
@@ -170,7 +170,7 @@ describe("route matching/response generation", () => {
 
       describe("location", () => {
         it("is the location used to match routes", done => {
-          const routes = [];
+          const routes = [{ name: "Catch All", path: "(.*)" }];
           const history = InMemory({ locations: ["/other-page"] });
           const router = curi(history, routes);
           router.respond(({ response }) => {
@@ -217,7 +217,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("status", () => {
-        it("is 200 if a route matches", done => {
+        it("defaults to 200", done => {
           const routes = [
             {
               name: "Contact",
@@ -232,25 +232,6 @@ describe("route matching/response generation", () => {
           const router = curi(history, routes);
           router.respond(({ response }) => {
             expect(response.status).toBe(200);
-            done();
-          });
-        });
-
-        it("is 404 if no routes match", done => {
-          const routes = [
-            {
-              name: "Contact",
-              path: "contact",
-              children: [
-                { name: "Email", path: "email" },
-                { name: "Phone", path: "phone" }
-              ]
-            }
-          ];
-          const history = InMemory({ locations: ["/other-page"] });
-          const router = curi(history, routes);
-          router.respond(({ response }) => {
-            expect(response.status).toBe(404);
             done();
           });
         });
@@ -366,22 +347,6 @@ describe("route matching/response generation", () => {
       });
 
       describe("title", () => {
-        it("is an empty string when there is no matched route", done => {
-          const routes = [
-            {
-              name: "State",
-              path: ":state"
-            }
-          ];
-          const history = InMemory({ locations: ["/"] });
-          const router = curi(history, routes);
-
-          router.respond(({ response }) => {
-            expect(response.title).toBe("");
-            done();
-          });
-        });
-
         it("is an empty string if the matched route does not have a title property", done => {
           const routes = [
             {
@@ -428,19 +393,6 @@ describe("route matching/response generation", () => {
           const router = curi(history, [Route]);
           router.respond(({ response }) => {
             expect(response.name).toBe("A Route");
-            done();
-          });
-        });
-
-        it("is undefined if no routes match", done => {
-          const Route = {
-            name: "A Route",
-            path: "a-route"
-          };
-          const history = InMemory({ locations: ["/"] });
-          const router = curi(history, [Route]);
-          router.respond(({ response }) => {
-            expect(response.name).toBeUndefined();
             done();
           });
         });

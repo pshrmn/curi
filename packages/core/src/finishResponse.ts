@@ -1,10 +1,10 @@
 import { InternalRoute, RedirectProps } from "./types/route";
 import { Interactions } from "./types/interaction";
-import { MatchResponse, Response, Resolved } from "./types/response";
-import { BestMatch } from "./types/match";
+import { Response, Resolved } from "./types/response";
+import { Match } from "./types/match";
 
 export default function finishResponse<B>(
-  match: BestMatch,
+  match: Match,
   interactions: Interactions,
   resolved: Resolved | null
 ): Response<B> {

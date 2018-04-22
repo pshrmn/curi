@@ -3,13 +3,8 @@ import parseParams from "./parseParams";
 
 import { HickoryLocation } from "@hickory/root";
 import { InternalRoute } from "../types/route";
-import { Match, BestMatch, MatchingRoute } from "../types/match";
-import {
-  Params,
-  RawParams,
-  MatchResponse,
-  MissResponse
-} from "../types/response";
+import { PossibleMatch, Match, MatchingRoute } from "../types/match";
+import { Params, RawParams } from "../types/response";
 
 function matchRoute(
   route: InternalRoute,
@@ -57,7 +52,7 @@ function matchRoute(
 function createMatch(
   routeMatches: Array<MatchingRoute>,
   location: HickoryLocation
-): BestMatch {
+): Match {
   let partials: Array<string> = [];
   let params: Params = {};
 
@@ -92,7 +87,7 @@ function createMatch(
 export default function matchLocation(
   location: HickoryLocation,
   routes: Array<InternalRoute>
-): Match {
+): PossibleMatch {
   // determine which route(s) match, then use the exact match
   // as the matched route and the rest as partial routes
   const routeLength = routes.length;
@@ -106,11 +101,6 @@ export default function matchLocation(
   // no matching route
   return {
     route: undefined,
-    response: {
-      location,
-      key: location.key,
-      status: 404,
-      title: ""
-    }
+    response: undefined
   };
 }

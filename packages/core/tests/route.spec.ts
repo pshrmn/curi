@@ -64,7 +64,7 @@ describe("public route properties", () => {
 
   describe("keys", () => {
     it("is the array of param names parsed from the path", () => {
-      const history = InMemory({ locations: ["/test"] });
+      const history = InMemory({ locations: ["/four/five/six"] });
       const routes = [
         {
           name: "Test",
@@ -79,7 +79,7 @@ describe("public route properties", () => {
     });
 
     it("is an empty array when the path has no params", () => {
-      const history = InMemory({ locations: ["/test"] });
+      const history = InMemory({ locations: ["/one/two/three"] });
       const routes = [
         {
           name: "Test",

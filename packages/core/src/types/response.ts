@@ -6,18 +6,11 @@ export type RawParams = { [key: string]: string };
 export type Params = { [key: string]: any };
 
 // the base properties of all responses
-export interface BaseResponse {
+export interface GenericResponse {
   location: HickoryLocation;
   key: string;
   status: number;
   title: string;
-}
-
-// when no route matches, a miss only contains the base properties
-export type MissResponse = BaseResponse;
-
-// when a route matches, the response is extended
-export interface GenericResponse extends BaseResponse {
   name: string;
   params: Params;
   partials: Array<string>;
@@ -28,12 +21,9 @@ export interface GenericResponse extends BaseResponse {
 }
 
 // the final response's body should match the intended shape
-export interface MatchResponse<B> extends GenericResponse {
+export interface Response<B> extends GenericResponse {
   body: B;
 }
-
-export type PendingResponse = GenericResponse | MissResponse;
-export type Response<B> = MatchResponse<B> | MissResponse;
 
 export interface Resolved {
   error: any;

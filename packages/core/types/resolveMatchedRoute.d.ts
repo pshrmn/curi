@@ -1,3 +1,3 @@
-import { BestMatch } from "./types/match";
+import { Match } from "./types/match";
 import { Resolved } from "./types/response";
-export default function resolveRoute(match: BestMatch): Promise<Resolved>;
+export default function resolveRoute(match: Match): Promise<Resolved>;

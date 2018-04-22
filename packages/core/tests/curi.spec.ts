@@ -136,7 +136,7 @@ describe("curi", () => {
               path: "cousin"
             }
           ];
-
+          const history = InMemory({ locations: ["/grandparent"] });
           const router = curi(history, routes, {
             route: [createfirstInteraction(), createsecondInteraction()]
           });
@@ -572,7 +572,10 @@ describe("curi", () => {
     });
 
     it("returns a function to unsubscribe when called", () => {
-      const router = curi(history, [{ name: "Home", path: "" }]);
+      const router = curi(history, [
+        { name: "Home", path: "" },
+        { name: "Not Found", path: "(.*)" }
+      ]);
 
       const sub1 = jest.fn();
       const sub2 = jest.fn();
@@ -760,7 +763,10 @@ describe("curi", () => {
         });
 
         it("isn't re-called for new responses", done => {
-          const routes = [{ name: "Home", path: "" }];
+          const routes = [
+            { name: "Home", path: "" },
+            { name: "Not Found", path: "(.*)" }
+          ];
           const oneTime = jest.fn();
           let called = false;
           const responseHandler = jest.fn(() => {
@@ -814,7 +820,10 @@ describe("curi", () => {
         });
 
         it("is re-called for new responses", done => {
-          const routes = [{ name: "Home", path: "" }];
+          const routes = [
+            { name: "Home", path: "" },
+            { name: "Not Found", path: "(.*)" }
+          ];
           const everyTime = jest.fn();
           let called = false;
           const responseHandler = jest.fn(() => {

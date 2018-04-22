@@ -5,14 +5,11 @@ export declare type RawParams = {
 export declare type Params = {
     [key: string]: any;
 };
-export interface BaseResponse {
+export interface GenericResponse {
     location: HickoryLocation;
     key: string;
     status: number;
     title: string;
-}
-export declare type MissResponse = BaseResponse;
-export interface GenericResponse extends BaseResponse {
     name: string;
     params: Params;
     partials: Array<string>;
@@ -21,11 +18,9 @@ export interface GenericResponse extends BaseResponse {
     error?: any;
     redirectTo?: ToArgument;
 }
-export interface MatchResponse<B> extends GenericResponse {
+export interface Response<B> extends GenericResponse {
     body: B;
 }
-export declare type PendingResponse = GenericResponse | MissResponse;
-export declare type Response<B> = MatchResponse<B> | MissResponse;
 export interface Resolved {
     error: any;
     initial: any;

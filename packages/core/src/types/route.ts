@@ -1,7 +1,7 @@
 import { RegExpOptions, Key } from "path-to-regexp";
 
 import { LocationDetails } from "@hickory/root";
-import { Params, MissResponse, MatchResponse, Resolved } from "./response";
+import { Params, Response, Resolved } from "./response";
 import { Interactions } from "./interaction";
 
 export type ParamParser = (input: string) => any;

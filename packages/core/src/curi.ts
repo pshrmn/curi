@@ -9,15 +9,9 @@ import hasAsyncRoute from "./utils/async";
 import { History, PendingNavigation } from "@hickory/root";
 
 import { RouteDescriptor, InternalRoute } from "./types/route";
-import {
-  Response,
-  MatchResponse,
-  PendingResponse,
-  Params,
-  Resolved
-} from "./types/response";
+import { Response, Params, Resolved } from "./types/response";
 import { Interaction, Interactions } from "./types/interaction";
-import { BestMatch } from "./types/match";
+import { PossibleMatch, Match } from "./types/match";
 import {
   CuriRouter,
   RouterOptions,
@@ -156,47 +150,50 @@ function createRouter<B>(
     if (cache) {
       const cachedResponse = cache.get(pendingNav.location);
       if (cachedResponse != null) {
-        cacheAndEmit<B>(cachedResponse as MatchResponse<B>, navigation);
+        cacheAndEmit(cachedResponse, navigation);
         return;
       }
     }
 
     const match = matchLocation(pendingNav.location, routes);
-    // bail out early on misses
+    // if no routes match, do nothing
     if (!match.route) {
+      console.error(
+        `The current location (${
+          pendingNav.location.pathname
+        }) has no matching route, ` +
+          'so a response could not be generated. A catch-all route ({ path: "(.*)" }) ' +
+          "can be used to match locations with no other matching route."
+      );
       pendingNav.finish();
-      emit(match.response, navigation);
       return;
     }
 
     if (sync) {
       pendingNav.finish();
       const response = finishResponse<B>(
-        match as BestMatch,
+        match as Match,
         registeredInteractions,
         null
       );
-      cacheAndEmit<B>(response as MatchResponse<B>, navigation);
+      cacheAndEmit(response, navigation);
     } else {
-      resolveMatchedRoute(match as BestMatch).then((resolved: Resolved) => {
+      resolveMatchedRoute(match as Match).then((resolved: Resolved) => {
         if (pendingNav.cancelled) {
           return;
         }
         pendingNav.finish();
         const response = finishResponse<B>(
-          match as BestMatch,
+          match as Match,
           registeredInteractions,
           resolved
         );
-        cacheAndEmit<B>(response as MatchResponse<B>, navigation);
+        cacheAndEmit(response, navigation);
       });
     }
   }
 
-  function cacheAndEmit<B>(
-    response: MatchResponse<B>,
-    navigation: Navigation<B>
-  ) {
+  function cacheAndEmit(response: Response<B>, navigation: Navigation<B>) {
     activeResponse = undefined;
     if (cache) {
       cache.set(response);
