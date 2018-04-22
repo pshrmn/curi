@@ -3,44 +3,44 @@ import { PathFunctionOptions } from "path-to-regexp";
 import { Interaction, Interactions } from "./interaction";
 import { RouteDescriptor } from "./route";
 import { Response } from "./response";
-export interface Navigation {
+export interface Navigation<B> {
     action: Action;
-    previous: Response;
+    previous: Response<B> | null;
 }
-export interface Emitted {
-    response: Response;
-    navigation: Navigation;
-    router: CuriRouter;
+export interface Emitted<B> {
+    response: Response<B>;
+    navigation: Navigation<B>;
+    router: CuriRouter<B>;
 }
-export declare type ResponseHandler = (props?: Emitted) => void;
+export declare type ResponseHandler<B> = (props?: Emitted<B>) => void;
 export interface RespondOptions {
     observe?: boolean;
     initial?: boolean;
 }
 export declare type RemoveResponseHandler = () => void;
-export interface SideEffect {
-    fn: ResponseHandler;
+export interface SideEffect<B> {
+    fn: ResponseHandler<B>;
     after?: boolean;
 }
-export interface Cache {
-    set: (response: Response) => void;
-    get: (location: HickoryLocation) => Response;
+export interface Cache<B> {
+    set: (response: Response<B>) => void;
+    get: (location: HickoryLocation) => Response<B>;
 }
-export interface RouterOptions {
+export interface RouterOptions<B> {
     route?: Array<Interaction>;
-    sideEffects?: Array<SideEffect>;
-    cache?: Cache;
+    sideEffects?: Array<SideEffect<B>>;
+    cache?: Cache<B>;
     pathnameOptions?: PathFunctionOptions;
     emitRedirects?: boolean;
 }
-export interface CurrentResponse {
-    response: Response;
-    navigation: Navigation;
+export interface CurrentResponse<B> {
+    response: Response<B> | null;
+    navigation: Navigation<B> | null;
 }
-export interface CuriRouter {
+export interface CuriRouter<B> {
     replaceRoutes: (routeArray: Array<RouteDescriptor>) => void;
-    respond: (fn: ResponseHandler, options?: RespondOptions) => RemoveResponseHandler;
+    respond: (fn: ResponseHandler<B>, options?: RespondOptions) => RemoveResponseHandler | void;
     route: Interactions;
     history: History;
-    current(): CurrentResponse;
+    current(): CurrentResponse<B>;
 }

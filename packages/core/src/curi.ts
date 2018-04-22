@@ -1,15 +1,23 @@
 import registerRoutes from "./utils/registerRoutes";
 import pathnameInteraction from "./interactions/pathname";
 import finishResponse from "./finishResponse";
-import { createResponse, asyncCreateResponse } from "./createResponse";
+import matchLocation from "./utils/match";
+import resolveMatchedRoute from "./resolveMatchedRoute";
 import createRoute from "./route";
 import hasAsyncRoute from "./utils/async";
 
 import { History, PendingNavigation } from "@hickory/root";
 
 import { RouteDescriptor, InternalRoute } from "./types/route";
-import { Response, PendingResponse, Params } from "./types/response";
+import {
+  Response,
+  MatchResponse,
+  PendingResponse,
+  Params,
+  Resolved
+} from "./types/response";
 import { Interaction, Interactions } from "./types/interaction";
+import { BestMatch } from "./types/match";
 import {
   CuriRouter,
   RouterOptions,
@@ -23,23 +31,23 @@ import {
   Navigation
 } from "./types/curi";
 
-function createRouter(
+function createRouter<B>(
   history: History,
   routeArray: Array<RouteDescriptor>,
-  options: RouterOptions = {}
-): CuriRouter {
+  options: RouterOptions<B> = {}
+): CuriRouter<B> {
   const {
     route: userInteractions = [],
     sideEffects = [],
     cache,
     pathnameOptions,
     emitRedirects = true
-  } = options as RouterOptions;
+  } = options;
 
   let sync = true;
 
-  const beforeSideEffects: Array<ResponseHandler> = [];
-  const afterSideEffects: Array<ResponseHandler> = [];
+  const beforeSideEffects: Array<ResponseHandler<B>> = [];
+  const afterSideEffects: Array<ResponseHandler<B>> = [];
   sideEffects.forEach(se => {
     if (se.after) {
       afterSideEffects.push(se.fn);
@@ -72,18 +80,18 @@ function createRouter(
     });
   }
 
-  const responseHandlers: Array<ResponseHandler> = [];
-  const oneTimers: Array<ResponseHandler> = [];
+  const responseHandlers: Array<ResponseHandler<B> | null> = [];
+  const oneTimers: Array<ResponseHandler<B>> = [];
 
-  const mostRecent: CurrentResponse = {
+  const mostRecent: CurrentResponse<B> = {
     response: null,
     navigation: null
   };
 
   function respond(
-    fn: ResponseHandler,
+    fn: ResponseHandler<B>,
     options?: RespondOptions
-  ): RemoveResponseHandler {
+  ): RemoveResponseHandler | void {
     const { observe = false, initial = true } = options || {};
 
     if (observe) {
@@ -103,12 +111,15 @@ function createRouter(
     }
   }
 
-  function emit(response: Response, navigation: Navigation): void {
-    const resp: Emitted = { response, navigation, router };
+  function emit(response: Response<B>, navigation: Navigation<B>): void {
+    // store for current() and respond()
+    mostRecent.response = response;
+    mostRecent.navigation = navigation;
+
+    const resp: Emitted<B> = { response, navigation, router };
     beforeSideEffects.forEach(fn => {
       fn(resp);
     });
-
     responseHandlers.forEach(fn => {
       if (fn != null) {
         fn(resp);
@@ -118,7 +129,9 @@ function createRouter(
     // ensures that those are called prior to the one time fns
     while (oneTimers.length) {
       const fn = oneTimers.pop();
-      fn(resp);
+      if (fn) {
+        fn(resp);
+      }
     }
 
     afterSideEffects.forEach(fn => {
@@ -126,7 +139,7 @@ function createRouter(
     });
   }
 
-  let activeResponse: PendingNavigation;
+  let activeResponse: PendingNavigation | undefined;
 
   function navigationHandler(pendingNav: PendingNavigation): void {
     if (activeResponse) {
@@ -143,43 +156,57 @@ function createRouter(
     if (cache) {
       const cachedResponse = cache.get(pendingNav.location);
       if (cachedResponse != null) {
-        cacheAndEmit(cachedResponse, navigation);
+        cacheAndEmit<B>(cachedResponse as MatchResponse<B>, navigation);
+        return;
       }
     }
 
-    if (sync) {
-      const pendingResponse = createResponse(pendingNav.location, routes);
+    const match = matchLocation(pendingNav.location, routes);
+    // bail out early on misses
+    if (!match.route) {
       pendingNav.finish();
-      const response = finishResponse(pendingResponse, registeredInteractions);
-      cacheAndEmit(response, navigation);
+      emit(match.response, navigation);
+      return;
+    }
+
+    if (sync) {
+      pendingNav.finish();
+      const response = finishResponse<B>(
+        match as BestMatch,
+        registeredInteractions,
+        null
+      );
+      cacheAndEmit<B>(response as MatchResponse<B>, navigation);
     } else {
-      asyncCreateResponse(pendingNav.location, routes).then(pendingResponse => {
+      resolveMatchedRoute(match as BestMatch).then((resolved: Resolved) => {
         if (pendingNav.cancelled) {
           return;
         }
         pendingNav.finish();
-        const response = finishResponse(
-          pendingResponse,
-          registeredInteractions
+        const response = finishResponse<B>(
+          match as BestMatch,
+          registeredInteractions,
+          resolved
         );
-        cacheAndEmit(response, navigation);
+        cacheAndEmit<B>(response as MatchResponse<B>, navigation);
       });
     }
   }
 
-  function cacheAndEmit(response: Response, navigation: Navigation) {
+  function cacheAndEmit<B>(
+    response: MatchResponse<B>,
+    navigation: Navigation<B>
+  ) {
     activeResponse = undefined;
     if (cache) {
       cache.set(response);
     }
 
     if (!response.redirectTo || emitRedirects) {
-      mostRecent.response = response;
-      mostRecent.navigation = navigation;
       emit(response, navigation);
     }
 
-    if (response.redirectTo) {
+    if (response.redirectTo !== undefined) {
       history.replace(response.redirectTo);
     }
   }
@@ -188,7 +215,7 @@ function createRouter(
   setupRoutesAndInteractions(routeArray);
   history.respondWith(navigationHandler);
 
-  const router: CuriRouter = {
+  const router: CuriRouter<B> = {
     route: registeredInteractions,
     history,
     respond,

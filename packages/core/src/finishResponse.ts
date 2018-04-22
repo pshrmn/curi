@@ -1,57 +1,52 @@
-import matchProperties from "./utils/matchProperties";
-
 import { InternalRoute, RedirectProps } from "./types/route";
 import { Interactions } from "./types/interaction";
-import { Response, PendingResponse } from "./types/response";
+import { MatchResponse, Response, Resolved } from "./types/response";
+import { BestMatch } from "./types/match";
 
-function responseSetters(response: Response, interactions: Interactions) {
-  return {
-    redirect(redirectProps: RedirectProps): void {
-      const { name, params, query, hash, state, status = 301 } = redirectProps;
-      response.status = status;
-      const pathname = interactions.pathname(name, params);
-      response.redirectTo = {
-        pathname,
-        query,
-        hash,
-        state
-      };
-    },
-
-    error(err: any): void {
-      response.error = err;
-    },
-
-    status(code: number): void {
-      response.status = code;
-    },
-
-    data(data: any): void {
-      response.data = data;
-    },
-
-    body(body: any): void {
-      response.body = body;
-    },
-
-    title(title: string): void {
-      response.title = title;
-    }
-  };
-}
-
-export default function finishResponse(
-  pending: PendingResponse,
-  interactions: Interactions
-): Response {
-  const { resolved, route, response } = pending;
-  if (route && route.response) {
+export default function finishResponse<B>(
+  match: BestMatch,
+  interactions: Interactions,
+  resolved: Resolved | null
+): Response<B> {
+  const { route, response } = match;
+  if (route.response) {
     route.response({
-      set: responseSetters(response, interactions),
+      set: {
+        redirect(redirectProps: RedirectProps): void {
+          const { name, params, status = 301, ...rest } = redirectProps;
+          response.status = status;
+          response.redirectTo = {
+            pathname: interactions.pathname(name, params),
+            ...rest
+          };
+        },
+
+        error(err: any): void {
+          response.error = err;
+        },
+
+        status(code: number): void {
+          response.status = code;
+        },
+
+        data(data: any): void {
+          response.data = data;
+        },
+
+        body(body: B): void {
+          response.body = body;
+        },
+
+        title(title: string): void {
+          response.title = title;
+        }
+      },
       resolved,
-      ...matchProperties(response),
+      name: response.name,
+      params: { ...response.params },
+      location: response.location,
       route: interactions
     });
   }
-  return response;
+  return response as Response<B>;
 }
