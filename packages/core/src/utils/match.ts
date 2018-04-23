@@ -2,15 +2,18 @@ import { join, stripLeadingSlash } from "./path";
 import parseParams from "./parseParams";
 
 import { HickoryLocation } from "@hickory/root";
-import { InternalRoute, MatchingRoute, BestMatch } from "../types/route";
-import { Params, RawParams, Response } from "../types/response";
+import { InternalRoute } from "../types/route";
+import { PossibleMatch, Match, MatchingRoute } from "../types/match";
+import { Params, RawParams } from "../types/response";
 
 function matchRoute(
   route: InternalRoute,
   pathname: string
 ): Array<MatchingRoute> {
   const testPath: string = stripLeadingSlash(pathname);
-  const regExpMatch: RegExpMatchArray = route.pathMatching.re.exec(testPath);
+  const regExpMatch: RegExpMatchArray | null = route.pathMatching.re.exec(
+    testPath
+  );
   if (!regExpMatch) {
     return [];
   }
@@ -46,47 +49,58 @@ function matchRoute(
     : [];
 }
 
+function createMatch(
+  routeMatches: Array<MatchingRoute>,
+  location: HickoryLocation
+): Match {
+  let partials: Array<string> = [];
+  let params: Params = {};
+
+  const bestMatch: MatchingRoute = routeMatches.pop() as MatchingRoute;
+  // handle ancestor routes
+  routeMatches.forEach(match => {
+    partials.push(match.route.public.name);
+    Object.assign(params, parseParams(match.params, match.route.paramParsers));
+  });
+  // handle best match
+  Object.assign(
+    params,
+    parseParams(bestMatch.params, bestMatch.route.paramParsers)
+  );
+
+  return {
+    route: bestMatch.route,
+    response: {
+      location,
+      key: location.key,
+      name: bestMatch.route.public.name,
+      params,
+      partials,
+      status: 200,
+      body: undefined,
+      data: undefined,
+      title: ""
+    }
+  };
+}
+
 export default function matchLocation(
   location: HickoryLocation,
   routes: Array<InternalRoute>
-): BestMatch {
-  let partials: Array<string> = [];
-  let params: Params = {};
-  let route: InternalRoute;
-
+): PossibleMatch {
   // determine which route(s) match, then use the exact match
   // as the matched route and the rest as partial routes
   const routeLength = routes.length;
   for (let i = 0; i < routeLength; i++) {
     const routeMatches = matchRoute(routes[i], location.pathname);
     if (routeMatches.length) {
-      const bestMatch: MatchingRoute = routeMatches.pop();
-
-      routeMatches.forEach(match => {
-        partials.push(match.route.public.name);
-        Object.assign(
-          params,
-          parseParams(match.params, match.route.paramParsers)
-        );
-      });
-
-      route = bestMatch.route;
-      Object.assign(params, parseParams(bestMatch.params, route.paramParsers));
-      break;
+      return createMatch(routeMatches, location);
     }
   }
 
-  // start building the properties of the response object
-  const response: Response = {
-    location,
-    key: location.key,
-    params,
-    name: route ? route.public.name : undefined,
-    partials,
-    status: route != null ? 200 : 404,
-    body: undefined,
-    data: undefined,
-    title: ""
+  // no matching route
+  return {
+    route: undefined,
+    response: undefined
   };
-  return { route, response };
 }

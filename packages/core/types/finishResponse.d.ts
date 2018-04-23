@@ -1,3 +1,4 @@
 import { Interactions } from "./types/interaction";
-import { Response, PendingResponse } from "./types/response";
-export default function finishResponse(pending: PendingResponse, interactions: Interactions): Response;
+import { Response, Resolved } from "./types/response";
+import { Match } from "./types/match";
+export default function finishResponse(match: Match, interactions: Interactions, resolved: Resolved | null): Response;

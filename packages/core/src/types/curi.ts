@@ -7,7 +7,7 @@ import { Response, Params } from "./response";
 
 export interface Navigation {
   action: Action;
-  previous: Response;
+  previous: Response | null;
 }
 
 export interface Emitted {
@@ -43,8 +43,8 @@ export interface RouterOptions {
 }
 
 export interface CurrentResponse {
-  response: Response;
-  navigation: Navigation;
+  response: Response | null;
+  navigation: Navigation | null;
 }
 
 export interface CuriRouter {
@@ -52,7 +52,7 @@ export interface CuriRouter {
   respond: (
     fn: ResponseHandler,
     options?: RespondOptions
-  ) => RemoveResponseHandler;
+  ) => RemoveResponseHandler | void;
   route: Interactions;
   history: History;
   current(): CurrentResponse;

@@ -1,5 +1,6 @@
 ## Next
 
+* Do no emit a response if no routes match. The user should add a catch-all route (`{ path: "(.*)" }`) to handle these themselves.
 * Move `match.response` to top level and group `match.every` and `match.initial` under `on` object (`on.initial` and `on.every`).
 * Group `initial` and `every` resolved values with `error` under `resolved` object.
 * Rename `router.refresh` to `router.replaceRoutes`.

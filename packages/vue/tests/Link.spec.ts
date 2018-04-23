@@ -9,7 +9,10 @@ import Link from "../src/Link";
 describe("Link component", () => {
   describe("basics", () => {
     const history = InMemory();
-    const routes = [{ name: "Place", path: "place/:name" }];
+    const routes = [
+      { name: "Place", path: "place/:name" },
+      { name: "Catch All", path: "(.*)" }
+    ];
     const router = curi(history, routes);
     const Vue = createLocalVue();
     Vue.use(CuriPlugin, { router });
@@ -78,7 +81,10 @@ describe("Link component", () => {
     const mockNavigate = jest.fn();
     history.navigate = mockNavigate;
 
-    const routes = [{ name: "Place", path: "place/:name" }];
+    const routes = [
+      { name: "Place", path: "place/:name" },
+      { name: "Catch All", path: "(.*)" }
+    ];
     const router = curi(history, routes);
 
     const Vue = createLocalVue();

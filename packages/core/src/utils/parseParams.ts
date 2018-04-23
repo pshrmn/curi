@@ -1,9 +1,9 @@
-import { ParamParsers } from '../types/route';
-import { RawParams, Params } from '../types/response';
+import { ParamParsers } from "../types/route";
+import { RawParams, Params } from "../types/response";
 
 export default function parseParams(
   params: RawParams,
-  fns: ParamParsers
+  fns?: ParamParsers
 ): Params {
   if (!fns) {
     return params;

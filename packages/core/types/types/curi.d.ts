@@ -5,7 +5,7 @@ import { RouteDescriptor } from "./route";
 import { Response } from "./response";
 export interface Navigation {
     action: Action;
-    previous: Response;
+    previous: Response | null;
 }
 export interface Emitted {
     response: Response;
@@ -34,12 +34,12 @@ export interface RouterOptions {
     emitRedirects?: boolean;
 }
 export interface CurrentResponse {
-    response: Response;
-    navigation: Navigation;
+    response: Response | null;
+    navigation: Navigation | null;
 }
 export interface CuriRouter {
     replaceRoutes: (routeArray: Array<RouteDescriptor>) => void;
-    respond: (fn: ResponseHandler, options?: RespondOptions) => RemoveResponseHandler;
+    respond: (fn: ResponseHandler, options?: RespondOptions) => RemoveResponseHandler | void;
     route: Interactions;
     history: History;
     current(): CurrentResponse;

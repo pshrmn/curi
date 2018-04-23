@@ -73,7 +73,7 @@ describe("<Link>", () => {
       const history = InMemory({
         locations: ["/the-initial-location"]
       });
-      const router = curi(history, []);
+      const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => <Link to={null}>Test</Link>}
@@ -87,7 +87,10 @@ describe("<Link>", () => {
 
   describe("params", () => {
     let history, router;
-    const routes = [{ name: "Park", path: "/park/:name" }];
+    const routes = [
+      { name: "Park", path: "/park/:name" },
+      { name: "Catch All", path: "(.*)" }
+    ];
 
     beforeEach(() => {
       history = InMemory();
@@ -144,7 +147,10 @@ describe("<Link>", () => {
   describe("hash & query", () => {
     it("merges hash & query props with the pathname when creating href", () => {
       const history = InMemory();
-      const router = curi(history, [{ name: "Test", path: "test" }]);
+      const router = curi(history, [
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (

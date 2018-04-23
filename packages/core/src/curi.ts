@@ -1,15 +1,17 @@
 import registerRoutes from "./utils/registerRoutes";
 import pathnameInteraction from "./interactions/pathname";
 import finishResponse from "./finishResponse";
-import { createResponse, asyncCreateResponse } from "./createResponse";
+import matchLocation from "./utils/match";
+import resolveMatchedRoute from "./resolveMatchedRoute";
 import createRoute from "./route";
 import hasAsyncRoute from "./utils/async";
 
 import { History, PendingNavigation } from "@hickory/root";
 
 import { RouteDescriptor, InternalRoute } from "./types/route";
-import { Response, PendingResponse, Params } from "./types/response";
+import { Response, Params, Resolved } from "./types/response";
 import { Interaction, Interactions } from "./types/interaction";
+import { PossibleMatch, Match } from "./types/match";
 import {
   CuriRouter,
   RouterOptions,
@@ -34,7 +36,7 @@ function createRouter(
     cache,
     pathnameOptions,
     emitRedirects = true
-  } = options as RouterOptions;
+  } = options;
 
   let sync = true;
 
@@ -72,7 +74,7 @@ function createRouter(
     });
   }
 
-  const responseHandlers: Array<ResponseHandler> = [];
+  const responseHandlers: Array<ResponseHandler | null> = [];
   const oneTimers: Array<ResponseHandler> = [];
 
   const mostRecent: CurrentResponse = {
@@ -83,7 +85,7 @@ function createRouter(
   function respond(
     fn: ResponseHandler,
     options?: RespondOptions
-  ): RemoveResponseHandler {
+  ): RemoveResponseHandler | void {
     const { observe = false, initial = true } = options || {};
 
     if (observe) {
@@ -104,11 +106,14 @@ function createRouter(
   }
 
   function emit(response: Response, navigation: Navigation): void {
+    // store for current() and respond()
+    mostRecent.response = response;
+    mostRecent.navigation = navigation;
+
     const resp: Emitted = { response, navigation, router };
     beforeSideEffects.forEach(fn => {
       fn(resp);
     });
-
     responseHandlers.forEach(fn => {
       if (fn != null) {
         fn(resp);
@@ -118,7 +123,9 @@ function createRouter(
     // ensures that those are called prior to the one time fns
     while (oneTimers.length) {
       const fn = oneTimers.pop();
-      fn(resp);
+      if (fn) {
+        fn(resp);
+      }
     }
 
     afterSideEffects.forEach(fn => {
@@ -126,7 +133,7 @@ function createRouter(
     });
   }
 
-  let activeResponse: PendingNavigation;
+  let activeResponse: PendingNavigation | undefined;
 
   function navigationHandler(pendingNav: PendingNavigation): void {
     if (activeResponse) {
@@ -144,23 +151,42 @@ function createRouter(
       const cachedResponse = cache.get(pendingNav.location);
       if (cachedResponse != null) {
         cacheAndEmit(cachedResponse, navigation);
+        return;
       }
     }
 
-    if (sync) {
-      const pendingResponse = createResponse(pendingNav.location, routes);
+    const match = matchLocation(pendingNav.location, routes);
+    // if no routes match, do nothing
+    if (!match.route) {
+      console.error(
+        `The current location (${
+          pendingNav.location.pathname
+        }) has no matching route, ` +
+          'so a response could not be generated. A catch-all route ({ path: "(.*)" }) ' +
+          "can be used to match locations with no other matching route."
+      );
       pendingNav.finish();
-      const response = finishResponse(pendingResponse, registeredInteractions);
+      return;
+    }
+
+    if (sync) {
+      pendingNav.finish();
+      const response = finishResponse(
+        match as Match,
+        registeredInteractions,
+        null
+      );
       cacheAndEmit(response, navigation);
     } else {
-      asyncCreateResponse(pendingNav.location, routes).then(pendingResponse => {
+      resolveMatchedRoute(match as Match).then((resolved: Resolved) => {
         if (pendingNav.cancelled) {
           return;
         }
         pendingNav.finish();
         const response = finishResponse(
-          pendingResponse,
-          registeredInteractions
+          match as Match,
+          registeredInteractions,
+          resolved
         );
         cacheAndEmit(response, navigation);
       });
@@ -174,12 +200,10 @@ function createRouter(
     }
 
     if (!response.redirectTo || emitRedirects) {
-      mostRecent.response = response;
-      mostRecent.navigation = navigation;
       emit(response, navigation);
     }
 
-    if (response.redirectTo) {
+    if (response.redirectTo !== undefined) {
       history.replace(response.redirectTo);
     }
   }

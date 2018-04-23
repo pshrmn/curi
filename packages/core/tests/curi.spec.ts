@@ -136,7 +136,7 @@ describe("curi", () => {
               path: "cousin"
             }
           ];
-
+          const history = InMemory({ locations: ["/grandparent"] });
           const router = curi(history, routes, {
             route: [createfirstInteraction(), createsecondInteraction()]
           });
@@ -168,7 +168,7 @@ describe("curi", () => {
 
       describe("sideEffects", () => {
         it("calls side effect methods AFTER a response is generated, passing them response and navigation", done => {
-          const routes = [{ name: "All", path: ":all+" }];
+          const routes = [{ name: "All", path: "(.*)" }];
           const sideEffect = jest.fn();
 
           const router = curi(history, routes, {
@@ -182,8 +182,8 @@ describe("curi", () => {
           });
         });
 
-        it('calls side effects WITHOUT "after: true" property before response handlers', done => {
-          const routes = [{ name: "All", path: ":all+" }];
+        it('calls side effects WITHOUT "after: true" BEFORE response handlers', done => {
+          const routes = [{ name: "All", path: "(.*)" }];
 
           const sideEffect1 = jest.fn();
           const sideEffect2 = jest.fn();
@@ -203,11 +203,11 @@ describe("curi", () => {
           });
         });
 
-        it('calls side effects WITH "after: true" property AFTER response handlers', done => {
+        it('calls side effects WITH "after: true" AFTER response handlers', done => {
           const routes = [
             {
               name: "All",
-              path: ":all+",
+              path: "(.*)",
               on: {
                 initial: () => Promise.resolve() // force async
               }
@@ -226,7 +226,7 @@ describe("curi", () => {
         });
 
         it("passes response, navigation, and router object to side effect", done => {
-          const routes = [{ name: "All", path: ":all*" }];
+          const routes = [{ name: "All", path: "(.*)" }];
           const responseHandler = jest.fn();
           const sideEffect = function({ response, navigation, router }) {
             expect(response).toMatchObject({
@@ -572,7 +572,10 @@ describe("curi", () => {
     });
 
     it("returns a function to unsubscribe when called", () => {
-      const router = curi(history, [{ name: "Home", path: "" }]);
+      const router = curi(history, [
+        { name: "Home", path: "" },
+        { name: "Not Found", path: "(.*)" }
+      ]);
 
       const sub1 = jest.fn();
       const sub2 = jest.fn();
@@ -592,7 +595,7 @@ describe("curi", () => {
     });
 
     it("passes response, navigation, and router object to response handler", done => {
-      const routes = [{ name: "All", path: ":all*" }];
+      const routes = [{ name: "All", path: "(.*)" }];
       const responseHandler = function({ response, navigation, router }) {
         expect(response).toMatchObject({
           name: "All",
@@ -760,7 +763,10 @@ describe("curi", () => {
         });
 
         it("isn't re-called for new responses", done => {
-          const routes = [{ name: "Home", path: "" }];
+          const routes = [
+            { name: "Home", path: "" },
+            { name: "Not Found", path: "(.*)" }
+          ];
           const oneTime = jest.fn();
           let called = false;
           const responseHandler = jest.fn(() => {
@@ -814,7 +820,10 @@ describe("curi", () => {
         });
 
         it("is re-called for new responses", done => {
-          const routes = [{ name: "Home", path: "" }];
+          const routes = [
+            { name: "Home", path: "" },
+            { name: "Not Found", path: "(.*)" }
+          ];
           const everyTime = jest.fn();
           let called = false;
           const responseHandler = jest.fn(() => {

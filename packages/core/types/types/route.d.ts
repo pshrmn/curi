@@ -1,6 +1,6 @@
 import { RegExpOptions, Key } from "path-to-regexp";
 import { LocationDetails } from "@hickory/root";
-import { Params, Response, Resolved } from "./response";
+import { Params, Resolved } from "./response";
 import { Interactions } from "./interaction";
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
@@ -25,7 +25,7 @@ export interface ResponseSetters {
     title: (title: string) => void;
 }
 export interface ResponseBuilder extends MatchedRouteProps {
-    resolved: Resolved;
+    resolved: Resolved | null;
     set: ResponseSetters;
     route: Interactions;
 }
@@ -53,11 +53,11 @@ export interface Route {
     path: string;
     keys: Array<string | number>;
     on: OnFns;
-    extra: {
+    extra?: {
         [key: string]: any;
     };
 }
-export interface InternalMatch {
+export interface PathMatching {
     mustBeExact: boolean;
     re: RegExp;
     keys: Array<Key>;
@@ -65,15 +65,7 @@ export interface InternalMatch {
 export interface InternalRoute {
     public: Route;
     children: Array<InternalRoute>;
-    response: ResponseFn;
-    pathMatching: InternalMatch;
-    paramParsers: ParamParsers;
-}
-export interface MatchingRoute {
-    route: InternalRoute;
-    params: Params;
-}
-export interface BestMatch {
-    route: InternalRoute;
-    response: Response;
+    response?: ResponseFn;
+    pathMatching: PathMatching;
+    paramParsers?: ParamParsers;
 }

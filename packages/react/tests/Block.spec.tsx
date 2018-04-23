@@ -19,7 +19,7 @@ describe("Block", () => {
   // overwrite with jest
   history.confirmWith = confirmWith;
   history.removeConfirmation = removeConfirmation;
-  const router = curi(history, []);
+  const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
   const fakeContext = {
     curi: { router }
   };

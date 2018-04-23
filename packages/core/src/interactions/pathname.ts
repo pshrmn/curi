@@ -33,7 +33,7 @@ function generatePathname(options?: PathFunctionOptions): Interaction {
       knownPaths[name] = base ? join(base, path) : path;
       return name;
     },
-    get: (name: string, params: Params): string => {
+    get: (name: string, params: Params): string | void => {
       if (knownPaths[name] == null) {
         console.error(
           `Could not generate pathname for ${name} because it is not registered.`
