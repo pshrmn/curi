@@ -181,7 +181,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("body", () => {
-        it("is undefined if it isn't set in response()", done => {
+        it("defaults to undefined", done => {
           const history = InMemory({ locations: ["/test"] });
           const routes = [
             {
@@ -196,15 +196,17 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is the value set with set.body", done => {
+        it("is the body value of the object returned by route.response()", done => {
           const history = InMemory({ locations: ["/test"] });
           const body = () => "anybody out there?";
           const routes = [
             {
               name: "Test",
               path: "test",
-              response: ({ set }) => {
-                set.body(body);
+              response: () => {
+                return {
+                  body: body
+                };
               }
             }
           ];
@@ -236,13 +238,15 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is the value set by calling status in the matching route's response() function", done => {
+        it("is the status value of object returned by route.response()", done => {
           const routes = [
             {
               name: "A Route",
               path: "",
-              response: ({ set }) => {
-                set.status(451);
+              response: () => {
+                return {
+                  status: 451
+                };
               }
             }
           ];
@@ -251,62 +255,6 @@ describe("route matching/response generation", () => {
           router.respond(({ response }) => {
             expect(response.status).toBe(451);
             done();
-          });
-        });
-
-        it("is set by calling set.redirect() in the matching response()", () => {
-          const routes = [
-            {
-              name: "New",
-              path: "new"
-            },
-            {
-              name: "302 Route",
-              path: "old",
-              response: ({ set }) => {
-                set.redirect({ name: "New", status: 302 });
-              }
-            }
-          ];
-          const history = InMemory({ locations: ["/old"] });
-          let firstCall = true;
-          const logger = ({ response }) => {
-            if (firstCall) {
-              expect(response.status).toBe(302);
-              firstCall = false;
-            }
-          };
-          const router = curi(history, routes, {
-            sideEffects: [{ fn: logger }]
-          });
-        });
-
-        it("is set to 301 by default when calling set.redirect() in response()", () => {
-          const routes = [
-            {
-              name: "New",
-              path: "new"
-            },
-            {
-              name: "301 Route",
-              path: "old",
-              response: ({ set }) => {
-                set.redirect({ name: "New" });
-              }
-            }
-          ];
-          const history = InMemory({ locations: ["/old"] });
-          let firstCall = true;
-          const logger = {
-            fn: ({ response }) => {
-              if (firstCall) {
-                expect(response.status).toBe(301);
-                firstCall = false;
-              }
-            }
-          };
-          const router = curi(history, routes, {
-            sideEffects: [logger]
           });
         });
       });
@@ -327,13 +275,17 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is the value set by calling set.data() in response()", done => {
+        it("is the data value of the object returned by route.response()", done => {
           const routes = [
             {
               name: "A Route",
               path: "",
-              response: ({ set }) => {
-                set.data({ test: "value" });
+              response: () => {
+                return {
+                  data: {
+                    test: "value"
+                  }
+                };
               }
             }
           ];
@@ -363,13 +315,15 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is the value set by calling set.title() in response()", done => {
+        it("is the title value of the object returned by route.response()", done => {
           const routes = [
             {
               name: "State",
               path: ":state",
-              response: ({ set }) => {
-                set.title("A State");
+              response: () => {
+                return {
+                  title: "A State"
+                };
               }
             }
           ];
@@ -578,13 +532,15 @@ describe("route matching/response generation", () => {
           });
         });
 
-        it("is set by calling the set.error() method from a matched route's response() function", done => {
+        it("is the error value on the object returned by route.response()", done => {
           const routes = [
             {
               name: "A Route",
               path: "",
-              response: ({ set }) => {
-                set.error("woops");
+              response: () => {
+                return {
+                  error: "woops"
+                };
               }
             }
           ];
@@ -598,16 +554,17 @@ describe("route matching/response generation", () => {
       });
 
       describe("redirectTo", () => {
-        it("is set by calling set.redirect() in a matching route's response()", () => {
+        it("is the redirectTo value of the object returned by route.response()", () => {
           const routes = [
             {
               name: "A Route",
               path: "",
-              response: ({ set }) => {
-                set.redirect({
-                  name: "B Route",
-                  status: 301
-                });
+              response: () => {
+                return {
+                  redirectTo: {
+                    name: "B Route"
+                  }
+                };
               }
             },
             {
@@ -947,29 +904,6 @@ describe("route matching/response generation", () => {
         });
       });
 
-      describe("set", () => {
-        it("receives the response set functions", () => {
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            response: ({ set }) => {
-              expect(set).toMatchObject(
-                expect.objectContaining({
-                  body: expect.any(Function),
-                  data: expect.any(Function),
-                  status: expect.any(Function),
-                  redirect: expect.any(Function),
-                  error: expect.any(Function)
-                })
-              );
-            }
-          };
-
-          const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
-        });
-      });
-
       describe("route", () => {
         it("receives the registered route interactions object", () => {
           const CatchAll = {
@@ -1000,7 +934,7 @@ describe("route matching/response generation", () => {
             {
               name: "Old",
               path: "old/:id",
-              response: ({ route, name, set }) => {
+              response: ({ route, name }) => {
                 expect(route.reverse(name)).toBe("dlO");
               }
             }

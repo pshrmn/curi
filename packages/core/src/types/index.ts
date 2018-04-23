@@ -10,13 +10,17 @@ export {
   ParamParser,
   ParamParsers,
   MatchedRouteProps,
-  ResponseSetters,
   ResponseBuilder,
   EveryMatchFn,
   InitialMatchFn,
   OnFns
 } from "./route";
-export { Response, RawParams, Params } from "./response";
+export {
+  Response,
+  RawParams,
+  Params,
+  ModifiableResponseProperties
+} from "./response";
 export {
   CuriRouter,
   RouterOptions,
