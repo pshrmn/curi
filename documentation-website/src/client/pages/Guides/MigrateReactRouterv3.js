@@ -134,33 +134,37 @@ export default ({ name }) => (
           (assuming we actually need it).
         </p>
         <p>
-          With Curi routes, we have a <IJS>response()</IJS> function.{" "}
-          <IJS>response()</IJS> is passed an object with properties to help
-          modify the response object that our application will receive. One of
-          these is a <IJS>set</IJS> object that is used to set properties of the
-          response. <IJS>set.body()</IJS> sets the <IJS>body</IJS> property of
-          the response. For this React application, we want our <IJS>body</IJS>{" "}
-          property to be the React component associated with each route.
+          With Curi routes, we have a <IJS>response()</IJS> function. The object
+          returned by <IJS>response()</IJS> is used to modify the response that
+          the application will use to render. For this React application, we
+          want our <IJS>body</IJS> property to be the React component associated
+          with each route.
         </p>
 
         <PrismBlock lang="javascript">
           {`const routes = [
   {
     path: '',
-    response: ({ set }) => {
-      set.body(Home);
+    response: () => {
+      return {
+        body: Home
+      };
     }
   },
   {
     path: 'inbox',
-    response: ({ set }) => {
-      set.body(Inbox);
+    response: () => {
+      return {
+        body: Inbox
+      };
     },
     children: [
       {
         path: ':message',
-        response: ({ set }) => {
-          set.body(Message);
+        response: () => {
+          return {
+            body: Message
+          };
         }
       }
     ]
@@ -202,20 +206,26 @@ export default ({ name }) => (
           {`const routes = [
   {
     path: '',
-    response: ({ set }) => {
-      set.body(Home);
+    response: () => {
+      return {
+        body: Home
+      };
     }
   },
   {
     path: 'inbox',
-    response: ({ set }) => {
-      set.body(Inbox);
+    response: () => {
+      return {
+        body: Inbox
+      };
     },
     children: [
       {
         path: ':message',
-        response: ({ set }) => {
-          set.body(Message);
+        response: () => {
+          return {
+            body: Message
+          };
         },
         on: {
           every: (route) => { return ... },
@@ -245,22 +255,28 @@ export default ({ name }) => (
   {
     name: 'Home',
     path: '',
-    response: ({ set }) => {
-      set.body(Home);
+    response: () => {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: 'Inbox',
     path: 'inbox',
-    response: ({ set }) => {
-      set.body(Inbox);
+    response: () => {
+      return {
+        body: Inbox
+      };
     },
     children: [
       {
         name: 'Message',
         path: ':message',
-        response: ({ set }) => {
-          set.body(Message);
+        response: () => {
+          return {
+            body: Message
+          };
         },
         on: {
           every: (route) => { return ... },

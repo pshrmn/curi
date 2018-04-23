@@ -87,8 +87,10 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    response: ({ set }) => {
-      set.body(Home);
+    response: () => {
+      return {
+        body: Home
+      };
     }
   },
   ...
@@ -121,8 +123,10 @@ const routes = [
   {
     name: 'Not Found',
     path: '(.*)' // this path matches EVERY pathname
-    response({ set }) {
-      set.body(NotFound);
+    response: () => {
+      return {
+        body: NotFound
+      };
     }
   }
 ];`}

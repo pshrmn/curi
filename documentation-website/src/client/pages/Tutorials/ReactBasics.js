@@ -378,19 +378,21 @@ registerServiceWorker();`}
       </p>
       <p>
         Earlier it was mentioned that response objects can be modified. This is
-        done in a route's <IJS>response()</IJS> function. <IJS>response()</IJS>{" "}
-        receives an object with a whole bunch of properties that we can use to
-        modify the response. For the time being, we only care about one:{" "}
-        <IJS>set</IJS>. This is an object with functions that actually modify
-        the response. <IJS>set.body()</IJS> will set the <IJS>body</IJS>{" "}
-        property of the response object.
+        done by returning an object from a route's <IJS>response()</IJS>{" "}
+        function. <IJS>response()</IJS> receives an object with a whole bunch of
+        properties that we can use to help determine how to modify the response,
+        but for the time being, we don't care about any of those. All we need to
+        know is that if we return an object with a <IJS>body</IJS> property,
+        that value will be set on our response object.
       </p>
       <PrismBlock lang="javascript">
         {`{
   name: "Home",
   path: "",
-  response({ set }) {
-    set.body('Home, sweet home.');
+  response() {
+    return {
+      body: "Home, sweet home."
+    };
     /*
       * response = {
       *   body: "Home, sweet home.",
@@ -401,8 +403,8 @@ registerServiceWorker();`}
 }`}
       </PrismBlock>
       <p>
-        If we pass React components to <IJS>set.body()</IJS>, we can render
-        those in the <Cmp>CuriProvider</Cmp>'s children function. We haven't
+        If the return object's <IJS>body</IJS> is a React component, we can
+        render it in the <Cmp>CuriProvider</Cmp>'s children function. We haven't
         actually defined components for our routes yet, so we should throw
         together some placeholders.
       </p>
@@ -458,29 +460,37 @@ export default [
   {
     name: "Home",
     path: "",
-    response({ set }) {
-      set.body(Home);
+    response() {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: "Book",
     path: "book/:id",
-    response({ set }) {
-      set.body(Book);
+    response() {
+      return {
+        body: Book
+      };
     }
   },
   {
     name: "Checkout",
     path: "checkout",
-    response({ set }) {
-      set.body(Checkout);
+    response() {
+      return {
+        body: Checkout
+      };
     }
   },
   {
     name: "Catch All",
     path: "(.*)",
-    response({ set }) {
-      set.body(NotFound);
+    response() {
+      return {
+        body: NotFound
+      };
     }
   }
 ];`}

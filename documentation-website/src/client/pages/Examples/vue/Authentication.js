@@ -29,9 +29,12 @@ export default ({ name }) => (
   {
     name: 'Protected',
     path: 'super-secret',
-    response: ({ set }) => {
+    response: () => {
       if (!store.userIsAuthenticated) {
-        set.redirect({ name: 'Login', status: 302 });
+        return {
+          name: "Login",
+          status: 302
+        };
       }
     }
   },

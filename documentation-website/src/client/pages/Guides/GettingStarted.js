@@ -162,10 +162,12 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    response({ set }) {
+    response() {
       // set response.body to be the imported
       // Home component
-      set.body(Home);
+      return {
+        body: Home
+      };
     }
   }
 ];
