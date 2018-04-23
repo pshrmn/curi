@@ -24,7 +24,7 @@ describe("<CuriProvider>", () => {
   describe("render", () => {
     it("calls render function when it renders", () => {
       const history = InMemory();
-      const router = curi(history, []);
+      const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
 
       const fn = jest.fn(() => {
         return null;

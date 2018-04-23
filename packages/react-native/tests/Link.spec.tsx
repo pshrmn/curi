@@ -68,7 +68,7 @@ describe("<Link>", () => {
       const history = InMemory({ locations: ["/the-initial-location"] });
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
-      const routes = [];
+      const routes = [{ name: "Catch All", path: "(.*)" }];
       const router = curi(history, routes);
       const tree = renderer.create(
         <CuriProvider router={router}>
@@ -88,12 +88,17 @@ describe("<Link>", () => {
   });
 
   describe("params", () => {
+    const routes = [
+      { name: "Park", path: "/park/:name" },
+      { name: "Catch All", path: "(.*)" }
+    ];
+
     it("uses params to generate the location to navigate to", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const router = curi(history, [{ name: "Park", path: "/park/:name" }]);
+      const router = curi(history, routes);
       const params = { name: "Glacier" };
       const tree = renderer.create(
         <CuriProvider router={router}>
@@ -114,7 +119,7 @@ describe("<Link>", () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const router = curi(history, [{ name: "Park", path: "/park/:name" }]);
+      const router = curi(history, routes);
 
       const params = { name: "Glacier" };
       const tree = renderer.create(

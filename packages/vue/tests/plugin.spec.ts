@@ -6,7 +6,7 @@ import CuriPlugin from "../src/plugin";
 
 describe("CuriPlugin", () => {
   const history = InMemory();
-  const routes = [];
+  const routes = [{ name: "Catch All", path: "(.*)" }];
   const router = curi(history, routes);
 
   describe("$router", () => {
@@ -67,7 +67,7 @@ describe("CuriPlugin", () => {
       }
 
       let history, router;
-      const routes = [];
+      const routes = [{ name: "Catch All", path: "(.*)" }];
 
       beforeEach(() => {
         history = InMemory();
