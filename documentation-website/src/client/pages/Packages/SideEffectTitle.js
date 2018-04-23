@@ -43,11 +43,7 @@ const router = curi(history, routes, {
           In order for this to work, your routes' <IJS>route.response()</IJS>{" "}
           functions need to return an object with a <IJS>title</IJS> string.
           about setting a title in the{" "}
-          <Link
-            to="Guide"
-            params={{ slug: "routes" }}
-            details={{ hash: "response" }}
-          >
+          <Link to="Guide" params={{ slug: "routes" }} hash="response">
             all about routes
           </Link>{" "}
           guide.

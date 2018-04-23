@@ -1,20 +1,16 @@
 import React from "react";
 import { Link } from "@curi/react";
 
-import styleActive from "../../../utils/styleActive";
+import ActiveLink from "../../../components/ActiveLink";
 import TUTORIAL_API from "../../../constants/tutorials";
 
 const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
     {tutorials.map(g => (
       <li key={g.title} className="solo">
-        <Link
-          to="Tutorial"
-          params={{ slug: g.slug }}
-          active={{ merge: styleActive }}
-        >
+        <ActiveLink to="Tutorial" params={{ slug: g.slug }}>
           {g.title}
-        </Link>
+        </ActiveLink>
       </li>
     ))}
   </ul>

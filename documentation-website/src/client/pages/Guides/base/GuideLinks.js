@@ -1,20 +1,15 @@
 import React from "react";
-import { Link } from "@curi/react";
 
 import GUIDE_API from "../../../constants/guides";
-import styleActive from "../../../utils/styleActive";
+import ActiveLink from "../../../components/ActiveLink";
 
 const GroupGuides = ({ guides }) => (
   <ul className="link-list">
     {guides.map(g => (
       <li key={g.name} className="solo">
-        <Link
-          to="Guide"
-          params={{ slug: g.slug }}
-          active={{ merge: styleActive }}
-        >
+        <ActiveLink to="Guide" params={{ slug: g.slug }}>
           {g.name}
-        </Link>
+        </ActiveLink>
       </li>
     ))}
   </ul>

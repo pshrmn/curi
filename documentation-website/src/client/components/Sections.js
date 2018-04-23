@@ -5,7 +5,7 @@ const Sectional = ({ title, id, children, tag: Tag, type = "section" }) => (
   <div className={type} id={id}>
     <Tag>
       {title}
-      <Link className="header-link" details={{ hash: id }}>
+      <Link className="header-link" hash={id}>
         #
       </Link>
     </Tag>

@@ -17,11 +17,7 @@ export default ({ name }) => (
     </p>
     <Note>
       You can review the response properties that can be modified in the{" "}
-      <Link
-        to="Guide"
-        params={{ slug: "routes" }}
-        details={{ hash: "response" }}
-      >
+      <Link to="Guide" params={{ slug: "routes" }} hash="response">
         routes guide
       </Link>.
     </Note>
@@ -83,11 +79,7 @@ export default ({ name }) => (
       <Subsection title="Redirect Response" id="redirect-properties">
         <p>
           When <IJS>route.response()</IJS> returns an object with a{" "}
-          <Link
-            to="Guide"
-            params={{ slug: "routes" }}
-            details={{ hash: "response" }}
-          >
+          <Link to="Guide" params={{ slug: "routes" }} hash="response">
             <IJS>redirectTo</IJS> property
           </Link>{" "}
           the response's <IJS>redirectTo</IJS> will be a location object. Curi
@@ -120,11 +112,7 @@ export default ({ name }) => (
         The body property of a response is likely the most important property of
         a <IJS>response</IJS> because it is what you will actually render. It is
         set using the object returned from the matched route's
-        <Link
-          to="Guide"
-          params={{ slug: "routes" }}
-          details={{ hash: "response" }}
-        >
+        <Link to="Guide" params={{ slug: "routes" }} hash="response">
           <IJS>response()</IJS> function
         </Link>. This value can be anything you want it to be, but it should
         usually be a function/component or an object containing

@@ -580,11 +580,11 @@ export default [
         </PrismBlock>
         <p>
           If you need to attach query or hash data to a <Cmp>curi-link</Cmp>,
-          use the <IJS>details</IJS> prop.
+          use the <IJS>query</IJS> and <IJS>hash</IJS> props.
         </p>
         <PrismBlock lang="html">
           {`<!-- { name: "Checkout", path: "checkout" } -->
-<curi-link to="Checkout" :details="{ query: 'a=123' }">Checkout</curi-link>
+<curi-link to="Checkout" :query="a=123">Checkout</curi-link>
 <!-- <a href="/checkout?a=123">Checkout</a> -->`}
         </PrismBlock>
       </Subsection>

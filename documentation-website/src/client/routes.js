@@ -22,39 +22,41 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-        set.title("Curi");
-      }
+    response: () => {
+      return {
+        body: Home,
+        title: "Curi"
+      };
     }
   },
   {
     name: "Tutorials",
     path: "tutorial",
-    match: {
-      response: ({ set }) => {
-        set.body(TutorialBase);
-        set.title("Tutorial");
-      }
+    response: () => {
+      return {
+        body: TutorialBase,
+        title: "Tutorials"
+      };
     },
     children: [
       {
         name: "Tutorial",
         path: ":slug",
-        match: {
+        response: ({ params, resolved }) => {
+          const tutorial = TUTORIAL_API.find(params.slug);
+          return {
+            body: resolved.initial,
+            tutorial: tutorial
+              ? `Tutorial ${tutorial.title}`
+              : "Tutorial Not Found"
+          };
+        },
+        on: {
           initial: () =>
             import(/* webpackChunkName: 'tutorial' */ "./route-components/Tutorial").then(
               module => module.default,
               catchImportError("tutorial")
-            ),
-          response: ({ route, resolved, set }) => {
-            set.body(resolved.initial);
-            const tutorial = TUTORIAL_API.find(route.params.slug);
-            if (tutorial) {
-              set.title(`Tutorial ${tutorial.title}`);
-            }
-          }
+            )
         }
       }
     ]
@@ -62,33 +64,35 @@ export default [
   {
     name: "Guides",
     path: "guides",
-    match: {
-      response: ({ set, addons }) => {
-        const defaultGuide = addons.pathname("Guide", {
-          slug: "getting-started"
-        });
-        set.redirect(defaultGuide);
-        set.title("Guides");
-      }
+    response: () => {
+      return {
+        redirectTo: {
+          name: "Guide",
+          params: {
+            slug: "getting-started"
+          }
+        },
+        title: "Guides"
+      };
     },
     children: [
       {
         name: "Guide",
         path: ":slug/",
-        match: {
+        response: ({ params, resolved, set }) => {
+          const guide = GUIDE_API.find(params.slug);
+          return {
+            body: resolved.initial,
+            data: guide,
+            title: guide ? `${guide.name} Guide` : "Guide Not Found"
+          };
+        },
+        on: {
           initial: () =>
             import(/* webpackChunkName: 'guide' */ "./route-components/Guide").then(
               module => module.default,
               catchImportError("guide")
-            ),
-          response: ({ route, resolved, set }) => {
-            set.body(resolved.initial);
-            const guide = GUIDE_API.find(route.params.slug);
-            if (guide) {
-              set.data(guide);
-              set.title(`${guide.name} Guide`);
-            }
-          }
+            )
         }
       }
     ]
@@ -96,30 +100,30 @@ export default [
   {
     name: "Packages",
     path: "packages",
-    match: {
-      response: ({ set }) => {
-        set.body(PackageList);
-        set.title("Curi Packages");
-      }
+    response: () => {
+      return {
+        body: PackageList,
+        title: "Curi Packages"
+      };
     },
     children: [
       {
         name: "Package",
         path: "@curi/:package/",
-        match: {
+        response: ({ params, resolved }) => {
+          const pkg = PACKAGE_API.find(params.package);
+          return {
+            body: resolved.initial,
+            title: `@curi/${params.package}`,
+            data: pkg
+          };
+        },
+        on: {
           initial: () =>
             import(/* webpackChunkName: 'package' */ "./route-components/Package").then(
               module => module.default,
               catchImportError("package")
-            ),
-          response: ({ route, resolved, set }) => {
-            set.body(resolved.initial);
-            const pkg = PACKAGE_API.find(route.params.package);
-            set.title(`@curi/${route.params.package}`);
-            if (pkg) {
-              set.data(pkg);
-            }
-          }
+            )
         }
       }
     ]
@@ -127,31 +131,31 @@ export default [
   {
     name: "Examples",
     path: "examples",
-    match: {
-      response: ({ set }) => {
-        set.body(ExampleList);
-        set.title("Examples");
-      }
+    response: () => {
+      return {
+        body: ExampleList,
+        title: "Examples"
+      };
     },
     children: [
       {
         name: "Example",
         path: ":category/:slug/",
-        match: {
+        response: ({ params, resolved }) => {
+          const { category, slug } = params;
+          const example = EXAMPLE_API.find(category, slug);
+          return {
+            body: resolved.initial,
+            data: example,
+            title: example ? `${example.name} Example` : "Example Not Found"
+          };
+        },
+        on: {
           initial: () =>
             import(/* webpackChunkName: 'example' */ "./route-components/Example").then(
               module => module.default,
               catchImportError("example")
-            ),
-          response: ({ route, resolved, set }) => {
-            set.body(resolved.initial);
-            const { category, slug } = route.params;
-            const example = EXAMPLE_API.find(category, slug);
-            if (example) {
-              set.data(example);
-              set.title(`${example.name} Example`);
-            }
-          }
+            )
         }
       }
     ]

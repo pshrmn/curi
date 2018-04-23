@@ -19,9 +19,9 @@
   "author": "Paul Sherman",
   "license": "UNLICENSED",
   "dependencies": {
-    "@curi/addon-active": "^1.0.0-beta.5",
-    "@curi/core": "^1.0.0-beta.26",
-    "@curi/react": "^1.0.0-beta.20",
+    "@curi/core": "^1.0.0-beta.29",
+    "@curi/react": "^1.0.0-beta.21",
+    "@curi/route-active": "^1.0.0-beta.6",
     "@curi/side-effect-scroll": "^1.0.0-beta.8",
     "@curi/side-effect-title": "^1.0.0-beta.9",
     "@hickory/browser": "^1.0.0-beta.5",

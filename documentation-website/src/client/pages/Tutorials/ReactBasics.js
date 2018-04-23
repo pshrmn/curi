@@ -591,11 +591,11 @@ registerServiceWorker();`}
         </PrismBlock>
         <p>
           If you need to attach query or hash data to a <Cmp>Link</Cmp>, use the{" "}
-          <IJS>details</IJS> prop.
+          <IJS>query</IJS> and <IJS>hash</IJS> props.
         </p>
         <PrismBlock lang="jsx">
           {`// { name: "Checkout", path: "checkout" }
-<Link to="Checkout" details={{ query: 'affiliate=123' }}>Checkout</Link>
+<Link to="Checkout" query='affiliate=123'>Checkout</Link>
 // <a href="/checkout?affiliate=123">Checkout</a>`}
         </PrismBlock>
       </Subsection>

@@ -120,7 +120,7 @@ const router = curi(history, routes, {
         <Link
           to="Guide"
           params={{ slug: "responses" }}
-          details={{ hash: "response-properties" }}
+          hash="response-properties"
         >
           response properties
         </Link>{" "}

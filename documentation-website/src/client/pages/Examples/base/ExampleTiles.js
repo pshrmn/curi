@@ -3,24 +3,25 @@ import { Link } from "@curi/react";
 
 import EXAMPLES from "../../../constants/examples";
 import { Section } from "../../../components/Sections";
-import styleActive from "../../../utils/styleActive";
+import ActiveLink from "../../../components/ActiveLink";
 
-const Category = ({ name, examples }) => (
-  <ul className="tiles">
-    {examples.map(example => (
-      <li key={`${example.category}/${example.slug}`} className="tile">
-        <Link
-          to="Example"
-          params={{ category: example.category, slug: example.slug }}
-          active={{ merge: styleActive }}
-        >
-          <h2>{example.name}</h2>
-          <p className="description">{example.description}</p>
-        </Link>
-      </li>
-    ))}
-  </ul>
-);
+const Category = ({ name, examples }) => {
+  return (
+    <ul className="tiles">
+      {examples.map(example => (
+        <li key={`${example.category}/${example.slug}`} className="tile">
+          <ActiveLink
+            to="Example"
+            params={{ category: example.category, slug: example.slug }}
+          >
+            <h2>{example.name}</h2>
+            <p className="description">{example.description}</p>
+          </ActiveLink>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export default () => {
   const examples = EXAMPLES.all();
@@ -30,7 +31,7 @@ export default () => {
       <ul>
         {categories.map(key => (
           <li key={key}>
-            <Link details={{ hash: key }}>{key}</Link>
+            <Link hash={key}>{key}</Link>
           </li>
         ))}
       </ul>

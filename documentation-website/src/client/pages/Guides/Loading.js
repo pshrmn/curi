@@ -89,11 +89,7 @@ export default ({ name }) => (
       <p>
         The <IJS>response()</IJS> function will receive an object with a number
         of properties. These are covered in detail in the{" "}
-        <Link
-          to="Guide"
-          params={{ slug: "routes" }}
-          details={{ hash: "response" }}
-        >
+        <Link to="Guide" params={{ slug: "routes" }} hash="response">
           All About Routes
         </Link>{" "}
         guide. The function returns an object with values that will modify the

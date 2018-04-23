@@ -41,7 +41,7 @@ const router = curi(history, routes, options);`}
               <Link
                 to="Guide"
                 params={{ slug: "getting-started" }}
-                details={{ hash: "history-object" }}
+                hash="history-object"
               >
                 Getting Started guide
               </Link>{" "}
@@ -140,7 +140,7 @@ const router = curi(history, routes, {
                 </ul>
                 <p>
                   * A "regular" response handler is one added using{" "}
-                  <Link details={{ hash: "respond" }}>
+                  <Link hash="respond">
                     <IJS>router.respond()</IJS>
                   </Link>.
                 </p>

@@ -1,34 +1,25 @@
 import React from "react";
-import { Link } from "@curi/react";
-import styleActive from "../utils/styleActive";
+import ActiveLink from "./ActiveLink";
 
 export default () => (
   <nav>
     <ul>
       <li>
-        <Link to="Home" className="home-link">
+        <ActiveLink to="Home" className="home-link">
           Curi
-        </Link>
+        </ActiveLink>
       </li>
       <li>
-        <Link to="Packages" active={{ merge: styleActive, partial: true }}>
-          Packages
-        </Link>
+        <ActiveLink to="Packages">Packages</ActiveLink>
       </li>
       <li>
-        <Link to="Guides" active={{ merge: styleActive, partial: true }}>
-          Guides
-        </Link>
+        <ActiveLink to="Guides">Guides</ActiveLink>
       </li>
       <li>
-        <Link to="Tutorials" active={{ merge: styleActive, partial: true }}>
-          Tutorials
-        </Link>
+        <ActiveLink to="Tutorials">Tutorials</ActiveLink>
       </li>
       <li>
-        <Link to="Examples" active={{ merge: styleActive, partial: true }}>
-          Examples
-        </Link>
+        <ActiveLink to="Examples">Examples</ActiveLink>
       </li>
       <li>
         <a href="https://github.com/pshrmn/curi">GitHub</a>

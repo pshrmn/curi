@@ -30,11 +30,7 @@ export default ({ name }) => (
       <p>
         In order for other components to access router-related variables, we
         need to make them available through React's <IJS>context</IJS>. The{" "}
-        <Link
-          to="Package"
-          params={{ package: "react" }}
-          details={{ hash: "CuriProvider" }}
-        >
+        <Link to="Package" params={{ package: "react" }} hash="CuriProvider">
           <Cmp>CuriProvider</Cmp>
         </Link>{" "}
         component is responsible for doing this. You pass it two props: a Curi{" "}
@@ -140,7 +136,7 @@ const routes = [
           <Link
             to="Guide"
             params={{ slug: "responses" }}
-            details={{ hash: "response-properties" }}
+            hash="response-properties"
           >
             Response Handlers
           </Link>{" "}
@@ -160,11 +156,7 @@ const routes = [
       <p>
         A single page application isn't very useful if you cannot navigate
         between locations. The{" "}
-        <Link
-          to="Package"
-          params={{ package: "react" }}
-          details={{ hash: "Link" }}
-        >
+        <Link to="Package" params={{ package: "react" }} hash="Link">
           <Cmp>Link</Cmp>
         </Link>{" "}
         component provides you with an easy way to do this by rendering anchor (<Cmp
@@ -235,16 +227,15 @@ const routes = [
 
       <p>
         If you want to attach additional location information to a Link, you can
-        do so using the <IJS>details</IJS> prop. This is an object that has any
-        other location properties that you want to link to. These would be{" "}
-        <IJS>query</IJS>, <IJS>hash</IJS>, and <IJS>state</IJS>.
+        do so using the property names as props. These would be <IJS>query</IJS>,{" "}
+        <IJS>hash</IJS>, and <IJS>state</IJS>.
       </p>
 
       <PrismBlock lang="jsx">
         {`<Link
   to='Song'
   params={{ albumID: 2390, songID: 8 }}
-  details={{ query: { time: 17 } }}
+  query={{ time: 17 }}
 >
   Some Song on Some Album
 </Link>
@@ -281,11 +272,7 @@ const routes = [
 
       <Note>
         This does not cover all of the Link props. Please check out the{" "}
-        <Link
-          to="Package"
-          params={{ package: "react" }}
-          details={{ hash: "Link" }}
-        >
+        <Link to="Package" params={{ package: "react" }} hash="Link">
           Link
         </Link>{" "}
         API docs to learn more about the other props.

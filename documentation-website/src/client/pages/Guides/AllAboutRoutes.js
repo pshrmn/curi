@@ -484,7 +484,7 @@ const user = {
       </PrismBlock>
       <p>
         You can control whether a route does exact or partial matching with{" "}
-        <Link details={{ hash: "pathOptions" }}>
+        <Link hash="pathOptions">
           <IJS>pathOptions</IJS>
         </Link>{" "}
         property. If you set <IJS>{`{ end: false }`}</IJS>, a route that

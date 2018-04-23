@@ -32,11 +32,7 @@ const router = curi(history, routes);`}
       <Note>
         This function also accepts an <IJS>options</IJS> object. You can read
         about its properties in the{" "}
-        <Link
-          to="Package"
-          params={{ package: "core" }}
-          details={{ hash: "options" }}
-        >
+        <Link to="Package" params={{ package: "core" }} hash="options">
           <IJS>@curi/core</IJS>
         </Link>{" "}
         documentation.

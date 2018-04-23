@@ -1,24 +1,24 @@
 import React from "react";
-import { Link } from "@curi/react";
 
 import EXAMPLE_API from "../../../constants/examples";
-import styleActive from "../../../utils/styleActive";
+import ActiveLink from "../../../components/ActiveLink";
 
-const Category = ({ name, examples }) => (
-  <ul className="link-list">
-    {examples.map(e => (
-      <li key={`${e.category}/${e.slug}`} className="solo">
-        <Link
-          to="Example"
-          params={{ category: e.category, slug: e.slug }}
-          active={{ merge: styleActive }}
-        >
-          {e.name}
-        </Link>
-      </li>
-    ))}
-  </ul>
-);
+const Category = ({ name, examples }) => {
+  return (
+    <ul className="link-list">
+      {examples.map(e => (
+        <li key={`${e.category}/${e.slug}`} className="solo">
+          <ActiveLink
+            to="Example"
+            params={{ category: e.category, slug: e.slug }}
+          >
+            {e.name}
+          </ActiveLink>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export default () => {
   const examples = EXAMPLE_API.all();

@@ -56,7 +56,7 @@ export default () => (
           <Link
             to="Guide"
             params={{ slug: "responses" }}
-            details={{ hash: "response-properties" }}
+            hash="response-properties"
           >
             Response
           </Link>{" "}

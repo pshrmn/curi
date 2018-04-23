@@ -21,11 +21,7 @@ export default ({ name }) => (
     <Section title="Response Handler Argument" id="argument">
       <p>
         Response handlers are passed an object with three properties:{" "}
-        <Link
-          to="Package"
-          params={{ package: "core" }}
-          details={{ hash: "properties" }}
-        >
+        <Link to="Package" params={{ package: "core" }} hash="properties">
           <IJS>router</IJS>
         </Link>,{" "}
         <Link to="Guide" params={{ slug: "responses" }}>

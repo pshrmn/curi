@@ -237,11 +237,7 @@ export default ({ name }) => (
         </PrismBlock>
         <p>
           The{" "}
-          <Link
-            to="Guide"
-            params={{ slug: "routes" }}
-            details={{ hash: "match" }}
-          >
+          <Link to="Guide" params={{ slug: "routes" }} hash="match">
             routes guide
           </Link>{" "}
           covers all of the route properties.
@@ -542,13 +538,15 @@ function render({ response }) {
           <p>
             With React Router, any additional location properties are passed to
             the <Cmp>Link</Cmp> using the <IJS>to</IJS> object. With Curi, these
-            properties are passed using the <IJS>details</IJS> prop.
+            properties are passed using the prop name (<IJS>hash</IJS>,{" "}
+            <IJS>query</IJS> &amp;
+            <IJS>state</IJS>).
           </p>
           <PrismBlock lang="jsx">
             {`// React Router
 <Link to={{ pathname: '/inbox', hash: '#test' }}>Inbox</Link>
 // Curi
-<Link to='Inbox' details={{ hash: 'test' }}>Inbox</Link>`}
+<Link to='Inbox' hash='test'>Inbox</Link>`}
           </PrismBlock>
         </li>
         <li>
