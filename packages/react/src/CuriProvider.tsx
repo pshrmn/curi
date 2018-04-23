@@ -3,7 +3,13 @@ import warning from "warning";
 
 import { Provider } from "./Context";
 
-import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
+import {
+  CuriRouter,
+  Emitted,
+  Response,
+  Navigation,
+  RemoveResponseHandler
+} from "@curi/core";
 
 export type CuriRenderFn = (props: Emitted) => React.ReactNode;
 
@@ -34,7 +40,7 @@ class CuriProvider extends React.Component<
         this.setState({ response, navigation });
       },
       { observe: true, initial: false }
-    );
+    ) as RemoveResponseHandler;
   }
 
   componentWillReceiveProps(nextProps: CuriProviderProps) {
