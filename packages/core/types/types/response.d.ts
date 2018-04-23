@@ -18,9 +18,7 @@ export interface GenericResponse {
     error?: any;
     redirectTo?: ToArgument;
 }
-export interface Response<B> extends GenericResponse {
-    body: B;
-}
+export declare type Response = GenericResponse;
 export interface Resolved {
     error: any;
     initial: any;

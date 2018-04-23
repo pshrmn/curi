@@ -5,18 +5,18 @@ import { Interaction, Interactions } from "./interaction";
 import { RouteDescriptor } from "./route";
 import { Response, Params } from "./response";
 
-export interface Navigation<B> {
+export interface Navigation {
   action: Action;
-  previous: Response<B> | null;
+  previous: Response | null;
 }
 
-export interface Emitted<B> {
-  response: Response<B>;
-  navigation: Navigation<B>;
-  router: CuriRouter<B>;
+export interface Emitted {
+  response: Response;
+  navigation: Navigation;
+  router: CuriRouter;
 }
 
-export type ResponseHandler<B> = (props?: Emitted<B>) => void;
+export type ResponseHandler = (props?: Emitted) => void;
 
 export interface RespondOptions {
   observe?: boolean;
@@ -24,36 +24,36 @@ export interface RespondOptions {
 }
 export type RemoveResponseHandler = () => void;
 
-export interface SideEffect<B> {
-  fn: ResponseHandler<B>;
+export interface SideEffect {
+  fn: ResponseHandler;
   after?: boolean;
 }
 
-export interface Cache<B> {
-  set: (response: Response<B>) => void;
-  get: (location: HickoryLocation) => Response<B>;
+export interface Cache {
+  set: (response: Response) => void;
+  get: (location: HickoryLocation) => Response;
 }
 
-export interface RouterOptions<B> {
+export interface RouterOptions {
   route?: Array<Interaction>;
-  sideEffects?: Array<SideEffect<B>>;
-  cache?: Cache<B>;
+  sideEffects?: Array<SideEffect>;
+  cache?: Cache;
   pathnameOptions?: PathFunctionOptions;
   emitRedirects?: boolean;
 }
 
-export interface CurrentResponse<B> {
-  response: Response<B> | null;
-  navigation: Navigation<B> | null;
+export interface CurrentResponse {
+  response: Response | null;
+  navigation: Navigation | null;
 }
 
-export interface CuriRouter<B> {
+export interface CuriRouter {
   replaceRoutes: (routeArray: Array<RouteDescriptor>) => void;
   respond: (
-    fn: ResponseHandler<B>,
+    fn: ResponseHandler,
     options?: RespondOptions
   ) => RemoveResponseHandler | void;
   route: Interactions;
   history: History;
-  current(): CurrentResponse<B>;
+  current(): CurrentResponse;
 }

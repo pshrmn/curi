@@ -25,11 +25,11 @@ import {
   Navigation
 } from "./types/curi";
 
-function createRouter<B>(
+function createRouter(
   history: History,
   routeArray: Array<RouteDescriptor>,
-  options: RouterOptions<B> = {}
-): CuriRouter<B> {
+  options: RouterOptions = {}
+): CuriRouter {
   const {
     route: userInteractions = [],
     sideEffects = [],
@@ -40,8 +40,8 @@ function createRouter<B>(
 
   let sync = true;
 
-  const beforeSideEffects: Array<ResponseHandler<B>> = [];
-  const afterSideEffects: Array<ResponseHandler<B>> = [];
+  const beforeSideEffects: Array<ResponseHandler> = [];
+  const afterSideEffects: Array<ResponseHandler> = [];
   sideEffects.forEach(se => {
     if (se.after) {
       afterSideEffects.push(se.fn);
@@ -74,16 +74,16 @@ function createRouter<B>(
     });
   }
 
-  const responseHandlers: Array<ResponseHandler<B> | null> = [];
-  const oneTimers: Array<ResponseHandler<B>> = [];
+  const responseHandlers: Array<ResponseHandler | null> = [];
+  const oneTimers: Array<ResponseHandler> = [];
 
-  const mostRecent: CurrentResponse<B> = {
+  const mostRecent: CurrentResponse = {
     response: null,
     navigation: null
   };
 
   function respond(
-    fn: ResponseHandler<B>,
+    fn: ResponseHandler,
     options?: RespondOptions
   ): RemoveResponseHandler | void {
     const { observe = false, initial = true } = options || {};
@@ -105,12 +105,12 @@ function createRouter<B>(
     }
   }
 
-  function emit(response: Response<B>, navigation: Navigation<B>): void {
+  function emit(response: Response, navigation: Navigation): void {
     // store for current() and respond()
     mostRecent.response = response;
     mostRecent.navigation = navigation;
 
-    const resp: Emitted<B> = { response, navigation, router };
+    const resp: Emitted = { response, navigation, router };
     beforeSideEffects.forEach(fn => {
       fn(resp);
     });
@@ -171,7 +171,7 @@ function createRouter<B>(
 
     if (sync) {
       pendingNav.finish();
-      const response = finishResponse<B>(
+      const response = finishResponse(
         match as Match,
         registeredInteractions,
         null
@@ -183,7 +183,7 @@ function createRouter<B>(
           return;
         }
         pendingNav.finish();
-        const response = finishResponse<B>(
+        const response = finishResponse(
           match as Match,
           registeredInteractions,
           resolved
@@ -193,7 +193,7 @@ function createRouter<B>(
     }
   }
 
-  function cacheAndEmit(response: Response<B>, navigation: Navigation<B>) {
+  function cacheAndEmit(response: Response, navigation: Navigation) {
     activeResponse = undefined;
     if (cache) {
       cache.set(response);
@@ -212,7 +212,7 @@ function createRouter<B>(
   setupRoutesAndInteractions(routeArray);
   history.respondWith(navigationHandler);
 
-  const router: CuriRouter<B> = {
+  const router: CuriRouter = {
     route: registeredInteractions,
     history,
     respond,

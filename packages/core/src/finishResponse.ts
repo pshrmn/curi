@@ -3,11 +3,11 @@ import { Interactions } from "./types/interaction";
 import { Response, Resolved } from "./types/response";
 import { Match } from "./types/match";
 
-export default function finishResponse<B>(
+export default function finishResponse(
   match: Match,
   interactions: Interactions,
   resolved: Resolved | null
-): Response<B> {
+): Response {
   const { route, response } = match;
   if (route.response) {
     route.response({
@@ -33,7 +33,7 @@ export default function finishResponse<B>(
           response.data = data;
         },
 
-        body(body: B): void {
+        body(body: any): void {
           response.body = body;
         },
 
@@ -48,5 +48,5 @@ export default function finishResponse<B>(
       route: interactions
     });
   }
-  return response as Response<B>;
+  return response as Response;
 }
