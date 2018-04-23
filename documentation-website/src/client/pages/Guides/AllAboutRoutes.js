@@ -133,25 +133,164 @@ const user = {
         </Subsection>
       </Subsection>
       <Subsection title="route.response()" id="response">
+        <p>A function for modifying the response object.</p>
         <p>
-          A function that will be called right before a response is emitted.
-          This function is where you can set various properties of the{" "}
-          <IJS>response</IJS> object. The <IJS>response</IJS> function will be
-          passed an object with a number of properties.
+          Only valid properties will be merged onto the response; everything
+          else will be ignored. The valid properties are:
+        </p>
+        <ol>
+          <li>
+            <p>
+              <IJS>body</IJS> - This is usually what you will render.
+            </p>
+            <PrismBlock lang="javascript">
+              {`import Home from "./components/Home";
+const routes = [
+  {
+    name: "Home",
+    path: "",
+    response: () => ({
+      body: Home
+    })
+  },
+  // ...
+];
+// response = { body: Home, ... }`}
+            </PrismBlock>
+          </li>
+          <li>
+            <p>
+              <IJS>status</IJS> - A number. This is useful for redirects or
+              locations caught by your catch-all route while using server-side
+              rendering. The default status value is <IJS>200</IJS>.
+            </p>
+            <PrismBlock lang="javascript">
+              {`{
+  response: () => ({
+    status: 301,
+    redirectTo: {...}
+  })
+}
+// response = { status: 301, ... }`}
+            </PrismBlock>
+          </li>
+          <li>
+            <p>
+              <IJS>error</IJS> - If an error occurs with the route's{" "}
+              <IJS>on</IJS> methods, you might want to attach an error message
+              to the response.
+            </p>
+            <PrismBlock lang="javascript">
+              {`{
+  on: {
+    initial: () => Promise.reject("woops!")
+  },
+  response: ({ error }) => ({
+    error
+  })
+}
+// response = { error: "woops!", ... }`}
+            </PrismBlock>
+          </li>
+          <li>
+            <p>
+              <IJS>data</IJS> - Anything you want it to be.
+            </p>
+            <PrismBlock lang="javascript">
+              {`{
+  response = () => ({
+    data: Math.random();
+  })
+}
+// response = { data: 0.8651606708109429, ... }`}
+            </PrismBlock>
+          </li>
+          <li>
+            <p>
+              <IJS>title</IJS> - This can be used with{" "}
+              <IJS>@curi/side-effect-title</IJS> to update the page's{" "}
+              <IJS>document.title</IJS>.
+            </p>
+            <PrismBlock lang="javascript">
+              {`{
+  response: ({ params }) => ({
+    title: \`User \${params.id}\`
+  })
+}
+// when visting /user/2
+// response = { title: "User 2", ... }`}
+            </PrismBlock>
+          </li>
+          <li>
+            <p>
+              <IJS>redirectTo</IJS> - An object with the <IJS>name</IJS> of the
+              route to redirect to, <IJS>params</IJS> (if required), and
+              optional <IJS>hash</IJS>, <IJS>query</IJS>, and <IJS>state</IJS>{" "}
+              properties.
+            </p>
+            <p>
+              The other values are copied directly, but <IJS>redirectTo</IJS>{" "}
+              will be turned into a location object using the object's{" "}
+              <IJS>name</IJS> (and <IJS>params</IJS> if required).
+            </p>
+            <PrismBlock lang="javascript">
+              {`[
+  {
+    name: "Old Photo",
+    path: "photo/:id",
+    response = ({ params }) => ({
+      redirectTo: { name: "Photo", params }
+    })
+  },
+  {
+    name: "New Photo",
+    path: "p/:id"
+  }
+]
+// when the user navigates to /photo/1:
+// response = { redirectTo: { pathname: "/p/1", ... }, ... }`}
+            </PrismBlock>
+          </li>
+        </ol>
+
+        <p>
+          This function is passed an object with a number of properties that can
+          be useful for modifying the response.
         </p>
         <PrismBlock lang="javascript">
-          {`response: ({ set, name, params location, resolved, route }) => {
-  // ...
+          {`{
+  response: ({ name, params location, resolved, route }) => {
+    // ...
+  }
 }`}
         </PrismBlock>
         <ul>
+          <Subsection tag="li" title="name" id="response-name">
+            <p>
+              The name of the matched route. This is mostly useful is{" "}
+              <IJS>response()</IJS> is defined in a separate file from where the
+              route is.
+            </p>
+          </Subsection>
+          <Subsection tag="li" title="params" id="response-params">
+            <p>
+              An object of route <IJS>params</IJS> parsed from the location's{" "}
+              <IJS>pathname</IJS>.
+            </p>
+          </Subsection>
+          <Subsection tag="li" title="location" id="response-location">
+            <p>
+              The <IJS>location</IJS> that this route was matched with.
+            </p>
+          </Subsection>
+
           <Subsection tag="li" title="resolved" id="response-resolved">
             <p>
               <IJS>resolved</IJS> is an object with the values resolved by the{" "}
               <IJS>on.initial()</IJS> and <IJS>on.every()</IJS> functions,{" "}
               <IJS>resolved.initial</IJS> and <IJS>resolved.every</IJS>,
               respectively. If either of those functions reject with an error
-              (that you don't catch yourself) that error will be passed as{" }"}
+              (that you don't catch yourself) that error will be passed as{" "}
               <IJS>resolved.error</IJS> function.
             </p>
             <p>
@@ -163,12 +302,14 @@ const user = {
 const user = {
   name: 'User',
   path: ':id',
-  response: ({ resolved, set }) => {
+  response: ({ resolved }) => {
+    const modifiers = {};
     if (resolved.error) {
-      // handle the error
+      modifiers.error = resolved.error;
     } else {
-      set.data(resolved.every);
+      modifiers.data = resolved.every;
     }
+    return modifiers;
   },
   on: {
     every: ({ params, location }) => (
@@ -179,81 +320,6 @@ const user = {
 }`}
             </PrismBlock>
           </Subsection>
-          <Subsection tag="li" title="name" id="response-name">
-            <p>
-              The name of the matched route. This is mostly useful is{" "}
-              <IJS>response()</IJS> is defined in a separate file from where the
-              route is.
-            </p>
-          </Subsection>
-          <Subsection tag="li" title="loation" id="response-location">
-            <p>
-              The <IJS>location</IJS> that this route was matched with.
-            </p>
-          </Subsection>
-          <Subsection tag="li" title="params" id="response-params">
-            <p>
-              An object of route <IJS>params</IJS> parsed from the location's{" "}
-              <IJS>pathname</IJS>.
-            </p>
-          </Subsection>
-          <Subsection tag="li" title="set" id="response-set">
-            <p>
-              The <IJS>set</IJS> object contains a number of functions that you
-              can use to modify the response.
-            </p>
-            <ul>
-              <li>
-                <IJS>body(body)</IJS> - The value passed to this method will be
-                set as the response's <IJS>body</IJS> property.
-              </li>
-              <li>
-                <IJS>data(data)</IJS> - The value passed to this method will be
-                set as the response's <IJS>data</IJS> property.
-              </li>
-              <li>
-                <IJS>{`redirect({ name, status, ... })`}</IJS> - This allows you
-                to turn the response into a redirect response. When you
-                application receives a redirect response, it should redirect to
-                the new location (using your history object) instead of
-                re-rendering. If you do not provide a code, then 301 will be
-                used. Setting the status code is mostly important for rendering
-                on the server. The <IJS>to</IJS> argument should be a string or
-                a location object. Once the response has been created, Curi will
-                automatically redirect to the <IJS>to</IJS> location.
-              </li>
-              <li>
-                <IJS>error(error)</IJS> - A method to call when something goes
-                wrong. This will add an error property to the response.
-              </li>
-              <li>
-                <IJS>status(code)</IJS> - This method will set a new status for
-                the response (the default status is 200 when a route matches and
-                404 when no routes match).
-              </li>
-              <li>
-                <IJS>title(t)</IJS> - This method will set the <IJS>title</IJS>{" "}
-                property of the response, which is used by{" "}
-                <IJS>@curi/side-effect-title</IJS> to set the document's title.
-              </li>
-            </ul>
-            <PrismBlock lang="javascript">
-              {`// when the user visits /contact, the response object's body
-// property will be the Contact value
-import Contact from './components/Contact';
-
-const routes = [
-  {
-    name: 'Contact',
-    path: 'contact',
-    response: ({ set }) => {
-      set.body(Contact);
-    }
-  }
-];`}
-            </PrismBlock>
-          </Subsection>
-
           <Subsection tag="li" title="route" id="response-route">
             <p>
               The route interactions that have been registered with Curi are
@@ -437,25 +503,21 @@ const routes = [
 }`}
       </PrismBlock>
       <Subsection title="No Matching Route" id="catch-all">
-        <p>
-          If none of your routes match a pathname, then Curi will set a "404"
-          status on the <IJS>response</IJS> object. The <IJS>body</IJS> property
-          of the response will also be <IJS>undefined</IJS>, so it is important
-          that your application checks the response's status when it renders.
-        </p>
-        <p>
-          A better option is to add a catch all route (<IJS>path: '(.*)'</IJS>)
-          to the end of your routes array, and that route will always match. You
-          may want to still manually set the status to "404" for the catch all
-          route in the route's <IJS>response()</IJS> method, but it is not
-          required.
-        </p>
-        <PrismBlock lang="javascript">
-          {`{
+        <Warning>
+          <p>
+            If none of your routes match a location, Curi will do nothing! You
+            need to set a catch-all route to match these locations yourself. The
+            best way to do this is to add a route to the end of your routes
+            array with a <IJS>path</IJS> of <IJS>"(.*)"</IJS>, which will match
+            every pathname.
+          </p>
+          <PrismBlock lang="javascript">
+            {`{
   name: 'Not Found',
   path: '(.*)',
 }`}
-        </PrismBlock>
+          </PrismBlock>
+        </Warning>
       </Subsection>
     </Section>
 

@@ -38,22 +38,28 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    response: ({ set }) => {
-      set.body(Home);
+    response: () => {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: 'Contact',
     path: 'contact',
-    response: ({ set }) => {
-      set.body(Contact);
+    response: () => {
+      return {
+        body: Contact
+      };
     },
     children: [
       {
         name: 'Contact Method',
         path: ':method',
-        response: ({ set }) => {
-          set.body(ContactMethod);
+        response: () => {
+          return {
+            body: ContactMethod
+          };
         }
       }
     ]
@@ -90,8 +96,10 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    response: ({ resolved, set }) => {
-      set.body(resolved.initial.default);
+    response: ({ resolved }) => {
+      return {
+        body: resolved.initial.default
+      };
     },
     on: {
       initial: () => import('./components/Home'),
@@ -100,8 +108,10 @@ const routes = [
   {
     name: 'Contact',
     path: 'contact',
-    response: ({ resolved, set }) => {
-      set.body(resolved.initial.default);
+    response: ({ resolved }) => {
+      return {
+        body: resolved.initial.default
+      };
     },
     on: {
       initial: () => import('./components/Contact'),
@@ -110,8 +120,10 @@ const routes = [
       {
         name: 'Contact Method',
         path: ':method',
-        response: ({ resolved, set }) => {
-          set.body(resolved.initial);
+        response: ({ resolved }) => {
+          return {
+            body: resolved.initial.default
+          };
         },
         on: {
           // we can resolve module.default in initial

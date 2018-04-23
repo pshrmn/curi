@@ -1,6 +1,5 @@
 import { RegExpOptions, Key } from "path-to-regexp";
-import { LocationDetails } from "@hickory/root";
-import { Params, Resolved } from "./response";
+import { Resolved, ResponseModifiers } from "./response";
 import { Interactions } from "./interaction";
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
@@ -11,27 +10,13 @@ export interface MatchedRouteProps {
     location: object;
     name: string;
 }
-export interface RedirectProps extends LocationDetails {
-    name: string;
-    params?: Params;
-    status?: number;
-}
-export interface ResponseSetters {
-    error: (err: any) => void;
-    redirect: (props: RedirectProps) => void;
-    data: (data: any) => void;
-    status: (status: number) => void;
-    body: (body: any) => void;
-    title: (title: string) => void;
-}
 export interface ResponseBuilder extends MatchedRouteProps {
     resolved: Resolved | null;
-    set: ResponseSetters;
     route: Interactions;
 }
 export declare type EveryMatchFn = (matched?: MatchedRouteProps) => Promise<any>;
 export declare type InitialMatchFn = () => Promise<any>;
-export declare type ResponseFn = (props: ResponseBuilder) => void;
+export declare type ResponseFn = (props: ResponseBuilder) => ResponseModifiers;
 export interface OnFns {
     initial?: InitialMatchFn;
     every?: EveryMatchFn;

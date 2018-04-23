@@ -1,7 +1,24 @@
-import { InternalRoute, RedirectProps } from "./types/route";
 import { Interactions } from "./types/interaction";
-import { Response, Resolved } from "./types/response";
+import {
+  Response,
+  Resolved,
+  GenericResponse,
+  ModifiableResponseProperties
+} from "./types/response";
 import { Match } from "./types/match";
+import { ToArgument } from "@hickory/root";
+
+function createRedirect(
+  redirectTo: any,
+  interactions: Interactions
+): ToArgument {
+  const { name, params, ...rest } = redirectTo;
+  const pathname = interactions.pathname(name, params);
+  return {
+    pathname,
+    ...rest
+  };
+}
 
 export default function finishResponse(
   match: Match,
@@ -9,44 +26,41 @@ export default function finishResponse(
   resolved: Resolved | null
 ): Response {
   const { route, response } = match;
-  if (route.response) {
-    route.response({
-      set: {
-        redirect(redirectProps: RedirectProps): void {
-          const { name, params, status = 301, ...rest } = redirectProps;
-          response.status = status;
-          response.redirectTo = {
-            pathname: interactions.pathname(name, params),
-            ...rest
-          };
-        },
-
-        error(err: any): void {
-          response.error = err;
-        },
-
-        status(code: number): void {
-          response.status = code;
-        },
-
-        data(data: any): void {
-          response.data = data;
-        },
-
-        body(body: any): void {
-          response.body = body;
-        },
-
-        title(title: string): void {
-          response.title = title;
-        }
-      },
-      resolved,
-      name: response.name,
-      params: { ...response.params },
-      location: response.location,
-      route: interactions
-    });
+  if (!route.response) {
+    return response as Response;
   }
+
+  const responseModifiers = route.response({
+    resolved,
+    name: response.name,
+    params: { ...response.params },
+    location: response.location,
+    route: interactions
+  });
+  if (!responseModifiers) {
+    return response as Response;
+  }
+
+  const settableProperties = [
+    "status",
+    "error",
+    "body",
+    "data",
+    "title",
+    "redirectTo"
+  ];
+  // only merge the valid properties onto the response
+  settableProperties.forEach(
+    (p: keyof GenericResponse & keyof ModifiableResponseProperties) => {
+      if (responseModifiers.hasOwnProperty(p)) {
+        if (p === "redirectTo") {
+          // special case
+          response[p] = createRedirect(responseModifiers[p], interactions);
+        } else {
+          response[p] = responseModifiers[p];
+        }
+      }
+    }
+  );
   return response as Response;
 }

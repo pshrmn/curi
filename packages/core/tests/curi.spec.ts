@@ -253,8 +253,10 @@ describe("curi", () => {
             {
               name: "All",
               path: "(.*)",
-              response: ({ set }) => {
-                set.data(Math.random());
+              response: () => {
+                return {
+                  data: Math.random()
+                };
               }
             }
           ];
@@ -305,8 +307,10 @@ describe("curi", () => {
             {
               name: "All",
               path: "(.*)",
-              response: ({ set }) => {
-                set.data(Math.random());
+              response: () => {
+                return {
+                  data: Math.random()
+                };
               }
             }
           ];
@@ -343,8 +347,12 @@ describe("curi", () => {
             {
               name: "Start",
               path: "",
-              response: ({ set }) => {
-                set.redirect({ name: "Other" });
+              response: () => {
+                return {
+                  redirectTo: {
+                    name: "Other"
+                  }
+                };
               }
             },
             {
@@ -369,8 +377,12 @@ describe("curi", () => {
             {
               name: "Start",
               path: "",
-              response: ({ set }) => {
-                set.redirect({ name: "Other" });
+              response: () => {
+                return {
+                  redirectTo: {
+                    name: "Other"
+                  }
+                };
               }
             },
             {
@@ -916,8 +928,13 @@ describe("curi", () => {
         {
           name: "A Route",
           path: "",
-          response: ({ set }) => {
-            set.redirect({ name: "B Route", status: 301 });
+          response: () => {
+            return {
+              status: 301,
+              redirectTo: {
+                name: "B Route"
+              }
+            };
           }
         },
         {

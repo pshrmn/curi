@@ -160,12 +160,14 @@ const router = curi(history, routes, {
   {
     name: "Old",
     path: "old/:id",
-    response({ set, params }) {
+    response({ params }) {
       // setup a redirect to the "New" route
-      set.redirect({
-        name: "New",
-        params
-      });
+      return {
+        redirectTo: {
+          name: "New",
+          params
+        }
+      };
     }
   },
   {

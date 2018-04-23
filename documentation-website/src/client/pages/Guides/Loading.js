@@ -96,23 +96,24 @@ export default ({ name }) => (
         >
           All About Routes
         </Link>{" "}
-        guide.
+        guide. The function returns an object with values that will modify the
+        response.
       </p>
 
       <p>
-        Here, we will be using the <IJS>resolved</IJS> and <IJS>set</IJS>{" "}
-        properties. We will use <IJS>set.data</IJS> to attach the data loaded
-        from our API to our response. Calling <IJS>set.data</IJS> will set the{" "}
-        <IJS>data</IJS> property of the response object.
+        Here, we will be using the <IJS>resolved</IJS> object to modify the
+        response's <IJS>data</IJS>
       </p>
 
       <PrismBlock lang="javascript">
         {`{
   name: 'Recipe',
   path: 'recipe/:id',
-  response({ set, resolved }) {                                                                                                                                   : ({ resolved, set }) => {
-    set.data(resolved);
-    set.body(Recipe);
+  response({ resolved }) {
+    return {
+      body: Recipe,
+      data: resolved.every
+    }
   },
   on: {
     every: ({ params }) => fakeAPI.getRecipe(params.id),
@@ -127,22 +128,27 @@ export default ({ name }) => (
       </p>
 
       <p>
-        By calling the <IJS>set.redirect</IJS> method, you can specify the route
-        that we should redirect to.
+        You can specify the route to redirect to with <IJS>redirectTo</IJS>.
+        This takes the <IJS>name</IJS> of the route to redirect to,{" "}
+        <IJS>params</IJS> if the route (or ancestor routes) have route params.{" "}
+        <IJS>hash</IJS>, <IJS>query</IJS>, and <IJS>state</IJS> can also be
+        provided.
       </p>
 
       <PrismBlock lang="javascript">
         {`{
   name: 'Old Recipe',
   path: 'r/:id',
-  response: ({ route, set }) => {
+  response: ({ params }) => {
     // destructure the current location to preserve
     // query/hash values
-    set.redirect({
-      name: 'Recipe',
-      params: route.params,
-      ...route.location
-    });
+    return {
+      redirectTo: {
+        name: 'Recipe',
+        params: params,
+        hash: location.hash
+      }
+    };
   }
 }`}
       </PrismBlock>

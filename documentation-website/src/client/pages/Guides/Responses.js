@@ -12,15 +12,15 @@ export default ({ name }) => (
     <p>
       Response objects are created by the router to descibe the route that
       matches a location. Some of these properties are set automatically, while
-      others can be configured using the <IJS>set</IJS> functions in a route's{" "}
-      <IJS>response()</IJS> method.
+      others can be modified using the object returned a route's{" "}
+      <IJS>response()</IJS> function.
     </p>
     <Note>
-      You can review the <IJS>set</IJS> functions in the{" "}
+      You can review the response properties that can be modified in the{" "}
       <Link
         to="Guide"
         params={{ slug: "routes" }}
-        details={{ hash: "response-set" }}
+        details={{ hash: "response" }}
       >
         routes guide
       </Link>.
@@ -50,23 +50,22 @@ export default ({ name }) => (
   params: { photoID: 12345, albumID: 6789 },
 
   // The status code for the response.
-  // This defaults to 200, but is 404 if no routes match.
-  // It can also be set with set.status() and set.redirect()
-  // in a route's response() method.
+  // This defaults to 200.
+  // It can also be set with a route's response() return object
   status: 200,
 
   // This can be anything you want. It is set using
-  // the set.data() in a route's response() method.
+  // a route's response() return object.
   // The default value is undefined.
   data: {...},
 
-  // The title string is set by calling set.title() in
-  // response(). The default value is an empty string.
+  // The title string is set using a route's response() return object
+  // The default value is an empty string.
   title: 'Photo 12345',
 
-  // The value set using set.body. This is where you can attach
-  // component(s) to a route. The structure here is up to
-  // you, but each of your routes should have the same structure.
+  // The body value is set using a route's response() return object.
+  // This is where you can attach component(s) to a route. The structure here
+  // is up to you, but each of your routes should have the same structure.
   body: Photo,
   // or maybe
   body: {
@@ -75,24 +74,24 @@ export default ({ name }) => (
   },
   // Please see below for more information about this property
 
-  // A value set by the response()'s set.error() function
+  // A value set by the route's response() return object.
+  // defaults to undefined
   error: undefined
 }`}
       </PrismBlock>
 
       <Subsection title="Redirect Response" id="redirect-properties">
         <p>
-          When you call{" "}
+          When <IJS>route.response()</IJS> returns an object with a{" "}
           <Link
             to="Guide"
             params={{ slug: "routes" }}
-            details={{ hash: "response-set" }}
+            details={{ hash: "response" }}
           >
-            <IJS>set.redirect()</IJS>
+            <IJS>redirectTo</IJS> property
           </Link>{" "}
-          in <IJS>response()</IJS>, the response will have a{" "}
-          <IJS>redirectTo</IJS> property. Curi will automatically trigger a
-          redirect when it sees this.
+          the response's <IJS>redirectTo</IJS> will be a location object. Curi
+          will automatically redirect the location when it sees this.
         </p>
         <PrismBlock lang="javascript">
           {`{
@@ -120,14 +119,13 @@ export default ({ name }) => (
       <p>
         The body property of a response is likely the most important property of
         a <IJS>response</IJS> because it is what you will actually render. It is
-        the value set by the matched route's <IJS>response()</IJS> function,
-        using{" "}
+        set using the object returned from the matched route's
         <Link
           to="Guide"
           params={{ slug: "routes" }}
-          details={{ hash: "response-set" }}
+          details={{ hash: "response" }}
         >
-          <IJS>set.body()</IJS>
+          <IJS>response()</IJS> function
         </Link>. This value can be anything you want it to be, but it should
         usually be a function/component or an object containing
         functions/components.
@@ -136,15 +134,19 @@ export default ({ name }) => (
         {`{
   name: "Home",
   path: "",
-  response: ({ set }) => {
+  response: () => {
     // a function/component
-    set.body(Home);
+    return {
+      body: Home
+    };
     // an object containing
     // functions/componnets
-    set.body({
-      menu: HomeMenu,
-      body: Home
-    });
+    return {
+      body: {
+        menu: HomeMenu,
+        main: Home
+      }
+    };
   }
 }`}
       </PrismBlock>

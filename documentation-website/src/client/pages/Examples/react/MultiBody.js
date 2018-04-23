@@ -21,11 +21,13 @@ export default ({ name }) => (
         {`const routes = [
   {
     ...,
-    response({ set }) {
-      set.body({
-        main: MainComponent,
-        menu: MenuComponent
-      });
+    response() {
+      return {
+        body: {
+          main: MainComponent,
+          menu: MenuComponent
+        }
+      };
     }
   }
 ];`}
@@ -41,14 +43,18 @@ export default ({ name }) => (
 const routes = [
   {
     ...,
-    response({ set }) {
-      set.body(OneLayout);
+    response() {
+      return {
+        body: OneLayout
+      };
     }
   },
   {
     ...,
-    response({ set }) {
-      set.body({ another: Layout });
+    response() {
+      return {
+        body: { another: Layout }
+      };
     }
   }
 ];`}
