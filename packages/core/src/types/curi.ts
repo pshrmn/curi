@@ -25,7 +25,7 @@ export interface RespondOptions {
 export type RemoveResponseHandler = () => void;
 
 export interface SideEffect {
-  fn: ResponseHandler;
+  effect: ResponseHandler;
   after?: boolean;
 }
 

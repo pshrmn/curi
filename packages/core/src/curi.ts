@@ -44,9 +44,9 @@ function createRouter(
   const afterSideEffects: Array<ResponseHandler> = [];
   sideEffects.forEach(se => {
     if (se.after) {
-      afterSideEffects.push(se.fn);
+      afterSideEffects.push(se.effect);
     } else {
-      beforeSideEffects.push(se.fn);
+      beforeSideEffects.push(se.effect);
     }
   });
 

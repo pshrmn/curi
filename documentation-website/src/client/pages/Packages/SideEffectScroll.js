@@ -48,7 +48,7 @@ import createScrollSideEffect from '@curi/side-effect-scroll';
 const scrollTo = createScrollSideEffect();
 
 const router = curi(history, routes, {
-  sideEffects: [{ fn: scrollTo, after: true }]
+  sideEffects: [{ effect: scrollTo, after: true }]
 });`}
         </PrismBlock>
       </Section>

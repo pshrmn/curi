@@ -35,7 +35,7 @@ const setTitle = createTitleSideEffect({
 });
 
 const router = curi(history, routes, {
-  sideEffects: [{ fn: setTitle }]
+  sideEffects: [{ effect: setTitle }]
 });`}
         </PrismBlock>
 

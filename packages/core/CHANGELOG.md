@@ -1,3 +1,7 @@
+## Next
+
+* Side effect response handlers are registered with `effect` instead of `fn`.
+
 ## 1.0.0-beta.29
 
 * `route.response()` returns object with properties to update and removes `set` from the properties passed to the function. `redirectTo` will auto-generate the location from the provided `name` and `params` while all of the other properties will be copied directly.

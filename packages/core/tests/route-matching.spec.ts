@@ -141,6 +141,7 @@ describe("route matching/response generation", () => {
           response: ({ resolved }) => {
             expect(resolved.error).toBe("This is an error");
             done();
+            return {};
           },
           on: {
             every: () => {
@@ -575,7 +576,7 @@ describe("route matching/response generation", () => {
           const history = InMemory({ locations: ["/"] });
           let firstCall = true;
           const logger = {
-            fn: ({ response }) => {
+            effect: ({ response }) => {
               if (firstCall) {
                 expect(response.redirectTo).toMatchObject({ pathname: "/b" });
                 firstCall = false;
@@ -685,6 +686,7 @@ describe("route matching/response generation", () => {
               expect(everySpy.mock.calls.length).toBe(2);
               expect(responseSpy.mock.calls.length).toBe(0);
               done();
+              return {};
             },
             on: {
               // re-use the every spy so that this route's response
@@ -707,6 +709,7 @@ describe("route matching/response generation", () => {
             path: ":anything",
             response: ({ resolved }) => {
               expect(resolved).toBe(null);
+              return {};
             }
           };
 
@@ -722,6 +725,7 @@ describe("route matching/response generation", () => {
               expect(resolved).toHaveProperty("error");
               expect(resolved).toHaveProperty("initial");
               expect(resolved).toHaveProperty("every");
+              return {};
             },
             on: {
               initial: () => Promise.resolve(1)
@@ -808,6 +812,7 @@ describe("route matching/response generation", () => {
                     expect(resolved.initial).toBe(random);
                     done();
                   }
+                  return {};
                 },
                 on: {
                   initial: () => {
@@ -896,6 +901,7 @@ describe("route matching/response generation", () => {
                   query: "one=two"
                 }
               });
+              return {};
             }
           };
 
@@ -911,6 +917,7 @@ describe("route matching/response generation", () => {
             path: ":anything",
             response: ({ route }) => {
               expect(typeof route.pathname).toBe("function");
+              return {};
             }
           };
 
@@ -936,6 +943,7 @@ describe("route matching/response generation", () => {
               path: "old/:id",
               response: ({ route, name }) => {
                 expect(route.reverse(name)).toBe("dlO");
+                return {};
               }
             }
           ];

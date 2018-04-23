@@ -19,7 +19,7 @@ export interface RespondOptions {
 }
 export declare type RemoveResponseHandler = () => void;
 export interface SideEffect {
-    fn: ResponseHandler;
+    effect: ResponseHandler;
     after?: boolean;
 }
 export interface Cache {
