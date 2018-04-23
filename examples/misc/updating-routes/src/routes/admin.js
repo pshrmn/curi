@@ -1,15 +1,15 @@
-import Admin from '../components/Admin';
-import routes from './base';
+import Admin from "../components/Admin";
+import routes from "./base";
 
 export default [
   {
-    name: 'Admin',
-    path: 'admin',
-    match: {
-      response: ({ set }) => {
-        set.body(Admin);
-      }
-    },
+    name: "Admin",
+    path: "admin",
+    response() {
+      return {
+        body: Admin
+      };
+    }
   },
   ...routes
 ];

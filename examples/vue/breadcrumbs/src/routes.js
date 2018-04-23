@@ -4,41 +4,45 @@ import Home from "./components/Home";
 import Products from "./components/Products";
 import Category from "./components/Category";
 import Product from "./components/Product";
+import NotFound from "./components/NotFound";
 
 export default [
   {
     name: "Home",
     path: "",
-    match: {
-      response: ({ set }) => {
-        set.redirect({ name: "Products" });
-        set.body(Home);
-      }
+    response() {
+      return {
+        redirectTo: {
+          name: "Products"
+        },
+        body: Home
+      };
     }
   },
   {
     name: "Products",
     path: "products",
-    match: {
-      response: ({ set }) => {
-        set.body(Products);
-        set.data(api.categories());
-      }
+    response() {
+      return {
+        body: Products,
+        data: api.categories()
+      };
     },
     children: [
       {
         name: "Category",
         path: ":category",
-        match: {
-          response: ({ route, set }) => {
-            set.body(Category);
-            const products = api.category(route.params.category);
-            if (products == null) {
-              set.error("Category does not exist");
-            } else {
-              set.data(products);
-            }
+        response({ params }) {
+          const modifiers = {
+            body: Category
+          };
+          const products = api.category(params.category);
+          if (products == null) {
+            modifiers.error = "Category does not exist";
+          } else {
+            modifiers.data = products;
           }
+          return modifiers;
         },
         extra: {
           title: params => `${params.category || "Category"}`
@@ -47,16 +51,17 @@ export default [
           {
             name: "Product",
             path: ":productID",
-            match: {
-              response: ({ route, set }) => {
-                set.body(Product);
-                const product = api.product(route.params.productID);
-                if (!product) {
-                  set.error("Product does not exist");
-                } else {
-                  set.data(product);
-                }
+            response: ({ params }) => {
+              const modifiers = {
+                body: Product
+              };
+              const product = api.product(params.productID);
+              if (!product) {
+                modifiers.error = "Product does not exist";
+              } else {
+                modifiers.data = product;
               }
+              return modifiers;
             },
             extra: {
               title: params => `${params.name || "Product"}`
@@ -65,5 +70,14 @@ export default [
         ]
       }
     ]
+  },
+  {
+    name: "Not Found",
+    path: "(.*)",
+    response() {
+      return {
+        body: NotFound
+      };
+    }
   }
 ];

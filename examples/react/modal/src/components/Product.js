@@ -18,7 +18,7 @@ const Product = ({ response }) => (
     <Link
       to="Product Detail"
       params={response.params}
-      details={{ state: { modal: true, name: "Dark Slate Blue" } }}
+      state={{ modal: true, name: "Dark Slate Blue" }}
     >
       Detail View
     </Link>

@@ -4,32 +4,36 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
+    on: {
       initial: () =>
-        import("./components/Home.js").then(module => module.default),
-      response: ({ resolved, set }) => {
-        set.body(resolved.initial);
-      }
+        import("./components/Home.js").then(module => module.default)
+    },
+    response: ({ resolved }) => {
+      return {
+        body: resolved.initial
+      };
     }
   },
   {
     name: "Contact",
     path: "contact",
-    match: {
+    on: {
       initial: () =>
-        import("./components/Contact.js").then(module => module.default),
-      response: ({ resolved, set }) => {
-        set.body(resolved.initial);
-      }
+        import("./components/Contact.js").then(module => module.default)
+    },
+    response: ({ resolved }) => {
+      return {
+        body: resolved.initial
+      };
     }
   },
   {
     name: "Not Found",
     path: "(.*)",
-    match: {
-      response: ({ set }) => {
-        set.body(NotFound);
-      }
+    response: () => {
+      return {
+        body: NotFound
+      };
     }
   }
 ];

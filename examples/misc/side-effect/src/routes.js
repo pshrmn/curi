@@ -7,31 +7,31 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-        set.title("Home");
-      }
+    response: () => {
+      return {
+        body: Home,
+        title: "Home"
+      };
     }
   },
   {
     name: "Contact",
     path: "contact",
-    match: {
-      response: ({ set }) => {
-        set.body(Contact);
-        set.title("Contact");
-      }
+    response: () => {
+      return {
+        body: Contact,
+        title: "Contact"
+      };
     },
     children: [
       {
         name: "Method",
         path: ":method",
-        match: {
-          response: ({ route, set }) => {
-            set.body(Method);
-            set.title(`Contact via ${route.params.method}`);
-          }
+        response: ({ params }) => {
+          return {
+            body: Method,
+            title: `Contact via ${params.method}`
+          };
         }
       }
     ]
@@ -39,10 +39,11 @@ export default [
   {
     name: "Not Found",
     path: "(.*)",
-    match: {
-      response: ({ set }) => {
-        set.body(NotFound);
-      }
+    response: () => {
+      return {
+        body: NotFound,
+        title: "Not Found"
+      };
     }
   }
 ];

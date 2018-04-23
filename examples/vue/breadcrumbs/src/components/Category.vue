@@ -15,18 +15,18 @@
 </template>
 
 <script>
-  import Breadcrumbs from './Breadcrumbs';
+import Breadcrumbs from "./Breadcrumbs";
 
-  export default {
-    name: 'contact-method',
-    methods: {
-      title(name) {
-        return this.$router.addons.title('Product', { name });
-      },
-      linkParams(productID) {
-        return { ...this.$curi.response.params, productID };
-      }
+export default {
+  name: "contact-method",
+  methods: {
+    title(name) {
+      return this.$router.route.title("Product", { name });
     },
-    components: { breadcrumbs: Breadcrumbs }
-  };
+    linkParams(productID) {
+      return { ...this.$curi.response.params, productID };
+    }
+  },
+  components: { breadcrumbs: Breadcrumbs }
+};
 </script>

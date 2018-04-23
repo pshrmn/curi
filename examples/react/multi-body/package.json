@@ -21,11 +21,11 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.28",
-    "@curi/react": "^1.0.0-beta.20",
+    "@curi/core": "^1.0.0-beta.29",
+    "@curi/react": "^1.0.0-beta.21",
     "@hickory/browser": "^1.0.0-beta.5",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
   }
 }

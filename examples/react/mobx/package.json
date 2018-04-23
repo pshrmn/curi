@@ -17,15 +17,15 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.28",
+    "@curi/core": "^1.0.0-beta.29",
     "@curi/mobx": "^1.0.0-alpha.1",
-    "@curi/react": "^1.0.0-beta.20",
+    "@curi/react": "^1.0.0-beta.21",
     "@hickory/browser": "^1.0.0-beta.5",
     "mobx": "^3.4.1",
     "mobx-react": "^4.3.5",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

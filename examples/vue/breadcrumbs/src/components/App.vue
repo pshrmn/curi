@@ -1,17 +1,11 @@
 <template>
   <div>
-    <component :is="cmp" />
+    <component :is="this.$curi.response.body" />
   </div>
 </template>
 
 <script>
-  import NotFound from './NotFound';
-  export default {
-    name: 'app',
-    computed: {
-      cmp() {
-        return this.$curi.response.body || NotFound
-      }
-    }
-  }
+export default {
+  name: "app"
+};
 </script>

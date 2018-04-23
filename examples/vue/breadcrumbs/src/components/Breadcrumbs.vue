@@ -7,18 +7,18 @@
 </template>
 
 <script>
-  export default {
-    name: 'breadcrumbs',
-    props: ['name', 'params'],
-    computed: {
-      ancestors() {
-        return this.$router.addons.ancestors(this.name).reverse();
-      }
-    },
-    methods: {
-      title(a) {
-        return this.$router.addons.title(a, this.params);
-      }
+export default {
+  name: "breadcrumbs",
+  props: ["name", "params"],
+  computed: {
+    ancestors() {
+      return this.$router.route.ancestors(this.name).reverse();
+    }
+  },
+  methods: {
+    title(a) {
+      return this.$router.route.title(a, this.params);
     }
   }
+};
 </script>

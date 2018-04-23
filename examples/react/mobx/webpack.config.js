@@ -7,10 +7,6 @@ const config = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "public", "js")
   },
-  externals: {
-    react: "React",
-    "react-dom": "ReactDOM"
-  },
   module: {
     rules: [
       {

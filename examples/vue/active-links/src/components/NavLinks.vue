@@ -2,28 +2,26 @@
   <nav>
     <ul>
       <li>
-        <curi-link to='Home' :active="{ merge }">Home</curi-link>
+        <active-link to='Home'>Home</active-link>
       </li>
       <li>
-        <curi-link to='Contact' :active="{ merge, partial: true }">Contact</curi-link>
+        <active-link to='Contact' :partial="true">Contact</active-link>
         <ul>
           <li>
-            <curi-link
+            <active-link
               to='Method'
-              :active="{ merge }"
               :params="{ method: 'phone' }"
             >
               By Phone
-            </curi-link>
+            </active-link>
           </li>
           <li>
-            <curi-link
+            <active-link
               to='Method'
-              :active="{ merge }"
               :params="{ method: 'email' }"
             >
               By Email
-            </curi-link>
+            </active-link>
           </li>
         </ul>
       </li>
@@ -32,15 +30,18 @@
 </template>
 
 <script>
-  export default {
-    name: 'nav-links',
-    methods: {
-      merge: (props) => {
-        props.class = 'active';
-        return props;
-      }
+import ActiveLink from "./ActiveLink";
+
+export default {
+  name: "nav-links",
+  methods: {
+    merge: props => {
+      props.class = "active";
+      return props;
     }
-  };
+  },
+  components: {
+    "active-link": ActiveLink
+  }
+};
 </script>
-
-

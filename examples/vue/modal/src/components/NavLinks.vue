@@ -11,7 +11,7 @@
             <curi-link
               to="Product"
               :params='{ color: "DarkSlateBlue" }'
-              :details='{ state: { name: "Dark Slate Blue" } }'
+              :state='{ name: "Dark Slate Blue" }'
             >
               Dark Slate Blue
             </curi-link>
@@ -20,7 +20,7 @@
             <curi-link
               to="Product"
               :params='{ color: "SeaGreen" }'
-              :details='{ state: { name: "Sea Green" } }'
+              :state='{ name: "Sea Green" }'
             >
               Sea Green
             </curi-link>
@@ -29,7 +29,7 @@
             <curi-link
               to="Product"
               :params='{ color: "Crimson" }'
-              :details='{ state: { name: "Crimson" } }'
+              :state='{ name: "Crimson" }'
             >
               Crimson
             </curi-link>

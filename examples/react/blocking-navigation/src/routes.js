@@ -1,23 +1,23 @@
-import Home from './components/Home';
-import Contact from './components/Contact';
+import Home from "./components/Home";
+import Contact from "./components/Contact";
 
 export default [
   {
-    name: 'Home',
-    path: '',
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-      }
+    name: "Home",
+    path: "",
+    response: () => {
+      return {
+        body: Home
+      };
     }
   },
   {
-    name: 'Contact',
-    path: 'contact',
-    match: {
-      response: ({ set }) => {
-        set.body(Contact);
-      }
+    name: "Contact",
+    path: "contact",
+    response: () => {
+      return {
+        body: Contact
+      };
     }
   }
 ];

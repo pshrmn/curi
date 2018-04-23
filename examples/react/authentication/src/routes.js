@@ -10,66 +10,70 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-      }
+    response: () => {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: "Protected",
     path: "protected",
-    match: {
-      response: ({ set }) => {
-        if (!fakeAuth.authenticated()) {
-          set.redirect(
-            {
-              name: "Login",
-              query: { next: "/protected" }
-            },
-            302
-          );
-        } else {
-          set.body(Protected);
-        }
+    response: ({ location }) => {
+      if (!fakeAuth.authenticated()) {
+        return {
+          redirectTo: {
+            name: "Login",
+            query: { next: location.pathname }
+          },
+          status: 302
+        };
+      } else {
+        return {
+          body: Protected
+        };
       }
     }
   },
   {
     name: "Login",
     path: "login",
-    match: {
-      response: ({ set }) => {
-        if (fakeAuth.authenticated()) {
-          set.redirect({
+    response: () => {
+      if (fakeAuth.authenticated()) {
+        return {
+          redirectTo: {
             name: "Home"
-          });
-        }
-        set.body(Login);
+          }
+        };
       }
+      return {
+        body: Login
+      };
     }
   },
   {
     name: "Logout",
     path: "logout",
-    match: {
-      response: ({ set }) => {
-        if (!fakeAuth.authenticated()) {
-          set.redirect({
+    response: () => {
+      if (!fakeAuth.authenticated()) {
+        return {
+          redirectTo: {
             name: "Home"
-          });
-        }
-        set.body(Logout);
+          }
+        };
       }
+      return {
+        body: Logout
+      };
     }
   },
   {
     name: "Not Found",
     path: "(.*)",
-    match: {
-      response: ({ set }) => {
-        set.body(NotFound);
-      }
+    response: () => {
+      return {
+        body: NotFound
+      };
     }
   }
 ];

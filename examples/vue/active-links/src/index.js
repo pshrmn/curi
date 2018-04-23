@@ -2,7 +2,7 @@ import Vue from "vue";
 import Browser from "@hickory/browser";
 import curi from "@curi/core";
 import { CuriPlugin } from "@curi/vue";
-import createActiveAddon from "@curi/addon-active";
+import active from "@curi/route-active";
 
 import routes from "./routes";
 import App from "./components/App";
@@ -10,7 +10,7 @@ import App from "./components/App";
 const history = Browser();
 
 const router = curi(history, routes, {
-  addons: [createActiveAddon()]
+  route: [active()]
 });
 
 Vue.use(CuriPlugin, { router });

@@ -1,20 +1,15 @@
 <template>
   <div>
     <Nav />
-    <component :is="cmp" />
+    <component :is="this.$curi.response.body" />
   </div>
 </template>
 
 <script>
-  import NotFound from './NotFound';
-  import Nav from './Nav';
-  export default {
-    name: 'app',
-    computed: {
-      cmp() {
-        return this.$curi.response.body || NotFound
-      }
-    },
-    components: { Nav }
-  }
+import NotFound from "./NotFound";
+import Nav from "./Nav";
+export default {
+  name: "app",
+  components: { Nav }
+};
 </script>

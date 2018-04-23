@@ -1,35 +1,45 @@
 import Home from "./components/Home";
 import Product from "./components/Product";
 import Detail from "./components/Detail";
+import NotFound from "./components/NotFound";
 
 export default [
   {
     name: "Home",
     path: "",
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-      }
+    response() {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: "Product",
     path: "paint/:color",
-    match: {
-      response: ({ set }) => {
-        set.body(Product);
-      }
+    response() {
+      return {
+        body: Product
+      };
     },
     children: [
       {
         name: "Product Detail",
         path: "detail",
-        match: {
-          response: ({ set }) => {
-            set.body(Detail);
-          }
+        response() {
+          return {
+            body: Detail
+          };
         }
       }
     ]
+  },
+  {
+    name: "Not Found",
+    path: "(.*)",
+    response() {
+      return {
+        body: NotFound
+      };
+    }
   }
 ];

@@ -1,33 +1,44 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Active, Link } from "@curi/react";
 
 const merge = props => {
   props.className = "active";
   return props;
 };
 
+const ActiveLink = ({ to, params, partial, ...rest }) => (
+  <Active name={to} params={params} partial={partial}>
+    {active => (
+      <Link
+        to={to}
+        params={params}
+        {...rest}
+        className={active ? "active" : ""}
+      />
+    )}
+  </Active>
+);
+
 const NavLinks = () => (
   <nav>
     <ul>
       <li>
-        <Link to="Home" active={{ merge }}>
-          Home
-        </Link>
+        <ActiveLink to="Home">Home</ActiveLink>
       </li>
       <li>
-        <Link to="Contact" active={{ merge, partial: true }}>
+        <ActiveLink to="Contact" partial={true}>
           Contact
-        </Link>
+        </ActiveLink>
         <ul>
           <li>
-            <Link to="Method" active={{ merge }} params={{ method: "phone" }}>
+            <ActiveLink to="Method" params={{ method: "phone" }}>
               By Phone
-            </Link>
+            </ActiveLink>
           </li>
           <li>
-            <Link to="Method" active={{ merge }} params={{ method: "email" }}>
+            <ActiveLink to="Method" params={{ method: "email" }}>
               By Email
-            </Link>
+            </ActiveLink>
           </li>
         </ul>
       </li>

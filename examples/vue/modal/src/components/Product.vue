@@ -5,7 +5,7 @@
     <curi-link
       to="Product Detail"
       :params="response.params"
-      :details='{ state: { modal: true } }'
+      :state='{ modal: true }'
     >
       Detail View
     </curi-link>

@@ -19,19 +19,19 @@ const routes = [
   {
     name: "Home",
     path: "",
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-      }
+    response() {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: "About",
     path: "about",
-    match: {
-      response: ({ set }) => {
-        set.body(About);
-      }
+    response() {
+      return {
+        body: About
+      };
     }
   }
 ];

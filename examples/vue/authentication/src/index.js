@@ -17,6 +17,7 @@ Vue.use(CuriPlugin, { router });
 
 const vm = new Vue({
   el: "#app",
+  store,
   template: "<app />",
   components: { app: App }
 });

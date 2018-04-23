@@ -13,12 +13,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'products',
-    methods: {
-      title(category) {
-        return this.$router.addons.title('Category', { category });
-      }
+export default {
+  name: "products",
+  methods: {
+    title(category) {
+      return this.$router.route.title("Category", { category });
     }
   }
+};
 </script>

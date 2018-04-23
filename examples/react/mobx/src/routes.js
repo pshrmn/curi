@@ -6,28 +6,28 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-      }
+    response() {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: "Product",
     path: "products/:id",
-    match: {
-      response: ({ route, set }) => {
-        set.body(Product);
-      }
+    response() {
+      return {
+        body: Product
+      };
     }
   },
   {
     name: "Not Found",
     path: "(.*)",
-    match: {
-      response: ({ set }) => {
-        set.body(NotFound);
-      }
+    response() {
+      return {
+        body: NotFound
+      };
     }
   }
 ];

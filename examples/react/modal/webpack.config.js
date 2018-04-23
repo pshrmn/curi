@@ -1,15 +1,11 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require("webpack");
+const path = require("path");
 
 const config = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public', 'js')
-  },
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM'
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "public", "js")
   },
   module: {
     rules: [
@@ -18,7 +14,7 @@ const config = {
         exclude: /(node_modules)/,
         use: [
           {
-            loader: 'babel-loader'
+            loader: "babel-loader"
           }
         ]
       }

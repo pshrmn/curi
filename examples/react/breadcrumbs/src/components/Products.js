@@ -9,7 +9,7 @@ const Products = ({ response: { data }, router }) => (
       {data.map(category => (
         <li key={category}>
           <Link to="Category" params={{ category }}>
-            {router.addons.title("Category", { category })}
+            {router.route.title("Category", { category })}
           </Link>
         </li>
       ))}

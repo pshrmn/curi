@@ -5,13 +5,13 @@ const Breadcrumbs = ({ name, params }) => (
   <Curious>
     {({ router }) => (
       <ul className="breadcrumbs">
-        {router.addons
+        {router.route
           .ancestors(name)
           .reverse()
           .map(a => (
             <li key={a}>
               <Link to={a} params={params}>
-                {router.addons.title(a, params)}
+                {router.route.title(a, params)}
               </Link>
             </li>
           ))}

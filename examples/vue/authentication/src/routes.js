@@ -10,68 +10,72 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
-      response: ({ set }) => {
-        set.body(Home);
-      }
+    response() {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: "Protected",
     path: "protected",
-    match: {
-      response: ({ set }) => {
-        if (!store.state.user) {
-          set.redirect(
-            {
-              name: "Login",
-              query: { next: "/protected" }
-            },
-            302
-          );
-        } else {
-          set.body(Protected);
-        }
+    response() {
+      if (!store.state.user) {
+        return {
+          redirectTo: {
+            name: "Login",
+            query: { next: "/protected" }
+          },
+          status: 302
+        };
+      } else {
+        return {
+          body: Protected
+        };
       }
     }
   },
   {
     name: "Login",
     path: "login",
-    match: {
-      response: ({ set }) => {
-        if (store.state.user) {
-          set.redirect({
+    response() {
+      if (store.state.user) {
+        return {
+          redirectTo: {
             name: "Home"
-          });
-        } else {
-          set.body(Login);
-        }
+          }
+        };
+      } else {
+        return {
+          body: Login
+        };
       }
     }
   },
   {
     name: "Logout",
     path: "logout",
-    match: {
-      response: ({ set }) => {
-        if (!store.state.user) {
-          set.redirect({
+    response() {
+      if (!store.state.user) {
+        return {
+          redirectTo: {
             name: "Home"
-          });
-        } else {
-          set.body(Logout);
-        }
+          }
+        };
+      } else {
+        return {
+          body: Logout
+        };
       }
     }
   },
   {
     name: "Not Found",
     path: "(.*)",
-    match: {
-      response: ({ set }) => {
-        set.body(NotFound);
-      }
+    response() {
+      return {
+        body: NotFound
+      };
     }
   }
 ];

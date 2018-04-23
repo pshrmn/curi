@@ -13,18 +13,16 @@ const router = curi(history, routes);
 
 ReactDOM.render(
   <CuriProvider router={router}>
-    {({ response, navigation }) => {
-      return (
-        <div>
-          <NavLinks />
-          <Display
-            response={response}
-            navigation={navigation}
-            render={response => <response.body response={response} />}
-          />
-        </div>
-      );
-    }}
+    {({ response, navigation }) => (
+      <div>
+        <NavLinks />
+        <Display
+          response={response}
+          navigation={navigation}
+          render={response => <response.body response={response} />}
+        />
+      </div>
+    )}
   </CuriProvider>,
   document.getElementById("root")
 );

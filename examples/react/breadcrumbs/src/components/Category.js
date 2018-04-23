@@ -13,7 +13,7 @@ const Category = ({ router, response: { params, data: products } }) => (
         return (
           <li key={p.id}>
             <Link to="Product" params={productParams}>
-              {router.addons.title("Product", { name: p.name })}
+              {router.route.title("Product", { name: p.name })}
             </Link>
           </li>
         );
