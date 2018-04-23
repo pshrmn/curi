@@ -1,6 +1,6 @@
 {
   "name": "@curi/svelte",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "Curi integration with Svelte",
   "main": "dist/curi-svelte.common.js",
   "module": "dist/curi-svelte.es.js",
@@ -35,7 +35,7 @@
     "svelte": ">=1.49.0"
   },
   "devDependencies": {
-    "@curi/core": "^1.0.0-beta.28",
+    "@curi/core": "^1.0.0-beta.29",
     "@hickory/in-memory": "^1.0.0-beta.4",
     "babel-core": "7.0.0-beta.0",
     "babel-jest": "^22.1.0",

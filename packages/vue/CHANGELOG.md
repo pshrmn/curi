@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.17
 
 * Add `hash`, `query`, and `state` props to `<curi-link>`, remove `details`.
 * Remove `active` prop from `<curi-link>`.

@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.7
 
 * Moved to `@curi/route-prefetch`.
 * Switch to `on.every()`.

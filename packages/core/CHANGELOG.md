@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.29
 
 * `route.response()` returns object with properties to update and removes `set` from the properties passed to the function. `redirectTo` will auto-generate the location from the provided `name` and `params` while all of the other properties will be copied directly.
 * Do no emit a response if no routes match. The user should add a catch-all route (`{ path: "(.*)" }`) to handle these themselves.
@@ -6,7 +6,7 @@
 * Group `initial` and `every` resolved values with `error` under `resolved` object.
 * Rename `router.refresh` to `router.replaceRoutes`.
 
-## 1.0.0-beta.27
+## 1.0.0-beta.28
 
 * If no route has a `match.initial` or `match.every` function, the router will emit in synchronous mode. In synchronous mode, `router.respond` is not necessary for delaying the initial render.
 

@@ -40,7 +40,7 @@
     "react-native": ">=0.55.0"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.28",
+    "@curi/core": "^1.0.0-beta.29",
     "@curi/react": "^1.0.0-beta.21",
     "@hickory/root": "^1.0.0-beta.7",
     "@types/invariant": "^2.2.29",
@@ -49,8 +49,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.37",
-    "@curi/route-active": "^1.0.0-beta.5",
-    "@curi/core": "^1.0.0-beta.28",
+    "@curi/core": "^1.0.0-beta.29",
+    "@curi/route-active": "^1.0.0-beta.6",
     "@hickory/in-memory": "^1.0.0-beta.4",
     "@types/enzyme": "^2.8.8",
     "@types/jest": "^22.0.1",

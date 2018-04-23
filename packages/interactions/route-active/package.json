@@ -1,6 +1,6 @@
 {
   "name": "@curi/route-active",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "description": "A Curi router interaction to determine if a route is \"active\"",
   "main": "dist/curi-route-active.common.js",
   "module": "dist/curi-route-active.es.js",
@@ -33,7 +33,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.28"
+    "@curi/core": "^1.0.0-beta.29"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

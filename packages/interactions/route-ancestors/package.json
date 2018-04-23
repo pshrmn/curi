@@ -1,6 +1,6 @@
 {
   "name": "@curi/route-ancestors",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "description": "Get a Curi route's ancestor routes",
   "main": "dist/curi-route-ancestors.common.js",
   "module": "dist/curi-route-ancestors.es.js",
@@ -34,7 +34,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.28"
+    "@curi/core": "^1.0.0-beta.29"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

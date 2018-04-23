@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.6
 
 * Moved to `@curi/route-ancestors`.
 * Removed source maps from `dist`.
