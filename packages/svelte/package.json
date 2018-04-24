@@ -35,7 +35,7 @@
     "svelte": ">=1.49.0"
   },
   "devDependencies": {
-    "@curi/core": "^1.0.0-beta.29",
+    "@curi/core": "^1.0.0-beta.30",
     "@hickory/in-memory": "^1.0.0-beta.4",
     "babel-core": "7.0.0-beta.0",
     "babel-jest": "^22.1.0",

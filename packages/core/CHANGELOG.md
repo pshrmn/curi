@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.30
 
 * Side effect response handlers are registered with `effect` instead of `fn`.
 
