@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Route Interactions Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><div><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Route Interactions</h1><p>Route interactions let you interact with a registered route using its name.</p><p>A registered route is generally any route that is in the array of routes that you used to create your router. However, some interactions only register routes that meet some criteria.</p><p>Route interactions are defined using objects with four properties: name, register, get, and reset.</p><pre><code class="language-javascript">{
+  // The string you will use to call the interaction.
+  name: &#x27;my&#x27;,
+
+  // A function used internally to register routes
+  // with the interaction. You only need to use this when
+  // writing your own interactions.
+  register: function(route, parentData) {...},
+
+  // This is the function that you will call. For example,
+  // with this interaction, the get function will be called
+  // when you call router.route.my(&#x27;...&#x27;)
+  get: function(route) {...},
+  reset: function() {...}
+}</code></pre><p>Instead of importing the actual route interaction object, you typically import a factory function to create the object. This isn&#x27;t absolutely necessary, but is useful for server-side rendering.</p><pre><code class="language-javascript">// interactions/my.js
+export default function createMyInteraction() {
+  return {
+    name: &quot;my&quot;,
+    register() {...},
+    get() {...},
+    reset() {...}
+  };
+}
+
+// index.js
+import createMyInteraction from &quot;./interactions/my&quot;;
+
+const interaction = createMyInteraction();</code></pre><div class="section" id="adding"><h2>Adding Interactions<a class="header-link" href="/guides/route-interactions/#adding">#</a></h2><p>Route interactions are provided to the router call as an array using the<!-- --> <code class="language-javascript">route</code> property of the options object (the third argument).</p><pre><code class="language-javascript">const router = curi(history, routes, {
+  route: [createMyInteraction()]
+});</code></pre><p>The route interaction will be added to the router&#x27;s <code class="language-javascript">route</code> <!-- -->property. To call an interaction, you simply use its name.</p><pre><code class="language-javascript">const myValue = router.route.my(&#x27;Some Route&#x27;, ...);</code></pre></div><div class="section" id="creating"><h2>Creating Route Interactions<a class="header-link" href="/guides/route-interactions/#creating">#</a></h2><p>There are just a few steps to creating your own route interactions.</p><p>Remember to export a function that will create the interaction object, not the actual interaction object.</p><pre><code class="language-javascript">// we&#x27;ll create an interaction confirms a route is registered
+export default function confirmInteraction() {
+  ...
+}</code></pre><p>The function should return an object with four properties:<!-- --> <code class="language-javascript">name</code>, <code class="language-javascript">register</code>, <code class="language-javascript">get</code>, and<!-- --> <code class="language-javascript">reset</code>.</p><ul><li><code class="language-javascript">name</code> is a unique identifier for the route interaction.</li><li><code class="language-javascript">register</code> is a function to internally store information about routes.</li><li><code class="language-javascript">get</code> is a function that will receive a route&#x27;s name (and possibly other arguments) and perform some task using the related route</li><li><code class="language-javascript">reset</code> is a function that will reset the interaction&#x27;s internal state (this is used if you call<!-- --> <code class="language-javascript">router.replaceRoutes()</code>).</li></ul><pre><code class="language-javascript">export default function confirmInteraction() {
+  // maintain an object of known routes
+  let knownRoutes = {};
+  return {
+    name: &#x27;confirm&#x27;,
+    // when a route is registered, we store it using its name
+    register: route =&gt; {
+      knownRoutes[route.name] = true;
+    },
+    // get checks the known routes to see if one exists with
+    // the requested name
+    get: (name) =&gt; {
+      return knownRoutes[name] != null
+    },
+    // reset the known routes
+    reset: () =&gt; {
+      knownRoutes = {};
+    }
+  };
+}</code></pre><p>In your application, you can import it, call the factory to create the interaction, and register the interaction when you create the router.</p><pre><code class="language-javascript">import curi from &#x27;@curi/core&#x27;;
+import confirmFactory from &#x27;./interactions/confirm&#x27;
+
+const routes = [{ name: &#x27;Home&#x27;, path: &#x27;&#x27; }];
+
+const router = curi(history, routes, {
+  route: [confirmFactory()]
+});
+
+router.route.confirm(&#x27;Home&#x27;); // true
+router.route.confirm(&#x27;Elsewhere&#x27;); // false</code></pre><div class="subsection" id="Slightly-more-advanced"><h3>Slightly more advanced<a class="header-link" href="/guides/route-interactions/#Slightly-more-advanced">#</a></h3><p>You might want to write an interaction that uses data from parent routes when registering a route. For example, the built-in pathname interaction joins a route&#x27;s path with it parent path(s).</p><p>The second argument passed to a router interaction&#x27;s<!-- --> <code class="language-javascript">register()</code> function is a parent data object. For root routes, this will be <code class="language-javascript">undefined</code>. For nested routes, this is the value returned by the parent route&#x27;s <code class="language-javascript">register()</code> <!-- -->function.</p><pre><code class="language-javascript">function ParentFactory() {
+  let routeTree = {};
+  return {
+    name: &#x27;routeParent&#x27;,
+    register: (route, parent) =&gt; {
+      routeTree[route.name] = parent;
+      // we return route.name and any child routes will receive that
+      // as their parent value
+      return route.name;
+    },
+    get: (name) =&gt; {
+      return routeTree[name];
+    },
+    reset: () =&gt; {
+      routeTree = {};
+    }
+  }
+}</code></pre></div></div><div><h2>Next</h2><p>Next on the list are side effects, which you can learn more about in the<!-- --> <a href="/guides/side-effects/">Using Side Effects</a> <!-- -->guide.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a class=" " href="/guides/responses/">Response Objects</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" active" href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a class=" " href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/react/">React Basics</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>

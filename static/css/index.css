@@ -5,10 +5,12 @@ body {
   font-size: 20px;
   line-height: 30px;
   margin: 0;
-  box-sizing: border-box; }
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
 
 *, *:before, *:after {
-  box-sizing: inherit; }
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit; }
 
 /* http://prismjs.com/download.html?themes=prism-okaidia&languages=markup+css+clike+javascript */
 /**
@@ -28,7 +30,11 @@ pre[class*="language-"] {
   word-break: normal;
   word-wrap: normal;
   line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
   tab-size: 4;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
   hyphens: none; }
 
 /* Code blocks */
@@ -140,6 +146,7 @@ pre[data-line] {
   margin-top: 1em;
   /* Same as .prism’s padding-top */
   background: rgba(153, 122, 102, 0.08);
+  background: -webkit-gradient(linear, left top, right top, color-stop(70%, rgba(153, 122, 102, 0.1)), to(rgba(153, 122, 102, 0)));
   background: linear-gradient(to right, rgba(153, 122, 102, 0.1) 70%, rgba(153, 122, 102, 0));
   pointer-events: none;
   line-height: inherit;
@@ -160,7 +167,8 @@ pre[data-line] {
   vertical-align: 0.3em;
   border-radius: 999px;
   text-shadow: none;
-  box-shadow: none; }
+  -webkit-box-shadow: none;
+          box-shadow: none; }
 
 .line-highlight[data-end]:after {
   content: attr(data-end);
@@ -226,9 +234,13 @@ header {
       color: #efefef;
       font-size: 1.1em;
       text-decoration: none;
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
       height: 50px;
-      align-items: center; }
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
       header nav a:hover {
         color: #ff9800; }
       header nav a.active {
@@ -276,11 +288,16 @@ main {
   .banner .banner-buttons {
     width: 80%;
     margin: 0 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-around; }
+    -ms-flex-pack: distribute;
+        justify-content: space-around; }
     .banner .banner-buttons button {
       font-family: "Zilla Slab", serif;
-      flex-grow: 1;
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
       font-size: 1.1em;
       background: #fff;
       color: #222233;
@@ -296,9 +313,15 @@ main {
   margin: 25px auto 0;
   border-top: 1px dashed #222233;
   padding-top: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around; }
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around; }
 
 .feature {
   background: #eeeeee;
@@ -355,6 +378,8 @@ main {
   border-bottom: 1px solid #efefef; }
 
 .tutorial .link-list li ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   margin: 0; }
   .tutorial .link-list li ul li {
@@ -391,8 +416,13 @@ main {
 
 .tiles {
   list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-flow: row wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
   padding: 0; }
   .tiles .tile {
     background: #222233;
@@ -402,7 +432,8 @@ main {
       display: block;
       width: 200px;
       height: 200px;
-      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
       padding: 5px 10px; }
   .tiles h2 {
     color: #ff9800;
@@ -422,9 +453,16 @@ main {
     width: 900px;
     margin: 0 auto; }
     header nav ul {
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
-      flex-flow: row wrap;
-      align-items: flex-end; }
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-flow: row wrap;
+              flex-flow: row wrap;
+      -webkit-box-align: end;
+          -ms-flex-align: end;
+              align-items: flex-end; }
       header nav ul li {
         margin-right: 20px; }
     header nav a {
@@ -436,8 +474,13 @@ main {
     margin-left: auto;
     margin-right: auto; }
   .code {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-flow: row nowrap; }
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap; }
     .code pre {
       width: 500px;
       min-width: 500px; }
@@ -448,16 +491,26 @@ main {
   .example,
   .tutorial {
     padding-top: 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-flow: row-nowrap; }
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row-nowrap;
+            flex-flow: row-nowrap; }
   .sidebar {
     max-width: 200px;
     min-width: 150px;
     margin-right: 15px;
-    order: 1; }
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1; }
     .sidebar h3 {
       font-size: 1.1em; }
   .content {
-    order: 2;
+    -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+            order: 2;
     position: relative;
     max-width: 800px; } }
+

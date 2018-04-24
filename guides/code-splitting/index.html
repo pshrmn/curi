@@ -8,7 +8,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorials</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Code Splitting</h1><p>If you are bundling an application with a lot of routes, users of your application may be downloading a lot of unnecessary content just to render the initial page. Using code splitting, you can reduce the initial download size for your application by splitting code that is conditionally loaded into a separate bundle that is only downloaded when it is needed.</p><div class="note"><strong>Note:</strong> <!-- -->This guide assumes that you are using Webpack 2+ to bundle your application.</div><div class="section" id="no-split"><h2>An app without code splitting<a class="header-link" href="/guides/code-splitting/#no-split">#</a></h2><p>Let&#x27;s start out by describing our application&#x27;s routes without code splitting. We will import each route&#x27;s component from the files where they are defined.</p><pre><code class="language-javascript">import Home from &#x27;./components/Home&#x27;;
+    <div id="root"><div><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Code Splitting</h1><p>If you are bundling an application with a lot of routes, users of your application may be downloading a lot of unnecessary content just to render the initial page. Using code splitting, you can reduce the initial download size for your application by splitting code that is conditionally loaded into a separate bundle that is only downloaded when it is needed.</p><div class="note"><strong>Note:</strong> <!-- -->This guide assumes that you are using Webpack 2+ to bundle your application.</div><div class="section" id="no-split"><h2>An app without code splitting<a class="header-link" href="/guides/code-splitting/#no-split">#</a></h2><p>Let&#x27;s start out by describing our application&#x27;s routes without code splitting. We will import each route&#x27;s component from the files where they are defined.</p><pre><code class="language-javascript">import Home from &#x27;./components/Home&#x27;;
 import Contact from &#x27;./components/Contact&#x27;;
 import ContactMethod from &#x27;./components/ContactMethod&#x27;;
 
@@ -16,74 +16,77 @@ const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;,
-    match: () =&gt; {
-      response: ({ set }) =&gt; {
-        set.body(Home);
-      }
+    response: () =&gt; {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: &#x27;Contact&#x27;,
     path: &#x27;contact&#x27;,
-    match: () =&gt; {
-      response: ({ set }) =&gt; {
-        set.body(Contact);
-      }
+    response: () =&gt; {
+      return {
+        body: Contact
+      };
     },
     children: [
       {
         name: &#x27;Contact Method&#x27;,
         path: &#x27;:method&#x27;,
-        match: () =&gt; {
-          response: ({ set }) =&gt; {
-            set.body(ContactMethod);
-          }
+        response: () =&gt; {
+          return {
+            body: ContactMethod
+          };
         }
       }
     ]
   }
-];</code></pre></div><div class="section" id="initial"><h2>import() in match.initial<a class="header-link" href="/guides/code-splitting/#initial">#</a></h2><p>Instead of having static imports, we will use the <code class="language-javascript">import()</code> <!-- -->function to import our modules. We will import our components using the<!-- --> <code class="language-javascript">match.initial</code> property of routes. This function will only be called the first time that its route matches, so we don&#x27;t have to worry about making extra requests to our server.</p><p><code class="language-javascript">match.initial</code> should be a function that returns a Promise;<!-- --> <code class="language-javascript">import()</code>, conveniently, returns a Promise. Then, in our<!-- --> <code class="language-javascript">match.response</code> function, instead of referencing values imported at the top of the file, we can reference the result of the<!-- --> <code class="language-javascript">initial</code> function using <code class="language-javascript">resolved.initial</code>.</p><p><code class="language-javascript">import()</code> resolves with a module object, so we will just assume that the component are default imports and reference them as<!-- --> <code class="language-javascript">resolved.initial.default</code>. Alternatively, we could just resolve the default value in our <code class="language-javascript">match.initial</code> function.</p><pre><code class="language-javascript">const routes = [
+];</code></pre></div><div class="section" id="initial"><h2>import() in on.initial()<a class="header-link" href="/guides/code-splitting/#initial">#</a></h2><p>Instead of having static imports, we will use the <code class="language-javascript">import()</code> <!-- -->function to import our modules. We will import our components using the<!-- --> <code class="language-javascript">on.initial()</code> property of routes. This function will only be called the first time that its route matches, so we don&#x27;t have to worry about making extra requests to our server.</p><p><code class="language-javascript">on.initial()</code> should be a function that returns a Promise;<!-- --> <code class="language-javascript">import()</code>, conveniently, returns a Promise. Then, in our<!-- --> <code class="language-javascript">response()</code> function, instead of referencing values imported at the top of the file, we can reference the result of the<!-- --> <code class="language-javascript">initial</code> function using <code class="language-javascript">resolved.initial</code>.</p><p><code class="language-javascript">import()</code> resolves with a module object, so we will just assume that the component are default imports and reference them as<!-- --> <code class="language-javascript">resolved.initial.default</code>. Alternatively, we could just resolve the default value in our <code class="language-javascript">on.initial()</code> function.</p><pre><code class="language-javascript">const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;,
-    match: {
-      initial: () =&gt; import(&#x27;./components/Home&#x27;),
-      response: ({ resolved, set }) =&gt; {
-        set.body(resolved.initial.default);
-      }
+    response: ({ resolved }) =&gt; {
+      return {
+        body: resolved.initial.default
+      };
     },
-    body: () =&gt; Home
+    on: {
+      initial: () =&gt; import(&#x27;./components/Home&#x27;),
+    }
   },
   {
     name: &#x27;Contact&#x27;,
     path: &#x27;contact&#x27;,
-    match: {
-      initial: () =&gt; import(&#x27;./components/Contact&#x27;),
-      response: ({ resolved, set }) =&gt; {
-        set.body(resolved.initial.default);
-      }
+    response: ({ resolved }) =&gt; {
+      return {
+        body: resolved.initial.default
+      };
     },
-    body: () =&gt; Contact,
+    on: {
+      initial: () =&gt; import(&#x27;./components/Contact&#x27;),
+    },
     children: [
       {
         name: &#x27;Contact Method&#x27;,
         path: &#x27;:method&#x27;,
-        match: {
+        response: ({ resolved }) =&gt; {
+          return {
+            body: resolved.initial.default
+          };
+        },
+        on: {
           // we can resolve module.default in initial
           // instead of in response
           initial: () =&gt; import(&#x27;./components/ContactMethod&#x27;)
-            .then(module =&gt; module.default),
-            response: ({ resolved, set }) =&gt; {
-            set.body(resolved.initial);
-          }
-        },
-        body: () =&gt; ContactMethod
+            .then(module =&gt; module.default)
+        }
       }
     ]
   }
-];</code></pre></div><div class="section" id="next"><h2>Next<a class="header-link" href="/guides/code-splitting/#next">#</a></h2><p>The approaches taken here are not the only way to do code splitting. You may choose to skip the <code class="language-javascript">match.initial</code> method and do code splitting at other points in your application. Whatever path you decide to go, hopefully this has shown you that setting up code splitting with the <code class="language-javascript">match.initial</code> property is fairly simple to do. If you are using Webpack and want to reduce your initial bundle size,<!-- --> <code class="language-javascript">match.initial</code> is an easy way to accomplish this.</p><p>Next, we will take a look at some related route properties in<!-- --> <a href="/guides/loading/">the loading guide</a>.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a href="/guides/routes/">Routes</a></li><li class="solo"><a href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a href="/guides/responses/">Response Objects</a></li><li class="solo"><a href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Add-ons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a class="active" href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li><li class="solo"><a href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
-    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+];</code></pre></div><div class="section" id="next"><h2>Next<a class="header-link" href="/guides/code-splitting/#next">#</a></h2><p>The approaches taken here are not the only way to do code splitting. You may choose to skip the <code class="language-javascript">on.initial()</code> method and do code splitting at other points in your application. Whatever path you decide to go, hopefully this has shown you that setting up code splitting with the <code class="language-javascript">on.initial()</code> property is fairly simple to do. If you are using Webpack and want to reduce your initial bundle size,<!-- --> <code class="language-javascript">on.initial()</code> is an easy way to accomplish this.</p><p>Next, we will take a look at some related route properties in<!-- --> <a href="/guides/loading/">the loading guide</a>.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a class=" " href="/guides/responses/">Response Objects</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a class=" " href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a class=" active" href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/react/">React Basics</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

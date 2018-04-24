@@ -3,12 +3,12 @@
   <head>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tutorial Vue Basics | Curi Documentation</title>
+    <title> | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a class="active" href="/tutorial">Tutorials</a></li><li><a href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="tutorial"><div class="content"><h1>Vue Basics Tutorial</h1><p>In this tutorial, we will be building a website for a bookstore. This will focus on the front-end part of the application.</p><div class="tutorial-outline"><p>In this tutorial, we will be doing the following:</p><ul><li>Learn how to define routes and setup the Curi router.</li><li>Learn how to render Vue components based on the current location.</li><li>Learn how to navigate within the application.</li></ul></div><div class="section" id="setup"><h2>Setup<a class="header-link" href="/tutorial/vue-basics#setup">#</a></h2><p>We will be using<!-- --> <a href="https://github.com/vuejs/vue-cli"><code class="language-javascript">@vue/cli</code></a> <!-- -->to develop this website.</p><div class="note"><strong>Note:</strong> <!-- -->The instructions here assume that you have NodeJS and NPM &gt; 5.2 installed on your computer. If you do not and cannot or just prefer to avoid setup altogether, you can follow along using<!-- --> <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the boilerplate will be different, but the differences are minor.</div><p>Begin by opening a terminal and navigating to the directory where you want to save your code. Then, we will use <code class="language-javascript">@vue/cli</code> to create the application. We</p><pre><code class="language-bash"># install vue-cli if it isn&#x27;t already
+    <div id="root"><div><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides">Guides</a></li><li><a class=" active" href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="tutorial"><div class="content"><h1>Vue Basics Tutorial</h1><p>In this tutorial, we will be building a website for a bookstore. This will focus on the front-end part of the application.</p><div class="tutorial-outline"><p>In this tutorial, we will be doing the following:</p><ul><li>Learn how to define routes and setup the Curi router.</li><li>Learn how to render Vue components based on the current location.</li><li>Learn how to navigate within the application.</li></ul></div><div class="section" id="setup"><h2>Setup<a class="header-link" href="/tutorial/vue-basics#setup">#</a></h2><p>We will be using<!-- --> <a href="https://github.com/vuejs/vue-cli"><code class="language-javascript">@vue/cli</code></a> <!-- -->to develop this website.</p><div class="note"><strong>Note:</strong> <!-- -->The instructions here assume that you have NodeJS and NPM &gt; 5.2 installed on your computer. If you do not and cannot or just prefer to avoid setup altogether, you can follow along using<!-- --> <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the boilerplate will be different, but the differences are minor.</div><p>Begin by opening a terminal and navigating to the directory where you want to save your code. Then, we will use <code class="language-javascript">@vue/cli</code> to create the application. We</p><pre><code class="language-bash"># install vue-cli if it isn&#x27;t already
 npm install --global @vue/cli
 # create the application
 vue create curi-bookstore
@@ -110,21 +110,21 @@ new Vue({
   params: {},
   partials: [],
   status: 200
-}</code></pre><p>The router uses an observer model to let functions subscribe to be called when a new response is generated. The <code class="language-javascript">CuriPlugin</code> <!-- -->sets up an observer so that it can trigger a re-render whenever there is a new one.</p><p>The <code class="language-javascript">navigation</code> object contains additional information about a navigation that doesn&#x27;t make sense to include in the response object. This includes the navigation&#x27;s &quot;action&quot; (<code class="language-javascript">PUSH</code>,<!-- --> <code class="language-javascript">POP</code>, or <code class="language-javascript">REPLACE</code>) and the previous response object. This can be useful for animation and modals.</p></div><p>Most of the time, the response is the only property you will need to use to render, but the other two may occasionally be useful.</p><p>How do we use the response to render? Any way you want, really. Based on the sample response above, the obvious idea would be to determine what component to render based on the response&#x27;s <code class="language-javascript">name</code>. However, we can make this even easier by using the <code class="language-javascript">body</code> property.</p><p>Earlier it was mentioned that response objects can be modified. This is done in a route&#x27;s <code class="language-javascript">match.response()</code> function.<!-- --> <code class="language-javascript">match.response()</code> receives an object with a whole bunch of properties that we can use to modify the response. For the time being, we only care about one: <code class="language-javascript">set</code>. This is an object with functions that actually modify the response. <code class="language-javascript">set.body()</code> will set the<!-- --> <code class="language-javascript">body</code> property of the response object.</p><pre><code class="language-javascript">{
+}</code></pre><p>The router uses an observer model to let functions subscribe to be called when a new response is generated. The <code class="language-javascript">CuriPlugin</code> <!-- -->sets up an observer so that it can trigger a re-render whenever there is a new one.</p><p>The <code class="language-javascript">navigation</code> object contains additional information about a navigation that doesn&#x27;t make sense to include in the response object. This includes the navigation&#x27;s &quot;action&quot; (<code class="language-javascript">PUSH</code>,<!-- --> <code class="language-javascript">POP</code>, or <code class="language-javascript">REPLACE</code>) and the previous response object. This can be useful for animation and modals.</p></div><p>Most of the time, the response is the only property you will need to use to render, but the other two may occasionally be useful.</p><p>How do we use the response to render? Any way you want, really. Based on the sample response above, the obvious idea would be to determine what component to render based on the response&#x27;s <code class="language-javascript">name</code>. However, we can make this even easier by using the <code class="language-javascript">body</code> property.</p><p>Earlier it was mentioned that response objects can be modified. This is done by returning an object from a route&#x27;s <code class="language-javascript">response()</code> <!-- -->function. <code class="language-javascript">response()</code> receives an object with a whole bunch of properties that we can use to help determine how to modify the response, but for the time being, we don&#x27;t care about any of those. All we need to know is that if we return an object with a <code class="language-javascript">body</code> property, that value will be set on our response object.</p><pre><code class="language-javascript">{
   name: &quot;Home&quot;,
   path: &quot;&quot;,
-  match: {
-    response({ set }) {
-      set.body(&#x27;Home, sweet home.&#x27;);
-      /*
-       * response = {
-       *   body: &quot;Home, sweet home.&quot;,
-       *   // ...
-       * }
-       */
-    }
+  response() {
+    return {
+      body: &quot;Home, sweet home.&quot;
+    };
+    /*
+      * response = {
+      *   body: &quot;Home, sweet home.&quot;,
+      *   // ...
+      * }
+      */
   }
-}</code></pre><p>If we pass Vue components to <code class="language-javascript">set.body()</code>, we can render those using <code class="language-jsx">&lt;<!-- -->Component :is<!-- -->&gt;</code>.</p><p>We haven&#x27;t actually defined components for our routes yet, so we should throw together some placeholders.</p><pre><code class="language-bash">touch src/components/Home.vue src/components/Book.vue \
+}</code></pre><p>If the return object&#x27;s <code class="language-javascript">body</code> property is a Vue component, we can render it using <code class="language-jsx">&lt;<!-- -->Component :is<!-- -->&gt;</code>.</p><p>We haven&#x27;t actually defined components for our routes yet, so we should throw together some placeholders.</p><pre><code class="language-bash">touch src/components/Home.vue src/components/Book.vue \
   src/components/Checkout.vue src/components/NotFound.vue</code></pre><pre><code class="language-html">&lt;!-- src/components/Home.vue --&gt;
 &lt;template&gt;
   &lt;div&gt;Home&lt;/div&gt;
@@ -147,37 +147,37 @@ export default [
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;,
-    match: {
-      response({ set }) {
-        set.body(Home);
-      }
+    response() {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: &quot;Book&quot;,
     path: &quot;book/:id&quot;,
-    match: {
-      response({ set }) {
-        set.body(Book);
-      }
+    response() {
+      return {
+        body: Book
+      };
     }
   },
   {
     name: &quot;Checkout&quot;,
     path: &quot;checkout&quot;,
-    match: {
-      response({ set }) {
-        set.body(Checkout);
-      }
+    response() {
+      return {
+        body: Checkout
+      };
     }
   },
   {
     name: &quot;Catch All&quot;,
     path: &quot;(.*)&quot;,
-    match: {
-      response({ set }) {
-        set.body(NotFound);
-      }
+    response() {
+      return {
+        body: NotFound
+      };
     }
   }
 ];</code></pre><p>We can now update <code class="language-javascript">App.vue</code> to render <code class="language-javascript">response.body</code> <!-- -->as a component, which as mentioned above is available through<!-- --> <code class="language-javascript">this.$curi</code>.</p><pre><code class="language-html">&lt;!-- src/App.vue --&gt;
@@ -192,8 +192,8 @@ export default [
 &lt;curi-link to=&quot;Some Route&quot;&gt;Some Route&lt;/curi-link&gt;
 
 &lt;!-- out of app --&gt;
-&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</code></pre><p>If you need to attach query or hash data to a <code class="language-jsx">&lt;<!-- -->curi-link<!-- -->&gt;</code>, use the <code class="language-javascript">details</code> prop.</p><pre><code class="language-html">&lt;!-- { name: &quot;Checkout&quot;, path: &quot;checkout&quot; } --&gt;
-&lt;curi-link to=&quot;Checkout&quot; :details=&quot;{ query: &#x27;a=123&#x27; }&quot;&gt;Checkout&lt;/curi-link&gt;
+&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</code></pre><p>If you need to attach query or hash data to a <code class="language-jsx">&lt;<!-- -->curi-link<!-- -->&gt;</code>, use the <code class="language-javascript">query</code> and <code class="language-javascript">hash</code> props.</p><pre><code class="language-html">&lt;!-- { name: &quot;Checkout&quot;, path: &quot;checkout&quot; } --&gt;
+&lt;curi-link to=&quot;Checkout&quot; :query=&quot;a=123&quot;&gt;Checkout&lt;/curi-link&gt;
 &lt;!-- &lt;a href=&quot;/checkout?a=123&quot;&gt;Checkout&lt;/a&gt; --&gt;</code></pre></div><div class="subsection" id="nav-menu"><h3>A Navigation Menu<a class="header-link" href="/tutorial/vue-basics#nav-menu">#</a></h3><p>We will start with creating a navigation menu component with links to our home page and checkout page.</p><pre><code class="language-bash">touch src/components/NavMenu.vue</code></pre><pre><code class="language-html">&lt;!-- src/components/NavMenu.vue --&gt;
 &lt;template&gt;
   &lt;nav&gt;
@@ -340,7 +340,7 @@ history.replace({ pathname: &#x27;/new&#x27; })
 history.navigate({ pathname: &#x27;/two&#x27; })
 // session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
 history.navigate({ pathname: &#x27;/new&#x27; })
-// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2<!-- -->`}</code></pre></div><p>Curi uses add-ons to add functionality to routes. Most of the time, you have to include these while creating the router, but Curi has one built-in add-on: <code class="language-javascript">pathname</code>. The <code class="language-jsx">&lt;<!-- -->curi-link<!-- -->&gt;</code> <!-- -->automatically generates the correct pathname string using the<!-- --> <code class="language-javascript">pathname</code> add-on, the <code class="language-javascript">to</code> prop (and sometimes the<!-- --> <code class="language-javascript">params</code> prop). We can access this add-on as<!-- --> <code class="language-javascript">router.addons.pathname()</code> to generate pathnames ourselves.</p><p>We also want to import our shopping cart API so that we can add a book to the cart.</p><pre data-line="8-10,19,29-35"><code class="language-html">&lt;!-- src/components/Book.vue --&gt;
+// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2<!-- -->`}</code></pre></div><p>Curi uses route interactions to add functionality to routes. Most of the time, you have to include these while creating the router, but Curi has one built-in route interaction: <code class="language-javascript">pathname</code>. The<!-- --> <code class="language-jsx">&lt;<!-- -->curi-link<!-- -->&gt;</code> automatically generates the correct pathname string using the <code class="language-javascript">pathname</code> route interaction, the <code class="language-javascript">to</code> prop (and sometimes the <code class="language-javascript">params</code> prop). We can access this route interaction as <code class="language-javascript">router.route.pathname()</code> to generate pathnames ourselves.</p><p>We also want to import our shopping cart API so that we can add a book to the cart.</p><pre data-line="8-10,19,29-35"><code class="language-html">&lt;!-- src/components/Book.vue --&gt;
 &lt;template&gt;
   &lt;div v-if=&quot;book&quot;&gt;
     &lt;h1&gt;{{book.title}}&lt;/h1&gt;
@@ -371,7 +371,7 @@ history.navigate({ pathname: &#x27;/new&#x27; })
     methods: {
       onClick: function() {
         cart.add(this.book, 1);
-        const pathname = this.$router.addons.pathname(&#x27;Checkout&#x27;);
+        const pathname = this.$router.route.pathname(&#x27;Checkout&#x27;);
         this.$router.history.push({ pathname });
       }
     }
@@ -419,14 +419,14 @@ history.navigate({ pathname: &#x27;/new&#x27; })
     methods: {
       onClick: function() {
         this.books = cart.reset();
-        const pathname = this.$router.addons.pathname(&#x27;Checkout&#x27;);
+        const pathname = this.$router.route.pathname(&#x27;Checkout&#x27;);
         this.$router.history.replace({ pathname, hash: &#x27;thanks&#x27; });
       }
     }
   }
-&lt;/script&gt;</code></pre></div><div class="section" id="next"><h2>What&#x27;s next?<a class="header-link" href="/tutorial/vue-basics#next">#</a></h2><p>We now have a functional website built with Vue and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides">guides</a> for information on advanced techniques.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul><li class="link-group"><h3>Basic</h3><ul class="link-list"><li class="solo"><a href="/tutorial/react-basics">React Basics</a></li><li class="solo"><a class="active" href="/tutorial/vue-basics">Vue Basics</a></li></ul></li></ul></div></div></main></div></div>
-    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+&lt;/script&gt;</code></pre></div><div class="section" id="next"><h2>What&#x27;s next?<a class="header-link" href="/tutorial/vue-basics#next">#</a></h2><p>We now have a functional website built with Vue and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides">guides</a> for information on advanced techniques.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul><li class="link-group"><h3>Basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/tutorial/react-basics">React Basics</a></li><li class="solo"><a class=" active" href="/tutorial/vue-basics">Vue Basics</a></li></ul></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

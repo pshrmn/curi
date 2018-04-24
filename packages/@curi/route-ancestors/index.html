@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@curi/route-ancestors | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><div><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" active" href="/packages">Packages</a></li><li><a class=" " href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="package"><div class="content"><h1>@curi/<!-- -->route-ancestors</h1><div class="package-info"><div>v<!-- -->1.0.0-beta.6</div><a href="https://github.com/pshrmn/curi/tree/master/packages/interactions/route-ancestors"><img style="height:16px;margin-right:5px" src="/static/img/github-logo.png"/>GitHub Repo</a><a href="https://npmjs.com/package/@curi/route-ancestors"><img style="height:16px;margin-right:5px" src="/static/img/npm-logo.png"/>NPM Package</a></div><div class="section" id="about"><h2>About<a class="header-link" href="/packages/@curi/route-ancestors/#about">#</a></h2><p>The <code class="language-javascript">@curi/route-ancestors</code> route interaction allows you to get the names of ancestor routes, which can be useful for generating breadcrumb links.</p></div><div class="section" id="installation"><h2>Installation<a class="header-link" href="/packages/@curi/route-ancestors/#installation">#</a></h2><div><pre><code class="language-bash">npm install @curi/route-ancestors
+yarn add @curi/route-ancestors</code></pre></div><div><p>Prefer inline scripts?</p><button type="button">Show &lt;script&gt; info</button></div></div><div class="section" id="API"><h2>API<a class="header-link" href="/packages/@curi/route-ancestors/#API">#</a></h2><div class="section" id="ancestors"><h3>ancestors<a class="header-link" href="/packages/@curi/route-ancestors/#ancestors">#</a></h3><p>The default export is a route interaction factory that will add an<!-- --> <code class="language-javascript">ancestors</code> function to the router object&#x27;s <code class="language-javascript">route</code> <!-- -->property.</p><p>The interaction returns the name of an ancestor route a given level &quot;up&quot; from the route. If no level is provided, then it will return an array of the names of all ancestor routes (from most ancient to parent).</p><pre><code class="language-javascript">import curi from &#x27;@curi/core&#x27;;
+import ancestors from &#x27;@curi/route-ancestors&#x27;;
+
+const routes = [
+  {
+    name: &#x27;Grandparent&#x27;, path: &#x27;0&#x27;,
+    children: [
+      {
+        name: &#x27;Parent&#x27;, path: &#x27;1&#x27;,
+        children: [
+          {
+            name: &#x27;Child&#x27;,
+            path: &#x27;2&#x27;
+          }
+        ]
+      }
+    ]
+  }
+];
+
+const router = curi(history,routes, {
+  route: [ancestors()]
+});</code></pre><div class="subsection" id="arguments"><h3>Arguments<a class="header-link" href="/packages/@curi/route-ancestors/#arguments">#</a></h3><ul><li><code class="language-javascript">name</code> - the name of the route to get ancestors of.</li><li><code class="language-javascript">level</code> - a number of levels &quot;up&quot; to get the ancestor name of. If this argument is not provided, the interaction will return an array of all ancestor routes names (from most ancient to parent).</li></ul><pre><code class="language-javascript">const parent = router.route.ancestors(&#x27;Child&#x27;, 1);
+// parent === &#x27;Parent&#x27;
+const ancestors = router.route.ancestors(&#x27;Child&#x27;);
+// ancestors === [&#x27;Grandparent&#x27;, &#x27;Parent&#x27;]</code></pre></div></div></div></div><div class="sidebar"><h2>Packages</h2><ul><li class="link-group"><h3>core</h3><ul class="link-list"><li class="solo"><a class=" " href="/packages/@curi/core/">core</a></li></ul></li><li class="link-group"><h3>route</h3><ul class="link-list"><li class="solo"><a class=" " href="/packages/@curi/route-active/">route-active</a></li><li class="solo"><a class=" active" href="/packages/@curi/route-ancestors/">route-ancestors</a></li><li class="solo"><a class=" " href="/packages/@curi/route-prefetch/">route-prefetch</a></li></ul></li><li class="link-group"><h3>side-effect</h3><ul class="link-list"><li class="solo"><a class=" " href="/packages/@curi/side-effect-title/">side-effect-title</a></li><li class="solo"><a class=" " href="/packages/@curi/side-effect-scroll/">side-effect-scroll</a></li></ul></li><li class="link-group"><h3>renderer</h3><ul class="link-list"><li class="solo"><a class=" " href="/packages/@curi/react/">react</a></li><li class="solo"><a class=" " href="/packages/@curi/react-native/">react-native</a></li><li class="solo"><a class=" " href="/packages/@curi/svelte/">svelte</a></li><li class="solo"><a class=" " href="/packages/@curi/vue/">vue</a></li></ul></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>

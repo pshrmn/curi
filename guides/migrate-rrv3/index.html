@@ -8,7 +8,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorials</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Migrate from React Router v2/3 to Curi</h1><p>The Curi router is somewhat similar to React Router versions 2 and 3, so migration is fairly easy. For instance, both use a centralized router. Both routers are made up of route objects (although with React Router some of these are disguised as JSX with <code class="language-jsx">&lt;<!-- -->Route<!-- -->&gt;</code> components). With both, routes can be nested, allowing child routes to build off of the paths from their parent routes.</p><p>Migration from React Router v2/3 to Curi should not require a complete reworking of your application, but there are some key differences.</p><ol><li>The routing is handled entirely outside of React. With Curi, there are no <code class="language-jsx">&lt;<!-- -->Route<!-- -->&gt;</code> components.</li><li>With Curi, when a nested route matches, only that route renders. Any ancestor routes that also (partially) match are not rendered. This is different from React Router, where ancestors of the best matched route also render.</li></ol><div class="section" id="routes"><h2>Routes<a class="header-link" href="/guides/migrate-rrv3/#routes">#</a></h2><p>Let’s get started with setting up our routes.</p><div class="subsection" id="routes-with-react-router"><h3>With React Router<a class="header-link" href="/guides/migrate-rrv3/#routes-with-react-router">#</a></h3><p>In React Router v2/3, there are two ways to define routes. You can either use JavaScript objects or JSX <code class="language-jsx">&lt;<!-- -->Route<!-- -->&gt;</code>s (which React Router converts to JavaScript objects).</p><pre><code class="language-jsx">// JavaScript objects
+    <div id="root"><div><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Migrate from React Router v2/3 to Curi</h1><p>The Curi router is somewhat similar to React Router versions 2 and 3, so migration is fairly easy. For instance, both use a centralized router. Both routers are made up of route objects (although with React Router some of these are disguised as JSX with <code class="language-jsx">&lt;<!-- -->Route<!-- -->&gt;</code> components). With both, routes can be nested, allowing child routes to build off of the paths from their parent routes.</p><p>Migration from React Router v2/3 to Curi should not require a complete reworking of your application, but there are some key differences.</p><ol><li>The routing is handled entirely outside of React. With Curi, there are no <code class="language-jsx">&lt;<!-- -->Route<!-- -->&gt;</code> components.</li><li>With Curi, when a nested route matches, only that route renders. Any ancestor routes that also (partially) match are not rendered. This is different from React Router, where ancestors of the best matched route also render.</li></ol><div class="section" id="routes"><h2>Routes<a class="header-link" href="/guides/migrate-rrv3/#routes">#</a></h2><p>Let’s get started with setting up our routes.</p><div class="subsection" id="routes-with-react-router"><h3>With React Router<a class="header-link" href="/guides/migrate-rrv3/#routes-with-react-router">#</a></h3><p>In React Router v2/3, there are two ways to define routes. You can either use JavaScript objects or JSX <code class="language-jsx">&lt;<!-- -->Route<!-- -->&gt;</code>s (which React Router converts to JavaScript objects).</p><pre><code class="language-jsx">// JavaScript objects
 {
   path: &#x27;/&#x27;,
   component: App,
@@ -52,88 +52,92 @@
       }
     ]
   }
-];</code></pre><p>The biggest difference between the Curi paths and the React Router paths is that with Curi, you never include a forward slash at the beginning of the path. This means that while the root path for React Router is <code class="language-javascript">&#x27;/&#x27;</code>, the root path for Curi is <code class="language-javascript">&#x27;&#x27;</code>.</p><p>Next, we should add our components to each route. We will ignore the<!-- --> <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> component that is used in the React Router routes. That is not route specific and will be rendered by our application (assuming we actually need it).</p><p>With Curi routes, we have a <code class="language-javascript">match</code> property. This is an object with a couple different optional function properties, but the one we care about right now is <code class="language-javascript">match.response</code>. In our<!-- --> <code class="language-javascript">match.response</code> function, we have a <code class="language-javascript">set</code> object that we can use to modify the response. One of the properties of this object is a <code class="language-javascript">body</code> function that we can call to set the<!-- --> <code class="language-javascript">body</code> property of the response. For this React application, we want our <code class="language-javascript">body</code> property to be the React component associated with each route.</p><pre><code class="language-javascript">const routes = [
+];</code></pre><p>The biggest difference between the Curi paths and the React Router paths is that with Curi, you never include a forward slash at the beginning of the path. This means that while the root path for React Router is <code class="language-javascript">&#x27;/&#x27;</code>, the root path for Curi is <code class="language-javascript">&#x27;&#x27;</code>.</p><p>Next, we should add our components to each route. We will ignore the<!-- --> <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> component that is used in the React Router routes. That is not route specific and will be rendered by our application (assuming we actually need it).</p><p>With Curi routes, we have a <code class="language-javascript">response()</code> function. The object returned by <code class="language-javascript">response()</code> is used to modify the response that the application will use to render. For this React application, we want our <code class="language-javascript">body</code> property to be the React component associated with each route.</p><pre><code class="language-javascript">const routes = [
   {
     path: &#x27;&#x27;,
-    match: {
-      response: ({ set }) =&gt; {
-        set.body(Home);
-      }
+    response: () =&gt; {
+      return {
+        body: Home
+      };
     }
   },
   {
     path: &#x27;inbox&#x27;,
-    match: {
-      response: ({ set }) =&gt; {
-        set.body(Inbox);
-      }
-    }
+    response: () =&gt; {
+      return {
+        body: Inbox
+      };
+    },
     children: [
       {
         path: &#x27;:message&#x27;,
-        match: {
-          response: ({ set }) =&gt; {
-            set.body(Message);
-          }
+        response: () =&gt; {
+          return {
+            body: Message
+          };
         }
       }
     ]
   }
-];</code></pre><p>We are close to replicating our React Router routes, we just have to implement the <code class="language-javascript">on___</code> methods for our <code class="language-javascript">:message</code> <!-- -->route. With Curi, routes have two possible loading function properties: <code class="language-javascript">match.initial</code> and <code class="language-javascript">match.every</code>.<!-- --> <code class="language-javascript">match.initial</code> is useful for tasks that only need to be run once per route, like the code splitting mentioned above.<!-- --> <code class="language-javascript">match.every</code>, on the other hand, will be called every time that a route matches.</p><p>With React Router, <code class="language-javascript">onEnter</code> is called when the route first matches, while <code class="language-javascript">onChange</code> is called when the same route matches a new location (e.g. with new path parameters).<!-- --> <code class="language-javascript">onEnter</code> and <code class="language-javascript">onChange</code> are nearly the same; the big difference between the two is that <code class="language-javascript">onChange</code> will receive the previous props, which could be used to determine which props changed. When converting these to Curi, we will use<!-- --> <code class="language-javascript">match.every</code> for both. This misses out on the ability to compare props in <code class="language-javascript">onChange</code>, but the primary purpose for comparing props in <code class="language-javascript">onChange</code> was to know whether you&#x27;re navigating to a new route or just swapping query/hash values, so a cache should serve the same purpose.</p><p>Curi routes can also have a <code class="language-javascript">match.response</code> property which you can use to modify the response object. This function will run once we know that the response will be emitted, so side effects can be run in here.</p><p>There currently is no equivalent to <code class="language-javascript">onLeave</code> with Curi. This is mostly because I haven’t seen a compelling need for it. It certainly could be implemented, but so far I have not found a reason to use that. If you have something you need this functionality for, please open up an issue in the GitHub repo.</p><pre><code class="language-javascript">const routes = [
+];</code></pre><p>We are close to replicating our React Router routes, we just have to implement the <code class="language-javascript">on___</code> methods for our <code class="language-javascript">:message</code> <!-- -->route. With Curi, routes can have functions that are called when they match the new loaction. These are <code class="language-javascript">on.initial()</code> and<!-- --> <code class="language-javascript">on.every()</code>. <code class="language-javascript">on.initial()</code> is useful for tasks that only need to be run once per route, like the code splitting mentioned above. <code class="language-javascript">on.every()</code> will be called every time that a route matches, so it is ideal for data loading.</p><p>With React Router, <code class="language-javascript">onEnter</code> is called when the route first matches, while <code class="language-javascript">onChange</code> is called when the same route matches a new location (e.g. with new path parameters).<!-- --> <code class="language-javascript">onEnter</code> and <code class="language-javascript">onChange</code> are nearly the same; the big difference between the two is that <code class="language-javascript">onChange</code> will receive the previous props, which could be used to determine which props changed. When converting these to Curi, we will use<!-- --> <code class="language-javascript">on.every()</code> for both. This misses out on the ability to compare props in <code class="language-javascript">onChange</code>, but the primary purpose for comparing props in <code class="language-javascript">onChange</code> was to know whether you&#x27;re navigating to a new route or just swapping query/hash values, so a cache should serve the same purpose.</p><p>There currently is no equivalent to <code class="language-javascript">onLeave</code> with Curi. This is mostly because I haven’t seen a compelling need for it. It certainly could be implemented, but so far I have not found a reason to use that. If you have something you need this functionality for, please open up an issue in the GitHub repo.</p><pre><code class="language-javascript">const routes = [
   {
     path: &#x27;&#x27;,
-    match: {
-      response: ({ set }) =&gt; {
-        set.body(Home);
-      }
+    response: () =&gt; {
+      return {
+        body: Home
+      };
     }
   },
   {
     path: &#x27;inbox&#x27;,
-    match: {
-      response: ({ set }) =&gt; {
-        set.body(Inbox);
-      }
-    }
+    response: () =&gt; {
+      return {
+        body: Inbox
+      };
+    },
     children: [
       {
         path: &#x27;:message&#x27;,
-        match: {
+        response: () =&gt; {
+          return {
+            body: Message
+          };
+        },
+        on: {
           every: (route) =&gt; { return ... },
-          response: ({ set }) =&gt; {
-            set.body(Message);
-          }
         }
       }
     ]
   }
-];</code></pre><p>The<!-- --> <a href="/guides/routes/#match">routes guide</a> <!-- -->covers all of the <code class="language-javascript">match</code> functions and their arguments.</p><p>We now have the equivalent routes implemented in Curi, but we have one last step. With Curi, each route has to have a unique name.</p><pre><code class="language-javascript">const routes = [
+];</code></pre><p>The<!-- --> <a href="/guides/routes/#match">routes guide</a> <!-- -->covers all of the route properties.</p><p>We now have the equivalent routes implemented in Curi, but we have one last step. With Curi, each route has to have a unique name.</p><pre><code class="language-javascript">const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;,
-    match: {
-      response: ({ set }) =&gt; {
-        set.body(Home);
-      }
+    response: () =&gt; {
+      return {
+        body: Home
+      };
     }
   },
   {
     name: &#x27;Inbox&#x27;,
     path: &#x27;inbox&#x27;,
-    match: {
-      response: ({ set }) =&gt; {
-        set.body(Inbox);
-      }
-    }
+    response: () =&gt; {
+      return {
+        body: Inbox
+      };
+    },
     children: [
       {
         name: &#x27;Message&#x27;,
         path: &#x27;:message&#x27;,
-        match: {
+        response: () =&gt; {
+          return {
+            body: Message
+          };
+        },
+        on: {
           every: (route) =&gt; { return ... },
-          response: ({ set }) =&gt; {
-            set.body(Message);
-          }
         }
       }
     ]
@@ -159,7 +163,7 @@ const router = curi(history, routes);</code></pre></div><div class="section" id=
 });</code></pre><p>So what should your <code class="language-javascript">children</code> function look like? When it is called, the function will receive an object with three properties:<!-- --> <code class="language-javascript">response</code>, the new response object, <code class="language-javascript">navigation</code>, an object with additional information about the navigation, and<!-- --> <code class="language-javascript">router</code>, your Curi router. We will ignore the<!-- --> <code class="language-javascript">navigation</code> and <code class="language-javascript">router</code> here because the<!-- --> <code class="language-javascript">response</code> is what we really want.</p><p>Earlier, we added <code class="language-javascript">body</code> properties to each of the routes and said that when a route matches, that function would be called and its return value would be attached to the response. That means, that inside of our <code class="language-javascript">children</code> function, we can access the matched route’s component as <code class="language-javascript">response.body</code>.</p><pre><code class="language-jsx">function render({ response }) {
   const { body:Body } = response;
   return &lt;Body /&gt;;
-}</code></pre><p>That isn’t perfect because it doesn’t consider what happens when there is no body (which happens if none of the routes match the location or you don&#x27;t set it in a route&#x27;s <code class="language-javascript">match.response</code> function).</p><div class="note"><strong>Note:</strong> <!-- -->Wildcard routes (<code class="language-javascript">{ path: &#x27;(.*)&#x27; }</code>) can be used to easily display a not found page for any location not matched by other routes.</div><p>Let’s get back to our <code class="language-javascript">response</code> object. In the React Router section, we had three components that were rendered: <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code>,<code class="language-jsx">&lt;<!-- -->Inbox<!-- -->&gt;</code>, and <code class="language-jsx">&lt;<!-- -->Message<!-- -->&gt;</code>. With Curi, only the most accurately matched route actually matches. That means that for the URI<!-- --> <code class="language-javascript">/inbox/test-message-please-ignore</code>, the <code class="language-javascript">&quot;Message&quot;</code> <!-- -->route will match, but its parent route, <code class="language-javascript">&quot;Inbox&quot;</code> will not. The <code class="language-javascript">response.body</code> will be the <code class="language-jsx">&lt;<!-- -->Message<!-- -->&gt;</code> component, so that is what our <code class="language-javascript">render</code> function will render. We don’t render <code class="language-jsx">&lt;<!-- -->Inbox<!-- -->&gt;</code> because we did not match the <code class="language-javascript">inbox</code> <!-- -->route.</p><p>It was mentioned above that there is no need for the <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> <!-- -->component with Curi. If you want to have an <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> component, you can render it either inside of the <code class="language-javascript">render</code> function or as a parent of your <code class="language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code>. This can be useful for rendering content that is unrelated to specific routes, like a page header or menu.</p><p>Rendering the <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> inside of the <code class="language-javascript">children</code> <!-- -->function is necessary if any of the components rendered by the<!-- --> <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> are location aware components, since they need to access the Curi router (through React’s context, which the<!-- --> <code class="language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> provides)</p><pre><code class="language-jsx">function render({ response }) {
+}</code></pre><p>That isn’t perfect because it doesn’t consider what happens when there is no body (which happens if none of the routes match the location or you don&#x27;t set it in a route&#x27;s <code class="language-javascript">response()</code> function).</p><div class="note"><strong>Note:</strong> <!-- -->Wildcard routes (<code class="language-javascript">{ path: &#x27;(.*)&#x27; }</code>) can be used to easily display a not found page for any location not matched by other routes.</div><p>Let’s get back to our <code class="language-javascript">response</code> object. In the React Router section, we had three components that were rendered: <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code>,<code class="language-jsx">&lt;<!-- -->Inbox<!-- -->&gt;</code>, and <code class="language-jsx">&lt;<!-- -->Message<!-- -->&gt;</code>. With Curi, only the most accurately matched route actually matches. That means that for the URI<!-- --> <code class="language-javascript">/inbox/test-message-please-ignore</code>, the <code class="language-javascript">&quot;Message&quot;</code> <!-- -->route will match, but its parent route, <code class="language-javascript">&quot;Inbox&quot;</code> will not. The <code class="language-javascript">response.body</code> will be the <code class="language-jsx">&lt;<!-- -->Message<!-- -->&gt;</code> component, so that is what our <code class="language-javascript">render</code> function will render. We don’t render <code class="language-jsx">&lt;<!-- -->Inbox<!-- -->&gt;</code> because we did not match the <code class="language-javascript">inbox</code> <!-- -->route.</p><p>It was mentioned above that there is no need for the <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> <!-- -->component with Curi. If you want to have an <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> component, you can render it either inside of the <code class="language-javascript">render</code> function or as a parent of your <code class="language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code>. This can be useful for rendering content that is unrelated to specific routes, like a page header or menu.</p><p>Rendering the <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> inside of the <code class="language-javascript">children</code> <!-- -->function is necessary if any of the components rendered by the<!-- --> <code class="language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> are location aware components, since they need to access the Curi router (through React’s context, which the<!-- --> <code class="language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> provides)</p><pre><code class="language-jsx">function render({ response }) {
   const { body:Body } = response;
   return (
     &lt;App&gt;
@@ -185,20 +189,20 @@ function render({ response }) {
 &lt;Link to={`/inbox/${message}`}&gt;Hello&lt;/Link&gt;
 // Curi
 &lt;Link to=&#x27;Home&#x27;&gt;Home&lt;/Link&gt;
-&lt;Link to=&#x27;Message&#x27; params={{ message }}&gt;Hello&lt;/Link&gt;</code></pre></li><li><p>With React Router, any additional location properties are passed to the <code class="language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> using the <code class="language-javascript">to</code> object. With Curi, these properties are passed using the <code class="language-javascript">details</code> prop.</p><pre><code class="language-jsx">// React Router
+&lt;Link to=&#x27;Message&#x27; params={{ message }}&gt;Hello&lt;/Link&gt;</code></pre></li><li><p>With React Router, any additional location properties are passed to the <code class="language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> using the <code class="language-javascript">to</code> object. With Curi, these properties are passed using the prop name (<code class="language-javascript">hash</code>,<!-- --> <code class="language-javascript">query</code> &amp;<code class="language-javascript">state</code>).</p><pre><code class="language-jsx">// React Router
 &lt;Link to={{ pathname: &#x27;/inbox&#x27;, hash: &#x27;#test&#x27; }}&gt;Inbox&lt;/Link&gt;
 // Curi
-&lt;Link to=&#x27;Inbox&#x27; details={{ hash: &#x27;test&#x27; }}&gt;Inbox&lt;/Link&gt;</code></pre></li><li><p>Active detection with Curi is more complicated than with React Router, but also more powerful. With Curi, you provide a<!-- --> <code class="language-javascript">merge</code> function that receives the props that will used to render the <code class="language-jsx">&lt;<!-- -->a<!-- -->&gt;</code> and allows you to modify/add props. You can also pass <code class="language-javascript">partial: true</code> to allow for partial matches to be considered active (the opposite of React Router&#x27;s<!-- --> <code class="language-javascript">onlyActiveOnIndex</code>).</p><pre><code class="language-jsx">// React Router
+&lt;Link to=&#x27;Inbox&#x27; hash=&#x27;test&#x27;&gt;Inbox&lt;/Link&gt;</code></pre></li><li><p>Active detection with Curi is more complicated than with React Router, but also more powerful. With Curi, you provide a<!-- --> <code class="language-javascript">merge</code> function that receives the props that will used to render the <code class="language-jsx">&lt;<!-- -->a<!-- -->&gt;</code> and allows you to modify/add props. You can also pass <code class="language-javascript">partial: true</code> to allow for partial matches to be considered active (the opposite of React Router&#x27;s<!-- --> <code class="language-javascript">onlyActiveOnIndex</code>).</p><pre><code class="language-jsx">// React Router
 &lt;Link
   to=&#x27;/&#x27;
   onlyActiveOnIndex
   activeClassName=&#x27;active&#x27;
 &gt;Home&lt;/Link&gt;
 // Curi
-// You need to add @curi/addon-active to your router object
-import createActiveAddon from &#x27;@curi/addon-active&#x27;;
+// You need to add @curi/route-active to your router object
+import active from &#x27;@curi/route-active&#x27;;
 const router = curi(history, routes, {
-  createActiveAddon
+  route: [active()]
 });
 
 // pass the merge function to your &lt;Link&gt;. The props it returns
@@ -211,9 +215,9 @@ function merge(props) {
   to=&#x27;Home&#x27;
   active={{ merge }}
 &gt;Home&lt;/Link&gt;</code></pre></li></ul></div><div class="section" id="router-props"><h2>Accessing router props from nested components<a class="header-link" href="/guides/migrate-rrv3/#router-props">#</a></h2><p>React Router provides a <code class="language-javascript">withRouter</code> higher-order component that will inject router props into the wrapped component. Curi provides similar functionality with the <code class="language-javascript">curious</code> higher-order component provided by the <code class="language-javascript">@curi/react</code> package.</p><pre><code class="language-javascript">export default withRouter(SomeComponent);
-export default curious(SomeComponent);</code></pre><p><code class="language-javascript">curious</code> will inject the Curi router and the current response object into the wrapped component.</p></div><p>At this point, hopefully you are comfortable with migrating from React Router v2/3 to Curi. If there are any concepts not covered here that you think should be, please feel free to open up an issue<!-- --> <a href="https://github.com/pshrmn/curi/issues">on GitHub</a>.</p></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a href="/guides/routes/">Routes</a></li><li class="solo"><a href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a href="/guides/responses/">Response Objects</a></li><li class="solo"><a href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Add-ons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li><li class="solo"><a href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class="active" href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
-    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+export default curious(SomeComponent);</code></pre><p><code class="language-javascript">curious</code> will inject the Curi router and the current response object into the wrapped component.</p></div><p>At this point, hopefully you are comfortable with migrating from React Router v2/3 to Curi. If there are any concepts not covered here that you think should be, please feel free to open up an issue<!-- --> <a href="https://github.com/pshrmn/curi/issues">on GitHub</a>.</p></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a class=" " href="/guides/responses/">Response Objects</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a class=" " href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/react/">React Basics</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" active" href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

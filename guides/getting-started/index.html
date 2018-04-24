@@ -8,7 +8,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div data-reactroot=""><header><nav><ul><li><a class="home-link" href="/">Curi</a></li><li><a href="/packages">Packages</a></li><li><a href="/tutorial">Tutorials</a></li><li><a class="active" href="/guides">Guides</a></li><li><a href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Getting Started</h1><p>This guide will cover a few basic concepts about Curi so that you can be confident integrating Curi into your application.</p><div class="section" id="router-object"><h2>The Router<a class="header-link" href="/guides/getting-started/#router-object">#</a></h2><p>A Curi router is created using the default export function from the<!-- --> <code class="language-javascript">@curi/core</code> package. This function takes a <code class="language-javascript">history</code> <!-- -->object and a <code class="language-javascript">routes</code> array.</p><pre><code class="language-javascript">import curi from &#x27;@curi/core&#x27;;
+    <div id="root"><div><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Getting Started</h1><p>This guide will cover a few basic concepts about Curi so that you can be confident integrating Curi into your application.</p><div class="section" id="router-object"><h2>The Router<a class="header-link" href="/guides/getting-started/#router-object">#</a></h2><p>A Curi router is created using the default export function from the<!-- --> <code class="language-javascript">@curi/core</code> package. This function takes a <code class="language-javascript">history</code> <!-- -->object and a <code class="language-javascript">routes</code> array.</p><pre><code class="language-javascript">import curi from &#x27;@curi/core&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 import routes from &#x27;./routes&#x27;;
 
@@ -23,19 +23,19 @@ const memoryHistory = InMemory();</code></pre></li></ul></div><div class="sectio
     ...
   },
   ...
-]</code></pre><p>With Curi, you never have to write a pathname string yourself. Route names are used to generate pathnames for you, so you just need to know the name of the route you want to link to. This also means that all routes must have unique names.</p><pre><code class="language-javascript">const pathname = router.addons.pathname(&quot;Home&quot;); // pathname === &#x27;/&#x27;</code></pre><p>How route matching works and the other route properties are explained more in-depth in the<!-- --> <a href="/guides/routes/">All About Routes</a> <!-- -->guide.</p></div><div class="section"><h2>Responses<a class="header-link" href="/guides/getting-started/">#</a></h2><p>Whenever navigation happens, Curi will create a <code class="language-javascript">response</code> <!-- -->object, which provides data about the route that it matched. The property values of the response object can be modified through the matching route&#x27;s <code class="language-javascript">match.response</code> function.</p><p>The response object is used to render your application. The response&#x27;s<!-- --> <code class="language-javascript">body</code> property provides a convenient way to specify what you should render.</p><pre><code class="language-jsx">// a React examples
+]</code></pre><p>With Curi, you never have to write a pathname string yourself. Route names are used to generate pathnames for you, so you just need to know the name of the route you want to link to. This also means that all routes must have unique names.</p><pre><code class="language-javascript">const pathname = router.route.pathname(&quot;Home&quot;); // pathname === &#x27;/&#x27;</code></pre><p>How route matching works and the other route properties are explained more in-depth in the<!-- --> <a href="/guides/routes/">All About Routes</a> <!-- -->guide.</p></div><div class="section"><h2>Responses<a class="header-link" href="/guides/getting-started/">#</a></h2><p>Whenever navigation happens, Curi will create a <code class="language-javascript">response</code> <!-- -->object, which provides data about the route that it matched. The property values of the response object can be modified through the matching route&#x27;s <code class="language-javascript">response()</code> function.</p><p>The response object is used to render your application. The response&#x27;s<!-- --> <code class="language-javascript">body</code> property provides a convenient way to specify what you should render.</p><pre><code class="language-jsx">// a React examples
 import Home from &#x27;./components/Home&#x27;;
 
 const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;,
-    match: {
-      response({ set }) {
-        // set response.body to be the imported
-        // Home component
-        set.body(Home);
-      }
+    response() {
+      // set response.body to be the imported
+      // Home component
+      return {
+        body: Home
+      };
     }
   }
 ];
@@ -43,9 +43,9 @@ const routes = [
 function render({ response }) {
   // when response.body === Home, this is the same as &lt;Home /&gt;
   return &lt;response.body /&gt;;
-}</code></pre></div><h2>Next</h2><p>Curi can match routes synchronously or asynchronously. Before we go further, we should quickly cover how this is determined and what is means for your application with the<!-- --> <a href="/guides/sync-or-async/">Sync or Async Guide</a>.</p></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a href="/guides/installation/">Installation</a></li><li class="solo"><a class="active" href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a href="/guides/routes/">Routes</a></li><li class="solo"><a href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a href="/guides/responses/">Response Objects</a></li><li class="solo"><a href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a href="/guides/addons/">Using Add-ons</a></li><li class="solo"><a href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a href="/guides/react/">React Basics</a></li><li class="solo"><a href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
-    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+}</code></pre></div><h2>Next</h2><p>Curi can match routes synchronously or asynchronously. Before we go further, we should quickly cover how this is determined and what is means for your application with the<!-- --> <a href="/guides/sync-or-async/">Sync or Async Guide</a>.</p></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" active" href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a class=" " href="/guides/responses/">Response Objects</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a class=" " href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/react/">React Basics</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>
