@@ -11,7 +11,7 @@ import NavLinks from "./components/NavLinks";
 const setTitle = createTitleSideEffect({ suffix: "| Middleware Example" });
 const history = Browser();
 const router = curi(history, routes, {
-  sideEffects: [{ fn: setTitle }]
+  sideEffects: [{ effect: setTitle }]
 });
 
 ReactDOM.render(
