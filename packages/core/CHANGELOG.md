@@ -1,5 +1,6 @@
 ## Next
 
+* Only routes with `on.initial()` or `on.every()` are async. A router with a mix of synchronous and asynchronous routes will match sync routes synchronously.
 * Update to use Hickory's `history.navigate()` for navigation.
 * Only the matched route properties (`name`, `params`, `partials`, `location`, and `key`) are guaranteed to exist on a response. The other properties only exist if provided on a `route.response()` return object.
 * `on.initial()` receives full matched route properties object.

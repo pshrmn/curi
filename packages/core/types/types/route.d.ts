@@ -43,6 +43,7 @@ export interface PathMatching {
 }
 export interface InternalRoute {
     public: Route;
+    sync: boolean;
     children: Array<InternalRoute>;
     response?: ResponseFn;
     pathMatching: PathMatching;
