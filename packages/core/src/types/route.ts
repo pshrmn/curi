@@ -1,7 +1,12 @@
 import { RegExpOptions, Key } from "path-to-regexp";
 
 import { LocationDetails } from "@hickory/root";
-import { Params, Response, Resolved, ResponseModifiers } from "./response";
+import {
+  Params,
+  Response,
+  Resolved,
+  ModifiableResponseProperties
+} from "./response";
 import { Interactions } from "./interaction";
 
 export type ParamParser = (input: string) => any;
@@ -22,7 +27,9 @@ export interface ResponseBuilder extends MatchedRouteProps {
 
 export type EveryMatchFn = (matched?: MatchedRouteProps) => Promise<any>;
 export type InitialMatchFn = () => Promise<any>;
-export type ResponseFn = (props: ResponseBuilder) => ResponseModifiers;
+export type ResponseFn = (
+  props: ResponseBuilder
+) => ModifiableResponseProperties;
 
 export interface OnFns {
   initial?: InitialMatchFn;

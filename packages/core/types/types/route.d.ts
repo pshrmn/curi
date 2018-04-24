@@ -1,5 +1,5 @@
 import { RegExpOptions, Key } from "path-to-regexp";
-import { Resolved, ResponseModifiers } from "./response";
+import { Resolved, ModifiableResponseProperties } from "./response";
 import { Interactions } from "./interaction";
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
@@ -16,7 +16,7 @@ export interface ResponseBuilder extends MatchedRouteProps {
 }
 export declare type EveryMatchFn = (matched?: MatchedRouteProps) => Promise<any>;
 export declare type InitialMatchFn = () => Promise<any>;
-export declare type ResponseFn = (props: ResponseBuilder) => ResponseModifiers;
+export declare type ResponseFn = (props: ResponseBuilder) => ModifiableResponseProperties;
 export interface OnFns {
     initial?: InitialMatchFn;
     every?: EveryMatchFn;

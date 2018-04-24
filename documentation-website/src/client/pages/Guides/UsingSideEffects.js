@@ -32,13 +32,13 @@ export default ({ name }) => (
       <p>
         You add side effect functions to your router by adding a{" "}
         <IJS>sideEffects</IJS> array to the options object (the third agument)
-        of <IJS>curi</IJS>. A side effect is an object with an <IJS>fn</IJS>{" "}
+        of <IJS>curi</IJS>. A side effect is an object with an <IJS>effect</IJS>{" "}
         property whose values is a response handler function.
       </p>
 
       <PrismBlock lang="javascript">
         {`const router = curi(history, routes, {
-  sideEffects: [{ fn: logResponse }]
+  sideEffects: [{ effect: logResponse }]
 });`}
       </PrismBlock>
 
@@ -54,7 +54,7 @@ export default ({ name }) => (
 
       <PrismBlock lang="javascript">
         {`const router = curi(history, routes, {
-  sideEffects: [{ fn: logResponse, after: true }]
+  sideEffects: [{ effect: logResponse, after: true }]
 });`}
       </PrismBlock>
 
@@ -93,7 +93,7 @@ export default ({ name }) => (
 }
 
 const router = curi(history, routes, {
-  sideEffects: [{ fn: mySideEffect }]
+  sideEffects: [{ effect: mySideEffect }]
 });`}
       </PrismBlock>
 

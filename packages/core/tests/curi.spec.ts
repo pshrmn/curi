@@ -1,7 +1,7 @@
 import "jest";
 import curi from "../src/curi";
 import InMemory from "@hickory/in-memory";
-import { Interaction, Response } from "../src/types";
+import { Interaction, Response, RemoveResponseHandler } from "../src/types";
 
 describe("curi", () => {
   let history;
@@ -172,7 +172,7 @@ describe("curi", () => {
           const sideEffect = jest.fn();
 
           const router = curi(history, routes, {
-            sideEffects: [{ fn: sideEffect }]
+            sideEffects: [{ effect: sideEffect }]
           });
           router.respond(({ response, navigation }) => {
             expect(sideEffect.mock.calls.length).toBe(1);
@@ -190,8 +190,8 @@ describe("curi", () => {
 
           const router = curi(history, routes, {
             sideEffects: [
-              { fn: sideEffect1, after: false },
-              { fn: sideEffect2 }
+              { effect: sideEffect1, after: false },
+              { effect: sideEffect2 }
             ]
           });
 
@@ -220,7 +220,7 @@ describe("curi", () => {
           };
 
           const router = curi(history, routes, {
-            sideEffects: [{ fn: sideEffect, after: true }]
+            sideEffects: [{ effect: sideEffect, after: true }]
           });
           router.respond(responseHandler);
         });
@@ -241,7 +241,7 @@ describe("curi", () => {
           };
 
           const router = curi(history, routes, {
-            sideEffects: [{ fn: sideEffect, after: true }]
+            sideEffects: [{ effect: sideEffect, after: true }]
           });
           router.respond(responseHandler);
         });
@@ -368,7 +368,7 @@ describe("curi", () => {
             }
           };
           const router = curi(history, routes, {
-            sideEffects: [{ fn: logger }]
+            sideEffects: [{ effect: logger }]
           });
         });
 
@@ -594,7 +594,10 @@ describe("curi", () => {
 
       // wait for the first response to be generated to ensure that both
       // response handler functions are called when subscribing
-      const unsub1 = router.respond(sub1, { observe: true, initial: false });
+      const unsub1 = router.respond(sub1, {
+        observe: true,
+        initial: false
+      }) as RemoveResponseHandler;
       const unsub2 = router.respond(sub2, { observe: true, initial: false });
 
       expect(sub1.mock.calls.length).toBe(0);
@@ -949,7 +952,7 @@ describe("curi", () => {
         done();
       });
       let emissionDetector = {
-        fn: () => {
+        effect: () => {
           hasEmitted = true;
         }
       };
