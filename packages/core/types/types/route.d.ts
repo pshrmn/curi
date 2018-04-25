@@ -1,13 +1,11 @@
 import { RegExpOptions, Key } from "path-to-regexp";
 import { Resolved, MatchResponseProperties, SettableResponseProperties } from "./response";
-import { Interactions } from "./interaction";
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
     [key: string]: ParamParser;
 }
 export interface ResponseBuilder {
     resolved: Resolved | null;
-    route: Interactions;
     match: MatchResponseProperties;
 }
 export declare type ResponseFn = (props: ResponseBuilder) => SettableResponseProperties;

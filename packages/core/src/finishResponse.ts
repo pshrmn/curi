@@ -31,8 +31,7 @@ export default function finishResponse(
 
   const responseModifiers = route.response({
     resolved,
-    match,
-    route: interactions
+    match
   });
   if (!responseModifiers) {
     return match as Response;

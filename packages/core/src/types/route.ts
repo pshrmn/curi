@@ -17,7 +17,6 @@ export interface ParamParsers {
 
 export interface ResponseBuilder {
   resolved: Resolved | null;
-  route: Interactions;
   match: MatchResponseProperties;
 }
 
