@@ -1,4 +1,4 @@
-import { Interaction, Route, MatchedRouteProps } from "@curi/core";
+import { Interaction, Route, MatchResponseProperties } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
 function prefetchRoute(): Interaction {
@@ -21,7 +21,7 @@ function prefetchRoute(): Interaction {
         loaders[name] = on.every;
       }
     },
-    get: (name: string, props?: MatchedRouteProps) => {
+    get: (name: string, props?: MatchResponseProperties) => {
       if (loaders[name] == null) {
         return Promise.reject(
           `Could not prefetch data for ${name} because it is not registered.`
