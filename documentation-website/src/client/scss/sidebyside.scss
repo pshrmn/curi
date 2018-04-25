@@ -1,0 +1,36 @@
+@import "./variables.scss";
+
+.side-by-side {
+  margin: 10px 0;
+  width: 100%;
+}
+
+.explanation {
+  width: 100%;
+}
+
+.code-block {
+  width: 100%;
+
+  pre {
+    height: 100%;
+  }
+}
+
+@media only screen and (min-width: $mediumScreen) {
+  .side-by-side {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+  }
+
+  .explanation,
+  .code-block {
+    max-width: 600px;
+    min-width: 500px;
+  }
+
+  .code-block {
+    margin-right: 20px;
+  }
+}

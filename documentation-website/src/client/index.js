@@ -16,7 +16,7 @@ const history = Browser();
 
 const router = curi(history, routes, {
   route: [active()],
-  sideEffects: [{ fn: setTitle }, { fn: scrollTo }]
+  sideEffects: [{ effect: setTitle }, { effect: scrollTo }]
 });
 
 router.respond(() => {

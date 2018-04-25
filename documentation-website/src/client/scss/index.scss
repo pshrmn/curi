@@ -1,28 +1,41 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 body {
   font-family: $serif;
   font-weight: 300;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 24px;
+  line-height: 36px;
   margin: 0;
   box-sizing: border-box;
 }
 
-*, *:before, *:after {
+@media only screen and (min-width: $mediumScreen) {
+  body {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-width: $largeScreen) {
+  body {
+    font-size: 20px;
+  }
+}
+
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
-@import './prism.scss';
-@import './baseElements.scss';
-@import './header.scss';
-@import './main.scss';
-@import './messages.scss';
-@import './homepage.scss';
-@import './article.scss';
-@import './package.scss';
-@import './demo.scss';
-@import './tiles.scss';
-@import './api.scss';
-
-
+@import "./prism.scss";
+@import "./baseElements.scss";
+@import "./header.scss";
+@import "./main.scss";
+@import "./messages.scss";
+@import "./homepage.scss";
+@import "./article.scss";
+@import "./package.scss";
+@import "./demo.scss";
+@import "./tiles.scss";
+@import "./api.scss";
+@import "./sidebyside.scss";

@@ -17,6 +17,9 @@
   width: 275px;
 }
 
+@media only screen and (min-width: $mediumScreen) {
+}
+
 @media only screen and (min-width: $largeScreen) {
   .code {
     display: flex;

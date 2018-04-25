@@ -4,13 +4,13 @@ import Header from "./components/Header";
 export default function render({ response }) {
   const { body: Body, params, data } = response;
   return (
-    <div>
+    <React.Fragment>
       <Header />
       <main>
         {!response || !response.body ? null : (
           <Body params={params} data={data} />
         )}
       </main>
-    </div>
+    </React.Fragment>
   );
 }

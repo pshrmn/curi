@@ -5,6 +5,7 @@ import Home from "./route-components/Home";
 import PackageList from "./route-components/PackageList";
 import ExampleList from "./route-components/ExampleList";
 import TutorialBase from "./route-components/TutorialBase";
+import NotFound from "./route-components/NotFound";
 
 import TUTORIAL_API from "./constants/tutorials";
 import GUIDE_API from "./constants/guides";
@@ -42,8 +43,8 @@ export default [
       {
         name: "Tutorial",
         path: ":slug",
-        response: ({ params, resolved }) => {
-          const tutorial = TUTORIAL_API.find(params.slug);
+        response: ({ match, resolved }) => {
+          const tutorial = TUTORIAL_API.find(match.params.slug);
           return {
             body: resolved.initial,
             tutorial: tutorial
@@ -79,8 +80,8 @@ export default [
       {
         name: "Guide",
         path: ":slug/",
-        response: ({ params, resolved, set }) => {
-          const guide = GUIDE_API.find(params.slug);
+        response: ({ match, resolved, set }) => {
+          const guide = GUIDE_API.find(match.params.slug);
           return {
             body: resolved.initial,
             data: guide,
@@ -110,11 +111,11 @@ export default [
       {
         name: "Package",
         path: "@curi/:package/",
-        response: ({ params, resolved }) => {
-          const pkg = PACKAGE_API.find(params.package);
+        response: ({ match, resolved }) => {
+          const pkg = PACKAGE_API.find(match.params.package);
           return {
             body: resolved.initial,
-            title: `@curi/${params.package}`,
+            title: `@curi/${match.params.package}`,
             data: pkg
           };
         },
@@ -141,8 +142,8 @@ export default [
       {
         name: "Example",
         path: ":category/:slug/",
-        response: ({ params, resolved }) => {
-          const { category, slug } = params;
+        response: ({ match, resolved }) => {
+          const { category, slug } = match.params;
           const example = EXAMPLE_API.find(category, slug);
           return {
             body: resolved.initial,
@@ -159,5 +160,14 @@ export default [
         }
       }
     ]
+  },
+  {
+    name: "Not Found",
+    path: "(.*)",
+    response: () => {
+      return {
+        body: NotFound
+      };
+    }
   }
 ];

@@ -1,19 +1,22 @@
-require('@babel/register');
-const PathToRegexp = require('path-to-regexp');
-const request = require('request-promise-native');
-const fs = require('fs');
-const join = require('path').join;
+require("@babel/register");
+const PathToRegexp = require("path-to-regexp");
+const request = require("request-promise-native");
+const fs = require("fs");
+const join = require("path").join;
 
-const BASE_DIR = join(__dirname, '..', 'gh-pages');
+const BASE_DIR = join(__dirname, "..", "gh-pages");
 
 function generatePaths(routes, params, parent) {
   if (!parent) {
-    parent = '/';
+    parent = "/";
   }
 
   return routes.reduce((acc, curr) => {
+    if (curr.path === "(.*)") {
+      return acc;
+    }
     const p = joinSegments(parent, curr.path);
-    const routeParams = params  && params[curr.name] ? params[curr.name] : {};
+    const routeParams = params && params[curr.name] ? params[curr.name] : {};
     const paths = compilePath(p, routeParams.params);
     acc = acc.concat(paths);
     if (curr.children) {
@@ -24,13 +27,13 @@ function generatePaths(routes, params, parent) {
 }
 
 function joinSegments(base, newSegment) {
-  return base.charAt(base.length-1) === '/'
+  return base.charAt(base.length - 1) === "/"
     ? base + newSegment
-    : base + '/' + newSegment;
+    : base + "/" + newSegment;
 }
 
 function localURI(path) {
-  return `http://localhost:8000${path}`
+  return `http://localhost:8000${path}`;
 }
 
 function compilePath(path, params) {
@@ -43,10 +46,10 @@ function compilePath(path, params) {
 
 function makeDirs(base, dirPath) {
   // save an extra attempt at making the root folder
-  if (dirPath.charAt(0) === '/') {
+  if (dirPath.charAt(0) === "/") {
     dirPath = dirPath.slice(1);
   }
-  const segments = dirPath.split('/');
+  const segments = dirPath.split("/");
   let current = base;
   segments.forEach(segment => {
     current = join(current, segment);
@@ -59,25 +62,21 @@ function makeDirs(base, dirPath) {
 
 module.exports = function generateStaticFiles(routes, params) {
   return Promise.all(
-    generatePaths(routes, params).map(p => (
+    generatePaths(routes, params).map(p =>
       request(localURI(p))
         .then(html => {
           const outputDir = makeDirs(BASE_DIR, p);
-          fs.writeFile(
-            join(outputDir, 'index.html'),
-            html,
-            function(err) {
-              if (err) {
-                console.error('something went wrong with path', p);
-                console.error(err);
-              }
+          fs.writeFile(join(outputDir, "index.html"), html, function(err) {
+            if (err) {
+              console.error("something went wrong with path", p);
+              console.error(err);
             }
-          )
+          });
           console.log(p);
         })
         .catch(err => {
           throw Error(err);
         })
-    ))
+    )
   );
-}
+};

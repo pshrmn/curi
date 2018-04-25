@@ -1,19 +1,17 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 main {
-  padding: 10px 10px 0 10px;
-  
+  width: calc(100vw - 20px);
+  padding: 10px 10px 0;
+  margin-bottom: 20px;
+
   a {
     color: $purple;
   }
-
-  margin-bottom: 20px;
 }
 
-@media only screen and (min-width: $largeScreen) {
+@media only screen and (min-width: $mediumScreen) {
   main {
-    width: $largeScreen;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 10px 25px 0;
   }
 }

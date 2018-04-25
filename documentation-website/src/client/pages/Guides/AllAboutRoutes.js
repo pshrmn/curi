@@ -270,39 +270,76 @@ const routes = [
         <ul>
           <Subsection tag="li" title="match" id="response-match">
             <p>An object with the matched route properties of a response.</p>
-            <ul>
-              <li>
-                <IJS>name</IJS> - the name of the matched route
-              </li>
-              <li>
-                <IJS>params</IJS> - route parameters parsed from the location
-              </li>
-              <li>
-                <IJS>partials</IJS> - the names of any ancestor routes of the
-                matched route
-              </li>
-              <li>
-                <IJS>location</IJS> - the location that was used to match the
-                route
-              </li>
-              <li>
-                <IJS>key</IJS> - the location's <IJS>key</IJS>, which is a
-                unique identifier
-              </li>
-            </ul>
+            <table>
+              <thead>
+                <tr>
+                  <th>property</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>name</td>
+                  <td>the name of the matched route</td>
+                </tr>
+                <tr>
+                  <td>params</td>
+                  <td>route parameters parsed from the location</td>
+                </tr>
+                <tr>
+                  <td>partials</td>
+                  <td>the names of any ancestor routes of the matched route</td>
+                </tr>
+                <tr>
+                  <td>location</td>
+                  <td>the location that was used to match the route</td>
+                </tr>
+                <tr>
+                  <td>key</td>
+                  <td>
+                    the location's <IJS>key</IJS>, which is a unique identifier
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </Subsection>
           <Subsection tag="li" title="resolved" id="response-resolved">
             <p>
               <IJS>resolved</IJS> is an object with the values resolved by the{" "}
-              <IJS>on.initial()</IJS> and <IJS>on.every()</IJS> functions,{" "}
-              <IJS>resolved.initial</IJS> and <IJS>resolved.every</IJS>,
-              respectively. If either of those functions reject with an error
-              (that you don't catch yourself) that error will be passed as{" "}
-              <IJS>resolved.error</IJS> function.
+              <IJS>on.initial()</IJS> and <IJS>on.every()</IJS> functions.
             </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>property</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>error</td>
+                  <td>
+                    if either <IJS>on.initial()</IJS> or <IJS>on.every()</IJS>{" "}
+                    throw and the error is not caught, it will be available here
+                  </td>
+                </tr>
+                <tr>
+                  <td>initial</td>
+                  <td>
+                    the value resolved by <IJS>on.initial()</IJS>
+                  </td>
+                </tr>
+                <tr>
+                  <td>every</td>
+                  <td>
+                    the value resolved by <IJS>on.every()</IJS>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <p>
-              When Curi is route matching synchronously, <IJS>resolved</IJS>{" "}
-              will be <IJS>null</IJS>.
+              If a route isn't async, <IJS>resolved</IJS> will be{" "}
+              <IJS>null</IJS>.
             </p>
             <PrismBlock lang="javascript">
               {`// attach resolved data to the response

@@ -1,19 +1,18 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 .banner {
-  text-align: center;
   margin-top: 15px;
   color: $purple;
   max-width: 800px;
-  margin: 0 auto;
-  
+  padding: 0 15px;
+
   h1 {
-    font-size: 2em;
     margin: 10px 0;
   }
 
   p {
     font-size: 1.1em;
+    margin: 0;
   }
 
   pre {
@@ -41,5 +40,11 @@
         border-color: $purple;
       }
     }
+  }
+}
+
+@media only screen and (min-width: $mediumScreen) {
+  .banner {
+    padding: 0;
   }
 }

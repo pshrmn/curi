@@ -1,7 +1,9 @@
-@import './variables.scss';
+@import "./variables.scss";
 
-header { 
+header {
   background: $purple;
+  width: 100%;
+  padding: 30px 15px;
 
   nav {
     color: $light-gray;
@@ -36,18 +38,16 @@ header {
   color: $bright-orange;
 }
 
-@media only screen and (min-width: $largeScreen) {
- 
+@media only screen and (min-width: $mediumScreen) {
   header {
-    nav {
-      width: $largeScreen;
-      margin: 0 auto;
+    padding: 0;
 
+    nav {
       ul {
         display: flex;
         flex-flow: row wrap;
         align-items: flex-end;
-
+        max-width: 100%;
         li {
           margin-right: 20px;
         }
@@ -55,12 +55,12 @@ header {
 
       a {
         border-bottom: 3px solid $purple;
+        padding: 0 5px;
 
         &.active {
           border-bottom-color: $bright-orange;
         }
       }
     }
-  
   }
 }
