@@ -133,29 +133,6 @@ describe("route matching/response generation", () => {
   });
 
   describe("response", () => {
-    it("if either initial or every response fns have uncaught errors, error is passed to response fn", done => {
-      const routes = [
-        {
-          name: "Contact",
-          path: "contact",
-          response: ({ resolved }) => {
-            expect(resolved.error).toBe("This is an error");
-            done();
-            return {};
-          },
-          on: {
-            every: () => {
-              return Promise.reject("This is an error");
-            }
-          }
-        }
-      ];
-      const history = InMemory({
-        locations: ["/contact"]
-      });
-      const router = curi(history, routes);
-    });
-
     describe("properties", () => {
       describe("key", () => {
         it("is the key property from the location", done => {
@@ -182,7 +159,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("body", () => {
-        it("defaults to undefined", done => {
+        it("is undefined if not set by route.response()", done => {
           const history = InMemory({ locations: ["/test"] });
           const routes = [
             {
@@ -220,7 +197,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("status", () => {
-        it("defaults to 200", done => {
+        it("is undefined if not set by route.response()", done => {
           const routes = [
             {
               name: "Contact",
@@ -234,7 +211,7 @@ describe("route matching/response generation", () => {
           const history = InMemory({ locations: ["/contact"] });
           const router = curi(history, routes);
           router.respond(({ response }) => {
-            expect(response.status).toBe(200);
+            expect(response.status).toBeUndefined();
             done();
           });
         });
@@ -261,7 +238,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("data", () => {
-        it("is undefined by default", done => {
+        it("is undefined if not set by route.response()", done => {
           const routes = [
             {
               name: "A Route",
@@ -300,7 +277,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("title", () => {
-        it("is an empty string if the matched route does not have a title property", done => {
+        it("is undefined if not set by route.response()", done => {
           const routes = [
             {
               name: "State",
@@ -311,7 +288,7 @@ describe("route matching/response generation", () => {
           const router = curi(history, routes);
 
           router.respond(({ response }) => {
-            expect(response.title).toBe("");
+            expect(response.title).toBeUndefined();
             done();
           });
         });
@@ -888,18 +865,21 @@ describe("route matching/response generation", () => {
         });
       });
 
-      describe("location, params, name", () => {
-        it("receives location, parsed params, and matched route's name", () => {
+      describe("match", () => {
+        it("receives the response properties based on the matched route", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
             response: props => {
-              expect(props).toMatchObject({
+              expect(props.match).toMatchObject({
+                name: "Catch All",
                 params: { anything: "hello" },
+                partials: [],
                 location: {
                   pathname: "/hello",
                   query: "one=two"
-                }
+                },
+                key: "0.0"
               });
               return {};
             }
@@ -907,51 +887,6 @@ describe("route matching/response generation", () => {
 
           const history = InMemory({ locations: ["/hello?one=two"] });
           const router = curi(history, [CatchAll]);
-        });
-      });
-
-      describe("route", () => {
-        it("receives the registered route interactions object", () => {
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            response: ({ route }) => {
-              expect(typeof route.pathname).toBe("function");
-              return {};
-            }
-          };
-
-          const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
-        });
-
-        it("can use registered interactions", () => {
-          const reverseInteraction = {
-            name: "reverse",
-            register() {},
-            get(name: string) {
-              return name
-                .split("")
-                .reverse()
-                .join("");
-            },
-            reset() {}
-          };
-          const routes = [
-            {
-              name: "Old",
-              path: "old/:id",
-              response: ({ route, name }) => {
-                expect(route.reverse(name)).toBe("dlO");
-                return {};
-              }
-            }
-          ];
-          const history = InMemory({ locations: ["/old/1"] });
-          let firstCall = true;
-          const router = curi(history, routes, {
-            route: [reverseInteraction]
-          });
         });
       });
     });

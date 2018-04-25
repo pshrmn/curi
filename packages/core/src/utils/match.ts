@@ -70,16 +70,12 @@ function createMatch(
 
   return {
     route: bestMatch.route,
-    response: {
+    match: {
       location,
       key: location.key,
       name: bestMatch.route.public.name,
       params,
-      partials,
-      status: 200,
-      body: undefined,
-      data: undefined,
-      title: ""
+      partials
     }
   };
 }
@@ -101,6 +97,6 @@ export default function matchLocation(
   // no matching route
   return {
     route: undefined,
-    response: undefined
+    match: undefined
   };
 }

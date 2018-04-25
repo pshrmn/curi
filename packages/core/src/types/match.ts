@@ -1,5 +1,5 @@
 import { InternalRoute } from "./route";
-import { Params, GenericResponse } from "./response";
+import { Params, MatchResponseProperties } from "./response";
 
 export interface MatchingRoute {
   route: InternalRoute;
@@ -8,12 +8,12 @@ export interface MatchingRoute {
 
 export interface MissMatch {
   route: undefined;
-  response: undefined;
+  match: undefined;
 }
 
 export interface Match {
   route: InternalRoute;
-  response: GenericResponse;
+  match: MatchResponseProperties;
 }
 
 export type PossibleMatch = Match | MissMatch;

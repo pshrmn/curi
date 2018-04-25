@@ -1,11 +1,18 @@
-import { HickoryLocation, ToArgument } from "@hickory/root";
+import { HickoryLocation, PartialLocation } from "@hickory/root";
 export declare type RawParams = {
     [key: string]: string;
 };
 export declare type Params = {
     [key: string]: any;
 };
-export interface ModifiableResponseProperties {
+export interface MatchResponseProperties {
+    location: HickoryLocation;
+    key: string;
+    name: string;
+    params: Params;
+    partials: Array<string>;
+}
+export interface SettableResponseProperties {
     status?: number;
     error?: any;
     body?: any;
@@ -13,20 +20,14 @@ export interface ModifiableResponseProperties {
     title?: string;
     redirectTo?: RedirectProps;
 }
-export interface GenericResponse {
-    location: HickoryLocation;
-    key: string;
-    status: number;
-    title: string;
-    name: string;
-    params: Params;
-    partials: Array<string>;
-    body: any;
-    data: any;
+export interface Response extends MatchResponseProperties {
+    status?: number;
     error?: any;
-    redirectTo?: ToArgument;
+    body?: any;
+    data?: any;
+    title?: string;
+    redirectTo?: PartialLocation;
 }
-export declare type Response = GenericResponse;
 export interface Resolved {
     error: any;
     initial: any;

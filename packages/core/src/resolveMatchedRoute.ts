@@ -6,16 +6,11 @@ import { Resolved } from "./types/response";
  * This will call any initial/every match functions for the matching route
  */
 export default function resolveRoute(match: Match): Promise<Resolved> {
-  const response = match.response;
+  const response = match.match;
   const { on } = match.route.public;
   return Promise.all([
-    on.initial && on.initial(),
-    on.every &&
-      on.every({
-        name: response.name,
-        params: { ...response.params },
-        location: response.location
-      })
+    on.initial && on.initial(match.match),
+    on.every && on.every(match.match)
   ]).then(
     ([initial, every]) => ({ error: null, initial, every }),
     error => ({ error, initial: null, every: null })

@@ -9,7 +9,6 @@ export {
   RouteDescriptor,
   ParamParser,
   ParamParsers,
-  MatchedRouteProps,
   ResponseBuilder,
   EveryMatchFn,
   InitialMatchFn,
@@ -19,7 +18,8 @@ export {
   Response,
   RawParams,
   Params,
-  ModifiableResponseProperties
+  MatchResponseProperties,
+  SettableResponseProperties
 } from "./response";
 export {
   CuriRouter,
