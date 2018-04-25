@@ -2,16 +2,15 @@ import { Interactions } from "./types/interaction";
 import {
   Response,
   Resolved,
-  GenericResponse,
-  ModifiableResponseProperties
+  SettableResponseProperties
 } from "./types/response";
 import { Match } from "./types/match";
-import { ToArgument } from "@hickory/root";
+import { PartialLocation } from "@hickory/root";
 
 function createRedirect(
   redirectTo: any,
   interactions: Interactions
-): ToArgument {
+): PartialLocation {
   const { name, params, ...rest } = redirectTo;
   const pathname = interactions.pathname(name, params);
   return {
@@ -21,24 +20,21 @@ function createRedirect(
 }
 
 export default function finishResponse(
-  match: Match,
+  routeMatch: Match,
   interactions: Interactions,
   resolved: Resolved | null
 ): Response {
-  const { route, response } = match;
+  const { route, match } = routeMatch;
   if (!route.response) {
-    return response as Response;
+    return match as Response;
   }
 
   const responseModifiers = route.response({
     resolved,
-    name: response.name,
-    params: { ...response.params },
-    location: response.location,
-    route: interactions
+    match
   });
   if (!responseModifiers) {
-    return response as Response;
+    return match as Response;
   }
 
   const settableProperties = [
@@ -49,9 +45,10 @@ export default function finishResponse(
     "title",
     "redirectTo"
   ];
+  const response: Response = match;
   // only merge the valid properties onto the response
   settableProperties.forEach(
-    (p: keyof GenericResponse & keyof ModifiableResponseProperties) => {
+    (p: keyof Response & keyof SettableResponseProperties) => {
       if (responseModifiers.hasOwnProperty(p)) {
         if (p === "redirectTo") {
           // special case

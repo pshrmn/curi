@@ -1,3 +1,11 @@
+## Next
+
+* Only the matched route properties (`name`, `params`, `partials`, `location`, and `key`) are guaranteed to exist on a response. The other properties only exist if provided on a `route.response()` return object.
+* `on.initial()` receives full matched route properties object.
+* `on.every()` receives full matched route properties object.
+* remove `route` interactions from `route.response()`
+* re-group `name`, `params`, and `location` with other matched route properties under `match` property passed to `route.response()`.
+
 ## 1.0.0-beta.30
 
 * Side effect response handlers are registered with `effect` instead of `fn`.

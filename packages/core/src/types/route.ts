@@ -5,7 +5,8 @@ import {
   Params,
   Response,
   Resolved,
-  ModifiableResponseProperties
+  MatchResponseProperties,
+  SettableResponseProperties
 } from "./response";
 import { Interactions } from "./interaction";
 
@@ -14,23 +15,17 @@ export interface ParamParsers {
   [key: string]: ParamParser;
 }
 
-export interface MatchedRouteProps {
-  params: object;
-  location: object;
-  name: string;
-}
-
-export interface ResponseBuilder extends MatchedRouteProps {
+export interface ResponseBuilder {
   resolved: Resolved | null;
-  route: Interactions;
+  match: MatchResponseProperties;
 }
 
-export type EveryMatchFn = (matched?: MatchedRouteProps) => Promise<any>;
-export type InitialMatchFn = () => Promise<any>;
-export type ResponseFn = (
-  props: ResponseBuilder
-) => ModifiableResponseProperties;
+export type ResponseFn = (props: ResponseBuilder) => SettableResponseProperties;
 
+export type EveryMatchFn = (matched?: MatchResponseProperties) => Promise<any>;
+export type InitialMatchFn = (
+  matched?: MatchResponseProperties
+) => Promise<any>;
 export interface OnFns {
   initial?: InitialMatchFn;
   every?: EveryMatchFn;

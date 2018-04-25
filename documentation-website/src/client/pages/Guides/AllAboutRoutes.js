@@ -88,6 +88,11 @@ export default ({ name }) => (
             Webpack using <IJS>import()</IJS>, you can load the modules in{" "}
             <IJS>on.initial()</IJS>.
           </p>
+          <p>
+            The <IJS>initial</IJS> function will be passed the matched route
+            properties: <IJS>name</IJS>, <IJS>params</IJS>, <IJS>partials</IJS>,{" "}
+            <IJS>location</IJS>, and <IJS>key</IJS>.
+          </p>
           <PrismBlock lang="javascript">
             {`const about = {
   name: 'About',
@@ -102,15 +107,13 @@ export default ({ name }) => (
         <Subsection tag="h5" title="on.every()" id="every">
           <p>
             <IJS>on.every()</IJS> will be called every time a route matches.
-            Like <IJS>on.initial()</IJS>, <IJS>on.every()</IJS> should return a
-            Promise.
+            This can be useful for data fetching. Like <IJS>on.initial()</IJS>,{" "}
+            <IJS>on.every()</IJS> should return a Promise.
           </p>
           <p>
-            This can be useful for data fetching. The <IJS>every</IJS> function
-            will be passed the a "route" object containing the <IJS>params</IJS>{" "}
-            parsed from the location's pathname (using the route and its
-            ancestor's paths), the current <IJS>location</IJS>, and the{" "}
-            <IJS>name</IJS> of the matched route.
+            The <IJS>every</IJS> function will be passed the matched route
+            properties: <IJS>name</IJS>, <IJS>params</IJS>, <IJS>partials</IJS>,{" "}
+            <IJS>location</IJS>, and <IJS>key</IJS>.
           </p>
           <PrismBlock lang="javascript">
             {`// fetch user data
@@ -259,31 +262,35 @@ const routes = [
         </p>
         <PrismBlock lang="javascript">
           {`{
-  response: ({ name, params location, resolved, route }) => {
+  response: ({ match, resolved }) => {
     // ...
   }
 }`}
         </PrismBlock>
         <ul>
-          <Subsection tag="li" title="name" id="response-name">
-            <p>
-              The name of the matched route. This is mostly useful is{" "}
-              <IJS>response()</IJS> is defined in a separate file from where the
-              route is.
-            </p>
+          <Subsection tag="li" title="match" id="response-match">
+            <p>An object with the matched route properties of a response.</p>
+            <ul>
+              <li>
+                <IJS>name</IJS> - the name of the matched route
+              </li>
+              <li>
+                <IJS>params</IJS> - route parameters parsed from the location
+              </li>
+              <li>
+                <IJS>partials</IJS> - the names of any ancestor routes of the
+                matched route
+              </li>
+              <li>
+                <IJS>location</IJS> - the location that was used to match the
+                route
+              </li>
+              <li>
+                <IJS>key</IJS> - the location's <IJS>key</IJS>, which is a
+                unique identifier
+              </li>
+            </ul>
           </Subsection>
-          <Subsection tag="li" title="params" id="response-params">
-            <p>
-              An object of route <IJS>params</IJS> parsed from the location's{" "}
-              <IJS>pathname</IJS>.
-            </p>
-          </Subsection>
-          <Subsection tag="li" title="location" id="response-location">
-            <p>
-              The <IJS>location</IJS> that this route was matched with.
-            </p>
-          </Subsection>
-
           <Subsection tag="li" title="resolved" id="response-resolved">
             <p>
               <IJS>resolved</IJS> is an object with the values resolved by the{" "}
@@ -319,13 +326,6 @@ const user = {
   }
 }`}
             </PrismBlock>
-          </Subsection>
-          <Subsection tag="li" title="route" id="response-route">
-            <p>
-              The route interactions that have been registered with Curi are
-              available to the <IJS>response</IJS> function, including the
-              built-in <IJS>pathname</IJS> interaction.
-            </p>
           </Subsection>
         </ul>
       </Subsection>

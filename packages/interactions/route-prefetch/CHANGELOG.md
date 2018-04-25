@@ -1,3 +1,7 @@
+## Next
+
+* Update type of props passed to `get()`.
+
 ## 1.0.0-beta.7
 
 * Moved to `@curi/route-prefetch`.
