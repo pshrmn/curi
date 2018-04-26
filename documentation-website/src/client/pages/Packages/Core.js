@@ -232,62 +232,167 @@ const router = curi(history, routes, {
             The router has a number of properties for you to use when rendering
             your application.
           </p>
-
-          <Subsection tag="h5" title="respond(fn, options)" id="respond">
+          <Subsection tag="h5" title="navigate(details)" id="navigate">
+            <PrismBlock lang="javascript">
+              {`/*
+  * routes = [
+  *   { name: "Album", path: "photos/:albumID", children: [
+  *       { name: "Photo", path: ":photoID" }
+  *     ]
+  *   }
+  * ]
+  */
+ router.navigate({
+  name: "Photo",
+  params: { albumID: 123, photoID: 456 }
+});
+// navigates to "/photos/123/456" using default "ANCHOR" method`}
+            </PrismBlock>
             <p>
-              The <IJS>respond()</IJS> method takes a function and whenever a
-              new response is made, it will call that function. The function
-              will be passed on object with three properties:
+              The <IJS>navigate()</IJS> method allows you to navigate
+              programmatically. It takes a <IJS>details</IJS> object with the
+              details of where you want to navigate to as well as the{" "}
+              <IJS>method</IJS> of navigation.
             </p>
-            <ol>
-              <li>
-                <IJS>response</IJS> - is the generated response object.
-              </li>
-              <li>
-                <IJS>navigation</IJS> - contains additional information about
-                the navigation that doesn't make sense to include in the
-                response.
-              </li>
-              <li>
-                <IJS>router</IJS> - is the Curi router.
-              </li>
-            </ol>
+            <table>
+              <thead>
+                <tr>
+                  <th>property</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>name</td>
+                  <td>The name of the route to navigate to</td>
+                </tr>
+                <tr>
+                  <td>params</td>
+                  <td>
+                    An object of any route params for the named route (and any
+                    of its ancestors that require params).
+                  </td>
+                </tr>
+                <tr>
+                  <td>hash</td>
+                  <td>The hash string of the location to navigate to.</td>
+                </tr>
+                <tr>
+                  <td>query</td>
+                  <td>The query value of the location to navigate to.</td>
+                </tr>
+                <tr>
+                  <td>state</td>
+                  <td>Any serializable state to attach to the location.</td>
+                </tr>
+                <tr>
+                  <td>method</td>
+                  <td>
+                    How to navigate. <IJS>"PUSH"</IJS> appends the new location
+                    after the current one. <IJS>"REPLACE"</IJS> replaces the
+                    current location. <IJS>"ANCHOR"</IJS> is the default method
+                    and acts like clicking a link. This behavior is a mix of{" "}
+                    <IJS>"PUSH"</IJS> and <IJS>"REPLACE"</IJS> where the current
+                    location is replaced if the new location has the exact same
+                    URL.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </Subsection>
+          <Subsection tag="h5" title="respond(fn, options)" id="respond">
             <PrismBlock lang="javascript">
               {`router.respond(({ response }) => {
   // render the application based on the response
 });`}
             </PrismBlock>
             <p>
-              When the router is async (at least one roue has an{" "}
-              <IJS>on.initial()</IJS> or <IJS>on.every()</IJS> function), the
-              router will not call the response handler functions until any
-              async functions have resolved.
+              The <IJS>respond()</IJS> method takes a function and whenever a
+              new response is made, it will call that function. The function
+              will be passed on object with three properties:
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>property</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>response</td>
+                  <td>The generated response object.</td>
+                </tr>
+                <tr>
+                  <td>navigation</td>
+                  <td>
+                    The navigation's <IJS>action</IJS> (<IJS>PUSH</IJS>,{" "}
+                    <IJS>REPLACE</IJS>, or <IJS>POP</IJS>) and the{" "}
+                    <IJS>previous</IJS> response object.
+                  </td>
+                </tr>
+                <tr>
+                  <td>router</td>
+                  <td>The Curi router</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>
+              When a matched route is async (it has an <IJS>on.initial()</IJS>{" "}
+              or <IJS>on.every()</IJS> function), the router will not call the
+              response handler functions until the <IJS>on</IJS> function(s)
+              have resolved.
             </p>
             <Subsection tag="h6" title="options" id="respond-options">
               <PrismBlock lang="javascript">
-                {`{ observe: true } // default false
-// When true, the response handler will be called for all future
-// responses that are emitted by the router (until it stops observing)
-// When false, the response handler will only be called one time.
-
-{ initial: false } // default true
-// When true, the response handler will be called immediately if a
-// response exists.
-// When false, the response handler will not be called
-// until the next response is emitted.`}
+                {`router.respond(responseHandler, {
+  observe: true
+});`}
               </PrismBlock>
-            </Subsection>
-            <p>
-              <IJS>respond()</IJS> returns a function to stop calling the
-              response handler.
-            </p>
-            <PrismBlock lang="javascript">
-              {`const stopObserving = router.respond(() => {...});
+              <table>
+                <thead>
+                  <tr>
+                    <th>option</th>
+                    <th>default</th>
+                    <th>description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>observe</td>
+                    <td>false</td>
+                    <td>
+                      When true, the response handler will be called for all
+                      future responses that are emitted by the router (until it
+                      stops observing) When false, the response handler will
+                      only be called one time.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>initial</td>
+                    <td>true</td>
+                    <td>
+                      When true, the response handler will be called immediately
+                      if a response exists. When false, the response handler
+                      will not be called until the next response is emitted.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                <IJS>respond()</IJS> returns a function to stop calling the
+                response handler when it is given the <IJS>observe: true</IJS>{" "}
+                option.
+              </p>
+              <PrismBlock lang="javascript">
+                {`const stopObserving = router.respond(() => {...}, { observe: true });
 // the router will call the response handler for all responses
 
 stopObserving();
 // the router no longer calls the response handler`}
-            </PrismBlock>
+              </PrismBlock>
+            </Subsection>
           </Subsection>
 
           <Subsection tag="h5" title="current()" id="current-property">

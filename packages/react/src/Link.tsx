@@ -34,11 +34,7 @@ export interface BaseLinkProps extends LinkProps {
   response: Response;
 }
 
-export interface LinkState {
-  location: PartialLocation;
-}
-
-class BaseLink extends React.Component<BaseLinkProps, LinkState> {
+class BaseLink extends React.Component<BaseLinkProps> {
   clickHandler = (event: React.MouseEvent<HTMLElement>) => {
     const { onClick, router, target } = this.props;
     if (onClick) {
@@ -47,31 +43,16 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
 
     if (canNavigate(event) && !target) {
       event.preventDefault();
-      router.history.navigate(this.state.location);
+      const { to: name, params, query, state, hash } = this.props;
+      router.navigate({
+        name,
+        params,
+        query,
+        state,
+        hash
+      });
     }
   };
-
-  setLocation(props: BaseLinkProps) {
-    const { router, to, params, hash, query, state, response } = props;
-    const pathname = to
-      ? router.route.pathname(to, params)
-      : response.location.pathname;
-    const location = {
-      hash,
-      query,
-      state,
-      pathname
-    };
-    this.setState({ location });
-  }
-
-  componentWillMount() {
-    this.setLocation(this.props);
-  }
-
-  componentWillReceiveProps(nextProps: BaseLinkProps) {
-    this.setLocation(nextProps);
-  }
 
   render(): React.ReactNode {
     const {
@@ -86,13 +67,20 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       response,
       ...rest
     } = this.props;
-    let anchorProps = rest;
     const Anchor: React.ReactType = anchor ? anchor : "a";
 
-    const { location } = this.state;
+    const pathname = to
+      ? router.route.pathname(to, params)
+      : response.location.pathname;
+    const location = {
+      hash,
+      query,
+      state,
+      pathname
+    };
     const href: string = router.history.toHref(location);
 
-    return <Anchor {...anchorProps} onClick={this.clickHandler} href={href} />;
+    return <Anchor {...rest} onClick={this.clickHandler} href={href} />;
   }
 }
 

@@ -3,6 +3,8 @@ import curi from "../src/curi";
 import InMemory from "@hickory/in-memory";
 import { Interaction, Response, RemoveResponseHandler } from "../src/types";
 
+import { NavType } from "@hickory/root";
+
 describe("curi", () => {
   let history;
 
@@ -541,7 +543,7 @@ describe("curi", () => {
           if (calls === 2) {
             done();
           } else {
-            router.history.navigate("/about");
+            router.navigate({ name: "About" });
           }
         },
         { observe: true }
@@ -790,6 +792,7 @@ describe("curi", () => {
         it("isn't re-called for new responses", done => {
           const routes = [
             { name: "Home", path: "" },
+            { name: "Contact", path: "contact" },
             { name: "Not Found", path: "(.*)" }
           ];
           const oneTime = jest.fn();
@@ -803,7 +806,7 @@ describe("curi", () => {
               called = true;
               // trigger another navigation to verify that the once sub
               // is not called again
-              router.history.navigate("/another-one");
+              router.navigate({ name: "Contact" });
             }
           });
           const router = curi(history, routes);
@@ -847,6 +850,7 @@ describe("curi", () => {
         it("is re-called for new responses", done => {
           const routes = [
             { name: "Home", path: "" },
+            { name: "Contact", path: "contact" },
             { name: "Not Found", path: "(.*)" }
           ];
           const everyTime = jest.fn();
@@ -860,7 +864,7 @@ describe("curi", () => {
               called = true;
               // trigger another navigation to verify that the observer
               // is called again
-              router.history.navigate("/another-one");
+              router.navigate({ name: "Contact" });
             }
           });
           const router = curi(history, routes);
@@ -929,6 +933,100 @@ describe("curi", () => {
             expect(oneTime.mock.calls.length).toBe(0);
             history.navigate("/somewhere-else");
           });
+        });
+      });
+    });
+  });
+
+  describe("navigate()", () => {
+    const routes = [
+      { name: "Home", path: "" },
+      {
+        name: "Contact",
+        path: "contact",
+        children: [{ name: "Method", path: ":method" }]
+      },
+      { name: "Catch All", path: "(.*)" }
+    ];
+    const history = InMemory();
+    const router = curi(history, routes);
+    const mockNavigate = (history.navigate = jest.fn());
+
+    afterEach(() => {
+      mockNavigate.mockReset();
+    });
+
+    describe("navigation method", () => {
+      it("defaults to 'ANCHOR' navigation", () => {
+        router.navigate({ name: "Contact" });
+        expect(mockNavigate.mock.calls[0][1]).toBe("ANCHOR");
+      });
+
+      it("ANCHOR", () => {
+        router.navigate({ name: "Contact", method: "ANCHOR" });
+        expect(mockNavigate.mock.calls[0][1]).toBe("ANCHOR");
+      });
+
+      it("PUSH", () => {
+        router.navigate({ name: "Contact", method: "PUSH" });
+        expect(mockNavigate.mock.calls[0][1]).toBe("PUSH");
+      });
+
+      it("REPLACE", () => {
+        router.navigate({ name: "Contact", method: "REPLACE" });
+        expect(mockNavigate.mock.calls[0][1]).toBe("REPLACE");
+      });
+
+      it("invalid method reverts to 'ANCHOR'", () => {
+        router.navigate({ name: "Contact", method: "BAAAAAAD" as NavType });
+        expect(mockNavigate.mock.calls[0][1]).toBe("ANCHOR");
+      });
+    });
+
+    describe("navigation location", () => {
+      it("generates the expected pathname", () => {
+        router.navigate({ name: "Contact" });
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          pathname: "/contact"
+        });
+      });
+
+      it("uses params to create pathname", () => {
+        router.navigate({ name: "Method", params: { method: "fax" } });
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          pathname: "/contact/fax"
+        });
+      });
+
+      it("re-uses current pathname if no name is provided", () => {
+        const history = InMemory({ locations: ["/reuse"] });
+        const router = curi(history, routes);
+        const mockNavigate = (history.navigate = jest.fn());
+        router.navigate({});
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          pathname: "/reuse"
+        });
+      });
+
+      it("includes the provided hash", () => {
+        router.navigate({ name: "Home", hash: "trending" });
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          hash: "trending"
+        });
+      });
+
+      it("includes the provided query", () => {
+        router.navigate({ name: "Home", query: "key=value" });
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          query: "key=value"
+        });
+      });
+
+      it("includes the provided state", () => {
+        const state = { test: true };
+        router.navigate({ name: "Home", state });
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          state
         });
       });
     });
