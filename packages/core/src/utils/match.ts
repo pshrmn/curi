@@ -72,7 +72,7 @@ function createMatch(
     route: bestMatch.route,
     match: {
       location,
-      key: location.key,
+      key: location.key as string, // fix hickory location type?
       name: bestMatch.route.public.name,
       params,
       partials

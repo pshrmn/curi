@@ -10,7 +10,7 @@ import activeInteraction from "@curi/route-active";
 import { TouchableHighlight, Text } from "react-native";
 import Link from "../src/Link";
 
-import { LinkMethod } from "../src/Link";
+import { NavType } from "@hickory/root";
 
 // play nice
 function fakeEvent(props = {}) {
@@ -228,7 +228,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <CuriProvider router={router}>
             {() => (
-              <Link to="Test" method={"whatchamacallit" as LinkMethod}>
+              <Link to="Test" method={"whatchamacallit" as NavType}>
                 <Text>Test</Text>
               </Link>
             )}
