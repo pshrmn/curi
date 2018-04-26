@@ -49,6 +49,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       keys,
       mustBeExact
     },
+    sync: !(on.initial || on.every),
     response,
     children,
     paramParsers

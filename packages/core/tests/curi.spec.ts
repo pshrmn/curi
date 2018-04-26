@@ -449,11 +449,11 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when a nested route has on.initial/every", () => {
+      it("does synchronous matching when a different route is async", done => {
         const routes = [
           {
             name: "Parent",
-            path: "",
+            path: "parent",
             children: [
               {
                 name: "Child",
@@ -465,12 +465,23 @@ describe("curi", () => {
             ]
           }
         ];
+        const history = InMemory({ locations: ["/parent/child"] });
         const router = curi(history, routes);
         const after = jest.fn();
-        router.respond(r => {
-          expect(after.mock.calls.length).toBe(1);
-        });
-        after();
+        let calls = 0;
+        router.respond(
+          r => {
+            if (calls === 0) {
+              calls++;
+              history.navigate({ pathname: "/parent" });
+              after();
+              return;
+            }
+            expect(after.mock.calls.length).toBe(0);
+            done();
+          },
+          { observe: true }
+        );
       });
     });
   });
@@ -680,10 +691,9 @@ describe("curi", () => {
         expect(promiseResolved).toBe(true);
         done();
       };
-
+      const history = InMemory({ locations: ["/contact/phone"] });
       const router = curi(history, routes);
       router.respond(check);
-      history.navigate("/contact/phone");
     });
 
     it("[async] does not emit responses for cancelled navigation", done => {
@@ -708,7 +718,7 @@ describe("curi", () => {
         expect(response.params.method).toBe("mail");
         done();
       };
-
+      const history = InMemory({ locations: ["/contact/fax"] });
       const router = curi(history, routes);
       router.respond(check);
       history.navigate("/contact/phone");

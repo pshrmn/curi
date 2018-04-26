@@ -4,7 +4,6 @@ import finishResponse from "./finishResponse";
 import matchLocation from "./utils/match";
 import resolveMatchedRoute from "./resolveMatchedRoute";
 import createRoute from "./route";
-import hasAsyncRoute from "./utils/async";
 
 import { History, PendingNavigation } from "@hickory/root";
 
@@ -38,8 +37,6 @@ function createRouter(
     emitRedirects = true
   } = options;
 
-  let sync = true;
-
   const beforeSideEffects: Array<ResponseHandler> = [];
   const afterSideEffects: Array<ResponseHandler> = [];
   sideEffects.forEach(se => {
@@ -62,7 +59,6 @@ function createRouter(
     routeArray: Array<RouteDescriptor>
   ): void {
     routes = routeArray.map(createRoute);
-    sync = !hasAsyncRoute(routes);
     for (let key in registeredInteractions) {
       delete registeredInteractions[key];
     }
@@ -169,7 +165,7 @@ function createRouter(
       return;
     }
 
-    if (sync) {
+    if (match.route.sync) {
       pendingNav.finish();
       const response = finishResponse(
         match as Match,
