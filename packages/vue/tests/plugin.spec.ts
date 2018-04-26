@@ -60,14 +60,17 @@ describe("CuriPlugin", () => {
             expect(this.$curi.response.location.pathname).toBe("/");
           },
           updated: function() {
-            expect(this.$curi.response.location.pathname).toBe("/another-one");
+            expect(this.$curi.response.location.pathname).toBe("/contact");
             done();
           }
         };
       }
 
       let history, router;
-      const routes = [{ name: "Catch All", path: "(.*)" }];
+      const routes = [
+        { name: "Contact", path: "contact" },
+        { name: "Catch All", path: "(.*)" }
+      ];
 
       beforeEach(() => {
         history = InMemory();
@@ -86,7 +89,7 @@ describe("CuriPlugin", () => {
             localVue: Vue,
             sync: false
           });
-          router.history.navigate("/another-one");
+          router.navigate({ name: "Contact" });
         }
       });
 
@@ -108,7 +111,7 @@ describe("CuriPlugin", () => {
               sync: false
             }
           );
-          router.history.navigate("/another-one");
+          router.navigate({ name: "Contact" });
         }
       });
     });
