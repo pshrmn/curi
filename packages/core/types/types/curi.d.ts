@@ -1,8 +1,8 @@
-import { History, HickoryLocation, Action } from "@hickory/root";
+import { History, HickoryLocation, Action, NavType } from "@hickory/root";
 import { PathFunctionOptions } from "path-to-regexp";
 import { Interaction, Interactions } from "./interaction";
 import { RouteDescriptor } from "./route";
-import { Response } from "./response";
+import { Response, Params } from "./response";
 export interface Navigation {
     action: Action;
     previous: Response | null;
@@ -37,10 +37,19 @@ export interface CurrentResponse {
     response: Response | null;
     navigation: Navigation | null;
 }
+export interface NavigationDetails {
+    name?: string;
+    params?: Params;
+    hash?: string;
+    query?: any;
+    state?: any;
+    method?: NavType;
+}
 export interface CuriRouter {
     replaceRoutes: (routeArray: Array<RouteDescriptor>) => void;
     respond: (fn: ResponseHandler, options?: RespondOptions) => RemoveResponseHandler | void;
     route: Interactions;
     history: History;
     current(): CurrentResponse;
+    navigate(options: NavigationDetails): void;
 }

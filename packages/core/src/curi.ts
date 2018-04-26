@@ -21,7 +21,8 @@ import {
   RemoveResponseHandler,
   Cache,
   CurrentResponse,
-  Navigation
+  Navigation,
+  NavigationDetails
 } from "./types/curi";
 
 function createRouter(
@@ -218,6 +219,26 @@ function createRouter(
         response: mostRecent.response,
         navigation: mostRecent.navigation
       };
+    },
+    navigate(details: NavigationDetails): void {
+      const { name, params, hash, query, state } = details;
+      let { method = "ANCHOR" } = details;
+      const pathname =
+        name !== undefined
+          ? registeredInteractions.pathname(name, params)
+          : history.location.pathname;
+      if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {
+        method = "ANCHOR";
+      }
+      history.navigate(
+        {
+          pathname,
+          hash,
+          query,
+          state
+        },
+        method
+      );
     }
   };
 
