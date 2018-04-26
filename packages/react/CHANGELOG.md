@@ -1,3 +1,7 @@
+## Next
+
+* Use `router.navigate()` in `<Link>`.
+
 ## 1.0.0-beta.21
 
 * Add `hash`, `query`, and `state` props to `<Link>`, remove `details`.
