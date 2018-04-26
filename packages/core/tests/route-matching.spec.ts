@@ -596,7 +596,7 @@ describe("route matching/response generation", () => {
               firstCall = false;
               expect(initialCount).toBe(1);
               expect(everyCount).toBe(1);
-              history.push("/another-one");
+              history.navigate("/another-one");
             } else {
               expect(initialCount).toBe(1);
               expect(everyCount).toBe(2);
@@ -676,7 +676,7 @@ describe("route matching/response generation", () => {
 
         const history = InMemory({ locations: ["/first"] });
         const router = curi(history, routes);
-        history.push("/second");
+        history.navigate("/second");
       });
 
       describe("resolved", () => {
@@ -800,7 +800,7 @@ describe("route matching/response generation", () => {
             ];
             const router = curi(history, routes);
             router.respond(() => {
-              history.push("/another-one");
+              history.navigate("/another-one");
             });
           });
 

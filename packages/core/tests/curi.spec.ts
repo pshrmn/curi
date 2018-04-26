@@ -281,7 +281,7 @@ describe("curi", () => {
           const steps = [
             r => {
               randomValue = r.data;
-              history.push("/new-location");
+              history.navigate("/new-location");
             },
             r => {
               expect(r.data).not.toEqual(randomValue);
@@ -321,7 +321,7 @@ describe("curi", () => {
           const steps = [
             r => {
               randomValue = r.data;
-              history.push("/new-location");
+              history.navigate("/new-location");
             },
             r => {
               expect(r.data).not.toEqual(randomValue);
@@ -530,7 +530,7 @@ describe("curi", () => {
           if (calls === 2) {
             done();
           } else {
-            router.history.push("/about");
+            router.history.navigate("/about");
           }
         },
         { observe: true }
@@ -603,7 +603,7 @@ describe("curi", () => {
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(0);
       unsub1();
-      history.push({ pathname: "/next" });
+      history.navigate({ pathname: "/next" });
 
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(1);
@@ -649,7 +649,7 @@ describe("curi", () => {
       };
 
       const router = curi(history, routes);
-      history.push("/contact/mail");
+      history.navigate("/contact/mail");
       router.respond(check);
     });
 
@@ -683,7 +683,7 @@ describe("curi", () => {
 
       const router = curi(history, routes);
       router.respond(check);
-      history.push("/contact/phone");
+      history.navigate("/contact/phone");
     });
 
     it("[async] does not emit responses for cancelled navigation", done => {
@@ -711,8 +711,8 @@ describe("curi", () => {
 
       const router = curi(history, routes);
       router.respond(check);
-      history.push("/contact/phone");
-      history.push("/contact/mail");
+      history.navigate("/contact/phone");
+      history.navigate("/contact/mail");
     });
 
     describe("response handler options", () => {
@@ -793,7 +793,7 @@ describe("curi", () => {
               called = true;
               // trigger another navigation to verify that the once sub
               // is not called again
-              router.history.push("/another-one");
+              router.history.navigate("/another-one");
             }
           });
           const router = curi(history, routes);
@@ -850,7 +850,7 @@ describe("curi", () => {
               called = true;
               // trigger another navigation to verify that the observer
               // is called again
-              router.history.push("/another-one");
+              router.history.navigate("/another-one");
             }
           });
           const router = curi(history, routes);
@@ -917,7 +917,7 @@ describe("curi", () => {
           router.respond(() => {
             router.respond(oneTime, { initial: false, observe: false });
             expect(oneTime.mock.calls.length).toBe(0);
-            history.push("/somewhere-else");
+            history.navigate("/somewhere-else");
           });
         });
       });
@@ -925,7 +925,7 @@ describe("curi", () => {
   });
 
   describe("response.redirectTo", () => {
-    it("triggers a history.replace call AFTER emitting initial response", done => {
+    it("triggers a replace navigation AFTER emitting initial response", done => {
       let callPosition = 0;
       const routes = [
         {
@@ -947,7 +947,8 @@ describe("curi", () => {
       ];
       let hasEmitted = false;
 
-      history.replace = jest.fn(() => {
+      history.navigate = jest.fn((loc, navType) => {
+        expect(navType).toBe("REPLACE");
         expect(hasEmitted).toBe(true);
         done();
       });

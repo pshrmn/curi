@@ -1,5 +1,6 @@
 ## Next
 
+* Update to use Hickory's `history.navigate()` for navigation.
 * Only the matched route properties (`name`, `params`, `partials`, `location`, and `key`) are guaranteed to exist on a response. The other properties only exist if provided on a `route.response()` return object.
 * `on.initial()` receives full matched route properties object.
 * `on.every()` receives full matched route properties object.
