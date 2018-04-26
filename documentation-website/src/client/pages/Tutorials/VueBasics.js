@@ -796,17 +796,16 @@ export default {
       </PrismBlock>
       <p>
         As stated above, we can access our <IJS>router</IJS> in the{" "}
-        <Cmp>Book</Cmp> component using <IJS>this.$router</IJS>.{" "}
-        <IJS>router.history</IJS> is our Hickory history object. This object can
-        be used to navigate to a new location. This means that when the user
-        clicks a button to add a book to their shopping cart, we can
-        automatically navigate to the checkout page.
+        <Cmp>Book</Cmp> component using <IJS>this.$router</IJS>. The router's{" "}
+        <IJS>navigate()</IJS> function can be used to navigate to a new
+        location. This means that when the user clicks a button to add a book to
+        their shopping cart, we can automatically navigate to the checkout page.
       </p>
       <Subsection title="Navigate Method" id="nav-method" type="aside">
         <p>
-          The <IJS>history.navigate()</IJS> function is used to navigate to new
-          locations. There are three types of navigation: <IJS>PUSH</IJS>,{" "}
-          <IJS>REPLACE</IJS>, and <IJS>ANCHOR</IJS>
+          <IJS>router.navigate()</IJS> is used to navigate to new locations.
+          There are three methods of navigation: <IJS>PUSH</IJS>,{" "}
+          <IJS>REPLACE</IJS>, and <IJS>ANCHOR</IJS>.
         </p>
         <p>
           <IJS>PUSH</IJS> pushes a new location after the current index,
@@ -814,7 +813,7 @@ export default {
         </p>
         <PrismBlock lang="javascript">
           {`// session = ['/one', '/two', '/three'], index = 1
-history.navigate({ pathname: '/new' }, "PUSH");
+router.navigate({ name: "New", method: "PUSH" });
 // session = ['/one', '/two', '/new'], index = 2`}
         </PrismBlock>
         <p>
@@ -822,8 +821,8 @@ history.navigate({ pathname: '/new' }, "PUSH");
         </p>
         <PrismBlock lang="javascript">
           {`// session = ['/one', '/two', '/three'], index = 1
-history.navigate({ pathname: '/new' }, "REPLACE");
-// session = ['/one', '/new', '/three'], index = 1`}
+router.navigate({ name: "Replace", method: "REPLACE" });
+// session = ['/one', '/replacement', '/three'], index = 1`}
         </PrismBlock>
         <p>
           <IJS>ANCHOR</IJS> is a mix between <IJS>PUSH</IJS> and{" "}
@@ -832,27 +831,17 @@ history.navigate({ pathname: '/new' }, "REPLACE");
           and if you navigate to a new location it will push.
         </p>
         <p>
-          If <IJS>history.navigate()</IJS> is called without a navigation type,
-          it will default to <IJS>ANCHOR</IJS>.
+          If <IJS>method.navigate()</IJS> is called without a navigation{" "}
+          <IJS>method</IJS>, it will default to <IJS>ANCHOR</IJS>.
         </p>
         <PrismBlock lang="javascript">
           {`// session = ['/one', '/two', '/three'], index = 1
-history.navigate({ pathname: '/two' }, "ANCHOR");
+router.navigate({ name: "Two", method: "ANCHOR" });
 // session = ['/one', '/two', '/three'], index = 1
-history.navigate({ pathname: '/new' });
+router.navigate({ name: "New", method: "ANCHOR" });
 // session = ['/one', '/two', '/new'], index = 2`}`}
         </PrismBlock>
       </Subsection>
-      <p>
-        Curi uses route interactions to add functionality to routes. Most of the
-        time, you have to include these while creating the router, but Curi has
-        one built-in route interaction: <IJS>pathname</IJS>. The{" "}
-        <Cmp>curi-link</Cmp> automatically generates the correct pathname string
-        using the <IJS>pathname</IJS> route interaction, the <IJS>to</IJS> prop
-        (and sometimes the <IJS>params</IJS> prop). We can access this route
-        interaction as <IJS>router.route.pathname()</IJS> to generate pathnames
-        ourselves.
-      </p>
       <p>
         We also want to import our shopping cart API so that we can add a book
         to the cart.
@@ -889,8 +878,7 @@ history.navigate({ pathname: '/new' });
     methods: {
       onClick: function() {
         cart.add(this.book, 1);
-        const pathname = this.$router.route.pathname('Checkout');
-        this.$router.history.navigate({ pathname });
+        this.$router.navigate({ name: "Checkout" });
       }
     }
   }
@@ -953,8 +941,11 @@ history.navigate({ pathname: '/new' });
     methods: {
       onClick: function() {
         this.books = cart.reset();
-        const pathname = this.$router.route.pathname('Checkout');
-        this.$router.history.navigate({ pathname, hash: 'thanks' }, "REPLACE");
+        this.$router.navigate(
+          { name: "Checkout",
+          hash: "thanks",
+          method: "REPLACE"
+        });
       }
     }
   }
