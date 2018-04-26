@@ -1,3 +1,7 @@
+## Next
+
+* Update `<Link>` `method` values `<Link method={"ANCHOR"|"PUSH"|"REPLACE"}>` and use single `history.navigate()` method.
+
 ## 1.0.0-beta.3
 
 * Add `hash`, `query`, and `state` props to `<Link>`, remove `details`.

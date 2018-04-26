@@ -865,39 +865,44 @@ registerServiceWorker();`}
         the user clicks a button to add a book to their shopping cart, we can
         automatically navigate to the checkout page.
       </p>
-      <Subsection title="Navigation Methods" id="nav-methods" type="aside">
+      <Subsection title="Navigate Method" id="nav-method" type="aside">
         <p>
-          The <IJS>history</IJS> object provides three methods to navigate to
-          new locations.
+          The <IJS>history.navigate()</IJS> function is used to navigate to new
+          locations. There are three types of navigation: <IJS>PUSH</IJS>,{" "}
+          <IJS>REPLACE</IJS>, and <IJS>ANCHOR</IJS>
         </p>
         <p>
-          <IJS>push()</IJS> pushes a new location after the current index,
+          <IJS>PUSH</IJS> pushes a new location after the current index,
           removing any locations after the current location.
         </p>
         <PrismBlock lang="javascript">
           {`// session = ['/one', '/two', '/three'], index = 1
-history.push({ pathname: '/new' })
+history.navigate({ pathname: '/new' }, "PUSH");
 // session = ['/one', '/two', '/new'], index = 2`}
         </PrismBlock>
         <p>
-          <IJS>replace()</IJS> replaces the location at the current index.
+          <IJS>REPLACE</IJS> replaces the location at the current index.
         </p>
         <PrismBlock lang="javascript">
           {`// session = ['/one', '/two', '/three'], index = 1
-history.replace({ pathname: '/new' })
+history.navigate({ pathname: '/new' }, "REPLACE");
 // session = ['/one', '/new', '/three'], index = 1`}
         </PrismBlock>
         <p>
-          <IJS>navigate()</IJS> is a mix between <IJS>push()</IJS> and{" "}
-          <IJS>replace()</IJS>. It mimics the behavior of clicking on links, so
-          if you navigate to the same location as the current one, and if you
-          navigate to a new location, it will push.
+          <IJS>ANCHOR</IJS> is a mix between <IJS>PUSH</IJS> and{" "}
+          <IJS>REPLACE</IJS>. It mimics the behavior of clicking on links, so if
+          you navigate to the same location as the current one it will replace,
+          and if you navigate to a new location it will push.
+        </p>
+        <p>
+          If <IJS>history.navigate()</IJS> is called without a navigation type,
+          it will default to <IJS>ANCHOR</IJS>.
         </p>
         <PrismBlock lang="javascript">
           {`// session = ['/one', '/two', '/three'], index = 1
-history.navigate({ pathname: '/two' })
+history.navigate({ pathname: '/two' }, "ANCHOR");
 // session = ['/one', '/two', '/three'], index = 1
-history.navigate({ pathname: '/new' })
+history.navigate({ pathname: '/new' });
 // session = ['/one', '/two', '/new'], index = 2`}`}
         </PrismBlock>
       </Subsection>
@@ -939,7 +944,7 @@ export default ({ response, router }) => {
         onClick={() => {
           cart.add(book, 1);
           const pathname = router.route.pathname('Checkout');
-          router.history.push({ pathname });
+          router.history.navigate({ pathname });
         }}
       >
         Add to Cart
@@ -998,7 +1003,7 @@ export default ({ router, response }) => {
         onClick={() => {
           cart.reset();
           const pathname = router.route.pathname('Checkout');
-          router.history.replace({ pathname, hash: 'thanks' });
+          router.history.navigate({ pathname, hash: 'thanks' }, "REPLACE");
         }}
       >
         Buy
