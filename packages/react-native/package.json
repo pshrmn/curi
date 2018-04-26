@@ -42,7 +42,7 @@
   "dependencies": {
     "@curi/core": "^1.0.0-beta.30",
     "@curi/react": "^1.0.0-beta.21",
-    "@hickory/root": "^1.0.0-beta.7",
+    "@hickory/root": "^1.0.0-beta.8",
     "@types/invariant": "^2.2.29",
     "@types/react": "^16.3.11",
     "invariant": "^2.2.2"
@@ -51,7 +51,7 @@
     "@babel/core": "^7.0.0-beta.37",
     "@curi/core": "^1.0.0-beta.30",
     "@curi/route-active": "^1.0.0-beta.6",
-    "@hickory/in-memory": "^1.0.0-beta.4",
+    "@hickory/in-memory": "^1.0.0-beta.5",
     "@types/enzyme": "^2.8.8",
     "@types/jest": "^22.0.1",
     "@types/node": "^8.0.53",

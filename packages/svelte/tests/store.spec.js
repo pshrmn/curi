@@ -63,7 +63,7 @@ describe("curiStore", () => {
       navigation: initialNavigation
     });
 
-    history.push("/about");
+    history.navigate("/about");
 
     const { response: currentResponse } = router.current();
     const { response: aboutResponse } = store.get("curi");

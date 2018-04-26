@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@curi/core": "^1.0.0-beta.30",
-    "@hickory/in-memory": "^1.0.0-beta.4",
+    "@hickory/in-memory": "^1.0.0-beta.5",
     "babel-core": "7.0.0-beta.0",
     "babel-jest": "^22.1.0",
     "babel-plugin-external-helpers": "^7.0.0-beta.0",

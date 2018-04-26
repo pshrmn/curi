@@ -204,7 +204,7 @@ function createRouter(
     }
 
     if (response.redirectTo !== undefined) {
-      history.replace(response.redirectTo);
+      history.navigate(response.redirectTo, "REPLACE");
     }
   }
 

@@ -2,8 +2,7 @@
 import React from "react";
 import { GestureResponderEvent } from "react-native";
 import { CuriRouter, Response } from "@curi/core";
-import { PartialLocation } from "@hickory/root";
-export declare type LinkMethod = "navigate" | "push" | "replace";
+import { PartialLocation, NavType } from "@hickory/root";
 export interface LinkProps {
     to?: string;
     params?: object;
@@ -14,7 +13,7 @@ export interface LinkProps {
     anchor?: React.ReactType;
     target?: string;
     style?: any;
-    method?: LinkMethod;
+    method?: NavType;
 }
 export interface BaseLinkProps extends LinkProps {
     router: CuriRouter;
