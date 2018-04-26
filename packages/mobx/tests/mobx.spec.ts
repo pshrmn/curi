@@ -36,7 +36,7 @@ describe("@curi/mobx", () => {
 
     it("updates response/navigation when a new response is emitted", () => {
       const { response: previousResponse } = router.current();
-      history.replace("/one");
+      history.navigate("/one", "REPLACE");
 
       expect(store.response.name).toBe("One");
       expect(store.navigation.action).toBe("REPLACE");

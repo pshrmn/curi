@@ -8,10 +8,9 @@ import { Emitted, CuriRouter, Response } from "@curi/core";
 import {
   HickoryLocation,
   PartialLocation,
-  LocationDetails
+  LocationDetails,
+  NavType
 } from "@hickory/root";
-
-export type LinkMethod = "navigate" | "push" | "replace";
 
 export interface LinkProps {
   to?: string;
@@ -23,7 +22,7 @@ export interface LinkProps {
   anchor?: React.ReactType;
   target?: string;
   style?: any;
-  method?: LinkMethod;
+  method?: NavType;
 }
 
 export interface BaseLinkProps extends LinkProps {
@@ -37,20 +36,18 @@ export interface LinkState {
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   pressHandler = (event: GestureResponderEvent) => {
-    const { onPress, router, method = "navigate" } = this.props;
+    const { onPress, router } = this.props;
+    let { method = "ANCHOR" } = this.props;
     if (onPress) {
       onPress(event);
     }
 
     if (!event.defaultPrevented) {
       event.preventDefault();
-      let fn = router.history.navigate;
-      if (method === "push") {
-        fn = router.history.push;
-      } else if (method === "replace") {
-        fn = router.history.replace;
+      if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {
+        method = "ANCHOR";
       }
-      fn(this.state.location);
+      router.history.navigate(this.state.location, method);
     }
   };
 

@@ -44,7 +44,7 @@ describe("syncResponses", () => {
         done();
       });
 
-      history.push({ pathname: "/one" });
+      history.navigate({ pathname: "/one" }, "PUSH");
     });
   });
 

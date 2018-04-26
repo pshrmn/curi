@@ -32,11 +32,11 @@
   "license": "MIT",
   "dependencies": {
     "@curi/core": "^1.0.0-beta.30",
-    "@hickory/root": "^1.0.0-beta.7",
+    "@hickory/root": "1.0.0-beta.8",
     "mobx": "^3.4.1"
   },
   "devDependencies": {
-    "@hickory/in-memory": "^1.0.0-beta.4",
+    "@hickory/in-memory": "^1.0.0-beta.5",
     "@types/jest": "^22.0.1",
     "@types/node": "^8.0.53",
     "jest": "^22.1.1",

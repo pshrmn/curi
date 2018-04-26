@@ -50,7 +50,7 @@ describe("<CuriProvider>", () => {
       });
 
       ReactDOM.render(<CuriProvider router={router}>{fn}</CuriProvider>, node);
-      history.push("/about");
+      history.navigate("/about");
     });
 
     it("passes { response, navigation, router } to render prop", () => {
