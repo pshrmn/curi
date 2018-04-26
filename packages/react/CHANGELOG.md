@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.22
 
 * Use `router.navigate()` in `<Link>`.
 

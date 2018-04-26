@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.4
 
 * Use `router.navigate()` in `<Link>`.
 * Update `<Link>` `method` values `<Link method={"ANCHOR"|"PUSH"|"REPLACE"}>`.
