@@ -86,7 +86,7 @@ describe("CuriPlugin", () => {
             localVue: Vue,
             sync: false
           });
-          router.history.push("/another-one");
+          router.history.navigate("/another-one");
         }
       });
 
@@ -108,7 +108,7 @@ describe("CuriPlugin", () => {
               sync: false
             }
           );
-          router.history.push("/another-one");
+          router.history.navigate("/another-one");
         }
       });
     });
