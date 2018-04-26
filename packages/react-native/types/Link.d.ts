@@ -2,7 +2,7 @@
 import React from "react";
 import { GestureResponderEvent } from "react-native";
 import { CuriRouter, Response } from "@curi/core";
-import { PartialLocation, NavType } from "@hickory/root";
+import { NavType } from "@hickory/root";
 export interface LinkProps {
     to?: string;
     params?: object;
@@ -18,9 +18,6 @@ export interface LinkProps {
 export interface BaseLinkProps extends LinkProps {
     router: CuriRouter;
     response: Response;
-}
-export interface LinkState {
-    location: PartialLocation;
 }
 declare const Link: (props: LinkProps) => JSX.Element;
 export default Link;

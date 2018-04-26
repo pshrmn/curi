@@ -543,7 +543,7 @@ describe("curi", () => {
           if (calls === 2) {
             done();
           } else {
-            router.history.navigate("/about");
+            router.navigate({ name: "About" });
           }
         },
         { observe: true }
@@ -792,6 +792,7 @@ describe("curi", () => {
         it("isn't re-called for new responses", done => {
           const routes = [
             { name: "Home", path: "" },
+            { name: "Contact", path: "contact" },
             { name: "Not Found", path: "(.*)" }
           ];
           const oneTime = jest.fn();
@@ -805,7 +806,7 @@ describe("curi", () => {
               called = true;
               // trigger another navigation to verify that the once sub
               // is not called again
-              router.history.navigate("/another-one");
+              router.navigate({ name: "Contact" });
             }
           });
           const router = curi(history, routes);
@@ -849,6 +850,7 @@ describe("curi", () => {
         it("is re-called for new responses", done => {
           const routes = [
             { name: "Home", path: "" },
+            { name: "Contact", path: "contact" },
             { name: "Not Found", path: "(.*)" }
           ];
           const everyTime = jest.fn();
@@ -862,7 +864,7 @@ describe("curi", () => {
               called = true;
               // trigger another navigation to verify that the observer
               // is called again
-              router.history.navigate("/another-one");
+              router.navigate({ name: "Contact" });
             }
           });
           const router = curi(history, routes);

@@ -224,7 +224,7 @@ function createRouter(
       const { name, params, hash, query, state } = details;
       let { method = "ANCHOR" } = details;
       const pathname =
-        name !== undefined
+        name != null
           ? registeredInteractions.pathname(name, params)
           : history.location.pathname;
       if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {

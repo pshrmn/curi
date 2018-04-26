@@ -30,48 +30,30 @@ export interface BaseLinkProps extends LinkProps {
   response: Response;
 }
 
-export interface LinkState {
-  location: PartialLocation;
-}
-
-class BaseLink extends React.Component<BaseLinkProps, LinkState> {
+class BaseLink extends React.Component<BaseLinkProps> {
   pressHandler = (event: GestureResponderEvent) => {
     const { onPress, router } = this.props;
-    let { method = "ANCHOR" } = this.props;
     if (onPress) {
       onPress(event);
     }
 
     if (!event.defaultPrevented) {
       event.preventDefault();
+      const { to: name, params, hash, query, state } = this.props;
+      let { method = "ANCHOR" } = this.props;
       if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {
         method = "ANCHOR";
       }
-      router.history.navigate(this.state.location, method);
+      router.navigate({
+        name,
+        params,
+        hash,
+        query,
+        state,
+        method
+      });
     }
   };
-
-  setLocation(props: BaseLinkProps) {
-    const { router, response, to, params, hash, query, state } = props;
-    const pathname = to
-      ? router.route.pathname(to, params)
-      : response.location.pathname;
-    const location = {
-      hash,
-      query,
-      state,
-      pathname
-    };
-    this.setState({ location });
-  }
-
-  componentWillMount() {
-    this.setLocation(this.props);
-  }
-
-  componentWillReceiveProps(nextProps: BaseLinkProps) {
-    this.setLocation(nextProps);
-  }
 
   render(): React.ReactElement<any> {
     const {

@@ -1,6 +1,7 @@
 ## Next
 
-* Update `<Link>` `method` values `<Link method={"ANCHOR"|"PUSH"|"REPLACE"}>` and use single `history.navigate()` method.
+* Use `router.navigate()` in `<Link>`.
+* Update `<Link>` `method` values `<Link method={"ANCHOR"|"PUSH"|"REPLACE"}>`.
 
 ## 1.0.0-beta.3
 
