@@ -473,7 +473,7 @@ describe("curi", () => {
           r => {
             if (calls === 0) {
               calls++;
-              history.push({ pathname: "/parent" });
+              history.navigate({ pathname: "/parent" });
               after();
               return;
             }
