@@ -1,5 +1,6 @@
 ## Next
 
+* Remove `response.key` (still available as `response.location.key`).
 * Remove the `cache` option from the router.
 
 ## 1.0.0-beta.31
