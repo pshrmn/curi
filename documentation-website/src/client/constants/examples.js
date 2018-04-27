@@ -50,18 +50,6 @@ const examples = {
       description: "Attach multiple components to a route"
     },
     {
-      name: "MobX",
-      category: "react",
-      slug: "mobx",
-      description: "Integrate MobX, React, and Curi (easily!)"
-    },
-    {
-      name: "Redux",
-      category: "react",
-      slug: "redux",
-      description: "Integrate Redux, React, and Curi (easily!)"
-    },
-    {
       name: "Transitions",
       category: "react",
       slug: "transitions",

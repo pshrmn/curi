@@ -12,8 +12,7 @@ import BreadcrumbsReact from "./react/Breadcrumbs";
 import DataLoadingReact from "./react/DataLoading";
 import ModalReact from "./react/Modal";
 import MultiBodyReact from "./react/MultiBody";
-import MobX from "./react/MobX";
-import Redux from "./react/Redux";
+
 import TransitionsReact from "./react/Transitions";
 // vue
 import ActiveLinksVue from "./vue/ActiveLinks";
@@ -44,8 +43,6 @@ export default {
     "data-loading": DataLoadingReact,
     modal: ModalReact,
     "multi-body": MultiBodyReact,
-    mobx: MobX,
-    redux: Redux,
     transitions: TransitionsReact
   },
   svelte: {

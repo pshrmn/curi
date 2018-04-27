@@ -49,18 +49,6 @@ const packages = [
     globalName: "CuriReactNative",
     type: "renderer"
   },
-  /*{
-    name: "mobx",
-    version: versions["mobx"],
-    globalName: "CuriMobX",
-    type: "state"
-  },
-  {
-    name: "redux",
-    version: versions["redux"],
-    globalName: "CuriRedux",
-    type: "state"
-  },*/
   {
     name: "svelte",
     version: versions["svelte"],
