@@ -160,7 +160,6 @@ location = {
     pathname: '/photos/6789/12345',
     ...
   },
-  key: '1.0',
 
   // set by matched route's response() function
   body: function Photo() {...},

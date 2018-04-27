@@ -7,7 +7,6 @@ export type Params = { [key: string]: any };
 
 export interface MatchResponseProperties {
   location: HickoryLocation;
-  key: string;
   name: string;
   params: Params;
   partials: Array<string>;
