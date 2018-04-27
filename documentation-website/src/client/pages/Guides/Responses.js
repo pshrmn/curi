@@ -25,8 +25,16 @@ export default ({ name }) => (
       title="The Properties of a Response Object"
       id="response-properties"
     >
+      <p>
+        There are two types of response properties. The "match" properties are
+        set based on the route that matches a location. A response always has
+        these proeprties. The "settable" properties are ones that are added by a
+        matched route's <IJS>response()</IJS> function. These only exist on the
+        response when they are returned by <IJS>route.response()</IJS>.
+      </p>
       <PrismBlock lang="javascript">
-        {`{
+        {`// match properties
+{
   // The location object used to generate the response.
   location: { pathname: '/photos/6789/12345', ... },
 
@@ -41,21 +49,11 @@ export default ({ name }) => (
   // from the pathname by path-to-regexp.
   // This includes params from ancestor routes.
   params: { photoID: 12345, albumID: 6789 },
-
-  // The status code for the response.
-  // This defaults to 200.
-  // It can also be set with a route's response() return object
-  status: 200,
-
-  // This can be anything you want. It is set using
-  // a route's response() return object.
-  // The default value is undefined.
-  data: {...},
-
-  // The title string is set using a route's response() return object
-  // The default value is an empty string.
-  title: 'Photo 12345',
-
+        }`}
+      </PrismBlock>
+      <PrismBlock lang="javascript">
+        {`// settable properties
+{
   // The body value is set using a route's response() return object.
   // This is where you can attach component(s) to a route. The structure here
   // is up to you, but each of your routes should have the same structure.
@@ -67,9 +65,22 @@ export default ({ name }) => (
   },
   // Please see below for more information about this property
 
+  // The status code for the response.
+  // This is mostly useful for server-side rendering
+  status: 200,
+
+  // This can be anything you want. It is set using
+  // a route's response() return object.
+  data: {...},
+
+  // The title string is set using a route's response() return object
+  title: 'Photo 12345',
+
   // A value set by the route's response() return object.
-  // defaults to undefined
-  error: undefined
+  error: undefined,
+
+  // A location to redirect to
+  redirectTo: {...}
 }`}
       </PrismBlock>
 
@@ -79,8 +90,8 @@ export default ({ name }) => (
           <Link to="Guide" params={{ slug: "routes" }} hash="response">
             <IJS>redirectTo</IJS> property
           </Link>{" "}
-          the response's <IJS>redirectTo</IJS> will be a location object. Curi
-          will automatically redirect the location when it sees this.
+          the router will turn this into a location object. Curi will
+          automatically redirect to this location.
         </p>
         <PrismBlock lang="javascript">
           {`{
@@ -90,11 +101,11 @@ export default ({ name }) => (
 }`}
         </PrismBlock>
         <p>
-          You can choose whether or not you want redirect responses emitted to
-          response handlers. The default behavior is that they are, but this
-          also means that you have to render using the redirect response. You
-          can pass the <IJS>{`{ emitRedirects: false }`}</IJS> option when you
-          create your router to prevent this.
+          You can choose whether or not you want responses with a{" "}
+          <IJS>redirectTo</IJS> property to be emitted. The default behavior is
+          to emit them, but this also means that you have to render using the
+          redirect response. The <IJS>{`{ emitRedirects: false }`}</IJS> option
+          prevents this.
         </p>
         <PrismBlock lang="javascript">
           {`const router = curi(history, routes, {
@@ -106,12 +117,9 @@ export default ({ name }) => (
 
     <Section title="The Body Property" id="body-property">
       <p>
-        The body property of a response is likely the most important property of
-        a <IJS>response</IJS> because it is what you will actually render. It is
-        set using the object returned from the matched route's
-        <Link to="Guide" params={{ slug: "routes" }} hash="response">
-          <IJS>response()</IJS> function
-        </Link>. This value can be anything you want it to be, but it should
+        The <IJS>body</IJS> property of a response is likely the most important
+        property of a <IJS>response</IJS> because it is what you will actually
+        render. This value can be anything you want it to be, but it should
         usually be a function/component or an object containing
         functions/components.
       </p>
@@ -137,19 +145,17 @@ export default ({ name }) => (
       </PrismBlock>
       <Note>
         It is important that each route uses the same structure for setting the
-        body. Mixing structures will make renderin more difficult to reason
-        about.
+        body. Mixing structures will make rendering more difficult.
       </Note>
     </Section>
 
     <div>
       <h2>Next</h2>
       <p>
-        Next, we'll take a look at another object passed to response handlers:{" "}
-        <Link to="Guide" params={{ slug: "navigation-objects" }}>
-          navigation objects
-        </Link>{" "}
-        .
+        Next, we'll take a look at{" "}
+        <Link to="Guide" params={{ slug: "observers" }}>
+          observers
+        </Link>.
       </p>
     </div>
   </BaseGuide>

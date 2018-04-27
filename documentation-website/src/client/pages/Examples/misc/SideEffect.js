@@ -13,17 +13,16 @@ export default ({ name }) => (
         and/or <IJS>on.every()</IJS> functions have resolved), the response's
         properties are used to create a JavaScript object. Then, any response
         handler functions are called and passed that JavaScript object . Side
-        effects are basically permanent response handlers (they cannot be
-        removed). Side effects can either be run before (default) or after
-        response handler that were set using <IJS>router.respond</IJS>. They
-        receive the new response and an object with information about the
-        navigation.
+        effects are basically permanent observers (they cannot be removed). Side
+        effects can either be run before (default) or after observers that were
+        set using <IJS>router.respond()</IJS>. They receive the new response and
+        an object with information about the navigation.
       </p>
 
       <p>
         A side effect function just does something using its arguments. It is a
-        response handler, but unlike ones assigned using{" "}
-        <IJS>router.respond</IJS>, side effects cannot be removed.
+        observers, but unlike ones assigned using <IJS>router.respond()</IJS>,
+        side effects cannot be removed.
       </p>
 
       <p>

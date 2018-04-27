@@ -14,13 +14,13 @@ export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
     <p>
-      Response handlers are functions that are called by the router when a new
-      response is emitted.
+      The Curi router uses an observer pattern. You give it an observer function
+      and when a response is created, that function will be called.
     </p>
 
-    <Section title="Response Handler Argument" id="argument">
+    <Section title="Observer Argument" id="argument">
       <p>
-        Response handlers are passed an object with three properties:{" "}
+        Observers are passed an object with three properties:{" "}
         <Link to="Package" params={{ package: "core" }} hash="properties">
           <IJS>router</IJS>
         </Link>,{" "}
@@ -29,8 +29,8 @@ export default ({ name }) => (
         </Link>, and{" "}
         <Link to="Guide" params={{ slug: "navigation-objects" }}>
           <IJS>navigation</IJS>
-        </Link>. Which one you will need will vary based on what the response
-        handler is doing.
+        </Link>. Which ones you use vary based on what the response handler is
+        doing.
       </p>
       <PrismBlock lang="javascript">
         {`function responseHandler({ router, response, navigation }) {
@@ -40,14 +40,15 @@ export default ({ name }) => (
     </Section>
 
     <Section title="Use Cases" id="use-cases">
+      <p>When should you use observers?</p>
       <Subsection title="Setup" id="setup">
         <p>
           If any of the routes in an application have <IJS>on.initial()</IJS> or{" "}
-          <IJS>on.every()</IJS> functions, Curi will create responses
-          asynchronously. This means that when your application first renders,
-          the initial response hasn't necessarily been created. To deal with
-          this, you can use a response handler to perform any setup that needs
-          the initial response to exist.
+          <IJS>on.every()</IJS> functions, when those routes match the response
+          will be emitted asynchronously. When the application first renders, if
+          the router matches an async route, the response isn't immediately
+          ready to use. To deal with this, you can use an observer to render
+          once the initial response is ready.
         </p>
         <PrismBlock lang="jsx">
           {`function setup({ router }) {
@@ -60,20 +61,19 @@ export default ({ name }) => (
         </PrismBlock>
         <p>
           A setup function only needs to be called once, so you can call{" "}
-          <IJS>router.respond</IJS> without any options.
+          <IJS>router.respond()</IJS> without any options.
         </p>
         <PrismBlock lang="javascript">{`router.respond(setup);`}</PrismBlock>
         <Note>
-          Setup is the only thing your application should need to write a
-          response handler for. Some other use cases will be discussed below,
-          but
+          Setup is the only thing your application <em>should</em> need to write
+          an observer for.
         </Note>
       </Subsection>
       <Subsection title="Rendering" id="rendering">
         <p>
           You could manually re-render your application by using a response
           handler that observes the router for every response (by passing the{" "}
-          <IJS>{`{ observe: true }`}</IJS> option to <IJS>router.respond</IJS>).
+          <IJS>{`{ observe: true }`}</IJS> option to <IJS>router.respond()</IJS>).
         </p>
         <p>
           If your application is using one of the provided Curi rendering
@@ -101,10 +101,10 @@ router.respond(render, { observe: true });`}
       </Subsection>
       <Subsection title="Side Effects" id="side-effects">
         <p>
-          Side effects are response handlers that are provided to the router at
-          creation instead of by calling <IJS>router.respond</IJS>. These can be
-          useful for tasks that are not rendering related as well as for tasks
-          that need to be performed after a render has completed.
+          Side effects are observers that are provided to the router at creation
+          instead of by calling <IJS>router.respond()</IJS>. These can be useful
+          for tasks that are not rendering related as well as for tasks that
+          need to be performed after a render has completed.
         </p>
         <p>
           The{" "}
@@ -126,9 +126,9 @@ router.respond(render, { observe: true });`}
         </p>
         <p>
           If you need to add logging to your application, you could write your
-          own response handler to do this. Your response handler can either be
-          added as a side effect when the router is constructed or later using{" "}
-          <IJS>router.respond</IJS>.
+          own observer to do this. Your observer can either be added as a side
+          effect when the router is constructed or later using{" "}
+          <IJS>router.respond()</IJS>.
         </p>
         <PrismBlock lang="javascript">
           {`function logger({ response }) {
@@ -150,8 +150,8 @@ router.respond(logger, { observe: true });`}
       <h2>Next</h2>
       <p>
         Next, we will cover{" "}
-        <Link to="Guide" params={{ slug: "responses" }}>
-          response objects
+        <Link to="Guide" params={{ slug: "navigation-objects" }}>
+          navigation objects
         </Link>.
       </p>
     </div>

@@ -138,7 +138,7 @@ const routes = [
             params={{ slug: "responses" }}
             hash="response-properties"
           >
-            Response Handlers
+            responses
           </Link>{" "}
           guide.
         </p>

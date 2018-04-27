@@ -32,10 +32,10 @@ export default ({ name, version, globalName }) => (
       <Section tag="h3" title="syncResponses" id="syncResponses">
         <p>
           <IJS>syncResponses</IJS> is responsible for linking your Redux store
-          with your Curi router. It observes the router with a response handler
-          that will dispatch a "location changed" event to the Redux store
-          whenever a new response is emitted. It will also add your Curi router
-          to the store.
+          with your Curi router. It observes the router with an observer that
+          will dispatch a "location changed" event to the Redux store whenever a
+          new response is emitted. It will also add your Curi router to the
+          store.
         </p>
         <PrismBlock lang="javascript">
           {`const router = curi(history, routes);

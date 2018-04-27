@@ -382,15 +382,15 @@ const router = curi(history, routes);`}
         <p>
           The <Cmp>CuriProvider</Cmp> takes a <IJS>router</IJS> prop, which it
           will use to listen for the router to emit new responses (by internally
-          calling <IJS>router.respond</IJS>) The <Cmp>CuriProvider</Cmp> places
-          the new <IJS>response</IJS> and <IJS>navigation</IJS> (alongside the{" "}
-          <IJS>router</IJS> object) on React's <IJS>context</IJS> so that child
-          components will be able to access those values.{" "}
+          calling <IJS>router.respond()</IJS>) The <Cmp>CuriProvider</Cmp>{" "}
+          places the new <IJS>response</IJS> and <IJS>navigation</IJS>{" "}
+          (alongside the <IJS>router</IJS> object) on React's <IJS>context</IJS>{" "}
+          so that child components will be able to access those values.{" "}
           <Cmp>CuriProvider</Cmp> also expects a function as its{" "}
           <IJS>children</IJS> prop (a render-invoked prop).
         </p>
         <p>
-          We will also use <IJS>router.respond</IJS> to wait for the initial
+          We will also use <IJS>router.respond()</IJS> to wait for the initial
           response to be emitted before rendering.
         </p>
         <PrismBlock lang="jsx">

@@ -10,10 +10,7 @@ export default ({ name }) => (
   <BaseGuide>
     <h1>{name}</h1>
 
-    <p>
-      This guide will cover a few basic concepts about Curi so that you can be
-      confident integrating Curi into your application.
-    </p>
+    <p>There are a few concepts that you should know about Curi.</p>
 
     <Section title="The Router" id="router-object">
       <p>
@@ -45,15 +42,22 @@ const router = curi(history, routes);`}
         a <IJS>history</IJS> object, which comes from the{" "}
         <a href="https://github.com/pshrmn/hickory">Hickory</a> library. There
         are a few different types of history objects that you can make; which
-        one you should use depends on where your application will be running.
+        one you should use depends on where your application will be running and
+        how you are serving the application.
+      </p>
+      <p>
+        If you are unsure about how to serve a single-page application,{" "}
+        <a href="https://medium.com/@pshrmn/single-page-applications-and-the-server-32a23d67936">
+          this article
+        </a>{" "}
+        should help.
       </p>
       <ul>
         <li>
           <p>
             <strong>Browser History</strong> - If you are building a website
-            that will be hosted on a dynamic server (it can respond to requests
-            for any location), you should use the <IJS>@hickory/browser</IJS>{" "}
-            package.
+            that will be hosted on a server that can handle dynamic requests,
+            you should use the <IJS>@hickory/browser</IJS> package.
           </p>
           <PrismBlock lang="bash">{`npm install @hickory/browser`}</PrismBlock>
           <PrismBlock lang="javascript">
@@ -64,7 +68,7 @@ const browserHistory = Browser();`}
         <li>
           <p>
             <strong>Hash History</strong> - If you are building a website that
-            will be hosted on a static file server, you will need to use the{" "}
+            will be hosted on a static file host, you will need to use the{" "}
             <IJS>@hickory/hash</IJS> package. The paths for your routes will be
             encoded in the <IJS>hash</IJS> section of the URL. This isn't as
             "pretty" as the paths you get with <IJS>@hickory/browser</IJS>, but
@@ -104,46 +108,42 @@ const memoryHistory = InMemory();`}
         Paths can be any valid{" "}
         <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a>{" "}
         string. It is just important that you do not begin the string with a
-        forward slash (/). Forward slashes are fine anywhere else in the path. (<IJS
-        >
-          this/is/fine
-        </IJS>, but <IJS>/this/is/not</IJS>).
+        forward slash (<IJS>/</IJS>). Forward slashes are fine anywhere else in
+        the path. (<IJS>this/is/fine</IJS>, but <IJS>/this/is/not</IJS>).
       </Note>
       <PrismBlock lang="javascript">
         {`const routes = [
   {
     name: 'Home',
-    path: '', // matches the pathname /
-    ...
+    path: '', // matches  '/'
+    // ...
   },
-  ...
+  // ...
 ]`}
       </PrismBlock>
       <p>
-        With Curi, you never have to write a pathname string yourself. Route
-        names are used to generate pathnames for you, so you just need to know
-        the name of the route you want to link to. This also means that all
-        routes must have unique names.
+        Curi creates URLs for you; you just need to know the name of the route
+        to link to. This means that all routes must have unique names.
       </p>
       <PrismBlock lang="javascript">
-        {`const pathname = router.route.pathname("Home"); // pathname === '/'`}
+        {`router.navigate({ name: "Home" }); // navigates to "/"`}
       </PrismBlock>
       <p>
-        How route matching works and the other route properties are explained
-        more in-depth in the{" "}
+        The{" "}
         <Link to="Guide" params={{ slug: "routes" }}>
           All About Routes
         </Link>{" "}
-        guide.
+        guide provides a more in-depth explanation of how route matching works
+        and the other route properties.
       </p>
     </Section>
 
     <Section title="Responses">
       <p>
-        Whenever navigation happens, Curi will create a <IJS>response</IJS>{" "}
-        object, which provides data about the route that it matched. The
-        property values of the response object can be modified through the
-        matching route's <IJS>response()</IJS> function.
+        Whenever the user navigates in the app, Curi will create a{" "}
+        <IJS>response</IJS> object, which provides data about the route that it
+        matched. The property values of the response object can be modified
+        through the matching route's <IJS>response()</IJS> function.
       </p>
       <p>
         The response object is used to render your application. The response's{" "}
@@ -151,7 +151,7 @@ const memoryHistory = InMemory();`}
         should render.
       </p>
       <PrismBlock lang="jsx">
-        {`// a React examples
+        {`// React
 import Home from './components/Home';
 
 const routes = [
@@ -168,21 +168,24 @@ const routes = [
   }
 ];
 
-function render({ response }) {
-  // when response.body === Home, this is the same as <Home />
-  return <response.body />;
-}`}
+ReactDOM.render((
+  <CuriProvider router={router}>
+    {({ response }) => {
+      // when response.body === Home, this is the same as <Home />
+      return <response.body />;
+    }}
+  </CuriProvider>
+), document.getElementById('root'));`}
       </PrismBlock>
     </Section>
 
     <h2>Next</h2>
     <p>
-      Curi can match routes synchronously or asynchronously. Before we go
-      further, we should quickly cover how this is determined and what is means
-      for your application with the{" "}
+      Curi can match routes synchronously or asynchronously. The{" "}
       <Link to="Guide" params={{ slug: "sync-or-async" }}>
         Sync or Async Guide
-      </Link>.
+      </Link>{" "}
+      covers how this works and what it means for your application.
     </p>
   </BaseGuide>
 );

@@ -29,8 +29,8 @@ export default ({ name, version, globalName }) => (
           manually, the <IJS>curiStore</IJS> will handle this for you.
         </p>
         <p>
-          This will setup a response handler to automatically update the store
-          when new responses are emitted by the router.
+          This will setup an observer to automatically update the store when new
+          responses are emitted by the router.
         </p>
         <PrismBlock lang="javascript">
           {`import { curiStore } from '@curi/svelte';
@@ -138,8 +138,8 @@ curiStore(router, store);`}
 </script>`}
       </PrismBlock>
       <p>
-        In your index file, setup a one time response handler to render this
-        component, making sure to pass the store to the component.
+        In your index file, setup an observer to render this component, making
+        sure to pass the store to the component.
       </p>
       <PrismBlock lang="javascript">
         {`import app from './components/app';

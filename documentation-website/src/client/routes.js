@@ -47,7 +47,7 @@ export default [
           const tutorial = TUTORIAL_API.find(match.params.slug);
           return {
             body: resolved.initial,
-            tutorial: tutorial
+            title: tutorial
               ? `Tutorial ${tutorial.title}`
               : "Tutorial Not Found"
           };

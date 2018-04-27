@@ -10,9 +10,9 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      Curi side effects are essentially permament observers (response handlers)
-      of your router, but you can specify whether they should be run before or
-      after response handlers that were setup using <IJS>router.respond</IJS>.
+      Curi side effects are permament observers of your router, but you can
+      specify whether they should be run before or after observers that were
+      setup using <IJS>router.respond()</IJS>.
     </p>
 
     <p>
@@ -30,10 +30,9 @@ export default ({ name }) => (
 
     <Section title="Adding Side Effects" id="adding">
       <p>
-        You add side effect functions to your router by adding a{" "}
-        <IJS>sideEffects</IJS> array to the options object (the third agument)
-        of <IJS>curi</IJS>. A side effect is an object with an <IJS>effect</IJS>{" "}
-        property whose values is a response handler function.
+        Side effects are provided to your router with the <IJS>sideEffects</IJS>{" "}
+        property of the options object. This is an array of objects with an{" "}
+        <IJS>effect</IJS> observer function.
       </p>
 
       <PrismBlock lang="javascript">
@@ -44,9 +43,9 @@ export default ({ name }) => (
 
       <p>
         Side effects can also have an <IJS>after</IJS> property. By default,
-        side effect functions will be called before any response handler
-        functions (the ones added with <IJS>router.respond</IJS>). However, you
-        might prefer for a side effect to be run after the response handlers. To
+        side effect functions will be called before any regular observer
+        functions (the ones added with <IJS>router.respond()</IJS>). However,
+        you might prefer for a side effect to be run after those observers. To
         do that, you just need to include <IJS>after: true</IJS> in your side
         effect object. If you do no provide this property, this will default to{" "}
         <IJS>false</IJS>.

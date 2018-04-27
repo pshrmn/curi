@@ -25,15 +25,15 @@ const guides = [
     type: "basic"
   },
   {
-    name: "Response Handlers",
-    slug: "response-handlers",
-    description: "Learn how to use response handlers to react to navigation",
+    name: "Responses",
+    slug: "responses",
+    description: "Learn about the objects created from matching routes",
     type: "basic"
   },
   {
-    name: "Response Objects",
-    slug: "responses",
-    description: "Learn about the objects created for matching routes",
+    name: "Observers",
+    slug: "observers",
+    description: "Learn how to use observers to react to navigation",
     type: "basic"
   },
   {
@@ -49,7 +49,7 @@ const guides = [
     type: "advanced"
   },
   {
-    name: "Using Side Effects",
+    name: "Side Effects",
     slug: "side-effects",
     description:
       "Learn how to use side effect functions to trigger behavior after navigation",

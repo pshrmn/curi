@@ -11,9 +11,8 @@ export default ({ name }) => (
     <h1>{name}</h1>
 
     <p>
-      Routes are JavaScript objects with two required props: <IJS>name</IJS> and{" "}
-      <IJS>path</IJS>. There are also a number of other props that you can use
-      to enhance the routes, which are covered below.
+      Routes are JavaScript objects with two required props—<IJS>name</IJS> and{" "}
+      <IJS>path</IJS>—and a number of optional properties.
     </p>
 
     <PrismBlock lang="javascript">
@@ -36,12 +35,11 @@ export default ({ name }) => (
 
       <Subsection title="route.path" id="path">
         <p>
-          A string that will be passed to{" "}
+          A string to describe what the route matches. Curi uses{" "}
           <a href="https://github.com/pillarjs/path-to-regexp#parameters">
             <IJS>path-to-regexp</IJS>
           </a>{" "}
-          to generate a regular expression use for matching the route to a
-          location's <IJS>pathname</IJS>.{" "}
+          for matching the route to a location's <IJS>pathname</IJS>.{" "}
           <a href="https://github.com/pillarjs/path-to-regexp#parameters">
             Path parameters
           </a>{" "}
@@ -62,36 +60,36 @@ export default ({ name }) => (
 // { name: 'Home', path: '/' }`}
         </PrismBlock>
         <Warning>
-          <IJS>path-to-regexp</IJS> supports arrays and RegExps, but only string
-          paths are supported here. This is because Curi needs to generate
-          pathnames given a route name, which <IJS>path-to-regexp</IJS> can only
-          do with strings.
+          <IJS>path-to-regexp</IJS> supports arrays and RegExps, but Curi only
+          supports string paths. This is because Curi needs to generate
+          pathnames given a route name and <IJS>path-to-regexp</IJS> can only do
+          that from strings.
         </Warning>
       </Subsection>
 
       <Subsection title="route.on" id="on">
         <p>
           The <IJS>on</IJS> object groups functions that will be called when the
-          route matches.
+          route matches. A route with an <IJS>on.initial()</IJS> or{" "}
+          <IJS>on.every()</IJS> function is async.
         </p>
 
         <Subsection tag="h5" title="on.initial()" id="initial">
           <p>
-            <IJS>on.initial()</IJS> will be called the first time that a route
-            matches and its result will be re-used on subsequent matches. It
+            <IJS>on.initial()</IJS> is called the first time that a route
+            matches. Its return value will be re-used on subsequent matches. It
             should return a Promise.
           </p>
           <p>
-            This can be used for loading resources that are required for the
-            route to display properly, but don't change based on{" "}
+            This can be used for loading resources that don't change based on{" "}
             <IJS>params</IJS>. For example, if you are doing code splitting with
             Webpack using <IJS>import()</IJS>, you can load the modules in{" "}
             <IJS>on.initial()</IJS>.
           </p>
           <p>
-            The <IJS>initial</IJS> function will be passed the matched route
-            properties: <IJS>name</IJS>, <IJS>params</IJS>, <IJS>partials</IJS>,{" "}
-            <IJS>location</IJS>, and <IJS>key</IJS>.
+            The <IJS>initial</IJS> function will be passed an object with the
+            matched route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
+            <IJS>partials</IJS>, <IJS>location</IJS>, and <IJS>key</IJS>.
           </p>
           <PrismBlock lang="javascript">
             {`const about = {
@@ -111,9 +109,9 @@ export default ({ name }) => (
             <IJS>on.every()</IJS> should return a Promise.
           </p>
           <p>
-            The <IJS>every</IJS> function will be passed the matched route
-            properties: <IJS>name</IJS>, <IJS>params</IJS>, <IJS>partials</IJS>,{" "}
-            <IJS>location</IJS>, and <IJS>key</IJS>.
+            The <IJS>every</IJS> function will be passed an object with the
+            matched route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
+            <IJS>partials</IJS>, <IJS>location</IJS>, and <IJS>key</IJS>.
           </p>
           <PrismBlock lang="javascript">
             {`// fetch user data
@@ -136,7 +134,11 @@ const user = {
         </Subsection>
       </Subsection>
       <Subsection title="route.response()" id="response">
-        <p>A function for modifying the response object.</p>
+        <p>
+          A function for modifying the response object. This returns an object
+          whose properties will be merged with the matched route properties to
+          create the "final" response.
+        </p>
         <p>
           Only valid properties will be merged onto the response; everything
           else will be ignored. The valid properties are:
@@ -562,8 +564,8 @@ const user = {
       <h2>Next</h2>
       <p>
         Now that you know how to setup your routes, we will take a look at{" "}
-        <Link to="Guide" params={{ slug: "response-handlers" }}>
-          response handlers
+        <Link to="Guide" params={{ slug: "responses" }}>
+          responses
         </Link>.
       </p>
     </div>

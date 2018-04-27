@@ -1,7 +1,7 @@
 import Installation from "./Installation";
 import GettingStarted from "./GettingStarted";
 import AllAboutRoutes from "./AllAboutRoutes";
-import ResponseHandlers from "./ResponseHandlers";
+import Observers from "./Observers";
 import Responses from "./Responses";
 import NavigationObjects from "./NavigationObjects";
 import RouteInteractions from "./RouteInteractions";
@@ -18,7 +18,7 @@ export default {
   "getting-started": GettingStarted,
   "sync-or-async": SyncAsync,
   routes: AllAboutRoutes,
-  "response-handlers": ResponseHandlers,
+  observers: Observers,
   responses: Responses,
   "navigation-objects": NavigationObjects,
   "route-interactions": RouteInteractions,

@@ -124,22 +124,21 @@ router.route.pathname("Home"); // returns "/"`}
 
 const scroll = createScrollSideEffect();
 const router = curi(history, routes, {
-  sideEffects: [{ fn: scroll, after: true }]
+  sideEffects: [{ effect: scroll, after: true }]
 });`}
                 </PrismBlock>
                 <ul>
                   <li>
-                    <IJS>fn</IJS> is a function (response handler) that will be
-                    called whenever a response is generated.
+                    <IJS>effect</IJS> is an observer that will be called
+                    whenever a response is generated.
                   </li>
                   <li>
                     <IJS>after</IJS> (default <IJS>false</IJS>) controls whether
-                    the response handler is called before or after regular*
-                    response handlers.
+                    the observer is called before or after regular* observers.
                   </li>
                 </ul>
                 <p>
-                  * A "regular" response handler is one added using{" "}
+                  * A "regular" observer is one added using{" "}
                   <Link hash="respond">
                     <IJS>router.respond()</IJS>
                   </Link>.
@@ -150,10 +149,10 @@ const router = curi(history, routes, {
                   <IJS>emitRedirects</IJS> - When <IJS>false</IJS> (default is{" "}
                   <IJS>true</IJS>), response objects with the{" "}
                   <IJS>redirectTo</IJS> property{" "}
-                  <strong>will not be emitted</strong> to response handlers (but
-                  they will still trigger automatic redirects). This can be
-                  useful for avoiding an extra render, but should not be used on
-                  the server.
+                  <strong>will not be emitted</strong> to observers (but they
+                  will still trigger automatic redirects). This can be useful
+                  for avoiding an extra render, but should not be used on the
+                  server.
                 </p>
                 <PrismBlock lang="javascript">
                   {`const routes = [
@@ -326,8 +325,8 @@ const router = curi(history, routes, {
             <p>
               When a matched route is async (it has an <IJS>on.initial()</IJS>{" "}
               or <IJS>on.every()</IJS> function), the router will not call the
-              response handler functions until the <IJS>on</IJS> function(s)
-              have resolved.
+              observer functions until the <IJS>on</IJS> function(s) have
+              resolved.
             </p>
             <Subsection tag="h6" title="options" id="respond-options">
               <PrismBlock lang="javascript">
@@ -348,34 +347,35 @@ const router = curi(history, routes, {
                     <td>observe</td>
                     <td>false</td>
                     <td>
-                      When true, the response handler will be called for all
-                      future responses that are emitted by the router (until it
-                      stops observing) When false, the response handler will
-                      only be called one time.
+                      When true, the function will be called for all future
+                      responses that are emitted by the router (until it stops
+                      observing) When false, the function will only be called
+                      one time.
                     </td>
                   </tr>
                   <tr>
                     <td>initial</td>
                     <td>true</td>
                     <td>
-                      When true, the response handler will be called immediately
-                      if a response exists. When false, the response handler
-                      will not be called until the next response is emitted.
+                      When true, the function will be called immediately if a
+                      response exists. When false, the response function will
+                      not be called until the next response is emitted.
                     </td>
                   </tr>
                 </tbody>
               </table>
               <p>
                 <IJS>respond()</IJS> returns a function to stop calling the
-                response handler when it is given the <IJS>observe: true</IJS>{" "}
-                option.
+                observer function. This function is only returned when{" "}
+                <IJS>router.respond()</IJS> is given the{" "}
+                <IJS>observe: true</IJS> option.
               </p>
               <PrismBlock lang="javascript">
                 {`const stopObserving = router.respond(() => {...}, { observe: true });
-// the router will call the response handler for all responses
+// the router will call the observer for all responses
 
 stopObserving();
-// the router no longer calls the response handler`}
+// the router no longer calls the observer`}
               </PrismBlock>
             </Subsection>
           </Subsection>
