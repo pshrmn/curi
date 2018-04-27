@@ -53,6 +53,9 @@ pre[class*="language-"] {
 .note:not(pre) > code[class*="language-"] {
   background: #fff; }
 
+.warning:not(pre) > code[class*="language-"] {
+  background: #ffb74d; }
+
 .aside :not(pre) > code[class*="language-"] {
   background: #81c784; }
 
@@ -550,5 +553,5 @@ main {
         -ms-flex-order: 2;
             order: 2;
     position: relative;
-    max-width: 800px; } }
+    max-width: 1000px; } }
 

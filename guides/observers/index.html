@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Observers Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Observers</h1><p>The Curi router uses an observer pattern. You give it an observer function and when a response is created, that function will be called.</p><div class="section" id="argument"><h2>Observer Argument<a class="header-link" href="/guides/observers/#argument">#</a></h2><p>Observers are passed an object with three properties:<!-- --> <a href="/packages/@curi/core/#properties"><code class="language-javascript">router</code></a>,<!-- --> <a href="/guides/responses/"><code class="language-javascript">response</code></a>, and<!-- --> <a href="/guides/navigation-objects/"><code class="language-javascript">navigation</code></a>. Which ones you use vary based on what the response handler is doing.</p><pre><code class="language-javascript">function responseHandler({ router, response, navigation }) {
+  // ...
+}</code></pre></div><div class="section" id="use-cases"><h2>Use Cases<a class="header-link" href="/guides/observers/#use-cases">#</a></h2><p>When should you use observers?</p><div class="subsection" id="setup"><h3>Setup<a class="header-link" href="/guides/observers/#setup">#</a></h3><p>If any of the routes in an application have <code class="language-javascript">on.initial()</code> or<!-- --> <code class="language-javascript">on.every()</code> functions, when those routes match the response will be emitted asynchronously. When the application first renders, if the router matches an async route, the response isn&#x27;t immediately ready to use. To deal with this, you can use an observer to render once the initial response is ready.</p><pre><code class="language-jsx">function setup({ router }) {
+  ReactDOM.render((
+    &lt;CuriProvider router={router}&gt;
+      {({ response }) =&gt; &lt;response.body /&gt;}
+    &lt;/CuriProvider&gt;
+  ), document.getElementById(&#x27;root&#x27;));
+}</code></pre><p>A setup function only needs to be called once, so you can call<!-- --> <code class="language-javascript">router.respond()</code> without any options.</p><pre><code class="language-javascript">router.respond(setup);</code></pre><div class="note"><strong>Note:</strong> <!-- -->Setup is the only thing your application <em>should</em> need to write an observer for.</div></div><div class="subsection" id="rendering"><h3>Rendering<a class="header-link" href="/guides/observers/#rendering">#</a></h3><p>You could manually re-render your application by using a response handler that observes the router for every response (by passing the<!-- --> <code class="language-javascript">{ observe: true }</code> option to <code class="language-javascript">router.respond()</code>).</p><p>If your application is using one of the provided Curi rendering packages (<a href="/packages/@curi/react/"><code class="language-javascript">@curi/react</code></a>,<!-- --> <a href="/packages/@curi/react-native/"><code class="language-javascript">@curi/react-native</code></a>,<!-- --> <a href="/packages/@curi/vue/"><code class="language-javascript">@curi/vue</code></a>, and<!-- --> <a href="/packages/@curi/svelte/"><code class="language-javascript">@curi/svelte</code></a>) you won&#x27;t actually have to manually observe the router because those packages do that internally for you.</p><pre><code class="language-javascript">function render({ response }) {
+  // render somehow
+}
+
+router.respond(render, { observe: true });</code></pre></div><div class="subsection" id="side-effects"><h3>Side Effects<a class="header-link" href="/guides/observers/#side-effects">#</a></h3><p>Side effects are observers that are provided to the router at creation instead of by calling <code class="language-javascript">router.respond()</code>. These can be useful for tasks that are not rendering related as well as for tasks that need to be performed after a render has completed.</p><p>The<!-- --> <a href="/packages/@curi/side-effect-title/"><code class="language-javascript">@curi/side-effect-title</code></a> <!-- -->package provides a side effect that will use <code class="language-javascript">response.title</code> <!-- -->to set the page&#x27;s <code class="language-javascript">document.title</code>.</p><p>With single-page applications, clicking on links wish hashes won&#x27;t always scroll to the matching element in the page. The<!-- --> <a href="/packages/@curi/side-effect-scroll/"><code class="language-javascript">@curi/side-effect-scroll</code></a> <!-- -->package adds this behavior by scrolling the page to the element that matches the new response&#x27;s hash (<code class="language-javascript">response.location.hash</code>) after the new response has rendered.</p><p>If you need to add logging to your application, you could write your own observer to do this. Your observer can either be added as a side effect when the router is constructed or later using<!-- --> <code class="language-javascript">router.respond()</code>.</p><pre><code class="language-javascript">function logger({ response }) {
+  loggingAPI.add(response.location);
+}
+
+// as a side-effect
+const router = curi(history, routes, {
+  sideEffects: [{ fn: logger }]
+});
+
+// with respond
+router.respond(logger, { observe: true });</code></pre></div></div><div><h2>Next</h2><p>Next, we will cover<!-- --> <a href="/guides/navigation-objects/">navigation objects</a>.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/responses/">Responses</a></li><li class="solo"><a class=" active" href="/guides/observers/">Observers</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/react/">React Basics</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>

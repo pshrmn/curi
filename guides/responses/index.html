@@ -3,15 +3,13 @@
   <head>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Response Objects Guide | Curi Documentation</title>
+    <title>Responses Guide | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Response Objects</h1><p>Response objects are created by the router to descibe the route that matches a location. Some of these properties are set automatically, while others can be modified using the object returned a route&#x27;s<!-- --> <code class="language-javascript">response()</code> function.</p><div class="note"><strong>Note:</strong> <!-- -->You can review the response properties that can be modified in the<!-- --> <a href="/guides/routes/#response">routes guide</a>.</div><div class="section" id="response-properties"><h2>The Properties of a Response Object<a class="header-link" href="/guides/responses/#response-properties">#</a></h2><pre><code class="language-javascript">{
-  // The location key
-  key: &#x27;1.0&#x27;,
-
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Responses</h1><p>Response objects are created by the router to descibe the route that matches a location. Some of these properties are set automatically, while others can be modified using the object returned a route&#x27;s<!-- --> <code class="language-javascript">response()</code> function.</p><div class="note"><strong>Note:</strong> <!-- -->You can review the response properties that can be modified in the<!-- --> <a href="/guides/routes/#response">routes guide</a>.</div><div class="section" id="response-properties"><h2>The Properties of a Response Object<a class="header-link" href="/guides/responses/#response-properties">#</a></h2><p>There are two types of response properties. The &quot;match&quot; properties are set based on the route that matches a location. A response always has these proeprties. The &quot;settable&quot; properties are ones that are added by a matched route&#x27;s <code class="language-javascript">response()</code> function. These only exist on the response when they are returned by <code class="language-javascript">route.response()</code>.</p><pre><code class="language-javascript">// match properties
+{
   // The location object used to generate the response.
   location: { pathname: &#x27;/photos/6789/12345&#x27;, ... },
 
@@ -26,21 +24,8 @@
   // from the pathname by path-to-regexp.
   // This includes params from ancestor routes.
   params: { photoID: 12345, albumID: 6789 },
-
-  // The status code for the response.
-  // This defaults to 200.
-  // It can also be set with a route&#x27;s response() return object
-  status: 200,
-
-  // This can be anything you want. It is set using
-  // a route&#x27;s response() return object.
-  // The default value is undefined.
-  data: {...},
-
-  // The title string is set using a route&#x27;s response() return object
-  // The default value is an empty string.
-  title: &#x27;Photo 12345&#x27;,
-
+        }</code></pre><pre><code class="language-javascript">// settable properties
+{
   // The body value is set using a route&#x27;s response() return object.
   // This is where you can attach component(s) to a route. The structure here
   // is up to you, but each of your routes should have the same structure.
@@ -52,16 +37,29 @@
   },
   // Please see below for more information about this property
 
+  // The status code for the response.
+  // This is mostly useful for server-side rendering
+  status: 200,
+
+  // This can be anything you want. It is set using
+  // a route&#x27;s response() return object.
+  data: {...},
+
+  // The title string is set using a route&#x27;s response() return object
+  title: &#x27;Photo 12345&#x27;,
+
   // A value set by the route&#x27;s response() return object.
-  // defaults to undefined
-  error: undefined
-}</code></pre><div class="subsection" id="redirect-properties"><h3>Redirect Response<a class="header-link" href="/guides/responses/#redirect-properties">#</a></h3><p>When <code class="language-javascript">route.response()</code> returns an object with a<!-- --> <a href="/guides/routes/#response"><code class="language-javascript">redirectTo</code> property</a> <!-- -->the response&#x27;s <code class="language-javascript">redirectTo</code> will be a location object. Curi will automatically redirect the location when it sees this.</p><pre><code class="language-javascript">{
+  error: undefined,
+
+  // A location to redirect to
+  redirectTo: {...}
+}</code></pre><div class="subsection" id="redirect-properties"><h3>Redirect Response<a class="header-link" href="/guides/responses/#redirect-properties">#</a></h3><p>When <code class="language-javascript">route.response()</code> returns an object with a<!-- --> <a href="/guides/routes/#response"><code class="language-javascript">redirectTo</code> property</a> <!-- -->the router will turn this into a location object. Curi will automatically redirect to this location.</p><pre><code class="language-javascript">{
   // The redirectTo property provides information on
   // where you should redirect to
   redirectTo: { pathname: &#x27;/login&#x27; }
-}</code></pre><p>You can choose whether or not you want redirect responses emitted to response handlers. The default behavior is that they are, but this also means that you have to render using the redirect response. You can pass the <code class="language-javascript">{ emitRedirects: false }</code> option when you create your router to prevent this.</p><pre><code class="language-javascript">const router = curi(history, routes, {
+}</code></pre><p>You can choose whether or not you want responses with a<!-- --> <code class="language-javascript">redirectTo</code> property to be emitted. The default behavior is to emit them, but this also means that you have to render using the redirect response. The <code class="language-javascript">{ emitRedirects: false }</code> option prevents this.</p><pre><code class="language-javascript">const router = curi(history, routes, {
   emitRedirects: false
-});</code></pre></div></div><div class="section" id="body-property"><h2>The Body Property<a class="header-link" href="/guides/responses/#body-property">#</a></h2><p>The body property of a response is likely the most important property of a <code class="language-javascript">response</code> because it is what you will actually render. It is set using the object returned from the matched route&#x27;s<a href="/guides/routes/#response"><code class="language-javascript">response()</code> function</a>. This value can be anything you want it to be, but it should usually be a function/component or an object containing functions/components.</p><pre><code class="language-javascript">{
+});</code></pre></div></div><div class="section" id="body-property"><h2>The Body Property<a class="header-link" href="/guides/responses/#body-property">#</a></h2><p>The <code class="language-javascript">body</code> property of a response is likely the most important property of a <code class="language-javascript">response</code> because it is what you will actually render. This value can be anything you want it to be, but it should usually be a function/component or an object containing functions/components.</p><pre><code class="language-javascript">{
   name: &quot;Home&quot;,
   path: &quot;&quot;,
   response: () =&gt; {
@@ -78,7 +76,7 @@
       }
     };
   }
-}</code></pre><div class="note"><strong>Note:</strong> <!-- -->It is important that each route uses the same structure for setting the body. Mixing structures will make renderin more difficult to reason about.</div></div><div><h2>Next</h2><p>Next, we&#x27;ll take a look at another object passed to response handlers:<!-- --> <a href="/guides/navigation-objects/">navigation objects</a> <!-- -->.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/response-handlers/">Response Handlers</a></li><li class="solo"><a class=" active" href="/guides/responses/">Response Objects</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Using Side Effects</a></li><li class="solo"><a class=" " href="/guides/response-caching/">Response Caching</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/react/">React Basics</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div>
+}</code></pre><div class="note"><strong>Note:</strong> <!-- -->It is important that each route uses the same structure for setting the body. Mixing structures will make rendering more difficult.</div></div><div><h2>Next</h2><p>Next, we&#x27;ll take a look at<!-- --> <a href="/guides/observers/">observers</a>.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" active" href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/observers/">Observers</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/react/">React Basics</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div>
     <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
