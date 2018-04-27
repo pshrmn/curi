@@ -2,13 +2,15 @@
 body {
   font-family: "Zilla Slab", serif;
   font-weight: 300;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 24px;
+  line-height: 36px;
   margin: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   -webkit-box-sizing: inherit;
           box-sizing: inherit; }
 
@@ -192,7 +194,7 @@ p {
   margin: 10px 0; }
 
 h1 {
-  font-size: 1.75em; }
+  font-size: 1.5em; }
 
 h2 {
   font-size: 1.3em; }
@@ -223,7 +225,9 @@ td {
   padding: 0 10px; }
 
 header {
-  background: #222233; }
+  background: #222233;
+  width: 100%;
+  padding: 30px 15px; }
   header nav {
     color: #efefef; }
     header nav ul {
@@ -251,7 +255,8 @@ header {
   color: #ff9800; }
 
 main {
-  padding: 10px 10px 0 10px;
+  width: calc(100vw - 20px);
+  padding: 10px 10px 0;
   margin-bottom: 20px; }
   main a {
     color: #222233; }
@@ -273,16 +278,15 @@ main {
   border: 1px solid #ff9800; }
 
 .banner {
-  text-align: center;
   margin-top: 15px;
   color: #222233;
   max-width: 800px;
-  margin: 0 auto; }
+  padding: 0 15px; }
   .banner h1 {
-    font-size: 2em;
     margin: 10px 0; }
   .banner p {
-    font-size: 1.1em; }
+    font-size: 1.1em;
+    margin: 0; }
   .banner pre {
     margin-top: 3px; }
   .banner .banner-buttons {
@@ -430,8 +434,8 @@ main {
     margin: 0 10px 10px 0; }
     .tiles .tile a {
       display: block;
-      width: 200px;
-      height: 200px;
+      width: 250px;
+      height: 250px;
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       padding: 5px 10px; }
@@ -448,10 +452,22 @@ main {
 #API .section {
   margin-bottom: 5px; }
 
-@media only screen and (min-width: 900px) {
-  header nav {
-    width: 900px;
-    margin: 0 auto; }
+.side-by-side {
+  margin: 10px 0;
+  width: 100%; }
+
+.explanation {
+  width: 100%; }
+
+.code-block {
+  width: 100%; }
+  .code-block pre {
+    height: 100%; }
+  @media only screen and (min-width: 641px) {
+  body {
+    font-size: 20px; }
+  header {
+    padding: 0; }
     header nav ul {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -462,17 +478,39 @@ main {
               flex-flow: row wrap;
       -webkit-box-align: end;
           -ms-flex-align: end;
-              align-items: flex-end; }
+              align-items: flex-end;
+      max-width: 100%; }
       header nav ul li {
         margin-right: 20px; }
     header nav a {
-      border-bottom: 3px solid #222233; }
+      border-bottom: 3px solid #222233;
+      padding: 0 5px; }
       header nav a.active {
         border-bottom-color: #ff9800; }
   main {
-    width: 900px;
-    margin-left: auto;
-    margin-right: auto; }
+    padding: 10px 25px 0; }
+  .banner {
+    padding: 0; }
+  .side-by-side {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row wrap;
+            flex-flow: row wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+  .explanation,
+  .code-block {
+    max-width: 600px;
+    min-width: 500px; }
+  .code-block {
+    margin-right: 20px; } }
+  @media only screen and (min-width: 1025px) {
+  body {
+    font-size: 20px; }
   .code {
     display: -webkit-box;
     display: -ms-flexbox;

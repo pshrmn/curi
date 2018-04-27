@@ -3,12 +3,12 @@
   <head>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> | Curi Documentation</title>
+    <title>undefined | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><div><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides">Guides</a></li><li><a class=" active" href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="tutorial"><div class="content"><h1>Vue Basics Tutorial</h1><p>In this tutorial, we will be building a website for a bookstore. This will focus on the front-end part of the application.</p><div class="tutorial-outline"><p>In this tutorial, we will be doing the following:</p><ul><li>Learn how to define routes and setup the Curi router.</li><li>Learn how to render Vue components based on the current location.</li><li>Learn how to navigate within the application.</li></ul></div><div class="section" id="setup"><h2>Setup<a class="header-link" href="/tutorial/vue-basics#setup">#</a></h2><p>We will be using<!-- --> <a href="https://github.com/vuejs/vue-cli"><code class="language-javascript">@vue/cli</code></a> <!-- -->to develop this website.</p><div class="note"><strong>Note:</strong> <!-- -->The instructions here assume that you have NodeJS and NPM &gt; 5.2 installed on your computer. If you do not and cannot or just prefer to avoid setup altogether, you can follow along using<!-- --> <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the boilerplate will be different, but the differences are minor.</div><p>Begin by opening a terminal and navigating to the directory where you want to save your code. Then, we will use <code class="language-javascript">@vue/cli</code> to create the application. We</p><pre><code class="language-bash"># install vue-cli if it isn&#x27;t already
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides">Guides</a></li><li><a class=" active" href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="tutorial"><div class="content"><h1>Vue Basics Tutorial</h1><p>In this tutorial, we will be building a website for a bookstore. This will focus on the front-end part of the application.</p><div class="tutorial-outline"><p>In this tutorial, we will be doing the following:</p><ul><li>Learn how to define routes and setup the Curi router.</li><li>Learn how to render Vue components based on the current location.</li><li>Learn how to navigate within the application.</li></ul></div><div class="section" id="setup"><h2>Setup<a class="header-link" href="/tutorial/vue-basics#setup">#</a></h2><p>We will be using<!-- --> <a href="https://github.com/vuejs/vue-cli"><code class="language-javascript">@vue/cli</code></a> <!-- -->to develop this website.</p><div class="note"><strong>Note:</strong> <!-- -->The instructions here assume that you have NodeJS and NPM &gt; 5.2 installed on your computer. If you do not and cannot or just prefer to avoid setup altogether, you can follow along using<!-- --> <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the boilerplate will be different, but the differences are minor.</div><p>Begin by opening a terminal and navigating to the directory where you want to save your code. Then, we will use <code class="language-javascript">@vue/cli</code> to create the application. We</p><pre><code class="language-bash"># install vue-cli if it isn&#x27;t already
 npm install --global @vue/cli
 # create the application
 vue create curi-bookstore
@@ -332,15 +332,15 @@ export default {
     cart.clear();
     return [];
   }
-};</code></pre><p>As stated above, we can access our <code class="language-javascript">router</code> in the<!-- --> <code class="language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component using <code class="language-javascript">this.$router</code>.<!-- --> <code class="language-javascript">router.history</code> is our Hickory history object. This object can be used to navigate to a new location. This means that when the user clicks a button to add a book to their shopping cart, we can automatically navigate to the checkout page.</p><div class="aside" id="nav-methods"><h3>Navigation Methods<a class="header-link" href="/tutorial/vue-basics#nav-methods">#</a></h3><p>The <code class="language-javascript">history</code> object provides three methods to navigate to new locations.</p><p><code class="language-javascript">push()</code> pushes a new location after the current index, removing any locations after the current location.</p><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
-history.push({ pathname: &#x27;/new&#x27; })
-// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2</code></pre><p><code class="language-javascript">replace()</code> replaces the location at the current index.</p><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
-history.replace({ pathname: &#x27;/new&#x27; })
-// session = [&#x27;/one&#x27;, &#x27;/new&#x27;, &#x27;/three&#x27;], index = 1</code></pre><p><code class="language-javascript">navigate()</code> is a mix between <code class="language-javascript">push()</code> and<!-- --> <code class="language-javascript">replace()</code>. It mimics the behavior of clicking on links, so if you navigate to the same location as the current one, and if you navigate to a new location, it will push.</p><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
-history.navigate({ pathname: &#x27;/two&#x27; })
+};</code></pre><p>As stated above, we can access our <code class="language-javascript">router</code> in the<!-- --> <code class="language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component using <code class="language-javascript">this.$router</code>. The router&#x27;s<!-- --> <code class="language-javascript">navigate()</code> function can be used to navigate to a new location. This means that when the user clicks a button to add a book to their shopping cart, we can automatically navigate to the checkout page.</p><div class="aside" id="nav-method"><h3>Navigate Method<a class="header-link" href="/tutorial/vue-basics#nav-method">#</a></h3><p><code class="language-javascript">router.navigate()</code> is used to navigate to new locations. There are three methods of navigation: <code class="language-javascript">PUSH</code>,<!-- --> <code class="language-javascript">REPLACE</code>, and <code class="language-javascript">ANCHOR</code>.</p><p><code class="language-javascript">PUSH</code> pushes a new location after the current index, removing any locations after the current location.</p><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+router.navigate({ name: &quot;New&quot;, method: &quot;PUSH&quot; });
+// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2</code></pre><p><code class="language-javascript">REPLACE</code> replaces the location at the current index.</p><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+router.navigate({ name: &quot;Replace&quot;, method: &quot;REPLACE&quot; });
+// session = [&#x27;/one&#x27;, &#x27;/replacement&#x27;, &#x27;/three&#x27;], index = 1</code></pre><p><code class="language-javascript">ANCHOR</code> is a mix between <code class="language-javascript">PUSH</code> and<!-- --> <code class="language-javascript">REPLACE</code>. It mimics the behavior of clicking on links, so if you navigate to the same location as the current one it will replace, and if you navigate to a new location it will push.</p><p>If <code class="language-javascript">method.navigate()</code> is called without a navigation<!-- --> <code class="language-javascript">method</code>, it will default to <code class="language-javascript">ANCHOR</code>.</p><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+router.navigate({ name: &quot;Two&quot;, method: &quot;ANCHOR&quot; });
 // session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
-history.navigate({ pathname: &#x27;/new&#x27; })
-// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2<!-- -->`}</code></pre></div><p>Curi uses route interactions to add functionality to routes. Most of the time, you have to include these while creating the router, but Curi has one built-in route interaction: <code class="language-javascript">pathname</code>. The<!-- --> <code class="language-jsx">&lt;<!-- -->curi-link<!-- -->&gt;</code> automatically generates the correct pathname string using the <code class="language-javascript">pathname</code> route interaction, the <code class="language-javascript">to</code> prop (and sometimes the <code class="language-javascript">params</code> prop). We can access this route interaction as <code class="language-javascript">router.route.pathname()</code> to generate pathnames ourselves.</p><p>We also want to import our shopping cart API so that we can add a book to the cart.</p><pre data-line="8-10,19,29-35"><code class="language-html">&lt;!-- src/components/Book.vue --&gt;
+router.navigate({ name: &quot;New&quot;, method: &quot;ANCHOR&quot; });
+// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2<!-- -->`}</code></pre></div><p>We also want to import our shopping cart API so that we can add a book to the cart.</p><pre data-line="8-10,19,29-35"><code class="language-html">&lt;!-- src/components/Book.vue --&gt;
 &lt;template&gt;
   &lt;div v-if=&quot;book&quot;&gt;
     &lt;h1&gt;{{book.title}}&lt;/h1&gt;
@@ -371,8 +371,7 @@ history.navigate({ pathname: &#x27;/new&#x27; })
     methods: {
       onClick: function() {
         cart.add(this.book, 1);
-        const pathname = this.$router.route.pathname(&#x27;Checkout&#x27;);
-        this.$router.history.push({ pathname });
+        this.$router.navigate({ name: &quot;Checkout&quot; });
       }
     }
   }
@@ -419,12 +418,15 @@ history.navigate({ pathname: &#x27;/new&#x27; })
     methods: {
       onClick: function() {
         this.books = cart.reset();
-        const pathname = this.$router.route.pathname(&#x27;Checkout&#x27;);
-        this.$router.history.replace({ pathname, hash: &#x27;thanks&#x27; });
+        this.$router.navigate(
+          { name: &quot;Checkout&quot;,
+          hash: &quot;thanks&quot;,
+          method: &quot;REPLACE&quot;
+        });
       }
     }
   }
-&lt;/script&gt;</code></pre></div><div class="section" id="next"><h2>What&#x27;s next?<a class="header-link" href="/tutorial/vue-basics#next">#</a></h2><p>We now have a functional website built with Vue and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides">guides</a> for information on advanced techniques.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul><li class="link-group"><h3>Basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/tutorial/react-basics">React Basics</a></li><li class="solo"><a class=" active" href="/tutorial/vue-basics">Vue Basics</a></li></ul></li></ul></div></div></main></div></div>
+&lt;/script&gt;</code></pre></div><div class="section" id="next"><h2>What&#x27;s next?<a class="header-link" href="/tutorial/vue-basics#next">#</a></h2><p>We now have a functional website built with Vue and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides">guides</a> for information on advanced techniques.</p></div></div><div class="sidebar"><h2>Tutorials</h2><ul><li class="link-group"><h3>Basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/tutorial/react-basics">React Basics</a></li><li class="solo"><a class=" active" href="/tutorial/vue-basics">Vue Basics</a></li></ul></li></ul></div></div></main></div>
     <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
