@@ -29,15 +29,9 @@ export interface SideEffect {
   after?: boolean;
 }
 
-export interface Cache {
-  set: (response: Response) => void;
-  get: (location: HickoryLocation) => Response;
-}
-
 export interface RouterOptions {
   route?: Array<Interaction>;
   sideEffects?: Array<SideEffect>;
-  cache?: Cache;
   pathnameOptions?: PathFunctionOptions;
   emitRedirects?: boolean;
 }
