@@ -366,7 +366,6 @@ new Vue({
   body: undefined,
   data: undefined,
   error: undefined,
-  key: '1.0',
   location: { pathname: '/', ... },
   name: 'Home',
   params: {},

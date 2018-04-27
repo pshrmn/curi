@@ -27,9 +27,6 @@ export default ({ name }) => (
     >
       <PrismBlock lang="javascript">
         {`{
-  // The location key
-  key: '1.0',
-
   // The location object used to generate the response.
   location: { pathname: '/photos/6789/12345', ... },
 

@@ -134,18 +134,6 @@ describe("route matching/response generation", () => {
 
   describe("response", () => {
     describe("properties", () => {
-      describe("key", () => {
-        it("is the key property from the location", done => {
-          const routes = [{ name: "Catch All", path: "(.*)" }];
-          const history = InMemory({ locations: ["/other-page"] });
-          const router = curi(history, routes);
-          router.respond(({ response }) => {
-            expect(response.key).toBe(history.location.key);
-            done();
-          });
-        });
-      });
-
       describe("location", () => {
         it("is the location used to match routes", done => {
           const routes = [{ name: "Catch All", path: "(.*)" }];
@@ -878,8 +866,7 @@ describe("route matching/response generation", () => {
                 location: {
                   pathname: "/hello",
                   query: "one=two"
-                },
-                key: "0.0"
+                }
               });
               return {};
             }
