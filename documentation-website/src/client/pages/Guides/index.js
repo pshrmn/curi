@@ -6,7 +6,6 @@ import Responses from "./Responses";
 import NavigationObjects from "./NavigationObjects";
 import RouteInteractions from "./RouteInteractions";
 import UsingSideEffects from "./UsingSideEffects";
-import ResponseCaching from "./ResponseCaching";
 import CodeSplitting from "./CodeSplitting";
 import Loading from "./Loading";
 import ReactBasics from "./ReactBasics";
@@ -24,7 +23,6 @@ export default {
   "navigation-objects": NavigationObjects,
   "route-interactions": RouteInteractions,
   "side-effects": UsingSideEffects,
-  "response-caching": ResponseCaching,
   "code-splitting": CodeSplitting,
   loading: Loading,
   react: ReactBasics,
