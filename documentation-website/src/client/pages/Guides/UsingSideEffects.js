@@ -132,12 +132,11 @@ const router = curi(history, routes, {
     <div>
       <h2>Next</h2>
       <p>
-        <IJS>curi</IJS>'s options object has three arguments. We have covered
-        the first two, so finally we will cover the cache option in the{" "}
-        <Link to="Guide" params={{ slug: "response-caching" }}>
-          response caching
+        Next we will take a closer look at how to add
+        <Link to="Guide" params={{ slug: "code-splitting" }}>
+          code-splitting
         </Link>{" "}
-        guide.
+        to routes.
       </p>
     </div>
   </BaseGuide>

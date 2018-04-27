@@ -185,21 +185,6 @@ const router = curi(history, routes, {
               </li>
               <li>
                 <p>
-                  <IJS>cache</IJS> - A{" "}
-                  <Link to="Guide" params={{ slug: "response-caching" }}>
-                    cache
-                  </Link>{" "}
-                  object with get/set properties to enable re-using responses
-                  when navigating to an already-visited location.
-                </p>
-                <p>
-                  Some data layers, like{" "}
-                  <a href="https://www.apollographql.com/">Apollo</a> have their
-                  own cache, which makes this unnecessary.
-                </p>
-              </li>
-              <li>
-                <p>
                   <IJS>pathnameOptions</IJS> - Curi uses{" "}
                   <a href="https://github.com/pillarjs/path-to-regexp">
                     <IJS>path-to-regexp</IJS>

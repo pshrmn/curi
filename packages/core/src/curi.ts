@@ -19,7 +19,6 @@ import {
   Emitted,
   RespondOptions,
   RemoveResponseHandler,
-  Cache,
   CurrentResponse,
   Navigation,
   NavigationDetails
@@ -33,7 +32,6 @@ function createRouter(
   const {
     route: userInteractions = [],
     sideEffects = [],
-    cache,
     pathnameOptions,
     emitRedirects = true
   } = options;
@@ -144,14 +142,6 @@ function createRouter(
       previous: mostRecent.response
     };
 
-    if (cache) {
-      const cachedResponse = cache.get(pendingNav.location);
-      if (cachedResponse != null) {
-        cacheAndEmit(cachedResponse, navigation);
-        return;
-      }
-    }
-
     const match = matchLocation(pendingNav.location, routes);
     // if no routes match, do nothing
     if (!match.route) {
@@ -173,7 +163,7 @@ function createRouter(
         registeredInteractions,
         null
       );
-      cacheAndEmit(response, navigation);
+      emitAndRedirect(response, navigation);
     } else {
       resolveMatchedRoute(match as Match).then((resolved: Resolved) => {
         if (pendingNav.cancelled) {
@@ -185,16 +175,13 @@ function createRouter(
           registeredInteractions,
           resolved
         );
-        cacheAndEmit(response, navigation);
+        emitAndRedirect(response, navigation);
       });
     }
   }
 
-  function cacheAndEmit(response: Response, navigation: Navigation) {
+  function emitAndRedirect(response: Response, navigation: Navigation) {
     activeResponse = undefined;
-    if (cache) {
-      cache.set(response);
-    }
 
     if (!response.redirectTo || emitRedirects) {
       emit(response, navigation);

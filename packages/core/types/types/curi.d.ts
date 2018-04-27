@@ -1,4 +1,4 @@
-import { History, HickoryLocation, Action, NavType } from "@hickory/root";
+import { History, Action, NavType } from "@hickory/root";
 import { PathFunctionOptions } from "path-to-regexp";
 import { Interaction, Interactions } from "./interaction";
 import { RouteDescriptor } from "./route";
@@ -22,14 +22,9 @@ export interface SideEffect {
     effect: ResponseHandler;
     after?: boolean;
 }
-export interface Cache {
-    set: (response: Response) => void;
-    get: (location: HickoryLocation) => Response;
-}
 export interface RouterOptions {
     route?: Array<Interaction>;
     sideEffects?: Array<SideEffect>;
-    cache?: Cache;
     pathnameOptions?: PathFunctionOptions;
     emitRedirects?: boolean;
 }

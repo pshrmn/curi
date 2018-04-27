@@ -189,11 +189,7 @@ export default ({ name }) => (
           big difference between the two is that <IJS>onChange</IJS> will
           receive the previous props, which could be used to determine which
           props changed. When converting these to Curi, we will use{" "}
-          <IJS>on.every()</IJS> for both. This misses out on the ability to
-          compare props in <IJS>onChange</IJS>, but the primary purpose for
-          comparing props in <IJS>onChange</IJS> was to know whether you're
-          navigating to a new route or just swapping query/hash values, so a
-          cache should serve the same purpose.
+          <IJS>on.every()</IJS> for both.
         </p>
         <p>
           There currently is no equivalent to <IJS>onLeave</IJS> with Curi. This

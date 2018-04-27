@@ -56,13 +56,6 @@ const guides = [
     type: "advanced"
   },
   {
-    name: "Response Caching",
-    slug: "response-caching",
-    description:
-      "Learn how to cache responses to prevent recreating duplicate responses",
-    type: "advanced"
-  },
-  {
     name: "Code Splitting",
     slug: "code-splitting",
     description: "Learn how to code split your project using Webpack",

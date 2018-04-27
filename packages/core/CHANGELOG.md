@@ -1,3 +1,7 @@
+## Next
+
+* Remove the `cache` option from the router.
+
 ## 1.0.0-beta.31
 
 * Only routes with `on.initial()` or `on.every()` are async. A router with a mix of synchronous and asynchronous routes will match sync routes synchronously.

@@ -28,6 +28,5 @@ export {
   Emitted,
   RemoveResponseHandler,
   SideEffect,
-  Cache,
   Navigation
 } from "./curi";
