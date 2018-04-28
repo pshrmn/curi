@@ -9,8 +9,8 @@
     "dev": "npm run webpack:dev -- --watch & cross-env BABEL_ENV=serve node ./src/server",
     "generate": "cross-env BABEL_ENV=serve node ./scripts/build",
     "prettier": "prettier --single-quote --write \"src/**/*.js\"",
-    "webpack:dev": "cross-env BABEL_ENV=build webpack-cli --mode=development",
-    "webpack:build": "cross-env BABEL_ENV=build webpack-cli --mode=production"
+    "webpack:dev": "webpack-cli --mode=development",
+    "webpack:build": "webpack-cli --mode=production"
   },
   "repository": {
     "type": "git",

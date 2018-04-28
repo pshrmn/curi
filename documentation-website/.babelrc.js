@@ -1,25 +1,25 @@
 const plugins = [
-  '@babel/plugin-proposal-class-properties',
-  '@babel/plugin-proposal-object-rest-spread'
+  "@babel/plugin-proposal-class-properties",
+  "@babel/plugin-proposal-object-rest-spread"
 ];
 
-const BABEL_ENV = process.env.BABEL_ENV
+const BABEL_ENV = process.env.BABEL_ENV;
 
-if (BABEL_ENV === 'build') {
-  plugins.push('@babel/plugin-syntax-dynamic-import');
-} else if (BABEL_ENV === 'serve') {
-  plugins.push('dynamic-import-node');
+if (BABEL_ENV === "serve") {
+  plugins.push("dynamic-import-node");
+} else {
+  plugins.push("@babel/plugin-syntax-dynamic-import");
 }
 
 const config = {
   presets: [
-    '@babel/preset-react',
+    "@babel/preset-react",
     [
-      '@babel/preset-env',
+      "@babel/preset-env",
       {
-        modules: 'commonjs',
+        modules: "commonjs",
         targets: {
-          browsers: ['> 1%']
+          browsers: ["> 1%"]
         }
       }
     ]

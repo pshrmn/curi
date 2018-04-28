@@ -10,7 +10,12 @@ import {
 
 const NPM = ({ name }) => (
   <SideBySide>
-    <Explanation>The package can be installed from NPM.</Explanation>
+    <Explanation>
+      <p>
+        If you have Node and NPM installed, you can install the package through{" "}
+        <IJS>npm</IJS> (or <IJS>yarn</IJS> if you prefer).
+      </p>
+    </Explanation>
     <CodeBlock lang="bash">
       {`npm install @curi/${name}
 yarn add @curi/${name}`}
@@ -27,8 +32,7 @@ const Unpkg = ({ name, version, globalName }) => (
       </p>
       <p>There are both full and minified versions available.</p>
       <p>
-        The package will be attached to the window as{" "}
-        <IJS>window.{globalName}</IJS>.
+        You can access the package via <IJS>window.{globalName}</IJS>.
       </p>
     </Explanation>
     <CodeBlock lang="markup">

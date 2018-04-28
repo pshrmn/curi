@@ -41,6 +41,8 @@ header {
 @media only screen and (min-width: $mediumScreen) {
   header {
     padding: 0;
+    position: fixed;
+    z-index: 1;
 
     nav {
       ul {
