@@ -1,55 +1,43 @@
 import React from "react";
-import { PrismBlock, InlineJS as IJS } from "../../../components/PrismBlocks";
+import { InlineJS as IJS } from "../../../components/PrismBlocks";
 import { Section } from "../../../components/Sections";
 import { isNull } from "util";
+import {
+  SideBySide,
+  Explanation,
+  CodeBlock
+} from "../../../components/SideBySide";
 
 const NPM = ({ name }) => (
-  <div>
-    <PrismBlock lang="bash">
+  <SideBySide>
+    <Explanation>The package can be installed from NPM.</Explanation>
+    <CodeBlock lang="bash">
       {`npm install @curi/${name}
 yarn add @curi/${name}`}
-    </PrismBlock>
-  </div>
+    </CodeBlock>
+  </SideBySide>
 );
 
-class Unpkg extends React.Component {
-  state = { expanded: false };
-
-  toggle = () => {
-    this.setState({
-      expanded: !this.state.expanded
-    });
-  };
-
-  render() {
-    const { name, version, globalName } = this.props;
-    return (
-      <div>
-        <p>Prefer inline scripts?</p>
-        <button type="button" onClick={this.toggle}>
-          {this.state.expanded ? "Hide <script> info" : "Show <script> info"}
-        </button>
-        {this.state.expanded ? (
-          <React.Fragment>
-            <p>
-              <a href="https://unpkg.com">Unpkg</a> will always have the latest
-              version of <IJS>@curi/{name}</IJS> available.
-            </p>
-            <PrismBlock lang="markup">
-              {`<script src="https://unpkg.com/@curi/${name}@${version}/dist/curi-${name}.js"></script>`}
-            </PrismBlock>
-            <p>
-              There is also a minimized version available if you change the
-              filename to <IJS>{name}.min.js</IJS>. The package will be attached
-              to the window as <IJS>window.{globalName}</IJS>.
-            </p>
-          </React.Fragment>
-        ) : null}
-      </div>
-    );
-  }
-}
-
+const Unpkg = ({ name, version, globalName }) => (
+  <SideBySide>
+    <Explanation>
+      <p>
+        Prefer inline scripts? Every version is available through{" "}
+        <a href={`https://unpkg.com/@curi/${name}@${version}/`}>Unpkg</a>.
+      </p>
+      <p>There are both full and minified versions available.</p>
+      <p>
+        The package will be attached to the window as{" "}
+        <IJS>window.{globalName}</IJS>.
+      </p>
+    </Explanation>
+    <CodeBlock lang="markup">
+      {`<script
+src="https://unpkg.com/@curi/${name}@${version}/dist/curi-${name}.js"
+></script>`}
+    </CodeBlock>
+  </SideBySide>
+);
 export default ({ name, version, globalName, unpkg }) => (
   <Section title="Installation" id="installation">
     <NPM name={name} />

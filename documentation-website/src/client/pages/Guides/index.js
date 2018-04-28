@@ -8,7 +8,6 @@ import RouteInteractions from "./RouteInteractions";
 import UsingSideEffects from "./UsingSideEffects";
 import CodeSplitting from "./CodeSplitting";
 import Loading from "./Loading";
-import ReactBasics from "./ReactBasics";
 import ReactNativeTips from "./ReactNativeTips";
 import MigrateReactRouterv3 from "./MigrateReactRouterv3";
 import SyncAsync from "./SyncAsync";
@@ -25,7 +24,6 @@ export default {
   "side-effects": UsingSideEffects,
   "code-splitting": CodeSplitting,
   loading: Loading,
-  react: ReactBasics,
   "react-native": ReactNativeTips,
   "migrate-rrv3": MigrateReactRouterv3
 };

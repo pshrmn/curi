@@ -1,12 +1,19 @@
 @import "./variables.scss";
 
 .side-by-side {
-  margin: 10px 0;
+  margin: 10px 0 20px;
   width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
 }
 
 .explanation {
   width: 100%;
+
+  p {
+    margin: 5px 0;
+  }
 }
 
 .code-block {
@@ -14,23 +21,20 @@
 
   pre {
     height: 100%;
+    vertical-align: top;
   }
 }
 
 @media only screen and (min-width: $mediumScreen) {
   .side-by-side {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
+    & > :first-child {
+      margin-right: 20px;
+    }
   }
 
   .explanation,
   .code-block {
     max-width: 600px;
     min-width: 500px;
-  }
-
-  .code-block {
-    margin-right: 20px;
   }
 }

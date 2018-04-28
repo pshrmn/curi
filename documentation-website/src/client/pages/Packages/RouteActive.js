@@ -1,8 +1,14 @@
 import React from "react";
+
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
-import { InlineJS as IJS, PrismBlock } from "../../components/PrismBlocks";
+import { InlineJS as IJS } from "../../components/PrismBlocks";
 import { Section, Subsection } from "../../components/Sections";
+import {
+  SideBySide,
+  CodeBlock,
+  Explanation
+} from "../../components/SideBySide";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -21,48 +27,72 @@ export default ({ name, version, globalName }) => (
   >
     <APIBlock>
       <Section tag="h3" title="active" id="active">
-        <p>
-          The default export is a route interaction factory that will add an{" "}
-          <IJS>active</IJS> function to the router's <IJS>route</IJS> property.
-        </p>
-        <p>
-          The interaction returns a boolean, <IJS>true</IJS> when a route is
-          "active" (it matches the response's <IJS>location</IJS>) and{" "}
-          <IJS>false</IJS> when it is not.
-        </p>
-        <PrismBlock lang="javascript">
-          {`import curi from '@curi/core';
+        <SideBySide>
+          <Explanation>
+            <p>
+              The default export is a route interaction factory that will add an{" "}
+              <IJS>active</IJS> function to the router's <IJS>route</IJS>{" "}
+              property.
+            </p>
+            <p>
+              The interaction returns a boolean, <IJS>true</IJS> when a route is
+              "active" (it matches the response's <IJS>location</IJS>) and{" "}
+              <IJS>false</IJS> when it is not.
+            </p>
+          </Explanation>
+          <CodeBlock>
+            {`import curi from '@curi/core';
 import active from '@curi/route-active';
 
 const router = curi(history, routes, {
   route: [active()]
 });`}
-        </PrismBlock>
+          </CodeBlock>
+        </SideBySide>
         <Subsection title="Arguments" id="arguments">
-          <ul>
-            <li>
-              <IJS>name</IJS> - the name of the route to check.
-            </li>
-            <li>
-              <IJS>response</IJS> - the response to check the route against.
-            </li>
-            <li>
-              <IJS>params</IJS> - any route params for the route that is being
-              checked
-            </li>
-            <li>
-              <IJS>partial</IJS> - when <IJS>true</IJS>, ancestor routes can be
-              considered active. (default <IJS>false</IJS>)
-            </li>
-          </ul>
-          <PrismBlock lang="javascript">
-            {`const isActive = router.route.active(
+          <SideBySide>
+            <Explanation>
+              <table>
+                <thead>
+                  <tr>
+                    <th>argument</th>
+                    <th>description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>name</td>
+                    <td>the name of the route to check if it is active</td>
+                  </tr>
+                  <tr>
+                    <td>response</td>
+                    <td>the response to check the route against.</td>
+                  </tr>
+                  <tr>
+                    <td>params</td>
+                    <td>
+                      any route params for the route that is being checked
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>partial</td>
+                    <td>
+                      when <IJS>true</IJS>, ancestor routes can be considered
+                      active. (default <IJS>false</IJS>)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </Explanation>
+            <CodeBlock>
+              {`const isActive = router.route.active(
   'Some Route',
   response,
   { id: 10 },
   false
 );`}
-          </PrismBlock>
+            </CodeBlock>
+          </SideBySide>
         </Subsection>
       </Section>
     </APIBlock>

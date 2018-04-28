@@ -1,8 +1,14 @@
 import React from "react";
+
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
-import { InlineJS as IJS, PrismBlock } from "../../components/PrismBlocks";
+import { InlineJS as IJS } from "../../components/PrismBlocks";
 import { Section, Subsection } from "../../components/Sections";
+import {
+  SideBySide,
+  CodeBlock,
+  Explanation
+} from "../../components/SideBySide";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -19,19 +25,22 @@ export default ({ name, version, globalName }) => (
   >
     <APIBlock>
       <Section tag="h3" title="ancestors" id="ancestors">
-        <p>
-          The default export is a route interaction factory that will add an{" "}
-          <IJS>ancestors</IJS> function to the router object's <IJS>route</IJS>{" "}
-          property.
-        </p>
-        <p>
-          The interaction returns the name of an ancestor route a given level
-          "up" from the route. If no level is provided, then it will return an
-          array of the names of all ancestor routes (from most ancient to
-          parent).
-        </p>
-        <PrismBlock lang="javascript">
-          {`import curi from '@curi/core';
+        <SideBySide>
+          <Explanation>
+            <p>
+              The default export is a route interaction factory that will add an{" "}
+              <IJS>ancestors</IJS> function to the router object's{" "}
+              <IJS>route</IJS> property.
+            </p>
+            <p>
+              The interaction returns the name of an ancestor route a given
+              level "up" from the route. If no level is provided, then it will
+              return an array of the names of all ancestor routes (from most
+              ancient to parent).
+            </p>
+          </Explanation>
+          <CodeBlock>
+            {`import curi from '@curi/core';
 import ancestors from '@curi/route-ancestors';
 
 const routes = [
@@ -54,27 +63,43 @@ const routes = [
 const router = curi(history,routes, {
   route: [ancestors()]
 });`}
-        </PrismBlock>
+          </CodeBlock>
+        </SideBySide>
 
         <Subsection title="Arguments" id="arguments">
-          <ul>
-            <li>
-              <IJS>name</IJS> - the name of the route to get ancestors of.
-            </li>
-            <li>
-              <IJS>level</IJS> - a number of levels "up" to get the ancestor
-              name of. If this argument is not provided, the interaction will
-              return an array of all ancestor routes names (from most ancient to
-              parent).
-            </li>
-          </ul>
-
-          <PrismBlock lang="javascript">
-            {`const parent = router.route.ancestors('Child', 1);
+          <SideBySide>
+            <Explanation>
+              <table>
+                <thead>
+                  <tr>
+                    <th>argument</th>
+                    <th>description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>name</td>
+                    <td>the name of the route to get ancestors of</td>
+                  </tr>
+                  <tr>
+                    <td>level</td>
+                    <td>
+                      a number of levels "up" to get the ancestor name of. If
+                      this argument is not provided, the interaction will return
+                      an array of all ancestor routes names (from most ancient
+                      to parent).
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </Explanation>
+            <CodeBlock>
+              {`const parent = router.route.ancestors('Child', 1);
 // parent === 'Parent'
 const ancestors = router.route.ancestors('Child');
 // ancestors === ['Grandparent', 'Parent']`}
-          </PrismBlock>
+            </CodeBlock>
+          </SideBySide>
         </Subsection>
       </Section>
     </APIBlock>

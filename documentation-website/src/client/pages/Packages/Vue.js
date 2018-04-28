@@ -3,11 +3,15 @@ import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
 import {
   InlineJS as IJS,
-  InlineComponent as Cmp,
-  PrismBlock
+  InlineComponent as Cmp
 } from "../../components/PrismBlocks";
 import { Note } from "../../components/Messages";
 import { Section, Subsection } from "../../components/Sections";
+import {
+  SideBySide,
+  CodeBlock,
+  Explanation
+} from "../../components/SideBySide";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -18,30 +22,34 @@ export default ({ name, version, globalName }) => (
   >
     <APIBlock>
       <Section tag="h3" title="CuriPlugin" id="curiplugin">
-        <p>What does the plugin do?</p>
-        <ol>
-          <li>
-            Register <Cmp>curi-link</Cmp> and <Cmp>curi-block</Cmp> components
-            with Vue so they can be used anywhere within your application
-            without manually importing.
-          </li>
-          <li>
-            Makes the Curi router globally available to Vue components as{" "}
-            <IJS>$router</IJS>.
-          </li>
-          <li>
-            Makes responses and navigations available to components through the{" "}
-            <IJS>$curi</IJS> property. <IJS>$curi</IJS> is responsive, so when a
-            new response is emitted, <IJS>$curi.response</IJS> and{" "}
-            <IJS>$curi.navigation</IJS> will automatically be updated.
-          </li>
-        </ol>
-        <PrismBlock lang="javascript">
-          {`import { CuriPlugin } from '@curi/vue';
+        <SideBySide>
+          <Explanation>
+            <p>What does the plugin do?</p>
+            <ol>
+              <li>
+                Register <Cmp>curi-link</Cmp> and <Cmp>curi-block</Cmp>{" "}
+                components with Vue so they can be used anywhere within your
+                application without manually importing.
+              </li>
+              <li>
+                Makes the Curi router globally available to Vue components as{" "}
+                <IJS>$router</IJS>.
+              </li>
+              <li>
+                Makes responses and navigations available to components through
+                the <IJS>$curi</IJS> property. <IJS>$curi</IJS> is responsive,
+                so when a new response is emitted, <IJS>$curi.response</IJS> and{" "}
+                <IJS>$curi.navigation</IJS> will automatically be updated.
+              </li>
+            </ol>
+          </Explanation>
+          <CodeBlock>
+            {`import { CuriPlugin } from '@curi/vue';
 
 const router = curi(history, routes);
 Vue.use(CuriPlugin, { router });`}
-        </PrismBlock>
+          </CodeBlock>
+        </SideBySide>
       </Section>
 
       <Section tag="h3" title={<Cmp>curi-link</Cmp>} id="link">
@@ -51,59 +59,82 @@ Vue.use(CuriPlugin, { router });`}
         </p>
         <ul>
           <li>
-            <p>
-              <IJS>to</IJS> - The name of the route to navigate to.{" "}
-              <em>This is required</em>.
-            </p>
-            <PrismBlock lang="html">
-              {`<curi-link to='Home'>Home</curi-link>
+            <SideBySide>
+              <Explanation>
+                <p>
+                  <IJS>to</IJS> - The name of the route to navigate to.{" "}
+                  <em>This is required</em>.
+                </p>
+              </Explanation>
+              <CodeBlock lang="html">
+                {`<curi-link to='Home'>Home</curi-link>
 <!-- <a href="/">Home</a> -->`}
-            </PrismBlock>
+              </CodeBlock>
+            </SideBySide>
           </li>
           <li>
-            <p>
-              <IJS>params</IJS> - An object containing the key-value params for
-              the route. For example, if you are linking to a route with the
-              path <IJS>album/:title</IJS>, the params object should have a{" "}
-              <IJS>title</IJS> property.
-            </p>
-            <PrismBlock lang="html">
-              {`<curi-link
+            <SideBySide>
+              <Explanation>
+                <p>
+                  <IJS>params</IJS> - An object containing the key-value params
+                  for the route. For example, if you are linking to a route with
+                  the path <IJS>album/:title</IJS>, the params object should
+                  have a <IJS>title</IJS> property.
+                </p>
+              </Explanation>
+              <CodeBlock lang="html">
+                {`<curi-link
   to='Album'
   :params="{ title: 'Coloring Book' }"
   >
   Coloring Book
   </curi-link>`}
-            </PrismBlock>
+              </CodeBlock>
+            </SideBySide>
           </li>
           <li>
-            <p>
-              <IJS>hash</IJS> - the hash for the location to link to
-            </p>
-            <PrismBlock lang="html">
-              {`<curi-link to="Home" hash="test">Home</curi-link>
+            <SideBySide>
+              <Explanation>
+                <p>
+                  <IJS>hash</IJS> - the hash for the location to link to
+                </p>
+              </Explanation>
+              <CodeBlock lang="html">
+                {`<curi-link to="Home" hash="test">Home</curi-link>
 <!-- <a href="/#test">Home</a> -->`}
-            </PrismBlock>
+              </CodeBlock>
+            </SideBySide>
           </li>
           <li>
-            <p>
-              <IJS>query</IJS> - the query for the location to link to
-            </p>
-            <PrismBlock lang="html">
-              {`<curi-link to="Home" query="one=1">Home</curi-link>
+            <SideBySide>
+              <Explanation>
+                <p>
+                  <IJS>query</IJS> - the query for the location to link to
+                </p>
+              </Explanation>
+              <CodeBlock lang="html">
+                {`<curi-link to="Home" query="one=1">Home</curi-link>
 <!-- <a href="/?one=1">Home</a> -->`}
-            </PrismBlock>
+              </CodeBlock>
+            </SideBySide>
           </li>
           <li>
-            <IJS>state</IJS> - the state to associated with the location
+            <SideBySide>
+              <Explanation>
+                <IJS>state</IJS> - the state to associated with the location
+              </Explanation>
+            </SideBySide>
           </li>
         </ul>
-        <p>
-          Additionally, any slots that you pass to the <Cmp>curi-link</Cmp> will
-          be rendered inside of the anchor.
-        </p>
-        <PrismBlock lang="html">
-          {`<curi-link
+        <SideBySide>
+          <Explanation>
+            <p>
+              Additionally, any slots that you pass to the <Cmp>curi-link</Cmp>{" "}
+              will be rendered inside of the anchor.
+            </p>
+          </Explanation>
+          <CodeBlock lang="html">
+            {`<curi-link
   to='Album'
   :params="{ title: 'Coloring Book' }"
 >
@@ -117,32 +148,37 @@ Vue.use(CuriPlugin, { router });`}
   <div>Coloring <span>Book</span></div>
 </a>
 -->`}
-        </PrismBlock>
+          </CodeBlock>
+        </SideBySide>
       </Section>
 
       <Section tag="h3" title={<Cmp>curi-block</Cmp>} id="block">
-        <p>
-          The <Cmp>curi-block</Cmp> component can be used to automatically block
-          navigation from a page. This will only block in-app navigation. If the
-          user attempts to leave your application, they will not be blocked.
-        </p>
-        <p>
-          The <Cmp>curi-block</Cmp> expects two props: <IJS>active</IJS> and{" "}
-          <IJS>confirm</IJS>.
-        </p>
-        <ul>
-          <li>
-            <IJS>active</IJS> - When this is true, navigation will be blocked
-            and when it is false, navigation will be allowed. If you do not
-            provide this prop, it will default to <IJS>true</IJS>.
-          </li>
-          <li>
-            <IJS>confirm</IJS> - The function that will be called to
-            confirm/deny the navigation.
-          </li>
-        </ul>
-        <PrismBlock lang="html">
-          {`<template>
+        <SideBySide>
+          <Explanation>
+            <p>
+              The <Cmp>curi-block</Cmp> component can be used to automatically
+              block navigation from a page. This will only block in-app
+              navigation. If the user attempts to leave your application, they
+              will not be blocked.
+            </p>
+            <p>
+              The <Cmp>curi-block</Cmp> expects two props: <IJS>active</IJS> and{" "}
+              <IJS>confirm</IJS>.
+            </p>
+            <ul>
+              <li>
+                <IJS>active</IJS> - When this is true, navigation will be
+                blocked and when it is false, navigation will be allowed. If you
+                do not provide this prop, it will default to <IJS>true</IJS>.
+              </li>
+              <li>
+                <IJS>confirm</IJS> - The function that will be called to
+                confirm/deny the navigation.
+              </li>
+            </ul>
+          </Explanation>
+          <CodeBlock lang="html">
+            {`<template>
   <div>
     <!-- ... -->
     <curi-block :active="active" :confirm="confirm" />
@@ -166,18 +202,22 @@ Vue.use(CuriPlugin, { router });`}
     }
   }
 </script>`}
-        </PrismBlock>
+          </CodeBlock>
+        </SideBySide>
       </Section>
     </APIBlock>
 
     <Section title="Usage" id="usage">
-      <p>
-        You can either use a Vue component or a render function to render Curi
-        responses.
-      </p>
+      <SideBySide>
+        <Explanation>
+          <p>
+            You can either use a Vue component or a render function to render
+            Curi responses.
+          </p>
+        </Explanation>
 
-      <PrismBlock lang="html">
-        {`<!-- App.vue -->
+        <CodeBlock lang="html">
+          {`<!-- App.vue -->
 <template>
   <div>
     <NavLinks />
@@ -193,10 +233,12 @@ Vue.use(CuriPlugin, { router });`}
   }
 </script>
 `}
-      </PrismBlock>
-
-      <PrismBlock lang="javascript">
-        {`// renderFunction.js
+        </CodeBlock>
+      </SideBySide>
+      <SideBySide>
+        <Explanation />
+        <CodeBlock>
+          {`// renderFunction.js
 import NavLinks from './NavLinks';
 export default function renderFunction(h) {
   return h('div', [
@@ -204,17 +246,19 @@ export default function renderFunction(h) {
     h(this.$curi.response.body)
   ]);
 }`}
-      </PrismBlock>
-
-      <p>
-        If the Curi is in async mode, you will still need to wait for it to emit
-        its first response before you can render. This can be done by calling
-        your rendering code in a callback function passed to{" "}
-        <IJS>router.respond()</IJS>.
-      </p>
-
-      <PrismBlock lang="javascript">
-        {`router.respond(() => {
+        </CodeBlock>
+      </SideBySide>
+      <SideBySide>
+        <Explanation>
+          <p>
+            If the router has async routes, you will need to wait for it to emit
+            its first response before you can render. This can be done by
+            calling your rendering code in an observer function passed to{" "}
+            <IJS>router.respond()</IJS>.
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`router.respond(() => {
   const vm = new Vue({
     el: '#app',
       
@@ -229,7 +273,8 @@ export default function renderFunction(h) {
     }
   });
 });`}
-      </PrismBlock>
+        </CodeBlock>
+      </SideBySide>
     </Section>
   </BasePackage>
 );

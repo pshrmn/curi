@@ -69,12 +69,6 @@ const guides = [
     type: "advanced"
   },
   {
-    name: "React Basics",
-    slug: "react",
-    description: "Learn the basics of how to use Curi with a React application",
-    type: "advanced"
-  },
-  {
     name: "React Native Tips",
     slug: "react-native",
     description: "Tips for using Curi with React Native",

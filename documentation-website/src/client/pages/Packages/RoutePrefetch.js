@@ -1,9 +1,15 @@
 import React from "react";
+
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
-import { InlineJS as IJS, PrismBlock } from "../../components/PrismBlocks";
+import { InlineJS as IJS } from "../../components/PrismBlocks";
 import { Note } from "../../components/Messages";
 import { Section, Subsection } from "../../components/Sections";
+import {
+  SideBySide,
+  CodeBlock,
+  Explanation
+} from "../../components/SideBySide";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -27,49 +33,71 @@ export default ({ name, version, globalName }) => (
     </Note>
     <APIBlock>
       <Section tag="h3" title="prefetch" id="prefetch">
-        <p>
-          The default export function is a route interaction factory that will
-          add an <IJS>prefetch</IJS> function to the router's <IJS>route</IJS>{" "}
-          property.
-        </p>
+        <SideBySide>
+          <Explanation>
+            <p>
+              The default export function is a route interaction factory that
+              will add an <IJS>prefetch</IJS> function to the router's{" "}
+              <IJS>route</IJS> property.
+            </p>
+            <p>
+              The prefetch route interaction allows you to call a route's{" "}
+              <IJS>on.every()</IJS> function manually. Why would you want to do
+              this? Prefetching data means that when users navigate, the new
+              page will be full rendered faster because we already have the
+              data.
+            </p>
+          </Explanation>
 
-        <PrismBlock lang="javascript">
-          {`import curi from '@curi/core';
+          <CodeBlock>
+            {`import curi from '@curi/core';
 import prefetch from '@curi/route-prefetch';
 
 const router = curi(history, routes, {
   route: [prefetch()]
 });
 `}
-        </PrismBlock>
-
-        <p>
-          The prefetch route interaction allows you to call a route's{" "}
-          <IJS>on.every()</IJS> function manually. Why would you want to do
-          this? Prefetching data means that when users navigate, the new page
-          will be full rendered faster because we already have the data.
-        </p>
+          </CodeBlock>
+        </SideBySide>
 
         <Subsection title="Arguments" id="arguments">
-          <PrismBlock lang="javascript">
-            {`// call a route's load function manually
+          <SideBySide>
+            <Explanation>
+              <table>
+                <thead>
+                  <tr>
+                    <th>argument</th>
+                    <th>description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>name</td>
+                    <td>
+                      the name of the route whose <IJS>on.every()</IJS> function
+                      should be called.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>match</td>
+                    <td>
+                      route props that are used by the <IJS>on.every()</IJS>{" "}
+                      function (the same ones that an <IJS>on.every()</IJS>{" "}
+                      function expects).
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                This route interaction will only register routes that have a{" "}
+                <IJS>on.every()</IJS> function.
+              </p>
+            </Explanation>
+            <CodeBlock>
+              {`// call a route's load function manually
 router.route.prefetch('User', { params: { id: 2 }})`}
-          </PrismBlock>
-          <ul>
-            <li>
-              <IJS>name</IJS> - the name of the route whose{" "}
-              <IJS>on.every()</IJS> function should be called.
-            </li>
-            <li>
-              <IJS>props</IJS> - route props that are used by the{" "}
-              <IJS>on.every()</IJS> function (the same ones that a{" "}
-              <IJS>on.every()</IJS> function expects).
-            </li>
-          </ul>
-          <p>
-            This route interaction will only register routes that have a{" "}
-            <IJS>on.every()</IJS> function.
-          </p>
+            </CodeBlock>
+          </SideBySide>
         </Subsection>
       </Section>
     </APIBlock>

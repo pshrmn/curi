@@ -26,7 +26,12 @@ class Banner extends React.Component {
     const banners = ["Any", "React", "Vue", "Svelte"];
     return (
       <div className="banner">
-        <h2>A JavaScript router that doesn't care how you render.</h2>
+        <h1>Curi is a JavaScript router for single-page applications</h1>
+        <p>
+          Curi cares about routing, not how you render. Building an application
+          with React? Cool! Or maybe you use Vue? Great! Svelte? Nice! A brand
+          new framework? Why not!
+        </p>
         <div className="banner-buttons">
           {banners.map(b => (
             <BannerButton

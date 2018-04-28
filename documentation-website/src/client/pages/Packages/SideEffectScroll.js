@@ -3,8 +3,13 @@ import { Link } from "@curi/react";
 
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
-import { InlineJS as IJS, PrismBlock } from "../../components/PrismBlocks";
+import { InlineJS as IJS } from "../../components/PrismBlocks";
 import { Section } from "../../components/Sections";
+import {
+  SideBySide,
+  CodeBlock,
+  Explanation
+} from "../../components/SideBySide";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -30,27 +35,27 @@ export default ({ name, version, globalName }) => (
     }
   >
     <APIBlock>
-      <Section
-        tag="h3"
-        title="createScrollSideEffect"
-        id="createScrollSideEffect"
-      >
-        <p>
-          When registering the side effect, you should pass the{" "}
-          <IJS>after: true</IJS> option. This should make the side effect run
-          after your application has re-rendered (although this is not
-          guaranteed if your application is rendered asynchronously).
-        </p>
-        <PrismBlock lang="javascript">
-          {`import curi from '@curi/core';
-import createScrollSideEffect from '@curi/side-effect-scroll';
+      <Section tag="h3" title="scrollEffect" id="scrollEffect">
+        <SideBySide>
+          <Explanation>
+            <p>
+              When registering the side effect, you should pass the{" "}
+              <IJS>after: true</IJS> option. This should make the side effect
+              run after your application has re-rendered (although this is not
+              guaranteed if your application is rendered asynchronously).
+            </p>
+          </Explanation>
+          <CodeBlock>
+            {`import curi from '@curi/core';
+import scrollEffect from '@curi/side-effect-scroll';
 
-const scrollTo = createScrollSideEffect();
+const scrollTo = scrollEffect();
 
 const router = curi(history, routes, {
   sideEffects: [{ effect: scrollTo, after: true }]
 });`}
-        </PrismBlock>
+          </CodeBlock>
+        </SideBySide>
       </Section>
     </APIBlock>
   </BasePackage>

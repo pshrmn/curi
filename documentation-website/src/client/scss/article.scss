@@ -96,10 +96,20 @@
   }
 }
 
-@media only screen and (min-width: $mediumScreen) {
+.package,
+.guide,
+.tutorial {
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  ol {
+    padding: 0;
+  }
 }
 
-@media only screen and (min-width: $largeScreen) {
+@media only screen and (min-width: $mediumScreen) {
   .guide,
   .package,
   .example,
@@ -122,7 +132,7 @@
 
   .content {
     order: 2;
+    flex-grow: 1;
     position: relative;
-    max-width: 1000px;
   }
 }
