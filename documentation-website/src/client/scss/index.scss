@@ -27,15 +27,19 @@ body {
   box-sizing: inherit;
 }
 
-@import "./prism.scss";
+@import "./api.scss";
+@import "./article.scss";
+@import "./banner.scss";
 @import "./baseElements.scss";
+@import "./content.scss";
+@import "./demo.scss";
 @import "./header.scss";
 @import "./main.scss";
 @import "./messages.scss";
-@import "./homepage.scss";
-@import "./article.scss";
 @import "./package.scss";
-@import "./demo.scss";
-@import "./tiles.scss";
-@import "./api.scss";
+@import "./prism.scss";
+@import "./section.scss";
+@import "./sidebar.scss";
 @import "./sidebyside.scss";
+@import "./tiles.scss";
+@import "./tutorial.scss";

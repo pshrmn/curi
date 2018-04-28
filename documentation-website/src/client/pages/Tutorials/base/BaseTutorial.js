@@ -1,13 +1,17 @@
 import React from "react";
 
 import TutorialLinks from "./TutorialLinks";
+import SideBar from "../../../components/SideBar";
+import Content from "../../../components/Content";
+
+// import "../../../scss/tutorial.scss";
 
 export default ({ children }) => (
   <div className="tutorial">
-    <div className="content">{children || null}</div>
-    <div className="sidebar">
+    <Content>{children || null}</Content>
+    <SideBar>
       <h2>Tutorials</h2>
       <TutorialLinks />
-    </div>
+    </SideBar>
   </div>
 );

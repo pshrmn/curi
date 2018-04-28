@@ -1,6 +1,8 @@
 import React from "react";
 import { PrismBlock } from "./PrismBlocks";
 
+// import "../scss/sidebyside.scss";
+
 const SideBySide = ({ children }) => (
   <div className="side-by-side">{children}</div>
 );

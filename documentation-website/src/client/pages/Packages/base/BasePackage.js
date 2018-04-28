@@ -5,6 +5,10 @@ import About from "./About";
 import GitHubLink from "./GitHubLink";
 import NPMLink from "./NPMLink";
 import PackageLinks from "./PackageLinks";
+import SideBar from "../../../components/SideBar";
+import Content from "../../../components/Content";
+
+// import "../../../scss/package.scss";
 
 function getDir(name) {
   if (name.indexOf("route-") === 0) {
@@ -25,7 +29,7 @@ const BasePackage = ({
   unpkg = true
 }) => (
   <div className="package">
-    <div className="content">
+    <Content>
       <h1>@curi/{name}</h1>
       <div className="package-info">
         <div>v{version}</div>
@@ -40,11 +44,11 @@ const BasePackage = ({
         unpkg={unpkg}
       />
       {children || null}
-    </div>
-    <div className="sidebar">
+    </Content>
+    <SideBar>
       <h2>Packages</h2>
       <PackageLinks />
-    </div>
+    </SideBar>
   </div>
 );
 

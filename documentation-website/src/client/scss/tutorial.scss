@@ -1,0 +1,48 @@
+@import "./variables.scss";
+
+.tutorial {
+  .link-list {
+    li {
+      &.solo {
+        border-bottom: 1px solid $light-gray;
+      }
+
+      ul {
+        display: flex;
+        margin: 0;
+        li {
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+
+  .tutorial-branch {
+    background: $light-orange;
+    border: 1px solid $bright-orange;
+    padding: 10px;
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      margin: 0;
+    }
+  }
+
+  .tutorial-outline {
+    border: 1px solid $border-blue;
+    padding: 10px;
+    margin: 5px 0;
+    background: $light-blue;
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      margin: 0;
+    }
+  }
+}

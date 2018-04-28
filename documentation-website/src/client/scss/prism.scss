@@ -43,18 +43,6 @@ pre[class*="language-"] {
   background: $purple;
 }
 
-.note {
-  &:not(pre) > code[class*="language-"] {
-    background: $white;
-  }
-}
-
-.warning {
-  &:not(pre) > code[class*="language-"] {
-    background: $orange;
-  }
-}
-
 .aside {
   :not(pre) > code[class*="language-"] {
     background: $green;

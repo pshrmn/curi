@@ -1,5 +1,7 @@
 import React from "react";
 
+// import "../scss/demo.scss";
+
 const CodeSandboxDemo = ({ id }) => (
   <div className="demo">
     <iframe

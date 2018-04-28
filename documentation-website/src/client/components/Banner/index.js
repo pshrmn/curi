@@ -6,6 +6,8 @@ import VueBanner from "./VueBanner";
 import GenericBanner from "./GenericBanner";
 import SvelteBanner from "./SvelteBanner";
 
+// import "../../scss/banner.scss";
+
 class Banner extends React.Component {
   state = { lib: "Any" };
 

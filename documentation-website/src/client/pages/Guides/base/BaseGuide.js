@@ -1,13 +1,15 @@
 import React from "react";
 
 import GuideLinks from "./GuideLinks";
+import SideBar from "../../../components/SideBar";
+import Content from "../../../components/Content";
 
 export default ({ children }) => (
   <div className="guide">
-    <div className="content">{children || null}</div>
-    <div className="sidebar">
+    <Content>{children || null}</Content>
+    <SideBar>
       <h2>Guides</h2>
       <GuideLinks />
-    </div>
+    </SideBar>
   </div>
 );

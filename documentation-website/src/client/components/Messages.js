@@ -1,5 +1,7 @@
 import React from "react";
 
+// import "../scss/messages.scss";
+
 export const Note = ({ children }) => (
   <div className="note">
     <strong>Note:</strong> {children}

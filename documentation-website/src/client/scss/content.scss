@@ -1,0 +1,20 @@
+@import "./variables.scss";
+
+.content {
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  ol {
+    padding: 0;
+  }
+}
+
+@media only screen and (min-width: $mediumScreen) {
+  .content {
+    order: 2;
+    flex-grow: 1;
+    position: relative;
+  }
+}

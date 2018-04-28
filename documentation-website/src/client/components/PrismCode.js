@@ -27,6 +27,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import React from "react";
 import { PropTypes } from "prop-types";
 
+// import "../scss/prism.scss";
+
 class PrismCode extends React.PureComponent {
   static propTypes = {
     async: PropTypes.bool,

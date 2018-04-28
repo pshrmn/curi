@@ -1,0 +1,52 @@
+@import "./variables.scss";
+
+.sidebar {
+  ul {
+    margin: 3px 0;
+    padding-left: 0px;
+    list-style: none;
+  }
+
+  li {
+    margin: 3px 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  h3 {
+    border-bottom: 1px solid $dark-gray;
+  }
+
+  .active {
+    font-weight: bold;
+  }
+
+  .link-group {
+    margin-bottom: 15px;
+  }
+
+  .link-list {
+    li.with {
+      margin: 10px 0;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+@media only screen and (min-width: $mediumScreen) {
+  .sidebar {
+    max-width: 200px;
+    min-width: 150px;
+    margin-right: 15px;
+    order: 1;
+
+    h3 {
+      font-size: 1.1em;
+    }
+  }
+}
