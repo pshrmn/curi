@@ -8,26 +8,26 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Routes</h1><p>Routes are JavaScript objects with two required props—<code class="language-javascript">name</code> and<!-- --> <code class="language-javascript">path</code>—and a number of optional properties.</p><pre><code class="language-javascript">{
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="guide"><div class="content"><h1>Routes</h1><div class="side-by-side"><div class="explanation"><p>Routes are JavaScript objects with two required props—<code class="language-javascript">name</code> <!-- -->and <code class="language-javascript">path</code>—and a number of optional properties.</p></div><div class="code-block"><pre><code class="language-javascript">{
   name: &#x27;Home&#x27;,
   path: &#x27;&#x27;
-};</code></pre><div class="section" id="route-properties"><h2>Route properties<a class="header-link" href="/guides/routes/#route-properties">#</a></h2><div class="subsection" id="name"><h3>route.name<a class="header-link" href="/guides/routes/#name">#</a></h3><p>A string, this must be unique for every route.</p><pre><code class="language-javascript">[
+};</code></pre></div></div><div class="section" id="route-properties"><h2>Route properties<a class="header-link" href="/guides/routes/#route-properties">#</a></h2><div class="subsection" id="name"><h3>route.name<a class="header-link" href="/guides/routes/#name">#</a></h3><div class="side-by-side"><div class="explanation"><p>A string, this must be unique for every route.</p></div><div class="code-block"><pre><code class="language-javascript">[
   { name: &#x27;Home&#x27; },
   { name: &#x27;Album&#x27; },
   { name: &#x27;Not Found&#x27; }
-];</code></pre></div><div class="subsection" id="path"><h3>route.path<a class="header-link" href="/guides/routes/#path">#</a></h3><p>A string to describe what the route matches. Curi uses<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#parameters"><code class="language-javascript">path-to-regexp</code></a> <!-- -->for matching the route to a location&#x27;s <code class="language-javascript">pathname</code>.<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#parameters">Path parameters</a> <!-- -->will be captured so that they can be parsed from a location&#x27;s<!-- --> <code class="language-javascript">pathname</code> when the route matches.</p><p><code class="language-javascript">path</code> strings should <strong>not</strong> have a leading slash</p><pre><code class="language-javascript">[
+];</code></pre></div></div></div><div class="subsection" id="path"><h3>route.path<a class="header-link" href="/guides/routes/#path">#</a></h3><div class="side-by-side"><div class="explanation"><p>A string to describe what the route matches. Curi uses<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#parameters"><code class="language-javascript">path-to-regexp</code></a> <!-- -->for matching the route to a location&#x27;s <code class="language-javascript">pathname</code>.<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#parameters">Path parameters</a> <!-- -->will be captured so that they can be parsed from a location&#x27;s<!-- --> <code class="language-javascript">pathname</code> when the route matches.</p><p><code class="language-javascript">path</code> strings should <strong>not</strong> have a leading slash</p><div class="warning"><strong>Warning:</strong> <code class="language-javascript">path-to-regexp</code> supports arrays and RegExps, but Curi only supports string paths. This is because Curi needs to generate pathnames given a route name and <code class="language-javascript">path-to-regexp</code> can only do that from strings.</div></div><div class="code-block"><pre><code class="language-javascript">[
   { name: &#x27;Home&#x27;, path: &#x27;&#x27; },
   { name: &#x27;Album&#x27;, path: &#x27;a/:albumID&#x27; },
   { name: &#x27;Not Found&#x27;, path: &#x27;(.*)&#x27; }
 ];
 // don&#x27;t do this
-// { name: &#x27;Home&#x27;, path: &#x27;/&#x27; }</code></pre><div class="warning"><strong>Warning:</strong> <code class="language-javascript">path-to-regexp</code> supports arrays and RegExps, but Curi only supports string paths. This is because Curi needs to generate pathnames given a route name and <code class="language-javascript">path-to-regexp</code> can only do that from strings.</div></div><div class="subsection" id="on"><h3>route.on<a class="header-link" href="/guides/routes/#on">#</a></h3><p>The <code class="language-javascript">on</code> object groups functions that will be called when the route matches. A route with an <code class="language-javascript">on.initial()</code> or<!-- --> <code class="language-javascript">on.every()</code> function is async.</p><div class="subsection" id="initial"><h5>on.initial()<a class="header-link" href="/guides/routes/#initial">#</a></h5><p><code class="language-javascript">on.initial()</code> is called the first time that a route matches. Its return value will be re-used on subsequent matches. It should return a Promise.</p><p>This can be used for loading resources that don&#x27;t change based on<!-- --> <code class="language-javascript">params</code>. For example, if you are doing code splitting with Webpack using <code class="language-javascript">import()</code>, you can load the modules in<!-- --> <code class="language-javascript">on.initial()</code>.</p><p>The <code class="language-javascript">initial</code> function will be passed an object with the matched route properties: <code class="language-javascript">name</code>, <code class="language-javascript">params</code>,<!-- --> <code class="language-javascript">partials</code>, <code class="language-javascript">location</code>, and <code class="language-javascript">key</code>.</p><pre><code class="language-javascript">const about = {
+// { name: &#x27;Home&#x27;, path: &#x27;/&#x27; }</code></pre></div></div></div><div class="subsection" id="on"><h3>route.on<a class="header-link" href="/guides/routes/#on">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="language-javascript">on</code> object groups functions that will be called when the route matches. A route with an <code class="language-javascript">on.initial()</code> or<!-- --> <code class="language-javascript">on.every()</code> function is async.</p></div></div><div class="subsection" id="initial"><h5>on.initial()<a class="header-link" href="/guides/routes/#initial">#</a></h5><div class="side-by-side"><div class="explanation"><p><code class="language-javascript">on.initial()</code> is called the first time that a route matches. Its return value will be re-used on subsequent matches. It should return a Promise.</p><p>This can be used for loading resources that don&#x27;t change based on <code class="language-javascript">params</code>. For example, if you are doing code splitting with Webpack using <code class="language-javascript">import()</code>, you can load the modules in <code class="language-javascript">on.initial()</code>.</p><p>The <code class="language-javascript">initial</code> function will be passed an object with the matched route properties: <code class="language-javascript">name</code>, <code class="language-javascript">params</code>,<!-- --> <code class="language-javascript">partials</code>, <code class="language-javascript">location</code>, and <code class="language-javascript">key</code>.</p></div><div class="code-block"><pre><code class="language-javascript">const about = {
   name: &#x27;About&#x27;,
   path: &#x27;about&#x27;,
   on: {
     initial: () =&gt; import(&#x27;./components/About&#x27;)
   }
-};</code></pre></div><div class="subsection" id="every"><h5>on.every()<a class="header-link" href="/guides/routes/#every">#</a></h5><p><code class="language-javascript">on.every()</code> will be called every time a route matches. This can be useful for data fetching. Like <code class="language-javascript">on.initial()</code>,<!-- --> <code class="language-javascript">on.every()</code> should return a Promise.</p><p>The <code class="language-javascript">every</code> function will be passed an object with the matched route properties: <code class="language-javascript">name</code>, <code class="language-javascript">params</code>,<!-- --> <code class="language-javascript">partials</code>, <code class="language-javascript">location</code>, and <code class="language-javascript">key</code>.</p><pre><code class="language-javascript">// fetch user data
+};</code></pre></div></div></div><div class="subsection" id="every"><h5>on.every()<a class="header-link" href="/guides/routes/#every">#</a></h5><div class="side-by-side"><div class="explanation"><p><code class="language-javascript">on.every()</code> will be called every time a route matches. This can be useful for data fetching. Like<!-- --> <code class="language-javascript">on.initial()</code>, <code class="language-javascript">on.every()</code> should return a Promise.</p><p>The <code class="language-javascript">every</code> function will be passed an object with the matched route properties: <code class="language-javascript">name</code>, <code class="language-javascript">params</code>,<!-- --> <code class="language-javascript">partials</code>, <code class="language-javascript">location</code>, and <code class="language-javascript">key</code>.</p><div class="note"><strong>Note:</strong> <!-- -->You should not perform side effects (e.g. passing the loaded data to a Redux store) in <code class="language-javascript">on.every()</code> because it is possible that navigating to the route might be cancelled. If you must perform side effects, you should do so in<!-- --> <code class="language-javascript">response()</code>.</div></div><div class="code-block"><pre><code class="language-javascript">// fetch user data
 const user = {
   name: &#x27;User&#x27;,
   path: &#x27;:id&#x27;,
@@ -36,49 +36,53 @@ const user = {
       fetch(`/api/users/${params.id}`)
         .then(resp =&gt; JSON.parse(resp))
   }
-}</code></pre><div class="note"><strong>Note:</strong> <!-- -->You should not perform side effects (e.g. passing the loaded data to a Redux store) in <code class="language-javascript">on.every()</code> because it is possible that navigating to the route might be cancelled. If you must perform side effects, you should do so in <code class="language-javascript">response()</code>.</div></div></div><div class="subsection" id="response"><h3>route.response()<a class="header-link" href="/guides/routes/#response">#</a></h3><p>A function for modifying the response object. This returns an object whose properties will be merged with the matched route properties to create the &quot;final&quot; response.</p><p>Only valid properties will be merged onto the response; everything else will be ignored. The valid properties are:</p><ol><li><p><code class="language-javascript">body</code> - This is usually what you will render.</p><pre><code class="language-javascript">import Home from &quot;./components/Home&quot;;
+}</code></pre></div></div></div></div><div class="subsection" id="response"><h3>route.response()<a class="header-link" href="/guides/routes/#response">#</a></h3><div class="side-by-side"><div class="explanation"><p>A function for modifying the response object. This returns an object whose properties will be merged with the matched route properties to create the &quot;final&quot; response.</p><p>Only valid properties will be merged onto the response; everything else will be ignored. The valid properties are:</p></div></div><ol><li><div class="side-by-side"><div class="explanation"><p><code class="language-javascript">body</code> - This is usually what you will render.</p></div><div class="code-block"><pre><code class="language-javascript">import Home from &quot;./components/Home&quot;;
 const routes = [
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;,
-    response: () =&gt; ({
-      body: Home
-    })
+    response() {
+      return { body: Home };
+    }
   },
   // ...
 ];
-// response = { body: Home, ... }</code></pre></li><li><p><code class="language-javascript">status</code> - A number. This is useful for redirects or locations caught by your catch-all route while using server-side rendering. The default status value is <code class="language-javascript">200</code>.</p><pre><code class="language-javascript">{
-  response: () =&gt; ({
-    status: 301,
-    redirectTo: {...}
-  })
+// response = { body: Home, ... }</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="language-javascript">status</code> - A number. This is useful for redirects or locations caught by your catch-all route while using server-side rendering. The default status value is<!-- --> <code class="language-javascript">200</code>.</p></div><div class="code-block"><pre><code class="language-javascript">{
+  response(){
+    return {
+      status: 301,
+      redirectTo: {...}
+    };
+  }
 }
-// response = { status: 301, ... }</code></pre></li><li><p><code class="language-javascript">error</code> - If an error occurs with the route&#x27;s<!-- --> <code class="language-javascript">on</code> methods, you might want to attach an error message to the response.</p><pre><code class="language-javascript">{
+// response = { status: 301, ... }</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="language-javascript">error</code> - If an error occurs with the route&#x27;s<!-- --> <code class="language-javascript">on</code> methods, you might want to attach an error message to the response.</p></div><div class="code-block"><pre><code class="language-javascript">{
   on: {
     initial: () =&gt; Promise.reject(&quot;woops!&quot;)
   },
-  response: ({ error }) =&gt; ({
-    error
-  })
+  response({ error }) {
+    return { error };
+  }
 }
-// response = { error: &quot;woops!&quot;, ... }</code></pre></li><li><p><code class="language-javascript">data</code> - Anything you want it to be.</p><pre><code class="language-javascript">{
-  response = () =&gt; ({
-    data: Math.random();
-  })
+// response = { error: &quot;woops!&quot;, ... }</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="language-javascript">data</code> - Anything you want it to be.</p></div><div class="code-block"><pre><code class="language-javascript">{
+  response() {
+    return { data: Math.random() };
+  }
 }
-// response = { data: 0.8651606708109429, ... }</code></pre></li><li><p><code class="language-javascript">title</code> - This can be used with<!-- --> <code class="language-javascript">@curi/side-effect-title</code> to update the page&#x27;s<!-- --> <code class="language-javascript">document.title</code>.</p><pre><code class="language-javascript">{
-  response: ({ params }) =&gt; ({
-    title: `User ${params.id}`
-  })
+// response = { data: 0.8651606708109429, ... }</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="language-javascript">title</code> - This can be used with<!-- --> <code class="language-javascript">@curi/side-effect-title</code> to update the page&#x27;s<!-- --> <code class="language-javascript">document.title</code>.</p></div><div class="code-block"><pre><code class="language-javascript">{
+  response({ params }) {
+    return { title: `User ${params.id}` };
+  }
 }
 // when visting /user/2
-// response = { title: &quot;User 2&quot;, ... }</code></pre></li><li><p><code class="language-javascript">redirectTo</code> - An object with the <code class="language-javascript">name</code> of the route to redirect to, <code class="language-javascript">params</code> (if required), and optional <code class="language-javascript">hash</code>, <code class="language-javascript">query</code>, and <code class="language-javascript">state</code> <!-- -->properties.</p><p>The other values are copied directly, but <code class="language-javascript">redirectTo</code> <!-- -->will be turned into a location object using the object&#x27;s<!-- --> <code class="language-javascript">name</code> (and <code class="language-javascript">params</code> if required).</p><pre><code class="language-javascript">[
+// response = { title: &quot;User 2&quot;, ... }</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="language-javascript">redirectTo</code> - An object with the <code class="language-javascript">name</code> of the route to redirect to, <code class="language-javascript">params</code> (if required), and optional <code class="language-javascript">hash</code>, <code class="language-javascript">query</code>, and<!-- --> <code class="language-javascript">state</code> properties.</p><p>The other values are copied directly, but<!-- --> <code class="language-javascript">redirectTo</code> will be turned into a location object using the object&#x27;s <code class="language-javascript">name</code> (and <code class="language-javascript">params</code> if required).</p></div><div class="code-block"><pre><code class="language-javascript">[
   {
     name: &quot;Old Photo&quot;,
     path: &quot;photo/:id&quot;,
-    response = ({ params }) =&gt; ({
-      redirectTo: { name: &quot;Photo&quot;, params }
-    })
+    response({ params }) {
+      return {
+        redirectTo: { name: &quot;Photo&quot;, params }
+      };
+    }
   },
   {
     name: &quot;New Photo&quot;,
@@ -86,11 +90,11 @@ const routes = [
   }
 ]
 // when the user navigates to /photo/1:
-// response = { redirectTo: { pathname: &quot;/p/1&quot;, ... }, ... }</code></pre></li></ol><p>This function is passed an object with a number of properties that can be useful for modifying the response.</p><pre><code class="language-javascript">{
+// response = { redirectTo: { pathname: &quot;/p/1&quot;, ... } }</code></pre></div></div></li></ol><div class="side-by-side"><div class="explanation"><p>This function is passed an object with a number of properties that can be useful for modifying the response.</p></div><div class="code-block"><pre><code class="language-javascript">{
   response: ({ match, resolved }) =&gt; {
     // ...
   }
-}</code></pre><ul><div class="subsection" id="response-match"><li>match<a class="header-link" href="/guides/routes/#response-match">#</a></li><p>An object with the matched route properties of a response.</p><table><thead><tr><th>property</th><th>description</th></tr></thead><tbody><tr><td>name</td><td>the name of the matched route</td></tr><tr><td>params</td><td>route parameters parsed from the location</td></tr><tr><td>partials</td><td>the names of any ancestor routes of the matched route</td></tr><tr><td>location</td><td>the location that was used to match the route</td></tr><tr><td>key</td><td>the location&#x27;s <code class="language-javascript">key</code>, which is a unique identifier</td></tr></tbody></table></div><div class="subsection" id="response-resolved"><li>resolved<a class="header-link" href="/guides/routes/#response-resolved">#</a></li><p><code class="language-javascript">resolved</code> is an object with the values resolved by the<!-- --> <code class="language-javascript">on.initial()</code> and <code class="language-javascript">on.every()</code> functions.</p><table><thead><tr><th>property</th><th>description</th></tr></thead><tbody><tr><td>error</td><td>if either <code class="language-javascript">on.initial()</code> or <code class="language-javascript">on.every()</code> <!-- -->throw and the error is not caught, it will be available here</td></tr><tr><td>initial</td><td>the value resolved by <code class="language-javascript">on.initial()</code></td></tr><tr><td>every</td><td>the value resolved by <code class="language-javascript">on.every()</code></td></tr></tbody></table><p>If a route isn&#x27;t async, <code class="language-javascript">resolved</code> will be<!-- --> <code class="language-javascript">null</code>.</p><pre><code class="language-javascript">// attach resolved data to the response
+}</code></pre></div></div><ul><div class="subsection" id="response-match"><li>match<a class="header-link" href="/guides/routes/#response-match">#</a></li><div class="side-by-side"><div class="explanation"><p>An object with the matched route properties of a response.</p><table><thead><tr><th>property</th><th>description</th></tr></thead><tbody><tr><td>name</td><td>the name of the matched route</td></tr><tr><td>params</td><td>route parameters parsed from the location</td></tr><tr><td>partials</td><td>the names of any ancestor routes of the matched route</td></tr><tr><td>location</td><td>the location that was used to match the route</td></tr><tr><td>key</td><td>the location&#x27;s <code class="language-javascript">key</code>, which is a unique identifier</td></tr></tbody></table></div></div></div><div class="subsection" id="response-resolved"><li>resolved<a class="header-link" href="/guides/routes/#response-resolved">#</a></li><div class="side-by-side"><div class="explanation"><p><code class="language-javascript">resolved</code> is an object with the values resolved by the <code class="language-javascript">on.initial()</code> and <code class="language-javascript">on.every()</code> <!-- -->functions.</p><table><thead><tr><th>property</th><th>description</th></tr></thead><tbody><tr><td>error</td><td>if either <code class="language-javascript">on.initial()</code> or<!-- --> <code class="language-javascript">on.every()</code> throw and the error is not caught, it will be available here</td></tr><tr><td>initial</td><td>the value resolved by <code class="language-javascript">on.initial()</code></td></tr><tr><td>every</td><td>the value resolved by <code class="language-javascript">on.every()</code></td></tr></tbody></table><p>If a route isn&#x27;t async, <code class="language-javascript">resolved</code> will be<!-- --> <code class="language-javascript">null</code>.</p></div><div class="code-block"><pre><code class="language-javascript">// attach resolved data to the response
 const user = {
   name: &#x27;User&#x27;,
   path: &#x27;:id&#x27;,
@@ -109,7 +113,7 @@ const user = {
         .then(resp =&gt; JSON.parse(resp))
     ),
   }
-}</code></pre></div></ul></div><div class="subsection" id="children"><h3>children<a class="header-link" href="/guides/routes/#children">#</a></h3><p>An optional array of route objects for creating nested routes. Any child routes will be matched relative to their parent route&#x27;s<!-- --> <code class="language-javascript">path</code>. This means that if a parent route&#x27;s <code class="language-javascript">path</code> <!-- -->string is <code class="language-javascript">&#x27;one&#x27;</code> and a child route&#x27;s <code class="language-javascript">path</code> string is <code class="language-javascript">&#x27;two&#x27;</code>, the child will match when the pathname is<!-- --> <code class="language-javascript">&#x27;one/two&#x27;</code>.</p><pre><code class="language-javascript">// &#x27;/a/Coloring+Book/All+Night&#x27; will be matched
+}</code></pre></div></div></div></ul></div><div class="subsection" id="children"><h3>children<a class="header-link" href="/guides/routes/#children">#</a></h3><div class="side-by-side"><div class="explanation"><p>An optional array of route objects for creating nested routes. Any child routes will be matched relative to their parent route&#x27;s<!-- --> <code class="language-javascript">path</code>. This means that if a parent route&#x27;s<!-- --> <code class="language-javascript">path</code> string is <code class="language-javascript">&#x27;one&#x27;</code> and a child route&#x27;s<!-- --> <code class="language-javascript">path</code> string is <code class="language-javascript">&#x27;two&#x27;</code>, the child will match when the pathname is <code class="language-javascript">&#x27;one/two&#x27;</code>.</p></div><div class="code-block"><pre><code class="language-javascript">// &#x27;/a/Coloring+Book/All+Night&#x27; will be matched
 // by the &quot;Song&quot; route, with the params
 // { album: &#x27;Coloring+Book&#x27;, title: &#x27;All+Night&#x27; }
 {
@@ -121,7 +125,7 @@ const user = {
       path: &#x27;:title&#x27;
     }
   ]
-}</code></pre></div><div class="subsection" id="params"><h3>params<a class="header-link" href="/guides/routes/#params">#</a></h3><p>When <code class="language-javascript">path-to-regexp</code> matches your paths, all parameters are extracted as strings. However, you might prefer for some route params to be other types. You can provide functions to transform params using the <code class="language-javascript">route.params</code> object.</p><p>Properties of the <code class="language-javascript">route.params</code> object are the names of params to be parsed. The paired value should be a function that takes a string (the value from the <code class="language-javascript">pathname</code>) and returns a new value (transformed however you want).</p><pre><code class="language-javascript">const routes = [
+}</code></pre></div></div></div><div class="subsection" id="params"><h3>params<a class="header-link" href="/guides/routes/#params">#</a></h3><div class="side-by-side"><div class="explanation"><p>When <code class="language-javascript">path-to-regexp</code> matches your paths, all parameters are extracted as strings. However, you might prefer for some route params to be other types. You can provide functions to transform params using the <code class="language-javascript">route.params</code> object.</p><p>Properties of the <code class="language-javascript">route.params</code> object are the names of params to be parsed. The paired value should be a function that takes a string (the value from the <code class="language-javascript">pathname</code>) and returns a new value (transformed however you want).</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
   {
     name: &#x27;Number&#x27;,
     path: &#x27;number/:num&#x27;,
@@ -131,7 +135,8 @@ const user = {
   }
 ]
 // when the user visits /number/1,
-// response.params will be { num: 1 } instead of { num: &quot;1&quot; }</code></pre></div><div class="subsection" id="pathOptions"><h3>pathOptions<a class="header-link" href="/guides/routes/#pathOptions">#</a></h3><p>If you need to provide different path options than<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#usage">the defaults</a> <!-- -->used by <code class="language-javascript">path-to-regexp</code>, you can provide them with a<!-- --> <code class="language-javascript">pathOptions</code> object.</p><div class="note"><strong>Note:</strong> <!-- -->If a route has a children array property, it will<!-- --> <strong>always</strong> have the <code class="language-javascript">end</code> path option set to false.</div></div><div class="subsection" id="extra"><h3>extra<a class="header-link" href="/guides/routes/#extra">#</a></h3><p>If you have any additional properties that you want attached to a route, use the <code class="language-javascript">extra</code> property. You will be able to use<!-- --> <code class="language-javascript">route.extra</code> in any custom route interactions.</p><pre><code class="language-javascript">const routes = [
+// response.params will be { num: 1 }
+// instead of { num: &quot;1&quot; }</code></pre></div></div></div><div class="subsection" id="pathOptions"><h3>pathOptions<a class="header-link" href="/guides/routes/#pathOptions">#</a></h3><div class="side-by-side"><div class="explanation"><p>If you need to provide different path options than<!-- --> <a href="https://github.com/pillarjs/path-to-regexp#usage">the defaults</a> <!-- -->used by <code class="language-javascript">path-to-regexp</code>, you can provide them with a<!-- --> <code class="language-javascript">pathOptions</code> object.</p><div class="note"><strong>Note:</strong> <!-- -->If a route has a children array property, it will<!-- --> <strong>always</strong> have the <code class="language-javascript">end</code> path option set to false.</div></div></div></div><div class="subsection" id="extra"><h3>extra<a class="header-link" href="/guides/routes/#extra">#</a></h3><div class="side-by-side"><div class="explanation"><p>If you have any additional properties that you want attached to a route, use the <code class="language-javascript">extra</code> property. You will be able to use<!-- --> <code class="language-javascript">route.extra</code> in any custom route interactions.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
   {
     name: &#x27;A Route&#x27;,
     path: &#x27;a-route&#x27;,
@@ -146,7 +151,7 @@ const user = {
       enter: &#x27;slide-right&#x27;
     }
   }
-];</code></pre></div></div><div class="section" id="matching-routes"><h2>Matching Routes<a class="header-link" href="/guides/routes/#matching-routes">#</a></h2><p>Whenever Curi receives a new location, it will determine which route has a <code class="language-javascript">path</code> that matches the new location&#x27;s <code class="language-javascript">pathname</code> by walking over the route objects in the order that they are defined in the array. If a route has <code class="language-javascript">children</code>, those will be checked before moving to the route&#x27;s nest sibling.</p><p>We&#x27;ll use this simple route setup to demonstrate how this works.</p><pre><code class="language-javascript">const routes = [
+];</code></pre></div></div></div></div><div class="section" id="matching-routes"><h2>Matching Routes<a class="header-link" href="/guides/routes/#matching-routes">#</a></h2><div class="side-by-side"><div class="explanation"><p>Whenever Curi receives a new location, it will determine which route has a <code class="language-javascript">path</code> that matches the new location&#x27;s<!-- --> <code class="language-javascript">pathname</code> by walking over the route objects in the order that they are defined in the array. If a route has<!-- --> <code class="language-javascript">children</code>, those will be checked before moving to the route&#x27;s nest sibling.</p><p>We&#x27;ll use this simple route setup to demonstrate how this works.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;,
@@ -159,9 +164,10 @@ const user = {
     name: &#x27;Not Found&#x27;,
     path: &#x27;(.*)&#x27; // this matches EVERY pathname
   }
-];</code></pre><p>Curi&#x27;s default matching behavior looks for exact matches. This means that when the route only matches part of the pathname, it does not count as a match. If the user navigates to a location with the pathname<!-- --> <code class="language-javascript">&quot;/a/red/yellow&quot;</code>, the <code class="language-javascript">Album</code> route will only partially match, so Curi will move on to the next route,<!-- --> <code class="language-javascript">Not Found</code>, which has a catch all <code class="language-javascript">path</code> that matches every pathname.</p><p>However, if a route has children, then Curi will check if any of those routes form a complete match before moving on to the next route in the routes array.</p><pre><code class="language-javascript">// when the pathname is &#x27;/a/Coloring+Book/All+Night&#x27;,
-// the Album route will partially match the pathname. Then,
-// its child route Song will be tested and fully match the pathname.
+];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Curi&#x27;s default matching behavior looks for exact matches. This means that when the route only matches part of the pathname, it does not count as a match. If the user navigates to a location with the pathname <code class="language-javascript">&quot;/a/red/yellow&quot;</code>, the <code class="language-javascript">Album</code> route will only partially match, so Curi will move on to the next route,<!-- --> <code class="language-javascript">Not Found</code>, which has a catch all <code class="language-javascript">path</code> that matches every pathname.</p><p>However, if a route has children, then Curi will check if any of those routes form a complete match before moving on to the next route in the routes array.</p></div><div class="code-block"><pre><code class="language-javascript">// when the pathname is &#x27;/a/Coloring+Book/All+Night&#x27;,
+// the Album route will partially match the pathname.
+// Then, its child route Song will be tested and fully
+// match the pathname.
 {
   name: &#x27;Album&#x27;,
   path: &#x27;a/:album&#x27;,
@@ -171,19 +177,20 @@ const user = {
       path: &#x27;:title&#x27;
     }
   ]
-}</code></pre><p>You can control whether a route does exact or partial matching with<!-- --> <a href="/guides/routes/#pathOptions"><code class="language-javascript">pathOptions</code></a> <!-- -->property. If you set <code class="language-javascript">{ end: false }</code>, a route that partially matches will consider itself matched.</p><pre><code class="language-javascript">// when the pathname is &#x27;/a/Good+Kid,+M.A.A.D+City/Poetic+Justice&#x27;,
-// the Album route will partially match. However, because it sets
-// end to false, the partial match will be used.
+}</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>You can control whether a route does exact or partial matching with<!-- --> <a href="/guides/routes/#pathOptions"><code class="language-javascript">pathOptions</code></a> <!-- -->property. If you set <code class="language-javascript">{ end: false }</code>, a route that partially matches will consider itself matched.</p></div><div class="code-block"><pre><code class="language-javascript">// when the pathname is
+// &#x27;/a/Good+Kid,+M.A.A.D+City/Poetic+Justice&#x27;,
+// the Album route will partially match. However, because
+// it sets &quot;end&quot; to false, the partial match will be used.
 {
   name: &#x27;Album&#x27;,
   path: &#x27;a/:albumID&#x27;,
   pathOptions: {
     end: false
   }
-}</code></pre><div class="subsection" id="catch-all"><h3>No Matching Route<a class="header-link" href="/guides/routes/#catch-all">#</a></h3><div class="warning"><strong>Warning:</strong> <p>If none of your routes match a location, Curi will do nothing! You need to set a catch-all route to match these locations yourself. The best way to do this is to add a route to the end of your routes array with a <code class="language-javascript">path</code> of <code class="language-javascript">&quot;(.*)&quot;</code>, which will match every pathname.</p><pre><code class="language-javascript">{
+}</code></pre></div></div><div class="subsection" id="catch-all"><h3>No Matching Route<a class="header-link" href="/guides/routes/#catch-all">#</a></h3><div class="warning"><strong>Warning:</strong> <div class="side-by-side"><div class="explanation"><p>If none of your routes match a location, Curi will do nothing! You need to set a catch-all route to match these locations yourself. The best way to do this is to add a route to the end of your routes array with a <code class="language-javascript">path</code> of <code class="language-javascript">&quot;(.*)&quot;</code>, which will match every pathname.</p></div><div class="code-block"><pre><code class="language-javascript">{
   name: &#x27;Not Found&#x27;,
   path: &#x27;(.*)&#x27;,
-}</code></pre></div></div></div><div><h2>Next</h2><p>Now that you know how to setup your routes, we will take a look at<!-- --> <a href="/guides/responses/">responses</a>.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" active" href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/observers/">Observers</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/react/">React Basics</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div>
+}</code></pre></div></div></div></div></div><div><h2>Next</h2><p>Now that you know how to setup your routes, we will take a look at<!-- --> <a href="/guides/responses/">responses</a>.</p></div></div><div class="sidebar"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" active" href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/observers/">Observers</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">Migrate from React Router v2/3 to Curi</a></li></ul></li></ul></div></div></main></div>
     <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
