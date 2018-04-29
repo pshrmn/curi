@@ -9,9 +9,16 @@ header {
     color: $light-gray;
 
     ul {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: flex-end;
       list-style: none;
       padding: 0;
       margin: 0;
+    }
+
+    li {
+      padding: 0 10px;
     }
 
     a {
@@ -21,6 +28,7 @@ header {
       display: flex;
       height: 50px;
       align-items: center;
+      border-bottom: 1px solid $purple;
 
       &:hover {
         color: $bright-orange;
@@ -28,6 +36,7 @@ header {
 
       &.active {
         color: $bright-orange;
+        border-bottom-color: $bright-orange;
       }
     }
   }
@@ -46,22 +55,16 @@ header {
 
     nav {
       ul {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: flex-end;
         max-width: 100%;
         li {
           margin-right: 20px;
+          padding: 0;
         }
       }
 
       a {
-        border-bottom: 3px solid $purple;
+        border-bottom-width: 3px;
         padding: 0 5px;
-
-        &.active {
-          border-bottom-color: $bright-orange;
-        }
       }
     }
   }

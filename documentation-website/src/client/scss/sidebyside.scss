@@ -32,9 +32,11 @@
     }
   }
 
-  .explanation,
-  .code-block {
+  .explanation {
+    flex: 1 1 50%;
     max-width: 600px;
-    min-width: 500px;
+  }
+  .code-block {
+    flex: 1 0 50%;
   }
 }

@@ -25,12 +25,17 @@ export default ({ name, version, globalName }) => (
       </p>
     }
   >
-    <Note>
-      You should only use this if you implement some sort of caching/lookup in
-      your functions. The <IJS>on.every()</IJS> function will be re-called when
-      the user actually navigates to the route, so the benefit comes from the
-      using a cached value instead of sending a new request to your server.
-    </Note>
+    <SideBySide>
+      <Explanation>
+        <Note>
+          You should only use this if you implement some sort of caching/lookup
+          in your functions. The <IJS>on.every()</IJS> function will be
+          re-called when the user actually navigates to the route, so the
+          benefit comes from the using a cached value instead of sending a new
+          request to your server.
+        </Note>
+      </Explanation>
+    </SideBySide>
     <APIBlock>
       <Section tag="h3" title="prefetch" id="prefetch">
         <SideBySide>
