@@ -38,5 +38,9 @@
   }
   .code-block {
     flex: 1 0 50%;
+
+    code {
+      min-width: 200px;
+    }
   }
 }

@@ -69,7 +69,7 @@ pre[class*="language-"] {
   background: $light-gray;
   color: $purple;
   text-shadow: none;
-  white-space: nowrap;
+  white-space: wrap;
 }
 
 :not(pre) > code[class*="language-"] .token {

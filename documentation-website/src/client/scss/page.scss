@@ -1,5 +1,9 @@
 @import "./variables.scss";
 
+.page {
+  position: relative;
+}
+
 @media only screen and (min-width: $mediumScreen) {
   .page {
     padding-top: 15px;

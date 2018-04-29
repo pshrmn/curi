@@ -2,15 +2,15 @@ import React from "react";
 
 import ExampleLinks from "./ExampleLinks";
 import Page from "../../../components/Page";
-import SideBar from "../../../components/SideBar";
+import PageLinks from "../../../components/PageLinks";
 import Content from "../../../components/Content";
 
 export default ({ children }) => (
   <Page type="example">
     <Content>{children || null}</Content>
-    <SideBar>
+    <PageLinks>
       <h2>Examples</h2>
       <ExampleLinks />
-    </SideBar>
+    </PageLinks>
   </Page>
 );

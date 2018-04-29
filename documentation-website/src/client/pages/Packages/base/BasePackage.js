@@ -6,7 +6,7 @@ import GitHubLink from "./GitHubLink";
 import NPMLink from "./NPMLink";
 import PackageLinks from "./PackageLinks";
 import Page from "../../../components/Page";
-import SideBar from "../../../components/SideBar";
+import PageLinks from "../../../components/PageLinks";
 import Content from "../../../components/Content";
 
 // import "../../../scss/package.scss";
@@ -46,10 +46,10 @@ const BasePackage = ({
       />
       {children || null}
     </Content>
-    <SideBar>
+    <PageLinks>
       <h2>Packages</h2>
       <PackageLinks />
-    </SideBar>
+    </PageLinks>
   </Page>
 );
 
