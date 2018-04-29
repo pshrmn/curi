@@ -27,7 +27,6 @@
     "express": "^4.16.3",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-media": "^1.8.0",
     "request": "^2.85.0"
   },
   "devDependencies": {
