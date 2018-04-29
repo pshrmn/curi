@@ -1,10 +1,7 @@
 @import "./variables.scss";
 
 @media only screen and (min-width: $mediumScreen) {
-  .guide,
-  .package,
-  .example,
-  .tutorial {
+  .page {
     padding-top: 15px;
     display: flex;
     flex-flow: row-nowrap;

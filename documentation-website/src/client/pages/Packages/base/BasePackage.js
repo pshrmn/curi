@@ -5,6 +5,7 @@ import About from "./About";
 import GitHubLink from "./GitHubLink";
 import NPMLink from "./NPMLink";
 import PackageLinks from "./PackageLinks";
+import Page from "../../../components/Page";
 import SideBar from "../../../components/SideBar";
 import Content from "../../../components/Content";
 
@@ -28,7 +29,7 @@ const BasePackage = ({
   about,
   unpkg = true
 }) => (
-  <div className="package">
+  <Page type="package">
     <Content>
       <h1>@curi/{name}</h1>
       <div className="package-info">
@@ -49,7 +50,7 @@ const BasePackage = ({
       <h2>Packages</h2>
       <PackageLinks />
     </SideBar>
-  </div>
+  </Page>
 );
 
 export default BasePackage;
