@@ -7,7 +7,10 @@ import { Link } from "../dist/curi-svelte.es.js";
 describe("<Link>", () => {
   it("renders an anchor with expected pathname", () => {
     const history = InMemory();
-    const routes = [{ name: "Home", path: "" }];
+    const routes = [
+      { name: "Home", path: "" },
+      { name: "Not Found", path: "(.*)" }
+    ];
     const router = curi(history, routes);
 
     const store = new Store({ router });
@@ -28,7 +31,10 @@ describe("<Link>", () => {
 
   it("uses params attribute to generate pathname", () => {
     const history = InMemory();
-    const routes = [{ name: "User", path: "u/:id" }];
+    const routes = [
+      { name: "User", path: "u/:id" },
+      { name: "Not Found", path: "(.*)" }
+    ];
     const router = curi(history, routes);
     const store = new Store({ router });
 
@@ -48,7 +54,10 @@ describe("<Link>", () => {
 
   it("falls back to current response's pathname if to isn't provided", done => {
     const history = InMemory({ locations: ["/u/2"] });
-    const routes = [{ name: "User", path: "u/:id" }];
+    const routes = [
+      { name: "User", path: "u/:id" },
+      { name: "Not Found", path: "(.*)" }
+    ];
     const router = curi(history, routes);
     const store = new Store({
       router,
@@ -80,7 +89,10 @@ describe("<Link>", () => {
 
   it("appends query & hash to end of URI", () => {
     const history = InMemory();
-    const routes = [{ name: "Home", path: "" }];
+    const routes = [
+      { name: "Home", path: "" },
+      { name: "Not Found", path: "(.*)" }
+    ];
     const router = curi(history, routes);
     const store = new Store({ router });
 
@@ -103,7 +115,10 @@ describe("<Link>", () => {
     it("will navigate to the new location", () => {
       const history = InMemory();
       history.navigate = jest.fn();
-      const routes = [{ name: "User", path: "u/:id" }];
+      const routes = [
+        { name: "User", path: "u/:id" },
+        { name: "Not Found", path: "(.*)" }
+      ];
       const router = curi(history, routes);
       const store = new Store({ router });
 
@@ -126,7 +141,10 @@ describe("<Link>", () => {
     it("will ignore modified clicks", () => {
       const history = InMemory();
       history.navigate = jest.fn();
-      const routes = [{ name: "User", path: "u/:id" }];
+      const routes = [
+        { name: "User", path: "u/:id" },
+        { name: "Not Found", path: "(.*)" }
+      ];
       const router = curi(history, routes);
       const store = new Store({ router });
 
@@ -152,7 +170,10 @@ describe("<Link>", () => {
     it("will ignore click if event.defaultPrevented is true", () => {
       const history = InMemory();
       history.navigate = jest.fn();
-      const routes = [{ name: "User", path: "u/:id" }];
+      const routes = [
+        { name: "User", path: "u/:id" },
+        { name: "Not Found", path: "(.*)" }
+      ];
       const router = curi(history, routes);
       const store = new Store({ router });
 
@@ -176,7 +197,10 @@ describe("<Link>", () => {
     it("will ignore click if not done with left mouse button", () => {
       const history = InMemory();
       history.navigate = jest.fn();
-      const routes = [{ name: "User", path: "u/:id" }];
+      const routes = [
+        { name: "User", path: "u/:id" },
+        { name: "Not Found", path: "(.*)" }
+      ];
       const router = curi(history, routes);
       const store = new Store({ router });
 

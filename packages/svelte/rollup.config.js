@@ -1,6 +1,5 @@
 import svelte from "rollup-plugin-svelte";
 import babel from "rollup-plugin-babel";
-import uglify from "rollup-plugin-uglify";
 import replace from "rollup-plugin-replace";
 import commonjs from "rollup-plugin-commonjs";
 import resolve from "rollup-plugin-node-resolve";
@@ -16,8 +15,7 @@ const config = {
   },
   plugins: [
     svelte({
-      include: "src/**/*.html",
-      store: true
+      include: "src/**/*.html"
     }),
     babel({
       exclude: "node_modules/**"
@@ -32,9 +30,5 @@ const config = {
   ],
   external: ["svelte/store"]
 };
-
-if (process.env.NODE_ENV === "production") {
-  config.plugins.push(uglify());
-}
 
 export default config;
