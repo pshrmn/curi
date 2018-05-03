@@ -32,7 +32,7 @@
     "@curi/core": "^1.0.0-beta.26"
   },
   "dependencies": {
-    "svelte": ">2"
+    "svelte": "^2.4.3"
   },
   "devDependencies": {
     "@curi/core": "^1.0.0-beta.32",
