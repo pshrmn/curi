@@ -2,8 +2,8 @@
   "name": "@curi/core",
   "version": "1.0.0-beta.32",
   "description": "A JavaScript router that doesn't care how you render",
-  "main": "dist/curi.common.js",
-  "module": "dist/curi.es.js",
+  "main": "dist/curi-core.common.js",
+  "module": "dist/curi-core.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",
