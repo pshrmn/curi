@@ -53,10 +53,5 @@
     "rollup-plugin-svelte": "^4.1.0",
     "simulant": "^0.2.2",
     "svelte-cli": "^3.0.0"
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "node_modules/(?!(svelte)/)"
-    ]
   }
 }

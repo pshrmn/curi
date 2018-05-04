@@ -2,7 +2,7 @@ import InMemory from "@hickory/in-memory";
 import curi from "@curi/core";
 import { Store } from "svelte/store";
 import simulant from "simulant";
-import { Link } from "../dist/curi-svelte.es.js";
+import Link from "../src/Link.html";
 
 describe("<Link>", () => {
   it("renders an anchor with expected pathname", () => {
