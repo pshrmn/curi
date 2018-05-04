@@ -1,4 +1,4 @@
-import { ResponseHandler, Emitted } from "@curi/core";
+import { Observer, Emitted } from "@curi/core";
 
 export interface TitleOptions {
   prefix?: string;
@@ -6,7 +6,7 @@ export interface TitleOptions {
   delimiter?: string;
 }
 
-function createTitleSideEffect(options?: TitleOptions): ResponseHandler {
+function createTitleSideEffect(options?: TitleOptions): Observer {
   const { prefix = "", suffix = "", delimiter = "" } = options || {};
 
   return function({ response }: Emitted) {

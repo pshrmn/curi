@@ -1,6 +1,6 @@
-import { ResponseHandler, Emitted } from "@curi/core";
+import { Observer, Emitted } from "@curi/core";
 
-function createScrollSideEffect(): ResponseHandler {
+function createScrollSideEffect(): Observer {
   return function({ response, navigation }: Emitted): void {
     if (navigation.action === "POP") {
       return;

@@ -1,3 +1,7 @@
+## 1.0.0-beta.10
+
+* Side effect function returns an `Observer`.
+
 ## 1.0.0-beta.9
 
 * Side effect receives `Emitted`.

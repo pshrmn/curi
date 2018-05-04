@@ -1,3 +1,3 @@
-import { ResponseHandler } from "@curi/core";
-declare function createScrollSideEffect(): ResponseHandler;
+import { Observer } from "@curi/core";
+declare function createScrollSideEffect(): Observer;
 export default createScrollSideEffect;
