@@ -1,3 +1,7 @@
+## 1.0.0-beta.5
+
+* TypeScript fix
+
 ## 1.0.0-beta.4
 
 * Use `router.navigate()` in `<Link>`.

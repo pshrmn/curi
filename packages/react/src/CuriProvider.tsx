@@ -8,7 +8,7 @@ import {
   Emitted,
   Response,
   Navigation,
-  RemoveResponseHandler
+  RemoveObserver
 } from "@curi/core";
 
 export type CuriRenderFn = (props: Emitted) => React.ReactNode;
@@ -40,7 +40,7 @@ class CuriProvider extends React.Component<
         this.setState({ response, navigation });
       },
       { observe: true, initial: false }
-    ) as RemoveResponseHandler;
+    ) as RemoveObserver;
   }
 
   componentWillReceiveProps(nextProps: CuriProviderProps) {
