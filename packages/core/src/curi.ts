@@ -1,7 +1,7 @@
 import registerRoutes from "./utils/registerRoutes";
 import pathnameInteraction from "./interactions/pathname";
 import finishResponse from "./finishResponse";
-import matchLocation from "./utils/match";
+import matchLocation from "./matchLocation";
 import resolveMatchedRoute from "./resolveMatchedRoute";
 import createRoute from "./route";
 
@@ -15,14 +15,19 @@ import {
   CuriRouter,
   RouterOptions,
   SideEffect,
-  ResponseHandler,
+  Observer,
   Emitted,
   RespondOptions,
-  RemoveResponseHandler,
+  RemoveObserver,
   CurrentResponse,
   Navigation,
   NavigationDetails
 } from "./types/curi";
+
+interface GroupedEffects {
+  before: Array<Observer>;
+  after: Array<Observer>;
+}
 
 function createRouter(
   history: History,
@@ -32,45 +37,47 @@ function createRouter(
   const {
     route: userInteractions = [],
     sideEffects = [],
-    pathnameOptions,
     emitRedirects = true
   } = options;
 
-  const beforeSideEffects: Array<ResponseHandler> = [];
-  const afterSideEffects: Array<ResponseHandler> = [];
-  sideEffects.forEach(se => {
-    if (se.after) {
-      afterSideEffects.push(se.effect);
-    } else {
-      beforeSideEffects.push(se.effect);
+  const groupedEffects: GroupedEffects = sideEffects.reduce(
+    (acc: GroupedEffects, curr: SideEffect) => {
+      if (curr.after) {
+        acc.after.push(curr.effect);
+      } else {
+        acc.before.push(curr.effect);
+      }
+      return acc;
+    },
+    {
+      before: [],
+      after: []
     }
-  });
+  );
 
   let routes: Array<InternalRoute> = [];
-  const registeredInteractions: Interactions = {};
-
-  // add the pathname interaction to the provided interactions
-  const allInteractions = userInteractions.concat(
-    pathnameInteraction(pathnameOptions)
-  );
+  const routeInteractions: Interactions = {};
 
   function setupRoutesAndInteractions(
     routeArray: Array<RouteDescriptor>
   ): void {
     routes = routeArray.map(createRoute);
-    for (let key in registeredInteractions) {
-      delete registeredInteractions[key];
+    for (let key in routeInteractions) {
+      delete routeInteractions[key];
     }
 
-    allInteractions.forEach(interaction => {
-      interaction.reset();
-      registeredInteractions[interaction.name] = interaction.get;
-      registerRoutes(routes, interaction);
-    });
+    // add the pathname interaction to the provided interactions
+    userInteractions
+      .concat(pathnameInteraction(options.pathnameOptions))
+      .forEach(interaction => {
+        interaction.reset();
+        routeInteractions[interaction.name] = interaction.get;
+        registerRoutes(routes, interaction);
+      });
   }
 
-  const responseHandlers: Array<ResponseHandler | null> = [];
-  const oneTimers: Array<ResponseHandler> = [];
+  const observers: Array<Observer | null> = [];
+  const oneTimers: Array<Observer> = [];
 
   const mostRecent: CurrentResponse = {
     response: null,
@@ -78,18 +85,18 @@ function createRouter(
   };
 
   function respond(
-    fn: ResponseHandler,
+    fn: Observer,
     options?: RespondOptions
-  ): RemoveResponseHandler | void {
+  ): RemoveObserver | void {
     const { observe = false, initial = true } = options || {};
 
     if (observe) {
-      const newLength = responseHandlers.push(fn);
+      const newLength = observers.push(fn);
       if (mostRecent.response && initial) {
         fn.call(null, { ...mostRecent, router });
       }
       return () => {
-        responseHandlers[newLength - 1] = null;
+        observers[newLength - 1] = null;
       };
     } else {
       if (mostRecent.response && initial) {
@@ -106,16 +113,15 @@ function createRouter(
     mostRecent.navigation = navigation;
 
     const resp: Emitted = { response, navigation, router };
-    beforeSideEffects.forEach(fn => {
+    groupedEffects.before.forEach(fn => {
       fn(resp);
     });
-    responseHandlers.forEach(fn => {
+    observers.forEach(fn => {
       if (fn != null) {
         fn(resp);
       }
     });
-    // calling one time responseHandlers after regular responseHandlers
-    // ensures that those are called prior to the one time fns
+
     while (oneTimers.length) {
       const fn = oneTimers.pop();
       if (fn) {
@@ -123,7 +129,7 @@ function createRouter(
       }
     }
 
-    afterSideEffects.forEach(fn => {
+    groupedEffects.after.forEach(fn => {
       fn(resp);
     });
   }
@@ -149,7 +155,7 @@ function createRouter(
         `The current location (${
           pendingNav.location.pathname
         }) has no matching route, ` +
-          'so a response could not be generated. A catch-all route ({ path: "(.*)" }) ' +
+          'so a response could not be emitted. A catch-all route ({ path: "(.*)" }) ' +
           "can be used to match locations with no other matching route."
       );
       pendingNav.finish();
@@ -158,11 +164,7 @@ function createRouter(
 
     if (match.route.sync) {
       pendingNav.finish();
-      const response = finishResponse(
-        match as Match,
-        registeredInteractions,
-        null
-      );
+      const response = finishResponse(match as Match, routeInteractions, null);
       emitAndRedirect(response, navigation);
     } else {
       resolveMatchedRoute(match as Match).then((resolved: Resolved) => {
@@ -172,7 +174,7 @@ function createRouter(
         pendingNav.finish();
         const response = finishResponse(
           match as Match,
-          registeredInteractions,
+          routeInteractions,
           resolved
         );
         emitAndRedirect(response, navigation);
@@ -192,27 +194,20 @@ function createRouter(
     }
   }
 
-  // now that everything is defined, actually do the setup
-  setupRoutesAndInteractions(routeArray);
-  history.respondWith(navigationHandler);
-
   const router: CuriRouter = {
-    route: registeredInteractions,
+    route: routeInteractions,
     history,
     respond,
     replaceRoutes: setupRoutesAndInteractions,
     current() {
-      return {
-        response: mostRecent.response,
-        navigation: mostRecent.navigation
-      };
+      return mostRecent;
     },
     navigate(details: NavigationDetails): void {
       const { name, params, hash, query, state } = details;
       let { method = "ANCHOR" } = details;
       const pathname =
         name != null
-          ? registeredInteractions.pathname(name, params)
+          ? routeInteractions.pathname(name, params)
           : history.location.pathname;
       if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {
         method = "ANCHOR";
@@ -228,6 +223,10 @@ function createRouter(
       );
     }
   };
+
+  // now that everything is defined, actually do the setup
+  setupRoutesAndInteractions(routeArray);
+  history.respondWith(navigationHandler);
 
   return router;
 }

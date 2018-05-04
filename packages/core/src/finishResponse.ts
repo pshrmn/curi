@@ -25,39 +25,34 @@ export default function finishResponse(
   resolved: Resolved | null
 ): Response {
   const { route, match } = routeMatch;
+  const response: Response = match;
   if (!route.response) {
-    return match as Response;
+    return response;
   }
 
   const responseModifiers = route.response({
     resolved,
     match
   });
+
   if (!responseModifiers) {
-    return match as Response;
+    return response;
   }
 
-  const settableProperties = [
-    "status",
-    "error",
-    "body",
-    "data",
-    "title",
-    "redirectTo"
-  ];
-  const response: Response = match;
+  const settableProperties: Array<
+    keyof Response & keyof SettableResponseProperties
+  > = ["status", "error", "body", "data", "title", "redirectTo"];
+
   // only merge the valid properties onto the response
-  settableProperties.forEach(
-    (p: keyof Response & keyof SettableResponseProperties) => {
-      if (responseModifiers.hasOwnProperty(p)) {
-        if (p === "redirectTo") {
-          // special case
-          response[p] = createRedirect(responseModifiers[p], interactions);
-        } else {
-          response[p] = responseModifiers[p];
-        }
+  settableProperties.forEach(p => {
+    if (responseModifiers.hasOwnProperty(p)) {
+      if (p === "redirectTo") {
+        // special case
+        response[p] = createRedirect(responseModifiers[p], interactions);
+      } else {
+        response[p] = responseModifiers[p];
       }
     }
-  );
-  return response as Response;
+  });
+  return response;
 }

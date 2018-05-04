@@ -24,9 +24,9 @@ export {
 export {
   CuriRouter,
   RouterOptions,
-  ResponseHandler,
+  Observer,
   Emitted,
-  RemoveResponseHandler,
+  RemoveObserver,
   SideEffect,
   Navigation
 } from "./curi";

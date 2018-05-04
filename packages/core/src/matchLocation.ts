@@ -1,10 +1,10 @@
-import { join, stripLeadingSlash } from "./path";
-import parseParams from "./parseParams";
+import { join, stripLeadingSlash } from "./utils/path";
+import parseParams from "./utils/parseParams";
 
 import { HickoryLocation } from "@hickory/root";
-import { InternalRoute } from "../types/route";
-import { PossibleMatch, Match, MatchingRoute } from "../types/match";
-import { Params, RawParams } from "../types/response";
+import { InternalRoute } from "./types/route";
+import { PossibleMatch, Match, MatchingRoute } from "./types/match";
+import { Params, RawParams } from "./types/response";
 
 function matchRoute(
   route: InternalRoute,

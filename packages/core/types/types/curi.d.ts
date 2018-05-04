@@ -12,14 +12,14 @@ export interface Emitted {
     navigation: Navigation;
     router: CuriRouter;
 }
-export declare type ResponseHandler = (props?: Emitted) => void;
+export declare type Observer = (props?: Emitted) => void;
 export interface RespondOptions {
     observe?: boolean;
     initial?: boolean;
 }
-export declare type RemoveResponseHandler = () => void;
+export declare type RemoveObserver = () => void;
 export interface SideEffect {
-    effect: ResponseHandler;
+    effect: Observer;
     after?: boolean;
 }
 export interface RouterOptions {
@@ -42,7 +42,7 @@ export interface NavigationDetails {
 }
 export interface CuriRouter {
     replaceRoutes: (routeArray: Array<RouteDescriptor>) => void;
-    respond: (fn: ResponseHandler, options?: RespondOptions) => RemoveResponseHandler | void;
+    respond: (fn: Observer, options?: RespondOptions) => RemoveObserver | void;
     route: Interactions;
     history: History;
     current(): CurrentResponse;

@@ -16,16 +16,16 @@ export interface Emitted {
   router: CuriRouter;
 }
 
-export type ResponseHandler = (props?: Emitted) => void;
+export type Observer = (props?: Emitted) => void;
 
 export interface RespondOptions {
   observe?: boolean;
   initial?: boolean;
 }
-export type RemoveResponseHandler = () => void;
+export type RemoveObserver = () => void;
 
 export interface SideEffect {
-  effect: ResponseHandler;
+  effect: Observer;
   after?: boolean;
 }
 
@@ -52,10 +52,7 @@ export interface NavigationDetails {
 
 export interface CuriRouter {
   replaceRoutes: (routeArray: Array<RouteDescriptor>) => void;
-  respond: (
-    fn: ResponseHandler,
-    options?: RespondOptions
-  ) => RemoveResponseHandler | void;
+  respond: (fn: Observer, options?: RespondOptions) => RemoveObserver | void;
   route: Interactions;
   history: History;
   current(): CurrentResponse;
