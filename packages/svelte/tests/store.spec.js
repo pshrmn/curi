@@ -6,7 +6,11 @@ import curiStore from "../src/store";
 
 describe("curiStore", () => {
   let history, router;
-  const routes = [{ name: "Home", path: "" }, { name: "About", path: "about" }];
+  const routes = [
+    { name: "Home", path: "" },
+    { name: "About", path: "about" },
+    { name: "Not Found", path: "(.*)" }
+  ];
 
   beforeEach(() => {
     history = InMemory();
@@ -17,16 +21,17 @@ describe("curiStore", () => {
     it("adds Curi properties to store", () => {
       const store = new Store({ foo: "oof" });
       curiStore(router, store);
-      expect(store.get("router")).toBe(router);
-      expect(store.get("curi")).toHaveProperty("response");
-      expect(store.get("curi")).toHaveProperty("navigation");
+
+      expect(store.get().router).toBe(router);
+      expect(store.get().curi).toHaveProperty("response");
+      expect(store.get().curi).toHaveProperty("navigation");
     });
 
     it("initializes with current response/navigation", done => {
       router.respond(({ response, navigation }) => {
         const store = new Store({ foo: "oof" });
         curiStore(router, store);
-        const $curi = store.get("curi");
+        const $curi = store.get().curi;
         expect($curi.response).toBe(response);
         expect($curi.navigation).toBe(navigation);
         done();
@@ -43,7 +48,7 @@ describe("curiStore", () => {
     it("initializes with current response/navigation", done => {
       router.respond(({ response, navigation }) => {
         const store = curiStore(router, store);
-        const $curi = store.get("curi");
+        const $curi = store.get().curi;
         expect($curi.response).toBe(response);
         expect($curi.navigation).toBe(navigation);
         done();
@@ -58,7 +63,7 @@ describe("curiStore", () => {
       response: initialResponse,
       navigation: initialNavigation
     } = router.current();
-    expect(store.get("curi")).toMatchObject({
+    expect(store.get().curi).toMatchObject({
       response: initialResponse,
       navigation: initialNavigation
     });
@@ -66,7 +71,7 @@ describe("curiStore", () => {
     history.navigate("/about");
 
     const { response: currentResponse } = router.current();
-    const { response: aboutResponse } = store.get("curi");
+    const { response: aboutResponse } = store.get().curi;
     expect(aboutResponse).toBe(currentResponse);
     expect(aboutResponse.name).toBe("About");
   });

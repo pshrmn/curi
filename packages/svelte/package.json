@@ -32,7 +32,7 @@
     "@curi/core": "^1.0.0-beta.26"
   },
   "dependencies": {
-    "svelte": ">=1.49.0"
+    "svelte": "^2.4.3"
   },
   "devDependencies": {
     "@curi/core": "^1.0.0-beta.32",
@@ -50,15 +50,8 @@
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-replace": "^2.0.0",
-    "rollup-plugin-svelte": "^3.1.0",
-    "rollup-plugin-uglify": "^2.0.1",
+    "rollup-plugin-svelte": "^4.1.0",
     "simulant": "^0.2.2",
-    "svelte": "^1.54.0",
-    "svelte-cli": "^1.4.0"
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "node_modules/(?!(svelte)/)"
-    ]
+    "svelte-cli": "^3.0.0"
   }
 }

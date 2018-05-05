@@ -1,3 +1,8 @@
+## Next
+
+* Update to Svelte v2 minimum dependency.
+* Remove `<script>` builds.
+
 ## 1.0.0-beta.5
 
 * Add `hash`, `query`, and `state` props to `<Link>`, remove `details`.
