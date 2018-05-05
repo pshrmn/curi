@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.6
 
 * Update to Svelte v2 minimum dependency.
 * Remove `<script>` builds.
