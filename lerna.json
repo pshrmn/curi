@@ -9,7 +9,7 @@
   "commands": {
     "bootstrap": {
       "hoist": "**",
-      "nohoist": ["ts-jest", "react-native", "babel-jest"]
+      "nohoist": ["ts-jest", "svelte", "react-native", "babel-jest"]
     }
   }
 }
