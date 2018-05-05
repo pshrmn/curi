@@ -9,7 +9,14 @@
   "commands": {
     "bootstrap": {
       "hoist": "**",
-      "nohoist": ["ts-jest", "svelte", "react-native", "babel-jest"]
+      "nohoist": [
+        "ts-jest",
+        "svelte",
+        "svelte-cli",
+        "rollup-plugin-svelte",
+        "react-native",
+        "babel-jest"
+      ]
     }
   }
 }
