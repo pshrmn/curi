@@ -378,8 +378,8 @@ router.respond(() => {
           </p>
           <p>
             In React applications, <IJS>response.body</IJS> should be a React
-            component, so rendering is just creating an element from{" "}
-            <IJS>response.body</IJS>.
+            component, so rendering the application means creating an element
+            from <IJS>response.body</IJS>.
           </p>
           <p>
             The{" "}

@@ -6,13 +6,9 @@ import routes from "./routes";
 import renderApp from "./render";
 
 const history = Browser();
-const router = curi(history, routes);
-router.respond(renderApp);
-
-// whenever we re-render, finish the progress bar
-router.respond(
-  () => {
-    NProgress.done();
-  },
-  { observe: true }
-);
+function finishProgress() {
+  NProgress.done();
+}
+const router = curi(history, routes, {
+  sideEffects: [{ effect: finishProgress, after: true }]
+});

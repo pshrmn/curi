@@ -16,10 +16,10 @@ export default ({ name }) => (
 
       <p>
         If you are unfamiliar with the Pinterest model, this is how it works:
-        when you navigate to a "modal route" from within the application, the
+        When you navigate to a "modal route" from within the application, the
         route will open in a modal window (preserving the background content
-        from the page that the user navigated from). However, if you load the
-        same location manually, it will render the location in a full window.
+        from the page that the user navigated from). If you load the same
+        location manually, it will render the location in a full window.
       </p>
 
       <p>

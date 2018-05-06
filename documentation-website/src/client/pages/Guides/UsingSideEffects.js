@@ -56,11 +56,12 @@ export default ({ name }) => (
           <p>
             Side effects can also have an <IJS>after</IJS> property. By default,
             side effect functions will be called before any regular observer
-            functions (the ones added with <IJS>router.respond()</IJS>).
-            However, you might prefer for a side effect to be run after those
-            observers. To do that, you just need to include{" "}
-            <IJS>after: true</IJS> in your side effect object. If you do no
-            provide this property, this will default to <IJS>false</IJS>.
+            functions (the ones added with <IJS>router.respond()</IJS>). Some
+            side effects make more sense to run after those observers,
+            especially if they rely on the application's content to be updated.
+            To do that, you need to include <IJS>after: true</IJS> in your side
+            effect object. If you do no provide this property, this will default
+            to <IJS>false</IJS>.
           </p>
         </Explanation>
         <CodeBlock>
@@ -106,9 +107,8 @@ const router = curi(history, routes, {
       <SideBySide>
         <Explanation>
           <p>
-            Side effects are just simple functions that receive a response
-            object and a navigation object and do something with them. One thing
-            that they should not do, however, is to modify the response.
+            Side effects are functions that receive a response object and a
+            navigation object and do something with them.
           </p>
         </Explanation>
         <CodeBlock>

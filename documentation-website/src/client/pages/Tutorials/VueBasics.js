@@ -42,8 +42,8 @@ export default () => (
       </p>
       <Note>
         The instructions here assume that you have NodeJS and NPM > 5.2
-        installed on your computer. If you do not and cannot or just prefer to
-        avoid setup altogether, you can follow along using{" "}
+        installed on your computer. If you do not, cannot, or prefer to avoid
+        setup altogether, you can follow along using{" "}
         <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the
         boilerplate will be different, but the differences are minor.
       </Note>
@@ -122,7 +122,7 @@ yarn serve`}
         We can import the <IJS>Browser</IJS> function from{" "}
         <IJS>@hickory/browser</IJS> in our main file (<IJS>src/main.js</IJS>,
         which <IJS>@vue/cli</IJS> created for us). To create a history object,
-        we just need to call that function.
+        we call that function.
       </p>
       <Note>
         The history object can be configured with{" "}
@@ -147,14 +147,14 @@ new Vue({
       </PrismBlock>
       <Note>
         Eslint will complain here because we haven't actually used the new{" "}
-        <IJS>history</IJS> object. We can just ignore that warning for now
-        because we'll get rid of it soon enough.
+        <IJS>history</IJS> object. We can ignore that warning for now because
+        we'll get rid of it soon enough.
       </Note>
     </Section>
     <Section title="Defining the Routes" id="defining-routes">
       <p>
-        Routes are simply JavaScript objects that define the valid locations for
-        a router. They have a <IJS>name</IJS> and a <IJS>path</IJS>.
+        Routes are JavaScript objects that define the valid locations for a
+        router. They have a <IJS>name</IJS> and a <IJS>path</IJS>.
       </p>
       <PrismBlock lang="javascript">
         {`// this is a route
@@ -392,10 +392,10 @@ new Vue({
         to render, but the other two may occasionally be useful.
       </p>
       <p>
-        How do we use the response to render? Any way you want, really. Based on
-        the sample response above, the obvious idea would be to determine what
-        component to render based on the response's <IJS>name</IJS>. However, we
-        can make this even easier by using the <IJS>body</IJS> property.
+        How do we use the response to render? Any way you want. Based on the
+        sample response above, the <IJS>name</IJS> stands out as the best way to
+        identify which route matched. We can make this even easier by adding
+        another property to the response: <IJS>body</IJS>.
       </p>
       <p>
         Earlier it was mentioned that response objects can be modified. This is
@@ -722,10 +722,10 @@ export default [
           Now that we can navigate to the books, we should fill out the UI for
           the <Cmp>Book</Cmp> component. We will once again import the{" "}
           <IJS>books.js</IJS> data. We can use <IJS>params.id</IJS> to select
-          the correct book. However, <IJS>params.id</IJS> is a string, so we
-          will need to parse it into an integer. Sometimes there won't be a
-          valid book for the <IJS>params.id</IJS>. In that case, we will also
-          want to display a message that the requested book could not be found.
+          the correct book. <IJS>params.id</IJS> is a string, so we will need to
+          parse it into an integer. Sometimes there won't be a valid book for
+          the <IJS>params.id</IJS>. In that case, we will also want to display a
+          message that the requested book could not be found.
         </p>
         <PrismBlock lang="html">
           {`<!-- src/components/Book.vue -->

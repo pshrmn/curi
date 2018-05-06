@@ -21,8 +21,7 @@ export default ({ name }) => (
     <SideBySide>
       <Explanation>
         <p>
-          Curi is somewhat similar to React Router versions 2 and 3, so
-          migration is fairly easy.
+          Curi is mostly conceptually similar to React Router versions 2 and 3.
         </p>
         <ol>
           <li>Both use a centralized router.</li>
@@ -126,9 +125,7 @@ export default ({ name }) => (
               </a>.
             </p>
 
-            <p>
-              First, we will just define the names and paths for our routes.
-            </p>
+            <p>First, we will define the names and paths for our routes.</p>
             <p>
               Each route must also have a unique name. A route's name will be
               used for interacting with it. For example, to navigate to a route,
@@ -222,8 +219,8 @@ const routes = [
         <SideBySide>
           <Explanation>
             <p>
-              We are close to replicating our React Router routes, we just have
-              to implement the <IJS>on___</IJS> methods for our <IJS>
+              We are close to replicating our React Router routes, but we still
+              need to implement the <IJS>on___</IJS> methods for our <IJS>
                 :message
               </IJS>{" "}
               route. With Curi, routes can have functions that are called when
@@ -532,21 +529,15 @@ function render({ response }) {
           <Explanation>
             <p>
               What about props that you want to send to your route components?
-              Just pass them to the <Cmp>Body</Cmp> component that you render.
-            </p>
-            <p>
-              The one catch here is that you will be passing the same props to
-              all of your route components. You could add fine-grained control
-              by using <IJS>response.name</IJS> and a <IJS>switch</IJS> or{" "}
-              <IJS>if</IJS>/<IJS>else</IJS> chain, but this is probably
-              overkill. If you’re worried about polluting the route component’s
-              props, just pass the whole response object.
+              Pass them to the <Cmp>Body</Cmp> component that you render. Props
+              can be passed individually, but passing the whole{" "}
+              <IJS>response</IJS> object is recommended.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
             {`function render({ response }) {
-  const { body:Body, data, params } = response;
-  return <Body data={data} params={params} />;
+  const { body:Body } = response;
+  return <Body response={response} />;
 }`}
           </CodeBlock>
         </SideBySide>

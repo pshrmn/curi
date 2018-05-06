@@ -21,10 +21,11 @@ export default ({ name }) => (
       <p>
         The <IJS>nprogress</IJS> package allows you to render a loading bar that
         will run across the top of your page. There are many possible solutions,
-        but this one is very easy to use, so it works well for our example. The
-        basis of what we will do is to tell <IJS>nprogress</IJS> to start when
-        the user clicks a link, and then when we re-render, we tell{" "}
-        <IJS>nprogress</IJS> that we are done loading.
+        but this one has a simple api (<IJS>start()</IJS> and <IJS>done()</IJS>),
+        so it works well for our example. The basis of what we will do is to
+        tell <IJS>nprogress</IJS> to start when the user clicks a link, and then
+        when we re-render, we tell <IJS>nprogress</IJS> that we are done
+        loading.
       </p>
 
       <PrismBlock lang="javascript">
@@ -34,14 +35,6 @@ nprogress.start();
 nprogress.done();
 `}
       </PrismBlock>
-
-      <p>
-        The example implementation can definitely be improved. Currently we are
-        calling <IJS>nprogress.done()</IJS> as a side effect of our render
-        function. This is not ideal, but again, this is just a minimum viable
-        example. In your own application, you could add an observer or use a
-        Curi side effect.
-      </p>
     </Section>
 
     <Section title="Live Demo" id="demo">

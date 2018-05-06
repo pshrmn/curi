@@ -22,7 +22,9 @@ export default ({ name }) => (
         <p>
           A registered route is generally any route that is in the array of
           routes that you used to create your router. However, some interactions
-          only register routes that meet some criteria.
+          only register routes that meet some criteria. For example, the{" "}
+          <IJS>prefetch</IJS> interaction only registers routes with
+          asynchronous methods.
         </p>
 
         <p>
@@ -94,7 +96,8 @@ const interaction = createMyInteraction();`}
         <Explanation>
           <p>
             The route interaction will be added to the router's <IJS>route</IJS>{" "}
-            property. To call an interaction, you simply use its name.
+            property. When you call an interaction, you pass the name of the
+            route that you want to interact with.
           </p>
         </Explanation>
         <CodeBlock>
@@ -106,9 +109,7 @@ const interaction = createMyInteraction();`}
     <Section title="Creating Route Interactions" id="creating">
       <SideBySide>
         <Explanation>
-          <p>
-            There are just a few steps to creating your own route interactions.
-          </p>
+          <p>There are a few steps to creating your own route interactions.</p>
 
           <p>
             Remember to export a function that will create the interaction

@@ -130,9 +130,9 @@ const App = () => (
 
             <p>
               With the <Cmp>Link</Cmp>, instead of providing a URI to navigate
-              to, you just need to specify the name of the route you want to
-              link to. Then, the pathname of the URI you want the component to
-              link to will be automatically generated for you.
+              to, you specify the name of the route that you want to link to.
+              Then, the pathname of the URI you want the component to link to
+              will be automatically generated for you.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
@@ -217,8 +217,8 @@ const App = () => (
                   By default, when you render a <Cmp>Link</Cmp>, an anchor
                   element will be rendered (<IJS>
                     React.createElement('a', ...)
-                  </IJS>). However, you can provide your own component to be
-                  rendered instead. This can be useful for using styled
+                  </IJS>). <IJS>anchor</IJS> lets you provide your own component
+                  to be rendered instead. This can be useful for using styled
                   components to navigate.
                 </p>
                 <Warning>

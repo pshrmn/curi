@@ -18,9 +18,9 @@ export default ({ name }) => (
       <Explanation>
         <p>
           If you are bundling an application with a lot of routes, users of your
-          application may be downloading a lot of unnecessary content just to
-          render the initial page. Using code splitting, you can reduce the
-          initial download size for your application by splitting code that is
+          application may be downloading a lot of unnecessary content for the
+          initial page render. Using code splitting, you can reduce the initial
+          download size for your application by splitting code that is
           conditionally loaded into a separate bundle that is only downloaded
           when it is needed.
         </p>
@@ -101,10 +101,10 @@ const routes = [
             <IJS>initial</IJS> function using <IJS>resolved.initial</IJS>.
           </p>
           <p>
-            <IJS>import()</IJS> resolves with a module object, so we will just
-            assume that the component are default imports and reference them as{" "}
-            <IJS>resolved.initial.default</IJS>. Alternatively, we could just
-            resolve the default value in our <IJS>on.initial()</IJS> function.
+            <IJS>import()</IJS> resolves with a module object. If the component
+            is a default export (<IJS>export default MyComponent</IJS>), we can
+            access the component through the imported module object's{" "}
+            <IJS>default</IJS> property.
           </p>
         </Explanation>
         <CodeBlock>
@@ -114,11 +114,14 @@ const routes = [
     path: '',
     response: ({ resolved }) => {
       return {
-        body: resolved.initial.default
+        body: resolved.initial
       };
     },
     on: {
-      initial: () => import('./components/Home'),
+      initial: () => (
+        import('./components/Home')
+          .then(module => module.default)
+      ),
     }
   },
   {
@@ -126,11 +129,14 @@ const routes = [
     path: 'contact',
     response: ({ resolved }) => {
       return {
-        body: resolved.initial.default
+        body: resolved.initial
       };
     },
     on: {
-      initial: () => import('./components/Contact'),
+      initial: () => (
+        import('./components/Contact')
+          .then(module => module.default)
+      ),
     },
     children: [
       {
@@ -138,12 +144,10 @@ const routes = [
         path: ':method',
         response: ({ resolved }) => {
           return {
-            body: resolved.initial.default
+            body: resolved.initial
           };
         },
         on: {
-          // we can resolve module.default in initial
-          // instead of in response
           initial: () => (
             import('./components/ContactMethod')
               .then(module => module.default)
@@ -167,8 +171,8 @@ const routes = [
         Whatever path you decide to go, hopefully this has shown you that
         setting up code splitting with the <IJS>on.initial()</IJS> property is
         fairly simple to do. If you are using Webpack and want to reduce your
-        initial bundle size, <IJS>on.initial()</IJS> is an easy way to
-        accomplish this.
+        initial bundle size, <IJS>on.initial()</IJS> is a good way to accomplish
+        this.
       </p>
 
       <p>

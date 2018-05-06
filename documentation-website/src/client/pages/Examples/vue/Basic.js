@@ -32,13 +32,6 @@ export default ({ name }) => (
           here
         </a>.
       </p>
-      <Note>
-        If you are experienced with Vue, you will probably notice that the
-        layout of this application is not optimal. That is a just testament to
-        my lack of familiarity with Vue. Hopefully will be fixed as I learn the
-        best practices. Please feel free to point out any issues and I will
-        update this example.
-      </Note>
     </Section>
   </BaseExample>
 );

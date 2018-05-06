@@ -486,15 +486,15 @@ const user = {
           <Explanation>
             <p>
               When <IJS>path-to-regexp</IJS> matches your paths, all parameters
-              are extracted as strings. However, you might prefer for some route
-              params to be other types. You can provide functions to transform
-              params using the <IJS>route.params</IJS> object.
+              are extracted as strings. If you prefer for some route params to
+              be other types, you can provide functions to transform params
+              using the <IJS>route.params</IJS> object.
             </p>
             <p>
               Properties of the <IJS>route.params</IJS> object are the names of
               params to be parsed. The paired value should be a function that
               takes a string (the value from the <IJS>pathname</IJS>) and
-              returns a new value (transformed however you want).
+              returns a new value (transformed using the function you provide).
             </p>
           </Explanation>
           <CodeBlock>
@@ -609,9 +609,9 @@ const user = {
             matches every pathname.
           </p>
           <p>
-            However, if a route has children, then Curi will check if any of
-            those routes form a complete match before moving on to the next
-            route in the routes array.
+            If a route has children, Curi will check if any of those routes form
+            a complete match before moving on to the next route in the routes
+            array.
           </p>
         </Explanation>
         <CodeBlock>
@@ -645,8 +645,8 @@ const user = {
         <CodeBlock>
           {`// when the pathname is
 // '/a/Good+Kid,+M.A.A.D+City/Poetic+Justice',
-// the Album route will partially match. However, because
-// it sets "end" to false, the partial match will be used.
+// the Album route will partially match, but because
+// it sets "end" to false, the partial match will still be used.
 {
   name: 'Album',
   path: 'a/:albumID',

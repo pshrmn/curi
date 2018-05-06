@@ -80,9 +80,7 @@ const Inbox = ({ match }) => (
               their parent route's <IJS>children</IJS> property.
             </p>
 
-            <p>
-              First, we will just define the names and paths for our routes.
-            </p>
+            <p>First, we will define the names and paths for our routes.</p>
             <p>
               Each route must have a unique name. A route's name will be used
               for interacting with it. For example, to navigate to a route, you
@@ -490,21 +488,15 @@ function render({ response }) {
           <Explanation>
             <p>
               What about props that you want to send to your route components?
-              Just pass them to the <Cmp>Body</Cmp> component that you render.
-            </p>
-            <p>
-              The one catch here is that you will be passing the same props to
-              all of your route components. You could add fine-grained control
-              by using <IJS>response.name</IJS> and a <IJS>switch</IJS> or{" "}
-              <IJS>if</IJS>/<IJS>else</IJS> chain, but this is probably
-              overkill. If you’re worried about polluting the route component’s
-              props, just pass the whole response object.
+              Pass them to the <Cmp>Body</Cmp> component that you render. Props
+              can be passed individually, but passing the whole{" "}
+              <IJS>response</IJS> object is recommended.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
             {`function render({ response }) {
-  const { body:Body, data, params } = response;
-  return <Body data={data} params={params} />;
+  const { body:Body } = response;
+  return <Body response={response} />;
 }`}
           </CodeBlock>
         </SideBySide>

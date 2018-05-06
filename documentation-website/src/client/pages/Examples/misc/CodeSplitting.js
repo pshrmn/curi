@@ -14,7 +14,7 @@ export default ({ name }) => (
         <Link to="Guide" params={{ slug: "code-splitting" }}>
           code splitting
         </Link>{" "}
-        guide covers the basic principles for how to do this. This example just
+        guide covers the basic principles for how to do this. This example
         provides you with code that actually implements what is explained there.
       </p>
     </Section>

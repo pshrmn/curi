@@ -60,7 +60,6 @@ export default ({ name }) => (
             <IJS>params</IJS>.
           </p>
           <p>
-            Just like the <IJS>on.initial()</IJS> function,{" "}
             <IJS>on.every()</IJS> is expected to return a Promise.
           </p>
           <p>
@@ -174,10 +173,10 @@ export default ({ name }) => (
     </Section>
     <p>
       <IJS>every</IJS> and <IJS>response</IJS> offer a convenient way to do data
-      loading prior to actually rendering the route. Please remember, however,
-      that your application will not be re-rendering until after the fetching
-      has resolved. If you have a long running load function, you may wish to
-      implement some sort of loading display. The{" "}
+      loading prior to actually rendering the route, but please remember that
+      your application will not be re-rendering until <em>after</em> the
+      fetching has resolved. If you have a long running load function, you may
+      wish to implement some sort of loading display. The{" "}
       <Link to="Example" params={{ category: "react", slug: "data-loading" }}>
         data loading example
       </Link>{" "}

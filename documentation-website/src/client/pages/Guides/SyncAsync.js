@@ -40,11 +40,12 @@ export default ({ name }) => (
 
 // async
 {
-  name: "About",
-  path: "about,
+  name: "User",
+  path: "user/:id,
   on: {
-    // this makes the route async
-    initial: () => import("./components/About")
+    // either of these makes the route async
+    initial: () => import("./components/User"),
+    every: ({ params }) => fetch(\`/api/user/\${params.id}\`)
   }
 }`}
       </CodeBlock>
@@ -55,8 +56,8 @@ export default ({ name }) => (
         <Explanation>
           <p>
             For the most part, it shouldn't matter to you (or your users)
-            whether Curi is sync or async. However, there are a couple of things
-            that you should be aware of when it comes to async matching.
+            whether Curi is sync or async, but there are a couple of things that
+            you should be aware of when it comes to async matching.
           </p>
         </Explanation>
       </SideBySide>
@@ -66,14 +67,11 @@ export default ({ name }) => (
           <SideBySide>
             <Explanation>
               <p>
-                If you have async routes, you should wait for the initial
-                response before rendering. If you don't, then the app will have
-                to know how to render when a response is <IJS>null</IJS>.
-              </p>
-              <p>
-                Waiting is done by passing a function that renders the app to{" "}
-                <IJS>router.respond()</IJS>. That function will be called once
-                the initial response is ready.
+                If the initial route that matches is async and you try to render
+                immediately, the <IJS>response</IJS> will be <IJS>null</IJS>.
+                You can wait to render until the initial response is ready with{" "}
+                <IJS>router.respond()</IJS>. The function you pass to that will
+                be called one time, once the initial response is ready.
               </p>
             </Explanation>
             <CodeBlock>
@@ -107,6 +105,28 @@ router.respond(() => {
                 </Link>.
               </p>
             </Explanation>
+            <CodeBlock lang="jsx">
+              {`<Link
+  to="User"
+  params={{ id: 1 }}
+  onClick={() => {
+    // display a loading bar when
+    // the user clicks a link.
+    nprogress.start();
+  }}
+>User 1</Link>
+
+// use a side effect to finish
+// loading bar when the new response
+// is ready
+const finishLoading = () => {
+  nprogress.done();
+};
+
+const router = curi(history, routes, {
+  sideEffects: [{ effect: finishLoading }]
+});`}
+            </CodeBlock>
           </SideBySide>
         </li>
       </ol>

@@ -135,9 +135,9 @@ const App = () => (
 
             <p>
               With the <Cmp>Link</Cmp>, instead of providing a URI to navigate
-              to, you just need to specify the name of the route you want to
-              link to. Then, the pathname of the URI you want the component to
-              link to will be automatically generated for you.
+              to, you specify the name of the route that you want to link to.
+              Then, the pathname of the URI you want the component to link to
+              will be automatically generated for you.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
@@ -222,8 +222,8 @@ const App = () => (
                   By default, when you render a <Cmp>Link</Cmp>, a{" "}
                   <Cmp>TouchableHighlight</Cmp> element will be rendered (<IJS>
                     React.createElement(TouchableHighlight, ...)
-                  </IJS>). However, you can provide your own component to be
-                  rendered instead.
+                  </IJS>). <IJS>anchor</IJS> lets you provide your own component
+                  to be rendered instead.
                 </p>
               </Explanation>
               <CodeBlock lang="jsx">

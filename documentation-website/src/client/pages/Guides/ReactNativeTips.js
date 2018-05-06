@@ -29,9 +29,8 @@ export default ({ name }) => (
       <SideBySide>
         <Explanation>
           <p>
-            To add back button support, you just need to use your{" "}
-            <IJS>history</IJS> object (which you can use directly or access
-            through your router).
+            To add back button support, you need to use your <IJS>history</IJS>{" "}
+            object (which you can use directly or access through your router).
           </p>
           <p>
             The <IJS>history.go()</IJS> method is used for jumping between
@@ -77,8 +76,8 @@ BackHandler.addEventListener(
             <Link to="Package" params={{ package: "react" }}>
               <IJS>@curi/react</IJS>
             </Link>{" "}
-            package. In fact, Curi's React Native package just re-exports most
-            of the components from the React package.
+            package. In fact, Curi's React Native package re-exports most of the
+            components from the React package.
           </p>
         </Explanation>
       </SideBySide>

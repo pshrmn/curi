@@ -482,9 +482,9 @@ const tooSoon = router.current();
 // tooSoon.navigation === null
 
 router.respond(({ response, navigation }) => {
-  const justRight = router.current();
-  // justRight.response === response
-  // justRight.navigation === navigation
+  const perfect = router.current();
+  // perfect.response === response
+  // perfect.navigation === navigation
 });`}
               </CodeBlock>
             </SideBySide>
@@ -531,9 +531,9 @@ const userPathname = router.route.pathname(
             <SideBySide>
               <Explanation>
                 <p>
-                  The route's history object. This allows you to just pass the
-                  router throughout your project instead of both that and the
-                  history object.
+                  The route's history object. This allows you to pass the router
+                  throughout your project instead of both that and the history
+                  object.
                 </p>
               </Explanation>
             </SideBySide>

@@ -115,8 +115,9 @@ export default ({ name }) => (
               because those packages do that internally for you.
             </p>
             <p>
-              However, if you are using vanilla JavaScript or writing your own
-              framework implementation, <IJS>router.respond()</IJS> with the{" "}
+              If you are using vanilla JavaScript to render your application or
+              you are writing your own framework implementation,{" "}
+              <IJS>router.respond()</IJS> with the{" "}
               <IJS>{`{ observe: true }`}</IJS> option is what you would use to
               re-render new responses.
             </p>

@@ -20,9 +20,9 @@ export default ({ name }) => (
       </p>
 
       <p>
-        A side effect function just does something using its arguments. It is a
-        observers, but unlike ones assigned using <IJS>router.respond()</IJS>,
-        side effects cannot be removed.
+        A side effect function can do anything you want. Side effects are
+        observers, but unlike observers assigned using{" "}
+        <IJS>router.respond()</IJS>, side effects cannot be removed.
       </p>
 
       <p>
