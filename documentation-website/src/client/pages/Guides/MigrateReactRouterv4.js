@@ -21,37 +21,10 @@ export default ({ name }) => (
     <SideBySide>
       <Explanation>
         <p>
-          Curi is somewhat similar to React Router versions 2 and 3, so
-          migration is fairly easy.
+          React Router v4 isn't like most other routers because it lacks a
+          centralized configuration. Migrating to Curi mostly involves
+          re-centralizing your routes to simplify route management.
         </p>
-        <ol>
-          <li>Both use a centralized router.</li>
-          <li>
-            Both routers are made up of route objects (although with React
-            Router some of these are disguised as JSX with <Cmp>Route</Cmp>{" "}
-            components).
-          </li>
-          <li>
-            With both, routes can be nested, allowing child routes to build off
-            of the paths from their parent routes.
-          </li>
-        </ol>
-        <p>
-          Migration from React Router v2/3 to Curi should not require a complete
-          reworking of your application, but there are some key differences.
-        </p>
-        <ol>
-          <li>
-            Curi's routing is handled entirely outside of React; there are no{" "}
-            <Cmp>Route</Cmp> components.
-          </li>
-          <li>
-            With Curi, when a nested route matches, only that route renders. Any
-            ancestor routes that also (partially) match are not rendered. This
-            is different from React Router, where ancestors of the best matched
-            route also render.
-          </li>
-        </ol>
       </Explanation>
     </SideBySide>
 
@@ -62,53 +35,39 @@ export default ({ name }) => (
         <SideBySide>
           <Explanation>
             <p>
-              In React Router v2/3, there are two ways to define routes. You can
-              either use JavaScript objects or JSX <Cmp>Route</Cmp>s (which
-              React Router converts to JavaScript objects).
-            </p>
-            <p>
-              Both styles described above define the same route structure for
-              three routes: <IJS>/</IJS>, <IJS>/inbox</IJS>, and{" "}
-              <IJS>/inbox/:message</IJS>. Each one of these has a component that
-              will be rendered when it matches. The <IJS>/inbox/:message</IJS>{" "}
-              route has some methods defined to describe its behavior when the
-              route enters, updates, and leaves.
+              With React Router v4, <Cmp>Route</Cmp>s are defined in components.
+              They are usually grouped together under a <Cmp>Switch</Cmp> so
+              that only a single route from a group renders. Nested routes are
+              rendered inside of the compnent rendered by the parent{" "}
+              <Cmp>Route</Cmp>
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`// JavaScript objects
-{
-  path: '/',
-  component: App,
-  indexRoute: Home,
-  childRoutes: [
-    {
-      path: 'inbox',
-      component: Inbox,
-      childRoutes: [
-        {
-          path: ':message',
-          component: Message,
-          onEnter: (next) => {...},
-          onChange: (prev, next) => {...},
-          onLeave: (prev) => {...}
-        }
-      ]
-    }
-  ]
-// JSX
-<Route path='/' component={App}>
-  <IndexRoute component={Home} />
-  <Route path='inbox' component={Inbox}>
+            {`import { Route, Switch } from "react-router-dom";
+            
+const App = () => (
+  <Switch>
+    <Route exact path="/" component={Home} />
+    <Route path="/inbox" component={Inbox} />
+  </Switch>                 
+);
+
+// the <Inbox> matches nested routes (and includes
+// a <Route> for "exact" /inbox matches)
+const Inbox = ({ match }) => (
+  <Switch>
     <Route
-      path=':message'
-      component={Message}
-      onEnter={next => {...}}
-      onChange={(prev, next) => {...}}
-      onLeave={prev => {...}}
+      exact
+      path={match.path}
+      component={Messages}
     />
-  </Route>
-</Route>`}
+    <Route
+      exact
+      path={\`\${match.path}/:message\`}
+      component={Message}
+    />
+  </Switch>
+);`}
           </CodeBlock>
         </SideBySide>
       </Subsection>
@@ -116,23 +75,18 @@ export default ({ name }) => (
         <SideBySide>
           <Explanation>
             <p>
-              Routes in Curi are always JavaScript objects. Like React Router,
-              each route object has a path property that describes the path
-              segments that the route matches. React Router v2/3 uses a custom
-              path matcher, but Curi uses <IJS>path-to-regexp</IJS>. You can
-              read learn how to format paths from the{" "}
-              <a href="https://github.com/pillarjs/path-to-regexp">
-                <IJS>path-to-regexp</IJS> repo
-              </a>.
+              Routes in Curi are JavaScript objects. They are grouped together
+              in an array of "top-level" routes. Nested routes are grouped under
+              their parent route's <IJS>children</IJS> property.
             </p>
 
             <p>
               First, we will just define the names and paths for our routes.
             </p>
             <p>
-              Each route must also have a unique name. A route's name will be
-              used for interacting with it. For example, to navigate to a route,
-              you only have to know its name, not its URL.
+              Each route must have a unique name. A route's name will be used
+              for interacting with it. For example, to navigate to a route, you
+              only have to know its name, not its URL.
             </p>
             <p>
               The biggest difference between the Curi paths and the React Router
@@ -163,23 +117,14 @@ export default ({ name }) => (
         </SideBySide>
         <SideBySide>
           <Explanation>
+            <p>Next, we should add our components to each route.</p>
             <p>
-              Next, we should add our components to each route. We will ignore
-              the <Cmp>App</Cmp> component that is used in the React Router
-              routes. That is not route specific and will be rendered by our
-              application (assuming we actually need it).
+              Curi routes can have a <IJS>response()</IJS> property, which is a
+              function that returns an object of properties to merge onto the
+              response that we will be using to render. For this React
+              application, we want a response's <IJS>body</IJS> property to be
+              the React component associated with each route.
             </p>
-            <p>
-              With Curi, the router creates a "response" object when it matches
-              locations. Some of the properties of the response are
-              automatically set based on the location and the matching route.
-              Others can be set by a route. This is done using the{" "}
-              <IJS>response()</IJS> property, which is a function that returns
-              an object whose properties will be added to the response. For this
-              React application, we want a response's <IJS>body</IJS> property
-              to be the React component associated with each route.
-            </p>
-            <Note>Only known properties will be merged onto the response.</Note>
           </Explanation>
           <CodeBlock>
             {`import Home from './pages/Home';
@@ -222,46 +167,31 @@ const routes = [
         <SideBySide>
           <Explanation>
             <p>
-              We are close to replicating our React Router routes, we just have
-              to implement the <IJS>on___</IJS> methods for our <IJS>
-                :message
-              </IJS>{" "}
-              route. With Curi, routes can have functions that are called when
-              they match the new loaction. These are <IJS>on.initial()</IJS> and{" "}
+              With React Router v4, a component's lifecycle methods are used for
+              loading data, code splitting, and other non-rendering tasks. WIth
+              Curi, the same thing can be done <em>or</em> you can use a route's{" "}
+              <IJS>on</IJS> methods to perform these tasks <em>before</em> the
+              response is emitted.
+            </p>
+            <p>
+              These methods are <IJS>on.initial()</IJS> and{" "}
               <IJS>on.every()</IJS>. <IJS>on.initial()</IJS> is useful for tasks
               that only need to be run once per route, like the code splitting
               mentioned above. <IJS>on.every()</IJS> will be called every time
               that a route matches, so it is ideal for data loading.
             </p>
             <p>
-              With React Router, <IJS>onEnter</IJS> is called when the route
-              first matches, while <IJS>onChange</IJS> is called when the same
-              route matches a new location (e.g. with new path parameters).{" "}
-              <IJS>onEnter</IJS> and <IJS>onChange</IJS> are nearly the same;
-              the big difference between the two is that <IJS>onChange</IJS>{" "}
-              will receive the previous props, which could be used to determine
-              which props changed. When converting these to Curi, we will use{" "}
-              <IJS>on.every()</IJS> for both.
-            </p>
-            <p>
-              There currently is no equivalent to <IJS>onLeave</IJS> with Curi.
-              This is mostly because I haven’t seen a compelling need for it. It
-              certainly could be implemented, but so far I have not found a
-              reason to use that. If you have something you need this
-              functionality for, please open up an issue in the GitHub repo.
-            </p>
-            <p>
               The{" "}
               <Link to="Guide" params={{ slug: "routes" }} hash="match">
                 routes guide
               </Link>{" "}
-              covers all of the route properties.
+              covers the details of these methods as well as all of the other
+              route properties.
             </p>
           </Explanation>
           <CodeBlock>
             {`const routes = [
   {
-    name: 'Home',
     path: '',
     response: () => {
       return {
@@ -270,7 +200,6 @@ const routes = [
     }
   },
   {
-    name: 'Inbox',
     path: 'inbox',
     response: () => {
       return {
@@ -279,7 +208,6 @@ const routes = [
     },
     children: [
       {
-        name: 'Message',
         path: ':message',
         response: () => {
           return {
@@ -307,18 +235,20 @@ const routes = [
         <Explanation>
           <p>
             With React Router, you create your router by rendering a{" "}
-            <Cmp>Router</Cmp>. That either takes the <Cmp>Route</Cmp> components
-            as props or the route objects through its <IJS>routes</IJS> prop.
-            The <Cmp>Router</Cmp> also takes a <IJS>history</IJS> prop, which is
-            either one of the pre-routerured objects (<IJS>browserHistory</IJS>{" "}
-            or <IJS>hashHistory</IJS>) or one that you create yourself.
+            <Cmp>Router</Cmp> component. This may be a <Cmp>BrowserRouter</Cmp>,
+            a <Cmp>HashRouter</Cmp>, a <Cmp>MemoryRouter</Cmp>, or a plain{" "}
+            <Cmp>Router</Cmp> that you pass your own <IJS>history</IJS> instance
+            to. The <Cmp>___Router</Cmp> components create a <IJS>history</IJS>{" "}
+            instance for you using props passed to the component.
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
-          {`import { Router, browserHistory } from 'react-router';
-const routes = [...];
+          {`import { BrowserRouter } from 'react-router-dom';
+
 ReactDOM.render((
-  <Router history={browserHistory} routes={routes} />
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 ), holder);`}
         </CodeBlock>
       </SideBySide>
@@ -351,50 +281,78 @@ const router = curi(history, routes);`}
           <p>
             We will walk through the rendering differences between React Router
             and Curi by looking at what happens in each when we navigate to the
-            URI <IJS>/inbox/test-message-please-ignore</IJS>.
+            URL with the pathname <IJS>/inbox/test-message-please-ignore</IJS>.
           </p>
         </Explanation>
       </SideBySide>
-      <Subsection title="React Router v2/3" id="rendering-react-router">
+      <Subsection title="React Router" id="rendering-react-router">
         <SideBySide>
           <Explanation>
             <p>
-              React Router uses the <Cmp>Router</Cmp> component to subscribe to
-              location changes. Each time that the location changes, it walks
-              over its routes and determines which route(s!) match.
+              React Router matches routes while it renders. It uses the{" "}
+              <Cmp>Router</Cmp> component to listen for location changes. Each
+              time that the location changes, the application re-renders.
             </p>
             <p>
-              React Router starts by rendering the root component. In the above
-              router, that is the <Cmp>App</Cmp>. Next, our <IJS>inbox</IJS>{" "}
-              route also matches, so React Router also renders our{" "}
-              <Cmp>Inbox</Cmp> component. Finally, the URI{" "}
-              <IJS>/inbox/test-message-please-ignore</IJS> also matches our <IJS
-              >
-                :message
-              </IJS>{" "}
-              route (which is concatenated with its parents to form the path{" "}
-              <IJS>/inbox/:message</IJS>), so <Cmp>Message</Cmp> is rendered as
-              well. Each child component is rendered by its parent, so we end up
-              with a component tree that looks something like this:
+              The <Cmp>Switch</Cmp> will iterate over its children{" "}
+              <Cmp>Route</Cmp>s. The first route, <IJS>"/"</IJS> has an{" "}
+              <IJS>exact</IJS> prop, so it only matches when the pathname is{" "}
+              <IJS>"/"</IJS>. Since it is not, the next <Cmp>Route</Cmp> will be
+              checked. The next route, <IJS>"/inbox"</IJS> matches the beginning
+              of the pathname <IJS>"/inbox/test-message-please-ignore"</IJS>. It
+              is not an exact match, but that route does not do exact matching,
+              so React Router will render its component, <Cmp>Inbox</Cmp>.
             </p>
+
             <p>
-              With this structure, any routes with children will be rendered
-              when one of the children matches. That means that those routes
-              need to know how to render based on what type of match they have.
-              For example, <Cmp>Inbox</Cmp> needs to know how to render for an
-              exact match (the URI is <IJS>/inbox</IJS>) and for a partial match
-              (<IJS>/inbox/test-message-please-ignore</IJS>). Also, if the{" "}
-              <Cmp>Inbox</Cmp> needs to pass any props to <Cmp>Message</Cmp>, it
-              has to use <IJS>React.cloneElement</IJS>, which works but is not
-              the cleanest looking code.
+              The <Cmp>Inbox</Cmp> has its own <Cmp>Switch</Cmp> to iterate
+              over. Its first route only matches <IJS>"/inbox"</IJS> exactly, so
+              it moves on to the next route, which has a <IJS>message</IJS>{" "}
+              route param. This route matches and stores{" "}
+              <IJS>"test-message-please-ignore"</IJS> as{" "}
+              <IJS>match.params.message</IJS>. The <Cmp>Message</Cmp> component
+              will then be rendered, which has acccess to the <IJS>message</IJS>{" "}
+              param.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`<App>
-  <Inbox>
-    <Message>
-  </Inbox>
-</App>`}
+            {`ReactDOM.render((
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+), holder);
+
+const App = () => (
+  <Switch>
+    <Route exact path="/" component={Home} />
+    <Route path="/inbox" component={Inbox} />
+  </Switch>                 
+);
+
+const Inbox = ({ match }) => (
+  <Switch>
+    <Route
+      exact
+      path={match.path}
+      component={Messages}
+    />
+    <Route
+      exact
+      path={\`\${match.path}/:message\`}
+      component={Message}
+    />
+  </Switch>
+);
+
+/*
+<BrowserRouter>
+  <App>
+    <Inbox>
+      <Message>
+    </Inbox>
+  </App>
+</BrowserRouter>
+*/`}
           </CodeBlock>
         </SideBySide>
       </Subsection>

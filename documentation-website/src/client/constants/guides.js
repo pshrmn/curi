@@ -75,10 +75,17 @@ const guides = [
     type: "advanced"
   },
   {
-    name: "Migrate from React Router v2/3 to Curi",
+    name: "React Router v2/3",
     slug: "migrate-rrv3",
     descriptioni:
       "Learn how to migrate an application from React Router v2 or v3 to Curi",
+    type: "migration"
+  },
+  {
+    name: "React Router v4",
+    slug: "migrate-rrv4",
+    descriptioni:
+      "Learn how to migrate an application from React Router v4 to Curi",
     type: "migration"
   }
 ];

@@ -10,6 +10,7 @@ import CodeSplitting from "./CodeSplitting";
 import Loading from "./Loading";
 import ReactNativeTips from "./ReactNativeTips";
 import MigrateReactRouterv3 from "./MigrateReactRouterv3";
+import MigrateReactRouterv4 from "./MigrateReactRouterv4";
 import SyncAsync from "./SyncAsync";
 
 export default {
@@ -25,5 +26,6 @@ export default {
   "code-splitting": CodeSplitting,
   loading: Loading,
   "react-native": ReactNativeTips,
-  "migrate-rrv3": MigrateReactRouterv3
+  "migrate-rrv3": MigrateReactRouterv3,
+  "migrate-rrv4": MigrateReactRouterv4
 };
