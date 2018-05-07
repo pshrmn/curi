@@ -16,7 +16,21 @@ describe("prefetch route interaction", () => {
   });
 
   describe("register", () => {
-    it("adds the path to the known paths", () => {
+    it("adds routes with on.initial() function", () => {
+      const spy = jest.fn(() => Promise.resolve());
+      const playerURI = {
+        name: "Player",
+        path: "player",
+        on: {
+          initial: () => Promise.resolve()
+        }
+      };
+      prefetch.register(playerURI);
+
+      expect(prefetch.get("Player")).toBeDefined();
+    });
+
+    it("adds routes with on.every() function", () => {
       const spy = jest.fn(() => Promise.resolve());
       const playerURI = {
         name: "Player",
@@ -30,14 +44,14 @@ describe("prefetch route interaction", () => {
       expect(prefetch.get("Player")).toBeDefined();
     });
 
-    it("does not register if there is no on.every() function", () => {
+    it("does not register if there is no on.initial() or on.every() function", () => {
       const route = { name: "None", path: "player" };
       prefetch.register(route);
       // This is a bit roundabout, but we verify that the paths did not register
       // by resolving from catch
       expect.assertions(1);
-      return prefetch.get("None").catch(err => {
-        expect(err).toBe(
+      return prefetch.get("None").then(resolved => {
+        expect(resolved.error).toBe(
           "Could not prefetch data for None because it is not registered."
         );
       });
@@ -74,7 +88,7 @@ describe("prefetch route interaction", () => {
   });
 
   describe("get", () => {
-    it("returns a Promise", () => {
+    it("returns a Promise that resolved with a Resolved object ({ initial, every, error })", () => {
       const playerURI = {
         name: "Player",
         path: "player/:id",
@@ -111,12 +125,15 @@ describe("prefetch route interaction", () => {
       });
     });
 
-    it("returns rejected Promise when path not found", () => {
-      const output = prefetch.get("Anonymous", { id: 123 });
+    it("returns Promise with error message when path not found", () => {
+      const name = "Anonymous";
+      const output = prefetch.get(name, { id: 123 });
       expect.assertions(2);
       expect(output).toBeInstanceOf(Promise);
-      return output.catch(err => {
-        expect(true).toBe(true);
+      return output.then(resolved => {
+        expect(resolved.error).toBe(
+          `Could not prefetch data for ${name} because it is not registered.`
+        );
       });
     });
   });
@@ -134,8 +151,8 @@ describe("prefetch route interaction", () => {
       expect(prefetch.get("Player").then).toBeDefined();
       prefetch.reset();
       expect.assertions(2);
-      return prefetch.get("Player").catch(err => {
-        expect(err).toBe(
+      return prefetch.get("Player").then(resolved => {
+        expect(resolved.error).toBe(
           `Could not prefetch data for Player because it is not registered.`
         );
       });

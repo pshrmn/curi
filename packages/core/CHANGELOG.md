@@ -1,3 +1,7 @@
+## Next
+
+* Export `Resolved` type
+
 ## 1.0.0-beta.32
 
 * Remove `response.key` (still available as `response.location.key`).
