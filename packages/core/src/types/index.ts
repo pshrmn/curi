@@ -18,6 +18,7 @@ export {
   Response,
   RawParams,
   Params,
+  Resolved,
   MatchResponseProperties,
   SettableResponseProperties
 } from "./response";

@@ -1,3 +1,9 @@
+## Next
+
+* If a requested route is not registered, Promise resolves object with `error` property instead
+  of throwing.
+* Support prefetching both `on.every()` _and_ `on.initial()`.
+
 ## 1.0.0-beta.8
 
 * Update type of props passed to `get()`.

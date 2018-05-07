@@ -1,8 +1,14 @@
-import { Interaction, Route, MatchResponseProperties } from "@curi/core";
+import {
+  Interaction,
+  Route,
+  MatchResponseProperties,
+  OnFns,
+  Resolved
+} from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
 function prefetchRoute(): Interaction {
-  let loaders: { [key: string]: Function } = {};
+  let loaders: { [key: string]: OnFns } = {};
 
   return {
     name: "prefetch",
@@ -17,17 +23,26 @@ function prefetchRoute(): Interaction {
             "you are overwriting the existing one. This may break your application."
         );
       }
-      if (on && on.every) {
-        loaders[name] = on.every;
+      if (on && (on.every || on.initial)) {
+        loaders[name] = on;
       }
     },
-    get: (name: string, props?: MatchResponseProperties) => {
+    get: (name: string, props?: MatchResponseProperties): Promise<Resolved> => {
       if (loaders[name] == null) {
-        return Promise.reject(
-          `Could not prefetch data for ${name} because it is not registered.`
-        );
+        return Promise.resolve({
+          error: `Could not prefetch data for ${name} because it is not registered.`,
+          initial: null,
+          every: null
+        });
       }
-      return loaders[name].call(null, props);
+      const { initial, every } = loaders[name];
+      return Promise.all([initial && initial(props), every && every(props)])
+        .then(([initial, every]) => ({ initial, every, error: null }))
+        .catch(error => ({
+          initial: null,
+          every: null,
+          error
+        }));
     },
     reset() {
       loaders = {};
