@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.9
 
 * If a requested route is not registered, Promise resolves object with `error` property instead
   of throwing.
