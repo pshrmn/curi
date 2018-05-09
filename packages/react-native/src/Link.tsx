@@ -28,6 +28,7 @@ export interface LinkProps {
 export interface BaseLinkProps extends LinkProps {
   router: CuriRouter;
   response: Response;
+  forwardedRef: React.Ref<any> | undefined;
 }
 
 class BaseLink extends React.Component<BaseLinkProps> {
@@ -67,19 +68,25 @@ class BaseLink extends React.Component<BaseLinkProps> {
       router,
       response,
       method,
+      forwardedRef,
       ...rest
     } = this.props;
 
-    return <Anchor {...rest} onPress={this.pressHandler} />;
+    return <Anchor {...rest} onPress={this.pressHandler} ref={forwardedRef} />;
   }
 }
 
-const Link = (props: LinkProps) => (
+const Link = React.forwardRef((props: LinkProps, ref) => (
   <Curious>
     {({ router, response }: Emitted) => (
-      <BaseLink {...props} router={router} response={response} />
+      <BaseLink
+        {...props}
+        router={router}
+        response={response}
+        forwardedRef={ref}
+      />
     )}
   </Curious>
-);
+));
 
 export default Link;

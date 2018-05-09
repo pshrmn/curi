@@ -166,6 +166,29 @@ describe("<Link>", () => {
     });
   });
 
+  describe("ref", () => {
+    it("returns the anchor's ref, not the link's", () => {
+      const history = InMemory();
+      const router = curi(history, [
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const ref = React.createRef();
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Link to="Test" ref={ref}>
+              Test
+            </Link>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const a = node.querySelector("a");
+      expect(a).toBe(ref.current);
+    });
+  });
+
   describe("clicking a link", () => {
     it("calls history.navigate", () => {
       const history = InMemory();

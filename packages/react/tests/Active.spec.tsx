@@ -50,7 +50,7 @@ describe("<Active>", () => {
           node
         );
       }).toThrow(
-        'You are attempting to use the "active" prop, but have not included the "active" ' +
+        'You are attempting to use the "active" function, but have not included the "active" ' +
           "route interaction (@curi/route-active) in your Curi router."
       );
       console.error = realError;

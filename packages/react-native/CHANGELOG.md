@@ -1,3 +1,7 @@
+## Next
+
+* Forward `<Link>` ref to actual component (e.g. `<TouchableHighlight>`).
+
 ## 1.0.0-beta.5
 
 * TypeScript fix
