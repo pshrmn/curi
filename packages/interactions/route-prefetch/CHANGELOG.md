@@ -1,3 +1,7 @@
+## Next
+
+* Add `which` object argument to specify which async functions to call. If not provided, all available functions are called. When `which` is provided, only functions with `true` `which` properties will be called.
+
 ## 1.0.0-beta.9
 
 * If a requested route is not registered, Promise resolves object with `error` property instead
