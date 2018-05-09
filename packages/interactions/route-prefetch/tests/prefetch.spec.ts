@@ -1,9 +1,11 @@
 import "jest";
 import createPrefetch from "../src";
+
 import { HickoryLocation } from "@hickory/root";
+import { Interaction, Route } from "@curi/core";
 
 describe("prefetch route interaction", () => {
-  let prefetch;
+  let prefetch: Interaction;
 
   beforeEach(() => {
     prefetch = createPrefetch();
@@ -17,36 +19,34 @@ describe("prefetch route interaction", () => {
 
   describe("register", () => {
     it("adds routes with on.initial() function", () => {
-      const spy = jest.fn(() => Promise.resolve());
-      const playerURI = {
+      const route = {
         name: "Player",
         path: "player",
         on: {
           initial: () => Promise.resolve()
         }
       };
-      prefetch.register(playerURI);
+      prefetch.register(route as Route);
 
       expect(prefetch.get("Player")).toBeDefined();
     });
 
     it("adds routes with on.every() function", () => {
-      const spy = jest.fn(() => Promise.resolve());
-      const playerURI = {
+      const route = {
         name: "Player",
         path: "player",
         on: {
           every: () => Promise.resolve()
         }
       };
-      prefetch.register(playerURI);
+      prefetch.register(route as Route);
 
       expect(prefetch.get("Player")).toBeDefined();
     });
 
     it("does not register if there is no on.initial() or on.every() function", () => {
       const route = { name: "None", path: "player" };
-      prefetch.register(route);
+      prefetch.register(route as Route);
       // This is a bit roundabout, but we verify that the paths did not register
       // by resolving from catch
       expect.assertions(1);
@@ -57,7 +57,7 @@ describe("prefetch route interaction", () => {
       });
     });
 
-    it("warns when registering the same name", () => {
+    it("warns when registering a route the same name as one already registered", () => {
       const warn = console.warn;
       const mockWarn = jest.fn();
       console.warn = mockWarn;
@@ -77,10 +77,10 @@ describe("prefetch route interaction", () => {
         }
       };
 
-      prefetch.register(first);
+      prefetch.register(first as Route);
       expect(mockWarn.mock.calls.length).toBe(0);
 
-      prefetch.register(second);
+      prefetch.register(second as Route);
       expect(mockWarn.mock.calls.length).toBe(1);
 
       console.warn = warn;
@@ -89,40 +89,15 @@ describe("prefetch route interaction", () => {
 
   describe("get", () => {
     it("returns a Promise that resolved with a Resolved object ({ initial, every, error })", () => {
-      const playerURI = {
+      const route = {
         name: "Player",
         path: "player/:id",
         on: {
           every: () => Promise.resolve()
         }
       };
-      prefetch.register(playerURI);
+      prefetch.register(route as Route);
       expect(prefetch.get("Player").then).toBeDefined();
-    });
-
-    it("passes arguments to route's on.every() function", () => {
-      const playerURI = {
-        name: "Player",
-        path: "player/:id",
-        on: {
-          every: function(props) {
-            expect(props).toMatchObject({
-              name: "Player",
-              location: locationToPass,
-              params: paramsToPass
-            });
-            return Promise.resolve(true);
-          }
-        }
-      };
-      const paramsToPass = { id: 1 };
-      const locationToPass = {} as HickoryLocation;
-      prefetch.register(playerURI);
-      prefetch.get("Player", {
-        name: "Player",
-        params: paramsToPass,
-        location: locationToPass
-      });
     });
 
     it("returns Promise with error message when path not found", () => {
@@ -136,18 +111,84 @@ describe("prefetch route interaction", () => {
         );
       });
     });
+
+    describe("props", () => {
+      it("passes arguments to route's on.every() function", () => {
+        const route = {
+          name: "Player",
+          path: "player/:id",
+          on: {
+            every: function(props) {
+              expect(props).toMatchObject({
+                name: "Player",
+                location: locationToPass,
+                params: paramsToPass
+              });
+              return Promise.resolve(true);
+            }
+          }
+        };
+        const paramsToPass = { id: 1 };
+        const locationToPass = {} as HickoryLocation;
+        prefetch.register(route as Route);
+        prefetch.get("Player", {
+          name: "Player",
+          params: paramsToPass,
+          location: locationToPass
+        });
+      });
+    });
+
+    describe("which", () => {
+      const route = {
+        name: "Home",
+        path: "",
+        on: {
+          initial: jest.fn(),
+          every: jest.fn()
+        }
+      };
+      const prefetch = createPrefetch();
+      prefetch.register(route as Route);
+
+      afterEach(() => {
+        route.on.initial.mockReset();
+        route.on.every.mockReset();
+      });
+
+      it("calls all available async functions when not provided", () => {
+        return prefetch.get("Home").then(resolved => {
+          expect(route.on.initial.mock.calls.length).toBe(1);
+          expect(route.on.every.mock.calls.length).toBe(1);
+        });
+      });
+
+      it("only calls on.initial() when which = { initial: true }", () => {
+        return prefetch.get("Home", null, { initial: true }).then(resolved => {
+          expect(route.on.initial.mock.calls.length).toBe(1);
+          expect(route.on.every.mock.calls.length).toBe(0);
+        });
+      });
+
+      it("only calls on.every() when which = { every: true }", () => {
+        return prefetch.get("Home", null, { every: true }).then(resolved => {
+          expect(route.on.initial.mock.calls.length).toBe(0);
+          expect(route.on.every.mock.calls.length).toBe(1);
+        });
+      });
+    });
   });
 
   describe("reset", () => {
     it("resets the registered routes", () => {
-      const playerURI = {
+      const route = {
         name: "Player",
         path: "player/:id",
         on: {
           every: () => Promise.resolve()
         }
       };
-      prefetch.register(playerURI);
+      prefetch.register(route as Route);
       expect(prefetch.get("Player").then).toBeDefined();
       prefetch.reset();
       expect.assertions(2);

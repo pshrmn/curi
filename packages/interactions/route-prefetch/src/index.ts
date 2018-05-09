@@ -7,6 +7,11 @@ import {
 } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
+export interface PrefetchType {
+  initial?: boolean;
+  every?: boolean;
+}
+
 function prefetchRoute(): Interaction {
   let loaders: { [key: string]: OnFns } = {};
 
@@ -27,7 +32,11 @@ function prefetchRoute(): Interaction {
         loaders[name] = on;
       }
     },
-    get: (name: string, props?: MatchResponseProperties): Promise<Resolved> => {
+    get: (
+      name: string,
+      props?: MatchResponseProperties,
+      which?: PrefetchType
+    ): Promise<Resolved> => {
       if (loaders[name] == null) {
         return Promise.resolve({
           error: `Could not prefetch data for ${name} because it is not registered.`,
@@ -36,7 +45,16 @@ function prefetchRoute(): Interaction {
         });
       }
       const { initial, every } = loaders[name];
-      return Promise.all([initial && initial(props), every && every(props)])
+      let prefetchInitial = true;
+      let prefetchEvery = true;
+      if (which) {
+        prefetchInitial = !!which.initial;
+        prefetchEvery = !!which.every;
+      }
+      return Promise.all([
+        initial && prefetchInitial && initial(props),
+        every && prefetchEvery && every(props)
+      ])
         .then(([initial, every]) => ({ initial, every, error: null }))
         .catch(error => ({
           initial: null,
