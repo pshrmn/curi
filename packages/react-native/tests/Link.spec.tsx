@@ -150,6 +150,31 @@ describe("<Link>", () => {
     });
   });
 
+  describe("ref", () => {
+    it("returns the anchor's ref, not the link's", () => {
+      const history = InMemory({ locations: ["/the-initial-location"] });
+      const mockNavigate = jest.fn();
+      history.navigate = mockNavigate;
+      const routes = [
+        { name: "Parks", path: "/parks" },
+        { name: "Catch All", path: "(.*)" }
+      ];
+      const router = curi(history, routes);
+      const ref = React.createRef();
+      const tree = renderer.create(
+        <CuriProvider router={router}>
+          {() => (
+            <Link to="Parks" ref={ref}>
+              <Text>Test</Text>
+            </Link>
+          )}
+        </CuriProvider>
+      );
+      const anchor = tree.root.findByType(TouchableHighlight);
+      expect(anchor.instance).toBe(ref.current);
+    });
+  });
+
   describe("pressing a link", () => {
     describe("navigation method", () => {
       let history, mockNavigate, mockPush, mockReplace;

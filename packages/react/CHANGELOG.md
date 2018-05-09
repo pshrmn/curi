@@ -1,3 +1,7 @@
+## Next
+
+* Forward `<Link>` ref to actual component (e.g. `<a>`).
+
 ## 1.0.0-beta.23
 
 * TypeScript fix

@@ -13,6 +13,7 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
 export interface BaseLinkProps extends LinkProps {
     router: CuriRouter;
     response: Response;
+    forwardedRef: React.Ref<any>;
 }
-declare const Link: (props: LinkProps) => React.ReactElement<any>;
+declare const Link: React.ComponentType<LinkProps & React.ClassAttributes<{}>>;
 export default Link;

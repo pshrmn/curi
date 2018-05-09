@@ -1,8 +1,8 @@
 import React from "react";
-import { ReactElement, ReactNode } from "react";
 import invariant from "invariant";
 import { Curious } from "./Context";
 
+import { ReactNode } from "react";
 import { CuriRouter, Response } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
@@ -18,7 +18,7 @@ const Active = (props: ActiveProps): ReactNode => (
     {({ router, response }) => {
       invariant(
         router.route.active,
-        'You are attempting to use the "active" prop, but have not included the "active" ' +
+        'You are attempting to use the "active" function, but have not included the "active" ' +
           "route interaction (@curi/route-active) in your Curi router."
       );
 
