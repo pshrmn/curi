@@ -13,9 +13,10 @@ export interface MatchData {
     partials?: Array<string>;
 }
 export interface PrefetchProps {
-    children: ReactNode;
+    children: (ref: React.RefObject<any>) => ReactNode;
     match: MatchData;
     which?: WhichOnFns;
+    ref?: React.RefObject<any>;
 }
 declare const Prefetch: (props: PrefetchProps) => React.ReactNode;
 export default Prefetch;

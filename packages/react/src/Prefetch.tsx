@@ -19,29 +19,16 @@ export interface MatchData {
 }
 
 export interface PrefetchProps {
-  children: ReactNode;
+  children: (ref: React.RefObject<any>) => ReactNode;
   match: MatchData;
   which?: WhichOnFns;
+  ref?: React.RefObject<any>;
 }
 
 interface PrefetchPropsWithRouter extends PrefetchProps {
   router: CuriRouter;
 }
 
-/*
- * const PrefetchLink = ({ match, which, children }) => (
- *   <Prefetch
- *     match={match}
- *     which={which}
- *   >
- *     <Link to={match.name} params={match.params}>{children}</Link>
- *   </Prefetch>
- * );
- * 
- * <PrefetchLink match={{ name: "User", params: { id: 1 } }}>
- *   User 1
- * </PrefetchLink>
- */
 class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
   obs: IntersectionObserver;
   intersectionRef: React.RefObject<any>;
@@ -54,7 +41,8 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
       'You are attempting to use the "prefetch" function, but have not included the "prefetch" ' +
         "route interaction (@curi/route-prefetch) in your Curi router."
     );
-    this.intersectionRef = React.createRef();
+    // re-use ref if provided, otherwise create a new one
+    this.intersectionRef = props.ref ? props.ref : React.createRef();
 
     if (!!(window && IntersectionObserver)) {
       this.obs = new IntersectionObserver(entries => {
@@ -74,9 +62,7 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
   }
 
   render() {
-    return React.cloneElement(React.Children.only(this.props.children), {
-      ref: this.intersectionRef
-    });
+    return this.props.children(this.intersectionRef);
   }
 
   componentDidMount() {
