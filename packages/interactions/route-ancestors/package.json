@@ -34,7 +34,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.33"
+    "@curi/core": "^1.0.0-beta.34"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

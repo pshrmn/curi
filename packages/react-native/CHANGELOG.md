@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.6
 
 * Forward `<Link>` ref to actual component (e.g. `<TouchableHighlight>`).
 

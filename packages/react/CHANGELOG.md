@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.24
 
 * Add `<Prefetch>` component for prefetching a route's data. Requires `@curi/router-prefetch`.
 * Forward `<Link>` ref to actual component (e.g. `<a>`).
