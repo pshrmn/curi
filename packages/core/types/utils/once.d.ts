@@ -1,1 +1,1 @@
-export default function once(fn: () => Promise<any>): () => Promise<any>;
+export default function once(fn: (...args: Array<any>) => Promise<any>): () => Promise<any>;

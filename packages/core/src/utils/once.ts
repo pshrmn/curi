@@ -1,4 +1,6 @@
-export default function once(fn: () => Promise<any>): () => Promise<any> {
+export default function once(
+  fn: (...args: Array<any>) => Promise<any>
+): () => Promise<any> {
   let promise: Promise<any>;
   let hasRun: boolean = false;
 
@@ -7,7 +9,7 @@ export default function once(fn: () => Promise<any>): () => Promise<any> {
       return promise;
     }
 
-    promise = fn();
+    promise = fn.apply(null, arguments);
     hasRun = true;
     return promise;
   };
