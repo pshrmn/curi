@@ -9,52 +9,55 @@ import Prefetch from "../src/Prefetch";
 import Link from "../src/Link";
 import CuriProvider from "../src/CuriProvider";
 
-// global...
-const entries = {
-  entries: [],
-  callback: () => {
-    /* noop */
-  },
-  intersectionRatio: 1,
-  flush() {
-    this.callback(this.entries);
-  },
-  push(target) {
-    this.entries.push({
+// simulate IntersectionObserver
+// https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver
+function createIntersectionObserver() {
+  let entries = [];
+  // noop
+  let callback: (...any: Array<any>) => void = () => {};
+  let intersectionRatio = 1;
+  function flush() {
+    callback(entries);
+  }
+  const observe = jest.fn(target => {
+    entries.push({
       target,
-      intersectionRatio: this.intersectionRatio
+      intersectionRatio
     });
-    this.flush();
-  },
-  update(target, ratio) {
-    this.entries = this.entries.map(e => {
-      if (e.target !== target) {
-        return e;
-      }
-      return {
-        target,
-        intersectionRatio: ratio
-      };
-    });
-    this.flush();
-  },
-  reset() {
-    this.entries = [];
-    this.callbacks = [];
-    this.intersectionRatio = 1;
-  },
-  disconnect: jest.fn(),
-  unobserve: jest.fn()
-};
+    flush();
+  });
+  function update(target, ratio) {
+    entries = entries.map(
+      e =>
+        e.target !== target
+          ? e
+          : {
+              target,
+              intersectionRatio: ratio
+            }
+    );
+    flush();
+  }
+  const disconnect = jest.fn();
+  const unobserve = jest.fn();
 
-function FakeIntersectionObserver(callback) {
-  entries.callback = callback;
   return {
-    observe: jest.fn(target => {
-      entries.push(target);
-    }),
-    disconnect: entries.disconnect,
-    unobserve: entries.unobserve
+    entries,
+    observe,
+    disconnect,
+    unobserve,
+    update,
+    setRatio(ratio) {
+      intersectionRatio = ratio;
+    },
+    io(fn) {
+      callback = fn;
+      return {
+        observe,
+        disconnect,
+        unobserve
+      };
+    }
   };
 }
 
@@ -64,16 +67,16 @@ function childrenResponse({ response }) {
 }
 
 describe("prefetch", () => {
-  global.IntersectionObserver = FakeIntersectionObserver;
-  let node;
+  let node, intersection;
 
   beforeEach(() => {
     node = document.createElement("div");
+    intersection = createIntersectionObserver();
+    global.IntersectionObserver = intersection.io;
   });
 
   afterEach(() => {
     ReactDOM.unmountComponentAtNode(node);
-    entries.reset();
     jest.resetAllMocks();
   });
 
@@ -81,6 +84,15 @@ describe("prefetch", () => {
     let linkRef;
 
     const history = InMemory();
+    const prefetchRoute = {
+      name: "Prefetch",
+      path: "prefetch",
+      on: {
+        // use on.every instead of on.initial so that the routes
+        // can be re-used (on.initial() is only called once)
+        every: jest.fn()
+      }
+    };
     const routes = [
       {
         name: "Home",
@@ -102,15 +114,7 @@ describe("prefetch", () => {
           };
         }
       },
-      {
-        name: "Prefetch",
-        path: "prefetch",
-        on: {
-          // use on.every instead of on.initial so that the routes
-          // can be re-used (on.initial() is only called once)
-          every: jest.fn()
-        }
-      },
+      prefetchRoute,
       { name: "Not Found", path: "(.*)" }
     ];
     const router = curi(history, routes, {
@@ -118,7 +122,7 @@ describe("prefetch", () => {
     });
 
     afterEach(() => {
-      routes[1].on.every.mockReset();
+      prefetchRoute.on.every.mockReset();
     });
 
     it('calls "on" fns immediately if the element is immediately visible', () => {
@@ -126,47 +130,106 @@ describe("prefetch", () => {
         <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
         node
       );
-      expect(routes[1].on.every.mock.calls.length).toBe(1);
+      expect(prefetchRoute.on.every.mock.calls.length).toBe(1);
     });
 
     it('does not call "on" fns immediately if the element is not visible', () => {
-      entries.intersectionRatio = 0;
+      intersection.setRatio(0);
       ReactDOM.render(
         <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
         node
       );
-      expect(routes[1].on.every.mock.calls.length).toBe(0);
+      expect(prefetchRoute.on.every.mock.calls.length).toBe(0);
     });
 
     it('calls "on" fns when element becomes visible', () => {
-      entries.intersectionRatio = 0;
+      intersection.setRatio(0);
       ReactDOM.render(
         <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
         node
       );
-      expect(routes[1].on.every.mock.calls.length).toBe(0);
-      entries.update(linkRef.current, 1);
-      expect(routes[1].on.every.mock.calls.length).toBe(1);
+      expect(prefetchRoute.on.every.mock.calls.length).toBe(0);
+      intersection.update(linkRef.current, 1);
+      expect(prefetchRoute.on.every.mock.calls.length).toBe(1);
     });
 
     it("stops observing ref and disconnects observer after calling callback", () => {
-      expect(entries.unobserve.mock.calls.length).toBe(0);
-      expect(entries.disconnect.mock.calls.length).toBe(0);
+      expect(intersection.unobserve.mock.calls.length).toBe(0);
+      expect(intersection.disconnect.mock.calls.length).toBe(0);
       ReactDOM.render(
         <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
         node
       );
-      expect(routes[1].on.every.mock.calls.length).toBe(1);
-      expect(entries.unobserve.mock.calls.length).toBe(1);
-      expect(entries.disconnect.mock.calls.length).toBe(1);
-      expect(entries.unobserve.mock.calls[0][0]).toBe(linkRef.current);
+      expect(prefetchRoute.on.every.mock.calls.length).toBe(1);
+      expect(intersection.unobserve.mock.calls.length).toBe(1);
+      expect(intersection.disconnect.mock.calls.length).toBe(1);
+      expect(intersection.unobserve.mock.calls[0][0]).toBe(linkRef.current);
     });
   });
 
   describe("changing refs", () => {
     it("stops observing old ref, starts observing new ref", () => {
       // cannot be visible to start or else it will be called immediately
-      entries.intersectionRatio = 0;
+      intersection.setRatio(0);
+      const history = InMemory();
+      const prefetchRoute = {
+        name: "Prefetch",
+        path: "prefetch",
+        on: {
+          // use on.every instead of on.initial so that the routes
+          // can be re-used (on.initial() is only called once)
+          every: jest.fn()
+        }
+      };
+      const routes = [
+        {
+          name: "Home",
+          path: ""
+        },
+        prefetchRoute,
+        { name: "Not Found", path: "(.*)" }
+      ];
+      const router = curi(history, routes, {
+        route: [prefetchInteraction()]
+      });
+
+      expect(intersection.unobserve.mock.calls.length).toBe(0);
+      expect(intersection.disconnect.mock.calls.length).toBe(0);
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Prefetch match={{ name: "Prefetch" }}>
+              {ref => (
+                <Link to="Prefetch" ref={ref}>
+                  Prefetch
+                </Link>
+              )}
+            </Prefetch>
+          )}
+        </CuriProvider>,
+        node
+      );
+
+      expect(intersection.unobserve.mock.calls.length).toBe(0);
+      expect(intersection.disconnect.mock.calls.length).toBe(0);
+
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Prefetch match={{ name: "Prefetch" }}>
+              {ref => <div>Prefetch</div>}
+            </Prefetch>
+          )}
+        </CuriProvider>,
+        node
+      );
+
+      expect(prefetchRoute.on.every.mock.calls.length).toBe(0);
+      expect(intersection.unobserve.mock.calls.length).toBe(1);
+      expect(intersection.disconnect.mock.calls.length).toBe(0);
+    });
+
+    it("doesn't add new observer if data is already fetched", () => {
       const history = InMemory();
       const routes = [
         {
@@ -188,8 +251,8 @@ describe("prefetch", () => {
         route: [prefetchInteraction()]
       });
 
-      expect(entries.unobserve.mock.calls.length).toBe(0);
-      expect(entries.disconnect.mock.calls.length).toBe(0);
+      expect(intersection.unobserve.mock.calls.length).toBe(0);
+      expect(intersection.disconnect.mock.calls.length).toBe(0);
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
@@ -205,8 +268,9 @@ describe("prefetch", () => {
         node
       );
 
-      expect(entries.unobserve.mock.calls.length).toBe(0);
-      expect(entries.disconnect.mock.calls.length).toBe(0);
+      expect(intersection.observe.mock.calls.length).toBe(1);
+      expect(intersection.unobserve.mock.calls.length).toBe(1);
+      expect(intersection.disconnect.mock.calls.length).toBe(1);
 
       ReactDOM.render(
         <CuriProvider router={router}>
@@ -218,10 +282,8 @@ describe("prefetch", () => {
         </CuriProvider>,
         node
       );
-
-      expect(routes[1].on.every.mock.calls.length).toBe(0);
-      expect(entries.unobserve.mock.calls.length).toBe(1);
-      expect(entries.disconnect.mock.calls.length).toBe(0);
+      // no new observer
+      expect(intersection.observe.mock.calls.length).toBe(1);
     });
   });
 

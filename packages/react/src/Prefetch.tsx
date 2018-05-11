@@ -33,6 +33,7 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
   obs: IntersectionObserver;
   intersectionRef: React.RefObject<any>;
   lastEle: any;
+  fetched: boolean;
 
   constructor(props: PrefetchPropsWithRouter) {
     super(props);
@@ -45,6 +46,7 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
     this.intersectionRef = props.forwardedRef
       ? props.forwardedRef
       : React.createRef();
+    this.fetched = false;
 
     if (!!(window && IntersectionObserver)) {
       this.obs = new IntersectionObserver(entries => {
@@ -53,6 +55,7 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
         entries.forEach(entry => {
           if (ref === entry.target && entry.intersectionRatio > 0) {
             router.route.prefetch(match.name, match, which);
+            this.fetched = true;
             this.obs.unobserve(ref);
             this.obs.disconnect();
           }
@@ -71,7 +74,7 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
   }
 
   componentDidUpdate() {
-    if (this.intersectionRef.current !== this.lastEle) {
+    if (!this.fetched && this.intersectionRef.current !== this.lastEle) {
       this.obs.unobserve(this.lastEle);
       this.obs.observe(this.intersectionRef.current);
       this.lastEle = this.intersectionRef;
