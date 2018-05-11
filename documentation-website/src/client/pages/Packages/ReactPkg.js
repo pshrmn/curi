@@ -433,6 +433,150 @@ const router = curi(history, routes, {
         </Section>
       </Section>
 
+      <Section title={<Cmp>Prefetch</Cmp>} id="Prefetch">
+        <SideBySide>
+          <Explanation>
+            <p>
+              The <Cmp>Prefetch</Cmp> component will load data for a route once
+              an element becomes visible in the page. This uses the{" "}
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">
+                <IJS>IntersectionObserver</IJS>
+              </a>{" "}
+              API to observe an element and call a route's <IJS>on</IJS>{" "}
+              functions when that element becomes visible.
+            </p>
+            <p>
+              <Cmp>Prefetch</Cmp> uses a render-invoked <IJS>children</IJS> prop
+              to provide a <IJS>ref</IJS>. That <IJS>ref</IJS> needs to be
+              attached to the element observed.
+            </p>
+          </Explanation>
+          <CodeBlock lang="jsx">
+            {`import { Prefetch } from '@curi/react';
+
+<Prefetch
+  match={{ name: "User", params: { id: 1 } }}
+>
+  {ref => <div ref={ref}>User 1</div>}
+</Prefetch>
+// when the <div> becomes visible, the "User" route's
+// on.initial() and on.every() functions will be called`}
+          </CodeBlock>
+        </SideBySide>
+        <Note>
+          <SideBySide>
+            <Explanation>
+              <p>
+                This component relies on{" "}
+                <Link to="Package" params={{ package: "route-prefetch" }}>
+                  <IJS>@curi/route-prefetch</IJS>
+                </Link>, so make sure to include that when you create your
+                router.
+              </p>
+            </Explanation>
+            <CodeBlock>
+              {`import prefetch from "@curi/route-prefetch";
+              
+const router = curi(history, routes, {
+  router: [ prefetch() ]
+});`}
+            </CodeBlock>
+          </SideBySide>
+        </Note>
+
+        <Section tag="h3" title="Props" id="Prefetch-props">
+          <Subsection tag="h4" title="match" id="Prefetch-match">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  The <IJS>match</IJS> object that will be passed to on{" "}
+                  <IJS>on</IJS> functions. The only required property is this
+                  object is <IJS>name</IJS>, which is required to know which
+                  route's <IJS>on</IJS> functions should be called.
+                </p>
+              </Explanation>
+              <CodeBlock lang="jsx">
+                {`<Prefetch match={{ name: "Home" }}>
+  {...}
+</Prefetch>`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+
+          <Subsection tag="h4" title="children()" id="Prefetch-children">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  The <IJS>children</IJS> prop is a render-invoked function that
+                  receives the <IJS>ref</IJS> to attach to the component that
+                  should be observed.
+                </p>
+              </Explanation>
+              <CodeBlock lang="jsx">
+                {`{<Prefetch match={{ name: "Home" }}>
+  {ref => <div ref={ref}>Home</div>}
+</Prefetch>`}`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+
+          <Subsection tag="h4" title="which" id="Prefetch-which">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  <IJS>which</IJS> is an object that specifies which{" "}
+                  <IJS>on</IJS> functions should be called. If a property is{" "}
+                  <IJS>true</IJS>, that function will be called. If the property
+                  is <IJS>false</IJS> or <IJS>undefined</IJS>, that function
+                  will not be called. If this is not provided, both{" "}
+                  <IJS>on.initial()</IJS> and <IJS>on.every()</IJS> will be
+                  called.
+                </p>
+              </Explanation>
+              <CodeBlock lang="jsx">
+                {`// only call on.initial()
+<Prefetch match={...} which={{ initial: true }}>
+  {...}
+</Prefetch>
+
+// only call on.every()
+<Prefetch match={...} which={{ every: true }}>
+  {...}
+</Prefetch>
+
+// call both
+<Prefetch match={...}>
+  {...}
+</Prefetch>`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+
+          <Subsection tag="h4" title="ref" id="Prefetch-ref">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  The <Cmp>Prefetch</Cmp> usually creates a <IJS>ref</IJS> for
+                  you, but you can provide a <IJS>ref</IJS> yourself if you need
+                  access to the DOM element elsewhere.
+                </p>
+                <Note>
+                  <Cmp>Prefetch</Cmp> only works with refs created using{" "}
+                  <IJS>React.createRef()</IJS>.
+                </Note>
+              </Explanation>
+              <CodeBlock lang="jsx">
+                {`const ref = React.createRef();
+
+<Prefetch match={...} ref={ref}>
+ {...}
+</Prefetch>`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+        </Section>
+      </Section>
+
       <Section title={<Cmp>Block</Cmp>} id="Block">
         <SideBySide>
           <Explanation>
