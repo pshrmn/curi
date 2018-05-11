@@ -19,10 +19,10 @@ export interface MatchData {
 }
 
 export interface PrefetchProps {
-  children: (ref: React.RefObject<any>) => ReactNode;
+  children: (ref: React.RefObject<any>) => React.ReactElement<any>;
   match: MatchData;
   which?: WhichOnFns;
-  ref?: React.RefObject<any>;
+  forwardedRef?: React.RefObject<any>;
 }
 
 interface PrefetchPropsWithRouter extends PrefetchProps {
@@ -42,7 +42,9 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
         "route interaction (@curi/route-prefetch) in your Curi router."
     );
     // re-use ref if provided, otherwise create a new one
-    this.intersectionRef = props.ref ? props.ref : React.createRef();
+    this.intersectionRef = props.forwardedRef
+      ? props.forwardedRef
+      : React.createRef();
 
     if (!!(window && IntersectionObserver)) {
       this.obs = new IntersectionObserver(entries => {
@@ -50,7 +52,7 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
         const { router, match, which } = this.props;
         entries.forEach(entry => {
           if (ref === entry.target) {
-            if (entry.isIntersecting || entry.intersectionRatio > 0) {
+            if (entry.intersectionRatio > 0) {
               router.route.prefetch(match.name, match, which);
               this.obs.unobserve(ref);
               this.obs.disconnect();
@@ -79,14 +81,19 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
   }
 }
 
-const Prefetch = (props: PrefetchProps): ReactNode => (
-  <Curious>
-    {({ router }) => (
-      <PrefetchWhenVisible router={router} {...props}>
-        {props.children}
-      </PrefetchWhenVisible>
-    )}
-  </Curious>
+const Prefetch = React.forwardRef(
+  (
+    props: PrefetchProps,
+    ref: React.RefObject<any>
+  ): React.ReactElement<any> => (
+    <Curious>
+      {({ router }) => (
+        <PrefetchWhenVisible router={router} forwardedRef={ref} {...props}>
+          {props.children}
+        </PrefetchWhenVisible>
+      )}
+    </Curious>
+  )
 );
 
 export default Prefetch;
