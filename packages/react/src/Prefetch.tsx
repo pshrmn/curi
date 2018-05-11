@@ -51,12 +51,10 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
         const ref = this.intersectionRef.current;
         const { router, match, which } = this.props;
         entries.forEach(entry => {
-          if (ref === entry.target) {
-            if (entry.intersectionRatio > 0) {
-              router.route.prefetch(match.name, match, which);
-              this.obs.unobserve(ref);
-              this.obs.disconnect();
-            }
+          if (ref === entry.target && entry.intersectionRatio > 0) {
+            router.route.prefetch(match.name, match, which);
+            this.obs.unobserve(ref);
+            this.obs.disconnect();
           }
         });
       });

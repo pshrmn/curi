@@ -12,19 +12,19 @@ import CuriProvider from "../src/CuriProvider";
 // global...
 const entries = {
   entries: [],
-  callbacks: [],
+  callback: () => {
+    /* noop */
+  },
   intersectionRatio: 1,
-  observe(fn) {
-    this.callbacks.push(fn);
+  flush() {
+    this.callback(this.entries);
   },
   push(target) {
     this.entries.push({
       target,
       intersectionRatio: this.intersectionRatio
     });
-    this.callbacks.forEach(fn => {
-      fn(this.entries);
-    });
+    this.flush();
   },
   update(target, ratio) {
     this.entries = this.entries.map(e => {
@@ -36,25 +36,25 @@ const entries = {
         intersectionRatio: ratio
       };
     });
-    this.callbacks.forEach(fn => {
-      fn(this.entries);
-    });
+    this.flush();
   },
   reset() {
     this.entries = [];
     this.callbacks = [];
     this.intersectionRatio = 1;
-  }
+  },
+  disconnect: jest.fn(),
+  unobserve: jest.fn()
 };
 
 function FakeIntersectionObserver(callback) {
-  entries.observe(callback);
+  entries.callback = callback;
   return {
     observe: jest.fn(target => {
       entries.push(target);
     }),
-    disconnect: jest.fn(),
-    unobserve: jest.fn()
+    disconnect: entries.disconnect,
+    unobserve: entries.unobserve
   };
 }
 
@@ -74,6 +74,7 @@ describe("prefetch", () => {
   afterEach(() => {
     ReactDOM.unmountComponentAtNode(node);
     entries.reset();
+    jest.resetAllMocks();
   });
 
   describe("calling callback", () => {
@@ -146,6 +147,81 @@ describe("prefetch", () => {
       expect(routes[1].on.every.mock.calls.length).toBe(0);
       entries.update(linkRef.current, 1);
       expect(routes[1].on.every.mock.calls.length).toBe(1);
+    });
+
+    it("stops observing ref and disconnects observer after calling callback", () => {
+      expect(entries.unobserve.mock.calls.length).toBe(0);
+      expect(entries.disconnect.mock.calls.length).toBe(0);
+      ReactDOM.render(
+        <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
+        node
+      );
+      expect(routes[1].on.every.mock.calls.length).toBe(1);
+      expect(entries.unobserve.mock.calls.length).toBe(1);
+      expect(entries.disconnect.mock.calls.length).toBe(1);
+      expect(entries.unobserve.mock.calls[0][0]).toBe(linkRef.current);
+    });
+  });
+
+  describe("changing refs", () => {
+    it("stops observing old ref, starts observing new ref", () => {
+      // cannot be visible to start or else it will be called immediately
+      entries.intersectionRatio = 0;
+      const history = InMemory();
+      const routes = [
+        {
+          name: "Home",
+          path: ""
+        },
+        {
+          name: "Prefetch",
+          path: "prefetch",
+          on: {
+            // use on.every instead of on.initial so that the routes
+            // can be re-used (on.initial() is only called once)
+            every: jest.fn()
+          }
+        },
+        { name: "Not Found", path: "(.*)" }
+      ];
+      const router = curi(history, routes, {
+        route: [prefetchInteraction()]
+      });
+
+      expect(entries.unobserve.mock.calls.length).toBe(0);
+      expect(entries.disconnect.mock.calls.length).toBe(0);
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Prefetch match={{ name: "Prefetch" }}>
+              {ref => (
+                <Link to="Prefetch" ref={ref}>
+                  Prefetch
+                </Link>
+              )}
+            </Prefetch>
+          )}
+        </CuriProvider>,
+        node
+      );
+
+      expect(entries.unobserve.mock.calls.length).toBe(0);
+      expect(entries.disconnect.mock.calls.length).toBe(0);
+
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Prefetch match={{ name: "Prefetch" }}>
+              {ref => <div>Prefetch</div>}
+            </Prefetch>
+          )}
+        </CuriProvider>,
+        node
+      );
+
+      expect(routes[1].on.every.mock.calls.length).toBe(0);
+      expect(entries.unobserve.mock.calls.length).toBe(1);
+      expect(entries.disconnect.mock.calls.length).toBe(0);
     });
   });
 
@@ -241,109 +317,97 @@ describe("prefetch", () => {
     });
 
     describe("{ initial: true } (implicit every=false)", () => {
-      let node = document.createElement("div");
-      const history = InMemory();
-      const match = { name: "Prefetch" };
-      const prefetchRoute = {
-        name: "Prefetch",
-        path: "prefetch",
-        on: {
-          initial: jest.fn(),
-          every: jest.fn()
-        }
-      };
-      const routes = [
-        {
-          name: "Home",
-          path: "",
-          response() {
-            return {
-              body: () => (
-                <Prefetch match={match} which={{ initial: true }}>
-                  {ref => (
-                    <Link to="Prefetch" ref={ref}>
-                      Prefetch
-                    </Link>
-                  )}
-                </Prefetch>
-              )
-            };
+      it("calls on.initial(), does not call on.every()", () => {
+        const history = InMemory();
+        const match = { name: "Prefetch" };
+        const prefetchRoute = {
+          name: "Prefetch",
+          path: "prefetch",
+          on: {
+            initial: jest.fn(),
+            every: jest.fn()
           }
-        },
-        prefetchRoute,
-        { name: "Not Found", path: "(.*)" }
-      ];
-      const router = curi(history, routes, {
-        route: [prefetchInteraction()]
-      });
+        };
+        const routes = [
+          {
+            name: "Home",
+            path: "",
+            response() {
+              return {
+                body: () => (
+                  <Prefetch match={match} which={{ initial: true }}>
+                    {ref => (
+                      <Link to="Prefetch" ref={ref}>
+                        Prefetch
+                      </Link>
+                    )}
+                  </Prefetch>
+                )
+              };
+            }
+          },
+          prefetchRoute,
+          { name: "Not Found", path: "(.*)" }
+        ];
+        const router = curi(history, routes, {
+          route: [prefetchInteraction()]
+        });
 
-      ReactDOM.render(
-        <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
-        node
-      );
+        ReactDOM.render(
+          <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
+          node
+        );
 
-      it("calls on.initial()", () => {
         expect(prefetchRoute.on.initial.mock.calls.length).toBe(1);
-      });
-
-      it("does not call on.every()", () => {
         expect(prefetchRoute.on.every.mock.calls.length).toBe(0);
       });
-
-      ReactDOM.unmountComponentAtNode(node);
     });
 
     describe("{ every: true } (implicit initial=false)", () => {
-      let node = document.createElement("div");
-      const history = InMemory();
-      const match = { name: "Prefetch" };
-      const prefetchRoute = {
-        name: "Prefetch",
-        path: "prefetch",
-        on: {
-          initial: jest.fn(),
-          every: jest.fn()
-        }
-      };
-      const routes = [
-        {
-          name: "Home",
-          path: "",
-          response() {
-            return {
-              body: () => (
-                <Prefetch match={match} which={{ every: true }}>
-                  {ref => (
-                    <Link to="Prefetch" ref={ref}>
-                      Prefetch
-                    </Link>
-                  )}
-                </Prefetch>
-              )
-            };
+      it("calls on.initial(), does not call on.every()", () => {
+        const history = InMemory();
+        const match = { name: "Prefetch" };
+        const prefetchRoute = {
+          name: "Prefetch",
+          path: "prefetch",
+          on: {
+            initial: jest.fn(),
+            every: jest.fn()
           }
-        },
-        prefetchRoute,
-        { name: "Not Found", path: "(.*)" }
-      ];
-      const router = curi(history, routes, {
-        route: [prefetchInteraction()]
-      });
+        };
+        const routes = [
+          {
+            name: "Home",
+            path: "",
+            response() {
+              return {
+                body: () => (
+                  <Prefetch match={match} which={{ every: true }}>
+                    {ref => (
+                      <Link to="Prefetch" ref={ref}>
+                        Prefetch
+                      </Link>
+                    )}
+                  </Prefetch>
+                )
+              };
+            }
+          },
+          prefetchRoute,
+          { name: "Not Found", path: "(.*)" }
+        ];
+        const router = curi(history, routes, {
+          route: [prefetchInteraction()]
+        });
 
-      ReactDOM.render(
-        <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
-        node
-      );
+        ReactDOM.render(
+          <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
+          node
+        );
 
-      it("does not call on.initial()", () => {
         expect(prefetchRoute.on.initial.mock.calls.length).toBe(0);
-      });
-
-      it("calls on.every()", () => {
         expect(prefetchRoute.on.every.mock.calls.length).toBe(1);
       });
-
-      ReactDOM.unmountComponentAtNode(node);
     });
   });
 
