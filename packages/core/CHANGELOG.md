@@ -1,3 +1,7 @@
+## Next
+
+* Bug fix: actually pass arguments object to `on.initial()`.
+
 ## 1.0.0-beta.33
 
 * Export `Resolved` type

@@ -130,6 +130,29 @@ describe("public route properties", () => {
         const routeProperties = router.route.properties("Test");
         expect(routeProperties.on.initial).toBeUndefined();
       });
+
+      it("will be passed matched route props object", done => {
+        const history = InMemory({ locations: ["/test"] });
+        const routes = [
+          {
+            name: "Test",
+            path: "test",
+            on: {
+              initial: props => {
+                expect(props).toMatchObject({
+                  name: "Test",
+                  params: {}
+                });
+                done();
+                return Promise.resolve();
+              }
+            }
+          }
+        ];
+        const router = curi(history, routes, {
+          route: [PropertyReporter()]
+        });
+      });
     });
 
     describe("every", () => {
@@ -164,6 +187,29 @@ describe("public route properties", () => {
         });
         const routeProperties = router.route.properties("Test");
         expect(routeProperties.on.every).toBeUndefined();
+      });
+    });
+
+    it("will be passed matched route props object", done => {
+      const history = InMemory({ locations: ["/test/1"] });
+      const routes = [
+        {
+          name: "Test",
+          path: "test/:id",
+          on: {
+            initial: props => {
+              expect(props).toMatchObject({
+                name: "Test",
+                params: { id: "1" }
+              });
+              done();
+              return Promise.resolve();
+            }
+          }
+        }
+      ];
+      const router = curi(history, routes, {
+        route: [PropertyReporter()]
       });
     });
   });
