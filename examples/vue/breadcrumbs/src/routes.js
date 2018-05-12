@@ -32,7 +32,8 @@ export default [
       {
         name: "Category",
         path: ":category",
-        response({ params }) {
+        response({ match }) {
+          const { params } = match;
           const modifiers = {
             body: Category
           };
@@ -51,7 +52,8 @@ export default [
           {
             name: "Product",
             path: ":productID",
-            response: ({ params }) => {
+            response: ({ match }) => {
+              const { params } = match;
               const modifiers = {
                 body: Product
               };

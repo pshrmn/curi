@@ -27,10 +27,10 @@ export default [
       {
         name: "Method",
         path: ":method",
-        response: ({ params }) => {
+        response: ({ match }) => {
           return {
             body: Method,
-            title: `Contact via ${params.method}`
+            title: `Contact via ${match.params.method}`
           };
         }
       }
