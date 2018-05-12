@@ -1,19 +1,19 @@
 import React from "react";
 
 import EXAMPLE_API from "../../../constants/examples";
-import ActiveLink from "../../../components/ActiveLink";
+import PrefetchActiveLink from "../../../components/PrefetchActiveLink";
 
 const Category = ({ name, examples }) => {
   return (
     <ul className="link-list">
       {examples.map(e => (
         <li key={`${e.category}/${e.slug}`} className="solo">
-          <ActiveLink
+          <PrefetchActiveLink
             to="Example"
             params={{ category: e.category, slug: e.slug }}
           >
             {e.name}
-          </ActiveLink>
+          </PrefetchActiveLink>
         </li>
       ))}
     </ul>

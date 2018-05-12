@@ -6,6 +6,7 @@ import { CuriProvider } from "@curi/react";
 import createTitleSideEffect from "@curi/side-effect-title";
 import createScrollSideEffect from "@curi/side-effect-scroll";
 import active from "@curi/route-active";
+import prefetch from "@curi/route-prefetch";
 import routes from "./routes";
 import renderFunction from "./render";
 
@@ -15,7 +16,7 @@ const scrollTo = createScrollSideEffect();
 const history = Browser();
 
 const router = curi(history, routes, {
-  route: [active()],
+  route: [active(), prefetch()],
   sideEffects: [{ effect: setTitle }, { effect: scrollTo }]
 });
 

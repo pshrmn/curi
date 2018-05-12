@@ -4,6 +4,7 @@ import InMemory from "@hickory/in-memory";
 import curi from "@curi/core";
 import { CuriProvider } from "@curi/react";
 import active from "@curi/route-active";
+import prefetch from "@curi/route-prefetch";
 import routes from "../client/routes";
 import renderFunction from "../client/render";
 
@@ -14,7 +15,7 @@ export default function createHandler(debug = false) {
     });
 
     const router = curi(history, routes, {
-      route: [active()]
+      route: [active(), prefetch()]
     });
 
     router.respond(({ response }) => {

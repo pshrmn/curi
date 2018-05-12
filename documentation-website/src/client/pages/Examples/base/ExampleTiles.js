@@ -3,20 +3,20 @@ import { Link } from "@curi/react";
 
 import EXAMPLES from "../../../constants/examples";
 import { Section } from "../../../components/Sections";
-import ActiveLink from "../../../components/ActiveLink";
+import PrefetchActiveLink from "../../../components/PrefetchActiveLink";
 
 const Category = ({ name, examples }) => {
   return (
     <ul className="tiles">
       {examples.map(example => (
         <li key={`${example.category}/${example.slug}`} className="tile">
-          <ActiveLink
+          <PrefetchActiveLink
             to="Example"
             params={{ category: example.category, slug: example.slug }}
           >
             <h2>{example.name}</h2>
             <p className="description">{example.description}</p>
-          </ActiveLink>
+          </PrefetchActiveLink>
         </li>
       ))}
     </ul>

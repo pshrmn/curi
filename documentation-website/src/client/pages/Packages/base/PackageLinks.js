@@ -1,15 +1,15 @@
 import React from "react";
 
 import PACKAGE_API from "../../../constants/packages";
-import ActiveLink from "../../../components/ActiveLink";
+import PrefetchActiveLink from "../../../components/PrefetchActiveLink";
 
 const GroupPackages = ({ packages }) => (
   <ul className="link-list">
     {packages.map(p => (
       <li key={p.name} className="solo">
-        <ActiveLink to="Package" params={{ package: p.name }}>
+        <PrefetchActiveLink to="Package" params={{ package: p.name }}>
           {p.name}
-        </ActiveLink>
+        </PrefetchActiveLink>
       </li>
     ))}
   </ul>

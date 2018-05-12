@@ -1,15 +1,15 @@
 import React from "react";
 
 import GUIDE_API from "../../../constants/guides";
-import ActiveLink from "../../../components/ActiveLink";
+import PrefetchActiveLink from "../../../components/PrefetchActiveLink";
 
 const GroupGuides = ({ guides }) => (
   <ul className="link-list">
     {guides.map(g => (
       <li key={g.name} className="solo">
-        <ActiveLink to="Guide" params={{ slug: g.slug }}>
+        <PrefetchActiveLink to="Guide" params={{ slug: g.slug }}>
           {g.name}
-        </ActiveLink>
+        </PrefetchActiveLink>
       </li>
     ))}
   </ul>
