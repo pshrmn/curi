@@ -32,7 +32,6 @@ interface PrefetchPropsWithRouter extends PrefetchProps {
 class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
   obs: IntersectionObserver;
   intersectionRef: React.RefObject<any>;
-  lastEle: any;
   fetched: boolean;
 
   constructor(props: PrefetchPropsWithRouter) {
@@ -48,7 +47,7 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
       : React.createRef();
     this.fetched = false;
 
-    if (!!(window && IntersectionObserver)) {
+    if (typeof window !== "undefined" && IntersectionObserver) {
       this.obs = new IntersectionObserver(entries => {
         const ref = this.intersectionRef.current;
         const { router, match, which } = this.props;
@@ -69,15 +68,8 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
   }
 
   componentDidMount() {
-    this.obs.observe(this.intersectionRef.current);
-    this.lastEle = this.intersectionRef.current;
-  }
-
-  componentDidUpdate() {
-    if (!this.fetched && this.intersectionRef.current !== this.lastEle) {
-      this.obs.unobserve(this.lastEle);
+    if (this.intersectionRef.current != null) {
       this.obs.observe(this.intersectionRef.current);
-      this.lastEle = this.intersectionRef;
     }
   }
 }

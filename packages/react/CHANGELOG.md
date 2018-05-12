@@ -1,3 +1,7 @@
+## 1.0.0-beta.25
+
+* Fix `<Prefetch>` on the server and don't change refs.
+
 ## 1.0.0-beta.24
 
 * Add `<Prefetch>` component for prefetching a route's data. Requires `@curi/router-prefetch`.
