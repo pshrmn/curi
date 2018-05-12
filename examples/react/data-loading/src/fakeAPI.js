@@ -1,6 +1,14 @@
+import dataCache from "./dataCache";
+
 const WIDTHS = [100, 150, 200];
 const HEIGHTS = [100, 200];
-const COLORS = ['IndianRed', 'MediumSeaGreen', 'Moccasin', 'Teal', 'YellowGreen'];
+const COLORS = [
+  "IndianRed",
+  "MediumSeaGreen",
+  "Moccasin",
+  "Teal",
+  "YellowGreen"
+];
 
 function random(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -8,7 +16,7 @@ function random(arr) {
 
 function randomImages() {
   const images = [];
-  for (let i=0; i<10; i++) {
+  for (let i = 0; i < 10; i++) {
     images.push({
       width: random(WIDTHS),
       height: random(HEIGHTS),
@@ -18,11 +26,20 @@ function randomImages() {
   return images;
 }
 
-export default function fakeAPI() {
+export default function fakeAPI(id) {
   return new Promise((resolve, reject) => {
-    // simulate loading time between 0-500ms
+    // use cached data if it exists
+    const existing = dataCache.get(id);
+    if (existing) {
+      resolve(existing);
+      return;
+    }
+    // otherwise simulate loading time between 0-500ms,
+    // generate data, cache, and resolve
     setTimeout(() => {
-      resolve(randomImages());
-    }, Math.random()*500);
+      const imgs = randomImages();
+      dataCache.set(id, imgs);
+      resolve(imgs);
+    }, Math.random() * 500);
   });
 }

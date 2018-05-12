@@ -1,4 +1,3 @@
-import dataCache from "./dataCache";
 import fakeAPI from "./fakeAPI";
 
 import Home from "./components/Home";
@@ -30,17 +29,8 @@ export default [
       return modifiers;
     },
     on: {
-      every: ({ params }) => {
-        const { id } = params;
-        // don't re-fetch data
-        const existing = dataCache.get(id);
-        return existing
-          ? Promise.resolve(existing)
-          : fakeAPI(id).then(data => {
-              dataCache.set(id, data);
-              return data;
-            });
-      }
+      // the fakeAPI caches results based on id
+      every: ({ params }) => fakeAPI(params.id)
     }
   },
   {

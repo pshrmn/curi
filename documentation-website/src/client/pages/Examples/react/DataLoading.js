@@ -1,6 +1,10 @@
 import React from "react";
 import BaseExample from "../base/BaseExample";
-import { PrismBlock, InlineJS as IJS } from "../../../components/PrismBlocks";
+import {
+  PrismBlock,
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from "../../../components/PrismBlocks";
 import { Section } from "../../../components/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
@@ -13,27 +17,36 @@ export default ({ name }) => (
         be triggered until a response has been created. If the route that
         matches has a <IJS>on.every()</IJS> function that makes a request to the
         server, the re-render will be delayed, possibly giving the user the
-        impression that nothing is happening. One way that you can attempt to
-        show that something is happening is by adding a loading bar to your page
-        that will demonstrate to the user that their request is going through.
+        impression that nothing is happening.
       </p>
 
       <p>
-        The <IJS>nprogress</IJS> package allows you to render a loading bar that
-        will run across the top of your page. There are many possible solutions,
-        but this one has a simple api (<IJS>start()</IJS> and <IJS>done()</IJS>),
-        so it works well for our example. The basis of what we will do is to
-        tell <IJS>nprogress</IJS> to start when the user clicks a link, and then
-        when we re-render, we tell <IJS>nprogress</IJS> that we are done
-        loading.
+        The <Cmp>Prefetch</Cmp> component lets you load data prior to navigating
+        to a route. This uses the <IJS>prefetch</IJS> route interaction and the{" "}
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">
+          <IJS>IntersectionObserver</IJS>
+        </a>{" "}
+        API to load data for a route when a specified element is visible in the
+        page. This example uses <Cmp>Link</Cmp>s so that when the associated{" "}
+        <Cmp>a</Cmp> element is visible, the data will be fetched.
       </p>
 
       <PrismBlock lang="javascript">
-        {`// when the user clicks a <Link>
-nprogress.start();
-// when we are re-rendering
-nprogress.done();
-`}
+        {`import prefetch from "@curi/route-prefetch";
+
+const router = curi(history, routes, {
+  route: [prefetch()]
+});
+
+<Prefetch match={{ name: "Album", params: { id: 1 } }}>
+  {ref => (
+    <Link to="Album" params={{ id: 1 }} ref={ref}>
+      Album 1
+    </Link>
+  )}
+</Prefetch>
+// when <a href="/a/1">Album 1</a> is visible,
+// the data for that route will be loaded`}
       </PrismBlock>
     </Section>
 

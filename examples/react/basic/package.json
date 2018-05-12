@@ -21,8 +21,8 @@
     "webpack": "^2.7.0"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.30",
-    "@curi/react": "^1.0.0-beta.21",
+    "@curi/core": "^1.0.0-beta.34",
+    "@curi/react": "^1.0.0-beta.25",
     "@hickory/browser": "^1.0.0-beta.5",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

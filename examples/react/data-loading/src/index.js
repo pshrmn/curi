@@ -1,14 +1,34 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import { CuriProvider } from "@curi/react";
 import Browser from "@hickory/browser";
 import curi from "@curi/core";
-import NProgress from "nprogress";
+import prefetch from "@curi/route-prefetch";
 
+import NavLinks from "./components/NavLinks";
 import routes from "./routes";
-import renderApp from "./render";
 
 const history = Browser();
-function finishProgress() {
-  NProgress.done();
-}
+
 const router = curi(history, routes, {
-  sideEffects: [{ effect: finishProgress, after: true }]
+  route: [prefetch()]
+});
+const root = document.getElementById("root");
+
+router.respond(() => {
+  ReactDOM.render(
+    <CuriProvider router={router}>
+      {({ response, router }) => {
+        const { body: Body, data } = response;
+
+        return (
+          <div>
+            <NavLinks />
+            <Body response={response} />
+          </div>
+        );
+      }}
+    </CuriProvider>,
+    document.getElementById("root")
+  );
 });
