@@ -17,12 +17,12 @@ export default [
   {
     name: "Album",
     path: "a/:id",
-    response({ error, resolved }) {
+    response({ resolved }) {
       const modifiers = {
         body: Album
       };
-      if (error) {
-        modifiers.error = error;
+      if (resolved.error) {
+        modifiers.error = resolved.error;
       } else {
         modifiers.data = resolved.every;
       }
