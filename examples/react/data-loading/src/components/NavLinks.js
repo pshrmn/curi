@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, Prefetch } from "@curi/react";
-import NProgress from "nprogress";
 
 const albums = [1, 2, 3, 4, 5];
 
