@@ -1,5 +1,6 @@
 import React from "react";
 import invariant from "invariant";
+import warning from "warning";
 import { Curious } from "./Context";
 
 import { ReactNode } from "react";
@@ -86,6 +87,10 @@ class PrefetchWhenVisible extends React.Component<
   }
 
   componentDidMount() {
+    warning(
+      this.intersectionRef.current,
+      "The ref provided to the children function is null. Did you forget to pass it to a component?"
+    );
     if (this.intersectionRef.current != null) {
       this.obs.observe(this.intersectionRef.current);
     }
