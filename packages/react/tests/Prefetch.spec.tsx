@@ -449,6 +449,53 @@ describe("prefetch", () => {
           node
         );
       });
+
+      it("warns if ref if null after mounting", () => {
+        const realWarn = console.error;
+        const mockWarn = (console.error = jest.fn());
+
+        const history = InMemory();
+        const match = { name: "Prefetch" };
+        const prefetchRoute = {
+          name: "Prefetch",
+          path: "prefetch",
+          on: {
+            initial: jest.fn(),
+            every: jest.fn()
+          }
+        };
+        const routes = [
+          {
+            name: "Home",
+            path: "",
+            response() {
+              return {
+                body: () => (
+                  <Prefetch match={match}>
+                    {ref => <Link to="Prefetch">Prefetch</Link>}
+                  </Prefetch>
+                )
+              };
+            }
+          },
+          prefetchRoute,
+          { name: "Not Found", path: "(.*)" }
+        ];
+        const router = curi(history, routes, {
+          route: [prefetchInteraction()]
+        });
+
+        ReactDOM.render(
+          <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
+          node
+        );
+        expect(mockWarn.mock.calls.length).toBe(1);
+        expect(mockWarn.mock.calls[0][0]).toBe(
+          "Warning: The ref provided to the children function is null. Did you forget to pass it to a component?"
+        );
+
+        console.error = realWarn;
+      });
     });
 
     describe("resolved (second argument)", () => {

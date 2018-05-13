@@ -1,5 +1,6 @@
 ## Next
 
+* Warn when the `ref` passed to `<Prefetch>`'s render-invoked function is `null` after mounting.
 * Pass the object resolved by `route.prefetch()` to `<Prefetch>`'s `children` render-invoked function.
 
 ## 1.0.0-beta.25
