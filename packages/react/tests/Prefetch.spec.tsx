@@ -402,51 +402,157 @@ describe("prefetch", () => {
   });
 
   describe("children() render-invoked prop", () => {
-    it("is called with a ref object to pass to a component that it renders", () => {
-      const history = InMemory();
-      const match = { name: "Prefetch" };
-      const prefetchRoute = {
-        name: "Prefetch",
-        path: "prefetch",
-        on: {
-          initial: jest.fn(),
-          every: jest.fn()
-        }
-      };
-      const routes = [
-        {
-          name: "Home",
-          path: "",
-          response() {
-            return {
-              body: () => (
-                <Prefetch match={match}>
-                  {ref => {
-                    // verify that ref is an object with a current property
-                    // (this is what React.createRef() creates)
-                    expect(ref).toHaveProperty("current");
-                    return (
-                      <Link to="Prefetch" ref={ref}>
-                        Prefetch
-                      </Link>
-                    );
-                  }}
-                </Prefetch>
-              )
-            };
+    describe("ref (first argument)", () => {
+      it("is a ref object", () => {
+        const history = InMemory();
+        const match = { name: "Prefetch" };
+        const prefetchRoute = {
+          name: "Prefetch",
+          path: "prefetch",
+          on: {
+            initial: jest.fn(),
+            every: jest.fn()
           }
-        },
-        prefetchRoute,
-        { name: "Not Found", path: "(.*)" }
-      ];
-      const router = curi(history, routes, {
-        route: [prefetchInteraction()]
+        };
+        const routes = [
+          {
+            name: "Home",
+            path: "",
+            response() {
+              return {
+                body: () => (
+                  <Prefetch match={match}>
+                    {ref => {
+                      // verify that ref is an object with a current property
+                      // (this is what React.createRef() creates)
+                      expect(ref).toHaveProperty("current");
+                      return (
+                        <Link to="Prefetch" ref={ref}>
+                          Prefetch
+                        </Link>
+                      );
+                    }}
+                  </Prefetch>
+                )
+              };
+            }
+          },
+          prefetchRoute,
+          { name: "Not Found", path: "(.*)" }
+        ];
+        const router = curi(history, routes, {
+          route: [prefetchInteraction()]
+        });
+
+        ReactDOM.render(
+          <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
+          node
+        );
+      });
+    });
+
+    describe("resolved (second argument)", () => {
+      it("starts out null", () => {
+        intersection.setRatio(0);
+        const history = InMemory();
+        const match = { name: "Prefetch" };
+        const prefetchRoute = {
+          name: "Prefetch",
+          path: "prefetch",
+          on: {
+            initial: jest.fn(),
+            every: jest.fn()
+          }
+        };
+        const routes = [
+          {
+            name: "Home",
+            path: "",
+            response() {
+              return {
+                body: () => (
+                  <Prefetch match={match}>
+                    {(ref, resolved) => {
+                      expect(resolved).toBe(null);
+                      return (
+                        <Link to="Prefetch" ref={ref}>
+                          Prefetch
+                        </Link>
+                      );
+                    }}
+                  </Prefetch>
+                )
+              };
+            }
+          },
+          prefetchRoute,
+          { name: "Not Found", path: "(.*)" }
+        ];
+        const router = curi(history, routes, {
+          route: [prefetchInteraction()]
+        });
+
+        ReactDOM.render(
+          <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
+          node
+        );
       });
 
-      ReactDOM.render(
-        <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
-        node
-      );
+      it("is the prefetch results once prefetched", done => {
+        const history = InMemory();
+        const match = { name: "Prefetch" };
+        const prefetchRoute = {
+          name: "Prefetch",
+          path: "prefetch",
+          on: {
+            initial: () => Promise.resolve("initial"),
+            every: () => Promise.resolve("every")
+          }
+        };
+        let renderCount = 0;
+        const routes = [
+          {
+            name: "Home",
+            path: "",
+            response() {
+              return {
+                body: () => (
+                  <Prefetch match={match}>
+                    {(ref, resolved) => {
+                      if (renderCount === 0) {
+                        expect(resolved).toBe(null);
+                        renderCount++;
+                      } else {
+                        expect(resolved).toMatchObject({
+                          initial: "initial",
+                          every: "every",
+                          error: null
+                        });
+                        done();
+                      }
+                      return (
+                        <Link to="Prefetch" ref={ref}>
+                          Prefetch
+                        </Link>
+                      );
+                    }}
+                  </Prefetch>
+                )
+              };
+            }
+          },
+          prefetchRoute,
+          { name: "Not Found", path: "(.*)" }
+        ];
+        const router = curi(history, routes, {
+          route: [prefetchInteraction()]
+        });
+
+        ReactDOM.render(
+          <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
+          node
+        );
+      });
     });
   });
 

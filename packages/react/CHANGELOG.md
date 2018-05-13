@@ -1,3 +1,7 @@
+## Next
+
+* Pass the object resolved by `route.prefetch()` to `<Prefetch>`'s `children` render-invoked function.
+
 ## 1.0.0-beta.25
 
 * Fix `<Prefetch>` on the server and don't change refs.

@@ -1,5 +1,6 @@
 /// <reference types="react" />
 import React from "react";
+import { Resolved } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 export interface WhichOnFns {
     initial?: boolean;
@@ -11,8 +12,9 @@ export interface MatchData {
     location?: HickoryLocation;
     partials?: Array<string>;
 }
+export declare type MaybeResolved = Resolved | null;
 export interface PrefetchProps {
-    children: (ref: React.RefObject<any>) => React.ReactElement<any>;
+    children: (ref: React.RefObject<any>, resolved: MaybeResolved) => React.ReactElement<any>;
     match: MatchData;
     which?: WhichOnFns;
     forwardedRef?: React.RefObject<any>;
