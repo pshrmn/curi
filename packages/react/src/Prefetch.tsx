@@ -3,7 +3,7 @@ import invariant from "invariant";
 import { Curious } from "./Context";
 
 import { ReactNode } from "react";
-import { CuriRouter, Response } from "@curi/core";
+import { CuriRouter, Response, Resolved } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
 export interface WhichOnFns {
@@ -18,8 +18,13 @@ export interface MatchData {
   partials?: Array<string>;
 }
 
+export type MaybeResolved = Resolved | null;
+
 export interface PrefetchProps {
-  children: (ref: React.RefObject<any>) => React.ReactElement<any>;
+  children: (
+    ref: React.RefObject<any>,
+    resolved: MaybeResolved
+  ) => React.ReactElement<any>;
   match: MatchData;
   which?: WhichOnFns;
   forwardedRef?: React.RefObject<any>;
@@ -29,10 +34,16 @@ interface PrefetchPropsWithRouter extends PrefetchProps {
   router: CuriRouter;
 }
 
-class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
+interface PrefetchState {
+  resolved: MaybeResolved;
+}
+
+class PrefetchWhenVisible extends React.Component<
+  PrefetchPropsWithRouter,
+  PrefetchState
+> {
   obs: IntersectionObserver;
   intersectionRef: React.RefObject<any>;
-  fetched: boolean;
 
   constructor(props: PrefetchPropsWithRouter) {
     super(props);
@@ -41,11 +52,15 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
       'You are attempting to use the "prefetch" function, but have not included the "prefetch" ' +
         "route interaction (@curi/route-prefetch) in your Curi router."
     );
+
+    this.state = {
+      resolved: null
+    };
+
     // re-use ref if provided, otherwise create a new one
     this.intersectionRef = props.forwardedRef
       ? props.forwardedRef
       : React.createRef();
-    this.fetched = false;
 
     if (typeof window !== "undefined" && IntersectionObserver) {
       this.obs = new IntersectionObserver(entries => {
@@ -53,10 +68,13 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
         const { router, match, which } = this.props;
         entries.forEach(entry => {
           if (ref === entry.target && entry.intersectionRatio > 0) {
-            router.route.prefetch(match.name, match, which);
-            this.fetched = true;
             this.obs.unobserve(ref);
             this.obs.disconnect();
+            router.route
+              .prefetch(match.name, match, which)
+              .then((resolved: Resolved) => {
+                this.setState({ resolved });
+              });
           }
         });
       });
@@ -64,7 +82,7 @@ class PrefetchWhenVisible extends React.Component<PrefetchPropsWithRouter> {
   }
 
   render() {
-    return this.props.children(this.intersectionRef);
+    return this.props.children(this.intersectionRef, this.state.resolved);
   }
 
   componentDidMount() {

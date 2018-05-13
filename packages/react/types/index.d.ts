@@ -2,7 +2,7 @@ export { ActiveProps } from "./Active";
 export { BlockProps } from "./Block";
 export { LinkProps } from "./Link";
 export { CuriProviderProps, CuriRenderFn } from "./CuriProvider";
-export { PrefetchProps, WhichOnFns, MatchData } from "./Prefetch";
+export { PrefetchProps, WhichOnFns, MatchData, MaybeResolved } from "./Prefetch";
 import Active from "./Active";
 import Block from "./Block";
 import CuriProvider from "./CuriProvider";
