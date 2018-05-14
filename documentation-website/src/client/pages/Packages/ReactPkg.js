@@ -508,14 +508,47 @@ const router = curi(history, routes, {
               <Explanation>
                 <p>
                   The <IJS>children</IJS> prop is a render-invoked function that
-                  receives the <IJS>ref</IJS> to attach to the component that
-                  should be observed.
+                  receives two arguments:
                 </p>
+                <ol>
+                  <li>
+                    <p>
+                      The <IJS>ref</IJS> to attach to the component that should
+                      be observed.
+                    </p>
+                    <p>
+                      If you forget to attach the <IJS>ref</IJS> to a component,
+                      an error message will be logged in the console.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      The <IJS>resolved</IJS> object returned by the{" "}
+                      <IJS>prefetch()</IJS> route interaction.
+                    </p>
+                    <p>
+                      This will be <IJS>null</IJS> until the data for the route
+                      has been prefetched. Once the prefetch has completed,{" "}
+                      <IJS>resolved</IJS> will be an object with{" "}
+                      <IJS>initial</IJS>, <IJS>every</IJS>, and <IJS>error</IJS>{" "}
+                      properties (<IJS>error</IJS> is set if either{" "}
+                      <IJS>on.initial()</IJS> or <IJS>on.every()</IJS> throw and
+                      you do not catch it). The <IJS>resolved</IJS> values can
+                      be used by your app or you can just use the knowledge that
+                      the data has finished loading to render an indicator.
+                    </p>
+                  </li>
+                </ol>
               </Explanation>
               <CodeBlock lang="jsx">
-                {`{<Prefetch match={{ name: "Home" }}>
-  {ref => <div ref={ref}>Home</div>}
-</Prefetch>`}`}
+                {`<Prefetch match={{ name: "Home" }}>
+  {(ref, resolved) => (
+    <div ref={ref}>
+      <h1>Home</h1>
+      {resolved ? "Loaded" : "Loading"}
+    </div>
+  )}
+</Prefetch>`}
               </CodeBlock>
             </SideBySide>
           </Subsection>
