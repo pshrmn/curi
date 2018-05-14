@@ -2,6 +2,7 @@ import Vue, { PluginObject, VueConstructor } from "vue";
 
 import Link from "./Link";
 import Block from "./Block";
+import Prefetch from "./Prefetch";
 
 import { CuriRouter } from "@curi/core";
 import { ReactiveResponse } from "./interface";
@@ -14,6 +15,7 @@ const CuriPlugin: PluginObject<CuriPluginOptions> = {
   install: function(_Vue: typeof Vue, options: CuriPluginOptions) {
     _Vue.component(Link.name, Link);
     _Vue.component(Block.name, Block);
+    _Vue.component(Prefetch.name, Prefetch);
 
     // create a reactive object so that components will receive
     // the new response/navigation when a new response is emitted
