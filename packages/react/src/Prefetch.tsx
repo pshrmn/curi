@@ -95,6 +95,10 @@ class PrefetchWhenVisible extends React.Component<
       this.obs.observe(this.intersectionRef.current);
     }
   }
+
+  componentWillUnmount() {
+    this.obs.disconnect();
+  }
 }
 
 const Prefetch = React.forwardRef(
