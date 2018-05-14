@@ -1,17 +1,15 @@
-@import "./variables.scss";
-
-/* http://prismjs.com/download.html?themes=prism-okaidia&languages=markup+css+clike+javascript */
+/* PrismJS 1.14.0
+http://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+clike+javascript+bash+jsx&plugins=line-highlight */
 /**
- * okaidia theme for JavaScript, CSS and HTML
- * Loosely based on Monokai textmate theme by http://www.monokai.nl/
- * @author ocodia
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
  */
 
 code[class*="language-"],
 pre[class*="language-"] {
-  color: #f8f8f2;
+  color: #ccc;
   background: none;
-  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   text-align: left;
   white-space: pre;
@@ -32,33 +30,14 @@ pre[class*="language-"] {
 
 /* Code blocks */
 pre[class*="language-"] {
-  padding: 0.5em;
-  margin: 0;
+  padding: 1em;
+  margin: 0.5em 0;
   overflow: auto;
-  border-radius: 0.3em;
 }
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-  background: $purple;
-}
-
-.aside {
-  :not(pre) > code[class*="language-"] {
-    background: $green;
-  }
-}
-
-.tutorial-outline {
-  :not(pre) > code[class*="language-"] {
-    background: $blue;
-  }
-}
-
-.tutorial-branch {
-  :not(pre) > code[class*="language-"] {
-    background: $orange;
-  }
+  background: #2d2d2d;
 }
 
 /* Inline code */
@@ -66,75 +45,64 @@ pre[class*="language-"] {
   padding: 0.1em;
   border-radius: 0.3em;
   white-space: normal;
-  background: $light-gray;
-  color: $purple;
-  text-shadow: none;
-  white-space: wrap;
-}
-
-:not(pre) > code[class*="language-"] .token {
-  color: #222233;
 }
 
 .token.comment,
+.token.block-comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: slategray;
+  color: #999;
 }
 
 .token.punctuation {
-  color: #f8f8f2;
+  color: #ccc;
 }
 
-.namespace {
-  opacity: 0.7;
-}
-
-.token.property,
 .token.tag,
-.token.constant,
-.token.symbol,
+.token.attr-name,
+.token.namespace,
 .token.deleted {
-  color: #f92672;
+  color: #e2777a;
+}
+
+.token.function-name {
+  color: #6196cc;
 }
 
 .token.boolean,
-.token.number {
-  color: #ae81ff;
+.token.number,
+.token.function {
+  color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+  color: #f8c555;
 }
 
 .token.selector,
-.token.attr-name,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+  color: #cc99cd;
+}
+
 .token.string,
 .token.char,
-.token.builtin,
-.token.inserted {
-  color: #a6e22e;
+.token.attr-value,
+.token.regex,
+.token.variable {
+  color: #7ec699;
 }
 
 .token.operator,
 .token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string,
-.token.variable {
-  color: #f8f8f2;
-}
-
-.token.atrule,
-.token.attr-value,
-.token.function {
-  color: #e6db74;
-}
-
-.token.keyword {
-  color: #66d9ef;
-}
-
-.token.regex,
-.token.important {
-  color: #fd971f;
+.token.url {
+  color: #67cdcc;
 }
 
 .token.important,
@@ -149,9 +117,13 @@ pre[class*="language-"] {
   cursor: help;
 }
 
+.token.inserted {
+  color: green;
+}
+
 pre[data-line] {
   position: relative;
-  padding: 1em 0 1em 2em;
+  padding: 1em 0 1em 3em;
 }
 
 .line-highlight {
@@ -182,13 +154,14 @@ pre[data-line] {
   left: 0.6em;
   min-width: 1em;
   padding: 0 0.5em;
-  color: slategray; /*hsl(24, 20%, 95%);*/
+  background-color: hsla(24, 20%, 50%, 0.4);
+  color: hsl(24, 20%, 95%);
   font: bold 65%/1.5 sans-serif;
   text-align: center;
   vertical-align: 0.3em;
   border-radius: 999px;
   text-shadow: none;
-  box-shadow: none;
+  box-shadow: 0 1px white;
 }
 
 .line-highlight[data-end]:after {

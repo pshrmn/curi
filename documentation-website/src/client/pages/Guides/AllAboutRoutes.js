@@ -77,7 +77,7 @@ export default ({ name }) => (
   { name: 'Album', path: 'a/:albumID' },
   { name: 'Not Found', path: '(.*)' }
 ];
-// don't do this
+// don't include a leading forward slash
 // { name: 'Home', path: '/' }`}
           </CodeBlock>
         </SideBySide>

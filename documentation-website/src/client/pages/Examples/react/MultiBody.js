@@ -39,7 +39,8 @@ export default ({ name }) => (
         <IJS>response.body</IJS> layouts.
       </Note>
       <PrismBlock lang="javascript">
-        {`// don't do this!
+        {`// be consistent, don't use
+// different body types
 const routes = [
   {
     ...,
