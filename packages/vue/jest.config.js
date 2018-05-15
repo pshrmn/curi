@@ -8,5 +8,8 @@ module.exports = {
     "ts-jest": {
       module: "es6"
     }
+  },
+  moduleNameMapper: {
+    "^vue$": "vue/dist/vue.common.js"
   }
 };

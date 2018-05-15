@@ -48,7 +48,6 @@ const Link: ComponentOptions<LinkComponent> = {
       if (this.click) {
         this.click(event);
       }
-
       if (canNavigate(event)) {
         event.preventDefault();
         this.$router.history.navigate(this.location);
@@ -57,11 +56,14 @@ const Link: ComponentOptions<LinkComponent> = {
   },
 
   render: function(h: CreateElement) {
-    let props = {
-      attrs: { href: this.href },
-      on: { click: this.clickHandler }
-    };
-    return h("a", props, this.$slots.default);
+    return h(
+      "a",
+      {
+        attrs: { href: this.href },
+        on: { click: this.clickHandler }
+      },
+      this.$slots.default
+    );
   }
 };
 

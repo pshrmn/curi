@@ -1,5 +1,5 @@
 import "jest";
-import { createLocalVue, shallow, mount } from "@vue/test-utils";
+import { createLocalVue } from "@vue/test-utils";
 import curi from "@curi/core";
 import InMemory from "@hickory/in-memory";
 import CuriPlugin from "../src/plugin";
@@ -18,12 +18,8 @@ describe("CuriPlugin", () => {
         }
       };
       Vue.use(CuriPlugin, { router });
-
-      const wrapper = shallow(FakeComponent, {
-        localVue: Vue
-      });
-
-      expect(wrapper.vm.$router).toBe(router);
+      const el = new Vue();
+      expect(el.$router).toBe(router);
     });
   });
 
@@ -38,12 +34,9 @@ describe("CuriPlugin", () => {
       router.respond(({ response, navigation }) => {
         Vue.use(CuriPlugin, { router });
 
-        const wrapper = shallow(FakeComponent, {
-          localVue: Vue
-        });
-
-        expect(wrapper.vm.$curi.response).toBe(response);
-        expect(wrapper.vm.$curi.navigation).toBe(navigation);
+        const el = new Vue();
+        expect(el.$curi.response).toBe(response);
+        expect(el.$curi.navigation).toBe(navigation);
 
         done();
       });
@@ -81,14 +74,13 @@ describe("CuriPlugin", () => {
         const Vue = createLocalVue();
         const FakeComponent = makeFake(done);
 
-        let wrapper;
+        let el;
         Vue.use(CuriPlugin, { router });
-
-        if (!wrapper) {
-          wrapper = shallow(FakeComponent, {
-            localVue: Vue,
-            sync: false
-          });
+        if (!el) {
+          el = new Vue({
+            template: "<div><FakeComponent /></div>",
+            components: { FakeComponent }
+          }).$mount();
           router.navigate({ name: "Contact" });
         }
       });
@@ -101,16 +93,10 @@ describe("CuriPlugin", () => {
         Vue.use(CuriPlugin, { router });
 
         if (!wrapper) {
-          wrapper = mount(
-            {
-              template: "<div><FakeComponent /></div>",
-              components: { FakeComponent }
-            },
-            {
-              localVue: Vue,
-              sync: false
-            }
-          );
+          wrapper = new Vue({
+            template: "<div><FakeComponent /></div>",
+            components: { FakeComponent }
+          }).$mount();
           router.navigate({ name: "Contact" });
         }
       });
@@ -120,19 +106,13 @@ describe("CuriPlugin", () => {
   describe("registering components components", () => {
     it("Registers the Link component as <curi-link>", () => {
       const Vue = createLocalVue();
-      Vue.use(CuriPlugin, {
-        router,
-        curi: { router, response: null, navigation: null }
-      });
+      Vue.use(CuriPlugin, { router });
       expect(Vue.options.components["curi-link"]).toBeDefined();
     });
 
     it("Registers the Block component as <curi-block>", () => {
       const Vue = createLocalVue();
-      Vue.use(CuriPlugin, {
-        router,
-        curi: { router, response: null, navigation: null }
-      });
+      Vue.use(CuriPlugin, { router });
       expect(Vue.options.components["curi-block"]).toBeDefined();
     });
   });
