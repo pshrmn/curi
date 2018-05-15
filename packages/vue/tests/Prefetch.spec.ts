@@ -123,7 +123,7 @@ describe("prefetch", () => {
     });
   });
 
-  describe("scoped slot", () => {
+  describe("on fns", () => {
     const history = InMemory();
     const prefetchRoute = {
       name: "Prefetch",
