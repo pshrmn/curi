@@ -9,6 +9,7 @@ import UsingSideEffects from "./UsingSideEffects";
 import CodeSplitting from "./CodeSplitting";
 import Loading from "./Loading";
 import ReactNativeTips from "./ReactNativeTips";
+import Apollo from "./Apollo";
 import MigrateReactRouterv3 from "./MigrateReactRouterv3";
 import MigrateReactRouterv4 from "./MigrateReactRouterv4";
 import SyncAsync from "./SyncAsync";
@@ -26,6 +27,7 @@ export default {
   "code-splitting": CodeSplitting,
   loading: Loading,
   "react-native": ReactNativeTips,
+  apollo: Apollo,
   "migrate-rrv3": MigrateReactRouterv3,
   "migrate-rrv4": MigrateReactRouterv4
 };

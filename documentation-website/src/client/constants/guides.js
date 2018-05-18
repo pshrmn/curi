@@ -75,6 +75,12 @@ const guides = [
     type: "advanced"
   },
   {
+    name: "Apollo Integration",
+    slug: "apollo",
+    description: "Integrating Curi and Apollo",
+    type: "advanced"
+  },
+  {
     name: "React Router v2/3",
     slug: "migrate-rrv3",
     descriptioni:
