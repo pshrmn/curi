@@ -8,58 +8,58 @@ const packages = [
     type: "core"
   },
   {
-    name: "route-active",
-    version: versions["route-active"],
-    globalName: "CuriRouteActive",
-    type: "route"
-  },
-  {
-    name: "route-ancestors",
-    version: versions["route-ancestors"],
-    globalName: "CuriRouteAncestors",
-    type: "route"
-  },
-  {
-    name: "route-prefetch",
-    version: versions["route-prefetch"],
-    globalName: "CuriRoutePrefetch",
-    type: "route"
-  },
-  {
-    name: "side-effect-title",
-    version: versions["side-effect-title"],
-    globalName: "CuriSideEffectTitle",
-    type: "side-effect"
-  },
-  {
-    name: "side-effect-scroll",
-    version: versions["side-effect-scroll"],
-    globalName: "CuriSideEffectScroll",
-    type: "side-effect"
-  },
-  {
     name: "react",
     version: versions["react"],
     globalName: "CuriReact",
-    type: "renderer"
+    type: "render"
   },
   {
     name: "react-native",
     version: versions["react-native"],
     globalName: "CuriReactNative",
-    type: "renderer"
+    type: "render"
   },
   {
     name: "svelte",
     version: versions["svelte"],
     globalName: "CuriSvelte",
-    type: "renderer"
+    type: "render"
   },
   {
     name: "vue",
     version: versions["vue"],
     globalName: "CuriVue",
-    type: "renderer"
+    type: "render"
+  },
+  {
+    name: "route-active",
+    version: versions["route-active"],
+    globalName: "CuriRouteActive",
+    type: "route interactions"
+  },
+  {
+    name: "route-ancestors",
+    version: versions["route-ancestors"],
+    globalName: "CuriRouteAncestors",
+    type: "route interactions"
+  },
+  {
+    name: "route-prefetch",
+    version: versions["route-prefetch"],
+    globalName: "CuriRoutePrefetch",
+    type: "route interactions"
+  },
+  {
+    name: "side-effect-title",
+    version: versions["side-effect-title"],
+    globalName: "CuriSideEffectTitle",
+    type: "side effects"
+  },
+  {
+    name: "side-effect-scroll",
+    version: versions["side-effect-scroll"],
+    globalName: "CuriSideEffectScroll",
+    type: "side effects"
   }
 ];
 

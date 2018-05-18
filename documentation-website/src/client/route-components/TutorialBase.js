@@ -1,17 +1,28 @@
 import React from "react";
 import { Link } from "@curi/react";
 
-import { InlineJS as IJS } from "../components/PrismBlocks";
-import { Note, Warning } from "../components/Messages";
-import { Section } from "../components/Sections";
-import TutorialTiles from "../pages/Tutorials/base/TutorialTiles";
+import TutorialLinks from "../pages/Tutorials/base/TutorialLinks";
+import Page from "../components/Page";
+import PageLinks from "../components/PageLinks";
 import Content from "../components/Content";
 
-export default () => (
-  <div className="tutorial">
+const TutorialBase = ({
+  name,
+  version,
+  globalName,
+  children,
+  about,
+  unpkg = true
+}) => (
+  <Page type="tutorial">
     <Content>
       <h1>Curi Tutorials</h1>
-      <TutorialTiles />
     </Content>
-  </div>
+    <PageLinks>
+      <h2>Tutorials</h2>
+      <TutorialLinks />
+    </PageLinks>
+  </Page>
 );
+
+export default TutorialBase;
