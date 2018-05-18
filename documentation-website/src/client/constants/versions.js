@@ -4,7 +4,7 @@ export default {
   "route-active": "1.0.0-beta.6",
   "route-ancestors": "1.0.0-beta.6",
   "route-prefetch": "1.0.0-beta.10",
-  "react": "1.0.0-beta.24",
+  "react": "1.0.0-beta.25",
   "react-native": "1.0.0-beta.6",
   "side-effect-scroll": "1.0.0-beta.9",
   "side-effect-title": "1.0.0-beta.10",
