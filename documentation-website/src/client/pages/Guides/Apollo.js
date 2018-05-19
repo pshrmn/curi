@@ -26,9 +26,8 @@ export default ({ name }) => (
           <a href="http://graphql.org">GraphQL</a>.
         </p>
         <p>
-          Using Apollo with Curi doesn't require any "special" integration, but
-          there are a few different implementation strategies you may choose
-          based on how tightly you want them to be paired.
+          There are a few different implementation strategies for integrating
+          Apollo and Curi based on how tightly you want them to be paired.
         </p>
         <Note>
           <p>
@@ -49,7 +48,23 @@ export default ({ name }) => (
       <SideBySide>
         <Explanation>
           <p>
-            Apollo's React components include an <Cmp>ApolloProvider</Cmp>{" "}
+            Your application's Apollo client instance should be defined in its
+            own module so that it can be imported throughout the application.
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`// apollo.js
+import ApolloClient from "apollo-boost";
+
+export default ApolloClient({
+  uri: "https://example.com/graphql"
+});`}
+        </CodeBlock>
+      </SideBySide>
+      <SideBySide>
+        <Explanation>
+          <p>
+            Apollo's React package provides an <Cmp>ApolloProvider</Cmp>{" "}
             component for accessing your Apollo client throughout the
             application. The <Cmp>CuriProvider</Cmp> should be a descendant of
             the <Cmp>ApolloProvider</Cmp> because we don't need to re-render the{" "}
@@ -119,9 +134,19 @@ ReactDOM.render((
       }}
     </CuriProvider>
   </ApolloProvider>
-), holder);          
-          
-// pages/Nouns.js
+), holder);`}
+        </CodeBlock>
+      </SideBySide>
+      <SideBySide>
+        <Explanation>
+          <p>
+            Because we pass the route's <IJS>body</IJS> component the{" "}
+            <IJS>response</IJS> when we render it, we can pass a query the
+            matches location params using <IJS>props.response.params</IJS>.
+          </p>
+        </Explanation>
+        <CodeBlock lang="jsx">
+          {`// pages/Nouns.js
 import { Query } from "react-apollo";
 
 const GET_NOUN = gql\`
@@ -134,7 +159,7 @@ const GET_NOUN = gql\`
   }
 \`;
 
-// use the "word" param from the response
+// use the "word" param from the response props
 // to query the correct data
 const Noun = ({ response }) => (
   <Query
@@ -164,29 +189,46 @@ const Noun = ({ response }) => (
       <SideBySide>
         <Explanation>
           <p>
-            You can use your Apollo client to call queries in a route's{" "}
-            <IJS>on.every()</IJS> function to tightly pair Curi and Apollo.{" "}
-            <IJS>client.query()</IJS> returns a Promise, just like{" "}
-            <IJS>on.every()</IJS> should, so <IJS>on.every()</IJS> can return a{" "}
-            <IJS>client.query()</IJS> call. This allows you to delay navigation
-            until after a route's GraphQL data has been loaded by Apollo.
-          </p>
-          <p>
-            There are two strategies for doing this. Both approaches require you
-            to be able to import your Apollo client in the module where you
-            define your routes. If you create and export your Apollo Client in
-            its own module, you can import it throughout your application.
+            You can use your Apollo client instance to call queries in a route's{" "}
+            <IJS>on.every()</IJS> function. <IJS>on.every()</IJS> is expected to
+            return a Promise, which is exactly what <IJS>client.query()</IJS>{" "}
+            returns, so tightly pairing Curi and Apollo is mostly center around
+            using <IJS>on.every()</IJS> to return a <IJS>client.query()</IJS>{" "}
+            call. This will delay navigation until after a route's GraphQL data
+            has been loaded by Apollo.
           </p>
         </Explanation>
         <CodeBlock>
-          {`// apollo.js
-import ApolloClient from "apollo-boost";
+          {`import client from "./apollo";
+import { EXAMPLE_QUERY } from "./queries";
 
-export default ApolloClient({
-  uri: "https://example.com/graphql"
-});
-
-// index.js
+const routes = [
+  {
+    name: "Example",
+    path: "example/:id",
+    on: {
+      every({ params }) {
+        return client.query({
+          query: EXAMPLE_QUERY,
+          variables: { id: params.id }
+        });
+      }
+    }
+  }
+];`}
+        </CodeBlock>
+      </SideBySide>
+      <SideBySide>
+        <Explanation>
+          <p>
+            There are two strategies for doing this. Both approaches require you
+            to be able to import your Apollo client in the module where you
+            define your routes, which is why we created client in its own module
+            in the <Link hash="setup">setup</Link> section.
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`// index.js
 import client from "./apollo";
 
 ReactDOM.render((
@@ -206,10 +248,16 @@ import client from "./apollo";
           <p>
             The first approach is to avoid the <Cmp>Query</Cmp> altogether.
             Instead, you can use a route's <IJS>response()</IJS> property to
-            attach the data fetched by Apollo directly to a response.
+            attach the data fetched by Apollo directly to a response through its{" "}
+            <IJS>data</IJS> property.
+          </p>
+          <p>
+            While we know at this point that the query has executed, we should
+            also check <IJS>resolved.error</IJS> in the <IJS>response()</IJS>{" "}
+            function to ensure that the query was executed successfully.
           </p>
         </Explanation>
-        <CodeBlock lang="jsx">
+        <CodeBlock>
           {`// routes.js
 import client from "./apollo";
 import GET_VERB from "./queries";
@@ -222,7 +270,6 @@ export default [
     path: "verb/:word",
     on: {
       every({ params }) {
-        // load the data
         return client.query({
           query: GET_VERB,
           variables: { word: params.word }
@@ -230,18 +277,28 @@ export default [
       }
     },
     response({ resolved }) {
-      // attach the resolved data to the response.
-      // in the real world, you would also check for errors
-      // here in case something goes wrong with the query
+      if (resolved.error) {
+        // handle failed queries
+      }
       return {
         body: Verb,
         data: resolved.every.data
       }
     }
   }
-];
-
-// pages/Verb.js
+];`}
+        </CodeBlock>
+      </SideBySide>
+      <SideBySide>
+        <Explanation>
+          <p>
+            In the response's <IJS>body</IJS> component, you would access the
+            query data through the <IJS>response</IJS>'s <IJS>data</IJS>{" "}
+            property.
+          </p>
+        </Explanation>
+        <CodeBlock lang="jsx">
+          {`// pages/Verb.js
 const Verb = ({ response }) => (
   <div>
     <h1>{response.data.verb.word}</h1>
@@ -256,12 +313,13 @@ const Verb = ({ response }) => (
         <Explanation>
           <p>
             The second approach is to use <IJS>on.every()</IJS> as a way to
-            cache the data, but also use <Cmp>Query</Cmp>. When the{" "}
-            <Cmp>Query</Cmp> calls the query, Apollo will grab the data from its
-            cache instead of re-sending a request to your server.
+            cache the data, but also use <Cmp>Query</Cmp>. With this approach,
+            we do not have to attach the query data to the response; we are just
+            relying on the fact that Apollo will execute and cache the results
+            prior to navigation.
           </p>
         </Explanation>
-        <CodeBlock lang="jsx">
+        <CodeBlock>
           {`// routes.js
 import client from "./apollo";
 import { GET_VERB } from "./queries";
@@ -281,9 +339,20 @@ export default [
       }
     }
   }
-];
-
-// pages/Verb.js
+];`}
+        </CodeBlock>
+      </SideBySide>
+      <SideBySide>
+        <Explanation>
+          <p>
+            The route's component will render a <Cmp>Query</Cmp> to also call
+            the query. Because the query has already been executed, Apollo will
+            grab the data from its cache instead of re-sending a request to your
+            server.
+          </p>
+        </Explanation>
+        <CodeBlock lang="jsx">
+          {`// pages/Verb.js
 import { GET_VERB } from "../queries";
 
 const Verb = ({ response }) => (
@@ -311,8 +380,7 @@ const Verb = ({ response }) => (
           <Explanation>
             <p>
               One additional benefit of adding queries to routes using{" "}
-              <IJS>on.every()</IJS> functions is that you can prefetch data for
-              a route.
+              <IJS>on.every()</IJS> is that you can prefetch data for a route.
             </p>
             <p>
               The{" "}
@@ -348,9 +416,10 @@ const router = curi(history, routes, {
 
 // this will call the GET_EXAMPLES query
 // and Apollo will cache the results
-route.prefetch("Example", {
-  params: { id: 2 }
-});`}
+router.route.prefetch(
+  "Example",
+  { params: { id: 2 }}
+);`}
           </CodeBlock>
         </SideBySide>
         <SideBySide>
@@ -365,7 +434,16 @@ route.prefetch("Example", {
             </p>
             <p>
               <Cmp>Prefetch</Cmp> relies on you attaching a <IJS>ref</IJS> to
-              the element that should trigger prefetching.
+              the element that should trigger prefetching. This uses the{" "}
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">
+                <IJS>IntersectionObserver</IJS>
+              </a>{" "}
+              API to observe the element you attach the ref to.
+            </p>
+            <p>
+              Prefetching behavior can also be attached to other events, such as
+              hovering over an element, but <Cmp>Prefetch</Cmp> is specifically
+              meant for prefetching when an element becomes visible.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
@@ -391,9 +469,9 @@ const PrefetchLink = ({ to, params, ...rest }) => (
             <p>
               If you want to get really fancy, <Cmp>Prefetch</Cmp> also lets you
               access the prefetched data with the second argument to its
-              render-invoked <IJS>children</IJS> prop. You can do this to update
-              your UI to indicate that the data has loaded or even use the
-              loaded data with some filler content.
+              render-invoked <IJS>children</IJS> prop. You can use this to
+              update your UI to indicate that the data has loaded or even use
+              the loaded data with some filler content.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">

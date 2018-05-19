@@ -646,7 +646,7 @@ export default () => (
 
     <p>
       At this point, hopefully you are comfortable with migrating from React
-      Router v2/3 to Curi. If there are any concepts not covered here that you
+      Router v4 to Curi. If there are any concepts not covered here that you
       think should be, please feel free to open up an issue{" "}
       <a href="https://github.com/pshrmn/curi/issues">on GitHub</a>.
     </p>
