@@ -36,7 +36,7 @@ const routes = [
       };
     }
   }
-];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Any location data that a query needs can be taken from the response object. The best way to access this from your components would be to pass the <code class="language-javascript">response</code> as a prop to the components rendered in the <code class="language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> component&#x27;s render-invoked<!-- --> <code class="language-javascript">children</code> prop.</p></div><div class="code-block"><pre><code class="language-jsx">// index.js
+];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Any location data that a query needs can be taken from the response object. The best way to access this from your components would be to pass the <code class="language-javascript">response</code> to the components rendered in the<!-- --> <code class="language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code>&#x27;s render-invoked <code class="language-javascript">children</code> prop.</p></div><div class="code-block"><pre><code class="language-jsx">// index.js
 ReactDOM.render((
   &lt;ApolloProvider client={client}&gt;
     &lt;CuriProvider router={router}&gt;
@@ -46,7 +46,7 @@ ReactDOM.render((
       }}
     &lt;/CuriProvider&gt;
   &lt;/ApolloProvider&gt;
-), holder);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Because we pass the route&#x27;s <code class="language-javascript">body</code> component the<!-- --> <code class="language-javascript">response</code> when we render it, we can pass a query the matches location params using <code class="language-javascript">props.response.params</code>.</p></div><div class="code-block"><pre><code class="language-jsx">// pages/Nouns.js
+), holder);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Because we pass the <code class="language-javascript">response</code> to the route&#x27;s<!-- --> <code class="language-javascript">body</code> component, we can pass a <code class="language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code> the response&#x27;s location params using <code class="language-javascript">props.response.params</code>.</p></div><div class="code-block"><pre><code class="language-jsx">// pages/Nouns.js
 import { Query } from &quot;react-apollo&quot;;
 
 const GET_NOUN = gql`
