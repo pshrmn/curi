@@ -47,7 +47,8 @@ const router = curi(history, routes, options);`}
               <Explanation>
                 <p>
                   A <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
-                  history object. The{" "}
+                  history object that will power navigation within the
+                  application. The{" "}
                   <Link
                     to="Guide"
                     params={{ slug: "getting-started" }}
@@ -76,7 +77,7 @@ const router = curi(history, routes);`}
                   <Link to="Guide" params={{ slug: "routes" }}>
                     route
                   </Link>{" "}
-                  objects
+                  objects for all valid routes in the application.
                 </p>
               </Explanation>
               <CodeBlock lang="jsx">
@@ -167,19 +168,13 @@ router.route.pathname("Home");
                         <tr>
                           <td>after</td>
                           <td>
-                            (default <IJS>false</IJS>) controls whether the
-                            observer is called before or after regular*
+                            (default <IJS>false</IJS>) controls whether the side
+                            effect is called before or after non-side effect
                             observers.
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                    <p>
-                      * A "regular" observer is one added using{" "}
-                      <Link hash="respond">
-                        <IJS>router.respond()</IJS>
-                      </Link>.
-                    </p>
                   </Explanation>
                   <CodeBlock>
                     {`import scrollEffect from "@curi/side-effect-scroll";
@@ -198,10 +193,9 @@ const router = curi(history, routes, {
                       <IJS>emitRedirects</IJS> - When <IJS>false</IJS> (default
                       is <IJS>true</IJS>), response objects with the{" "}
                       <IJS>redirectTo</IJS> property{" "}
-                      <strong>will not be emitted</strong> to observers (but
-                      they will still trigger automatic redirects). This can be
-                      useful for avoiding an extra render, but should not be
-                      used on the server.
+                      <strong>will not be emitted</strong> to observers. This
+                      can be useful for avoiding an extra render, but should not
+                      be used on the server.
                     </p>
                   </Explanation>
                   <CodeBlock>
@@ -229,7 +223,7 @@ const router = curi(history, routes, {
   emitRedirects: false                 
 });
 // navigating to "/old/2" will automatically redirect
-// to "/new/2" without rendering a response`}
+// to "/new/2" without emitting a response`}
                   </CodeBlock>
                 </SideBySide>
               </li>
@@ -247,9 +241,7 @@ const router = curi(history, routes, {
                         <IJS>encode</IJS>
                       </a>{" "}
                       function for creating pathnames, which you can specify
-                      with this options.
-                    </p>
-                    <p>
+                      with this options.{" "}
                       <strong>
                         You most likely will never need to use this.
                       </strong>
@@ -277,7 +269,7 @@ const router = curi(history, routes, {
             <SideBySide>
               <Explanation>
                 <p>
-                  The <IJS>navigate()</IJS> method allows you to navigate
+                  The <IJS>navigate()</IJS> method is used to navigate
                   programmatically. It takes a <IJS>details</IJS> object with
                   the details of where you want to navigate to as well as the{" "}
                   <IJS>method</IJS> of navigation.
@@ -498,8 +490,8 @@ router.respond(({ response, navigation }) => {
                   <Link to="Guide" params={{ slug: "route-interactions" }}>
                     route interactions
                   </Link>{" "}
-                  are accessed through the <IJS>route</IJS> property. This
-                  allows you to interact with routes based on their names.
+                  are accessed through the <IJS>route</IJS> property. These are
+                  used to interact with routes using their names.
                 </p>
               </Explanation>
             </SideBySide>
@@ -531,9 +523,8 @@ const userPathname = router.route.pathname(
             <SideBySide>
               <Explanation>
                 <p>
-                  The route's history object. This allows you to pass the router
-                  throughout your project instead of both that and the history
-                  object.
+                  The route's history object, in case you need to interact
+                  directly with that.
                 </p>
               </Explanation>
             </SideBySide>

@@ -51,9 +51,9 @@ export default ({ name, version, globalName }) => (
               must be descendants of a <Cmp>CuriProvider</Cmp>.
             </Note>
             <p>
-              This component will listen for new responses to be emitted by your{" "}
-              <IJS>router</IJS> and will automatically re-render your
-              application when this happens.
+              <Cmp>CuriProvider</Cmp> will observe your <IJS>router</IJS> so
+              that it can automatically re-render your application after
+              navigation.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
@@ -82,8 +82,8 @@ const App = () => (
             <SideBySide>
               <Explanation>
                 <p>
-                  <IJS>children</IJS> is a render-invoked prop that will be
-                  passed an object with three properties:
+                  <IJS>children</IJS> is a render-invoked prop. When it is
+                  called, it will be passed an object with three properties:
                 </p>
                 <table>
                   <thead>
@@ -96,7 +96,7 @@ const App = () => (
                     <tr>
                       <td>response</td>
                       <td>
-                        the response object generated for the current location.
+                        the response object generated for the current location
                       </td>
                     </tr>
                     <tr>
@@ -122,9 +122,9 @@ const App = () => (
         <SideBySide>
           <Explanation>
             <p>
-              A <Cmp>Link</Cmp> allows you to navigate within your application
-              using an anchor element (<Cmp>a</Cmp>). When the rendered element
-              is clicked, instead of reloading the page it will use your router
+              A <Cmp>Link</Cmp> is for navigating within your application using
+              an anchor element (<Cmp>a</Cmp>). When the rendered element is
+              clicked, instead of reloading the page it will use your router
               object's history object to navigate.
             </p>
 
@@ -280,9 +280,9 @@ const MyComponent = () => (
         <SideBySide>
           <Explanation>
             <p>
-              The <Cmp>Active</Cmp> component allows you to render based on
-              whether or not a route is "active" (its name and params match the
-              current response's name and params) using a render-invoked{" "}
+              The <Cmp>Active</Cmp> component is used to render based on whether
+              or not a route is "active" (its name and params match the current
+              response's name and params) using a render-invoked{" "}
               <IJS>children</IJS> prop.
             </p>
           </Explanation>
@@ -407,7 +407,7 @@ const router = curi(history, routes, {
               <Explanation>
                 <p>
                   When <IJS>true</IJS>, <IJS>partial</IJS> allows ancestor
-                  routes to be "active". Defaults to <IJS>false</IJS>.
+                  routes to be considered active. Defaults to <IJS>false</IJS>.
                 </p>
               </Explanation>
               <CodeBlock lang="jsx">
@@ -437,18 +437,17 @@ const router = curi(history, routes, {
         <SideBySide>
           <Explanation>
             <p>
-              The <Cmp>Prefetch</Cmp> component will load data for a route once
-              an element becomes visible in the page. This uses the{" "}
+              The <Cmp>Prefetch</Cmp> component is used for calling a route's{" "}
+              <IJS>on</IJS> methods when a specified element becomes visible in
+              the page. The specified element's visibility is monitored by the{" "}
               <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">
-                <IJS>IntersectionObserver</IJS>
-              </a>{" "}
-              API to observe an element and call a route's <IJS>on</IJS>{" "}
-              functions when that element becomes visible.
+                <IJS>IntersectionObserver</IJS> API
+              </a>.
             </p>
             <p>
               <Cmp>Prefetch</Cmp> uses a render-invoked <IJS>children</IJS> prop
-              to provide a <IJS>ref</IJS>. That <IJS>ref</IJS> needs to be
-              attached to the element observed.
+              to provide a <IJS>ref</IJS> for the element that should be
+              observed.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
@@ -489,10 +488,10 @@ const router = curi(history, routes, {
             <SideBySide>
               <Explanation>
                 <p>
-                  The <IJS>match</IJS> object that will be passed to on{" "}
-                  <IJS>on</IJS> functions. The only required property is this
-                  object is <IJS>name</IJS>, which is required to know which
-                  route's <IJS>on</IJS> functions should be called.
+                  The <IJS>match</IJS> object that will be passed to{" "}
+                  <IJS>on</IJS> functions. The only required property of this
+                  object is <IJS>name</IJS> because <Cmp>Prefetch</Cmp> needs to
+                  know which route's <IJS>on</IJS> functions should be called.
                 </p>
               </Explanation>
               <CodeBlock lang="jsx">
@@ -557,13 +556,16 @@ const router = curi(history, routes, {
             <SideBySide>
               <Explanation>
                 <p>
-                  <IJS>which</IJS> is an object that specifies which{" "}
-                  <IJS>on</IJS> functions should be called. If a property is{" "}
-                  <IJS>true</IJS>, that function will be called. If the property
-                  is <IJS>false</IJS> or <IJS>undefined</IJS>, that function
-                  will not be called. If this is not provided, both{" "}
+                  <IJS>which</IJS> is an object whose properties specify which{" "}
+                  <IJS>on</IJS> functions should be called. If a property's
+                  value is <IJS>true</IJS>, the matching <IJS>on</IJS> function
+                  will be called. If the property is <IJS>false</IJS> or{" "}
+                  <IJS>undefined</IJS>, that function will not be called.
+                </p>
+                <p>
+                  If <IJS>which</IJS> is not provided, both{" "}
                   <IJS>on.initial()</IJS> and <IJS>on.every()</IJS> will be
-                  called.
+                  called when the observed element becomes visible.
                 </p>
               </Explanation>
               <CodeBlock lang="jsx">

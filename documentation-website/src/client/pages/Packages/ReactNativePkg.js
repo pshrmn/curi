@@ -59,6 +59,11 @@ export default ({ name, version, globalName }) => (
               <IJS>@curi/react-native</IJS> must be descendants of a{" "}
               <Cmp>CuriProvider</Cmp>.
             </Note>
+            <p>
+              <Cmp>CuriProvider</Cmp> will observe your <IJS>router</IJS> so
+              that it can automatically re-render your application after
+              navigation.
+            </p>
           </Explanation>
           <CodeBlock lang="jsx">
             {`import { CuriProvider } from '@curi/react-native';
@@ -86,8 +91,8 @@ const App = () => (
             <SideBySide>
               <Explanation>
                 <p>
-                  <IJS>children</IJS> is a render-invoked prop that will be
-                  passed an object with three properties:
+                  <IJS>children</IJS> is a render-invoked prop. When it is
+                  called, it will be passed an object with three properties:
                 </p>
                 <table>
                   <thead>
@@ -100,7 +105,7 @@ const App = () => (
                     <tr>
                       <td>response</td>
                       <td>
-                        the response object generated for the current location.
+                        the response object generated for the current location
                       </td>
                     </tr>
                     <tr>
@@ -126,7 +131,7 @@ const App = () => (
         <SideBySide>
           <Explanation>
             <p>
-              A <Cmp>Link</Cmp> allows you to navigate within your application.
+              A <Cmp>Link</Cmp> is used for navigating within your application.
               By default, this will render a <Cmp>TouchableHighlight</Cmp>, but
               you can also provide another component. When the rendered element
               is touched, it will use the router's <IJS>history</IJS> object to
@@ -286,9 +291,9 @@ const  MyComponent = () => (
         <SideBySide>
           <Explanation>
             <p>
-              The <Cmp>Active</Cmp> component allows you to render based on
-              whether or not a route is "active" (its name and params match the
-              current response's name and params) using a render-invoked{" "}
+              The <Cmp>Active</Cmp> component is used to render based on whether
+              or not a route is "active" (its name and params match the current
+              response's name and params) using a render-invoked{" "}
               <IJS>children</IJS> prop.
             </p>
           </Explanation>
@@ -411,7 +416,7 @@ const router = curi(history, routes, {
               <Explanation>
                 <p>
                   When <IJS>true</IJS>, <IJS>partial</IJS> allows ancestor
-                  routes to be "active". Defaults to <IJS>false</IJS>.
+                  routes to be considered active. Defaults to <IJS>false</IJS>.
                 </p>
               </Explanation>
               <CodeBlock lang="jsx">

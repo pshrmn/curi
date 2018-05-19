@@ -31,8 +31,9 @@ export default ({ name }) => (
             components).
           </li>
           <li>
-            With both, routes can be nested, allowing child routes to build off
-            of the paths from their parent routes.
+            With both Reaft Router and Curi, routes can be nested. This can be
+            used to specify child routes that build off of the paths from their
+            parent routes.
           </li>
         </ol>
         <p>
@@ -608,9 +609,9 @@ function render({ response }) {
                 <Cmp>Active</Cmp>'s <IJS>children</IJS> prop is a render-invoked
                 function that receives a boolean <IJS>true</IJS> when the named
                 route is active and <IJS>false</IJS> when it is not. You can
-                also pass <IJS>{`partial=\{true\}`}</IJS> to allow for partial
-                matches to be considered active (the opposite of React Router's{" "}
-                <IJS>onlyActiveOnIndex</IJS>).
+                also pass <IJS>{`partial=\{true\}`}</IJS> to let partial matches
+                (ancestor routes) be considered active (the opposite of React
+                Router's <IJS>onlyActiveOnIndex</IJS>).
               </p>
             </Explanation>
             <CodeBlock lang="jsx">

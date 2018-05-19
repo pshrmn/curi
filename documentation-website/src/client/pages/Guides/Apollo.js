@@ -118,9 +118,8 @@ const routes = [
           <p>
             Any location data that a query needs can be taken from the response
             object. The best way to access this from your components would be to
-            pass the <IJS>response</IJS> as a prop to the components rendered in
-            the <Cmp>CuriProvider</Cmp> component's render-invoked{" "}
-            <IJS>children</IJS> prop.
+            pass the <IJS>response</IJS> to the components rendered in the{" "}
+            <Cmp>CuriProvider</Cmp>'s render-invoked <IJS>children</IJS> prop.
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
@@ -140,9 +139,9 @@ ReactDOM.render((
       <SideBySide>
         <Explanation>
           <p>
-            Because we pass the route's <IJS>body</IJS> component the{" "}
-            <IJS>response</IJS> when we render it, we can pass a query the
-            matches location params using <IJS>props.response.params</IJS>.
+            Because we pass the <IJS>response</IJS> to the route's{" "}
+            <IJS>body</IJS> component, we can pass a <Cmp>Query</Cmp> the
+            response's location params using <IJS>props.response.params</IJS>.
           </p>
         </Explanation>
         <CodeBlock lang="jsx">

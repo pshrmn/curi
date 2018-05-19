@@ -12,8 +12,8 @@ const CodeSandboxDemo = ({ id }) => (
     />
     <p>
       Use the three buttons at the top of the Sandbox to toggle view modes.
-      Clicking the menu button in the top left corner opens a menu that allows
-      you to switch between files.
+      Clicking the menu button in the top left corner opens a menu to switch
+      between files.
     </p>
   </div>
 );

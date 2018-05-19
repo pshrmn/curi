@@ -10,8 +10,8 @@ export default ({ name }) => (
     <Section title="Explanation" id="explanation">
       <p>
         You can easily generate breadcrumb navigation links for the current
-        route using the <IJS>@curi/route-ancestors</IJS> package. This allows
-        you to get the route names for the current route. Using these names you
+        route using the <IJS>@curi/route-ancestors</IJS> package, which provides
+        the names of the ancestors of the current route. Using these names you
         can render a Link for each one (passing the parameters if necessary).
       </p>
     </Section>

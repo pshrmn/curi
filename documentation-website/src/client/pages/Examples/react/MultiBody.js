@@ -12,8 +12,8 @@ export default ({ name }) => (
       <p>
         The <IJS>body</IJS> property of a response doesn't have to be a single
         component/function. Sometimes you might want to attach multiple values
-        to a route. This allows you to do things like specifying menu content
-        for a route that is rendered in a different section than the main
+        to a route. For example, specifying menu content for a route that is
+        rendered in a different section of the application than the main
         content. Another use case is when you have multiple routes that may
         share the same root component, but may have different nested components.
       </p>

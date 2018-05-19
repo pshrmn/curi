@@ -17,9 +17,8 @@ export default ({ name, version, globalName }) => (
     globalName={globalName}
     about={
       <p>
-        The <IJS>@curi/route-ancestors</IJS> route interaction allows you to get
-        the names of ancestor routes, which can be useful for generating
-        breadcrumb links.
+        The <IJS>@curi/route-ancestors</IJS> route interaction returns the names
+        of ancestor routes, which can be useful for generating breadcrumb links.
       </p>
     }
   >
@@ -28,9 +27,10 @@ export default ({ name, version, globalName }) => (
         <SideBySide>
           <Explanation>
             <p>
-              The default export is a route interaction factory that will add an{" "}
-              <IJS>ancestors</IJS> function to the router object's{" "}
-              <IJS>route</IJS> property.
+              A function to create the ancestors route interaction. When you
+              create your router, the result is passed to the router using the
+              `route` option, which will add an <IJS>ancestors()</IJS> function
+              to the router's route interactions.
             </p>
             <p>
               The interaction returns the name of an ancestor route a given
@@ -45,15 +45,12 @@ import ancestors from '@curi/route-ancestors';
 
 const routes = [
   {
-    name: 'Grandparent', path: '0',
+    name: 'Grandparent', path: 'g',
     children: [
       {
-        name: 'Parent', path: '1',
+        name: 'Parent', path: 'p',
         children: [
-          {
-            name: 'Child',
-            path: '2'
-          }
+          { name: 'Child', path: 'c' }
         ]
       }
     ]

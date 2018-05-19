@@ -18,9 +18,8 @@ export default ({ name, version, globalName }) => (
     globalName={globalName}
     about={
       <p>
-        This package allows you to set <IJS>title</IJS> properties on your
-        routes and will automatically set the page's title whenever the location
-        changes.
+        This package adds a side effect to the router that updates the page's
+        title as a result of navigation.
       </p>
     }
   >
@@ -29,10 +28,15 @@ export default ({ name, version, globalName }) => (
         <SideBySide>
           <Explanation>
             <p>
-              In order for this to work, your routes'{" "}
-              <IJS>route.response()</IJS> functions need to return an object
-              with a <IJS>title</IJS> string. You can learn about setting a
-              title in the{" "}
+              <IJS>@curi/side-effect-title</IJS> exports a function for creating
+              a side effect that will update the page's title whenever a new
+              response is created.
+            </p>
+            <p>
+              The side effect relies on the response objects having a{" "}
+              <IJS>title</IJS> string, which you will have to set yourself using
+              your routes' <IJS>response()</IJS> functions. You can learn about
+              setting a title in the{" "}
               <Link to="Guide" params={{ slug: "routes" }} hash="response">
                 all about routes
               </Link>{" "}

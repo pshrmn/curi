@@ -567,9 +567,9 @@ function render({ response }) {
                 <Cmp>Active</Cmp>'s <IJS>children</IJS> prop is a render-invoked
                 function that receives a boolean <IJS>true</IJS> when the named
                 route is active and <IJS>false</IJS> when it is not. You can
-                also pass <IJS>{`partial=\{true\}`}</IJS> to allow for partial
-                matches to be considered active (the opposite of React Router's{" "}
-                <IJS>onlyActiveOnIndex</IJS>).
+                also pass <IJS>{`partial=\{true\}`}</IJS> to partial matches
+                (ancestor routes) be considered active (the opposite of React
+                Router's <IJS>onlyActiveOnIndex</IJS>).
               </p>
             </Explanation>
             <CodeBlock lang="jsx">

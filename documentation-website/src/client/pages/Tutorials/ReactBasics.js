@@ -745,8 +745,8 @@ export default () => (
           the <Cmp>Book</Cmp> component. Up above, we passed the{" "}
           <IJS>response</IJS> object as a prop to the <IJS>response.body</IJS>{" "}
           component. Now, we can use that object in the <Cmp>Book</Cmp>{" "}
-          component to access the captured route params. This will allow us to
-          know which book to show.
+          component to access the captured route params so that we know which
+          book to show.
         </p>
         <p>
           We will once again import the <IJS>books.js</IJS> data. We can use{" "}

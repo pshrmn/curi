@@ -19,10 +19,12 @@ export default ({ name, version, globalName }) => (
     about={
       <div>
         <p>
-          Hickory, the history package that Curi uses, uses the{" "}
-          <IJS>pushState</IJS> and <IJS>replaceState</IJS> methods for
-          navigation. Unfortunately, these do not trigger scrolling to the top
-          of the page when you navigate. This package provides a side effect
+          When Curi is running in a browser, it relies on the{" "}
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">
+            History API
+          </a>{" "}
+          to change locations, but this does not trigger scrolling to the top of
+          the page when you navigate. This package provides a side effect
           function that will scroll to the top of the page whenever those
           functions are used for navigation.
         </p>
@@ -40,9 +42,8 @@ export default ({ name, version, globalName }) => (
           <Explanation>
             <p>
               When registering the side effect, you should pass the{" "}
-              <IJS>after: true</IJS> option. This should make the side effect
-              run after your application has re-rendered (although this is not
-              guaranteed if your application is rendered asynchronously).
+              <IJS>after: true</IJS> option. This will call the side effect
+              after your application has re-rendered.
             </p>
           </Explanation>
           <CodeBlock>

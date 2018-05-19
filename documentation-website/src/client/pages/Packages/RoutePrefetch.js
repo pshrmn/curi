@@ -25,8 +25,8 @@ export default ({ name, version, globalName }) => (
           exist on the route).
         </p>
         <p>
-          Prefetching data means that when users navigate, the new page will be
-          full rendered faster because we already have the data.
+          Prefetching data means results in faster renders after navigation
+          because you don't have to wait for the data to load.
         </p>
       </div>
     }
@@ -34,10 +34,11 @@ export default ({ name, version, globalName }) => (
     <SideBySide>
       <Explanation>
         <Note>
-          You need to cache the results of <IJS>on.every()</IJS> because the
-          function will be re-called when the user navigates to that route.The
-          result of <IJS>on.initial()</IJS> is automatically re-used on
-          subsequent calls, so you do not have to worry about caching it.
+          Prefetching <IJS>on.every()</IJS> calls is only beneficial if you
+          cache the results because the function will be re-called when the user
+          navigates to that route. The result of <IJS>on.initial()</IJS> is
+          automatically re-used on subsequent calls, so you do not have to worry
+          about caching it.
         </Note>
       </Explanation>
     </SideBySide>
@@ -46,9 +47,10 @@ export default ({ name, version, globalName }) => (
         <SideBySide>
           <Explanation>
             <p>
-              The default export function is a route interaction factory. When
-              passed to a Curi router, a <IJS>route.prefetch()</IJS> will be
-              available for calling a route's <IJS>on</IJS> functions.
+              A function to create the prefetch route interaction. When you
+              create your router, the result is passed to the router using the
+              `route` option, which will add a <IJS>prefetch()</IJS> function to
+              the router's route interactions.
             </p>
           </Explanation>
 
@@ -59,7 +61,8 @@ import prefetch from '@curi/route-prefetch';
 const router = curi(history, routes, {
   route: [prefetch()]
 });
-`}
+
+router.route.prefetch("Some Route");`}
           </CodeBlock>
         </SideBySide>
 
@@ -76,36 +79,35 @@ const router = curi(history, routes, {
                 <tbody>
                   <tr>
                     <td>name</td>
-                    <td>
-                      The name of the route whose <IJS>on.every()</IJS> function
-                      should be called.
-                    </td>
+                    <td>The name of the route to prefetch.</td>
                   </tr>
                   <tr>
                     <td>match</td>
                     <td>
-                      Route props that are used by the <IJS>on.every()</IJS>{" "}
-                      function (the same ones that an <IJS>on.every()</IJS>{" "}
-                      function expects).
+                      Route props that are used by the <IJS>on</IJS> functions.
                     </td>
                   </tr>
                   <tr>
                     <td>which</td>
                     <td>
-                      When provided, only the specified (value is{" "}
-                      <IJS>true</IJS>) functions will be called. When not
-                      provided, all available functions will be called.
+                      An object whose properties are the names of the{" "}
+                      <IJS>on</IJS> functions and whose values specify if they
+                      should be called (called when <IJS>true</IJS>). If this
+                      object is not provided, all available functions will be
+                      called.
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <p>
-                This route interaction will only register routes that have an{" "}
-                <IJS>on.initial()</IJS> or <IJS>on.every()</IJS> function. If
-                you try calling this for any routes with neither of those,{" "}
-                <IJS>prefetch()</IJS> will resolve an object with an{" "}
-                <IJS>error</IJS> property.
-              </p>
+              <Note>
+                <p>
+                  This route interaction will only register routes that have an{" "}
+                  <IJS>on.initial()</IJS> or <IJS>on.every()</IJS> function. If
+                  you try calling this for any routes with neither of those,{" "}
+                  <IJS>prefetch()</IJS> will resolve an object with an{" "}
+                  <IJS>error</IJS> property.
+                </p>
+              </Note>
             </Explanation>
             <CodeBlock>
               {`

@@ -51,18 +51,26 @@ const router = curi(history, routes);`}
           <p>There are three kinds of histories:</p>
           <ol>
             <li>
-              <IJS>browser</IJS> is the go to history for running an application
-              in the browser.
+              <IJS>browser</IJS> is used for applications whose server can
+              handle dynamic requests.
             </li>
             <li>
-              <IJS>hash</IJS> is a fallback browser history for applications
-              served from static file hosts.
+              <IJS>hash</IJS> is a fallback history for applications served from
+              static file hosts that can only handle requests for files that
+              exist.
             </li>
             <li>
               <IJS>in-memory</IJS> is used outside of the browser. For example,
               on the server or in a React Native app.
             </li>
           </ol>
+          <p>
+            If you are unfamiliar with how single-page applications interact
+            with a server, please check out this article:{" "}
+            <a href="https://medium.com/@pshrmn/single-page-applications-and-the-server-32a23d67936">
+              Single-Page Applications and the Server
+            </a>.
+          </p>
         </Explanation>
         <CodeBlock>
           {`import Browser from "@hickory/browser";

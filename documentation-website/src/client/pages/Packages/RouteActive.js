@@ -30,14 +30,15 @@ export default ({ name, version, globalName }) => (
         <SideBySide>
           <Explanation>
             <p>
-              The default export is a route interaction factory that will add an{" "}
-              <IJS>active</IJS> function to the router's <IJS>route</IJS>{" "}
-              property.
+              A function to create the active route interaction. When you create
+              your router, the result is passed to the router using the `route`
+              option, which will add an <IJS>active()</IJS> function to the
+              router's route interactions.
             </p>
             <p>
-              The interaction returns a boolean, <IJS>true</IJS> when a route is
+              The interaction returns a boolean: <IJS>true</IJS> when a route is
               "active" (it matches the response's <IJS>location</IJS>) and{" "}
-              <IJS>false</IJS> when it is not.
+              <IJS>false</IJS> when it does not.
             </p>
           </Explanation>
           <CodeBlock>
