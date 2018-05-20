@@ -27,19 +27,56 @@ body {
   box-sizing: inherit;
 }
 
-// @import "./api.scss";
-// @import "./banner.scss";
-@import "./baseElements.scss";
-// @import "./content.scss";
-// @import "./demo.scss";
-// @import "./header.scss";
-// @import "./main.scss";
-// @import "./messages.scss";
-// @import "./page.scss";
-// @import "./package.scss";
-// @import "./prism.scss";
-// @import "./prismOverrides.scss";
-// @import "./section.scss";
-// @import "./page-links.scss";
-// @import "./sidebyside.scss";
-// @import "./tutorial.scss";
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  margin: 5px 0;
+}
+
+p {
+  margin: 5px 0;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.3em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+h5 {
+  font-size: 1.1em;
+}
+
+h6 {
+  font-size: 1em;
+}
+
+table,
+th,
+td {
+  border: 1px solid $border-gray;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+}
+
+th,
+td {
+  padding: 10px;
+}

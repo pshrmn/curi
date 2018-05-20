@@ -35,6 +35,7 @@ function renderFullPage(html, title, debug) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${title} | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
