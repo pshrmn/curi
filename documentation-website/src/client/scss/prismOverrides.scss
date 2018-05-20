@@ -2,42 +2,5 @@
 
 pre[class*="language-"] {
   margin: 0;
-}
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
   background: $purple;
-}
-
-.aside {
-  :not(pre) > code[class*="language-"] {
-    background: $green;
-  }
-}
-
-.tutorial-outline {
-  :not(pre) > code[class*="language-"] {
-    background: $blue;
-  }
-}
-
-.tutorial-branch {
-  :not(pre) > code[class*="language-"] {
-    background: $orange;
-  }
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-  padding: 0.1em;
-  border-radius: 0.3em;
-  white-space: normal;
-  background: $light-gray;
-  color: $purple;
-  text-shadow: none;
-  white-space: wrap;
-}
-
-:not(pre) > code[class*="language-"] .token {
-  color: $purple;
 }

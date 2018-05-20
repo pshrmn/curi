@@ -1,0 +1,19 @@
+@import "./variables.scss";
+
+.inline-code {
+  padding: 0.1em;
+  border-radius: 0.3em;
+  white-space: normal;
+  /*
+   * not ideal, but using important so that I don't have to
+   * edit the css file provided by prism
+   */
+  background: $light-gray !important;
+  color: $purple !important;
+  text-shadow: none;
+  white-space: wrap;
+
+  .token {
+    color: $purple;
+  }
+}

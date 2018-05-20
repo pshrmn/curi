@@ -29,6 +29,10 @@
     ul {
       margin: 0;
     }
+
+    .inline-code {
+      background: $orange !important;
+    }
   }
 
   .tutorial-outline {
@@ -43,6 +47,10 @@
 
     ul {
       margin: 0;
+    }
+
+    .inline-code {
+      background: $blue !important;
     }
   }
 }

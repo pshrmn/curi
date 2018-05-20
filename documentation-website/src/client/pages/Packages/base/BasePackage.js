@@ -9,7 +9,7 @@ import Page from "../../../components/Page";
 import PageLinks from "../../../components/PageLinks";
 import Content from "../../../components/Content";
 
-// import "../../../scss/package.scss";
+import "../../../scss/package.scss";
 
 function getDir(name) {
   if (name.indexOf("route-") === 0) {

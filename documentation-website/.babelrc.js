@@ -6,7 +6,12 @@ const plugins = [
 const BABEL_ENV = process.env.BABEL_ENV;
 
 if (BABEL_ENV === "serve") {
-  plugins.push("dynamic-import-node");
+  plugins.push("dynamic-import-node", [
+    "babel-plugin-transform-require-ignore",
+    {
+      extensions: [".scss"]
+    }
+  ]);
 } else {
   plugins.push("@babel/plugin-syntax-dynamic-import");
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@curi/react";
 
-// import "../scss/section.scss";
+import "../scss/section.scss";
 
 const Sectional = ({ title, id, children, tag: Tag, type = "section" }) => (
   <div className={type} id={id}>

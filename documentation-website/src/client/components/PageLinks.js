@@ -1,6 +1,6 @@
 import React from "react";
 
-// import "../scss/page-links.scss";
+import "../scss/page-links.scss";
 
 class PageLinks extends React.Component {
   state = { visible: false };
