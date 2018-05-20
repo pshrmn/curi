@@ -1,11 +1,4 @@
 const plugins = [
-  [
-    "emotion",
-    {
-      hoist: true,
-      autoLabel: true
-    }
-  ],
   "@babel/plugin-proposal-class-properties",
   "@babel/plugin-proposal-object-rest-spread"
 ];

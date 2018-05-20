@@ -1,5 +1,4 @@
 import React from "react";
-import { css } from "emotion";
 
 import Installation from "./Installation";
 import About from "./About";
@@ -10,15 +9,7 @@ import Page from "../../../components/Page";
 import PageLinks from "../../../components/PageLinks";
 import Content from "../../../components/Content";
 
-const pkg = css(`
-.package-info {
-  > * {
-    margin-right: 5px;
-    margin-bottom: 5px;
-    display: block;
-  }
-}
-`);
+// import "../../../scss/package.scss";
 
 function getDir(name) {
   if (name.indexOf("route-") === 0) {
@@ -38,7 +29,7 @@ const BasePackage = ({
   about,
   unpkg = true
 }) => (
-  <Page type={pkg}>
+  <Page type="package">
     <Content>
       <h1>@curi/{name}</h1>
       <div className="package-info">

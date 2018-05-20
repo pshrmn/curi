@@ -1,0 +1,71 @@
+@import "./variables.scss";
+
+header {
+  background: $purple;
+  width: 100%;
+  padding: 30px 15px;
+
+  nav {
+    color: $light-gray;
+
+    ul {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: flex-end;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      padding: 0 10px;
+    }
+
+    a {
+      color: $light-gray;
+      font-size: 1.1em;
+      text-decoration: none;
+      display: flex;
+      height: 50px;
+      align-items: center;
+      border-bottom: 1px solid $purple;
+
+      &:hover {
+        color: $bright-orange;
+      }
+
+      &.active {
+        color: $bright-orange;
+        border-bottom-color: $bright-orange;
+      }
+    }
+  }
+}
+
+.home-link {
+  font-size: 1.5em;
+  color: $bright-orange;
+}
+
+@media only screen and (min-width: $mediumScreen) {
+  header {
+    padding: 0;
+    position: fixed;
+    z-index: 1;
+
+    nav {
+      ul {
+        max-width: 100%;
+        li {
+          margin-right: 20px;
+          padding: 0;
+        }
+      }
+
+      a {
+        border-bottom-width: 3px;
+        padding: 0 5px;
+      }
+    }
+  }
+}

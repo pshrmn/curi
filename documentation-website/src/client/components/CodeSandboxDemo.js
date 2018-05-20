@@ -1,16 +1,9 @@
 import React from "react";
-import { css } from "emotion";
 
-const demo = css(`
-p {
-  font-style: italic;
-  text-align: center;
-  margin: 0;
-}
-`);
+// import "../scss/demo.scss";
 
 const CodeSandboxDemo = ({ id }) => (
-  <div className={demo}>
+  <div className="demo">
     <iframe
       src={`https://codesandbox.io/embed/${id}`}
       width="100%"

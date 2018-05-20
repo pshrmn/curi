@@ -1,0 +1,28 @@
+@import "./variables.scss";
+
+.note,
+.warning {
+  padding: 10px 5px;
+  margin: 5px 0;
+}
+
+.note {
+  background: $gray;
+  border: 1px solid $border-gray;
+
+  &:not(pre) > code[class*="language-"] {
+    background: $white;
+  }
+}
+
+.aside .note {
+  background: $white;
+}
+
+.warning {
+  background: $light-orange;
+  border: 1px solid $bright-orange;
+  &:not(pre) > code[class*="language-"] {
+    background: $orange;
+  }
+}
