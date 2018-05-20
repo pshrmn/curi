@@ -1,12 +1,56 @@
 import React from "react";
-
 import { Link } from "@curi/react";
+import { css } from "emotion";
+
 import ReactBanner from "./ReactBanner";
 import VueBanner from "./VueBanner";
 import GenericBanner from "./GenericBanner";
 import SvelteBanner from "./SvelteBanner";
 
-// import "../../scss/banner.scss";
+import STYLES from "../../constants/styles";
+
+const banner = css(`
+  margin: 15px 0 50px;
+  color: ${STYLES.purple};
+  max-width: 800px;
+  padding: 0 15px;
+
+  h1 {
+    margin: 10px 0;
+  }
+
+  p {
+    font-size: 1.1em;
+    margin: 0;
+  }
+
+  .banner-buttons {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      font-family: ${STYLES.serif};
+      flex-grow: 1;
+      font-size: 1.1em;
+      background: ${STYLES.white};
+      color: ${STYLES.purple};
+      border: 0;
+      border-bottom: 3px solid ${STYLES.white};
+      cursor: pointer;
+
+      &.active {
+        font-weight: normal;
+        border-color: ${STYLES.purple};
+      }
+    }
+  }
+
+@media only screen and (min-width: ${STYLES.mediumScreen}) {
+  padding: 0;
+}
+`);
 
 class Banner extends React.Component {
   state = { lib: "Any" };
@@ -27,7 +71,7 @@ class Banner extends React.Component {
     }
     const banners = ["Any", "React", "Vue", "Svelte"];
     return (
-      <div className="banner">
+      <div className={banner}>
         <h1>Curi is a JavaScript router for single-page applications</h1>
         <p>
           Curi cares about routing, not how you render. Building an application
