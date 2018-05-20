@@ -1,0 +1,32 @@
+.section,
+.subsection {
+  margin-top: 15px; }
+  .section .header-link,
+  .subsection .header-link {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #666; }
+
+.aside {
+  padding: 5px 10px;
+  border-left: 2px solid #4caf50;
+  background: #e8f5e9;
+  margin-top: 15px; }
+  .aside .header-link {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #666; }
+  .aside .inline-code {
+    background: #81c784 !important; }
+
+.package-info > * {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: block; }
+
+#API > .section {
+  border-bottom: 3px double #222233; }
+
+#API .section {
+  margin-bottom: 5px; }
+
