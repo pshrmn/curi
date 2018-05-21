@@ -161,6 +161,7 @@ function createRouter(
       );
       pendingNav.finish();
       cancelCallback = undefined;
+      finishCallback = undefined;
       return;
     }
 
@@ -212,6 +213,7 @@ function createRouter(
     navigate(details: NavigationDetails): void {
       if (cancelCallback) {
         cancelCallback();
+        finishCallback = undefined;
       }
       let { name, params, hash, query, state, method = "ANCHOR" } = details;
       const pathname =
@@ -221,12 +223,10 @@ function createRouter(
       if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {
         method = "ANCHOR";
       }
-      if (details.cancelled) {
-        cancelCallback = details.cancelled;
-      }
-      if (details.finished) {
-        finishCallback = details.finished;
-      }
+
+      cancelCallback = details.cancelled;
+      finishCallback = details.finished;
+
       history.navigate(
         {
           pathname,
