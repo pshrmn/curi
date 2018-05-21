@@ -141,10 +141,6 @@ function createRouter(
     if (activeResponse) {
       activeResponse.cancel(pendingNav.action);
       activeResponse.cancelled = true;
-      if (cancelCallback) {
-        cancelCallback();
-        cancelCallback = undefined;
-      }
     }
     activeResponse = pendingNav;
 
@@ -214,6 +210,9 @@ function createRouter(
       return mostRecent;
     },
     navigate(details: NavigationDetails): void {
+      if (cancelCallback) {
+        cancelCallback();
+      }
       let { name, params, hash, query, state, method = "ANCHOR" } = details;
       const pathname =
         name != null
