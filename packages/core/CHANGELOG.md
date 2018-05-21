@@ -1,3 +1,7 @@
+## Next
+
+* Add `cancelled` property to `router.navigate()`, which is a function to be called if the navigation is cancelled.
+
 ## 1.0.0-beta.34
 
 * Bug fix: actually pass arguments object to `on.initial()`.

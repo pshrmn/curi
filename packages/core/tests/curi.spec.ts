@@ -936,6 +936,83 @@ describe("curi", () => {
         });
       });
     });
+
+    describe("cancelling a navigation", () => {
+      it("calls the navigation's cancelled function", () => {
+        const routes = [
+          { name: "Home", path: "" },
+          {
+            name: "Slow",
+            path: "slow",
+            on: {
+              every: () => {
+                // takes 500ms to resolve
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("done");
+                  }, 500);
+                });
+              }
+            }
+          },
+          {
+            name: "Fast",
+            path: "fast",
+            on: {
+              every: () => Promise.resolve("complete")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ];
+        const history = InMemory();
+        const router = curi(history, routes);
+        const cancelled = jest.fn();
+        router.navigate({
+          name: "Slow",
+          cancelled
+        });
+        expect(cancelled.mock.calls.length).toBe(0);
+        router.navigate({ name: "Fast" });
+        expect(cancelled.mock.calls.length).toBe(1);
+      });
+
+      it("does not call the previous navigation's cancelled function", done => {
+        const routes = [
+          { name: "Home", path: "" },
+          {
+            name: "Loader",
+            path: "loader/:id",
+            on: {
+              every: () => Promise.resolve("complete")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ];
+        const history = InMemory();
+        const router = curi(history, routes);
+        const cancelled = jest.fn();
+        router.navigate({
+          name: "Loader",
+          params: { id: 1 },
+          cancelled
+        });
+        router.respond(
+          ({ response }) => {
+            // verify this is running after the first navigation completes
+            expect(response.name).toBe("Loader");
+
+            expect(cancelled.mock.calls.length).toBe(0);
+            router.navigate({
+              name: "Loader",
+              params: { id: 2 }
+            });
+            expect(cancelled.mock.calls.length).toBe(0);
+            done();
+          },
+          { initial: false }
+        );
+      });
+    });
   });
 
   describe("response.redirectTo", () => {

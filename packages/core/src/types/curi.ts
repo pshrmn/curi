@@ -48,6 +48,7 @@ export interface NavigationDetails {
   query?: any;
   state?: any;
   method?: NavType;
+  cancelled?: () => void;
 }
 
 export interface CuriRouter {
