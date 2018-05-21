@@ -1013,6 +1013,77 @@ describe("curi", () => {
         );
       });
     });
+
+    describe("finishing a navigation", () => {
+      it("does not calls the navigation's finished function when the navigation is cancelled", () => {
+        const routes = [
+          { name: "Home", path: "" },
+          {
+            name: "Slow",
+            path: "slow",
+            on: {
+              every: () => {
+                // takes 500ms to resolve
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("done");
+                  }, 500);
+                });
+              }
+            }
+          },
+          {
+            name: "Fast",
+            path: "fast",
+            on: {
+              every: () => Promise.resolve("complete")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ];
+        const history = InMemory();
+        const router = curi(history, routes);
+        const finished = jest.fn();
+        router.navigate({
+          name: "Slow",
+          finished
+        });
+        router.navigate({ name: "Fast" });
+        expect(finished.mock.calls.length).toBe(0);
+      });
+
+      it("calls the navigation's finished function", done => {
+        const routes = [
+          { name: "Home", path: "" },
+          {
+            name: "Loader",
+            path: "loader/:id",
+            on: {
+              every: () => Promise.resolve("complete")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ];
+        const history = InMemory();
+        const router = curi(history, routes);
+        const finished = jest.fn();
+        router.navigate({
+          name: "Loader",
+          params: { id: 1 },
+          finished
+        });
+        router.respond(
+          ({ response }) => {
+            // verify this is running after the first navigation completes
+            expect(response.name).toBe("Loader");
+
+            expect(finished.mock.calls.length).toBe(1);
+            done();
+          },
+          { initial: false }
+        );
+      });
+    });
   });
 
   describe("response.redirectTo", () => {

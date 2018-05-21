@@ -40,6 +40,7 @@ export interface NavigationDetails {
     state?: any;
     method?: NavType;
     cancelled?: () => void;
+    finished?: () => void;
 }
 export interface CuriRouter {
     replaceRoutes: (routeArray: Array<RouteDescriptor>) => void;

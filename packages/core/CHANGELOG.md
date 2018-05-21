@@ -1,6 +1,6 @@
 ## Next
 
-* Add `cancelled` property to `router.navigate()`, which is a function to be called if the navigation is cancelled.
+* Add `cancelled` and `finished` properties to `router.navigate()`, which are functions to be called if the navigation is cancelled/when the navigation is finished.
 
 ## 1.0.0-beta.34
 

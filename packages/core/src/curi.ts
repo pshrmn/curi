@@ -136,6 +136,7 @@ function createRouter(
 
   let activeResponse: PendingNavigation | undefined;
   let cancelCallback: (() => void) | undefined;
+  let finishCallback: (() => void) | undefined;
   function navigationHandler(pendingNav: PendingNavigation): void {
     if (activeResponse) {
       activeResponse.cancel(pendingNav.action);
@@ -190,6 +191,10 @@ function createRouter(
   function emitAndRedirect(response: Response, navigation: Navigation) {
     activeResponse = undefined;
     cancelCallback = undefined;
+    if (finishCallback) {
+      finishCallback();
+      finishCallback = undefined;
+    }
 
     if (!response.redirectTo || emitRedirects) {
       emit(response, navigation);
@@ -209,8 +214,7 @@ function createRouter(
       return mostRecent;
     },
     navigate(details: NavigationDetails): void {
-      const { name, params, hash, query, state } = details;
-      let { method = "ANCHOR" } = details;
+      let { name, params, hash, query, state, method = "ANCHOR" } = details;
       const pathname =
         name != null
           ? routeInteractions.pathname(name, params)
@@ -220,6 +224,9 @@ function createRouter(
       }
       if (details.cancelled) {
         cancelCallback = details.cancelled;
+      }
+      if (details.finished) {
+        finishCallback = details.finished;
       }
       history.navigate(
         {
