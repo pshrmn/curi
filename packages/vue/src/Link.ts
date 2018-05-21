@@ -11,6 +11,7 @@ export interface LinkComponent extends Vue {
   location: HickoryLocation;
   href: string;
   click(e: MouseEvent): void;
+  loading: boolean;
 }
 
 const canNavigate = (event: MouseEvent) => {
@@ -43,6 +44,12 @@ const Link: ComponentOptions<LinkComponent> = {
     }
   },
 
+  data: function() {
+    return {
+      loading: false
+    };
+  },
+
   methods: {
     clickHandler: function(event: MouseEvent) {
       if (this.click) {
@@ -50,7 +57,22 @@ const Link: ComponentOptions<LinkComponent> = {
       }
       if (canNavigate(event)) {
         event.preventDefault();
-        this.$router.history.navigate(this.location);
+        let cancelled, finished;
+        if (this.$scopedSlots.default) {
+          cancelled = finished = () => {
+            this.loading = false;
+          };
+          this.loading = true;
+        }
+        this.$router.navigate({
+          name: this.to,
+          params: this.params,
+          hash: this.hash,
+          query: this.query,
+          state: this.state,
+          cancelled,
+          finished
+        });
       }
     }
   },
@@ -62,7 +84,11 @@ const Link: ComponentOptions<LinkComponent> = {
         attrs: { href: this.href },
         on: { click: this.clickHandler }
       },
-      this.$slots.default
+      this.$scopedSlots.default
+        ? this.$scopedSlots.default({
+            loading: this.loading
+          })
+        : this.$slots.default
     );
   }
 };

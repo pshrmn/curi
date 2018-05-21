@@ -135,7 +135,8 @@ function createRouter(
   }
 
   let activeResponse: PendingNavigation | undefined;
-
+  let cancelCallback: (() => void) | undefined;
+  let finishCallback: (() => void) | undefined;
   function navigationHandler(pendingNav: PendingNavigation): void {
     if (activeResponse) {
       activeResponse.cancel(pendingNav.action);
@@ -159,6 +160,8 @@ function createRouter(
           "can be used to match locations with no other matching route."
       );
       pendingNav.finish();
+      cancelCallback = undefined;
+      finishCallback = undefined;
       return;
     }
 
@@ -184,6 +187,11 @@ function createRouter(
 
   function emitAndRedirect(response: Response, navigation: Navigation) {
     activeResponse = undefined;
+    cancelCallback = undefined;
+    if (finishCallback) {
+      finishCallback();
+      finishCallback = undefined;
+    }
 
     if (!response.redirectTo || emitRedirects) {
       emit(response, navigation);
@@ -203,8 +211,11 @@ function createRouter(
       return mostRecent;
     },
     navigate(details: NavigationDetails): void {
-      const { name, params, hash, query, state } = details;
-      let { method = "ANCHOR" } = details;
+      if (cancelCallback) {
+        cancelCallback();
+        finishCallback = undefined;
+      }
+      let { name, params, hash, query, state, method = "ANCHOR" } = details;
       const pathname =
         name != null
           ? routeInteractions.pathname(name, params)
@@ -212,6 +223,10 @@ function createRouter(
       if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {
         method = "ANCHOR";
       }
+
+      cancelCallback = details.cancelled;
+      finishCallback = details.finished;
+
       history.navigate(
         {
           pathname,

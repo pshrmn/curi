@@ -5,7 +5,7 @@ import curi from "@curi/core";
 import CuriPlugin from "../src/plugin";
 
 describe("<curi-link>", () => {
-  let Vue, node, history, router;
+  let Vue, node, history, router, wrapper;
   const routes = [
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
@@ -23,12 +23,13 @@ describe("<curi-link>", () => {
   });
 
   afterEach(() => {
+    wrapper.$destroy();
     document.body.innerHTML = "";
   });
 
   describe("rendering", () => {
     it("renders an anchor element", () => {
-      const wrapper = new Vue({
+      wrapper = new Vue({
         el: node,
         template: `
           <div>
@@ -43,7 +44,7 @@ describe("<curi-link>", () => {
     });
 
     it("computes the expected href using the props", () => {
-      const wrapper = new Vue({
+      wrapper = new Vue({
         el: node,
         template: `
           <div>
@@ -70,7 +71,7 @@ describe("<curi-link>", () => {
       const router = curi(history, routes);
       Vue.use(CuriPlugin, { router });
 
-      const wrapper = new Vue({
+      wrapper = new Vue({
         el: node,
         template: `
           <div>
@@ -83,7 +84,7 @@ describe("<curi-link>", () => {
     });
 
     it("sets the slots as the link's children", () => {
-      const wrapper = new Vue({
+      wrapper = new Vue({
         el: node,
         template: `
           <div>
@@ -110,7 +111,7 @@ describe("<curi-link>", () => {
     });
 
     it("navigates to expected location when clicked", () => {
-      const wrapper = new Vue({
+      wrapper = new Vue({
         el: node,
         template: `
           <div>
@@ -141,8 +142,191 @@ describe("<curi-link>", () => {
       });
     });
 
+    describe("scoped slot", () => {
+      let history;
+      const routes = [
+        {
+          name: "Test",
+          path: "test",
+          on: {
+            every: () => {
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("done");
+                }, 100);
+              });
+            }
+          }
+        },
+        { name: "Catch All", path: "(.*)" }
+      ];
+
+      beforeEach(() => {
+        history = InMemory();
+      });
+
+      it("loading = true after clicking", done => {
+        const router = curi(history, routes);
+        const Vue = createLocalVue();
+        Vue.use(CuriPlugin, { router });
+
+        // if a link has no on methods, finished will be called almost
+        // immediately (although this style should only be used for routes
+        // with on methods)
+        const LoadChecker = {
+          props: ["loading"],
+          render(h) {
+            return h("div", this.loading);
+          },
+          updated() {
+            expect(this.loading).toBe(true);
+            done();
+          }
+        };
+        wrapper = new Vue({
+          el: node,
+          template: `
+            <div>
+              <curi-link to="Test" id="after-click">
+                <template slot-scope="{ loading }">
+                  <LoadChecker :loading="loading" />
+                </template>
+              </curi-link>
+            </div>
+          `,
+          components: {
+            LoadChecker
+          }
+        });
+        const a = document.querySelector("#after-click");
+
+        a.dispatchEvent(
+          new MouseEvent("click", {
+            button: 0
+          })
+        );
+      });
+
+      it("loading = false after navigation completes", done => {
+        const router = curi(history, routes);
+        const Vue = createLocalVue();
+        Vue.use(CuriPlugin, { router });
+
+        // if a link has no on methods, finished will be called almost
+        // immediately (although this style should only be used for routes
+        // with on methods)
+        wrapper = new Vue({
+          el: node,
+          template: `
+            <div>
+              <curi-link to="Test" id="nav-complete">
+                <template slot-scope="{ loading }">
+                  {{loading}}
+                </template>
+              </curi-link>
+            </div>
+          `
+        });
+        const a = document.querySelector("#nav-complete");
+        a.dispatchEvent(
+          new MouseEvent("click", {
+            button: 0
+          })
+        );
+
+        router.respond(
+          ({ response }) => {
+            // navigation is complete, wait for Vue to re-render
+            Vue.nextTick(() => {
+              expect(a.textContent.trim()).toBe("false");
+              done();
+            });
+          },
+          { initial: false }
+        );
+      });
+
+      it("loading = false after navigation is cancelled", done => {
+        const routes = [
+          {
+            name: "Slow",
+            path: "slow",
+            on: {
+              every: () => {
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("slow");
+                  }, 100);
+                });
+              }
+            }
+          },
+          {
+            name: "Fast",
+            path: "fast",
+            on: {
+              every: () => Promise.resolve("fast")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ];
+        const router = curi(history, routes);
+        const Vue = createLocalVue();
+        Vue.use(CuriPlugin, { router });
+
+        // if a link has no on methods, finished will be called almost
+        // immediately (although this style should only be used for routes
+        // with on methods)
+        wrapper = new Vue({
+          el: node,
+          template: `
+            <div>
+              <curi-link to="Slow" id="slow">
+                <template slot-scope="{ loading }">
+                  {{loading}}
+                </template>
+              </curi-link>
+              <curi-link to="Fast" id="fast">
+                <template slot-scope="{ loading }">
+                  {{loading}}
+                </template>
+              </curi-link>
+            </div>
+          `
+        });
+        const slowLink = document.querySelector("#slow");
+        const fastLink = document.querySelector("#slow");
+
+        expect(slowLink.textContent.trim()).toBe("false");
+
+        slowLink.dispatchEvent(
+          new MouseEvent("click", {
+            button: 0
+          })
+        );
+        Vue.nextTick(() => {
+          expect(slowLink.textContent.trim()).toBe("true");
+          fastLink.dispatchEvent(
+            new MouseEvent("click", {
+              button: 0
+            })
+          );
+          router.respond(
+            ({ response }) => {
+              // navigation is cancelled, wait for Vue to re-render
+              Vue.nextTick(() => {
+                expect(slowLink.textContent.trim()).toBe("false");
+                done();
+              });
+            },
+            { initial: false }
+          );
+        });
+      });
+    });
+
     it("does not navigate if event.defaultPrevented is true", () => {
-      const wrapper = new Vue({
+      wrapper = new Vue({
         el: node,
         template: `
           <div>
@@ -168,7 +352,7 @@ describe("<curi-link>", () => {
     });
 
     it("does not navigate if a modifier key is held while clicking", () => {
-      const wrapper = new Vue({
+      wrapper = new Vue({
         el: node,
         template: `
           <div>
@@ -192,7 +376,7 @@ describe("<curi-link>", () => {
     });
 
     it("does not navigate for non left mouse button clicks", () => {
-      const wrapper = new Vue({
+      wrapper = new Vue({
         el: node,
         template: `
           <div>
@@ -213,7 +397,7 @@ describe("<curi-link>", () => {
 
     describe("click prop", () => {
       it("will be called prior to navigation", () => {
-        const wrapper = new Vue({
+        wrapper = new Vue({
           el: node,
           template: `
             <div>
@@ -237,7 +421,7 @@ describe("<curi-link>", () => {
       });
 
       it("calling event.preventDefault() in click fn will stop navigation", () => {
-        const wrapper = new Vue({
+        wrapper = new Vue({
           el: node,
           template: `
             <div>

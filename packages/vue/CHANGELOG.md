@@ -1,5 +1,6 @@
 ## 1.0.0-beta.17
 
+* Add scoped slot to `<curi-link>` for accessing the link's `loading` state.
 * Add `hash`, `query`, and `state` props to `<curi-link>`, remove `details`.
 * Remove `active` prop from `<curi-link>`.
 

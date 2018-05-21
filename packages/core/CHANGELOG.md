@@ -1,3 +1,7 @@
+## Next
+
+* Add `cancelled` and `finished` properties to `router.navigate()`, which are functions to be called if the navigation is cancelled/when the navigation is finished.
+
 ## 1.0.0-beta.34
 
 * Bug fix: actually pass arguments object to `on.initial()`.

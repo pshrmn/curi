@@ -189,6 +189,51 @@ describe("<Link>", () => {
     });
   });
 
+  describe("children", () => {
+    describe("React Node", () => {
+      it("renders the provided children value(s)", () => {
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const children = "Test Value";
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => <Link to="Test">{children}</Link>}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
+        expect(a.textContent).toBe(children);
+      });
+    });
+
+    describe("render-invoked function", () => {
+      it("calls the function with the component's loading state (initial loading=false)", () => {
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test">
+                {loading => {
+                  expect(loading).toBe(false);
+                  return null;
+                }}
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
+      });
+    });
+  });
+
   describe("clicking a link", () => {
     it("calls history.navigate", () => {
       const history = InMemory();
@@ -216,6 +261,171 @@ describe("<Link>", () => {
       };
       Simulate.click(a, leftClickEvent);
       expect(mockNavigate.mock.calls.length).toBe(1);
+    });
+
+    describe("children(loading)", () => {
+      it("children(true) after clicking", () => {
+        // if a link has no on methods, finished will be called almost
+        // immediately (although this style should only be used for routes
+        // with on methods)
+        const history = InMemory();
+        const router = curi(history, [
+          {
+            name: "Test",
+            path: "test",
+            on: {
+              every: () => {
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("done");
+                  }, 100);
+                });
+              }
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test">
+                {loading => {
+                  return <div>{loading.toString()}</div>;
+                }}
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
+        expect(a.textContent).toBe("false");
+        const leftClickEvent = {
+          defaultPrevented: false,
+          preventDefault() {
+            this.defaultPrevented = true;
+          },
+          metaKey: null,
+          altKey: null,
+          ctrlKey: null,
+          shiftKey: null,
+          button: 0
+        };
+        Simulate.click(a, leftClickEvent);
+        expect(a.textContent).toBe("true");
+      });
+
+      it("children(false) when navigation is cancelled", () => {
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          {
+            name: "Slow",
+            path: "slow",
+            on: {
+              every: () => {
+                // takes 500ms to resolve
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("slow");
+                  }, 500);
+                });
+              }
+            }
+          },
+          {
+            name: "Fast",
+            path: "fast"
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <React.Fragment>
+                <Link to="Slow">
+                  {loading => {
+                    return <div>Slow {loading.toString()}</div>;
+                  }}
+                </Link>
+                <Link to="Fast">
+                  {loading => {
+                    return <div>Fast {loading.toString()}</div>;
+                  }}
+                </Link>
+              </React.Fragment>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const [slowLink, fastLink] = node.querySelectorAll("a");
+        expect(slowLink.textContent).toBe("Slow false");
+        const leftClickEvent = {
+          defaultPrevented: false,
+          preventDefault() {
+            this.defaultPrevented = true;
+          },
+          metaKey: null,
+          altKey: null,
+          ctrlKey: null,
+          shiftKey: null,
+          button: 0
+        };
+        Simulate.click(slowLink, leftClickEvent);
+        expect(slowLink.textContent).toBe("Slow true");
+
+        Simulate.click(fastLink, leftClickEvent);
+        expect(slowLink.textContent).toBe("Slow false");
+      });
+
+      it("children(false) when navigation is finished", done => {
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          {
+            name: "Loader",
+            path: "load",
+            on: {
+              every: () => Promise.resolve("done")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        ReactDOM.render(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Loader">
+                {loading => {
+                  return <div>{loading.toString()}</div>;
+                }}
+              </Link>
+            )}
+          </CuriProvider>,
+          node
+        );
+        const a = node.querySelector("a");
+        expect(a.textContent).toBe("false");
+        const leftClickEvent = {
+          defaultPrevented: false,
+          preventDefault() {
+            this.defaultPrevented = true;
+          },
+          metaKey: null,
+          altKey: null,
+          ctrlKey: null,
+          shiftKey: null,
+          button: 0
+        };
+        Simulate.click(a, leftClickEvent);
+        expect(a.textContent).toBe("true");
+        router.respond(
+          ({ response }) => {
+            expect(response.name).toBe("Loader");
+            expect(a.textContent).toBe("false");
+            done();
+          },
+          { initial: false }
+        );
+      });
     });
 
     it("includes hash, query, and state in location passed to history.navigate", () => {
