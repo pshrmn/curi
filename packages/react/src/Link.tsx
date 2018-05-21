@@ -18,6 +18,8 @@ const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   );
 };
 
+export type LoadingChildren = (loading: boolean) => React.ReactNode;
+
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   to?: string;
@@ -27,6 +29,7 @@ export interface LinkProps
   state?: any;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   anchor?: React.ReactType;
+  children: LoadingChildren | React.ReactNode;
 }
 
 export interface BaseLinkProps extends LinkProps {
@@ -35,7 +38,15 @@ export interface BaseLinkProps extends LinkProps {
   forwardedRef: React.Ref<any> | undefined;
 }
 
-class BaseLink extends React.Component<BaseLinkProps> {
+export interface LinkState {
+  loading: boolean;
+}
+
+class BaseLink extends React.Component<BaseLinkProps, LinkState> {
+  state = {
+    loading: false
+  };
+
   clickHandler = (event: React.MouseEvent<HTMLElement>) => {
     const { onClick, router, target } = this.props;
     if (onClick) {
@@ -45,12 +56,22 @@ class BaseLink extends React.Component<BaseLinkProps> {
     if (canNavigate(event) && !target) {
       event.preventDefault();
       const { to: name, params, query, state, hash } = this.props;
+      let cancelled, finished;
+      // only trigger re-renders when children uses state
+      if (typeof this.props.children === "function") {
+        cancelled = finished = () => {
+          this.setState({ loading: false });
+        };
+        this.setState({ loading: true });
+      }
       router.navigate({
         name,
         params,
         query,
         state,
-        hash
+        hash,
+        cancelled,
+        finished
       });
     }
   };
@@ -67,6 +88,7 @@ class BaseLink extends React.Component<BaseLinkProps> {
       router,
       response,
       forwardedRef,
+      children,
       ...rest
     } = this.props;
     const Anchor: React.ReactType = anchor ? anchor : "a";
@@ -85,7 +107,11 @@ class BaseLink extends React.Component<BaseLinkProps> {
         onClick={this.clickHandler}
         href={href}
         ref={forwardedRef}
-      />
+      >
+        {typeof children === "function"
+          ? children(this.state.loading)
+          : children}
+      </Anchor>
     );
   }
 }

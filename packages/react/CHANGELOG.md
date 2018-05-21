@@ -1,5 +1,6 @@
 ## Next
 
+* `<Link>` children can be a render-invoked prop that receives the link's loading state.
 * Warn when the `ref` passed to `<Prefetch>`'s render-invoked function is `null` after mounting.
 * Pass the object resolved by `route.prefetch()` to `<Prefetch>`'s `children` render-invoked function.
 
