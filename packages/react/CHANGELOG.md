@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.26
 
 * `<Link>` children can be a render-invoked prop that receives the link's navigating state.
 * Warn when the `ref` passed to `<Prefetch>`'s render-invoked function is `null` after mounting.

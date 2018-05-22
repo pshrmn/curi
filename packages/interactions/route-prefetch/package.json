@@ -34,7 +34,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.34",
+    "@curi/core": "^1.0.0-beta.35",
     "@hickory/root": "1.0.0-beta.8"
   },
   "devDependencies": {

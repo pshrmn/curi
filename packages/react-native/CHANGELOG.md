@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.7
 
 * `<Link>`'s `children` can be a React node or a render-invoked prop that receives the `<Link>`'s current `navigating` state.
 

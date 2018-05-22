@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.18
 
 * Add scoped slot to `<curi-link>` for accessing the link's `navigating` state.
 
