@@ -3,6 +3,7 @@ import React from "react";
 import { GestureResponderEvent } from "react-native";
 import { CuriRouter, Response } from "@curi/core";
 import { NavType } from "@hickory/root";
+export declare type NavigatingChildren = (navigating: boolean) => React.ReactNode;
 export interface LinkProps {
     to?: string;
     params?: object;
@@ -14,11 +15,15 @@ export interface LinkProps {
     target?: string;
     style?: any;
     method?: NavType;
+    children: NavigatingChildren | React.ReactNode;
 }
 export interface BaseLinkProps extends LinkProps {
     router: CuriRouter;
     response: Response;
     forwardedRef: React.Ref<any> | undefined;
+}
+export interface LinkState {
+    navigating: boolean;
 }
 declare const Link: React.ComponentType<LinkProps & React.ClassAttributes<{}>>;
 export default Link;

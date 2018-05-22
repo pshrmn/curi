@@ -12,6 +12,8 @@ import {
   NavType
 } from "@hickory/root";
 
+export type NavigatingChildren = (navigating: boolean) => React.ReactNode;
+
 export interface LinkProps {
   to?: string;
   params?: object;
@@ -23,6 +25,7 @@ export interface LinkProps {
   target?: string;
   style?: any;
   method?: NavType;
+  children: NavigatingChildren | React.ReactNode;
 }
 
 export interface BaseLinkProps extends LinkProps {
@@ -31,7 +34,15 @@ export interface BaseLinkProps extends LinkProps {
   forwardedRef: React.Ref<any> | undefined;
 }
 
-class BaseLink extends React.Component<BaseLinkProps> {
+export interface LinkState {
+  navigating: boolean;
+}
+
+class BaseLink extends React.Component<BaseLinkProps, LinkState> {
+  state = {
+    navigating: false
+  };
+
   pressHandler = (event: GestureResponderEvent) => {
     const { onPress, router } = this.props;
     if (onPress) {
@@ -40,10 +51,17 @@ class BaseLink extends React.Component<BaseLinkProps> {
 
     if (!event.defaultPrevented) {
       event.preventDefault();
-      const { to: name, params, hash, query, state } = this.props;
+      const { to: name, params, hash, query, state, children } = this.props;
       let { method = "ANCHOR" } = this.props;
       if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {
         method = "ANCHOR";
+      }
+      let cancelled, finished;
+      if (typeof children === "function") {
+        cancelled = finished = () => {
+          this.setState({ navigating: false });
+        };
+        this.setState({ navigating: true });
       }
       router.navigate({
         name,
@@ -51,7 +69,9 @@ class BaseLink extends React.Component<BaseLinkProps> {
         hash,
         query,
         state,
-        method
+        method,
+        cancelled,
+        finished
       });
     }
   };
@@ -69,10 +89,17 @@ class BaseLink extends React.Component<BaseLinkProps> {
       response,
       method,
       forwardedRef,
+      children,
       ...rest
     } = this.props;
 
-    return <Anchor {...rest} onPress={this.pressHandler} ref={forwardedRef} />;
+    return (
+      <Anchor {...rest} onPress={this.pressHandler} ref={forwardedRef}>
+        {typeof children === "function"
+          ? children(this.state.navigating)
+          : children}
+      </Anchor>
+    );
   }
 }
 

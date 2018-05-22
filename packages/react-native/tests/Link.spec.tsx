@@ -175,6 +175,54 @@ describe("<Link>", () => {
     });
   });
 
+  describe("children", () => {
+    describe("React Node", () => {
+      it("renders the provided children value(s)", () => {
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const children = "Test Value";
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test">
+                <Text>{children}</Text>
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        const text = anchor.findByType(Text);
+        expect(anchor).toBeDefined();
+        expect(text.instance.props.children).toBe(children);
+      });
+    });
+
+    describe("render-invoked function", () => {
+      it("calls the function with the component's navigating state (initial navigating=false)", () => {
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test">
+                {navigating => {
+                  expect(navigating).toBe(false);
+                  return <Text>Test</Text>;
+                }}
+              </Link>
+            )}
+          </CuriProvider>
+        );
+      });
+    });
+  });
+
   describe("pressing a link", () => {
     describe("navigation method", () => {
       let history, mockNavigate, mockPush, mockReplace;
@@ -262,6 +310,148 @@ describe("<Link>", () => {
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][1]).toBe("ANCHOR");
+      });
+    });
+
+    describe("children(navigating)", () => {
+      it("children(true) after clicking", () => {
+        // if a link has no on methods, finished will be called almost
+        // immediately (although this style should only be used for routes
+        // with on methods)
+        const history = InMemory();
+        const router = curi(history, [
+          {
+            name: "Test",
+            path: "test",
+            on: {
+              every: () => {
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("done");
+                  }, 100);
+                });
+              }
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Test">
+                {navigating => {
+                  return <Text>{navigating.toString()}</Text>;
+                }}
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        const text = anchor.findByType(Text);
+        expect(text.instance.props.children).toBe("false");
+
+        anchor.props.onPress(fakeEvent());
+
+        expect(text.instance.props.children).toBe("true");
+      });
+
+      it("children(false) when navigation is cancelled", () => {
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          {
+            name: "Slow",
+            path: "slow",
+            on: {
+              every: () => {
+                // takes 500ms to resolve
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("slow");
+                  }, 500);
+                });
+              }
+            }
+          },
+          {
+            name: "Fast",
+            path: "fast"
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <React.Fragment>
+                <Link to="Slow">
+                  {navigating => {
+                    return <Text>{`Slow ${navigating.toString()}`}</Text>;
+                  }}
+                </Link>
+                <Link to="Fast">
+                  {navigating => {
+                    return <Text>{`Fast ${navigating.toString()}`}</Text>;
+                  }}
+                </Link>
+              </React.Fragment>
+            )}
+          </CuriProvider>
+        );
+        const [slowLink, fastLink] = tree.root.findAllByType(
+          TouchableHighlight
+        );
+
+        const text = slowLink.findByType(Text);
+
+        expect(text.instance.props.children).toBe("Slow false");
+
+        slowLink.props.onPress(fakeEvent());
+        expect(text.instance.props.children).toBe("Slow true");
+
+        fastLink.props.onPress(fakeEvent());
+        expect(text.instance.props.children).toBe("Slow false");
+      });
+
+      it("children(false) when navigation is finished", done => {
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          {
+            name: "Loader",
+            path: "load",
+            on: {
+              every: () => Promise.resolve("done")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const tree = renderer.create(
+          <CuriProvider router={router}>
+            {() => (
+              <Link to="Loader">
+                {navigating => {
+                  return <Text>{navigating.toString()}</Text>;
+                }}
+              </Link>
+            )}
+          </CuriProvider>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        const text = anchor.findByType(Text);
+        expect(text.instance.props.children).toBe("false");
+
+        anchor.props.onPress(fakeEvent());
+        expect(text.instance.props.children).toBe("true");
+
+        router.respond(
+          ({ response }) => {
+            expect(response.name).toBe("Loader");
+            expect(text.instance.props.children).toBe("false");
+            done();
+          },
+          { initial: false }
+        );
       });
     });
 

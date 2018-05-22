@@ -1,3 +1,7 @@
+## Next
+
+* `<Link>`'s `children` can be a React node or a render-invoked prop that receives the `<Link>`'s current `navigating` state.
+
 ## 1.0.0-beta.6
 
 * Forward `<Link>` ref to actual component (e.g. `<TouchableHighlight>`).
