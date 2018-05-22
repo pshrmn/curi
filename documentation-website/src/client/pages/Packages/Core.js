@@ -317,6 +317,19 @@ const router = curi(history, routes, {
                         replaced if the new location has the exact same URL.
                       </td>
                     </tr>
+                    <tr>
+                      <td>finished</td>
+                      <td>
+                        A function to call once the navigation has finished.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>cancelled</td>
+                      <td>
+                        A function to call if the navigation is superseded by
+                        another navigation.
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </Explanation>

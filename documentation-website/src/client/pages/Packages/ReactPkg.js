@@ -210,6 +210,42 @@ const App = () => (
             </SideBySide>
           </Subsection>
 
+          <Subsection tag="h4" title="children" id="Link-children">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  The <IJS>children</IJS> prop can take two forms: either a
+                  valid React Node (e.g. a React element, a string, or{" "}
+                  <IJS>null</IJS>) or a render-invoked <IJS>children</IJS>{" "}
+                  function.
+                </p>
+                <p>
+                  The render-invoked <IJS>children</IJS> function will be called
+                  with the <Cmp>Link</Cmp>'s navigation state. The navigation
+                  state is <IJS>false</IJS> to start, <IJS>true</IJS> when the{" "}
+                  <Cmp>Link</Cmp> is clicked, and <IJS>false</IJS> when the the
+                  navigation finishes/is cancelled.
+                </p>
+              </Explanation>
+              <CodeBlock lang="jsx">
+                {`// a React node
+<Link to="Home">
+  Home
+</Link>
+
+// a render-invoked function
+<Link to="User" params={{ id: 1 }}>
+  {navigating => (
+    <React.Fragment>
+      User 1
+      {navigating ? <Spinner /> : null}
+    </React.Fragment>
+  )}
+</Link>`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+
           <Subsection tag="h4" title="anchor" id="Link-anchor">
             <SideBySide>
               <Explanation>

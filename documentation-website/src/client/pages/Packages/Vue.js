@@ -21,7 +21,7 @@ export default ({ name, version, globalName }) => (
     about={<p>This package enables you to use Curi alongside VueJS.</p>}
   >
     <APIBlock>
-      <Section tag="h3" title="CuriPlugin" id="curiplugin">
+      <Section title="CuriPlugin" id="curiplugin">
         <SideBySide>
           <Explanation>
             <p>What does the plugin do?</p>
@@ -52,107 +52,118 @@ Vue.use(CuriPlugin, { router });`}
         </SideBySide>
       </Section>
 
-      <Section tag="h3" title={<Cmp>curi-link</Cmp>} id="link">
+      <Section title={<Cmp>curi-link</Cmp>} id="link">
         <p>
           The <Cmp>curi-link</Cmp> component will render an anchor (<Cmp>a</Cmp>)
           element.
         </p>
-        <ul>
-          <li>
-            <SideBySide>
-              <Explanation>
-                <p>
-                  <IJS>to</IJS> - The name of the route to navigate to.{" "}
-                  <em>This is required</em>.
-                </p>
-              </Explanation>
-              <CodeBlock lang="html">
-                {`<curi-link to='Home'>Home</curi-link>
+
+        <Subsection tag="h4" title="to" id="Link-to">
+          <SideBySide>
+            <Explanation>
+              <p>
+                <IJS>to</IJS> - The name of the route to navigate to.{" "}
+                <em>This is required</em>.
+              </p>
+            </Explanation>
+            <CodeBlock lang="html">
+              {`<curi-link to='Home'>Home</curi-link>
 <!-- <a href="/">Home</a> -->`}
-              </CodeBlock>
-            </SideBySide>
-          </li>
-          <li>
-            <SideBySide>
-              <Explanation>
-                <p>
-                  <IJS>params</IJS> - An object containing the key-value params
-                  for the route. For example, if you are linking to a route with
-                  the path <IJS>album/:title</IJS>, the params object should
-                  have a <IJS>title</IJS> property.
-                </p>
-              </Explanation>
-              <CodeBlock lang="html">
-                {`<curi-link
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection tag="h4" title="params" id="Link-params">
+          <SideBySide>
+            <Explanation>
+              <p>
+                <IJS>params</IJS> - An object containing the key-value params
+                for the route. For example, if you are linking to a route with
+                the path <IJS>album/:title</IJS>, the params object should have
+                a <IJS>title</IJS> property.
+              </p>
+            </Explanation>
+            <CodeBlock lang="html">
+              {`<curi-link
   to='Album'
   :params="{ title: 'Coloring Book' }"
   >
   Coloring Book
-  </curi-link>`}
-              </CodeBlock>
-            </SideBySide>
-          </li>
-          <li>
-            <SideBySide>
-              <Explanation>
-                <p>
-                  <IJS>hash</IJS> - the hash for the location to link to
-                </p>
-              </Explanation>
-              <CodeBlock lang="html">
-                {`<curi-link to="Home" hash="test">Home</curi-link>
+</curi-link>`}
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection tag="h4" title="hash" id="Link-hash">
+          <SideBySide>
+            <Explanation>
+              <p>
+                <IJS>hash</IJS> - the hash for the location to link to
+              </p>
+            </Explanation>
+            <CodeBlock lang="html">
+              {`<curi-link to="Home" hash="test">Home</curi-link>
 <!-- <a href="/#test">Home</a> -->`}
-              </CodeBlock>
-            </SideBySide>
-          </li>
-          <li>
-            <SideBySide>
-              <Explanation>
-                <p>
-                  <IJS>query</IJS> - the query for the location to link to
-                </p>
-              </Explanation>
-              <CodeBlock lang="html">
-                {`<curi-link to="Home" query="one=1">Home</curi-link>
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection tag="h4" title="query" id="Link-query">
+          <SideBySide>
+            <Explanation>
+              <p>
+                <IJS>query</IJS> - the query for the location to link to
+              </p>
+            </Explanation>
+            <CodeBlock lang="html">
+              {`<curi-link to="Home" query="one=1">Home</curi-link>
 <!-- <a href="/?one=1">Home</a> -->`}
-              </CodeBlock>
-            </SideBySide>
-          </li>
-          <li>
-            <SideBySide>
-              <Explanation>
-                <IJS>state</IJS> - the state to associated with the location
-              </Explanation>
-            </SideBySide>
-          </li>
-        </ul>
-        <SideBySide>
-          <Explanation>
-            <p>
-              Additionally, any slots that you pass to the <Cmp>curi-link</Cmp>{" "}
-              will be rendered inside of the anchor.
-            </p>
-          </Explanation>
-          <CodeBlock lang="html">
-            {`<curi-link
-  to='Album'
-  :params="{ title: 'Coloring Book' }"
->
-  <div>
-    Coloring
-    <span>Book</span>
-  </div>
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection tag="h4" title="state" id="Link-state">
+          <SideBySide>
+            <Explanation>
+              <IJS>state</IJS> - the state to associated with the location
+            </Explanation>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection tag="h4" title="slots" id="Link-slots">
+          <SideBySide>
+            <Explanation>
+              <p>
+                The <Cmp>curi-link</Cmp>'s can take either a regular slot or a
+                scoped slot.
+              </p>
+              <p>
+                When given a scoped slot, the <Cmp>curi-link</Cmp> will inject
+                the link's navigation state (a <IJS>navigating</IJS> property).
+                The navigation state is <IJS>false</IJS> by default,{" "}
+                <IJS>true</IJS> when the <Cmp>curi-link</Cmp> is clicked, and{" "}
+                <IJS>false</IJS> when the the navigation finishes/is cancelled.
+              </p>
+            </Explanation>
+            <CodeBlock lang="html">
+              {`<!-- a regular slot -->
+<curi-link to="Home">
+  Home
 </curi-link>
-<!--
-<a href="album/Coloring Book">
-  <div>Coloring <span>Book</span></div>
-</a>
--->`}
-          </CodeBlock>
-        </SideBySide>
+
+<!-- a scoped slot -->
+<curi-link to="User" :params="{ id: 1 }">
+  <template slot-scope="{ navigating }">
+    User 1
+    <spinner v-if="navigating" />
+  </template>
+</curi-ink>`}
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
       </Section>
 
-      <Section tag="h3" title={<Cmp>curi-block</Cmp>} id="block">
+      <Section title={<Cmp>curi-block</Cmp>} id="block">
         <SideBySide>
           <Explanation>
             <p>
