@@ -210,7 +210,7 @@ describe("<Link>", () => {
     });
 
     describe("render-invoked function", () => {
-      it("calls the function with the component's loading state (initial loading=false)", () => {
+      it("calls the function with the component's navigating state (initial navigating=false)", () => {
         const history = InMemory();
         const router = curi(history, [
           { name: "Test", path: "test" },
@@ -220,8 +220,8 @@ describe("<Link>", () => {
           <CuriProvider router={router}>
             {() => (
               <Link to="Test">
-                {loading => {
-                  expect(loading).toBe(false);
+                {navigating => {
+                  expect(navigating).toBe(false);
                   return null;
                 }}
               </Link>
@@ -263,7 +263,7 @@ describe("<Link>", () => {
       expect(mockNavigate.mock.calls.length).toBe(1);
     });
 
-    describe("children(loading)", () => {
+    describe("children(navigating)", () => {
       it("children(true) after clicking", () => {
         // if a link has no on methods, finished will be called almost
         // immediately (although this style should only be used for routes
@@ -289,8 +289,8 @@ describe("<Link>", () => {
           <CuriProvider router={router}>
             {() => (
               <Link to="Test">
-                {loading => {
-                  return <div>{loading.toString()}</div>;
+                {navigating => {
+                  return <div>{navigating.toString()}</div>;
                 }}
               </Link>
             )}
@@ -343,13 +343,13 @@ describe("<Link>", () => {
             {() => (
               <React.Fragment>
                 <Link to="Slow">
-                  {loading => {
-                    return <div>Slow {loading.toString()}</div>;
+                  {navigating => {
+                    return <div>Slow {navigating.toString()}</div>;
                   }}
                 </Link>
                 <Link to="Fast">
-                  {loading => {
-                    return <div>Fast {loading.toString()}</div>;
+                  {navigating => {
+                    return <div>Fast {navigating.toString()}</div>;
                   }}
                 </Link>
               </React.Fragment>
@@ -394,8 +394,8 @@ describe("<Link>", () => {
           <CuriProvider router={router}>
             {() => (
               <Link to="Loader">
-                {loading => {
-                  return <div>{loading.toString()}</div>;
+                {navigating => {
+                  return <div>{navigating.toString()}</div>;
                 }}
               </Link>
             )}

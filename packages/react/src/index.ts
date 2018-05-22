@@ -1,6 +1,6 @@
 export { ActiveProps } from "./Active";
 export { BlockProps } from "./Block";
-export { LinkProps } from "./Link";
+export { LinkProps, NavigatingChildren } from "./Link";
 export { CuriProviderProps, CuriRenderFn } from "./CuriProvider";
 export {
   PrefetchProps,
