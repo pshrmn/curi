@@ -16,6 +16,7 @@ export declare type MaybeResolved = Resolved | null;
 export interface PrefetchComponent extends Vue {
     match: MatchData;
     which?: WhichOnFns;
+    resolved: MaybeResolved;
 }
 declare const Prefetch: ComponentOptions<PrefetchComponent>;
 export default Prefetch;
