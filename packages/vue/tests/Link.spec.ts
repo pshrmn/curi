@@ -1,6 +1,7 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import InMemory from "@hickory/in-memory";
+
 import curi from "@curi/core";
 import CuriPlugin from "../src/plugin";
 
