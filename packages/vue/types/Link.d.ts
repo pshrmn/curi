@@ -9,7 +9,7 @@ export interface LinkComponent extends Vue {
     location: HickoryLocation;
     href: string;
     click(e: MouseEvent): void;
-    loading: boolean;
+    navigating: boolean;
 }
 declare const Link: ComponentOptions<LinkComponent>;
 export default Link;

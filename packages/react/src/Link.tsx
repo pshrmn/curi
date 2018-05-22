@@ -18,7 +18,7 @@ const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   );
 };
 
-export type LoadingChildren = (loading: boolean) => React.ReactNode;
+export type NavigatingChildren = (navigating: boolean) => React.ReactNode;
 
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -29,7 +29,7 @@ export interface LinkProps
   state?: any;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   anchor?: React.ReactType;
-  children: LoadingChildren | React.ReactNode;
+  children: NavigatingChildren | React.ReactNode;
 }
 
 export interface BaseLinkProps extends LinkProps {
@@ -39,12 +39,12 @@ export interface BaseLinkProps extends LinkProps {
 }
 
 export interface LinkState {
-  loading: boolean;
+  navigating: boolean;
 }
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   state = {
-    loading: false
+    navigating: false
   };
 
   clickHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -60,9 +60,9 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       // only trigger re-renders when children uses state
       if (typeof this.props.children === "function") {
         cancelled = finished = () => {
-          this.setState({ loading: false });
+          this.setState({ navigating: false });
         };
-        this.setState({ loading: true });
+        this.setState({ navigating: true });
       }
       router.navigate({
         name,
@@ -109,7 +109,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
         ref={forwardedRef}
       >
         {typeof children === "function"
-          ? children(this.state.loading)
+          ? children(this.state.navigating)
           : children}
       </Anchor>
     );

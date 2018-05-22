@@ -165,7 +165,7 @@ describe("<curi-link>", () => {
         history = InMemory();
       });
 
-      it("loading = true after clicking", done => {
+      it("navigating = true after clicking", done => {
         const router = curi(history, routes);
         const Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
@@ -174,12 +174,12 @@ describe("<curi-link>", () => {
         // immediately (although this style should only be used for routes
         // with on methods)
         const LoadChecker = {
-          props: ["loading"],
+          props: ["navigating"],
           render(h) {
-            return h("div", this.loading);
+            return h("div", this.navigating);
           },
           updated() {
-            expect(this.loading).toBe(true);
+            expect(this.navigating).toBe(true);
             done();
           }
         };
@@ -188,8 +188,8 @@ describe("<curi-link>", () => {
           template: `
             <div>
               <curi-link to="Test" id="after-click">
-                <template slot-scope="{ loading }">
-                  <LoadChecker :loading="loading" />
+                <template slot-scope="{ navigating }">
+                  <LoadChecker :navigating="navigating" />
                 </template>
               </curi-link>
             </div>
@@ -207,7 +207,7 @@ describe("<curi-link>", () => {
         );
       });
 
-      it("loading = false after navigation completes", done => {
+      it("navigating = false after navigation completes", done => {
         const router = curi(history, routes);
         const Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
@@ -220,8 +220,8 @@ describe("<curi-link>", () => {
           template: `
             <div>
               <curi-link to="Test" id="nav-complete">
-                <template slot-scope="{ loading }">
-                  {{loading}}
+                <template slot-scope="{ navigating }">
+                  {{navigating}}
                 </template>
               </curi-link>
             </div>
@@ -246,7 +246,7 @@ describe("<curi-link>", () => {
         );
       });
 
-      it("loading = false after navigation is cancelled", done => {
+      it("navigating = false after navigation is cancelled", done => {
         const routes = [
           {
             name: "Slow",
@@ -282,13 +282,13 @@ describe("<curi-link>", () => {
           template: `
             <div>
               <curi-link to="Slow" id="slow">
-                <template slot-scope="{ loading }">
-                  {{loading}}
+                <template slot-scope="{ navigating }">
+                  {{navigating}}
                 </template>
               </curi-link>
               <curi-link to="Fast" id="fast">
-                <template slot-scope="{ loading }">
-                  {{loading}}
+                <template slot-scope="{ navigating }">
+                  {{navigating}}
                 </template>
               </curi-link>
             </div>

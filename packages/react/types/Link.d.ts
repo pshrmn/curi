@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import React from "react";
 import { CuriRouter, Response } from "@curi/core";
-export declare type LoadingChildren = (loading: boolean) => React.ReactNode;
+export declare type NavigatingChildren = (navigating: boolean) => React.ReactNode;
 export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     to?: string;
     params?: object;
@@ -10,7 +10,7 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
     state?: any;
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     anchor?: React.ReactType;
-    children: LoadingChildren | React.ReactNode;
+    children: NavigatingChildren | React.ReactNode;
 }
 export interface BaseLinkProps extends LinkProps {
     router: CuriRouter;
@@ -18,7 +18,7 @@ export interface BaseLinkProps extends LinkProps {
     forwardedRef: React.Ref<any> | undefined;
 }
 export interface LinkState {
-    loading: boolean;
+    navigating: boolean;
 }
 declare const Link: React.ComponentType<LinkProps & React.ClassAttributes<{}>>;
 export default Link;
