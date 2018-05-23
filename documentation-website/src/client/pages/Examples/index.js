@@ -17,6 +17,7 @@ import MultiBodyReact from "./react/MultiBody";
 import TransitionsReact from "./react/Transitions";
 // vue
 import ActiveLinksVue from "./vue/ActiveLinks";
+import AsyncNavVue from "./vue/AsyncNav";
 import AuthenticationVue from "./vue/Authentication";
 import BasicVue from "./vue/Basic";
 import BlockingNavigationVue from "./vue/BlockingNavigation";
@@ -52,6 +53,7 @@ export default {
   },
   vue: {
     "active-links": ActiveLinksVue,
+    "async-nav": AsyncNavVue,
     authentication: AuthenticationVue,
     basic: BasicVue,
     "blocking-navigation": BlockingNavigationVue,
