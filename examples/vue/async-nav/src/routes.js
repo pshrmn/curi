@@ -7,7 +7,9 @@ export default [
     on: {
       initial: () =>
         Promise.all([
-          import("./pages/Home").then(module => module.default),
+          import("./pages/Home").then(
+            module => (module.default ? module.default : module)
+          ),
           movies() /* the movies don't change */
         ])
     },
@@ -23,7 +25,10 @@ export default [
     name: "Movie",
     path: "movie/:id",
     on: {
-      initial: () => import("./pages/Movie").then(module => module.default),
+      initial: () =>
+        import("./pages/Movie").then(
+          module => (module.default ? module.default : module)
+        ),
       every: ({ params }) => movie(params.id)
     },
     response({ resolved }) {
@@ -42,7 +47,10 @@ export default [
     name: "Not Found",
     path: "(.*)",
     on: {
-      initial: () => import("./pages/NotFound").then(module => module.default)
+      initial: () =>
+        import("./pages/NotFound").then(
+          module => (module.default ? module.default : module)
+        )
     },
     response({ resolved }) {
       return {
