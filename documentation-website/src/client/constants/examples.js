@@ -50,6 +50,13 @@ const examples = {
       description: "Attach multiple components to a route"
     },
     {
+      name: "Async Navigation",
+      category: "react",
+      slug: "async-nav",
+      description:
+        "Display a spinner to indicate that navigation is loading content for async routes"
+    },
+    {
       name: "Transitions",
       category: "react",
       slug: "transitions",

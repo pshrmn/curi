@@ -5,6 +5,7 @@ import ServerRendering from "./misc/ServerRendering";
 import SideEffect from "./misc/SideEffect";
 // react
 import ActiveLinksReact from "./react/ActiveLinks";
+import AsyncNavReact from "./react/AsyncNav";
 import AuthenticationReact from "./react/Authentication";
 import BasicReact from "./react/Basic";
 import BlockingNavigationReact from "./react/BlockingNavigation";
@@ -36,6 +37,7 @@ export default {
   },
   react: {
     "active-links": ActiveLinksReact,
+    "async-nav": AsyncNavReact,
     authentication: AuthenticationReact,
     basic: BasicReact,
     "blocking-navigation": BlockingNavigationReact,
