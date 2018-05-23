@@ -1,19 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { CuriProvider } from "@curi/react";
 import Browser from "@hickory/browser";
 import curi from "@curi/core";
-import prefetch from "@curi/route-prefetch";
+import { CuriProvider } from "@curi/react";
 
 import routes from "./routes";
 import Controls from "./components/Controls";
 
 const history = Browser();
-
-const router = curi(history, routes, {
-  route: [prefetch()]
-});
-const root = document.getElementById("root");
+const router = curi(history, routes);
 
 router.respond(() => {
   ReactDOM.render(

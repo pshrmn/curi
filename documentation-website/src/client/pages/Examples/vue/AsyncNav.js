@@ -13,33 +13,28 @@ export default ({ name }) => (
     <h1>{name}</h1>
     <Section title="Explanation" id="explanation">
       <p>
-        Use the <Cmp>Link</Cmp>'s <IJS>children</IJS> as a render-invoked prop
-        that knows whether or not the <Cmp>Link</Cmp> is currently navigating.
+        Use the <Cmp>curi-link</Cmp>'s <IJS>slot</IJS> as scoped-slot so you can
+        know whether or not the link is currently navigating.
       </p>
 
       <PrismBlock lang="jsx">
-        {`<Link to="Movie" params={{ id: 'some_movie' }}>
-  {navigating => (
-    <React.Fragment>
-      Some Movie
-      {navigating
-        ? <Spinner />
-        : null
-      }
-    </React.Fragment>
-  )}
-</Link>`}
+        {`<curi-link to="Movie" :params="{ id: 'some_movie' }">
+  <template slot-scope="{ navigating }">
+    Some Movie
+    <Spinner v-if="navigating" />
+  </template>
+</curi-link>`}
       </PrismBlock>
     </Section>
 
     <Section title="Live Demo" id="demo">
-      <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/async-nav" />
+      <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/async-nav" />
     </Section>
 
     <Section title="On GitHub" id="source">
       If you want to run this code locally, the source code is available on
       GitHub{" "}
-      <a href="https://github.com/pshrmn/curi/tree/master/examples/react/async-nav">
+      <a href="https://github.com/pshrmn/curi/tree/master/examples/vue/async-nav">
         here
       </a>.
     </Section>

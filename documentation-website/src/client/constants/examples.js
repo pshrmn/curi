@@ -7,6 +7,13 @@ const examples = {
       description: "Style links when they match the current location"
     },
     {
+      name: "Async Navigation",
+      category: "react",
+      slug: "async-nav",
+      description:
+        "Display a spinner to indicate that navigation is loading content for async routes"
+    },
+    {
       name: "Authentication",
       category: "react",
       slug: "authentication",
@@ -50,13 +57,6 @@ const examples = {
       description: "Attach multiple components to a route"
     },
     {
-      name: "Async Navigation",
-      category: "react",
-      slug: "async-nav",
-      description:
-        "Display a spinner to indicate that navigation is loading content for async routes"
-    },
-    {
       name: "Transitions",
       category: "react",
       slug: "transitions",
@@ -69,6 +69,13 @@ const examples = {
       category: "vue",
       slug: "active-links",
       description: "Style links when they match the current location"
+    },
+    {
+      name: "Async Navigation",
+      category: "vue",
+      slug: "async-nav",
+      description:
+        "Display a spinner to indicate that navigation is loading content for async routes"
     },
     {
       name: "Authentication",
