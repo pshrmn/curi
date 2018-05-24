@@ -23,7 +23,7 @@ const MOVIES = [
   }
 ];
 
-let latency = 500;
+let latency = 1500;
 
 export const delay = value => {
   if (value !== undefined) {
