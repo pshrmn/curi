@@ -1,3 +1,7 @@
+## Next
+
+* Side effects are now only called after observers registered with `router.respond()`. Instead of registering them with an object, only the side effect observer function is passed.
+
 ## 1.0.0-beta.35
 
 * Add `cancelled` and `finished` properties to `router.navigate()`, which are functions to be called if the navigation is cancelled/when the navigation is finished.
