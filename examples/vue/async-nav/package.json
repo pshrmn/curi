@@ -1,5 +1,5 @@
 {
-  "name": "curi-link-spinner-example",
+  "name": "@curi-example/async-nav-vue",
   "private": true,
   "version": "0.1.0",
   "description": "Display a spinner while navigation is happening",

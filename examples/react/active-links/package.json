@@ -1,5 +1,5 @@
 {
-  "name": "curi-active-links-example",
+  "name": "@curi-example/active-links-react",
   "private": true,
   "version": "0.1.0",
   "description": "Style links differently when they are active",

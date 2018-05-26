@@ -1,5 +1,5 @@
 {
-  "name": "curi-side-effect-example",
+  "name": "@curi-example/side-effect",
   "private": true,
   "version": "0.1.0",
   "description": "Use side effects in a Curi application",

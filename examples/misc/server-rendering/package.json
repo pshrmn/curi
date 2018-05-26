@@ -1,5 +1,5 @@
 {
-  "name": "curi-server-rendering-example",
+  "name": "@curi-example/server-rendering",
   "private": true,
   "version": "0.1.0",
   "description": "Server rendering with curi",

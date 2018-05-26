@@ -1,5 +1,5 @@
 {
-  "name": "curi-react-basic-example",
+  "name": "@curi-example/basic-react",
   "private": true,
   "version": "0.1.0",
   "description": "A simple application that uses Curi + React",

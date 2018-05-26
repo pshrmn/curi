@@ -1,5 +1,5 @@
 {
-  "name": "curi-breadcrumbs-example",
+  "name": "@curi-example/breadcrumbs-react",
   "private": true,
   "version": "0.1.0",
   "description": "Render breadcrumb links",

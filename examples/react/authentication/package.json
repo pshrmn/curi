@@ -1,5 +1,5 @@
 {
-  "name": "curi-authentication-example",
+  "name": "@curi-example/authentication-react",
   "private": true,
   "version": "0.1.0",
   "description": "Curi routes that redirect when not authenticated",

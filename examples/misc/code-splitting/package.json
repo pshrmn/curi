@@ -1,5 +1,5 @@
 {
-  "name": "curi-code-splitting-example",
+  "name": "@curi-example/code-splitting",
   "private": true,
   "version": "0.1.0",
   "description": "Code splitting with curi",

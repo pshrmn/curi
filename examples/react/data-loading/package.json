@@ -1,5 +1,5 @@
 {
-  "name": "curi-data-loading-example",
+  "name": "@curi-example/data-loading-react",
   "private": true,
   "version": "0.1.0",
   "description": "Prefetch data before navigating",

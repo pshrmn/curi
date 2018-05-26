@@ -1,5 +1,5 @@
 {
-  "name": "curi-transitions-example",
+  "name": "@curi-example/transitions-react",
   "private": true,
   "version": "0.1.0",
   "description": "Animate transitions betweeen locations",
