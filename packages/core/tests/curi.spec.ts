@@ -169,62 +169,20 @@ describe("curi", () => {
       });
 
       describe("sideEffects", () => {
-        it("calls side effect methods AFTER a response is generated, passing them response and navigation", done => {
+        it("calls side effect methods AFTER a response is generated, passing response, navigation, and router", done => {
           const routes = [{ name: "All", path: "(.*)" }];
           const sideEffect = jest.fn();
 
           const router = curi(history, routes, {
-            sideEffects: [{ effect: sideEffect }]
+            sideEffects: [sideEffect]
           });
           router.respond(({ response, navigation }) => {
             expect(sideEffect.mock.calls.length).toBe(1);
             expect(sideEffect.mock.calls[0][0].response).toBe(response);
             expect(sideEffect.mock.calls[0][0].navigation).toBe(navigation);
+            expect(sideEffect.mock.calls[0][0].router).toBe(router);
             done();
           });
-        });
-
-        it('calls side effects WITHOUT "after: true" BEFORE response handlers', done => {
-          const routes = [{ name: "All", path: "(.*)" }];
-
-          const sideEffect1 = jest.fn();
-          const sideEffect2 = jest.fn();
-
-          const router = curi(history, routes, {
-            sideEffects: [
-              { effect: sideEffect1, after: false },
-              { effect: sideEffect2 }
-            ]
-          });
-
-          expect.assertions(2);
-          router.respond(({ response }) => {
-            expect(sideEffect1.mock.calls.length).toBe(1);
-            expect(sideEffect2.mock.calls.length).toBe(1);
-            done();
-          });
-        });
-
-        it('calls side effects WITH "after: true" AFTER response handlers', done => {
-          const routes = [
-            {
-              name: "All",
-              path: "(.*)",
-              on: {
-                initial: () => Promise.resolve() // force async
-              }
-            }
-          ];
-          const responseHandler = jest.fn();
-          const sideEffect = function() {
-            expect(responseHandler.mock.calls.length).toBe(1);
-            done();
-          };
-
-          const router = curi(history, routes, {
-            sideEffects: [{ effect: sideEffect, after: true }]
-          });
-          router.respond(responseHandler);
         });
 
         it("passes response, navigation, and router object to side effect", done => {
@@ -243,7 +201,7 @@ describe("curi", () => {
           };
 
           const router = curi(history, routes, {
-            sideEffects: [{ effect: sideEffect, after: true }]
+            sideEffects: [sideEffect]
           });
           router.respond(responseHandler);
         });
@@ -276,7 +234,7 @@ describe("curi", () => {
             }
           };
           const router = curi(history, routes, {
-            sideEffects: [{ effect: logger }]
+            sideEffects: [logger]
           });
         });
 
@@ -1114,13 +1072,12 @@ describe("curi", () => {
         expect(hasEmitted).toBe(true);
         done();
       });
-      let emissionDetector = {
-        effect: () => {
-          hasEmitted = true;
-        }
-      };
       const router = curi(history, routes, {
-        sideEffects: [emissionDetector]
+        sideEffects: [
+          () => {
+            hasEmitted = true;
+          }
+        ]
       });
     });
   });

@@ -14,7 +14,6 @@ import { PossibleMatch, Match } from "./types/match";
 import {
   CuriRouter,
   RouterOptions,
-  SideEffect,
   Observer,
   Emitted,
   RespondOptions,
@@ -23,11 +22,6 @@ import {
   Navigation,
   NavigationDetails
 } from "./types/curi";
-
-interface GroupedEffects {
-  before: Array<Observer>;
-  after: Array<Observer>;
-}
 
 function createRouter(
   history: History,
@@ -39,21 +33,6 @@ function createRouter(
     sideEffects = [],
     emitRedirects = true
   } = options;
-
-  const groupedEffects: GroupedEffects = sideEffects.reduce(
-    (acc: GroupedEffects, curr: SideEffect) => {
-      if (curr.after) {
-        acc.after.push(curr.effect);
-      } else {
-        acc.before.push(curr.effect);
-      }
-      return acc;
-    },
-    {
-      before: [],
-      after: []
-    }
-  );
 
   let routes: Array<InternalRoute> = [];
   const routeInteractions: Interactions = {};
@@ -113,24 +92,11 @@ function createRouter(
     mostRecent.navigation = navigation;
 
     const resp: Emitted = { response, navigation, router };
-    groupedEffects.before.forEach(fn => {
-      fn(resp);
-    });
-    observers.forEach(fn => {
+
+    [...observers, ...oneTimers.splice(0), ...sideEffects].forEach(fn => {
       if (fn != null) {
         fn(resp);
       }
-    });
-
-    while (oneTimers.length) {
-      const fn = oneTimers.pop();
-      if (fn) {
-        fn(resp);
-      }
-    }
-
-    groupedEffects.after.forEach(fn => {
-      fn(resp);
     });
   }
 
