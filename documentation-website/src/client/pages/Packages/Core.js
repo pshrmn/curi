@@ -177,11 +177,10 @@ router.route.pathname("Home");
                     </table>
                   </Explanation>
                   <CodeBlock>
-                    {`import scrollEffect from "@curi/side-effect-scroll";
+                    {`import scroll from "@curi/side-effect-scroll";
 
-const scroll = scrollEffect();
 const router = curi(history, routes, {
-  sideEffects: [{ effect: scroll, after: true }]
+  sideEffects: [scroll()]
 });`}
                   </CodeBlock>
                 </SideBySide>

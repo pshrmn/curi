@@ -39,21 +39,12 @@ export default ({ name, version, globalName }) => (
     <APIBlock>
       <Section tag="h3" title="scrollEffect" id="scrollEffect">
         <SideBySide>
-          <Explanation>
-            <p>
-              When registering the side effect, you should pass the{" "}
-              <IJS>after: true</IJS> option. This will call the side effect
-              after your application has re-rendered.
-            </p>
-          </Explanation>
           <CodeBlock>
             {`import curi from '@curi/core';
-import scrollEffect from '@curi/side-effect-scroll';
-
-const scrollTo = scrollEffect();
+import scroll from '@curi/side-effect-scroll';
 
 const router = curi(history, routes, {
-  sideEffects: [{ effect: scrollTo, after: true }]
+  sideEffects: [scroll()]
 });`}
           </CodeBlock>
         </SideBySide>

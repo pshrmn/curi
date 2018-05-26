@@ -124,7 +124,7 @@ const finishLoading = () => {
 };
 
 const router = curi(history, routes, {
-  sideEffects: [{ effect: finishLoading }]
+  sideEffects: [finishLoading]
 });`}
             </CodeBlock>
           </SideBySide>
