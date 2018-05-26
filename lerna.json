@@ -4,7 +4,10 @@
   "packages": [
     "packages/*",
     "packages/interactions/*",
-    "packages/side-effects/*"
+    "packages/side-effects/*",
+    "examples",
+    "examples/**",
+    "documentation-website"
   ],
   "commands": {
     "bootstrap": {
