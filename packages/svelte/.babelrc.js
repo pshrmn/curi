@@ -1,15 +1,11 @@
 const building = process.env.BABEL_ENV === "build";
 
-const plugins = ["transform-object-rest-spread"];
-
-if (building) {
-  plugins.push("external-helpers");
-}
+const plugins = ["@babel/plugin-proposal-object-rest-spread"];
 
 module.exports = {
   presets: [
     [
-      "env",
+      "@babel/preset-env",
       {
         modules: building ? false : "commonjs",
         targets: {
