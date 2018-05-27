@@ -540,12 +540,10 @@ describe("route matching/response generation", () => {
           ];
           const history = InMemory({ locations: ["/"] });
           let firstCall = true;
-          const logger = {
-            effect: ({ response }) => {
-              if (firstCall) {
-                expect(response.redirectTo).toMatchObject({ pathname: "/b" });
-                firstCall = false;
-              }
+          const logger = ({ response }) => {
+            if (firstCall) {
+              expect(response.redirectTo).toMatchObject({ pathname: "/b" });
+              firstCall = false;
             }
           };
           const router = curi(history, routes, {

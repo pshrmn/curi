@@ -28,6 +28,5 @@ export {
   Observer,
   Emitted,
   RemoveObserver,
-  SideEffect,
   Navigation
 } from "./curi";

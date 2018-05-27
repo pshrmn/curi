@@ -18,13 +18,9 @@ export interface RespondOptions {
     initial?: boolean;
 }
 export declare type RemoveObserver = () => void;
-export interface SideEffect {
-    effect: Observer;
-    after?: boolean;
-}
 export interface RouterOptions {
     route?: Array<Interaction>;
-    sideEffects?: Array<SideEffect>;
+    sideEffects?: Array<Observer>;
     pathnameOptions?: PathFunctionOptions;
     emitRedirects?: boolean;
 }

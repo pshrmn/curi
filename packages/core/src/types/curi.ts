@@ -24,14 +24,9 @@ export interface RespondOptions {
 }
 export type RemoveObserver = () => void;
 
-export interface SideEffect {
-  effect: Observer;
-  after?: boolean;
-}
-
 export interface RouterOptions {
   route?: Array<Interaction>;
-  sideEffects?: Array<SideEffect>;
+  sideEffects?: Array<Observer>;
   pathnameOptions?: PathFunctionOptions;
   emitRedirects?: boolean;
 }
