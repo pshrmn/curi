@@ -1,7 +1,5 @@
 const building = process.env.BABEL_ENV === "build";
 
-const plugins = ["@babel/plugin-proposal-object-rest-spread"];
-
 module.exports = {
   presets: [
     [
@@ -14,5 +12,5 @@ module.exports = {
       }
     ]
   ],
-  plugins: plugins
+  plugins: ["@babel/plugin-proposal-object-rest-spread"]
 };

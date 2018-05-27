@@ -1,7 +1,7 @@
 module.exports = {
   moduleFileExtensions: ["js", "html"],
   transform: {
-    "\\.js$": "babel-jest",
+    "\\.js$": "./scripts/babelCompile",
     "\\.html$": "./scripts/svelteCompile"
   },
   transformIgnorePatterns: ["node_modules/(?!(svelte)/)"],
