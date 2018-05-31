@@ -55,7 +55,7 @@ function createRouter(
       });
   }
 
-  const observers: Array<Observer | null> = [];
+  let observers: Array<Observer> = [];
   const oneTimers: Array<Observer> = [];
 
   const mostRecent: CurrentResponse = {
@@ -70,12 +70,14 @@ function createRouter(
     const { observe = false, initial = true } = options || {};
 
     if (observe) {
-      const newLength = observers.push(fn);
+      observers.push(fn);
       if (mostRecent.response && initial) {
         fn.call(null, { ...mostRecent, router });
       }
       return () => {
-        observers[newLength - 1] = null;
+        observers = observers.filter(obs => {
+          return obs !== fn;
+        });
       };
     } else {
       if (mostRecent.response && initial) {
@@ -94,9 +96,7 @@ function createRouter(
     const resp: Emitted = { response, navigation, router };
 
     [...observers, ...oneTimers.splice(0), ...sideEffects].forEach(fn => {
-      if (fn != null) {
-        fn(resp);
-      }
+      fn(resp);
     });
   }
 
