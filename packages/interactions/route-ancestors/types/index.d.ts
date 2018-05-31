@@ -1,3 +1,2 @@
 import { Interaction } from "@curi/core";
-declare function getRouteAncestors(): Interaction;
-export default getRouteAncestors;
+export default function getRouteAncestors(): Interaction;

@@ -12,7 +12,7 @@ export interface PrefetchType {
   every?: boolean;
 }
 
-function prefetchRoute(): Interaction {
+export default function prefetchRoute(): Interaction {
   let loaders: { [key: string]: OnFns } = {};
 
   return {
@@ -67,5 +67,3 @@ function prefetchRoute(): Interaction {
     }
   };
 }
-
-export default prefetchRoute;

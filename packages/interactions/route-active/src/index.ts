@@ -11,7 +11,7 @@ function acceptableRouteName(
   );
 }
 
-function checkIfActive(): Interaction {
+export default function checkIfActive(): Interaction {
   let routeParams: { [key: string]: Array<string> } = {};
 
   return {
@@ -63,5 +63,3 @@ function checkIfActive(): Interaction {
     }
   };
 }
-
-export default checkIfActive;

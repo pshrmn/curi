@@ -1,6 +1,6 @@
 import { Observer, Emitted } from "@curi/core";
 
-function createScrollSideEffect(): Observer {
+export default function createScrollSideEffect(): Observer {
   return function({ response, navigation }: Emitted): void {
     if (navigation.action === "POP") {
       return;
@@ -24,5 +24,3 @@ function createScrollSideEffect(): Observer {
     }, 0);
   };
 }
-
-export default createScrollSideEffect;

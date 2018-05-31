@@ -1,6 +1,6 @@
 import { Route, Interaction } from "@curi/core";
 
-function getRouteAncestors(): Interaction {
+export default function getRouteAncestors(): Interaction {
   let routeAncestors: { [key: string]: Array<string> } = {};
 
   function get(name: string, level: number): string;
@@ -44,5 +44,3 @@ function getRouteAncestors(): Interaction {
     }
   };
 }
-
-export default getRouteAncestors;

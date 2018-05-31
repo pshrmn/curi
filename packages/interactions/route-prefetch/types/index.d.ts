@@ -3,5 +3,4 @@ export interface PrefetchType {
     initial?: boolean;
     every?: boolean;
 }
-declare function prefetchRoute(): Interaction;
-export default prefetchRoute;
+export default function prefetchRoute(): Interaction;

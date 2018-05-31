@@ -1,6 +1,6 @@
 import { Store } from "svelte/store";
 
-function curiStore(router, store) {
+export default function curiStore(router, store) {
   if (!store) {
     store = new Store({
       router,
@@ -22,5 +22,3 @@ function curiStore(router, store) {
 
   return store;
 }
-
-export default curiStore;

@@ -23,7 +23,7 @@ import {
   NavigationDetails
 } from "./types/curi";
 
-function createRouter(
+export default function createRouter(
   history: History,
   routeArray: Array<RouteDescriptor>,
   options: RouterOptions = {}
@@ -211,5 +211,3 @@ function createRouter(
 
   return router;
 }
-
-export default createRouter;

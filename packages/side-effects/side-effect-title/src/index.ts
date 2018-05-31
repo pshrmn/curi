@@ -6,7 +6,9 @@ export interface TitleOptions {
   delimiter?: string;
 }
 
-function createTitleSideEffect(options?: TitleOptions): Observer {
+export default function createTitleSideEffect(
+  options?: TitleOptions
+): Observer {
   const { prefix = "", suffix = "", delimiter = "" } = options || {};
 
   return function({ response }: Emitted) {
@@ -21,5 +23,3 @@ function createTitleSideEffect(options?: TitleOptions): Observer {
     document.title = parts.join(" ");
   };
 }
-
-export default createTitleSideEffect;

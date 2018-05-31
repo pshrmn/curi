@@ -4,5 +4,4 @@ export interface TitleOptions {
     suffix?: string;
     delimiter?: string;
 }
-declare function createTitleSideEffect(options?: TitleOptions): Observer;
-export default createTitleSideEffect;
+export default function createTitleSideEffect(options?: TitleOptions): Observer;
