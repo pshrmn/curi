@@ -367,8 +367,8 @@ const Inbox = ({ match }) => (
               The <Cmp>CuriProvider</Cmp> takes a <IJS>router</IJS> prop, which
               it will use know when a new responses are emitted.{" "}
               <Cmp>CuriProvider</Cmp> also expects a function as its{" "}
-              <IJS>children</IJS> prop (a render-invoked prop). This function
-              renders the application using the <IJS>response</IJS>.
+              <IJS>children</IJS> prop (a render-invoked function). This
+              function renders the application using the <IJS>response</IJS>.
             </p>
             <p>
               When the <Cmp>CuriProvider</Cmp>'s <IJS>children()</IJS> function
@@ -592,7 +592,7 @@ const router = curi(history, routes, {
 
 // The <Active> component determines if a route is active
 // and passes true/false to the render-invoked children
-// prop
+// function
 <Active name="Home">
   {active => (
     <Link
@@ -622,10 +622,10 @@ const router = curi(history, routes, {
             component.
           </p>
           <p>
-            <IJS>Curious</IJS> has a render-invoked <IJS>children</IJS> prop,
-            which you can use to inject the Curi <IJS>router</IJS>, the current{" "}
-            <IJS>response</IJS>, and the current <IJS>navigation</IJS> object
-            into components.
+            <IJS>Curious</IJS> has a render-invoked <IJS>children</IJS>{" "}
+            function, which you can use to inject the Curi <IJS>router</IJS>,
+            the current <IJS>response</IJS>, and the current{" "}
+            <IJS>navigation</IJS> object into components.
           </p>
         </Explanation>
         <CodeBlock>

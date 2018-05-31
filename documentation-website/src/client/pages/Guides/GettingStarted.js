@@ -381,8 +381,8 @@ router.respond(() => {
         <Explanation>
           <p>
             <IJS>@curi/react</IJS> uses a <Cmp>CuriProvider</Cmp> with a
-            render-invoked <IJS>children</IJS> prop that will be called whenever
-            there is a new response.
+            render-invoked <IJS>children</IJS> function that will be called
+            whenever there is a new response.
           </p>
           <p>
             In React applications, <IJS>response.body</IJS> should be a React

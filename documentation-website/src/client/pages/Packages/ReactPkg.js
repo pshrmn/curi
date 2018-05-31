@@ -82,7 +82,7 @@ const App = () => (
             <SideBySide>
               <Explanation>
                 <p>
-                  <IJS>children</IJS> is a render-invoked prop. When it is
+                  <IJS>children</IJS> is a render-invoked function. When it is
                   called, it will be passed an object with three properties:
                 </p>
                 <table>
@@ -319,7 +319,7 @@ const MyComponent = () => (
               The <Cmp>Active</Cmp> component is used to render based on whether
               or not a route is "active" (its name and params match the current
               response's name and params) using a render-invoked{" "}
-              <IJS>children</IJS> prop.
+              <IJS>children</IJS> function.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
@@ -481,9 +481,9 @@ const router = curi(history, routes, {
               </a>.
             </p>
             <p>
-              <Cmp>Prefetch</Cmp> uses a render-invoked <IJS>children</IJS> prop
-              to provide a <IJS>ref</IJS> for the element that should be
-              observed.
+              <Cmp>Prefetch</Cmp> uses a render-invoked <IJS>children</IJS>{" "}
+              function to provide a <IJS>ref</IJS> for the element that should
+              be observed.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">

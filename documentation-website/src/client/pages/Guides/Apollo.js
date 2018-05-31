@@ -119,7 +119,8 @@ const routes = [
             Any location data that a query needs can be taken from the response
             object. The best way to access this from your components would be to
             pass the <IJS>response</IJS> to the components rendered in the{" "}
-            <Cmp>CuriProvider</Cmp>'s render-invoked <IJS>children</IJS> prop.
+            <Cmp>CuriProvider</Cmp>'s <IJS>children</IJS> prop, which is a
+            render-invoked function.
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
@@ -468,7 +469,7 @@ const PrefetchLink = ({ to, params, ...rest }) => (
             <p>
               If you want to get really fancy, <Cmp>Prefetch</Cmp> also lets you
               access the prefetched data with the second argument to its
-              render-invoked <IJS>children</IJS> prop. You can use this to
+              render-invoked <IJS>children</IJS> function. You can use this to
               update your UI to indicate that the data has loaded or even use
               the loaded data with some filler content.
             </p>

@@ -13,8 +13,9 @@ export default ({ name }) => (
     <h1>{name}</h1>
     <Section title="Explanation" id="explanation">
       <p>
-        Use the <Cmp>Link</Cmp>'s <IJS>children</IJS> as a render-invoked prop
-        that knows whether or not the <Cmp>Link</Cmp> is currently navigating.
+        Use the <Cmp>Link</Cmp>'s <IJS>children</IJS> as a render-invoked
+        function that knows whether or not the <Cmp>Link</Cmp> is currently
+        navigating.
       </p>
 
       <PrismBlock lang="jsx">
