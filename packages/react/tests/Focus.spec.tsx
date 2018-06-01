@@ -100,4 +100,38 @@ describe("<Focus>", () => {
 
     expect(wrapper).toBe(postNavFocus);
   });
+
+  describe("component", () => {
+    it("renders a <div> by default", () => {
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Focus>
+              <input type="text" />
+            </Focus>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const input = document.querySelector("input");
+      const wrapper = input.parentElement;
+      expect(wrapper.tagName).toBe("DIV");
+    });
+
+    it("uses provided component type as wrapper", () => {
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Focus component="main">
+              <input type="text" />
+            </Focus>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const input = document.querySelector("input");
+      const wrapper = input.parentElement;
+      expect(wrapper.tagName).toBe("MAIN");
+    });
+  });
 });

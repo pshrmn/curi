@@ -6,6 +6,7 @@ import { Response } from "@curi/core";
 
 export interface FocusProps {
   children: ReactNode;
+  component?: string;
 }
 
 interface FocusPropsWithResponse extends FocusProps {
@@ -20,16 +21,21 @@ class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
     this.divToFocus = null;
   }
 
+  static defaultProps = {
+    component: "div"
+  };
+
   setRef = (element: any) => {
     this.divToFocus = element;
   };
 
   render() {
+    const Wrapper = this.props.component;
     // https://developers.google.com/web/fundamentals/accessibility/focus/using-tabindex#managing_focus_at_the_page_level
     return (
-      <div tabIndex={-1} ref={this.setRef}>
+      <Wrapper tabIndex={-1} ref={this.setRef}>
         {this.props.children}
-      </div>
+      </Wrapper>
     );
   }
 
