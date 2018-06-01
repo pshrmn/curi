@@ -50,8 +50,14 @@ class PrefetchWhenVisible extends React.Component<
     super(props);
     invariant(
       props.router.route.prefetch,
-      'You are attempting to use the "prefetch" function, but have not included the "prefetch" ' +
-        "route interaction (@curi/route-prefetch) in your Curi router."
+      `You are attempting to use the "prefetch" route interaction, but have not included it in your Curi router.
+      
+import curi from "@curi/core";
+import prefetch from "@curi/route-prefetch";
+
+const router = curi(history, routes, {
+  route: [prefetch()]
+});`
     );
 
     this.state = {

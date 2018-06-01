@@ -46,7 +46,7 @@ class CuriProvider extends React.Component<
   componentWillReceiveProps(nextProps: CuriProviderProps) {
     warning(
       nextProps.router === this.props.router,
-      'The "router" prop of <CuriProvider> cannot be changed.'
+      `The "router" prop passed to <CuriProvider> cannot be changed. If you need to update the router's routes, use router.replaceRoutes().`
     );
   }
 

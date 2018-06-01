@@ -122,7 +122,16 @@ describe("prefetch", () => {
           <CuriProvider router={router}>{childrenResponse}</CuriProvider>,
           node
         );
-      }).toThrow();
+      }).toThrow(
+        `You are attempting to use the "prefetch" route interaction, but have not included it in your Curi router.
+      
+import curi from "@curi/core";
+import prefetch from "@curi/route-prefetch";
+
+const router = curi(history, routes, {
+  route: [prefetch()]
+});`
+      );
 
       console.error = realError;
     });

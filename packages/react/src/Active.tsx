@@ -18,8 +18,14 @@ const Active = (props: ActiveProps): ReactNode => (
     {({ router, response }) => {
       invariant(
         router.route.active,
-        'You are attempting to use the "active" function, but have not included the "active" ' +
-          "route interaction (@curi/route-active) in your Curi router."
+        `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
+
+import curi from "@curi/core";
+import active from "@curi/route-active";
+
+const router = curi(history, routes, {
+  route: [active()]
+});`
       );
 
       return props.children(

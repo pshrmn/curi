@@ -21,8 +21,37 @@ describe("<CuriProvider>", () => {
     ReactDOM.unmountComponentAtNode(node);
   });
 
-  describe("render", () => {
-    it("calls render function when it renders", () => {
+  describe("router prop", () => {
+    it("warns if attempting to pass a new router prop", () => {
+      const history = InMemory();
+      const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
+      const router2 = curi(history, [{ name: "Catch All", path: "(.*)" }]);
+      ReactDOM.render(
+        <CuriProvider router={router}>{() => null}</CuriProvider>,
+        node
+      );
+
+      const realWarn = console.error;
+      const fakeWarn = (console.error = jest.fn());
+
+      expect(fakeWarn.mock.calls.length).toBe(0);
+
+      ReactDOM.render(
+        <CuriProvider router={router2}>{() => null}</CuriProvider>,
+        node
+      );
+
+      expect(fakeWarn.mock.calls.length).toBe(1);
+      expect(fakeWarn.mock.calls[0][0]).toBe(
+        `Warning: The "router" prop passed to <CuriProvider> cannot be changed. If you need to update the router's routes, use router.replaceRoutes().`
+      );
+
+      console.error = realWarn;
+    });
+  });
+
+  describe("children prop", () => {
+    it("calls children() function when it renders", () => {
       const history = InMemory();
       const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
 
@@ -33,7 +62,7 @@ describe("<CuriProvider>", () => {
       expect(fn.mock.calls.length).toBe(1);
     });
 
-    it("re-calls render prop when the location changes", done => {
+    it("re-renders when the location changes", done => {
       const history = InMemory();
       const router = curi(history, routes);
       let pushedHistory = false;
@@ -53,7 +82,7 @@ describe("<CuriProvider>", () => {
       history.navigate("/about");
     });
 
-    it("passes { response, navigation, router } to render prop", () => {
+    it("passes { response, navigation, router } to children()  prop", () => {
       const history = InMemory();
       const fn = jest.fn(({ response, navigation, router: routerProp }) => {
         expect(response).toMatchObject({
