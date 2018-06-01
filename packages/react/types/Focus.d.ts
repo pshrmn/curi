@@ -1,7 +1,6 @@
 /// <reference types="react" />
-import { ReactNode } from "react";
-export interface FocusProps {
-    children: ReactNode;
+import React from "react";
+export interface FocusProps extends React.HTMLAttributes<HTMLElement> {
     component?: string;
 }
 declare const Focus: (props: FocusProps) => JSX.Element;

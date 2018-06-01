@@ -4,8 +4,7 @@ import { Curious } from "./Context";
 import { ReactNode } from "react";
 import { Response } from "@curi/core";
 
-export interface FocusProps {
-  children: ReactNode;
+export interface FocusProps extends React.HTMLAttributes<HTMLElement> {
   component?: string;
 }
 
@@ -30,11 +29,11 @@ class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
   };
 
   render() {
-    const Wrapper = this.props.component;
+    const { children, component: Wrapper, ...rest } = this.props;
     // https://developers.google.com/web/fundamentals/accessibility/focus/using-tabindex#managing_focus_at_the_page_level
     return (
-      <Wrapper tabIndex={-1} ref={this.setRef}>
-        {this.props.children}
+      <Wrapper tabIndex={-1} ref={this.setRef} {...rest}>
+        {children}
       </Wrapper>
     );
   }

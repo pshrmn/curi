@@ -134,4 +134,23 @@ describe("<Focus>", () => {
       expect(wrapper.tagName).toBe("MAIN");
     });
   });
+
+  describe("other props", () => {
+    it("passes on other props to the focus wrapper", () => {
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Focus id="yo" className="ahoy">
+              <input type="text" />
+            </Focus>
+          )}
+        </CuriProvider>,
+        node
+      );
+      const input = document.querySelector("input");
+      const wrapper = input.parentElement;
+      expect(wrapper.getAttribute("id")).toBe("yo");
+      expect(wrapper.className).toBe("ahoy");
+    });
+  });
 });
