@@ -1,11 +1,12 @@
 import React from "react";
+import warning from "warning";
 import { Curious } from "./Context";
 
-import { ReactNode, ReactType } from "react";
+import { ReactNode, ReactType, Ref } from "react";
 import { Response } from "@curi/core";
 
-export interface FocusProps extends React.HTMLAttributes<HTMLElement> {
-  component?: ReactType;
+export interface FocusProps {
+  children(ref: Ref<any>): ReactNode;
 }
 
 interface FocusPropsWithResponse extends FocusProps {
@@ -13,29 +14,20 @@ interface FocusPropsWithResponse extends FocusProps {
 }
 
 class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
-  divToFocus: HTMLElement | null;
+  eleToFocus: HTMLElement | null;
 
   constructor(props: FocusPropsWithResponse) {
     super(props);
-    this.divToFocus = null;
+    this.eleToFocus = null;
   }
 
-  static defaultProps = {
-    component: "div"
-  };
-
   setRef = (element: any) => {
-    this.divToFocus = element;
+    this.eleToFocus = element;
   };
 
   render() {
-    const { children, component: Wrapper, ...rest } = this.props;
-    // https://developers.google.com/web/fundamentals/accessibility/focus/using-tabindex#managing_focus_at_the_page_level
-    return (
-      <Wrapper tabIndex={-1} ref={this.setRef} {...rest}>
-        {children}
-      </Wrapper>
-    );
+    const { children } = this.props;
+    return children(this.setRef);
   }
 
   componentDidMount() {
@@ -50,8 +42,15 @@ class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
   }
 
   focus() {
-    if (this.divToFocus !== null) {
-      this.divToFocus.focus();
+    // https://developers.google.com/web/fundamentals/accessibility/focus/using-tabindex#managing_focus_at_the_page_level
+    if (this.eleToFocus !== null) {
+      warning(
+        this.eleToFocus.hasAttribute("tabIndex") ||
+          this.eleToFocus.tabIndex !== -1,
+        'The component that is passed the ref must have a "tabIndex" prop or be focusable by default in order to be focused. ' +
+          "Otherwise, the document's <body> will be focused instead."
+      );
+      this.eleToFocus.focus();
     }
   }
 }

@@ -29,16 +29,19 @@ describe("<Focus>", () => {
       <CuriProvider router={router}>
         {() => (
           <Focus>
-            <span id="child">Testing!</span>
+            {ref => (
+              <div id="test" tabIndex={-1} ref={ref}>
+                Testing!
+              </div>
+            )}
           </Focus>
         )}
       </CuriProvider>,
       node
     );
-    const span = document.querySelector("#child");
-    const wrapper = span.parentElement;
+    const wrapper = document.querySelector("#test");
     const focused = document.activeElement;
-    expect(wrapper).toBe(focused);
+    expect(focused).toBe(wrapper);
   });
 
   it("does not re-focus for regular re-renders", () => {
@@ -46,29 +49,41 @@ describe("<Focus>", () => {
       <CuriProvider router={router}>
         {() => (
           <Focus>
-            <input type="text" />
+            {ref => (
+              <div id="test" tabIndex={-1} ref={ref}>
+                <input type="text" />
+              </div>
+            )}
           </Focus>
         )}
       </CuriProvider>,
       node
     );
+    const wrapper = document.querySelector("#test");
+    const initialFocus = document.activeElement;
+    expect(initialFocus).toBe(wrapper);
+
     const input = document.querySelector("input");
     // steal the focus
     input.focus();
-    const focused = document.activeElement;
-    expect(input).toBe(focused);
+    const stolenFocus = document.activeElement;
+    expect(stolenFocus).toBe(input);
 
     ReactDOM.render(
       <CuriProvider router={router}>
         {() => (
           <Focus>
-            <input type="number" />
+            {ref => (
+              <div id="test" ref={ref}>
+                <input type="number" />
+              </div>
+            )}
           </Focus>
         )}
       </CuriProvider>,
       node
     );
-    expect(input).toBe(focused);
+    expect(stolenFocus).toBe(input);
   });
 
   it("re-focuses for new response re-renders", () => {
@@ -76,7 +91,11 @@ describe("<Focus>", () => {
       <CuriProvider router={router}>
         {() => (
           <Focus>
-            <input type="text" />
+            {ref => (
+              <div id="test" tabIndex={-1} ref={ref}>
+                <input type="text" />
+              </div>
+            )}
           </Focus>
         )}
       </CuriProvider>,
@@ -101,56 +120,49 @@ describe("<Focus>", () => {
     expect(wrapper).toBe(postNavFocus);
   });
 
-  describe("component", () => {
-    it("renders a <div> by default", () => {
+  describe("tabIndex", () => {
+    it("warns when ref element does not have a tabIndex attribute", () => {
+      const realWarn = console.error;
+      const fakeWarn = (console.error = jest.fn());
+
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
             <Focus>
-              <input type="text" />
+              {ref => (
+                <div id="test" ref={ref}>
+                  <input type="text" />
+                </div>
+              )}
             </Focus>
           )}
         </CuriProvider>,
         node
       );
-      const input = document.querySelector("input");
-      const wrapper = input.parentElement;
-      expect(wrapper.tagName).toBe("DIV");
+      expect(fakeWarn.mock.calls.length).toBe(1);
+      console.error = realWarn;
     });
 
-    it("uses provided component type as wrapper", () => {
+    it("does not warn when ref element does not have a tabIndex attribute, but ele is already focusable", () => {
+      const realWarn = console.error;
+      const fakeWarn = (console.error = jest.fn());
+
       ReactDOM.render(
         <CuriProvider router={router}>
           {() => (
-            <Focus component="main">
-              <input type="text" />
+            <Focus>
+              {ref => (
+                <div id="test">
+                  <input type="text" ref={ref} />
+                </div>
+              )}
             </Focus>
           )}
         </CuriProvider>,
         node
       );
-      const input = document.querySelector("input");
-      const wrapper = input.parentElement;
-      expect(wrapper.tagName).toBe("MAIN");
-    });
-  });
-
-  describe("other props", () => {
-    it("passes on other props to the focus wrapper", () => {
-      ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => (
-            <Focus id="yo" className="ahoy">
-              <input type="text" />
-            </Focus>
-          )}
-        </CuriProvider>,
-        node
-      );
-      const input = document.querySelector("input");
-      const wrapper = input.parentElement;
-      expect(wrapper.getAttribute("id")).toBe("yo");
-      expect(wrapper.className).toBe("ahoy");
+      expect(fakeWarn.mock.calls.length).toBe(0);
+      console.error = realWarn;
     });
   });
 });
