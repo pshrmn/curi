@@ -38,6 +38,37 @@ describe("route matching/response generation", () => {
       });
     });
 
+    describe("no matching routes", () => {
+      const realError = console.error;
+      const fakeError = (console.error = jest.fn());
+
+      afterAll(() => {
+        console.error = realError;
+      });
+
+      it("no response is emitted", () => {
+        const history = InMemory({ locations: ["/test"] });
+        const routes = [];
+        const router = curi(history, routes);
+
+        const observer = jest.fn();
+        router.respond(observer);
+        expect(observer.mock.calls.length).toBe(0);
+      });
+
+      it("warns that no route matched", () => {
+        const history = InMemory({ locations: ["/test"] });
+        const routes = [];
+        const router = curi(history, routes);
+        const observer = jest.fn();
+
+        router.respond(observer);
+        expect(fakeError.mock.calls[0][0]).toBe(
+          `The current location (/test) has no matching route, so a response could not be emitted. A catch-all route ({ path: "(.*)" }) can be used to match locations with no other matching route.`
+        );
+      });
+    });
+
     describe("nested routes", () => {
       it("includes parent if partials if a child matches", done => {
         const history = InMemory({ locations: ["/ND/Fargo"] });

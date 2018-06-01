@@ -69,6 +69,7 @@ const router = curi(history, routes, {
       ? props.forwardedRef
       : React.createRef();
 
+    /* istanbul ignore else */
     if (typeof window !== "undefined" && IntersectionObserver) {
       this.obs = new IntersectionObserver(entries => {
         const ref = this.intersectionRef.current;

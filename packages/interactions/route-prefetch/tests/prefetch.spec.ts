@@ -112,6 +112,28 @@ describe("prefetch route interaction", () => {
       });
     });
 
+    it("returns Promise with error message when route throws", () => {
+      const name = "Thrower";
+      const errorMessage = "woops!";
+      const route = {
+        name,
+        path: "throws",
+        on: {
+          every: () =>
+            new Promise((resolve, reject) => {
+              reject(errorMessage);
+            })
+        }
+      };
+      prefetch.register(route as Route);
+      const output = prefetch.get(name, { id: 123 });
+      expect.assertions(2);
+      expect(output).toBeInstanceOf(Promise);
+      return output.then(resolved => {
+        expect(resolved.error).toBe(errorMessage);
+      });
+    });
+
     describe("props", () => {
       it("passes arguments to route's on.every() function", () => {
         const route = {
