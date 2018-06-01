@@ -4,7 +4,7 @@ import warning from "warning";
 import { Curious } from "./Context";
 
 import { ReactNode } from "react";
-import { CuriRouter, Response, Resolved } from "@curi/core";
+import { CuriRouter, Resolved } from "@curi/core";
 import { HickoryLocation } from "@hickory/root";
 
 export interface WhichOnFns {

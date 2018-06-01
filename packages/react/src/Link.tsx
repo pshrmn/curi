@@ -1,14 +1,7 @@
 import React from "react";
-import invariant from "invariant";
-
 import { Curious } from "./Context";
 
 import { CuriRouter, Response } from "@curi/core";
-import {
-  HickoryLocation,
-  PartialLocation,
-  LocationDetails
-} from "@hickory/root";
 
 const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   return (
