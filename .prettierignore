@@ -2,4 +2,4 @@ package.json
 package-lock.json
 *.d.ts
 README.md
-documentation-website/src/client/constants/versions.js
+website/src/client/constants/versions.js

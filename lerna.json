@@ -7,7 +7,7 @@
     "packages/side-effects/*",
     "examples",
     "examples/**",
-    "documentation-website"
+    "website"
   ],
   "commands": {
     "bootstrap": {

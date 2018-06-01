@@ -1,18 +1,24 @@
-const join = require('path').join;
-const fs = require('fs');
+const join = require("path").join;
+const fs = require("fs");
 
-const BASE_PATH = join(__dirname, '..', '..', 'packages');
-const OUTPUT_FILE = join(__dirname, '..', 'src', 'client', 'constants', 'versions.js');
+const BASE_PATH = join(__dirname, "..", "..", "packages");
+const OUTPUT_FILE = join(
+  __dirname,
+  "..",
+  "src",
+  "client",
+  "constants",
+  "versions.js"
+);
 
 function getPackagesFromDir(dir) {
-
   return fs.readdirSync(dir).reduce((acc, name) => {
     const path = join(dir, name);
 
     if (!fs.lstatSync(path).isDirectory(1)) {
       return acc;
     } else if (isPackage(path)) {
-      const pkg = require(join(path, 'package.json'));
+      const pkg = require(join(path, "package.json"));
       acc[packageName(pkg)] = pkg.version;
     } else {
       Object.assign(acc, getPackagesFromDir(path));
@@ -22,7 +28,7 @@ function getPackagesFromDir(dir) {
 }
 
 function isPackage(dir) {
-  return fs.existsSync(join(dir, 'package.json'));
+  return fs.existsSync(join(dir, "package.json"));
 }
 
 function packageName(pkg) {
@@ -41,4 +47,4 @@ export default ${JSON.stringify(mappedVersions, null, 2)};\n`,
       }
     }
   );
-}
+};
