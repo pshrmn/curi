@@ -1,11 +1,11 @@
 import React from "react";
 import { Curious } from "./Context";
 
-import { ReactNode } from "react";
+import { ReactNode, ReactType } from "react";
 import { Response } from "@curi/core";
 
 export interface FocusProps extends React.HTMLAttributes<HTMLElement> {
-  component?: string;
+  component?: ReactType;
 }
 
 interface FocusPropsWithResponse extends FocusProps {
