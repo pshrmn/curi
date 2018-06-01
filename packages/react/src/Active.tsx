@@ -3,8 +3,7 @@ import invariant from "invariant";
 import { Curious } from "./Context";
 
 import { ReactNode } from "react";
-import { CuriRouter, Response } from "@curi/core";
-import { HickoryLocation } from "@hickory/root";
+import { Response } from "@curi/core";
 
 export interface ActiveProps {
   children(active: boolean, response?: Response): ReactNode;
