@@ -11,9 +11,9 @@ const Explanation = ({ children }) => (
   <div className="explanation">{children}</div>
 );
 
-const CodeBlock = ({ children, lang = "javascript" }) => (
+const CodeBlock = ({ lang = "javascript", ...rest }) => (
   <div className="code-block">
-    <PrismBlock lang={lang}>{children}</PrismBlock>
+    <PrismBlock lang={lang} {...rest} />
   </div>
 );
 

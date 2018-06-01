@@ -271,6 +271,45 @@ const App = () => (
         </Section>
       </Section>
 
+      <Section title={<Cmp>Focus</Cmp>} id="Focus">
+        <SideBySide>
+          <Explanation>
+            <p>
+              <Cmp>Focus</Cmp> lets you focus a DOM element whenever there is a
+              new response. Its <IJS>children</IJS> prop is a render-invoked
+              function that receives a React ref, which should be attached to
+              the DOM component that you want to be focused.
+            </p>
+            <p>
+              The DOM component that gets the ref should either already be
+              "focusable", like an <Cmp>input</Cmp>, or be given a{" "}
+              <IJS>tabIndex</IJS> prop (usually with the value of <IJS>-1</IJS>).
+              If neither of these conditions is met, then the document's{" "}
+              <Cmp>body</Cmp> will be focused.
+            </p>
+            <p>
+              The focused element will have an outline (the exact style varies
+              by browser). You can remove this visual with a CSS{" "}
+              <IJS>outline</IJS> of <IJS>"none"</IJS>.
+            </p>
+            <Note>
+              You should only have one <Cmp>Focus</Cmp> in an app.
+            </Note>
+          </Explanation>
+          <CodeBlock lang="jsx">
+            {`import { Focus } from "@curi/react";
+
+<Focus>
+  {ref => (
+    <div tabIndex={-1} ref={ref}>
+      {/* ... */}
+    </div>
+  )}
+</Focus>`}
+          </CodeBlock>
+        </SideBySide>
+      </Section>
+
       <Section title={<Cmp>Curious</Cmp>} id="Curious">
         <SideBySide>
           <Explanation>

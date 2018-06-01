@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "@curi/react";
+import Content from "../../components/Content";
 
 import {
   PrismBlock,
@@ -15,7 +16,7 @@ import {
 } from "../../components/SideBySide";
 
 export default () => (
-  <div>
+  <Content>
     <Banner />
-  </div>
+  </Content>
 );

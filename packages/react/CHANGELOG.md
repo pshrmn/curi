@@ -1,3 +1,7 @@
+## Next
+
+* Add `<Focus>` component for auto-focusing after new responses.
+
 ## 1.0.0-beta.26
 
 * `<Link>` children can be a render-invoked prop that receives the link's navigating state.
