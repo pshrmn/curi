@@ -29,7 +29,7 @@ export default function createHandler(debug = false) {
 
 function renderFullPage(html, title, debug) {
   return `<!doctype html>
-<html>
+<html lang="en">
   <head>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

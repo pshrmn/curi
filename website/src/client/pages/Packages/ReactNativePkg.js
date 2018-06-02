@@ -24,8 +24,8 @@ export default ({ name, version, globalName }) => (
     about={
       <div>
         <p>
-          The <IJS>@curi/react-native</IJS> provides components to use Curi
-          routing in a React Native application.
+          The <IJS>@curi/react-native</IJS> package provides components to use
+          Curi routing in a React Native application.
         </p>
         <p>
           For more information on using Curi with React Native, please check out

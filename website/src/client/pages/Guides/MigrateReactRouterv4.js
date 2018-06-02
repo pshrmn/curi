@@ -309,7 +309,7 @@ const router = curi(history, routes);`}
               route param. This route matches and stores{" "}
               <IJS>"test-message-please-ignore"</IJS> as{" "}
               <IJS>match.params.message</IJS>. The <Cmp>Message</Cmp> component
-              will then be rendered, which has acccess to the <IJS>message</IJS>{" "}
+              will then be rendered, which has access to the <IJS>message</IJS>{" "}
               param.
             </p>
           </Explanation>

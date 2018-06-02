@@ -9,6 +9,7 @@ export default ({ name, dir }) => (
     <img
       style={{ height: 16, marginRight: 5 }}
       src="/static/img/github-logo.png"
+      alt="GitHub logo"
     />GitHub Repo
   </a>
 );

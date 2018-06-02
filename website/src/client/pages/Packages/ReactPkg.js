@@ -23,8 +23,8 @@ export default ({ name, version, globalName }) => (
     about={
       <div>
         <p>
-          The <IJS>@curi/react</IJS> provides a number of React components that
-          you can use for rendering your application.
+          The <IJS>@curi/react</IJS> package provides a number of React
+          components that you can use for rendering your application.
         </p>
       </div>
     }
