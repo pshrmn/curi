@@ -7,7 +7,7 @@ const focusDirection: DirectiveOptions = {
   inserted(el, binding) {
     warning(
       el.hasAttribute("tabIndex") || el.tabIndex !== -1,
-      'The component that is passed the directive must have a "tabIndex" prop or ' +
+      'The element that is passed the "v-curi-focus" directive must have a "tabIndex" prop or ' +
         "be focusable by default in order to be focused. " +
         "Otherwise, the document's <body> will be focused instead."
     );
