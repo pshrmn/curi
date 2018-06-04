@@ -1,0 +1,33 @@
+{
+  "name": "@curi-example/basic-vue",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Add Curi routing to a Vue application",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack"
+  },
+  "keywords": [
+    "Curi",
+    "Vue",
+    "router"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.7",
+    "vue-loader": "^13.5.0",
+    "vue-template-compiler": "^2.5.9",
+    "webpack": "^2.5.1"
+  },
+  "dependencies": {
+    "@curi/core": "^1.0.0-beta.30",
+    "@curi/vue": "^1.0.0-beta.17",
+    "@hickory/browser": "^1.0.0-beta.5",
+    "vue": "^2.5.9"
+  }
+}

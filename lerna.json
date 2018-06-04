@@ -18,7 +18,10 @@
         "svelte-cli",
         "rollup-plugin-svelte",
         "react-native",
-        "babel-jest"
+        "babel-jest",
+        "webpack",
+        "webpack-cli",
+        "mini-css-extract-plugin"
       ]
     }
   }

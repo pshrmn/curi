@@ -4,6 +4,7 @@ import ScriptTags from "./misc/ScriptTags";
 import ServerRendering from "./misc/ServerRendering";
 import SideEffect from "./misc/SideEffect";
 // react
+import A11yReact from "./react/Accessibility";
 import ActiveLinksReact from "./react/ActiveLinks";
 import AsyncNavReact from "./react/AsyncNav";
 import AuthenticationReact from "./react/Authentication";
@@ -16,6 +17,7 @@ import MultiBodyReact from "./react/MultiBody";
 
 import TransitionsReact from "./react/Transitions";
 // vue
+import A11yVue from "./vue/Accessibility";
 import ActiveLinksVue from "./vue/ActiveLinks";
 import AsyncNavVue from "./vue/AsyncNav";
 import AuthenticationVue from "./vue/Authentication";
@@ -37,6 +39,7 @@ export default {
     "side-effect": SideEffect
   },
   react: {
+    accessibility: A11yReact,
     "active-links": ActiveLinksReact,
     "async-nav": AsyncNavReact,
     authentication: AuthenticationReact,
@@ -52,6 +55,7 @@ export default {
     basic: BasicSvelte
   },
   vue: {
+    accessibility: A11yVue,
     "active-links": ActiveLinksVue,
     "async-nav": AsyncNavVue,
     authentication: AuthenticationVue,

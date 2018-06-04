@@ -7,6 +7,12 @@ const examples = {
       description: "Style links when they match the current location"
     },
     {
+      name: "Accessibility",
+      category: "react",
+      slug: "accessibility",
+      description: "Focus content after navigating"
+    },
+    {
       name: "Async Navigation",
       category: "react",
       slug: "async-nav",
@@ -69,6 +75,12 @@ const examples = {
       category: "vue",
       slug: "active-links",
       description: "Style links when they match the current location"
+    },
+    {
+      name: "Accessibility",
+      category: "vue",
+      slug: "accessibility",
+      description: "Focus content after navigating"
     },
     {
       name: "Async Navigation",

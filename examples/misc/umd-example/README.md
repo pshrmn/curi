@@ -5,6 +5,6 @@ This is just a simple example that demonstrates using the UMD builds of `@curi/c
 ```js
 const {
   Link,
-  CuriBase
+  CuriProvider
 } = CuriReact;
 ```

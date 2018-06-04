@@ -10,9 +10,7 @@ export default function render({ response }) {
     <React.Fragment>
       <Header />
       <main>
-        {!response || !response.body ? null : (
-          <Body params={params} data={data} />
-        )}
+        <Body params={params} data={data} />
       </main>
     </React.Fragment>
   );

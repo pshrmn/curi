@@ -12,7 +12,7 @@ function catchAll(req, res) {
 
   // 3. Wait for the initial location's response to finish
   router.response((response, navigation) => {
-    // 4. Generate the HTML markup by rendering a <CuriBase> and
+    // 4. Generate the HTML markup by rendering a <CuriProvider> and
     // passing it the response
     const markup = renderToString(
       <CuriProvider router={router}>
