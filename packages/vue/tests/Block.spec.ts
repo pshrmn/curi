@@ -1,7 +1,7 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import InMemory from "@hickory/in-memory";
-import curi from "@curi/core";
+import curi from "@curi/router";
 import CuriPlugin from "../src/plugin";
 
 describe("<curi-block>", () => {
@@ -12,7 +12,7 @@ describe("<curi-block>", () => {
   history.removeConfirmation = mockRemoveConfirmation;
 
   const routes = [
-    { name: "Place", path: "/place/:name" },
+    { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ];
   const router = curi(history, routes);

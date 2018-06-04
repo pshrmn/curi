@@ -1,5 +1,5 @@
 import { PluginObject } from "vue";
-import { CuriRouter } from "@curi/core";
+import { CuriRouter } from "@curi/router";
 export interface CuriPluginOptions {
     router: CuriRouter;
 }

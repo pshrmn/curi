@@ -3,7 +3,7 @@ import warning from "warning";
 import { Curious } from "./Context";
 
 import { ReactNode, ReactType, Ref } from "react";
-import { Response } from "@curi/core";
+import { Response } from "@curi/router";
 
 export interface FocusProps {
   children(ref: Ref<any>): ReactNode;

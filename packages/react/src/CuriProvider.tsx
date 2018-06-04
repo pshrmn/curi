@@ -9,7 +9,7 @@ import {
   Response,
   Navigation,
   RemoveObserver
-} from "@curi/core";
+} from "@curi/router";
 
 export type CuriRenderFn = (props: Emitted) => React.ReactNode;
 

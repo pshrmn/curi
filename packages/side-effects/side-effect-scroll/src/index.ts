@@ -1,4 +1,4 @@
-import { Observer, Emitted } from "@curi/core";
+import { Observer, Emitted } from "@curi/router";
 
 export default function createScrollSideEffect(): Observer {
   return function({ response, navigation }: Emitted): void {

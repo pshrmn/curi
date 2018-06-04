@@ -2,10 +2,10 @@ import versions from "./versions";
 
 const packages = [
   {
-    name: "core",
-    version: versions["core"],
+    name: "router",
+    version: versions["router"],
     globalName: "Curi",
-    type: "core"
+    type: "router"
   },
   {
     name: "react",

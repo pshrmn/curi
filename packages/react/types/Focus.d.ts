@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { ReactNode, Ref } from "react";
 export interface FocusProps {
     children(ref: Ref<any>): ReactNode;

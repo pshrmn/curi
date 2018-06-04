@@ -1,4 +1,4 @@
-import { Route, Interaction } from "@curi/core";
+import { Route, Interaction } from "@curi/router";
 
 export default function getRouteAncestors(): Interaction {
   let routeAncestors: { [key: string]: Array<string> } = {};

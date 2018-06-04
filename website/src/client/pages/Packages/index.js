@@ -1,4 +1,4 @@
-import Core from "./Core";
+import Router from "./Router";
 import RouteActive from "./RouteActive";
 import RouteAncestors from "./RouteAncestors";
 import RoutePrefetch from "./RoutePrefetch";
@@ -10,7 +10,7 @@ import Svelte from "./Svelte";
 import Vue from "./Vue";
 
 export default {
-  core: Core,
+  router: Router,
   "route-active": RouteActive,
   "route-ancestors": RouteAncestors,
   "route-prefetch": RoutePrefetch,

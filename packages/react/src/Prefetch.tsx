@@ -4,7 +4,7 @@ import warning from "warning";
 import { Curious } from "./Context";
 
 import { ReactNode } from "react";
-import { CuriRouter, Resolved } from "@curi/core";
+import { CuriRouter, Resolved } from "@curi/router";
 import { HickoryLocation } from "@hickory/root";
 
 export interface WhichOnFns {
@@ -52,7 +52,7 @@ class PrefetchWhenVisible extends React.Component<
       props.router.route.prefetch,
       `You are attempting to use the "prefetch" route interaction, but have not included it in your Curi router.
       
-import curi from "@curi/core";
+import curi from "@curi/router";
 import prefetch from "@curi/route-prefetch";
 
 const router = curi(history, routes, {

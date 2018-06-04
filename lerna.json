@@ -21,7 +21,8 @@
         "babel-jest",
         "webpack",
         "webpack-cli",
-        "mini-css-extract-plugin"
+        "mini-css-extract-plugin",
+        "vue"
       ]
     }
   }

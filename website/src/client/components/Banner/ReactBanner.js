@@ -7,7 +7,7 @@ const ReactBanner = () => (
 import ReactDOM from 'react-dom';
 
 import Browser from '@hickory/browser';
-import curi from '@curi/core';
+import curi from '@curi/router';
 import { CuriProvider } from '@curi/react';
 
 const history = Browser();

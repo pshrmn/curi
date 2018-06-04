@@ -32,7 +32,7 @@ export default ({ name }) => (
         <Explanation>
           <p>
             Observers are passed an object with three properties:{" "}
-            <Link to="Package" params={{ package: "core" }} hash="properties">
+            <Link to="Package" params={{ package: "router" }} hash="properties">
               <IJS>router</IJS>
             </Link>,{" "}
             <Link to="Guide" params={{ slug: "responses" }}>

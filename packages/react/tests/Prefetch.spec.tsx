@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
-import curi from "@curi/core";
+import curi from "@curi/router";
 import prefetchInteraction from "@curi/route-prefetch";
 
 import Prefetch from "../src/Prefetch";
@@ -125,7 +125,7 @@ describe("prefetch", () => {
       }).toThrow(
         `You are attempting to use the "prefetch" route interaction, but have not included it in your Curi router.
       
-import curi from "@curi/core";
+import curi from "@curi/router";
 import prefetch from "@curi/route-prefetch";
 
 const router = curi(history, routes, {

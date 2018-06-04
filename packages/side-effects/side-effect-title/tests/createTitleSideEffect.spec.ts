@@ -1,6 +1,6 @@
 import "jest";
 import createTitleSideEffect from "../src";
-import { Emitted } from "@curi/core";
+import { Emitted } from "@curi/router";
 
 describe("createTitleSideEffect", () => {
   const fakeResponse = {

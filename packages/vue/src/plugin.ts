@@ -5,7 +5,7 @@ import Block from "./Block";
 
 import focus from "./focus";
 
-import { CuriRouter } from "@curi/core";
+import { CuriRouter } from "@curi/router";
 import { ReactiveResponse } from "./interface";
 
 export interface CuriPluginOptions {

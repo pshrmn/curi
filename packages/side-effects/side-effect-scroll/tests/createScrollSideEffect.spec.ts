@@ -1,6 +1,6 @@
 import "jest";
 import createScrollSideEffect from "../src";
-import { Emitted } from "@curi/core";
+import { Emitted } from "@curi/router";
 
 jest.useFakeTimers();
 

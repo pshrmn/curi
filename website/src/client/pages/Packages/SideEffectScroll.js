@@ -40,7 +40,7 @@ export default ({ name, version, globalName }) => (
       <Section tag="h3" title="scrollEffect" id="scrollEffect">
         <SideBySide>
           <CodeBlock>
-            {`import curi from '@curi/core';
+            {`import curi from '@curi/router';
 import scroll from '@curi/side-effect-scroll';
 
 const router = curi(history, routes, {

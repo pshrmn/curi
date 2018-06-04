@@ -1,6 +1,5 @@
-/// <reference types="react" />
 import React from "react";
-import { Resolved } from "@curi/core";
+import { Resolved } from "@curi/router";
 import { HickoryLocation } from "@hickory/root";
 export interface WhichOnFns {
     initial?: boolean;

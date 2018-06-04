@@ -199,7 +199,7 @@ export default function confirmInteraction() {
           </p>
         </Explanation>
         <CodeBlock>
-          {`import curi from '@curi/core';
+          {`import curi from '@curi/router';
 import confirmFactory from './interactions/confirm'
 
 const routes = [{ name: 'Home', path: '' }];

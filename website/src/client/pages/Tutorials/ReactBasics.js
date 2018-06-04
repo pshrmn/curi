@@ -65,12 +65,12 @@ yarn start # start the dev server`}
         there are a few packages that need to be installed.
       </p>
       <PrismBlock lang="bash">
-        {`yarn add @hickory/browser @curi/core @curi/react`}
+        {`yarn add @hickory/browser @curi/router @curi/react`}
       </PrismBlock>
       <p>
         The <IJS>@hickory/browser</IJS> package will be used to create an object
         that interacts with the browser to power navigation (e.g. updates the
-        URI in the address bar when you click a link). <IJS>@curi/core</IJS>{" "}
+        URI in the address bar when you click a link). <IJS>@curi/router</IJS>{" "}
         provides the function to actually create the router.{" "}
         <IJS>@curi/react</IJS> gives us some React components that interact with
         the router.
@@ -278,14 +278,14 @@ export default [
       <p>
         With the history object created and the routes defined, we are ready to
         create the router. Back in the <IJS>src/index.js</IJS> file, we should
-        import the <IJS>curi</IJS> function from <IJS>@curi/core</IJS> as well
+        import the <IJS>curi</IJS> function from <IJS>@curi/router</IJS> as well
         as our routes from <IJS>src/routes.js</IJS>
       </p>
       <PrismBlock lang="jsx" data-line="4,8,13">
         {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/core';
+import curi from '@curi/router';
 import Browser from '@hickory/browser';
 
 import './index.css';
@@ -508,7 +508,7 @@ export default [
         {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/core';
+import curi from '@curi/router';
 import Browser from '@hickory/browser';
 import { CuriProvider } from '@curi/react';
 
@@ -632,7 +632,7 @@ export default () => (
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/core';
+import curi from '@curi/router';
 import Browser from '@hickory/browser';
 import { CuriProvider } from '@curi/react';
 
@@ -826,7 +826,7 @@ export default {
         {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/core';
+import curi from '@curi/router';
 import Browser from '@hickory/browser';
 import { CuriProvider } from '@curi/react';
 

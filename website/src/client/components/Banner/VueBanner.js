@@ -7,7 +7,7 @@ const VueBanner = () => (
 
 import Browser from '@hickory/browser';
 import { CuriPlugin } from '@curi/vue';
-import curi from '@curi/core';
+import curi from '@curi/router';
 import app from './components/App';
 
 const history = Browser();

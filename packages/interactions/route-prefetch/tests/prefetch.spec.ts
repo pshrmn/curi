@@ -2,7 +2,7 @@ import "jest";
 import createPrefetch from "../src";
 
 import { HickoryLocation } from "@hickory/root";
-import { Interaction, Route } from "@curi/core";
+import { Interaction, Route } from "@curi/router";
 
 describe("prefetch route interaction", () => {
   let prefetch: Interaction;
