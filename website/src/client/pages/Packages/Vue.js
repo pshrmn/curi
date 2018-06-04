@@ -216,6 +216,39 @@ Vue.use(CuriPlugin, { router });`}
           </CodeBlock>
         </SideBySide>
       </Section>
+
+      <Section title={<IJS>curi-focus</IJS>} id="curi-focus">
+        <SideBySide>
+          <Explanation>
+            <p>
+              The <IJS>curi-focus</IJS> directive is used to specify an element
+              that should be focused when a new response is emitted.
+            </p>
+            <p>
+              The DOM component that gets the ref should either already be
+              "focusable", like an <Cmp>input</Cmp>, or be given a{" "}
+              <IJS>tabIndex</IJS> prop (usually with the value of <IJS>-1</IJS>).
+              If neither of these conditions is met, then the document's{" "}
+              <Cmp>body</Cmp> will be focused.
+            </p>
+            <p>
+              The focused element will have an outline (the exact style varies
+              by browser). You can remove this visual with a CSS outline of{" "}
+              <IJS>"none"</IJS>.
+            </p>
+            <Note>
+              You should only have one focused element rendered at a time.
+            </Note>
+          </Explanation>
+          <CodeBlock lang="html">
+            {`<template>
+  <main :tabIndex="-1" v-curi-focus="$curi.response">
+    <component :is="$curi.response.body" />
+  </main>
+</template>`}
+          </CodeBlock>
+        </SideBySide>
+      </Section>
     </APIBlock>
 
     <Section title="Usage" id="usage">
