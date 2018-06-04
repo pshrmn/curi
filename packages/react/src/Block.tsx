@@ -2,7 +2,7 @@ import React from "react";
 import { Curious } from "./Context";
 
 import { ConfirmationFunction } from "@hickory/root";
-import { CuriRouter } from "@curi/core";
+import { CuriRouter } from "@curi/router";
 
 export interface BlockProps {
   active?: boolean;

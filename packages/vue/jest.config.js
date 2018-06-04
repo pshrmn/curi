@@ -10,6 +10,6 @@ module.exports = {
     }
   },
   moduleNameMapper: {
-    "^vue$": "vue/dist/vue.common.js"
+    "^vue$": "<rootDir>/node_modules/vue/dist/vue.common.js"
   }
 };

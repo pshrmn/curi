@@ -1,6 +1,5 @@
-/// <reference types="react" />
 import React from "react";
-import { CuriRouter, Response } from "@curi/core";
+import { CuriRouter, Response } from "@curi/router";
 export declare type NavigatingChildren = (navigating: boolean) => React.ReactNode;
 export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     to?: string;

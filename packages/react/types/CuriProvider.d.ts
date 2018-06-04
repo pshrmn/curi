@@ -1,6 +1,5 @@
-/// <reference types="react" />
 import React from "react";
-import { CuriRouter, Emitted, Response, Navigation } from "@curi/core";
+import { CuriRouter, Emitted, Response, Navigation } from "@curi/router";
 export declare type CuriRenderFn = (props: Emitted) => React.ReactNode;
 export interface CuriProviderProps {
     children: CuriRenderFn;

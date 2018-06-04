@@ -22,8 +22,8 @@ There are also a number of [examples](/examples) that you can learn from. Many o
 
 |Name|About|Documentation|Source|
 |---|---|---|---|
-|[@curi/core](/packages/core)|[![npm][@curi/core-version-badge]][npm-@curi/core]|[Documentation](https://curi.js.org/packages/@curi/curi/)|[Source](/packages/core/src)|
-||The core package provides the core routing functionality for the application. It is used to create a configuration object using a `history` object and a `routes` array.|
+|[@curi/router](/packages/router)|[![npm][@curi/router-version-badge]][npm-@curi/router]|[Documentation](https://curi.js.org/packages/@curi/router/)|[Source](/packages/router/src)|
+||The router package provides the function to create a router.|
 
 #### Route Interactions:
 
@@ -71,8 +71,8 @@ While you can use vanilla JavaScript to render your application, most modern app
 [build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg
 [build]: https://travis-ci.org/pshrmn/curi
 
-[@curi/core-version-badge]: https://img.shields.io/npm/v/@curi/core.svg
-[npm-@curi/core]: https://npmjs.com/package/@curi/core
+[@curi/router-version-badge]: https://img.shields.io/npm/v/@curi/router.svg
+[npm-@curi/router]: https://npmjs.com/package/@curi/router
 
 [@curi/route-prefetch-version-badge]: https://img.shields.io/npm/v/@curi/route-prefetch.svg
 [npm-@curi/route-prefetch]: https://npmjs.com/package/@curi/route-prefetch

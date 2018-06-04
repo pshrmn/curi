@@ -11,7 +11,7 @@ describe("curi-focus directive", () => {
   const mockRemoveConfirmation = jest.fn();
 
   const routes = [
-    { name: "Place", path: "/place/:name" },
+    { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ];
   const router = curi(history, routes);
@@ -46,7 +46,7 @@ describe("curi-focus directive", () => {
     expect(document.activeElement).toBe(main);
   });
 
-  it("does not re-focus for regular re-renders", () => {
+  it("does not re-focus for regular re-renders", done => {
     vueWrapper = new Vue({
       template: `
         <div>
@@ -74,8 +74,10 @@ describe("curi-focus directive", () => {
     expect(stolenFocus).toBe(input);
 
     vueWrapper.type = "number";
-
-    expect(stolenFocus).toBe(input);
+    Vue.nextTick(() => {
+      expect(stolenFocus).toBe(input);
+      done();
+    });
   });
 
   it("re-focuses for new response re-renders", done => {

@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
-import curi from "@curi/core";
+import curi from "@curi/router";
 import activeInteraction from "@curi/route-active";
 
 import CuriProvider from "../src/CuriProvider";
@@ -52,7 +52,7 @@ describe("<Active>", () => {
       }).toThrow(
         `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
 
-import curi from "@curi/core";
+import curi from "@curi/router";
 import active from "@curi/route-active";
 
 const router = curi(history, routes, {

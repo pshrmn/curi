@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import curi from "@curi/core";
+import curi from "@curi/router";
 import InMemory from "@hickory/in-memory";
 import CuriProvider from "../src/CuriProvider";
 import Block from "../src/Block";

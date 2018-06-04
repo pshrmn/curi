@@ -1,7 +1,7 @@
 import React from "react";
 import { Curious } from "./Context";
 
-import { CuriRouter, Response } from "@curi/core";
+import { CuriRouter, Response } from "@curi/router";
 
 const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   return (

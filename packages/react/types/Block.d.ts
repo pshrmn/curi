@@ -1,7 +1,6 @@
-/// <reference types="react" />
 import React from "react";
 import { ConfirmationFunction } from "@hickory/root";
-import { CuriRouter } from "@curi/core";
+import { CuriRouter } from "@curi/router";
 export interface BlockProps {
     active?: boolean;
     confirm: ConfirmationFunction;

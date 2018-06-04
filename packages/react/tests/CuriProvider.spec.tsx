@@ -1,13 +1,13 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import curi from "@curi/core";
+import curi from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
 import CuriProvider from "../src/CuriProvider";
 import { Curious } from "../src/Context";
 
-import { Response, Navigation } from "@curi/core";
+import { Response, Navigation } from "@curi/router";
 
 describe("<CuriProvider>", () => {
   let node;

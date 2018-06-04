@@ -3,7 +3,7 @@ import invariant from "invariant";
 import { Curious } from "./Context";
 
 import { ReactNode } from "react";
-import { Response } from "@curi/core";
+import { Response } from "@curi/router";
 
 export interface ActiveProps {
   children(active: boolean, response?: Response): ReactNode;
@@ -19,7 +19,7 @@ const Active = (props: ActiveProps): ReactNode => (
         router.route.active,
         `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
 
-import curi from "@curi/core";
+import curi from "@curi/router";
 import active from "@curi/route-active";
 
 const router = curi(history, routes, {

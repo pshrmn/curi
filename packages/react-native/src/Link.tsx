@@ -4,7 +4,7 @@ import { TouchableHighlight } from "react-native";
 import { Curious } from "@curi/react";
 
 import { GestureResponderEvent } from "react-native";
-import { Emitted, CuriRouter, Response } from "@curi/core";
+import { Emitted, CuriRouter, Response } from "@curi/router";
 import {
   HickoryLocation,
   PartialLocation,

@@ -1,7 +1,6 @@
-/// <reference types="react" />
 import React from "react";
 import { ReactNode } from "react";
-import { Response } from "@curi/core";
+import { Response } from "@curi/router";
 export interface ActiveProps {
     children(active: boolean, response?: Response): ReactNode;
     name: string;

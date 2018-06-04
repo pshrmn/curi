@@ -1,4 +1,4 @@
-import { Interaction } from "@curi/core";
+import { Interaction } from "@curi/router";
 export interface PrefetchType {
     initial?: boolean;
     every?: boolean;

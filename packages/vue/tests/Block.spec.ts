@@ -12,7 +12,7 @@ describe("<curi-block>", () => {
   history.removeConfirmation = mockRemoveConfirmation;
 
   const routes = [
-    { name: "Place", path: "/place/:name" },
+    { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ];
   const router = curi(history, routes);
