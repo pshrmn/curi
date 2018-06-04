@@ -1,4 +1,4 @@
-import Vue, { DirectiveOptions } from 'vue';
+import Vue, { DirectiveOptions } from "vue";
 export interface FocusComponent extends Vue {
 }
 declare const focusDirection: DirectiveOptions;

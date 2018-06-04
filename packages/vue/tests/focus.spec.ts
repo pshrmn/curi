@@ -5,6 +5,7 @@ import curi from "@curi/core";
 import CuriPlugin from "../src/plugin";
 
 describe("curi-focus directive", () => {
+  let vueWrapper;
   const history = InMemory();
   const mockConfirmWith = jest.fn();
   const mockRemoveConfirmation = jest.fn();
@@ -25,27 +26,34 @@ describe("curi-focus directive", () => {
   });
 
   afterEach(() => {
+    vueWrapper.$destroy();
     document.body.innerHTML = "";
   });
 
   it("focuses when it renders", () => {
-    const wrapper = new Vue({
+    vueWrapper = new Vue({
       template: `
         <div>
-          <main v-curi-focus="$curi.response" tabIndex="-1" id="test" />
+          <main
+            v-curi-focus="$curi.response"
+            tabIndex="-1"
+          />
         </div>
       `,
       el: node
     });
-    const div = document.body.querySelector("#test");
-    expect(document.activeElement).toBe(div);
+    const main = document.querySelector("main");
+    expect(document.activeElement).toBe(main);
   });
 
   it("does not re-focus for regular re-renders", () => {
-    const vueWrapper = new Vue({
+    vueWrapper = new Vue({
       template: `
         <div>
-          <main v-curi-focus="$curi.response" tabIndex="-1" id="test">
+          <main
+            v-curi-focus="$curi.response"
+            tabIndex="-1"
+          >
             <input :type="type" />
           </main>
         </div>
@@ -55,7 +63,7 @@ describe("curi-focus directive", () => {
         type: "text"
       }
     });
-    const wrapper = document.querySelector("#test");
+    const wrapper = document.querySelector("main");
     const initialFocus = document.activeElement;
     expect(initialFocus).toBe(wrapper);
 
@@ -71,10 +79,13 @@ describe("curi-focus directive", () => {
   });
 
   it("re-focuses for new response re-renders", done => {
-    new Vue({
+    vueWrapper = new Vue({
       template: `
         <div>
-          <main v-curi-focus="$curi.response" tabIndex="-1" id="test">
+          <main
+            v-curi-focus="$curi.response"
+            tabIndex="-1"
+          >
             <input />
           </main>
         </div>
@@ -104,7 +115,7 @@ describe("curi-focus directive", () => {
   });
 
   it("isn't affected by prop changes", done => {
-    const vueWrapper = new Vue({
+    vueWrapper = new Vue({
       template: `
         <div>
           <main v-curi-focus="$curi.response" tabIndex="-1" :class="wat">
@@ -141,14 +152,14 @@ describe("curi-focus directive", () => {
   });
 
   describe("tabIndex", () => {
-    it("warns when ref element does not have a tabIndex attribute", () => {
+    it("warns when element with directive does not have a tabIndex attribute", () => {
       const realWarn = console.error;
       const fakeWarn = (console.error = jest.fn());
 
-      const wrapper = new Vue({
+      vueWrapper = new Vue({
         template: `
           <div>
-            <main v-curi-focus="$curi.response" id="test" />
+            <main v-curi-focus="$curi.response" />
           </div>
         `,
         el: node
@@ -158,17 +169,16 @@ describe("curi-focus directive", () => {
       console.error = realWarn;
     });
 
-    it("does not warn when ref element does not have a tabIndex attribute, but ele is already focusable", () => {
+    it("does not warn when element with directive does not have a tabIndex attribute, but ele is already focusable", () => {
       const realWarn = console.error;
       const fakeWarn = (console.error = jest.fn());
 
-      const wrapper = new Vue({
+      vueWrapper = new Vue({
         template: `
           <div>
             <input
               type="text"
               v-curi-focus="$curi.response"
-              id="test"
             />
           </div>
         `,
