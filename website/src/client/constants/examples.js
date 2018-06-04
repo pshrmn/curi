@@ -1,16 +1,16 @@
 const examples = {
   react: [
     {
-      name: "Active Links",
-      category: "react",
-      slug: "active-links",
-      description: "Style links when they match the current location"
-    },
-    {
       name: "Accessibility",
       category: "react",
       slug: "accessibility",
       description: "Focus content after navigating"
+    },
+    {
+      name: "Active Links",
+      category: "react",
+      slug: "active-links",
+      description: "Style links when they match the current location"
     },
     {
       name: "Async Navigation",
@@ -71,16 +71,16 @@ const examples = {
   ],
   vue: [
     {
-      name: "Active Links",
-      category: "vue",
-      slug: "active-links",
-      description: "Style links when they match the current location"
-    },
-    {
       name: "Accessibility",
       category: "vue",
       slug: "accessibility",
       description: "Focus content after navigating"
+    },
+    {
+      name: "Active Links",
+      category: "vue",
+      slug: "active-links",
+      description: "Style links when they match the current location"
     },
     {
       name: "Async Navigation",

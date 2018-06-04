@@ -9,14 +9,7 @@ import PageLinks from "../components/PageLinks";
 import Content from "../components/Content";
 import { SideBySide, Explanation } from "../components/SideBySide";
 
-const ExampleList = ({
-  name,
-  version,
-  globalName,
-  children,
-  about,
-  unpkg = true
-}) => (
+const ExampleList = () => (
   <Page type="tutorial">
     <Content>
       <h1>Curi Examples</h1>

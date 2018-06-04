@@ -2,10 +2,11 @@ import React from "react";
 
 import ExampleComponents from "../pages/Examples";
 
-export default ({ params, data }) => {
-  if (!data) {
+export default ({ response }) => {
+  if (!response.data) {
     return <div>The requested example could not be found.</div>;
   }
-  const Component = ExampleComponents[params.category][params.slug];
-  return <Component name={data.name} />;
+  const { category, slug } = response.params;
+  const Component = ExampleComponents[category][slug];
+  return <Component name={response.data.name} />;
 };

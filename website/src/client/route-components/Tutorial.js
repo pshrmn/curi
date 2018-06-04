@@ -2,8 +2,8 @@ import React from "react";
 
 import TutorialComponents from "../pages/Tutorials";
 
-export default ({ params }) => {
-  const Component = TutorialComponents[params.slug];
+export default ({ response }) => {
+  const Component = TutorialComponents[response.params.slug];
   if (!Component) {
     return <div>The requested tutorial could not be found.</div>;
   }
