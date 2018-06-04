@@ -1,9 +1,9 @@
 {
-  "name": "@curi/route-ancestors",
-  "version": "1.0.0-beta.6",
-  "description": "Get a Curi route's ancestor routes",
-  "main": "dist/curi-route-ancestors.common.js",
-  "module": "dist/curi-route-ancestors.es.js",
+  "name": "@curi/router",
+  "version": "1.0.0-beta.35",
+  "description": "A JavaScript router that doesn't care how you render",
+  "main": "dist/curi-router.common.js",
+  "module": "dist/curi-router.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",
@@ -12,7 +12,7 @@
     "*.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist types",
     "build": "node ./scripts/build",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
@@ -22,21 +22,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pshrmn/curi/tree/master/packages/interactions/route-ancestors"
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/router"
   },
   "keywords": [
-    "Curi",
-    "route",
-    "interaction",
-    "ancestor",
-    "parent"
+    "URL",
+    "URI",
+    "routing",
+    "navigation"
   ],
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.35"
+    "@hickory/root": "1.0.0-beta.8",
+    "path-to-regexp": "^2.1.0"
   },
   "devDependencies": {
+    "@hickory/in-memory": "1.0.0-beta.5",
     "@types/jest": "^22.0.1",
     "@types/node": "^8.0.53",
     "jest": "^22.1.1",

@@ -19,7 +19,7 @@ export default ({ name, version, globalName }) => (
     globalName={globalName}
     about={
       <p>
-        The <IJS>@curi/core</IJS> package is used to create a router.
+        The <IJS>@curi/router</IJS> package is used to create a router.
       </p>
     }
   >
@@ -35,7 +35,7 @@ export default ({ name, version, globalName }) => (
             </p>
           </Explanation>
           <CodeBlock>
-            {`import curi from '@curi/core';
+            {`import curi from '@curi/router';
 
 const router = curi(history, routes, options);`}
           </CodeBlock>

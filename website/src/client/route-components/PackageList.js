@@ -26,15 +26,15 @@ const PackageList = ({
             Curi is split into a number of different packages that you can pick
             and choose from in order to only use what you need. You will always
             need the{" "}
-            <Link to="Package" params={{ package: "core" }}>
-              core
+            <Link to="Package" params={{ package: "router" }}>
+              router
             </Link>{" "}
             package, but no other package is necessary.
           </p>
           <Note>
             All of the Curi packages are scoped under <IJS>@curi</IJS>. For
-            example, to install the <IJS>core</IJS>, you would call{" "}
-            <IJS>npm install @curi/core</IJS>.
+            example, to install the <IJS>router</IJS> package, you would call{" "}
+            <IJS>npm install @curi/router</IJS>.
           </Note>
         </Explanation>
       </SideBySide>

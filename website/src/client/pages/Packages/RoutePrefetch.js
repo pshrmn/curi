@@ -55,7 +55,7 @@ export default ({ name, version, globalName }) => (
           </Explanation>
 
           <CodeBlock>
-            {`import curi from '@curi/core';
+            {`import curi from '@curi/router';
 import prefetch from '@curi/route-prefetch';
 
 const router = curi(history, routes, {

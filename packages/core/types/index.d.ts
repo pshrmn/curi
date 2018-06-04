@@ -1,3 +1,2 @@
-export * from './types';
-import curi from './curi';
+import curi from "@curi/router";
 export default curi;

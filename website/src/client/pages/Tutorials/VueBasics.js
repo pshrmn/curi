@@ -72,12 +72,12 @@ yarn serve`}
         packages that need to be installed.
       </p>
       <PrismBlock lang="bash">
-        {`yarn add @hickory/browser @curi/core @curi/vue`}
+        {`yarn add @hickory/browser @curi/router @curi/vue`}
       </PrismBlock>
       <p>
         The <IJS>@hickory/browser</IJS> package will be used to create an object
         that interacts with the browser to power navigation (e.g. updates the
-        URI in the address bar when you click a link). <IJS>@curi/core</IJS>{" "}
+        URI in the address bar when you click a link). <IJS>@curi/router</IJS>{" "}
         provides the function to actually create the router.{" "}
         <IJS>@curi/vue</IJS> gives us a plugin for Vue and some Vue components
         that interact with the router.
@@ -290,13 +290,13 @@ export default [
       <p>
         With the history object created and the routes defined, we are ready to
         create the router. Back in the <IJS>src/index.js</IJS> file, we should
-        import the <IJS>curi</IJS> function from <IJS>@curi/core</IJS> as well
+        import the <IJS>curi</IJS> function from <IJS>@curi/router</IJS> as well
         as our routes from <IJS>src/routes.js</IJS>
       </p>
       <PrismBlock lang="javascript" data-line="3,6,12">
         {`// src/main.js
 import Vue from 'vue'
-import curi from '@curi/core';
+import curi from '@curi/router';
 import Browser from '@hickory/browser'
 
 import routes from './routes';
@@ -329,7 +329,7 @@ new Vue({
       <PrismBlock lang="javascript" data-line="5,14">
         {`// src/main.js
 import Vue from 'vue'
-import curi from '@curi/core';
+import curi from '@curi/router';
 import Browser from '@hickory/browser'
 import { CuriPlugin } from '@curi/vue'
 

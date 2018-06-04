@@ -4,7 +4,7 @@ import {
   MatchResponseProperties,
   OnFns,
   Resolved
-} from "@curi/core";
+} from "@curi/router";
 import { HickoryLocation } from "@hickory/root";
 
 export interface PrefetchType {

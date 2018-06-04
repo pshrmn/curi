@@ -264,7 +264,7 @@ ReactDOM.render((
           </p>
         </Explanation>
         <CodeBlock>
-          {`import curi from '@curi/core';
+          {`import curi from '@curi/router';
 import Browser from '@hickory/browser';
 const history = Browser();
 const routes = [...];

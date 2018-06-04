@@ -1,5 +1,5 @@
 import InMemory from "@hickory/in-memory";
-import curi from "@curi/core";
+import curi from "@curi/router";
 import { Store } from "svelte/store";
 import simulant from "simulant";
 import Link from "../src/Link.html";

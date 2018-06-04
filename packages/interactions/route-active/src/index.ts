@@ -1,4 +1,4 @@
-import { Route, Response, Interaction } from "@curi/core";
+import { Route, Response, Interaction } from "@curi/router";
 
 function acceptableRouteName(
   name: string,

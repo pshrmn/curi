@@ -16,7 +16,7 @@ export default ({ name }) => (
     <SideBySide>
       <Explanation>
         <p>
-          The core Curi package to install is <IJS>@curi/core</IJS>.
+          The main Curi package to install is <IJS>@curi/router</IJS>.
         </p>
         <p>
           The router will also need a Hickory package (<IJS>
@@ -26,7 +26,9 @@ export default ({ name }) => (
           browser package is best for most websites.
         </p>
       </Explanation>
-      <CodeBlock lang="bash">npm install @hickory/browser @curi/core</CodeBlock>
+      <CodeBlock lang="bash">
+        npm install @hickory/browser @curi/router
+      </CodeBlock>
     </SideBySide>
 
     <SideBySide>
@@ -41,7 +43,7 @@ export default ({ name }) => (
  src="https://unpkg.com/@hickory/browser/dist/hickory-browser.min.js"
 ></script>
 <script
- src="https://unpkg.com/@curi/core/dist/curi.min.js"
+ src="https://unpkg.com/@curi/router/dist/curi.min.js"
 ></script>`}
       </CodeBlock>
     </SideBySide>

@@ -4,7 +4,7 @@ import { PrismBlock } from "../PrismBlocks";
 const SvelteBanner = () => (
   <PrismBlock lang="javascript">
     {`import Browser from '@hickory/browser';
-import curi from '@curi/core';
+import curi from '@curi/router';
 import { curiStore } from '@curi/svelte';
 
 const history = Browser();

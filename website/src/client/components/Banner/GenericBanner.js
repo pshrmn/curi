@@ -4,7 +4,7 @@ import { PrismBlock } from "../PrismBlocks";
 const GenericBanner = () => (
   <PrismBlock lang="javascript">
     {`import Browser from '@hickory/browser';
-import curi from '@curi/core';
+import curi from '@curi/router';
 
 // create your history object
 const history = Browser();
