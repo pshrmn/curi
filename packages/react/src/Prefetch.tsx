@@ -1,6 +1,4 @@
 import React from "react";
-import invariant from "invariant";
-import warning from "warning";
 import { Curious } from "./Context";
 
 import { ReactNode } from "react";
@@ -48,17 +46,20 @@ class PrefetchWhenVisible extends React.Component<
 
   constructor(props: PrefetchPropsWithRouter) {
     super(props);
-    invariant(
-      props.router.route.prefetch,
-      `You are attempting to use the "prefetch" route interaction, but have not included it in your Curi router.
-      
+    if (process.env.NODE_ENV !== "production") {
+      if (!props.router.route.prefetch) {
+        throw new Error(
+          `You are attempting to use the "prefetch" route interaction, but have not included it in your Curi router.
+
 import curi from "@curi/router";
 import prefetch from "@curi/route-prefetch";
 
 const router = curi(history, routes, {
   route: [prefetch()]
 });`
-    );
+        );
+      }
+    }
 
     this.state = {
       resolved: null
@@ -94,10 +95,13 @@ const router = curi(history, routes, {
   }
 
   componentDidMount() {
-    warning(
-      this.intersectionRef.current,
-      "The ref provided to the children function is null. Did you forget to pass it to a component?"
-    );
+    if (process.env.NODE_ENV !== "production") {
+      if (this.intersectionRef.current == null) {
+        console.warn(
+          "The ref provided to the children function is null. Did you forget to pass it to a component?"
+        );
+      }
+    }
     if (this.intersectionRef.current != null) {
       this.obs.observe(this.intersectionRef.current);
     }

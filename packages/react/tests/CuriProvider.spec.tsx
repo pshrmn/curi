@@ -31,8 +31,8 @@ describe("<CuriProvider>", () => {
         node
       );
 
-      const realWarn = console.error;
-      const fakeWarn = (console.error = jest.fn());
+      const realWarn = console.warn;
+      const fakeWarn = (console.warn = jest.fn());
 
       expect(fakeWarn.mock.calls.length).toBe(0);
 
@@ -43,10 +43,10 @@ describe("<CuriProvider>", () => {
 
       expect(fakeWarn.mock.calls.length).toBe(1);
       expect(fakeWarn.mock.calls[0][0]).toBe(
-        `Warning: The "router" prop passed to <CuriProvider> cannot be changed. If you need to update the router's routes, use router.replaceRoutes().`
+        `The "router" prop passed to <CuriProvider> cannot be changed. If you need to update the router's routes, use router.replaceRoutes().`
       );
 
-      console.error = realWarn;
+      console.warn = realWarn;
     });
   });
 

@@ -50,8 +50,8 @@ describe("curi", () => {
     });
 
     describe("paths beginning with forward slash", () => {
-      const realWarn = console.error;
-      const fakeWarn = (console.error = jest.fn());
+      const realWarn = console.warn;
+      const fakeWarn = (console.warn = jest.fn());
 
       const routes = [
         { name: "Home", path: "/" },
@@ -63,7 +63,7 @@ describe("curi", () => {
       });
 
       afterAll(() => {
-        console.error = realWarn;
+        console.warn = realWarn;
       });
 
       it("removes the leading slash", () => {

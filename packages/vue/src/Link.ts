@@ -1,6 +1,5 @@
 import Vue, { CreateElement, ComponentOptions } from "vue";
 import { HickoryLocation } from "@hickory/root";
-import warning from "warning";
 
 export interface LinkComponent extends Vue {
   to: string;

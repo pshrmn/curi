@@ -89,7 +89,7 @@ describe("<Link>", () => {
 
   describe("params", () => {
     const routes = [
-      { name: "Park", path: "/park/:name" },
+      { name: "Park", path: "park/:name" },
       { name: "Catch All", path: "(.*)" }
     ];
 
@@ -156,7 +156,7 @@ describe("<Link>", () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
       const routes = [
-        { name: "Parks", path: "/parks" },
+        { name: "Parks", path: "parks" },
         { name: "Catch All", path: "(.*)" }
       ];
       const router = curi(history, routes);
