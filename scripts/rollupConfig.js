@@ -3,7 +3,7 @@ const replace = require("rollup-plugin-replace");
 const commonjs = require("rollup-plugin-commonjs");
 const resolve = require("rollup-plugin-node-resolve");
 
-module.exports = function(options = {}) {
+module.exports = function(options, env) {
   const {
     name,
     file,
@@ -22,9 +22,8 @@ module.exports = function(options = {}) {
     "@class": "#__PURE__"
   };
   if (safeModules) {
-    replacePatterns["process.env.NODE_ENV"] = JSON.stringify(
-      process.env.NODE_ENV
-    );
+    console.log("BUILDING WITH", env.NODE_ENV);
+    replacePatterns["process.env.NODE_ENV"] = JSON.stringify(env.NODE_ENV);
   }
 
   const plugins = [

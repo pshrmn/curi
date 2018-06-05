@@ -16,7 +16,7 @@ function buildCommands(cmds) {
 }
 
 async function rollupBuild(name, config, extraEnv) {
-  const { inputOptions, outputOptions } = buildConfig(config);
+  const { inputOptions, outputOptions } = buildConfig(config, extraEnv);
 
   const buildStartTime = new Date();
   console.log("\nBuilding", name);
