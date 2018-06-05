@@ -22,7 +22,6 @@ module.exports = function(options, env) {
     "@class": "#__PURE__"
   };
   if (safeModules) {
-    console.log("BUILDING WITH", env.NODE_ENV);
     replacePatterns["process.env.NODE_ENV"] = JSON.stringify(env.NODE_ENV);
   }
 
