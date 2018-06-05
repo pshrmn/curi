@@ -49,6 +49,36 @@ describe("curi", () => {
       });
     });
 
+    describe("paths beginning with forward slash", () => {
+      const realWarn = console.error;
+      const fakeWarn = (console.error = jest.fn());
+
+      const routes = [
+        { name: "Home", path: "/" },
+        { name: "Catch All", path: "(.*)" }
+      ];
+
+      afterEach(() => {
+        fakeWarn.mockReset();
+      });
+
+      afterAll(() => {
+        console.error = realWarn;
+      });
+
+      it("removes the leading slash", () => {
+        const router = curi(history, routes);
+        router.respond(({ response }) => {
+          expect(response.name).toBe("Home");
+        });
+      });
+
+      it("warns", () => {
+        const router = curi(history, routes);
+        expect(fakeWarn.mock.calls.length).toBe(1);
+      });
+    });
+
     it("makes interactions available through router.route", () => {
       const routes = [{ name: "Home", path: "" }];
       const createfakeInteraction = () => ({

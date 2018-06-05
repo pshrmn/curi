@@ -1,4 +1,5 @@
 import PathToRegexp from "path-to-regexp";
+import warning from "warning";
 
 import once from "./utils/once";
 
@@ -8,7 +9,6 @@ import { Key } from "path-to-regexp";
 const createRoute = (options: RouteDescriptor): InternalRoute => {
   const {
     name,
-    path,
     pathOptions = {},
     children: descriptorChildren = [],
     response,
@@ -16,6 +16,15 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     extra,
     params: paramParsers
   } = options;
+  let { path } = options;
+
+  if (path.charAt(0) === "/") {
+    warning(
+      false,
+      `Route paths cannot start with a forward slash (/). (Received "${path}")`
+    );
+    path = path.slice(1);
+  }
 
   // end defaults to true, so end has to be hardcoded for it to be false
   // set this before setting pathOptions.end for children
