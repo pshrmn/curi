@@ -1,30 +1,62 @@
-const rollupBuild = require('../../../scripts/build');
+const rollupBuild = require("../../../scripts/build");
+
+const name = "CuriReact";
 
 // don't bundle dependencies for es/cjs builds
-const pkg = require('../package.json')
+const pkg = require("../package.json");
 const deps = Object.keys(pkg.dependencies).map(key => key);
-const depsString = deps.join(',');
 
-rollupBuild(
-  'ES',
-  { f: 'es', o: 'dist/curi-react.es.js', e: depsString },
-  { NODE_ENV: 'development', BABEL_ENV: 'build' }
-);
+const external = [...deps, "react"];
+const globals = {
+  react: "React"
+};
 
-rollupBuild(
-  'CommonJS',
-  { f: 'cjs', o: 'dist/curi-react.common.js', e: depsString },
-  { NODE_ENV: 'development', BABEL_ENV: 'build' }
-);
+rollupBuild([
+  [
+    "ES",
+    {
+      name,
+      format: "es",
+      file: "dist/curi-react.es.js",
+      external,
+      safeModules: false
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
 
-rollupBuild(
-  '<script> file',
-  { f: 'iife', o: 'dist/curi-react.js' },
-  { NODE_ENV: 'development', BABEL_ENV: 'build' }
-);
+  [
+    "CommonJS",
+    {
+      name,
+      format: "cjs",
+      file: "dist/curi-react.common.js",
+      external,
+      safeModules: false
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
 
-rollupBuild(
-  '<script> min file',
-  { f: 'iife', o: 'dist/curi-react.min.js' },
-  { NODE_ENV: 'production', BABEL_ENV: 'build' }
-);
+  [
+    "<script> file",
+    {
+      name,
+      format: "iife",
+      file: "dist/curi-react.js",
+      external
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
+
+  [
+    "<script> min file",
+    {
+      name,
+      format: "iife",
+      file: "dist/curi-react.min.js",
+      external,
+      globals,
+      uglify: true
+    },
+    { NODE_ENV: "production", BABEL_ENV: "build" }
+  ]
+]);

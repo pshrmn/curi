@@ -1,25 +1,54 @@
 const rollupBuild = require("../../../../scripts/build");
 
-rollupBuild(
-  "ES",
-  { f: "es", o: "dist/curi-route-active.es.js" },
-  { NODE_ENV: "development" }
-);
+const name = "CuriRouteActive";
 
-rollupBuild(
-  "CommonJS",
-  { f: "cjs", o: "dist/curi-route-active.common.js" },
-  { NODE_ENV: "development" }
-);
+// don't bundle dependencies for es/cjs builds
+const pkg = require("../package.json");
+const deps = Object.keys(pkg.dependencies).map(key => key);
 
-rollupBuild(
-  "<script> file",
-  { f: "iife", o: "dist/curi-route-active.js" },
-  { NODE_ENV: "development" }
-);
+rollupBuild([
+  [
+    "ES",
+    {
+      name,
+      format: "es",
+      file: "dist/curi-route-active.es.js",
+      external: deps,
+      safeModules: false
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
 
-rollupBuild(
-  "<script> min file",
-  { f: "iife", o: "dist/curi-route-active.min.js" },
-  { NODE_ENV: "production" }
-);
+  [
+    "CommonJS",
+    {
+      name,
+      format: "cjs",
+      file: "dist/curi-route-active.common.js",
+      external: deps,
+      safeModules: false
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
+
+  [
+    "<script> file",
+    {
+      name,
+      format: "iife",
+      file: "dist/curi-route-active.js"
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
+
+  [
+    "<script> min file",
+    {
+      name,
+      format: "iife",
+      file: "dist/curi-route-active.min.js",
+      uglify: true
+    },
+    { NODE_ENV: "production", BABEL_ENV: "build" }
+  ]
+]);

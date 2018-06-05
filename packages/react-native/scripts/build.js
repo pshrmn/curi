@@ -1,18 +1,39 @@
 const rollupBuild = require("../../../scripts/build");
 
+const name = "CuriReactNative";
+
 // don't bundle dependencies for es/cjs builds
 const pkg = require("../package.json");
 const deps = Object.keys(pkg.dependencies).map(key => key);
-const depsString = deps.join(",");
 
-rollupBuild(
-  "ES",
-  { f: "es", o: "dist/curi-react-native.es.js", e: depsString },
-  { NODE_ENV: "development", BABEL_ENV: "build" }
-);
+const external = [...deps, "react", "react-native"];
+const globals = {
+  react: "React",
+  "react-native": "ReactNative"
+};
 
-rollupBuild(
-  "CommonJS",
-  { f: "cjs", o: "dist/curi-react-native.common.js", e: depsString },
-  { NODE_ENV: "development", BABEL_ENV: "build" }
-);
+rollupBuild([
+  [
+    "ES",
+    {
+      name,
+      format: "es",
+      file: "dist/curi-react-native.es.js",
+      external,
+      safeModules: false
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
+
+  [
+    "CommonJS",
+    {
+      name,
+      format: "cjs",
+      file: "dist/curi-react-native.common.js",
+      external,
+      safeModules: false
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ]
+]);
