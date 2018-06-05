@@ -122,8 +122,8 @@ describe("<Focus>", () => {
 
   describe("tabIndex", () => {
     it("warns when ref element does not have a tabIndex attribute", () => {
-      const realWarn = console.error;
-      const fakeWarn = (console.error = jest.fn());
+      const realWarn = console.warn;
+      const fakeWarn = (console.warn = jest.fn());
 
       ReactDOM.render(
         <CuriProvider router={router}>
@@ -140,12 +140,12 @@ describe("<Focus>", () => {
         node
       );
       expect(fakeWarn.mock.calls.length).toBe(1);
-      console.error = realWarn;
+      console.warn = realWarn;
     });
 
     it("does not warn when ref element does not have a tabIndex attribute, but ele is already focusable", () => {
-      const realWarn = console.error;
-      const fakeWarn = (console.error = jest.fn());
+      const realWarn = console.warn;
+      const fakeWarn = (console.warn = jest.fn());
 
       ReactDOM.render(
         <CuriProvider router={router}>
@@ -162,7 +162,7 @@ describe("<Focus>", () => {
         node
       );
       expect(fakeWarn.mock.calls.length).toBe(0);
-      console.error = realWarn;
+      console.warn = realWarn;
     });
   });
 });

@@ -124,7 +124,7 @@ describe("prefetch", () => {
         );
       }).toThrow(
         `You are attempting to use the "prefetch" route interaction, but have not included it in your Curi router.
-      
+
 import curi from "@curi/router";
 import prefetch from "@curi/route-prefetch";
 
@@ -460,8 +460,8 @@ const router = curi(history, routes, {
       });
 
       it("warns if ref if null after mounting", () => {
-        const realWarn = console.error;
-        const mockWarn = (console.error = jest.fn());
+        const realWarn = console.warn;
+        const mockWarn = (console.warn = jest.fn());
 
         const history = InMemory();
         const match = { name: "Prefetch" };
@@ -500,10 +500,10 @@ const router = curi(history, routes, {
         );
         expect(mockWarn.mock.calls.length).toBe(1);
         expect(mockWarn.mock.calls[0][0]).toBe(
-          "Warning: The ref provided to the children function is null. Did you forget to pass it to a component?"
+          "The ref provided to the children function is null. Did you forget to pass it to a component?"
         );
 
-        console.error = realWarn;
+        console.warn = realWarn;
       });
     });
 

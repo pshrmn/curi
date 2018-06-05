@@ -1,5 +1,4 @@
 import PathToRegexp from "path-to-regexp";
-import warning from "warning";
 
 import once from "./utils/once";
 
@@ -19,10 +18,11 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
   let { path } = options;
 
   if (path.charAt(0) === "/") {
-    warning(
-      false,
-      `Route paths cannot start with a forward slash (/). (Received "${path}")`
-    );
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        `Route paths cannot start with a forward slash (/). (Received "${path}")`
+      );
+    }
     path = path.slice(1);
   }
 

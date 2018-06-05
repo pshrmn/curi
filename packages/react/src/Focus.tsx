@@ -1,5 +1,4 @@
 import React from "react";
-import warning from "warning";
 import { Curious } from "./Context";
 
 import { ReactNode, ReactType, Ref } from "react";
@@ -44,12 +43,17 @@ class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
   focus() {
     // https://developers.google.com/web/fundamentals/accessibility/focus/using-tabindex#managing_focus_at_the_page_level
     if (this.eleToFocus !== null) {
-      warning(
-        this.eleToFocus.hasAttribute("tabIndex") ||
-          this.eleToFocus.tabIndex !== -1,
-        'The component that is passed the ref must have a "tabIndex" prop or be focusable by default in order to be focused. ' +
-          "Otherwise, the document's <body> will be focused instead."
-      );
+      if (process.env.NODE_ENV !== "production") {
+        if (
+          !this.eleToFocus.hasAttribute("tabIndex") &&
+          this.eleToFocus.tabIndex === -1
+        ) {
+          console.warn(
+            'The component that is passed the ref must have a "tabIndex" prop or be focusable by default in order to be focused. ' +
+              "Otherwise, the document's <body> will be focused instead."
+          );
+        }
+      }
       this.eleToFocus.focus();
     }
   }

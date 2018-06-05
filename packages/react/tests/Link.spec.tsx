@@ -88,7 +88,7 @@ describe("<Link>", () => {
   describe("params", () => {
     let history, router;
     const routes = [
-      { name: "Park", path: "/park/:name" },
+      { name: "Park", path: "park/:name" },
       { name: "Catch All", path: "(.*)" }
     ];
 

@@ -1,5 +1,4 @@
 import React from "react";
-import invariant from "invariant";
 import { TouchableHighlight } from "react-native";
 import { Curious } from "@curi/react";
 

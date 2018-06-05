@@ -36,7 +36,7 @@ describe("<Active>", () => {
   });
 
   describe("no route.active()", () => {
-    it('warns if attempting to use in a Curi router without the "active" route interaction', () => {
+    it('throws if attempting to use in a Curi router without the "active" route interaction', () => {
       const router = curi(history, routes);
 
       const realError = console.error;

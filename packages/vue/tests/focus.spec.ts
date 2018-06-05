@@ -155,8 +155,8 @@ describe("curi-focus directive", () => {
 
   describe("tabIndex", () => {
     it("warns when element with directive does not have a tabIndex attribute", () => {
-      const realWarn = console.error;
-      const fakeWarn = (console.error = jest.fn());
+      const realWarn = console.warn;
+      const fakeWarn = (console.warn = jest.fn());
 
       vueWrapper = new Vue({
         template: `
@@ -168,12 +168,12 @@ describe("curi-focus directive", () => {
       });
       expect(fakeWarn.mock.calls.length).toBe(1);
       expect(document.activeElement).toBe(document.body);
-      console.error = realWarn;
+      console.warn = realWarn;
     });
 
     it("does not warn when element with directive does not have a tabIndex attribute, but ele is already focusable", () => {
-      const realWarn = console.error;
-      const fakeWarn = (console.error = jest.fn());
+      const realWarn = console.warn;
+      const fakeWarn = (console.warn = jest.fn());
 
       vueWrapper = new Vue({
         template: `
@@ -194,7 +194,7 @@ describe("curi-focus directive", () => {
       expect(fakeWarn.mock.calls.length).toBe(0);
       const input = document.body.querySelector("input");
       expect(document.activeElement).toBe(input);
-      console.error = realWarn;
+      console.warn = realWarn;
     });
   });
 });

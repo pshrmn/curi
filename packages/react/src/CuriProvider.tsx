@@ -1,6 +1,4 @@
 import React from "react";
-import warning from "warning";
-
 import { Provider } from "./Context";
 
 import {
@@ -44,10 +42,13 @@ class CuriProvider extends React.Component<
   }
 
   componentWillReceiveProps(nextProps: CuriProviderProps) {
-    warning(
-      nextProps.router === this.props.router,
-      `The "router" prop passed to <CuriProvider> cannot be changed. If you need to update the router's routes, use router.replaceRoutes().`
-    );
+    if (process.env.NODE_ENV !== "production") {
+      if (nextProps.router !== this.props.router) {
+        console.warn(
+          `The "router" prop passed to <CuriProvider> cannot be changed. If you need to update the router's routes, use router.replaceRoutes().`
+        );
+      }
+    }
   }
 
   componentWillUnmount() {
