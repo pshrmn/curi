@@ -1,25 +1,63 @@
 const rollupBuild = require("../../../../scripts/build");
+const typescript = require("rollup-plugin-typescript2");
 
-rollupBuild(
-  "ES",
-  { f: "es", o: "dist/curi-route-ancestors.es.js" },
-  { NODE_ENV: "development", BABEL_ENV: "build" }
-);
+// don't bundle dependencies for es/cjs builds
+const pkg = require("../package.json");
+const deps = Object.keys(pkg.dependencies).map(key => key);
 
-rollupBuild(
-  "CommonJS",
-  { f: "cjs", o: "dist/curi-route-ancestors.common.js" },
-  { NODE_ENV: "development", BABEL_ENV: "build" }
-);
+const base = {
+  name: "CuriRouteAncestors",
+  input: "src/index.ts",
+  plugins: [
+    typescript({
+      useTsconfigDeclarationDir: true
+    })
+  ]
+};
 
-rollupBuild(
-  "<script> file",
-  { f: "iife", o: "dist/curi-route-ancestors.js" },
-  { NODE_ENV: "development", BABEL_ENV: "build" }
-);
+rollupBuild([
+  [
+    "ES",
+    {
+      ...base,
+      format: "es",
+      file: "dist/curi-route-ancestors.es.js",
+      external: deps,
+      safeModules: false
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
 
-rollupBuild(
-  "<script> min file",
-  { f: "iife", o: "dist/curi-route-ancestors.min.js" },
-  { NODE_ENV: "production", BABEL_ENV: "build" }
-);
+  [
+    "CommonJS",
+    {
+      ...base,
+      format: "cjs",
+      file: "dist/curi-route-ancestors.common.js",
+      external: deps,
+      safeModules: false
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
+
+  [
+    "<script> file",
+    {
+      ...base,
+      format: "iife",
+      file: "dist/curi-route-ancestors.js"
+    },
+    { NODE_ENV: "development", BABEL_ENV: "build" }
+  ],
+
+  [
+    "<script> min file",
+    {
+      ...base,
+      format: "iife",
+      file: "dist/curi-route-ancestors.min.js",
+      uglify: true
+    },
+    { NODE_ENV: "production", BABEL_ENV: "build" }
+  ]
+]);
