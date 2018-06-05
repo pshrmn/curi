@@ -1,4 +1,3 @@
-const typescript = require("rollup-plugin-typescript2");
 const uglifyPlugin = require("rollup-plugin-uglify");
 const replace = require("rollup-plugin-replace");
 const commonjs = require("rollup-plugin-commonjs");
@@ -15,8 +14,7 @@ module.exports = function(options = {}) {
     plugins: userPlugins = [],
     sourcemap = false,
     safeModules = true,
-    uglify = false,
-    typescript: useTypescript = true
+    uglify = false
   } = options;
 
   const replacePatterns = {
@@ -37,13 +35,7 @@ module.exports = function(options = {}) {
       include: /node_modules/
     })
   ];
-  if (useTypescript) {
-    plugins.push(
-      typescript({
-        useTsconfigDeclarationDir: true
-      })
-    );
-  }
+
   if (uglify) {
     plugins.push(uglifyPlugin());
   }

@@ -29,6 +29,7 @@
     "typescript": "^2.6.1"
   },
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.35"
+    "@curi/router": "^1.0.0-beta.35",
+    "rollup-plugin-typescript2": "^0.14.0"
   }
 }

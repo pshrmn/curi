@@ -40,17 +40,18 @@
     "react-native": ">=0.55.0"
   },
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.35",
     "@curi/react": "^1.0.0-beta.26",
+    "@curi/router": "^1.0.0-beta.35",
     "@hickory/root": "^1.0.0-beta.8",
     "@types/invariant": "^2.2.29",
     "@types/react": "^16.3.11",
-    "invariant": "^2.2.2"
+    "invariant": "^2.2.2",
+    "rollup-plugin-typescript2": "^0.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.37",
-    "@curi/router": "^1.0.0-beta.35",
     "@curi/route-active": "^1.0.0-beta.6",
+    "@curi/router": "^1.0.0-beta.35",
     "@hickory/in-memory": "^1.0.0-beta.5",
     "@types/enzyme": "^2.8.8",
     "@types/jest": "^22.0.1",

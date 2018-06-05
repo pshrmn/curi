@@ -1,4 +1,5 @@
 const rollupBuild = require("../../../scripts/build");
+const typescript = require("rollup-plugin-typescript2");
 
 const name = "CuriReact";
 
@@ -11,6 +12,12 @@ const globals = {
   react: "React"
 };
 
+const plugins = [
+  typescript({
+    useTsconfigDeclarationDir: true
+  })
+];
+
 rollupBuild([
   [
     "ES",
@@ -19,6 +26,7 @@ rollupBuild([
       format: "es",
       file: "dist/curi-react.es.js",
       external,
+      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -31,6 +39,7 @@ rollupBuild([
       format: "cjs",
       file: "dist/curi-react.common.js",
       external,
+      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -42,7 +51,8 @@ rollupBuild([
       name,
       format: "iife",
       file: "dist/curi-react.js",
-      external
+      external,
+      plugins
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
@@ -55,6 +65,7 @@ rollupBuild([
       file: "dist/curi-react.min.js",
       external,
       globals,
+      plugins,
       uglify: true
     },
     { NODE_ENV: "production", BABEL_ENV: "build" }

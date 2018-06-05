@@ -1,4 +1,5 @@
 const rollupBuild = require("../../../scripts/build");
+const typescript = require("rollup-plugin-typescript2");
 
 const name = "CuriReactNative";
 
@@ -12,6 +13,12 @@ const globals = {
   "react-native": "ReactNative"
 };
 
+const plugins = [
+  typescript({
+    useTsconfigDeclarationDir: true
+  })
+];
+
 rollupBuild([
   [
     "ES",
@@ -20,6 +27,7 @@ rollupBuild([
       format: "es",
       file: "dist/curi-react-native.es.js",
       external,
+      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -32,6 +40,7 @@ rollupBuild([
       format: "cjs",
       file: "dist/curi-react-native.common.js",
       external,
+      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }

@@ -1,4 +1,5 @@
 const rollupBuild = require("../../../scripts/build");
+const typescript = require("rollup-plugin-typescript2");
 
 const name = "CuriVue";
 
@@ -10,6 +11,12 @@ const globals = {
   vue: "Vue"
 };
 
+const plugins = [
+  typescript({
+    useTsconfigDeclarationDir: true
+  })
+];
+
 rollupBuild([
   [
     "ES",
@@ -18,6 +25,7 @@ rollupBuild([
       format: "es",
       file: "dist/curi-vue.es.js",
       external,
+      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -30,6 +38,7 @@ rollupBuild([
       format: "cjs",
       file: "dist/curi-vue.common.js",
       external,
+      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -42,7 +51,8 @@ rollupBuild([
       format: "iife",
       file: "dist/curi-vue.js",
       external,
-      globals
+      globals,
+      plugins
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
@@ -55,6 +65,7 @@ rollupBuild([
       file: "dist/curi-vue.min.js",
       external,
       globals,
+      plugins,
       uglify: true
     },
     { NODE_ENV: "production", BABEL_ENV: "build" }
