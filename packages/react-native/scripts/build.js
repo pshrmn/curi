@@ -1,16 +1,19 @@
 const rollupBuild = require("../../../scripts/build");
 const typescript = require("rollup-plugin-typescript2");
 
-const name = "CuriReactNative";
-
 // don't bundle dependencies for es/cjs builds
 const pkg = require("../package.json");
 const deps = Object.keys(pkg.dependencies).map(key => key);
 
-const external = [...deps, "react", "react-native"];
-const globals = {
-  react: "React",
-  "react-native": "ReactNative"
+const base = {
+  name: "CuriReactNative",
+  input: "src/index.ts",
+  plugins: [
+    typescript({
+      useTsconfigDeclarationDir: true
+    })
+  ],
+  external: [...deps, "react", "react-native"]
 };
 
 const plugins = [
@@ -23,11 +26,9 @@ rollupBuild([
   [
     "ES",
     {
-      name,
+      ...base,
       format: "es",
       file: "dist/curi-react-native.es.js",
-      external,
-      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -36,11 +37,9 @@ rollupBuild([
   [
     "CommonJS",
     {
-      name,
+      ...base,
       format: "cjs",
       file: "dist/curi-react-native.common.js",
-      external,
-      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }

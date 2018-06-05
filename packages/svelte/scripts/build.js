@@ -1,30 +1,33 @@
 const rollupBuild = require("../../../scripts/build");
 const copyHTML = require("./copyHTML");
 const sveltePlugin = require("rollup-plugin-svelte");
-
-const name = "CuriSvelte";
+const babelPlugin = require("rollup-plugin-babel");
 
 // don't bundle dependencies for es/cjs builds
 const pkg = require("../package.json");
 const deps = Object.keys(pkg.dependencies).map(key => key);
 const external = [...deps, "svelte/store"];
 
-const plugins = [
-  sveltePlugin({
-    include: "src/**/*.html"
-  })
-];
+const base = {
+  name: "CuriSvelte",
+  input: "src/index.js",
+  plugins: [
+    sveltePlugin({
+      include: "src/**/*.html"
+    }),
+    babelPlugin({
+      exclude: "node_modules/**"
+    })
+  ]
+};
 
 rollupBuild([
   [
     "ES",
     {
-      name,
+      ...base,
       format: "es",
-      input: "src/index.js",
       file: "dist/curi-svelte.es.js",
-      plugins,
-      external,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -32,12 +35,9 @@ rollupBuild([
   [
     "CommonJS",
     {
-      name,
+      ...base,
       format: "cjs",
-      input: "src/index.js",
       file: "dist/curi-svelte.common.js",
-      plugins,
-      external,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }

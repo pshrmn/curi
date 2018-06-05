@@ -1,27 +1,28 @@
 const rollupBuild = require("../../../scripts/build");
 const typescript = require("rollup-plugin-typescript2");
 
-const name = "Curi";
-
 // don't bundle dependencies for es/cjs builds
 const pkg = require("../package.json");
 const deps = Object.keys(pkg.dependencies).map(key => key);
 
-const plugins = [
-  typescript({
-    useTsconfigDeclarationDir: true
-  })
-];
+const base = {
+  name: "Curi",
+  input: "src/index.ts",
+  plugins: [
+    typescript({
+      useTsconfigDeclarationDir: true
+    })
+  ]
+};
 
 rollupBuild([
   [
     "ES",
     {
-      name,
+      ...base,
       format: "es",
       file: "dist/curi-core.es.js",
       external: deps,
-      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -30,11 +31,10 @@ rollupBuild([
   [
     "CommonJS",
     {
-      name,
+      ...base,
       format: "cjs",
       file: "dist/curi-core.common.js",
       external: deps,
-      plugins,
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -43,10 +43,9 @@ rollupBuild([
   [
     "<script> file",
     {
-      name,
+      ...base,
       format: "iife",
-      file: "dist/curi-core.js",
-      plugins
+      file: "dist/curi-core.js"
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
@@ -54,10 +53,9 @@ rollupBuild([
   [
     "<script> min file",
     {
-      name,
+      ...base,
       format: "iife",
       file: "dist/curi-core.min.js",
-      plugins,
       uglify: true
     },
     { NODE_ENV: "production", BABEL_ENV: "build" }

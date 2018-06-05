@@ -7,7 +7,7 @@ module.exports = function(options = {}) {
   const {
     name,
     file,
-    input = "src/index.ts",
+    input,
     external = [],
     globals = {},
     format = "cjs",
