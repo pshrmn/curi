@@ -17,22 +17,28 @@ module.exports = function(options, env) {
     uglify = false
   } = options;
 
-  const replacePatterns = {
-    // Typescript -> Uglify
-    "@class": "#__PURE__"
-  };
-  if (safeModules) {
-    replacePatterns["process.env.NODE_ENV"] = JSON.stringify(env.NODE_ENV);
-  }
-
   const plugins = [
     ...userPlugins,
-    replace(replacePatterns),
+    // Typescript -> Uglify
+    replace({
+      values: {
+        "@class": "#__PURE__"
+      },
+      delimiters: ["", ""]
+    }),
     resolve(),
     commonjs({
       include: /node_modules/
     })
   ];
+
+  if (safeModules) {
+    plugins.push(
+      replace({
+        "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV)
+      })
+    );
+  }
 
   if (uglify) {
     plugins.push(uglifyPlugin());
