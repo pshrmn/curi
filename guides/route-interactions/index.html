@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +9,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides/getting-started/">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main><div class="page guide"><div class="content"><h1>Route Interactions</h1><div class="side-by-side"><div class="explanation"><p>Route interactions let you interact with a registered route using its name.</p><p>A registered route is generally any route that is in the array of routes that you used to create your router. However, some interactions only register routes that meet some criteria. For example, the<!-- --> <code class="inline-code language-javascript">prefetch</code> interaction only registers routes with asynchronous methods.</p><p>Route interactions are defined using objects with four properties: name, register, get, and reset.</p></div><div class="code-block"><pre><code class="language-javascript">{
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides/getting-started/">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Route Interactions</h1><div class="side-by-side"><div class="explanation"><p>Route interactions let you interact with a registered route using its name.</p><p>A registered route is generally any route that is in the array of routes that you used to create your router. However, some interactions only register routes that meet some criteria. For example, the<!-- --> <code class="inline-code language-javascript">prefetch</code> interaction only registers routes with asynchronous methods.</p><p>Route interactions are defined using objects with four properties: name, register, get, and reset.</p></div><div class="code-block"><pre><code class="language-javascript">{
   // The string you will use to call the interaction.
   name: &#x27;my&#x27;,
 
@@ -62,7 +62,7 @@ export default function confirmInteraction() {
       knownRoutes = {};
     }
   };
-}</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>In your application, you can import it, call the factory to create the interaction, and register the interaction when you create the router.</p></div><div class="code-block"><pre><code class="language-javascript">import curi from &#x27;@curi/core&#x27;;
+}</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>In your application, you can import it, call the factory to create the interaction, and register the interaction when you create the router.</p></div><div class="code-block"><pre><code class="language-javascript">import curi from &#x27;@curi/router&#x27;;
 import confirmFactory from &#x27;./interactions/confirm&#x27;
 
 const routes = [{ name: &#x27;Home&#x27;, path: &#x27;&#x27; }];
