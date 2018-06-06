@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import curi from "@curi/core";
+import curi from "@curi/router";
 import Browser from "@hickory/browser";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { CuriProvider } from "@curi/react";

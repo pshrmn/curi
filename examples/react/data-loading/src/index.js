@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { CuriProvider } from "@curi/react";
 import Browser from "@hickory/browser";
-import curi from "@curi/core";
+import curi from "@curi/router";
 import prefetch from "@curi/route-prefetch";
 
 import NavLinks from "./components/NavLinks";

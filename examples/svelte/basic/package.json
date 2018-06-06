@@ -25,7 +25,7 @@
     "webpack": "^2.5.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.36",
+    "@curi/router": "^1.0.0-beta.36",
     "@curi/svelte": "^1.0.0-beta.6",
     "@hickory/browser": "^1.0.0-beta.5",
     "svelte": "^1.49.3"

@@ -1,5 +1,5 @@
 import Vue from "vue";
-import curi from "@curi/core";
+import curi from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 import Browser from "@hickory/browser";
 import ancestors from "@curi/route-ancestors";

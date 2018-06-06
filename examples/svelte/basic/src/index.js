@@ -1,5 +1,5 @@
 import Browser from "@hickory/browser";
-import curi from "@curi/core";
+import curi from "@curi/router";
 import { Store } from "svelte/store";
 
 import routes from "./routes";
