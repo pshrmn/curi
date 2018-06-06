@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/updating-routes",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Update the known routes of a Curi application",
   "main": "index.js",
   "scripts": {
@@ -18,8 +18,8 @@
     "webpack": "^3.9.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.30",
-    "@curi/react": "^1.0.0-beta.21",
+    "@curi/core": "^1.0.0-beta.36",
+    "@curi/react": "^1.0.0-beta.27",
     "@hickory/browser": "^1.0.0-beta.5",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

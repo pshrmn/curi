@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.36
 
 - Warns when route `path`s begin with a forward slash.
 - Side effects are now only called after observers registered with `router.respond()`. Instead of registering them with an object, only the side effect observer function is passed.

@@ -19,6 +19,7 @@ export default function createHandler(debug = false) {
     });
 
     router.respond(({ response }) => {
+      // TODO: Detect redirects?
       const markup = renderToString(
         <CuriProvider router={router}>{renderFunction}</CuriProvider>
       );

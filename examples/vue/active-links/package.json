@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/active-links-vue",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Style links differently when they are active",
   "main": "index.js",
   "scripts": {
@@ -27,9 +27,9 @@
     "webpack": "^2.5.1"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.30",
+    "@curi/core": "^1.0.0-beta.36",
     "@curi/route-active": "^1.0.0-beta.6",
-    "@curi/vue": "^1.0.0-beta.17",
+    "@curi/vue": "^1.0.0-beta.19",
     "@hickory/browser": "^1.0.0-beta.5",
     "vue": "^2.5.9"
   }

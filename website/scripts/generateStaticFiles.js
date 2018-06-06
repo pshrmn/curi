@@ -75,6 +75,7 @@ module.exports = function generateStaticFiles(routes, params) {
           console.log(p);
         })
         .catch(err => {
+          console.log("OH NO WHAT HAPPEND?", p);
           throw Error(err);
         })
     )

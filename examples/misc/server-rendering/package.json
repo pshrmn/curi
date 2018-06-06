@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/server-rendering",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Server rendering with curi",
   "main": "index.js",
   "scripts": {
@@ -28,8 +28,8 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "@curi/core": "^1.0.0-beta.30",
-    "@curi/react": "^1.0.0-beta.21",
+    "@curi/core": "^1.0.0-beta.36",
+    "@curi/react": "^1.0.0-beta.27",
     "@hickory/browser": "^1.0.0-beta.5",
     "@hickory/in-memory": "^1.0.0-beta.3",
     "express": "^4.16.2",

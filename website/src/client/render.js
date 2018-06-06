@@ -6,13 +6,16 @@ import "./scss/index.scss";
 import "./scss/main.scss";
 
 export default function render({ response }) {
-  const { body: Body } = response;
+  let { body: Body } = response;
+  if (!Body) {
+    Body = () => <div>Redirecting...</div>;
+  }
   return (
     <React.Fragment>
       <Header />
       <Focus>
         {ref => (
-          <main ref={ref} tabIndex={-1}>
+          <main ref={ref} tabIndex={-1} style={{ outline: "none" }}>
             <Body response={response} />
           </main>
         )}
