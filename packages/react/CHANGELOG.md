@@ -1,5 +1,6 @@
 ## Next
 
+- `<Link>` is now a pure component.
 - `<Focus>` uses a 0 second timeout to delay focusing.
 
 ## 1.0.0-beta.27
