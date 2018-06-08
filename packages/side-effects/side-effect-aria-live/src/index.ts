@@ -1,17 +1,17 @@
 import { Observer, Emitted } from "@curi/router";
 
+export type AriaLiveValue = "assertive" | "polite" | "off";
+
 export default function createAriaLiveSideEffect(
-  el: HTMLElement,
-  fmt: (emitted: Emitted) => string
+  fmt: (emitted: Emitted) => string,
+  mode: AriaLiveValue = "assertive"
 ): Observer {
-  if (process.env.NODE_ENV !== "production") {
-    if (!el.hasAttribute("aria-live")) {
-      console.warn(
-        `The provided element does not have an "aria-live" attribute, so it cannot announce location changes to screen readers.`
-      );
-    }
-  }
+  const announcer = document.createElement("div");
+  announcer.setAttribute("aria-live", mode);
+  announcer.setAttribute("style", "position: absolute; left: -999em");
+  document.body.appendChild(announcer);
+
   return function(emitted: Emitted): void {
-    el.textContent = fmt(emitted);
+    announcer.textContent = fmt(emitted);
   };
 }

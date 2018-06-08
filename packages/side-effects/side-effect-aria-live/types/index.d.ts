@@ -1,2 +1,3 @@
 import { Observer, Emitted } from "@curi/router";
-export default function createAriaLiveSideEffect(el: HTMLElement, fmt: (emitted: Emitted) => string): Observer;
+export declare type AriaLiveValue = "assertive" | "polite" | "off";
+export default function createAriaLiveSideEffect(fmt: (emitted: Emitted) => string, mode?: AriaLiveValue): Observer;
