@@ -7,6 +7,8 @@ import curi from "@curi/router";
 import Focus from "../src/Focus";
 import CuriProvider from "../src/CuriProvider";
 
+jest.useFakeTimers();
+
 describe("<Focus>", () => {
   let node;
   let history, router;
@@ -39,6 +41,7 @@ describe("<Focus>", () => {
       </CuriProvider>,
       node
     );
+    jest.runAllTimers();
     const wrapper = document.querySelector("#test");
     const focused = document.activeElement;
     expect(focused).toBe(wrapper);
@@ -59,6 +62,9 @@ describe("<Focus>", () => {
       </CuriProvider>,
       node
     );
+
+    jest.runAllTimers();
+
     const wrapper = document.querySelector("#test");
     const initialFocus = document.activeElement;
     expect(initialFocus).toBe(wrapper);
@@ -83,6 +89,9 @@ describe("<Focus>", () => {
       </CuriProvider>,
       node
     );
+
+    jest.runAllTimers();
+
     expect(stolenFocus).toBe(input);
   });
 
@@ -101,6 +110,9 @@ describe("<Focus>", () => {
       </CuriProvider>,
       node
     );
+
+    jest.runAllTimers();
+
     const input = document.querySelector("input");
     const wrapper = input.parentElement;
     const initialFocused = document.activeElement;
@@ -114,6 +126,8 @@ describe("<Focus>", () => {
 
     // navigate and verify wrapper is re-focused
     router.navigate({ name: "About" });
+
+    jest.runAllTimers();
 
     const postNavFocus = document.activeElement;
 
