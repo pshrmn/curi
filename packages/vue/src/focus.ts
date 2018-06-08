@@ -5,7 +5,7 @@ export interface FocusComponent extends Vue {}
 function scheduleFocus(el: HTMLElement) {
   setTimeout(() => {
     el.focus();
-  }, 10);
+  });
 }
 
 const focusDirection: DirectiveOptions = {

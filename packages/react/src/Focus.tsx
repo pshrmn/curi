@@ -56,7 +56,7 @@ class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
       }
       setTimeout(() => {
         this.eleToFocus.focus();
-      }, 10);
+      });
     }
   }
 }
