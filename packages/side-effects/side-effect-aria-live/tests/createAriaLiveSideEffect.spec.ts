@@ -1,6 +1,6 @@
 import "jest";
 import createAriaLiveSideEffect from "../src";
-import { Emitted } from "@curi/core";
+import { Emitted } from "@curi/router";
 
 describe("createAriaLiveSideEffect", () => {
   const liveRegion = document.createElement("div");
