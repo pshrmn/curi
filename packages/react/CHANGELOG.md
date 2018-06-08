@@ -1,3 +1,7 @@
+## Next
+
+- `<Focus>` uses a 0 second timeout to delay focusing.
+
 ## 1.0.0-beta.27
 
 - Add `<Focus>` component for auto-focusing after new responses.
