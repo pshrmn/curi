@@ -4,11 +4,11 @@ import InMemory from "@hickory/in-memory";
 import curi from "@curi/router";
 import CuriPlugin from "../src/plugin";
 
+jest.useFakeTimers();
+
 describe("curi-focus directive", () => {
   let vueWrapper;
   const history = InMemory();
-  const mockConfirmWith = jest.fn();
-  const mockRemoveConfirmation = jest.fn();
 
   const routes = [
     { name: "Place", path: "place/:name" },
@@ -42,11 +42,14 @@ describe("curi-focus directive", () => {
       `,
       el: node
     });
+
+    jest.runAllTimers();
+
     const main = document.querySelector("main");
     expect(document.activeElement).toBe(main);
   });
 
-  it("does not re-focus for regular re-renders", done => {
+  it("does not re-focus for regular re-renders", () => {
     vueWrapper = new Vue({
       template: `
         <div>
@@ -63,6 +66,9 @@ describe("curi-focus directive", () => {
         type: "text"
       }
     });
+
+    jest.runAllTimers();
+
     const wrapper = document.querySelector("main");
     const initialFocus = document.activeElement;
     expect(initialFocus).toBe(wrapper);
@@ -74,10 +80,10 @@ describe("curi-focus directive", () => {
     expect(stolenFocus).toBe(input);
 
     vueWrapper.type = "number";
-    Vue.nextTick(() => {
-      expect(stolenFocus).toBe(input);
-      done();
-    });
+
+    jest.runAllTimers();
+
+    expect(stolenFocus).toBe(input);
   });
 
   it("re-focuses for new response re-renders", done => {
@@ -94,6 +100,9 @@ describe("curi-focus directive", () => {
       `,
       el: node
     });
+
+    jest.runAllTimers();
+
     const input = document.querySelector("input");
     const wrapper = input.parentElement;
     const initialFocused = document.activeElement;
@@ -108,12 +117,15 @@ describe("curi-focus directive", () => {
     // navigate and verify wrapper is re-focused
     router.navigate({ name: "Place", params: { name: "Hawaii" } });
 
-    // need to wait a tick
-    Vue.nextTick(() => {
+    // need to switch to real timers
+    // TODO: figure out why...
+    jest.useRealTimers();
+    setTimeout(() => {
       const postNavFocus = document.activeElement;
       expect(postNavFocus).toBe(wrapper);
+      jest.useFakeTimers();
       done();
-    });
+    }, 15);
   });
 
   it("isn't affected by prop changes", done => {
@@ -130,6 +142,9 @@ describe("curi-focus directive", () => {
         wat: "no"
       }
     });
+
+    jest.runAllTimers();
+
     const input = document.querySelector("input");
     const wrapper = input.parentElement;
     const initialFocused = document.activeElement;
@@ -191,6 +206,9 @@ describe("curi-focus directive", () => {
           }
         }
       });
+
+      jest.runAllTimers();
+
       expect(fakeWarn.mock.calls.length).toBe(0);
       const input = document.body.querySelector("input");
       expect(document.activeElement).toBe(input);
