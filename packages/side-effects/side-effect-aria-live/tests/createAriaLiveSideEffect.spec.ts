@@ -26,8 +26,8 @@ describe("createAriaLiveSideEffect", () => {
     const notLive = document.createElement("div");
     document.body.appendChild(notLive);
 
-    const realWarn = console.error;
-    const fakeWarn = (console.error = jest.fn());
+    const realWarn = console.warn;
+    const fakeWarn = (console.warn = jest.fn());
 
     const sideEffect = createAriaLiveSideEffect(
       notLive,
@@ -36,7 +36,7 @@ describe("createAriaLiveSideEffect", () => {
 
     expect(fakeWarn.mock.calls.length).toBe(1);
 
-    console.error = realWarn;
+    console.warn = realWarn;
     document.body.removeChild(notLive);
   });
 });
