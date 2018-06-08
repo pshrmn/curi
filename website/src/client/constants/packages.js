@@ -50,6 +50,12 @@ const packages = [
     type: "route interactions"
   },
   {
+    name: "side-effect-aria-live",
+    version: versions["side-effect-aria-live"],
+    globalName: "CuriSideEffectAriaLive",
+    type: "side effects"
+  },
+  {
     name: "side-effect-title",
     version: versions["side-effect-title"],
     globalName: "CuriSideEffectTitle",

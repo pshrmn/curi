@@ -7,8 +7,6 @@ import CuriPlugin from "../src/plugin";
 describe("curi-focus directive", () => {
   let vueWrapper;
   const history = InMemory();
-  const mockConfirmWith = jest.fn();
-  const mockRemoveConfirmation = jest.fn();
 
   const routes = [
     { name: "Place", path: "place/:name" },
@@ -30,7 +28,7 @@ describe("curi-focus directive", () => {
     document.body.innerHTML = "";
   });
 
-  it("focuses when it renders", () => {
+  it("focuses when it renders", done => {
     vueWrapper = new Vue({
       template: `
         <div>
@@ -42,8 +40,12 @@ describe("curi-focus directive", () => {
       `,
       el: node
     });
-    const main = document.querySelector("main");
-    expect(document.activeElement).toBe(main);
+
+    setTimeout(() => {
+      const main = document.querySelector("main");
+      expect(document.activeElement).toBe(main);
+      done();
+    }, 5);
   });
 
   it("does not re-focus for regular re-renders", done => {
@@ -63,21 +65,25 @@ describe("curi-focus directive", () => {
         type: "text"
       }
     });
-    const wrapper = document.querySelector("main");
-    const initialFocus = document.activeElement;
-    expect(initialFocus).toBe(wrapper);
 
-    const input = document.querySelector("input");
-    // steal the focus
-    input.focus();
-    const stolenFocus = document.activeElement;
-    expect(stolenFocus).toBe(input);
+    setTimeout(() => {
+      const wrapper = document.querySelector("main");
+      const initialFocus = document.activeElement;
+      expect(initialFocus).toBe(wrapper);
 
-    vueWrapper.type = "number";
-    Vue.nextTick(() => {
+      const input = document.querySelector("input");
+      // steal the focus
+      input.focus();
+      const stolenFocus = document.activeElement;
       expect(stolenFocus).toBe(input);
-      done();
-    });
+
+      vueWrapper.type = "number";
+
+      setTimeout(() => {
+        expect(stolenFocus).toBe(input);
+        done();
+      }, 5);
+    }, 5);
   });
 
   it("re-focuses for new response re-renders", done => {
@@ -94,26 +100,28 @@ describe("curi-focus directive", () => {
       `,
       el: node
     });
-    const input = document.querySelector("input");
-    const wrapper = input.parentElement;
-    const initialFocused = document.activeElement;
 
-    expect(initialFocused).toBe(wrapper);
+    setTimeout(() => {
+      const input = document.querySelector("input");
+      const wrapper = input.parentElement;
+      const initialFocused = document.activeElement;
 
-    // steal the focus
-    input.focus();
-    const stolenFocus = document.activeElement;
-    expect(stolenFocus).toBe(input);
+      expect(initialFocused).toBe(wrapper);
 
-    // navigate and verify wrapper is re-focused
-    router.navigate({ name: "Place", params: { name: "Hawaii" } });
+      // steal the focus
+      input.focus();
+      const stolenFocus = document.activeElement;
+      expect(stolenFocus).toBe(input);
 
-    // need to wait a tick
-    Vue.nextTick(() => {
-      const postNavFocus = document.activeElement;
-      expect(postNavFocus).toBe(wrapper);
-      done();
-    });
+      // navigate and verify wrapper is re-focused
+      router.navigate({ name: "Place", params: { name: "Hawaii" } });
+
+      setTimeout(() => {
+        const postNavFocus = document.activeElement;
+        expect(postNavFocus).toBe(wrapper);
+        done();
+      }, 5);
+    }, 5);
   });
 
   it("isn't affected by prop changes", done => {
@@ -130,27 +138,30 @@ describe("curi-focus directive", () => {
         wat: "no"
       }
     });
-    const input = document.querySelector("input");
-    const wrapper = input.parentElement;
-    const initialFocused = document.activeElement;
 
-    expect(initialFocused).toBe(wrapper);
-    expect(wrapper.className).toBe("no");
+    setTimeout(() => {
+      const input = document.querySelector("input");
+      const wrapper = input.parentElement;
+      const initialFocused = document.activeElement;
 
-    // steal the focus
-    input.focus();
-    const stolenFocus = document.activeElement;
-    expect(stolenFocus).toBe(input);
+      expect(initialFocused).toBe(wrapper);
+      expect(wrapper.className).toBe("no");
 
-    vueWrapper.wat = "yes";
+      // steal the focus
+      input.focus();
+      const stolenFocus = document.activeElement;
+      expect(stolenFocus).toBe(input);
 
-    Vue.nextTick(() => {
-      const postUpdateFocus = document.activeElement;
-      expect(postUpdateFocus).toBe(input);
+      vueWrapper.wat = "yes";
 
-      expect(wrapper.className).toBe("yes");
-      done();
-    });
+      Vue.nextTick(() => {
+        const postUpdateFocus = document.activeElement;
+        expect(postUpdateFocus).toBe(input);
+
+        expect(wrapper.className).toBe("yes");
+        done();
+      });
+    }, 5);
   });
 
   describe("tabIndex", () => {
@@ -171,7 +182,7 @@ describe("curi-focus directive", () => {
       console.warn = realWarn;
     });
 
-    it("does not warn when element with directive does not have a tabIndex attribute, but ele is already focusable", () => {
+    it("does not warn when element with directive does not have a tabIndex attribute, but ele is already focusable", done => {
       const realWarn = console.warn;
       const fakeWarn = (console.warn = jest.fn());
 
@@ -191,10 +202,14 @@ describe("curi-focus directive", () => {
           }
         }
       });
-      expect(fakeWarn.mock.calls.length).toBe(0);
-      const input = document.body.querySelector("input");
-      expect(document.activeElement).toBe(input);
-      console.warn = realWarn;
+
+      setTimeout(() => {
+        expect(fakeWarn.mock.calls.length).toBe(0);
+        const input = document.body.querySelector("input");
+        expect(document.activeElement).toBe(input);
+        console.warn = realWarn;
+        done();
+      }, 5);
     });
   });
 });

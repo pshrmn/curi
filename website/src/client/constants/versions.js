@@ -7,6 +7,7 @@ export default {
   "react": "1.0.0-beta.27",
   "react-native": "1.0.0-beta.7",
   "router": "1.0.0-beta.36",
+  "side-effect-aria-live": "1.0.0-beta.0",
   "side-effect-scroll": "1.0.0-beta.9",
   "side-effect-title": "1.0.0-beta.10",
   "svelte": "1.0.0-beta.6",

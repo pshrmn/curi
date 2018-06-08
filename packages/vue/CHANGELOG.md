@@ -1,3 +1,7 @@
+## Next
+
+- `curi-focus` uses a 0 second timeout to delay focusing.
+
 ## 1.0.0-beta.19
 
 - Add a `curi-focus` directive to auto-focus an element when new responses are emitted.

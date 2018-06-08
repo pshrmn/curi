@@ -2,6 +2,12 @@ import Vue, { DirectiveOptions } from "vue";
 
 export interface FocusComponent extends Vue {}
 
+function scheduleFocus(el: HTMLElement) {
+  setTimeout(() => {
+    el.focus();
+  });
+}
+
 const focusDirection: DirectiveOptions = {
   inserted(el, binding) {
     if (process.env.NODE_ENV !== "production") {
@@ -13,11 +19,11 @@ const focusDirection: DirectiveOptions = {
         );
       }
     }
-    el.focus();
+    scheduleFocus(el);
   },
   update(el, binding) {
     if (binding.value !== binding.oldValue) {
-      el.focus();
+      scheduleFocus(el);
     }
   }
 };
