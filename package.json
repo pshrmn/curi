@@ -10,7 +10,7 @@
     "postinstall": "npm run bootstrap",
     "precommit": "pretty-quick --staged",
     "prettier": "lerna run prettier",
-    "versions": "lerna publish --skip-git --skip-npm --ignore @curi-example/* --ignore @curi/docs-website",
+    "versions": "lerna publish --skip-git --skip-npm",
     "test": "lerna run test",
     "coverage": "lerna run coverage"
   },

@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/transitions-vue",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Animate transitions betweeen locations",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@curi/router": "^1.0.0-beta.36",
-    "@curi/vue": "^1.0.0-beta.19",
+    "@curi/vue": "^1.0.0-beta.20",
     "@hickory/browser": "^1.0.0-beta.5",
     "vue": "^2.5.9"
   }

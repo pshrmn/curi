@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/basic-react",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A simple application that uses Curi + React",
   "main": "index.js",
   "scripts": {
@@ -21,8 +21,8 @@
     "webpack": "^2.7.0"
   },
   "dependencies": {
+    "@curi/react": "^1.0.0-beta.28",
     "@curi/router": "^1.0.0-beta.36",
-    "@curi/react": "^1.0.0-beta.27",
     "@hickory/browser": "^1.0.0-beta.5",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

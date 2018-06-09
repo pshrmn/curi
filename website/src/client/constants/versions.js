@@ -4,12 +4,12 @@ export default {
   "route-active": "1.0.0-beta.6",
   "route-ancestors": "1.0.0-beta.6",
   "route-prefetch": "1.0.0-beta.10",
-  "react": "1.0.0-beta.27",
-  "react-native": "1.0.0-beta.7",
+  "react": "1.0.0-beta.28",
+  "react-native": "1.0.0-beta.8",
   "router": "1.0.0-beta.36",
   "side-effect-aria-live": "1.0.0-beta.0",
   "side-effect-scroll": "1.0.0-beta.9",
   "side-effect-title": "1.0.0-beta.10",
   "svelte": "1.0.0-beta.6",
-  "vue": "1.0.0-beta.19"
+  "vue": "1.0.0-beta.20"
 };
