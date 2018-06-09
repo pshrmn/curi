@@ -1,7 +1,6 @@
 require("@babel/register");
 
 const generateStaticFiles = require("./generateStaticFiles");
-const updatePackageVersions = require("./updatePackageVersions");
 
 const createApp = require("../src/server/app");
 const routes = require("../src/client/routes").default;
@@ -21,8 +20,6 @@ const exampleParams = Object.keys(categories)
     return acc;
   }, []);
 const tutorialNames = tutorials_api.all().map(t => ({ slug: t.slug }));
-
-updatePackageVersions();
 
 let server;
 const app = createApp();

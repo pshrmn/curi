@@ -35,7 +35,7 @@ function packageName(pkg) {
   return pkg.name.slice(6);
 }
 
-module.exports = function updatePackageVersions() {
+function updatePackageVersions() {
   const mappedVersions = getPackagesFromDir(BASE_PATH);
   fs.writeFile(
     OUTPUT_FILE,
@@ -47,4 +47,6 @@ export default ${JSON.stringify(mappedVersions, null, 2)};\n`,
       }
     }
   );
-};
+}
+
+updatePackageVersions();
