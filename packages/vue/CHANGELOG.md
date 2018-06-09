@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.20
 
 - `curi-focus` uses a 0 second timeout to delay focusing.
 
