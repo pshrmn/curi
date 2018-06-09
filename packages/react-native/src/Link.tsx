@@ -37,7 +37,7 @@ export interface LinkState {
   navigating: boolean;
 }
 
-class BaseLink extends React.Component<BaseLinkProps, LinkState> {
+class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
   state = {
     navigating: false
   };
