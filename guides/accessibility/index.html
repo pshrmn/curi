@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accessibility Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides/getting-started/">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Accessibility</h1><div class="side-by-side"><div class="explanation"><p>It is important to keep in mind that some visitors to your site rely on screen readers, so you should ensure that they have a pleasant experience. One &quot;issue&quot; with single-page applications is that they traditionally are more difficult for screen reader users because they do not have a great way for detecting navigation.</p><p>Curi provides a couple approaches to help you make your site accessible.</p></div></div><div class="section" id="aria-live"><h2>Announcing Navigation<a class="header-link" href="/guides/accessibility/#aria-live">#</a></h2><div class="side-by-side"><div class="explanation"><p>When the content of<!-- --> <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions">ARIA live regions</a> <!-- -->change, the new content will be announced to screen reader users. The<!-- --> <a href="/packages/@curi/side-effect-aria-live/"><code class="inline-code language-javascript">@curi/side-effect-aria-live</code></a> <!-- -->package provides a side effect for creating a live region and updating its content to announce navigation.</p><p>The side effect takes a function which returns a string that should be read by screen readers. This can be whatever you want it to be, but screen readers normally read a page&#x27;s title, so if you are setting <code class="inline-code language-javascript">title</code>s for your responses, it is probably a good idea to have those announced.</p></div><div class="code-block"><pre><code class="language-javascript">import ariaLive from &quot;@curi/side-effect-aria-live&quot;;
+   
+const announcer = ariaLive(
+  ({ response }) =&gt; `Navigated to ${response.title}`
+);
+
+const routes = [
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;,
+    response() {
+      return {
+        title: &quot;Home&quot;
+      };
+    }
+  }
+]
+
+const router = curi(history, routes, {
+  sideEffects: [announcer]
+});
+
+// when the user navigates to &quot;/&quot;, the screen reader will read:
+// &quot;Navigated to Home</code></pre></div></div></div><div class="section" id="focus"><h2>Focusing Content<a class="header-link" href="/guides/accessibility/#focus">#</a></h2><div class="side-by-side"><div class="explanation"><p>Screen readers read the content of elements in the page that are focused. They can move through the page to read different elements. When you navigate, the content of the site will be re-rendered, so it is important for you to focus on the new content so that users using screen readers don&#x27;t have to tab around looking for the new content. This is focus management and there are a couple things to keep in mind when implementing it.</p></div></div><div class="side-by-side"><div class="explanation"><p>When you focus an element, make sure to focus the specific content for a page. If you were to just focus the page&#x27;s <code class="inline-code language-jsx">&lt;<!-- -->body<!-- -->&gt;</code> or a root <code class="inline-code language-jsx">&lt;<!-- -->div<!-- -->&gt;</code>, then the user might have to tab through less important content, like the page&#x27;s menus, while looking for the new content.</p></div><div class="code-block"><pre><code class="language-html">&lt;!--
+  it is better to focus the important content (&lt;main&gt;)
+  and not the entire page
+--&gt;
+&lt;div&gt;
+  &lt;header&gt;&lt;/header&gt;
+  &lt;main&gt;&lt;/main&gt;
+&lt;/div&gt;</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>The element that you focus needs to be focusable. Elements can be natively focusable (e.g. <code class="inline-code language-jsx">&lt;<!-- -->input<!-- -->&gt;</code>s and <code class="inline-code language-jsx">&lt;<!-- -->a<!-- -->&gt;</code>s) or you can use the <code class="inline-code language-javascript">tabIndex</code> property. A <code class="inline-code language-javascript">tabIndex</code> of<!-- --> <code class="inline-code language-javascript">-1</code> lets you focus an element, but keeps screen readers from accidentally focusing it when a user is tabbing through the page&#x27;s contents.</p><div class="warning"><strong>Warning:</strong> <!-- -->If you try to focus an element that is not focusable, then the document&#x27;s <code class="inline-code language-jsx">&lt;<!-- -->body<!-- -->&gt;</code> will be focused instead.</div></div><div class="code-block"><pre><code class="language-html">&lt;!-- you can focus us --&gt;
+&lt;input /&gt;
+&lt;a href=&quot;https://example.com&quot;&gt;Example&lt;/a&gt;
+&lt;div tabIndex=&quot;-1&quot;&gt;&lt;/div&gt;
+
+&lt;!-- but not me --&gt;
+&lt;div&gt;&lt;/div&gt;</code></pre></div></div><div class="subsection" id="focus-react"><h3>Focusing in React Applications<a class="header-link" href="/guides/accessibility/#focus-react">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">@curi/react</code> package provides a <code class="inline-code language-jsx">&lt;<!-- -->Focus<!-- -->&gt;</code> <!-- -->component that gives you a <code class="inline-code language-javascript">ref</code> to attach to the component that should be focused. Whenever the user navigates, it will re-focus so that the screen reader is focused on the correct content.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriProvider, Focus } from &quot;@curi/react&quot;;
+          
+ReactDOM.render((
+  &lt;CuriProvider router={router}&gt;
+    {({ response }) =&gt; {
+      const { body:Body } = response;
+      return (
+        &lt;Header /&gt;
+        &lt;Focus&gt;
+          {ref =&gt; (
+            &lt;main ref={ref} tabIndex={-1}&gt;
+            &lt;/main&gt;
+          )}
+        &lt;/Focus&gt;
+      );
+    }}
+  &lt;/CuriProvider&gt;
+), holder);</code></pre></div></div></div><div class="subsection" id="focus-vue"><h3>Focusing in Vue Applications<a class="header-link" href="/guides/accessibility/#focus-vue">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">@curi/vue</code> package provides a directive for focusing an element. The directive needs to be passed something that changes when the user navigates, so you can just pass it the current <code class="inline-code language-javascript">response</code></p></div><div class="code-block"><pre><code class="language-html">&lt;template&gt;
+  &lt;header&gt;...&lt;/header&gt;
+  &lt;main tabIndex=&quot;-1&quot; v-curi-focus=&quot;$curi.response&quot;&gt;
+    &lt;component :is=&quot;$curi.response.body&quot; /&gt;
+  &lt;/main&gt;
+&lt;/template&gt;</code></pre></div></div></div></div><div class="section" id="more"><h2>More Resources<a class="header-link" href="/guides/accessibility/#more">#</a></h2><div class="side-by-side"><div class="explanation"><p>The above content is great for making navigation within your application accessible, but those aren&#x27;t the only steps that you should take to making your site more accessible.</p><p>If you are interested in other resources for improving the accessibility of your website, I would recommend Google&#x27;s<!-- --> <a href="https://developers.google.com/web/fundamentals/accessibility/">collection of accessibility articles</a>. WebAIM also provides a good<!-- --> <a href="https://webaim.org/standards/wcag/checklist">checklist</a> <!-- -->to consult.</p><p>The<!-- --> <a href="https://chrome.google.com/webstore/detail/chromevox/kgejglhpjiefppelpmljglcjbhoiplfn?hl=en">ChromeVox</a> <!-- -->extension for Chrome is a free screen reader that you can use to experience your site like a user using a screen reader would. This documentation site uses the above announcement and focus techniques, so you can see how they work by activating a screen reader and navigating throughout this site.</p></div></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/observers/">Observers</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" active" href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
