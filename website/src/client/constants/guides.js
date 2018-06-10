@@ -69,6 +69,12 @@ const guides = [
     type: "advanced"
   },
   {
+    name: "Accessibility",
+    slug: "accessibility",
+    description: "Make your site inclusive to users who use screen readers.",
+    type: "advanced"
+  },
+  {
     name: "React Native Tips",
     slug: "react-native",
     description: "Tips for using Curi with React Native",

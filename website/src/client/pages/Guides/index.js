@@ -8,6 +8,7 @@ import RouteInteractions from "./RouteInteractions";
 import UsingSideEffects from "./UsingSideEffects";
 import CodeSplitting from "./CodeSplitting";
 import Loading from "./Loading";
+import Accessibility from "./Accessibility";
 import ReactNativeTips from "./ReactNativeTips";
 import Apollo from "./Apollo";
 import MigrateReactRouterv3 from "./MigrateReactRouterv3";
@@ -26,6 +27,7 @@ export default {
   "side-effects": UsingSideEffects,
   "code-splitting": CodeSplitting,
   loading: Loading,
+  accessibility: Accessibility,
   "react-native": ReactNativeTips,
   apollo: Apollo,
   "migrate-rrv3": MigrateReactRouterv3,
