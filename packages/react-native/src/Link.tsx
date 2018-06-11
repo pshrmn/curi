@@ -4,12 +4,7 @@ import { Curious } from "@curi/react";
 
 import { GestureResponderEvent } from "react-native";
 import { Emitted, CuriRouter, Response } from "@curi/router";
-import {
-  HickoryLocation,
-  PartialLocation,
-  LocationDetails,
-  NavType
-} from "@hickory/root";
+import { NavType } from "@hickory/root";
 
 export type NavigatingChildren = (navigating: boolean) => React.ReactNode;
 
