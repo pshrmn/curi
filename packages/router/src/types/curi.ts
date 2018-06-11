@@ -1,4 +1,4 @@
-import { History, HickoryLocation, Action, NavType } from "@hickory/root";
+import { History, Action, NavType } from "@hickory/root";
 import { PathFunctionOptions } from "path-to-regexp";
 
 import { Interaction, Interactions } from "./interaction";

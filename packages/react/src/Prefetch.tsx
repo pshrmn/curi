@@ -1,7 +1,6 @@
 import React from "react";
 import { Curious } from "./Context";
 
-import { ReactNode } from "react";
 import { CuriRouter, Resolved } from "@curi/router";
 import { HickoryLocation } from "@hickory/root";
 

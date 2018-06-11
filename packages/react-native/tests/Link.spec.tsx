@@ -4,9 +4,8 @@ import "react-native";
 import renderer from "react-test-renderer";
 
 import InMemory from "@hickory/in-memory";
-import curi, { Response } from "@curi/router";
+import curi from "@curi/router";
 import { CuriProvider } from "@curi/react";
-import activeInteraction from "@curi/route-active";
 import { TouchableHighlight, Text } from "react-native";
 import Link from "../src/Link";
 

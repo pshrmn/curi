@@ -1,14 +1,10 @@
 import { RegExpOptions, Key } from "path-to-regexp";
 
-import { LocationDetails } from "@hickory/root";
 import {
-  Params,
-  Response,
   Resolved,
   MatchResponseProperties,
   SettableResponseProperties
 } from "./response";
-import { Interactions } from "./interaction";
 
 export type ParamParser = (input: string) => any;
 export interface ParamParsers {

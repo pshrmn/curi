@@ -1,4 +1,4 @@
-import { join, stripLeadingSlash } from "./utils/path";
+import { stripLeadingSlash } from "./utils/path";
 import parseParams from "./utils/parseParams";
 
 import { HickoryLocation } from "@hickory/root";

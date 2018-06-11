@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { CuriRouter, Response, Navigation } from "@curi/router";
 
 export interface ReactiveResponse {

@@ -1,7 +1,7 @@
 import "jest";
 import curi from "../src/curi";
 import InMemory from "@hickory/in-memory";
-import { Interaction, Response, RemoveResponseHandler } from "../src/types";
+import { RemoveObserver } from "../src/types";
 
 import { NavType } from "@hickory/root";
 
@@ -504,7 +504,7 @@ describe("curi", () => {
       const unsub1 = router.respond(sub1, {
         observe: true,
         initial: false
-      }) as RemoveResponseHandler;
+      }) as RemoveObserver;
       const unsub2 = router.respond(sub2, { observe: true, initial: false });
 
       expect(sub1.mock.calls.length).toBe(0);

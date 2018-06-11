@@ -1,5 +1,4 @@
 import "jest";
-import createRoute from "../src/route";
 import { Route, Interaction } from "../src/types";
 import curi from "../src/curi";
 import InMemory from "@hickory/in-memory";

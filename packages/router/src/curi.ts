@@ -8,9 +8,9 @@ import createRoute from "./route";
 import { History, PendingNavigation } from "@hickory/root";
 
 import { RouteDescriptor, InternalRoute } from "./types/route";
-import { Response, Params, Resolved } from "./types/response";
-import { Interaction, Interactions } from "./types/interaction";
-import { PossibleMatch, Match } from "./types/match";
+import { Response, Resolved } from "./types/response";
+import { Interactions } from "./types/interaction";
+import { Match } from "./types/match";
 import {
   CuriRouter,
   RouterOptions,

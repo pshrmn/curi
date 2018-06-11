@@ -3,12 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
 import InMemory from "@hickory/in-memory";
-import curi, { Response } from "@curi/router";
-import activeInteraction from "@curi/route-active";
+import curi from "@curi/router";
 import Link from "../src/Link";
 import CuriProvider from "../src/CuriProvider";
-
-import { LocationDetails } from "@hickory/in-memory";
 
 describe("<Link>", () => {
   let node;

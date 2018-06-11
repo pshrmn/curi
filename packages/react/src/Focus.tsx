@@ -1,7 +1,7 @@
 import React from "react";
 import { Curious } from "./Context";
 
-import { ReactNode, ReactType, Ref } from "react";
+import { ReactNode, Ref } from "react";
 import { Response } from "@curi/router";
 
 export interface FocusProps {

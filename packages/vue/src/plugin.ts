@@ -1,4 +1,4 @@
-import Vue, { PluginObject, VueConstructor } from "vue";
+import Vue, { PluginObject } from "vue";
 
 import Link from "./Link";
 import Block from "./Block";

@@ -4,8 +4,6 @@ import { Emitted } from "@curi/router";
 
 jest.useFakeTimers();
 
-const mockScroll = jest.fn();
-
 describe("createScrollSideEffect", () => {
   let realScrollTo = window.scrollTo;
   let realScrollIntoView = Element.prototype.scrollIntoView;
