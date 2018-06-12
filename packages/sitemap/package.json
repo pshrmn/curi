@@ -1,0 +1,50 @@
+{
+  "name": "@curi/sitemap",
+  "version": "1.0.0-alpha.0",
+  "description": "Create a sitemap file for an application that uses the Curi router",
+  "main": "dist/curi-sitemap.common.js",
+  "module": "dist/curi-sitemap.es.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "LICENSE",
+    "*.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist types",
+    "build": "node ./scripts/build",
+    "coverage": "jest --coverage",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.ts\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/sitemap"
+  },
+  "keywords": [
+    "URL",
+    "URI",
+    "routing",
+    "navigation"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "dependencies": {
+    "@curi/router": "^1.0.0-beta.36",
+    "@hickory/in-memory": "^1.0.0-beta.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.0.1",
+    "@types/node": "^8.0.53",
+    "jest": "^22.1.1",
+    "prettier": "^1.10.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.58.1",
+    "rollup-plugin-typescript2": "^0.14.0",
+    "ts-jest": "^21.2.3",
+    "typescript": "^2.6.1"
+  }
+}
