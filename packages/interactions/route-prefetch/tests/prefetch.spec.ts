@@ -1,5 +1,7 @@
 import "jest";
-import createPrefetch from "../src";
+
+// resolved by jest
+import createPrefetch from "@curi/route-prefetch";
 
 import { HickoryLocation } from "@hickory/root";
 import { Interaction, Route } from "@curi/router";
