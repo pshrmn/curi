@@ -1,7 +1,11 @@
-const mappedModule =
-  process.env.TEST_ENV === "src"
-    ? "<rootDir>/src/index"
-    : "<rootDir>/dist/curi-react-native.common.js";
+let mappedModule;
+switch (process.env.TEST_ENV) {
+  case "cjs":
+    mappedModule = "<rootDir>/dist/curi-react-native.common.js";
+    break;
+  default:
+    mappedModule = "<rootDir>/src/index";
+}
 
 module.exports = {
   preset: "react-native",

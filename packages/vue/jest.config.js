@@ -1,7 +1,11 @@
-const mappedModule =
-  process.env.TEST_ENV === "src"
-    ? "<rootDir>/src/index"
-    : "<rootDir>/dist/curi-vue.common.js";
+let mappedModule;
+switch (process.env.TEST_ENV) {
+  case "cjs":
+    mappedModule = "<rootDir>/dist/curi-vue.common.js";
+    break;
+  default:
+    mappedModule = "<rootDir>/src/index";
+}
 
 module.exports = {
   moduleFileExtensions: ["ts", "js"],

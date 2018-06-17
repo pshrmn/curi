@@ -15,7 +15,7 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
-    "test": "TEST_ENV=src jest && TEST_ENV=dist jest"
+    "test": "jest && TEST_ENV=cjs jest"
   },
   "repository": {
     "type": "git",
