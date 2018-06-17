@@ -1,6 +1,8 @@
 import "jest";
-import createTitleSideEffect from "../src";
 import { Emitted } from "@curi/router";
+
+// resolved by jeste
+import createTitleSideEffect from "@curi/side-effect-title";
 
 describe("createTitleSideEffect", () => {
   const fakeResponse = {
