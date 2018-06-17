@@ -1,3 +1,8 @@
+const mappedModule =
+  process.env.TEST_ENV === "src"
+    ? "<rootDir>/src/index"
+    : "<rootDir>/dist/curi-react-native.common.js";
+
 module.exports = {
   preset: "react-native",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
@@ -13,7 +18,8 @@ module.exports = {
     }
   },
   moduleNameMapper: {
-    "^React$": "<rootDir>/../../node_modules/react"
+    "^React$": "<rootDir>/../../node_modules/react",
+    "@curi/react-native": mappedModule
   },
   collectCoverageFrom: ["src/*.tsx"]
 };
