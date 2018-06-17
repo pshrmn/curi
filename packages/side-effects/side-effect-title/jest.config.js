@@ -14,11 +14,8 @@ module.exports = {
       module: "es6"
     }
   },
-<<<<<<< 223ca47faf03330a5eb3d555662ce014e93270ac
-  testURL: "http://localhost"
-=======
+  testURL: "http://localhost",
   moduleNameMapper: {
     "@curi/side-effect-title": mappedModule
   }
->>>>>>> @curi/side-effect-title test source and dist
 };

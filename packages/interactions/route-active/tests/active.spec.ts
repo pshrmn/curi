@@ -1,5 +1,7 @@
 import "jest";
-import createActive from "../src";
+
+// resolved by jest
+import createActive from "@curi/route-active";
 
 describe("active route interaction", () => {
   let active;

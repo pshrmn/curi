@@ -1,3 +1,8 @@
+const mappedModule =
+  process.env.TEST_ENV === "src"
+    ? "<rootDir>/src/index"
+    : "<rootDir>/dist/curi-route-active.common.js";
+
 module.exports = {
   moduleFileExtensions: ["ts", "js"],
   testMatch: ["**/tests/**/*.spec.ts"],
@@ -9,5 +14,8 @@ module.exports = {
       module: "es6"
     }
   },
-  testURL: "http://localhost"
+  testURL: "http://localhost",
+  moduleNameMapper: {
+    "@curi/route-active": mappedModule
+  }
 };
