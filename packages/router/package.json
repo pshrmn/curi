@@ -14,11 +14,11 @@
   "scripts": {
     "prebuild": "rimraf dist types",
     "build": "node ./scripts/build",
-    "coverage": "jest --coverage",
+    "coverage": "TEST_ENV=src jest --coverage",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.ts\"",
-    "test": "jest"
+    "test": "TEST_ENV=src jest && TEST_ENV=dist jest"
   },
   "repository": {
     "type": "git",

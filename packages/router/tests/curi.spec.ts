@@ -1,9 +1,11 @@
 import "jest";
-import { curi } from "../src";
 import InMemory from "@hickory/in-memory";
 import { RemoveObserver } from "../src/types";
 
 import { NavType } from "@hickory/root";
+
+// resolved by jest
+import { curi } from "@curi/router";
 
 describe("curi", () => {
   let history;

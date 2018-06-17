@@ -1,7 +1,9 @@
 import "jest";
 import { Route, Interaction } from "../src/types";
-import { curi } from "../src";
 import InMemory from "@hickory/in-memory";
+
+// resolved by jest
+import { curi } from "@curi/router";
 
 function PropertyReporter(): Interaction {
   let knownRoutes = {};
