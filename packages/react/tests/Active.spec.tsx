@@ -5,10 +5,8 @@ import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 import activeInteraction from "@curi/route-active";
 
-import CuriProvider from "../src/CuriProvider";
-import Active from "../src/Active";
-
-import { HickoryLocation } from "@hickory/root";
+// resolved by jest
+import { CuriProvider, Active } from "@curi/react";
 
 describe("<Active>", () => {
   let node;

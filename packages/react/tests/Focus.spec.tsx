@@ -4,8 +4,8 @@ import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 
-import Focus from "../src/Focus";
-import CuriProvider from "../src/CuriProvider";
+// resolved by jest
+import { CuriProvider, Focus } from "@curi/react";
 
 jest.useFakeTimers();
 

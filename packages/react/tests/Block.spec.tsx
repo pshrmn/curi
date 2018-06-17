@@ -4,8 +4,9 @@ import ReactDOM from "react-dom";
 
 import { curi } from "@curi/router";
 import InMemory from "@hickory/in-memory";
-import CuriProvider from "../src/CuriProvider";
-import Block from "../src/Block";
+
+// resolved by jest
+import { CuriProvider, Block } from "@curi/react";
 
 describe("Block", () => {
   let confirmationFunction;
@@ -20,9 +21,6 @@ describe("Block", () => {
   history.confirmWith = confirmWith;
   history.removeConfirmation = removeConfirmation;
   const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
-  const fakeContext = {
-    curi: { router }
-  };
 
   beforeEach(() => {
     node = document.createElement("div");
