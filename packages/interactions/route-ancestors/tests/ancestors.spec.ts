@@ -1,5 +1,7 @@
 import "jest";
-import createAncestors from "../src";
+
+// resolved by jest
+import createAncestors from "@curi/route-ancestors";
 
 describe("ancestors route interaction", () => {
   let ancestors;
