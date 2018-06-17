@@ -16,7 +16,7 @@ module.exports = {
   },
   setupFiles: ["<rootDir>/tests/setup/rAF.js"],
   collectCoverageFrom: ["src/*.tsx"],
-  testURL: "http://localhost"
+  testURL: "http://localhost",
   moduleNameMapper: {
     "@curi/react": mappedModule
   }

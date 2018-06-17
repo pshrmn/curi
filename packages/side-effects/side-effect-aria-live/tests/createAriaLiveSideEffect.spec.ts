@@ -1,6 +1,8 @@
 import "jest";
-import createAriaLiveSideEffect from "../src";
 import { Emitted } from "@curi/router";
+
+// resolved by jest
+import createAriaLiveSideEffect from "@curi/side-effect-aria-live";
 
 describe("createAriaLiveSideEffect", () => {
   it("inserts a <div> with a live-region into the DOM", () => {
