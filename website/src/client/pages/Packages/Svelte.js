@@ -74,7 +74,7 @@ curiStore(router, store);`}
           <CodeBlock lang="html">
             {`<div>
   <Link to='Home'>Home</Link>
-  <Link to='User' params='{{ { userID: 5 } }}'>
+  <Link to='User' params='{ { userID: 5 } }'>
     Profile
   </Link>
 </div>
@@ -109,7 +109,7 @@ curiStore(router, store);`}
                   </p>
                 </Explanation>
                 <CodeBlock lang="html">
-                  {`<Link to="User" params='{{ { userID: 5 } }}'>
+                  {`<Link to="User" params='{ { userID: 5 } }'>
   Profile
 </Link>
 <!-- <a href="/user/5">Profile</a> -->`}
@@ -169,7 +169,7 @@ curiStore(router, store);`}
         <CodeBlock lang="html">
           {`<!-- components/App.html -->
 <NavLinks />
-<:Component {$curi.response.body}></:Component>
+<svelte:component this={$curi.response.body} />
 
 <script>
   import NavLinks from './NavLinks.html';
