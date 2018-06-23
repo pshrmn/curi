@@ -6,11 +6,11 @@
 	<li>
 		<Link to='Contact'>Contact Us</Link>
     <ul>
-      {{#each methods as method}}
+      {#each methods as method}
         <li>
-          <Link to='Method' params='{{ { method } }}'>By {{method}}</Link>
+          <Link to='Method' params='{ { method } }'>By {method}</Link>
         </li>
-      {{/each}}
+      {/each}
     </ul>
 	</li>
   </ul>

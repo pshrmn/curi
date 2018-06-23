@@ -20,14 +20,14 @@
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "svelte-cli": "^1.4.0",
-    "svelte-loader": "^2.1.0",
+    "svelte-cli": "^3.0.0",
+    "svelte-loader": "^2.8.1",
     "webpack": "^2.5.1"
   },
   "dependencies": {
     "@curi/router": "^1.0.0-beta.36",
     "@curi/svelte": "^1.0.0-beta.6",
     "@hickory/browser": "^1.0.0-beta.5",
-    "svelte": "^1.49.3"
+    "svelte": "^2.8.1"
   }
 }

@@ -1,5 +1,5 @@
 <Nav />
-<:Component {$curi.response.body}></:Component>
+<svelte:component this={$curi.response.body} />
 
 <script>
 	import Nav from './Nav.html';
