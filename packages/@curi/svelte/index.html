@@ -20,7 +20,7 @@ const router = curi(history, routes);
 const store = new Store({...});
 curiStore(router, store);</code></pre></div></div></div><div class="section" id="link"><h3><code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code><a class="header-link" href="/packages/@curi/svelte/#link">#</a></h3><div class="side-by-side"><div class="explanation"><p>In order for the components provided by this package to work, they need to have access to your Curi router object.</p></div><div class="code-block"><pre><code class="language-html">&lt;div&gt;
   &lt;Link to=&#x27;Home&#x27;&gt;Home&lt;/Link&gt;
-  &lt;Link to=&#x27;User&#x27; params=&#x27;{{ { userID: 5 } }}&#x27;&gt;
+  &lt;Link to=&#x27;User&#x27; params=&#x27;{ { userID: 5 } }&#x27;&gt;
     Profile
   &lt;/Link&gt;
 &lt;/div&gt;
@@ -30,14 +30,14 @@ curiStore(router, store);</code></pre></div></div></div><div class="section" id=
     components: { Link }
   }
 &lt;/script&gt;</code></pre></div></div><div class="subsection" id="link-props"><h3>Props<a class="header-link" href="/packages/@curi/svelte/#link-props">#</a></h3><ul><li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">to</code> - the name of the route to link to</p></div><div class="code-block"><pre><code class="language-html">&lt;Link to=&quot;Home&quot;&gt;Home&lt;/Link&gt;
-&lt;!-- &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt; --&gt;</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">params</code> - any route params for the linked route</p></div><div class="code-block"><pre><code class="language-html">&lt;Link to=&quot;User&quot; params=&#x27;{{ { userID: 5 } }}&#x27;&gt;
+&lt;!-- &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt; --&gt;</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">params</code> - any route params for the linked route</p></div><div class="code-block"><pre><code class="language-html">&lt;Link to=&quot;User&quot; params=&#x27;{ { userID: 5 } }&#x27;&gt;
   Profile
 &lt;/Link&gt;
 &lt;!-- &lt;a href=&quot;/user/5&quot;&gt;Profile&lt;/a&gt; --&gt;</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">hash</code> - the hash for the location to link to</p></div><div class="code-block"><pre><code class="language-html">&lt;Link to=&quot;Home&quot; hash=&quot;test&quot;&gt;Home&lt;/Link&gt;
 &lt;!-- &lt;a href=&quot;/#test&quot;&gt;Home&lt;/a&gt; --&gt;</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">query</code> - the query for the location to link to</p></div><div class="code-block"><pre><code class="language-html">&lt;Link to=&quot;Home&quot; query=&quot;one=1&quot;&gt;Home&lt;/Link&gt;
 &lt;!-- &lt;a href=&quot;/?one=1&quot;&gt;Home&lt;/a&gt; --&gt;</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><code class="inline-code language-javascript">state</code> - the state to associated with the location</div></div></li></ul></div></div></div><div class="section" id="usage"><h2>Usage<a class="header-link" href="/packages/@curi/svelte/#usage">#</a></h2><div class="side-by-side"><div class="explanation"><p>For rendering your application, you should should have a base component that has any global layout and uses the response to render the correct component(s). Assuming you setup your store using<!-- --> <code class="inline-code language-javascript">curiStore</code>, the components can access the router using<!-- --> <code class="inline-code language-javascript">$router</code> and the response and navigation using<!-- --> <code class="inline-code language-javascript">$curi.response</code> and <code class="inline-code language-javascript">$curi.navigation</code>.</p></div><div class="code-block"><pre><code class="language-html">&lt;!-- components/App.html --&gt;
 &lt;NavLinks /&gt;
-&lt;:Component {$curi.response.body}&gt;&lt;/:Component&gt;
+&lt;svelte:component this={$curi.response.body} /&gt;
 
 &lt;script&gt;
   import NavLinks from &#x27;./NavLinks.html&#x27;;

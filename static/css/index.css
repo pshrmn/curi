@@ -98,44 +98,6 @@ pre[class*="language-"] {
   .inline-code .token {
     color: #222233; }
 
-.banner {
-  margin: 15px 0 50px;
-  color: #222233;
-  max-width: 800px;
-  padding: 0 15px; }
-  .banner h1 {
-    margin: 10px 0; }
-  .banner p {
-    font-size: 1.1em;
-    margin: 0; }
-  .banner pre {
-    margin-top: 0; }
-  .banner .banner-buttons {
-    width: 80%;
-    margin: 0 auto;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: distribute;
-        justify-content: space-around; }
-    .banner .banner-buttons button {
-      font-family: "Zilla Slab", serif;
-      -webkit-box-flex: 1;
-          -ms-flex-positive: 1;
-              flex-grow: 1;
-      font-size: 1.1em;
-      background: #fff;
-      color: #222233;
-      border: 0;
-      border-bottom: 3px solid #fff;
-      cursor: pointer; }
-      .banner .banner-buttons button.active {
-        font-weight: normal;
-        border-color: #222233; }
-      @media only screen and (min-width: 641px) {
-  .banner {
-    padding: 0; } }
-
 .side-by-side {
   margin: 10px 0 20px;
   width: 100%;

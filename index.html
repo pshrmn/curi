@@ -9,21 +9,50 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><header><nav><ul><li><a class="home-link active" href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides/getting-started/">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="content" style="outline:none"><div class="banner"><h1>Curi is a JavaScript router for single-page applications</h1><p>Curi cares about routing, not how you render. Building an application with React? Cool! Or maybe you use Vue? Great! Svelte? Nice! A brand new framework? Why not!</p><div class="banner-buttons"><button class="active">Any</button><button class="">React</button><button class="">Vue</button><button class="">Svelte</button></div><pre><code class="language-javascript">import Browser from &#x27;@hickory/browser&#x27;;
-import curi from &#x27;@curi/router&#x27;;
+    <div id="root"><header><nav><ul><li><a class="home-link active" href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides/getting-started/">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="content" style="outline:none"><h1>Curi is a JavaScript router for single-page applications</h1><p>Curi cares about routing, not how you render.</p><div class="side-by-side"><div class="explanation"><p>A router has two main pieces: a <code class="inline-code language-javascript">history</code> object for controlling navigation and a <code class="inline-code language-javascript">routes</code> array of the valid routes for an application.</p></div><div class="code-block"><pre><code class="language-javascript">import Browser from &#x27;@hickory/browser&#x27;;
 
-// create your history object
 const history = Browser();
-
-// define your routes
 const routes = [
   { name: &#x27;Home&#x27;, path: &#x27;&#x27;, ... },
   { name: &#x27;User&#x27;, path: &#x27;u/:userID&#x27;, ... },
-  ...
-];
+  // ...
+  { name: &#x27;Not Found&#x27;, path: &#x27;(.*)&#x27;, ... }
+];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>A router is created by passing the <code class="inline-code language-javascript">history</code> and<!-- --> <code class="inline-code language-javascript">routes</code> to the <code class="inline-code language-javascript">curi</code> function from the<!-- --> <a href="/packages/@curi/router/"><code class="inline-code language-javascript">@curi/router</code></a> <!-- -->package.</p></div><div class="code-block"><pre><code class="language-javascript">import curi from &#x27;@curi/router&#x27;;
 
-// create your Curi router
-const router = curi(history, routes);</code></pre><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> <!-- -->guide.</p></div></div></main></div>
+const router = curi(history, routes);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>How you render depends on what framework you are using.</p></div></div><div class="side-by-side"><div class="explanation"><p>For<!-- --> <a href="/packages/@curi/react/">React</a> <!-- -->applications, you would use the <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code>, which automatically re-renders your application after navigation. This works with both React DOM and React Native.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriProvider } from &quot;@curi/react&quot;;
+        
+ReactDOM.render((
+  &lt;CuriProvider router={router}&gt;
+    {({ response }) =&gt; {
+      const { body:Body } = response;
+      return &lt;Body response={response} /&gt;;
+    }}
+  &lt;/CuriProvider&gt;
+), holder);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With<!-- --> <a href="/packages/@curi/vue/">Vue</a>, the <code class="inline-code language-javascript">CuriPlugin</code> sets up responsive rendering.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriPlugin } from &quot;@curi/vue&quot;;
+        
+Vue.use(CuriPlugin, { router });
+const vm = new Vue({
+  el: &#x27;#root&#x27;,
+  template: &#x27;&lt;app /&gt;&#x27;,
+  components: { app }
+});
+
+// app.html
+&lt;template&gt;
+  &lt;component
+    :is=&quot;$curi.response.body&quot;
+    :response=&quot;$curi.response&quot;
+  /&gt;
+&lt;/template&gt;</code></pre></div></div><div class="side-by-side"><div class="explanation"><p><a href="/packages/@curi/svelte/">Svelte</a> <!-- -->apps can use the store to interact with the router. The store is automatically updated after navigation to trigger re-renders.</p></div><div class="code-block"><pre><code class="language-jsx">import { curiStore } from &quot;@curi/svelte&quot;;
+const store = curiStore(router);
+
+const view = new app({ target, store });
+
+// app.html
+&lt;svelte:component
+  this={$curi.response.body}
+  response={$curi.response}
+/&gt;</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>While React, Vue, and Svelte are currently the only frameworks with &quot;official&quot; packages, with a little work Curi can work with most frameworks (and vanilla JavaScript)!</p></div></div><div class="side-by-side"><div class="explanation"><p>Ready to learn more? Check out the<!-- --> <a href="/guides/getting-started/">getting started</a> <!-- -->guide.</p></div></div></div></main></div>
     <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
