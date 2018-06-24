@@ -17,6 +17,7 @@ const TutorialBase = ({
   <Page type="tutorial">
     <Content>
       <h1>Curi Tutorials</h1>
+      <p>A few tutorials to help get you up to speed with Curi.</p>
     </Content>
     <PageLinks>
       <h2>Tutorials</h2>
