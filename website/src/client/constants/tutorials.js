@@ -7,6 +7,12 @@ const tutorials = [
       "Learn the basics of setting up a single-page application using Curi and React"
   },
   {
+    title: "React Advanced",
+    slug: "react-advanced",
+    type: "Advanced",
+    description: "Add code splitting and data preloading to an application."
+  },
+  {
     title: "Vue Basics",
     slug: "vue-basics",
     type: "Basic",
