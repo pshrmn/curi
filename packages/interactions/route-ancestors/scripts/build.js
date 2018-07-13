@@ -41,20 +41,20 @@ rollupBuild([
   ],
 
   [
-    "<script> file",
+    "UMD",
     {
       ...base,
-      format: "iife",
+      format: "umd",
       file: "dist/curi-route-ancestors.js"
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
 
   [
-    "<script> min file",
+    "minimized UMD",
     {
       ...base,
-      format: "iife",
+      format: "umd",
       file: "dist/curi-route-ancestors.min.js",
       uglify: true
     },

@@ -41,20 +41,20 @@ rollupBuild([
   ],
 
   [
-    "<script> file",
+    "UMD",
     {
       ...base,
-      format: "iife",
+      format: "umd",
       file: "dist/curi-side-effect-title.js"
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
 
   [
-    "<script> min file",
+    "minimized UMD",
     {
       ...base,
-      format: "iife",
+      format: "umd",
       file: "dist/curi-side-effect-title.min.js",
       uglify: true
     },

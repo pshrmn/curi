@@ -1,5 +1,6 @@
 ## Next
 
+* Switch script builds from IIFE to UMD
 * Updates exported types.
 * Emit a new response after calling `replaceRoutes()`.
 
