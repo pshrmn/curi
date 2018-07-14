@@ -1,3 +1,7 @@
+## Next
+
+- `<Prefetch when>` accepts array of match function names to call and its render-invoked `children()` function now receives a third argument: `error`.
+
 ## 1.0.0-beta.28
 
 - `<Link>` is now a pure component.

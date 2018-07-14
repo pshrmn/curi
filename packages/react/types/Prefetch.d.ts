@@ -1,10 +1,7 @@
 import React from "react";
 import { Resolved } from "@curi/router";
 import { HickoryLocation } from "@hickory/root";
-export interface WhichOnFns {
-    initial?: boolean;
-    every?: boolean;
-}
+export declare type WhichFns = Array<string>;
 export interface MatchData {
     name: string;
     params?: object;
@@ -13,9 +10,9 @@ export interface MatchData {
 }
 export declare type MaybeResolved = Resolved | null;
 export interface PrefetchProps {
-    children: (ref: React.RefObject<any>, resolved: MaybeResolved) => React.ReactElement<any>;
+    children: (ref: React.RefObject<any>, resolved: MaybeResolved, error: any) => React.ReactElement<any>;
     match: MatchData;
-    which?: WhichOnFns;
+    which?: WhichFns;
     forwardedRef?: React.RefObject<any>;
 }
 declare const Prefetch: React.ComponentType<PrefetchProps & React.ClassAttributes<any>>;
