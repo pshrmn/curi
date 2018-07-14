@@ -1,2 +1,2 @@
-import curi from "@curi/router";
-export default curi;
+import { curi, once, pathname } from "@curi/router";
+export { curi, once, pathname };
