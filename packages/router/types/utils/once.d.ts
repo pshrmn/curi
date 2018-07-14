@@ -1,1 +1,3 @@
-export default function once(fn: (...args: Array<any>) => Promise<any>): () => Promise<any>;
+declare type AnyFn = (...args: Array<any>) => Promise<any>;
+export default function once(fn: AnyFn): AnyFn;
+export {};

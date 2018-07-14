@@ -1,9 +1,6 @@
 import { Interactions } from "./types/interaction";
-import {
-  Response,
-  Resolved,
-  SettableResponseProperties
-} from "./types/response";
+import { Response, SettableResponseProperties } from "./types/response";
+import { ResolveResults } from "./types/route";
 import { Match } from "./types/match";
 import { PartialLocation } from "@hickory/root";
 
@@ -22,7 +19,7 @@ function createRedirect(
 export default function finishResponse(
   routeMatch: Match,
   interactions: Interactions,
-  resolved: Resolved | null
+  resolvedResults: ResolveResults | null
 ): Response {
   const { route, match } = routeMatch;
   const response: Response = match;
@@ -30,8 +27,11 @@ export default function finishResponse(
     return response;
   }
 
+  const { resolved = null, error = null } = resolvedResults || {};
+
   const responseModifiers = route.response({
     resolved,
+    error,
     match
   });
 

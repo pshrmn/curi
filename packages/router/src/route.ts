@@ -1,21 +1,10 @@
 import PathToRegexp from "path-to-regexp";
 
-import once from "./utils/once";
-
 import { RouteDescriptor, InternalRoute } from "./types/route";
 import { Key } from "path-to-regexp";
 
 const createRoute = (options: RouteDescriptor): InternalRoute => {
-  const {
-    name,
-    pathOptions = {},
-    children: descriptorChildren = [],
-    response,
-    on = {},
-    extra,
-    params: paramParsers
-  } = options;
-  let { path } = options;
+  let path = options.path;
 
   if (path.charAt(0) === "/") {
     if (process.env.NODE_ENV !== "production") {
@@ -26,6 +15,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     path = path.slice(1);
   }
 
+  const pathOptions = options.pathOptions || {};
   // end defaults to true, so end has to be hardcoded for it to be false
   // set this before setting pathOptions.end for children
   const mustBeExact = pathOptions.end == null || pathOptions.end;
@@ -33,35 +23,34 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
   let children: Array<InternalRoute> = [];
   // when we have child routes, we need to perform non-end matching and
   // create route objects for each child
-  if (descriptorChildren.length) {
+  if (options.children && options.children.length) {
     pathOptions.end = false;
-    children = descriptorChildren.map(createRoute);
+    children = options.children.map(createRoute);
   }
 
   // keys is populated by PathToRegexp
   const keys: Array<Key> = [];
   const re = PathToRegexp(path, keys, pathOptions);
 
+  const match = options.match || {};
+
   return {
     public: {
-      name,
+      name: options.name,
       path: path,
       keys: keys.map(key => key.name),
-      on: {
-        initial: on.initial && once(on.initial),
-        every: on.every
-      },
-      extra
+      match,
+      extra: options.extra
     },
     pathMatching: {
       re,
       keys,
       mustBeExact
     },
-    sync: !(on.initial || on.every),
-    response,
+    sync: !Object.keys(match).length,
+    response: options.response,
     children,
-    paramParsers
+    paramParsers: options.params
   };
 };
 

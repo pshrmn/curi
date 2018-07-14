@@ -1,5 +1,5 @@
 import "jest";
-import curi from "../src/curi";
+import { curi } from "../src";
 import InMemory from "@hickory/in-memory";
 import { RemoveObserver } from "../src/types";
 
@@ -309,13 +309,13 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when a route has on.initial", () => {
+      it("does asynchronous matching when route.match isn't empty", () => {
         const routes = [
           {
             name: "Home",
             path: "",
-            on: {
-              initial: () => Promise.resolve()
+            match: {
+              test: () => Promise.resolve()
             }
           }
         ];
@@ -327,25 +327,7 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when a route has on.every", () => {
-        const routes = [
-          {
-            name: "Home",
-            path: "",
-            on: {
-              every: () => Promise.resolve()
-            }
-          }
-        ];
-        const router = curi(history, routes);
-        const after = jest.fn();
-        router.respond(r => {
-          expect(after.mock.calls.length).toBe(1);
-        });
-        after();
-      });
-
-      it("does synchronous matching when a different route is async", done => {
+      it("still does synchronous matching when a different route is async", done => {
         const routes = [
           {
             name: "Parent",
@@ -354,8 +336,8 @@ describe("curi", () => {
               {
                 name: "Child",
                 path: "child",
-                on: {
-                  initial: () => Promise.resolve()
+                match: {
+                  test: () => Promise.resolve()
                 }
               }
             ]
@@ -393,14 +375,14 @@ describe("curi", () => {
       });
     });
 
-    describe("on", () => {
+    describe("async", () => {
       it("initial value is an object with null response and navigation properties", () => {
         const router = curi(history, [
           {
             name: "Catch All",
             path: "(.*)",
-            on: {
-              initial: () => Promise.resolve()
+            match: {
+              test: () => Promise.resolve()
             }
           }
         ]);
@@ -572,8 +554,8 @@ describe("curi", () => {
             {
               name: "How",
               path: ":method",
-              on: {
-                every: () => {
+              match: {
+                test: () => {
                   promiseResolved = true;
                   return Promise.resolve(promiseResolved);
                 }
@@ -603,8 +585,8 @@ describe("curi", () => {
             {
               name: "How",
               path: ":method",
-              on: {
-                initial: () => Promise.resolve()
+              match: {
+                test: () => Promise.resolve()
               }
             }
           ]
@@ -643,7 +625,9 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              on: { initial: () => Promise.resolve() }
+              match: {
+                test: () => Promise.resolve()
+              }
             }
           ];
           const sub = jest.fn();
@@ -660,7 +644,9 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              on: { initial: () => Promise.resolve() }
+              match: {
+                test: () => Promise.resolve()
+              }
             }
           ];
           const sub = jest.fn();
@@ -713,7 +699,9 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              on: { initial: () => Promise.resolve() }
+              match: {
+                test: () => Promise.resolve()
+              }
             },
             { name: "Catch All", path: "(.*)" }
           ];
@@ -771,7 +759,9 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              on: { initial: () => Promise.resolve() }
+              match: {
+                test: () => Promise.resolve()
+              }
             },
             { name: "Catch All", path: "(.*)" }
           ];
@@ -932,8 +922,8 @@ describe("curi", () => {
           {
             name: "Slow",
             path: "slow",
-            on: {
-              every: () => {
+            match: {
+              test: () => {
                 // takes 500ms to resolve
                 return new Promise(resolve => {
                   setTimeout(() => {
@@ -946,8 +936,8 @@ describe("curi", () => {
           {
             name: "Fast",
             path: "fast",
-            on: {
-              every: () => Promise.resolve("complete")
+            match: {
+              test: () => Promise.resolve("complete")
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -970,8 +960,8 @@ describe("curi", () => {
           {
             name: "Loader",
             path: "loader/:id",
-            on: {
-              every: () => Promise.resolve("complete")
+            match: {
+              test: () => Promise.resolve("complete")
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1009,8 +999,8 @@ describe("curi", () => {
           {
             name: "Slow",
             path: "slow",
-            on: {
-              every: () => {
+            match: {
+              test: () => {
                 // takes 500ms to resolve
                 return new Promise(resolve => {
                   setTimeout(() => {
@@ -1023,8 +1013,8 @@ describe("curi", () => {
           {
             name: "Fast",
             path: "fast",
-            on: {
-              every: () => Promise.resolve("complete")
+            match: {
+              test: () => Promise.resolve("complete")
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1046,8 +1036,8 @@ describe("curi", () => {
           {
             name: "Loader",
             path: "loader/:id",
-            on: {
-              every: () => Promise.resolve("complete")
+            match: {
+              test: () => Promise.resolve("complete")
             }
           },
           { name: "Catch All", path: "(.*)" }

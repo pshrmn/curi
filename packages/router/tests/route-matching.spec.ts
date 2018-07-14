@@ -1,5 +1,5 @@
 import "jest";
-import curi from "../src/curi";
+import { curi } from "../src";
 import InMemory from "@hickory/in-memory";
 
 describe("route matching/response generation", () => {
@@ -585,48 +585,9 @@ describe("route matching/response generation", () => {
     });
   });
 
-  describe("the on functions", () => {
-    describe("initial", () => {
-      it("will only be called once", done => {
-        /*
-         * This test is a bit odd to read, but it verifies that the
-         * on.initial function is only called once (while the
-         * on.every function is called on every match).
-         */
-        let initialCount = 0;
-        let everyCount = 0;
-        const initial = () => Promise.resolve(initialCount++);
-        const every = () => Promise.resolve(everyCount++);
-        const history = InMemory({ locations: ["/test"] });
-        const routes = [
-          {
-            name: "Test",
-            path: ":test",
-            on: { initial, every }
-          }
-        ];
-        const router = curi(history, routes);
-        let firstCall = true;
-        router.respond(
-          () => {
-            if (firstCall) {
-              firstCall = false;
-              expect(initialCount).toBe(1);
-              expect(everyCount).toBe(1);
-              history.navigate("/another-one");
-            } else {
-              expect(initialCount).toBe(1);
-              expect(everyCount).toBe(2);
-              done();
-            }
-          },
-          { observe: true }
-        );
-      });
-    });
-
-    describe("every", () => {
-      it("receives location, matched route name, and params", done => {
+  describe("the match functions", () => {
+    describe("calling functions", () => {
+      it("is called with location, matched route name, and params", done => {
         const spy = jest.fn(route => {
           expect(route).toMatchObject({
             params: { anything: "hello" },
@@ -642,11 +603,32 @@ describe("route matching/response generation", () => {
         const CatchAll = {
           name: "Catch All",
           path: ":anything",
-          on: { every: spy }
+          match: { spy }
+        };
+
+        const history = InMemory({ locations: ["/hello?one=two"] });
+        curi(history, [CatchAll]);
+      });
+
+      it("calls all match functions", done => {
+        const one = jest.fn();
+        const two = jest.fn();
+        const CatchAll = {
+          name: "Catch All",
+          path: ":anything",
+          match: {
+            one,
+            two
+          }
         };
 
         const history = InMemory({ locations: ["/hello?one=two"] });
         const router = curi(history, [CatchAll]);
+        router.respond(() => {
+          expect(one.mock.calls.length).toBe(1);
+          expect(one.mock.calls.length).toBe(1);
+          done();
+        });
       });
     });
 
@@ -654,7 +636,7 @@ describe("route matching/response generation", () => {
       it("is not called if the navigation has been cancelled", done => {
         const responseSpy = jest.fn();
         let firstHasResolved = false;
-        const everySpy = jest.fn(() => {
+        const spy = jest.fn(() => {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               firstHasResolved = true;
@@ -667,26 +649,26 @@ describe("route matching/response generation", () => {
           {
             name: "First",
             path: "first",
-            response: responseSpy,
-            on: {
-              every: everySpy
-            }
+            match: {
+              spy
+            },
+            response: responseSpy
           },
           {
             name: "Second",
             path: "second",
             response: () => {
               expect(firstHasResolved).toBe(true);
-              expect(everySpy.mock.calls.length).toBe(2);
+              expect(spy.mock.calls.length).toBe(2);
               expect(responseSpy.mock.calls.length).toBe(0);
               done();
               return {};
             },
-            on: {
-              // re-use the every spy so that this route's response
-              // fn isn't call until after the first route's every
+            match: {
+              // re-use the spy so that this route's response
+              // fn isn't call until after the first route's spy
               // fn has resolved
-              every: everySpy
+              spy
             }
           }
         ];
@@ -697,7 +679,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("resolved", () => {
-        it("is null when route has no on.initial/every functions", () => {
+        it("is null when route has no match functions", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
@@ -711,18 +693,16 @@ describe("route matching/response generation", () => {
           const router = curi(history, [CatchAll]);
         });
 
-        it("is an object with error/initial/every properties when router is asynchronous", () => {
+        it("is null when route a match function throws", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            response: ({ resolved }) => {
-              expect(resolved).toHaveProperty("error");
-              expect(resolved).toHaveProperty("initial");
-              expect(resolved).toHaveProperty("every");
-              return {};
+            match: {
+              fails: () => Promise.reject("woops!")
             },
-            on: {
-              initial: () => Promise.resolve(1)
+            response: ({ resolved }) => {
+              expect(resolved).toBe(null);
+              return {};
             }
           };
 
@@ -730,155 +710,63 @@ describe("route matching/response generation", () => {
           const router = curi(history, [CatchAll]);
         });
 
-        describe("error", () => {
-          it("receives the error rejected by on.initial()", done => {
-            const spy = jest.fn(({ resolved }) => {
-              expect(resolved.error).toBe("rejected by initial");
-              done();
-            });
+        it("is an object named match function properties when router is asynchronous", () => {
+          const CatchAll = {
+            name: "Catch All",
+            path: ":anything",
+            response: ({ resolved }) => {
+              expect(resolved.test).toBe(1);
+              expect(resolved.yo).toBe("yo!");
+              return {};
+            },
+            match: {
+              test: () => Promise.resolve(1),
+              yo: () => Promise.resolve("yo!")
+            }
+          };
 
-            const CatchAll = {
-              name: "Catch All",
-              path: ":anything",
-              response: spy,
-              on: {
-                initial: () => Promise.reject("rejected by initial")
-              }
-            };
+          const history = InMemory({ locations: ["/hello?one=two"] });
+          const router = curi(history, [CatchAll]);
+        });
+      });
 
-            const history = InMemory({ locations: ["/hello?one=two"] });
-            const router = curi(history, [CatchAll]);
+      describe("error", () => {
+        it("receives the error rejected by a match function", done => {
+          const spy = jest.fn(({ error }) => {
+            expect(error).toBe("rejected");
+            done();
           });
 
-          it("receives the error rejected by on.every()", done => {
-            const spy = jest.fn(({ resolved }) => {
-              expect(resolved.error).toBe("rejected by every");
-              done();
-            });
+          const CatchAll = {
+            name: "Catch All",
+            path: ":anything",
+            response: spy,
+            match: {
+              fails: () => Promise.reject("rejected")
+            }
+          };
 
-            const CatchAll = {
-              name: "Catch All",
-              path: ":anything",
-              response: spy,
-              on: {
-                every: () => Promise.reject("rejected by every")
-              }
-            };
-
-            const history = InMemory({ locations: ["/hello?one=two"] });
-            const router = curi(history, [CatchAll]);
-          });
+          const history = InMemory({ locations: ["/hello?one=two"] });
+          const router = curi(history, [CatchAll]);
         });
 
-        describe("initial", () => {
-          it("is the data resolved by on.initial()", done => {
-            const spy = jest.fn(({ resolved }) => {
-              expect(resolved.initial).toMatchObject({ test: "ing" });
-              done();
-            });
-
-            const CatchAll = {
-              name: "Catch All",
-              path: ":anything",
-              response: spy,
-              on: {
-                initial: () => Promise.resolve({ test: "ing" })
-              }
-            };
-
-            const history = InMemory({ locations: ["/hello?one=two"] });
-            const router = curi(history, [CatchAll]);
+        it("is null when all match functions succeed", done => {
+          const spy = jest.fn(({ error }) => {
+            expect(error).toBe(null);
+            done();
           });
 
-          it("re-use the Promise returned by initial on subsequent matches", done => {
-            const history = InMemory({ locations: ["/test"] });
-            let hasFinished = false;
-            let random;
-            const routes = [
-              {
-                name: "Test",
-                path: ":test",
-                response: ({ resolved }) => {
-                  if (!hasFinished) {
-                    hasFinished = true;
-                    random = resolved.initial;
-                  } else {
-                    expect(resolved.initial).toBe(random);
-                    done();
-                  }
-                  return {};
-                },
-                on: {
-                  initial: () => {
-                    return Promise.resolve(Math.random());
-                  }
-                }
-              }
-            ];
-            const router = curi(history, routes);
-            router.respond(() => {
-              history.navigate("/another-one");
-            });
-          });
+          const CatchAll = {
+            name: "Catch All",
+            path: ":anything",
+            response: spy,
+            match: {
+              succeed: () => Promise.resolve("hurray!")
+            }
+          };
 
-          it("resolved.initial is undefined if there is an on.every() fn but no on.initial() fn", done => {
-            const spy = jest.fn(({ resolved }) => {
-              expect(resolved.initial).toBeUndefined();
-              done();
-            });
-
-            const CatchAll = {
-              name: "Catch All",
-              path: ":anything",
-              response: spy,
-              on: {
-                every: () => Promise.resolve()
-              }
-            };
-
-            const history = InMemory({ locations: ["/hello?one=two"] });
-            const router = curi(history, [CatchAll]);
-          });
-        });
-
-        describe("every", () => {
-          it("is the data resolved by on.every()", done => {
-            const spy = jest.fn(({ resolved }) => {
-              expect(resolved.every).toMatchObject({ test: "ing" });
-              done();
-            });
-
-            const CatchAll = {
-              name: "Catch All",
-              path: ":anything",
-              response: spy,
-              on: {
-                every: () => Promise.resolve({ test: "ing" })
-              }
-            };
-
-            const history = InMemory({ locations: ["/hello?one=two"] });
-            const router = curi(history, [CatchAll]);
-          });
-
-          it("resolved.every is undefined if there is an on.initial() fn but no on.every() fn", done => {
-            const spy = jest.fn(opts => {
-              expect(opts.resolved.every).toBeUndefined();
-              done();
-            });
-
-            const CatchAll = {
-              name: "Catch All",
-              path: ":anything",
-              response: spy,
-              on: {
-                initial: () => Promise.resolve()
-              }
-            };
-
-            const history = InMemory({ locations: ["/hello?one=two"] });
-            const router = curi(history, [CatchAll]);
-          });
+          const history = InMemory({ locations: ["/hello?one=two"] });
+          const router = curi(history, [CatchAll]);
         });
       });
 

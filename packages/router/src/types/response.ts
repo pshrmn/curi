@@ -28,12 +28,6 @@ export interface Response extends MatchResponseProperties {
   redirectTo?: PartialLocation;
 }
 
-export interface Resolved {
-  error: any;
-  initial: any;
-  every: any;
-}
-
 export interface RedirectProps {
   name: string;
   params?: Params;

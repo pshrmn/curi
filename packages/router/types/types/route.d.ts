@@ -1,19 +1,25 @@
 import { RegExpOptions, Key } from "path-to-regexp";
-import { Resolved, MatchResponseProperties, SettableResponseProperties } from "./response";
+import { MatchResponseProperties, SettableResponseProperties } from "./response";
+export interface Resolved {
+    [key: string]: any;
+}
+export interface ResolveResults {
+    resolved: Resolved | null;
+    error: any;
+}
 export declare type ParamParser = (input: string) => any;
 export interface ParamParsers {
     [key: string]: ParamParser;
 }
 export interface ResponseBuilder {
     resolved: Resolved | null;
+    error: any;
     match: MatchResponseProperties;
 }
 export declare type ResponseFn = (props: ResponseBuilder) => SettableResponseProperties;
-export declare type EveryMatchFn = (matched?: MatchResponseProperties) => Promise<any>;
-export declare type InitialMatchFn = (matched?: MatchResponseProperties) => Promise<any>;
-export interface OnFns {
-    initial?: InitialMatchFn;
-    every?: EveryMatchFn;
+export declare type AsyncMatchFn = (matched?: MatchResponseProperties) => Promise<any>;
+export interface AsyncGroup {
+    [key: string]: AsyncMatchFn;
 }
 export interface RouteDescriptor {
     name: string;
@@ -22,7 +28,7 @@ export interface RouteDescriptor {
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
     response?: ResponseFn;
-    on?: OnFns;
+    match?: AsyncGroup;
     extra?: {
         [key: string]: any;
     };
@@ -31,7 +37,7 @@ export interface Route {
     name: string;
     path: string;
     keys: Array<string | number>;
-    on: OnFns;
+    match: AsyncGroup;
     extra?: {
         [key: string]: any;
     };
