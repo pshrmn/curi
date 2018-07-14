@@ -4,7 +4,7 @@
   "description": "A route interaction to prefetching Curi route data",
   "main": "dist/curi-route-prefetch.common.js",
   "module": "dist/curi-route-prefetch.es.js",
-  "typse": "types/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
     "dist",
     "types",

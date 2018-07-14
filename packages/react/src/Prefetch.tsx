@@ -2,9 +2,8 @@ import React from "react";
 import { Curious } from "./Context";
 
 import { CuriRouter, Resolved, ResolveResults } from "@curi/router";
+import { WhichFns } from "@curi/route-prefetch";
 import { HickoryLocation } from "@hickory/root";
-
-export type WhichFns = Array<string>;
 
 export interface MatchData {
   name: string;
