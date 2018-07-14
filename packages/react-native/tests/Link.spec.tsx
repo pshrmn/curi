@@ -4,7 +4,7 @@ import "react-native";
 import renderer from "react-test-renderer";
 
 import InMemory from "@hickory/in-memory";
-import curi from "@curi/router";
+import { curi } from "@curi/router";
 import { CuriProvider } from "@curi/react";
 import { TouchableHighlight, Text } from "react-native";
 import Link from "../src/Link";
@@ -322,8 +322,8 @@ describe("<Link>", () => {
           {
             name: "Test",
             path: "test",
-            on: {
-              every: () => {
+            match: {
+              test: () => {
                 return new Promise(resolve => {
                   setTimeout(() => {
                     resolve("done");
@@ -362,8 +362,8 @@ describe("<Link>", () => {
           {
             name: "Slow",
             path: "slow",
-            on: {
-              every: () => {
+            match: {
+              test: () => {
                 // takes 500ms to resolve
                 return new Promise(resolve => {
                   setTimeout(() => {
@@ -419,8 +419,8 @@ describe("<Link>", () => {
           {
             name: "Loader",
             path: "load",
-            on: {
-              every: () => Promise.resolve("done")
+            match: {
+              test: () => Promise.resolve("done")
             }
           },
           { name: "Catch All", path: "(.*)" }
