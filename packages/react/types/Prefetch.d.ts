@@ -1,7 +1,7 @@
 import React from "react";
 import { Resolved } from "@curi/router";
+import { WhichFns } from "@curi/route-prefetch";
 import { HickoryLocation } from "@hickory/root";
-export declare type WhichFns = Array<string>;
 export interface MatchData {
     name: string;
     params?: object;
