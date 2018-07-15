@@ -279,13 +279,15 @@ export default [
         With the history object created and the routes defined, we are ready to
         create the router. Back in the <IJS>src/index.js</IJS> file, we should
         import the <IJS>curi</IJS> function from <IJS>@curi/router</IJS> as well
-        as our routes from <IJS>src/routes.js</IJS>
+        as our routes from <IJS>src/routes.js</IJS>. Creating the router is done
+        by calling the <IJS>curi()</IJS> function and passing it the{" "}
+        <IJS>history</IJS> object and the <IJS>routes</IJS> array.
       </p>
       <PrismBlock lang="jsx" data-line="4,8,13">
         {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/router';
+import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
 
 import './index.css';
@@ -508,7 +510,7 @@ export default [
         {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/router';
+import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
 import { CuriProvider } from '@curi/react';
 
@@ -632,7 +634,7 @@ export default () => (
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/router';
+import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
 import { CuriProvider } from '@curi/react';
 
@@ -826,7 +828,7 @@ export default {
         {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/router';
+import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
 import { CuriProvider } from '@curi/react';
 

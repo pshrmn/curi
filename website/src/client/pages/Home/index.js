@@ -48,7 +48,7 @@ const routes = [
         </p>
       </Explanation>
       <CodeBlock>
-        {`import curi from '@curi/router';
+        {`import { curi } from '@curi/router';
 
 const router = curi(history, routes);`}
       </CodeBlock>

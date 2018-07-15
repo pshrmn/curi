@@ -83,85 +83,45 @@ export default ({ name }) => (
         </SideBySide>
       </Subsection>
 
-      <Subsection title="route.on" id="on">
+      <Subsection title="route.match" id="match">
         <SideBySide>
           <Explanation>
             <p>
-              The <IJS>on</IJS> object groups functions that will be called when
-              the route matches. A route with an <IJS>on.initial()</IJS> or{" "}
-              <IJS>on.every()</IJS> function is async.
+              The <IJS>match</IJS> object groups async functions that will be
+              called when the route matches.
             </p>
+            <p>
+              A route any <IJS>match</IJS> function is asynchronous, while one
+              without any <IJS>match</IJS> functions is synchronous.
+            </p>
+            <p>
+              <IJS>match</IJS> functions are called every time that a route
+              matches the current location.
+            </p>
+            <p>
+              <IJS>match</IJS> functions will be passed an object with the
+              matched route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
+              <IJS>partials</IJS>, and <IJS>location</IJS>.
+            </p>
+            <Note>
+              You should not perform side effects (e.g. passing the loaded data
+              to a Redux store) in <IJS>match</IJS> functions because it is
+              possible that navigating to the route might be cancelled. If you
+              must perform side effects for a route, you should do so in{" "}
+              <IJS>response()</IJS>.
+            </Note>
           </Explanation>
-        </SideBySide>
-
-        <Subsection tag="h5" title="on.initial()" id="initial">
-          <SideBySide>
-            <Explanation>
-              <p>
-                <IJS>on.initial()</IJS> is called the first time that a route
-                matches. Its return value will be re-used on subsequent matches.
-                It should return a Promise.
-              </p>
-              <p>
-                This can be used for loading resources that don't change based
-                on <IJS>params</IJS>. For example, if you are doing code
-                splitting with Webpack using <IJS>import()</IJS>, you can load
-                the modules in <IJS>on.initial()</IJS>.
-              </p>
-              <p>
-                The <IJS>initial</IJS> function will be passed an object with
-                the matched route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
-                <IJS>partials</IJS>, <IJS>location</IJS>, and <IJS>key</IJS>.
-              </p>
-            </Explanation>
-            <CodeBlock>
-              {`const about = {
+          <CodeBlock>
+            {`const about = {
   name: 'About',
   path: 'about',
-  on: {
-    initial: () => import('./components/About')
+  match: {
+    body: () => import('./components/About'),
+    data: () => fetch('/api/about')
   }
 };`}
-            </CodeBlock>
-          </SideBySide>
-        </Subsection>
-
-        <Subsection tag="h5" title="on.every()" id="every">
-          <SideBySide>
-            <Explanation>
-              <p>
-                <IJS>on.every()</IJS> will be called every time a route matches.
-                This can be useful for data fetching. Like{" "}
-                <IJS>on.initial()</IJS>, <IJS>on.every()</IJS> should return a
-                Promise.
-              </p>
-              <p>
-                The <IJS>every</IJS> function will be passed an object with the
-                matched route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
-                <IJS>partials</IJS>, <IJS>location</IJS>, and <IJS>key</IJS>.
-              </p>
-              <Note>
-                You should not perform side effects (e.g. passing the loaded
-                data to a Redux store) in <IJS>on.every()</IJS> because it is
-                possible that navigating to the route might be cancelled. If you
-                must perform side effects, you should do so in{" "}
-                <IJS>response()</IJS>.
-              </Note>
-            </Explanation>
-            <CodeBlock>
-              {`// fetch user data
-const user = {
-  name: 'User',
-  path: ':id',
-  on: {
-    every: ({ params, location }) =>
-      fetch(\`/api/users/$\{params.id\}\`)
-        .then(resp => JSON.parse(resp))
-  }
-}`}
-            </CodeBlock>
-          </SideBySide>
-        </Subsection>
+          </CodeBlock>
+        </SideBySide>
       </Subsection>
       <Subsection title="route.response()" id="response">
         <SideBySide>
@@ -229,14 +189,14 @@ const routes = [
               <Explanation>
                 <p>
                   <IJS>error</IJS> - If an error occurs with the route's{" "}
-                  <IJS>on</IJS> methods, you might want to attach an error
+                  <IJS>match</IJS> methods, you might want to attach an error
                   message to the response.
                 </p>
               </Explanation>
               <CodeBlock>
                 {`{
-  on: {
-    initial: () => Promise.reject("woops!")
+  match: {
+    test: () => Promise.reject("woops!")
   },
   response({ error }) {
     return { error };
@@ -386,39 +346,8 @@ const routes = [
               <Explanation>
                 <p>
                   <IJS>resolved</IJS> is an object with the values resolved by
-                  the <IJS>on.initial()</IJS> and <IJS>on.every()</IJS>{" "}
-                  functions.
+                  the <IJS>match</IJS> functions.
                 </p>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>property</th>
-                      <th>description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>error</td>
-                      <td>
-                        if either <IJS>on.initial()</IJS> or{" "}
-                        <IJS>on.every()</IJS> throw and the error is not caught,
-                        it will be available here
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>initial</td>
-                      <td>
-                        the value resolved by <IJS>on.initial()</IJS>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>every</td>
-                      <td>
-                        the value resolved by <IJS>on.every()</IJS>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
                 <p>
                   If a route isn't async, <IJS>resolved</IJS> will be{" "}
                   <IJS>null</IJS>.
@@ -429,20 +358,47 @@ const routes = [
 const user = {
   name: 'User',
   path: ':id',
-  response: ({ resolved }) => {
-    const modifiers = {};
-    if (resolved.error) {
-      modifiers.error = resolved.error;
-    } else {
-      modifiers.data = resolved.every;
-    }
-    return modifiers;
-  },
-  on: {
-    every: ({ params, location }) => (
+  match: {
+    data: ({ params, location }) => (
       fetch(\`/api/users/$\{params.id\}\`)
         .then(resp => JSON.parse(resp))
     ),
+  },
+  response: ({ resolved }) => {
+    return {
+      data: resolved.data
+    };
+  }
+}`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+          <Subsection tag="li" title="error" id="response-error">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  <IJS>error</IJS> is an error thrown by one of the route's{" "}
+                  <IJS>match</IJS> functions.
+                </p>
+              </Explanation>
+              <CodeBlock>
+                {`// check if any of a route's match functions threw
+const user = {
+  name: 'User',
+  path: ':id',
+  match: {
+    data: ({ params, location }) => (
+      fetch(\`/api/users/$\{params.id\}\`)
+        .then(resp => JSON.parse(resp))
+    ),
+  },
+  response: ({ error, resolved }) => {
+    if (error) {
+      return { error };
+    }
+    return {
+      data: resolved.data
+    };
   }
 }`}
               </CodeBlock>

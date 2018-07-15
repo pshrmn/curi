@@ -37,7 +37,7 @@ export default ({ name }) => (
           </p>
         </Explanation>
         <CodeBlock>
-          {`import curi from "@curi/router";
+          {`import { curi } from '@curi/router';
 
 const history = Browser();
 const routes = [...];

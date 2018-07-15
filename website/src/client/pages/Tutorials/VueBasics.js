@@ -291,12 +291,14 @@ export default [
         With the history object created and the routes defined, we are ready to
         create the router. Back in the <IJS>src/index.js</IJS> file, we should
         import the <IJS>curi</IJS> function from <IJS>@curi/router</IJS> as well
-        as our routes from <IJS>src/routes.js</IJS>
+        as our routes from <IJS>src/routes.js</IJS>. Creating the router is done
+        by calling the <IJS>curi()</IJS> function and passing it the{" "}
+        <IJS>history</IJS> object and the <IJS>routes</IJS> array.
       </p>
       <PrismBlock lang="javascript" data-line="3,6,12">
         {`// src/main.js
 import Vue from 'vue'
-import curi from '@curi/router';
+import { curi } from '@curi/router';
 import Browser from '@hickory/browser'
 
 import routes from './routes';
@@ -329,7 +331,7 @@ new Vue({
       <PrismBlock lang="javascript" data-line="5,14">
         {`// src/main.js
 import Vue from 'vue'
-import curi from '@curi/router';
+import { curi } from '@curi/router';
 import Browser from '@hickory/browser'
 import { CuriPlugin } from '@curi/vue'
 

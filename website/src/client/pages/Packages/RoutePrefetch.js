@@ -55,7 +55,7 @@ export default ({ name, version, globalName }) => (
           </Explanation>
 
           <CodeBlock>
-            {`import curi from '@curi/router';
+            {`import { curi } from '@curi/router';
 import prefetch from '@curi/route-prefetch';
 
 const router = curi(history, routes, {
@@ -90,10 +90,9 @@ router.route.prefetch("Some Route");`}
                   <tr>
                     <td>which</td>
                     <td>
-                      An object whose properties are the names of the{" "}
-                      <IJS>on</IJS> functions and whose values specify if they
-                      should be called (called when <IJS>true</IJS>). If this
-                      object is not provided, all available functions will be
+                      An array whose values are the names of the{" "}
+                      <IJS>match</IJS> functions that should be called. If this
+                      array is not provided, all available functions will be
                       called.
                     </td>
                   </tr>
@@ -114,23 +113,23 @@ router.route.prefetch("Some Route");`}
 {
   name: "User",
   path: "u/:id",
-  on: {
-    initial: () => {...},
-    every: () => {...}
+  match: {
+    one: () => {...},
+    two: () => {...}
   }
 }
 
-// call a route's on.initial() and on.every() functions
+// call a route's match.one() and match.two() functions
 router.route.prefetch(
   'User',
   { params: { id: 2 }}
 )
 
-// only call the route's on.initial() function
+// only call the route's match.one() function
 router.route.prefetch(
   'User',
   { params: { id: 3 }},
-  { initial: true }
+  ['one']
 );`}
             </CodeBlock>
           </SideBySide>

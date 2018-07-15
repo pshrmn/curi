@@ -21,21 +21,21 @@ export default ({ name }) => (
     <SideBySide>
       <Explanation>
         <p>
-          In the code splitting guide, we used the <IJS>on.initial()</IJS>{" "}
-          property of routes. Routes also have <IJS>on.every()</IJS> and{" "}
-          <IJS>response()</IJS> properties. While <IJS>initial</IJS>is only
-          called the first time a route matches, <IJS>on.every()</IJS> and{" "}
-          <IJS>response()</IJS> are called every time a route matches.
+          In the code splitting guide, we added a function that calls{" "}
+          <IJS>import()</IJS> to a route's <IJS>match</IJS> object in order to
+          dynamically load modules. We can do the same thing for other data.
         </p>
       </Explanation>
     </SideBySide>
 
-    <Section title="every" id="every">
+    <Section title="match" id="match">
       <SideBySide>
         <Explanation>
           <p>
-            <IJS>on.every()</IJS> is where you should perform any data loading
-            for the matched route.
+            An async function (with any name you want it to have) can be added
+            to the <IJS>match</IJS> object and the value it resolves will be
+            available in the route's <IJS>response()</IJS> function (as a
+            property of the <IJS>resolved</IJS> object).
           </p>
           <p>
             When the <IJS>Recipe</IJS> route matches, we want to fetch data for
@@ -55,17 +55,21 @@ export default ({ name }) => (
       <SideBySide>
         <Explanation>
           <p>
-            The <IJS>every</IJS> function will be passed a "route" object that
+            Here, we will name the match function for fetching data{" "}
+            <IJS>"data"</IJS>.
+          </p>
+          <p>
+            The <IJS>match.data()</IJS> function will be passed an object that
             contains the matched route response properties, including the route{" "}
             <IJS>params</IJS>.
           </p>
           <p>
-            <IJS>on.every()</IJS> is expected to return a Promise.
+            All <IJS>match</IJS> functions are expected to return a Promise.
           </p>
           <p>
             Now, when we navigate to <IJS>/recipe/chocolate-chip-cookies</IJS>,
-            the <IJS>every</IJS> function will call the fake API function to
-            load the <IJS>"chocolate-chip-cookies"</IJS> recipe. The function
+            the <IJS>match.data()</IJS> function will call the fake API function
+            to load the <IJS>"chocolate-chip-cookies"</IJS> recipe. The function
             will resolve with the loaded data.
           </p>
         </Explanation>
@@ -73,8 +77,8 @@ export default ({ name }) => (
           {`{
   name: 'Recipe',
   path: 'recipe/:id',
-  on: {
-    every: ({ params }) => fakeAPI.getRecipe(params.id)
+  match: {
+    data: ({ params }) => fakeAPI.getRecipe(params.id)
   }
 }`}
         </CodeBlock>
@@ -85,17 +89,17 @@ export default ({ name }) => (
       <SideBySide>
         <Explanation>
           <p>
-            While <IJS>on.every()</IJS> starts our data loading, it doesn't
+            While <IJS>match.data()</IJS> starts our data loading, it doesn't
             actually do anything. Instead, we should handle any loaded data with
             the <IJS>response()</IJS> function.
           </p>
 
           <p>
-            The <IJS>response()</IJS> and <IJS>on.every()</IJS> are separate
+            The <IJS>response()</IJS> and <IJS>match.data()</IJS> are separate
             because while a route is resolving, the user may navigate again,
             which overrides the current navigation. We cannot cancel the{" "}
-            <IJS>on.every()</IJS> function for the current navigation, so if it
-            performs any side effects, our application is stuck with them. To
+            <IJS>match.data()</IJS> function for the current navigation, so if
+            it performs any side effects, our application is stuck with them. To
             avoid this, the <IJS>response()</IJS> function is not called until
             we know that the current navigation will complete.
           </p>
@@ -106,27 +110,22 @@ export default ({ name }) => (
             <Link to="Guide" params={{ slug: "routes" }} hash="response">
               All About Routes
             </Link>{" "}
-            guide. The function returns an object with values that will modify
-            the response.
-          </p>
-
-          <p>
-            Here, we will be using the <IJS>resolved</IJS> object to modify the
-            response's <IJS>data</IJS>
+            guide, but the only one we care about right now is{" "}
+            <IJS>resolved</IJS>.
           </p>
         </Explanation>
         <CodeBlock>
           {`{
   name: 'Recipe',
   path: 'recipe/:id',
+  match: {
+    data: ({ params }) => fakeAPI.getRecipe(params.id),
+  },
   response({ resolved }) {
     return {
       body: Recipe,
-      data: resolved.every
+      data: resolved.data
     }
-  },
-  on: {
-    every: ({ params }) => fakeAPI.getRecipe(params.id),
   }
 }`}
         </CodeBlock>
@@ -172,11 +171,11 @@ export default ({ name }) => (
       </SideBySide>
     </Section>
     <p>
-      <IJS>every</IJS> and <IJS>response</IJS> offer a convenient way to do data
-      loading prior to actually rendering the route, but please remember that
-      your application will not be re-rendering until <em>after</em> the
-      fetching has resolved. If you have a long running load function, you may
-      wish to implement some sort of loading display. The{" "}
+      A route's <IJS>match</IJS> and <IJS>response()</IJS> functions offer a
+      convenient way to do data loading prior to actually rendering the route,
+      but please remember that your application will not be re-rendering until{" "}
+      <em>after</em> the fetching has resolved. If you have a long running load
+      function, you may wish to implement some sort of loading display. The{" "}
       <Link to="Example" params={{ category: "react", slug: "data-loading" }}>
         data loading example
       </Link>{" "}

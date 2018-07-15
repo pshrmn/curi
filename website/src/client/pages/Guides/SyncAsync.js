@@ -29,9 +29,8 @@ export default ({ name }) => (
         </p>
 
         <p>
-          By default, routes are synchronous. If a route has an{" "}
-          <IJS>on.initial</IJS> or <IJS>on.every()</IJS> function, it becomes
-          async.
+          By default, routes are synchronous. If a route has any functions in
+          its <IJS>match</IJS> object, it becomes async.
         </p>
       </Explanation>
       <CodeBlock>
@@ -42,10 +41,9 @@ export default ({ name }) => (
 {
   name: "User",
   path: "user/:id,
-  on: {
-    // either of these makes the route async
-    initial: () => import("./components/User"),
-    every: ({ params }) => fetch(\`/api/user/\${params.id}\`)
+  // any functions in here makes the route async
+  match: {
+    body: () => import("./components/User"),
   }
 }`}
       </CodeBlock>

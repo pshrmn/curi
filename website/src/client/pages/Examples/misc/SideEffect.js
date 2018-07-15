@@ -32,7 +32,7 @@ export default ({ name }) => (
       </p>
 
       <PrismBlock lang="javascript">
-        {`import curi from 'curi';
+        {`import { curi } from '@curi/router';
 import mySideEffect from './mySideEffect';
 
 const router = curi(history, routes, {

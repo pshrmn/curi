@@ -225,11 +225,9 @@ const routes = [
                 :message
               </IJS>{" "}
               route. With Curi, routes can have functions that are called when
-              they match the new loaction. These are <IJS>on.initial()</IJS> and{" "}
-              <IJS>on.every()</IJS>. <IJS>on.initial()</IJS> is useful for tasks
-              that only need to be run once per route, like the code splitting
-              mentioned above. <IJS>on.every()</IJS> will be called every time
-              that a route matches, so it is ideal for data loading.
+              they match the new location. These are grouped under the route's{" "}
+              <IJS>match</IJS> object. The <IJS>match</IJS> functions are called
+              every time that a route matches a location.
             </p>
             <p>
               With React Router, <IJS>onEnter</IJS> is called when the route
@@ -238,8 +236,9 @@ const routes = [
               <IJS>onEnter</IJS> and <IJS>onChange</IJS> are nearly the same;
               the big difference between the two is that <IJS>onChange</IJS>{" "}
               will receive the previous props, which could be used to determine
-              which props changed. When converting these to Curi, we will use{" "}
-              <IJS>on.every()</IJS> for both.
+              which props changed. The functionality for both <IJS>onEnter</IJS>{" "}
+              and <IJS>onChange</IJS> can be covered using a <IJS>match</IJS>{" "}
+              function.
             </p>
             <p>
               There currently is no equivalent to <IJS>onLeave</IJS> with Curi.
@@ -284,8 +283,8 @@ const routes = [
             body: Message
           };
         },
-        on: {
-          every: (route) => { return ... },
+        match: {
+          data: (route) => { return ... },
         }
       }
     ]
@@ -334,7 +333,7 @@ ReactDOM.render((
           </p>
         </Explanation>
         <CodeBlock>
-          {`import curi from '@curi/router';
+          {`import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
 const history = Browser();
 const routes = [...];
