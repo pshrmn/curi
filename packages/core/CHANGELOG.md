@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.37
 
 - Keep exports the same as new `@curi/router` exports.
 

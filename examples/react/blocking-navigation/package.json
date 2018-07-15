@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/blocking-navigation-react",
   "private": true,
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Use the <Block> component to prevent transitions",
   "main": "index.js",
   "scripts": {
@@ -17,8 +17,8 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "@curi/react": "^1.0.0-beta.28",
-    "@curi/router": "^1.0.0-beta.36",
+    "@curi/react": "^1.0.0-beta.29",
+    "@curi/router": "^1.0.0-beta.37",
     "@hickory/browser": "^1.0.0-beta.5",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.37
 
 - Default export is moved to the `curi` named export.
 - Added `once` named export for match functions that should re-use their initial result.

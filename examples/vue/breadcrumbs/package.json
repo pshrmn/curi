@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/breadcrumbs-vue",
   "private": true,
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Render breadcrumb links",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@curi/route-ancestors": "^1.0.0-beta.6",
-    "@curi/router": "^1.0.0-beta.36",
+    "@curi/router": "^1.0.0-beta.37",
     "@curi/vue": "^1.0.0-beta.20",
     "@hickory/browser": "^1.0.0-beta.5",
     "vue": "^2.5.9"

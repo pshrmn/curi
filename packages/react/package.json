@@ -1,6 +1,6 @@
 {
   "name": "@curi/react",
-  "version": "1.0.0-beta.28",
+  "version": "1.0.0-beta.29",
   "description": "React web components to use with Curi",
   "main": "dist/curi-react.common.js",
   "module": "dist/curi-react.es.js",
@@ -39,9 +39,9 @@
     "react": ">=16.3"
   },
   "dependencies": {
-    "@curi/route-active": "^1.0.0-beta.6",
-    "@curi/route-prefetch": "^1.0.0-beta.10",
-    "@curi/router": "^1.0.0-beta.36",
+    "@curi/route-active": "^1.0.0--.beta.6",
+    "@curi/route-prefetch": "^1.0.0-beta.11",
+    "@curi/router": "^1.0.0-beta.37",
     "@hickory/root": "^1.0.0-beta.7",
     "@types/react": "^16.3.11"
   },
