@@ -1,3 +1,5 @@
 export * from "./types";
 import curi from "./curi";
-export default curi;
+import once from "./utils/once";
+import pathname from "./interactions/pathname";
+export { curi, once, pathname };

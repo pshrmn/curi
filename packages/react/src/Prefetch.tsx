@@ -1,13 +1,9 @@
 import React from "react";
 import { Curious } from "./Context";
 
-import { CuriRouter, Resolved } from "@curi/router";
+import { CuriRouter, Resolved, ResolveResults } from "@curi/router";
+import { WhichFns } from "@curi/route-prefetch";
 import { HickoryLocation } from "@hickory/root";
-
-export interface WhichOnFns {
-  initial?: boolean;
-  every?: boolean;
-}
 
 export interface MatchData {
   name: string;
@@ -21,10 +17,11 @@ export type MaybeResolved = Resolved | null;
 export interface PrefetchProps {
   children: (
     ref: React.RefObject<any>,
-    resolved: MaybeResolved
+    resolved: MaybeResolved,
+    error: any
   ) => React.ReactElement<any>;
   match: MatchData;
-  which?: WhichOnFns;
+  which?: WhichFns;
   forwardedRef?: React.RefObject<any>;
 }
 
@@ -34,6 +31,7 @@ interface PrefetchPropsWithRouter extends PrefetchProps {
 
 interface PrefetchState {
   resolved: MaybeResolved;
+  error: any;
 }
 
 class PrefetchWhenVisible extends React.Component<
@@ -61,7 +59,8 @@ const router = curi(history, routes, {
     }
 
     this.state = {
-      resolved: null
+      resolved: null,
+      error: null
     };
 
     // re-use ref if provided, otherwise create a new one
@@ -80,8 +79,8 @@ const router = curi(history, routes, {
             this.obs.disconnect();
             router.route
               .prefetch(match.name, match, which)
-              .then((resolved: Resolved) => {
-                this.setState({ resolved });
+              .then((results: ResolveResults) => {
+                this.setState(results);
               });
           }
         });
@@ -90,7 +89,11 @@ const router = curi(history, routes, {
   }
 
   render() {
-    return this.props.children(this.intersectionRef, this.state.resolved);
+    return this.props.children(
+      this.intersectionRef,
+      this.state.resolved,
+      this.state.error
+    );
   }
 
   componentDidMount() {

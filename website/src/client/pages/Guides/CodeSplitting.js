@@ -81,24 +81,33 @@ const routes = [
       </SideBySide>
     </Section>
 
-    <Section title="import() in on.initial()" id="initial">
+    <Section title="import() in match" id="import">
       <SideBySide>
         <Explanation>
           <p>
             Instead of having static imports, we will use the{" "}
             <IJS>import()</IJS> function to import our modules. We will import
-            our components using the <IJS>on.initial()</IJS> property of routes.
-            This function will only be called the first time that its route
-            matches, so we don't have to worry about making extra requests to
-            our server.
+            our components by adding a property to a route's <IJS>match</IJS>{" "}
+            object. The property name for the function is how we will access the
+            resolved data in the route's <IJS>response()</IJS> function.
           </p>
-
           <p>
-            <IJS>on.initial()</IJS> should be a function that returns a Promise;{" "}
-            <IJS>import()</IJS>, conveniently, returns a Promise. Then, in our{" "}
-            <IJS>response()</IJS> function, instead of referencing values
-            imported at the top of the file, we can reference the result of the{" "}
-            <IJS>initial</IJS> function using <IJS>resolved.initial</IJS>.
+            <IJS>match</IJS> functions are called every time a route matches.
+            However, <IJS>import()</IJS> calls automatically re-use the results
+            of a previous call, so we do not have to worry about extra network
+            requests.
+          </p>
+          <p>
+            Here we will name the <IJS>match</IJS> function for importing a
+            component <IJS>body</IJS>, since it will be set as the response's{" "}
+            <IJS>body</IJS> property.
+          </p>
+          <p>
+            <IJS>match.body()</IJS> should return a Promise; <IJS>import()</IJS>,
+            conveniently, returns a Promise. In our <IJS>response()</IJS>{" "}
+            function, instead of referencing values imported at the top of the
+            file, we can reference the result of the <IJS>match.body()</IJS>{" "}
+            function using <IJS>resolved.body</IJS>.
           </p>
           <p>
             <IJS>import()</IJS> resolves with a module object. If the component
@@ -112,46 +121,46 @@ const routes = [
   {
     name: 'Home',
     path: '',
-    response: ({ resolved }) => {
-      return {
-        body: resolved.initial
-      };
-    },
-    on: {
-      initial: () => (
+    match: {
+      body: () => (
         import('./components/Home')
           .then(module => module.default)
       ),
+    },
+    response: ({ resolved }) => {
+      return {
+        body: resolved.body
+      };
     }
   },
   {
     name: 'Contact',
     path: 'contact',
-    response: ({ resolved }) => {
-      return {
-        body: resolved.initial
-      };
-    },
-    on: {
-      initial: () => (
+    match: {
+      body: () => (
         import('./components/Contact')
           .then(module => module.default)
       ),
+    },
+    response: ({ resolved }) => {
+      return {
+        body: resolved.body
+      };
     },
     children: [
       {
         name: 'Contact Method',
         path: ':method',
-        response: ({ resolved }) => {
-          return {
-            body: resolved.initial
-          };
-        },
-        on: {
-          initial: () => (
+        match: {
+          body: () => (
             import('./components/ContactMethod')
               .then(module => module.default)
           )
+        },
+        response: ({ resolved }) => {
+          return {
+            body: resolved.body
+          };
         }
       }
     ]
@@ -163,15 +172,18 @@ const routes = [
 
     <Section title="Next" id="next">
       <p>
-        The approaches taken here are not the only way to do code splitting. You
-        may choose to skip the <IJS>on.initial()</IJS> method and do code
-        splitting at other points in your application.
+        The approaches taken here are not the only way to do code splitting.
+        Another approach is to skip the <IJS>match</IJS> method and do code
+        splitting at other points in your application (e.g.{" "}
+        <a href="https://github.com/jamiebuilds/react-loadable">
+          <IJS>react-loadable</IJS>
+        </a>).
       </p>
       <p>
         Whatever path you decide to go, hopefully this has shown you that
-        setting up code splitting with the <IJS>on.initial()</IJS> property is
-        fairly simple to do. If you are using Webpack and want to reduce your
-        initial bundle size, <IJS>on.initial()</IJS> is a good way to accomplish
+        setting up code splitting with a <IJS>match</IJS> function is fairly
+        simple to do. If you are using Webpack and want to reduce your initial
+        bundle size, <IJS>match</IJS> functions are a good way to accomplish
         this.
       </p>
 

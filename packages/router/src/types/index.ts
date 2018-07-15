@@ -10,15 +10,15 @@ export {
   ParamParser,
   ParamParsers,
   ResponseBuilder,
-  EveryMatchFn,
-  InitialMatchFn,
-  OnFns
+  AsyncMatchFn,
+  AsyncGroup,
+  Resolved,
+  ResolveResults
 } from "./route";
 export {
   Response,
   RawParams,
   Params,
-  Resolved,
   MatchResponseProperties,
   SettableResponseProperties
 } from "./response";

@@ -1,7 +1,7 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import InMemory from "@hickory/in-memory";
-import curi from "@curi/router";
+import { curi } from "@curi/router";
 import CuriPlugin from "../src/plugin";
 
 describe("<curi-link>", () => {
@@ -148,8 +148,8 @@ describe("<curi-link>", () => {
         {
           name: "Test",
           path: "test",
-          on: {
-            every: () => {
+          match: {
+            test: () => {
               return new Promise(resolve => {
                 setTimeout(() => {
                   resolve("done");
@@ -251,8 +251,8 @@ describe("<curi-link>", () => {
           {
             name: "Slow",
             path: "slow",
-            on: {
-              every: () => {
+            match: {
+              test: () => {
                 return new Promise(resolve => {
                   setTimeout(() => {
                     resolve("slow");
@@ -264,8 +264,8 @@ describe("<curi-link>", () => {
           {
             name: "Fast",
             path: "fast",
-            on: {
-              every: () => Promise.resolve("fast")
+            match: {
+              test: () => Promise.resolve("fast")
             }
           },
           { name: "Catch All", path: "(.*)" }

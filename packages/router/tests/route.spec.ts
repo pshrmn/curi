@@ -1,6 +1,6 @@
 import "jest";
 import { Route, Interaction } from "../src/types";
-import curi from "../src/curi";
+import { curi } from "../src";
 import InMemory from "@hickory/in-memory";
 
 function PropertyReporter(): Interaction {
@@ -14,7 +14,7 @@ function PropertyReporter(): Interaction {
     get: (name: string): Route => {
       if (knownRoutes[name] == null) {
         console.error(
-          `Could not generate pathname for ${name} because it is not registered.`
+          `Could not get properties for ${name} because it is not registered.`
         );
         return;
       }
@@ -93,123 +93,62 @@ describe("public route properties", () => {
     });
   });
 
-  describe("on", () => {
-    describe("initial", () => {
-      it("will be defined when a on.initial function is provided", () => {
-        const initialTest = () => Promise.resolve();
-
-        const history = InMemory({ locations: ["/test"] });
-        const routes = [
-          {
-            name: "Test",
-            path: "test",
-            on: {
-              initial: initialTest
-            }
-          }
-        ];
-        const router = curi(history, routes, {
-          route: [PropertyReporter()]
-        });
-        const routeProperties = router.route.properties("Test");
-        expect(routeProperties.on.initial).toBeDefined();
-      });
-
-      it("will be undefined when on.initial fn isn't defined", () => {
-        const history = InMemory({ locations: ["/test"] });
-        const routes = [
-          {
-            name: "Test",
-            path: "test"
-          }
-        ];
-        const router = curi(history, routes, {
-          route: [PropertyReporter()]
-        });
-        const routeProperties = router.route.properties("Test");
-        expect(routeProperties.on.initial).toBeUndefined();
-      });
-
-      it("will be passed matched route props object", done => {
-        const history = InMemory({ locations: ["/test"] });
-        const routes = [
-          {
-            name: "Test",
-            path: "test",
-            on: {
-              initial: props => {
-                expect(props).toMatchObject({
-                  name: "Test",
-                  params: {}
-                });
-                done();
-                return Promise.resolve();
-              }
-            }
-          }
-        ];
-        const router = curi(history, routes, {
-          route: [PropertyReporter()]
-        });
-      });
-    });
-
-    describe("every", () => {
-      it("will be the provided on.every() function", () => {
-        const everyTest = () => Promise.resolve();
-
-        const history = InMemory({ locations: ["/test"] });
-        const routes = [
-          {
-            name: "Test",
-            path: "test",
-            on: { every: everyTest }
-          }
-        ];
-        const router = curi(history, routes, {
-          route: [PropertyReporter()]
-        });
-        const routeProperties = router.route.properties("Test");
-        expect(routeProperties.on.every).toBe(everyTest);
-      });
-
-      it("will be undefined when on.every() isn't defined", () => {
-        const history = InMemory({ locations: ["/test"] });
-        const routes = [
-          {
-            name: "Test",
-            path: "test"
-          }
-        ];
-        const router = curi(history, routes, {
-          route: [PropertyReporter()]
-        });
-        const routeProperties = router.route.properties("Test");
-        expect(routeProperties.on.every).toBeUndefined();
-      });
-    });
-
-    it("will be passed matched route props object", done => {
-      const history = InMemory({ locations: ["/test/1"] });
+  describe("match", () => {
+    it("is the match functions", done => {
+      const history = InMemory({ locations: ["/test"] });
       const routes = [
         {
           name: "Test",
-          path: "test/:id",
-          on: {
-            initial: props => {
-              expect(props).toMatchObject({
-                name: "Test",
-                params: { id: "1" }
-              });
-              done();
-              return Promise.resolve();
-            }
+          path: "test",
+          match: {
+            iTest: () => Promise.resolve("iTest"),
+            eTest: () => Promise.resolve("eTest")
           }
         }
       ];
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });
+      const routeProperties = router.route.properties("Test");
+      const { iTest, eTest } = routeProperties.match;
+      Promise.all([iTest(), eTest()]).then(([iResult, eResult]) => {
+        expect(iResult).toBe("iTest");
+        expect(eResult).toBe("eTest");
+        done();
+      });
+    });
+
+    it("is an empty object when route.match isn't provided", done => {
+      const history = InMemory({ locations: ["/test"] });
+      const routes = [
+        {
+          name: "Test",
+          path: "test"
+        }
+      ];
+      const router = curi(history, routes, {
+        route: [PropertyReporter()]
+      });
+      const routeProperties = router.route.properties("Test");
+      expect(routeProperties.match).toEqual({});
+      done();
+    });
+
+    it("is an empty object when route.match is an empty object", done => {
+      const history = InMemory({ locations: ["/test"] });
+      const routes = [
+        {
+          name: "Test",
+          path: "test",
+          match: {}
+        }
+      ];
+      const router = curi(history, routes, {
+        route: [PropertyReporter()]
+      });
+      const routeProperties = router.route.properties("Test");
+      expect(routeProperties.match).toEqual({});
+      done();
     });
   });
 

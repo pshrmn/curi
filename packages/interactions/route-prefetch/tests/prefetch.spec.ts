@@ -18,12 +18,13 @@ describe("prefetch route interaction", () => {
   });
 
   describe("register", () => {
-    it("adds routes with on.initial() function", () => {
+    it("adds routes with match function(s)", () => {
       const route = {
         name: "Player",
         path: "player",
-        on: {
-          initial: () => Promise.resolve()
+        keys: [],
+        match: {
+          test: () => Promise.resolve()
         }
       };
       prefetch.register(route as Route);
@@ -31,20 +32,7 @@ describe("prefetch route interaction", () => {
       expect(prefetch.get("Player")).toBeDefined();
     });
 
-    it("adds routes with on.every() function", () => {
-      const route = {
-        name: "Player",
-        path: "player",
-        on: {
-          every: () => Promise.resolve()
-        }
-      };
-      prefetch.register(route as Route);
-
-      expect(prefetch.get("Player")).toBeDefined();
-    });
-
-    it("does not register if there is no on.initial() or on.every() function", () => {
+    it("does not register if there are no match functions", () => {
       const route = { name: "None", path: "player" };
       prefetch.register(route as Route);
       // This is a bit roundabout, but we verify that the paths did not register
@@ -65,15 +53,17 @@ describe("prefetch route interaction", () => {
       const first = {
         name: "Test",
         path: "first",
-        on: {
-          every: () => Promise.resolve()
+        keys: [],
+        match: {
+          test: () => Promise.resolve()
         }
       };
       const second = {
         name: "Test",
         path: "second",
-        on: {
-          every: () => Promise.resolve()
+        keys: [],
+        match: {
+          test: () => Promise.resolve()
         }
       };
 
@@ -88,12 +78,13 @@ describe("prefetch route interaction", () => {
   });
 
   describe("get", () => {
-    it("returns a Promise that resolved with a Resolved object ({ initial, every, error })", () => {
+    it("returns a Promise that resolved with object ({ resolved, error })", () => {
       const route = {
         name: "Player",
         path: "player/:id",
-        on: {
-          every: () => Promise.resolve()
+        keys: ["id"],
+        match: {
+          test: () => Promise.resolve()
         }
       };
       prefetch.register(route as Route);
@@ -118,8 +109,9 @@ describe("prefetch route interaction", () => {
       const route = {
         name,
         path: "throws",
-        on: {
-          every: () =>
+        keys: [],
+        match: {
+          test: () =>
             new Promise((resolve, reject) => {
               reject(errorMessage);
             })
@@ -139,8 +131,9 @@ describe("prefetch route interaction", () => {
         const route = {
           name: "Player",
           path: "player/:id",
-          on: {
-            every: function(props) {
+          keys: ["id"],
+          match: {
+            test: function(props) {
               expect(props).toMatchObject({
                 name: "Player",
                 location: locationToPass,
@@ -165,37 +158,31 @@ describe("prefetch route interaction", () => {
       const route = {
         name: "Home",
         path: "",
-        on: {
-          initial: jest.fn(),
-          every: jest.fn()
+        keys: [],
+        match: {
+          one: jest.fn(),
+          two: jest.fn()
         }
       };
       const prefetch = createPrefetch();
       prefetch.register(route as Route);
 
       afterEach(() => {
-        route.on.initial.mockReset();
-        route.on.every.mockReset();
+        route.match.one.mockReset();
+        route.match.two.mockReset();
       });
 
       it("calls all available async functions when not provided", () => {
         return prefetch.get("Home").then(resolved => {
-          expect(route.on.initial.mock.calls.length).toBe(1);
-          expect(route.on.every.mock.calls.length).toBe(1);
+          expect(route.match.one.mock.calls.length).toBe(1);
+          expect(route.match.two.mock.calls.length).toBe(1);
         });
       });
 
-      it("only calls on.initial() when which = { initial: true }", () => {
-        return prefetch.get("Home", null, { initial: true }).then(resolved => {
-          expect(route.on.initial.mock.calls.length).toBe(1);
-          expect(route.on.every.mock.calls.length).toBe(0);
-        });
-      });
-
-      it("only calls on.every() when which = { every: true }", () => {
-        return prefetch.get("Home", null, { every: true }).then(resolved => {
-          expect(route.on.initial.mock.calls.length).toBe(0);
-          expect(route.on.every.mock.calls.length).toBe(1);
+      it("only calls match.one() when which = ['one']", () => {
+        return prefetch.get("Home", null, ["one"]).then(resolved => {
+          expect(route.match.one.mock.calls.length).toBe(1);
+          expect(route.match.two.mock.calls.length).toBe(0);
         });
       });
     });
@@ -206,8 +193,9 @@ describe("prefetch route interaction", () => {
       const route = {
         name: "Player",
         path: "player/:id",
-        on: {
-          every: () => Promise.resolve()
+        keys: ["id"],
+        match: {
+          test: () => Promise.resolve()
         }
       };
       prefetch.register(route as Route);

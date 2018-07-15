@@ -4,26 +4,25 @@ export default [
   {
     name: "Home",
     path: "",
-    on: {
-      initial: () =>
-        import("./components/Home.js").then(module => module.default)
+    match: {
+      body: () => import("./components/Home.js").then(module => module.default)
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   },
   {
     name: "Contact",
     path: "contact",
-    on: {
-      initial: () =>
+    match: {
+      body: () =>
         import("./components/Contact.js").then(module => module.default)
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   },

@@ -2,23 +2,20 @@ import {
   Interaction,
   Route,
   MatchResponseProperties,
-  OnFns,
-  Resolved
+  ResolveResults,
+  AsyncGroup
 } from "@curi/router";
 import { HickoryLocation } from "@hickory/root";
 
-export interface PrefetchType {
-  initial?: boolean;
-  every?: boolean;
-}
+export type WhichFns = Array<string>;
 
 export default function prefetchRoute(): Interaction {
-  let loaders: { [key: string]: OnFns } = {};
+  let loaders: { [key: string]: AsyncGroup } = {};
 
   return {
     name: "prefetch",
     register: (route: Route) => {
-      const { name, on } = route;
+      const { name, match } = route;
       if (loaders[name] !== undefined) {
         console.warn(
           'A route with the name "' +
@@ -28,37 +25,44 @@ export default function prefetchRoute(): Interaction {
             "you are overwriting the existing one. This may break your application."
         );
       }
-      if (on && (on.every || on.initial)) {
-        loaders[name] = on;
+      if (match && Object.keys(match).length) {
+        loaders[name] = match;
       }
     },
     get: (
       name: string,
       props?: MatchResponseProperties,
-      which?: PrefetchType
-    ): Promise<Resolved> => {
+      which?: WhichFns
+    ): Promise<ResolveResults> => {
       if (loaders[name] == null) {
         return Promise.resolve({
           error: `Could not prefetch data for ${name} because it is not registered.`,
-          initial: null,
-          every: null
+          resolved: null
         });
       }
-      const { initial, every } = loaders[name];
-      let prefetchInitial = true;
-      let prefetchEvery = true;
-      if (which) {
-        prefetchInitial = !!which.initial;
-        prefetchEvery = !!which.every;
-      }
-      return Promise.all([
-        initial && prefetchInitial && initial(props),
-        every && prefetchEvery && every(props)
-      ])
-        .then(([initial, every]) => ({ initial, every, error: null }))
+      const asyncFns = loaders[name];
+      const { keys, promises } = Object.keys(asyncFns).reduce(
+        (acc, key) => {
+          if (which && which.indexOf(key) === -1) {
+            return acc;
+          }
+          acc.keys.push(key);
+          acc.promises.push(asyncFns[key](props));
+          return acc;
+        },
+        { keys: [], promises: [] }
+      );
+
+      return Promise.all(promises)
+        .then(results => ({
+          resolved: results.reduce((acc, curr, index) => {
+            acc[keys[index]] = curr;
+            return acc;
+          }, {}),
+          error: null
+        }))
         .catch(error => ({
-          initial: null,
-          every: null,
+          resolved: null,
           error
         }));
     },

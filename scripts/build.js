@@ -1,5 +1,4 @@
 const fs = require("fs");
-const execSync = require("child_process").execSync;
 const prettyBytes = require("pretty-bytes");
 const gzipSize = require("gzip-size");
 const rollup = require("rollup");
@@ -16,6 +15,10 @@ function buildCommands(cmds) {
 }
 
 async function rollupBuild(name, config, extraEnv) {
+  Object.keys(extraEnv).forEach(key => {
+    process.env[key] = extraEnv[key];
+  });
+
   const { inputOptions, outputOptions } = buildConfig(config, extraEnv);
 
   const buildStartTime = new Date();

@@ -63,7 +63,7 @@ export default ({ name, version, globalName }) => (
             </p>
           </Explanation>
           <CodeBlock>
-            {`import curi from '@curi/router';
+            {`import { curi } from '@curi/router';
 import ariaLive from '@curi/side-effect-aria-live';
 
 const announcer = ariaLive(

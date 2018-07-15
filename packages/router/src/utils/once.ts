@@ -1,6 +1,6 @@
-export default function once(
-  fn: (...args: Array<any>) => Promise<any>
-): () => Promise<any> {
+type AnyFn = (...args: Array<any>) => Promise<any>;
+
+export default function once(fn: AnyFn): AnyFn {
   let promise: Promise<any>;
   let hasRun: boolean = false;
 

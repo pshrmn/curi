@@ -1,5 +1,5 @@
 import "jest";
-import curi from "../src/curi";
+import { curi } from "../src";
 import InMemory from "@hickory/in-memory";
 
 describe("route.pathOptions matching", () => {

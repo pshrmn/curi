@@ -166,25 +166,19 @@ const routes = [
           <Explanation>
             <p>
               With React Router v4, a component's lifecycle methods are used for
-              loading data, code splitting, and other non-rendering tasks. WIth
-              Curi, the same thing can be done <em>or</em> you can use a route's{" "}
-              <IJS>on</IJS> methods to perform these tasks <em>before</em> the
-              response is emitted.
-            </p>
-            <p>
-              These methods are <IJS>on.initial()</IJS> and{" "}
-              <IJS>on.every()</IJS>. <IJS>on.initial()</IJS> is useful for tasks
-              that only need to be run once per route, like the code splitting
-              mentioned above. <IJS>on.every()</IJS> will be called every time
-              that a route matches, so it is ideal for data loading.
+              loading data, code splitting, and other non-rendering tasks. With
+              Curi, routes can have functions that are called when they match
+              the new location. These are grouped under the route's{" "}
+              <IJS>match</IJS> object. The <IJS>match</IJS> functions are called
+              every time that a route matches a location.
             </p>
             <p>
               The{" "}
               <Link to="Guide" params={{ slug: "routes" }} hash="match">
                 routes guide
               </Link>{" "}
-              covers the details of these methods as well as all of the other
-              route properties.
+              covers the details of <IJS>match</IJS> methods as well as all of
+              the other route properties.
             </p>
           </Explanation>
           <CodeBlock>
@@ -212,8 +206,8 @@ const routes = [
             body: Message
           };
         },
-        on: {
-          every: (route) => { return ... },
+        match: {
+          body: (route) => { return ... },
         }
       }
     ]
@@ -264,7 +258,7 @@ ReactDOM.render((
           </p>
         </Explanation>
         <CodeBlock>
-          {`import curi from '@curi/router';
+          {`import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
 const history = Browser();
 const routes = [...];

@@ -44,7 +44,7 @@ export default ({ name, version, globalName }) => (
             </p>
           </Explanation>
           <CodeBlock>
-            {`import curi from '@curi/router';
+            {`import { curi } from '@curi/router';
 import titleEffect from '@curi/side-effect-title';
 
 const setTitle = titleEffect({

@@ -72,62 +72,39 @@ npm run start`}
       <SideBySide>
         <Explanation>
           <p>
-            Curi lets you attach async code to a route, and when that route
-            matches, a response will not be emitted until the async code has
-            completed. There are two types of async code.
+            Curi lets you attach async functions to a route, and when that route
+            matches, a response will not be emitted until the async functions
+            have completed. The results of the async functions will be available
+            in a route's <IJS>response()</IJS> function under the{" "}
+            <IJS>resolved</IJS> object.
           </p>
-          <p>
-            The first is a function that is only called the first time a route
-            matches. This is useful for functions that only need to be run once,
-            like importing a module.
-          </p>
-          <p>
-            The second is a function that is called every time a route matches.
-            This is useful for routes with params that will load different data
-            based on the params.
-          </p>
+          <Note>
+            These async functions are called every time a route matches. If you
+            have functions that should re-use the results from previous calls,
+            you will probably want to implement some caching into your async
+            functions. Curi provides a{" "}
+            <Link to="Package" params={{ package: "router" }} hash="once">
+              <IJS>once()</IJS>
+            </Link>{" "}
+            function for simple caching, but leaves more advanced caching
+            solutions to the user.
+          </Note>
           <p>
             The async functions for a route are grouped under the route's{" "}
-            <IJS>on</IJS> property. <IJS>on.initial()</IJS> is only called the
-            first time a route is matched (its result is cached and re-used on
-            subsequent matches). <IJS>on.every()</IJS> is called every time a
-            route matches.
+            <IJS>match</IJS> object. The name of each function is the name that
+            the function's result will be available as on the{" "}
+            <IJS>resolved</IJS> object. If any of the async functions throws an
+            error, that error will be available in the <IJS>response()</IJS>{" "}
+            function through the <IJS>error</IJS> property.
           </p>
-        </Explanation>
-        <CodeBlock>
-          {`const routes = [
-  {
-    name: "A Route",
-    on: {
-      initial: () => {
-        // called the first time a route matches
-      },
-      every: () => {
-        // called every time a route matches
-      }
-    }
-  }
-];`}
-        </CodeBlock>
-      </SideBySide>
-      <SideBySide>
-        <Explanation>
           <p>
-            Both functions will be passed an object of the matched route
+            Async functions will be passed an object of the matched route
             properties, which you may use to specify what data to load.
           </p>
           <p>
-            Curi uses Promises to manage async code, so both functions should
+            Curi uses Promises to manage async code, so async functions should
             return Promises. If you want to return a value, you can use{" "}
             <IJS>Promise.resolve()</IJS> to return it using a Promise.
-          </p>
-          <p>
-            You can access the values returned by these functions in the route's{" "}
-            <IJS>response()</IJS> function. The object passed to{" "}
-            <IJS>response()</IJS> has a <IJS>resolved</IJS> property that will
-            contain these values (<IJS>resolved.initial</IJS> is the value
-            returned by <IJS>on.initial()</IJS> and <IJS>resolved.every</IJS>{" "}
-            comes from <IJS>on.every()</IJS>).
           </p>
         </Explanation>
         <CodeBlock>
@@ -135,19 +112,19 @@ npm run start`}
   {
     name: "A Route",
     path: "route/:id",
-    on: {
-      initial: () => {
-        // called the first time a route matches
-        return Promise.resolve("Initial");
-      },
-      every: ({ params }) => {
-        // called every time a route matches
-        return FakeAPI.get(params.id);
-      }
+    match: {
+      component: () => import("./components/SomeComponent")
+        .then(module => module.default),
+      data: ({ params }) => fetch(\`/api/data/$\{params.id\}\`)
     },
-    response({ resolved }) {
-      // resolved.initial === "Initial"
-      // resolved.every === {...}; (result of API call)
+    response({ resolved, error }) {
+      if (error) {
+        // ...
+      }
+      return {
+        body: resolved.component,
+        data: resolved.data
+      }
     }
   }
 ];`}
@@ -156,11 +133,12 @@ npm run start`}
       <SideBySide>
         <Explanation>
           <p>
-            There is one caveat to async routes: we cannot safely render a
-            response right away. When a user loads your application and the
-            first route that matches is asynchronous, then there is no response
+            There is one caveat to async routes: we cannot safely render the
+            application immediately on load because the initial response might
+            not be ready yet. When a user loads your application and the first
+            route that matches has asynchronous functions, there is no response
             to render until the async code finishes. This means that if you
-            attempt to render immediately creating a router, the{" "}
+            attempt to render immediately after creating a router, the{" "}
             <IJS>response</IJS> that will be passed to the{" "}
             <Cmp>CuriProvider</Cmp>'s <IJS>children()</IJS> will be{" "}
             <IJS>null</IJS>.
@@ -255,12 +233,6 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
             need to switch to using <IJS>import()</IJS>.
           </p>
           <p>
-            In the previous section, we outlined the differences between{" "}
-            <IJS>on.initial()</IJS> and <IJS>on.every()</IJS>. Module loading is
-            something that we only need to do once per route, so{" "}
-            <IJS>on.initial()</IJS> is ideal for code splitting.
-          </p>
-          <p>
             Currently <IJS>response()</IJS> returns an object whose{" "}
             <IJS>body</IJS> property is a module imported at the top of the
             file. Now we want to change this to have <IJS>body</IJS> be the
@@ -272,8 +244,8 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
   {
     name: "Test",
     path: "test",
-    on: {
-      initial: () => import(/* webpackChunkName: "Test" */ "./components/Test.js")
+    match: {
+      body: () => import(/* webpackChunkName: "Test" */ "./components/Test.js")
     }
   }
 ];`}
@@ -283,8 +255,8 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
         <SideBySide>
           <Explanation>
             <p>
-              <IJS>import()</IJS> resolves a module object, not our component.
-              Our components are exported using default exports, so they will be
+              <IJS>import()</IJS> resolves a module object, not a component. Our
+              components are exported using default exports, so they will be
               available as the module object's <IJS>default</IJS> property.
             </p>
             <p>
@@ -296,8 +268,9 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
               module object's <IJS>default</IJS> property.
             </p>
             <p>
-              The second is to reference <IJS>resolved.initial.default</IJS> in
-              our <IJS>response()</IJS> functions.
+              The second is to reference <IJS>resolved.body.default</IJS> (or
+              whatever you name the function) in the <IJS>response()</IJS>{" "}
+              functions.
             </p>
             <p>Which you choose is mostly a matter of personal preference.</p>
           </Explanation>
@@ -306,25 +279,25 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
   {
     name: "One",
     path: "one",
-    on: {
-      initial: () => import("./components/One.js")
+    match: {
+      body: () => import("./components/One.js")
         .then(module => module.default)
     },
     response({ resolved }) {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   },
   {
     name: "Two",
     path: "two",
-    on: {
-      initial: () => import("./components/Two.js")
+    match: {
+      body: () => import("./components/Two.js")
     },
     response({ resolved }) {
       return {
-        body: resolved.initial.default
+        body: resolved.body.default
       };
     }
   }
@@ -335,11 +308,12 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
       <SideBySide>
         <Explanation>
           <p>
-            When a module fails to load, the error will be set as{" "}
-            <IJS>resolved.error</IJS>, but you would probably be better off
-            setting a default error module to display. This tutorial is breezing
-            over this, but it is something to consider (especially if you expect
-            your application to work offline with service workers).
+            When a module fails to load, the error will be passed to the{" "}
+            <IJS>response()</IJS> function through the <IJS>error</IJS>{" "}
+            property. We won't be incorporating this into the application here,
+            but in a real application you probably want to have a fallback
+            component to display an error message (especially if you have an
+            offline mode with service workers).
           </p>
         </Explanation>
         <CodeBlock>
@@ -349,14 +323,14 @@ const routes = [
   {
     name: "One",
     path: "one",
-    on: {
-      initial: () => import("./components/One.js")
+    match: {
+      body: () => import("./components/One.js")
         .then(module => module.default)
         .catch(err => displayLoadError(err))
     },
     response({ resolved }) {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   }
@@ -366,15 +340,15 @@ const routes = [
       <SideBySide>
         <Explanation>
           <p>
-            We can go ahead and update the <IJS>routes.js</IJS> module to remove
-            the imports at the top of the file and use <IJS>import()</IJS> to
-            import the route components. We will use <IJS>then()</IJS> to only
-            resolve the component instead of the entire module object.
+            We can now update the <IJS>routes.js</IJS> module to remove the
+            imports at the top of the file and use <IJS>import()</IJS> to import
+            the route components. We will use <IJS>then()</IJS> to only resolve
+            the component instead of the entire module object.
           </p>
           <p>
             The <IJS>response()</IJS> functions should also be updated to set
             the return object's <IJS>body</IJS> property to{" "}
-            <IJS>resolved.initial</IJS>
+            <IJS>resolved.body</IJS>
           </p>
         </Explanation>
         <CodeBlock data-line="6-14,19-27,32-40,45-53">
@@ -383,52 +357,52 @@ export default [
   {
     name: "Home",
     path: "",
-    on: {
-      initial: () => import("./components/Home")
+    match: {
+      body: () => import("./components/Home")
         .then(module => module.default)
     },
     response({ resolved }) {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   },
   {
     name: "Book",
     path: "book/:id",
-    on: {
-      initial: () => import("./components/Book")
+    match: {
+      body: () => import("./components/Book")
         .then(module => module.default)
     },
     response({ resolved }) {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   },
   {
     name: "Checkout",
     path: "checkout",
-    on: {
-      initial: () => import("./components/Checkout")
-      .then(module => module.default)
+    match: {
+      body: () => import("./components/Checkout")
+        .then(module => module.default)
     },
     response({ resolved }) {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   },
   {
     name: "Catch All",
     path: "(.*)",
-    on: {
-      initial: () => import("./components/NotFound")
-      .then(module => module.default)
+    match: {
+      body: () => import("./components/NotFound")
+        .then(module => module.default)
     },
     response({ resolved }) {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   }
@@ -446,7 +420,7 @@ export default [
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/router';
+import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
 import { CuriProvider } from '@curi/react';
 
@@ -534,7 +508,7 @@ registerServiceWorker();`}
         <SideBySide>
           <Explanation>
             <p>
-              First, we will create a <IJS>api.js</IJS> module that exports the
+              First, we will create an <IJS>api.js</IJS> module that exports the
               fake API functions.
             </p>
           </Explanation>
@@ -580,42 +554,24 @@ export const BOOK = id => Promise.resolve(
             appropriately named properties.
           </p>
           <p>
-            The <IJS>Book</IJS> API call definitely needs to be performed in{" "}
-            <IJS>on.every()</IJS> because the data it fetches depends on params
-            from the current location. The <IJS>Home</IJS> API call could be
-            made from either <IJS>on.every()</IJS> or <IJS>on.initial()</IJS>.
-            We will use <IJS>on.initial()</IJS> here because the data will not
-            change, but if the API call returned a random list, you would
-            probably want to use <IJS>on.every()</IJS> to generate new data
-            every time.
-          </p>
-          <p>
-            Because the <IJS>Home</IJS> route already has an <IJS>import()</IJS>,
-            we need to use{" "}
-            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all">
-              <IJS>Promise.all()</IJS>
-            </a>{" "}
-            to add another Promise to wait for.
+            The <IJS>Home</IJS> route already has an <IJS>import()</IJS>, which
+            we name <IJS>body</IJS>. We will name the async call to load the
+            books data <IJS>"books"</IJS>.
           </p>
           <p>
             The <IJS>Book</IJS> route's <IJS>response()</IJS> also needs to be
-            updated. Its <IJS>resolved.initial</IJS> is now an array whose first
-            value is what the <IJS>import()</IJS> resolved and whose second
-            value is what the <IJS>books()</IJS>
-            call resolved.
+            updated to attach the books data (<IJS>resolved.books</IJS>) to the
+            response.
           </p>
           <p>
             The <IJS>book()</IJS> API call expects to be given the <IJS>id</IJS>{" "}
-            number of the book it should return data for. The{" "}
-            <IJS>on.every()</IJS> function is passed an object of matched route
-            properties, so we can grab the correct param (<IJS>id</IJS>) from
-            the <IJS>params</IJS> property. However, when params are parsed,
-            they are stored as strings. To convert it to a number, we can use
-            the route's
-            <IJS>params</IJS> property to tell Curi how to parse the{" "}
-            <IJS>id</IJS>. By giving it a function that calls{" "}
-            <IJS>parseInt()</IJS> on the provided value, <IJS>params.id</IJS>{" "}
-            will be a number instead of a string.
+            number of the book it should return data for. We can grab the
+            correct param (<IJS>id</IJS>) from the <IJS>params</IJS> property.
+            However, when params are parsed, they are stored as strings. To
+            convert it to a number, we can use the route's <IJS>params</IJS>{" "}
+            property to tell Curi how to parse the <IJS>id</IJS>. By giving it a
+            function that calls <IJS>parseInt()</IJS> on the provided value,{" "}
+            <IJS>params.id</IJS> will be a number instead of a string.
           </p>
         </Explanation>
         <CodeBlock data-line="2,9-13,16-20,26-28,30-32,35-38">
@@ -626,18 +582,15 @@ export default [
   {
     name: "Home",
     path: "",
-    on: {
-      initial: () => Promise.all([
-        import("./components/Home")
-          .then(module => module.default),
-        BOOKS()
-      ])
+    match: {
+      body: () => import("./components/Home")
+        .then(module => module.default),
+      books: () => BOOKS()
     },
     response({ resolved }) {
-      const [body, books] = resolved.initial;
       return {
-        body,
-        data: { books }
+        body: resolved.body,
+        data: { books: resolved.books }
       };
     }
   },
@@ -647,41 +600,41 @@ export default [
     params: {
       id: id => parseInt(id, 10)
     },
-    on: {
-      initial: () => import("./components/Book")
+    match: {
+      body: () => import("./components/Book")
         .then(module => module.default),
-      every: ({ params }) => BOOK(params.id)
+      book: ({ params }) => BOOK(params.id)
     },
     response({ resolved }) {
       return {
-        body: resolved.initial,
-        data: { book: resolved.every }
+        body: resolved.body,
+        data: { book: resolved.book }
       };
     }
   },
   {
     name: "Checkout",
     path: "checkout",
-    on: {
-      initial: () => import("./components/Checkout")
-      .then(module => module.default)
+    match: {
+      body: () => import("./components/Checkout")
+        .then(module => module.default)
     },
     response({ resolved }) {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   },
   {
     name: "Catch All",
     path: "(.*)",
-    on: {
-      initial: () => import("./components/NotFound")
-      .then(module => module.default)
+    match: {
+      body: () => import("./components/NotFound")
+        .then(module => module.default)
     },
     response({ resolved }) {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   }
@@ -814,7 +767,7 @@ export const BOOK = id => new Promise(resolve => {
       <Subsection
         title={
           <span>
-            <Cmp>Link</Cmp> Navigating
+            <Cmp>Link</Cmp> is navigating?
           </span>
         }
         id="link-navigating"
@@ -947,7 +900,7 @@ export default ({ response }) => (
             {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import curi from '@curi/router';
+import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
 import prefetch from '@curi/route-prefetch';
 import { CuriProvider } from '@curi/react';

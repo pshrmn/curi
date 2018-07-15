@@ -1,3 +1,10 @@
+## Next
+
+- Default export is moved to the `curi` named export.
+- Added `once` named export for match functions that should re-use their initial result.
+- Added `pathname` named export to create a `pathname` route interaction.
+- Remove `on.initial` and `on.every`. Add `match` object for async functions. Keys are the values that are set on the `resolved` object passed to `response()`.
+
 ## 1.0.0-beta.36
 
 - Warns when route `path`s begin with a forward slash.

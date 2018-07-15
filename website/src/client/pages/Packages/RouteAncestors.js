@@ -40,7 +40,7 @@ export default ({ name, version, globalName }) => (
             </p>
           </Explanation>
           <CodeBlock>
-            {`import curi from '@curi/router';
+            {`import { curi } from '@curi/router';
 import ancestors from '@curi/route-ancestors';
 
 const routes = [

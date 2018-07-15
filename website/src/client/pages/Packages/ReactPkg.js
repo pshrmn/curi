@@ -631,30 +631,21 @@ const router = curi(history, routes, {
             <SideBySide>
               <Explanation>
                 <p>
-                  <IJS>which</IJS> is an object whose properties specify which{" "}
-                  <IJS>on</IJS> functions should be called. If a property's
-                  value is <IJS>true</IJS>, the matching <IJS>on</IJS> function
-                  will be called. If the property is <IJS>false</IJS> or{" "}
-                  <IJS>undefined</IJS>, that function will not be called.
+                  <IJS>which</IJS> is an array whose values are the names of a
+                  route's async <IJS>match</IJS> functions to call.
                 </p>
                 <p>
-                  If <IJS>which</IJS> is not provided, both{" "}
-                  <IJS>on.initial()</IJS> and <IJS>on.every()</IJS> will be
-                  called when the observed element becomes visible.
+                  If <IJS>which</IJS> is not provided, all of a route's{" "}
+                  <IJS>match</IJS> functions will be called.
                 </p>
               </Explanation>
               <CodeBlock lang="jsx">
-                {`// only call on.initial()
-<Prefetch match={...} which={{ initial: true }}>
+                {`// only call match.one()
+<Prefetch match={...} which={["one"]}>
   {...}
 </Prefetch>
 
-// only call on.every()
-<Prefetch match={...} which={{ every: true }}>
-  {...}
-</Prefetch>
-
-// call both
+// call all match functions
 <Prefetch match={...}>
   {...}
 </Prefetch>`}

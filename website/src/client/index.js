@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Browser from "@hickory/browser";
-import curi from "@curi/router";
+import { curi } from "@curi/router";
 import { CuriProvider } from "@curi/react";
 import titleSideEffect from "@curi/side-effect-title";
 import scrollSideEffect from "@curi/side-effect-scroll";

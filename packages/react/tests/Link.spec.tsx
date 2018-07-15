@@ -3,7 +3,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
 import InMemory from "@hickory/in-memory";
-import curi from "@curi/router";
+import { curi } from "@curi/router";
+
 import Link from "../src/Link";
 import CuriProvider from "../src/CuriProvider";
 
@@ -270,8 +271,8 @@ describe("<Link>", () => {
           {
             name: "Test",
             path: "test",
-            on: {
-              every: () => {
+            match: {
+              test: () => {
                 return new Promise(resolve => {
                   setTimeout(() => {
                     resolve("done");
@@ -318,8 +319,8 @@ describe("<Link>", () => {
           {
             name: "Slow",
             path: "slow",
-            on: {
-              every: () => {
+            match: {
+              test: () => {
                 // takes 500ms to resolve
                 return new Promise(resolve => {
                   setTimeout(() => {
@@ -381,8 +382,8 @@ describe("<Link>", () => {
           {
             name: "Loader",
             path: "load",
-            on: {
-              every: () => Promise.resolve("done")
+            match: {
+              test: () => Promise.resolve("done")
             }
           },
           { name: "Catch All", path: "(.*)" }

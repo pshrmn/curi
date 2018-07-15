@@ -7,8 +7,8 @@ import createRoute from "./route";
 
 import { History, PendingNavigation } from "@hickory/root";
 
-import { RouteDescriptor, InternalRoute } from "./types/route";
-import { Response, Resolved } from "./types/response";
+import { RouteDescriptor, InternalRoute, ResolveResults } from "./types/route";
+import { Response } from "./types/response";
 import { Interactions } from "./types/interaction";
 import { Match } from "./types/match";
 import {
@@ -136,7 +136,7 @@ export default function createRouter(
       const response = finishResponse(match as Match, routeInteractions, null);
       emitAndRedirect(response, navigation);
     } else {
-      resolveMatchedRoute(match as Match).then((resolved: Resolved) => {
+      resolveMatchedRoute(match as Match).then((resolved: ResolveResults) => {
         if (pendingNav.cancelled) {
           return;
         }

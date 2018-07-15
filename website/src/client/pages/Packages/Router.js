@@ -24,18 +24,18 @@ export default ({ name, version, globalName }) => (
     }
   >
     <APIBlock>
-      <Section tag="h3" title="constructor" id="constructor">
+      <Section title="curi" id="curi">
         <SideBySide>
           <Explanation>
             <p>
-              The Curi package's default export is a function to create a
-              router. It has two required arguments: a <IJS>history</IJS> object
-              and a <IJS>routes</IJS> array, and an optional third argument: an{" "}
+              The <IJS>curi</IJS> export is a function to create a router. It
+              has two required arguments: a <IJS>history</IJS> object and a{" "}
+              <IJS>routes</IJS> array, and an optional third argument: an{" "}
               <IJS>options</IJS> object.
             </p>
           </Explanation>
           <CodeBlock>
-            {`import curi from '@curi/router';
+            {`import { curi } from '@curi/router';
 
 const router = curi(history, routes, options);`}
           </CodeBlock>
@@ -542,6 +542,67 @@ const userPathname = router.route.pathname(
             </SideBySide>
           </Subsection>
         </Section>
+      </Section>
+      <Section title="once" id="once">
+        <SideBySide>
+          <Explanation>
+            <p>
+              <IJS>once</IJS> takes a function as its argument and returns a new
+              function. The first time the returned function is called, it will
+              call the function passed to <IJS>once()</IJS>. Every call after
+              that will re-use the result from the first call.
+            </p>
+            <p>
+              The <IJS>once()</IJS> function is useful for any async route{" "}
+              <IJS>match</IJS> functions that only need to be called once.
+            </p>
+            <Note>
+              This will not work for functions whose result depends on variables
+              that will change for a route (i.e. loading data based on route
+              params).
+            </Note>
+          </Explanation>
+          <CodeBlock>
+            {`import { once } from "@curi/router";
+            
+const routes = [
+  {
+    name: "Menu",
+    path: "menu",
+    match: {
+      // this function will be called every time the user
+      // navigates to the "Menu" route
+      nonCached: () => api.getItems(),
+      // this function is only called the first time the
+      // user navigates to the "Menu" route
+      cached: once(() => api.getItems)
+    }
+  }
+];`}
+          </CodeBlock>
+        </SideBySide>
+      </Section>
+      <Section title="pathname" id="pathname">
+        <SideBySide>
+          <Explanation>
+            <p>
+              Curi automatically includes a <IJS>pathname</IJS> route
+              interaction for you to generate URL pathnames for routes. If you
+              need to access this same ability outside of a router, you can
+              import the <IJS>pathname</IJS> route interaction.
+            </p>
+          </Explanation>
+          <CodeBlock>
+            {`import { pathname } from "@curi/router";
+
+const pathnameGenerator = pathname();
+// register routes
+pathnameGenerator.register({ name: "Yo", path: "yo/:name" });
+// generate pathname
+const path = pathnameGenerator.get("Yo", { name: "joey" })
+// path = "/yo/joey"`}
+          </CodeBlock>
+        </SideBySide>
       </Section>
     </APIBlock>
   </BasePackage>
