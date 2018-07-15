@@ -1,5 +1,5 @@
 import Browser from "@hickory/browser";
-import curi from "@curi/router";
+import { curi } from "@curi/router";
 
 import routes from "./routes";
 import renderApp from "./render";

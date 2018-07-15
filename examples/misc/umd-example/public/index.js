@@ -36,7 +36,7 @@ const routes = [
   }
 ];
 
-const router = Curi(hashHistory, routes);
+const router = Curi.curi(hashHistory, routes);
 const root = document.getElementById("root");
 
 function render({ response }) {

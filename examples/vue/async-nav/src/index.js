@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Browser from "@hickory/browser";
-import curi from "@curi/router";
+import { curi } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 
 import routes from "./routes";

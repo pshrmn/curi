@@ -2,39 +2,38 @@ export default [
   {
     name: "Home",
     path: "",
-    on: {
-      initial: () =>
-        import("./components/Home.js").then(module => module.default)
+    match: {
+      body: () => import("./components/Home.js").then(module => module.default)
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   },
   {
     name: "Contact",
     path: "contact",
-    on: {
-      initial: () =>
+    match: {
+      body: () =>
         import("./components/Contact.js").then(module => module.default)
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     },
     children: [
       {
         name: "Contact Method",
         path: ":method",
-        on: {
-          initial: () =>
+        match: {
+          body: () =>
             import("./components/Method.js").then(module => module.default)
         },
         response: ({ resolved }) => {
           return {
-            body: resolved.initial
+            body: resolved.body
           };
         }
       }
@@ -43,13 +42,13 @@ export default [
   {
     name: "Not Found",
     path: "(.*)",
-    on: {
-      initial: () =>
+    match: {
+      body: () =>
         import("./components/NotFound.js").then(module => module.default)
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   }

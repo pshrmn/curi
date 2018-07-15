@@ -1,7 +1,7 @@
 import React from "react";
 import { renderToString } from "react-dom/server";
 import InMemory from "@hickory/in-memory";
-import curi from "@curi/router";
+import { curi } from "@curi/router";
 import { CuriProvider } from "@curi/react";
 import routes from "./src/routes";
 import { renderResponse } from "./src/render";

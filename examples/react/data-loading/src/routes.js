@@ -17,20 +17,20 @@ export default [
   {
     name: "Album",
     path: "a/:id",
-    response({ resolved }) {
+    match: {
+      // the fakeAPI caches results based on id
+      data: ({ params }) => fakeAPI(params.id)
+    },
+    response({ error, resolved }) {
       const modifiers = {
         body: Album
       };
-      if (resolved.error) {
-        modifiers.error = resolved.error;
+      if (error) {
+        modifiers.error = error;
       } else {
-        modifiers.data = resolved.every;
+        modifiers.data = resolved.data;
       }
       return modifiers;
-    },
-    on: {
-      // the fakeAPI caches results based on id
-      every: ({ params }) => fakeAPI(params.id)
     }
   },
   {

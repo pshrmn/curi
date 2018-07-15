@@ -4,41 +4,38 @@ export default [
   {
     name: "Home",
     path: "",
-    on: {
-      initial: () =>
-        Promise.all([
-          import("./pages/Home").then(
-            module => (module.default ? module.default : module)
-          ),
-          movies() /* the movies don't change */
-        ])
+    match: {
+      body: () =>
+        import("./pages/Home").then(
+          module => (module.default ? module.default : module)
+        ),
+      movies: () => movies()
     },
     response({ resolved }) {
-      const [body, data] = resolved.initial;
       return {
-        body,
-        data
+        body: resolved.body,
+        data: resolved.movies
       };
     }
   },
   {
     name: "Movie",
     path: "movie/:id",
-    on: {
-      initial: () =>
+    match: {
+      body: () =>
         import("./pages/Movie").then(
           module => (module.default ? module.default : module)
         ),
-      every: ({ params }) => movie(params.id)
+      movie: ({ params }) => movie(params.id)
     },
-    response({ resolved }) {
+    response({ error, resolved }) {
       const modifiers = {
-        body: resolved.initial
+        body: resolved.body
       };
-      if (resolved.error) {
-        modifiers.error = resolved.error;
+      if (error) {
+        modifiers.error = error;
       } else {
-        modifiers.data = resolved.every;
+        modifiers.data = resolved.movie;
       }
       return modifiers;
     }
@@ -46,15 +43,15 @@ export default [
   {
     name: "Not Found",
     path: "(.*)",
-    on: {
-      initial: () =>
+    match: {
+      body: () =>
         import("./pages/NotFound").then(
           module => (module.default ? module.default : module)
         )
     },
     response({ resolved }) {
       return {
-        body: resolved.initial
+        body: resolved.body
       };
     }
   }
