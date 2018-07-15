@@ -68,9 +68,9 @@ export default [
     name: &quot;Catch All&quot;,
     path: &quot;(.*)&quot;
   }
-];</code></pre></div><div class="section" id="router"><h2>The Router<a class="header-link" href="/tutorial/vue-basics#router">#</a></h2><p>With the history object created and the routes defined, we are ready to create the router. Back in the <code class="inline-code language-javascript">src/index.js</code> file, we should import the <code class="inline-code language-javascript">curi</code> function from <code class="inline-code language-javascript">@curi/router</code> as well as our routes from <code class="inline-code language-javascript">src/routes.js</code></p><pre data-line="3,6,12"><code class="language-javascript">// src/main.js
+];</code></pre></div><div class="section" id="router"><h2>The Router<a class="header-link" href="/tutorial/vue-basics#router">#</a></h2><p>With the history object created and the routes defined, we are ready to create the router. Back in the <code class="inline-code language-javascript">src/index.js</code> file, we should import the <code class="inline-code language-javascript">curi</code> function from <code class="inline-code language-javascript">@curi/router</code> as well as our routes from <code class="inline-code language-javascript">src/routes.js</code>. Creating the router is done by calling the <code class="inline-code language-javascript">curi()</code> function and passing it the<!-- --> <code class="inline-code language-javascript">history</code> object and the <code class="inline-code language-javascript">routes</code> array.</p><pre data-line="3,6,12"><code class="language-javascript">// src/main.js
 import Vue from &#x27;vue&#x27;
-import curi from &#x27;@curi/router&#x27;;
+import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;
 
 import routes from &#x27;./routes&#x27;;
@@ -85,7 +85,7 @@ new Vue({
   render: h =&gt; h(App)
 }).$mount(&#x27;#app&#x27;)</code></pre><div class="note"><strong>Note:</strong> <!-- -->The Eslint warning has now moved to the <code class="inline-code language-javascript">router</code>, but this is still nothing to worry about.</div><p>We will add router support to the Vue application using a plugin. This plugin does a couple of things. First, it makes some Curi components available within the application. The only one of these components that we will be using is the <code class="inline-code language-jsx">&lt;<!-- -->curi-link<!-- -->&gt;</code>. Second, it makes router related values accessible to the components in the application. The router is available as <code class="inline-code language-javascript">this.$router</code> and the<!-- --> <code class="inline-code language-javascript">response</code> and <code class="inline-code language-javascript">navigation</code> (we will cover these next) are grouped under <code class="inline-code language-javascript">this.$curi</code>. When the <code class="inline-code language-javascript">CuriPlugin</code> <!-- -->is installed, the <code class="inline-code language-javascript">router</code> as passed in the options object.</p><pre data-line="5,14"><code class="language-javascript">// src/main.js
 import Vue from &#x27;vue&#x27;
-import curi from &#x27;@curi/router&#x27;;
+import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;
 import { CuriPlugin } from &#x27;@curi/vue&#x27;
 

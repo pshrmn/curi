@@ -22,22 +22,14 @@
   { name: &#x27;Not Found&#x27;, path: &#x27;(.*)&#x27; }
 ];
 // don&#x27;t include a leading forward slash
-// { name: &#x27;Home&#x27;, path: &#x27;/&#x27; }</code></pre></div></div></div><div class="subsection" id="on"><h3>route.on<a class="header-link" href="/guides/routes/#on">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">on</code> object groups functions that will be called when the route matches. A route with an <code class="inline-code language-javascript">on.initial()</code> or<!-- --> <code class="inline-code language-javascript">on.every()</code> function is async.</p></div></div><div class="subsection" id="initial"><h5>on.initial()<a class="header-link" href="/guides/routes/#initial">#</a></h5><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">on.initial()</code> is called the first time that a route matches. Its return value will be re-used on subsequent matches. It should return a Promise.</p><p>This can be used for loading resources that don&#x27;t change based on <code class="inline-code language-javascript">params</code>. For example, if you are doing code splitting with Webpack using <code class="inline-code language-javascript">import()</code>, you can load the modules in <code class="inline-code language-javascript">on.initial()</code>.</p><p>The <code class="inline-code language-javascript">initial</code> function will be passed an object with the matched route properties: <code class="inline-code language-javascript">name</code>, <code class="inline-code language-javascript">params</code>,<!-- --> <code class="inline-code language-javascript">partials</code>, <code class="inline-code language-javascript">location</code>, and <code class="inline-code language-javascript">key</code>.</p></div><div class="code-block"><pre><code class="language-javascript">const about = {
+// { name: &#x27;Home&#x27;, path: &#x27;/&#x27; }</code></pre></div></div></div><div class="subsection" id="match"><h3>route.match<a class="header-link" href="/guides/routes/#match">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">match</code> object groups async functions that will be called when the route matches.</p><p>A route any <code class="inline-code language-javascript">match</code> function is asynchronous, while one without any <code class="inline-code language-javascript">match</code> functions is synchronous.</p><p><code class="inline-code language-javascript">match</code> functions are called every time that a route matches the current location.</p><p><code class="inline-code language-javascript">match</code> functions will be passed an object with the matched route properties: <code class="inline-code language-javascript">name</code>, <code class="inline-code language-javascript">params</code>,<!-- --> <code class="inline-code language-javascript">partials</code>, and <code class="inline-code language-javascript">location</code>.</p><div class="note"><strong>Note:</strong> <!-- -->You should not perform side effects (e.g. passing the loaded data to a Redux store) in <code class="inline-code language-javascript">match</code> functions because it is possible that navigating to the route might be cancelled. If you must perform side effects for a route, you should do so in<!-- --> <code class="inline-code language-javascript">response()</code>.</div></div><div class="code-block"><pre><code class="language-javascript">const about = {
   name: &#x27;About&#x27;,
   path: &#x27;about&#x27;,
-  on: {
-    initial: () =&gt; import(&#x27;./components/About&#x27;)
+  match: {
+    body: () =&gt; import(&#x27;./components/About&#x27;),
+    data: () =&gt; fetch(&#x27;/api/about&#x27;)
   }
-};</code></pre></div></div></div><div class="subsection" id="every"><h5>on.every()<a class="header-link" href="/guides/routes/#every">#</a></h5><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">on.every()</code> will be called every time a route matches. This can be useful for data fetching. Like<!-- --> <code class="inline-code language-javascript">on.initial()</code>, <code class="inline-code language-javascript">on.every()</code> should return a Promise.</p><p>The <code class="inline-code language-javascript">every</code> function will be passed an object with the matched route properties: <code class="inline-code language-javascript">name</code>, <code class="inline-code language-javascript">params</code>,<!-- --> <code class="inline-code language-javascript">partials</code>, <code class="inline-code language-javascript">location</code>, and <code class="inline-code language-javascript">key</code>.</p><div class="note"><strong>Note:</strong> <!-- -->You should not perform side effects (e.g. passing the loaded data to a Redux store) in <code class="inline-code language-javascript">on.every()</code> because it is possible that navigating to the route might be cancelled. If you must perform side effects, you should do so in<!-- --> <code class="inline-code language-javascript">response()</code>.</div></div><div class="code-block"><pre><code class="language-javascript">// fetch user data
-const user = {
-  name: &#x27;User&#x27;,
-  path: &#x27;:id&#x27;,
-  on: {
-    every: ({ params, location }) =&gt;
-      fetch(`/api/users/${params.id}`)
-        .then(resp =&gt; JSON.parse(resp))
-  }
-}</code></pre></div></div></div></div><div class="subsection" id="response"><h3>route.response()<a class="header-link" href="/guides/routes/#response">#</a></h3><div class="side-by-side"><div class="explanation"><p>A function for modifying the response object. This returns an object whose properties will be merged with the matched route properties to create the &quot;final&quot; response.</p><p>Only valid properties will be merged onto the response; everything else will be ignored. The valid properties are:</p></div></div><ol><li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">body</code> - This is usually what you will render.</p></div><div class="code-block"><pre><code class="language-javascript">import Home from &quot;./components/Home&quot;;
+};</code></pre></div></div></div><div class="subsection" id="response"><h3>route.response()<a class="header-link" href="/guides/routes/#response">#</a></h3><div class="side-by-side"><div class="explanation"><p>A function for modifying the response object. This returns an object whose properties will be merged with the matched route properties to create the &quot;final&quot; response.</p><p>Only valid properties will be merged onto the response; everything else will be ignored. The valid properties are:</p></div></div><ol><li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">body</code> - This is usually what you will render.</p></div><div class="code-block"><pre><code class="language-javascript">import Home from &quot;./components/Home&quot;;
 const routes = [
   {
     name: &quot;Home&quot;,
@@ -56,9 +48,9 @@ const routes = [
     };
   }
 }
-// response = { status: 301, ... }</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">error</code> - If an error occurs with the route&#x27;s<!-- --> <code class="inline-code language-javascript">on</code> methods, you might want to attach an error message to the response.</p></div><div class="code-block"><pre><code class="language-javascript">{
-  on: {
-    initial: () =&gt; Promise.reject(&quot;woops!&quot;)
+// response = { status: 301, ... }</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">error</code> - If an error occurs with the route&#x27;s<!-- --> <code class="inline-code language-javascript">match</code> methods, you might want to attach an error message to the response.</p></div><div class="code-block"><pre><code class="language-javascript">{
+  match: {
+    test: () =&gt; Promise.reject(&quot;woops!&quot;)
   },
   response({ error }) {
     return { error };
@@ -95,24 +87,38 @@ const routes = [
   response: ({ match, resolved }) =&gt; {
     // ...
   }
-}</code></pre></div></div><ul><div class="subsection" id="response-match"><li>match<a class="header-link" href="/guides/routes/#response-match">#</a></li><div class="side-by-side"><div class="explanation"><p>An object with the matched route properties of a response.</p><table><thead><tr><th>property</th><th>description</th></tr></thead><tbody><tr><td>name</td><td>the name of the matched route</td></tr><tr><td>params</td><td>route parameters parsed from the location</td></tr><tr><td>partials</td><td>the names of any ancestor routes of the matched route</td></tr><tr><td>location</td><td>the location that was used to match the route</td></tr><tr><td>key</td><td>the location&#x27;s <code class="inline-code language-javascript">key</code>, which is a unique identifier</td></tr></tbody></table></div></div></div><div class="subsection" id="response-resolved"><li>resolved<a class="header-link" href="/guides/routes/#response-resolved">#</a></li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">resolved</code> is an object with the values resolved by the <code class="inline-code language-javascript">on.initial()</code> and <code class="inline-code language-javascript">on.every()</code> <!-- -->functions.</p><table><thead><tr><th>property</th><th>description</th></tr></thead><tbody><tr><td>error</td><td>if either <code class="inline-code language-javascript">on.initial()</code> or<!-- --> <code class="inline-code language-javascript">on.every()</code> throw and the error is not caught, it will be available here</td></tr><tr><td>initial</td><td>the value resolved by <code class="inline-code language-javascript">on.initial()</code></td></tr><tr><td>every</td><td>the value resolved by <code class="inline-code language-javascript">on.every()</code></td></tr></tbody></table><p>If a route isn&#x27;t async, <code class="inline-code language-javascript">resolved</code> will be<!-- --> <code class="inline-code language-javascript">null</code>.</p></div><div class="code-block"><pre><code class="language-javascript">// attach resolved data to the response
+}</code></pre></div></div><ul><div class="subsection" id="response-match"><li>match<a class="header-link" href="/guides/routes/#response-match">#</a></li><div class="side-by-side"><div class="explanation"><p>An object with the matched route properties of a response.</p><table><thead><tr><th>property</th><th>description</th></tr></thead><tbody><tr><td>name</td><td>the name of the matched route</td></tr><tr><td>params</td><td>route parameters parsed from the location</td></tr><tr><td>partials</td><td>the names of any ancestor routes of the matched route</td></tr><tr><td>location</td><td>the location that was used to match the route</td></tr><tr><td>key</td><td>the location&#x27;s <code class="inline-code language-javascript">key</code>, which is a unique identifier</td></tr></tbody></table></div></div></div><div class="subsection" id="response-resolved"><li>resolved<a class="header-link" href="/guides/routes/#response-resolved">#</a></li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">resolved</code> is an object with the values resolved by the <code class="inline-code language-javascript">match</code> functions.</p><p>If a route isn&#x27;t async, <code class="inline-code language-javascript">resolved</code> will be<!-- --> <code class="inline-code language-javascript">null</code>.</p></div><div class="code-block"><pre><code class="language-javascript">// attach resolved data to the response
 const user = {
   name: &#x27;User&#x27;,
   path: &#x27;:id&#x27;,
-  response: ({ resolved }) =&gt; {
-    const modifiers = {};
-    if (resolved.error) {
-      modifiers.error = resolved.error;
-    } else {
-      modifiers.data = resolved.every;
-    }
-    return modifiers;
-  },
-  on: {
-    every: ({ params, location }) =&gt; (
+  match: {
+    data: ({ params, location }) =&gt; (
       fetch(`/api/users/${params.id}`)
         .then(resp =&gt; JSON.parse(resp))
     ),
+  },
+  response: ({ resolved }) =&gt; {
+    return {
+      data: resolved.data
+    };
+  }
+}</code></pre></div></div></div><div class="subsection" id="response-error"><li>error<a class="header-link" href="/guides/routes/#response-error">#</a></li><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">error</code> is an error thrown by one of the route&#x27;s<!-- --> <code class="inline-code language-javascript">match</code> functions.</p></div><div class="code-block"><pre><code class="language-javascript">// check if any of a route&#x27;s match functions threw
+const user = {
+  name: &#x27;User&#x27;,
+  path: &#x27;:id&#x27;,
+  match: {
+    data: ({ params, location }) =&gt; (
+      fetch(`/api/users/${params.id}`)
+        .then(resp =&gt; JSON.parse(resp))
+    ),
+  },
+  response: ({ error, resolved }) =&gt; {
+    if (error) {
+      return { error };
+    }
+    return {
+      data: resolved.data
+    };
   }
 }</code></pre></div></div></div></ul></div><div class="subsection" id="children"><h3>children<a class="header-link" href="/guides/routes/#children">#</a></h3><div class="side-by-side"><div class="explanation"><p>An optional array of route objects for creating nested routes. Any child routes will be matched relative to their parent route&#x27;s<!-- --> <code class="inline-code language-javascript">path</code>. This means that if a parent route&#x27;s<!-- --> <code class="inline-code language-javascript">path</code> string is <code class="inline-code language-javascript">&#x27;one&#x27;</code> and a child route&#x27;s<!-- --> <code class="inline-code language-javascript">path</code> string is <code class="inline-code language-javascript">&#x27;two&#x27;</code>, the child will match when the pathname is <code class="inline-code language-javascript">&#x27;one/two&#x27;</code>.</p></div><div class="code-block"><pre><code class="language-javascript">// &#x27;/a/Coloring+Book/All+Night&#x27; will be matched
 // by the &quot;Song&quot; route, with the params

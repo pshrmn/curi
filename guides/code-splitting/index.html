@@ -43,55 +43,55 @@ const routes = [
       }
     ]
   }
-];</code></pre></div></div></div><div class="section" id="initial"><h2>import() in on.initial()<a class="header-link" href="/guides/code-splitting/#initial">#</a></h2><div class="side-by-side"><div class="explanation"><p>Instead of having static imports, we will use the<!-- --> <code class="inline-code language-javascript">import()</code> function to import our modules. We will import our components using the <code class="inline-code language-javascript">on.initial()</code> property of routes. This function will only be called the first time that its route matches, so we don&#x27;t have to worry about making extra requests to our server.</p><p><code class="inline-code language-javascript">on.initial()</code> should be a function that returns a Promise;<!-- --> <code class="inline-code language-javascript">import()</code>, conveniently, returns a Promise. Then, in our<!-- --> <code class="inline-code language-javascript">response()</code> function, instead of referencing values imported at the top of the file, we can reference the result of the<!-- --> <code class="inline-code language-javascript">initial</code> function using <code class="inline-code language-javascript">resolved.initial</code>.</p><p><code class="inline-code language-javascript">import()</code> resolves with a module object. If the component is a default export (<code class="inline-code language-javascript">export default MyComponent</code>), we can access the component through the imported module object&#x27;s<!-- --> <code class="inline-code language-javascript">default</code> property.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
+];</code></pre></div></div></div><div class="section" id="import"><h2>import() in match<a class="header-link" href="/guides/code-splitting/#import">#</a></h2><div class="side-by-side"><div class="explanation"><p>Instead of having static imports, we will use the<!-- --> <code class="inline-code language-javascript">import()</code> function to import our modules. We will import our components by adding a property to a route&#x27;s <code class="inline-code language-javascript">match</code> <!-- -->object. The property name for the function is how we will access the resolved data in the route&#x27;s <code class="inline-code language-javascript">response()</code> function.</p><p><code class="inline-code language-javascript">match</code> functions are called every time a route matches. However, <code class="inline-code language-javascript">import()</code> calls automatically re-use the results of a previous call, so we do not have to worry about extra network requests.</p><p>Here we will name the <code class="inline-code language-javascript">match</code> function for importing a component <code class="inline-code language-javascript">body</code>, since it will be set as the response&#x27;s<!-- --> <code class="inline-code language-javascript">body</code> property.</p><p><code class="inline-code language-javascript">match.body()</code> should return a Promise; <code class="inline-code language-javascript">import()</code>, conveniently, returns a Promise. In our <code class="inline-code language-javascript">response()</code> <!-- -->function, instead of referencing values imported at the top of the file, we can reference the result of the <code class="inline-code language-javascript">match.body()</code> <!-- -->function using <code class="inline-code language-javascript">resolved.body</code>.</p><p><code class="inline-code language-javascript">import()</code> resolves with a module object. If the component is a default export (<code class="inline-code language-javascript">export default MyComponent</code>), we can access the component through the imported module object&#x27;s<!-- --> <code class="inline-code language-javascript">default</code> property.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
   {
     name: &#x27;Home&#x27;,
     path: &#x27;&#x27;,
-    response: ({ resolved }) =&gt; {
-      return {
-        body: resolved.initial
-      };
-    },
-    on: {
-      initial: () =&gt; (
+    match: {
+      body: () =&gt; (
         import(&#x27;./components/Home&#x27;)
           .then(module =&gt; module.default)
       ),
+    },
+    response: ({ resolved }) =&gt; {
+      return {
+        body: resolved.body
+      };
     }
   },
   {
     name: &#x27;Contact&#x27;,
     path: &#x27;contact&#x27;,
-    response: ({ resolved }) =&gt; {
-      return {
-        body: resolved.initial
-      };
-    },
-    on: {
-      initial: () =&gt; (
+    match: {
+      body: () =&gt; (
         import(&#x27;./components/Contact&#x27;)
           .then(module =&gt; module.default)
       ),
+    },
+    response: ({ resolved }) =&gt; {
+      return {
+        body: resolved.body
+      };
     },
     children: [
       {
         name: &#x27;Contact Method&#x27;,
         path: &#x27;:method&#x27;,
-        response: ({ resolved }) =&gt; {
-          return {
-            body: resolved.initial
-          };
-        },
-        on: {
-          initial: () =&gt; (
+        match: {
+          body: () =&gt; (
             import(&#x27;./components/ContactMethod&#x27;)
               .then(module =&gt; module.default)
           )
+        },
+        response: ({ resolved }) =&gt; {
+          return {
+            body: resolved.body
+          };
         }
       }
     ]
   }
-];</code></pre></div></div></div><div class="section" id="next"><h2>Next<a class="header-link" href="/guides/code-splitting/#next">#</a></h2><p>The approaches taken here are not the only way to do code splitting. You may choose to skip the <code class="inline-code language-javascript">on.initial()</code> method and do code splitting at other points in your application.</p><p>Whatever path you decide to go, hopefully this has shown you that setting up code splitting with the <code class="inline-code language-javascript">on.initial()</code> property is fairly simple to do. If you are using Webpack and want to reduce your initial bundle size, <code class="inline-code language-javascript">on.initial()</code> is a good way to accomplish this.</p><p>Next, we will take a look at some related route properties in<!-- --> <a href="/guides/loading/">the loading guide</a>.</p></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/observers/">Observers</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" active" href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+];</code></pre></div></div></div><div class="section" id="next"><h2>Next<a class="header-link" href="/guides/code-splitting/#next">#</a></h2><p>The approaches taken here are not the only way to do code splitting. Another approach is to skip the <code class="inline-code language-javascript">match</code> method and do code splitting at other points in your application (e.g.<!-- --> <a href="https://github.com/jamiebuilds/react-loadable"><code class="inline-code language-javascript">react-loadable</code></a>).</p><p>Whatever path you decide to go, hopefully this has shown you that setting up code splitting with a <code class="inline-code language-javascript">match</code> function is fairly simple to do. If you are using Webpack and want to reduce your initial bundle size, <code class="inline-code language-javascript">match</code> functions are a good way to accomplish this.</p><p>Next, we will take a look at some related route properties in<!-- --> <a href="/guides/loading/">the loading guide</a>.</p></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/observers/">Observers</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" active" href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
     <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

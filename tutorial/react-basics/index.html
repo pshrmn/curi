@@ -61,10 +61,10 @@ export default [
     name: &quot;Catch All&quot;,
     path: &quot;(.*)&quot;
   }
-];</code></pre></div><div class="section" id="router"><h2>The Router<a class="header-link" href="/tutorial/react-basics#router">#</a></h2><p>With the history object created and the routes defined, we are ready to create the router. Back in the <code class="inline-code language-javascript">src/index.js</code> file, we should import the <code class="inline-code language-javascript">curi</code> function from <code class="inline-code language-javascript">@curi/router</code> as well as our routes from <code class="inline-code language-javascript">src/routes.js</code></p><pre data-line="4,8,13"><code class="language-jsx">// src/index.js
+];</code></pre></div><div class="section" id="router"><h2>The Router<a class="header-link" href="/tutorial/react-basics#router">#</a></h2><p>With the history object created and the routes defined, we are ready to create the router. Back in the <code class="inline-code language-javascript">src/index.js</code> file, we should import the <code class="inline-code language-javascript">curi</code> function from <code class="inline-code language-javascript">@curi/router</code> as well as our routes from <code class="inline-code language-javascript">src/routes.js</code>. Creating the router is done by calling the <code class="inline-code language-javascript">curi()</code> function and passing it the<!-- --> <code class="inline-code language-javascript">history</code> object and the <code class="inline-code language-javascript">routes</code> array.</p><pre data-line="4,8,13"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import curi from &#x27;@curi/router&#x27;;
+import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 
 import &#x27;./index.css&#x27;;
@@ -172,7 +172,7 @@ export default [
 ];</code></pre><p>We can now render the <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> in our index file. The<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> gets passed the Curi router using the<!-- --> <code class="inline-code language-javascript">router</code> prop and a render-invoked function as the component&#x27;s<!-- --> <code class="inline-code language-javascript">children</code>. In the render-invoked function, we can use<!-- --> <code class="inline-code language-javascript">response.body</code> to render the component for the matched route. We will also pass the <code class="inline-code language-javascript">response</code> as a prop to the rendered component, which will be useful soon.</p><pre data-line="6,15-24"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import curi from &#x27;@curi/router&#x27;;
+import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 import { CuriProvider } from &#x27;@curi/react&#x27;;
 
@@ -221,7 +221,7 @@ export default () =&gt; (
 );</code></pre><p>We can import that in our index file and add it to our<!-- --> <code class="inline-code language-javascript">children</code> function. This is a good opportunity to also add some structure to the elements returned by the <code class="inline-code language-javascript">children</code> <!-- -->function.</p><pre data-line="10,21-28"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import curi from &#x27;@curi/router&#x27;;
+import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 import { CuriProvider } from &#x27;@curi/react&#x27;;
 
@@ -347,7 +347,7 @@ export default {
 };</code></pre><p>Before we edit the <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component, we should quickly revisit the <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children</code> function. In addition to passing the <code class="inline-code language-javascript">response</code> to <code class="inline-code language-javascript">response.body</code>, we should also pass it our router. This will allow us to do programmatic navigation.</p><pre data-line="18,26"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import curi from &#x27;@curi/router&#x27;;
+import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 import { CuriProvider } from &#x27;@curi/react&#x27;;
 

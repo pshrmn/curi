@@ -82,7 +82,7 @@ const routes = [
       }
     ]
   }
-];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With React Router v4, a component&#x27;s lifecycle methods are used for loading data, code splitting, and other non-rendering tasks. WIth Curi, the same thing can be done <em>or</em> you can use a route&#x27;s<!-- --> <code class="inline-code language-javascript">on</code> methods to perform these tasks <em>before</em> the response is emitted.</p><p>These methods are <code class="inline-code language-javascript">on.initial()</code> and<!-- --> <code class="inline-code language-javascript">on.every()</code>. <code class="inline-code language-javascript">on.initial()</code> is useful for tasks that only need to be run once per route, like the code splitting mentioned above. <code class="inline-code language-javascript">on.every()</code> will be called every time that a route matches, so it is ideal for data loading.</p><p>The<!-- --> <a href="/guides/routes/#match">routes guide</a> <!-- -->covers the details of these methods as well as all of the other route properties.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
+];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With React Router v4, a component&#x27;s lifecycle methods are used for loading data, code splitting, and other non-rendering tasks. With Curi, routes can have functions that are called when they match the new location. These are grouped under the route&#x27;s<!-- --> <code class="inline-code language-javascript">match</code> object. The <code class="inline-code language-javascript">match</code> functions are called every time that a route matches a location.</p><p>The<!-- --> <a href="/guides/routes/#match">routes guide</a> <!-- -->covers the details of <code class="inline-code language-javascript">match</code> methods as well as all of the other route properties.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
   {
     path: &#x27;&#x27;,
     response: () =&gt; {
@@ -106,8 +106,8 @@ const routes = [
             body: Message
           };
         },
-        on: {
-          every: (route) =&gt; { return ... },
+        match: {
+          body: (route) =&gt; { return ... },
         }
       }
     ]
@@ -118,7 +118,7 @@ ReactDOM.render((
   &lt;BrowserRouter&gt;
     &lt;App /&gt;
   &lt;/BrowserRouter&gt;
-), holder);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With Curi, the router is created prior to rendering. It takes a Hickory history object, your routes array, and possibly an options object. <a href="https://github.com/pshrmn/hickory">Hickory</a> is similar to the <code class="inline-code language-javascript">history</code> package used by React Router, but has a slight modified API (easier navigation blocking and navigation that imitates how anchors work) and more convenient location objects (you can use a <code class="inline-code language-javascript">query</code> object instead of having to manually create a <code class="inline-code language-javascript">search</code> string).</p></div><div class="code-block"><pre><code class="language-javascript">import curi from &#x27;@curi/router&#x27;;
+), holder);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With Curi, the router is created prior to rendering. It takes a Hickory history object, your routes array, and possibly an options object. <a href="https://github.com/pshrmn/hickory">Hickory</a> is similar to the <code class="inline-code language-javascript">history</code> package used by React Router, but has a slight modified API (easier navigation blocking and navigation that imitates how anchors work) and more convenient location objects (you can use a <code class="inline-code language-javascript">query</code> object instead of having to manually create a <code class="inline-code language-javascript">search</code> string).</p></div><div class="code-block"><pre><code class="language-javascript">import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 const history = Browser();
 const routes = [...];
