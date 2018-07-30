@@ -9,8 +9,8 @@ export default ({ name }) => (
     <h1>{name}</h1>
     <Section title="Explanation" id="explanation">
       <p>
-        Code splitting with Curi routes is done using the{" "}
-        <IJS>on.initial()</IJS> function. The{" "}
+        Code splitting with Curi routes is done using a <IJS>match</IJS>{" "}
+        function. The{" "}
         <Link to="Guide" params={{ slug: "code-splitting" }}>
           code splitting
         </Link>{" "}

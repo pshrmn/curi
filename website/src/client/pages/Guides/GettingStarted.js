@@ -28,11 +28,11 @@ export default ({ name }) => (
             <IJS>routes</IJS> array.
           </p>
           <p>
-            The <IJS>history</IJS> object controls navigation between locations
+            The <IJS>history</IJS> object manages navigation between locations
             within an application.
           </p>
           <p>
-            The <IJS>routes</IJS> array defines how the application renders for
+            The <IJS>routes</IJS> array defines what the application renders for
             different locations.
           </p>
         </Explanation>
@@ -48,20 +48,26 @@ const router = curi(history, routes);`}
     <Section title="History" id="history-object">
       <SideBySide>
         <Explanation>
-          <p>There are three kinds of histories:</p>
+          <p>
+            The type of <IJS>history</IJS> that an application uses depends on
+            where it is running. There are three types of histories:
+          </p>
           <ol>
             <li>
-              <IJS>browser</IJS> is used for applications whose server can
-              handle dynamic requests.
+              The <IJS>browser</IJS> history is used for applications running in
+              a browser. If you use the <IJS>browser</IJS> history, your
+              application should be hosted on a server that can handle dynamic
+              requests.
             </li>
             <li>
-              <IJS>hash</IJS> is a fallback history for applications served from
-              static file hosts that can only handle requests for files that
-              exist.
+              The <IJS>hash</IJS> history is a fallback history for applications
+              running in a browser, but are hosted on servers that can only
+              handle requests for files that exist (static file servers).
             </li>
             <li>
-              <IJS>in-memory</IJS> is used outside of the browser. For example,
-              on the server or in a React Native app.
+              The <IJS>in-memory</IJS> history is used for applications not
+              running in a browser. For example, the <IJS>in-memory</IJS>{" "}
+              history is used on the server or in a React Native app.
             </li>
           </ol>
           <p>
@@ -87,17 +93,40 @@ const inMemoryHistory = InMemory();`}
         <Explanation>
           <p>
             The <IJS>history</IJS> object will map URLs into location objects.
-          </p>
-          <p>
-            The <IJS>query</IJS> is a string by default, but the history object
-            can be setup to automatically parse it into an object.
+            The domain and protocol segments of a URL are ignored. Only the{" "}
+            <IJS>pathname</IJS>, <IJS>query</IJS> (search), and <IJS>hash</IJS>{" "}
+            segments are used.
           </p>
           <p>
             Only the <IJS>pathname</IJS> will be used for route matching.
           </p>
         </Explanation>
         <CodeBlock>
-          {`// www.example.com/page?key=value#trending
+          {`// https://www.example.com/page?key=value#trending
+location = {
+  pathname: "/page",
+  query: "?key=value"
+  hash: "trending"
+}`}
+        </CodeBlock>
+      </SideBySide>
+      <SideBySide>
+        <Explanation>
+          <p>
+            The <IJS>query</IJS> value of a location is a string by default, but
+            the history object can be configured to automatically parse it into
+            an object.
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`import { parse, stringify } from "qs";
+import Browser from "@hickory/browser";
+
+const history = Browser({
+  query: { parse, stringify }
+});
+  
+// https://www.example.com/page?key=value#trending
 location = {
   pathname: "/page",
   query: { key: "value" }
@@ -127,13 +156,10 @@ location = {
             it is included after all other routes to render a 404 page.
           </p>
           <p>
-            Route names and params are what will be used for navigation within
-            the app. URLs can be annoying to write, so Curi will handle this for
-            you. All you have to know is the name of the route to navigate to.
-            This also prevents you from navigating to a route that doesn't exist
-            (although it doesn't prevent a user from manually navigating to a
-            route that doesn't exist, which is why the "Not Found" route is
-            important).
+            URLs can be annoying to write, so Curi handles this for you. When
+            you want to navigate to another route in an application, you specify
+            the name of the route to navigate to (and any params for the route)
+            instead of having to write the URL.
           </p>
         </Explanation>
         <CodeBlock>
@@ -245,7 +271,7 @@ router.navigate({
           <p>
             The argument object also has a <IJS>resolved</IJS> property to
             access any asynchronously resolve data from the matched routes{" "}
-            <IJS>on.initial()</IJS> and <IJS>on.every()</IJS> functions.
+            <IJS>match</IJS> functions.
           </p>
         </Explanation>
         <CodeBlock>
@@ -270,43 +296,43 @@ const routes = [
         <Explanation>
           <p>
             A route can have functions that will be called when a route matches.
-            These are grouped under the <IJS>on</IJS> property.
+            These are grouped under the <IJS>match</IJS> property.{" "}
+            <IJS>match</IJS> functions are called every time that a route
+            matches. However, Curi also provides a <IJS>once()</IJS> function to
+            add some basic caching for functions that will re-use their result.
           </p>
           <p>
-            <IJS>on.initial()</IJS> will be run the first time a route matches
-            and its return value will be re-used on subsequent matches. This is
-            ideal for code splitting.
+            The resolved values from <IJS>match</IJS> functions will be passed
+            to the route's <IJS>response()</IJS> function through the{" "}
+            <IJS>resolved</IJS> property. The resolved values can be accessed
+            using the <IJS>match</IJS> functions' names.
           </p>
           <p>
-            <IJS>on.every()</IJS> is run every time a route matches, so data
-            that varies based on route params can be loaded here.
-          </p>
-          <p>
-            Both of these methods receive the matched route properties of a
+            <IJS>match</IJS> functions receive the matched route properties of a
             response and are expected to return a Promise.
           </p>
           <p>
-            If either function has an uncaught error, it will be available in
-            the route's <IJS>response()</IJS> method as{" "}
-            <IJS>resolved.error</IJS>.
+            If any <IJS>match</IJS> function has an uncaught error, it will be
+            available in the route's <IJS>response()</IJS> method as{" "}
+            <IJS>error</IJS>.
           </p>
         </Explanation>
         <CodeBlock>{`const routes = [
   {
     name: "User",
     path: "user/:id",
-    on: {
-      initial() => import("./components/User"),
-      every({ params })) => fetch(\`api/user/\${params.id}\`)
+    match: {
+      body() => import("./components/User"),
+      data({ params })) => fetch(\`api/user/\${params.id}\`)
         .then(resp => JSON.parse(resp))
     },
-    response({ resolved }) {
-      if (resolved.error) {
+    response({ resolved, error }) {
+      if (error) {
         // handle the error
       }
       return {
-        body: resolved.initial,
-        data: resolved.every
+        body: resolved.body,
+        data: resolved.data
       }
     }
   }
@@ -345,12 +371,12 @@ stop();
       <SideBySide>
         <Explanation>
           <p>
-            If you have any asynchronous routes (routes with{" "}
-            <IJS>on.initial()</IJS> or <IJS>on.every()</IJS> functions),{" "}
-            <IJS>router.respond()</IJS> should be used to delay the initial
-            render. If you don't pass the <IJS>{`{ observe: true }`}</IJS>{" "}
-            option, the observer function will only be called once, which is
-            perfect for delaying the initial render.
+            If you have any asynchronous routes (routes with <IJS>match</IJS>{" "}
+            functions), <IJS>router.respond()</IJS> should be used to delay the
+            initial render. If you don't pass the{" "}
+            <IJS>{`{ observe: true }`}</IJS> option, the observer function will
+            only be called once, which is perfect for delaying the initial
+            render.
           </p>
         </Explanation>
         <CodeBlock>

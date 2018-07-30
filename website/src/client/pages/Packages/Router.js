@@ -391,10 +391,9 @@ router.navigate({
                 </table>
 
                 <p>
-                  When a matched route is async (it has an{" "}
-                  <IJS>on.initial()</IJS> or <IJS>on.every()</IJS> function),
-                  the router will not call the observer functions until the{" "}
-                  <IJS>on</IJS> function(s) have resolved.
+                  When a matched route is async (it has <IJS>match</IJS>{" "}
+                  functions), the router will not call the observer functions
+                  until the async function(s) have resolved.
                 </p>
               </Explanation>
               <CodeBlock>

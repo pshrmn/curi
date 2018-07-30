@@ -66,9 +66,11 @@ const router = curi(history, routes);`}
           <Link to="Package" params={{ package: "react" }}>
             React
           </Link>{" "}
-          applications, you would use the <Cmp>CuriProvider</Cmp>, which
-          automatically re-renders your application after navigation. This works
-          with both React DOM and React Native.
+          applications, the <Cmp>CuriProvider</Cmp> component is used to
+          automatically re-render an application when the location changes.{" "}
+          <Cmp>CuriProvider</Cmp> uses a render-invoked function to render your
+          application's content. This works with both React DOM and React
+          Native.
         </p>
       </Explanation>
       <CodeBlock lang="jsx">
@@ -90,7 +92,9 @@ ReactDOM.render((
           With{" "}
           <Link to="Package" params={{ package: "vue" }}>
             Vue
-          </Link>, the <IJS>CuriPlugin</IJS> sets up responsive rendering.
+          </Link>, the <IJS>CuriPlugin</IJS> sets up responsive rendering. The
+          plugin attaches a <IJS>$curi</IJS> variable to components, which gives
+          access to the current response object.
         </p>
       </Explanation>
       <CodeBlock lang="jsx">

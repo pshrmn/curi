@@ -28,15 +28,16 @@ const Unpkg = ({ name, version, globalName }) => (
     <Explanation>
       <p>
         Prefer inline scripts? Every version is available through{" "}
-        <a href={`https://unpkg.com/@curi/${name}@${version}/`}>Unpkg</a>.
-      </p>
-      <p>There are both full and minified versions available.</p>
-      <p>
-        You can access the package via <IJS>window.{globalName}</IJS>.
+        <a href={`https://unpkg.com/@curi/${name}@${version}/`}>Unpkg</a>. There
+        are both full and minified versions available. You can access the
+        package's exports through <IJS>window.{globalName}</IJS>.
       </p>
     </Explanation>
     <CodeBlock lang="markup">
-      {`<script src="https://unpkg.com/@curi/${name}@${version}/dist/curi-${name}.js"></script>`}
+      {`<script src="https://unpkg.com/@curi/${name}@${version}/dist/curi-${name}.js"></script>
+<script type="text/javascript">
+  window.${globalName}
+</script>`}
     </CodeBlock>
   </SideBySide>
 );

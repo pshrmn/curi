@@ -21,8 +21,7 @@ export default ({ name, version, globalName }) => (
         <p>
           The prefetch route interaction can be used fetch data for a route
           prior to navigating. The interaction will call a route's{" "}
-          <IJS>on.initial()</IJS> and <IJS>on.every()</IJS> functions (if they
-          exist on the route).
+          <IJS>match</IJS> functions (if they exist on the route).
         </p>
         <p>
           Prefetching data means results in faster renders after navigation
@@ -34,11 +33,10 @@ export default ({ name, version, globalName }) => (
     <SideBySide>
       <Explanation>
         <Note>
-          Prefetching <IJS>on.every()</IJS> calls is only beneficial if you
+          Prefetching <IJS>match</IJS> functions calls is only beneficial if you
           cache the results because the function will be re-called when the user
-          navigates to that route. The result of <IJS>on.initial()</IJS> is
-          automatically re-used on subsequent calls, so you do not have to worry
-          about caching it.
+          navigates to that route. Functions wrapped by Curi's <IJS>once()</IJS>{" "}
+          wrapper will automatically re-use the results from their first call.
         </Note>
       </Explanation>
     </SideBySide>
@@ -100,11 +98,10 @@ router.route.prefetch("Some Route");`}
               </table>
               <Note>
                 <p>
-                  This route interaction will only register routes that have an{" "}
-                  <IJS>on.initial()</IJS> or <IJS>on.every()</IJS> function. If
-                  you try calling this for any routes with neither of those,{" "}
-                  <IJS>prefetch()</IJS> will resolve an object with an{" "}
-                  <IJS>error</IJS> property.
+                  This route interaction will only register routes that have{" "}
+                  <IJS>match</IJS> functions. If you try calling this for any
+                  routes with neither of those, <IJS>prefetch()</IJS> will
+                  resolve an object with an <IJS>error</IJS> property.
                 </p>
               </Note>
             </Explanation>

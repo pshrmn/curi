@@ -62,13 +62,12 @@ export default ({ name }) => (
         <SideBySide>
           <Explanation>
             <p>
-              If any of the routes in an application have{" "}
-              <IJS>on.initial()</IJS> or <IJS>on.every()</IJS> functions, when
-              those routes match the response will be emitted asynchronously.
-              When the application first renders, if the router matches an async
-              route, the response isn't immediately ready to use. To deal with
-              this, you can use an observer to render once the initial response
-              is ready.
+              If any of the routes in an application have <IJS>match</IJS>{" "}
+              functions, when those routes match the response will be emitted
+              asynchronously. When the application first renders, if the router
+              matches an async route, the response isn't immediately ready to
+              use. To deal with this, you can use an observer to render once the
+              initial response is ready.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">

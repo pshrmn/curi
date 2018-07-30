@@ -190,12 +190,12 @@ const Noun = ({ response }) => (
         <Explanation>
           <p>
             You can use your Apollo client instance to call queries in a route's{" "}
-            <IJS>on.every()</IJS> function. <IJS>on.every()</IJS> is expected to
-            return a Promise, which is exactly what <IJS>client.query()</IJS>{" "}
+            <IJS>match</IJS> functions. <IJS>match</IJS> functions are expected
+            to return a Promise, which is exactly what <IJS>client.query()</IJS>{" "}
             returns, so tightly pairing Curi and Apollo is mostly center around
-            using <IJS>on.every()</IJS> to return a <IJS>client.query()</IJS>{" "}
-            call. This will delay navigation until after a route's GraphQL data
-            has been loaded by Apollo.
+            using a <IJS>match</IJS> functoin to return a{" "}
+            <IJS>client.query()</IJS> call. This will delay navigation until
+            after a route's GraphQL data has been loaded by Apollo.
           </p>
         </Explanation>
         <CodeBlock>
@@ -206,8 +206,8 @@ const routes = [
   {
     name: "Example",
     path: "example/:id",
-    on: {
-      every({ params }) {
+    match: {
+      data({ params }) {
         return client.query({
           query: EXAMPLE_QUERY,
           variables: { id: params.id }
@@ -268,21 +268,21 @@ export default [
   {
     name: "Verb",
     path: "verb/:word",
-    on: {
-      every({ params }) {
+    match: {
+      verb({ params }) {
         return client.query({
           query: GET_VERB,
           variables: { word: params.word }
         })
       }
     },
-    response({ resolved }) {
-      if (resolved.error) {
+    response({ error, resolved }) {
+      if (error) {
         // handle failed queries
       }
       return {
         body: Verb,
-        data: resolved.every.data
+        data: resolved.verb.data
       }
     }
   }
@@ -312,11 +312,11 @@ const Verb = ({ response }) => (
       <SideBySide>
         <Explanation>
           <p>
-            The second approach is to use <IJS>on.every()</IJS> as a way to
-            cache the data, but also use <Cmp>Query</Cmp>. With this approach,
-            we do not have to attach the query data to the response; we are just
-            relying on the fact that Apollo will execute and cache the results
-            prior to navigation.
+            The second approach is to use a <IJS>match</IJS> function as a way
+            to cache the data, but also use <Cmp>Query</Cmp>. With this
+            approach, we do not have to attach the query data to the response;
+            we are just relying on the fact that Apollo will execute and cache
+            the results prior to navigation.
           </p>
         </Explanation>
         <CodeBlock>
@@ -328,8 +328,8 @@ export default [
   {
     name: "Verb",
     path: "verb/:word",
-    on: {
-      every({ params }) {
+    match: {
+      data({ params }) {
         // load the data so it is cached by
         // your Apollo client
         return client.query({
@@ -380,7 +380,8 @@ const Verb = ({ response }) => (
           <Explanation>
             <p>
               One additional benefit of adding queries to routes using{" "}
-              <IJS>on.every()</IJS> is that you can prefetch data for a route.
+              <IJS>match</IJS> functions is that you can prefetch data for a
+              route.
             </p>
             <p>
               The{" "}
@@ -399,8 +400,8 @@ const routes = [
   {
     name: "Example",
     path: "example/:id",
-    on: {
-      every({ params }) {
+    match {
+      examples({ params }) {
         client.query({
           query: GET_EXAMPLES,
           variables: { id: params.id }

@@ -13,11 +13,11 @@ export default ({ name }) => (
     <h1>{name}</h1>
     <Section title="Explanation" id="explanation">
       <p>
-        When a user navigates to one of your routes, the re-rendering will not
-        be triggered until a response has been created. If the route that
-        matches has a <IJS>on.every()</IJS> function that makes a request to the
-        server, the re-render will be delayed, possibly giving the user the
-        impression that nothing is happening.
+        When a user navigates to one of your routes, the application will not
+        re-render until a response has been created. If the route that matches
+        has a <IJS>match</IJS> function that makes a request to the server, the
+        re-render will be delayed, possibly giving the user the impression that
+        nothing is happening.
       </p>
 
       <p>

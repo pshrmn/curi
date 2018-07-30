@@ -513,8 +513,9 @@ const router = curi(history, routes, {
           <Explanation>
             <p>
               The <Cmp>Prefetch</Cmp> component is used for calling a route's{" "}
-              <IJS>on</IJS> methods when a specified element becomes visible in
-              the page. The specified element's visibility is monitored by the{" "}
+              <IJS>match</IJS> methods when a specified element becomes visible
+              in the page. The specified element's visibility is monitored by
+              the{" "}
               <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">
                 <IJS>IntersectionObserver</IJS> API
               </a>.
@@ -534,7 +535,7 @@ const router = curi(history, routes, {
   {ref => <div ref={ref}>User 1</div>}
 </Prefetch>
 // when the <div> becomes visible, the "User" route's
-// on.initial() and on.every() functions will be called`}
+// match functions will be called`}
           </CodeBlock>
         </SideBySide>
         <Note>
@@ -564,9 +565,10 @@ const router = curi(history, routes, {
               <Explanation>
                 <p>
                   The <IJS>match</IJS> object that will be passed to{" "}
-                  <IJS>on</IJS> functions. The only required property of this
+                  <IJS>match</IJS> functions. The only required property of this
                   object is <IJS>name</IJS> because <Cmp>Prefetch</Cmp> needs to
-                  know which route's <IJS>on</IJS> functions should be called.
+                  know which route's <IJS>match</IJS> functions should be
+                  called.
                 </p>
               </Explanation>
               <CodeBlock lang="jsx">
@@ -603,14 +605,16 @@ const router = curi(history, routes, {
                     <p>
                       This will be <IJS>null</IJS> until the data for the route
                       has been prefetched. Once the prefetch has completed,{" "}
-                      <IJS>resolved</IJS> will be an object with{" "}
-                      <IJS>initial</IJS>, <IJS>every</IJS>, and <IJS>error</IJS>{" "}
-                      properties (<IJS>error</IJS> is set if either{" "}
-                      <IJS>on.initial()</IJS> or <IJS>on.every()</IJS> throw and
-                      you do not catch it). The <IJS>resolved</IJS> values can
-                      be used by your app or you can just use the knowledge that
-                      the data has finished loading to render an indicator.
+                      <IJS>resolved</IJS> will be an object with the values
+                      resolved by the route's <IJS>match</IJS> functions. The{" "}
+                      <IJS>resolved</IJS> values can be used by your app or you
+                      can just use the knowledge that the data has finished
+                      loading to render an indicator.
                     </p>
+                  </li>
+                  <li>
+                    An uncaught <IJS>error</IJS> thrown by one of the{" "}
+                    <IJS>match</IJS> functions.
                   </li>
                 </ol>
               </Explanation>
