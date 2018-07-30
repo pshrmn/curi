@@ -10,5 +10,6 @@ module.exports = {
     }
   },
   setupFiles: ["<rootDir>/tests/setup/rAF.js"],
-  collectCoverageFrom: ["src/*.tsx"]
+  collectCoverageFrom: ["src/*.tsx"],
+  testURL: "http://localhost"
 };

@@ -11,5 +11,6 @@ module.exports = {
   },
   moduleNameMapper: {
     "^vue$": "<rootDir>/node_modules/vue/dist/vue.common.js"
-  }
+  },
+  testURL: "http://localhost"
 };

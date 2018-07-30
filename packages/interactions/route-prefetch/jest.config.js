@@ -8,5 +8,6 @@ module.exports = {
     "ts-jest": {
       module: "es6"
     }
-  }
+  },
+  testURL: "http://localhost"
 };

@@ -26,7 +26,7 @@ describe("<Link>", () => {
 
     const a = node.querySelector("a");
     expect(a).not.toBeUndefined();
-    expect(a.href).toEqual("/");
+    expect(a.pathname).toEqual("/");
   });
 
   it("uses params attribute to generate pathname", () => {
@@ -49,7 +49,7 @@ describe("<Link>", () => {
     });
 
     const a = node.querySelector("a");
-    expect(a.href).toEqual("/u/1");
+    expect(a.pathname).toEqual("/u/1");
   });
 
   it("falls back to current response's pathname if to isn't provided", done => {
@@ -82,7 +82,8 @@ describe("<Link>", () => {
       });
 
       const a = node.querySelector("a");
-      expect(a.href).toEqual("/u/2#is-a-band");
+      expect(a.pathname).toEqual("/u/2");
+      expect(a.hash).toEqual("#is-a-band");
       done();
     });
   });
@@ -108,7 +109,8 @@ describe("<Link>", () => {
     });
 
     const a = node.querySelector("a");
-    expect(a.href).toEqual("/?one=two#test");
+    expect(a.search).toEqual("?one=two");
+    expect(a.hash).toEqual("#test");
   });
 
   describe("clicking a <Link>", () => {
