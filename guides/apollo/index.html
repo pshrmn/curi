@@ -81,15 +81,15 @@ const Noun = ({ response }) =&gt; (
       )
     }}
   &lt;/Query&gt;
-);</code></pre></div></div></div><div class="section" id="tight-pairing"><h2>Tight Pairing<a class="header-link" href="/guides/apollo/#tight-pairing">#</a></h2><div class="side-by-side"><div class="explanation"><p>You can use your Apollo client instance to call queries in a route&#x27;s<!-- --> <code class="inline-code language-javascript">on.every()</code> function. <code class="inline-code language-javascript">on.every()</code> is expected to return a Promise, which is exactly what <code class="inline-code language-javascript">client.query()</code> <!-- -->returns, so tightly pairing Curi and Apollo is mostly center around using <code class="inline-code language-javascript">on.every()</code> to return a <code class="inline-code language-javascript">client.query()</code> <!-- -->call. This will delay navigation until after a route&#x27;s GraphQL data has been loaded by Apollo.</p></div><div class="code-block"><pre><code class="language-javascript">import client from &quot;./apollo&quot;;
+);</code></pre></div></div></div><div class="section" id="tight-pairing"><h2>Tight Pairing<a class="header-link" href="/guides/apollo/#tight-pairing">#</a></h2><div class="side-by-side"><div class="explanation"><p>You can use your Apollo client instance to call queries in a route&#x27;s<!-- --> <code class="inline-code language-javascript">match</code> functions. <code class="inline-code language-javascript">match</code> functions are expected to return a Promise, which is exactly what <code class="inline-code language-javascript">client.query()</code> <!-- -->returns, so tightly pairing Curi and Apollo is mostly center around using a <code class="inline-code language-javascript">match</code> functoin to return a<!-- --> <code class="inline-code language-javascript">client.query()</code> call. This will delay navigation until after a route&#x27;s GraphQL data has been loaded by Apollo.</p></div><div class="code-block"><pre><code class="language-javascript">import client from &quot;./apollo&quot;;
 import { EXAMPLE_QUERY } from &quot;./queries&quot;;
 
 const routes = [
   {
     name: &quot;Example&quot;,
     path: &quot;example/:id&quot;,
-    on: {
-      every({ params }) {
+    match: {
+      data({ params }) {
         return client.query({
           query: EXAMPLE_QUERY,
           variables: { id: params.id }
@@ -119,21 +119,21 @@ export default [
   {
     name: &quot;Verb&quot;,
     path: &quot;verb/:word&quot;,
-    on: {
-      every({ params }) {
+    match: {
+      verb({ params }) {
         return client.query({
           query: GET_VERB,
           variables: { word: params.word }
         })
       }
     },
-    response({ resolved }) {
-      if (resolved.error) {
+    response({ error, resolved }) {
+      if (error) {
         // handle failed queries
       }
       return {
         body: Verb,
-        data: resolved.every.data
+        data: resolved.verb.data
       }
     }
   }
@@ -145,7 +145,7 @@ const Verb = ({ response }) =&gt; (
       {response.data.verb.definition}
     &lt;/p&gt;
   &lt;/div&gt;
-)</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>The second approach is to use <code class="inline-code language-javascript">on.every()</code> as a way to cache the data, but also use <code class="inline-code language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code>. With this approach, we do not have to attach the query data to the response; we are just relying on the fact that Apollo will execute and cache the results prior to navigation.</p></div><div class="code-block"><pre><code class="language-javascript">// routes.js
+)</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>The second approach is to use a <code class="inline-code language-javascript">match</code> function as a way to cache the data, but also use <code class="inline-code language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code>. With this approach, we do not have to attach the query data to the response; we are just relying on the fact that Apollo will execute and cache the results prior to navigation.</p></div><div class="code-block"><pre><code class="language-javascript">// routes.js
 import client from &quot;./apollo&quot;;
 import { GET_VERB } from &quot;./queries&quot;;
 
@@ -153,8 +153,8 @@ export default [
   {
     name: &quot;Verb&quot;,
     path: &quot;verb/:word&quot;,
-    on: {
-      every({ params }) {
+    match: {
+      data({ params }) {
         // load the data so it is cached by
         // your Apollo client
         return client.query({
@@ -184,15 +184,15 @@ const Verb = ({ response }) =&gt; (
       );
     }}
   &lt;/Query&gt;
-)</code></pre></div></div><div class="subsection" id="prefetch"><h3>Prefetching<a class="header-link" href="/guides/apollo/#prefetch">#</a></h3><div class="side-by-side"><div class="explanation"><p>One additional benefit of adding queries to routes using<!-- --> <code class="inline-code language-javascript">on.every()</code> is that you can prefetch data for a route.</p><p>The<!-- --> <a href="/packages/@curi/route-prefetch/"><code class="inline-code language-javascript">@curi/route-prefetch</code></a> <!-- -->interaction lets you programmatically fetch the data for a route prior to navigating to a location.</p></div><div class="code-block"><pre><code class="language-javascript">// index.js
+)</code></pre></div></div><div class="subsection" id="prefetch"><h3>Prefetching<a class="header-link" href="/guides/apollo/#prefetch">#</a></h3><div class="side-by-side"><div class="explanation"><p>One additional benefit of adding queries to routes using<!-- --> <code class="inline-code language-javascript">match</code> functions is that you can prefetch data for a route.</p><p>The<!-- --> <a href="/packages/@curi/route-prefetch/"><code class="inline-code language-javascript">@curi/route-prefetch</code></a> <!-- -->interaction lets you programmatically fetch the data for a route prior to navigating to a location.</p></div><div class="code-block"><pre><code class="language-javascript">// index.js
 import prefetch from &quot;@curi/route-prefetch&quot;;
 
 const routes = [
   {
     name: &quot;Example&quot;,
     path: &quot;example/:id&quot;,
-    on: {
-      every({ params }) {
+    match {
+      examples({ params }) {
         client.query({
           query: GET_EXAMPLES,
           variables: { id: params.id }

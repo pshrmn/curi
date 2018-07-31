@@ -19,7 +19,7 @@ const routes = [
   { name: &#x27;Not Found&#x27;, path: &#x27;(.*)&#x27;, ... }
 ];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>A router is created by passing the <code class="inline-code language-javascript">history</code> and<!-- --> <code class="inline-code language-javascript">routes</code> to the <code class="inline-code language-javascript">curi</code> function from the<!-- --> <a href="/packages/@curi/router/"><code class="inline-code language-javascript">@curi/router</code></a> <!-- -->package.</p></div><div class="code-block"><pre><code class="language-javascript">import { curi } from &#x27;@curi/router&#x27;;
 
-const router = curi(history, routes);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>How you render depends on what framework you are using.</p></div></div><div class="side-by-side"><div class="explanation"><p>For<!-- --> <a href="/packages/@curi/react/">React</a> <!-- -->applications, you would use the <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code>, which automatically re-renders your application after navigation. This works with both React DOM and React Native.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriProvider } from &quot;@curi/react&quot;;
+const router = curi(history, routes);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>How you render depends on what framework you are using.</p></div></div><div class="side-by-side"><div class="explanation"><p>For<!-- --> <a href="/packages/@curi/react/">React</a> <!-- -->applications, the <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> component is used to automatically re-render an application when the location changes.<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> uses a render-invoked function to render your application&#x27;s content. This works with both React DOM and React Native.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriProvider } from &quot;@curi/react&quot;;
         
 ReactDOM.render((
   &lt;CuriProvider router={router}&gt;
@@ -28,7 +28,7 @@ ReactDOM.render((
       return &lt;Body response={response} /&gt;;
     }}
   &lt;/CuriProvider&gt;
-), holder);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With<!-- --> <a href="/packages/@curi/vue/">Vue</a>, the <code class="inline-code language-javascript">CuriPlugin</code> sets up responsive rendering.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriPlugin } from &quot;@curi/vue&quot;;
+), holder);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With<!-- --> <a href="/packages/@curi/vue/">Vue</a>, the <code class="inline-code language-javascript">CuriPlugin</code> sets up responsive rendering. The plugin attaches a <code class="inline-code language-javascript">$curi</code> variable to components, which gives access to the current response object.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriPlugin } from &quot;@curi/vue&quot;;
         
 Vue.use(CuriPlugin, { router });
 const vm = new Vue({
