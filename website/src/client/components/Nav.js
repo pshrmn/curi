@@ -13,7 +13,7 @@ export default () => (
         <PrefetchActiveLink to="Packages">Packages</PrefetchActiveLink>
       </li>
       <li>
-        <PrefetchActiveLink to="Guide" params={{ slug: "getting-started" }}>
+        <PrefetchActiveLink to="Guide" params={{ slug: "creating-a-router" }}>
           Guides
         </PrefetchActiveLink>
       </li>

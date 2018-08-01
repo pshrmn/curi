@@ -170,7 +170,7 @@ const routes = [
       </SideBySide>
     </Section>
 
-    <Section title="Next" id="next">
+    <Section title="Other Approaches" id="other">
       <p>
         The approaches taken here are not the only way to do code splitting.
         Another approach is to skip the <IJS>match</IJS> method and do code
@@ -185,13 +185,6 @@ const routes = [
         simple to do. If you are using Webpack and want to reduce your initial
         bundle size, <IJS>match</IJS> functions are a good way to accomplish
         this.
-      </p>
-
-      <p>
-        Next, we will take a look at some related route properties in{" "}
-        <Link to="Guide" params={{ slug: "loading" }}>
-          the loading guide
-        </Link>.
       </p>
     </Section>
   </BaseGuide>

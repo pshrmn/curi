@@ -159,16 +159,5 @@ const router = curi(history, routes, {
         </Explanation>
       </SideBySide>
     </Section>
-
-    <div>
-      <h2>Next</h2>
-      <p>
-        Next we will take a closer look at how to add{" "}
-        <Link to="Guide" params={{ slug: "code-splitting" }}>
-          code splitting
-        </Link>{" "}
-        to routes.
-      </p>
-    </div>
   </BaseGuide>
 );

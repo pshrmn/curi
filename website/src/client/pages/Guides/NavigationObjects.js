@@ -69,16 +69,5 @@ export default ({ name }) => (
         </Explanation>
       </SideBySide>
     </Section>
-    <div>
-      <h2>Next</h2>
-      <p>
-        Let's take a moment to go back to our router and look at what Curi's
-        route interactions are for in the{" "}
-        <Link to="Guide" params={{ slug: "route-interactions" }}>
-          Route Interactions
-        </Link>{" "}
-        guide.
-      </p>
-    </div>
   </BaseGuide>
 );

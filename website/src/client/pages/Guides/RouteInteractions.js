@@ -253,16 +253,5 @@ router.route.confirm('Elsewhere'); // false`}
         </SideBySide>
       </Subsection>
     </Section>
-
-    <div>
-      <h2>Next</h2>
-      <p>
-        Next on the list are side effects, which you can learn more about in the{" "}
-        <Link to="Guide" params={{ slug: "side-effects" }}>
-          Using Side Effects
-        </Link>{" "}
-        guide.
-      </p>
-    </div>
   </BaseGuide>
 );

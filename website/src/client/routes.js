@@ -63,7 +63,7 @@ export default [
         redirectTo: {
           name: "Guide",
           params: {
-            slug: "getting-started"
+            slug: "creating-a-router"
           }
         },
         title: "Guides"

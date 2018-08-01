@@ -129,13 +129,5 @@ const router = curi(history, routes, {
         </li>
       </ol>
     </Section>
-    <h2>Next</h2>
-    <p>
-      Get to know about route objects with the{" "}
-      <Link to="Guide" params={{ slug: "routes" }}>
-        All About Routes
-      </Link>{" "}
-      guide.
-    </p>
   </BaseGuide>
 );

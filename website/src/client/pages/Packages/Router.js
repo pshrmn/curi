@@ -10,7 +10,7 @@ import {
   CodeBlock,
   Explanation
 } from "../../components/SideBySide";
-import { Note } from "../../components/Messages";
+import { Note, Warning } from "../../components/Messages";
 
 export default ({ name, version, globalName }) => (
   <BasePackage
@@ -51,10 +51,10 @@ const router = curi(history, routes, options);`}
                   application. The{" "}
                   <Link
                     to="Guide"
-                    params={{ slug: "getting-started" }}
+                    params={{ slug: "creating-a-router" }}
                     hash="history-object"
                   >
-                    Getting Started guide
+                    Creating a Router guide
                   </Link>{" "}
                   provides more information on how to choose which history type
                   is right for an application.
@@ -602,6 +602,512 @@ const path = pathnameGenerator.get("Yo", { name: "joey" })
 // path = "/yo/joey"`}
           </CodeBlock>
         </SideBySide>
+      </Section>
+      <Section title="Route properties" id="route-properties">
+        <Subsection title="route.name" id="name">
+          <SideBySide>
+            <Explanation>
+              <p>A string, this must be unique for every route.</p>
+            </Explanation>
+            <CodeBlock>
+              {`[
+  { name: 'Home' },
+  { name: 'Album' },
+  { name: 'Not Found' }
+];`}
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection title="route.path" id="path">
+          <SideBySide>
+            <Explanation>
+              <p>
+                A string pattern describing what the route matches. Whenever the
+                router receives a new location, it will loop through the known
+                route paths to determine which one matches the new location's{" "}
+                <IJS>pathname</IJS> the best.
+              </p>
+              <p>
+                Curi uses
+                <a href="https://github.com/pillarjs/path-to-regexp#parameters">
+                  <IJS>path-to-regexp</IJS>
+                </a>{" "}
+                for paths, which enables routes to have
+                <a href="https://github.com/pillarjs/path-to-regexp#parameters">
+                  path parameters
+                </a>. When a route with parameters matches a location, the
+                parameters will be be parsed from the location's{" "}
+                <IJS>pathname</IJS>.
+              </p>
+              <p>
+                <IJS>path</IJS> strings should <strong>not</strong> have a
+                leading slash.
+              </p>
+              <Warning>
+                <IJS>path-to-regexp</IJS> supports arrays and RegExps, but Curi
+                only supports string paths. This is because Curi uses{" "}
+                <IJS>path-to-regexp</IJS> to generate pathnames from a route's
+                name, which it can only do from strings paths.
+              </Warning>
+            </Explanation>
+            <CodeBlock>
+              {`[
+  { name: 'Home', path: '' },
+  // when the pathname is a/yo, albumID = "yo"
+  { name: 'Album', path: 'a/:albumID' },
+  // the path (.*) matches every pathname
+  { name: 'Not Found', path: '(.*)' }
+];
+
+// don't include a leading forward slash
+// { name: 'Home', path: '/' }`}
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection title="route.match" id="match">
+          <SideBySide>
+            <Explanation>
+              <p>
+                The <IJS>match</IJS> object groups async functions that will be
+                called when the route matches.
+              </p>
+              <p>
+                A route with any <IJS>match</IJS> functions is asynchronous,
+                while one with no <IJS>match</IJS> functions is synchronous. You
+                can read more about this is the{" "}
+                <Link to="Guide" params={{ slug: "sync-or-async" }}>
+                  sync or async
+                </Link>{" "}
+                guide.
+              </p>
+              <p>
+                <IJS>match</IJS> functions are called every time that a route
+                matches the current location.
+              </p>
+              <p>
+                <IJS>match</IJS> functions will be passed an object with the
+                matched route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
+                <IJS>partials</IJS>, and <IJS>location</IJS>.
+              </p>
+              <Note>
+                You should not perform side effects (e.g. passing the loaded
+                data to a Redux store) in <IJS>match</IJS> functions because it
+                is possible that navigating to the route might be cancelled. If
+                you must perform side effects for a route, you should do so in{" "}
+                <IJS>response()</IJS>.
+              </Note>
+            </Explanation>
+            <CodeBlock>
+              {`const about = {
+  name: 'About',
+  path: 'about',
+  match: {
+    body: () => import('./components/About'),
+    data: () => fetch('/api/about')
+  }
+};`}
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
+        <Subsection title="route.response()" id="response">
+          <SideBySide>
+            <Explanation>
+              <p>
+                A function for modifying the response object. This returns an
+                object whose properties will be merged with the matched route
+                properties to create the "final" response.
+              </p>
+              <p>
+                Only valid properties will be merged onto the response;
+                everything else will be ignored. The valid properties are:
+              </p>
+            </Explanation>
+          </SideBySide>
+          <ol>
+            <li>
+              <SideBySide>
+                <Explanation>
+                  <p>
+                    <IJS>body</IJS> - This is usually what you will render.
+                  </p>
+                </Explanation>
+                <CodeBlock>
+                  {`import Home from "./components/Home";
+const routes = [
+  {
+    name: "Home",
+    path: "",
+    response() {
+      return { body: Home };
+    }
+  },
+  // ...
+];
+// response = { body: Home, ... }`}
+                </CodeBlock>
+              </SideBySide>
+            </li>
+            <li>
+              <SideBySide>
+                <Explanation>
+                  <p>
+                    <IJS>status</IJS> - A number. This is useful for redirects
+                    or locations caught by your catch-all route while using
+                    server-side rendering. The default status value is{" "}
+                    <IJS>200</IJS>.
+                  </p>
+                </Explanation>
+                <CodeBlock>
+                  {`{
+  response(){
+    return {
+      status: 301,
+      redirectTo: {...}
+    };
+  }
+}
+// response = { status: 301, ... }`}
+                </CodeBlock>
+              </SideBySide>
+            </li>
+            <li>
+              <SideBySide>
+                <Explanation>
+                  <p>
+                    <IJS>error</IJS> - If an error occurs with the route's{" "}
+                    <IJS>match</IJS> methods, you might want to attach an error
+                    message to the response.
+                  </p>
+                </Explanation>
+                <CodeBlock>
+                  {`{
+  match: {
+    test: () => Promise.reject("woops!")
+  },
+  response({ error }) {
+    return { error };
+  }
+}
+// response = { error: "woops!", ... }`}
+                </CodeBlock>
+              </SideBySide>
+            </li>
+            <li>
+              <SideBySide>
+                <Explanation>
+                  <p>
+                    <IJS>data</IJS> - Anything you want it to be.
+                  </p>
+                </Explanation>
+                <CodeBlock>
+                  {`{
+  response() {
+    return { data: Math.random() };
+  }
+}
+// response = { data: 0.8651606708109429, ... }`}
+                </CodeBlock>
+              </SideBySide>
+            </li>
+            <li>
+              <SideBySide>
+                <Explanation>
+                  <p>
+                    <IJS>title</IJS> - This can be used with{" "}
+                    <IJS>@curi/side-effect-title</IJS> to update the page's{" "}
+                    <IJS>document.title</IJS>.
+                  </p>
+                </Explanation>
+                <CodeBlock>
+                  {`{
+  response({ params }) {
+    return { title: \`User \${params.id}\` };
+  }
+}
+// when visting /user/2
+// response = { title: "User 2", ... }`}
+                </CodeBlock>
+              </SideBySide>
+            </li>
+            <li>
+              <SideBySide>
+                <Explanation>
+                  <p>
+                    <IJS>redirectTo</IJS> - An object with the <IJS>name</IJS>{" "}
+                    of the route to redirect to, <IJS>params</IJS> (if
+                    required), and optional <IJS>hash</IJS>, <IJS>query</IJS>,
+                    and <IJS>state</IJS> properties.
+                  </p>
+                  <p>
+                    The other values are copied directly, but{" "}
+                    <IJS>redirectTo</IJS> will be turned into a location object
+                    using the object's <IJS>name</IJS> (and <IJS>params</IJS> if
+                    required).
+                  </p>
+                </Explanation>
+                <CodeBlock>
+                  {`[
+  {
+    name: "Old Photo",
+    path: "photo/:id",
+    response({ params }) {
+      return {
+        redirectTo: { name: "Photo", params }
+      };
+    }
+  },
+  {
+    name: "New Photo",
+    path: "p/:id"
+  }
+]
+// when the user navigates to /photo/1:
+// response = { redirectTo: { pathname: "/p/1", ... } }`}
+                </CodeBlock>
+              </SideBySide>
+            </li>
+          </ol>
+          <SideBySide>
+            <Explanation>
+              <p>
+                This function is passed an object with a number of properties
+                that can be useful for modifying the response.
+              </p>
+            </Explanation>
+            <CodeBlock>
+              {`{
+  response: ({ match, resolved }) => {
+    // ...
+  }
+}`}
+            </CodeBlock>
+          </SideBySide>
+          <ul>
+            <Subsection tag="li" title="match" id="response-match">
+              <SideBySide>
+                <Explanation>
+                  <p>
+                    An object with the matched route properties of a response.
+                  </p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>property</th>
+                        <th>description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>name</td>
+                        <td>the name of the matched route</td>
+                      </tr>
+                      <tr>
+                        <td>params</td>
+                        <td>route parameters parsed from the location</td>
+                      </tr>
+                      <tr>
+                        <td>partials</td>
+                        <td>
+                          the names of any ancestor routes of the matched route
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>location</td>
+                        <td>the location that was used to match the route</td>
+                      </tr>
+                      <tr>
+                        <td>key</td>
+                        <td>
+                          the location's <IJS>key</IJS>, which is a unique
+                          identifier
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </Explanation>
+              </SideBySide>
+            </Subsection>
+            <Subsection tag="li" title="resolved" id="response-resolved">
+              <SideBySide>
+                <Explanation>
+                  <p>
+                    <IJS>resolved</IJS> is an object with the values resolved by
+                    the <IJS>match</IJS> functions.
+                  </p>
+                  <p>
+                    If a route isn't async, <IJS>resolved</IJS> will be{" "}
+                    <IJS>null</IJS>.
+                  </p>
+                </Explanation>
+                <CodeBlock>
+                  {`// attach resolved data to the response
+const user = {
+  name: 'User',
+  path: ':id',
+  match: {
+    data: ({ params, location }) => (
+      fetch(\`/api/users/$\{params.id\}\`)
+        .then(resp => JSON.parse(resp))
+    ),
+  },
+  response: ({ resolved }) => {
+    return {
+      data: resolved.data
+    };
+  }
+}`}
+                </CodeBlock>
+              </SideBySide>
+            </Subsection>
+            <Subsection tag="li" title="error" id="response-error">
+              <SideBySide>
+                <Explanation>
+                  <p>
+                    <IJS>error</IJS> is an error thrown by one of the route's{" "}
+                    <IJS>match</IJS> functions.
+                  </p>
+                </Explanation>
+                <CodeBlock>
+                  {`// check if any of a route's match functions threw
+const user = {
+  name: 'User',
+  path: ':id',
+  match: {
+    data: ({ params, location }) => (
+      fetch(\`/api/users/$\{params.id\}\`)
+        .then(resp => JSON.parse(resp))
+    ),
+  },
+  response: ({ error, resolved }) => {
+    if (error) {
+      return { error };
+    }
+    return {
+      data: resolved.data
+    };
+  }
+}`}
+                </CodeBlock>
+              </SideBySide>
+            </Subsection>
+          </ul>
+        </Subsection>
+
+        <Subsection title="children" id="children">
+          <SideBySide>
+            <Explanation>
+              <p>
+                An optional array of route objects for creating nested routes.
+                Any child routes will be matched relative to their parent
+                route's <IJS>path</IJS>. This means that if a parent route's{" "}
+                <IJS>path</IJS> string is <IJS>'one'</IJS> and a child route's{" "}
+                <IJS>path</IJS> string is <IJS>'two'</IJS>, the child will match
+                when the pathname is <IJS>'one/two'</IJS>.
+              </p>
+            </Explanation>
+            <CodeBlock>
+              {`// '/a/Coloring+Book/All+Night' will be matched
+// by the "Song" route, with the params
+// { album: 'Coloring+Book', title: 'All+Night' }
+{
+  name: 'Album',
+  path: 'a/:album',
+  children: [
+    {
+      name: 'Song',
+      path: ':title'
+    }
+  ]
+}`}
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection title="params" id="params">
+          <SideBySide>
+            <Explanation>
+              <p>
+                When <IJS>path-to-regexp</IJS> matches your paths, all
+                parameters are extracted as strings. If you prefer for some
+                route params to be other types, you can provide functions to
+                transform params using the <IJS>route.params</IJS> object.
+              </p>
+              <p>
+                Properties of the <IJS>route.params</IJS> object are the names
+                of params to be parsed. The paired value should be a function
+                that takes a string (the value from the <IJS>pathname</IJS>) and
+                returns a new value (transformed using the function you
+                provide).
+              </p>
+            </Explanation>
+            <CodeBlock>
+              {`const routes = [
+  {
+    name: 'Number',
+    path: 'number/:num',
+    params: {
+      num: n => parseInt(n, 10)
+    }
+  }
+]
+// when the user visits /number/1,
+// response.params will be { num: 1 }
+// instead of { num: "1" }`}
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection title="pathOptions" id="pathOptions">
+          <SideBySide>
+            <Explanation>
+              <p>
+                If you need to provide different path options than{" "}
+                <a href="https://github.com/pillarjs/path-to-regexp#usage">
+                  the defaults
+                </a>{" "}
+                used by <IJS>path-to-regexp</IJS>, you can provide them with a{" "}
+                <IJS>pathOptions</IJS> object.
+              </p>
+              <Note>
+                If a route has a children array property, it will{" "}
+                <strong>always</strong> have the <IJS>end</IJS> path option set
+                to false.
+              </Note>
+            </Explanation>
+          </SideBySide>
+        </Subsection>
+
+        <Subsection title="extra" id="extra">
+          <SideBySide>
+            <Explanation>
+              <p>
+                If you have any additional properties that you want attached to
+                a route, use the <IJS>extra</IJS> property. You will be able to
+                use <IJS>route.extra</IJS> in any custom route interactions.
+              </p>
+            </Explanation>
+            <CodeBlock>
+              {`const routes = [
+  {
+    name: 'A Route',
+    path: 'a-route',
+    extra: {
+      transition: 'fade'
+    }
+  },
+  {
+    name: 'B Route',
+    path: 'b-route',
+    extra: {
+      enter: 'slide-right'
+    }
+  }
+];`}
+            </CodeBlock>
+          </SideBySide>
+        </Subsection>
       </Section>
     </APIBlock>
   </BasePackage>

@@ -106,9 +106,13 @@ export default ({ name }) => (
 
           <p>
             The <IJS>response()</IJS> function will receive an object with a
-            number of properties. These are covered in detail in the{" "}
-            <Link to="Guide" params={{ slug: "routes" }} hash="response">
-              All About Routes
+            number of properties. These are covered in in the{" "}
+            <Link
+              to="Guide"
+              params={{ slug: "routes-and-responses" }}
+              hash="route-response"
+            >
+              Routes and Responses
             </Link>{" "}
             guide, but the only one we care about right now is{" "}
             <IJS>resolved</IJS>.

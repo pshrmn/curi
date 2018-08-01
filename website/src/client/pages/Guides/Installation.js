@@ -71,13 +71,5 @@ export default ({ name }) => (
         </Explanation>
       </SideBySide>
     </Section>
-
-    <h2>Next</h2>
-    <p>
-      <Link to="Guide" params={{ slug: "getting-started" }}>
-        Get started
-      </Link>{" "}
-      with Curi.
-    </p>
   </BaseGuide>
 );

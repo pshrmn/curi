@@ -6,10 +6,16 @@ const guides = [
     type: "basic"
   },
   {
-    name: "Getting Started",
-    slug: "getting-started",
+    name: "Creating a Router",
+    slug: "creating-a-router",
     description:
       "Learn the basic concepts that you'll need to know to setup your project",
+    type: "basic"
+  },
+  {
+    name: "Routes & Responses",
+    slug: "routes-and-responses",
+    description: "An introduction to how routes and responses work",
     type: "basic"
   },
   {
@@ -19,20 +25,8 @@ const guides = [
     type: "basic"
   },
   {
-    name: "Routes",
-    slug: "routes",
-    description: "Learn about Curi routes and their properties",
-    type: "basic"
-  },
-  {
-    name: "Responses",
-    slug: "responses",
-    description: "Learn about the objects created from matching routes",
-    type: "basic"
-  },
-  {
-    name: "Observers",
-    slug: "observers",
+    name: "Detecting Navigation",
+    slug: "detecting-navigation",
     description: "Learn how to use observers to react to navigation",
     type: "basic"
   },

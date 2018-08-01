@@ -249,8 +249,12 @@ const routes = [
             </p>
             <p>
               The{" "}
-              <Link to="Guide" params={{ slug: "routes" }} hash="match">
-                routes guide
+              <Link
+                to="Package"
+                params={{ package: "router" }}
+                hash="route-properties"
+              >
+                <IJS>@curi/router</IJS> route API documentation
               </Link>{" "}
               covers all of the route properties.
             </p>

@@ -21,13 +21,15 @@ export default ({ name }) => (
     <SideBySide>
       <Explanation>
         <p>
-          The Curi router uses an observer pattern. You give it an observer
-          function and when a response is created, that function will be called.
+          The Curi router uses an observer pattern to let an application know
+          when there is a new response. The main function for observers is to
+          use the new response to render the application, but other
+          functionality (like logging) can also be performed with observers.
         </p>
       </Explanation>
     </SideBySide>
 
-    <Section title="Observer Argument" id="argument">
+    <Section title="Observer Arguments" id="arguments">
       <SideBySide>
         <Explanation>
           <p>
@@ -35,7 +37,11 @@ export default ({ name }) => (
             <Link to="Package" params={{ package: "router" }} hash="properties">
               <IJS>router</IJS>
             </Link>,{" "}
-            <Link to="Guide" params={{ slug: "responses" }}>
+            <Link
+              to="Guide"
+              params={{ slug: "routes-and-responses" }}
+              hash="responses"
+            >
               <IJS>response</IJS>
             </Link>, and{" "}
             <Link to="Guide" params={{ slug: "navigation-objects" }}>
@@ -182,15 +188,5 @@ router.respond(logger, { observe: true });`}
         </SideBySide>
       </Subsection>
     </Section>
-
-    <div>
-      <h2>Next</h2>
-      <p>
-        Next, we will cover{" "}
-        <Link to="Guide" params={{ slug: "navigation-objects" }}>
-          navigation objects
-        </Link>.
-      </p>
-    </div>
   </BaseGuide>
 );

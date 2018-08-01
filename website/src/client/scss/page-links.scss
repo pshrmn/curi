@@ -28,8 +28,16 @@
   }
 
   .link-list {
-    li.with {
-      margin: 10px 0;
+    li {
+      border-bottom: 1px solid $border-gray;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      &.with {
+        margin: 10px 0;
+      }
     }
 
     p {
@@ -70,8 +78,8 @@
 @media only screen and (min-width: $mediumScreen) {
   .page-links {
     position: relative;
-    width: 200px;
-    min-width: 200px;
+    width: 225px;
+    min-width: 225;
     margin-right: 15px;
     order: 1;
 
