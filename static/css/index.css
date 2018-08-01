@@ -191,8 +191,12 @@ pre[class*="language-"] {
 .page-links .link-group {
   margin-bottom: 15px; }
 
-.page-links .link-list li.with {
-  margin: 10px 0; }
+.page-links .link-list li {
+  border-bottom: 1px solid #c7c7c7; }
+  .page-links .link-list li:last-child {
+    border-bottom: 0; }
+  .page-links .link-list li.with {
+    margin: 10px 0; }
 
 .page-links .link-list p {
   margin: 0; }
@@ -224,8 +228,8 @@ pre[class*="language-"] {
   @media only screen and (min-width: 641px) {
   .page-links {
     position: relative;
-    width: 200px;
-    min-width: 200px;
+    width: 225px;
+    min-width: 225;
     margin-right: 15px;
     -webkit-box-ordinal-group: 2;
         -ms-flex-order: 1;

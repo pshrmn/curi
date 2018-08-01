@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating a Router Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides/creating-a-router/">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Creating a Router</h1><div class="section" id="router-object"><h2>The Router<a class="header-link" href="/guides/creating-a-router/#router-object">#</a></h2><div class="side-by-side"><div class="explanation"><p>The router is the controller of the single-page application. A router is created using a <code class="inline-code language-javascript">history</code> object and a<!-- --> <code class="inline-code language-javascript">routes</code> array.</p></div><div class="code-block"><pre><code class="language-javascript">import { curi } from &#x27;@curi/router&#x27;;
+
+const history = Browser();
+const routes = [...];
+const router = curi(history, routes);</code></pre></div></div></div><div class="section" id="history-object"><h2>History<a class="header-link" href="/guides/creating-a-router/#history-object">#</a></h2><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">history</code> object manages navigation between locations within an application.</p><p>There are three types of <code class="inline-code language-javascript">history</code>, and which one you use depends on where your application is running.</p></div></div><ol><li><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">browser</code> history is used for applications running in a browser. If you use the <code class="inline-code language-javascript">browser</code> history, your application should be hosted on a server that can handle dynamic requests.</p></div><div class="code-block"><pre><code class="language-javascript">import Browser from &quot;@hickory/browser&quot;;
+const browserHistory = Browser();</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">hash</code> history is a fallback history for applications running in a browser, but are hosted on servers that can only handle requests for files that exist (static file servers).</p></div><div class="code-block"><pre><code class="language-javascript">import Hash from &quot;@hickory/hash&quot;;
+const hashHistory = Hash();</code></pre></div></div></li><li><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">in-memory</code> history is used for applications not running in a browser. For example, the <code class="inline-code language-javascript">in-memory</code> <!-- -->history is used on the server or in a React Native app.</p></div><div class="code-block"><pre><code class="language-javascript">import InMemory from &quot;@hickory/in-memory&quot;;
+const inMemoryHistory = InMemory();</code></pre></div></div></li></ol><div class="side-by-side"><div class="explanation"><p>If you are not familiar with how single-page applications interact with a server, this article should help:<!-- --> <a href="https://medium.com/@pshrmn/single-page-applications-and-the-server-32a23d67936">Single-Page Applications and the Server</a>.</p></div></div><div class="subsection" id="locations"><h3>Locations<a class="header-link" href="/guides/creating-a-router/#locations">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">history</code> object will map URLs into location objects. Only the <code class="inline-code language-javascript">pathname</code>, <code class="inline-code language-javascript">query</code> (search), and<!-- --> <code class="inline-code language-javascript">hash</code> segments are used; locations ignore the domain and protocol segments of a URL.</p><p>When matching loactions to routes, only the <code class="inline-code language-javascript">pathname</code> is used.</p></div><div class="code-block"><pre><code class="language-javascript">// https://www.example.com/page?key=value#trending
+location = {
+  pathname: &quot;/page&quot;,
+  query: &quot;?key=value&quot;
+  hash: &quot;trending&quot;
+}</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">query</code> value of a location is a string by default, but the history object can be configured to automatically parse it into an object.</p><p>You can choose whichever query parsing/stringifying package you prefer. Some of the most popular are<!-- --> <a href="http://npmjs.com/package/qs"><code class="inline-code language-javascript">qs</code></a>,<!-- --> <a href="http://npmjs.com/package/query-string"><code class="inline-code language-javascript">query-string</code></a>, and<!-- --> <a href="https://www.npmjs.com/package/querystring"><code class="inline-code language-javascript">querystring</code></a>.</p></div><div class="code-block"><pre><code class="language-javascript">import { parse, stringify } from &quot;qs&quot;;
+import Browser from &quot;@hickory/browser&quot;;
+
+const history = Browser({
+  query: { parse, stringify }
+});
+  
+// https://www.example.com/page?key=value#trending
+location = {
+  pathname: &quot;/page&quot;,
+  query: { key: &quot;value&quot; }
+  hash: &quot;trending&quot;
+}</code></pre></div></div></div></div><div class="section" id="routes-array"><h2>Routes<a class="header-link" href="/guides/creating-a-router/#routes-array">#</a></h2><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">routes</code> array defines the valid locations within an application.</p><p>Each route is an object that has a unique <code class="inline-code language-javascript">name</code> and a<!-- --> <code class="inline-code language-javascript">path</code> string, which defines what locations the route matches.</p><p><strong>Note:</strong> <code class="inline-code language-javascript">path</code> strings do not start with a slash.</p><p>Routes can be nested. A child route&#x27;s <code class="inline-code language-javascript">path</code> will build on the paths from any ancestor routes.</p><p>You will probably want to include a &quot;catch all&quot; route to match any &quot;invalid&quot; locations and render a 404 page. The path<!-- --> <code class="inline-code language-javascript">&quot;(.*)&quot;</code> matches every location.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;
+  },
+  {
+    name: &quot;Album&quot;,
+    path: &quot;photos/:albumID&quot;,
+    children: [
+      {
+        name: &quot;Photo&quot;,
+        // matches /photos/6789/12345
+        path: &quot;:photoID&quot;
+      }
+    ]
+  },
+  {
+    name: &quot;Not Found&quot;,
+    path: &quot;(.*)&quot;
+  }
+];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Why do routes have names? Curi lets you interact with routes using their names. For example, Curi provides a <code class="inline-code language-javascript">pathname</code> route interaction. When you want to navigate to a route within your application, you specify the name of the route to navigate to (and any params for the route) and Curi will create the URL for you.</p></div><div class="code-block"><pre><code class="language-javascript">const pathname = router.route.pathname(
+  &quot;Photo&quot;,
+  {
+    albumID: &quot;abcd&quot;,
+    photoId: &quot;98765&quot;
+  }
+);
+// pathname = &quot;/photos/abcd/98765&quot;</code></pre></div></div></div><div class="section" id="navigation"><h2>Navigation<a class="header-link" href="/guides/creating-a-router/#navigation">#</a></h2><div class="side-by-side"><div class="explanation"><p>The router receives locations from its <code class="inline-code language-javascript">history</code> object. This either happens from in-app navigation (e.g. clicking a link) or platform navigation (e.g. clicking the back button or typing URL in the address bar and hitting enter).</p><p>The router has a <code class="inline-code language-javascript">navigate()</code> method to let you navigate with code. The function takes the <code class="inline-code language-javascript">name</code> of the route you want to navigate to and any route <code class="inline-code language-javascript">params</code>. The navigation<!-- --> <code class="inline-code language-javascript">method</code> controls how the history changes locations, with the default behavior acting like clicking a link.</p></div><div class="code-block"><pre><code class="language-javascript">router.navigate({
+  name: &quot;Photo&quot;,
+  params: { albumID: 1357, photoID: 02468 },
+  hash: &quot;comments&quot;
+});
+// /photos/1357/02468#comments
+
+router.navigate({
+  name: &quot;Login&quot;,
+  state: { next: location.pathname },
+  // replace the current location with the Login location
+  // &quot;REPLACE&quot; is ideal for redirects
+  method: &quot;REPLACE&quot;
+});</code></pre></div></div></div><div class="section" id="async-route"><h2>Async Routes<a class="header-link" href="/guides/creating-a-router/#async-route">#</a></h2><div class="side-by-side"><div class="explanation"><p>A route can have functions that will be called when a route matches. These are grouped under the <code class="inline-code language-javascript">match</code> property.<!-- --> <code class="inline-code language-javascript">match</code> functions are called every time that a route matches. However, Curi also provides a <code class="inline-code language-javascript">once()</code> function to add some basic caching for functions that will re-use their result.</p><p>The resolved values from <code class="inline-code language-javascript">match</code> functions will be passed to the route&#x27;s <code class="inline-code language-javascript">response()</code> function through the<!-- --> <code class="inline-code language-javascript">resolved</code> property. The resolved values can be accessed using the <code class="inline-code language-javascript">match</code> functions&#x27; names.</p><p><code class="inline-code language-javascript">match</code> functions receive the matched route properties of a response and are expected to return a Promise.</p><p>If any <code class="inline-code language-javascript">match</code> function has an uncaught error, it will be available in the route&#x27;s <code class="inline-code language-javascript">response()</code> method as<!-- --> <code class="inline-code language-javascript">error</code>.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
+  {
+    name: &quot;User&quot;,
+    path: &quot;user/:id&quot;,
+    match: {
+      body() =&gt; import(&quot;./components/User&quot;),
+      data({ params })) =&gt; fetch(`api/user/${params.id}`)
+        .then(resp =&gt; JSON.parse(resp))
+    },
+    response({ resolved, error }) {
+      if (error) {
+        // handle the error
+      }
+      return {
+        body: resolved.body,
+        data: resolved.data
+      }
+    }
+  }
+];</code></pre></div></div></div><div class="section" id="observer"><h2>Observers<a class="header-link" href="/guides/creating-a-router/#observer">#</a></h2><div class="side-by-side"><div class="explanation"><p>When the router has created a response, it emits it to any observers. You can give the router an observer function through its<!-- --> <code class="inline-code language-javascript">respond()</code> method.</p><p>You usually do not have to call this yourself. Framework implementations will set observers up internally to automatically trigger re-renders for new responses. <code class="inline-code language-javascript">@curi/react</code> does this using the <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> component and<!-- --> <code class="inline-code language-javascript">@curi/vue</code> uses the <code class="inline-code language-javascript">CuriPlugin</code>.</p></div><div class="code-block"><pre><code class="language-javascript">const router = curi(history, routes);
+
+// { observe: true } sets up an observer function
+// to be called for every new response
+const stop = router.respond(({ response }) =&gt; {
+  console.log(&#x27;new response!&#x27;, response);
+}, { observe: true });
+// ...
+stop();
+// no longer observing</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>If you have any asynchronous routes (routes with <code class="inline-code language-javascript">match</code> <!-- -->functions), <code class="inline-code language-javascript">router.respond()</code> should be used to delay the initial render. If you don&#x27;t pass the<!-- --> <code class="inline-code language-javascript">{ observe: true }</code> option, the observer function will only be called once, which is perfect for delaying the initial render.</p></div><div class="code-block"><pre><code class="language-javascript">// wait for initial response to render with an
+// observer function that will only be called once
+router.respond(() =&gt; {
+  // safe to render async routes now
+});</code></pre></div></div></div><div class="section" id="rendering"><h2>Rendering<a class="header-link" href="/guides/creating-a-router/#rendering">#</a></h2><div class="side-by-side"><div class="explanation"><p>We&#x27;ve finally gotten to rendering. How this is done really varies based on how you are rendering, but the idea is always the same.</p><p>When the app loads and whenever there is navigation in the app, a new response is created. The application will use the properties of this new response, especially <code class="inline-code language-javascript">response.body</code>, to render new content.</p></div></div><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">@curi/react</code> uses a <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> with a render-invoked <code class="inline-code language-javascript">children</code> function that will be called whenever there is a new response.</p><p>In React applications, <code class="inline-code language-javascript">response.body</code> should be a React component, so rendering the application means creating an element from <code class="inline-code language-javascript">response.body</code>.</p><p>The<!-- --> <a href="/tutorial/react-basics">React Basics Tutorial</a> <!-- -->gets into more detail about how this works.</p></div><div class="code-block"><pre><code class="language-javascript">// React
+ReactDOM.render((
+  &lt;CuriProvider router={router}&gt;
+    {({ response }) =&gt; {
+      const { body:Body } = response;
+      return &lt;Body /&gt;;
+    }}
+  &lt;/CuriProvider&gt;
+), document.getElementById(&#x27;root&#x27;));</code></pre></div></div><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">@curi/vue</code> sets up reactive objects that update when there is a new response. <code class="inline-code language-jsx">&lt;<!-- -->component :is<!-- -->&gt;</code> can be used to render the <code class="inline-code language-javascript">body</code> component.</p><p>The<!-- --> <a href="/tutorial/react-basics">Vue Basics Tutorial</a> <!-- -->details how to use Vue and Curi.</p></div><div class="code-block"><pre><code class="language-javascript">// Vue
+Vue.use(CuriPlugin, { router });
+new Vue({
+  el: &#x27;#app&#x27;,
+  template: &#x27;&lt;app /&gt;&#x27;,
+  components: { app }
+});
+</code></pre></div></div><div class="side-by-side"><div class="explanation"><p><code class="inline-code language-javascript">@curi/svelte</code> uses the Svelte store and<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->svelte:component<!-- -->&gt;</code> to render.</p></div><div class="code-block"><pre><code class="language-javascript">// Svelte
+const store = curiStore(router);
+new app({ target, store });</code></pre></div></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" active" href="/guides/creating-a-router/">Creating a Router</a></li><li class="solo"><a class=" " href="/guides/routes-and-responses/">Routes &amp; Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/detecting-navigation/">Detecting Navigation</a></li><li class="solo"><a class=" " href="/guides/navigation-objects/">Navigation Objects</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native Tips</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
