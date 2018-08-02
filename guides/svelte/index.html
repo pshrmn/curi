@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Svelte Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides/creating-a-router/">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Svelte</h1><div class="section" id="store"><h2>Store Integration<a class="header-link" href="/guides/svelte/#store">#</a></h2><div class="side-by-side"><div class="explanation"><p>Curi relies on Svelte&#x27;s store to interface with an application. By adding the <code class="inline-code language-javascript">response</code> (plus the <code class="inline-code language-javascript">router</code> and<!-- --> <code class="inline-code language-javascript">navigation</code> objects) to the store, they are accessible throughout the application.</p><p><code class="inline-code language-javascript">@curi/svelte</code> provides a function to link the router to the store. This sets up an<!-- --> <a href="/guides/navigating/#observer">observer</a>, so that whenever there is a new response, the parts of your application that use the response will be re-rendered.</p></div><div class="code-block"><pre><code class="language-jsx">import store from &quot;svelte/store&quot;;
+import { curiStore } from &quot;@curi/svelte&quot;;
+
+import router from &quot;./router&quot;;
+
+const store = new Store();
+curiStore(router, store);</code></pre></div></div><div class="subsection" id="rendering-response"><h3>Rendering with the response<a class="header-link" href="/guides/svelte/#rendering-response">#</a></h3><div class="side-by-side"><div class="explanation"><p>Svelte allows you to render dynamic components using the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->svelte:component this<!-- -->&gt;</code> syntax. If you set Svelte components as the <code class="inline-code language-javascript">body</code> properties on your responses, you can combine <code class="inline-code language-jsx">&lt;<!-- -->svelte:component this<!-- -->&gt;</code> and<!-- --> <code class="inline-code language-javascript">response.body</code> to render the appropriate component for a<!-- --> <code class="inline-code language-javascript">response</code>.</p><p>A root component is a good place to perform general application layout, like menus, in addition to rendering the response&#x27;s<!-- --> <code class="inline-code language-javascript">body</code>.</p></div><div class="code-block"><pre><code class="language-html">&lt;template&gt;
+  &lt;header&gt;
+    &lt;NavLinks /&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;svelte:component this={$curi.response.body} /&gt;
+  &lt;/main&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import NavLinks from &quot;./NavLinks&quot;;
+  export default {
+    components: { NavLinks }
+  };
+&lt;/script&gt;</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>If your routes use an object to attach multiple components to a response, splitting them apart in computed properties may give your templates a cleaner look.</p><p>If you do attach multiple components to a response, please remember that you want every route to set the same <code class="inline-code language-javascript">body</code> <!-- -->shape. Otherwise, you&#x27;ll have to determine the shape and change how you render, which can quickly become messy.</p></div><div class="code-block"><pre><code class="language-html">&lt;script&gt;
+const routes = [
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;,
+    response() {
+      return {
+        body: {
+          main: HomeMain,
+          menu: HomeMenu
+        }
+      }
+    }
+  },
+  // ...
+];
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;header&gt;
+    &lt;svelte:component this={menu} /&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+  &lt;svelte:component this={main} /&gt;
+  &lt;/main&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    computed: {
+      main({ $curi }) {
+        return $curi.response.body.main;
+      },
+      menu({ $curi }) {
+        return $curi.response.body.menu;
+      }
+    }
+  }
+&lt;/script&gt;</code></pre></div></div></div></div><div class="section" id="navigating"><h2>Navigating<a class="header-link" href="/guides/svelte/#navigating">#</a></h2><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> component is used to navigate between routes within an application. When it renders in the DOM, it will render as an anchor (<code class="inline-code language-jsx">&lt;<!-- -->a<!-- -->&gt;</code>) element.</p><p>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">to</code> prop describes which route clicking the link should navigate to. If you pass an invalid route name, Curi will warn you.</p><p>If a route has any params (or if any of a route&#x27;s ancestors have params for nested routes), the <code class="inline-code language-javascript">params</code> prop is used to pass these to the <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code>.</p></div><div class="code-block"><pre><code class="language-html">&lt;template&gt;
+  &lt;nav&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;Link to=&quot;Home&quot;&gt;Home&lt;/Link&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;Link to=&quot;About&quot;&gt;About&lt;/Link&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;Link to=&quot;User&quot; params={{ id: &#x27;blue&#x27; }}&gt;Blue&lt;/Link&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import { Link } from &quot;@curi/svelte&quot;;
+
+  export default {
+    components: { Link }
+  };
+&lt;/script&gt;</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> also takes <code class="inline-code language-javascript">hash</code>, <code class="inline-code language-javascript">query</code>, and <code class="inline-code language-javascript">state</code> props to attach their values to the location that will be navigated to.</p></div><div class="code-block"><pre><code class="language-jsx">&lt;Link to=&quot;Home&quot; hash=&quot;details&quot;&gt;Home&lt;/Link&gt;
+// renders
+&lt;a href=&quot;/#details&quot;&gt;Home&lt;/a&gt;</code></pre></div></div></div><div class="side-by-side"><div class="explanation"><p>Please check out the full<!-- --> <a href="/packages/@curi/svelte/#API"><code class="inline-code language-javascript">@curi/svelte</code></a> <!-- -->API documentation to see every component that the package provides.</p></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/creating-a-router/">Creating a Router</a></li><li class="solo"><a class=" " href="/guides/routes-and-responses/">Routes &amp; Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/navigating-and-observing/">Navigating &amp; Observing</a></li></ul></li><li class="link-group"><h3>rendering</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/react/">React</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li><li class="solo"><a class=" " href="/guides/vue/">Vue</a></li><li class="solo"><a class=" active" href="/guides/svelte/">Svelte</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
