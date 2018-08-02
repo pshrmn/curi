@@ -25,17 +25,40 @@ const guides = [
     type: "basic"
   },
   {
-    name: "Detecting Navigation",
-    slug: "detecting-navigation",
-    description: "Learn how to use observers to react to navigation",
+    name: "Navigating & Observing",
+    slug: "navigating-and-observing",
+    description:
+      "Learn how to programmatically navigate and use observers to detect navigation",
     type: "basic"
+  },
+
+  {
+    name: "React",
+    slug: "react",
+    description: "Learn the basics of using Curi and React",
+    type: "rendering"
   },
   {
-    name: "Navigation Objects",
-    slug: "navigation-objects",
-    description: "Learn about the objects created for matching routes",
-    type: "basic"
+    name: "React Native",
+    slug: "react-native",
+    description: "Learn the basics of using Curi and React Native",
+    type: "rendering"
   },
+  /*
+  {
+    name: "Vue",
+    slug: "vue",
+    description: "Learn the basics of using Curi and Vue",
+    type: "rendering"
+  },
+  {
+    name: "Svelte",
+    slug: "svelte",
+    description: "Learn the basics of using Curi and Svelte",
+    type: "rendering"
+  },
+  */
+
   {
     name: "Route Interactions",
     slug: "route-interactions",
@@ -66,12 +89,6 @@ const guides = [
     name: "Accessibility",
     slug: "accessibility",
     description: "Make your site inclusive to users who use screen readers.",
-    type: "advanced"
-  },
-  {
-    name: "React Native Tips",
-    slug: "react-native",
-    description: "Tips for using Curi with React Native",
     type: "advanced"
   },
   {

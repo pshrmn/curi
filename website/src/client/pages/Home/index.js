@@ -57,7 +57,7 @@ const history = Browser();
 const routes = [
   { name: 'Home', path: '', ... },
   { name: 'User', path: 'u/:userID', ... },
-  // ...
+  // more routes...
   { name: 'Not Found', path: '(.*)', ... }
 ];
 
