@@ -4,3 +4,7 @@ pre[class*="language-"] {
   margin: 0;
   background: $purple;
 }
+
+:not(pre) > code[class*="language-"] {
+  white-space: nowrap;
+}

@@ -44,7 +44,6 @@ const guides = [
     description: "Learn the basics of using Curi and React Native",
     type: "rendering"
   },
-  /*
   {
     name: "Vue",
     slug: "vue",
@@ -57,7 +56,6 @@ const guides = [
     description: "Learn the basics of using Curi and Svelte",
     type: "rendering"
   },
-  */
 
   {
     name: "Route Interactions",

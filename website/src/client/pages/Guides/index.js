@@ -30,8 +30,8 @@ export default {
   // rendering
   react: ReactRendering,
   "react-native": ReactNativeRendering,
-  // vue: VueRendering,
-  // svelte: SvelteRendering,
+  vue: VueRendering,
+  svelte: SvelteRendering,
 
   // advanced
   "route-interactions": RouteInteractions,

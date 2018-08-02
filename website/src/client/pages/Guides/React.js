@@ -200,7 +200,7 @@ export default () => (
               renders a new response.
             </p>
             <p>
-              You can read some more about accessilibity in the{" "}
+              You can read some more about accessibility in the{" "}
               <Link to="Guide" params={{ slug: "accessibility" }}>
                 accessibility
               </Link>{" "}
