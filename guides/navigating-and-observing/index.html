@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navigating & Observing Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides/creating-a-router/">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Navigating &amp; Observing</h1><div class="section" id="navigation"><h2>Navigation<a class="header-link" href="/guides/navigating-and-observing/#navigation">#</a></h2><div class="side-by-side"><div class="explanation"><p>The history object that you provide when creating a router is responsible for tracking all navigation within your application. Navigation can be triggered a variety of ways.</p><p>There first type is &quot;external&quot; navigation, meaning it comes from outside of the application. For a website, this would be navigating by entering a URL in the address bar or by pressing the browser&#x27;s forward/back buttons.</p><p>The second type of navigation is &quot;internal&quot;, where you use code to navigate to a new location.</p><p>This guide is only going to discuss how to perform internal navigation since that is the only type that you need to perform with code.</p></div><div class="code-block"><pre><code class="language-javascript">import Browser from &quot;@hickory/browser&quot;;
+import { curi } from &quot;@curi/router&quot;;
+
+import routes from &quot;./routes&quot;;
+
+// this history object is responsible for tracking navigation
+const history = Browser();
+
+const router = curi(history, routes);</code></pre></div></div><div class="subsection" id="with-history"><h3>Navigation With History<a class="header-link" href="/guides/navigating-and-observing/#with-history">#</a></h3><div class="side-by-side"><div class="explanation"><p>Locations are stored in what is essentially an array (the exact mechanism varies by history type). An index is used to keep track of which location in the array is the current location.</p><div class="note"><strong>Note:</strong> <!-- -->With the browser and hash histories, you cannot actually access the array of locations/index because doing so could cause security issues.</div></div><div class="code-block"><pre><code class="language-javascript">// array of locations
+[
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/two&quot; },
+  { pathname: &quot;/three&quot; }
+]
+// index = 2, current location = { pathname: &quot;/three&quot; }</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>There are three ways to change locations: popping, pushing, and replacing.</p></div></div><div class="side-by-side"><div class="explanation"><p>Popping means that you change the index to another (valid) index in the array. Popping is performed by specifying how many locations forward (positive numbers) or backward (negative numbers) you want to go. When you click a browser&#x27;s back button, that is essentially popping by negative one.</p><p>The history object&#x27;s <code class="inline-code language-javascript">go()</code> function is used for popping between locations.</p></div><div class="code-block"><pre data-line="8,15"><code class="language-javascript">locations = [
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/two&quot; },
+  { pathname: &quot;/three&quot; }
+]
+index = 2
+
+history.go(-2)
+
+locations = [
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/two&quot; },
+  { pathname: &quot;/three&quot; }
+]
+index = 0</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Pushing adds a new location after the current location in the array. Pushing is destructive because if there were any locations after the current location, they are lost when you push a new location.</p><p>The history object&#x27;s <code class="inline-code language-javascript">navigate()</code> method is used for pushing new locations. In order to ensure that a location is pushed, the <code class="inline-code language-javascript">&quot;PUSH&quot;</code> argument should be passed to the method call.</p></div><div class="code-block"><pre data-line="8,12,14"><code class="language-javascript">locations = [
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/two&quot; },
+  { pathname: &quot;/three&quot; }
+]
+index = 0
+
+history.navigate(&quot;/four&quot;, &quot;PUSH&quot;)
+
+locations = [
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/four&quot; }
+]
+index = 1</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Replacing replaces the location at the current index with a new location. When you replace the current location, it has no effect on locations after the current one.</p><p>The history object&#x27;s <code class="inline-code language-javascript">navigate()</code> method is used for replacing locations. In order to ensure that a location is replaced, the <code class="inline-code language-javascript">&quot;REPLACE&quot;</code> argument should be passed to the method call.</p></div><div class="code-block"><pre data-line="8,13"><code class="language-javascript">locations = [
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/two&quot; },
+  { pathname: &quot;/three&quot; }
+]
+index = 2
+
+history.navigate(&quot;/four&quot;, &quot;REPLACE&quot;)
+
+locations = [
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/two&quot; },
+  { pathname: &quot;/four&quot; }
+]
+index = 2</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">history.navigate()</code> method has one other way of navigating, which is also its default method. This method is called <code class="inline-code language-javascript">&quot;ANCHOR&quot;</code> because it simulates how clicking an anchor in a non-single-page application works.</p><p>Anchor navigation is a hybrid of pushing and replacing. If you attempt to navigate to the same location as the current location (same <code class="inline-code language-javascript">pathname</code>, <code class="inline-code language-javascript">query</code>, and <code class="inline-code language-javascript">hash</code>), then the current location will be replaced. If you attempt to navigate to a new location, it will be pushed.</p><p>Unless you have a reason to explicitly push/replace, anchor navigation is what you should use for navigation.</p></div><div class="code-block"><pre data-line="8,18,25,27"><code class="language-javascript">locations = [
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/two&quot; },
+  { pathname: &quot;/three&quot; }
+]
+index = 2
+
+history.navigate(&quot;/three&quot;)
+
+// same location, so nothing changes
+locations = [
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/two&quot; },
+  { pathname: &quot;/three&quot; }
+]
+index = 2
+
+history.navigate(&quot;/four&quot;)
+
+// new location is pushed
+locations = [
+  { pathname: &quot;/one&quot; },
+  { pathname: &quot;/two&quot; },
+  { pathname: &quot;/three&quot; },
+  { pathname: &quot;/four&quot; }
+]
+index = 3</code></pre></div></div></div><div class="subsection" id="with-router"><h3>Navigation with the Router<a class="header-link" href="/guides/navigating-and-observing/#with-router">#</a></h3><div class="side-by-side"><div class="explanation"><p>In the above examples, navigation is done using URL pathnames, but one of the principles of Curi is that you shouldn&#x27;t have to write URLs yourself. To help with this, the router has its own<!-- --> <code class="inline-code language-javascript">navigate()</code> method.</p><p><code class="inline-code language-javascript">router.navigate()</code> takes an object with the<!-- --> <code class="inline-code language-javascript">name</code> of the route to navigate to. If the route (or any of its ancestors) requires<code class="inline-code language-javascript">params</code>, they should also be provided through the object.</p><p><code class="inline-code language-javascript">query</code>, <code class="inline-code language-javascript">hash</code>, and <code class="inline-code language-javascript">state</code> properties can also be provided to pass any of those location details.</p><p><code class="inline-code language-javascript">router.navigate()</code> does anchor style (<code class="inline-code language-javascript">&quot;ANCHOR&quot;</code>) navigation by default, but if you want to do<!-- --> <code class="inline-code language-javascript">&quot;PUSH&quot;</code>/<code class="inline-code language-javascript">&quot;REPLACE&quot;</code> navigation, you can provide the type with the <code class="inline-code language-javascript">method</code> property.</p></div><div class="code-block"><pre><code class="language-javascript">router.navigate({
+  name: &quot;User&quot;,
+  params: { id: 1423 }
+});
+
+// replace the current location with the Login route
+router.navigte({
+  name: &quot;Login&quot;,
+  state: { next: &quot;/profile&quot; }
+  method: &quot;REPLACE&quot;
+});</code></pre></div></div></div></div><div class="section" id="detecting-navigation"><h2>Detecting Navigation<a class="header-link" href="/guides/navigating-and-observing/#detecting-navigation">#</a></h2><div class="side-by-side"><div class="explanation"><p>The Curi router uses an observer pattern to let registered functions know when there is a new response. The registered functions can then do whatever they want with this information. The main function for observers is to use the new response to render the application, but other functionality (like logging) can also be performed with observers.</p></div></div><div class="subsection" id="observer"><h3>Observer Functions<a class="header-link" href="/guides/navigating-and-observing/#observer">#</a></h3><div class="side-by-side"><div class="explanation"><p>When observer functions are called, they are passed an object with three properties:<!-- --> <a href="/packages/@curi/router/#properties"><code class="inline-code language-javascript">router</code></a>,<!-- --> <a href="/guides/routes-and-responses/#responses"><code class="inline-code language-javascript">response</code></a>, and<!-- --> <a href="/guides/navigation-objects/"><code class="inline-code language-javascript">navigation</code></a>. Which objects/properties you use depends on what the response handler is doing.</p></div><div class="code-block"><pre><code class="language-javascript">function responseHandler({
+  router,
+  response,
+  navigation
+}) {
+  // ...
+}</code></pre></div></div></div><div class="subsection" id="registering"><h3>Registering Observers<a class="header-link" href="/guides/navigating-and-observing/#registering">#</a></h3><div class="side-by-side"><div class="explanation"><p>Observer functions are provided to the router through its<!-- --> <code class="inline-code language-javascript">respond()</code> function. By default, functions passed to<!-- --> <code class="inline-code language-javascript">respond()</code> will only be called one time. However, we can pass a configuration object as <code class="inline-code language-javascript">respond()</code>&#x27;s second argument and tell it to call the function for all responses.</p><p>When registering a function to continuously observe, a function will be returned to let you stop observing. You should rarely need to do this, but it can be useful for memory management if you are adding and removing lots of observers.</p></div><div class="code-block"><pre><code class="language-javascript">// fn will only be called one time
+router.respond(fn);
+
+// obs will be called for every new response
+const stop = router.respond(fn, { observe: true });</code></pre></div></div></div><div class="subsection" id="use-cases"><h3>Use Cases<a class="header-link" href="/guides/navigating-and-observing/#use-cases">#</a></h3><p>What should you use observers for?</p><div class="subsection" id="setup"><h3>Setup<a class="header-link" href="/guides/navigating-and-observing/#setup">#</a></h3><div class="side-by-side"><div class="explanation"><p>If any of the routes in an application have <code class="inline-code language-javascript">match</code> <!-- -->functions, responses for them are creating asynchronously. When the application first renders, if the router matches an async route, the response isn&#x27;t immediately ready to use. To deal with this, you can use an observer to render once the initial response is ready.</p><p>A setup function only needs to be called once, so you can call<!-- --> <code class="inline-code language-javascript">router.respond()</code> without any options.</p><div class="note"><strong>Note:</strong> <!-- -->In most applications, waiting for the initial response is the only time you may need to write observers yourself.</div></div><div class="code-block"><pre><code class="language-jsx">function setup({ router }) {
+  ReactDOM.render((
+    &lt;CuriProvider router={router}&gt;
+      {({ response }) =&gt; &lt;response.body /&gt;}
+    &lt;/CuriProvider&gt;
+  ), document.getElementById(&#x27;root&#x27;));
+}
+
+router.respond(setup);</code></pre></div></div></div><div class="subsection" id="rendering"><h3>Rendering<a class="header-link" href="/guides/navigating-and-observing/#rendering">#</a></h3><div class="side-by-side"><div class="explanation"><p>Rendering libraries need to know when there is a new response so that they can re-render the application.</p><p>The Curi rendering packages (<a href="/packages/@curi/react/"><code class="inline-code language-javascript">@curi/react</code></a>,<!-- --> <a href="/packages/@curi/react-native/"><code class="inline-code language-javascript">@curi/react-native</code></a>,<!-- --> <a href="/packages/@curi/vue/"><code class="inline-code language-javascript">@curi/vue</code></a>, and<!-- --> <a href="/packages/@curi/svelte/"><code class="inline-code language-javascript">@curi/svelte</code></a>) setup an observer internally so that they can automatically re-render.</p><p>If you are using vanilla JavaScript to render your application or you are writing your own framework implementation,<!-- --> <code class="inline-code language-javascript">router.respond()</code> with the<!-- --> <code class="inline-code language-javascript">{ observe: true }</code> option is what you would use to re-render new responses.</p></div><div class="code-block"><pre><code class="language-javascript">function observer({ response }) {
+  // let the app know there is a new response
+}
+
+router.respond(observer, { observe: true });</code></pre></div></div></div><div class="subsection" id="side-effects"><h3>Side Effects<a class="header-link" href="/guides/navigating-and-observing/#side-effects">#</a></h3><div class="side-by-side"><div class="explanation"><p>Side effects are observers that are provided to the router at creation instead of by calling <code class="inline-code language-javascript">router.respond()</code>. These can be useful for tasks that are not rendering related as well as for tasks that need to be performed after a render has completed.</p><p>The<!-- --> <a href="/packages/@curi/side-effect-title/"><code class="inline-code language-javascript">@curi/side-effect-title</code></a> <!-- -->package provides a side effect that will use<!-- --> <code class="inline-code language-javascript">response.title</code> to set the page&#x27;s<!-- --> <code class="inline-code language-javascript">document.title</code>.</p><p>With single-page applications, clicking on links wish hashes won&#x27;t always scroll to the matching element in the page. The<!-- --> <a href="/packages/@curi/side-effect-scroll/"><code class="inline-code language-javascript">@curi/side-effect-scroll</code></a> <!-- -->package adds this behavior by scrolling the page to the element that matches the new response&#x27;s hash (<code class="inline-code language-javascript">response.location.hash</code>) after the new response has rendered.</p><p>If you need to add logging to your application, you could write your own observer to do this. Your observer can either be added as a side effect when the router is constructed or later using<!-- --> <code class="inline-code language-javascript">router.respond()</code>.</p></div><div class="code-block"><pre><code class="language-javascript">function logger({ response }) {
+  loggingAPI.add(response.location);
+}
+
+// as a side-effect
+const router = curi(history, routes, {
+  sideEffects: [{ fn: logger }]
+});
+
+// with respond
+router.respond(logger, { observe: true });</code></pre></div></div></div></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/creating-a-router/">Creating a Router</a></li><li class="solo"><a class=" " href="/guides/routes-and-responses/">Routes &amp; Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" active" href="/guides/navigating-and-observing/">Navigating &amp; Observing</a></li></ul></li><li class="link-group"><h3>rendering</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/react/">React</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
