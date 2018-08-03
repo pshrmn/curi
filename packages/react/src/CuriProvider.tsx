@@ -41,9 +41,9 @@ class CuriProvider extends React.Component<
     ) as RemoveObserver;
   }
 
-  componentWillReceiveProps(nextProps: CuriProviderProps) {
+  componentDidUpdate(prevProps: CuriProviderProps) {
     if (process.env.NODE_ENV !== "production") {
-      if (nextProps.router !== this.props.router) {
+      if (prevProps.router !== this.props.router) {
         console.warn(
           `The "router" prop passed to <CuriProvider> cannot be changed. If you need to update the router's routes, use router.replaceRoutes().`
         );
