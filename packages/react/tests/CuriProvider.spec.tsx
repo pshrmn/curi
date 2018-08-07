@@ -7,8 +7,6 @@ import InMemory from "@hickory/in-memory";
 import CuriProvider from "../src/CuriProvider";
 import { Curious } from "../src/Context";
 
-import { Response, Navigation } from "@curi/router";
-
 describe("<CuriProvider>", () => {
   let node;
   const routes = [{ name: "Home", path: "" }, { name: "About", path: "about" }];
@@ -22,31 +20,44 @@ describe("<CuriProvider>", () => {
   });
 
   describe("router prop", () => {
-    it("warns if attempting to pass a new router prop", () => {
+    it("can switch observers when given a new router", () => {
       const history = InMemory();
-      const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
-      const router2 = curi(history, [{ name: "Catch All", path: "(.*)" }]);
+      const router = curi(history, [
+        {
+          name: "Catch All",
+          path: "(.*)",
+          response() {
+            return { data: "one" };
+          }
+        }
+      ]);
+      const router2 = curi(history, [
+        {
+          name: "Catch All",
+          path: "(.*)",
+          response() {
+            return { data: "two" };
+          }
+        }
+      ]);
+
       ReactDOM.render(
-        <CuriProvider router={router}>{() => null}</CuriProvider>,
+        <CuriProvider router={router}>
+          {({ response }) => <div>{response.data}</div>}
+        </CuriProvider>,
         node
       );
 
-      const realWarn = console.warn;
-      const fakeWarn = (console.warn = jest.fn());
-
-      expect(fakeWarn.mock.calls.length).toBe(0);
+      expect(node.textContent).toBe("one");
 
       ReactDOM.render(
-        <CuriProvider router={router2}>{() => null}</CuriProvider>,
+        <CuriProvider router={router2}>
+          {({ response }) => <div>{response.data}</div>}
+        </CuriProvider>,
         node
       );
 
-      expect(fakeWarn.mock.calls.length).toBe(1);
-      expect(fakeWarn.mock.calls[0][0]).toBe(
-        `The "router" prop passed to <CuriProvider> cannot be changed. If you need to update the router's routes, use router.replaceRoutes().`
-      );
-
-      console.warn = realWarn;
+      expect(node.textContent).toBe("two");
     });
   });
 
