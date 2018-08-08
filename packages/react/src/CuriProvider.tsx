@@ -13,18 +13,10 @@ export type CuriRenderFn = (props: Emitted) => React.ReactNode;
 
 export interface CuriProviderProps {
   children: CuriRenderFn;
-  router?: CuriRouter;
+  router: CuriRouter;
 }
 
-export interface CuriProviderState {
-  response: Response;
-  navigation: Navigation;
-}
-
-class CuriProvider extends React.Component<
-  CuriProviderProps,
-  CuriProviderState
-> {
+class CuriProvider extends React.Component<CuriProviderProps> {
   stopResponding: () => void;
 
   constructor(props: CuriProviderProps) {
@@ -33,22 +25,25 @@ class CuriProvider extends React.Component<
   }
 
   componentDidMount() {
-    this.stopResponding = this.props.router.respond(
+    this.setupRespond(this.props.router);
+  }
+
+  componentDidUpdate(prevProps: CuriProviderProps) {
+    if (prevProps.router !== this.props.router) {
+      if (this.stopResponding) {
+        this.stopResponding();
+      }
+      this.setupRespond(this.props.router);
+    }
+  }
+
+  setupRespond(router: CuriRouter) {
+    this.stopResponding = router.respond(
       ({ response, navigation }: Emitted) => {
-        this.setState({ response, navigation });
+        this.setState({});
       },
       { observe: true, initial: false }
     ) as RemoveObserver;
-  }
-
-  componentWillReceiveProps(nextProps: CuriProviderProps) {
-    if (process.env.NODE_ENV !== "production") {
-      if (nextProps.router !== this.props.router) {
-        console.warn(
-          `The "router" prop passed to <CuriProvider> cannot be changed. If you need to update the router's routes, use router.replaceRoutes().`
-        );
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -59,11 +54,11 @@ class CuriProvider extends React.Component<
   }
 
   render() {
-    const router = this.props.router;
-    const { response, navigation } = this.state;
+    const { router, children } = this.props;
+    const { response, navigation } = router.current();
     const value = { router, response, navigation };
 
-    return <Provider value={value}>{this.props.children(value)}</Provider>;
+    return <Provider value={value}>{children(value)}</Provider>;
   }
 }
 
