@@ -1,6 +1,11 @@
 const webpack = require("webpack");
 const path = require("path");
 const MiniCSS = require("mini-css-extract-plugin");
+const SWPrecache = require("sw-precache-webpack-plugin");
+
+const SITE_ROOT = path.join(__dirname, "gh-pages");
+const STATIC_ROOT = path.join(SITE_ROOT, "static");
+const SITE_URL = "https://curi.js.org/";
 
 const config = {
   context: path.join(__dirname, "src", "client"),
@@ -8,9 +13,9 @@ const config = {
     index: ["./scss/index.scss", "./index.js"]
   },
   output: {
-    path: path.join(__dirname, "gh-pages", "static"),
+    path: STATIC_ROOT,
     filename: "js/bundle.js",
-    chunkFilename: "js/[name].bundle.js",
+    chunkFilename: "js/[name]-[hash].bundle.js",
     publicPath: "/static/"
   },
   externals: {
@@ -42,6 +47,16 @@ const config = {
   plugins: [
     new MiniCSS({
       filename: "css/[name].css"
+    }),
+    new SWPrecache({
+      cacheId: "curi-documentation-website",
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filepath: path.join(SITE_ROOT, "service-worker.js"),
+      minify: false,
+      navigateFallback: SITE_URL + "index.html",
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      staticFileGlobs: [path.join(STATIC_ROOT, "img", "*.png")],
+      mergeStaticsConfig: true
     })
   ]
 };

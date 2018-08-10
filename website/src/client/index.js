@@ -30,3 +30,9 @@ router.respond(() => {
     document.getElementById("root")
   );
 });
+
+(function() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
+  }
+})();
