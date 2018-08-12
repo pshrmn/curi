@@ -18,6 +18,7 @@ export interface CuriProviderProps {
 
 class CuriProvider extends React.Component<CuriProviderProps> {
   stopResponding: () => void;
+  isMounted: boolean;
 
   constructor(props: CuriProviderProps) {
     super(props);
@@ -25,6 +26,7 @@ class CuriProvider extends React.Component<CuriProviderProps> {
   }
 
   componentDidMount() {
+    this.isMounted = true;
     this.setupRespond(this.props.router);
   }
 
@@ -40,7 +42,9 @@ class CuriProvider extends React.Component<CuriProviderProps> {
   setupRespond(router: CuriRouter) {
     this.stopResponding = router.respond(
       ({ response, navigation }: Emitted) => {
-        this.setState({});
+        if (this.isMounted) {
+          this.setState({});
+        }
       },
       { observe: true, initial: false }
     ) as RemoveObserver;
@@ -48,6 +52,7 @@ class CuriProvider extends React.Component<CuriProviderProps> {
 
   componentWillUnmount() {
     /* istanbul ignore else */
+    this.isMounted = false;
     if (this.stopResponding) {
       this.stopResponding();
     }

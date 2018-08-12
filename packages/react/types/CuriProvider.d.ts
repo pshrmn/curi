@@ -7,6 +7,7 @@ export interface CuriProviderProps {
 }
 declare class CuriProvider extends React.Component<CuriProviderProps> {
     stopResponding: () => void;
+    isMounted: boolean;
     constructor(props: CuriProviderProps);
     componentDidMount(): void;
     componentDidUpdate(prevProps: CuriProviderProps): void;
