@@ -41,6 +41,7 @@ function renderFullPage(html, title, debug) {
   </head>
   <body>
     <div id="root">${html}</div>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign,IntersectionObserver,IntersectionObserverEntry"></script>
     <script src="https://unpkg.com/react@16.3.1/umd/react.${
       debug ? "development" : "production.min"
     }.js"></script>
