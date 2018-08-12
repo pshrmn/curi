@@ -1,5 +1,6 @@
 ## Next
 
+* `<Prefetch>` verifies that `IntersectionObserver` exists on the `window` object.
 * `<CuriProvider>` can accept a new `router` prop.
 
 ## 1.0.0-beta.29

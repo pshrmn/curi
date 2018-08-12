@@ -69,11 +69,13 @@ const router = curi(history, routes, {
       : React.createRef();
 
     /* istanbul ignore else */
-    if (typeof window !== "undefined" && IntersectionObserver) {
-      this.obs = new IntersectionObserver(entries => {
+    // @ts-ignore
+    if (typeof window !== "undefined" && window.IntersectionObserver) {
+      // @ts-ignore
+      this.obs = new window.IntersectionObserver(entries => {
         const ref = this.intersectionRef.current;
         const { router, match, which } = this.props;
-        entries.forEach(entry => {
+        entries.forEach((entry: IntersectionObserverEntry) => {
           if (ref === entry.target && entry.intersectionRatio > 0) {
             this.obs.unobserve(ref);
             this.obs.disconnect();
