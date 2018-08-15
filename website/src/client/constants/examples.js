@@ -44,12 +44,12 @@ const examples = {
       slug: "breadcrumbs",
       description: "Render breadcrumb links to ancestor routes"
     },
-    {
+    /*{
       name: "Data Loading",
       category: "react",
       slug: "data-loading",
       description: "Display a loading bar while waiting for data to load"
-    },
+    },*/
     {
       name: "Modal Routes",
       category: "react",

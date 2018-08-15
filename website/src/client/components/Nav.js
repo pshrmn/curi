@@ -1,27 +1,27 @@
 import React from "react";
-import PrefetchActiveLink from "./PrefetchActiveLink";
+import ActiveLink from "./ActiveLink";
 
 export default () => (
   <nav>
     <ul>
       <li>
-        <PrefetchActiveLink to="Home" className="home-link">
+        <ActiveLink to="Home" className="home-link">
           Curi
-        </PrefetchActiveLink>
+        </ActiveLink>
       </li>
       <li>
-        <PrefetchActiveLink to="Packages">Packages</PrefetchActiveLink>
+        <ActiveLink to="Packages">Packages</ActiveLink>
       </li>
       <li>
-        <PrefetchActiveLink to="Guide" params={{ slug: "creating-a-router" }}>
+        <ActiveLink to="Guide" params={{ slug: "creating-a-router" }}>
           Guides
-        </PrefetchActiveLink>
+        </ActiveLink>
       </li>
       <li>
-        <PrefetchActiveLink to="Tutorials">Tutorials</PrefetchActiveLink>
+        <ActiveLink to="Tutorials">Tutorials</ActiveLink>
       </li>
       <li>
-        <PrefetchActiveLink to="Examples">Examples</PrefetchActiveLink>
+        <ActiveLink to="Examples">Examples</ActiveLink>
       </li>
       <li>
         <a href="https://github.com/pshrmn/curi">GitHub</a>

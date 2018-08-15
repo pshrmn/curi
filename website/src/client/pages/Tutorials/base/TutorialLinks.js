@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "@curi/react";
 
-import PrefetchActiveLink from "../../../components/PrefetchActiveLink";
+import ActiveLink from "../../../components/ActiveLink";
 import TUTORIAL_API from "../../../constants/tutorials";
 
 const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
     {tutorials.map(g => (
       <li key={g.title} className="solo">
-        <PrefetchActiveLink to="Tutorial" params={{ slug: g.slug }}>
+        <ActiveLink to="Tutorial" params={{ slug: g.slug }}>
           {g.title}
-        </PrefetchActiveLink>
+        </ActiveLink>
       </li>
     ))}
   </ul>
