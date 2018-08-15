@@ -1,17 +1,19 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require("webpack");
+const path = require("path");
+const { VueLoaderPlugin } = require("vue-loader");
 
 const config = {
-  entry: './src/index.js',
+  mode: "production",
+  entry: "./src/index.js",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public', 'js')
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "public", "js")
   },
   externals: {
-    vue: 'Vue'
+    vue: "Vue"
   },
   resolve: {
-    extensions: ['.js', '.vue']
+    extensions: [".js", ".vue"]
   },
   module: {
     rules: [
@@ -20,7 +22,7 @@ const config = {
         exclude: /(node_modules)/,
         use: [
           {
-            loader: 'babel-loader'
+            loader: "babel-loader"
           }
         ]
       },
@@ -28,12 +30,13 @@ const config = {
         test: /\.vue$/,
         use: [
           {
-            loader: 'vue-loader'
+            loader: "vue-loader"
           }
         ]
       }
     ]
-  }
+  },
+  plugins: [new VueLoaderPlugin()]
 };
 
 module.exports = config;

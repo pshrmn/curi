@@ -1,14 +1,15 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require("webpack");
+const path = require("path");
 
 const config = {
-  entry: './src/index.js',
+  mode: "production",
+  entry: "./src/index.js",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public', 'js')
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "public", "js")
   },
   resolve: {
-    extensions: ['.js', '.html']
+    extensions: [".js", ".html"]
   },
   module: {
     rules: [
@@ -17,7 +18,7 @@ const config = {
         exclude: /(node_modules)/,
         use: [
           {
-            loader: 'babel-loader'
+            loader: "babel-loader"
           }
         ]
       },
@@ -26,7 +27,7 @@ const config = {
         exclude: /(node_modules)/,
         use: [
           {
-            loader: 'svelte-loader',
+            loader: "svelte-loader",
             options: {
               store: true
             }

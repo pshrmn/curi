@@ -5,7 +5,10 @@ export default [
     name: "Home",
     path: "",
     match: {
-      body: () => import("./pages/Home").then(module => module.default),
+      body: () =>
+        import(/* webpackChunkName: "Home" */ "./pages/Home").then(
+          module => module.default
+        ),
       movies: () => movies()
     },
     response({ resolved }) {
@@ -19,7 +22,10 @@ export default [
     name: "Movie",
     path: "movie/:id",
     match: {
-      body: () => import("./pages/Movie").then(module => module.default),
+      body: () =>
+        import(/* webpackChunkName: "Movie" */ "./pages/Movie").then(
+          module => module.default
+        ),
       movie: ({ params }) => movie(params.id)
     },
     response({ error, resolved }) {
@@ -38,7 +44,10 @@ export default [
     name: "Not Found",
     path: "(.*)",
     match: {
-      body: () => import("./pages/NotFound").then(module => module.default)
+      body: () =>
+        import(/* webpackChunkName: "NotFound" */ "./pages/NotFound").then(
+          module => module.default
+        )
     },
     response({ resolved }) {
       return {

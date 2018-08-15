@@ -1,7 +1,9 @@
 const webpack = require("webpack");
 const path = require("path");
+const { VueLoaderPlugin } = require("vue-loader");
 
 const config = {
+  mode: "production",
   entry: "./src/index.js",
   output: {
     filename: "bundle.js",
@@ -32,9 +34,18 @@ const config = {
             loader: "vue-loader"
           }
         ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "css-loader"
+          }
+        ]
       }
     ]
-  }
+  },
+  plugins: [new VueLoaderPlugin()]
 };
 
 module.exports = config;

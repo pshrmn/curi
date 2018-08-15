@@ -1,4 +1,3 @@
 {
-  "presets": [ "env" ],
-  "plugins": [ "transform-export-extensions" ]
+  "presets": [ "@babel/preset-env" ]
 }

@@ -1,8 +1,7 @@
 {
-  "presets": [ "env" ],
+  "presets": [ "@babel/preset-env" ],
   "plugins": [
-    "syntax-dynamic-import",
-    "transform-export-extensions",
-    "transform-object-rest-spread"
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-object-rest-spread"
   ]
 }

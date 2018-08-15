@@ -10,11 +10,12 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^6.4.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "webpack": "^2.4.1"
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
+    "@babel/preset-react": "^7.0.0-rc.1",
+    "babel-loader": "^8.0.0-beta.4",
+    "webpack": "^4.16.5",
+    "webpack-command": "^0.4.1"
   },
   "dependencies": {
     "@curi/react": "^1.0.0-beta.29",
