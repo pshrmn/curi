@@ -1,13 +1,7 @@
 import React from "react";
 import { Provider } from "./Context";
 
-import {
-  CuriRouter,
-  Emitted,
-  Response,
-  Navigation,
-  RemoveObserver
-} from "@curi/router";
+import { CuriRouter, Emitted, RemoveObserver } from "@curi/router";
 
 export type CuriRenderFn = (props: Emitted) => React.ReactNode;
 
@@ -18,7 +12,7 @@ export interface CuriProviderProps {
 
 class CuriProvider extends React.Component<CuriProviderProps> {
   stopResponding: () => void;
-  isMounted: boolean;
+  removed: boolean;
 
   constructor(props: CuriProviderProps) {
     super(props);
@@ -26,7 +20,6 @@ class CuriProvider extends React.Component<CuriProviderProps> {
   }
 
   componentDidMount() {
-    this.isMounted = true;
     this.setupRespond(this.props.router);
   }
 
@@ -41,8 +34,8 @@ class CuriProvider extends React.Component<CuriProviderProps> {
 
   setupRespond(router: CuriRouter) {
     this.stopResponding = router.respond(
-      ({ response, navigation }: Emitted) => {
-        if (this.isMounted) {
+      () => {
+        if (!this.removed) {
           this.setState({});
         }
       },
@@ -51,8 +44,8 @@ class CuriProvider extends React.Component<CuriProviderProps> {
   }
 
   componentWillUnmount() {
+    this.removed = true;
     /* istanbul ignore else */
-    this.isMounted = false;
     if (this.stopResponding) {
       this.stopResponding();
     }
