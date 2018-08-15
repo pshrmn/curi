@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Prefetch } from "@curi/react";
+import { Link } from "@curi/react";
 
 const albums = [1, 2, 3, 4, 5];
 
@@ -11,13 +11,9 @@ const NavLinks = () => (
       </li>
       {albums.map(i => (
         <li key={i}>
-          <Prefetch match={{ name: "Album", params: { id: i } }}>
-            {ref => (
-              <Link to="Album" params={{ id: i }} ref={ref}>
-                Album {i}
-              </Link>
-            )}
-          </Prefetch>
+          <Link to="Album" params={{ id: i }}>
+            Album {i}
+          </Link>
         </li>
       ))}
     </ul>
