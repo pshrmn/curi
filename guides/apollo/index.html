@@ -211,29 +211,6 @@ const router = curi(history, routes, {
 router.route.prefetch(
   &quot;Example&quot;,
   { params: { id: 2 }}
-);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p><a href="/packages/@curi/react%20/"><code class="inline-code language-javascript">@curi/react</code></a> <!-- -->provides a <code class="inline-code language-jsx">&lt;<!-- -->Prefetch<!-- -->&gt;</code> component that will automatically prefetch the data for a route once an element becomes visible in the page.</p><p><code class="inline-code language-jsx">&lt;<!-- -->Prefetch<!-- -->&gt;</code> relies on you attaching a <code class="inline-code language-javascript">ref</code> to the element that should trigger prefetching. This uses the<!-- --> <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver"><code class="inline-code language-javascript">IntersectionObserver</code></a> <!-- -->API to observe the element you attach the ref to.</p><p>Prefetching behavior can also be attached to other events, such as hovering over an element, but <code class="inline-code language-jsx">&lt;<!-- -->Prefetch<!-- -->&gt;</code> is specifically meant for prefetching when an element becomes visible.</p></div><div class="code-block"><pre><code class="language-jsx">import { Prefetch, Link } from &quot;@curi/react&quot;;
-            
-// don&#x27;t forget to attach the ref to a component!
-const PrefetchLink = ({ to, params, ...rest }) =&gt; (
-  &lt;Prefetch match={{ name: to, params }}&gt;
-    {ref =&gt; (
-      &lt;Link to={to} params={params} ref={ref} {...rest} /&gt;
-    )}
-  &lt;/Prefetch&gt;
-);
-
-// usage
-&lt;PrefetchLink to=&quot;Example&quot; params={{ id: 3 }}&gt;
-  Example 3
-&lt;/Prefetch&gt;</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>If you want to get really fancy, <code class="inline-code language-jsx">&lt;<!-- -->Prefetch<!-- -->&gt;</code> also lets you access the prefetched data with the second argument to its render-invoked <code class="inline-code language-javascript">children</code> function. You can use this to update your UI to indicate that the data has loaded or even use the loaded data with some filler content.</p></div><div class="code-block"><pre><code class="language-jsx">const PrefetchLink = ({ to, params, children, ...rest }) =&gt; (
-  &lt;Prefetch match={{ name: to, params }}&gt;
-    {(ref, resolved) =&gt; (
-      &lt;Link to={to} params={params} ref={ref} {...rest}&gt;
-        {children}
-        {resolved ? &lt;Loading /&gt; : &lt;Loaded /&gt;}
-      &lt;/Link&gt;
-    )}
-  &lt;/Prefetch&gt;
 );</code></pre></div></div></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/creating-a-router/">Creating a Router</a></li><li class="solo"><a class=" " href="/guides/routes-and-responses/">Routes &amp; Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/navigating-and-observing/">Navigating &amp; Observing</a></li></ul></li><li class="link-group"><h3>rendering</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/react/">React</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li><li class="solo"><a class=" " href="/guides/vue/">Vue</a></li><li class="solo"><a class=" " href="/guides/svelte/">Svelte</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" active" href="/guides/apollo/">Apollo Integration</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign,IntersectionObserver,IntersectionObserverEntry"></script>
     <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
