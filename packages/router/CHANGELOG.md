@@ -1,3 +1,7 @@
+## Next
+
+* Emit a new response after calling `replaceRoutes()`.
+
 ## 1.0.0-beta.37
 
 * Default export is moved to the `curi` named export.
