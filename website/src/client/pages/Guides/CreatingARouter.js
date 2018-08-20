@@ -44,8 +44,8 @@ const router = curi(history, routes);`}
             within an application.
           </p>
           <p>
-            There are three types of <IJS>history</IJS>, and which one you use
-            depends on where your application is running.
+            There are three types of <IJS>history</IJS> to choose from; which
+            one you use depends on where your application is running.
           </p>
         </Explanation>
       </SideBySide>

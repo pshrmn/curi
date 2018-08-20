@@ -20,8 +20,8 @@ export default () => (
       <Explanation>
         <p>Curi cares about routing, not how you render.</p>
         <p>
-          Rendering is left to whatever rendering library you are using.
-          Currently, there are packages to support using Curi with{" "}
+          Rendering depends on the UI library that you are using. Currently,
+          there are packages to support using Curi with{" "}
           <Link to="Package" params={{ package: "react" }}>
             React
           </Link>{" "}

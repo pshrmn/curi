@@ -43,7 +43,7 @@ export default ({ name }) => (
  src="https://unpkg.com/@hickory/browser/dist/hickory-browser.min.js"
 ></script>
 <script
- src="https://unpkg.com/@curi/router/dist/curi.min.js"
+ src="https://unpkg.com/@curi/router/dist/curi-router.min.js"
 ></script>`}
       </CodeBlock>
     </SideBySide>
