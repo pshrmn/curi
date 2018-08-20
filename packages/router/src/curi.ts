@@ -53,6 +53,10 @@ export default function createRouter(
         routeInteractions[interaction.name] = interaction.get;
         registerRoutes(routes, interaction);
       });
+
+    // assign navigation response handler
+    // this will be re-called if router.replaceRoutes() is called
+    history.respondWith(navigationHandler);
   }
 
   let observers: Array<Observer> = [];
@@ -207,7 +211,6 @@ export default function createRouter(
 
   // now that everything is defined, actually do the setup
   setupRoutesAndInteractions(routeArray);
-  history.respondWith(navigationHandler);
 
   return router;
 }

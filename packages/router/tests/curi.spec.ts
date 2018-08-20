@@ -464,6 +464,32 @@ describe("curi", () => {
         expect(router.route.pathname(n)).toBeDefined();
       });
     });
+
+    it("re-calls response handler for new routes", () => {
+      const history = InMemory({
+        locations: ["/admin"]
+      });
+
+      const nonAuthRoutes = [
+        { name: "Home", path: "" },
+        { name: "Not Found", path: "(.*)" }
+      ];
+      const authRoutes = [
+        { name: "Home", path: "" },
+        { name: "Admin", path: "admin" },
+        { name: "Not Found", path: "(.*)" }
+      ];
+
+      const router = curi(history, nonAuthRoutes);
+
+      const { response: initialResponse } = router.current();
+      expect(initialResponse.name).toBe("Not Found");
+
+      router.replaceRoutes(authRoutes);
+
+      const { response: replacedResponse, navigation } = router.current();
+      expect(replacedResponse.name).toBe("Admin");
+    });
   });
 
   describe("respond", () => {
