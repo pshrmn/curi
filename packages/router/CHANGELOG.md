@@ -1,5 +1,6 @@
 ## Next
 
+* Updates exported types.
 * Emit a new response after calling `replaceRoutes()`.
 
 ## 1.0.0-beta.37

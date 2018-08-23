@@ -1,7 +1,12 @@
 import React from "react";
 import { Provider } from "./Context";
 
-import { CuriRouter, Emitted, RemoveObserver } from "@curi/router";
+import {
+  CuriRouter,
+  CurrentResponse,
+  Emitted,
+  RemoveObserver
+} from "@curi/router";
 
 export type CuriRenderFn = (props: Emitted) => React.ReactNode;
 
@@ -10,13 +15,37 @@ export interface CuriProviderProps {
   router: CuriRouter;
 }
 
-class CuriProvider extends React.Component<CuriProviderProps> {
+export interface CuriProviderState {
+  router: CuriRouter;
+  emitted: CurrentResponse;
+}
+
+class CuriProvider extends React.Component<
+  CuriProviderProps,
+  CuriProviderState
+> {
   stopResponding: () => void;
   removed: boolean;
 
   constructor(props: CuriProviderProps) {
     super(props);
-    this.state = this.props.router.current();
+    this.state = {
+      router: this.props.router,
+      emitted: this.props.router.current()
+    };
+  }
+
+  static getDerivedStateFromProps(
+    nextProps: CuriProviderProps,
+    prevState: CuriProviderState
+  ) {
+    if (nextProps.router !== prevState.router) {
+      return {
+        router: nextProps.router,
+        emitted: nextProps.router.current()
+      };
+    }
+    return null;
   }
 
   componentDidMount() {
@@ -34,9 +63,11 @@ class CuriProvider extends React.Component<CuriProviderProps> {
 
   setupRespond(router: CuriRouter) {
     this.stopResponding = router.respond(
-      () => {
+      ({ response, navigation }) => {
         if (!this.removed) {
-          this.setState({});
+          this.setState({
+            emitted: { response, navigation }
+          });
         }
       },
       { observe: true, initial: false }
@@ -53,7 +84,7 @@ class CuriProvider extends React.Component<CuriProviderProps> {
 
   render() {
     const { router, children } = this.props;
-    const { response, navigation } = router.current();
+    const { response, navigation } = this.state.emitted;
     const value = { router, response, navigation };
 
     return <Provider value={value}>{children(value)}</Provider>;

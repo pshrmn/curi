@@ -28,5 +28,6 @@ export {
   Observer,
   Emitted,
   RemoveObserver,
-  Navigation
+  Navigation,
+  CurrentResponse
 } from "./curi";
