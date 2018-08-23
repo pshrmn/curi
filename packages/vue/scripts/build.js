@@ -43,10 +43,10 @@ rollupBuild([
   ],
 
   [
-    "<script> file",
+    "UMD",
     {
       ...base,
-      format: "iife",
+      format: "umd",
       file: "dist/curi-vue.js",
       external: ["vue"]
     },
@@ -54,10 +54,10 @@ rollupBuild([
   ],
 
   [
-    "<script> min file",
+    "minimized UMD",
     {
       ...base,
-      format: "iife",
+      format: "umd",
       file: "dist/curi-vue.min.js",
       external: ["vue"],
       uglify: true

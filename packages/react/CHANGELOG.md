@@ -1,5 +1,6 @@
 ## Next
 
+* Switch script builds from IIFE to UMD
 * Prepare `<CuriProvider>` for Suspense support by using `getDerivedStateFromProps()` to store subscription source (the router).
 * Remove `<Prefetch>`.
 * `<CuriProvider>` can accept a new `router` prop.

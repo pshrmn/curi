@@ -44,10 +44,10 @@ rollupBuild([
   ],
 
   [
-    "<script> file",
+    "UMD",
     {
       ...base,
-      format: "iife",
+      format: "umd",
       file: "dist/curi-react.js",
       external: ["react"]
     },
@@ -55,10 +55,10 @@ rollupBuild([
   ],
 
   [
-    "<script> min file",
+    "minimized UMD",
     {
       ...base,
-      format: "iife",
+      format: "umd",
       file: "dist/curi-react.min.js",
       external: ["react"],
       uglify: true
