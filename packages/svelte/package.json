@@ -39,7 +39,7 @@
     "@babel/plugin-external-helpers": "^7.0.0-beta.49",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
-    "@curi/router": "^1.0.0-beta.37",
+    "@curi/router": "^1.0.0-beta.38",
     "@hickory/in-memory": "^1.0.0-beta.5",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.0.0",

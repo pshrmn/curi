@@ -1,6 +1,6 @@
 {
   "name": "@curi/side-effect-aria-live",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "Curi side effect to announce location changes using aria-live",
   "main": "dist/curi-side-effect-aria-live.common.js",
   "module": "dist/curi-side-effect-aria-live.es.js",
@@ -34,7 +34,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.37"
+    "@curi/router": "^1.0.0-beta.38"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

@@ -1,3 +1,7 @@
+## 1.0.0-beta.9
+
+* Fix bad `@curi/route-active` dependency.
+
 ## 1.0.0-beta.8
 
 * `<Link>` is now a pure component.

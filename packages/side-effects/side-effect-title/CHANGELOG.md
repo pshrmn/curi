@@ -1,3 +1,7 @@
+## 1.0.0-beta.11
+
+- Switch script builds from IIFE to UMD
+
 ## 1.0.0-beta.10
 
 * Side effect function returns an `Observer`.

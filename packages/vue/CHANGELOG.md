@@ -1,6 +1,7 @@
-## Next
+## 1.0.0-beta.21
 
-- Switch script builds from IIFE to UMD
+* Fix bad `@curi/route-active` dependency.
+* Switch script builds from IIFE to UMD.
 
 ## 1.0.0-beta.20
 

@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.10
 
 - Switch script builds from IIFE to UMD
 

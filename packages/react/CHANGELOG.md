@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.30
 
 * Switch script builds from IIFE to UMD
 * Prepare `<CuriProvider>` for Suspense support by using `getDerivedStateFromProps()` to store subscription source (the router).

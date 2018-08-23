@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/async-nav-react",
   "private": true,
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Display a spinner while navigation is happening",
   "main": "index.js",
   "scripts": {
@@ -29,9 +29,9 @@
     "webpack-command": "^0.4.1"
   },
   "dependencies": {
-    "@curi/react": "^1.0.0-beta.29",
-    "@curi/route-prefetch": "^1.0.0-beta.11",
-    "@curi/router": "^1.0.0-beta.37",
+    "@curi/react": "^1.0.0-beta.30",
+    "@curi/route-prefetch": "^1.0.0-beta.12",
+    "@curi/router": "^1.0.0-beta.38",
     "@hickory/browser": "^1.0.0-beta.5",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",

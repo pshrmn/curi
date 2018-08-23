@@ -30,6 +30,6 @@
     "typescript": "^3.0.1"
   },
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.37"
+    "@curi/router": "^1.0.0-beta.38"
   }
 }
