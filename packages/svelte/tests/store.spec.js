@@ -2,7 +2,8 @@ import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 import { Store } from "svelte/store";
 
-import curiStore from "../src/store";
+// resolved by jest
+import { curiStore } from "@curi/svelte";
 
 describe("curiStore", () => {
   let history, router;
@@ -42,7 +43,7 @@ describe("curiStore", () => {
   describe("new store", () => {
     it("can create a new store", () => {
       const store = curiStore(router);
-      expect(store).toBeInstanceOf(Store);
+      expect(store.get().router).toBe(router);
     });
 
     it("initializes with current response/navigation", done => {

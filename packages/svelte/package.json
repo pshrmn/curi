@@ -11,11 +11,11 @@
   ],
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "node ./scripts/build",
+    "build": "BABEL_ENV=build node ./scripts/build",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
     "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
-    "test": "jest"
+    "test": "jest && TEST_ENV=cjs jest"
   },
   "repository": {
     "type": "git",

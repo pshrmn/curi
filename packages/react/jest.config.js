@@ -1,3 +1,15 @@
+let mappedModule;
+switch (process.env.TEST_ENV) {
+  case "cjs":
+    mappedModule = "<rootDir>/dist/curi-react.common.js";
+    break;
+  case "cjs":
+    mappedModule = "<rootDir>/dist/curi-react.js";
+    break;
+  default:
+    mappedModule = "<rootDir>/src/index";
+}
+
 module.exports = {
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
   testMatch: ["**/tests/**/*.spec.tsx"],
@@ -11,5 +23,8 @@ module.exports = {
   },
   setupFiles: ["<rootDir>/tests/setup/rAF.js"],
   collectCoverageFrom: ["src/*.tsx"],
-  testURL: "http://localhost"
+  testURL: "http://localhost",
+  moduleNameMapper: {
+    "@curi/react": mappedModule
+  }
 };

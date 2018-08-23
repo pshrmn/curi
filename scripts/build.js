@@ -6,14 +6,6 @@ const buildConfig = require("./rollupConfig");
 
 const buildStats = {};
 
-function buildCommands(cmds) {
-  return Object.keys(cmds)
-    .map(key => {
-      return `-${key} ${cmds[key]}`;
-    })
-    .join(" ");
-}
-
 async function rollupBuild(name, config, extraEnv) {
   Object.keys(extraEnv).forEach(key => {
     process.env[key] = extraEnv[key];

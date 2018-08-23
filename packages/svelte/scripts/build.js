@@ -30,7 +30,7 @@ rollupBuild([
       file: "dist/curi-svelte.es.js",
       safeModules: false
     },
-    { NODE_ENV: "development", BABEL_ENV: "build" }
+    { NODE_ENV: "development" }
   ],
   [
     "CommonJS",
@@ -40,7 +40,7 @@ rollupBuild([
       file: "dist/curi-svelte.common.js",
       safeModules: false
     },
-    { NODE_ENV: "development", BABEL_ENV: "build" }
+    { NODE_ENV: "development" }
   ]
 ]);
 

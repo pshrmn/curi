@@ -2,7 +2,9 @@ import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
-import CuriPlugin from "../src/plugin";
+
+// resolved by jest
+import { CuriPlugin } from "@curi/vue";
 
 describe("curi-focus directive", () => {
   let vueWrapper;

@@ -1,3 +1,12 @@
+let mappedModule;
+switch (process.env.TEST_ENV) {
+  case "cjs":
+    mappedModule = "<rootDir>/dist/curi-react-native.common.js";
+    break;
+  default:
+    mappedModule = "<rootDir>/src/index";
+}
+
 module.exports = {
   preset: "react-native",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
@@ -13,7 +22,8 @@ module.exports = {
     }
   },
   moduleNameMapper: {
-    "^React$": "<rootDir>/../../node_modules/react"
+    "^React$": "<rootDir>/../../node_modules/react",
+    "@curi/react-native": mappedModule
   },
   collectCoverageFrom: ["src/*.tsx"]
 };

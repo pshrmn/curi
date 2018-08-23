@@ -5,8 +5,9 @@ import { Simulate } from "react-dom/test-utils";
 import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 
-import Link from "../src/Link";
-import CuriProvider from "../src/CuriProvider";
+// resolved by jest
+import { CuriProvider, Link } from "@curi/react";
+
 
 describe("<Link>", () => {
   let node;

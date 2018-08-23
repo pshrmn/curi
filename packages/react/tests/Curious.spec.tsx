@@ -4,8 +4,8 @@ import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 
-import { Curious } from "../src/Context";
-import CuriProvider from "../src/CuriProvider";
+// resolved by jest
+import { CuriProvider, Curious } from "@curi/react";
 
 describe("<Curious>", () => {
   let node;

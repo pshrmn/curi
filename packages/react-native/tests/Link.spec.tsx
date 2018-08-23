@@ -5,9 +5,10 @@ import renderer from "react-test-renderer";
 
 import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
-import { CuriProvider } from "@curi/react";
 import { TouchableHighlight, Text } from "react-native";
-import Link from "../src/Link";
+
+// resolved by Jest
+import { CuriProvider, Link } from "@curi/react-native";
 
 import { NavType } from "@hickory/root";
 

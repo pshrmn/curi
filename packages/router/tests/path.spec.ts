@@ -1,6 +1,8 @@
 import "jest";
-import { curi } from "../src";
 import InMemory from "@hickory/in-memory";
+
+// resolved by jest
+import { curi } from "@curi/router";
 
 describe("route.pathOptions matching", () => {
   describe("default options", () => {

@@ -1,3 +1,15 @@
+let mappedModule;
+switch (process.env.TEST_ENV) {
+  case "cjs":
+    mappedModule = "<rootDir>/dist/curi-vue.common.js";
+    break;
+  case "umd":
+    mappedModule = "<rootDir>/dist/curi-vue.js";
+    break;
+  default:
+    mappedModule = "<rootDir>/src/index";
+}
+
 module.exports = {
   moduleFileExtensions: ["ts", "js"],
   testMatch: ["**/tests/**/*.spec.ts"],
@@ -10,7 +22,8 @@ module.exports = {
     }
   },
   moduleNameMapper: {
-    "^vue$": "<rootDir>/node_modules/vue/dist/vue.common.js"
+    "^vue$": "<rootDir>/node_modules/vue/dist/vue.common.js",
+    "@curi/vue": mappedModule
   },
   testURL: "http://localhost"
 };
