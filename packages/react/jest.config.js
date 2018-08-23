@@ -3,6 +3,9 @@ switch (process.env.TEST_ENV) {
   case "cjs":
     mappedModule = "<rootDir>/dist/curi-react.common.js";
     break;
+  case "cjs":
+    mappedModule = "<rootDir>/dist/curi-react.js";
+    break;
   default:
     mappedModule = "<rootDir>/src/index";
 }

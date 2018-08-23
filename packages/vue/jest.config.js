@@ -3,6 +3,9 @@ switch (process.env.TEST_ENV) {
   case "cjs":
     mappedModule = "<rootDir>/dist/curi-vue.common.js";
     break;
+  case "umd":
+    mappedModule = "<rootDir>/dist/curi-vue.js";
+    break;
   default:
     mappedModule = "<rootDir>/src/index";
 }
