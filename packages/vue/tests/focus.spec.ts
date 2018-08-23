@@ -47,7 +47,7 @@ describe("curi-focus directive", () => {
       const main = document.querySelector("main");
       expect(document.activeElement).toBe(main);
       done();
-    }, 5);
+    }, 25);
   });
 
   it("does not re-focus for regular re-renders", done => {
@@ -84,8 +84,8 @@ describe("curi-focus directive", () => {
       setTimeout(() => {
         expect(stolenFocus).toBe(input);
         done();
-      }, 5);
-    }, 5);
+      }, 25);
+    }, 25);
   });
 
   it("re-focuses for new response re-renders", done => {
@@ -122,8 +122,8 @@ describe("curi-focus directive", () => {
         const postNavFocus = document.activeElement;
         expect(postNavFocus).toBe(wrapper);
         done();
-      }, 5);
-    }, 5);
+      }, 25);
+    }, 25);
   });
 
   it("isn't affected by prop changes", done => {
@@ -163,7 +163,7 @@ describe("curi-focus directive", () => {
         expect(wrapper.className).toBe("yes");
         done();
       });
-    }, 5);
+    }, 25);
   });
 
   describe("tabIndex", () => {
@@ -211,7 +211,7 @@ describe("curi-focus directive", () => {
         expect(document.activeElement).toBe(input);
         console.warn = realWarn;
         done();
-      }, 5);
+      }, 25);
     });
   });
 });
