@@ -37,6 +37,22 @@ export default function createRouter(
   let routes: Array<InternalRoute> = [];
   const routeInteractions: Interactions = {};
 
+  // the navigation currently being processed
+  let activeNavigation: PendingNavigation | undefined;
+
+  // the last finish response & navigation
+  const mostRecent: CurrentResponse = {
+    response: null,
+    navigation: null
+  };
+
+  // router.navigate() hooks
+  let cancelCallback: (() => void) | undefined;
+  let finishCallback: (() => void) | undefined;
+
+  let observers: Array<Observer> = [];
+  const oneTimers: Array<Observer> = [];
+
   function setupRoutesAndInteractions(
     routeArray: Array<RouteDescriptor>
   ): void {
@@ -59,62 +75,14 @@ export default function createRouter(
     history.respondWith(navigationHandler);
   }
 
-  let observers: Array<Observer> = [];
-  const oneTimers: Array<Observer> = [];
-
-  const mostRecent: CurrentResponse = {
-    response: null,
-    navigation: null
-  };
-
-  function respond(
-    fn: Observer,
-    options?: RespondOptions
-  ): RemoveObserver | void {
-    const { observe = false, initial = true } = options || {};
-
-    if (observe) {
-      observers.push(fn);
-      if (mostRecent.response && initial) {
-        fn.call(null, { ...mostRecent, router });
-      }
-      return () => {
-        observers = observers.filter(obs => {
-          return obs !== fn;
-        });
-      };
-    } else {
-      if (mostRecent.response && initial) {
-        fn.call(null, { ...mostRecent, router });
-      } else {
-        oneTimers.push(fn);
-      }
-    }
-  }
-
-  function emit(response: Response, navigation: Navigation): void {
-    // store for current() and respond()
-    mostRecent.response = response;
-    mostRecent.navigation = navigation;
-
-    const resp: Emitted = { response, navigation, router };
-
-    [...observers, ...oneTimers.splice(0), ...sideEffects].forEach(fn => {
-      fn(resp);
-    });
-  }
-
-  let activeResponse: PendingNavigation | undefined;
-  let cancelCallback: (() => void) | undefined;
-  let finishCallback: (() => void) | undefined;
   function navigationHandler(pendingNav: PendingNavigation): void {
-    if (activeResponse) {
-      activeResponse.cancel(pendingNav.action);
-      activeResponse.cancelled = true;
+    if (activeNavigation) {
+      activeNavigation.cancel(pendingNav.action);
+      activeNavigation.cancelled = true;
     }
-    activeResponse = pendingNav;
+    activeNavigation = pendingNav;
 
-    const navigation = {
+    const navigation: Navigation = {
       action: pendingNav.action,
       previous: mostRecent.response
     };
@@ -130,41 +98,73 @@ export default function createRouter(
           "can be used to match locations with no other matching route."
       );
       pendingNav.finish();
-      cancelCallback = undefined;
-      finishCallback = undefined;
+      if (finishCallback) {
+        finishCallback();
+      }
+      resetCallbacks();
+      activeNavigation = undefined;
       return;
     }
 
     if (match.route.sync) {
-      pendingNav.finish();
-      const response = finishResponse(match as Match, routeInteractions, null);
-      emitAndRedirect(response, navigation);
+      finalizeResponseAndEmit(match as Match, pendingNav, navigation, null);
     } else {
       resolveMatchedRoute(match as Match).then((resolved: ResolveResults) => {
         if (pendingNav.cancelled) {
           return;
         }
-        pendingNav.finish();
-        const response = finishResponse(
+        finalizeResponseAndEmit(
           match as Match,
-          routeInteractions,
+          pendingNav,
+          navigation,
           resolved
         );
-        emitAndRedirect(response, navigation);
       });
     }
   }
 
-  function emitAndRedirect(response: Response, navigation: Navigation) {
-    activeResponse = undefined;
+  function finalizeResponseAndEmit(
+    match: Match,
+    pending: PendingNavigation,
+    navigation: Navigation,
+    resolved: ResolveResults | null
+  ) {
+    const response = finishResponse(match, routeInteractions, resolved);
+    pending.finish();
+    emitImmediate(response, navigation);
+    activeNavigation = undefined;
+  }
+
+  function resetCallbacks() {
     cancelCallback = undefined;
+    finishCallback = undefined;
+  }
+
+  function callObservers(emitted: Emitted) {
+    observers.forEach(fn => {
+      fn(emitted);
+    });
+  }
+
+  function callOneTimersAndSideEffects(emitted: Emitted) {
+    [...oneTimers.splice(0), ...sideEffects].forEach(fn => {
+      fn(emitted);
+    });
+  }
+
+  function emitImmediate(response: Response, navigation: Navigation) {
     if (finishCallback) {
       finishCallback();
-      finishCallback = undefined;
     }
+    resetCallbacks();
 
     if (!response.redirectTo || emitRedirects) {
-      emit(response, navigation);
+      // store for current() and respond()
+      mostRecent.response = response;
+      mostRecent.navigation = navigation;
+
+      callObservers({ response, navigation, router });
+      callOneTimersAndSideEffects({ response, navigation, router });
     }
 
     if (response.redirectTo !== undefined) {
@@ -175,7 +175,27 @@ export default function createRouter(
   const router: CuriRouter = {
     route: routeInteractions,
     history,
-    respond,
+    respond(fn: Observer, options?: RespondOptions): RemoveObserver | void {
+      const { observe = false, initial = true } = options || {};
+
+      if (observe) {
+        observers.push(fn);
+        if (mostRecent.response && initial) {
+          fn.call(null, { ...mostRecent, router });
+        }
+        return () => {
+          observers = observers.filter(obs => {
+            return obs !== fn;
+          });
+        };
+      } else {
+        if (mostRecent.response && initial) {
+          fn.call(null, { ...mostRecent, router });
+        } else {
+          oneTimers.push(fn);
+        }
+      }
+    },
     replaceRoutes: setupRoutesAndInteractions,
     current() {
       return mostRecent;
@@ -183,8 +203,9 @@ export default function createRouter(
     navigate(details: NavigationDetails): void {
       if (cancelCallback) {
         cancelCallback();
-        finishCallback = undefined;
       }
+      resetCallbacks();
+
       let { name, params, hash, query, state, method = "ANCHOR" } = details;
       const pathname =
         name != null
