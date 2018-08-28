@@ -34,17 +34,16 @@
   "license": "MIT",
   "dependencies": {
     "@hickory/root": "^1.0.0",
-    "path-to-regexp": "^2.1.0",
-    "rollup": "^0.65.0"
+    "path-to-regexp": "^2.1.0"
   },
   "devDependencies": {
-    "@hickory/in-memory": "1.0.0",
+    "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
     "@types/node": "^8.0.53",
     "jest": "^22.1.1",
     "prettier": "^1.10.2",
     "rimraf": "^2.6.2",
-    "rollup": "^0.58.1",
+    "rollup": "^0.65.0",
     "rollup-plugin-typescript2": "^0.14.0",
     "ts-jest": "^21.2.3",
     "typescript": "^3.0.1"
