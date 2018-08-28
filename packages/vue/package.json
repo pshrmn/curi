@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@curi/route-active": "^1.0.0-beta.8",
-    "@hickory/in-memory": "^1.0.0-beta.5",
+    "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
     "@types/node": "^8.0.53",
     "@vue/test-utils": "^1.0.0-beta.10",
@@ -51,6 +51,6 @@
   },
   "dependencies": {
     "@curi/router": "^1.0.0-beta.38",
-    "@hickory/root": "^1.0.0-beta.7"
+    "@hickory/root": "^1.0.0"
   }
 }
