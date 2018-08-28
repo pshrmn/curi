@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import ActiveLink from "../../../components/ActiveLink";
 import TUTORIAL_API from "../../../constants/tutorials";

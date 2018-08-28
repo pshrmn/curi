@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
@@ -334,7 +334,7 @@ const  MyComponent = () => (
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { Active } from '@curi/react';
+            {`import { Active } from '@curi/react-dom';
 
 const ActiveLink = ({ to, params, partial, ...rest}) => (
   <Active name={to} params={params} partial={partial}>

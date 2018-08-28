@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseGuide from "./base/BaseGuide";
 import {
@@ -73,7 +73,7 @@ export default ApolloClient({
         </Explanation>
         <CodeBlock lang="jsx">
           {`import { ApolloProvider } from "react-apollo";
-import { CuriProvider } from "@curi/react";
+import { CuriProvider } from "@curi/react-dom";
 
 ReactDOM.render((
   <ApolloProvider client={client}>

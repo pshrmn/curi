@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";

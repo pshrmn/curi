@@ -1,5 +1,5 @@
 import React from "react";
-import { Focus } from "@curi/react";
+import { Focus } from "@curi/react-dom";
 import Header from "./components/Header";
 
 import "./scss/index.scss";

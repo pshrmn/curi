@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import TutorialLinks from "../pages/Tutorials/base/TutorialLinks";
 import Page from "../components/Page";

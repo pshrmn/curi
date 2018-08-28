@@ -19,7 +19,7 @@
   "author": "Paul Sherman",
   "license": "UNLICENSED",
   "dependencies": {
-    "@curi/react": "^1.0.0-beta.30",
+    "@curi/react-dom": "^1.0.0-beta.0",
     "@curi/route-active": "^1.0.0-beta.8",
     "@curi/route-prefetch": "^1.0.0-beta.12",
     "@curi/router": "^1.0.0-beta.38",

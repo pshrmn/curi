@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseTutorial from "./base/BaseTutorial";
 import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
@@ -65,15 +65,15 @@ yarn start # start the dev server`}
         there are a few packages that need to be installed.
       </p>
       <PrismBlock lang="bash">
-        {`yarn add @hickory/browser @curi/router @curi/react`}
+        {`yarn add @hickory/browser @curi/router @curi/react-dom`}
       </PrismBlock>
       <p>
         The <IJS>@hickory/browser</IJS> package will be used to create an object
         that interacts with the browser to power navigation (e.g. updates the
         URI in the address bar when you click a link). <IJS>@curi/router</IJS>{" "}
         provides the function to actually create the router.{" "}
-        <IJS>@curi/react</IJS> gives us some React components that interact with
-        the router.
+        <IJS>@curi/react-dom</IJS> gives us some React components that interact
+        with the router.
       </p>
     </Section>
     <Section title="History and Locations" id="history">
@@ -305,13 +305,13 @@ registerServiceWorker();`}
     <Section title="Rendering with React" id="rendering">
       <p>
         We can now render our application. To do this, we will use the{" "}
-        <Cmp>CuriProvider</Cmp> component from the <IJS>@curi/react</IJS>{" "}
+        <Cmp>CuriProvider</Cmp> component from the <IJS>@curi/react-dom</IJS>{" "}
         package. This component does two things:
       </p>
       <ol>
         <li>
           It places router-related values on the context for other{" "}
-          <IJS>@curi/react</IJS> components
+          <IJS>@curi/react-dom</IJS> components
         </li>
         <li>It re-renders the application whenever the location changes.</li>
       </ol>
@@ -512,7 +512,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react';
+import { CuriProvider } from '@curi/react-dom';
 
 import './index.css';
 import routes from './routes';
@@ -547,8 +547,9 @@ registerServiceWorker();`}
     </Section>
     <Section title="Navigating between locations" id="navigating">
       <p>
-        The <IJS>@curi/react</IJS> package provides a <Cmp>Link</Cmp> component
-        that we can use to navigate between locations within our application.
+        The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Link</Cmp>{" "}
+        component that we can use to navigate between locations within our
+        application.
       </p>
       <Subsection
         title={
@@ -609,7 +610,7 @@ registerServiceWorker();`}
         <PrismBlock lang="jsx">
           {`// src/components/NavMenu.js
 import React from 'react';
-import { Link } from '@curi/react';
+import { Link } from '@curi/react-dom';
 
 export default () => (
   <nav>
@@ -636,7 +637,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react';
+import { CuriProvider } from '@curi/react-dom';
 
 import './index.css';
 import routes from './routes';
@@ -724,7 +725,7 @@ export default [
         <PrismBlock lang="jsx" data-line="4,7-17">
           {`// src/components/Home.js
 import React from 'react';
-import { Link } from '@curi/react';
+import { Link } from '@curi/react-dom';
 
 import books from '../books';
 
@@ -830,7 +831,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react';
+import { CuriProvider } from '@curi/react-dom';
 
 import './index.css';
 import routes from './routes';

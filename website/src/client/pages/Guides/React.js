@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseGuide from "./base/BaseGuide";
 import {
@@ -43,7 +43,7 @@ export default ({ name }) => (
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
-          {`import { CuriProvider } from '@curi/react';
+          {`import { CuriProvider } from '@curi/react-dom';
 
 import router from "./router";
 
@@ -175,7 +175,7 @@ ReactDOM.render((
             </Note>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { Curious } from "@curi/react";
+            {`import { Curious } from "@curi/react-dom";
             
 const RouteName = ({ response }) => (
   <div>{response.name}</div>
@@ -208,7 +208,7 @@ export default () => (
             </p>
           </Explanation>
           <CodeBlock lang="jsx" data-line="12-18">
-            {`import { Focus } from "@curi/react";
+            {`import { Focus } from "@curi/react-dom";
             
 ReactDOM.render((
   <CuriProvider router={router}>
@@ -256,7 +256,7 @@ ReactDOM.render((
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
-          {`import { Link } from "@curi/react";
+          {`import { Link } from "@curi/react-dom";
           
 const NavLinks = () => (
   <nav>
@@ -295,7 +295,7 @@ const NavLinks = () => (
         <p>
           Please check out the full{" "}
           <Link to="Package" params={{ package: "react" }} hash="API">
-            <IJS>@curi/react</IJS>
+            <IJS>@curi/react-dom</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.
         </p>

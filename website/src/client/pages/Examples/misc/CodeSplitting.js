@@ -1,6 +1,6 @@
 import React from "react";
 import BaseExample from "../base/BaseExample";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 import { Section } from "../../../components/Sections";
 import { InlineJS as IJS } from "../../../components/PrismBlocks";
 

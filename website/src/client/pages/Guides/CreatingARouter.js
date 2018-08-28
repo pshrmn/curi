@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseGuide from "./base/BaseGuide";
 import {
@@ -289,8 +289,8 @@ router.navigate({
           <p>
             You usually do not have to call this yourself. Framework
             implementations will set observers up internally to automatically
-            trigger re-renders for new responses. <IJS>@curi/react</IJS> does
-            this using the <Cmp>CuriProvider</Cmp> component and{" "}
+            trigger re-renders for new responses. <IJS>@curi/react-dom</IJS>{" "}
+            does this using the <Cmp>CuriProvider</Cmp> component and{" "}
             <IJS>@curi/vue</IJS> uses the <IJS>CuriPlugin</IJS>.
           </p>
         </Explanation>
@@ -340,7 +340,7 @@ router.respond(() => {
       <SideBySide>
         <Explanation>
           <p>
-            <IJS>@curi/react</IJS> uses a <Cmp>CuriProvider</Cmp> with a
+            <IJS>@curi/react-dom</IJS> uses a <Cmp>CuriProvider</Cmp> with a
             render-invoked <IJS>children</IJS> function that will be called
             whenever there is a new response.
           </p>

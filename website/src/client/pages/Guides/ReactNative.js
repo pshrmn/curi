@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseGuide from "./base/BaseGuide";
 import {
@@ -249,7 +249,7 @@ const NavLinks = () => (
         <p>
           Please check out the full{" "}
           <Link to="Package" params={{ package: "react" }} hash="API">
-            <IJS>@curi/react</IJS>
+            <IJS>@curi/react-dom</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.
         </p>
