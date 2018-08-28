@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableHighlight } from "react-native";
-import { Curious } from "@curi/react";
+import { Curious } from "@curi/react-universal";
 
 import { GestureResponderEvent } from "react-native";
 import { Emitted, CuriRouter, Response } from "@curi/router";

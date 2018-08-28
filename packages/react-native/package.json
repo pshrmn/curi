@@ -40,7 +40,7 @@
     "react-native": ">=0.55.0"
   },
   "dependencies": {
-    "@curi/react": "^1.0.0-beta.30",
+    "@curi/react-universal": "^1.0.0-beta.30",
     "@curi/router": "^1.0.0-beta.38",
     "@hickory/root": "^1.0.0",
     "@types/invariant": "^2.2.29",
