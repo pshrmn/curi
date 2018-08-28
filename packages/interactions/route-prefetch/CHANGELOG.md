@@ -1,3 +1,7 @@
+## Next
+
+- Include package name in warning when attempting to overwrite a registered route.
+
 ## 1.0.0-beta.12
 
 - Switch script builds from IIFE to UMD

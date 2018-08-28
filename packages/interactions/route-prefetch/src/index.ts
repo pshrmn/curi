@@ -18,7 +18,7 @@ export default function prefetchRoute(): Interaction {
       const { name, match } = route;
       if (loaders[name] !== undefined) {
         console.warn(
-          'A route with the name "' +
+          '[@curi/route-prefetch] A route with the name "' +
             name +
             '" already exists. Each route should' +
             "have a unique name. By registering a function with a name that already exists, " +

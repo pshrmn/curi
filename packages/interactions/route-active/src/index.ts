@@ -26,7 +26,7 @@ export default function checkIfActive(): Interaction {
         : keys;
       if (routeParams[name] !== undefined) {
         console.warn(
-          'A route with the name "' +
+          '[@curi/route-active] A route with the name "' +
             name +
             '" already exists. Each route should' +
             "have a unique name. By registering a route function with a name that already exists, " +
