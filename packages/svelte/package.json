@@ -32,6 +32,7 @@
     "@curi/router": "^1.0.0-beta.26"
   },
   "dependencies": {
+    "rollup": "^0.65.0",
     "svelte": "^2.4.3"
   },
   "devDependencies": {
