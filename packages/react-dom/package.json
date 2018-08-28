@@ -1,9 +1,9 @@
 {
-  "name": "@curi/react",
-  "version": "1.0.0-beta.30",
-  "description": "React components to use with Curi",
-  "main": "dist/curi-react.common.js",
-  "module": "dist/curi-react.es.js",
+  "name": "@curi/react-dom",
+  "version": "1.0.0-beta.0",
+  "description": "React DOM components to use with Curi",
+  "main": "dist/curi-react-dom.common.js",
+  "module": "dist/curi-react-dom.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",
@@ -23,10 +23,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pshrmn/curi/tree/master/packages/react"
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/react-dom"
   },
   "keywords": [
     "React",
+    "react-dom",
     "Curi",
     "router",
     "navigation"
@@ -37,9 +38,8 @@
     "react": ">=16.3"
   },
   "dependencies": {
-    "@curi/route-active": "^1.0.0-beta.8",
+    "@curi/react": "^1.0.0-beta.30",
     "@curi/router": "^1.0.0-beta.38",
-    "@hickory/root": "^1.0.0",
     "@types/react": "^16.3.11"
   },
   "devDependencies": {

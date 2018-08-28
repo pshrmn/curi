@@ -1,3 +1,7 @@
+## Next
+
+* Moved `react-dom` specific components (`<Link>` and `<Focus>`) to `@curi/react-dom`. `@curi/react-dom` also re-exports everything from `@curi/react`. You should never need to use `@curi/react` yourself, but instead choose the package for whichever renderer you are using `react-dom` or `react-native`.
+
 ## 1.0.0-beta.30
 
 * Switch script builds from IIFE to UMD

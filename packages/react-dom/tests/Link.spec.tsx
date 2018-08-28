@@ -6,8 +6,7 @@ import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 
 // resolved by jest
-import { CuriProvider, Link } from "@curi/react";
-
+import { CuriProvider, Link } from "@curi/react-dom";
 
 describe("<Link>", () => {
   let node;
