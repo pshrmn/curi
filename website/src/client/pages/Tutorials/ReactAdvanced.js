@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseTutorial from "./base/BaseTutorial";
 import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
@@ -422,7 +422,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react';
+import { CuriProvider } from '@curi/react-dom';
 
 import './index.css';
 import routes from './routes';
@@ -661,7 +661,7 @@ export default [
         <CodeBlock lang="jsx" data-line="5,8">
           {`// src/components/Home.js
 import React from 'react';
-import { Link } from '@curi/react';
+import { Link } from '@curi/react-dom';
 
 export default ({ response }) => (
   <div>
@@ -730,7 +730,7 @@ export default ({ response, router }) => {
           </p>
           <p>
             We can update the fake API to delay resolving so that we can take a
-            look at some of the <IJS>@curi/react</IJS> components that are
+            look at some of the <IJS>@curi/react-dom</IJS> components that are
             navigation-aware. The implementation here isn't important, so you
             can just copy+paste the code. The only thing to know is that the{" "}
             <IJS>BOOKS()</IJS> function has a one second delay and the{" "}
@@ -790,7 +790,7 @@ export const BOOK = id => new Promise(resolve => {
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { Link } from "@curi/react";
+            {`import { Link } from "@curi/react-dom";
             
 <Link to="Book" params={{ id: 1 }}>
   {navigating => (
@@ -834,7 +834,7 @@ export const BOOK = id => new Promise(resolve => {
           <CodeBlock lang="jsx" data-line="4,12-17">
             {`// src/components/Home.js
 import React from 'react';
-import { Link } from '@curi/react';
+import { Link } from '@curi/react-dom';
 import Spinner from "react-spinkit";
 
 export default ({ response }) => (

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseGuide from "./base/BaseGuide";
 import {
@@ -406,7 +406,7 @@ const router = curi(history, routes);`}
               With Curi, we also need to re-render our application every time
               that the location changes. We will do this using the{" "}
               <Cmp>CuriProvider</Cmp> component, which comes from the{" "}
-              <IJS>@curi/react</IJS> package.
+              <IJS>@curi/react-dom</IJS> package.
             </p>
             <p>
               The <Cmp>CuriProvider</Cmp> takes a <IJS>router</IJS> prop, which
@@ -554,8 +554,9 @@ function render({ response }) {
           <p>
             You will want to be able to navigate between routes in your
             application. React Router provides a <Cmp>Link</Cmp> component to do
-            this, and so does Curi (through the <IJS>@curi/react</IJS> package).
-            There are a few differences to note between these two components:
+            this, and so does Curi (through the <IJS>@curi/react-dom</IJS>{" "}
+            package). There are a few differences to note between these two
+            components:
           </p>
         </Explanation>
       </SideBySide>

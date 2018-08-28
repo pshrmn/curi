@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseGuide from "./base/BaseGuide";
 import {
@@ -74,7 +74,7 @@ BackHandler.addEventListener(
             </Link>{" "}
             package is quite similar to the{" "}
             <Link to="Package" params={{ package: "react" }}>
-              <IJS>@curi/react</IJS>
+              <IJS>@curi/react-dom</IJS>
             </Link>{" "}
             package. In fact, Curi's React Native package re-exports most of the
             components from the React package.
@@ -108,7 +108,7 @@ BackHandler.addEventListener(
         <SideBySide>
           <Explanation>
             <p>
-              <IJS>@curi/react</IJS> provides a <Cmp>CuriProvider</Cmp>{" "}
+              <IJS>@curi/react-dom</IJS> provides a <Cmp>CuriProvider</Cmp>{" "}
               component that will listen for new responses and re-render your
               application.
             </p>

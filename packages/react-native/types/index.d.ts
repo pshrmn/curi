@@ -1,4 +1,4 @@
 export { LinkProps, NavigatingChildren } from "./Link";
-export { Active, Block, CuriProvider, Curious } from "@curi/react";
+export * from "@curi/react-universal";
 import Link from "./Link";
 export { Link };

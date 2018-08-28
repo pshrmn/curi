@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import ExampleLinks from "../pages/Examples/base/ExampleLinks";
 import { Note } from "../components/Messages";

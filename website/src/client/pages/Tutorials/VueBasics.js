@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseTutorial from "./base/BaseTutorial";
 import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";

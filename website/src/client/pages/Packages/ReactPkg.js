@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
@@ -23,7 +23,7 @@ export default ({ name, version, globalName }) => (
     about={
       <div>
         <p>
-          The <IJS>@curi/react</IJS> package provides a number of React
+          The <IJS>@curi/react-dom</IJS> package provides a number of React
           components that you can use for rendering your application.
         </p>
       </div>
@@ -47,7 +47,7 @@ export default ({ name, version, globalName }) => (
               </li>
             </ol>
             <Note>
-              All of the other components provided by <IJS>@curi/react</IJS>{" "}
+              All of the other components provided by <IJS>@curi/react-dom</IJS>{" "}
               must be descendants of a <Cmp>CuriProvider</Cmp>.
             </Note>
             <p>
@@ -57,7 +57,7 @@ export default ({ name, version, globalName }) => (
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { CuriProvider } from '@curi/react';
+            {`import { CuriProvider } from '@curi/react-dom';
             
 const App = () => (
   <CuriProvider router={router}>
@@ -136,7 +136,7 @@ const App = () => (
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { Link } from '@curi/react';
+            {`import { Link } from '@curi/react-dom';
 
 <Link to='User' params={{ id: 16 }}>User 16</Link>
 // <a href='/user/16'>User 16</a>`}
@@ -297,7 +297,7 @@ const App = () => (
             </Note>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { Focus } from "@curi/react";
+            {`import { Focus } from "@curi/react-dom";
 
 <Focus>
   {ref => (
@@ -319,7 +319,7 @@ const App = () => (
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { Curious } from '@curi/react';
+            {`import { Curious } from '@curi/react-dom';
 
 const MyComponent = () => (
   <Curious>
@@ -362,7 +362,7 @@ const MyComponent = () => (
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { Active } from '@curi/react';
+            {`import { Active } from '@curi/react-dom';
 
 const ActiveLink = ({ to, params, partial, ...rest}) => (
   <Active name={to} params={params} partial={partial}>
@@ -521,7 +521,7 @@ const router = curi(history, routes, {
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { Block } from '@curi/react';`}
+            {`import { Block } from '@curi/react-dom';`}
           </CodeBlock>
         </SideBySide>
 

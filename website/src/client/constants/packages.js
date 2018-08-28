@@ -8,9 +8,9 @@ const packages = [
     type: "router"
   },
   {
-    name: "react",
-    version: versions["react"],
-    globalName: "CuriReact",
+    name: "react-dom",
+    version: versions["react-dom"],
+    globalName: "CuriReactDOM",
     type: "render"
   },
   {

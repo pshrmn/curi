@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseGuide from "./base/BaseGuide";
 import {
@@ -406,7 +406,7 @@ router.respond(setup);`}
                   to="Package"
                   params={{ package: "react" }}
                 >
-                  <IJS>@curi/react</IJS>
+                  <IJS>@curi/react-dom</IJS>
                 </Link>,{" "}
                 <Link to="Package" params={{ package: "react-native" }}>
                   <IJS>@curi/react-native</IJS>

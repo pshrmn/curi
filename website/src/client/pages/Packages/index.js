@@ -18,7 +18,7 @@ export default {
   "side-effect-aria-live": SideEffectAriaLive,
   "side-effect-title": SideEffectTitle,
   "side-effect-scroll": SideEffectScroll,
-  react: ReactPkg,
+  "react-dom": ReactPkg,
   "react-native": ReactNativePkg,
   svelte: Svelte,
   vue: Vue

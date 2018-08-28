@@ -1,5 +1,7 @@
 # @curi/react
 
+**You probably want to install `@curi/react-dom` instead!**
+
 [![npm][badge]][npm-link]
 
 [badge]: https://img.shields.io/npm/v/@curi/react.svg

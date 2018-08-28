@@ -1,5 +1,5 @@
 import React from "react";
-import { Curious } from "./Context";
+import { Curious } from "@curi/react-universal";
 
 import { CuriRouter, Response } from "@curi/router";
 

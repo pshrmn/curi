@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 
 import BaseGuide from "./base/BaseGuide";
 import {
@@ -150,7 +150,7 @@ const router = curi(history, routes, {
         <SideBySide>
           <Explanation>
             <p>
-              The <IJS>@curi/react</IJS> package provides a <Cmp>Focus</Cmp>{" "}
+              The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Focus</Cmp>{" "}
               component that gives you a <IJS>ref</IJS> to attach to the
               component that should be focused. Whenever the user navigates, it
               will re-focus so that the screen reader is focused on the correct
@@ -158,7 +158,7 @@ const router = curi(history, routes, {
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { CuriProvider, Focus } from "@curi/react";
+            {`import { CuriProvider, Focus } from "@curi/react-dom";
           
 ReactDOM.render((
   <CuriProvider router={router}>

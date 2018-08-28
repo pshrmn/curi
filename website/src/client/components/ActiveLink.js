@@ -1,5 +1,5 @@
 import React from "react";
-import { Active, Link } from "@curi/react";
+import { Active, Link } from "@curi/react-dom";
 
 const ActiveLink = React.forwardRef(
   ({ to, params, children, className = "" }, ref) => (

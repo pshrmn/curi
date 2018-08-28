@@ -1,0 +1,60 @@
+{
+  "name": "@curi/react-dom",
+  "version": "1.0.0-beta.0",
+  "description": "React DOM components to use with Curi",
+  "main": "dist/curi-react-dom.common.js",
+  "module": "dist/curi-react-dom.es.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "typings",
+    "LICENSE",
+    "*.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist & rimraf types",
+    "build": "node ./scripts/build",
+    "coverage": "jest --coverage",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.{ts,tsx}\"",
+    "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/react-dom"
+  },
+  "keywords": [
+    "React",
+    "react-dom",
+    "Curi",
+    "router",
+    "navigation"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.3"
+  },
+  "dependencies": {
+    "@curi/react-universal": "^1.0.0-beta.0",
+    "@curi/router": "^1.0.0-beta.38",
+    "@types/react": "^16.3.11"
+  },
+  "devDependencies": {
+    "@hickory/in-memory": "^1.0.0",
+    "@types/jest": "^22.0.1",
+    "@types/node": "^8.0.53",
+    "@types/react-dom": "^16.0.5",
+    "jest": "^22.1.1",
+    "prettier": "^1.10.2",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.65.0",
+    "rollup-plugin-typescript2": "^0.14.0",
+    "ts-jest": "^21.2.3",
+    "typescript": "^3.0.1"
+  }
+}
