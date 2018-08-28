@@ -38,7 +38,7 @@
     "@hickory/root": "^1.0.0"
   },
   "devDependencies": {
-    "@curi/route-active": "^1.0.0-beta.8",
+    "@curi/route-active": "^1.0.0-beta.9",
     "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
     "@types/node": "^8.0.53",

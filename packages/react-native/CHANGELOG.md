@@ -1,3 +1,7 @@
+## 1.0.0-beta.10
+
+* Change dependency to `@curi/react-universal` from `@curi/react`.
+
 ## 1.0.0-beta.9
 
 * Fix bad `@curi/route-active` dependency.

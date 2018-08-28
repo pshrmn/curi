@@ -1,6 +1,6 @@
 {
   "name": "@curi/route-ancestors",
-  "version": "1.0.0-beta.7",
+  "version": "1.0.0-beta.8",
   "description": "Get a Curi route's ancestor routes",
   "main": "dist/curi-route-ancestors.common.js",
   "module": "dist/curi-route-ancestors.es.js",

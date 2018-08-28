@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.13
 
 - Include package name in warning when attempting to overwrite a registered route.
 
