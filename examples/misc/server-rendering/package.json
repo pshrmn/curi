@@ -17,11 +17,11 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.0.0-rc.1",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0-rc.1",
-    "@babel/preset-env": "^7.0.0-rc.1",
-    "@babel/preset-react": "^7.0.0-rc.1",
-    "babel-loader": "^8.0.0-beta.4",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.0",
     "babel-plugin-dynamic-import-node": "^2.0.0",
     "cross-env": "^4.0.0",
     "source-map-loader": "^0.2.3",
@@ -29,7 +29,7 @@
     "webpack-command": "^0.4.1"
   },
   "dependencies": {
-    "@babel/register": "^7.0.0-rc.1",
+    "@babel/register": "^7.0.0",
     "@curi/react-dom": "^1.0.0-beta.0",
     "@curi/router": "^1.0.0-beta.38",
     "@hickory/browser": "^1.0.0",
