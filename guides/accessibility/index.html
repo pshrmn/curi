@@ -45,7 +45,7 @@ const router = curi(history, routes, {
 &lt;div tabIndex=&quot;-1&quot;&gt;&lt;/div&gt;
 
 &lt;!-- but not me --&gt;
-&lt;div&gt;&lt;/div&gt;</code></pre></div></div><div class="subsection" id="focus-react"><h3>Focusing in React Applications<a class="header-link" href="/guides/accessibility/#focus-react">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">@curi/react</code> package provides a <code class="inline-code language-jsx">&lt;<!-- -->Focus<!-- -->&gt;</code> <!-- -->component that gives you a <code class="inline-code language-javascript">ref</code> to attach to the component that should be focused. Whenever the user navigates, it will re-focus so that the screen reader is focused on the correct content.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriProvider, Focus } from &quot;@curi/react&quot;;
+&lt;div&gt;&lt;/div&gt;</code></pre></div></div><div class="subsection" id="focus-react"><h3>Focusing in React Applications<a class="header-link" href="/guides/accessibility/#focus-react">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">@curi/react-dom</code> package provides a <code class="inline-code language-jsx">&lt;<!-- -->Focus<!-- -->&gt;</code> <!-- -->component that gives you a <code class="inline-code language-javascript">ref</code> to attach to the component that should be focused. Whenever the user navigates, it will re-focus so that the screen reader is focused on the correct content.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriProvider, Focus } from &quot;@curi/react-dom&quot;;
           
 ReactDOM.render((
   &lt;CuriProvider router={router}&gt;

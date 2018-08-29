@@ -15,7 +15,7 @@ import ApolloClient from &quot;apollo-boost&quot;;
 export default ApolloClient({
   uri: &quot;https://example.com/graphql&quot;
 });</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Apollo&#x27;s React package provides an <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> <!-- -->component for accessing your Apollo client throughout the application. The <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> should be a descendant of the <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> because we don&#x27;t need to re-render the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> for every new response.</p></div><div class="code-block"><pre><code class="language-jsx">import { ApolloProvider } from &quot;react-apollo&quot;;
-import { CuriProvider } from &quot;@curi/react&quot;;
+import { CuriProvider } from &quot;@curi/react-dom&quot;;
 
 ReactDOM.render((
   &lt;ApolloProvider client={client}&gt;
