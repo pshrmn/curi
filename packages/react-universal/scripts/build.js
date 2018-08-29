@@ -6,7 +6,7 @@ const pkg = require("../package.json");
 const deps = Object.keys(pkg.dependencies).map(key => key);
 
 const base = {
-  name: "CuriReact",
+  name: "CuriReactUniversal",
   input: "src/index.ts",
   plugins: [
     typescript({
@@ -24,7 +24,7 @@ rollupBuild([
     {
       ...base,
       format: "es",
-      file: "dist/curi-react.es.js",
+      file: "dist/curi-react-universal.es.js",
       external: [...deps, "react"],
       safeModules: false
     },
@@ -36,7 +36,7 @@ rollupBuild([
     {
       ...base,
       format: "cjs",
-      file: "dist/curi-react.common.js",
+      file: "dist/curi-react-universal.common.js",
       external: [...deps, "react"],
       safeModules: false
     },
@@ -48,7 +48,7 @@ rollupBuild([
     {
       ...base,
       format: "umd",
-      file: "dist/curi-react.js",
+      file: "dist/curi-react-universal.js",
       external: ["react"]
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -59,7 +59,7 @@ rollupBuild([
     {
       ...base,
       format: "umd",
-      file: "dist/curi-react.min.js",
+      file: "dist/curi-react-universal.min.js",
       external: ["react"],
       uglify: true
     },

@@ -2,8 +2,8 @@
   "name": "@curi/react-universal",
   "version": "1.0.0-beta.0",
   "description": "React components to use with Curi",
-  "main": "dist/curi-react.common.js",
-  "module": "dist/curi-react.es.js",
+  "main": "dist/curi-react-universal.common.js",
+  "module": "dist/curi-react-universal.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",
