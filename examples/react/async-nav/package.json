@@ -32,7 +32,7 @@
     "@curi/react-dom": "^1.0.0-beta.0",
     "@curi/route-prefetch": "^1.0.0-beta.13",
     "@curi/router": "^1.0.0-beta.38",
-    "@hickory/browser": "^1.0.0-beta.5",
+    "@hickory/browser": "^1.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-spinkit": "^3.0.0"

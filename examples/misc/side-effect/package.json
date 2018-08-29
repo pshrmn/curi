@@ -26,7 +26,7 @@
     "@curi/react-dom": "^1.0.0-beta.0",
     "@curi/router": "^1.0.0-beta.38",
     "@curi/side-effect-title": "^1.0.0-beta.11",
-    "@hickory/browser": "^1.0.0-beta.5",
+    "@hickory/browser": "^1.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
   }

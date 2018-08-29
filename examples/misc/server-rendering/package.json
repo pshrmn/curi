@@ -32,8 +32,8 @@
     "@babel/register": "^7.0.0-rc.1",
     "@curi/react-dom": "^1.0.0-beta.0",
     "@curi/router": "^1.0.0-beta.38",
-    "@hickory/browser": "^1.0.0-beta.5",
-    "@hickory/in-memory": "^1.0.0-beta.3",
+    "@hickory/browser": "^1.0.0",
+    "@hickory/in-memory": "^1.0.0",
     "express": "^4.16.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
