@@ -6,7 +6,7 @@ import { curi } from "@curi/router";
 import activeInteraction from "@curi/route-active";
 
 // resolved by jest
-import { CuriProvider, Active } from "@curi/react";
+import { CuriProvider, Active } from "@curi/react-universal";
 
 describe("<Active>", () => {
   let node;

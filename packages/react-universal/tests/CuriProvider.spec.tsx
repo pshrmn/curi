@@ -5,7 +5,7 @@ import { curi } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
 // resolved by jest
-import { CuriProvider, Curious } from "@curi/react";
+import { CuriProvider, Curious } from "@curi/react-universal";
 
 describe("<CuriProvider>", () => {
   let node;

@@ -6,7 +6,7 @@ import { curi } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
 // resolved by jest
-import { CuriProvider, Block } from "@curi/react";
+import { CuriProvider, Block } from "@curi/react-universal";
 
 describe("Block", () => {
   let confirmationFunction;
