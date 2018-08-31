@@ -30,7 +30,7 @@ function generatePathname(options?: PathFunctionOptions): Interaction {
       if (parent && knownPaths[parent]) {
         base = knownPaths[parent];
       }
-      knownPaths[name] = base ? join(base, path) : path;
+      knownPaths[name] = withLeadingSlash(base ? join(base, path) : path);
       return name;
     },
     get: (name: string, params: Params): string | void => {
@@ -43,7 +43,7 @@ function generatePathname(options?: PathFunctionOptions): Interaction {
       const compile = cache[name]
         ? cache[name]
         : (cache[name] = PathToRegexp.compile(knownPaths[name]));
-      return withLeadingSlash(compile(params, options));
+      return compile(params, options);
     },
     reset: () => {
       knownPaths = {};

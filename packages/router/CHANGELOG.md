@@ -1,3 +1,7 @@
+## Next
+
+* Fix for optional initial path segments.
+
 ## 1.0.0-beta.38
 
 * Switch script builds from IIFE to UMD

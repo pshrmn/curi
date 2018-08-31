@@ -163,6 +163,46 @@ describe("route matching/response generation", () => {
         done();
       });
     });
+
+    describe("optional path parameters", () => {
+      it("works when optional param is included", () => {
+        const history = InMemory({ locations: ["/NY/about"] });
+        const routes = [
+          {
+            name: "State",
+            path: ":state?/about",
+            pathOptions: { end: false }
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ];
+        const router = curi(history, routes);
+        router.respond(({ response }) => {
+          expect(response.name).toBe("State");
+        });
+      });
+
+      it("works when optional param is NOT included", () => {
+        const history = InMemory({ locations: ["/about"] });
+        const routes = [
+          {
+            name: "State",
+            path: ":state?/about",
+            pathOptions: { end: false }
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ];
+        const router = curi(history, routes);
+        router.respond(({ response }) => {
+          expect(response.name).toBe("State");
+        });
+      });
+    });
   });
 
   describe("response", () => {
