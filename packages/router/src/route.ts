@@ -1,5 +1,7 @@
 import PathToRegexp from "path-to-regexp";
 
+import { withLeadingSlash } from "./utils/path";
+
 import { RouteDescriptor, InternalRoute } from "./types/route";
 import { Key } from "path-to-regexp";
 
@@ -30,7 +32,9 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
 
   // keys is populated by PathToRegexp
   const keys: Array<Key> = [];
-  const re = PathToRegexp(path, keys, pathOptions);
+  // path is compiled with a leading slash
+  // for optional initial params
+  const re = PathToRegexp(withLeadingSlash(path), keys, pathOptions);
 
   const match = options.match || {};
 

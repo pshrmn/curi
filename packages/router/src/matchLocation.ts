@@ -10,7 +10,7 @@ function matchRoute(
   route: InternalRoute,
   pathname: string
 ): Array<MatchingRoute> {
-  const testPath: string = stripLeadingSlash(pathname);
+  const testPath: string = pathname;
   const regExpMatch: RegExpMatchArray | null = route.pathMatching.re.exec(
     testPath
   );
