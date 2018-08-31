@@ -1,7 +1,7 @@
 {
   "name": "@curi/docs-website",
   "private": true,
-  "version": "1.0.5",
+  "version": "0.1.5",
   "description": "The documentation website for the Curi router",
   "scripts": {
     "prebuild": "npm run setupBuild && npm run versions && webpack-cli --mode=production",
@@ -22,7 +22,7 @@
     "@curi/react-dom": "^1.0.0-beta.0",
     "@curi/route-active": "^1.0.0-beta.9",
     "@curi/route-prefetch": "^1.0.0-beta.13",
-    "@curi/router": "^1.0.0-beta.38",
+    "@curi/router": "^1.0.0-beta.39",
     "@curi/side-effect-aria-live": "^1.0.0-beta.1",
     "@curi/side-effect-scroll": "^1.0.0-beta.10",
     "@curi/side-effect-title": "^1.0.0-beta.11",
