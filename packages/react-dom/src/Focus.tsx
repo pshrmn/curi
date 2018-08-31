@@ -6,6 +6,7 @@ import { Response } from "@curi/router";
 
 export interface FocusProps {
   children(ref: Ref<any>): ReactNode;
+  preventScroll: boolean;
 }
 
 interface FocusPropsWithResponse extends FocusProps {
@@ -19,6 +20,10 @@ class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
     super(props);
     this.eleToFocus = null;
   }
+
+  static defaultProps = {
+    preventScroll: false
+  };
 
   setRef = (element: any) => {
     this.eleToFocus = element;
@@ -55,7 +60,8 @@ class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
         }
       }
       setTimeout(() => {
-        this.eleToFocus.focus();
+        // @ts-ignore
+        this.eleToFocus.focus({ preventScroll: this.props.preventScroll });
       });
     }
   }
