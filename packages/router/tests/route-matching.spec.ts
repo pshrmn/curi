@@ -627,7 +627,7 @@ describe("route matching/response generation", () => {
     });
   });
 
-  describe("the match functions", () => {
+  describe("resolve functions", () => {
     describe("calling functions", () => {
       it("is called with location, matched route name, and params", done => {
         const spy = jest.fn(route => {
@@ -645,20 +645,20 @@ describe("route matching/response generation", () => {
         const CatchAll = {
           name: "Catch All",
           path: ":anything",
-          match: { spy }
+          resolve: { spy }
         };
 
         const history = InMemory({ locations: ["/hello?one=two"] });
         curi(history, [CatchAll]);
       });
 
-      it("calls all match functions", done => {
+      it("calls all resolve functions", done => {
         const one = jest.fn();
         const two = jest.fn();
         const CatchAll = {
           name: "Catch All",
           path: ":anything",
-          match: {
+          resolve: {
             one,
             two
           }
@@ -691,7 +691,7 @@ describe("route matching/response generation", () => {
           {
             name: "First",
             path: "first",
-            match: {
+            resolve: {
               spy
             },
             response: responseSpy
@@ -706,7 +706,7 @@ describe("route matching/response generation", () => {
               done();
               return {};
             },
-            match: {
+            resolve: {
               // re-use the spy so that this route's response
               // fn isn't call until after the first route's spy
               // fn has resolved
@@ -721,7 +721,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("resolved", () => {
-        it("is null when route has no match functions", () => {
+        it("is null when route has no resolve functions", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
@@ -735,11 +735,11 @@ describe("route matching/response generation", () => {
           const router = curi(history, [CatchAll]);
         });
 
-        it("is null when route a match function throws", () => {
+        it("is null when a resolve function throws", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
-            match: {
+            resolve: {
               fails: () => Promise.reject("woops!")
             },
             response: ({ resolved }) => {
@@ -752,7 +752,7 @@ describe("route matching/response generation", () => {
           const router = curi(history, [CatchAll]);
         });
 
-        it("is an object named match function properties when router is asynchronous", () => {
+        it("is an object with named resolve function properties for async routes", () => {
           const CatchAll = {
             name: "Catch All",
             path: ":anything",
@@ -761,7 +761,7 @@ describe("route matching/response generation", () => {
               expect(resolved.yo).toBe("yo!");
               return {};
             },
-            match: {
+            resolve: {
               test: () => Promise.resolve(1),
               yo: () => Promise.resolve("yo!")
             }
@@ -773,7 +773,7 @@ describe("route matching/response generation", () => {
       });
 
       describe("error", () => {
-        it("receives the error rejected by a match function", done => {
+        it("receives the error rejected by a resolve function", done => {
           const spy = jest.fn(({ error }) => {
             expect(error).toBe("rejected");
             done();
@@ -783,7 +783,7 @@ describe("route matching/response generation", () => {
             name: "Catch All",
             path: ":anything",
             response: spy,
-            match: {
+            resolve: {
               fails: () => Promise.reject("rejected")
             }
           };
@@ -792,7 +792,7 @@ describe("route matching/response generation", () => {
           const router = curi(history, [CatchAll]);
         });
 
-        it("is null when all match functions succeed", done => {
+        it("is null when all resolve functions succeed", done => {
           const spy = jest.fn(({ error }) => {
             expect(error).toBe(null);
             done();
@@ -802,7 +802,7 @@ describe("route matching/response generation", () => {
             name: "Catch All",
             path: ":anything",
             response: spy,
-            match: {
+            resolve: {
               succeed: () => Promise.resolve("hurray!")
             }
           };

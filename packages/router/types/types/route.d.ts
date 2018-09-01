@@ -28,7 +28,7 @@ export interface RouteDescriptor {
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
     response?: ResponseFn;
-    match?: AsyncGroup;
+    resolve?: AsyncGroup;
     extra?: {
         [key: string]: any;
     };
@@ -37,7 +37,7 @@ export interface Route {
     name: string;
     path: string;
     keys: Array<string | number>;
-    match: AsyncGroup;
+    resolve: AsyncGroup;
     extra?: {
         [key: string]: any;
     };

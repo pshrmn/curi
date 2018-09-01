@@ -311,12 +311,12 @@ describe("curi", () => {
         after();
       });
 
-      it("does asynchronous matching when route.match isn't empty", () => {
+      it("does asynchronous matching when route.resolve isn't empty", () => {
         const routes = [
           {
             name: "Home",
             path: "",
-            match: {
+            resolve: {
               test: () => Promise.resolve()
             }
           }
@@ -338,7 +338,7 @@ describe("curi", () => {
               {
                 name: "Child",
                 path: "child",
-                match: {
+                resolve: {
                   test: () => Promise.resolve()
                 }
               }
@@ -383,7 +383,7 @@ describe("curi", () => {
           {
             name: "Catch All",
             path: "(.*)",
-            match: {
+            resolve: {
               test: () => Promise.resolve()
             }
           }
@@ -582,7 +582,7 @@ describe("curi", () => {
             {
               name: "How",
               path: ":method",
-              match: {
+              resolve: {
                 test: () => {
                   promiseResolved = true;
                   return Promise.resolve(promiseResolved);
@@ -613,7 +613,7 @@ describe("curi", () => {
             {
               name: "How",
               path: ":method",
-              match: {
+              resolve: {
                 test: () => Promise.resolve()
               }
             }
@@ -653,7 +653,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              match: {
+              resolve: {
                 test: () => Promise.resolve()
               }
             }
@@ -672,7 +672,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              match: {
+              resolve: {
                 test: () => Promise.resolve()
               }
             }
@@ -727,7 +727,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              match: {
+              resolve: {
                 test: () => Promise.resolve()
               }
             },
@@ -787,7 +787,7 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              match: {
+              resolve: {
                 test: () => Promise.resolve()
               }
             },
@@ -950,7 +950,7 @@ describe("curi", () => {
           {
             name: "Slow",
             path: "slow",
-            match: {
+            resolve: {
               test: () => {
                 // takes 500ms to resolve
                 return new Promise(resolve => {
@@ -964,7 +964,7 @@ describe("curi", () => {
           {
             name: "Fast",
             path: "fast",
-            match: {
+            resolve: {
               test: () => Promise.resolve("complete")
             }
           },
@@ -988,7 +988,7 @@ describe("curi", () => {
           {
             name: "Loader",
             path: "loader/:id",
-            match: {
+            resolve: {
               test: () => Promise.resolve("complete")
             }
           },
@@ -1027,7 +1027,7 @@ describe("curi", () => {
           {
             name: "Slow",
             path: "slow",
-            match: {
+            resolve: {
               test: () => {
                 // takes 500ms to resolve
                 return new Promise(resolve => {
@@ -1041,7 +1041,7 @@ describe("curi", () => {
           {
             name: "Fast",
             path: "fast",
-            match: {
+            resolve: {
               test: () => Promise.resolve("complete")
             }
           },
@@ -1064,7 +1064,7 @@ describe("curi", () => {
           {
             name: "Loader",
             path: "loader/:id",
-            match: {
+            resolve: {
               test: () => Promise.resolve("complete")
             }
           },
