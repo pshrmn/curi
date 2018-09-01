@@ -310,7 +310,7 @@ stop();
       <SideBySide>
         <Explanation>
           <p>
-            If you have any asynchronous routes (routes with <IJS>match</IJS>{" "}
+            If you have any asynchronous routes (routes with <IJS>resolve</IJS>{" "}
             functions), <IJS>router.respond()</IJS> should be used to delay the
             initial render. If you don't pass the{" "}
             <IJS>{`{ observe: true }`}</IJS> option, the observer function will

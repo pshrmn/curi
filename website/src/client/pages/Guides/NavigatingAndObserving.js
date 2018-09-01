@@ -365,7 +365,7 @@ const stop = router.respond(fn, { observe: true });`}
           <SideBySide>
             <Explanation>
               <p>
-                If any of the routes in an application have <IJS>match</IJS>{" "}
+                If any of the routes in an application have <IJS>resolve</IJS>{" "}
                 functions, responses for them are creating asynchronously. When
                 the application first renders, if the router matches an async
                 route, the response isn't immediately ready to use. To deal with

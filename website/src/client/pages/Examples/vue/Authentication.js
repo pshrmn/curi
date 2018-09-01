@@ -14,7 +14,7 @@ export default ({ name }) => (
     <Section title="Explanation" id="explanation">
       <p>
         Sometimes you will want to redirect based on the results of your{" "}
-        <IJS>match</IJS> functions. For instance, you might see that a user is
+        <IJS>resolve</IJS> functions. For instance, you might see that a user is
         not authenticated and shouldn't be able to view a page.
       </p>
 

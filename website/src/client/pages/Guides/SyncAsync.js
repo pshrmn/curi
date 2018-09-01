@@ -30,7 +30,7 @@ export default ({ name }) => (
 
         <p>
           By default, routes are synchronous. If a route has any functions in
-          its <IJS>match</IJS> object, it becomes async.
+          its <IJS>resolve</IJS> object, it becomes async.
         </p>
       </Explanation>
       <CodeBlock>
@@ -42,7 +42,7 @@ export default ({ name }) => (
   name: "User",
   path: "user/:id,
   // any functions in here makes the route async
-  match: {
+  resolve: {
     body: () => import("./components/User"),
   }
 }`}

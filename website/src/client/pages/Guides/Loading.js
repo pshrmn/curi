@@ -22,18 +22,18 @@ export default ({ name }) => (
       <Explanation>
         <p>
           In the code splitting guide, we added a function that calls{" "}
-          <IJS>import()</IJS> to a route's <IJS>match</IJS> object in order to
+          <IJS>import()</IJS> to a route's <IJS>resolve</IJS> object in order to
           dynamically load modules. We can do the same thing for other data.
         </p>
       </Explanation>
     </SideBySide>
 
-    <Section title="match" id="match">
+    <Section title="resolve" id="resolve">
       <SideBySide>
         <Explanation>
           <p>
             An async function (with any name you want it to have) can be added
-            to the <IJS>match</IJS> object and the value it resolves will be
+            to the <IJS>resolve</IJS> object and the value it resolves will be
             available in the route's <IJS>response()</IJS> function (as a
             property of the <IJS>resolved</IJS> object).
           </p>
@@ -55,29 +55,29 @@ export default ({ name }) => (
       <SideBySide>
         <Explanation>
           <p>
-            Here, we will name the match function for fetching data{" "}
+            Here, we will name the <IJS>resolve</IJS> function for fetching data{" "}
             <IJS>"data"</IJS>.
           </p>
           <p>
-            The <IJS>match.data()</IJS> function will be passed an object that
+            The <IJS>resolve.data()</IJS> function will be passed an object that
             contains the matched route response properties, including the route{" "}
             <IJS>params</IJS>.
           </p>
           <p>
-            All <IJS>match</IJS> functions are expected to return a Promise.
+            All <IJS>resolve</IJS> functions are expected to return a Promise.
           </p>
           <p>
             Now, when we navigate to <IJS>/recipe/chocolate-chip-cookies</IJS>,
-            the <IJS>match.data()</IJS> function will call the fake API function
-            to load the <IJS>"chocolate-chip-cookies"</IJS> recipe. The function
-            will resolve with the loaded data.
+            the <IJS>resolve.data()</IJS> function will call the fake API
+            function to load the <IJS>"chocolate-chip-cookies"</IJS> recipe. The
+            function will resolve with the loaded data.
           </p>
         </Explanation>
         <CodeBlock>
           {`{
   name: 'Recipe',
   path: 'recipe/:id',
-  match: {
+  resolve: {
     data: ({ params }) => fakeAPI.getRecipe(params.id)
   }
 }`}
@@ -89,16 +89,16 @@ export default ({ name }) => (
       <SideBySide>
         <Explanation>
           <p>
-            While <IJS>match.data()</IJS> starts our data loading, it doesn't
+            While <IJS>resolve.data()</IJS> starts our data loading, it doesn't
             actually do anything. Instead, we should handle any loaded data with
             the <IJS>response()</IJS> function.
           </p>
 
           <p>
-            The <IJS>response()</IJS> and <IJS>match.data()</IJS> are separate
+            The <IJS>response()</IJS> and <IJS>resolve.data()</IJS> are separate
             because while a route is resolving, the user may navigate again,
             which overrides the current navigation. We cannot cancel the{" "}
-            <IJS>match.data()</IJS> function for the current navigation, so if
+            <IJS>resolve.data()</IJS> function for the current navigation, so if
             it performs any side effects, our application is stuck with them. To
             avoid this, the <IJS>response()</IJS> function is not called until
             we know that the current navigation will complete.
@@ -122,7 +122,7 @@ export default ({ name }) => (
           {`{
   name: 'Recipe',
   path: 'recipe/:id',
-  match: {
+  resolve: {
     data: ({ params }) => fakeAPI.getRecipe(params.id),
   },
   response({ resolved }) {
@@ -175,11 +175,11 @@ export default ({ name }) => (
       </SideBySide>
     </Section>
     <p>
-      A route's <IJS>match</IJS> and <IJS>response()</IJS> functions offer a
-      convenient way to do data loading prior to actually rendering the route,
-      but please remember that your application will not be re-rendering until{" "}
-      <em>after</em> the fetching has resolved. If you have a long running load
-      function, you may wish to implement some sort of loading display. The{" "}
+      A route's <IJS>resolve</IJS> object and <IJS>response()</IJS> functions
+      offer a convenient way to do data loading prior to actually rendering the
+      route, but please remember that your application will not be re-rendering
+      until <em>after</em> the fetching has resolved. If you have a long running
+      load function, you may wish to implement some sort of loading display. The{" "}
       <Link to="Example" params={{ category: "react", slug: "data-loading" }}>
         data loading example
       </Link>{" "}
