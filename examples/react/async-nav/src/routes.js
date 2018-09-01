@@ -4,7 +4,7 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
+    resolve: {
       body: () =>
         import(/* webpackChunkName: "Home" */ "./pages/Home").then(
           module => module.default
@@ -21,7 +21,7 @@ export default [
   {
     name: "Movie",
     path: "movie/:id",
-    match: {
+    resolve: {
       body: () =>
         import(/* webpackChunkName: "Movie" */ "./pages/Movie").then(
           module => module.default
@@ -43,7 +43,7 @@ export default [
   {
     name: "Not Found",
     path: "(.*)",
-    match: {
+    resolve: {
       body: () =>
         import(/* webpackChunkName: "NotFound" */ "./pages/NotFound").then(
           module => module.default

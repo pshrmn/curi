@@ -4,7 +4,7 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
+    resolve: {
       body: () => import("./components/Home.js").then(module => module.default)
     },
     response: ({ resolved }) => {
@@ -16,7 +16,7 @@ export default [
   {
     name: "Contact",
     path: "contact",
-    match: {
+    resolve: {
       body: () =>
         import("./components/Contact.js").then(module => module.default)
     },
