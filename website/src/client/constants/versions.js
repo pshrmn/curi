@@ -2,11 +2,11 @@
 export default {
   "route-active": "1.0.0-beta.9",
   "route-ancestors": "1.0.0-beta.8",
-  "route-prefetch": "1.0.0-beta.13",
+  "route-prefetch": "1.0.0-beta.14",
   "react-dom": "1.0.0-beta.0",
   "react-native": "1.0.0-beta.10",
   "react-universal": "1.0.0-beta.0",
-  "router": "1.0.0-beta.38",
+  "router": "1.0.0-beta.40",
   "side-effect-aria-live": "1.0.0-beta.1",
   "side-effect-scroll": "1.0.0-beta.10",
   "side-effect-title": "1.0.0-beta.11",

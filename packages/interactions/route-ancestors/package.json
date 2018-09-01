@@ -34,7 +34,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.39"
+    "@curi/router": "^1.0.0-beta.40"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

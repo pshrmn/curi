@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.40
 
 * Switch from `route.match` to `route.resolve`.
 

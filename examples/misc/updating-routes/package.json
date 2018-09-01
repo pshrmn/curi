@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/updating-routes",
   "private": true,
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Update the known routes of a Curi application",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@curi/react-dom": "^1.0.0-beta.0",
-    "@curi/router": "^1.0.0-beta.39",
+    "@curi/router": "^1.0.0-beta.40",
     "@hickory/browser": "^1.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
