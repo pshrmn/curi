@@ -82,7 +82,7 @@ const routes = [
       }
     ]
   }
-];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With React Router v4, a component&#x27;s lifecycle methods are used for loading data, code splitting, and other non-rendering tasks. With Curi, routes can have functions that are called when they match the new location. These are grouped under the route&#x27;s<!-- --> <code class="inline-code language-javascript">match</code> object. The <code class="inline-code language-javascript">match</code> functions are called every time that a route matches a location.</p><p>The<!-- --> <a href="/packages/@curi/router/#route-properties"><code class="inline-code language-javascript">@curi/router</code> route API documentation</a> <!-- -->covers all of the route properties.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
+];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With React Router v4, a component&#x27;s lifecycle methods are used for loading data, code splitting, and other non-rendering tasks. With Curi, routes can have functions that are called when they match the new location. These are grouped under the route&#x27;s<!-- --> <code class="inline-code language-javascript">resolve</code> object. The <code class="inline-code language-javascript">resolve</code> functions are called every time that a route matches a location.</p><p>The<!-- --> <a href="/packages/@curi/router/#route-properties"><code class="inline-code language-javascript">@curi/router</code> route API documentation</a> <!-- -->covers all of the route properties.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
   {
     path: &#x27;&#x27;,
     response: () =&gt; {
@@ -106,7 +106,7 @@ const routes = [
             body: Message
           };
         },
-        match: {
+        resolve: {
           body: (route) =&gt; { return ... },
         }
       }

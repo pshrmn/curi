@@ -82,7 +82,7 @@ const stop = router.respond(({ response }) =&gt; {
 }, { observe: true });
 // ...
 stop();
-// no longer observing</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>If you have any asynchronous routes (routes with <code class="inline-code language-javascript">match</code> <!-- -->functions), <code class="inline-code language-javascript">router.respond()</code> should be used to delay the initial render. If you don&#x27;t pass the<!-- --> <code class="inline-code language-javascript">{ observe: true }</code> option, the observer function will only be called once, which is perfect for delaying the initial render.</p></div><div class="code-block"><pre><code class="language-javascript">// wait for initial response to render with an
+// no longer observing</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>If you have any asynchronous routes (routes with <code class="inline-code language-javascript">resolve</code> <!-- -->functions), <code class="inline-code language-javascript">router.respond()</code> should be used to delay the initial render. If you don&#x27;t pass the<!-- --> <code class="inline-code language-javascript">{ observe: true }</code> option, the observer function will only be called once, which is perfect for delaying the initial render.</p></div><div class="code-block"><pre><code class="language-javascript">// wait for initial response to render with an
 // observer function that will only be called once
 router.respond(() =&gt; {
   // safe to render async routes now
