@@ -15,7 +15,7 @@ export default function prefetchRoute(): Interaction {
   return {
     name: "prefetch",
     register: (route: Route) => {
-      const { name, match } = route;
+      const { name, resolve } = route;
       if (loaders[name] !== undefined) {
         console.warn(
           '[@curi/route-prefetch] A route with the name "' +
@@ -25,8 +25,8 @@ export default function prefetchRoute(): Interaction {
             "you are overwriting the existing one. This may break your application."
         );
       }
-      if (match && Object.keys(match).length) {
-        loaders[name] = match;
+      if (resolve && Object.keys(resolve).length) {
+        loaders[name] = resolve;
       }
     },
     get: (
