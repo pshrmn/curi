@@ -17,7 +17,7 @@ export default [
   {
     name: "Album",
     path: "a/:id",
-    match: {
+    resolve: {
       // the fakeAPI caches results based on id
       data: ({ params }) => fakeAPI(params.id)
     },

@@ -19,7 +19,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
 
   const pathOptions = options.pathOptions || {};
   // end defaults to true, so end has to be hardcoded for it to be false
-  // set this before setting pathOptions.end for children
+  // set this resolve setting pathOptions.end for children
   const mustBeExact = pathOptions.end == null || pathOptions.end;
 
   let children: Array<InternalRoute> = [];
@@ -36,14 +36,14 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
   // for optional initial params
   const re = PathToRegexp(withLeadingSlash(path), keys, pathOptions);
 
-  const match = options.match || {};
+  const resolve = options.resolve || {};
 
   return {
     public: {
       name: options.name,
       path: path,
       keys: keys.map(key => key.name),
-      match,
+      resolve,
       extra: options.extra
     },
     pathMatching: {
@@ -51,7 +51,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       keys,
       mustBeExact
     },
-    sync: !Object.keys(match).length,
+    sync: !Object.keys(resolve).length,
     response: options.response,
     children,
     paramParsers: options.params

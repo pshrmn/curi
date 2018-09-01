@@ -21,7 +21,7 @@ export default ({ name, version, globalName }) => (
         <p>
           The prefetch route interaction can be used fetch data for a route
           prior to navigating. The interaction will call a route's{" "}
-          <IJS>match</IJS> functions (if they exist on the route).
+          <IJS>resolve</IJS> functions (if they exist on the route).
         </p>
         <p>
           Prefetching data means results in faster renders after navigation
@@ -33,10 +33,11 @@ export default ({ name, version, globalName }) => (
     <SideBySide>
       <Explanation>
         <Note>
-          Prefetching <IJS>match</IJS> functions calls is only beneficial if you
-          cache the results because the function will be re-called when the user
-          navigates to that route. Functions wrapped by Curi's <IJS>once()</IJS>{" "}
-          wrapper will automatically re-use the results from their first call.
+          Prefetching <IJS>resolve</IJS> functions calls is only beneficial if
+          you cache the results because the function will be re-called when the
+          user navigates to that route. Functions wrapped by Curi's{" "}
+          <IJS>once()</IJS> wrapper will automatically re-use the results from
+          their first call.
         </Note>
       </Explanation>
     </SideBySide>
@@ -80,18 +81,19 @@ router.route.prefetch("Some Route");`}
                     <td>The name of the route to prefetch.</td>
                   </tr>
                   <tr>
-                    <td>match</td>
+                    <td>resolve</td>
                     <td>
-                      Route props that are used by the <IJS>on</IJS> functions.
+                      Route props that are used by the <IJS>resolve</IJS>{" "}
+                      functions.
                     </td>
                   </tr>
                   <tr>
                     <td>which</td>
                     <td>
                       An array whose values are the names of the{" "}
-                      <IJS>match</IJS> functions that should be called. If this
-                      array is not provided, all available functions will be
-                      called.
+                      <IJS>resolve</IJS> functions that should be called. If
+                      this array is not provided, all available functions will
+                      be called.
                     </td>
                   </tr>
                 </tbody>
@@ -99,7 +101,7 @@ router.route.prefetch("Some Route");`}
               <Note>
                 <p>
                   This route interaction will only register routes that have{" "}
-                  <IJS>match</IJS> functions. If you try calling this for any
+                  <IJS>resolve</IJS> functions. If you try calling this for any
                   routes with neither of those, <IJS>prefetch()</IJS> will
                   resolve an object with an <IJS>error</IJS> property.
                 </p>
@@ -110,19 +112,19 @@ router.route.prefetch("Some Route");`}
 {
   name: "User",
   path: "u/:id",
-  match: {
+  resolve: {
     one: () => {...},
     two: () => {...}
   }
 }
 
-// call a route's match.one() and match.two() functions
+// call a route's resolve.one() and resolve.two() functions
 router.route.prefetch(
   'User',
   { params: { id: 2 }}
 )
 
-// only call the route's match.one() function
+// only call the route's resolve.one() function
 router.route.prefetch(
   'User',
   { params: { id: 3 }},

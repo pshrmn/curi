@@ -9,12 +9,12 @@ export interface KeyPromiseGroup {
  * This will call any initial/every match functions for the matching route
  */
 export default function resolveRoute(match: Match): Promise<ResolveResults> {
-  const { match: asyncFns } = match.route.public;
+  const { resolve } = match.route.public;
 
-  const { keys, promises } = Object.keys(asyncFns).reduce(
+  const { keys, promises } = Object.keys(resolve).reduce(
     (acc, key) => {
       acc.keys.push(key);
-      acc.promises.push(asyncFns[key](match.match));
+      acc.promises.push(resolve[key](match.match));
       return acc;
     },
     { keys: [], promises: [] } as KeyPromiseGroup

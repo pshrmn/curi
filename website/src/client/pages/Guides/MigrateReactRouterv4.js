@@ -169,8 +169,8 @@ const routes = [
               loading data, code splitting, and other non-rendering tasks. With
               Curi, routes can have functions that are called when they match
               the new location. These are grouped under the route's{" "}
-              <IJS>match</IJS> object. The <IJS>match</IJS> functions are called
-              every time that a route matches a location.
+              <IJS>resolve</IJS> object. The <IJS>resolve</IJS> functions are
+              called every time that a route matches a location.
             </p>
             <p>
               The{" "}
@@ -209,7 +209,7 @@ const routes = [
             body: Message
           };
         },
-        match: {
+        resolve: {
           body: (route) => { return ... },
         }
       }

@@ -9,7 +9,7 @@ export default ({ name }) => (
     <h1>{name}</h1>
     <Section title="Explanation" id="explanation">
       <p>
-        Once a response has completed (the route's <IJS>match</IJS> functions
+        Once a response has completed (the route's <IJS>resolve</IJS> functions
         have resolved), the response's properties are used to create a
         JavaScript object. Then, any response handler functions are called and
         passed that JavaScript object . Side effects are permanent observers

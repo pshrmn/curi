@@ -226,8 +226,8 @@ const routes = [
               </IJS>{" "}
               route. With Curi, routes can have functions that are called when
               they match the new location. These are grouped under the route's{" "}
-              <IJS>match</IJS> object. The <IJS>match</IJS> functions are called
-              every time that a route matches a location.
+              <IJS>resolve</IJS> object. The <IJS>resolve</IJS> functions are
+              called every time that a route matches a location.
             </p>
             <p>
               With React Router, <IJS>onEnter</IJS> is called when the route
@@ -237,7 +237,7 @@ const routes = [
               the big difference between the two is that <IJS>onChange</IJS>{" "}
               will receive the previous props, which could be used to determine
               which props changed. The functionality for both <IJS>onEnter</IJS>{" "}
-              and <IJS>onChange</IJS> can be covered using a <IJS>match</IJS>{" "}
+              and <IJS>onChange</IJS> can be covered using a <IJS>resolve</IJS>{" "}
               function.
             </p>
             <p>
@@ -287,7 +287,7 @@ const routes = [
             body: Message
           };
         },
-        match: {
+        resolve: {
           data: (route) => { return ... },
         }
       }

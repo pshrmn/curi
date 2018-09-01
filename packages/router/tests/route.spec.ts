@@ -95,14 +95,14 @@ describe("public route properties", () => {
     });
   });
 
-  describe("match", () => {
-    it("is the match functions", done => {
+  describe("resolve", () => {
+    it("is the resolve functions", done => {
       const history = InMemory({ locations: ["/test"] });
       const routes = [
         {
           name: "Test",
           path: "test",
-          match: {
+          resolve: {
             iTest: () => Promise.resolve("iTest"),
             eTest: () => Promise.resolve("eTest")
           }
@@ -112,7 +112,7 @@ describe("public route properties", () => {
         route: [PropertyReporter()]
       });
       const routeProperties = router.route.properties("Test");
-      const { iTest, eTest } = routeProperties.match;
+      const { iTest, eTest } = routeProperties.resolve;
       Promise.all([iTest(), eTest()]).then(([iResult, eResult]) => {
         expect(iResult).toBe("iTest");
         expect(eResult).toBe("eTest");
@@ -120,7 +120,7 @@ describe("public route properties", () => {
       });
     });
 
-    it("is an empty object when route.match isn't provided", done => {
+    it("is an empty object when route.resolve isn't provided", done => {
       const history = InMemory({ locations: ["/test"] });
       const routes = [
         {
@@ -132,24 +132,24 @@ describe("public route properties", () => {
         route: [PropertyReporter()]
       });
       const routeProperties = router.route.properties("Test");
-      expect(routeProperties.match).toEqual({});
+      expect(routeProperties.resolve).toEqual({});
       done();
     });
 
-    it("is an empty object when route.match is an empty object", done => {
+    it("is an empty object when route.resolve is an empty object", done => {
       const history = InMemory({ locations: ["/test"] });
       const routes = [
         {
           name: "Test",
           path: "test",
-          match: {}
+          resolve: {}
         }
       ];
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });
       const routeProperties = router.route.properties("Test");
-      expect(routeProperties.match).toEqual({});
+      expect(routeProperties.resolve).toEqual({});
       done();
     });
   });

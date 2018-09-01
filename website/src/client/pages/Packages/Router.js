@@ -391,7 +391,7 @@ router.navigate({
                 </table>
 
                 <p>
-                  When a matched route is async (it has <IJS>match</IJS>{" "}
+                  When a matched route is async (it has <IJS>resolve</IJS>{" "}
                   functions), the router will not call the observer functions
                   until the async function(s) have resolved.
                 </p>
@@ -553,7 +553,7 @@ const userPathname = router.route.pathname(
             </p>
             <p>
               The <IJS>once()</IJS> function is useful for any async route{" "}
-              <IJS>match</IJS> functions that only need to be called once.
+              <IJS>resolve</IJS> functions that only need to be called once.
             </p>
             <Note>
               This will not work for functions whose result depends on variables
@@ -568,7 +568,7 @@ const routes = [
   {
     name: "Menu",
     path: "menu",
-    match: {
+    resolve: {
       // this function will be called every time the user
       // navigates to the "Menu" route
       nonCached: () => api.getItems(),
@@ -666,44 +666,44 @@ const path = pathnameGenerator.get("Yo", { name: "joey" })
           </SideBySide>
         </Subsection>
 
-        <Subsection title="route.match" id="match">
+        <Subsection title="route.resolve" id="resolve">
           <SideBySide>
             <Explanation>
               <p>
-                The <IJS>match</IJS> object groups async functions that will be
-                called when the route matches.
+                The <IJS>resolve</IJS> object groups async functions that will
+                be called when the route matches.
               </p>
               <p>
-                A route with any <IJS>match</IJS> functions is asynchronous,
-                while one with no <IJS>match</IJS> functions is synchronous. You
-                can read more about this is the{" "}
+                A route with any <IJS>resolve</IJS> functions is asynchronous,
+                while one with no <IJS>resolve</IJS> functions is synchronous.
+                You can read more about this is the{" "}
                 <Link to="Guide" params={{ slug: "sync-or-async" }}>
                   sync or async
                 </Link>{" "}
                 guide.
               </p>
               <p>
-                <IJS>match</IJS> functions are called every time that a route
+                <IJS>resolve</IJS> functions are called every time that a route
                 matches the current location.
               </p>
               <p>
-                <IJS>match</IJS> functions will be passed an object with the
+                <IJS>resolve</IJS> functions will be passed an object with the
                 matched route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
                 <IJS>partials</IJS>, and <IJS>location</IJS>.
               </p>
               <Note>
                 You should not perform side effects (e.g. passing the loaded
-                data to a Redux store) in <IJS>match</IJS> functions because it
-                is possible that navigating to the route might be cancelled. If
-                you must perform side effects for a route, you should do so in{" "}
-                <IJS>response()</IJS>.
+                data to a Redux store) in <IJS>resolve</IJS> functions because
+                it is possible that navigating to the route might be cancelled.
+                If you must perform side effects for a route, you should do so
+                in <IJS>response()</IJS>.
               </Note>
             </Explanation>
             <CodeBlock>
               {`const about = {
   name: 'About',
   path: 'about',
-  match: {
+  resolve: {
     body: () => import('./components/About'),
     data: () => fetch('/api/about')
   }
@@ -777,13 +777,13 @@ const routes = [
                 <Explanation>
                   <p>
                     <IJS>error</IJS> - If an error occurs with the route's{" "}
-                    <IJS>match</IJS> methods, you might want to attach an error
-                    message to the response.
+                    <IJS>resolve</IJS> methods, you might want to attach an
+                    error message to the response.
                   </p>
                 </Explanation>
                 <CodeBlock>
                   {`{
-  match: {
+  resolve: {
     test: () => Promise.reject("woops!")
   },
   response({ error }) {
@@ -934,7 +934,7 @@ const routes = [
                 <Explanation>
                   <p>
                     <IJS>resolved</IJS> is an object with the values resolved by
-                    the <IJS>match</IJS> functions.
+                    the <IJS>resolve</IJS> functions.
                   </p>
                   <p>
                     If a route isn't async, <IJS>resolved</IJS> will be{" "}
@@ -946,7 +946,7 @@ const routes = [
 const user = {
   name: 'User',
   path: ':id',
-  match: {
+  resolve: {
     data: ({ params, location }) => (
       fetch(\`/api/users/$\{params.id\}\`)
         .then(resp => JSON.parse(resp))
@@ -966,15 +966,15 @@ const user = {
                 <Explanation>
                   <p>
                     <IJS>error</IJS> is an error thrown by one of the route's{" "}
-                    <IJS>match</IJS> functions.
+                    <IJS>resolve</IJS> functions.
                   </p>
                 </Explanation>
                 <CodeBlock>
-                  {`// check if any of a route's match functions threw
+                  {`// check if any of a route's resolve functions threw
 const user = {
   name: 'User',
   path: ':id',
-  match: {
+  resolve: {
     data: ({ params, location }) => (
       fetch(\`/api/users/$\{params.id\}\`)
         .then(resp => JSON.parse(resp))

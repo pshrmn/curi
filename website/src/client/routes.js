@@ -36,7 +36,7 @@ export default [
       {
         name: "Tutorial",
         path: ":slug",
-        match: {
+        resolve: {
           body: () =>
             import(/* webpackChunkName: 'tutorial' */ "./route-components/Tutorial").then(
               module => module.default,
@@ -73,7 +73,7 @@ export default [
       {
         name: "Guide",
         path: ":slug/",
-        match: {
+        resolve: {
           body: () =>
             import(/* webpackChunkName: 'guide' */ "./route-components/Guide").then(
               module => module.default,
@@ -104,7 +104,7 @@ export default [
       {
         name: "Package",
         path: "@curi/:package/",
-        match: {
+        resolve: {
           body: () =>
             import(/* webpackChunkName: 'package' */ "./route-components/Package").then(
               module => module.default,
@@ -135,7 +135,7 @@ export default [
       {
         name: "Example",
         path: ":category/:slug/",
-        match: {
+        resolve: {
           body: () =>
             import(/* webpackChunkName: 'example' */ "./route-components/Example").then(
               module => module.default,

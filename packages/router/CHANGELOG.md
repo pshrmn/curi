@@ -1,5 +1,9 @@
 ## Next
 
+* Switch from `route.match` to `route.resolve`.
+
+## 1.0.0-beta.39
+
 * Fix for optional initial path segments.
 
 ## 1.0.0-beta.38

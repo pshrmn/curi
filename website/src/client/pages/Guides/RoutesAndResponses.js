@@ -99,7 +99,7 @@ export default ({ name }) => (
                   <td>data</td>
                   <td>
                     A place to attach any data you want to the response, such as
-                    data loaded in the route's <IJS>match</IJS> functions.
+                    data loaded in the route's <IJS>resolve</IJS> functions.
                   </td>
                 </tr>
                 <tr>
@@ -286,7 +286,7 @@ const routes = [
 ];`}
         </CodeBlock>
       </SideBySide>
-      <Subsection title="Match" id="match">
+      <Subsection title="Resolve" id="resolve">
         <SideBySide>
           <Explanation>
             <p>
@@ -296,13 +296,13 @@ const routes = [
               based on the path parameters parsed from the location.
             </p>
             <p>
-              A route's <IJS>match</IJS> property is an optional object for
+              A route's <IJS>resolve</IJS> property is an optional object for
               attaching functions to a route. A response will not be emitted
-              until after all of a route's <IJS>match</IJS> functions have
+              until after all of a route's <IJS>resolve</IJS> functions have
               finished.
             </p>
             <p>
-              A route with <IJS>match</IJS> properties is asynchronous, which
+              A route with <IJS>resolve</IJS> properties is asynchronous, which
               has effects to be aware of. You can read about these in the{" "}
               <Link to="Guide" params={{ slug: "sync-or-async" }}>
                 Sync or Async
@@ -310,17 +310,17 @@ const routes = [
               guide.
             </p>
             <p>
-              Curi uses Promises to manage a route's <IJS>match</IJS> functions.
-              Each function should return a Promise. This makes it easy to wait
-              for all of the <IJS>match</IJS> functions to complete before
-              emitting the response for a matched route.
+              Curi uses Promises to manage a route's <IJS>resolve</IJS>{" "}
+              functions. Each function should return a Promise. This makes it
+              easy to wait for all of the <IJS>resolve</IJS> functions to
+              complete before emitting the response for a matched route.
             </p>
             <Note>
               <IJS>Promise.resolve()</IJS> can be used to return a Promise.
             </Note>
             <p>
-              When <IJS>match</IJS> functions are called, they will be passed an
-              object with the "match" properties of a response. These are the
+              When <IJS>resolve</IJS> functions are called, they will be passed
+              an object with the "match" properties of a response. These are the
               matched route's <IJS>name</IJS>, the <IJS>location</IJS>, an
               object of parsed <IJS>params</IJS>, and an array of the names of{" "}
               <IJS>partial</IJS> route matches.
@@ -330,7 +330,7 @@ const routes = [
             {`{
   name: "User",
   path: "u/:id",
-  match: {
+  resolve: {
     authorized: () => {
       // run code to verify the user can view the page
       return Promise.resolve(true);
@@ -369,16 +369,16 @@ const routes = [
               might find useful.
             </p>
             <p>
-              The first is an object of <IJS>match</IJS> properties (the base
+              The first is an object of <IJS>resolve</IJS> properties (the base
               response properties).
             </p>
             <p>
               The second is a <IJS>resolved</IJS> object, which contains the
-              resolved values from the route's <IJS>match</IJS> functions.
+              resolved values from the route's <IJS>resolve</IJS> functions.
             </p>
             <p>
               The third property is an <IJS>error</IJS>, which is only defined
-              if one of the <IJS>match</IJS> functions throws an error and you
+              if one of the <IJS>resolve</IJS> functions throws an error and you
               don't catch it.
             </p>
           </Explanation>
@@ -389,7 +389,7 @@ const routes = [
   {
     name: "User",
     path: "u/:id",
-    match: {
+    resolve: {
       data: ({ params }) => UserAPI.get(params.id)
     },
     response({ match, resolved, error }) {

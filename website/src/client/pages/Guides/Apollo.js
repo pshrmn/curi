@@ -190,12 +190,13 @@ const Noun = ({ response }) => (
         <Explanation>
           <p>
             You can use your Apollo client instance to call queries in a route's{" "}
-            <IJS>match</IJS> functions. <IJS>match</IJS> functions are expected
-            to return a Promise, which is exactly what <IJS>client.query()</IJS>{" "}
-            returns, so tightly pairing Curi and Apollo is mostly center around
-            using a <IJS>match</IJS> functoin to return a{" "}
-            <IJS>client.query()</IJS> call. This will delay navigation until
-            after a route's GraphQL data has been loaded by Apollo.
+            <IJS>resolve</IJS> functions. <IJS>resolve</IJS> functions are
+            expected to return a Promise, which is exactly what{" "}
+            <IJS>client.query()</IJS> returns, so tightly pairing Curi and
+            Apollo is mostly center around using a <IJS>resolve</IJS> function
+            to return a <IJS>client.query()</IJS> call. This will delay
+            navigation until after a route's GraphQL data has been loaded by
+            Apollo.
           </p>
         </Explanation>
         <CodeBlock>
@@ -206,7 +207,7 @@ const routes = [
   {
     name: "Example",
     path: "example/:id",
-    match: {
+    resolve: {
       data({ params }) {
         return client.query({
           query: EXAMPLE_QUERY,
@@ -268,7 +269,7 @@ export default [
   {
     name: "Verb",
     path: "verb/:word",
-    match: {
+    resolve: {
       verb({ params }) {
         return client.query({
           query: GET_VERB,
@@ -312,7 +313,7 @@ const Verb = ({ response }) => (
       <SideBySide>
         <Explanation>
           <p>
-            The second approach is to use a <IJS>match</IJS> function as a way
+            The second approach is to use a <IJS>resolve</IJS> function as a way
             to cache the data, but also use <Cmp>Query</Cmp>. With this
             approach, we do not have to attach the query data to the response;
             we are just relying on the fact that Apollo will execute and cache
@@ -328,7 +329,7 @@ export default [
   {
     name: "Verb",
     path: "verb/:word",
-    match: {
+    resolve: {
       data({ params }) {
         // load the data so it is cached by
         // your Apollo client
@@ -380,7 +381,7 @@ const Verb = ({ response }) => (
           <Explanation>
             <p>
               One additional benefit of adding queries to routes using{" "}
-              <IJS>match</IJS> functions is that you can prefetch data for a
+              <IJS>resolve</IJS> functions is that you can prefetch data for a
               route.
             </p>
             <p>
@@ -400,7 +401,7 @@ const routes = [
   {
     name: "Example",
     path: "example/:id",
-    match {
+    resolve: {
       examples({ params }) {
         client.query({
           query: GET_EXAMPLES,

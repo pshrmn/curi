@@ -4,7 +4,7 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
+    resolve: {
       body: () =>
         import("./pages/Home").then(
           module => (module.default ? module.default : module)
@@ -21,7 +21,7 @@ export default [
   {
     name: "Movie",
     path: "movie/:id",
-    match: {
+    resolve: {
       body: () =>
         import("./pages/Movie").then(
           module => (module.default ? module.default : module)
@@ -43,7 +43,7 @@ export default [
   {
     name: "Not Found",
     path: "(.*)",
-    match: {
+    resolve: {
       body: () =>
         import("./pages/NotFound").then(
           module => (module.default ? module.default : module)

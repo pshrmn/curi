@@ -91,8 +91,8 @@ npm run start`}
           </Note>
           <p>
             The async functions for a route are grouped under the route's{" "}
-            <IJS>match</IJS> object. The name of each function is the name that
-            the function's result will be available as on the{" "}
+            <IJS>resolve</IJS> object. The name of each function is the name
+            that the function's result will be available as on the{" "}
             <IJS>resolved</IJS> object. If any of the async functions throws an
             error, that error will be available in the <IJS>response()</IJS>{" "}
             function through the <IJS>error</IJS> property.
@@ -112,7 +112,7 @@ npm run start`}
   {
     name: "A Route",
     path: "route/:id",
-    match: {
+    resolve: {
       component: () => import("./components/SomeComponent")
         .then(module => module.default),
       data: ({ params }) => fetch(\`/api/data/$\{params.id\}\`)
@@ -244,7 +244,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
   {
     name: "Test",
     path: "test",
-    match: {
+    resolve: {
       body: () => import(/* webpackChunkName: "Test" */ "./components/Test.js")
     }
   }
@@ -279,7 +279,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
   {
     name: "One",
     path: "one",
-    match: {
+    resolve: {
       body: () => import("./components/One.js")
         .then(module => module.default)
     },
@@ -292,7 +292,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
   {
     name: "Two",
     path: "two",
-    match: {
+    resolve: {
       body: () => import("./components/Two.js")
     },
     response({ resolved }) {
@@ -323,7 +323,7 @@ const routes = [
   {
     name: "One",
     path: "one",
-    match: {
+    resolve: {
       body: () => import("./components/One.js")
         .then(module => module.default)
         .catch(err => displayLoadError(err))
@@ -357,7 +357,7 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
+    resolve: {
       body: () => import("./components/Home")
         .then(module => module.default)
     },
@@ -370,7 +370,7 @@ export default [
   {
     name: "Book",
     path: "book/:id",
-    match: {
+    resolve: {
       body: () => import("./components/Book")
         .then(module => module.default)
     },
@@ -383,7 +383,7 @@ export default [
   {
     name: "Checkout",
     path: "checkout",
-    match: {
+    resolve: {
       body: () => import("./components/Checkout")
         .then(module => module.default)
     },
@@ -396,7 +396,7 @@ export default [
   {
     name: "Catch All",
     path: "(.*)",
-    match: {
+    resolve: {
       body: () => import("./components/NotFound")
         .then(module => module.default)
     },
@@ -582,7 +582,7 @@ export default [
   {
     name: "Home",
     path: "",
-    match: {
+    resolve: {
       body: () => import("./components/Home")
         .then(module => module.default),
       books: () => BOOKS()
@@ -600,7 +600,7 @@ export default [
     params: {
       id: id => parseInt(id, 10)
     },
-    match: {
+    resolve: {
       body: () => import("./components/Book")
         .then(module => module.default),
       book: ({ params }) => BOOK(params.id)
@@ -615,7 +615,7 @@ export default [
   {
     name: "Checkout",
     path: "checkout",
-    match: {
+    resolve: {
       body: () => import("./components/Checkout")
         .then(module => module.default)
     },
@@ -628,7 +628,7 @@ export default [
   {
     name: "Catch All",
     path: "(.*)",
-    match: {
+    resolve: {
       body: () => import("./components/NotFound")
         .then(module => module.default)
     },
