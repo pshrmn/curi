@@ -323,7 +323,7 @@ describe("<Link>", () => {
           {
             name: "Test",
             path: "test",
-            match: {
+            resolve: {
               test: () => {
                 return new Promise(resolve => {
                   setTimeout(() => {
@@ -363,7 +363,7 @@ describe("<Link>", () => {
           {
             name: "Slow",
             path: "slow",
-            match: {
+            resolve: {
               test: () => {
                 // takes 500ms to resolve
                 return new Promise(resolve => {
@@ -420,7 +420,7 @@ describe("<Link>", () => {
           {
             name: "Loader",
             path: "load",
-            match: {
+            resolve: {
               test: () => Promise.resolve("done")
             }
           },

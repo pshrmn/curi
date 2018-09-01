@@ -150,7 +150,7 @@ describe("<curi-link>", () => {
         {
           name: "Test",
           path: "test",
-          match: {
+          resolve: {
             test: () => {
               return new Promise(resolve => {
                 setTimeout(() => {
@@ -253,7 +253,7 @@ describe("<curi-link>", () => {
           {
             name: "Slow",
             path: "slow",
-            match: {
+            resolve: {
               test: () => {
                 return new Promise(resolve => {
                   setTimeout(() => {
@@ -266,7 +266,7 @@ describe("<curi-link>", () => {
           {
             name: "Fast",
             path: "fast",
-            match: {
+            resolve: {
               test: () => Promise.resolve("fast")
             }
           },
