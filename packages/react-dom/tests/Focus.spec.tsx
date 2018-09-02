@@ -134,6 +134,81 @@ describe("<Focus>", () => {
     expect(wrapper).toBe(postNavFocus);
   });
 
+  describe("preventScroll", () => {
+    const realFocus = HTMLElement.prototype.focus;
+    let fakeFocus;
+
+    beforeEach(() => {
+      fakeFocus = HTMLElement.prototype.focus = jest.fn();
+    });
+
+    afterEach(() => {
+      fakeFocus.mockReset();
+      HTMLElement.prototype.focus = realFocus;
+    });
+
+    it("calls focus({ preventScroll: false }} when not provided", () => {
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Focus>
+              {ref => (
+                <div id="test" tabIndex={-1} ref={ref}>
+                  <input type="text" />
+                </div>
+              )}
+            </Focus>
+          )}
+        </CuriProvider>,
+        node
+      );
+      jest.runAllTimers();
+      expect(fakeFocus.mock.calls[0][0]).toMatchObject({
+        preventScroll: false
+      });
+    });
+
+    it("calls focus({ preventScroll: true }} when preventScroll = true", () => {
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Focus preventScroll={true}>
+              {ref => (
+                <div id="test" tabIndex={-1} ref={ref}>
+                  <input type="text" />
+                </div>
+              )}
+            </Focus>
+          )}
+        </CuriProvider>,
+        node
+      );
+      jest.runAllTimers();
+      expect(fakeFocus.mock.calls[0][0]).toMatchObject({ preventScroll: true });
+    });
+
+    it("calls focus({ preventScroll: false }} when preventScroll = false", () => {
+      ReactDOM.render(
+        <CuriProvider router={router}>
+          {() => (
+            <Focus preventScroll={false}>
+              {ref => (
+                <div id="test" tabIndex={-1} ref={ref}>
+                  <input type="text" />
+                </div>
+              )}
+            </Focus>
+          )}
+        </CuriProvider>,
+        node
+      );
+      jest.runAllTimers();
+      expect(fakeFocus.mock.calls[0][0]).toMatchObject({
+        preventScroll: false
+      });
+    });
+  });
+
   describe("tabIndex", () => {
     it("warns when ref element does not have a tabIndex attribute", () => {
       const realWarn = console.warn;
