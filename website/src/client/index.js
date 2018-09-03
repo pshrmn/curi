@@ -11,7 +11,9 @@ import prefetch from "@curi/route-prefetch";
 import routes from "./routes";
 import renderFunction from "./render";
 
-const setTitle = titleSideEffect({ suffix: "| Curi Documentation" });
+const setTitle = titleSideEffect(
+  ({ response }) => `${response.title} | Curi Documentation`
+);
 const scrollTo = scrollSideEffect();
 const announce = ariaLiveSideEffect(
   ({ response }) => `Navigated to ${response.title}`
