@@ -1,6 +1,10 @@
+## Next
+
+* Pass the side effect creator a callback function that returns a string.
+
 ## 1.0.0-beta.11
 
-- Switch script builds from IIFE to UMD
+* Switch script builds from IIFE to UMD
 
 ## 1.0.0-beta.10
 

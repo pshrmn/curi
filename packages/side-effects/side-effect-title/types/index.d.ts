@@ -1,7 +1,3 @@
-import { Observer } from "@curi/router";
-export interface TitleOptions {
-    prefix?: string;
-    suffix?: string;
-    delimiter?: string;
-}
-export default function createTitleSideEffect(options?: TitleOptions): Observer;
+import { Observer, Response } from "@curi/router";
+export declare type TitleBuilder = (response: Response) => string;
+export default function createTitleSideEffect(callback: TitleBuilder): Observer;
