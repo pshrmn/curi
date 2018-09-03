@@ -530,6 +530,32 @@ const userPathname = router.route.pathname(
             </Subsection>
           </Subsection>
 
+          <Subsection tag="h5" title="refresh()" id="refresh-property">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  The <IJS>refresh()</IJS> function takes an array of new
+                  routes, which will replace the existing routes. The router
+                  will emit a new response based on the current location.
+                </p>
+                <p>
+                  The function can be called without any arguments and it will
+                  emit a response using the existing routes.
+                </p>
+              </Explanation>
+              <CodeBlock>
+                {`const oldRoutes = [...];
+const newRoutes = [...];
+
+const router = curi(history, oldRoutes);
+// generates responses using old routes
+
+router.refresh(newRoutes);
+// generates responses using new routes`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+
           <Subsection tag="h5" title="history" id="history-property">
             <SideBySide>
               <Explanation>

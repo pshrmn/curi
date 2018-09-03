@@ -33,23 +33,19 @@ export default ({ name, version, globalName }) => (
               response is created.
             </p>
             <p>
-              The side effect relies on the response objects having a{" "}
-              <IJS>title</IJS> string, which you will have to set yourself using
-              your routes' <IJS>response()</IJS> functions. You can learn about
-              setting a title in the{" "}
-              <Link to="Guide" params={{ slug: "routes" }} hash="response">
-                all about routes
-              </Link>{" "}
-              guide.
+              When creating the title side effect, you pass it a function. That
+              function will be passed the object emitted by the router (with{" "}
+              <IJS>response</IJS>, <IJS>navigation</IJS>, and <IJS>router</IJS>{" "}
+              properties). The function returns a string, which the side effect
+              will set as the document's <IJS>title</IJS>.
             </p>
           </Explanation>
           <CodeBlock>
             {`import { curi } from '@curi/router';
 import titleEffect from '@curi/side-effect-title';
 
-const setTitle = titleEffect({
-  suffix: 'My Site',
-  delimiter: '|'
+const setTitle = titleEffect(({ response }) => {
+  return \`\${response.title} | My Site\`;
 });
 
 const router = curi(history, routes, {
@@ -60,37 +56,23 @@ const router = curi(history, routes, {
         <SideBySide>
           <Explanation>
             <p>
-              You can provide a prefix and/or a suffix string that will be
-              included before/after the title.
+              While you can use any properties of the <IJS>response</IJS> to
+              generate the string, the <IJS>response.title</IJS> property is
+              intended to be used with this side effect.
             </p>
           </Explanation>
           <CodeBlock>
-            {`const prefixedTitle = titleEffect({ prefix: 'Before'});
-// response.title = 'Middle'
-// document.title = 'Before Middle';
-
-const suffixedTitle = titleEffect({ suffix: 'After'});
-// response.title = 'Middle'
-// document.title = 'Middle After';`}
-          </CodeBlock>
-        </SideBySide>
-        <SideBySide>
-          <Explanation>
-            <p>
-              A <IJS>delimiter</IJS> can be specified for joining the{" "}
-              <IJS>prefix</IJS> and <IJS>suffix</IJS> to the title string.
-              Spaces will be placed between the prefix, title, and suffix
-              strings and the delimiters.
-            </p>
-          </Explanation>
-          <CodeBlock>
-            {`const prefixedTitle = titleEffect({
-  prefix: 'Before',
-  suffix: 'After',
-  delimiter: '&'
-});
-// response.title = 'Middle'
-// document.title = 'Before & Middle & After';`}
+            {`{
+  name: "About",
+  path: "about",
+  response() {
+    return {
+      body: Home,
+      title: "About"
+    }
+  }              
+}
+// when the About route matches, document.title = "About | My Site"`}
           </CodeBlock>
         </SideBySide>
       </Section>
