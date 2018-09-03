@@ -3,7 +3,7 @@ export default {
   "route-active": "1.0.0-beta.9",
   "route-ancestors": "1.0.0-beta.8",
   "route-prefetch": "1.0.0-beta.14",
-  "react-dom": "1.0.0-beta.0",
+  "react-dom": "1.0.0-beta.1",
   "react-native": "1.0.0-beta.10",
   "react-universal": "1.0.0-beta.0",
   "router": "1.0.0-beta.40",

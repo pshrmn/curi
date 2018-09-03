@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/transitions-vue",
   "private": true,
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Animate transitions betweeen locations",
   "main": "index.js",
   "scripts": {

@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.1
 
 * Add `preventScroll` prop to `<Focus>`. When `false` (default), the page will scroll to the element that it focuses. When `true`, the page will not scroll.
 

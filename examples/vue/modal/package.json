@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/modal-vue",
   "private": true,
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Render a modal (pinterest/twitter)",
   "main": "index.js",
   "scripts": {
