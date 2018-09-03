@@ -502,13 +502,39 @@ describe("curi", () => {
       const router = curi(history, englishRoutes);
 
       const { response: initialResponse } = router.current();
+
       expect(initialResponse.name).toBe("About");
 
       // setup a response handler, but ensure it doesn't get called
       // with existing response.
       router.respond(
-        ({ response }) => {
+        ({ response, navigation }) => {
           expect(response.name).toBe("About");
+          done();
+        },
+        { observe: false, initial: false }
+      );
+      // then refresh the router. the response handler should be called
+      // with a response for the current location.
+      router.refresh();
+    });
+
+    it("re-uses previously emitted navigation.previous", done => {
+      const englishRoutes = [
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
+        { name: "Contact", path: "contact" }
+      ];
+      const history = InMemory({ locations: ["/about"] });
+      const router = curi(history, englishRoutes);
+
+      const { navigation: initialNavigation } = router.current();
+
+      // setup a response handler, but ensure it doesn't get called
+      // with existing response.
+      router.respond(
+        ({ response, navigation }) => {
+          expect(navigation).toMatchObject(initialNavigation);
           done();
         },
         { observe: false, initial: false }

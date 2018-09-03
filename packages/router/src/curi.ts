@@ -45,6 +45,9 @@ export default function createRouter(
     response: null,
     navigation: null
   };
+  // when true, navigation.previous will re-use the previous
+  // navigation.previous instead of using mostRecent.response
+  let refreshing = false;
 
   // router.navigate() hooks
   let cancelCallback: (() => void) | undefined;
@@ -86,8 +89,13 @@ export default function createRouter(
 
     const navigation: Navigation = {
       action: pendingNav.action,
-      previous: mostRecent.response
+      previous: refreshing
+        ? mostRecent.navigation
+          ? mostRecent.navigation.previous
+          : null
+        : mostRecent.response
     };
+    refreshing = false;
 
     const match = matchLocation(pendingNav.location, routes);
     // if no routes match, do nothing
@@ -198,7 +206,10 @@ export default function createRouter(
         }
       }
     },
-    refresh: setupRoutesAndInteractions,
+    refresh(routes?: Array<RouteDescriptor>) {
+      refreshing = true;
+      setupRoutesAndInteractions(routes);
+    },
     current() {
       return mostRecent;
     },
