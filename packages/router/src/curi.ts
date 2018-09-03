@@ -54,24 +54,26 @@ export default function createRouter(
   const oneTimers: Array<Observer> = [];
 
   function setupRoutesAndInteractions(
-    routeArray: Array<RouteDescriptor>
+    routeArray?: Array<RouteDescriptor>
   ): void {
-    routes = routeArray.map(createRoute);
-    for (let key in routeInteractions) {
-      delete routeInteractions[key];
+    if (routeArray) {
+      routes = routeArray.map(createRoute);
+      for (let key in routeInteractions) {
+        delete routeInteractions[key];
+      }
+
+      // add the pathname interaction to the provided interactions
+      userInteractions
+        .concat(pathnameInteraction(options.pathnameOptions))
+        .forEach(interaction => {
+          interaction.reset();
+          routeInteractions[interaction.name] = interaction.get;
+          registerRoutes(routes, interaction);
+        });
     }
 
-    // add the pathname interaction to the provided interactions
-    userInteractions
-      .concat(pathnameInteraction(options.pathnameOptions))
-      .forEach(interaction => {
-        interaction.reset();
-        routeInteractions[interaction.name] = interaction.get;
-        registerRoutes(routes, interaction);
-      });
-
     // assign navigation response handler
-    // this will be re-called if router.replaceRoutes() is called
+    // this will be re-called if router.refresh() is called
     history.respondWith(navigationHandler);
   }
 
@@ -196,7 +198,7 @@ export default function createRouter(
         }
       }
     },
-    replaceRoutes: setupRoutesAndInteractions,
+    refresh: setupRoutesAndInteractions,
     current() {
       return mostRecent;
     },

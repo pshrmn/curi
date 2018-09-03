@@ -1,3 +1,7 @@
+## Next
+
+* Rename `router.replaceRoutes()` to `router.refresh()`. If called with no arguments, just re-emits a response.
+
 ## 1.0.0-beta.40
 
 * Switch from `route.match` to `route.resolve`.

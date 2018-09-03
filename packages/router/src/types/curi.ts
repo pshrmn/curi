@@ -48,7 +48,7 @@ export interface NavigationDetails {
 }
 
 export interface CuriRouter {
-  replaceRoutes: (routeArray: Array<RouteDescriptor>) => void;
+  refresh: (routeArray?: Array<RouteDescriptor>) => void;
   respond: (fn: Observer, options?: RespondOptions) => RemoveObserver | void;
   route: Interactions;
   history: History;
