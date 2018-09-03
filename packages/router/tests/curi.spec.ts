@@ -471,7 +471,6 @@ describe("curi", () => {
       const history = InMemory({
         locations: ["/admin"]
       });
-
       const nonAuthRoutes = [
         { name: "Home", path: "" },
         { name: "Not Found", path: "(.*)" }
