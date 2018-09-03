@@ -12,7 +12,7 @@ import routes from "./routes";
 import renderFunction from "./render";
 
 const setTitle = titleSideEffect(
-  response => `${response.title} | Curi Documentation`
+  ({ response }) => `${response.title} | Curi Documentation`
 );
 const scrollTo = scrollSideEffect();
 const announce = ariaLiveSideEffect(

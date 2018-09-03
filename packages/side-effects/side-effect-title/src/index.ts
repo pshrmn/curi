@@ -1,12 +1,11 @@
-import { Observer, Emitted, Response } from "@curi/router";
+import { Observer, Emitted } from "@curi/router";
 
-export type TitleBuilder = (response: Response) => string;
+export type TitleBuilder = (emitted: Emitted) => string;
 
 export default function createTitleSideEffect(
   callback: TitleBuilder
 ): Observer {
-  return function({ response }: Emitted) {
-    const title = callback(response);
-    document.title = title;
+  return function(emitted: Emitted) {
+    document.title = callback(emitted);
   };
 }

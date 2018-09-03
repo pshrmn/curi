@@ -10,7 +10,7 @@ describe("createTitleSideEffect", () => {
   } as Emitted;
 
   it("sets document.title to value returned by provided callback", () => {
-    const sideEffect = createTitleSideEffect(response => {
+    const sideEffect = createTitleSideEffect(({ response }) => {
       return `My Site | ${response.title}`;
     });
     sideEffect(fakeResponse);
