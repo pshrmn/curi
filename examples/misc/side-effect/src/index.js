@@ -8,7 +8,9 @@ import { CuriProvider } from "@curi/react-dom";
 import routes from "./routes";
 import NavLinks from "./components/NavLinks";
 
-const setTitle = createTitleSideEffect({ suffix: "| Middleware Example" });
+const setTitle = createTitleSideEffect(
+  ({ response }) => `${response.title} | Middleware Example`
+);
 const history = Browser();
 const router = curi(history, routes, {
   sideEffects: [{ effect: setTitle }]
