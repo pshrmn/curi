@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { CuriProvider } from "@curi/react";
+import { CuriProvider } from "@curi/react-dom";
 
 import NavLinks from "./components/NavLinks";
 

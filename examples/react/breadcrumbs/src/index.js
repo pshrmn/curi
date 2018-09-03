@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Browser from "@hickory/browser";
 import { curi } from "@curi/router";
-import { CuriProvider } from "@curi/react";
+import { CuriProvider } from "@curi/react-dom";
 import ancestors from "@curi/route-ancestors";
 
 import routes from "./routes";

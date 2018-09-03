@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { curi } from "@curi/router";
 import Browser from "@hickory/browser";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { CuriProvider } from "@curi/react";
+import { CuriProvider } from "@curi/react-dom";
 
 import routes from "./routes";
 import NavLinks from "./components/NavLinks";

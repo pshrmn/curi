@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { curi } from "@curi/router";
 import Browser from "@hickory/browser";
-import { CuriProvider, Focus } from "@curi/react";
+import { CuriProvider, Focus } from "@curi/react-dom";
 
 import NavLinks from "./components/NavLinks";
 
