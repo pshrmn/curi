@@ -14,13 +14,13 @@ class App extends React.Component {
   }
 
   login() {
-    this.props.router.replaceRoutes(adminRoutes);
+    this.props.router.refresh(adminRoutes);
     this.setState({ admin: true });
   }
 
   logout() {
     const { router } = this.props;
-    router.replaceRoutes(baseRoutes);
+    router.refresh(baseRoutes);
     this.setState({ admin: false });
     const pathname = router.route.pathname("Home");
     router.history.push(pathname);

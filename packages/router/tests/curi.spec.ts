@@ -429,7 +429,7 @@ describe("curi", () => {
     });
   });
 
-  describe("replaceRoutes", () => {
+  describe("refresh", () => {
     const err = console.error;
 
     beforeEach(() => {
@@ -454,7 +454,7 @@ describe("curi", () => {
 
       const router = curi(history, englishRoutes);
 
-      router.replaceRoutes(spanishRoutes);
+      router.refresh(spanishRoutes);
 
       const englishNames = ["Home", "About", "Contact"];
       englishNames.forEach(n => {
@@ -467,11 +467,10 @@ describe("curi", () => {
       });
     });
 
-    it("re-calls response handler for new routes", () => {
+    it("emits a new response handler for new routes", () => {
       const history = InMemory({
         locations: ["/admin"]
       });
-
       const nonAuthRoutes = [
         { name: "Home", path: "" },
         { name: "Not Found", path: "(.*)" }
@@ -487,10 +486,36 @@ describe("curi", () => {
       const { response: initialResponse } = router.current();
       expect(initialResponse.name).toBe("Not Found");
 
-      router.replaceRoutes(authRoutes);
+      router.refresh(authRoutes);
 
       const { response: replacedResponse, navigation } = router.current();
       expect(replacedResponse.name).toBe("Admin");
+    });
+
+    it("emits a response when called with no argument", done => {
+      const englishRoutes = [
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
+        { name: "Contact", path: "contact" }
+      ];
+      const history = InMemory({ locations: ["/about"] });
+      const router = curi(history, englishRoutes);
+
+      const { response: initialResponse } = router.current();
+      expect(initialResponse.name).toBe("About");
+
+      // setup a response handler, but ensure it doesn't get called
+      // with existing response.
+      router.respond(
+        ({ response }) => {
+          expect(response.name).toBe("About");
+          done();
+        },
+        { observe: false, initial: false }
+      );
+      // then refresh the router. the response handler should be called
+      // with a response for the current location.
+      router.refresh();
     });
   });
 
