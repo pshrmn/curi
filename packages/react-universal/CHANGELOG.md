@@ -1,6 +1,6 @@
 ## Next
 
-* Export a `curiRoot()` (higher-order component) function to create a routing provider component instead of a `<CuriProvider>`. There should only be one Curi `router` in an application, so there shouldn't be a reason to swap routers.
+* Export a `curiProvider()` function to create a routing provider component instead of a `<CuriProvider>`.
 
 ## 1.0.0-beta.0
 

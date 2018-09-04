@@ -1,3 +1,7 @@
+## Next
+
+* Export a `curiProvider()` function to create a routing provider component instead of a `<CuriProvider>`.
+
 ## 1.0.0-beta.10
 
 * Change dependency to `@curi/react-universal` from `@curi/react`.
