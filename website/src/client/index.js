@@ -11,6 +11,8 @@ import prefetch from "@curi/route-prefetch";
 import routes from "./routes";
 import renderFunction from "./render";
 
+import "./scss/index.scss";
+
 const setTitle = titleSideEffect(
   ({ response }) => `${response.title} | Curi Documentation`
 );
@@ -39,3 +41,12 @@ router.respond(() => {
     navigator.serviceWorker.register("/service-worker.js");
   }
 })();
+
+if (process.env.NODE_ENV !== "production") {
+  if (module.hot) {
+    module.hot.accept("./routes", () => {
+      const nextRoutes = require("./routes").default;
+      router.refresh(nextRoutes);
+    });
+  }
+}

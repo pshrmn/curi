@@ -10,7 +10,10 @@ const SITE_URL = "https://curi.js.org/";
 const config = {
   context: path.join(__dirname, "src", "client"),
   entry: {
-    index: ["./scss/index.scss", "./index.js"]
+    index: [
+      "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
+      "./index.js"
+    ]
   },
   output: {
     path: STATIC_ROOT,
@@ -57,7 +60,10 @@ const config = {
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
       staticFileGlobs: [path.join(STATIC_ROOT, "img", "*.png")],
       mergeStaticsConfig: true
-    })
+    }),
+    process.env.NODE_ENV !== "production"
+      ? new webpack.HotModuleReplacementPlugin()
+      : undefined
   ]
 };
 

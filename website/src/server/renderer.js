@@ -8,7 +8,7 @@ import prefetch from "@curi/route-prefetch";
 import routes from "../client/routes";
 import renderFunction from "../client/render";
 
-export default function createHandler(debug = false) {
+export default function createRenderer(debug = false) {
   return function(req, res) {
     const history = InMemory({
       locations: [req.url]
