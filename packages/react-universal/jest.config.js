@@ -25,6 +25,6 @@ module.exports = {
   collectCoverageFrom: ["src/*.tsx"],
   testURL: "http://localhost",
   moduleNameMapper: {
-    "@curi/react": mappedModule
+    "@curi/react-universal": mappedModule
   }
 };
