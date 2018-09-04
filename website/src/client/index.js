@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Browser from "@hickory/browser";
 import { curi } from "@curi/router";
-import { CuriProvider } from "@curi/react-dom";
+import { curiProvider } from "@curi/react-dom";
 import titleSideEffect from "@curi/side-effect-title";
 import scrollSideEffect from "@curi/side-effect-scroll";
 import ariaLiveSideEffect from "@curi/side-effect-aria-live";
@@ -25,10 +25,11 @@ const router = curi(history, routes, {
   route: [active(), prefetch()],
   sideEffects: [setTitle, scrollTo, announce]
 });
+const Router = curiProvider(router);
 
 router.respond(() => {
   ReactDOM.hydrate(
-    <CuriProvider router={router}>{renderFunction}</CuriProvider>,
+    <Router>{renderFunction}</Router>,
     document.getElementById("root")
   );
 });

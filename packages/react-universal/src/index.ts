@@ -1,10 +1,10 @@
 export { ActiveProps } from "./Active";
 export { BlockProps } from "./Block";
-export { CuriProviderProps, CuriRenderFn } from "./CuriProvider";
+export { RouterProps, CuriRenderFn } from "./curiProvider";
 
 import Active from "./Active";
 import Block from "./Block";
-import CuriProvider from "./CuriProvider";
+import curiProvider from "./curiProvider";
 import { Curious } from "./Context";
 
-export { Active, Block, CuriProvider, Curious };
+export { Active, Block, curiProvider, Curious };

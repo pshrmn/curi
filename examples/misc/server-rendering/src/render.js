@@ -1,9 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { CuriProvider } from "@curi/react-dom";
 
 import NavLinks from "./components/NavLinks";
 
+// maintain this in a separate file to re-use it
+// on the server and the client
 export const renderResponse = ({ response }) => {
   const { body: Body, params } = response;
   return (
@@ -11,12 +11,5 @@ export const renderResponse = ({ response }) => {
       <NavLinks />
       <Body params={params} />
     </div>
-  );
-};
-
-export const responseHandler = ({ router }) => {
-  ReactDOM.hydrate(
-    <CuriProvider router={router}>{renderResponse}</CuriProvider>,
-    document.getElementById("root")
   );
 };

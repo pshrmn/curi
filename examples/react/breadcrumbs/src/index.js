@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Browser from "@hickory/browser";
 import { curi } from "@curi/router";
-import { CuriProvider } from "@curi/react-dom";
+import { curiProvider } from "@curi/react-dom";
 import ancestors from "@curi/route-ancestors";
 
 import routes from "./routes";
@@ -37,14 +37,15 @@ const history = Browser();
 const router = curi(history, routes, {
   route: [ancestors(), titleText()]
 });
+const Router = curiProvider(router);
 const root = document.getElementById("root");
 
 ReactDOM.render(
-  <CuriProvider router={router}>
+  <Router>
     {({ response, router }) => {
       const { body: Body, data } = response;
       return <Body response={response} router={router} />;
     }}
-  </CuriProvider>,
+  </Router>,
   document.getElementById("root")
 );

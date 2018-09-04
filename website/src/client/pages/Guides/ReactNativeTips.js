@@ -104,27 +104,29 @@ BackHandler.addEventListener(
           </CodeBlock>
         </SideBySide>
       </Subsection>
-      <Subsection title={<Cmp>CuriProvider</Cmp>} id="componentsCuriProvider">
+      <Subsection title={<IJS>curiProvider</IJS>} id="fn-curiProvider">
         <SideBySide>
           <Explanation>
             <p>
-              <IJS>@curi/react-dom</IJS> provides a <Cmp>CuriProvider</Cmp>{" "}
-              component that will listen for new responses and re-render your
-              application.
+              <IJS>@curi/react-native</IJS> provides a <IJS>curiProvider()</IJS>{" "}
+              function that will create the root Curi component for an
+              application. That component will listen for new responses and
+              re-render your application.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { CuriProvider } from '@curi/react-native';
+            {`import { curiProvider } from '@curi/react-native';
 
 import router from './router';
+const Router = curiProvider(router);
 
 const App = () => (
-  <CuriProvider router={router}>
+  <Router>
     {({ response }) => {
       const { body:Body } = response;
       return <Body response={response} />;
     }}
-  </CuriProvider>
+  </Router>
 );`}
           </CodeBlock>
         </SideBySide>

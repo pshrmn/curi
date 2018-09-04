@@ -5,17 +5,18 @@ import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 
 // resolved by jest
-import { CuriProvider, Curious } from "@curi/react-universal";
+import { curiProvider, Curious } from "@curi/react-universal";
 
 describe("<Curious>", () => {
   let node;
-  let history, router;
+  let history, router, Router;
   const routes = [{ name: "Home", path: "" }];
 
   beforeEach(() => {
     node = document.createElement("div");
     history = InMemory();
     router = curi(history, routes);
+    Router = curiProvider(router);
   });
 
   afterEach(() => {
@@ -25,7 +26,7 @@ describe("<Curious>", () => {
   it("passes router, response, and navigation to children function", done => {
     router.respond(({ response, navigation }) => {
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Curious>
               {value => {
@@ -37,7 +38,7 @@ describe("<Curious>", () => {
               }}
             </Curious>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
     });

@@ -18,17 +18,17 @@ export default ({ name }) => (
   // 1. Create a memory history using the requested location
   const history = InMemory({ locations: [req.url]});
 
-  // 2. Create a router
+  // 2. Create a router and the root React routing component
   const router = curi(history, routes);
+  const Router = curiProvider(router);
 
   // 3. Wait for the response to be generated
   router.respond(({ response, navigation }) => {
-    // 4. Generate the HTML markup by rendering a <CuriProvider> and
-    // passing it the router.
+    // 4. Generate the HTML markup by rendering the <Router>
     const markup = renderToString(
-      <CuriProvider router={router}>
+      <Router>
         {renderFunction}
-      </CuriProvider>
+      </Router>
     );
     // 5. Insert the markup into the page's html and send it
     res.send(renderFullPage(markup));

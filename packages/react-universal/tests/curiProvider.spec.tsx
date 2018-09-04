@@ -5,9 +5,9 @@ import { curi } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
 // resolved by jest
-import { CuriProvider, Curious } from "@curi/react-universal";
+import { curiProvider, Curious } from "@curi/react-universal";
 
-describe("<CuriProvider>", () => {
+describe("curiProvider()", () => {
   let node;
   const routes = [{ name: "Home", path: "" }, { name: "About", path: "about" }];
 
@@ -19,47 +19,7 @@ describe("<CuriProvider>", () => {
     ReactDOM.unmountComponentAtNode(node);
   });
 
-  describe("router prop", () => {
-    it("can switch observers when given a new router", () => {
-      const history = InMemory();
-      const router = curi(history, [
-        {
-          name: "Catch All",
-          path: "(.*)",
-          response() {
-            return { data: "one" };
-          }
-        }
-      ]);
-      const router2 = curi(history, [
-        {
-          name: "Catch All",
-          path: "(.*)",
-          response() {
-            return { data: "two" };
-          }
-        }
-      ]);
-
-      ReactDOM.render(
-        <CuriProvider router={router}>
-          {({ response }) => <div>{response.data}</div>}
-        </CuriProvider>,
-        node
-      );
-
-      expect(node.textContent).toBe("one");
-
-      ReactDOM.render(
-        <CuriProvider router={router2}>
-          {({ response }) => <div>{response.data}</div>}
-        </CuriProvider>,
-        node
-      );
-
-      expect(node.textContent).toBe("two");
-    });
-  });
+  describe("router argument", () => {});
 
   describe("children prop", () => {
     it("calls children() function when it renders", () => {
@@ -69,7 +29,8 @@ describe("<CuriProvider>", () => {
       const fn = jest.fn(() => {
         return null;
       });
-      ReactDOM.render(<CuriProvider router={router}>{fn}</CuriProvider>, node);
+      const Router = curiProvider(router);
+      ReactDOM.render(<Router>{fn}</Router>, node);
       expect(fn.mock.calls.length).toBe(1);
     });
 
@@ -89,7 +50,8 @@ describe("<CuriProvider>", () => {
         return null;
       });
 
-      ReactDOM.render(<CuriProvider router={router}>{fn}</CuriProvider>, node);
+      const Router = curiProvider(router);
+      ReactDOM.render(<Router>{fn}</Router>, node);
       history.navigate("/about");
     });
 
@@ -107,7 +69,8 @@ describe("<CuriProvider>", () => {
       });
 
       const router = curi(history, routes);
-      ReactDOM.render(<CuriProvider router={router}>{fn}</CuriProvider>, node);
+      const Router = curiProvider(router);
+      ReactDOM.render(<Router>{fn}</Router>, node);
     });
   });
 
@@ -130,15 +93,12 @@ describe("<CuriProvider>", () => {
         </Curious>
       );
 
+      const Router = curiProvider(router);
+
       router.respond(({ response, navigation }) => {
         emittedResponse = response;
         emittedNavigation = navigation;
-        ReactDOM.render(
-          <CuriProvider router={router}>
-            {() => <ContextLogger />}
-          </CuriProvider>,
-          node
-        );
+        ReactDOM.render(<Router>{() => <ContextLogger />}</Router>, node);
       });
     });
   });

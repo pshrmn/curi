@@ -356,20 +356,23 @@ const Inbox = ({ match }) => (
           <Explanation>
             <p>
               With Curi, we also need to re-render our application every time
-              that the location changes. We will do this using the{" "}
-              <Cmp>CuriProvider</Cmp> component, which comes from the{" "}
-              <IJS>@curi/react-dom</IJS> package.
+              that the location changes. We will do this by creating a root Curi
+              component by calling the <IJS>curiProvider()</IJS> function, which
+              comes from the <IJS>@curi/react-dom</IJS> package, and passing it
+              our Curi router. While the name of this component is entirely up
+              to you, we will refer to it as the <Cmp>Router</Cmp> here.
             </p>
             <p>
-              The <Cmp>CuriProvider</Cmp> takes a <IJS>router</IJS> prop, which
-              it will use know when a new responses are emitted.{" "}
-              <Cmp>CuriProvider</Cmp> also expects a function as its{" "}
-              <IJS>children</IJS> prop (a render-invoked function). This
-              function renders the application using the <IJS>response</IJS>.
+              The <Cmp>Router</Cmp> will setup an observer on the provided
+              router so that it can re-render your application whenever there is
+              a new <IJS>response</IJS>. The <Cmp>Router</Cmp> expects a
+              function as its <IJS>children</IJS> prop (a render-invoked
+              function). This function renders the application using the{" "}
+              <IJS>response</IJS>.
             </p>
             <p>
-              When the <Cmp>CuriProvider</Cmp>'s <IJS>children()</IJS> function
-              is called, it will receive an object with three properties:
+              When the <Cmp>Router</Cmp>'s <IJS>children()</IJS> function is
+              called, it will receive an object with three properties:
             </p>
             <ol>
               <li>
@@ -404,19 +407,24 @@ const Inbox = ({ match }) => (
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`ReactDOM.render((
-  <CuriProvider router={router}>
+            {`import { curiProvider } from "@curi/react-dom";
+
+const router = curi(history, routes);            
+const Router = curiProvider(router);
+
+ReactDOM.render((
+  <Router>
     {({ response }) => {
       const { body:Body } = response;
       return <Body />;
     }}
-  </CuriProvider>
+  </Router>
 ), holder);
 
 /*
-  <CuriProvider>
+  <Router>
     <Message />
-  </CuriProvider>
+  </Router>
 */`}
           </CodeBlock>
         </SideBySide>
@@ -447,16 +455,16 @@ const Inbox = ({ match }) => (
               It was mentioned above that there is no need for the{" "}
               <Cmp>App</Cmp> component with Curi. If you want to have an{" "}
               <Cmp>App</Cmp> component, you can render it either inside of the{" "}
-              <IJS>render</IJS> function or as a parent of your{" "}
-              <Cmp>CuriProvider</Cmp>. This can be useful for rendering content
-              that is unrelated to specific routes, like a page header or menu.
+              <IJS>children()</IJS> function or as a parent of your{" "}
+              <Cmp>Router</Cmp>. This can be useful for rendering content that
+              is unrelated to specific routes, like a page header or menu.
             </p>
             <p>
-              Rendering the <Cmp>App</Cmp> inside of the <IJS>children</IJS>{" "}
+              Rendering the <Cmp>App</Cmp> inside of the <IJS>children()</IJS>{" "}
               function is necessary if any of the components rendered by the{" "}
               <Cmp>App</Cmp> are location aware components, since they need to
               access the Curi router (through React’s context, which the{" "}
-              <Cmp>CuriProvider</Cmp> provides)
+              <Cmp>Router</Cmp> provides)
             </p>
           </Explanation>
           <CodeBlock lang="jsx">

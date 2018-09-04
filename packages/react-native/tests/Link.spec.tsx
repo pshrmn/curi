@@ -8,7 +8,7 @@ import { curi } from "@curi/router";
 import { TouchableHighlight, Text } from "react-native";
 
 // resolved by Jest
-import { CuriProvider, Link } from "@curi/react-native";
+import { curiProvider, Link } from "@curi/react-native";
 
 import { NavType } from "@hickory/root";
 
@@ -28,15 +28,15 @@ describe("<Link>", () => {
     it("renders a <TouchableHighlight> by default", () => {
       const history = InMemory();
       const router = curi(history, [{ name: "Test", path: "" }]);
-
+      const Router = curiProvider(router);
       const tree = renderer.create(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Test">
               <Text>Test</Text>
             </Link>
           )}
-        </CuriProvider>
+        </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
       expect(anchor).toBeDefined();
@@ -45,18 +45,20 @@ describe("<Link>", () => {
     it("when provided, it renders the component instead of an anchor", () => {
       const history = InMemory();
       const router = curi(history, [{ name: "Test", path: "" }]);
+      const Router = curiProvider(router);
+
       const StyledAnchor = props => (
         <TouchableHighlight style={{ borderColor: "orange" }} {...props} />
       );
 
       const tree = renderer.create(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Test" anchor={StyledAnchor}>
               <Text>Test</Text>
             </Link>
           )}
-        </CuriProvider>
+        </Router>
       );
       const anchor = tree.root.find(StyledAnchor);
       expect(anchor).toBeDefined();
@@ -70,14 +72,16 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
       const routes = [{ name: "Catch All", path: "(.*)" }];
       const router = curi(history, routes);
+      const Router = curiProvider(router);
+
       const tree = renderer.create(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to={null}>
               <Text>Test</Text>
             </Link>
           )}
-        </CuriProvider>
+        </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
       anchor.props.onPress(fakeEvent());
@@ -99,15 +103,17 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, routes);
+      const Router = curiProvider(router);
+
       const params = { name: "Glacier" };
       const tree = renderer.create(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Park" params={params}>
               <Text>Test</Text>
             </Link>
           )}
-        </CuriProvider>
+        </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
       anchor.props.onPress(fakeEvent());
@@ -120,16 +126,17 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, routes);
+      const Router = curiProvider(router);
 
       const params = { name: "Glacier" };
       const tree = renderer.create(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Park" params={params}>
               <Text>Test</Text>
             </Link>
           )}
-        </CuriProvider>
+        </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
       anchor.props.onPress(fakeEvent());
@@ -137,13 +144,13 @@ describe("<Link>", () => {
 
       const newParams = { name: "Yellowstone" };
       tree.update(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Park" params={newParams}>
               <Text>Test</Text>
             </Link>
           )}
-        </CuriProvider>
+        </Router>
       );
       anchor.props.onPress(fakeEvent());
       expect(mockNavigate.mock.calls[1][0].pathname).toBe("/park/Yellowstone");
@@ -160,15 +167,17 @@ describe("<Link>", () => {
         { name: "Catch All", path: "(.*)" }
       ];
       const router = curi(history, routes);
+      const Router = curiProvider(router);
+
       const ref = React.createRef();
       const tree = renderer.create(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Parks" ref={ref}>
               <Text>Test</Text>
             </Link>
           )}
-        </CuriProvider>
+        </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
       expect(anchor.instance).toBe(ref.current);
@@ -183,15 +192,17 @@ describe("<Link>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
+
         const children = "Test Value";
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test">
                 <Text>{children}</Text>
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         const text = anchor.findByType(Text);
@@ -207,8 +218,10 @@ describe("<Link>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test">
                 {navigating => {
@@ -217,7 +230,7 @@ describe("<Link>", () => {
                 }}
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
       });
     });
@@ -234,14 +247,16 @@ describe("<Link>", () => {
 
       it("[default] navigates as ANCHOR", () => {
         const router = curi(history, [{ name: "Test", path: "" }]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test">
                 <Text>Test</Text>
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
@@ -250,14 +265,16 @@ describe("<Link>", () => {
 
       it("method='ANCHOR'", () => {
         const router = curi(history, [{ name: "Test", path: "" }]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test" method="ANCHOR">
                 <Text>Test</Text>
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
@@ -266,14 +283,16 @@ describe("<Link>", () => {
 
       it("method='PUSH'", () => {
         const router = curi(history, [{ name: "Test", path: "" }]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test" method="PUSH">
                 <Text>Test</Text>
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
@@ -282,14 +301,16 @@ describe("<Link>", () => {
 
       it("method='REPLACE'", () => {
         const router = curi(history, [{ name: "Test", path: "" }]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test" method="REPLACE">
                 <Text>Test</Text>
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
@@ -298,14 +319,16 @@ describe("<Link>", () => {
 
       it("[unknown] uses ANCHOR", () => {
         const router = curi(history, [{ name: "Test", path: "" }]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test" method={"whatchamacallit" as NavType}>
                 <Text>Test</Text>
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
@@ -335,9 +358,10 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
 
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test">
                 {navigating => {
@@ -345,7 +369,7 @@ describe("<Link>", () => {
                 }}
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         const text = anchor.findByType(Text);
@@ -380,8 +404,10 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <React.Fragment>
                 <Link to="Slow">
@@ -396,7 +422,7 @@ describe("<Link>", () => {
                 </Link>
               </React.Fragment>
             )}
-          </CuriProvider>
+          </Router>
         );
         const [slowLink, fastLink] = tree.root.findAllByType(
           TouchableHighlight
@@ -426,8 +452,10 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Loader">
                 {navigating => {
@@ -435,7 +463,7 @@ describe("<Link>", () => {
                 }}
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         const text = anchor.findByType(Text);
@@ -461,14 +489,16 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
+      const Router = curiProvider(router);
+
       const tree = renderer.create(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Test" hash="thing" query="one=1" state="yo">
               <Text>Test</Text>
             </Link>
           )}
-        </CuriProvider>
+        </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
       anchor.props.onPress(fakeEvent());
@@ -488,14 +518,16 @@ describe("<Link>", () => {
         history.navigate = mockNavigate;
         const onPress = jest.fn();
         const router = curi(history, [{ name: "Test", path: "" }]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test" onPress={onPress}>
                 <Text>Test</Text>
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
@@ -512,14 +544,16 @@ describe("<Link>", () => {
           event.preventDefault();
         });
         const router = curi(history, [{ name: "Test", path: "" }]);
+        const Router = curiProvider(router);
+
         const tree = renderer.create(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test" onPress={onPress}>
                 <Text>Test</Text>
               </Link>
             )}
-          </CuriProvider>
+          </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
@@ -534,14 +568,16 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
+      const Router = curiProvider(router);
+
       const tree = renderer.create(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Test">
               <Text>Test</Text>
             </Link>
           )}
-        </CuriProvider>
+        </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
       anchor.props.onPress(fakeEvent({ defaultPrevented: true }));
