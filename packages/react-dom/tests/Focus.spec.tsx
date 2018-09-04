@@ -5,13 +5,13 @@ import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 
 // resolved by jest
-import { CuriProvider, Focus } from "@curi/react-dom";
+import { curiProvider, Focus } from "@curi/react-dom";
 
 jest.useFakeTimers();
 
 describe("<Focus>", () => {
   let node;
-  let history, router;
+  let history, router, Router;
   const routes = [{ name: "Home", path: "" }, { name: "About", path: "about" }];
 
   beforeEach(() => {
@@ -19,6 +19,7 @@ describe("<Focus>", () => {
     document.body.appendChild(node);
     history = InMemory();
     router = curi(history, routes);
+    Router = curiProvider(router);
   });
 
   afterEach(() => {
@@ -28,7 +29,7 @@ describe("<Focus>", () => {
 
   it("focuses when mounting", () => {
     ReactDOM.render(
-      <CuriProvider router={router}>
+      <Router>
         {() => (
           <Focus>
             {ref => (
@@ -38,7 +39,7 @@ describe("<Focus>", () => {
             )}
           </Focus>
         )}
-      </CuriProvider>,
+      </Router>,
       node
     );
     jest.runAllTimers();
@@ -49,7 +50,7 @@ describe("<Focus>", () => {
 
   it("does not re-focus for regular re-renders", () => {
     ReactDOM.render(
-      <CuriProvider router={router}>
+      <Router>
         {() => (
           <Focus>
             {ref => (
@@ -59,7 +60,7 @@ describe("<Focus>", () => {
             )}
           </Focus>
         )}
-      </CuriProvider>,
+      </Router>,
       node
     );
 
@@ -76,7 +77,7 @@ describe("<Focus>", () => {
     expect(stolenFocus).toBe(input);
 
     ReactDOM.render(
-      <CuriProvider router={router}>
+      <Router>
         {() => (
           <Focus>
             {ref => (
@@ -86,7 +87,7 @@ describe("<Focus>", () => {
             )}
           </Focus>
         )}
-      </CuriProvider>,
+      </Router>,
       node
     );
 
@@ -97,7 +98,7 @@ describe("<Focus>", () => {
 
   it("re-focuses for new response re-renders", () => {
     ReactDOM.render(
-      <CuriProvider router={router}>
+      <Router>
         {() => (
           <Focus>
             {ref => (
@@ -107,7 +108,7 @@ describe("<Focus>", () => {
             )}
           </Focus>
         )}
-      </CuriProvider>,
+      </Router>,
       node
     );
 
@@ -149,7 +150,7 @@ describe("<Focus>", () => {
 
     it("calls focus({ preventScroll: false }} when not provided", () => {
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Focus>
               {ref => (
@@ -159,7 +160,7 @@ describe("<Focus>", () => {
               )}
             </Focus>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       jest.runAllTimers();
@@ -170,7 +171,7 @@ describe("<Focus>", () => {
 
     it("calls focus({ preventScroll: true }} when preventScroll = true", () => {
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Focus preventScroll={true}>
               {ref => (
@@ -180,7 +181,7 @@ describe("<Focus>", () => {
               )}
             </Focus>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       jest.runAllTimers();
@@ -189,7 +190,7 @@ describe("<Focus>", () => {
 
     it("calls focus({ preventScroll: false }} when preventScroll = false", () => {
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Focus preventScroll={false}>
               {ref => (
@@ -199,7 +200,7 @@ describe("<Focus>", () => {
               )}
             </Focus>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       jest.runAllTimers();
@@ -215,7 +216,7 @@ describe("<Focus>", () => {
       const fakeWarn = (console.warn = jest.fn());
 
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Focus>
               {ref => (
@@ -225,7 +226,7 @@ describe("<Focus>", () => {
               )}
             </Focus>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       expect(fakeWarn.mock.calls.length).toBe(1);
@@ -237,7 +238,7 @@ describe("<Focus>", () => {
       const fakeWarn = (console.warn = jest.fn());
 
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Focus>
               {ref => (
@@ -247,7 +248,7 @@ describe("<Focus>", () => {
               )}
             </Focus>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       expect(fakeWarn.mock.calls.length).toBe(0);

@@ -6,17 +6,18 @@ import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 
 // resolved by jest
-import { CuriProvider, Link } from "@curi/react-dom";
+import { curiProvider, Link } from "@curi/react-dom";
 
 describe("<Link>", () => {
   let node;
-  let history, router;
+  let history, router, Router;
   const routes = [{ name: "Test", path: "" }];
 
   beforeEach(() => {
     node = document.createElement("div");
     history = InMemory();
     router = curi(history, routes);
+    Router = curiProvider(router);
   });
 
   afterEach(() => {
@@ -26,9 +27,7 @@ describe("<Link>", () => {
   describe("anchor", () => {
     it("renders an <a> by default", () => {
       ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => <Link to="Test">Test</Link>}
-        </CuriProvider>,
+        <Router>{() => <Link to="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -40,13 +39,13 @@ describe("<Link>", () => {
         <a style={{ color: "orange" }} {...props} />
       );
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link anchor={StyledAnchor} to="Test">
               Test
             </Link>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -58,9 +57,7 @@ describe("<Link>", () => {
   describe("to", () => {
     it("sets the href attribute using the named route's path", () => {
       ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => <Link to="Test">Test</Link>}
-        </CuriProvider>,
+        <Router>{() => <Link to="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -72,10 +69,9 @@ describe("<Link>", () => {
         locations: ["/the-initial-location"]
       });
       const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
+      const Router = curiProvider(router);
       ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => <Link to={null}>Test</Link>}
-        </CuriProvider>,
+        <Router>{() => <Link to={null}>Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -84,7 +80,7 @@ describe("<Link>", () => {
   });
 
   describe("params", () => {
-    let history, router;
+    let history, router, Router;
     const routes = [
       { name: "Park", path: "park/:name" },
       { name: "Catch All", path: "(.*)" }
@@ -93,18 +89,19 @@ describe("<Link>", () => {
     beforeEach(() => {
       history = InMemory();
       router = curi(history, routes);
+      Router = curiProvider(router);
     });
 
     it("uses params to generate the href", () => {
       const params = { name: "Glacier" };
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Park" params={params}>
               Test
             </Link>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -114,13 +111,13 @@ describe("<Link>", () => {
     it("updates href when props change", () => {
       const params = { name: "Glacier" };
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Park" params={params}>
               Test
             </Link>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       let a = node.querySelector("a");
@@ -128,13 +125,13 @@ describe("<Link>", () => {
 
       const newParams = { name: "Yellowstone" };
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Park" params={newParams}>
               Test
             </Link>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       a = node.querySelector("a");
@@ -149,14 +146,15 @@ describe("<Link>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
+      const Router = curiProvider(router);
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Test" query="one=two" hash="hashtag">
               Test
             </Link>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -171,15 +169,16 @@ describe("<Link>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
+      const Router = curiProvider(router);
       const ref = React.createRef();
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Test" ref={ref}>
               Test
             </Link>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -195,11 +194,10 @@ describe("<Link>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
         const children = "Test Value";
         ReactDOM.render(
-          <CuriProvider router={router}>
-            {() => <Link to="Test">{children}</Link>}
-          </CuriProvider>,
+          <Router>{() => <Link to="Test">{children}</Link>}</Router>,
           node
         );
         const a = node.querySelector("a");
@@ -214,8 +212,9 @@ describe("<Link>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
         ReactDOM.render(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test">
                 {navigating => {
@@ -224,7 +223,7 @@ describe("<Link>", () => {
                 }}
               </Link>
             )}
-          </CuriProvider>,
+          </Router>,
           node
         );
         const a = node.querySelector("a");
@@ -239,10 +238,9 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
+      const Router = curiProvider(router);
       ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => <Link to="Test">Test</Link>}
-        </CuriProvider>,
+        <Router>{() => <Link to="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -283,8 +281,10 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
+
         ReactDOM.render(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test">
                 {navigating => {
@@ -292,7 +292,7 @@ describe("<Link>", () => {
                 }}
               </Link>
             )}
-          </CuriProvider>,
+          </Router>,
           node
         );
         const a = node.querySelector("a");
@@ -336,8 +336,10 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
+
         ReactDOM.render(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <React.Fragment>
                 <Link to="Slow">
@@ -352,7 +354,7 @@ describe("<Link>", () => {
                 </Link>
               </React.Fragment>
             )}
-          </CuriProvider>,
+          </Router>,
           node
         );
         const [slowLink, fastLink] = node.querySelectorAll("a");
@@ -388,8 +390,10 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const Router = curiProvider(router);
+
         ReactDOM.render(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Loader">
                 {navigating => {
@@ -397,7 +401,7 @@ describe("<Link>", () => {
                 }}
               </Link>
             )}
-          </CuriProvider>,
+          </Router>,
           node
         );
         const a = node.querySelector("a");
@@ -432,14 +436,16 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
+      const Router = curiProvider(router);
+
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Link to="Test" hash="thing" query="one=1" state="yo">
               Test
             </Link>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -471,14 +477,16 @@ describe("<Link>", () => {
         history.navigate = mockNavigate;
         const onClick = jest.fn();
         const router = curi(history, [{ name: "Test", path: "" }]);
+        const Router = curiProvider(router);
+
         ReactDOM.render(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test" onClick={onClick}>
                 Test
               </Link>
             )}
-          </CuriProvider>,
+          </Router>,
           node
         );
         const a = node.querySelector("a");
@@ -506,14 +514,16 @@ describe("<Link>", () => {
           event.preventDefault();
         });
         const router = curi(history, [{ name: "Test", path: "" }]);
+        const Router = curiProvider(router);
+
         ReactDOM.render(
-          <CuriProvider router={router}>
+          <Router>
             {() => (
               <Link to="Test" onClick={onClick}>
                 Test
               </Link>
             )}
-          </CuriProvider>,
+          </Router>,
           node
         );
         const a = node.querySelector("a");
@@ -540,10 +550,10 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
+      const Router = curiProvider(router);
+
       ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => <Link to="Test">Test</Link>}
-        </CuriProvider>,
+        <Router>{() => <Link to="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -573,10 +583,10 @@ describe("<Link>", () => {
       history.navigate = mockNavigate;
 
       const router = curi(history, [{ name: "Test", path: "" }]);
+      const Router = curiProvider(router);
+
       ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => <Link to="Test">Test</Link>}
-        </CuriProvider>,
+        <Router>{() => <Link to="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
