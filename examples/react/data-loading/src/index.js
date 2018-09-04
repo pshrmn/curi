@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { CuriProvider } from "@curi/react-dom";
+import { curiProvider } from "@curi/react-dom";
 import Browser from "@hickory/browser";
 import { curi } from "@curi/router";
 import prefetch from "@curi/route-prefetch";
@@ -13,11 +13,12 @@ const history = Browser();
 const router = curi(history, routes, {
   route: [prefetch()]
 });
+const Router = curiProvider(router);
 const root = document.getElementById("root");
 
 router.respond(() => {
   ReactDOM.render(
-    <CuriProvider router={router}>
+    <Router>
       {({ response, router }) => {
         const { body: Body, data } = response;
 
@@ -28,7 +29,7 @@ router.respond(() => {
           </div>
         );
       }}
-    </CuriProvider>,
+    </Router>,
     document.getElementById("root")
   );
 });
