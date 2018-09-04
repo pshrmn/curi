@@ -6,12 +6,12 @@ import { curi } from "@curi/router";
 import activeInteraction from "@curi/route-active";
 
 // resolved by jest
-import { CuriProvider, Active } from "@curi/react-universal";
+import { curiProvider, Active } from "@curi/react-universal";
 
 describe("<Active>", () => {
   let node;
   let history;
-  let router;
+  let router, Router;
   const routes = [
     { name: "Home", path: "" },
     {
@@ -27,6 +27,7 @@ describe("<Active>", () => {
     router = curi(history, routes, {
       route: [activeInteraction()]
     });
+    Router = curiProvider(router);
   });
 
   afterEach(() => {
@@ -40,11 +41,13 @@ describe("<Active>", () => {
       const realError = console.error;
       console.error = jest.fn();
 
+      const Router = curiProvider(router);
+
       expect(() => {
         ReactDOM.render(
-          <CuriProvider router={router}>
+          <Router>
             {() => <Active name="Home">{active => null}</Active>}
-          </CuriProvider>,
+          </Router>,
           node
         );
       }).toThrow(
@@ -64,7 +67,7 @@ const router = curi(history, routes, {
   describe("name", () => {
     it('uses the "name" to determine if it is active', () => {
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Active name="Home">
               {active => {
@@ -73,7 +76,7 @@ const router = curi(history, routes, {
               }}
             </Active>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
     });
@@ -85,8 +88,9 @@ const router = curi(history, routes, {
       const router = curi(history, routes, {
         route: [activeInteraction()]
       });
+      const Router = curiProvider(router);
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Active name="Method" params={{ method: "email" }}>
               {active => {
@@ -95,7 +99,7 @@ const router = curi(history, routes, {
               }}
             </Active>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
     });
@@ -107,9 +111,7 @@ const router = curi(history, routes, {
         return null;
       });
       ReactDOM.render(
-        <CuriProvider router={router}>
-          {() => <Active name="Home">{childrenMock}</Active>}
-        </CuriProvider>,
+        <Router>{() => <Active name="Home">{childrenMock}</Active>}</Router>,
         node,
         () => {
           expect(childrenMock.mock.calls.length).toBe(1);
@@ -119,7 +121,7 @@ const router = curi(history, routes, {
 
     it("children(true) if the specified route is active", () => {
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Active name="Home">
               {active => {
@@ -128,14 +130,14 @@ const router = curi(history, routes, {
               }}
             </Active>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
     });
 
     it("children(false) if the specified route is NOT active", () => {
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Active name="Contact">
               {active => {
@@ -144,14 +146,14 @@ const router = curi(history, routes, {
               }}
             </Active>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
     });
 
     it("receives the current response object as its second argument", () => {
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Active name="Home">
               {(active, response) => {
@@ -162,7 +164,7 @@ const router = curi(history, routes, {
               }}
             </Active>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
     });
@@ -174,9 +176,9 @@ const router = curi(history, routes, {
       const router = curi(history, routes, {
         route: [activeInteraction()]
       });
-
+      const Router = curiProvider(router);
       ReactDOM.render(
-        <CuriProvider router={router}>
+        <Router>
           {() => (
             <Active name="Contact" partial={true}>
               {active => {
@@ -185,7 +187,7 @@ const router = curi(history, routes, {
               }}
             </Active>
           )}
-        </CuriProvider>,
+        </Router>,
         node
       );
     });

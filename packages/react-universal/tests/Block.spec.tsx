@@ -6,7 +6,7 @@ import { curi } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
 // resolved by jest
-import { CuriProvider, Block } from "@curi/react-universal";
+import { curiProvider, Block } from "@curi/react-universal";
 
 describe("Block", () => {
   let confirmationFunction;
@@ -21,6 +21,7 @@ describe("Block", () => {
   history.confirmWith = confirmWith;
   history.removeConfirmation = removeConfirmation;
   const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
+  const Router = curiProvider(router);
 
   beforeEach(() => {
     node = document.createElement("div");
@@ -35,9 +36,7 @@ describe("Block", () => {
   it("if active=true when mounting, adds block", () => {
     const confirm = jest.fn();
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={true} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(1);
@@ -46,12 +45,7 @@ describe("Block", () => {
 
   it("defaults to active=true", () => {
     const confirm = jest.fn();
-    ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block confirm={confirm} />}
-      </CuriProvider>,
-      node
-    );
+    ReactDOM.render(<Router>{() => <Block confirm={confirm} />}</Router>, node);
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(confirmWith.mock.calls[0][0]).toBe(confirm);
   });
@@ -59,9 +53,7 @@ describe("Block", () => {
   it("if active=false when mounting, does not add block", () => {
     const confirm = jest.fn();
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={false} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={false} confirm={confirm} />}</Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(0);
@@ -71,17 +63,13 @@ describe("Block", () => {
     const confirm = jest.fn();
 
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={true} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
       node
     );
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={false} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={false} confirm={confirm} />}</Router>,
       node
     );
     expect(removeConfirmation.mock.calls.length).toBe(1);
@@ -91,17 +79,13 @@ describe("Block", () => {
     const confirm = jest.fn();
 
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={false} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={false} confirm={confirm} />}</Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(0);
 
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={true} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(1);
@@ -112,18 +96,14 @@ describe("Block", () => {
     const confirm2 = jest.fn();
 
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={true} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={true} confirm={confirm2} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={true} confirm={confirm2} />}</Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(2);
@@ -133,18 +113,14 @@ describe("Block", () => {
   it("does not reset block if both active and confirm stay the same", () => {
     const confirm = jest.fn();
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={true} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
       node
     );
 
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={true} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
       node
     );
 
@@ -155,9 +131,7 @@ describe("Block", () => {
   it("unblocks when unmounting", () => {
     const confirm = jest.fn();
     ReactDOM.render(
-      <CuriProvider router={router}>
-        {() => <Block active={true} confirm={confirm} />}
-      </CuriProvider>,
+      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
       node
     );
     expect(removeConfirmation.mock.calls.length).toBe(0);
