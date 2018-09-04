@@ -305,8 +305,9 @@ registerServiceWorker();`}
     <Section title="Rendering with React" id="rendering">
       <p>
         We can now render our application. To do this, we will use the{" "}
-        <Cmp>CuriProvider</Cmp> component from the <IJS>@curi/react-dom</IJS>{" "}
-        package. This component does two things:
+        <Cmp>curiProvider()</Cmp> function from the <IJS>@curi/react-dom</IJS>{" "}
+        package. This function takes the Curi router and returns a component
+        that does two things:
       </p>
       <ol>
         <li>
@@ -316,18 +317,25 @@ registerServiceWorker();`}
         <li>It re-renders the application whenever the location changes.</li>
       </ol>
       <p>
-        The <Cmp>CuriProvider</Cmp> takes two props. The first is{" "}
-        <IJS>router</IJS>, which is the router we created above. The second is a
-        children function, passed as the children of the <Cmp>CuriProvider</Cmp>.
-        This function will receive an object that has three properties:{" "}
-        <IJS>router</IJS>, <IJS>response</IJS>, and <IJS>navigation</IJS>.
+        The returned component can be called anything you like, but here we will
+        call it <Cmp>Router</Cmp>.
+      </p>
+      <p>
+        The <Cmp>Router</Cmp> takes one prop: a render-invoked function, passed
+        as the <IJS>children</IJS> prop. This function will receive an object
+        that has three properties: <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
+        <IJS>navigation</IJS>.
       </p>
       <PrismBlock lang="jsx">
-        {`<CuriProvider router={router}>
+        {`import { curiProvider } from "@curi/react-dom";
+        
+const Router = curiProvider(router);
+        
+<Router>
   {({ router, response, navigation }) => {
     return <div>This is the website</div>;
   }}
-</CuriProvider>`}
+</Router>`}
       </PrismBlock>
       <p>
         The <IJS>router</IJS> is our Curi router, but what are the other two?
@@ -355,7 +363,7 @@ registerServiceWorker();`}
         </PrismBlock>
         <p>
           The router uses an observer model to let functions subscribe to be
-          called when a new response is generated. The <Cmp>CuriProvider</Cmp>{" "}
+          called when a new response is generated. The <Cmp>Router</Cmp>{" "}
           observes the router so that it can re-render the application whenever
           there is a new one.
         </p>
@@ -405,7 +413,7 @@ registerServiceWorker();`}
       </PrismBlock>
       <p>
         If the return object's <IJS>body</IJS> is a React component, we can
-        render it in the <Cmp>CuriProvider</Cmp>'s children function. We haven't
+        render it in the <Cmp>Router</Cmp>'s children function. We haven't
         actually defined components for our routes yet, so we should throw
         together some placeholders.
       </p>
@@ -497,22 +505,21 @@ export default [
 ];`}
       </PrismBlock>
       <p>
-        We can now render the <Cmp>CuriProvider</Cmp> in our index file. The{" "}
-        <Cmp>CuriProvider</Cmp> gets passed the Curi router using the{" "}
-        <IJS>router</IJS> prop and a render-invoked function as the component's{" "}
-        <IJS>children</IJS>. In the render-invoked function, we can use{" "}
-        <IJS>response.body</IJS> to render the component for the matched route.
-        We will also pass the <IJS>response</IJS> as a prop to the rendered
-        component, which will be useful soon.
+        We can now render the <Cmp>Router</Cmp> in our index file. The{" "}
+        <Cmp>Router</Cmp> gets passed a render-invoked function as the
+        component's <IJS>children</IJS>. In the render-invoked function, we can
+        use <IJS>response.body</IJS> to render the component for the matched
+        route. We will also pass the <IJS>response</IJS> as a prop to the
+        rendered component, which will be useful soon.
       </p>
 
-      <PrismBlock lang="jsx" data-line="6,15-24">
+      <PrismBlock lang="jsx" data-line="6,14,16-25">
         {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react-dom';
+import { curiProvider } from '@curi/react-dom';
 
 import './index.css';
 import routes from './routes';
@@ -520,16 +527,17 @@ import registerServiceWorker from './registerServiceWorker';
 
 const history = Browser();
 const router = curi(history, routes);
+const Router = curiProvider(router);
 
 ReactDOM.render((
-  <CuriProvider router={router}>
+  <Router>
     {({ response }) => {
       const { body:Body } = response;
       return (
         <Body response={response} />
       );
     }}
-  </CuriProvider>
+  </Router>
 ), document.getElementById('root'));
 registerServiceWorker();`}
       </PrismBlock>
@@ -631,13 +639,13 @@ export default () => (
           some structure to the elements returned by the <IJS>children</IJS>{" "}
           function.
         </p>
-        <PrismBlock lang="jsx" data-line="10,21-28">
+        <PrismBlock lang="jsx" data-line="10,22-29">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react-dom';
+import { curiProvider } from '@curi/react-dom';
 
 import './index.css';
 import routes from './routes';
@@ -646,9 +654,10 @@ import registerServiceWorker from './registerServiceWorker';
 
 const history = Browser();
 const router = curi(history, routes);
+const Router = curiProvider(router);
 
 ReactDOM.render((
-  <CuriProvider router={router}>
+  <Router>
     {({ response }) => {
       const { body:Body } = response;
       return (
@@ -662,7 +671,7 @@ ReactDOM.render((
         </div>
       );
     }}
-  </CuriProvider>
+  </Router>
 ), document.getElementById('root'));
 registerServiceWorker();`}
         </PrismBlock>
@@ -820,18 +829,18 @@ export default {
       </PrismBlock>
       <p>
         Before we edit the <Cmp>Book</Cmp> component, we should quickly revisit
-        the <Cmp>CuriProvider</Cmp>'s <IJS>children</IJS> function. In addition
-        to passing the <IJS>response</IJS> to <IJS>response.body</IJS>, we
-        should also pass it our router. This will allow us to do programmatic
+        the <Cmp>Router</Cmp>'s <IJS>children</IJS> function. In addition to
+        passing the <IJS>response</IJS> to <IJS>response.body</IJS>, we should
+        also pass it our router. This will allow us to do programmatic
         navigation.
       </p>
-      <PrismBlock lang="jsx" data-line="18,26">
+      <PrismBlock lang="jsx" data-line="19,27">
         {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react-dom';
+import { curiProvider } from '@curi/react-dom';
 
 import './index.css';
 import routes from './routes';
@@ -840,9 +849,10 @@ import registerServiceWorker from './registerServiceWorker';
 
 const history = Browser();
 const router = curi(history, routes);
+const Router = curiProvider(router);
 
 ReactDOM.render((
-  <CuriProvider router={router}>
+  <Router>
     {({ response, router }) => {
       const { body:Body } = response;
       return (
@@ -856,7 +866,7 @@ ReactDOM.render((
         </div>
       );
     }}
-  </CuriProvider>
+  </Router>
 ), document.getElementById('root'));
 registerServiceWorker();`}
       </PrismBlock>

@@ -2,7 +2,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
-import { CuriProvider } from "@curi/react-dom";
+import { curiProvider } from "@curi/react-dom";
 import active from "@curi/route-active";
 import prefetch from "@curi/route-prefetch";
 import routes from "../client/routes";
@@ -17,12 +17,11 @@ export default function createHandler(debug = false) {
     const router = curi(history, routes, {
       route: [active(), prefetch()]
     });
+    const Router = curiProvider(router);
 
     router.respond(({ response }) => {
       // TODO: Detect redirects?
-      const markup = renderToString(
-        <CuriProvider router={router}>{renderFunction}</CuriProvider>
-      );
+      const markup = renderToString(<Router>{renderFunction}</Router>);
       res.send(renderFullPage(markup, response.title, debug));
     });
   };

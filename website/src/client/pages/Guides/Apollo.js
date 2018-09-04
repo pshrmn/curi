@@ -66,20 +66,23 @@ export default ApolloClient({
           <p>
             Apollo's React package provides an <Cmp>ApolloProvider</Cmp>{" "}
             component for accessing your Apollo client throughout the
-            application. The <Cmp>CuriProvider</Cmp> should be a descendant of
-            the <Cmp>ApolloProvider</Cmp> because we don't need to re-render the{" "}
+            application. The <Cmp>Router</Cmp> (or whatever you name the root
+            Curi component) should be a descendant of the{" "}
+            <Cmp>ApolloProvider</Cmp> because we don't need to re-render the{" "}
             <Cmp>ApolloProvider</Cmp> for every new response.
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
           {`import { ApolloProvider } from "react-apollo";
-import { CuriProvider } from "@curi/react-dom";
+import { curiProvider } from "@curi/react-dom";
+
+const Router = curiProvider(router);
 
 ReactDOM.render((
   <ApolloProvider client={client}>
-    <CuriProvider router={router}>
+    <Router>
       {() => {...}}
-    </CuriProvider>
+    </Router>
   </ApolloProvider>
 ), holder);`}
         </CodeBlock>
@@ -119,7 +122,7 @@ const routes = [
             Any location data that a query needs can be taken from the response
             object. The best way to access this from your components would be to
             pass the <IJS>response</IJS> to the components rendered in the{" "}
-            <Cmp>CuriProvider</Cmp>'s <IJS>children</IJS> prop, which is a
+            <Cmp>Router</Cmp>'s <IJS>children</IJS> prop, which is a
             render-invoked function.
           </p>
         </Explanation>
@@ -127,12 +130,12 @@ const routes = [
           {`// index.js
 ReactDOM.render((
   <ApolloProvider client={client}>
-    <CuriProvider router={router}>
+    <Router>
       {({ response }) => {
         const { body:Body } = response;
         return <Body response={response} />;
       }}
-    </CuriProvider>
+    </Router>
   </ApolloProvider>
 ), holder);`}
         </CodeBlock>

@@ -158,10 +158,12 @@ const router = curi(history, routes, {
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { CuriProvider, Focus } from "@curi/react-dom";
-          
+            {`import { curiProvider, Focus } from "@curi/react-dom";
+
+const Router = curiProvider(router);
+
 ReactDOM.render((
-  <CuriProvider router={router}>
+  <Router>
     {({ response }) => {
       const { body:Body } = response;
       return (
@@ -174,7 +176,7 @@ ReactDOM.render((
         </Focus>
       );
     }}
-  </CuriProvider>
+  </Router>
 ), holder);`}
           </CodeBlock>
         </SideBySide>

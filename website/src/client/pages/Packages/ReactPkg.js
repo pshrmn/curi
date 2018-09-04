@@ -30,55 +30,65 @@ export default ({ name, version, globalName }) => (
     }
   >
     <APIBlock>
-      <Section title={<Cmp>CuriProvider</Cmp>} id="CuriProvider">
+      <Section title={<IJS>curiProvider()</IJS>} id="curiProvider">
         <SideBySide>
           <Explanation>
             <p>
-              The <Cmp>CuriProvider</Cmp> is the root Curi component for an
-              application. It has two jobs:
+              The application needs a component at its root to re-render the
+              application when new responses are emitted and to make routing
+              related available through React's context. This component is
+              created by passing the Curi <IJS>router</IJS> to the{" "}
+              <IJS>curiProvider()</IJS> function.
             </p>
-            <ol>
-              <li>
-                Re-rendering the application when a new response is emitted.
-              </li>
-              <li>
-                Placing values on the context so that the other Curi components
-                can access them.
-              </li>
-            </ol>
+            <Note>
+              <p>
+                Why does <IJS>@curi/react-dom</IJS> export a function to create
+                a component and not just a component? Props signify values that
+                can change, but an application should only ever have one router.
+                By hard-coding the <IJS>router</IJS> into a component, we avoid
+                having to handle the possibility of switching routers (which
+                should not happen).
+              </p>
+            </Note>
             <Note>
               All of the other components provided by <IJS>@curi/react-dom</IJS>{" "}
-              must be descendants of a <Cmp>CuriProvider</Cmp>.
+              must be descendants of the component created by{" "}
+              <IJS>curiProvider()</IJS>.
             </Note>
-            <p>
-              <Cmp>CuriProvider</Cmp> will observe your <IJS>router</IJS> so
-              that it can automatically re-render your application after
-              navigation.
-            </p>
           </Explanation>
           <CodeBlock lang="jsx">
-            {`import { CuriProvider } from '@curi/react-dom';
-            
+            {`import { curiProvider } from '@curi/react-dom';
+
+const router = curi(history, routes);
+const Router = curiProvider(router);
+
 const App = () => (
-  <CuriProvider router={router}>
+  <Router>
     {({ response, navigation, router }) => {
       const { body:Body } = response;
       return <Body response={response} />;
     }}
-  </CuriProvider>
+  </Router>
 );`}
           </CodeBlock>
         </SideBySide>
-        <Section tag="h3" title="Props" id="CuriProvider-props">
-          <Subsection tag="h4" title="router" id="CuriProvider-router">
+        <Section tag="h3" title="Arguments" id="curiProvider-arguments">
+          <Subsection tag="h4" title="router" id="curiProvider-router">
             <SideBySide>
               <Explanation>
                 <p>A Curi router.</p>
               </Explanation>
+              <CodeBlock>
+                {`import { curiProvider } from "@curi/react-dom";
+
+const router = curi(history, routes);
+const Router = curiProvider(router);`}
+              </CodeBlock>
             </SideBySide>
           </Subsection>
-
-          <Subsection tag="h4" title="children" id="CuriProvider-render">
+        </Section>
+        <Section tag="h3" title="Props" id="curiProvider-props">
+          <Subsection tag="h4" title="children" id="curiProvider-render">
             <SideBySide>
               <Explanation>
                 <p>

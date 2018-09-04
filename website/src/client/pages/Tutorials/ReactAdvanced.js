@@ -139,9 +139,8 @@ npm run start`}
             route that matches has asynchronous functions, there is no response
             to render until the async code finishes. This means that if you
             attempt to render immediately after creating a router, the{" "}
-            <IJS>response</IJS> that will be passed to the{" "}
-            <Cmp>CuriProvider</Cmp>'s <IJS>children()</IJS> will be{" "}
-            <IJS>null</IJS>.
+            <IJS>response</IJS> that will be passed to the <Cmp>Router</Cmp>'s{" "}
+            <IJS>children()</IJS> will be <IJS>null</IJS>.
           </p>
           <p>
             There are a few possible ways to handle this situation. The first is
@@ -163,17 +162,19 @@ npm run start`}
         <CodeBlock>
           {`// delay rendering
 const router = curi(...);
+const Router = curiProvider(router);
+
 router.respond(() => {
   ReactDOM.render((
-    <CuriProvider>
+    <Router>
       {...}
-    </CuriProvider>
+    </Router>
   ), holder);
 });
 
 // render using null response
 ReactDOM.render((
-  <CuriProvider>
+  <Router>
     {({ response }) => {
       if (response == null) {
         return <div>Loading...</div>;
@@ -181,7 +182,7 @@ ReactDOM.render((
       const { body:Body } = response;
       return <Body response={response} />;
     }}
-  </CuriProvider>
+  </Router>
 ), holder);`}
         </CodeBlock>
       </SideBySide>
@@ -422,7 +423,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
-import { CuriProvider } from '@curi/react-dom';
+import { curiProvider } from '@curi/react-dom';
 
 import './index.css';
 import routes from './routes';
@@ -431,10 +432,11 @@ import registerServiceWorker from './registerServiceWorker';
 
 const history = Browser();
 const router = curi(history, routes);
+const Router = curiProvider(router);
 
 router.respond(() => {
   ReactDOM.render((
-    <CuriProvider router={router}>
+    <Router>
       {({ response, router }) => {
         const { body:Body } = response;
         return (
@@ -448,7 +450,7 @@ router.respond(() => {
           </div>
         );
       }}
-    </CuriProvider>
+    </Router>
   ), document.getElementById('root'));
 });
 registerServiceWorker();`}

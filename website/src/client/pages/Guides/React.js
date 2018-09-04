@@ -22,40 +22,53 @@ export default ({ name }) => (
       <SideBySide>
         <Explanation>
           <p>
-            The <Cmp>CuriProvider</Cmp> component is the root of a Curi + React
-            application.
+            The <IJS>curiProvider()</IJS> function is used to create the
+            component at the root of a Curi + React application. You can call
+            this component anything that you want, but here it will be referred
+            to as the <Cmp>Router</Cmp>.
           </p>
+          <Note>
+            <p>
+              Why does <IJS>@curi/react-dom</IJS> export a function to create a
+              component and not just a component? Props signify values that can
+              change, but an application should only ever have one router. By
+              hard-coding the <IJS>router</IJS> into a component, we avoid
+              having to handle the possibility of switching routers (which
+              should not happen).
+            </p>
+          </Note>
           <p>
-            The <Cmp>CuriProvider</Cmp> is passed a Curi router through its{" "}
-            <IJS>router</IJS> prop. The component will automatically add an{" "}
+            <IJS>curiProvider()</IJS> is passed the application's Curi router.
+            The returned component will automatically add an{" "}
             <Link to="Guide" params={{ slug: "navigating" }} hash="observer">
               observer
             </Link>{" "}
-            to the Curi router so that it can re-render when there are new
-            responses.
+            to the Curi router when it mounts, so that it can re-render when
+            there are new responses.
           </p>
           <p>
-            The <Cmp>CuriProvider</Cmp> also takes a render-invoked function as
-            its <IJS>children</IJS> prop. This function will be called with an
+            The <Cmp>Router</Cmp> takes a render-invoked function as its{" "}
+            <IJS>children</IJS> prop. This function will be called with an
             object that has three properties— <IJS>response</IJS>,{" "}
             <IJS>router</IJS>, and <IJS>navigation</IJS>—and returns the React
             element(s) that form the root of the application.
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
-          {`import { CuriProvider } from '@curi/react-dom';
+          {`import { curiProvider } from '@curi/react-dom';
 
 import router from "./router";
+const Router = curiProvider(router);
 
 // router.respond() is used to delay rendering in case
 // the initially matched route is asynchronous
 router.respond(() => {
   ReactDOM.render((
-    <CuriProvider router={router}>
+    <Router>
       {({ response, router, navigation }) => {
         return <response.body />;
       }}
-    </CuriProvider>
+    </Router>
   ), document.getElementById("root"));
 });`}
         </CodeBlock>
@@ -90,7 +103,7 @@ router.respond(() => {
           </Explanation>
           <CodeBlock lang="jsx">
             {`ReactDOM.render((
-  <CuriProvider router={router}>
+  <Router>
     {({ response, router, navigation }) => {
       // rename body to Body for JSX transformation
       const { body:Body } = response;
@@ -105,7 +118,7 @@ router.respond(() => {
         </React.Fragment>
       );
     }}
-  </CuriProvider>
+  </Router>
 ), document.getElementById("root"));`}
           </CodeBlock>
         </SideBySide>
@@ -141,7 +154,7 @@ router.respond(() => {
 ];
 
 ReactDOM.render((
-  <CuriProvider router={router}>
+  <Router>
     {({ response, router, navigation }) => {
       const { Main, Menu } = response.body;
       return (
@@ -155,7 +168,7 @@ ReactDOM.render((
         </React.Fragment>
       );
     }}
-  </CuriProvider>
+  </Router>
 ), document.getElementById("root"));`}
           </CodeBlock>
         </SideBySide>
@@ -170,7 +183,7 @@ ReactDOM.render((
                 layers of components.
               </p>
               <p>
-                * anywhere that is a child of your <Cmp>CuriProvider</Cmp>.
+                * anywhere that is a child of your <Cmp>Router</Cmp>.
               </p>
             </Note>
           </Explanation>
@@ -211,7 +224,7 @@ export default () => (
             {`import { Focus } from "@curi/react-dom";
             
 ReactDOM.render((
-  <CuriProvider router={router}>
+  <Router>
     {({ response }) => {
       const { body:Body } = response;
       return (
@@ -229,7 +242,7 @@ ReactDOM.render((
         </React.Fragment>
       );
     }}
-  </CuriProvider>
+  </Router>
 ), document.getElementById("root"));`}
           </CodeBlock>
         </SideBySide>

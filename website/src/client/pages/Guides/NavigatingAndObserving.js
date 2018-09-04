@@ -382,11 +382,13 @@ const stop = router.respond(fn, { observe: true });`}
               </Note>
             </Explanation>
             <CodeBlock lang="jsx">
-              {`function setup({ router }) {
+              {`const Router = curiProvider(router);
+              
+function setup() {
   ReactDOM.render((
-    <CuriProvider router={router}>
+    <Router>
       {({ response }) => <response.body />}
-    </CuriProvider>
+    </Router>
   ), document.getElementById('root'));
 }
 

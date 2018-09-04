@@ -290,8 +290,9 @@ router.navigate({
             You usually do not have to call this yourself. Framework
             implementations will set observers up internally to automatically
             trigger re-renders for new responses. <IJS>@curi/react-dom</IJS>{" "}
-            does this using the <Cmp>CuriProvider</Cmp> component and{" "}
-            <IJS>@curi/vue</IJS> uses the <IJS>CuriPlugin</IJS>.
+            does this using a component created by calling{" "}
+            <IJS>curiProvider(router)</IJS> and <IJS>@curi/vue</IJS> uses the{" "}
+            <IJS>CuriPlugin</IJS>.
           </p>
         </Explanation>
         <CodeBlock>
@@ -340,7 +341,7 @@ router.respond(() => {
       <SideBySide>
         <Explanation>
           <p>
-            <IJS>@curi/react-dom</IJS> uses a <Cmp>CuriProvider</Cmp> with a
+            <IJS>@curi/react-dom</IJS> uses a <Cmp>Router</Cmp> with a
             render-invoked <IJS>children</IJS> function that will be called
             whenever there is a new response.
           </p>
@@ -359,13 +360,15 @@ router.respond(() => {
         </Explanation>
         <CodeBlock>
           {`// React
+const Router = curiProvider(router);
+
 ReactDOM.render((
-  <CuriProvider router={router}>
+  <Router>
     {({ response }) => {
       const { body:Body } = response;
       return <Body />;
     }}
-  </CuriProvider>
+  </Router>
 ), document.getElementById('root'));`}
         </CodeBlock>
       </SideBySide>
