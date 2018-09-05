@@ -6,7 +6,7 @@ export default {
   "react-dom": "1.0.0-beta.2",
   "react-native": "1.0.0-beta.11",
   "react-universal": "1.0.0-beta.1",
-  "router": "1.0.0-beta.40",
+  "router": "1.0.0-beta.41",
   "side-effect-aria-live": "1.0.0-beta.1",
   "side-effect-scroll": "1.0.0-beta.10",
   "side-effect-title": "1.0.0-beta.11",

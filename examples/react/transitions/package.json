@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/transitions-react",
   "private": true,
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Animate transitions betweeen locations",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@curi/react-dom": "^1.0.0-beta.2",
-    "@curi/router": "^1.0.0-beta.40",
+    "@curi/router": "^1.0.0-beta.41",
     "@hickory/browser": "^1.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",

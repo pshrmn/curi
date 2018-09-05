@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/data-loading-react",
   "private": true,
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Prefetch data before navigating",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,7 @@
   "dependencies": {
     "@curi/react-dom": "^1.0.0-beta.2",
     "@curi/route-prefetch": "^1.0.0-beta.14",
-    "@curi/router": "^1.0.0-beta.40",
+    "@curi/router": "^1.0.0-beta.41",
     "@hickory/browser": "^1.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

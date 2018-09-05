@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.41
 
 * Rename `router.replaceRoutes()` to `router.refresh()`. If called with no arguments, just re-emits a response. The emitted `navigation.previous` will re-use the last emitted `navigation.previous`.
 

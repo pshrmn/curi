@@ -34,7 +34,7 @@
     "vue": "^2.5.2"
   },
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.40",
+    "@curi/router": "^1.0.0-beta.41",
     "@hickory/root": "^1.0.0"
   },
   "devDependencies": {
