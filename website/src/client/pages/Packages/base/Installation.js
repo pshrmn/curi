@@ -34,7 +34,7 @@ const Unpkg = ({ name, version, globalName }) => (
       </p>
     </Explanation>
     <CodeBlock lang="markup">
-      {`<script src="https://unpkg.com/@curi/${name}@${version}/dist/curi-${name}.js"></script>
+      {`<script src="https://unpkg.com/@curi/${name}@${version}/dist/curi-${name}.umd.js"></script>
 <script type="text/javascript">
   window.${globalName}
 </script>`}
