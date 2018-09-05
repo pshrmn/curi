@@ -3,6 +3,7 @@
   "version": "1.0.0-beta.1",
   "description": "Curi side effect to announce location changes using aria-live",
   "main": "dist/curi-side-effect-aria-live",
+  "module": "dist/curi-side-effect-aria-live.mjs",
   "types": "types/index.d.ts",
   "files": [
     "dist",

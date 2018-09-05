@@ -3,6 +3,7 @@
   "version": "1.0.0-beta.10",
   "description": "Curi side effect to scroll when navigating to new locations",
   "main": "dist/curi-side-effect-scroll",
+  "module": "dist/curi-side-effect-scroll.mjs",
   "types": "types/index.d.ts",
   "files": [
     "dist",
