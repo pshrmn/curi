@@ -1,10 +1,10 @@
 let mappedModule;
 switch (process.env.TEST_ENV) {
   case "cjs":
-    mappedModule = "<rootDir>/dist/curi-vue.common.js";
+    mappedModule = "<rootDir>/dist/curi-vue.js";
     break;
   case "umd":
-    mappedModule = "<rootDir>/dist/curi-vue.js";
+    mappedModule = "<rootDir>/dist/curi-vue.umd.js";
     break;
   default:
     mappedModule = "<rootDir>/src/index";
