@@ -19,11 +19,11 @@ const base = {
 };
 rollupBuild([
   [
-    "ES",
+    "ESM",
     {
       ...base,
-      format: "es",
-      file: "dist/curi-vue.es.js",
+      format: "esm",
+      file: "dist/curi-vue.mjs",
       external: [...deps, "vue"],
       safeModules: false
     },
@@ -35,7 +35,7 @@ rollupBuild([
     {
       ...base,
       format: "cjs",
-      file: "dist/curi-vue.common.js",
+      file: "dist/curi-vue.js",
       external: [...deps, "vue"],
       safeModules: false
     },
@@ -47,7 +47,7 @@ rollupBuild([
     {
       ...base,
       format: "umd",
-      file: "dist/curi-vue.js",
+      file: "dist/curi-vue.umd.js",
       external: ["vue"]
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }

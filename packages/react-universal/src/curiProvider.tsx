@@ -18,7 +18,7 @@ export interface RouterState {
   emitted: CurrentResponse;
 }
 
-export default function curiRoot(router: CuriRouter) {
+export default function curiProvider(router: CuriRouter) {
   return class Router extends React.Component<RouterProps, RouterState> {
     stopResponding: () => void;
     removed: boolean;

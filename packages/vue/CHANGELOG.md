@@ -1,3 +1,7 @@
+## Next
+
+* Support dual-mode package (CJS/ESM) builds.
+
 ## 1.0.0-beta.21
 
 * Fix bad `@curi/route-active` dependency.

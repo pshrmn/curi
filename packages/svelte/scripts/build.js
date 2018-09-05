@@ -23,11 +23,11 @@ const base = {
 
 rollupBuild([
   [
-    "ES",
+    "ESM",
     {
       ...base,
-      format: "es",
-      file: "dist/curi-svelte.es.js",
+      format: "esm",
+      file: "dist/curi-svelte.mjs",
       safeModules: false
     },
     { NODE_ENV: "development" }
@@ -37,7 +37,7 @@ rollupBuild([
     {
       ...base,
       format: "cjs",
-      file: "dist/curi-svelte.common.js",
+      file: "dist/curi-svelte.js",
       safeModules: false
     },
     { NODE_ENV: "development" }
