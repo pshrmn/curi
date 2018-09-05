@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/blocking-navigation-vue",
   "private": true,
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Use the <Block> component to prevent transitions",
   "main": "index.js",
   "scripts": {

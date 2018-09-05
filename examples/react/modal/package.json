@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/modal-react",
   "private": true,
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Render a modal (pinterest/twitter)",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "webpack-command": "^0.4.1"
   },
   "dependencies": {
-    "@curi/react-dom": "^1.0.0-beta.1",
+    "@curi/react-dom": "^1.0.0-beta.2",
     "@curi/router": "^1.0.0-beta.40",
     "@hickory/browser": "^1.0.0",
     "prop-types": "^15.6.0",

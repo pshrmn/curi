@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/authentication-vue",
   "private": true,
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Curi routes that redirect when not authenticated",
   "main": "index.js",
   "scripts": {

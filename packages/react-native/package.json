@@ -1,6 +1,6 @@
 {
   "name": "@curi/react-native",
-  "version": "1.0.0-beta.10",
+  "version": "1.0.0-beta.11",
   "description": "React Native components to use with Curi",
   "main": "dist/curi-react-native.common.js",
   "module": "dist/curi-react-native.es.js",
@@ -40,7 +40,7 @@
     "react-native": ">=0.55.0"
   },
   "dependencies": {
-    "@curi/react-universal": "^1.0.0-beta.0",
+    "@curi/react-universal": "^1.0.0-beta.1",
     "@curi/router": "^1.0.0-beta.40",
     "@hickory/root": "^1.0.0",
     "@types/invariant": "^2.2.29",

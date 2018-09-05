@@ -1,6 +1,6 @@
 {
   "name": "@curi/react-dom",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "React DOM components to use with Curi",
   "main": "dist/curi-react-dom.common.js",
   "module": "dist/curi-react-dom.es.js",
@@ -38,7 +38,7 @@
     "react": ">=16.3"
   },
   "dependencies": {
-    "@curi/react-universal": "^1.0.0-beta.0",
+    "@curi/react-universal": "^1.0.0-beta.1",
     "@curi/router": "^1.0.0-beta.40",
     "@types/react": "^16.3.11"
   },
