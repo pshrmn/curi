@@ -1,8 +1,10 @@
-import React from 'react';
-import { Block } from '@curi/react';
+import React from "react";
+import { Block } from "@curi/react-dom";
 
 function confirm(info, success, failure) {
-  const resp = window.confirm('Are you sure you want to navigate? The form has not been submitted');
+  const resp = window.confirm(
+    "Are you sure you want to navigate? The form has not been submitted"
+  );
   if (resp) {
     success();
   } else {
@@ -11,15 +13,14 @@ function confirm(info, success, failure) {
 }
 
 class Form extends React.Component {
-
   constructor(props) {
     super(props);
     this.submitForm = this.submitForm.bind(this);
     this.setEmail = this.setEmail.bind(this);
     this.setMessage = this.setMessage.bind(this);
     this.state = {
-      email: '',
-      message: '',
+      email: "",
+      message: "",
       dirty: false,
       submitted: false
     };
@@ -29,7 +30,7 @@ class Form extends React.Component {
     const value = event.target.value;
     this.setState({
       email: value,
-      dirty: value !== '' || this.state.message !== ''
+      dirty: value !== "" || this.state.message !== ""
     });
   }
 
@@ -37,12 +38,12 @@ class Form extends React.Component {
     const value = event.target.value;
     this.setState({
       message: value,
-      dirty: value !== '' || this.state.email !== ''
+      dirty: value !== "" || this.state.email !== ""
     });
   }
 
   submitForm(event) {
-    if (this.state.email === '' || this.state.message === '') {
+    if (this.state.email === "" || this.state.message === "") {
       return;
     }
     this.setState({
@@ -57,31 +58,19 @@ class Form extends React.Component {
     }
     return (
       <form>
-        <Block
-          active={dirty}
-          confirm={confirm}
-        />
+        <Block active={dirty} confirm={confirm} />
         <p>
           <label>
-            Email{' '}
-            <input
-              type='text'
-              value={email}
-              onChange={this.setEmail}
-            />
+            Email <input type="text" value={email} onChange={this.setEmail} />
           </label>
         </p>
         <p>
           <label>
-            Message{' '}
-            <input
-              type='text'
-              value={message}
-              onChange={this.setMessage}
-            />
+            Message{" "}
+            <input type="text" value={message} onChange={this.setMessage} />
           </label>
         </p>
-        <button type='button' onClick={this.submitForm}>
+        <button type="button" onClick={this.submitForm}>
           Submit
         </button>
       </form>

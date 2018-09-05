@@ -7,17 +7,18 @@ function catchAll(req, res) {
   // 1. Create a memory history using the requested location
   const history = InMemory({ locations: [req.url]});
 
-  // 2. Create a router
+  // 2. Create a router and the root Curi provider component
   const router = curi(history, routes);
+  const Router = curiProvider(router);
 
   // 3. Wait for the initial location's response to finish
   router.response((response, navigation) => {
-    // 4. Generate the HTML markup by rendering a <CuriProvider> and
-    // passing it the response
+    // 4. Generate the HTML markup by rendering the <Router> and
+    // passing it the render function
     const markup = renderToString(
-      <CuriProvider router={router}>
+      <Router>
         {renderFunction}
-      </CuriProvider>
+      </Router>
     );
     // 5. Insert the markup into the page's html and send it
     res.send(renderFullPage(markup));

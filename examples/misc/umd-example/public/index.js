@@ -37,6 +37,7 @@ const routes = [
 ];
 
 const router = Curi.curi(hashHistory, routes);
+const Router = CuriReactDOM.curiProvider(router);
 const root = document.getElementById("root");
 
 function render({ response }) {
@@ -47,4 +48,4 @@ function render({ response }) {
   return h("div", null, h(Nav), h(Body));
 }
 
-ReactDOM.render(h(CuriReact.CuriProvider, { router: router }, render), root);
+ReactDOM.render(h(Router, { router: router }, render), root);

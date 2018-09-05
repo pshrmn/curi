@@ -1,28 +1,22 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react-dom";
 
 const NavLinks = () => (
   <nav>
     <ul>
       <li>
-        <Link to='Home'>Home</Link>
+        <Link to="Home">Home</Link>
       </li>
       <li>
-        <Link to='Contact'>Contact</Link>
+        <Link to="Contact">Contact</Link>
         <ul>
           <li>
-            <Link
-              to='Method'
-              params={{ method: 'phone' }}
-            >
+            <Link to="Method" params={{ method: "phone" }}>
               By Phone
             </Link>
           </li>
           <li>
-            <Link
-              to='Method'
-              params={{ method: 'email' }}
-            >
+            <Link to="Method" params={{ method: "email" }}>
               By Email
             </Link>
           </li>

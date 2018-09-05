@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react";
+import { Link } from "@curi/react-dom";
 import Breadcrumbs from "./Breadcrumbs";
 
 const Category = ({ router, response: { params, data: products } }) => (

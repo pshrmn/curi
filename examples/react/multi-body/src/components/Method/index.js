@@ -1,12 +1,8 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react-dom";
 
 export const Method = ({ params }) => {
-  return (
-    <div>
-      Please do not contact us by {params.method}.
-    </div>  
-  );
+  return <div>Please do not contact us by {params.method}.</div>;
 };
 
 export const MethodMenu = props => {
@@ -14,10 +10,10 @@ export const MethodMenu = props => {
     <nav>
       <ul>
         <li>
-          <Link to='Home'>Home</Link>
+          <Link to="Home">Home</Link>
         </li>
         <li>
-          <Link to='Contact'>Contact</Link>
+          <Link to="Contact">Contact</Link>
         </li>
       </ul>
     </nav>

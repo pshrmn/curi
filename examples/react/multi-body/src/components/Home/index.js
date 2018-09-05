@@ -1,12 +1,8 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react-dom";
 
 export const Home = () => {
-  return (
-    <div>
-      Home.
-    </div>  
-  );
+  return <div>Home.</div>;
 };
 
 export const HomeMenu = props => {
@@ -14,7 +10,7 @@ export const HomeMenu = props => {
     <nav>
       <ul>
         <li>
-          <Link to='Contact'>Contact</Link>
+          <Link to="Contact">Contact</Link>
         </li>
       </ul>
     </nav>

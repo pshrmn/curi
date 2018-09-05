@@ -1,12 +1,8 @@
-import React from 'react';
-import { Link } from '@curi/react';
+import React from "react";
+import { Link } from "@curi/react-dom";
 
 export const Contact = () => {
-  return (
-    <div>
-      Contact Page.
-    </div>  
-  );
+  return <div>Contact Page.</div>;
 };
 
 export const ContactMenu = props => {
@@ -14,14 +10,18 @@ export const ContactMenu = props => {
     <nav>
       <ul>
         <li>
-          <Link to='Home'>Home</Link>
+          <Link to="Home">Home</Link>
         </li>
         <li>
-          <Link to='Method' params={{ method: 'email' }}>Contact By Email</Link>
+          <Link to="Method" params={{ method: "email" }}>
+            Contact By Email
+          </Link>
         </li>
         <li>
-        <Link to='Method' params={{ method: 'fax' }}>Contact By Fax</Link>
-      </li>
+          <Link to="Method" params={{ method: "fax" }}>
+            Contact By Fax
+          </Link>
+        </li>
       </ul>
     </nav>
   );

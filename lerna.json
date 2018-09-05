@@ -21,6 +21,7 @@
         "babel-jest",
         "webpack",
         "webpack-cli",
+        "webpack-command",
         "webpack-dev-middleware",
         "webpack-hot-middleware",
         "mini-css-extract-plugin",

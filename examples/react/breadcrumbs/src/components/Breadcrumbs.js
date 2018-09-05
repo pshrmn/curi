@@ -1,5 +1,5 @@
 import React from "react";
-import { Curious, Link } from "@curi/react";
+import { Curious, Link } from "@curi/react-dom";
 
 const Breadcrumbs = ({ name, params }) => (
   <Curious>
