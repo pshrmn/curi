@@ -10,13 +10,13 @@
 </template>
 
 <script>
-  export default {
-    name: 'logout',
-    methods: {
-      onClick: function(e) {
-        this.$store.commit('logout');
-        this.$router.history.replace('/');
-      }
+export default {
+  name: "logout",
+  methods: {
+    onClick: function(e) {
+      this.$store.commit("logout");
+      this.$router.history.navigate("/", "REPLACE");
     }
-  };
+  }
+};
 </script>

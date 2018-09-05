@@ -10,14 +10,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'login',
-    methods: {
-      onClick: function(e) {
-        this.$store.commit('login');
-        const { query } = this.$curi.response.location;
-        this.$router.history.replace(query.next || '/');
-      }
+export default {
+  name: "login",
+  methods: {
+    onClick: function(e) {
+      this.$store.commit("login");
+      const { query } = this.$curi.response.location;
+      this.$router.history.navigate(query.next || "/", "REPLACE");
     }
-  };
+  }
+};
 </script>

@@ -19,12 +19,12 @@ export default [
   {
     name: "Protected",
     path: "protected",
-    response: ({ location }) => {
+    response: ({ match }) => {
       if (!fakeAuth.authenticated()) {
         return {
           redirectTo: {
             name: "Login",
-            query: { next: location.pathname }
+            query: { next: match.location.pathname }
           },
           status: 302
         };

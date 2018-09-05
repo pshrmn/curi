@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import fakeAuth from '../fakeAuth';
+import fakeAuth from "../fakeAuth";
 
-const Login = (props) => (
+const Login = props => (
   <div>
     <button
-      type='button'
-      onClick={(e) => {
+      type="button"
+      onClick={e => {
         fakeAuth.login();
         const { query } = props.location;
-        props.history.replace(query.next || '/');
+        props.history.navigate(query.next || "/", "REPLACE");
       }}
     >
       Login

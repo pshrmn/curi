@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import fakeAuth from '../fakeAuth';
+import fakeAuth from "../fakeAuth";
 
-const Logout = (props) => (
+const Logout = props => (
   <div>
     <button
-      type='button'
-      onClick={(e) => {
+      type="button"
+      onClick={e => {
         fakeAuth.logout();
-        props.history.replace('/');
+        props.history.navigate("/", "REPLACE");
       }}
     >
       Logout
