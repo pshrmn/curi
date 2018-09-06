@@ -2,8 +2,8 @@
   "name": "@curi/react-dom",
   "version": "1.0.0-beta.3",
   "description": "React DOM components to use with Curi",
-  "main": "dist/curi-react-dom",
-  "module": "dist/curi-react-dom.mjs",
+  "main": "dist/curi-react-dom.js",
+  "module": "dist/curi-react-dom.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",

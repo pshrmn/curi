@@ -23,7 +23,7 @@ rollupBuild([
     {
       ...base,
       format: "esm",
-      file: "dist/curi-vue.mjs",
+      file: "dist/curi-vue.es.js",
       external: [...deps, "vue"],
       replaceNodeEnv: false
     },

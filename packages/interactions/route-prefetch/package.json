@@ -2,8 +2,8 @@
   "name": "@curi/route-prefetch",
   "version": "1.0.0-beta.15",
   "description": "A route interaction to prefetching Curi route data",
-  "main": "dist/curi-route-prefetch",
-  "module": "dist/curi-route-prefetch.mjs",
+  "main": "dist/curi-route-prefetch.js",
+  "module": "dist/curi-route-prefetch.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",

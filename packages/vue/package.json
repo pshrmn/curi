@@ -2,8 +2,8 @@
   "name": "@curi/vue",
   "version": "1.0.0-beta.22",
   "description": "Curi plugins and components for Vue.js",
-  "main": "dist/curi-vue",
-  "module": "dist/curi-vue.mjs",
+  "main": "dist/curi-vue.js",
+  "module": "dist/curi-vue.es.js",
   "files": [
     "dist",
     "LICENSE",

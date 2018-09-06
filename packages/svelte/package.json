@@ -2,8 +2,8 @@
   "name": "@curi/svelte",
   "version": "1.0.0-beta.7",
   "description": "Curi integration with Svelte",
-  "main": "dist/curi-svelte",
-  "module": "dist/curi-svelte.mjs",
+  "main": "dist/curi-svelte.js",
+  "module": "dist/curi-svelte.es.js",
   "files": [
     "dist",
     "LICENSE",

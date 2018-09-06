@@ -21,7 +21,7 @@ rollupBuild([
     {
       ...base,
       format: "esm",
-      file: "dist/curi-side-effect-title.mjs",
+      file: "dist/curi-side-effect-title.es.js",
       external: deps,
       replaceNodeEnv: false
     },

@@ -28,7 +28,7 @@ rollupBuild([
     {
       ...base,
       format: "esm",
-      file: "dist/curi-react-native.mjs",
+      file: "dist/curi-react-native.es.js",
       replaceNodeEnv: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }

@@ -27,7 +27,7 @@ rollupBuild([
     {
       ...base,
       format: "esm",
-      file: "dist/curi-svelte.mjs",
+      file: "dist/curi-svelte.es.js",
       replaceNodeEnv: false
     },
     { NODE_ENV: "development" }

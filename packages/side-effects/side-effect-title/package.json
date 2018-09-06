@@ -2,8 +2,8 @@
   "name": "@curi/side-effect-title",
   "version": "1.0.0-beta.12",
   "description": "Curi side effecft to set the page title when loading a route",
-  "main": "dist/curi-side-effect-title",
-  "module": "dist/curi-side-effect-title.mjs",
+  "main": "dist/curi-side-effect-title.js",
+  "module": "dist/curi-side-effect-title.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",

@@ -21,7 +21,7 @@ rollupBuild([
     {
       ...base,
       format: "esm",
-      file: "dist/curi-side-effect-scroll.mjs",
+      file: "dist/curi-side-effect-scroll.es.js",
       external: deps,
       replaceNodeEnv: false
     },

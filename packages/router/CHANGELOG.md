@@ -1,3 +1,7 @@
+## Next
+
+* Revert dual-mode (not ready yet!).
+
 ## 1.0.0-beta.42
 
 * Split `router.respond()` into `router.once()` for one time functions and `router.observe()` for observer functions.

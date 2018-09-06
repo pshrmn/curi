@@ -21,7 +21,7 @@ rollupBuild([
     {
       ...base,
       format: "esm",
-      file: "dist/curi-route-ancestors.mjs",
+      file: "dist/curi-route-ancestors.es.js",
       external: deps,
       replaceNodeEnv: false
     },

@@ -24,7 +24,7 @@ rollupBuild([
     {
       ...base,
       format: "esm",
-      file: "dist/curi-react-universal.mjs",
+      file: "dist/curi-react-universal.es.js",
       external: [...deps, "react"],
       replaceNodeEnv: false
     },

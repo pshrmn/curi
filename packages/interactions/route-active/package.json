@@ -2,8 +2,8 @@
   "name": "@curi/route-active",
   "version": "1.0.0-beta.10",
   "description": "A Curi router interaction to determine if a route is \"active\"",
-  "main": "dist/curi-route-active",
-  "module": "dist/curi-route-active.mjs",
+  "main": "dist/curi-route-active.js",
+  "module": "dist/curi-route-active.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",

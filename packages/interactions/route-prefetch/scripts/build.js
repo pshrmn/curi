@@ -21,7 +21,7 @@ rollupBuild([
     {
       ...base,
       format: "esm",
-      file: "dist/curi-route-prefetch.mjs",
+      file: "dist/curi-route-prefetch.es.js",
       external: deps,
       replaceNodeEnv: false
     },

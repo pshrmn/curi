@@ -2,8 +2,8 @@
   "name": "@curi/react-native",
   "version": "1.0.0-beta.12",
   "description": "React Native components to use with Curi",
-  "main": "dist/curi-react-native",
-  "module": "dist/curi-react-native.mjs",
+  "main": "dist/curi-react-native.js",
+  "module": "dist/curi-react-native.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",
