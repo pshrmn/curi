@@ -1,6 +1,6 @@
 {
   "name": "@curi/vue",
-  "version": "1.0.0-beta.22",
+  "version": "1.0.0-beta.23",
   "description": "Curi plugins and components for Vue.js",
   "main": "dist/curi-vue.js",
   "module": "dist/curi-vue.es.js",
@@ -34,11 +34,11 @@
     "vue": "^2.5.2"
   },
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.42",
+    "@curi/router": "^1.0.0-beta.43",
     "@hickory/root": "^1.0.0"
   },
   "devDependencies": {
-    "@curi/route-active": "^1.0.0-beta.10",
+    "@curi/route-active": "^1.0.0-beta.11",
     "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
     "@types/node": "^8.0.53",
