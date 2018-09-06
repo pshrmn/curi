@@ -70,9 +70,8 @@ describe("curi", () => {
 
       it("removes the leading slash", () => {
         const router = curi(history, routes);
-        router.respond(({ response }) => {
-          expect(response.name).toBe("Home");
-        });
+        const { response } = router.current();
+        expect(response.name).toBe("Home");
       });
 
       it("warns", () => {
@@ -208,7 +207,7 @@ describe("curi", () => {
           const router = curi(history, routes, {
             sideEffects: [sideEffect]
           });
-          router.respond(({ response, navigation }) => {
+          router.once(({ response, navigation }) => {
             expect(sideEffect.mock.calls.length).toBe(1);
             expect(sideEffect.mock.calls[0][0].response).toBe(response);
             expect(sideEffect.mock.calls[0][0].navigation).toBe(navigation);
@@ -219,7 +218,6 @@ describe("curi", () => {
 
         it("passes response, navigation, and router object to side effect", done => {
           const routes = [{ name: "All", path: "(.*)" }];
-          const responseHandler = jest.fn();
           const sideEffect = function({ response, navigation, router }) {
             expect(response).toMatchObject({
               name: "All",
@@ -235,7 +233,6 @@ describe("curi", () => {
           const router = curi(history, routes, {
             sideEffects: [sideEffect]
           });
-          router.respond(responseHandler);
         });
       });
 
@@ -292,7 +289,8 @@ describe("curi", () => {
           const router = curi(history, routes, {
             emitRedirects: false
           });
-          router.respond(({ response }) => {
+          // the first emitted response is the location that was redirected to
+          router.once(({ response }) => {
             expect(response.name).toBe("Other");
             done();
           });
@@ -305,7 +303,7 @@ describe("curi", () => {
         const routes = [{ name: "Home", path: "" }];
         const router = curi(history, routes);
         const after = jest.fn();
-        router.respond(r => {
+        router.once(r => {
           expect(after.mock.calls.length).toBe(0);
         });
         after();
@@ -323,7 +321,7 @@ describe("curi", () => {
         ];
         const router = curi(history, routes);
         const after = jest.fn();
-        router.respond(r => {
+        router.once(r => {
           expect(after.mock.calls.length).toBe(1);
         });
         after();
@@ -348,20 +346,17 @@ describe("curi", () => {
         const history = InMemory({ locations: ["/parent/child"] });
         const router = curi(history, routes);
         const after = jest.fn();
-        let calls = 0;
-        router.respond(
-          r => {
-            if (calls === 0) {
-              calls++;
-              history.navigate({ pathname: "/parent" });
-              after();
-              return;
-            }
-            expect(after.mock.calls.length).toBe(0);
-            done();
-          },
-          { observe: true }
-        );
+        let navigated = false;
+        router.observe(r => {
+          if (!navigated) {
+            navigated = true;
+            history.navigate({ pathname: "/parent" });
+            after();
+            return;
+          }
+          expect(after.mock.calls.length).toBe(0);
+          done();
+        });
       });
     });
   });
@@ -397,7 +392,7 @@ describe("curi", () => {
 
     it("response and navigation are the last resolved response and navigation", () => {
       const router = curi(history, [{ name: "Home", path: "" }]);
-      router.respond(({ response, navigation }) => {
+      router.once(({ response, navigation }) => {
         expect(router.current()).toMatchObject({
           response,
           navigation
@@ -411,21 +406,18 @@ describe("curi", () => {
         { name: "About", path: "about" }
       ]);
       let calls = 0;
-      router.respond(
-        ({ response, navigation }) => {
-          calls++;
-          expect(router.current()).toMatchObject({
-            response,
-            navigation
-          });
-          if (calls === 2) {
-            done();
-          } else {
-            router.navigate({ name: "About" });
-          }
-        },
-        { observe: true }
-      );
+      router.observe(({ response, navigation }) => {
+        calls++;
+        expect(router.current()).toMatchObject({
+          response,
+          navigation
+        });
+        if (calls === 2) {
+          done();
+        } else {
+          router.navigate({ name: "About" });
+        }
+      });
     });
   });
 
@@ -507,12 +499,12 @@ describe("curi", () => {
 
       // setup a response handler, but ensure it doesn't get called
       // with existing response.
-      router.respond(
+      router.once(
         ({ response, navigation }) => {
           expect(response.name).toBe("About");
           done();
         },
-        { observe: false, initial: false }
+        { initial: false }
       );
       // then refresh the router. the response handler should be called
       // with a response for the current location.
@@ -532,12 +524,12 @@ describe("curi", () => {
 
       // setup a response handler, but ensure it doesn't get called
       // with existing response.
-      router.respond(
+      router.once(
         ({ response, navigation }) => {
           expect(navigation).toMatchObject(initialNavigation);
           done();
         },
-        { observe: false, initial: false }
+        { initial: false }
       );
       // then refresh the router. the response handler should be called
       // with a response for the current location.
@@ -545,7 +537,7 @@ describe("curi", () => {
     });
   });
 
-  describe("respond", () => {
+  describe("observe(fn)", () => {
     let history;
     beforeEach(() => {
       history = InMemory({ locations: ["/"] });
@@ -562,11 +554,11 @@ describe("curi", () => {
 
       // wait for the first response to be generated to ensure that both
       // response handler functions are called when subscribing
-      const unsub1 = router.respond(sub1, {
+      const unsub1 = router.observe(sub1, {
         observe: true,
         initial: false
       }) as RemoveObserver;
-      const unsub2 = router.respond(sub2, { observe: true, initial: false });
+      const unsub2 = router.observe(sub2, { observe: true, initial: false });
 
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(0);
@@ -577,109 +569,163 @@ describe("curi", () => {
       expect(sub2.mock.calls.length).toBe(1);
     });
 
-    it("passes response, navigation, and router object to response handler", done => {
-      const routes = [{ name: "All", path: "(.*)" }];
-      const responseHandler = function({ response, navigation, router }) {
-        expect(response).toMatchObject({
-          name: "All",
-          location: { pathname: "/" }
-        });
-        expect(navigation).toMatchObject({
-          action: "PUSH"
-        });
-        expect(router).toBe(router);
-        done();
-      };
+    describe("response handler", () => {
+      it("is passed object with response, navigation, and router", done => {
+        const routes = [{ name: "All", path: "(.*)" }];
+        const responseHandler = function({ response, navigation, router }) {
+          expect(response).toMatchObject({
+            name: "All",
+            location: { pathname: "/" }
+          });
+          expect(navigation).toMatchObject({
+            action: "PUSH"
+          });
+          expect(router).toBe(router);
+          done();
+        };
 
-      const router = curi(history, routes);
-      router.respond(responseHandler);
-    });
+        const router = curi(history, routes);
+        router.observe(responseHandler);
+      });
 
-    it("notifies response handlers of new response and navigation when location changes", () => {
-      const How = { name: "How", path: ":method" };
-      const routes = [
-        { name: "Home", path: "" },
-        { name: "About", path: "about" },
-        { name: "Contact", path: "contact", children: [How] }
-      ];
+      it("is called when response is emitted", () => {
+        const How = { name: "How", path: ":method" };
+        const routes = [
+          { name: "Home", path: "" },
+          { name: "About", path: "about" },
+          { name: "Contact", path: "contact", children: [How] }
+        ];
 
-      const check = ({ response, navigation }) => {
-        expect(response).toMatchObject({
-          name: "How",
-          partials: ["Contact"],
-          params: {
-            method: "mail"
+        const check = ({ response, navigation }) => {
+          expect(response).toMatchObject({
+            name: "How",
+            partials: ["Contact"],
+            params: {
+              method: "mail"
+            }
+          });
+          expect(navigation).toMatchObject({
+            action: "PUSH"
+          });
+        };
+
+        const router = curi(history, routes);
+        // register before navigation, but don't call with existing response
+        router.observe(check, { initial: false });
+        history.navigate("/contact/mail");
+      });
+
+      it("is re-called for new responses", done => {
+        const routes = [
+          { name: "Home", path: "" },
+          { name: "Contact", path: "contact" },
+          { name: "Not Found", path: "(.*)" }
+        ];
+        const everyTime = jest.fn();
+        let called = false;
+        const responseHandler = jest.fn(() => {
+          if (called) {
+            expect(everyTime.mock.calls.length).toBe(2);
+            expect(responseHandler.mock.calls.length).toBe(2);
+            done();
+          } else {
+            called = true;
+            // trigger another navigation to verify that the observer
+            // is called again
+            router.navigate({ name: "Contact" });
           }
         });
-        expect(navigation).toMatchObject({
-          action: "PUSH"
+        const router = curi(history, routes);
+        router.observe(everyTime);
+        router.observe(responseHandler);
+      });
+
+      it("is called BEFORE once() response handlers", done => {
+        // need to use an async route so that handlers are registered before
+        // the initial response is ready
+        const routes = [
+          {
+            name: "Home",
+            path: "",
+            resolve: {
+              test: () => Promise.resolve()
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ];
+        const oneTime = jest.fn();
+        let called = false;
+        const responseHandler = jest.fn(() => {
+          expect(oneTime.mock.calls.length).toBe(0);
+          done();
         });
-      };
+        const router = curi(history, routes);
+        router.once(oneTime);
+        router.observe(responseHandler);
+      });
 
-      const router = curi(history, routes);
-      history.navigate("/contact/mail");
-      router.respond(check);
-    });
-
-    it("[async] notifies response handlers AFTER promises have resolved", done => {
-      let promiseResolved = false;
-      const routes = [
-        { name: "Home", path: "" },
-        { name: "About", path: "about" },
-        {
-          name: "Contact",
-          path: "contact",
-          children: [
+      describe("matched route is async", () => {
+        it("is called AFTER promises have resolved", done => {
+          let promiseResolved = false;
+          const routes = [
+            { name: "Home", path: "" },
+            { name: "About", path: "about" },
             {
-              name: "How",
-              path: ":method",
-              resolve: {
-                test: () => {
-                  promiseResolved = true;
-                  return Promise.resolve(promiseResolved);
+              name: "Contact",
+              path: "contact",
+              children: [
+                {
+                  name: "How",
+                  path: ":method",
+                  resolve: {
+                    test: () => {
+                      promiseResolved = true;
+                      return Promise.resolve(promiseResolved);
+                    }
+                  }
                 }
-              }
+              ]
             }
-          ]
-        }
-      ];
+          ];
 
-      const check = response => {
-        expect(promiseResolved).toBe(true);
-        done();
-      };
-      const history = InMemory({ locations: ["/contact/phone"] });
-      const router = curi(history, routes);
-      router.respond(check);
-    });
+          const check = response => {
+            expect(promiseResolved).toBe(true);
+            done();
+          };
+          const history = InMemory({ locations: ["/contact/phone"] });
+          const router = curi(history, routes);
+          router.observe(check);
+        });
 
-    it("[async] does not emit responses for cancelled navigation", done => {
-      const routes = [
-        { name: "Home", path: "" },
-        { name: "About", path: "about" },
-        {
-          name: "Contact",
-          path: "contact",
-          children: [
+        it("does not emit responses for cancelled navigation", done => {
+          const routes = [
+            { name: "Home", path: "" },
+            { name: "About", path: "about" },
             {
-              name: "How",
-              path: ":method",
-              resolve: {
-                test: () => Promise.resolve()
-              }
+              name: "Contact",
+              path: "contact",
+              children: [
+                {
+                  name: "How",
+                  path: ":method",
+                  resolve: {
+                    test: () => Promise.resolve()
+                  }
+                }
+              ]
             }
-          ]
-        }
-      ];
-      const check = ({ response }) => {
-        expect(response.params.method).toBe("mail");
-        done();
-      };
-      const history = InMemory({ locations: ["/contact/fax"] });
-      const router = curi(history, routes);
-      router.respond(check);
-      history.navigate("/contact/phone");
-      history.navigate("/contact/mail");
+          ];
+          const check = ({ response }) => {
+            expect(response.params.method).toBe("mail");
+            done();
+          };
+          const history = InMemory({ locations: ["/contact/fax"] });
+          const router = curi(history, routes);
+          router.observe(check);
+          history.navigate("/contact/phone");
+          history.navigate("/contact/mail");
+        });
+      });
     });
 
     describe("response handler options", () => {
@@ -689,7 +735,7 @@ describe("curi", () => {
           const sub = jest.fn();
           const router = curi(history, routes);
           const { response, navigation } = router.current();
-          router.respond(sub, { initial: true });
+          router.observe(sub, { initial: true });
           expect(sub.mock.calls.length).toBe(1);
           const {
             response: mockResponse,
@@ -711,8 +757,8 @@ describe("curi", () => {
           ];
           const sub = jest.fn();
           const router = curi(history, routes);
-          router.respond(() => {
-            router.respond(sub, { initial: true });
+          router.once(() => {
+            router.observe(sub, { initial: true });
             expect(sub.mock.calls.length).toBe(1);
             done();
           });
@@ -730,50 +776,214 @@ describe("curi", () => {
           ];
           const sub = jest.fn();
           const router = curi(history, routes);
-          router.respond(sub, { initial: true });
+          router.observe(sub, { initial: true });
           expect(sub.mock.calls.length).toBe(0);
         });
       });
 
-      describe("{ observe: false } (default)", () => {
-        it("is called once", () => {
+      describe("{ initial: false }", () => {
+        it("has response, is not immediately called", done => {
           const routes = [{ name: "Home", path: "" }];
-          const oneTime = jest.fn();
-          const responseHandler = jest.fn(() => {
-            expect(oneTime.mock.calls.length).toBe(1);
-            expect(responseHandler.mock.calls.length).toBe(1);
-          });
+          const everyTime = jest.fn();
           const router = curi(history, routes);
-          router.respond(oneTime);
-          router.respond(responseHandler, { observe: true });
+          router.once(() => {
+            router.observe(everyTime, { initial: false });
+            expect(everyTime.mock.calls.length).toBe(0);
+            done();
+          });
         });
 
-        it("isn't re-called for new responses", done => {
+        it("is called AFTER next navigation", done => {
           const routes = [
             { name: "Home", path: "" },
-            { name: "Contact", path: "contact" },
-            { name: "Not Found", path: "(.*)" }
+            { name: "Catch All", path: "(.*)" }
           ];
-          const oneTime = jest.fn();
-          let called = false;
-          const responseHandler = jest.fn(() => {
-            if (called) {
-              expect(oneTime.mock.calls.length).toBe(1);
-              expect(responseHandler.mock.calls.length).toBe(2);
-              done();
-            } else {
-              called = true;
-              // trigger another navigation to verify that the once sub
-              // is not called again
-              router.navigate({ name: "Contact" });
-            }
+          const everyTime = jest.fn(({ response }) => {
+            expect(response.name).toBe("Catch All");
+            done();
           });
           const router = curi(history, routes);
-          router.respond(oneTime);
-          router.respond(responseHandler, { observe: true });
+          router.once(() => {
+            router.observe(everyTime, { initial: false });
+            expect(everyTime.mock.calls.length).toBe(0);
+            history.navigate("/somewhere-else");
+          });
+        });
+      });
+    });
+  });
+
+  describe("once(fn)", () => {
+    let history;
+    beforeEach(() => {
+      history = InMemory({ locations: ["/"] });
+    });
+
+    describe("response handler", () => {
+      it("is passed object with response, navigation, and router", done => {
+        const routes = [{ name: "All", path: "(.*)" }];
+        const responseHandler = function({ response, navigation, router }) {
+          expect(response).toMatchObject({
+            name: "All",
+            location: { pathname: "/" }
+          });
+          expect(navigation).toMatchObject({
+            action: "PUSH"
+          });
+          expect(router).toBe(router);
+          done();
+        };
+
+        const router = curi(history, routes);
+        router.once(responseHandler);
+      });
+
+      it("is called when response is emitted", () => {
+        const routes = [
+          { name: "Home", path: "" },
+          { name: "Contact", path: "contact" },
+          { name: "Not Found", path: "(.*)" }
+        ];
+        const oneTime = jest.fn();
+        const router = curi(history, routes);
+        router.once(oneTime);
+        expect(oneTime.mock.calls.length).toBe(1);
+      });
+
+      it("isn't re-called for new responses", () => {
+        //
+        const routes = [
+          { name: "Home", path: "" },
+          { name: "Contact", path: "contact" },
+          { name: "Not Found", path: "(.*)" }
+        ];
+        const firstOnce = jest.fn();
+        const secondOnce = jest.fn();
+        const router = curi(history, routes);
+        router.once(firstOnce);
+        expect(firstOnce.mock.calls.length).toBe(1);
+        expect(firstOnce.mock.calls[0][0].response).toMatchObject({
+          name: "Home"
+        });
+        router.navigate({ name: "Contact" });
+        // register a second one time response handler
+        // to verify that another response is emitted,
+        // but first one timer isn't re-called
+        router.once(secondOnce);
+
+        expect(secondOnce.mock.calls.length).toBe(1);
+        expect(secondOnce.mock.calls[0][0].response).toMatchObject({
+          name: "Contact"
+        });
+        expect(firstOnce.mock.calls.length).toBe(1);
+      });
+
+      it("is called AFTER observe() response handlers", done => {
+        // need to use an async route so that handlers are registered before
+        // the initial response is ready
+        const routes = [
+          {
+            name: "Home",
+            path: "",
+            resolve: {
+              test: () => Promise.resolve()
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ];
+        const oneTime = jest.fn(() => {
+          expect(responseHandler.mock.calls.length).toBe(1);
+          done();
+        });
+        let called = false;
+        const responseHandler = jest.fn();
+        const router = curi(history, routes);
+        router.once(oneTime);
+        router.observe(responseHandler);
+      });
+
+      describe("matched route is async", () => {
+        it("is called AFTER promises have resolved", done => {
+          let promiseResolved = false;
+          const routes = [
+            { name: "Home", path: "" },
+            { name: "About", path: "about" },
+            {
+              name: "Contact",
+              path: "contact",
+              children: [
+                {
+                  name: "How",
+                  path: ":method",
+                  resolve: {
+                    test: () => {
+                      promiseResolved = true;
+                      return Promise.resolve(promiseResolved);
+                    }
+                  }
+                }
+              ]
+            }
+          ];
+
+          const check = response => {
+            expect(promiseResolved).toBe(true);
+            done();
+          };
+          const history = InMemory({ locations: ["/contact/phone"] });
+          const router = curi(history, routes);
+          router.once(check);
         });
 
-        it("[async] no initial response, called AFTER regular response handlers", done => {
+        it("does not emit responses for cancelled navigation", done => {
+          const routes = [
+            { name: "Home", path: "" },
+            { name: "About", path: "about" },
+            {
+              name: "Contact",
+              path: "contact",
+              children: [
+                {
+                  name: "How",
+                  path: ":method",
+                  resolve: {
+                    test: () => Promise.resolve()
+                  }
+                }
+              ]
+            }
+          ];
+          const check = ({ response }) => {
+            expect(response.params.method).toBe("mail");
+            done();
+          };
+          const history = InMemory({ locations: ["/contact/fax"] });
+          const router = curi(history, routes);
+          router.once(check);
+          history.navigate("/contact/phone");
+          history.navigate("/contact/mail");
+        });
+      });
+    });
+
+    describe("response handler options", () => {
+      describe("{ initial: true } (default)", () => {
+        it("immediately called with most recent response/navigation", () => {
+          const routes = [{ name: "Home", path: "" }];
+          const sub = jest.fn();
+          const router = curi(history, routes);
+          const { response, navigation } = router.current();
+          router.once(sub, { initial: true });
+          expect(sub.mock.calls.length).toBe(1);
+          const {
+            response: mockResponse,
+            navigation: mockNavigation
+          } = sub.mock.calls[0][0];
+          expect(mockResponse).toBe(response);
+          expect(mockNavigation).toBe(navigation);
+        });
+
+        it("[async] immediately called if initial response has resolved", done => {
           const routes = [
             {
               name: "Home",
@@ -781,59 +991,18 @@ describe("curi", () => {
               resolve: {
                 test: () => Promise.resolve()
               }
-            },
-            { name: "Catch All", path: "(.*)" }
+            }
           ];
-          const oneTime = jest.fn(() => {
-            expect(responseHandler.mock.calls.length).toBe(1);
-            done();
-          });
-          let called = false;
-          const responseHandler = jest.fn();
-          const router = curi(history, routes);
-          router.respond(oneTime);
-          router.respond(responseHandler, { observe: true });
-        });
-      });
-
-      describe("{ observe: true }", () => {
-        it("has response, immediate call", done => {
-          const routes = [{ name: "Home", path: "" }];
           const sub = jest.fn();
           const router = curi(history, routes);
-          router.respond(() => {
-            router.respond(sub, { observe: true });
+          router.once(() => {
+            router.once(sub, { initial: true });
             expect(sub.mock.calls.length).toBe(1);
             done();
           });
         });
 
-        it("is re-called for new responses", done => {
-          const routes = [
-            { name: "Home", path: "" },
-            { name: "Contact", path: "contact" },
-            { name: "Not Found", path: "(.*)" }
-          ];
-          const everyTime = jest.fn();
-          let called = false;
-          const responseHandler = jest.fn(() => {
-            if (called) {
-              expect(everyTime.mock.calls.length).toBe(2);
-              expect(responseHandler.mock.calls.length).toBe(2);
-              done();
-            } else {
-              called = true;
-              // trigger another navigation to verify that the observer
-              // is called again
-              router.navigate({ name: "Contact" });
-            }
-          });
-          const router = curi(history, routes);
-          router.respond(everyTime, { observe: true });
-          router.respond(responseHandler, { observe: true });
-        });
-
-        it("[async] no initial response, is called before one time response handlers", done => {
+        it("[async] not immediately called if initial response hasn't resolved", () => {
           const routes = [
             {
               name: "Home",
@@ -841,18 +1010,12 @@ describe("curi", () => {
               resolve: {
                 test: () => Promise.resolve()
               }
-            },
-            { name: "Catch All", path: "(.*)" }
+            }
           ];
-          const oneTime = jest.fn();
-          let called = false;
-          const responseHandler = jest.fn(() => {
-            expect(oneTime.mock.calls.length).toBe(0);
-            done();
-          });
+          const sub = jest.fn();
           const router = curi(history, routes);
-          router.respond(oneTime);
-          router.respond(responseHandler, { observe: true });
+          router.once(sub, { initial: true });
+          expect(sub.mock.calls.length).toBe(0);
         });
       });
 
@@ -861,21 +1024,8 @@ describe("curi", () => {
           const routes = [{ name: "Home", path: "" }];
           const oneTime = jest.fn();
           const router = curi(history, routes);
-          router.respond(() => {
-            router.respond(oneTime, { initial: false });
-            expect(oneTime.mock.calls.length).toBe(0);
-            done();
-          });
-        });
-      });
-
-      describe("{ observe: false, initial: false }", () => {
-        it("has response, is not immediately called", done => {
-          const routes = [{ name: "Home", path: "" }];
-          const oneTime = jest.fn();
-          const router = curi(history, routes);
-          router.respond(() => {
-            router.respond(oneTime, { initial: false, observe: false });
+          router.once(() => {
+            router.once(oneTime, { initial: false });
             expect(oneTime.mock.calls.length).toBe(0);
             done();
           });
@@ -891,8 +1041,8 @@ describe("curi", () => {
             done();
           });
           const router = curi(history, routes);
-          router.respond(() => {
-            router.respond(oneTime, { initial: false, observe: false });
+          router.once(() => {
+            router.once(oneTime, { initial: false });
             expect(oneTime.mock.calls.length).toBe(0);
             history.navigate("/somewhere-else");
           });
@@ -1053,7 +1203,7 @@ describe("curi", () => {
           params: { id: 1 },
           cancelled
         });
-        router.respond(
+        router.once(
           ({ response }) => {
             // verify this is running after the first navigation completes
             expect(response.name).toBe("Loader");
@@ -1129,7 +1279,7 @@ describe("curi", () => {
           params: { id: 1 },
           finished
         });
-        router.respond(
+        router.once(
           ({ response }) => {
             // verify this is running after the first navigation completes
             expect(response.name).toBe("Loader");

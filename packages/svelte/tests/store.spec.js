@@ -28,15 +28,13 @@ describe("curiStore", () => {
       expect(store.get().curi).toHaveProperty("navigation");
     });
 
-    it("initializes with current response/navigation", done => {
-      router.respond(({ response, navigation }) => {
-        const store = new Store({ foo: "oof" });
-        curiStore(router, store);
-        const $curi = store.get().curi;
-        expect($curi.response).toBe(response);
-        expect($curi.navigation).toBe(navigation);
-        done();
-      });
+    it("initializes with current response/navigation", () => {
+      const { response, navigation } = router.current();
+      const store = new Store({ foo: "oof" });
+      curiStore(router, store);
+      const $curi = store.get().curi;
+      expect($curi.response).toBe(response);
+      expect($curi.navigation).toBe(navigation);
     });
   });
 
@@ -46,14 +44,12 @@ describe("curiStore", () => {
       expect(store.get().router).toBe(router);
     });
 
-    it("initializes with current response/navigation", done => {
-      router.respond(({ response, navigation }) => {
-        const store = curiStore(router, store);
-        const $curi = store.get().curi;
-        expect($curi.response).toBe(response);
-        expect($curi.navigation).toBe(navigation);
-        done();
-      });
+    it("initializes with current response/navigation", () => {
+      const { response, navigation } = router.current();
+      const store = curiStore(router, store);
+      const $curi = store.get().curi;
+      expect($curi.response).toBe(response);
+      expect($curi.navigation).toBe(navigation);
     });
   });
 

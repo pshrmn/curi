@@ -1,7 +1,8 @@
 import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
-import { Store } from "svelte/store";
 import simulant from "simulant";
+import { curiStore } from "@curi/svelte";
+
 import Link from "../src/Link.html";
 
 describe("<Link>", () => {
@@ -12,8 +13,7 @@ describe("<Link>", () => {
       { name: "Not Found", path: "(.*)" }
     ];
     const router = curi(history, routes);
-
-    const store = new Store({ router });
+    const store = curiStore(router);
 
     const node = document.createElement("div");
     const link = new Link({
@@ -36,7 +36,7 @@ describe("<Link>", () => {
       { name: "Not Found", path: "(.*)" }
     ];
     const router = curi(history, routes);
-    const store = new Store({ router });
+    const store = curiStore(router);
 
     const node = document.createElement("div");
     const link = new Link({
@@ -52,40 +52,27 @@ describe("<Link>", () => {
     expect(a.pathname).toEqual("/u/1");
   });
 
-  it("falls back to current response's pathname if to isn't provided", done => {
+  it("falls back to current response's pathname if \"to\" isn't provided", () => {
     const history = InMemory({ locations: ["/u/2"] });
     const routes = [
       { name: "User", path: "u/:id" },
       { name: "Not Found", path: "(.*)" }
     ];
     const router = curi(history, routes);
-    const store = new Store({
-      router,
-      curi: { response: undefined, navigation: undefined }
+    const store = curiStore(router);
+
+    const node = document.createElement("div");
+    const link = new Link({
+      target: node,
+      store,
+      data: {
+        hash: "is-a-band"
+      }
     });
 
-    router.respond(
-      ({ response, navigation }) => {
-        store.set({ curi: { response, navigation } });
-      },
-      { observe: true }
-    );
-
-    router.respond(() => {
-      const node = document.createElement("div");
-      const link = new Link({
-        target: node,
-        store,
-        data: {
-          hash: "is-a-band"
-        }
-      });
-
-      const a = node.querySelector("a");
-      expect(a.pathname).toEqual("/u/2");
-      expect(a.hash).toEqual("#is-a-band");
-      done();
-    });
+    const a = node.querySelector("a");
+    expect(a.pathname).toEqual("/u/2");
+    expect(a.hash).toEqual("#is-a-band");
   });
 
   it("appends query & hash to end of URI", () => {
@@ -95,7 +82,7 @@ describe("<Link>", () => {
       { name: "Not Found", path: "(.*)" }
     ];
     const router = curi(history, routes);
-    const store = new Store({ router });
+    const store = curiStore(router);
 
     const node = document.createElement("div");
     const link = new Link({
@@ -122,7 +109,7 @@ describe("<Link>", () => {
         { name: "Not Found", path: "(.*)" }
       ];
       const router = curi(history, routes);
-      const store = new Store({ router });
+      const store = curiStore(router);
 
       const node = document.createElement("div");
       const link = new Link({
@@ -148,7 +135,7 @@ describe("<Link>", () => {
         { name: "Not Found", path: "(.*)" }
       ];
       const router = curi(history, routes);
-      const store = new Store({ router });
+      const store = curiStore(router);
 
       const node = document.createElement("div");
       const link = new Link({
@@ -177,7 +164,7 @@ describe("<Link>", () => {
         { name: "Not Found", path: "(.*)" }
       ];
       const router = curi(history, routes);
-      const store = new Store({ router });
+      const store = curiStore(router);
 
       const node = document.createElement("div");
       const link = new Link({
@@ -204,7 +191,7 @@ describe("<Link>", () => {
         { name: "Not Found", path: "(.*)" }
       ];
       const router = curi(history, routes);
-      const store = new Store({ router });
+      const store = curiStore(router);
 
       const node = document.createElement("div");
       const link = new Link({

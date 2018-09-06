@@ -1,5 +1,6 @@
 ## Next
 
+* Split `router.respond()` into `router.once()` for one time functions and `router.observe()` for observer functions.
 * Support dual-mode package (CJS/ESM) builds.
 
 ## 1.0.0-beta.41

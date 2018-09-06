@@ -419,7 +419,7 @@ describe("<Link>", () => {
         };
         Simulate.click(a, leftClickEvent);
         expect(a.textContent).toBe("true");
-        router.respond(
+        router.once(
           ({ response }) => {
             expect(response.name).toBe("Loader");
             expect(a.textContent).toBe("false");

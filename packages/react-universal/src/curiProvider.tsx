@@ -35,7 +35,7 @@ export default function curiProvider(router: CuriRouter) {
     }
 
     setupRespond(router: CuriRouter) {
-      this.stopResponding = router.respond(
+      this.stopResponding = router.observe(
         ({ response, navigation }) => {
           if (!this.removed) {
             this.setState({
@@ -43,8 +43,8 @@ export default function curiProvider(router: CuriRouter) {
             });
           }
         },
-        { observe: true, initial: false }
-      ) as RemoveObserver;
+        { initial: false }
+      );
     }
 
     componentWillUnmount() {

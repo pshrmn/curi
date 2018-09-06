@@ -26,22 +26,19 @@ describe("CuriPlugin", () => {
   });
 
   describe("$curi", () => {
-    it("Adds $curi property to all components", done => {
+    it("Adds $curi property to all components", () => {
       const Vue = createLocalVue();
       const FakeComponent = {
         render: function(h) {
           return h("div");
         }
       };
-      router.respond(({ response, navigation }) => {
-        Vue.use(CuriPlugin, { router });
+      const { response, navigation } = router.current();
+      Vue.use(CuriPlugin, { router });
 
-        const el = new Vue();
-        expect(el.$curi.response).toBe(response);
-        expect(el.$curi.navigation).toBe(navigation);
-
-        done();
-      });
+      const el = new Vue();
+      expect(el.$curi.response).toBe(response);
+      expect(el.$curi.navigation).toBe(navigation);
     });
 
     describe("reactive properties", () => {

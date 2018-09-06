@@ -13,12 +13,9 @@ export default function curiStore(router, store) {
     });
   }
 
-  router.respond(
-    ({ response, navigation }) => {
-      store.set({ curi: { response, navigation } });
-    },
-    { observe: true }
-  );
+  router.observe(({ response, navigation }) => {
+    store.set({ curi: { response, navigation } });
+  });
 
   return store;
 }
