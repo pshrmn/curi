@@ -24,11 +24,11 @@ const plugins = [
 
 rollupBuild([
   [
-    "ES",
+    "ESM",
     {
       ...base,
-      format: "es",
-      file: "dist/curi-react-native.es.js",
+      format: "esm",
+      file: "dist/curi-react-native.mjs",
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
@@ -39,7 +39,7 @@ rollupBuild([
     {
       ...base,
       format: "cjs",
-      file: "dist/curi-react-native.common.js",
+      file: "dist/curi-react-native.js",
       safeModules: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }

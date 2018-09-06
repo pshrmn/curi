@@ -1,3 +1,7 @@
+## Next
+
+* Support dual-mode package (CJS/ESM) builds.
+
 ## 1.0.0-beta.6
 
 * Update to Svelte v2 minimum dependency.

@@ -1,7 +1,7 @@
 let mappedModule;
 switch (process.env.TEST_ENV) {
   case "cjs":
-    mappedModule = "<rootDir>/dist/curi-svelte.common.js";
+    mappedModule = "<rootDir>/dist/curi-svelte.js";
     break;
   default:
     mappedModule = "<rootDir>/src/index";

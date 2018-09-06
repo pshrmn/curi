@@ -1,3 +1,7 @@
+## Next
+
+* Support dual-mode package (CJS/ESM) builds.
+
 ## 1.0.0-beta.11
 
 * Export a `curiProvider()` function to create a routing provider component instead of a `<CuriProvider>`.

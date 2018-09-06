@@ -1,9 +1,7 @@
-import PathToRegexp, {
-  PathFunction,
-  PathFunctionOptions
-} from "path-to-regexp";
+import PathToRegexp from "path-to-regexp";
 import { withLeadingSlash, join } from "../utils/path";
 
+import { PathFunction, PathFunctionOptions } from "path-to-regexp";
 import { Interaction } from "../types/interaction";
 import { Route } from "../types/route";
 import { Params } from "../types/response";

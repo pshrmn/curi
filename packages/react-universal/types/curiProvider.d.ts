@@ -7,7 +7,7 @@ export interface RouterProps {
 export interface RouterState {
     emitted: CurrentResponse;
 }
-export default function curiRoot(router: CuriRouter): {
+export default function curiProvider(router: CuriRouter): {
     new (props: RouterProps): {
         stopResponding: () => void;
         removed: boolean;

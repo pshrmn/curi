@@ -1,10 +1,10 @@
 let mappedModule;
 switch (process.env.TEST_ENV) {
   case "cjs":
-    mappedModule = "<rootDir>/dist/curi-side-effect-scroll.common.js";
+    mappedModule = "<rootDir>/dist/curi-side-effect-scroll.js";
     break;
   case "umd":
-    mappedModule = "<rootDir>/dist/curi-side-effect-scroll.js";
+    mappedModule = "<rootDir>/dist/curi-side-effect-scroll.umd.js";
     break;
   default:
     mappedModule = "<rootDir>/src/index";

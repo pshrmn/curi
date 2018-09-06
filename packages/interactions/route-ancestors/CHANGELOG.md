@@ -1,3 +1,7 @@
+## Next
+
+- Support dual-mode package (CJS/ESM) builds.
+
 ## 1.0.0-beta.8
 
 - Include package name in warning when attempting to overwrite a registered route.

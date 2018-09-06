@@ -1,7 +1,7 @@
 let mappedModule;
 switch (process.env.TEST_ENV) {
   case "cjs":
-    mappedModule = "<rootDir>/dist/curi-react-native.common.js";
+    mappedModule = "<rootDir>/dist/curi-react-native.js";
     break;
   default:
     mappedModule = "<rootDir>/src/index";

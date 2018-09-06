@@ -7,6 +7,6 @@ const key: Emitted = {
   navigation: null
 };
 
-const { Provider, Consumer } = React.createContext<Emitted>(key);
+const { Provider, Consumer: Curious } = React.createContext<Emitted>(key);
 
-export { Provider, Consumer as Curious };
+export { Provider, Curious };

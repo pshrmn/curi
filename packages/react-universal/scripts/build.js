@@ -20,11 +20,11 @@ const base = {
 
 rollupBuild([
   [
-    "ES",
+    "ESM",
     {
       ...base,
-      format: "es",
-      file: "dist/curi-react-universal.es.js",
+      format: "esm",
+      file: "dist/curi-react-universal.mjs",
       external: [...deps, "react"],
       safeModules: false
     },
@@ -36,7 +36,7 @@ rollupBuild([
     {
       ...base,
       format: "cjs",
-      file: "dist/curi-react-universal.common.js",
+      file: "dist/curi-react-universal.js",
       external: [...deps, "react"],
       safeModules: false
     },
@@ -48,7 +48,7 @@ rollupBuild([
     {
       ...base,
       format: "umd",
-      file: "dist/curi-react-universal.js",
+      file: "dist/curi-react-universal.umd.js",
       external: ["react"]
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
