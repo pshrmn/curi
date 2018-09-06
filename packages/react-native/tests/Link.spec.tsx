@@ -472,7 +472,7 @@ describe("<Link>", () => {
         anchor.props.onPress(fakeEvent());
         expect(text.instance.props.children).toBe("true");
 
-        router.respond(
+        router.once(
           ({ response }) => {
             expect(response.name).toBe("Loader");
             expect(text.instance.props.children).toBe("false");

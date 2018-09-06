@@ -25,13 +25,10 @@ const CuriPlugin: PluginObject<CuriPluginOptions> = {
       data: { response: null, navigation: null }
     });
 
-    options.router.respond(
-      ({ response, navigation }) => {
-        reactive.response = response;
-        reactive.navigation = navigation;
-      },
-      { observe: true }
-    );
+    options.router.observe(({ response, navigation }) => {
+      reactive.response = response;
+      reactive.navigation = navigation;
+    });
 
     _Vue.mixin({
       beforeCreate: function() {

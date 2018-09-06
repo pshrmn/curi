@@ -236,7 +236,7 @@ describe("<curi-link>", () => {
           })
         );
 
-        router.respond(
+        router.once(
           ({ response }) => {
             // navigation is complete, wait for Vue to re-render
             Vue.nextTick(() => {
@@ -313,7 +313,7 @@ describe("<curi-link>", () => {
               button: 0
             })
           );
-          router.respond(
+          router.once(
             ({ response }) => {
               // navigation is cancelled, wait for Vue to re-render
               Vue.nextTick(() => {

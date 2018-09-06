@@ -23,24 +23,23 @@ describe("<Curious>", () => {
     ReactDOM.unmountComponentAtNode(node);
   });
 
-  it("passes router, response, and navigation to children function", done => {
-    router.respond(({ response, navigation }) => {
-      ReactDOM.render(
-        <Router>
-          {() => (
-            <Curious>
-              {value => {
-                expect(value.router).toBe(router);
-                expect(value.response).toBe(response);
-                expect(value.navigation).toBe(navigation);
-                done();
-                return null;
-              }}
-            </Curious>
-          )}
-        </Router>,
-        node
-      );
-    });
+  it("passes router, response, and navigation to children function", () => {
+    const { response, navigation } = router.current();
+    ReactDOM.render(
+      <Router>
+        {() => (
+          <Curious>
+            {value => {
+              expect(value.router).toBe(router);
+              expect(value.response).toBe(response);
+              expect(value.navigation).toBe(navigation);
+              console.log("*************");
+              return null;
+            }}
+          </Curious>
+        )}
+      </Router>,
+      node
+    );
   });
 });

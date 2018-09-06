@@ -16,7 +16,7 @@ import {
   RouterOptions,
   Observer,
   Emitted,
-  RespondOptions,
+  ObserveOptions,
   RemoveObserver,
   CurrentResponse,
   Navigation,
@@ -169,7 +169,7 @@ export default function createRouter(
     resetCallbacks();
 
     if (!response.redirectTo || emitRedirects) {
-      // store for current() and respond()
+      // store for current() and observe()
       mostRecent.response = response;
       mostRecent.navigation = navigation;
 
@@ -185,25 +185,26 @@ export default function createRouter(
   const router: CuriRouter = {
     route: routeInteractions,
     history,
-    respond(fn: Observer, options?: RespondOptions): RemoveObserver | void {
-      const { observe = false, initial = true } = options || {};
+    observe(fn: Observer, options?: ObserveOptions): RemoveObserver {
+      const { initial = true } = options || {};
 
-      if (observe) {
-        observers.push(fn);
-        if (mostRecent.response && initial) {
-          fn.call(null, { ...mostRecent, router });
-        }
-        return () => {
-          observers = observers.filter(obs => {
-            return obs !== fn;
-          });
-        };
+      observers.push(fn);
+      if (mostRecent.response && initial) {
+        fn.call(null, { ...mostRecent, router });
+      }
+      return () => {
+        observers = observers.filter(obs => {
+          return obs !== fn;
+        });
+      };
+    },
+    once(fn: Observer, options?: ObserveOptions) {
+      const { initial = true } = options || {};
+
+      if (mostRecent.response && initial) {
+        fn.call(null, { ...mostRecent, router });
       } else {
-        if (mostRecent.response && initial) {
-          fn.call(null, { ...mostRecent, router });
-        } else {
-          oneTimers.push(fn);
-        }
+        oneTimers.push(fn);
       }
     },
     refresh(routes?: Array<RouteDescriptor>) {
