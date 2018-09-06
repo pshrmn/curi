@@ -18,7 +18,7 @@ export interface Emitted {
 
 export type Observer = (props?: Emitted) => void;
 
-export interface ObserveOptions {
+export interface ResponseHandlerOptions {
   initial?: boolean;
 }
 export type RemoveObserver = () => void;
@@ -48,8 +48,8 @@ export interface NavigationDetails {
 
 export interface CuriRouter {
   refresh: (routeArray?: Array<RouteDescriptor>) => void;
-  observe: (fn: Observer, options?: ObserveOptions) => RemoveObserver;
-  once: (fn: Observer, options?: ObserveOptions) => void;
+  observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
+  once: (fn: Observer, options?: ResponseHandlerOptions) => void;
   route: Interactions;
   history: History;
   current(): CurrentResponse;

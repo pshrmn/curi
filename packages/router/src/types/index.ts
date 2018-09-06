@@ -27,6 +27,7 @@ export {
   RouterOptions,
   Observer,
   Emitted,
+  ResponseHandlerOptions,
   RemoveObserver,
   Navigation,
   CurrentResponse

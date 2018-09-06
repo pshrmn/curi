@@ -16,7 +16,7 @@ import {
   RouterOptions,
   Observer,
   Emitted,
-  ObserveOptions,
+  ResponseHandlerOptions,
   RemoveObserver,
   CurrentResponse,
   Navigation,
@@ -185,7 +185,7 @@ export default function createRouter(
   const router: CuriRouter = {
     route: routeInteractions,
     history,
-    observe(fn: Observer, options?: ObserveOptions): RemoveObserver {
+    observe(fn: Observer, options?: ResponseHandlerOptions): RemoveObserver {
       const { initial = true } = options || {};
 
       observers.push(fn);
@@ -198,7 +198,7 @@ export default function createRouter(
         });
       };
     },
-    once(fn: Observer, options?: ObserveOptions) {
+    once(fn: Observer, options?: ResponseHandlerOptions) {
       const { initial = true } = options || {};
 
       if (mostRecent.response && initial) {
