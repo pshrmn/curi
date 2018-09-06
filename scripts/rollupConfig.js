@@ -13,7 +13,7 @@ module.exports = function(options, env) {
     format = "cjs",
     plugins: userPlugins = [],
     sourcemap = false,
-    safeModules = true,
+    replaceNodeEnv = true,
     uglify = false
   } = options;
 
@@ -32,7 +32,7 @@ module.exports = function(options, env) {
     })
   ];
 
-  if (safeModules) {
+  if (replaceNodeEnv) {
     plugins.push(
       replace({
         "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV)

@@ -23,7 +23,7 @@ rollupBuild([
       format: "esm",
       file: "dist/curi-route-active.mjs",
       external: deps,
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
@@ -35,7 +35,7 @@ rollupBuild([
       format: "cjs",
       file: "dist/curi-route-active.js",
       external: deps,
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],

@@ -23,7 +23,7 @@ rollupBuild([
       format: "esm",
       file: "dist/curi-side-effect-scroll.mjs",
       external: deps,
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
@@ -35,7 +35,7 @@ rollupBuild([
       format: "cjs",
       file: "dist/curi-side-effect-scroll.js",
       external: deps,
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],

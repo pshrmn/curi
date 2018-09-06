@@ -28,7 +28,7 @@ rollupBuild([
       ...base,
       format: "esm",
       file: "dist/curi-svelte.mjs",
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development" }
   ],
@@ -38,7 +38,7 @@ rollupBuild([
       ...base,
       format: "cjs",
       file: "dist/curi-svelte.js",
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development" }
   ]

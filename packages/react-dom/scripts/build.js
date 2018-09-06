@@ -26,7 +26,7 @@ rollupBuild([
       format: "esm",
       file: "dist/curi-react-dom.mjs",
       external: [...deps, "react"],
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
@@ -38,7 +38,7 @@ rollupBuild([
       format: "cjs",
       file: "dist/curi-react-dom.js",
       external: [...deps, "react"],
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],

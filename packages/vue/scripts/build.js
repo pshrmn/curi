@@ -25,7 +25,7 @@ rollupBuild([
       format: "esm",
       file: "dist/curi-vue.mjs",
       external: [...deps, "vue"],
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
@@ -37,7 +37,7 @@ rollupBuild([
       format: "cjs",
       file: "dist/curi-vue.js",
       external: [...deps, "vue"],
-      safeModules: false
+      replaceNodeEnv: false
     },
     { NODE_ENV: "development", BABEL_ENV: "build" }
   ],
