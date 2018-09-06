@@ -10,7 +10,7 @@ export default function(req, res) {
   const history = InMemory({ locations: [req.url] });
   const router = curi(history, routes);
   const Router = curiProvider(router);
-  router.respond(() => {
+  router.once(() => {
     const markup = renderToString(<Router>{renderResponse}</Router>);
     res.send(renderFullPage(markup));
   });

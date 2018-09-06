@@ -31,13 +31,12 @@ The above example is very basic. Some other things that you might need to consid
 * redirects — You should redirect instead of rendering markup when `redirectTo` is set.
 
 ```js
-router.ready()
-  .then(response => {
-    if (response.redirectTo) {
-      res.redirect(response.redirectTo);
-    }
-    // ...
-  });
+router.once(({ response }) => {
+  if (response.redirectTo) {
+    res.redirect(response.redirectTo);
+  }
+  // ...
+});
 ```
 
 * Data loading — You would need to maintain two copies of your routes if you want to handle data fetching on the server differently than it works on the client side. This is not something that I have explored very closely yet, so I don't have any recommendations on exactly how to approach this.

@@ -11,7 +11,7 @@ const router = curi(history, routes);
 
 Vue.use(CuriPlugin, { router });
 
-router.respond(() => {
+router.once(() => {
   const vm = new Vue({
     el: "#app",
     template: "<app />",

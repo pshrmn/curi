@@ -11,7 +11,7 @@ const history = Browser();
 const router = curi(history, routes);
 const Router = curiProvider(router);
 
-router.respond(() => {
+router.once(() => {
   ReactDOM.render(
     <Router>
       {({ response, router }) => {

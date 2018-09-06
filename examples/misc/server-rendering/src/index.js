@@ -12,7 +12,7 @@ const router = curi(history, routes);
 const Router = curiProvider(router);
 const root = document.getElementById("root");
 
-router.respond(() => {
+router.once(() => {
   ReactDOM.hydrate(
     <Router>{renderResponse}</Router>,
     document.getElementById("root")
