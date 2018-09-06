@@ -11,8 +11,6 @@ import prefetch from "@curi/route-prefetch";
 import routes from "./routes";
 import renderFunction from "./render";
 
-import "./scss/index.scss";
-
 const setTitle = titleSideEffect(
   ({ response }) => `${response.title} | Curi Documentation`
 );
@@ -29,7 +27,7 @@ const router = curi(history, routes, {
 });
 const Router = curiProvider(router);
 
-router.respond(() => {
+router.once(() => {
   ReactDOM.hydrate(
     <Router>{renderFunction}</Router>,
     document.getElementById("root")

@@ -145,9 +145,9 @@ npm run start`}
           <p>
             There are a few possible ways to handle this situation. The first is
             to delay rendering by placing your <IJS>ReactDOM.render()</IJS> call
-            inside of a <IJS>router.respond()</IJS> callback. This will
-            guarantee that the render isn't called until the first response is
-            ready. Alternatively, you can update the render-invoked{" "}
+            inside of a <IJS>router.once()</IJS> callback. This will guarantee
+            that the render isn't called until the first response is ready.
+            Alternatively, you can update the render-invoked{" "}
             <IJS>children()</IJS> function to know what to do when{" "}
             <IJS>response</IJS> is <IJS>null</IJS>.
           </p>
@@ -164,7 +164,7 @@ npm run start`}
 const router = curi(...);
 const Router = curiProvider(router);
 
-router.respond(() => {
+router.once(() => {
   ReactDOM.render((
     <Router>
       {...}
@@ -414,7 +414,7 @@ export default [
         <Explanation>
           <p>
             We will also update the <IJS>index.js</IJS> module to use{" "}
-            <IJS>router.respond()</IJS> to delay the initial render.
+            <IJS>router.once()</IJS> to delay the initial render.
           </p>
         </Explanation>
         <CodeBlock data-line="16-34">
@@ -434,7 +434,7 @@ const history = Browser();
 const router = curi(history, routes);
 const Router = curiProvider(router);
 
-router.respond(() => {
+router.once(() => {
   ReactDOM.render((
     <Router>
       {({ response, router }) => {

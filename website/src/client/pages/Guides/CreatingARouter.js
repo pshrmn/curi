@@ -278,31 +278,45 @@ router.navigate({
       </SideBySide>
     </Section>
 
-    <Section title="Observers" id="observer">
+    <Section title="Response Handlers" id="response-handlers">
       <SideBySide>
         <Explanation>
           <p>
-            When the router has created a response, it emits it to any
-            observers. You can give the router an observer function through its{" "}
-            <IJS>respond()</IJS> method.
+            When the router has created a response, it emits it to any response
+            handlers. There are three types of response handlers: observers, one
+            time functions, and side effects.
           </p>
           <p>
-            You usually do not have to call this yourself. Framework
-            implementations will set observers up internally to automatically
-            trigger re-renders for new responses. <IJS>@curi/react-dom</IJS>{" "}
-            does this using a component created by calling{" "}
-            <IJS>curiProvider(router)</IJS> and <IJS>@curi/vue</IJS> uses the{" "}
-            <IJS>CuriPlugin</IJS>.
+            Side effects are passed to the router when you are creating it. You
+            can read more about them in the{" "}
+            <Link to="Guide" params={{ slug: "side-effects" }}>
+              side effects guide
+            </Link>.
+          </p>
+          <p>
+            One time functions are passed to the router using{" "}
+            <IJS>router.once()</IJS>. These are response handlers that will only
+            be called one time. If a response already exists, then the response
+            handler will be called immediately (unless configured not to).
+            Otherwise, the one time response handler will be called after the
+            next response is emitted.
+          </p>
+          <p>
+            Observers are passed to the router using <IJS>router.observe()</IJS>.
+            Unlike one time functions, these will be called for every response
+            emitted by the router (until you tell the router to stop calling
+            it). You most likely will not need to call this yourself. The
+            different framework implementations (<IJS>@curi/react-dom</IJS>,{" "}
+            <IJS>@curi/react-native</IJS>, <IJS>@curi/vue</IJS>, and{" "}
+            <IJS>@curi/svelte</IJS>) setup observers for you.
           </p>
         </Explanation>
         <CodeBlock>
           {`const router = curi(history, routes);
 
-// { observe: true } sets up an observer function
-// to be called for every new response
-const stop = router.respond(({ response }) => {
+const stop = router.observe(({ response }) => {
   console.log('new response!', response);
-}, { observe: true });
+});
 // ...
 stop();
 // no longer observing`}
@@ -312,17 +326,13 @@ stop();
         <Explanation>
           <p>
             If you have any asynchronous routes (routes with <IJS>resolve</IJS>{" "}
-            functions), <IJS>router.respond()</IJS> should be used to delay the
-            initial render. If you don't pass the{" "}
-            <IJS>{`{ observe: true }`}</IJS> option, the observer function will
-            only be called once, which is perfect for delaying the initial
-            render.
+            functions), <IJS>router.once()</IJS> should be used to delay the
+            initial render until after the initial response is ready.
           </p>
         </Explanation>
         <CodeBlock>
-          {`// wait for initial response to render with an
-// observer function that will only be called once
-router.respond(() => {
+          {`// wait for initial response to be ready
+router.once(() => {
   // safe to render async routes now
 });`}
         </CodeBlock>

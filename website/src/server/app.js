@@ -3,16 +3,19 @@ const path = require("path");
 const webpack = require("webpack");
 
 const createRenderer = require("./renderer").default;
-const webpackConfig = require("../../webpack.config.js");
 
-webpackConfig.mode =
-  process.env.NODE_ENV !== "production" ? "development" : "production";
+const __DEV__ = process.env.NODE_ENV !== "production";
+
+const webpackConfig = require(__DEV__
+  ? "../../webpack.config.dev.js"
+  : "../../webpack.config.prod.js");
+
 const compiler = webpack(webpackConfig);
 
 module.exports = function createApp(debug) {
   const app = express();
 
-  if (process.env.NODE_ENV !== "production") {
+  if (__DEV__) {
     app.use(
       require("webpack-dev-middleware")(compiler, {
         noInfo: true,

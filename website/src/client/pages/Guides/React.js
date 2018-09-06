@@ -60,9 +60,9 @@ export default ({ name }) => (
 import router from "./router";
 const Router = curiProvider(router);
 
-// router.respond() is used to delay rendering in case
+// router.once() is used to delay rendering in case
 // the initially matched route is asynchronous
-router.respond(() => {
+router.once(() => {
   ReactDOM.render((
     <Router>
       {({ response, router, navigation }) => {

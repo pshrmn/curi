@@ -13,16 +13,16 @@ export default ({ name }) => (
         have resolved), the response's properties are used to create a
         JavaScript object. Then, any response handler functions are called and
         passed that JavaScript object . Side effects are permanent observers
-        (they cannot be removed). Side effects can either be run before
-        (default) or after observers that were set using{" "}
-        <IJS>router.respond()</IJS>. They receive the new response and an object
-        with information about the navigation.
+        (they cannot be removed). Side effects after other response handlers
+        (observers that were set using <IJS>router.observe()</IJS> and one time
+        functions that were set using <IJS>router.once()</IJS>). They receive
+        the new response and an object with information about the navigation.
       </p>
 
       <p>
-        A side effect function can do anything you want. Side effects are
-        observers, but unlike observers assigned using{" "}
-        <IJS>router.respond()</IJS>, side effects cannot be removed.
+        A side effect function can do anything you want. Unlike observers
+        assigned using <IJS>router.observe()</IJS>, side effects cannot be
+        removed.
       </p>
 
       <p>

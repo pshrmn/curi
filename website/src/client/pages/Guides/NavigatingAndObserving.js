@@ -284,21 +284,20 @@ router.navigte({
       <SideBySide>
         <Explanation>
           <p>
-            The Curi router uses an observer pattern to let registered functions
-            know when there is a new response. The registered functions can then
-            do whatever they want with this information. The main function for
-            observers is to use the new response to render the application, but
-            other functionality (like logging) can also be performed with
-            observers.
+            The Curi router uses an observer pattern to call registered
+            functions (called response handlers) when there is a new response.
+            The main function for response handlers is to use the new response
+            to render the application, but any other functionality (like
+            logging) can also be performed.
           </p>
         </Explanation>
       </SideBySide>
 
-      <Subsection title="Observer Functions" id="observer">
+      <Subsection title="Response Handlers" id="response-handlers">
         <SideBySide>
           <Explanation>
             <p>
-              When observer functions are called, they are passed an object with
+              When response handlers are called, they are passed an object with
               three properties:{" "}
               <Link
                 to="Package"
@@ -332,53 +331,54 @@ router.navigte({
         </SideBySide>
       </Subsection>
 
-      <Subsection title="Registering Observers" id="registering">
+      <Subsection title="Registering Response Handlers" id="registering">
         <SideBySide>
           <Explanation>
             <p>
-              Observer functions are provided to the router through its{" "}
-              <IJS>respond()</IJS> function. By default, functions passed to{" "}
-              <IJS>respond()</IJS> will only be called one time. However, we can
-              pass a configuration object as <IJS>respond()</IJS>'s second
-              argument and tell it to call the function for all responses.
+              There are two ways to attach response handlers to the router:{" "}
+              <IJS>router.once()</IJS> and <IJS>router.observe()</IJS>. Response
+              handlers registered with <IJS>router.once()</IJS> will only be
+              called one time, while those registered with{" "}
+              <IJS>router.observe()</IJS> will be called for every new response.
             </p>
             <p>
-              When registering a function to continuously observe, a function
-              will be returned to let you stop observing. You should rarely need
-              to do this, but it can be useful for memory management if you are
-              adding and removing lots of observers.
+              When you register a response handler using{" "}
+              <IJS>router.observer()</IJS>, it will return a function that you
+              can use to stop calling the response handler for new responses.
+              You should rarely need to do this, but it can be useful for memory
+              management if you are adding and removing lots of observers.
             </p>
           </Explanation>
           <CodeBlock>
             {`// fn will only be called one time
-router.respond(fn);
+router.once(fn);
 
 // obs will be called for every new response
-const stop = router.respond(fn, { observe: true });`}
+const stop = router.observer(fn);`}
           </CodeBlock>
         </SideBySide>
       </Subsection>
 
       <Subsection title="Use Cases" id="use-cases">
-        <p>What should you use observers for?</p>
+        <p>What should you use response handlers for?</p>
         <Subsection title="Setup" id="setup">
           <SideBySide>
             <Explanation>
               <p>
                 If any of the routes in an application have <IJS>resolve</IJS>{" "}
-                functions, responses for them are creating asynchronously. When
-                the application first renders, if the router matches an async
-                route, the response isn't immediately ready to use. To deal with
-                this, you can use an observer to render once the initial
-                response is ready.
+                functions, when they match their responses are created
+                asynchronously. When the application first renders, if the
+                router matches an async route, the response isn't immediately
+                ready to use. To deal with this, you can use an observer to
+                render once the initial response is ready.
               </p>
               <p>
-                A setup function only needs to be called once, so you can call{" "}
-                <IJS>router.respond()</IJS> without any options.
+                A setup function only needs to be called one time, so you can
+                register it with <IJS>router.once()</IJS>.
               </p>
               <Note>
                 In most applications, waiting for the initial response is the
-                only time you may need to write observers yourself.
+                only time you may need to write response handlers yourself.
               </Note>
             </Explanation>
             <CodeBlock lang="jsx">
@@ -392,7 +392,7 @@ function setup() {
   ), document.getElementById('root'));
 }
 
-router.respond(setup);`}
+router.once(setup);`}
             </CodeBlock>
           </SideBySide>
         </Subsection>
@@ -423,10 +423,8 @@ router.respond(setup);`}
               </p>
               <p>
                 If you are using vanilla JavaScript to render your application
-                or you are writing your own framework implementation,{" "}
-                <IJS>router.respond()</IJS> with the{" "}
-                <IJS>{`{ observe: true }`}</IJS> option is what you would use to
-                re-render new responses.
+                or you are writing your own framework implementation, you would
+                use <IJS>router.observer()</IJS> to re-render new responses.
               </p>
             </Explanation>
             <CodeBlock>
@@ -434,7 +432,7 @@ router.respond(setup);`}
   // let the app know there is a new response
 }
 
-router.respond(observer, { observe: true });`}
+router.observer(observer);`}
             </CodeBlock>
           </SideBySide>
         </Subsection>
@@ -443,7 +441,7 @@ router.respond(observer, { observe: true });`}
             <Explanation>
               <p>
                 Side effects are observers that are provided to the router at
-                creation instead of by calling <IJS>router.respond()</IJS>.
+                creation instead of by calling <IJS>router.observe()</IJS>.
                 These can be useful for tasks that are not rendering related as
                 well as for tasks that need to be performed after a render has
                 completed.
@@ -472,7 +470,7 @@ router.respond(observer, { observe: true });`}
                 If you need to add logging to your application, you could write
                 your own observer to do this. Your observer can either be added
                 as a side effect when the router is constructed or later using{" "}
-                <IJS>router.respond()</IJS>.
+                <IJS>router.observe()</IJS>.
               </p>
             </Explanation>
             <CodeBlock>
@@ -485,8 +483,8 @@ const router = curi(history, routes, {
   sideEffects: [{ fn: logger }]
 });
 
-// with respond
-router.respond(logger, { observe: true });`}
+// as an observer
+router.observe(logger);`}
             </CodeBlock>
           </SideBySide>
         </Subsection>

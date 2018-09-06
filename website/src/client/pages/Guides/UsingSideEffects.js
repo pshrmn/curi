@@ -16,8 +16,9 @@ export default ({ name }) => (
     <SideBySide>
       <Explanation>
         <p>
-          Curi side effects are permanent router observers that are run after
-          the observers registered using <IJS>router.respond()</IJS>.
+          Curi side effects are permanent router response handlers that are run
+          after those registered using <IJS>router.observe()</IJS> and{" "}
+          <IJS>router.once()</IJS>.
         </p>
 
         <p>
@@ -55,9 +56,10 @@ export default ({ name }) => (
         <Explanation>
           <p>
             Side effects are always run after observers registered using{" "}
-            <IJS>router.respond()</IJS>. Because <IJS>router.respond()</IJS> is
-            primarily used for rendering the application, this means that the
-            side effects will be called after the application has re-rendered.
+            <IJS>router.observe()</IJS> and <IJS>router.once()</IJS>. Because
+            those forms of response handler registration are primarily used for
+            rendering the application, this means that the side effects will be
+            called after the application has re-rendered.
           </p>
         </Explanation>
         <CodeBlock>
@@ -69,7 +71,7 @@ const render = () => {
   // render the app
 };
 
-router.respond(render, { observe: true });
+router.observe(render);
 
 // whenever there is a response, render will be
 // called before logResponse`}

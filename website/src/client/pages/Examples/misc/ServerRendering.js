@@ -8,13 +8,15 @@ export default ({ name }) => (
     <h1>{name}</h1>
     <Section title="Explanation" id="explanation">
       <p>
-        Server rendering with Curi is fairly straightforward. You should have a
-        catch all route handler that will respond to all (non-static file)
-        requests.
+        Server rendering with Curi is pretty similar to client side rendering.
+        The server should have a catch all route handler that will respond to
+        all (non-static file) requests.
       </p>
 
       <PrismBlock lang="javascript">
-        {`function catchAll(req, res) {
+        {`// express
+        
+function catchAll(req, res) {
   // 1. Create a memory history using the requested location
   const history = InMemory({ locations: [req.url]});
 
@@ -23,7 +25,7 @@ export default ({ name }) => (
   const Router = curiProvider(router);
 
   // 3. Wait for the response to be generated
-  router.respond(({ response, navigation }) => {
+  router.once(({ response, navigation }) => {
     // 4. Generate the HTML markup by rendering the <Router>
     const markup = renderToString(
       <Router>
@@ -33,7 +35,9 @@ export default ({ name }) => (
     // 5. Insert the markup into the page's html and send it
     res.send(renderFullPage(markup));
   });
-}`}
+}
+
+app.get("*", catchAll);`}
       </PrismBlock>
 
       <p>

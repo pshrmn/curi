@@ -193,7 +193,7 @@ curiStore(router, store);`}
 const store = curiStore(router);
 
 // use a one time subscriber for the initial render
-router.respond(() => {
+router.once(() => {
   view = new app({ target, store });
 });`}
         </CodeBlock>

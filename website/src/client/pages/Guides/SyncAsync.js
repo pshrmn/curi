@@ -68,13 +68,13 @@ export default ({ name }) => (
                 If the initial route that matches is async and you try to render
                 immediately, the <IJS>response</IJS> will be <IJS>null</IJS>.
                 You can wait to render until the initial response is ready with{" "}
-                <IJS>router.respond()</IJS>. The function you pass to that will
-                be called one time, once the initial response is ready.
+                <IJS>router.oncd()</IJS>. The function you pass to that will be
+                called one time, once the initial response is ready.
               </p>
             </Explanation>
             <CodeBlock>
               {`const router = curi(history, routes);
-router.respond(() => {
+router.once(() => {
   // the initial response is ready,
   // so it is safe to render
   ReactDOM.render(...);

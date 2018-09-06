@@ -79,7 +79,7 @@ const App = () => (
             </p>
             <p>
               Unlike with the DOM, React Native cannot have its initial render
-              delayed with a <IJS>router.respond()</IJS> call. Instead, the{" "}
+              delayed with a <IJS>router.once()</IJS> call. Instead, the{" "}
               <IJS>children()</IJS> function should check if the{" "}
               <IJS>response</IJS> exists, and rendering a loading component when
               it does not.

@@ -19,7 +19,7 @@ export default function createRenderer(debug = false) {
     });
     const Router = curiProvider(router);
 
-    router.respond(({ response }) => {
+    router.once(({ response }) => {
       // TODO: Detect redirects?
       const markup = renderToString(<Router>{renderFunction}</Router>);
       res.send(renderFullPage(markup, response.title, debug));

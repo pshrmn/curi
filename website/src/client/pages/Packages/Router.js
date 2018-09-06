@@ -354,14 +354,16 @@ router.navigate({
               </CodeBlock>
             </SideBySide>
           </Subsection>
-          <Subsection tag="h5" title="respond(fn, options)" id="respond">
+          <Subsection tag="h5" title="once(fn, options)" id="once">
             <SideBySide>
               <Explanation>
                 <p>
-                  The <IJS>respond()</IJS> method takes an observer function.
-                  Whenever a new response is made, the router will call that
-                  function. The function will be passed on object with three
-                  properties:
+                  The <IJS>once()</IJS> method takes a response handler
+                  function. If a response already exists, the function will be
+                  called immediately. Otherwise, the function will be called
+                  once a new response is created. The{" "}
+                  <IJS>{`\{ initial: false \}`}</IJS> option can be used to
+                  prevent an immediate call even if a response already exists.
                 </p>
                 <table>
                   <thead>
@@ -392,17 +394,17 @@ router.navigate({
 
                 <p>
                   When a matched route is async (it has <IJS>resolve</IJS>{" "}
-                  functions), the router will not call the observer functions
-                  until the async function(s) have resolved.
+                  functions), a response will not be created until the async
+                  function(s) have resolved.
                 </p>
               </Explanation>
               <CodeBlock>
-                {`router.respond(({ response }) => {
+                {`router.once(({ response }) => {
   // render the application based on the response
 });`}
               </CodeBlock>
             </SideBySide>
-            <Subsection tag="h6" title="options" id="respond-options">
+            <Subsection tag="h6" title="options" id="once-options">
               <SideBySide>
                 <Explanation>
                   <table>
@@ -414,16 +416,6 @@ router.navigate({
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>observe</td>
-                        <td>false</td>
-                        <td>
-                          When true, the function will be called for all future
-                          responses that are emitted by the router (until it
-                          stops observing) When false, the function will only be
-                          called one time.
-                        </td>
-                      </tr>
                       <tr>
                         <td>initial</td>
                         <td>true</td>
@@ -437,24 +429,103 @@ router.navigate({
                   </table>
                 </Explanation>
                 <CodeBlock>
-                  {`router.respond(responseHandler, {
-                    observe: true
-                  });`}
+                  {`router.once(responseHandler, {
+  initial: false
+});`}
+                </CodeBlock>
+              </SideBySide>
+            </Subsection>
+          </Subsection>
+          <Subsection tag="h5" title="observe(fn, options)" id="observe">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  The <IJS>observe()</IJS> method takes a response handler
+                  function. The response handler will be called every time a new
+                  response is emitted (and it a response already exists, the
+                  function will be called immediately). The{" "}
+                  <IJS>{`\{ initial: false \}`}</IJS> option can be used to
+                  prevent an immediate call even if a response already exists.
+                </p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>property</th>
+                      <th>description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>response</td>
+                      <td>The generated response object.</td>
+                    </tr>
+                    <tr>
+                      <td>navigation</td>
+                      <td>
+                        The navigation's <IJS>action</IJS> (<IJS>PUSH</IJS>,{" "}
+                        <IJS>REPLACE</IJS>, or <IJS>POP</IJS>) and the{" "}
+                        <IJS>previous</IJS> response object.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>router</td>
+                      <td>The Curi router</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <p>
+                  When a matched route is async (it has <IJS>resolve</IJS>{" "}
+                  functions), a response will not be created until the async
+                  function(s) have resolved.
+                </p>
+              </Explanation>
+              <CodeBlock>
+                {`router.observe(({ response }) => {
+  // render the application based on the response
+});`}
+              </CodeBlock>
+            </SideBySide>
+            <Subsection tag="h6" title="options" id="observe-options">
+              <SideBySide>
+                <Explanation>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>option</th>
+                        <th>default</th>
+                        <th>description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>initial</td>
+                        <td>true</td>
+                        <td>
+                          When true, the function will be called immediately if
+                          a response exists. When false, the response function
+                          will not be called until the next response is emitted.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </Explanation>
+                <CodeBlock>
+                  {`router.observe(responseHandler, {
+  initial: false
+});`}
                 </CodeBlock>
               </SideBySide>
               <SideBySide>
                 <Explanation>
                   <p>
-                    <IJS>respond()</IJS> returns a function to stop calling the
-                    observer function. This function is only returned when{" "}
-                    <IJS>router.respond()</IJS> is given the{" "}
-                    <IJS>observe: true</IJS> option.
+                    <IJS>observe()</IJS> returns a function to stop calling the
+                    response handler function for new responses.
                   </p>
                 </Explanation>
                 <CodeBlock>
-                  {`const stopObserving = router.respond(
-  () => {...},
-  { observe: true }
+                  {`const stopObserving = router.observe(
+  () => {...}
 );
 // the router will now call the observer for all responses
 

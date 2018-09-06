@@ -298,11 +298,11 @@ export default function renderFunction(h) {
             If the router has async routes, you will need to wait for it to emit
             its first response before you can render. This can be done by
             calling your rendering code in an observer function passed to{" "}
-            <IJS>router.respond()</IJS>.
+            <IJS>router.once()</IJS>.
           </p>
         </Explanation>
         <CodeBlock>
-          {`router.respond(() => {
+          {`router.once(() => {
   const vm = new Vue({
     el: '#app',
       
