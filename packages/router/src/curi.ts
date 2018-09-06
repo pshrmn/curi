@@ -169,7 +169,7 @@ export default function createRouter(
     resetCallbacks();
 
     if (!response.redirectTo || emitRedirects) {
-      // store for current() and observe()
+      // store for current(), observe(), and once()
       mostRecent.response = response;
       mostRecent.navigation = navigation;
 

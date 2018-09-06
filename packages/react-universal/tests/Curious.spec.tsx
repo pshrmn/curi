@@ -33,7 +33,6 @@ describe("<Curious>", () => {
               expect(value.router).toBe(router);
               expect(value.response).toBe(response);
               expect(value.navigation).toBe(navigation);
-              console.log("*************");
               return null;
             }}
           </Curious>

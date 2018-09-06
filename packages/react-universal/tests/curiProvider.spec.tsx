@@ -76,8 +76,6 @@ describe("curiProvider()", () => {
 
   describe("context", () => {
     it("makes response, navigation, and router available to <Curious>", () => {
-      let emittedResponse;
-      let emittedNavigation;
       const history = InMemory();
       const router = curi(history, routes);
 
@@ -87,7 +85,6 @@ describe("curiProvider()", () => {
             expect(value.response).toBe(emittedResponse);
             expect(value.router).toBe(router);
             expect(value.navigation).toBe(emittedNavigation);
-            console.log("9999999999999999999");
             return null;
           }}
         </Curious>
@@ -95,9 +92,10 @@ describe("curiProvider()", () => {
 
       const Router = curiProvider(router);
 
-      const { response, navigation } = router.current();
-      emittedResponse = response;
-      emittedNavigation = navigation;
+      const {
+        response: emittedResponse,
+        navigation: emittedNavigation
+      } = router.current();
       ReactDOM.render(<Router>{() => <ContextLogger />}</Router>, node);
     });
   });

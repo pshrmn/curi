@@ -44,7 +44,7 @@ export default function curiProvider(router: CuriRouter) {
           }
         },
         { initial: false }
-      ) as RemoveObserver;
+      );
     }
 
     componentWillUnmount() {
