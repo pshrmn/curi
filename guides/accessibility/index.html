@@ -45,10 +45,12 @@ const router = curi(history, routes, {
 &lt;div tabIndex=&quot;-1&quot;&gt;&lt;/div&gt;
 
 &lt;!-- but not me --&gt;
-&lt;div&gt;&lt;/div&gt;</code></pre></div></div><div class="subsection" id="focus-react"><h3>Focusing in React Applications<a class="header-link" href="/guides/accessibility/#focus-react">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">@curi/react-dom</code> package provides a <code class="inline-code language-jsx">&lt;<!-- -->Focus<!-- -->&gt;</code> <!-- -->component that gives you a <code class="inline-code language-javascript">ref</code> to attach to the component that should be focused. Whenever the user navigates, it will re-focus so that the screen reader is focused on the correct content.</p></div><div class="code-block"><pre><code class="language-jsx">import { CuriProvider, Focus } from &quot;@curi/react-dom&quot;;
-          
+&lt;div&gt;&lt;/div&gt;</code></pre></div></div><div class="subsection" id="focus-react"><h3>Focusing in React Applications<a class="header-link" href="/guides/accessibility/#focus-react">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">@curi/react-dom</code> package provides a <code class="inline-code language-jsx">&lt;<!-- -->Focus<!-- -->&gt;</code> <!-- -->component that gives you a <code class="inline-code language-javascript">ref</code> to attach to the component that should be focused. Whenever the user navigates, it will re-focus so that the screen reader is focused on the correct content.</p></div><div class="code-block"><pre><code class="language-jsx">import { curiProvider, Focus } from &quot;@curi/react-dom&quot;;
+
+const Router = curiProvider(router);
+
 ReactDOM.render((
-  &lt;CuriProvider router={router}&gt;
+  &lt;Router&gt;
     {({ response }) =&gt; {
       const { body:Body } = response;
       return (
@@ -61,7 +63,7 @@ ReactDOM.render((
         &lt;/Focus&gt;
       );
     }}
-  &lt;/CuriProvider&gt;
+  &lt;/Router&gt;
 ), holder);</code></pre></div></div></div><div class="subsection" id="focus-vue"><h3>Focusing in Vue Applications<a class="header-link" href="/guides/accessibility/#focus-vue">#</a></h3><div class="side-by-side"><div class="explanation"><p>The <code class="inline-code language-javascript">@curi/vue</code> package provides a directive for focusing an element. The directive needs to be passed something that changes when the user navigates, so you can just pass it the current <code class="inline-code language-javascript">response</code></p></div><div class="code-block"><pre><code class="language-html">&lt;template&gt;
   &lt;header&gt;...&lt;/header&gt;
   &lt;main tabIndex=&quot;-1&quot; v-curi-focus=&quot;$curi.response&quot;&gt;

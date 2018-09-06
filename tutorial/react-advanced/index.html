@@ -35,19 +35,21 @@ npm run start</code></pre></div></div></div><div class="section" id="async"><h2>
       }
     }
   }
-];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet. When a user loads your application and the first route that matches has asynchronous functions, there is no response to render until the async code finishes. This means that if you attempt to render immediately after creating a router, the<!-- --> <code class="inline-code language-javascript">response</code> that will be passed to the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children()</code> will be<!-- --> <code class="inline-code language-javascript">null</code>.</p><p>There are a few possible ways to handle this situation. The first is to delay rendering by placing your <code class="inline-code language-javascript">ReactDOM.render()</code> call inside of a <code class="inline-code language-javascript">router.respond()</code> callback. This will guarantee that the render isn&#x27;t called until the first response is ready. Alternatively, you can update the render-invoked<!-- --> <code class="inline-code language-javascript">children()</code> function to know what to do when<!-- --> <code class="inline-code language-javascript">response</code> is <code class="inline-code language-javascript">null</code>.</p><p>Which approach is best will depend on the specifics of an application. If there are routes that will take a long time for the initial load, you will probably want to render something while they load. For async code with short loading times, a blank screen might be more acceptable.</p></div><div class="code-block"><pre><code class="language-javascript">// delay rendering
+];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet. When a user loads your application and the first route that matches has asynchronous functions, there is no response to render until the async code finishes. This means that if you attempt to render immediately after creating a router, the<!-- --> <code class="inline-code language-javascript">response</code> that will be passed to the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s<!-- --> <code class="inline-code language-javascript">children()</code> will be <code class="inline-code language-javascript">null</code>.</p><p>There are a few possible ways to handle this situation. The first is to delay rendering by placing your <code class="inline-code language-javascript">ReactDOM.render()</code> call inside of a <code class="inline-code language-javascript">router.once()</code> callback. This will guarantee that the render isn&#x27;t called until the first response is ready. Alternatively, you can update the render-invoked<!-- --> <code class="inline-code language-javascript">children()</code> function to know what to do when<!-- --> <code class="inline-code language-javascript">response</code> is <code class="inline-code language-javascript">null</code>.</p><p>Which approach is best will depend on the specifics of an application. If there are routes that will take a long time for the initial load, you will probably want to render something while they load. For async code with short loading times, a blank screen might be more acceptable.</p></div><div class="code-block"><pre><code class="language-javascript">// delay rendering
 const router = curi(...);
-router.respond(() =&gt; {
+const Router = curiProvider(router);
+
+router.once(() =&gt; {
   ReactDOM.render((
-    &lt;CuriProvider&gt;
+    &lt;Router&gt;
       {...}
-    &lt;/CuriProvider&gt;
+    &lt;/Router&gt;
   ), holder);
 });
 
 // render using null response
 ReactDOM.render((
-  &lt;CuriProvider&gt;
+  &lt;Router&gt;
     {({ response }) =&gt; {
       if (response == null) {
         return &lt;div&gt;Loading...&lt;/div&gt;;
@@ -55,7 +57,7 @@ ReactDOM.render((
       const { body:Body } = response;
       return &lt;Body response={response} /&gt;;
     }}
-  &lt;/CuriProvider&gt;
+  &lt;/Router&gt;
 ), holder);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>For more information on async route properties, please refer to the<!-- --> <a href="/guides/routes/">routes guide</a>.</p></div></div></div><div class="section" id="code-splitting"><h2>Code Splitting<a class="header-link" href="/tutorial/react-advanced#code-splitting">#</a></h2><div class="side-by-side"><div class="explanation"><p>Code splitting works by &quot;dynamically&quot; importing modules using the<!-- --> <code class="inline-code language-javascript">import()</code> function. When bundlers like Webpack see<!-- --> <code class="inline-code language-javascript">import()</code> functions, they know to create a separate bundle for that module (and that module&#x27;s imports, etc.).</p><p>You can add a <code class="inline-code language-javascript">/* webpackChunkName: &quot;chunkName&quot; */</code> comment to an <code class="inline-code language-javascript">import()</code> call to let Webpack know what to name a code split bundle.</p><p>Create React App&#x27;s default configuration is already setup to support code splitting, but if you were creating your own Webpack configuration, you would need to use<!-- --> <a href="https://webpack.js.org/configuration/output/#output-chunkfilename"><code class="inline-code language-javascript">output.chunkFilename</code></a> <!-- -->to support code splitting.</p></div><div class="code-block"><pre><code class="language-javascript">// this creates a &quot;Test&quot; bundle
 import(/* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;)</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Currently, the <code class="inline-code language-javascript">routes.js</code> module imports all of the route modules at the top of the file. In order to add code splitting, we need to switch to using <code class="inline-code language-javascript">import()</code>.</p><p>Currently <code class="inline-code language-javascript">response()</code> returns an object whose<!-- --> <code class="inline-code language-javascript">body</code> property is a module imported at the top of the file. Now we want to change this to have <code class="inline-code language-javascript">body</code> be the imported module.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = [
   {
@@ -162,12 +164,12 @@ export default [
       };
     }
   }
-];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>We will also update the <code class="inline-code language-javascript">index.js</code> module to use<!-- --> <code class="inline-code language-javascript">router.respond()</code> to delay the initial render.</p></div><div class="code-block"><pre data-line="16-34"><code class="language-javascript">// src/index.js
+];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>We will also update the <code class="inline-code language-javascript">index.js</code> module to use<!-- --> <code class="inline-code language-javascript">router.once()</code> to delay the initial render.</p></div><div class="code-block"><pre data-line="16-34"><code class="language-javascript">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
-import { CuriProvider } from &#x27;@curi/react-dom&#x27;;
+import { curiProvider } from &#x27;@curi/react-dom&#x27;;
 
 import &#x27;./index.css&#x27;;
 import routes from &#x27;./routes&#x27;;
@@ -176,10 +178,11 @@ import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
 const history = Browser();
 const router = curi(history, routes);
+const Router = curiProvider(router);
 
-router.respond(() =&gt; {
+router.once(() =&gt; {
   ReactDOM.render((
-    &lt;CuriProvider router={router}&gt;
+    &lt;Router&gt;
       {({ response, router }) =&gt; {
         const { body:Body } = response;
         return (
@@ -193,7 +196,7 @@ router.respond(() =&gt; {
           &lt;/div&gt;
         );
       }}
-    &lt;/CuriProvider&gt;
+    &lt;/Router&gt;
   ), document.getElementById(&#x27;root&#x27;));
 });
 registerServiceWorker();</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>With those changes, Webpack will now split the application into multiple bundles. The initial render will be delayed until after the code split bundle for the first route has been loaded.</p></div></div></div><div class="section" id="preloading-data"><h2>Preloading Data<a class="header-link" href="/tutorial/react-advanced#preloading-data">#</a></h2><div class="side-by-side"><div class="explanation"><p>Preloading data lets you delay navigation until after the data for a route has loaded. This can save you from having to render a partial page with spinners if the data takes a while to load.</p><p>While the data is loading, the user will be able to continue interacting with the current page. This means that the user can also start a new navigation while the current navigation is running. When this happens, Curi knows to to cancel the previous navigation and perform the new navigation instead.</p><p>We have two routes that need to load data: <code class="inline-code language-javascript">Home</code> and<!-- --> <code class="inline-code language-javascript">Book</code>. The <code class="inline-code language-javascript">Home</code> route will load the known books, while the <code class="inline-code language-javascript">Book</code> route will load data about a specific book.</p><p>Currently the data for both of these routes is imported in their components. In a real site you would most likely make API calls to a REST or GraphQL endpoint, but here we will simulate this with a fake API.</p></div></div><div class="subsection" id="fake-api"><h3>The Fake API<a class="header-link" href="/tutorial/react-advanced#fake-api">#</a></h3><div class="side-by-side"><div class="explanation"><p>The fake API will simulate asynchronous calls to the server by returning Promises, similarly to the<!-- --> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a>.</p></div></div><div class="side-by-side"><div class="explanation"><p>First, we will create an <code class="inline-code language-javascript">api.js</code> module that exports the fake API functions.</p></div><div class="code-block"><pre><code class="language-bash">touch src/api.js</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>In the API module, we will import the <code class="inline-code language-javascript">books.js</code> data.</p><p>We need to write two functions. The first returns a list of all books and the second returns the data for a specific book. For both, we can use <code class="inline-code language-javascript">Promise.resolve()</code> to return a Promise, even though we don&#x27;t really have any asynchronous code being run.</p></div><div class="code-block"><pre><code class="language-javascript">// src/api.js

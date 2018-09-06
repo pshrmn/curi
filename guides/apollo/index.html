@@ -14,14 +14,16 @@ import ApolloClient from &quot;apollo-boost&quot;;
 
 export default ApolloClient({
   uri: &quot;https://example.com/graphql&quot;
-});</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Apollo&#x27;s React package provides an <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> <!-- -->component for accessing your Apollo client throughout the application. The <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code> should be a descendant of the <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> because we don&#x27;t need to re-render the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> for every new response.</p></div><div class="code-block"><pre><code class="language-jsx">import { ApolloProvider } from &quot;react-apollo&quot;;
-import { CuriProvider } from &quot;@curi/react-dom&quot;;
+});</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Apollo&#x27;s React package provides an <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> <!-- -->component for accessing your Apollo client throughout the application. The <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> (or whatever you name the root Curi component) should be a descendant of the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> because we don&#x27;t need to re-render the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> for every new response.</p></div><div class="code-block"><pre><code class="language-jsx">import { ApolloProvider } from &quot;react-apollo&quot;;
+import { curiProvider } from &quot;@curi/react-dom&quot;;
+
+const Router = curiProvider(router);
 
 ReactDOM.render((
   &lt;ApolloProvider client={client}&gt;
-    &lt;CuriProvider router={router}&gt;
+    &lt;Router&gt;
       {() =&gt; {...}}
-    &lt;/CuriProvider&gt;
+    &lt;/Router&gt;
   &lt;/ApolloProvider&gt;
 ), holder);</code></pre></div></div></div><div class="section" id="loose-pairing"><h2>Loose Pairing<a class="header-link" href="/guides/apollo/#loose-pairing">#</a></h2><div class="side-by-side"><div class="explanation"><p>Apollo and Curi don&#x27;t actually have to know about each other. Curi can create a response without doing any data fetching and let Apollo handle that with its <code class="inline-code language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code> component.</p></div><div class="code-block"><pre><code class="language-javascript">// routes.js
 import Noun from &quot;./pages/Noun&quot;;
@@ -37,15 +39,15 @@ const routes = [
       };
     }
   }
-];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Any location data that a query needs can be taken from the response object. The best way to access this from your components would be to pass the <code class="inline-code language-javascript">response</code> to the components rendered in the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->CuriProvider<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children</code> prop, which is a render-invoked function.</p></div><div class="code-block"><pre><code class="language-jsx">// index.js
+];</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Any location data that a query needs can be taken from the response object. The best way to access this from your components would be to pass the <code class="inline-code language-javascript">response</code> to the components rendered in the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children</code> prop, which is a render-invoked function.</p></div><div class="code-block"><pre><code class="language-jsx">// index.js
 ReactDOM.render((
   &lt;ApolloProvider client={client}&gt;
-    &lt;CuriProvider router={router}&gt;
+    &lt;Router&gt;
       {({ response }) =&gt; {
         const { body:Body } = response;
         return &lt;Body response={response} /&gt;;
       }}
-    &lt;/CuriProvider&gt;
+    &lt;/Router&gt;
   &lt;/ApolloProvider&gt;
 ), holder);</code></pre></div></div><div class="side-by-side"><div class="explanation"><p>Because we pass the <code class="inline-code language-javascript">response</code> to the route&#x27;s<!-- --> <code class="inline-code language-javascript">body</code> component, we can pass a <code class="inline-code language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code> the response&#x27;s location params using <code class="inline-code language-javascript">props.response.params</code>.</p></div><div class="code-block"><pre><code class="language-jsx">// pages/Nouns.js
 import { Query } from &quot;react-apollo&quot;;
