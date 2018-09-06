@@ -555,7 +555,7 @@ const tooSoon = router.current();
 // tooSoon.response === null
 // tooSoon.navigation === null
 
-router.respond(({ response, navigation }) => {
+router.once(({ response, navigation }) => {
   const perfect = router.current();
   // perfect.response === response
   // perfect.navigation === navigation
