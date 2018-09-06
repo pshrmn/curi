@@ -1,6 +1,6 @@
 {
   "name": "@curi/side-effect-title",
-  "version": "1.0.0-beta.11",
+  "version": "1.0.0-beta.12",
   "description": "Curi side effecft to set the page title when loading a route",
   "main": "dist/curi-side-effect-title",
   "module": "dist/curi-side-effect-title.mjs",
@@ -33,7 +33,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.41"
+    "@curi/router": "^1.0.0-beta.42"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

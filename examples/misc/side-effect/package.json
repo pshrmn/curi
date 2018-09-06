@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/side-effect",
   "private": true,
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Use side effects in a Curi application",
   "main": "index.js",
   "scripts": {
@@ -23,9 +23,9 @@
     "webpack-command": "^0.4.1"
   },
   "dependencies": {
-    "@curi/react-dom": "^1.0.0-beta.2",
-    "@curi/router": "^1.0.0-beta.41",
-    "@curi/side-effect-title": "^1.0.0-beta.11",
+    "@curi/react-dom": "^1.0.0-beta.3",
+    "@curi/router": "^1.0.0-beta.42",
+    "@curi/side-effect-title": "^1.0.0-beta.12",
     "@hickory/browser": "^1.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

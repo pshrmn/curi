@@ -1,6 +1,6 @@
 {
   "name": "@curi/side-effect-scroll",
-  "version": "1.0.0-beta.10",
+  "version": "1.0.0-beta.11",
   "description": "Curi side effect to scroll when navigating to new locations",
   "main": "dist/curi-side-effect-scroll",
   "module": "dist/curi-side-effect-scroll.mjs",
@@ -33,7 +33,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.41"
+    "@curi/router": "^1.0.0-beta.42"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

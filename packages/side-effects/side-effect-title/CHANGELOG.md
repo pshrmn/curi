@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.12
 
 * Support dual-mode package (CJS/ESM) builds.
 * Pass the side effect creator a callback function that returns a string.

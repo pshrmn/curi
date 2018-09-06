@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.3
 
 * Support dual-mode package (CJS/ESM) builds.
 

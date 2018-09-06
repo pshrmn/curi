@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/async-nav-vue",
   "private": true,
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Display a spinner while navigation is happening",
   "main": "index.js",
   "scripts": {
@@ -28,8 +28,8 @@
     "webpack-command": "^0.4.1"
   },
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.41",
-    "@curi/vue": "^1.0.0-beta.21",
+    "@curi/router": "^1.0.0-beta.42",
+    "@curi/vue": "^1.0.0-beta.22",
     "@hickory/browser": "^1.0.0",
     "epic-spinners": "^1.0.3",
     "vue": "^2.5.17"
