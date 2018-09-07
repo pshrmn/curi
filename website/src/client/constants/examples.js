@@ -69,7 +69,7 @@ const examples = {
       description: "Transition between routes using react-transition-group"
     }
   ],
-  vue: [
+  /*vue: [
     {
       name: "Accessibility",
       category: "vue",
@@ -126,7 +126,7 @@ const examples = {
       slug: "transitions",
       description: "Transition between routes"
     }
-  ],
+  ],*/
   /*svelte: [
     {
       name: "Basic",
@@ -135,14 +135,14 @@ const examples = {
       description: "A simple Curi app rendered using Svelte"
     }
   ],*/
-  full: [
+  /*full: [
     {
       name: "Twitch Clone",
       category: "full",
       slug: "twitch",
       description: "A clone of Twitch.tv built with Curi + Vue"
     }
-  ],
+  ],*/
   misc: [
     {
       name: "Code Splitting",
