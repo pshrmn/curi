@@ -32,7 +32,8 @@
 
         "vue",
         "vue-loader",
-        "vue-template-compiler"
+        "vue-template-compiler",
+        "@vue/*"
       ]
     }
   }
