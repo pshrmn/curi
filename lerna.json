@@ -16,6 +16,7 @@
         "ts-jest",
         "svelte",
         "svelte-cli",
+        "svelte-loader",
         "rollup-plugin-svelte",
         "react-native",
         "babel-jest",
