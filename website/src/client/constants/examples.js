@@ -127,14 +127,14 @@ const examples = {
       description: "Transition between routes"
     }
   ],
-  svelte: [
+  /*svelte: [
     {
       name: "Basic",
       category: "svelte",
       slug: "basic",
       description: "A simple Curi app rendered using Svelte"
     }
-  ],
+  ],*/
   full: [
     {
       name: "Twitch Clone",
