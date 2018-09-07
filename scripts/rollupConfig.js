@@ -2,6 +2,7 @@ const uglifyPlugin = require("rollup-plugin-uglify");
 const replace = require("rollup-plugin-replace");
 const commonjs = require("rollup-plugin-commonjs");
 const resolve = require("rollup-plugin-node-resolve");
+const { sizeSnapshot } = require("rollup-plugin-size-snapshot");
 
 module.exports = function(options, env) {
   const {
@@ -29,6 +30,9 @@ module.exports = function(options, env) {
     resolve(),
     commonjs({
       include: /node_modules/
+    }),
+    sizeSnapshot({
+      matchSnapshot: true
     })
   ];
 

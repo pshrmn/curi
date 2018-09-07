@@ -1,0 +1,31 @@
+{
+  "dist/curi-side-effect-aria-live.es.js": {
+    "bundled": 446,
+    "minified": 300,
+    "gzipped": 220,
+    "treeshaked": {
+      "rollup": {
+        "code": 0,
+        "import_statements": 0
+      },
+      "webpack": {
+        "code": 951
+      }
+    }
+  },
+  "dist/curi-side-effect-aria-live.js": {
+    "bundled": 463,
+    "minified": 313,
+    "gzipped": 228
+  },
+  "dist/curi-side-effect-aria-live.umd.js": {
+    "bundled": 741,
+    "minified": 439,
+    "gzipped": 289
+  },
+  "dist/curi-side-effect-aria-live.min.js": {
+    "bundled": 741,
+    "minified": 439,
+    "gzipped": 289
+  }
+}

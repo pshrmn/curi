@@ -35,7 +35,8 @@
   },
   "dependencies": {
     "@curi/router": "^1.0.0-beta.43",
-    "@hickory/root": "^1.0.0"
+    "@hickory/root": "^1.0.0",
+    "rollup-plugin-size-snapshot": "^0.6.1"
   },
   "devDependencies": {
     "@curi/route-active": "^1.0.0-beta.11",

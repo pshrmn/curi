@@ -1,0 +1,31 @@
+{
+  "dist/curi-vue.es.js": {
+    "bundled": 4969,
+    "minified": 2454,
+    "gzipped": 1080,
+    "treeshaked": {
+      "rollup": {
+        "code": 12,
+        "import_statements": 12
+      },
+      "webpack": {
+        "code": 1013
+      }
+    }
+  },
+  "dist/curi-vue.js": {
+    "bundled": 5194,
+    "minified": 2632,
+    "gzipped": 1142
+  },
+  "dist/curi-vue.umd.js": {
+    "bundled": 5692,
+    "minified": 2583,
+    "gzipped": 1131
+  },
+  "dist/curi-vue.min.js": {
+    "bundled": 5291,
+    "minified": 2328,
+    "gzipped": 984
+  }
+}

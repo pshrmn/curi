@@ -33,7 +33,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.43"
+    "@curi/router": "^1.0.0-beta.43",
+    "rollup-plugin-size-snapshot": "^0.6.1"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",
