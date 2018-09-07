@@ -13,20 +13,26 @@
     "bootstrap": {
       "hoist": "**",
       "nohoist": [
-        "ts-jest",
         "svelte",
         "svelte-cli",
         "svelte-loader",
         "rollup-plugin-svelte",
+
         "react-native",
+
+        "ts-jest",
         "babel-jest",
+
         "webpack",
         "webpack-cli",
         "webpack-command",
         "webpack-dev-middleware",
         "webpack-hot-middleware",
         "mini-css-extract-plugin",
-        "vue"
+
+        "vue",
+        "vue-loader",
+        "vue-template-compiler"
       ]
     }
   }
