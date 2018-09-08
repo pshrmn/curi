@@ -69,7 +69,7 @@ const examples = {
       description: "Transition between routes using react-transition-group"
     }
   ],
-  /*vue: [
+  vue: [
     {
       name: "Accessibility",
       category: "vue",
@@ -126,7 +126,7 @@ const examples = {
       slug: "transitions",
       description: "Transition between routes"
     }
-  ],*/
+  ],
   /*svelte: [
     {
       name: "Basic",
