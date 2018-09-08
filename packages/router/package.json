@@ -17,7 +17,6 @@
     "coverage": "jest --coverage",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
-    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.ts\"",
     "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
   },
   "repository": {
@@ -41,7 +40,6 @@
     "@types/jest": "^22.0.1",
     "@types/node": "^8.0.53",
     "jest": "^22.1.1",
-    "prettier": "^1.10.2",
     "rimraf": "^2.6.2",
     "ts-jest": "^21.2.3"
   }

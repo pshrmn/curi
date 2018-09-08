@@ -14,7 +14,6 @@
     "build": "BABEL_ENV=build node ./scripts/build",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
-    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
     "test": "jest && TEST_ENV=cjs jest"
   },
   "repository": {
@@ -44,7 +43,6 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.0.0",
     "jest": "^22.1.1",
-    "prettier": "^1.10.2",
     "rimraf": "^2.6.2",
     "simulant": "^0.2.2",
     "svelte-cli": "^3.0.0"
