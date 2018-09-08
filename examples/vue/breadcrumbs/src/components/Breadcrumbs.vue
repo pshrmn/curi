@@ -22,3 +22,16 @@ export default {
   }
 };
 </script>
+
+<style>
+.breadcrumbs {
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs li {
+  list-style: none;
+  margin-right: 10px;
+}
+</style>

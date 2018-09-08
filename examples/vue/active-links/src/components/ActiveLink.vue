@@ -26,3 +26,13 @@ export default {
   }
 };
 </script>
+
+<style>
+a {
+  color: blue;
+}
+
+a.active {
+  color: red;
+}
+</style>
