@@ -3,18 +3,18 @@ const path = require("path");
 const { VueLoaderPlugin } = require("vue-loader");
 
 const config = {
-  mode: "production",
-  entry: "./src/index.js",
+  mode: "development",
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "public", "js")
-  },
-  externals: {
-    vue: "Vue"
+    filename: "js/bundle.js",
+    publicPath: "./static/"
   },
   resolve: {
-    extensions: [".js", ".vue"]
+    extensions: [".js", ".vue"],
+    alias: {
+      vue: "vue/dist/vue.js"
+    }
   },
+  devtool: "cheap-module-source-map", // eval(), ugh
   module: {
     rules: [
       {
@@ -22,7 +22,8 @@ const config = {
         exclude: /(node_modules)/,
         use: [
           {
-            loader: "babel-loader"
+            loader: "babel-loader",
+            options: require("../babel/.babelrc.vue.js")
           }
         ]
       },
@@ -31,6 +32,17 @@ const config = {
         use: [
           {
             loader: "vue-loader"
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader"
           }
         ]
       }

@@ -4,19 +4,8 @@
   "version": "0.1.11",
   "description": "Use the <Block> component to prevent transitions",
   "main": "index.js",
-  "scripts": {
-    "webpack": "webpack"
-  },
   "author": "Paul Sherman",
   "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.0",
-    "webpack": "^4.16.5",
-    "webpack-command": "^0.4.1"
-  },
   "dependencies": {
     "@curi/react-dom": "^1.0.0-beta.4",
     "@curi/router": "^1.0.0-beta.43",

@@ -4,9 +4,6 @@
   "version": "0.1.11",
   "description": "Display a spinner while navigation is happening",
   "main": "index.js",
-  "scripts": {
-    "webpack": "webpack"
-  },
   "keywords": [
     "curi",
     "prefetch",
@@ -15,19 +12,6 @@
   ],
   "author": "Paul Sherman",
   "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.0",
-    "css-loader": "^1.0.0",
-    "style-loader": "^0.22.1",
-    "webpack": "^4.16.5",
-    "webpack-command": "^0.4.1"
-  },
   "dependencies": {
     "@curi/react-dom": "^1.0.0-beta.4",
     "@curi/route-prefetch": "^1.0.0-beta.16",

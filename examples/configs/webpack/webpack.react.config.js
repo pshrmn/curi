@@ -2,12 +2,10 @@ const webpack = require("webpack");
 const path = require("path");
 
 const config = {
-  mode: "production",
-  entry: "./src/index.js",
+  mode: "development",
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "public", "js"),
-    publicPath: "/static/js/"
+    filename: "js/bundle.js",
+    publicPath: "./static/"
   },
   module: {
     rules: [
@@ -16,7 +14,8 @@ const config = {
         exclude: /(node_modules)/,
         use: [
           {
-            loader: "babel-loader"
+            loader: "babel-loader",
+            options: require("../babel/.babelrc.react.js")
           }
         ]
       },
