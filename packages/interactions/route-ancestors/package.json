@@ -34,8 +34,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.43",
-    "rollup-plugin-size-snapshot": "^0.6.1"
+    "@curi/router": "^1.0.0-beta.43"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",
@@ -43,9 +42,6 @@
     "jest": "^22.1.1",
     "prettier": "^1.10.2",
     "rimraf": "^2.6.2",
-    "rollup": "^0.65.0",
-    "rollup-plugin-typescript2": "^0.14.0",
-    "ts-jest": "^21.2.3",
-    "typescript": "^3.0.1"
+    "ts-jest": "^21.2.3"
   }
 }
