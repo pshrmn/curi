@@ -11,10 +11,12 @@ const config = {
   resolve: {
     extensions: [".js", ".vue"],
     alias: {
-      vue: "vue/dist/vue.js"
+      vue: "vue/dist/vue.common.js"
     }
   },
-  devtool: "cheap-module-source-map", // eval(), ugh
+  externals: {
+    vue: "Vue"
+  },
   module: {
     rules: [
       {
