@@ -42,6 +42,8 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.0.0",
     "jest": "^22.1.1",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-svelte": "^4.3.0",
     "simulant": "^0.2.2",
     "svelte-cli": "^3.0.0"
   }
