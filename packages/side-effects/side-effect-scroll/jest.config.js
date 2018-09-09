@@ -14,7 +14,7 @@ module.exports = {
   moduleFileExtensions: ["ts", "js"],
   testMatch: ["**/tests/**/*.spec.ts"],
   transform: {
-    "\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    "\\.ts$": "ts-jest"
   },
   globals: {
     "ts-jest": {
