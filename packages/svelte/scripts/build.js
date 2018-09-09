@@ -1,7 +1,13 @@
-const rollupBuild = require("../../../scripts/build");
-const copyHTML = require("./copyHTML");
+const rimraf = require("rimraf");
+const path = require("path");
 const sveltePlugin = require("rollup-plugin-svelte");
 const babelPlugin = require("rollup-plugin-babel");
+
+const rollupBuild = require("../../../scripts/build");
+const copyHTML = require("./copyHTML");
+
+const dist = path.join(__dirname, "..", "dist");
+rimraf.sync(dist);
 
 // don't bundle dependencies for es/cjs builds
 const pkg = require("../package.json");

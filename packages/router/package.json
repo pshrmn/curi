@@ -12,7 +12,6 @@
     "*.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist types",
     "build": "node ./scripts/build",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
@@ -39,7 +38,6 @@
     "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
     "jest": "^22.1.1",
-    "rimraf": "^2.6.2",
     "ts-jest": "^21.2.3"
   }
 }

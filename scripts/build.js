@@ -1,5 +1,5 @@
 const rollup = require("rollup");
-const buildConfig = require("./rollupConfig");
+const buildConfig = require("./config/rollup");
 
 const buildStats = {};
 

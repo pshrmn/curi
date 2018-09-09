@@ -31,9 +31,7 @@ module.exports = function(options, env) {
     commonjs({
       include: /node_modules/
     }),
-    sizeSnapshot({
-      matchSnapshot: true
-    })
+    sizeSnapshot()
   ];
 
   if (replaceNodeEnv) {
