@@ -12,7 +12,7 @@ module.exports = {
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
   testMatch: ["**/tests/**/*.spec.tsx"],
   transform: {
-    "\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
+    "\\.tsx?$": "ts-jest",
     "\\.jsx?$": "<rootDir>/node_modules/babel-jest"
   },
   transformIgnorePatterns: ["node_modules/(?!react-native)/"],

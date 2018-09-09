@@ -13,12 +13,10 @@
     "*.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist & rimraf types",
     "build": "node ./scripts/build",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
-    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.{ts,tsx}\"",
     "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
   },
   "repository": {
@@ -40,22 +38,15 @@
   "dependencies": {
     "@curi/react-universal": "^1.0.0-beta.3",
     "@curi/router": "^1.0.0-beta.43",
-    "@types/react": "^16.3.11",
-    "rollup-plugin-size-snapshot": "^0.6.1"
+    "@types/react": "^16.3.11"
   },
   "devDependencies": {
     "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
-    "@types/node": "^8.0.53",
     "@types/react-dom": "^16.0.5",
     "jest": "^22.1.1",
-    "prettier": "^1.10.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.65.0",
-    "rollup-plugin-typescript2": "^0.14.0",
-    "ts-jest": "^21.2.3",
-    "typescript": "^3.0.1"
+    "ts-jest": "^21.2.3"
   }
 }

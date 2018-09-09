@@ -1,5 +1,13 @@
-const rollupBuild = require("../../../scripts/build");
+const rimraf = require("rimraf");
+const path = require("path");
 const typescript = require("rollup-plugin-typescript2");
+
+const rollupBuild = require("../../../scripts/build");
+
+const dist = path.join(__dirname, "..", "dist");
+const types = path.join(__dirname, "..", "types");
+rimraf.sync(dist);
+rimraf.sync(types);
 
 // don't bundle dependencies for es/cjs builds
 const pkg = require("../package.json");

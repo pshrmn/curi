@@ -10,11 +10,9 @@
     "*.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
     "build": "BABEL_ENV=build node ./scripts/build",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
-    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.js\"",
     "test": "jest && TEST_ENV=cjs jest"
   },
   "repository": {
@@ -32,24 +30,20 @@
     "@curi/router": "^1.0.0-beta.26"
   },
   "dependencies": {
-    "rollup-plugin-size-snapshot": "^0.6.1",
     "svelte": "^2.4.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.49",
-    "@babel/plugin-external-helpers": "^7.0.0-beta.49",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-external-helpers": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
     "@curi/router": "^1.0.0-beta.43",
     "@hickory/in-memory": "^1.0.0",
-    "babel-core": "^7.0.0-bridge.0",
+    "babel-core": "bridge",
     "babel-jest": "^23.0.0",
     "jest": "^22.1.1",
-    "prettier": "^1.10.2",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.65.0",
-    "rollup-plugin-babel": "^4.0.0-beta.4",
-    "rollup-plugin-svelte": "^4.1.0",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-svelte": "^4.3.0",
     "simulant": "^0.2.2",
     "svelte-cli": "^3.0.0"
   }

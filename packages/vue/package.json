@@ -10,12 +10,10 @@
     "*.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
     "build": "node ./scripts/build",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
-    "prettier": "prettier --single-quote --write \"{src,tests}/**/*.ts\"",
     "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
   },
   "repository": {
@@ -35,22 +33,15 @@
   },
   "dependencies": {
     "@curi/router": "^1.0.0-beta.43",
-    "@hickory/root": "^1.0.0",
-    "rollup-plugin-size-snapshot": "^0.6.1"
+    "@hickory/root": "^1.0.0"
   },
   "devDependencies": {
     "@curi/route-active": "^1.0.0-beta.11",
     "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
-    "@types/node": "^8.0.53",
     "@vue/test-utils": "^1.0.0-beta.10",
     "jest": "^22.1.1",
-    "prettier": "^1.10.2",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.65.0",
-    "rollup-plugin-typescript2": "^0.14.0",
     "ts-jest": "^21.2.3",
-    "typescript": "^3.0.1",
     "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17"
   }
