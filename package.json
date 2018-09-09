@@ -23,6 +23,7 @@
     "npm": "^5.0.0"
   },
   "devDependencies": {
+    "@types/node": "^10.9.4",
     "husky": "^0.14.3",
     "lerna": "^2.9.0",
     "prettier": "^1.10.2",
