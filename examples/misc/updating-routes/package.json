@@ -1,14 +1,14 @@
 {
   "name": "@curi-example/updating-routes",
   "private": true,
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Update the known routes of a Curi application",
   "main": "index.js",
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "^1.0.0-beta.4",
-    "@curi/router": "^1.0.0-beta.43",
+    "@curi/react-dom": "^1.0.0",
+    "@curi/router": "^1.0.0",
     "@hickory/browser": "^1.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

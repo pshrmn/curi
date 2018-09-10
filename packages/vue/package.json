@@ -32,11 +32,11 @@
     "vue": "^2.5.2"
   },
   "dependencies": {
-    "@curi/router": "^1.0.0-beta.43",
+    "@curi/router": "^1.0.0",
     "@hickory/root": "^1.0.0"
   },
   "devDependencies": {
-    "@curi/route-active": "^1.0.0-beta.11",
+    "@curi/route-active": "^1.0.0",
     "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
     "@vue/test-utils": "^1.0.0-beta.10",
