@@ -96,6 +96,12 @@ const guides = [
     type: "advanced"
   },
   {
+    name: "Development Tips",
+    slug: "dev-tips",
+    description: "Tips on developing using Curi",
+    type: "advanced"
+  },
+  {
     name: "React Router v2/3",
     slug: "migrate-rrv3",
     descriptioni:

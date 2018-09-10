@@ -15,6 +15,7 @@ import CodeSplitting from "./CodeSplitting";
 import LoadingData from "./Loading";
 import Accessibility from "./Accessibility";
 import Apollo from "./Apollo";
+import DevTips from "./DevTips";
 
 import MigrateReactRouterv3 from "./MigrateReactRouterv3";
 import MigrateReactRouterv4 from "./MigrateReactRouterv4";
@@ -40,6 +41,7 @@ export default {
   loading: LoadingData,
   accessibility: Accessibility,
   apollo: Apollo,
+  "dev-tips": DevTips,
 
   // migration
   "migrate-rrv3": MigrateReactRouterv3,
