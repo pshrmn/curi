@@ -5,12 +5,14 @@ import Page from "../../../components/Page";
 import PageLinks from "../../../components/PageLinks";
 import Content from "../../../components/Content";
 
-export default ({ children }) => (
-  <Page type="example">
-    <Content>{children || null}</Content>
-    <PageLinks>
-      <h2>Examples</h2>
-      <ExampleLinks />
-    </PageLinks>
-  </Page>
-);
+export default function BaseExample({ children }) {
+  return (
+    <Page type="example">
+      <Content>{children || null}</Content>
+      <PageLinks>
+        <h2>Examples</h2>
+        <ExampleLinks />
+      </PageLinks>
+    </Page>
+  );
+}

@@ -41,11 +41,14 @@ const Unpkg = ({ name, version, globalName }) => (
     </CodeBlock>
   </SideBySide>
 );
-export default ({ name, version, globalName, unpkg }) => (
-  <Section title="Installation" id="installation">
-    <NPM name={name} />
-    {unpkg ? (
-      <Unpkg name={name} version={version} globalName={globalName} />
-    ) : null}
-  </Section>
-);
+
+export default function Installation({ name, version, globalName, unpkg }) {
+  return (
+    <Section title="Installation" id="installation">
+      <NPM name={name} />
+      {unpkg ? (
+        <Unpkg name={name} version={version} globalName={globalName} />
+      ) : null}
+    </Section>
+  );
+}

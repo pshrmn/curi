@@ -15,7 +15,7 @@ const GroupPackages = ({ packages }) => (
   </ul>
 );
 
-export default () => {
+export default function PackageLinks() {
   const groups = PACKAGE_API.grouped();
   return (
     <ul>
@@ -27,4 +27,4 @@ export default () => {
       ))}
     </ul>
   );
-};
+}

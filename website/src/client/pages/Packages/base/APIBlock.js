@@ -3,8 +3,10 @@ import { Section } from "../../../components/Sections";
 
 import "../../../scss/api.scss";
 
-export default ({ children }) => (
-  <Section title="API" id="API">
-    {children}
-  </Section>
-);
+export default function APIBlock({ children }) {
+  return (
+    <Section title="API" id="API">
+      {children}
+    </Section>
+  );
+}

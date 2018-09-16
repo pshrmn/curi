@@ -11,50 +11,51 @@ import {
   Explanation
 } from "../../components/SideBySide";
 
-export default ({ name, version, globalName }) => (
-  <BasePackage
-    name={name}
-    version={version}
-    globalName={globalName}
-    about={
-      <div>
-        <p>
-          The prefetch route interaction can be used fetch data for a route
-          prior to navigating. The interaction will call a route's{" "}
-          <IJS>resolve</IJS> functions (if they exist on the route).
-        </p>
-        <p>
-          Prefetching data means results in faster renders after navigation
-          because you don't have to wait for the data to load.
-        </p>
-      </div>
-    }
-  >
-    <SideBySide>
-      <Explanation>
-        <Note>
-          Prefetching <IJS>resolve</IJS> functions calls is only beneficial if
-          you cache the results because the function will be re-called when the
-          user navigates to that route. Functions wrapped by Curi's{" "}
-          <IJS>once()</IJS> wrapper will automatically re-use the results from
-          their first call.
-        </Note>
-      </Explanation>
-    </SideBySide>
-    <APIBlock>
-      <Section tag="h3" title="prefetch" id="prefetch">
-        <SideBySide>
-          <Explanation>
-            <p>
-              A function to create the prefetch route interaction. When you
-              create your router, the result is passed to the router using the
-              `route` option, which will add a <IJS>prefetch()</IJS> function to
-              the router's route interactions.
-            </p>
-          </Explanation>
+export default function RoutePrefetchPkg({ name, version, globalName }) {
+  return (
+    <BasePackage
+      name={name}
+      version={version}
+      globalName={globalName}
+      about={
+        <div>
+          <p>
+            The prefetch route interaction can be used fetch data for a route
+            prior to navigating. The interaction will call a route's{" "}
+            <IJS>resolve</IJS> functions (if they exist on the route).
+          </p>
+          <p>
+            Prefetching data means results in faster renders after navigation
+            because you don't have to wait for the data to load.
+          </p>
+        </div>
+      }
+    >
+      <SideBySide>
+        <Explanation>
+          <Note>
+            Prefetching <IJS>resolve</IJS> functions calls is only beneficial if
+            you cache the results because the function will be re-called when
+            the user navigates to that route. Functions wrapped by Curi's{" "}
+            <IJS>once()</IJS> wrapper will automatically re-use the results from
+            their first call.
+          </Note>
+        </Explanation>
+      </SideBySide>
+      <APIBlock>
+        <Section tag="h3" title="prefetch" id="prefetch">
+          <SideBySide>
+            <Explanation>
+              <p>
+                A function to create the prefetch route interaction. When you
+                create your router, the result is passed to the router using the
+                `route` option, which will add a <IJS>prefetch()</IJS> function
+                to the router's route interactions.
+              </p>
+            </Explanation>
 
-          <CodeBlock>
-            {`import { curi } from '@curi/router';
+            <CodeBlock>
+              {`import { curi } from '@curi/router';
 import prefetch from '@curi/route-prefetch';
 
 const router = curi(history, routes, {
@@ -62,53 +63,53 @@ const router = curi(history, routes, {
 });
 
 router.route.prefetch("Some Route");`}
-          </CodeBlock>
-        </SideBySide>
+            </CodeBlock>
+          </SideBySide>
 
-        <Subsection title="Arguments" id="arguments">
-          <SideBySide>
-            <Explanation>
-              <table>
-                <thead>
-                  <tr>
-                    <th>argument</th>
-                    <th>description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>name</td>
-                    <td>The name of the route to prefetch.</td>
-                  </tr>
-                  <tr>
-                    <td>resolve</td>
-                    <td>
-                      Route props that are used by the <IJS>resolve</IJS>{" "}
-                      functions.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>which</td>
-                    <td>
-                      An array whose values are the names of the{" "}
-                      <IJS>resolve</IJS> functions that should be called. If
-                      this array is not provided, all available functions will
-                      be called.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <Note>
-                <p>
-                  This route interaction will only register routes that have{" "}
-                  <IJS>resolve</IJS> functions. If you try calling this for any
-                  routes with neither of those, <IJS>prefetch()</IJS> will
-                  resolve an object with an <IJS>error</IJS> property.
-                </p>
-              </Note>
-            </Explanation>
-            <CodeBlock>
-              {`
+          <Subsection title="Arguments" id="arguments">
+            <SideBySide>
+              <Explanation>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>argument</th>
+                      <th>description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>name</td>
+                      <td>The name of the route to prefetch.</td>
+                    </tr>
+                    <tr>
+                      <td>resolve</td>
+                      <td>
+                        Route props that are used by the <IJS>resolve</IJS>{" "}
+                        functions.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>which</td>
+                      <td>
+                        An array whose values are the names of the{" "}
+                        <IJS>resolve</IJS> functions that should be called. If
+                        this array is not provided, all available functions will
+                        be called.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Note>
+                  <p>
+                    This route interaction will only register routes that have{" "}
+                    <IJS>resolve</IJS> functions. If you try calling this for
+                    any routes with neither of those, <IJS>prefetch()</IJS> will
+                    resolve an object with an <IJS>error</IJS> property.
+                  </p>
+                </Note>
+              </Explanation>
+              <CodeBlock>
+                {`
 {
   name: "User",
   path: "u/:id",
@@ -130,10 +131,11 @@ router.route.prefetch(
   { params: { id: 3 }},
   ['one']
 );`}
-            </CodeBlock>
-          </SideBySide>
-        </Subsection>
-      </Section>
-    </APIBlock>
-  </BasePackage>
-);
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+        </Section>
+      </APIBlock>
+    </BasePackage>
+  );
+}

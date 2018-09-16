@@ -7,9 +7,6 @@ import "./scss/main.scss";
 
 export default function render({ response }) {
   let { body: Body } = response;
-  if (!Body) {
-    Body = () => <div>Redirecting...</div>;
-  }
   return (
     <React.Fragment>
       <Header />

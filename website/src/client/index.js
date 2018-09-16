@@ -23,7 +23,8 @@ const history = Browser();
 
 const router = curi(history, routes, {
   route: [active(), prefetch()],
-  sideEffects: [setTitle, scrollTo, announce]
+  sideEffects: [setTitle, scrollTo, announce],
+  emitRedirects: false
 });
 const Router = curiProvider(router);
 

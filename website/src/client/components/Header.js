@@ -3,8 +3,10 @@ import Nav from "./Nav";
 
 import "../scss/header.scss";
 
-export default () => (
-  <header>
-    <Nav />
-  </header>
-);
+export default function Header() {
+  return (
+    <header>
+      <Nav />
+    </header>
+  );
+}

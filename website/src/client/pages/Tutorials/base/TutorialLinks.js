@@ -16,7 +16,7 @@ const GroupTutorials = ({ tutorials }) => (
   </ul>
 );
 
-export default () => {
+export default function TutorialLinks() {
   const groups = TUTORIAL_API.grouped();
   return (
     <ul>
@@ -28,4 +28,4 @@ export default () => {
       ))}
     </ul>
   );
-};
+}

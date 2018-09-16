@@ -15,7 +15,7 @@ const GroupGuides = ({ guides }) => (
   </ul>
 );
 
-export default () => {
+export default function GuideLinks() {
   const groups = GUIDE_API.grouped();
   return (
     <ul>
@@ -27,4 +27,4 @@ export default () => {
       ))}
     </ul>
   );
-};
+}

@@ -3,7 +3,7 @@ import React from "react";
 import { InlineJS } from "../components/PrismBlocks";
 import PackageComponents from "../pages/Packages";
 
-export default ({ response }) => {
+export default function PackagePage({ response }) {
   if (!response.data) {
     return (
       <div>
@@ -15,4 +15,4 @@ export default ({ response }) => {
   const Component = PackageComponents[response.params.package];
   const { name, version, globalName } = response.data;
   return <Component name={name} version={version} globalName={globalName} />;
-};
+}

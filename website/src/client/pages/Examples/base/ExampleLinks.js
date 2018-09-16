@@ -20,7 +20,7 @@ const Category = ({ name, examples }) => {
   );
 };
 
-export default () => {
+export default function ExampleLinks() {
   const examples = EXAMPLE_API.all();
   const categories = Object.keys(examples);
   return (
@@ -33,4 +33,4 @@ export default () => {
       ))}
     </div>
   );
-};
+}
