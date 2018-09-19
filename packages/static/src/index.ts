@@ -32,7 +32,7 @@ function registerRoutes(
   parent?: any
 ) {
   routes.forEach(route => {
-    const parentData = generator.register(route as Route);
+    const parentData = generator.register(route as Route, parent);
     if (route.children) {
       registerRoutes(route.children, generator, parentData);
     }
@@ -72,14 +72,14 @@ export default function generateStaticFiles(
         if (response.statusCode === 200) {
           const outputFilename = join(outputDir, url, "index.html");
           await outputFile(outputFilename, response.body);
-          console.log(`${url}: ✔`);
+          console.log(`✔ ${url}`);
         } else {
           console.log(
-            `${url}: ✖\n\tUnexpected status (${response.statusCode})"`
+            `✖ ${url}\n\tUnexpected status (${response.statusCode})"`
           );
         }
       } catch (e) {
-        console.error(`${url}: ✖`);
+        console.error(`✖ ${url}`);
         console.error(e);
       }
     })
