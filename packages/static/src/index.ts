@@ -66,19 +66,20 @@ export default function generateStaticFiles(
       try {
         const response = await request({
           uri: localURI(url, port),
-          resolveWithFullResponse: true
+          resolveWithFullResponse: true,
+          simple: false
         });
         if (response.statusCode === 200) {
           const outputFilename = join(outputDir, url, "index.html");
           await outputFile(outputFilename, response.body);
-          console.log(`Successfully generated and saved HTML for ${url}`);
+          console.log(`${url}: ✔`);
         } else {
           console.log(
-            `Unexpected status (${response.statusCode}) for "${url}"`
+            `${url}: ✖\n\tUnexpected status (${response.statusCode})"`
           );
         }
       } catch (e) {
-        console.error(`Failed to generate HTML for "${url}"`);
+        console.error(`${url}: ✖`);
         console.error(e);
       }
     })
