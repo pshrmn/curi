@@ -26,8 +26,7 @@
         "webpack",
         "webpack-cli",
         "webpack-command",
-        "webpack-dev-middleware",
-        "webpack-hot-middleware",
+        "webpack-dev-server",
         "mini-css-extract-plugin",
 
         "vue",

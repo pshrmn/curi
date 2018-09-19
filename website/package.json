@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "npm run setupBuild && npm run versions && webpack-cli --config webpack.config.prod.js",
     "build": "npm run generate",
-    "dev": "webpack-cli --config webpack.config.dev.js --mode=development --watch & cross-env BABEL_ENV=serve node ./src/server",
+    "dev": "webpack-dev-server --config webpack.config.dev.js",
     "generate": "cross-env BABEL_ENV=serve node ./scripts/build",
     "prettier": "prettier --single-quote --write \"src/**/*.js\"",
     "setupBuild": "node ./scripts/buildSetup",
@@ -62,7 +62,6 @@
     "sw-precache-webpack-plugin": "^0.11.5",
     "webpack": "^4.10.2",
     "webpack-cli": "^3.0.1",
-    "webpack-dev-middleware": "^3.2.0",
-    "webpack-hot-middleware": "^2.23.1"
+    "webpack-dev-server": "^3.1.8"
   }
 }

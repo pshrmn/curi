@@ -48,12 +48,8 @@ function renderFullPage(html, title, debug) {
   <body>
     <div id="root">${html}</div>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
-    <script src="https://unpkg.com/react@16.5.1/umd/react.${
-      debug ? "development" : "production.min"
-    }.js"></script>
-    <script src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.${
-      debug ? "development" : "production.min"
-    }.js"></script>
+    <script src="https://unpkg.com/react@16.5.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.development.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

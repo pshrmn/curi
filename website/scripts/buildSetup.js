@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const join = require("path").join;
 
 const BASE_DIR = join(__dirname, "..");
-const STATIC_DIR = join(BASE_DIR, "static");
+const STATIC_DIR = join(BASE_DIR, "public", "static");
 const GH_STATIC_DIR = join(BASE_DIR, "gh-pages", "static");
 const GH_PAGES = join(BASE_DIR, "gh-pages");
 

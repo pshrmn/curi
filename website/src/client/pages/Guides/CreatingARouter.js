@@ -23,7 +23,7 @@ export default function CreatingARouterGuide({ name }) {
         <SideBySide>
           <Explanation>
             <p>
-              The router is the controller of the single-page application. A
+              The router ijkads the controller of the single-page application. A
               router is created using a <IJS>history</IJS> object and a{" "}
               <IJS>routes</IJS> array.
             </p>
