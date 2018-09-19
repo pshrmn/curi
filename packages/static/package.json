@@ -2,9 +2,17 @@
   "name": "@curi/static",
   "version": "1.0.0-alpha.0",
   "description": "Generate static HTML files from Curi routes",
-  "main": "index.js",
+  "main": "dist/curi-static.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "LICENSE",
+    "*.md"
+  ],
   "scripts": {
-    "build": "node ./scripts/build"
+    "build": "node ./scripts/build",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",

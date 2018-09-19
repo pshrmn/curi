@@ -71,6 +71,7 @@ export default function generateStaticFiles(
         if (response.statusCode === 200) {
           const outputFilename = join(outputDir, url, "index.html");
           await outputFile(outputFilename, response.body);
+          console.log(`Successfully generated and saved HTML for ${url}`);
         } else {
           console.log(
             `Unexpected status (${response.statusCode}) for "${url}"`
