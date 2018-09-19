@@ -20,9 +20,16 @@ export default function createRenderer(debug = false) {
     const Router = curiProvider(router);
 
     router.once(({ response }) => {
-      // TODO: Detect redirects?
-      const markup = renderToString(<Router>{renderFunction}</Router>);
-      res.send(renderFullPage(markup, response.title, debug));
+      let markup;
+      let status;
+      if (response.redirectTo) {
+        markup = "Redirecting...";
+        status = 302;
+      } else {
+        markup = renderToString(<Router>{renderFunction}</Router>);
+        status = 200;
+      }
+      res.status(status).send(renderFullPage(markup, response.title, debug));
     });
   };
 }
