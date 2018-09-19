@@ -74,9 +74,7 @@ export default function generateStaticFiles(
           await outputFile(outputFilename, response.body);
           console.log(`✔ ${url}`);
         } else {
-          console.log(
-            `✖ ${url}\n\tUnexpected status (${response.statusCode})"`
-          );
+          console.log(`✖ ${url}\n\tUnexpected status (${response.statusCode})`);
         }
       } catch (e) {
         console.error(`✖ ${url}`);
