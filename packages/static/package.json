@@ -1,0 +1,29 @@
+{
+  "name": "@curi/static",
+  "version": "1.0.0-alpha.0",
+  "description": "Generate static HTML files from Curi routes",
+  "main": "index.js",
+  "scripts": {
+    "build": "node ./scripts/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/static"
+  },
+  "keywords": [
+    "curi",
+    "router",
+    "static",
+    "html"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "dependencies": {
+    "@curi/router": "^1.0.0",
+    "@types/fs-extra": "^5.0.4",
+    "@types/request-promise-native": "^1.0.15",
+    "fs-extra": "^7.0.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
+  }
+}
