@@ -21,7 +21,6 @@
   "dependencies": {
     "@curi/react-dom": "^1.0.0",
     "@curi/route-active": "^1.0.0",
-    "@curi/route-prefetch": "^1.0.0",
     "@curi/router": "^1.0.0",
     "@curi/side-effect-aria-live": "^1.0.0",
     "@curi/side-effect-scroll": "^1.0.0",
@@ -29,10 +28,8 @@
     "@curi/static": "^1.0.0-alpha.0",
     "@hickory/browser": "^1.0.0",
     "@hickory/in-memory": "^1.0.0",
-    "express": "^4.16.3",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "request": "^2.85.0"
+    "react-dom": "^16.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

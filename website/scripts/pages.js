@@ -1,8 +1,8 @@
-const routes = require("../src/client/routes").default;
-const packages_api = require("../src/client/constants/packages").default;
-const guides_api = require("../src/client/constants/guides").default;
-const examples_api = require("../src/client/constants/examples").default;
-const tutorials_api = require("../src/client/constants/tutorials").default;
+const routes = require("../src/routes").default;
+const packages_api = require("../src/constants/packages").default;
+const guides_api = require("../src/constants/guides").default;
+const examples_api = require("../src/constants/examples").default;
+const tutorials_api = require("../src/constants/tutorials").default;
 
 const packageParams = packages_api.all().map(p => ({ package: p.name }));
 const guideParams = guides_api.all().map(p => ({ slug: p.slug }));

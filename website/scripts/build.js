@@ -9,7 +9,7 @@ const render = require("./render");
 const pages = require("./pages");
 const insert = require("./insert");
 
-const routes = require("../src/client/routes").default;
+const routes = require("../src/routes").default;
 
 const PORT = "9000";
 const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
