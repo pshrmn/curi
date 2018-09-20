@@ -3,6 +3,8 @@ import { join } from "path";
 import { curi } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
+import pathnames from "./pathnames";
+
 // types
 import { RouteDescriptor, Params, RouterOptions, Emitted } from "@curi/router";
 
@@ -40,23 +42,7 @@ export default async function generate(
     outputRedirects = false
   } = config;
 
-  const history = InMemory();
-  const router = curi(history, routes, {
-    ...routerOptions,
-    emitRedirects: true // need to emit redirects or will get stuck waiting forever
-  });
-
-  const pageURLs = pages.map(page => {
-    const pathname = router.route.pathname(page.name, page.params);
-    if (pathname == null) {
-      console.warn(
-        `Failed to create page URL for "${
-          page.name
-        }" with params ${JSON.stringify(page.params)}`
-      );
-    }
-    return pathname;
-  });
+  const pageURLs = pathnames({ routes, pages, routerOptions });
 
   return Promise.all<Result>(
     pageURLs.map(url => {

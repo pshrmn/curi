@@ -12,4 +12,9 @@ export interface GenerateConfiguration {
     outputRedirects?: boolean;
     routerOptions?: RouterOptions;
 }
-export default function generate(config: GenerateConfiguration): Promise<any>;
+export interface Result {
+    pathname: string;
+    success: boolean;
+    error?: Error;
+}
+export default function generate(config: GenerateConfiguration): Promise<Array<Result>>;
