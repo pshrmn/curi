@@ -15,10 +15,7 @@ export default function pages(config: PathnamesConfiguration): Array<string> {
   const { routes, pages, routerOptions } = config;
 
   const history = InMemory();
-  const router = curi(history, routes, {
-    ...routerOptions,
-    emitRedirects: true // need to emit redirects or will get stuck waiting forever
-  });
+  const router = curi(history, routes, routerOptions);
 
   return pages.map(page => {
     const pathname = router.route.pathname(page.name, page.params);

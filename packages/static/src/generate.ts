@@ -42,15 +42,13 @@ export default async function generate(
     outputRedirects = false
   } = config;
 
-  const pageURLs = pathnames({ routes, pages, routerOptions });
-
   return Promise.all<Result>(
-    pageURLs.map(url => {
+    pathnames({ routes, pages, routerOptions }).map(pathname => {
       return new Promise((resolve, reject) => {
         try {
           // create a new router for each so we don't run into any issues
           // with overlapping requests
-          const history = InMemory({ locations: [url] });
+          const history = InMemory({ locations: [pathname] });
 
           const router = curi(history, routes, {
             ...routerOptions,
@@ -63,7 +61,7 @@ export default async function generate(
               const { response } = emitted;
               if (response.redirectTo && !outputRedirects) {
                 resolve({
-                  pathname: url,
+                  pathname,
                   success: false,
                   error: new Error("redirect")
                 });
@@ -71,15 +69,15 @@ export default async function generate(
               }
               const markup = render(emitted);
               const html = insert(markup, emitted);
-              const outputFilename = join(outputDir, url, "index.html");
+              const outputFilename = join(outputDir, pathname, "index.html");
               outputFile(outputFilename, html).then(() => {
-                resolve({ pathname: url, success: true });
+                resolve({ pathname, success: true });
               });
             },
             { initial: true }
           );
         } catch (e) {
-          resolve({ pathname: url, success: false, error: e });
+          resolve({ pathname, success: false, error: e });
         }
       });
     })
