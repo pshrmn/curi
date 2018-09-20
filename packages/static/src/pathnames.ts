@@ -2,13 +2,13 @@ import { curi } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
 // types
-import { RouteDescriptor } from "@curi/router";
-import { PageDescriptor, GetRouterOptions } from "./types";
+import { RouteDescriptor, RouterOptions } from "@curi/router";
+import { PageDescriptor } from "./types";
 
 export interface PathnamesConfiguration {
   routes: Array<RouteDescriptor>;
   pages: Array<PageDescriptor>;
-  routerOptions?: GetRouterOptions;
+  routerOptions?: RouterOptions;
 }
 
 export default function pathnames(
@@ -17,7 +17,7 @@ export default function pathnames(
   const { routes, pages, routerOptions } = config;
 
   const history = InMemory();
-  const router = curi(history, routes, routerOptions && routerOptions());
+  const router = curi(history, routes, routerOptions);
 
   return pages.map(page => {
     const pathname = router.route.pathname(page.name, page.params);

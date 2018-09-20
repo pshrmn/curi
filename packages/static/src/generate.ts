@@ -44,8 +44,12 @@ export default async function generate(
   } = config;
 
   return Promise.all<Result>(
-    pathnames({ routes, pages, routerOptions }).map(pathname => {
-      return new Promise((resolve, reject) => {
+    pathnames({
+      routes,
+      pages,
+      routerOptions: routerOptions && routerOptions()
+    }).map(pathname => {
+      return new Promise(resolve => {
         try {
           // create a new router for each so we don't run into any issues
           // with overlapping requests
