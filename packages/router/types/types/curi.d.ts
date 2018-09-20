@@ -22,6 +22,7 @@ export interface RouterOptions {
     sideEffects?: Array<Observer>;
     pathnameOptions?: PathFunctionOptions;
     emitRedirects?: boolean;
+    automaticRedirects?: boolean;
 }
 export interface CurrentResponse {
     response: Response | null;

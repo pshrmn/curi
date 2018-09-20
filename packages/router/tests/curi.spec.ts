@@ -296,6 +296,75 @@ describe("curi", () => {
           });
         });
       });
+
+      describe("automaticRedirects", () => {
+        it("automatically redirects by default", () => {
+          const routes = [
+            {
+              name: "Start",
+              path: "",
+              response: () => {
+                return {
+                  redirectTo: {
+                    name: "Other"
+                  }
+                };
+              }
+            },
+            {
+              name: "Other",
+              path: "other"
+            }
+          ];
+          const router = curi(history, routes);
+          // because the routes are not asynchronous, an automatic redirect
+          // will be triggered before once is called, so its response
+          // will be for the redirected location
+          router.once(({ response, navigation }) => {
+            expect(response).toMatchObject({
+              name: "Other"
+            });
+            expect(navigation).toMatchObject({
+              action: "REPLACE",
+              previous: {
+                name: "Start"
+              }
+            });
+          });
+        });
+
+        it("does not automatically redirect when automaticRedirects = false", () => {
+          const routes = [
+            {
+              name: "Start",
+              path: "",
+              response: () => {
+                return {
+                  redirectTo: {
+                    name: "Other"
+                  }
+                };
+              }
+            },
+            {
+              name: "Other",
+              path: "other"
+            }
+          ];
+          const router = curi(history, routes, {
+            automaticRedirects: false
+          });
+          router.once(({ response, navigation }) => {
+            expect(response).toMatchObject({
+              name: "Start"
+            });
+            expect(navigation).toMatchObject({
+              action: "PUSH",
+              previous: null
+            });
+          });
+        });
+      });
     });
 
     describe("sync/async matching", () => {

@@ -31,7 +31,8 @@ export default function createRouter(
   const {
     route: userInteractions = [],
     sideEffects = [],
-    emitRedirects = true
+    emitRedirects = true,
+    automaticRedirects = true
   } = options;
 
   let routes: Array<InternalRoute> = [];
@@ -177,7 +178,7 @@ export default function createRouter(
       callOneTimersAndSideEffects({ response, navigation, router });
     }
 
-    if (response.redirectTo !== undefined) {
+    if (response.redirectTo !== undefined && automaticRedirects) {
       history.navigate(response.redirectTo, "REPLACE");
     }
   }
