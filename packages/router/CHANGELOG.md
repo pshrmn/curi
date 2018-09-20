@@ -1,3 +1,7 @@
+## Next
+
+* Add `automaticRedirects` option to router. When `false`, redirects will have to be triggered by the user. This is mostly useful for server-side rendering.
+
 ## 1.0.0-beta.43
 
 * Revert dual-mode (not ready yet!).
