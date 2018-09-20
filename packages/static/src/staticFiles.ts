@@ -14,7 +14,7 @@ export interface PageDescriptor {
   params?: Params;
 }
 
-export interface GenerateConfiguration {
+export interface StaticConfiguration {
   routes: Array<RouteDescriptor>;
   pages: Array<PageDescriptor>;
   render: (emitted: Emitted) => string;
@@ -30,8 +30,8 @@ export interface Result {
   error?: Error;
 }
 
-export default async function generate(
-  config: GenerateConfiguration
+export default async function staticFiles(
+  config: StaticConfiguration
 ): Promise<Array<Result>> {
   const {
     routes,
@@ -39,7 +39,7 @@ export default async function generate(
     outputDir,
     render,
     insert,
-    routerOptions,
+    routerOptions = (() => {}) as GetRouterOptions,
     outputRedirects = false
   } = config;
 
@@ -47,7 +47,7 @@ export default async function generate(
     pathnames({
       routes,
       pages,
-      routerOptions: routerOptions && routerOptions()
+      routerOptions: routerOptions()
     }).map(pathname => {
       return new Promise(resolve => {
         try {
@@ -56,7 +56,7 @@ export default async function generate(
           const history = InMemory({ locations: [pathname] });
 
           const router = curi(history, routes, {
-            ...(routerOptions && routerOptions()),
+            ...routerOptions(),
             emitRedirects: true, // need to emit redirects or will get stuck waiting forever
             automaticRedirects: false // and the responses should be for the redirect
           });

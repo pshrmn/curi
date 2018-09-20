@@ -3,7 +3,7 @@ import { ensureDir, remove, existsSync } from "fs-extra";
 import { join } from "path";
 
 // resolved by jest
-import { generate } from "@curi/static";
+import { staticFiles } from "@curi/static";
 
 // types
 import { Emitted } from "@curi/router";
@@ -15,7 +15,7 @@ const DEFAULT_INSERT = (markup: string, emitted: Emitted) => {
   return `<html><body>${markup}</body</html>`;
 };
 
-describe("generate()", () => {
+describe("staticFiles()", () => {
   it("creates HTML files for each route in the correct location", async () => {
     const fixtures = join(FIXTURES_ROOT, "basic");
     await remove(fixtures);
@@ -38,7 +38,7 @@ describe("generate()", () => {
       }
     ];
     const pages = [{ name: "Home" }, { name: "About" }];
-    await generate({
+    await staticFiles({
       routes,
       pages,
       render: DEFAULT_RENDER,
@@ -77,7 +77,7 @@ describe("generate()", () => {
         }
       ];
       const pages = [{ name: "Home" }, { name: "About" }];
-      await generate({
+      await staticFiles({
         routes,
         pages,
         render: DEFAULT_RENDER,
@@ -119,7 +119,7 @@ describe("generate()", () => {
         }
       ];
       const pages = [{ name: "Home" }, { name: "About" }];
-      await generate({
+      await staticFiles({
         routes,
         pages,
         render: DEFAULT_RENDER,
@@ -154,7 +154,7 @@ describe("generate()", () => {
       ];
       const pages = [{ name: "Home" }];
       const render = jest.fn(({ response }) => response.body);
-      await generate({
+      await staticFiles({
         routes,
         pages,
         render,
@@ -191,7 +191,7 @@ describe("generate()", () => {
       const pages = [{ name: "Home" }];
       const render = DEFAULT_RENDER;
       const insert = jest.fn(html => html);
-      await generate({
+      await staticFiles({
         routes,
         pages,
         render,
@@ -228,7 +228,7 @@ describe("generate()", () => {
       ];
       const pages = [{ name: "Home" }];
       const routerOptions = jest.fn();
-      await generate({
+      await staticFiles({
         routes,
         pages,
         render: DEFAULT_RENDER,
@@ -236,7 +236,7 @@ describe("generate()", () => {
         outputDir: fixtures,
         routerOptions
       });
-      // once to generate pathnames and again for the Home markup
+      // once to static pathnames and again for the Home markup
       expect(routerOptions.mock.calls.length).toBe(2);
     });
   });

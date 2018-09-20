@@ -4,7 +4,7 @@ export interface PageDescriptor {
     name: string;
     params?: Params;
 }
-export interface GenerateConfiguration {
+export interface StaticConfiguration {
     routes: Array<RouteDescriptor>;
     pages: Array<PageDescriptor>;
     render: (emitted: Emitted) => string;
@@ -18,4 +18,4 @@ export interface Result {
     success: boolean;
     error?: Error;
 }
-export default function generate(config: GenerateConfiguration): Promise<Array<Result>>;
+export default function staticFiles(config: StaticConfiguration): Promise<Array<Result>>;

@@ -1,10 +1,10 @@
 import { PageDescriptor } from "./types";
-import { GenerateConfiguration } from "./generate";
+import { StaticConfiguration } from "./staticFiles";
 import { PathnamesConfiguration } from "./pathnames";
 
-export { PageDescriptor, GenerateConfiguration, PathnamesConfiguration };
+export { PageDescriptor, StaticConfiguration, PathnamesConfiguration };
 
-import generate from "./generate";
+import staticFiles from "./staticFiles";
 import pathnames from "./pathnames";
 
-export { generate, pathnames };
+export { staticFiles, pathnames };
