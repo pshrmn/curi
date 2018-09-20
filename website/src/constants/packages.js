@@ -66,6 +66,12 @@ const packages = [
     version: versions["side-effect-scroll"],
     globalName: "CuriSideEffectScroll",
     type: "side effects"
+  },
+  {
+    name: "static",
+    version: versions["static"],
+    globalName: "CuriStatic",
+    type: "dev"
   }
 ];
 

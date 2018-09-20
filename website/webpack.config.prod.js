@@ -1,6 +1,8 @@
 const webpack = require("webpack");
-const path = require("path");
+const MiniCSS = require("mini-css-extract-plugin");
 const SWPrecache = require("sw-precache-webpack-plugin");
+const path = require("path");
+
 const configBase = require("./webpack.config.base.js");
 
 const SITE_ROOT = path.join(__dirname, "gh-pages");
@@ -13,8 +15,20 @@ const config = {
   entry: {
     index: ["./index.js"]
   },
+  module: {
+    rules: [
+      ...configBase.module.rules,
+      {
+        test: /\.scss$/,
+        use: [MiniCSS.loader, "css-loader", "postcss-loader", "sass-loader"]
+      }
+    ]
+  },
   plugins: [
     ...configBase.plugins,
+    new MiniCSS({
+      filename: "css/[name].css"
+    }),
     new SWPrecache({
       cacheId: "curi-documentation-website",
       dontCacheBustUrlsMatching: /\.\w{8}\./,

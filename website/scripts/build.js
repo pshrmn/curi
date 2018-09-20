@@ -1,59 +1,40 @@
 require("@babel/register");
+const start = new Date();
+const path = require("path");
+const React = require("react");
+const { staticFiles } = require("@curi/static");
+const active = require("@curi/route-active");
 
-const generateStaticFiles = require("./generateStaticFiles");
+const render = require("./render");
+const pages = require("./pages");
+const insert = require("./insert");
 
-const createApp = require("../src/server/app");
-const routes = require("../src/client/routes").default;
-const packages_api = require("../src/client/constants/packages").default;
-const guides_api = require("../src/client/constants/guides").default;
-const examples_api = require("../src/client/constants/examples").default;
-const tutorials_api = require("../src/client/constants/tutorials").default;
+const routes = require("../src/routes").default;
 
-const packageNames = packages_api.all().map(p => ({ package: p.name }));
-const guideNames = guides_api.all().map(p => ({ slug: p.slug }));
-const categories = examples_api.all();
-const exampleParams = Object.keys(categories)
-  .map(key => categories[key])
-  .reduce((acc, category) => {
-    const params = category.map(e => ({ category: e.category, slug: e.slug }));
-    acc = acc.concat(params);
-    return acc;
-  }, []);
-const tutorialNames = tutorials_api.all().map(t => ({ slug: t.slug }));
+const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
 
-let server;
-const app = createApp();
-server = app.listen("8000", () => {
-  generateStaticFiles(routes, {
-    Packages: {
-      children: {
-        Package: {
-          params: packageNames
-        }
-      }
-    },
-    Guides: {
-      children: {
-        Guide: {
-          params: guideNames
-        }
-      }
-    },
-    Examples: {
-      children: {
-        Example: {
-          params: exampleParams
-        }
-      }
-    },
-    Tutorials: {
-      children: {
-        Tutorial: {
-          params: tutorialNames
-        }
-      }
-    }
-  }).then(() => {
-    server.close();
-  });
+staticFiles({
+  routes,
+  pages,
+  routerOptions: {
+    route: [active()]
+  },
+  render,
+  insert,
+  outputDir: OUTPUT_DIR,
+  outputRedirects: false
+}).then(results => {
+  const end = new Date();
+  const resultString = results
+    .map(result => {
+      return result.success
+        ? `✔ ${result.pathname}`
+        : `✖ ${result.pathname} (${result.error.message})`;
+    })
+    .join("\n");
+  console.log(
+    `${resultString}
+
+Build time: ${end - start}ms`
+  );
 });

@@ -2,14 +2,7 @@ const join = require("path").join;
 const fs = require("fs");
 
 const BASE_PATH = join(__dirname, "..", "..", "packages");
-const OUTPUT_FILE = join(
-  __dirname,
-  "..",
-  "src",
-  "client",
-  "constants",
-  "versions.js"
-);
+const OUTPUT_FILE = join(__dirname, "..", "src", "constants", "versions.js");
 
 function getPackagesFromDir(dir) {
   return fs.readdirSync(dir).reduce((acc, name) => {

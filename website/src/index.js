@@ -29,17 +29,18 @@ const router = curi(history, routes, {
 const Router = curiProvider(router);
 
 router.once(() => {
-  ReactDOM.hydrate(
-    <Router>{renderFunction}</Router>,
-    document.getElementById("root")
-  );
-});
-
-(function() {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js");
+  if (process.env.NODE_ENV !== "production") {
+    ReactDOM.render(
+      <Router>{renderFunction}</Router>,
+      document.getElementById("root")
+    );
+  } else {
+    ReactDOM.hydrate(
+      <Router>{renderFunction}</Router>,
+      document.getElementById("root")
+    );
   }
-})();
+});
 
 if (process.env.NODE_ENV !== "production") {
   if (module.hot) {
@@ -48,4 +49,10 @@ if (process.env.NODE_ENV !== "production") {
       router.refresh(nextRoutes);
     });
   }
+} else {
+  (function() {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/service-worker.js");
+    }
+  })();
 }

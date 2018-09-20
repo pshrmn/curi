@@ -6,10 +6,11 @@ export default {
   "react-dom": "1.0.0",
   "react-native": "1.0.0",
   "react-universal": "1.0.0",
-  "router": "1.0.0",
+  router: "1.0.0",
   "side-effect-aria-live": "1.0.0",
   "side-effect-scroll": "1.0.0",
   "side-effect-title": "1.0.0",
-  "svelte": "1.0.0-beta.8",
-  "vue": "1.0.0-beta.23"
+  static: "1.0.0-alpha.0",
+  svelte: "1.0.0-beta.8",
+  vue: "1.0.0-beta.23"
 };
