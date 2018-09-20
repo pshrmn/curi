@@ -25,8 +25,15 @@ generate({
   outputRedirects: false
 }).then(results => {
   const end = new Date();
+  const resultString = results
+    .map(result => {
+      return result.success
+        ? `✔ ${result.pathname}`
+        : `✖ ${result.pathname} (${result.error.message})`;
+    })
+    .join("\n");
   console.log(
-    `${results.join("\n")}
+    `${resultString}
 
 Build time: ${end - start}ms`
   );
