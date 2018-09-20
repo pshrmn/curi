@@ -236,6 +236,57 @@ const router = curi(history, routes, {
                     <SideBySide>
                       <Explanation>
                         <p>
+                          <IJS>automaticRedirects</IJS> - When the initially
+                          matched route is synchronous and redirects, the
+                          router's automatic redirect will occur before any
+                          response handlers (registered with <IJS>once()</IJS>{" "}
+                          or <IJS>observer()</IJS>) are called. This means that
+                          they will be called with the response for the location
+                          that was redirected to instead of the initial
+                          location. This is fine on the client side, but causes
+                          issues with server side rendering. When{" "}
+                          <IJS>automaticRedirects</IJS> is <IJS>false</IJS>, the
+                          automatic redirect will not happen.{" "}
+                          <strong>
+                            Using <IJS>automaticRedirects = false</IJS> is
+                            recommend for server side rendering.
+                          </strong>
+                        </p>
+                      </Explanation>
+                      <CodeBlock>
+                        {`const routes = [
+  {
+    name: "Old",
+    path: "old/:id",
+    response({ params }) {
+      // setup a redirect to the "New" route
+      return {
+        redirectTo: {
+          name: "New",
+          params
+        }
+      };
+    }
+  },
+  {
+    name: "New",
+    path: "new/:id"
+  }
+];
+const history = InMemory({ locations: ["old/1" ]});
+const router = curi(history, routes, {
+  automaticRedirects: false                 
+});
+router.once(({ response }) => {
+  // response = { name: "Old", ... }
+});`}
+                      </CodeBlock>
+                    </SideBySide>
+                  </li>
+                  <li>
+                    <SideBySide>
+                      <Explanation>
+                        <p>
                           <IJS>pathnameOptions</IJS> - Curi uses{" "}
                           <a href="https://github.com/pillarjs/path-to-regexp">
                             <IJS>path-to-regexp</IJS>
