@@ -1,11 +1,15 @@
-import { RouteDescriptor, Params } from "@curi/router";
+import { RouteDescriptor, Params, RouterOptions, Emitted } from "@curi/router";
 export interface PageDescriptor {
     name: string;
     params?: Params;
 }
-export interface Options {
+export interface GenerateConfiguration {
+    routes: Array<RouteDescriptor>;
+    pages: Array<PageDescriptor>;
+    render: (emitted: Emitted) => string;
+    insert: (markup: string, emitted: Emitted) => string;
     outputDir: string;
-    port?: string;
     outputRedirects?: boolean;
+    routerOptions?: RouterOptions;
 }
-export default function generate(routes: Array<RouteDescriptor>, pages: Array<PageDescriptor>, options: Options): Promise<void[]>;
+export default function generate(config: GenerateConfiguration): Promise<any>;

@@ -1,51 +1,47 @@
-import request from "request-promise-native";
-import { ensureDir, outputFile } from "fs-extra";
+import { outputFile } from "fs-extra";
 import { join } from "path";
-import { pathname } from "@curi/router";
+import { curi } from "@curi/router";
+import InMemory from "@hickory/in-memory";
 
 // types
-import { RouteDescriptor, Route, Params, Interaction } from "@curi/router";
+import { RouteDescriptor, Params, RouterOptions, Emitted } from "@curi/router";
 
 export interface PageDescriptor {
   name: string;
   params?: Params;
 }
 
-export interface Options {
+export interface GenerateConfiguration {
+  routes: Array<RouteDescriptor>;
+  pages: Array<PageDescriptor>;
+  render: (emitted: Emitted) => string;
+  insert: (markup: string, emitted: Emitted) => string;
   outputDir: string;
-  port?: string;
   outputRedirects?: boolean;
+  routerOptions?: RouterOptions;
 }
 
-function localURI(path: string, port: string = "8000") {
-  return `http://localhost:${port}${path}`;
-}
+export default async function generate(
+  config: GenerateConfiguration
+): Promise<any> {
+  const {
+    routes,
+    pages,
+    outputDir,
+    render,
+    insert,
+    routerOptions,
+    outputRedirects = false
+  } = config;
 
-function registerRoutes(
-  routes: Array<RouteDescriptor>,
-  generator: Interaction,
-  parent?: any
-) {
-  routes.forEach(route => {
-    const parentData = generator.register(route as Route, parent);
-    if (route.children) {
-      registerRoutes(route.children, generator, parentData);
-    }
+  const history = InMemory();
+  const router = curi(history, routes, {
+    ...routerOptions,
+    emitRedirects: true // need to emit redirects or will get stuck waiting forever
   });
-}
-
-export default function generate(
-  routes: Array<RouteDescriptor>,
-  pages: Array<PageDescriptor>,
-  options: Options
-) {
-  const { port, outputDir, outputRedirects = false } = options;
-
-  const pathnameGenerator = pathname();
-  registerRoutes(routes, pathnameGenerator);
 
   const pageURLs = pages.map(page => {
-    const pathname = pathnameGenerator.get(page.name, page.params);
+    const pathname = router.route.pathname(page.name, page.params);
     if (pathname == null) {
       console.warn(
         `Failed to create page URL for "${
@@ -57,24 +53,40 @@ export default function generate(
   });
 
   return Promise.all(
-    pageURLs.map(async url => {
-      try {
-        const response = await request({
-          uri: localURI(url, port),
-          resolveWithFullResponse: true,
-          simple: false
-        });
-        if (response.statusCode !== 200 && !outputRedirects) {
-          console.log(`✖ ${url}\n\tUnexpected status (${response.statusCode})`);
-        } else {
-          const outputFilename = join(outputDir, url, "index.html");
-          await outputFile(outputFilename, response.body);
-          console.log(`✔ ${url}`);
+    pageURLs.map(url => {
+      return new Promise((resolve, reject) => {
+        try {
+          // create a new router for each so we don't run into any issues
+          // with overlapping requests
+          const history = InMemory({ locations: [url] });
+
+          const router = curi(history, routes, {
+            ...routerOptions,
+            emitRedirects: true, // need to emit redirects or will get stuck waiting forever
+            automaticRedirects: false // and the responses should be for the redirect
+          });
+
+          router.once(
+            (emitted: Emitted) => {
+              const { response } = emitted;
+              if (response.redirectTo && !outputRedirects) {
+                resolve(`✖ ${url} (redirect)`);
+                return;
+              }
+              const markup = render(emitted);
+              const html = insert(markup, emitted);
+              const outputFilename = join(outputDir, url, "index.html");
+              outputFile(outputFilename, html).then(() => {
+                resolve(`✔ ${url}`);
+              });
+            },
+            { initial: true }
+          );
+        } catch (e) {
+          console.error(e);
+          resolve(`✖ ${url}`);
         }
-      } catch (e) {
-        console.error(`✖ ${url}`);
-        console.error(e);
-      }
+      });
     })
   );
 }

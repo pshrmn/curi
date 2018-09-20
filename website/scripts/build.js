@@ -1,8 +1,8 @@
 require("@babel/register");
-
+const start = new Date();
 const path = require("path");
 const React = require("react");
-const { generate, serve } = require("@curi/static");
+const { generate } = require("@curi/static");
 const active = require("@curi/route-active");
 
 const render = require("./render");
@@ -11,23 +11,23 @@ const insert = require("./insert");
 
 const routes = require("../src/routes").default;
 
-const PORT = "9000";
 const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
 
-serve({
-  port: PORT,
+generate({
   routes,
+  pages,
   routerOptions: {
     route: [active()]
   },
-  doNotRenderRedirects: true,
   render,
   insert,
-  ready: () => {
-    return generate(routes, pages, {
-      port: PORT,
-      outputDir: OUTPUT_DIR,
-      outputRedirects: true
-    });
-  }
+  outputDir: OUTPUT_DIR,
+  outputRedirects: false
+}).then(results => {
+  const end = new Date();
+  console.log(
+    `${results.join("\n")}
+
+Build time: ${end - start}ms`
+  );
 });
