@@ -2,7 +2,7 @@ require("@babel/register");
 const start = new Date();
 const path = require("path");
 const React = require("react");
-const { generate } = require("@curi/static");
+const { staticFiles } = require("@curi/static");
 const active = require("@curi/route-active");
 
 const render = require("./render");
@@ -13,7 +13,7 @@ const routes = require("../src/routes").default;
 
 const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
 
-generate({
+staticFiles({
   routes,
   pages,
   routerOptions: {

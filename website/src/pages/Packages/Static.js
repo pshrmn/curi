@@ -63,6 +63,34 @@ staticFiles({
               </CodeBlock>
             </SideBySide>
 
+            <SideBySide>
+              <Explanation>
+                <p>
+                  <IJS>staticFiles()</IJS> returns a Promise that resolve with
+                  an array of results. Each entry in the results array contains
+                  the <IJS>pathname</IJS> of the result, a <IJS>success</IJS>{" "}
+                  boolean, and, if <IJS>success</IJS> is false, the{" "}
+                  <IJS>error</IJS> that occurred.
+                </p>
+                <p>
+                  It can be useful to log the results to easily see what pages
+                  were successfully built and which had issues.
+                </p>
+              </Explanation>
+              <CodeBlock>
+                {`staticFiles({...})
+  .then(results => {
+    const resultString = results
+      .map(result => {
+        return result.success
+          ? \`✔ \${result.pathname}\`
+          : \`✖ \${result.pathname} (\${result.error.message})\`;
+      })
+      .join("\\n");
+    console.log(resultString);
+  });`}
+              </CodeBlock>
+            </SideBySide>
             <Section tag="h4" title="Arguments" id="staticFiles-arguments">
               <Subsection tag="h5" title="routes" id="staticFiles-routes">
                 <SideBySide>
