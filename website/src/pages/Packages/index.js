@@ -7,6 +7,7 @@ import SideEffectTitle from "./SideEffectTitle";
 import SideEffectScroll from "./SideEffectScroll";
 import ReactPkg from "./ReactPkg";
 import ReactNativePkg from "./ReactNativePkg";
+import Static from "./Static";
 import Svelte from "./Svelte";
 import Vue from "./Vue";
 
@@ -20,6 +21,7 @@ export default {
   "side-effect-scroll": SideEffectScroll,
   "react-dom": ReactPkg,
   "react-native": ReactNativePkg,
+  static: Static,
   svelte: Svelte,
   vue: Vue
 };
