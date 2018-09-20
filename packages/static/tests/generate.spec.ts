@@ -10,6 +10,7 @@ import { Emitted } from "@curi/router";
 
 const FIXTURES_ROOT = join(__dirname, "fixtures");
 
+const DEFAULT_RENDER = (emitted: Emitted) => emitted.response.body;
 const DEFAULT_INSERT = (markup: string, emitted: Emitted) => {
   return `<html><body>${markup}</body</html>`;
 };
@@ -40,7 +41,7 @@ describe("generate()", () => {
     await generate({
       routes,
       pages,
-      render: ({ response }) => response.body,
+      render: DEFAULT_RENDER,
       insert: DEFAULT_INSERT,
       outputDir: fixtures
     });
@@ -79,7 +80,7 @@ describe("generate()", () => {
       await generate({
         routes,
         pages,
-        render: ({ response }) => response.body,
+        render: DEFAULT_RENDER,
         insert: DEFAULT_INSERT,
         outputDir: fixtures,
         outputRedirects: false
@@ -121,7 +122,7 @@ describe("generate()", () => {
       await generate({
         routes,
         pages,
-        render: ({ response }) => response.body,
+        render: DEFAULT_RENDER,
         insert: DEFAULT_INSERT,
         outputDir: fixtures,
         outputRedirects: true
@@ -188,7 +189,7 @@ describe("generate()", () => {
         }
       ];
       const pages = [{ name: "Home" }];
-      const render = ({ response }) => response.body;
+      const render = DEFAULT_RENDER;
       const insert = jest.fn(html => html);
       await generate({
         routes,
@@ -207,6 +208,36 @@ describe("generate()", () => {
           action: "PUSH"
         }
       });
+    });
+  });
+
+  describe("routerOptions", () => {
+    it("calls routerOptions function to get options for a router", async () => {
+      const fixtures = join(FIXTURES_ROOT, "routerOptions");
+      await remove(fixtures);
+      await ensureDir(fixtures);
+
+      const routes = [
+        {
+          name: "Home",
+          path: "",
+          response() {
+            return { body: "Home" };
+          }
+        }
+      ];
+      const pages = [{ name: "Home" }];
+      const routerOptions = jest.fn();
+      await generate({
+        routes,
+        pages,
+        render: DEFAULT_RENDER,
+        insert: DEFAULT_INSERT,
+        outputDir: fixtures,
+        routerOptions
+      });
+      // once to generate pathnames and again for the Home markup
+      expect(routerOptions.mock.calls.length).toBe(2);
     });
   });
 });

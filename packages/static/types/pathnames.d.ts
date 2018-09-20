@@ -1,8 +1,8 @@
-import { RouteDescriptor, RouterOptions } from "@curi/router";
-import { PageDescriptor } from "./types";
+import { RouteDescriptor } from "@curi/router";
+import { PageDescriptor, GetRouterOptions } from "./types";
 export interface PathnamesConfiguration {
     routes: Array<RouteDescriptor>;
     pages: Array<PageDescriptor>;
-    routerOptions?: RouterOptions;
+    routerOptions?: GetRouterOptions;
 }
 export default function pathnames(config: PathnamesConfiguration): Array<string>;

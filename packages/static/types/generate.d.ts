@@ -1,4 +1,5 @@
-import { RouteDescriptor, Params, RouterOptions, Emitted } from "@curi/router";
+import { RouteDescriptor, Params, Emitted } from "@curi/router";
+import { GetRouterOptions } from "./types";
 export interface PageDescriptor {
     name: string;
     params?: Params;
@@ -10,7 +11,7 @@ export interface GenerateConfiguration {
     insert: (markup: string, emitted: Emitted) => string;
     outputDir: string;
     outputRedirects?: boolean;
-    routerOptions?: RouterOptions;
+    routerOptions?: GetRouterOptions;
 }
 export interface Result {
     pathname: string;

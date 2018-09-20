@@ -6,7 +6,8 @@ import InMemory from "@hickory/in-memory";
 import pathnames from "./pathnames";
 
 // types
-import { RouteDescriptor, Params, RouterOptions, Emitted } from "@curi/router";
+import { RouteDescriptor, Params, Emitted } from "@curi/router";
+import { GetRouterOptions } from "./types";
 
 export interface PageDescriptor {
   name: string;
@@ -20,7 +21,7 @@ export interface GenerateConfiguration {
   insert: (markup: string, emitted: Emitted) => string;
   outputDir: string;
   outputRedirects?: boolean;
-  routerOptions?: RouterOptions;
+  routerOptions?: GetRouterOptions;
 }
 
 export interface Result {
@@ -51,7 +52,7 @@ export default async function generate(
           const history = InMemory({ locations: [pathname] });
 
           const router = curi(history, routes, {
-            ...routerOptions,
+            ...(routerOptions && routerOptions()),
             emitRedirects: true, // need to emit redirects or will get stuck waiting forever
             automaticRedirects: false // and the responses should be for the redirect
           });

@@ -56,4 +56,24 @@ describe("pathnames()", () => {
       ])
     );
   });
+
+  it("calls routerOptions function to get options for a router", () => {
+    const routes = [
+      {
+        name: "Home",
+        path: "",
+        response() {
+          return { body: "Home" };
+        }
+      }
+    ];
+    const pages = [{ name: "Home" }];
+    const routerOptions = jest.fn();
+    pathnames({
+      routes,
+      pages,
+      routerOptions
+    });
+    expect(routerOptions.mock.calls.length).toBe(1);
+  });
 });
