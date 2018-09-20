@@ -5,6 +5,6 @@ import { PathnamesConfiguration } from "./pathnames";
 export { PageDescriptor, GenerateConfiguration, PathnamesConfiguration };
 
 import generate from "./generate";
-import pages from "./pathnames";
+import pathnames from "./pathnames";
 
-export { generate, pages };
+export { generate, pathnames };

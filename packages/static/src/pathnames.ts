@@ -11,7 +11,9 @@ export interface PathnamesConfiguration {
   routerOptions?: RouterOptions;
 }
 
-export default function pages(config: PathnamesConfiguration): Array<string> {
+export default function pathnames(
+  config: PathnamesConfiguration
+): Array<string> {
   const { routes, pages, routerOptions } = config;
 
   const history = InMemory();

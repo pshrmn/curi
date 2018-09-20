@@ -1,7 +1,7 @@
 {
   "dist/curi-static.js": {
-    "bundled": 7122,
-    "minified": 2967,
-    "gzipped": 1392
+    "bundled": 7010,
+    "minified": 2945,
+    "gzipped": 1389
   }
 }

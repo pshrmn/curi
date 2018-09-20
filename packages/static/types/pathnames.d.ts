@@ -5,4 +5,4 @@ export interface PathnamesConfiguration {
     pages: Array<PageDescriptor>;
     routerOptions?: RouterOptions;
 }
-export default function pages(config: PathnamesConfiguration): Array<string>;
+export default function pathnames(config: PathnamesConfiguration): Array<string>;
