@@ -21,9 +21,15 @@ export interface GenerateConfiguration {
   routerOptions?: RouterOptions;
 }
 
+export interface Result {
+  pathname: string;
+  success: boolean;
+  error?: Error;
+}
+
 export default async function generate(
   config: GenerateConfiguration
-): Promise<any> {
+): Promise<Array<Result>> {
   const {
     routes,
     pages,
@@ -52,7 +58,7 @@ export default async function generate(
     return pathname;
   });
 
-  return Promise.all(
+  return Promise.all<Result>(
     pageURLs.map(url => {
       return new Promise((resolve, reject) => {
         try {
@@ -70,21 +76,24 @@ export default async function generate(
             (emitted: Emitted) => {
               const { response } = emitted;
               if (response.redirectTo && !outputRedirects) {
-                resolve(`✖ ${url} (redirect)`);
+                resolve({
+                  pathname: url,
+                  success: false,
+                  error: new Error("redirect")
+                });
                 return;
               }
               const markup = render(emitted);
               const html = insert(markup, emitted);
               const outputFilename = join(outputDir, url, "index.html");
               outputFile(outputFilename, html).then(() => {
-                resolve(`✔ ${url}`);
+                resolve({ pathname: url, success: true });
               });
             },
             { initial: true }
           );
         } catch (e) {
-          console.error(e);
-          resolve(`✖ ${url}`);
+          resolve({ pathname: url, success: false, error: e });
         }
       });
     })
