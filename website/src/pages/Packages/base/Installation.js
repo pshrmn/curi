@@ -13,13 +13,10 @@ const NPM = ({ name }) => (
     <Explanation>
       <p>
         If you have Node and NPM installed, you can install the package through{" "}
-        <IJS>npm</IJS> (or <IJS>yarn</IJS> if you prefer).
+        <IJS>npm</IJS>.
       </p>
     </Explanation>
-    <CodeBlock lang="bash">
-      {`npm install @curi/${name}
-yarn add @curi/${name}`}
-    </CodeBlock>
+    <CodeBlock lang="bash">{`npm install @curi/${name}`}</CodeBlock>
   </SideBySide>
 );
 
