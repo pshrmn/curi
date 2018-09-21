@@ -16,9 +16,9 @@ const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
 staticFiles({
   routes,
   pages,
-  routerOptions: {
+  getRouterOptions: () => ({
     route: [active()]
-  },
+  }),
   render,
   insert,
   outputDir: OUTPUT_DIR,
