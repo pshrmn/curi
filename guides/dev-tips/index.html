@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Development Tips Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" " href="/guides/creating-a-router/">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Development Tips</h1><div class="section" id="hmr"><h2>Hot Module Replacement<a class="header-link" href="/guides/dev-tips/#hmr">#</a></h2><div class="side-by-side"><div class="explanation"><p>Hot module replacement (HMR) can make development more convenient by automatically updating page content without refreshing the page. With Webpack, there are only a few steps required to get this working with Curi.</p><p>The first step is to get your Webpack configuration setup for hot module replacement. Webpack&#x27;s<!-- --> <a href="https://webpack.js.org/guides/hot-module-replacement/">hot module replacement guide</a> <!-- -->is a good resource to learn how to do this.</p></div></div><div class="side-by-side"><div class="explanation"><p>The next step is identifying what file(s) you want to watch. A watched file will be notified when it, any of its dependencies, or any dependencies depndencies (and so on down the line) are updated. The best way to do this with a Curi application is to watch the file where your routes are defined.</p><p>The <code class="inline-code language-javascript">router</code> has a <code class="inline-code language-javascript">refresh()</code> method that is used for providing new routes to the router. When it is called, it will also generate and emit a new response.</p><p><code class="inline-code language-javascript">module.hot.accept()</code> is used for watching a file and calling a callback when that files or any files in its dependency chain are updated. In the callback, we can re-import the routes and pass them to the router&#x27;s <code class="inline-code language-javascript">refresh()</code> method. This will in turn emit a new response, which will automatically be rendered.</p><p>With that, your application should be setup to support hot module replacement.</p></div><div class="code-block"><pre data-line="9-14"><code class="language-javascript">// index.js
+import { curi } from &quot;@curi/core&quot;;
+import Browser from &quot;@hickory/browser&quot;;
+import routes from &quot;./routes&quot;;
+
+const history = Browser();
+const router = curi(history, routes);
+
+if (module.hot) {
+  module.hot.accept(&quot;./routes.js&quot;, function() {
+    const nextRoutes = require(&quot;./routes&quot;).default;
+    router.refresh(nextRoutes);
+  });
+}</code></pre></div></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul><li class="link-group"><h3>basic</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/creating-a-router/">Creating a Router</a></li><li class="solo"><a class=" " href="/guides/routes-and-responses/">Routes &amp; Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/navigating-and-observing/">Navigating &amp; Observing</a></li></ul></li><li class="link-group"><h3>rendering</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/react/">React</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li><li class="solo"><a class=" " href="/guides/vue/">Vue</a></li><li class="solo"><a class=" " href="/guides/svelte/">Svelte</a></li></ul></li><li class="link-group"><h3>advanced</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li><li class="solo"><a class=" active" href="/guides/dev-tips/">Development Tips</a></li></ul></li><li class="link-group"><h3>migration</h3><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
+    <script src="https://unpkg.com/react@16.5.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>

@@ -617,7 +617,9 @@ Prism.languages.clike = {
   var e = function(t) {
       return "string" == typeof t
         ? t
-        : "string" == typeof t.content ? t.content : t.content.map(e).join("");
+        : "string" == typeof t.content
+          ? t.content
+          : t.content.map(e).join("");
     },
     a = function(n) {
       for (var s = [], g = 0; g < n.length; g++) {
