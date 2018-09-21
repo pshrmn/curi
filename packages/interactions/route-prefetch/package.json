@@ -32,7 +32,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.0",
+    "@curi/router": "^1.0.1",
     "@hickory/root": "^1.0.0"
   },
   "devDependencies": {
