@@ -3,9 +3,6 @@ import "jest";
 // resolved by jest
 import { pathnames } from "@curi/static";
 
-// types
-import { Emitted } from "@curi/router";
-
 describe("pathnames()", () => {
   it("returns an array of pathname strings from the given routes/page descriptors", () => {
     const routes = [

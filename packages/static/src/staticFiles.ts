@@ -21,7 +21,7 @@ export interface StaticConfiguration {
   insert: (markup: string, emitted: Emitted) => string;
   outputDir: string;
   outputRedirects?: boolean;
-  routerOptions?: GetRouterOptions;
+  getRouterOptions?: GetRouterOptions;
 }
 
 export interface Result {
@@ -39,7 +39,7 @@ export default async function staticFiles(
     outputDir,
     render,
     insert,
-    routerOptions = (() => {}) as GetRouterOptions,
+    getRouterOptions = (() => {}) as GetRouterOptions,
     outputRedirects = false
   } = config;
 
@@ -47,7 +47,7 @@ export default async function staticFiles(
     pathnames({
       routes,
       pages,
-      routerOptions: routerOptions()
+      routerOptions: getRouterOptions()
     }).map(pathname => {
       return new Promise(resolve => {
         try {
@@ -56,7 +56,7 @@ export default async function staticFiles(
           const history = InMemory({ locations: [pathname] });
 
           const router = curi(history, routes, {
-            ...routerOptions(),
+            ...getRouterOptions(),
             emitRedirects: true, // need to emit redirects or will get stuck waiting forever
             automaticRedirects: false // and the responses should be for the redirect
           });

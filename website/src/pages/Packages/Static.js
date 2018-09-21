@@ -256,13 +256,13 @@ staticFiles({
               </Subsection>
               <Subsection
                 tag="h5"
-                title="routerOptions()"
-                id="staticFiles-routerOptions"
+                title="getRouterOptions()"
+                id="staticFiles-getRouterOptions"
               >
                 <SideBySide>
                   <Explanation>
                     <p>
-                      The <IJS>routerOptions()</IJS> function returns the
+                      The <IJS>getRouterOptions()</IJS> function returns the
                       options for a router.
                     </p>
                     <p>
@@ -282,13 +282,13 @@ staticFiles({
                   </Explanation>
                   <CodeBlock>
                     {`import active from "@curi/active";
-const routerOptions = () => ({
+const getRouterOptions = () => ({
   routes: [active()]
 });
 
 staticFiles({
   // ...
-  routerOptions
+  getRouterOptions
 });`}
                   </CodeBlock>
                 </SideBySide>

@@ -11,7 +11,7 @@ export interface StaticConfiguration {
     insert: (markup: string, emitted: Emitted) => string;
     outputDir: string;
     outputRedirects?: boolean;
-    routerOptions?: GetRouterOptions;
+    getRouterOptions?: GetRouterOptions;
 }
 export interface Result {
     pathname: string;
