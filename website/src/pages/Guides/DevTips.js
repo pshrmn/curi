@@ -82,6 +82,21 @@ if (module.hot) {
 }`}
           </CodeBlock>
         </SideBySide>
+        <SideBySide>
+          <Explanation>
+            <Note>
+              This approach does not work with code splitting because the "main"
+              module cannot be hot reloaded. If you are using code splitting (<IJS
+              >
+                import()
+              </IJS>) and compiling with Babel using the{" "}
+              <IJS>@babel/plugin-syntax-dynamic-import</IJS> plugin, you will
+              want to use the <IJS>dynamic-import-node</IJS> in development
+              instead. This will produce a single bundle (no actual code
+              splitting), so it should only be used in development.
+            </Note>
+          </Explanation>
+        </SideBySide>
       </Section>
     </BaseGuide>
   );
