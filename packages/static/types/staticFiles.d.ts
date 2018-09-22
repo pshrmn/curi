@@ -7,8 +7,8 @@ export interface PageDescriptor {
 export interface StaticConfiguration {
     routes: Array<RouteDescriptor>;
     pages: Array<PageDescriptor>;
-    render: (emitted: Emitted) => string;
-    insert: (markup: string, emitted: Emitted) => string;
+    render: (emitted: Emitted) => any;
+    insert: (markup: any) => string;
     outputDir: string;
     outputRedirects?: boolean;
     getRouterOptions?: GetRouterOptions;

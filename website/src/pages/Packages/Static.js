@@ -3,7 +3,10 @@ import { Link } from "@curi/react-dom";
 
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
-import { InlineJS as IJS } from "../../components/PrismBlocks";
+import {
+  InlineJS as IJS,
+  InlineComponent as Cmp
+} from "../../components/PrismBlocks";
 import { Section, Subsection } from "../../components/Sections";
 import {
   SideBySide,
@@ -151,8 +154,8 @@ staticFiles({
                     <p>
                       A function that takes the emitted <IJS>response</IJS>,{" "}
                       <IJS>navigation</IJS>, and <IJS>router</IJS> for a
-                      location and returns the markup generated from those
-                      values.
+                      location and returns the content that should be inserted
+                      into the page's HTML.
                     </p>
                     <p>
                       <IJS>render()</IJS>s behavior will depend on what type of
@@ -160,6 +163,13 @@ staticFiles({
                       would call the <IJS>renderToString()</IJS> method from{" "}
                       <IJS>react-dom/server</IJS>. A Vue application would use{" "}
                       <IJS>vue-server-renderer</IJS>.
+                    </p>
+                    <p>
+                      <IJS>render()</IJS> can return anything you want it to.
+                      This may be a string for simple rendering, or an object
+                      with multiple properties for more complex rendering (e.g.
+                      title/style properties for the <Cmp>head</Cmp> and
+                      rendered markup to insert in the <Cmp>body</Cmp>).
                     </p>
                   </Explanation>
                   <CodeBlock lang="jsx">
@@ -188,27 +198,29 @@ staticFiles({
                 <SideBySide>
                   <Explanation>
                     <p>
-                      A function that takes the markup returned by the{" "}
+                      A function that takes the value returned by the{" "}
                       <IJS>render()</IJS> function and inserts it into the full
-                      HTML for a page. The function also receives the emitted
-                      values (<IJS>response</IJS>, <IJS>navigation</IJS>, and{" "}
-                      <IJS>router</IJS>) in case you need to use those values.
+                      HTML for a page.
                     </p>
                   </Explanation>
                   <CodeBlock>
-                    {`function insert(markup, emitted) {
+                    {`function insert(markup) {
   return \`<!doctype html>
 <html>
   <head>
-    <title>\${emitted.response.title}</title>
+    <title>\${markup.title}</title>
   </head>
   <body>
-    <div id="root">\${markup}</div>
+    <div id="root">\${markup.html}</div>
     <script src="/static/js/bundle.js"></script>
   </body>
 </html>\`;
 }
 
+// where the markup comes from the render() function:
+function render() {
+  return { title: "Yo!", html: "<div>Hey!</div>" };
+}
 
 staticFiles({
   // ...

@@ -174,8 +174,8 @@ describe("staticFiles()", () => {
   });
 
   describe("insert()", () => {
-    it("calls insert() with the results of return() and the emitted response information", async () => {
-      const fixtures = join(FIXTURES_ROOT, "render");
+    it("calls insert() with the results of render()", async () => {
+      const fixtures = join(FIXTURES_ROOT, "insert");
       await remove(fixtures);
       await ensureDir(fixtures);
 
@@ -199,15 +199,6 @@ describe("staticFiles()", () => {
         outputDir: fixtures
       });
       expect(insert.mock.calls[0][0]).toBe("Home");
-      expect(insert.mock.calls[0][1]).toMatchObject({
-        response: {
-          name: "Home"
-        },
-        navigation: {
-          previous: null,
-          action: "PUSH"
-        }
-      });
     });
   });
 

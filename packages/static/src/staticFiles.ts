@@ -17,8 +17,8 @@ export interface PageDescriptor {
 export interface StaticConfiguration {
   routes: Array<RouteDescriptor>;
   pages: Array<PageDescriptor>;
-  render: (emitted: Emitted) => string;
-  insert: (markup: string, emitted: Emitted) => string;
+  render: (emitted: Emitted) => any;
+  insert: (markup: any) => string;
   outputDir: string;
   outputRedirects?: boolean;
   getRouterOptions?: GetRouterOptions;
@@ -73,7 +73,7 @@ export default async function staticFiles(
                 return;
               }
               const markup = render(emitted);
-              const html = insert(markup, emitted);
+              const html = insert(markup);
               const outputFilename = join(outputDir, pathname, "index.html");
               outputFile(outputFilename, html).then(() => {
                 resolve({ pathname, success: true });
