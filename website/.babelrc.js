@@ -3,18 +3,23 @@ const plugins = [
   "@babel/plugin-proposal-object-rest-spread"
 ];
 
-const BABEL_ENV = process.env.BABEL_ENV;
-
-if (BABEL_ENV === "serve") {
-  plugins.push("dynamic-import-node", [
-    "babel-plugin-transform-require-ignore",
-    {
-      extensions: [".scss"]
-    }
-  ]);
-} else {
-  plugins.push("@babel/plugin-syntax-dynamic-import");
+switch (process.env.BABEL_ENV) {
+  case "dev":
+    plugins.push("dynamic-import-node");
+    break;
+  case "build":
+    plugins.push("dynamic-import-node", [
+      "babel-plugin-transform-require-ignore",
+      {
+        extensions: [".scss"]
+      }
+    ]);
+    break;
+  default:
+    plugins.push("@babel/plugin-syntax-dynamic-import");
 }
+
+console.log({ plugins }, process.env.BABEL_ENV);
 
 const config = {
   presets: [
