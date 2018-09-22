@@ -10,7 +10,7 @@ export default {
   "side-effect-aria-live": "1.0.0",
   "side-effect-scroll": "1.0.0",
   "side-effect-title": "1.0.0",
-  static: "1.0.0-alpha.0",
+  static: "1.0.0-alpha.1",
   svelte: "1.0.0-beta.8",
   vue: "1.0.0-beta.23"
 };

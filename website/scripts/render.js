@@ -6,5 +6,8 @@ const renderFn = require("../src/render").default;
 
 module.exports = function render(emitted) {
   const Router = curiProvider(emitted.router);
-  return renderToString(React.createElement(Router, null, renderFn));
+  return {
+    html: renderToString(React.createElement(Router, null, renderFn)),
+    title: emitted.response.title
+  };
 };
