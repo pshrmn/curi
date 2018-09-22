@@ -19,8 +19,6 @@ switch (process.env.BABEL_ENV) {
     plugins.push("@babel/plugin-syntax-dynamic-import");
 }
 
-console.log({ plugins }, process.env.BABEL_ENV);
-
 const config = {
   presets: [
     "@babel/preset-react",
