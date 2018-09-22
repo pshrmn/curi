@@ -1,6 +1,6 @@
 {
   "name": "@curi/static",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Generate static HTML files from Curi routes",
   "main": "dist/curi-static.js",
   "types": "types/index.d.ts",
@@ -13,6 +13,7 @@
   "scripts": {
     "build": "node ./scripts/build",
     "prepare": "npm run build",
+    "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest"
   },
   "repository": {
