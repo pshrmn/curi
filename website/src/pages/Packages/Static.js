@@ -58,7 +58,7 @@ import routes from "../src/routes";
 
 staticFiles({
   routes,
-  pages: [{ name}],
+  pages: [{ name: "Home" }, { name: "About" }],
   outputDir: join(process.cwd(), "public"),
   render: () => {...},
   insert: () => {...}
