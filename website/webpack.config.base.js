@@ -9,7 +9,7 @@ const config = {
   output: {
     path: STATIC_ROOT,
     filename: "js/bundle.js",
-    chunkFilename: "js/[name]-[hash].bundle.js",
+    chunkFilename: "js/[name].bundle.js",
     publicPath: "/static/"
   },
   externals: {

@@ -1,6 +1,5 @@
 const webpack = require("webpack");
 const MiniCSS = require("mini-css-extract-plugin");
-const SWPrecache = require("sw-precache-webpack-plugin");
 const path = require("path");
 
 const configBase = require("./webpack.config.base.js");
@@ -28,16 +27,6 @@ const config = {
     ...configBase.plugins,
     new MiniCSS({
       filename: "css/[name].css"
-    }),
-    new SWPrecache({
-      cacheId: "curi-documentation-website",
-      dontCacheBustUrlsMatching: /\.\w{8}\./,
-      filepath: path.join(SITE_ROOT, "service-worker.js"),
-      minify: false,
-      navigateFallback: SITE_URL + "index.html",
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-      staticFileGlobs: [path.join(STATIC_ROOT, "img", "*.png")],
-      mergeStaticsConfig: true
     })
   ]
 };
