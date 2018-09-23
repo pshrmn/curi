@@ -166,7 +166,7 @@ pre[class*="language-"] {
   .page-links {
     position: relative;
     width: 225px;
-    min-width: 225;
+    min-width: 225px;
     margin-right: 15px;
     -webkit-box-ordinal-group: 2;
         -ms-flex-order: 1;
