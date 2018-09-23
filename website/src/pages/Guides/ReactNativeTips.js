@@ -75,7 +75,7 @@ BackHandler.addEventListener(
                 <IJS>@curi/react-native</IJS>
               </Link>{" "}
               package is quite similar to the{" "}
-              <Link to="Package" params={{ package: "react" }}>
+              <Link to="Package" params={{ package: "react-dom" }}>
                 <IJS>@curi/react-dom</IJS>
               </Link>{" "}
               package. In fact, Curi's React Native package re-exports most of

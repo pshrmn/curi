@@ -12,8 +12,8 @@ const NPM = ({ name }) => (
   <SideBySide>
     <Explanation>
       <p>
-        If you have Node and NPM installed, you can install the package through{" "}
-        <IJS>npm</IJS>.
+        The package can be installed through <IJS>npm</IJS> (you need to have
+        Node & NPM installed).
       </p>
     </Explanation>
     <CodeBlock lang="bash">{`npm install @curi/${name}`}</CodeBlock>
@@ -24,10 +24,10 @@ const Unpkg = ({ name, version, globalName }) => (
   <SideBySide>
     <Explanation>
       <p>
-        Prefer inline scripts? Every version is available through{" "}
-        <a href={`https://unpkg.com/@curi/${name}@${version}/`}>Unpkg</a>. There
-        are both full and minified versions available. You can access the
-        package's exports through <IJS>window.{globalName}</IJS>.
+        Prefer inline scripts? A full and minified script is available for every
+        version through{" "}
+        <a href={`https://unpkg.com/@curi/${name}@${version}/`}>Unpkg</a>. You
+        can access the package's exports through <IJS>window.{globalName}</IJS>.
       </p>
     </Explanation>
     <CodeBlock lang="markup">

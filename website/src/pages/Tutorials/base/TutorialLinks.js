@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import ActiveLink from "../../../components/ActiveLink";
 import TUTORIAL_API from "../../../constants/tutorials";
+import ActiveLink from "../../../components/ActiveLink";
+import CollapsibleGroup from "../../../components/CollapsibleGroup";
 
 const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
@@ -18,14 +19,9 @@ const GroupTutorials = ({ tutorials }) => (
 
 export default function TutorialLinks() {
   const groups = TUTORIAL_API.grouped();
-  return (
-    <ul>
-      {Object.keys(groups).map(name => (
-        <li className="link-group" key={name}>
-          <h3>{name}</h3>
-          <GroupTutorials tutorials={groups[name]} />
-        </li>
-      ))}
-    </ul>
-  );
+  return Object.keys(groups).map(title => (
+    <CollapsibleGroup key={title} title={title}>
+      <GroupTutorials tutorials={groups[title]} />
+    </CollapsibleGroup>
+  ));
 }

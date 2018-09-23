@@ -410,7 +410,7 @@ router.once(setup);`}
                 <p>
                   The Curi rendering packages (<Link
                     to="Package"
-                    params={{ package: "react" }}
+                    params={{ package: "react-dom" }}
                   >
                     <IJS>@curi/react-dom</IJS>
                   </Link>,{" "}

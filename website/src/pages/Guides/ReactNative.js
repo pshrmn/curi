@@ -265,7 +265,7 @@ const NavLinks = () => (
         <Explanation>
           <p>
             Please check out the full{" "}
-            <Link to="Package" params={{ package: "react" }} hash="API">
+            <Link to="Package" params={{ package: "react-dom" }} hash="API">
               <IJS>@curi/react-dom</IJS>
             </Link>{" "}
             API documentation to see every component that the package provides.

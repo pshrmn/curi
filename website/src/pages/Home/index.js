@@ -19,36 +19,34 @@ export default function HomePage() {
 
       <SideBySide>
         <Explanation>
-          <p>Curi cares about routing, not how you render.</p>
+          <p>Curi cares about routing, you choose how you render.</p>
           <p>
-            Rendering depends on the UI library that you are using. Currently,
-            there are packages to support using Curi with{" "}
-            <Link to="Package" params={{ package: "react" }}>
-              React
-            </Link>{" "}
-            (DOM and{" "}
+            Currently, there are packages to support using Curi with{" "}
+            <Link to="Package" params={{ package: "react-dom" }}>
+              React DOM
+            </Link>,{" "}
             <Link to="Package" params={{ package: "react-native" }}>
               React Native
-            </Link>),{" "}
+            </Link>,{" "}
             <Link to="Package" params={{ package: "vue" }}>
               Vue
             </Link>, and{" "}
             <Link to="Package" params={{ package: "svelte" }}>
               Svelte
-            </Link>, but with a little elbow grease Curi should work with any
+            </Link>. With a little elbow grease Curi should work with any
             rendering library.
           </p>
           <p>
-            Curious to see Curi in action? The{" "}
-            <Link to="Examples">examples</Link> section has a variety of demos
-            showing off what you can do with Curi.
-          </p>
-          <p>
-            Ready to learn more? Check out the{" "}
+            Ready to learn more? Get started with the{" "}
             <Link to="Guide" params={{ slug: "creating-a-router" }}>
               creating a router
             </Link>{" "}
             guide.
+          </p>
+          <p>
+            Want to see Curi in action? The <Link to="Examples">examples</Link>{" "}
+            section has a variety of demos showing off what you can do with
+            Curi.
           </p>
         </Explanation>
         <CodeBlock>

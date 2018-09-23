@@ -2,8 +2,9 @@ import React from "react";
 
 import EXAMPLE_API from "../../../constants/examples";
 import ActiveLink from "../../../components/ActiveLink";
+import CollapsibleGroup from "../../../components/CollapsibleGroup";
 
-const Category = ({ name, examples }) => {
+const Category = ({ examples }) => {
   return (
     <ul className="link-list">
       {examples.map(e => (
@@ -23,14 +24,9 @@ const Category = ({ name, examples }) => {
 export default function ExampleLinks() {
   const examples = EXAMPLE_API.all();
   const categories = Object.keys(examples);
-  return (
-    <div>
-      {categories.map(key => (
-        <div key={key}>
-          <h3>{key}</h3>
-          <Category name={key} examples={examples[key]} />
-        </div>
-      ))}
-    </div>
-  );
+  return categories.map(title => (
+    <CollapsibleGroup key={title} title={title}>
+      <Category examples={examples[title]} />
+    </CollapsibleGroup>
+  ));
 }

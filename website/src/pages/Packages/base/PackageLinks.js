@@ -2,6 +2,7 @@ import React from "react";
 
 import PACKAGE_API from "../../../constants/packages";
 import ActiveLink from "../../../components/ActiveLink";
+import CollapsibleGroup from "../../../components/CollapsibleGroup";
 
 const GroupPackages = ({ packages }) => (
   <ul className="link-list">
@@ -17,14 +18,9 @@ const GroupPackages = ({ packages }) => (
 
 export default function PackageLinks() {
   const groups = PACKAGE_API.grouped();
-  return (
-    <ul>
-      {Object.keys(groups).map(name => (
-        <li className="link-group" key={name}>
-          <h3>{name}</h3>
-          <GroupPackages packages={groups[name]} />
-        </li>
-      ))}
-    </ul>
-  );
+  return Object.keys(groups).map(title => (
+    <CollapsibleGroup key={title} title={title}>
+      <GroupPackages packages={groups[title]} />
+    </CollapsibleGroup>
+  ));
 }

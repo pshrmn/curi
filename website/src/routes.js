@@ -1,6 +1,7 @@
 // components that are not code split
 import Home from "./route-components/Home";
 import PackageList from "./route-components/PackageList";
+import GuideList from "./route-components/GuideList";
 import ExampleList from "./route-components/ExampleList";
 import TutorialBase from "./route-components/TutorialBase";
 import NotFound from "./route-components/NotFound";
@@ -60,12 +61,7 @@ export default [
     path: "guides",
     response: () => {
       return {
-        redirectTo: {
-          name: "Guide",
-          params: {
-            slug: "creating-a-router"
-          }
-        },
+        body: GuideList,
         title: "Guides"
       };
     },

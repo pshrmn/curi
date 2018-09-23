@@ -2,6 +2,7 @@ import React from "react";
 
 import GUIDE_API from "../../../constants/guides";
 import ActiveLink from "../../../components/ActiveLink";
+import CollapsibleGroup from "../../../components/CollapsibleGroup";
 
 const GroupGuides = ({ guides }) => (
   <ul className="link-list">
@@ -17,14 +18,9 @@ const GroupGuides = ({ guides }) => (
 
 export default function GuideLinks() {
   const groups = GUIDE_API.grouped();
-  return (
-    <ul>
-      {Object.keys(groups).map(name => (
-        <li className="link-group" key={name}>
-          <h3>{name}</h3>
-          <GroupGuides guides={groups[name]} />
-        </li>
-      ))}
-    </ul>
-  );
+  return Object.keys(groups).map(title => (
+    <CollapsibleGroup key={title} title={title}>
+      <GroupGuides guides={groups[title]} />
+    </CollapsibleGroup>
+  ));
 }

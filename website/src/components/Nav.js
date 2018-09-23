@@ -14,9 +14,7 @@ export default function Nav() {
           <ActiveLink to="Packages">Packages</ActiveLink>
         </li>
         <li>
-          <ActiveLink to="Guide" params={{ slug: "creating-a-router" }}>
-            Guides
-          </ActiveLink>
+          <ActiveLink to="Guides">Guides</ActiveLink>
         </li>
         <li>
           <ActiveLink to="Tutorials">Tutorials</ActiveLink>
