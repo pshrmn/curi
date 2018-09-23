@@ -2,5 +2,5 @@ package.json
 package-lock.json
 *.d.ts
 README.md
-website/src/client/constants/versions.js
+website/src/constants/versions.js
 CHANGELOG.md
