@@ -1,14 +1,13 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
-import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
-import { InlineJS as IJS } from "../../../components/PrismBlocks";
-import { Note } from "../../../components/Messages";
-import { Section } from "../../../components/Sections";
 
-export default function AccessibilityExample({ name }) {
+import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
+import { InlineJS as IJS } from "../../../components/highlight/Inline";
+import { Note } from "../../../components/Messages";
+import { Section } from "../../../components/layout/Sections";
+
+export default function AccessibilityExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           This example demonstrates how to increase the accessibility of an
@@ -29,6 +28,6 @@ export default function AccessibilityExample({ name }) {
           </a>.
         </p>
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

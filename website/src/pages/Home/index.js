@@ -1,20 +1,15 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import Content from "../../components/Content";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../components/PrismBlocks";
-import {
-  SideBySide,
-  Explanation,
-  CodeBlock
-} from "../../components/SideBySide";
+} from "../../components/highlight/Inline";
+import { Explanation, CodeBlock } from "../../components/layout/Groups";
 
 export default function HomePage() {
   return (
-    <Content>
+    <React.Fragment>
       <h1>Curi is a JavaScript router for single-page applications</h1>
       <CodeBlock>
         {`import { curi } from '@curi/router';
@@ -30,39 +25,37 @@ const routes = [
 
 const router = curi(history, routes);`}
       </CodeBlock>
-      <SideBySide>
-        <Explanation>
-          <p>
-            Curi cares about routing, you choose how you render. Curi currently
-            supports{" "}
-            <Link to="Package" params={{ package: "react-dom" }}>
-              React DOM
-            </Link>,{" "}
-            <Link to="Package" params={{ package: "react-native" }}>
-              React Native
-            </Link>,{" "}
-            <Link to="Package" params={{ package: "vue" }}>
-              Vue
-            </Link>, and{" "}
-            <Link to="Package" params={{ package: "svelte" }}>
-              Svelte
-            </Link>. With a little elbow grease, Curi should work with any UI
-            library.
-          </p>
-          <p>
-            Ready to learn more? Get started with the{" "}
-            <Link to="Guide" params={{ slug: "creating-a-router" }}>
-              creating a router
-            </Link>{" "}
-            guide.
-          </p>
-          <p>
-            Want to see Curi in action? The <Link to="Examples">examples</Link>{" "}
-            section has a variety of demos showing off what you can do with
-            Curi.
-          </p>
-        </Explanation>
-      </SideBySide>
-    </Content>
+
+      <Explanation>
+        <p>
+          Curi cares about routing, you choose how you render. Curi currently
+          supports{" "}
+          <Link to="Package" params={{ package: "react-dom" }}>
+            React DOM
+          </Link>,{" "}
+          <Link to="Package" params={{ package: "react-native" }}>
+            React Native
+          </Link>,{" "}
+          <Link to="Package" params={{ package: "vue" }}>
+            Vue
+          </Link>, and{" "}
+          <Link to="Package" params={{ package: "svelte" }}>
+            Svelte
+          </Link>. With a little elbow grease, Curi should work with any UI
+          library.
+        </p>
+        <p>
+          Ready to learn more? Get started with the{" "}
+          <Link to="Guide" params={{ slug: "creating-a-router" }}>
+            creating a router
+          </Link>{" "}
+          guide.
+        </p>
+        <p>
+          Want to see Curi in action? The <Link to="Examples">examples</Link>{" "}
+          section has a variety of demos showing off what you can do with Curi.
+        </p>
+      </Explanation>
+    </React.Fragment>
   );
 }

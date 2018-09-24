@@ -1,17 +1,16 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import {
-  PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+} from "../../../components/highlight/Inline";
+import { CodeBlock } from "../../../components/layout/Groups";
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function TransitionsExample({ name }) {
+export default function TransitionsExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           This example uses <IJS>react-transition-group</IJS> (v1) to animate
@@ -27,7 +26,7 @@ export default function TransitionsExample({ name }) {
           entering/leaving/staying.
         </p>
 
-        <PrismBlock lang="jsx">
+        <CodeBlock lang="jsx">
           {`function render({ response }) {
     return (
       <CSSTransitionGroup>
@@ -35,7 +34,7 @@ export default function TransitionsExample({ name }) {
       </CSSTransitionGroup>
     );
   }`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
 
       <Section title="Live Demo" id="demo">
@@ -49,6 +48,6 @@ export default function TransitionsExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

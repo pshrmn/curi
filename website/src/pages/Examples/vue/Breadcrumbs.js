@@ -1,13 +1,12 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
-import { Section } from "../../../components/Sections";
-import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
-import { InlineJS as IJS } from "../../../components/PrismBlocks";
 
-export default function BreadcrumbsExample({ name }) {
+import { Section } from "../../../components/layout/Sections";
+import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
+import { InlineJS as IJS } from "../../../components/highlight/Inline";
+
+export default function BreadcrumbsExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           You can easily generate breadcrumb navigation links for the current
@@ -29,6 +28,6 @@ export default function BreadcrumbsExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

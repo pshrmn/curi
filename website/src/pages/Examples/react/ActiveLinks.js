@@ -1,16 +1,15 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+} from "../../../components/highlight/Inline";
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function ActiveLinksExample({ name }) {
+export default function ActiveLinksExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           You may want to style a link differently when it is "active" (based on
@@ -43,6 +42,6 @@ export default function ActiveLinksExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

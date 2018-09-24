@@ -1,14 +1,14 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
-import { Section } from "../../../components/Sections";
+
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
-import { InlineJS as IJS, PrismBlock } from "../../../components/PrismBlocks";
+import { InlineJS as IJS } from "../../../components/highlight/Inline";
+import { CodeBlock } from "../../../components/layout/Groups";
 import { Note } from "../../../components/Messages";
 
-export default function MultiBodyExample({ name }) {
+export default function MultiBodyExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           The <IJS>body</IJS> property of a response doesn't have to be a single
@@ -19,7 +19,7 @@ export default function MultiBodyExample({ name }) {
           share the same root component, but may have different nested
           components.
         </p>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`const routes = [
     {
       ...,
@@ -33,14 +33,14 @@ export default function MultiBodyExample({ name }) {
       }
     }
   ];`}
-        </PrismBlock>
+        </CodeBlock>
         <Note>
           One thing to remember when attaching multiple components to a route is
           that all of your routes should have the same root structure.
           Otherwise, when you render you will have to adapt your code to deal
           with different <IJS>response.body</IJS> layouts.
         </Note>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`// be consistent, don't use
   // different body types
   const routes = [
@@ -61,7 +61,7 @@ export default function MultiBodyExample({ name }) {
       }
     }
   ];`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
 
       <Section title="Live Demo" id="demo">
@@ -75,6 +75,6 @@ export default function MultiBodyExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

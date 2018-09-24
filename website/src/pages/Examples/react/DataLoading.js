@@ -1,17 +1,11 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
-import {
-  PrismBlock,
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function DataLoadingExample({ name }) {
+export default function DataLoadingExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>TBD</p>
       </Section>
@@ -27,6 +21,6 @@ export default function DataLoadingExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

@@ -1,10 +1,10 @@
 // components that are not code split
-import Home from "./route-components/Home";
-import PackageList from "./route-components/PackageList";
-import GuideList from "./route-components/GuideList";
-import ExampleList from "./route-components/ExampleList";
-import TutorialBase from "./route-components/TutorialBase";
-import NotFound from "./route-components/NotFound";
+import Home from "./components/routes/Home";
+import PackageList from "./components/routes/PackageList";
+import GuideList from "./components/routes/GuideList";
+import ExampleList from "./components/routes/ExampleList";
+import TutorialBase from "./components/routes/TutorialBase";
+import NotFound from "./components/routes/NotFound";
 
 import TUTORIAL_API from "./constants/tutorials";
 import GUIDE_API from "./constants/guides";
@@ -26,7 +26,7 @@ export default [
   },
   {
     name: "Tutorials",
-    path: "tutorial",
+    path: "tutorial/",
     response: () => {
       return {
         body: TutorialBase,
@@ -36,10 +36,10 @@ export default [
     children: [
       {
         name: "Tutorial",
-        path: ":slug",
+        path: ":slug/",
         resolve: {
           body: () =>
-            import(/* webpackChunkName: 'tutorial' */ "./route-components/Tutorial").then(
+            import(/* webpackChunkName: 'tutorial' */ "./components/routes/Tutorial").then(
               module => module.default,
               catchImportError("tutorial")
             )
@@ -58,7 +58,7 @@ export default [
   },
   {
     name: "Guides",
-    path: "guides",
+    path: "guides/",
     response: () => {
       return {
         body: GuideList,
@@ -71,7 +71,7 @@ export default [
         path: ":slug/",
         resolve: {
           body: () =>
-            import(/* webpackChunkName: 'guide' */ "./route-components/Guide").then(
+            import(/* webpackChunkName: 'guide' */ "./components/routes/Guide").then(
               module => module.default,
               catchImportError("guide")
             )
@@ -89,7 +89,7 @@ export default [
   },
   {
     name: "Packages",
-    path: "packages",
+    path: "packages/",
     response: () => {
       return {
         body: PackageList,
@@ -102,7 +102,7 @@ export default [
         path: "@curi/:package/",
         resolve: {
           body: () =>
-            import(/* webpackChunkName: 'package' */ "./route-components/Package").then(
+            import(/* webpackChunkName: 'package' */ "./components/routes/Package").then(
               module => module.default,
               catchImportError("package")
             )
@@ -120,7 +120,7 @@ export default [
   },
   {
     name: "Examples",
-    path: "examples",
+    path: "examples/",
     response: () => {
       return {
         body: ExampleList,
@@ -133,7 +133,7 @@ export default [
         path: ":category/:slug/",
         resolve: {
           body: () =>
-            import(/* webpackChunkName: 'example' */ "./route-components/Example").then(
+            import(/* webpackChunkName: 'example' */ "./components/routes/Example").then(
               module => module.default,
               catchImportError("example")
             )

@@ -1,13 +1,12 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
-import { InlineJS as IJS } from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+
+import { InlineJS as IJS } from "../../../components/highlight/Inline";
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function ModalExample({ name }) {
+export default function ModalExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           This example mimics the way that Pinterest works. Whether or not this
@@ -56,6 +55,6 @@ export default function ModalExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

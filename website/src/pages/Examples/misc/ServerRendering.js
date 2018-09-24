@@ -1,12 +1,12 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
-import { Section } from "../../../components/Sections";
-import { InlineJS as IJS, PrismBlock } from "../../../components/PrismBlocks";
 
-export default function ServerRenderingExample({ name }) {
+import { Section } from "../../../components/layout/Sections";
+import { InlineJS as IJS } from "../../../components/highlight/Inline";
+import { CodeBlock } from "../../../components/layout/Groups";
+
+export default function ServerRenderingExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           Server rendering with Curi is pretty similar to client side rendering.
@@ -14,7 +14,7 @@ export default function ServerRenderingExample({ name }) {
           all (non-static file) requests.
         </p>
 
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`// express
           
   function catchAll(req, res) {
@@ -39,7 +39,7 @@ export default function ServerRenderingExample({ name }) {
   }
 
   app.get("*", catchAll);`}
-        </PrismBlock>
+        </CodeBlock>
 
         <p>
           The above example is very basic. Some other things that you might need
@@ -63,7 +63,7 @@ export default function ServerRenderingExample({ name }) {
             ensure that <IJS>dynamic-import-node</IJS> isn't being run when
             building your client side bundle. The solution used in this
             experiment is to use the <IJS>env</IJS> property.
-            <PrismBlock lang="javascript">
+            <CodeBlock lang="javascript">
               {`{
     "presets": [ "es2015", "react" ],
     "plugins": [
@@ -75,11 +75,11 @@ export default function ServerRenderingExample({ name }) {
       }
     }
   }`}
-            </PrismBlock>
+            </CodeBlock>
             Then, when starting the server, make sure that BABEL_ENV=server.
-            <PrismBlock lang="markup">
+            <CodeBlock lang="markup">
               {`cross-env BABEL_ENV=server npm start`}
-            </PrismBlock>
+            </CodeBlock>
           </li>
         </ul>
       </Section>
@@ -91,6 +91,6 @@ export default function ServerRenderingExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

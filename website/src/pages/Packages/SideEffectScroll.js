@@ -1,26 +1,18 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import BasePackage from "./base/BasePackage";
-import APIBlock from "./base/APIBlock";
-import { InlineJS as IJS } from "../../components/PrismBlocks";
-import { Section } from "../../components/Sections";
-import {
-  SideBySide,
-  CodeBlock,
-  Explanation
-} from "../../components/SideBySide";
+import APIBlock from "../../components/package/APIBlock";
+import About from "../../components/package/About";
+import { InlineJS as IJS } from "../../components/highlight/Inline";
+import { Section } from "../../components/layout/Sections";
+import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 export default class SideEffectScrollPkg extends React.PureComponent {
   render() {
-    const { name, version, globalName } = this.props;
     return (
-      <BasePackage
-        name={name}
-        version={version}
-        globalName={globalName}
-        about={
-          <div>
+      <React.Fragment>
+        <About>
+          <Explanation>
             <p>
               When Curi is running in a browser, it relies on the{" "}
               <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">
@@ -36,24 +28,21 @@ export default class SideEffectScrollPkg extends React.PureComponent {
               forward buttons, will rely on the browser to correctly restore the
               scroll position.
             </p>
-          </div>
-        }
-      >
+          </Explanation>
+        </About>
         <APIBlock>
           <Section tag="h3" title="scrollEffect" id="scrollEffect">
-            <SideBySide>
-              <CodeBlock>
-                {`import { curi } from '@curi/router';
+            <CodeBlock>
+              {`import { curi } from '@curi/router';
 import scroll from '@curi/side-effect-scroll';
 
 const router = curi(history, routes, {
   sideEffects: [scroll()]
 });`}
-              </CodeBlock>
-            </SideBySide>
+            </CodeBlock>
           </Section>
         </APIBlock>
-      </BasePackage>
+      </React.Fragment>
     );
   }
 }

@@ -1,13 +1,13 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
-import { InlineJS as IJS, PrismBlock } from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+
+import { InlineJS as IJS } from "../../../components/highlight/Inline";
+import { CodeBlock } from "../../../components/layout/Groups";
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function SideEffectExample({ name }) {
+export default function SideEffectExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           Once a response has completed (the route's <IJS>resolve</IJS>{" "}
@@ -33,14 +33,14 @@ export default function SideEffectExample({ name }) {
           options object.
         </p>
 
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`import { curi } from '@curi/router';
   import mySideEffect from './mySideEffect';
 
   const router = curi(history, routes, {
     sideEffects: [mySideEffect]
   });`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
 
       <Section title="Live Demo" id="demo">
@@ -54,6 +54,6 @@ export default function SideEffectExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

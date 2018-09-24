@@ -1,17 +1,16 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
+} from "../../../components/highlight/Inline";
 import { Note } from "../../../components/Messages";
-import { Section } from "../../../components/Sections";
+import { Section } from "../../../components/layout/Sections";
 
-export default function BasicExample({ name }) {
+export default function BasicExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           While Vue does have an official router, this project shows how you
@@ -34,6 +33,6 @@ export default function BasicExample({ name }) {
           </a>.
         </p>
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

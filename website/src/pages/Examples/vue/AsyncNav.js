@@ -1,31 +1,30 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import {
-  PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+} from "../../../components/highlight/Inline";
+import { CodeBlock } from "../../../components/layout/Groups";
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function AsyncNavExample({ name }) {
+export default function AsyncNavExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           Use the <Cmp>curi-link</Cmp>'s <IJS>slot</IJS> as scoped-slot so you
           can know whether or not the link is currently navigating.
         </p>
 
-        <PrismBlock lang="jsx">
+        <CodeBlock lang="jsx">
           {`<curi-link to="Movie" :params="{ id: 'some_movie' }">
     <template slot-scope="{ navigating }">
       Some Movie
       <Spinner v-if="navigating" />
     </template>
   </curi-link>`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
 
       <Section title="Live Demo" id="demo">
@@ -39,6 +38,6 @@ export default function AsyncNavExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

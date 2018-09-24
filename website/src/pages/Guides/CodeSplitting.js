@@ -1,49 +1,40 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import BaseGuide from "./base/BaseGuide";
-import { InlineJS as IJS, PrismBlock } from "../../components/PrismBlocks";
+import { InlineJS as IJS } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/Sections";
-import {
-  SideBySide,
-  CodeBlock,
-  Explanation
-} from "../../components/SideBySide";
+import { Section, Subsection } from "../../components/layout/Sections";
+import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
-export default function CodeSplittingGuide({ name }) {
+export default function CodeSplittingGuide() {
   return (
-    <BaseGuide>
-      <h1>{name}</h1>
-      <SideBySide>
-        <Explanation>
-          <p>
-            If you are bundling an application with a lot of routes, users of
-            your application may be downloading a lot of unnecessary content for
-            the initial page render. Using code splitting, you can reduce the
-            initial download size for your application by splitting code that is
-            conditionally loaded into a separate bundle that is only downloaded
-            when it is needed.
-          </p>
+    <React.Fragment>
+      <Explanation>
+        <p>
+          If you are bundling an application with a lot of routes, users of your
+          application may be downloading a lot of unnecessary content for the
+          initial page render. Using code splitting, you can reduce the initial
+          download size for your application by splitting code that is
+          conditionally loaded into a separate bundle that is only downloaded
+          when it is needed.
+        </p>
 
-          <Note>
-            This guide assumes that you are using Webpack 2+ to bundle your
-            application.
-          </Note>
-        </Explanation>
-      </SideBySide>
+        <Note>
+          This guide assumes that you are using Webpack 2+ to bundle your
+          application.
+        </Note>
+      </Explanation>
 
       <Section title="An app without code splitting" id="no-split">
-        <SideBySide>
-          <Explanation>
-            <p>
-              Let's start out by describing our application's routes without
-              code splitting. We will import each route's component from the
-              files where they are defined.
-            </p>
-          </Explanation>
-          <CodeBlock>
-            {`import Home from './components/Home';
+        <Explanation>
+          <p>
+            Let's start out by describing our application's routes without code
+            splitting. We will import each route's component from the files
+            where they are defined.
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`import Home from './components/Home';
 import Contact from './components/Contact';
 import ContactMethod from './components/ContactMethod';
 
@@ -78,50 +69,45 @@ const routes = [
     ]
   }
 ];`}
-          </CodeBlock>
-        </SideBySide>
+        </CodeBlock>
       </Section>
 
       <Section title="import() in resolve" id="import">
-        <SideBySide>
-          <Explanation>
-            <p>
-              Instead of having static imports, we will use the{" "}
-              <IJS>import()</IJS> function to import our modules. We will import
-              our components by adding a property to a route's{" "}
-              <IJS>resolve</IJS> object. The property name for the function is
-              how we will access the resolved data in the route's{" "}
-              <IJS>response()</IJS> function.
-            </p>
-            <p>
-              <IJS>resolve</IJS> functions are called every time a route
-              matches. However, <IJS>import()</IJS> calls automatically re-use
-              the results of a previous call, so we do not have to worry about
-              extra network requests.
-            </p>
-            <p>
-              Here we will name the <IJS>resolve</IJS> function for importing a
-              component <IJS>body</IJS>, since it will be set as the response's{" "}
-              <IJS>body</IJS> property.
-            </p>
-            <p>
-              <IJS>resolve.body()</IJS> should return a Promise;{" "}
-              <IJS>import()</IJS>, conveniently, returns a Promise. In our{" "}
-              <IJS>response()</IJS> function, instead of referencing values
-              imported at the top of the file, we can reference the result of
-              the <IJS>resolve.body()</IJS> function using{" "}
-              <IJS>resolved.body</IJS>.
-            </p>
-            <p>
-              <IJS>import()</IJS> resolves with a module object. If the
-              component is a default export (<IJS>
-                export default MyComponent
-              </IJS>), we can access the component through the imported module
-              object's <IJS>default</IJS> property.
-            </p>
-          </Explanation>
-          <CodeBlock>
-            {`const routes = [
+        <Explanation>
+          <p>
+            Instead of having static imports, we will use the{" "}
+            <IJS>import()</IJS> function to import our modules. We will import
+            our components by adding a property to a route's <IJS>resolve</IJS>{" "}
+            object. The property name for the function is how we will access the
+            resolved data in the route's <IJS>response()</IJS> function.
+          </p>
+          <p>
+            <IJS>resolve</IJS> functions are called every time a route matches.
+            However, <IJS>import()</IJS> calls automatically re-use the results
+            of a previous call, so we do not have to worry about extra network
+            requests.
+          </p>
+          <p>
+            Here we will name the <IJS>resolve</IJS> function for importing a
+            component <IJS>body</IJS>, since it will be set as the response's{" "}
+            <IJS>body</IJS> property.
+          </p>
+          <p>
+            <IJS>resolve.body()</IJS> should return a Promise;{" "}
+            <IJS>import()</IJS>, conveniently, returns a Promise. In our{" "}
+            <IJS>response()</IJS> function, instead of referencing values
+            imported at the top of the file, we can reference the result of the{" "}
+            <IJS>resolve.body()</IJS> function using <IJS>resolved.body</IJS>.
+          </p>
+          <p>
+            <IJS>import()</IJS> resolves with a module object. If the component
+            is a default export (<IJS>export default MyComponent</IJS>), we can
+            access the component through the imported module object's{" "}
+            <IJS>default</IJS> property.
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`const routes = [
   {
     name: 'Home',
     path: '',
@@ -170,8 +156,7 @@ const routes = [
     ]
   }
 ];`}
-          </CodeBlock>
-        </SideBySide>
+        </CodeBlock>
       </Section>
 
       <Section title="Other Approaches" id="other">
@@ -191,6 +176,6 @@ const routes = [
           this.
         </p>
       </Section>
-    </BaseGuide>
+    </React.Fragment>
   );
 }

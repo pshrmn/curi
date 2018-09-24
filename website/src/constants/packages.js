@@ -5,73 +5,85 @@ const packages = [
     name: "router",
     version: versions["router"],
     globalName: "Curi",
-    type: "router"
+    type: "router",
+    script: true
   },
   {
     name: "react-dom",
     version: versions["react-dom"],
     globalName: "CuriReactDOM",
-    type: "render"
+    type: "render",
+    script: true
   },
   {
     name: "react-native",
     version: versions["react-native"],
     globalName: "CuriReactNative",
-    type: "render"
+    type: "render",
+    script: false
   },
   {
     name: "svelte",
     version: versions["svelte"],
     globalName: "CuriSvelte",
-    type: "render"
+    type: "render",
+    script: false
   },
   {
     name: "vue",
     version: versions["vue"],
     globalName: "CuriVue",
-    type: "render"
+    type: "render",
+    script: true
   },
   {
     name: "route-active",
     version: versions["route-active"],
     globalName: "CuriRouteActive",
-    type: "route interactions"
+    type: "route interactions",
+    script: true
   },
   {
     name: "route-ancestors",
     version: versions["route-ancestors"],
     globalName: "CuriRouteAncestors",
-    type: "route interactions"
+    type: "route interactions",
+    script: true
   },
   {
     name: "route-prefetch",
     version: versions["route-prefetch"],
     globalName: "CuriRoutePrefetch",
-    type: "route interactions"
+    type: "route interactions",
+    script: true
   },
   {
     name: "side-effect-aria-live",
     version: versions["side-effect-aria-live"],
     globalName: "CuriSideEffectAriaLive",
-    type: "side effects"
+    type: "side effects",
+    script: true
   },
   {
     name: "side-effect-title",
     version: versions["side-effect-title"],
     globalName: "CuriSideEffectTitle",
-    type: "side effects"
+    type: "side effects",
+    script: true
   },
   {
     name: "side-effect-scroll",
     version: versions["side-effect-scroll"],
     globalName: "CuriSideEffectScroll",
-    type: "side effects"
+    type: "side effects",
+    script: true
   },
   {
     name: "static",
     version: versions["static"],
     globalName: "CuriStatic",
-    type: "dev"
+    type: "dev",
+    script: false
   }
 ];
 

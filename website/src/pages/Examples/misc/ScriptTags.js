@@ -1,15 +1,14 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+} from "../../../components/highlight/Inline";
+import { Section } from "../../../components/layout/Sections";
 
-export default function ScriptTagExample({ name }) {
+export default function ScriptTagExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           This example uses unbundled JavaScript and script tags to serve its
@@ -34,6 +33,6 @@ export default function ScriptTagExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

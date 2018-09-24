@@ -10,8 +10,9 @@
 @media only screen and (min-width: $mediumScreen) {
   .content {
     order: 2;
-    flex-grow: 1;
+    flex: 0 1 800px;
     position: relative;
-    padding: 0 50px;
+    padding: 0;
+    overflow: hidden;
   }
 }

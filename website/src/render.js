@@ -1,6 +1,6 @@
 import React from "react";
 import { Focus } from "@curi/react-dom";
-import Header from "./components/Header";
+import Header from "./components/layout/Header";
 
 import "./scss/index.scss";
 import "./scss/main.scss";

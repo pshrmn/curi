@@ -1,17 +1,18 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
+} from "../../../components/highlight/Inline";
 import { Note } from "../../../components/Messages";
-import { Section } from "../../../components/Sections";
+import { Section } from "../../../components/layout/Sections";
 
-export default function TwitchExample({ name }) {
+export const slug = "twitch";
+
+export default function TwitchExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           A clone of <a href="https://twitch.tv">Twitch</a> without all of the
@@ -30,6 +31,6 @@ export default function TwitchExample({ name }) {
           GitHub <a href="https://github.com/pshrmn/twitch-curi-demo">here</a>.
         </p>
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

@@ -1,17 +1,16 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import {
-  PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+} from "../../../components/highlight/Inline";
+import { CodeBlock } from "../../../components/layout/Groups";
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function TransitionsExample({ name }) {
+export default function TransitionsExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           You can easily animate transitions between locations with Vue using
@@ -23,14 +22,14 @@ export default function TransitionsExample({ name }) {
           params), you will need to attach a <IJS>key</IJS> to the{" "}
           <Cmp>component</Cmp>.
         </p>
-        <PrismBlock lang="html">
+        <CodeBlock lang="html">
           {`<transition>
     <component
       :is="$curi.response.body"
       :key="$curi.response.location.key"
     />
   </transition>`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
 
       <Section title="Live Demo" id="demo">
@@ -44,6 +43,6 @@ export default function TransitionsExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

@@ -1,17 +1,16 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import {
-  PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+} from "../../../components/highlight/Inline";
+import { CodeBlock } from "../../../components/layout/Groups";
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function AuthenticationExample({ name }) {
+export default function AuthenticationExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           Sometimes you will want to redirect based on the results of your{" "}
@@ -24,7 +23,7 @@ export default function AuthenticationExample({ name }) {
           the response by calling its redirect method.
         </p>
 
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`const routes = [
     // ...,
     {
@@ -45,7 +44,7 @@ export default function AuthenticationExample({ name }) {
       ...
     }
   ];`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
 
       <Section title="Live Demo" id="demo">
@@ -59,6 +58,6 @@ export default function AuthenticationExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

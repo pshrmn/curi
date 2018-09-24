@@ -1,51 +1,43 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import BasePackage from "./base/BasePackage";
-import APIBlock from "./base/APIBlock";
-import { InlineJS as IJS } from "../../components/PrismBlocks";
-import { Section } from "../../components/Sections";
-import {
-  SideBySide,
-  CodeBlock,
-  Explanation
-} from "../../components/SideBySide";
+import APIBlock from "../../components/package/APIBlock";
+import About from "../../components/package/About";
+import { InlineJS as IJS } from "../../components/highlight/Inline";
+import { Section } from "../../components/layout/Sections";
+import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 export default class SideEffectTitlePkg extends React.PureComponent {
   render() {
-    const { name, version, globalName } = this.props;
     return (
-      <BasePackage
-        name={name}
-        version={version}
-        globalName={globalName}
-        about={
-          <p>
-            This package adds a side effect to the router that updates the
-            page's title as a result of navigation.
-          </p>
-        }
-      >
+      <React.Fragment>
+        <About>
+          <Explanation>
+            <p>
+              This package adds a side effect to the router that updates the
+              page's title as a result of navigation.
+            </p>
+          </Explanation>
+        </About>
         <APIBlock>
           <Section tag="h3" title="titleEffect" id="titleEffect">
-            <SideBySide>
-              <Explanation>
-                <p>
-                  <IJS>@curi/side-effect-title</IJS> exports a function for
-                  creating a side effect that will update the page's title
-                  whenever a new response is created.
-                </p>
-                <p>
-                  When creating the title side effect, you pass it a function.
-                  That function will be passed the object emitted by the router
-                  (with <IJS>response</IJS>, <IJS>navigation</IJS>, and{" "}
-                  <IJS>router</IJS> properties). The function returns a string,
-                  which the side effect will set as the document's{" "}
-                  <IJS>title</IJS>.
-                </p>
-              </Explanation>
-              <CodeBlock>
-                {`import { curi } from '@curi/router';
+            <Explanation>
+              <p>
+                <IJS>@curi/side-effect-title</IJS> exports a function for
+                creating a side effect that will update the page's title
+                whenever a new response is created.
+              </p>
+              <p>
+                When creating the title side effect, you pass it a function.
+                That function will be passed the object emitted by the router
+                (with <IJS>response</IJS>, <IJS>navigation</IJS>, and{" "}
+                <IJS>router</IJS> properties). The function returns a string,
+                which the side effect will set as the document's{" "}
+                <IJS>title</IJS>.
+              </p>
+            </Explanation>
+            <CodeBlock>
+              {`import { curi } from '@curi/router';
 import titleEffect from '@curi/side-effect-title';
 
 const setTitle = titleEffect(({ response }) => {
@@ -55,18 +47,17 @@ const setTitle = titleEffect(({ response }) => {
 const router = curi(history, routes, {
   sideEffects: [setTitle]
 });`}
-              </CodeBlock>
-            </SideBySide>
-            <SideBySide>
-              <Explanation>
-                <p>
-                  While you can use any properties of the <IJS>response</IJS> to
-                  generate the string, the <IJS>response.title</IJS> property is
-                  intended to be used with this side effect.
-                </p>
-              </Explanation>
-              <CodeBlock>
-                {`{
+            </CodeBlock>
+
+            <Explanation>
+              <p>
+                While you can use any properties of the <IJS>response</IJS> to
+                generate the string, the <IJS>response.title</IJS> property is
+                intended to be used with this side effect.
+              </p>
+            </Explanation>
+            <CodeBlock>
+              {`{
   name: "About",
   path: "about",
   response() {
@@ -77,11 +68,10 @@ const router = curi(history, routes, {
   }              
 }
 // when the About route matches, document.title = "About | My Site"`}
-              </CodeBlock>
-            </SideBySide>
+            </CodeBlock>
           </Section>
         </APIBlock>
-      </BasePackage>
+      </React.Fragment>
     );
   }
 }

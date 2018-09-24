@@ -1,20 +1,19 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import BaseTutorial from "./base/BaseTutorial";
-import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
+import Outline from "../../components/tutorial/Outline";
 import {
   InlineJS as IJS,
-  InlineComponent as Cmp,
-  PrismBlock
-} from "../../components/PrismBlocks";
+  InlineComponent as Cmp
+} from "../../components/highlight/Inline";
+import { CodeBlock } from "../../components/layout/Groups";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/Sections";
+import { Section, Subsection } from "../../components/layout/Sections";
 import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default function VueBasicsTutorial() {
   return (
-    <BaseTutorial>
+    <React.Fragment>
       <h1>Vue Basics Tutorial</h1>
       <p>
         In this tutorial, we will be building a website for a bookstore. This
@@ -53,7 +52,7 @@ export default function VueBasicsTutorial() {
           want to save your code. Then, we will use <IJS>@vue/cli</IJS> to
           create the application. We
         </p>
-        <PrismBlock lang="bash">
+        <CodeBlock lang="bash">
           {`# install vue-cli if it isn't already
 npm install --global @vue/cli
 # create the application
@@ -64,7 +63,7 @@ vue create curi-bookstore
 cd curi-bookstore
 # start the dev server
 yarn serve`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           The dev server will automatically update when we change files, so we
           can leave that running. We will still be working in the terminal, so
@@ -72,9 +71,9 @@ yarn serve`}
           application's directory. Once you have done that, there are a few
           packages that need to be installed.
         </p>
-        <PrismBlock lang="bash">
+        <CodeBlock lang="bash">
           {`yarn add @hickory/browser @curi/router @curi/vue`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           The <IJS>@hickory/browser</IJS> package will be used to create an
           object that interacts with the browser to power navigation (e.g.
@@ -91,14 +90,14 @@ yarn serve`}
           https) or its hostname (www.example.com). The properties we care about
           are the <IJS>pathname</IJS>, <IJS>hash</IJS>, and <IJS>query</IJS>.
         </p>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`// uri = "https://example.com/one?key=value#id
 {
   pathname: "/one",
   query: "key=value",
   hash: "id"
 }`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           The router will match its routes against a location's{" "}
           <IJS>pathname</IJS> to figure out which route matches. The{" "}
@@ -132,7 +131,7 @@ yarn serve`}
             an options object
           </a>, but we will stick with the defaults.
         </Note>
-        <PrismBlock lang="javascript" data-line="3,9">
+        <CodeBlock lang="javascript" data-line="3,9">
           {`// src/main.js
 import Vue from 'vue'
 import Browser from '@hickory/browser'
@@ -146,7 +145,7 @@ const history = Browser()
 new Vue({
   render: h => h(App)
 }).$mount('#app')`}
-        </PrismBlock>
+        </CodeBlock>
         <Note>
           Eslint will complain here because we haven't actually used the new{" "}
           <IJS>history</IJS> object. We can ignore that warning for now because
@@ -158,10 +157,10 @@ new Vue({
           Routes are JavaScript objects that define the valid locations for a
           router. They have a <IJS>name</IJS> and a <IJS>path</IJS>.
         </p>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`// this is a route
 { name: "Home", path: "" }`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           A route's <IJS>name</IJS> needs to be unique. We will use route names
           when we navigate within the application. A route's <IJS>path</IJS>{" "}
@@ -172,33 +171,33 @@ new Vue({
             Route paths are strings describing the pathname segments they should
             match.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`{ path: '' } // matches "/"
 { path: 'about/stuff' } // matches "/about/stuff"`}
-          </PrismBlock>
+          </CodeBlock>
           <p>Paths never begin with a slash.</p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// yes
 { path: '' }
 // no
 { path: '/' }`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             Paths can include dynamic parameters. These are specified with a
             string that starts with a colon (<IJS>:</IJS>) followed by the name
             of the params.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// a param named "id"
 { path: ':id' }`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             Routes can be nested using the <IJS>children</IJS> property of a
             route. A nested route inherits the path from its ancestor route(s),
             so its <IJS>path</IJS> is only the additional part of the pathname
             that should be matched.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`{
   name: "Parent",
   path: "parent", // matches /parent
@@ -209,7 +208,7 @@ new Vue({
     { name: "Son", path: "son" }
   ]
 }`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
         <p>The website will start with four routes.</p>
         <table>
@@ -266,8 +265,8 @@ new Vue({
           <IJS>routes.js</IJS> file where we can define the application's
           routes.
         </p>
-        <PrismBlock lang="bash">{`touch src/routes.js`}</PrismBlock>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="bash">{`touch src/routes.js`}</CodeBlock>
+        <CodeBlock lang="javascript">
           {`// src/routes.js
 export default [
   {
@@ -287,7 +286,7 @@ export default [
     path: "(.*)"
   }
 ];`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
       <Section title="The Router" id="router">
         <p>
@@ -299,7 +298,7 @@ export default [
           <IJS>curi()</IJS> function and passing it the <IJS>history</IJS>{" "}
           object and the <IJS>routes</IJS> array.
         </p>
-        <PrismBlock lang="javascript" data-line="3,6,12">
+        <CodeBlock lang="javascript" data-line="3,6,12">
           {`// src/main.js
 import Vue from 'vue'
 import { curi } from '@curi/router';
@@ -316,7 +315,7 @@ const router = curi(history, routes)
 new Vue({
   render: h => h(App)
 }).$mount('#app')`}
-        </PrismBlock>
+        </CodeBlock>
         <Note>
           The Eslint warning has now moved to the <IJS>router</IJS>, but this is
           still nothing to worry about.
@@ -333,7 +332,7 @@ new Vue({
           <IJS>CuriPlugin</IJS> is installed, the <IJS>router</IJS> as passed in
           the options object.
         </p>
-        <PrismBlock lang="javascript" data-line="5,14">
+        <CodeBlock lang="javascript" data-line="5,14">
           {`// src/main.js
 import Vue from 'vue'
 import { curi } from '@curi/router';
@@ -352,7 +351,7 @@ Vue.use(CuriPlugin, { router })
 new Vue({
   render: h => h(App)
 }).$mount('#app')`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
       <Section title="Rendering with Vue" id="rendering">
         <p>
@@ -371,7 +370,7 @@ new Vue({
             ourselves, but for now the important thing to know is that the
             response lets us know about the current route.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// a sample response object
 {
   body: undefined,
@@ -383,7 +382,7 @@ new Vue({
   partials: [],
   status: 200
 }`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             The router uses an observer model to let functions subscribe to be
             called when a new response is generated. The <IJS>CuriPlugin</IJS>{" "}
@@ -419,7 +418,7 @@ new Vue({
           <IJS>body</IJS> property, that value will be set on our response
           object.
         </p>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`{
   name: "Home",
   path: "",
@@ -435,7 +434,7 @@ new Vue({
       */
   }
 }`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           If the return object's <IJS>body</IJS> property is a Vue component, we
           can render it using <Cmp>Component :is</Cmp>.
@@ -444,39 +443,39 @@ new Vue({
           We haven't actually defined components for our routes yet, so we
           should throw together some placeholders.
         </p>
-        <PrismBlock lang="bash">
+        <CodeBlock lang="bash">
           {`touch src/components/Home.vue src/components/Book.vue \\
   src/components/Checkout.vue src/components/NotFound.vue`}
-        </PrismBlock>
-        <PrismBlock lang="html">
+        </CodeBlock>
+        <CodeBlock lang="html">
           {`<!-- src/components/Home.vue -->
 <template>
   <div>Home</div>
 </template>`}
-        </PrismBlock>
-        <PrismBlock lang="html">
+        </CodeBlock>
+        <CodeBlock lang="html">
           {`<!-- src/components/Book.vue -->
 <template>
   <div>Book</div>
 </template>`}
-        </PrismBlock>
-        <PrismBlock lang="html">
+        </CodeBlock>
+        <CodeBlock lang="html">
           {`<!-- src/components/Checkout.vue -->
 <template>
   <div>Checkout</div>
 </template>`}
-        </PrismBlock>
-        <PrismBlock lang="html">
+        </CodeBlock>
+        <CodeBlock lang="html">
           {`<!-- src/components/NotFound.vue -->
 <template>
   <div>Not Found</div>
 </template>`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           These components can be imported in <IJS>src/routes.js</IJS> and
           attached to their respective routes.
         </p>
-        <PrismBlock lang="javascript" data-line="2-5,11-15,20-24,29-33,38-42">
+        <CodeBlock lang="javascript" data-line="2-5,11-15,20-24,29-33,38-42">
           {`// src/routes.js
 import Home from './components/Home';
 import Book from './components/Book';
@@ -521,24 +520,24 @@ export default [
     }
   }
 ];`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           We can now update <IJS>App.vue</IJS> to render{" "}
           <IJS>response.body</IJS> as a component, which as mentioned above is
           available through <IJS>this.$curi</IJS>.
         </p>
 
-        <PrismBlock lang="html">
+        <CodeBlock lang="html">
           {`<!-- src/App.vue -->
 <template>
   <component :is="$curi.response.body" />
 </template>
 `}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           We can also remove the <Cmp>HelloWorld</Cmp> component.
         </p>
-        <PrismBlock lang="bash">{`rm src/components/HelloWorld.vue`}</PrismBlock>
+        <CodeBlock lang="bash">{`rm src/components/HelloWorld.vue`}</CodeBlock>
         <p>
           At this point in time our app is rendering, but is isn't very
           interesting because we cannot navigate between locations.
@@ -564,49 +563,49 @@ export default [
             location the link should navigate to. Instead, we specify the name
             of the route using the <IJS>to</IJS> prop.
           </p>
-          <PrismBlock lang="html">
+          <CodeBlock lang="html">
             {`<!-- { name: "Home", path: "" } -->
 <curi-link to="Home">Home</curi-link>
 <!-- <a href="/">Home</a> -->`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             If a route has params, we provide these to the <Cmp>curi-link</Cmp>{" "}
             as a <IJS>params</IJS> object. For a nested route, we would also
             need to provide params for any ancestor routes.
           </p>
-          <PrismBlock lang="html">
+          <CodeBlock lang="html">
             {`<!-- { name: "Book", path: "book/:id" } -->
 <curi-link to="Book" :params="{ id: 7 }">The Dark Forest</curi-link>
 <!-- <a href="/book/7">The Dark Forest</a> -->`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             The <Cmp>curi-link</Cmp> is only for in-app navigation. If you want
             to link to pages outside of the application, use an anchor.
           </p>
-          <PrismBlock lang="html">
+          <CodeBlock lang="html">
             {`<!-- in-app -->
 <curi-link to="Some Route">Some Route</curi-link>
 
 <!-- out of app -->
 <a href="https://github.com">GitHub</a>`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             If you need to attach query or hash data to a <Cmp>curi-link</Cmp>,
             use the <IJS>query</IJS> and <IJS>hash</IJS> props.
           </p>
-          <PrismBlock lang="html">
+          <CodeBlock lang="html">
             {`<!-- { name: "Checkout", path: "checkout" } -->
 <curi-link to="Checkout" :query="a=123">Checkout</curi-link>
 <!-- <a href="/checkout?a=123">Checkout</a> -->`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
         <Subsection title="A Navigation Menu" id="nav-menu">
           <p>
             We will start with creating a navigation menu component with links
             to our home page and checkout page.
           </p>
-          <PrismBlock lang="bash">{`touch src/components/NavMenu.vue`}</PrismBlock>
-          <PrismBlock lang="html">
+          <CodeBlock lang="bash">{`touch src/components/NavMenu.vue`}</CodeBlock>
+          <CodeBlock lang="html">
             {`<!-- src/components/NavMenu.vue -->
 <template>
   <nav>
@@ -620,13 +619,13 @@ export default [
     </ul>
   </nav>
 </template>`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             We can import that in our <IJS>App.vue</IJS> file and add it to our
             template. This is a good opportunity to also add some structure to
             the elements in the template.
           </p>
-          <PrismBlock lang="html">
+          <CodeBlock lang="html">
             {`<!-- src/App.vue -->
 <template>
   <div>
@@ -649,7 +648,7 @@ export default [
     }
   };
 </script>`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
         <Subsection title="Linking to Books" id="book-links">
           <p>
@@ -657,12 +656,12 @@ export default [
             First, we need data about the books. For now, we're going to
             hard-code the books in the <IJS>src/books.js</IJS> module.
           </p>
-          <PrismBlock lang="bash">{`touch src/books.js`}</PrismBlock>
+          <CodeBlock lang="bash">{`touch src/books.js`}</CodeBlock>
           <p>
             You can copy+paste or modify the data, but the structure of the
             provided data should stay the same.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// src/books.js
 export default [
   {
@@ -701,12 +700,12 @@ export default [
     pages: 1087
   }
 ];`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             The data can be imported in the <Cmp>Home</Cmp> component. We will
             iterate over the books with a <Cmp>Link</Cmp> to each one.
           </p>
-          <PrismBlock lang="html">
+          <CodeBlock lang="html">
             {`<!-- src/components/Home.vue -->
 <template>
   <div>
@@ -730,7 +729,7 @@ export default [
     }
   }
 </script>`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             Now that we can navigate to the books, we should fill out the UI for
             the <Cmp>Book</Cmp> component. We will once again import the{" "}
@@ -740,7 +739,7 @@ export default [
             for the <IJS>params.id</IJS>. In that case, we will also want to
             display a message that the requested book could not be found.
           </p>
-          <PrismBlock lang="html">
+          <CodeBlock lang="html">
             {`<!-- src/components/Book.vue -->
 <template>
   <div v-if="book">
@@ -767,7 +766,7 @@ export default [
     }
   }
 </script>`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
       </Section>
       <Section title="Let's go shopping" id="shopping">
@@ -775,14 +774,14 @@ export default [
           We want to be able to add books to our shopping cart. Since this is a
           play site, we will store the cart data in memory.
         </p>
-        <PrismBlock lang="bash">{`touch src/cart.js`}</PrismBlock>
+        <CodeBlock lang="bash">{`touch src/cart.js`}</CodeBlock>
         <p>
           The shopping cart implementation will be a JavaScript <IJS>Map</IJS>.
           We can call its <IJS>set</IJS> method to add books, its{" "}
           <IJS>clear</IJS> method to reset the cart, and iterate over its{" "}
           <IJS>entries</IJS> with a <IJS>for...of</IJS> loop.
         </p>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`// src/cart.js
 const cart = new Map();
 
@@ -805,7 +804,7 @@ export default {
     return [];
   }
 };`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           As stated above, we can access our <IJS>router</IJS> in the{" "}
           <Cmp>Book</Cmp> component using <IJS>this.$router</IJS>. The router's{" "}
@@ -824,19 +823,19 @@ export default {
             <IJS>PUSH</IJS> pushes a new location after the current index,
             removing any locations after the current location.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "New", method: "PUSH" });
 // session = ['/one', '/two', '/new'], index = 2`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             <IJS>REPLACE</IJS> replaces the location at the current index.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "Replace", method: "REPLACE" });
 // session = ['/one', '/replacement', '/three'], index = 1`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             <IJS>ANCHOR</IJS> is a mix between <IJS>PUSH</IJS> and{" "}
             <IJS>REPLACE</IJS>. It mimics the behavior of clicking on links, so
@@ -847,19 +846,19 @@ router.navigate({ name: "Replace", method: "REPLACE" });
             If <IJS>method.navigate()</IJS> is called without a navigation{" "}
             <IJS>method</IJS>, it will default to <IJS>ANCHOR</IJS>.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "Two", method: "ANCHOR" });
 // session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "New", method: "ANCHOR" });
 // session = ['/one', '/two', '/new'], index = 2`}`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
         <p>
           We also want to import our shopping cart API so that we can add a book
           to the cart.
         </p>
-        <PrismBlock lang="html" data-line="8-10,19,29-35">
+        <CodeBlock lang="html" data-line="8-10,19,29-35">
           {`<!-- src/components/Book.vue -->
 <template>
   <div v-if="book">
@@ -896,7 +895,7 @@ router.navigate({ name: "New", method: "ANCHOR" });
     }
   }
 </script>`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           Finally, we can update our <Cmp>Checkout</Cmp> component to display
           the books in the shopping cart. To do this, we will import our cart
@@ -910,7 +909,7 @@ router.navigate({ name: "New", method: "ANCHOR" });
           in the URI, we can render a "Thanks for your purchase" message to
           "confirm" the purchase.
         </p>
-        <PrismBlock lang="html">
+        <CodeBlock lang="html">
           {`<!-- src/components/Checkout.vue -->
 <template>
   <div v-if="books.length">
@@ -963,7 +962,7 @@ router.navigate({ name: "New", method: "ANCHOR" });
     }
   }
 </script>`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
       <Section title="What's next?" id="next">
         <p>
@@ -973,6 +972,6 @@ router.navigate({ name: "New", method: "ANCHOR" });
           techniques.
         </p>
       </Section>
-    </BaseTutorial>
+    </React.Fragment>
   );
 }

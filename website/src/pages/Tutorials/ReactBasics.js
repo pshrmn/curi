@@ -1,20 +1,19 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import BaseTutorial from "./base/BaseTutorial";
-import { TutorialBranch, CompleteBranch, Outline } from "./base/Branch";
+import Outline from "../../components/tutorial/Outline";
 import {
   InlineJS as IJS,
-  InlineComponent as Cmp,
-  PrismBlock
-} from "../../components/PrismBlocks";
+  InlineComponent as Cmp
+} from "../../components/highlight/Inline";
+import { CodeBlock } from "../../components/layout/Groups";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/Sections";
+import { Section, Subsection } from "../../components/layout/Sections";
 import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default function ReactBasicsTutorial() {
   return (
-    <BaseTutorial>
+    <React.Fragment>
       <h1>React Basics Tutorial</h1>
       <p>
         In this tutorial, we will be building a website for a bookstore. This
@@ -53,11 +52,11 @@ export default function ReactBasicsTutorial() {
           want to save your code. Then, we will use <IJS>npx</IJS> to create the
           application.
         </p>
-        <PrismBlock lang="bash">
+        <CodeBlock lang="bash">
           {`npx create-react-app curi-bookstore # create the app
 cd curi-bookstore # enter the new app directory
 yarn start # start the dev server`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           <IJS>create-react-app</IJS>'s dev server will automatically update
           when we change files, so we can leave that running. We will still be
@@ -65,9 +64,9 @@ yarn start # start the dev server`}
           window/tab and navigate to the application's directory. Once you have
           done that, there are a few packages that need to be installed.
         </p>
-        <PrismBlock lang="bash">
+        <CodeBlock lang="bash">
           {`yarn add @hickory/browser @curi/router @curi/react-dom`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           The <IJS>@hickory/browser</IJS> package will be used to create an
           object that interacts with the browser to power navigation (e.g.
@@ -84,14 +83,14 @@ yarn start # start the dev server`}
           https) or its hostname (www.example.com). The properties we care about
           are the <IJS>pathname</IJS>, <IJS>hash</IJS>, and <IJS>query</IJS>.
         </p>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`// uri = "https://example.com/one?key=value#id
 {
   pathname: "/one",
   query: "key=value",
   hash: "id"
 }`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           The router will match its routes against a location's{" "}
           <IJS>pathname</IJS> to figure out which route matches. The{" "}
@@ -125,7 +124,7 @@ yarn start # start the dev server`}
             an options object
           </a>, but we will stick with the defaults.
         </Note>
-        <PrismBlock lang="jsx" data-line="4,10">
+        <CodeBlock lang="jsx" data-line="4,10">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -139,17 +138,17 @@ const history = Browser();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
       <Section title="Defining the Routes" id="defining-routes">
         <p>
           Routes are JavaScript objects that define the valid locations for a
           router. They have a <IJS>name</IJS> and a <IJS>path</IJS>.
         </p>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`// this is a route
 { name: "Home", path: "" }`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           A route's <IJS>name</IJS> needs to be unique. We will use route names
           when we navigate within the application. A route's <IJS>path</IJS>{" "}
@@ -160,33 +159,33 @@ registerServiceWorker();`}
             Route paths are strings describing the pathname segments they should
             match.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`{ path: '' } // matches "/"
 { path: 'about/stuff' } // matches "/about/stuff"`}
-          </PrismBlock>
+          </CodeBlock>
           <p>Paths never begin with a slash.</p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// yes
 { path: '' }
 // no
 { path: '/' }`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             Paths can include dynamic parameters. These are specified with a
             string that starts with a colon (<IJS>:</IJS>) followed by the name
             of the params.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// a param named "id"
 { path: ':id' }`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             Routes can be nested using the <IJS>children</IJS> property of a
             route. A nested route inherits the path from its ancestor route(s),
             so its <IJS>path</IJS> is only the additional part of the pathname
             that should be matched.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`{
   name: "Parent",
   path: "parent", // matches /parent
@@ -197,7 +196,7 @@ registerServiceWorker();`}
     { name: "Son", path: "son" }
   ]
 }`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
         <p>The website will start with four routes.</p>
         <table>
@@ -254,8 +253,8 @@ registerServiceWorker();`}
           <IJS>routes.js</IJS> file where we can define the application's
           routes.
         </p>
-        <PrismBlock lang="bash">{`touch src/routes.js`}</PrismBlock>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="bash">{`touch src/routes.js`}</CodeBlock>
+        <CodeBlock lang="javascript">
           {`// src/routes.js
 export default [
   {
@@ -275,7 +274,7 @@ export default [
     path: "(.*)"
   }
 ];`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
       <Section title="The Router" id="router">
         <p>
@@ -287,7 +286,7 @@ export default [
           <IJS>curi()</IJS> function and passing it the <IJS>history</IJS>{" "}
           object and the <IJS>routes</IJS> array.
         </p>
-        <PrismBlock lang="jsx" data-line="4,8,13">
+        <CodeBlock lang="jsx" data-line="4,8,13">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -304,7 +303,7 @@ const router = curi(history, routes);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
       <Section title="Rendering with React" id="rendering">
         <p>
@@ -330,7 +329,7 @@ registerServiceWorker();`}
           object that has three properties: <IJS>router</IJS>,{" "}
           <IJS>response</IJS>, and <IJS>navigation</IJS>.
         </p>
-        <PrismBlock lang="jsx">
+        <CodeBlock lang="jsx">
           {`import { curiProvider } from "@curi/react-dom";
         
 const Router = curiProvider(router);
@@ -340,7 +339,7 @@ const Router = curiProvider(router);
     return <div>This is the website</div>;
   }}
 </Router>`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           The <IJS>router</IJS> is our Curi router, but what are the other two?
         </p>
@@ -356,7 +355,7 @@ const Router = curiProvider(router);
             ourselves, but for now the important thing to know is that the
             response lets us know about the current route.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// a sample response object
 {
   body: undefined,
@@ -368,7 +367,7 @@ const Router = curiProvider(router);
   partials: [],
   status: 200
 }`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             The router uses an observer model to let functions subscribe to be
             called when a new response is generated. The <Cmp>Router</Cmp>{" "}
@@ -404,7 +403,7 @@ const Router = curiProvider(router);
           <IJS>body</IJS> property, that value will be set on our response
           object.
         </p>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`{
   name: "Home",
   path: "",
@@ -420,55 +419,61 @@ const Router = curiProvider(router);
       */
   }
 }`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           If the return object's <IJS>body</IJS> is a React component, we can
           render it in the <Cmp>Router</Cmp>'s children function. We haven't
           actually defined components for our routes yet, so we should throw
           together some placeholders.
         </p>
-        <PrismBlock lang="bash">
+        <CodeBlock lang="bash">
           {`mkdir -p src/components
 touch src/components/Home.js src/components/Book.js \\
   src/components/Checkout.js src/components/NotFound.js`}
-        </PrismBlock>
-        <PrismBlock lang="jsx">
+        </CodeBlock>
+        <CodeBlock lang="jsx">
           {`// src/components/Home.js
 import React from 'react';
 
-export default () => (
-  <div>Home</div>
-);`}
-        </PrismBlock>
-        <PrismBlock lang="jsx">
+export default function Home() {
+  return (
+    <div>Home</div>
+  );
+}`}
+        </CodeBlock>
+        <CodeBlock lang="jsx">
           {`// src/components/Book.js
 import React from 'react';
 
 export default () => (
   <div>Book</div>
 );`}
-        </PrismBlock>
-        <PrismBlock lang="jsx">
+        </CodeBlock>
+        <CodeBlock lang="jsx">
           {`// src/components/Checkout.js
 import React from 'react';
 
-export default () => (
-  <div>Checkout</div>
-);`}
-        </PrismBlock>
-        <PrismBlock lang="jsx">
+export default function Checkout() {
+  return (
+    <div>Checkout</div>
+  );
+}`}
+        </CodeBlock>
+        <CodeBlock lang="jsx">
           {`// src/components/NotFound.js
 import React from 'react';
 
-export default () => (
-  <div>Not Found</div>
-);`}
-        </PrismBlock>
+export default function NotFound() {
+  return (
+    <div>Not Found</div>
+  );
+}`}
+        </CodeBlock>
         <p>
           These components can be imported in <IJS>src/routes.js</IJS> and
           attached to their respective routes.
         </p>
-        <PrismBlock lang="javascript" data-line="2-5,11-15,20-24,29-33,38-42">
+        <CodeBlock lang="javascript" data-line="2-5,11-15,20-24,29-33,38-42">
           {`// src/routes.js
 import Home from './components/Home';
 import Book from './components/Book';
@@ -513,7 +518,7 @@ export default [
     }
   }
 ];`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           We can now render the <Cmp>Router</Cmp> in our index file. The{" "}
           <Cmp>Router</Cmp> gets passed a render-invoked function as the
@@ -523,7 +528,7 @@ export default [
           the rendered component, which will be useful soon.
         </p>
 
-        <PrismBlock lang="jsx" data-line="6,14,16-25">
+        <CodeBlock lang="jsx" data-line="6,14,16-25">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -550,14 +555,14 @@ ReactDOM.render((
   </Router>
 ), document.getElementById('root'));
 registerServiceWorker();`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           We can also remove the <Cmp>App</Cmp> component import and delete the
           related files.
         </p>
-        <PrismBlock lang="bash">
+        <CodeBlock lang="bash">
           {`rm src/App.js src/App.css src/App.test.js`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           At this point in time our app is rendering, but is isn't very
           interesting because we cannot navigate between locations.
@@ -583,73 +588,75 @@ registerServiceWorker();`}
             location the link should navigate to. Instead, we specify the name
             of the route using the <IJS>to</IJS> prop.
           </p>
-          <PrismBlock lang="jsx">
+          <CodeBlock lang="jsx">
             {`// { name: "Home", path: "" }
 <Link to="Home">Home</Link>
 // <a href="/">Home</a>`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             If a route has params, we provide these to the <Cmp>Link</Cmp> as a{" "}
             <IJS>params</IJS> object. For a nested route, we would also need to
             provide params for any ancestor routes.
           </p>
-          <PrismBlock lang="jsx">
+          <CodeBlock lang="jsx">
             {`// { name: "Book", path: "book/:id" }
 <Link to="Book" params={{ id: 7 }}>The Dark Forest</Link>
 // <a href="/book/7">The Dark Forest</a>`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             The <Cmp>Link</Cmp> is only for in-app navigation. If you want to
             link to pages outside of the application, use an anchor.
           </p>
-          <PrismBlock lang="jsx">
+          <CodeBlock lang="jsx">
             {`// in-app
 <Link to="Some Route">Some Route</Link>
 
 // out of app
 <a href="https://github.com">GitHub</a>`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             If you need to attach query or hash data to a <Cmp>Link</Cmp>, use
             the <IJS>query</IJS> and <IJS>hash</IJS> props.
           </p>
-          <PrismBlock lang="jsx">
+          <CodeBlock lang="jsx">
             {`// { name: "Checkout", path: "checkout" }
 <Link to="Checkout" query='affiliate=123'>Checkout</Link>
 // <a href="/checkout?affiliate=123">Checkout</a>`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
         <Subsection title="A Navigation Menu" id="nav-menu">
           <p>
             We will start with creating a navigation menu component with links
             to our home page and checkout page.
           </p>
-          <PrismBlock lang="bash">{`touch src/components/NavMenu.js`}</PrismBlock>
-          <PrismBlock lang="jsx">
+          <CodeBlock lang="bash">{`touch src/components/NavMenu.js`}</CodeBlock>
+          <CodeBlock lang="jsx">
             {`// src/components/NavMenu.js
 import React from 'react';
 import { Link } from '@curi/react-dom';
 
-export default () => (
-  <nav>
-    <ul>
-      <li>
-        <Link to="Home">Home</Link>
-      </li>
-      <li>
-        <Link to="Checkout">Checkout</Link>
-      </li>
-    </ul>
-  </nav>
-);`}
-          </PrismBlock>
+export default function NavMenu() {
+  return (
+    <nav>
+      <ul>
+        <li>
+          <Link to="Home">Home</Link>
+        </li>
+        <li>
+          <Link to="Checkout">Checkout</Link>
+        </li>
+      </ul>
+    </nav>
+  );
+}`}
+          </CodeBlock>
           <p>
             We can import that in our index file and add it to our{" "}
             <IJS>children</IJS> function. This is a good opportunity to also add
             some structure to the elements returned by the <IJS>children</IJS>{" "}
             function.
           </p>
-          <PrismBlock lang="jsx" data-line="10,22-29">
+          <CodeBlock lang="jsx" data-line="10,22-29">
             {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -684,7 +691,7 @@ ReactDOM.render((
   </Router>
 ), document.getElementById('root'));
 registerServiceWorker();`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
         <Subsection title="Linking to Books" id="book-links">
           <p>
@@ -692,12 +699,12 @@ registerServiceWorker();`}
             First, we need data about the books. For now, we're going to
             hard-code the books in the <IJS>src/books.js</IJS> module.
           </p>
-          <PrismBlock lang="bash">{`touch src/books.js`}</PrismBlock>
+          <CodeBlock lang="bash">{`touch src/books.js`}</CodeBlock>
           <p>
             You can copy+paste or modify the data, but the structure of the
             provided data should stay the same.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// src/books.js
 export default [
   {
@@ -736,32 +743,34 @@ export default [
     pages: 1087
   }
 ];`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             The data can be imported in the <Cmp>Home</Cmp> component. We will
             iterate over the books with a <Cmp>Link</Cmp> to each one.
           </p>
-          <PrismBlock lang="jsx" data-line="4,7-17">
+          <CodeBlock lang="jsx" data-line="4,7-17">
             {`// src/components/Home.js
 import React from 'react';
 import { Link } from '@curi/react-dom';
 
 import books from '../books';
 
-export default () => (
-  <div>
-    <ul>
-      {books.map(book => (
-        <li key={book.id}>
-          <Link to="Book" params={{ id: book.id }} >
-            {book.title} by {book.author}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  </div>
-);`}
-          </PrismBlock>
+export default function Home() {
+  return (
+    <div>
+      <ul>
+        {books.map(book => (
+          <li key={book.id}>
+            <Link to="Book" params={{ id: book.id }} >
+              {book.title} by {book.author}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}`}
+          </CodeBlock>
           <p>
             Now that we can navigate to the books, we should fill out the UI for
             the <Cmp>Book</Cmp> component. Up above, we passed the{" "}
@@ -778,13 +787,13 @@ export default () => (
             <IJS>params.id</IJS>. In that case, we will also want to display a
             message that the requested book could not be found.
           </p>
-          <PrismBlock lang="jsx" data-line="4,6-20">
+          <CodeBlock lang="jsx" data-line="4,6-20">
             {`// src/components/Book.js
 import React from 'react';
 
 import books from '../books';
 
-export default ({ response }) => {
+export default function Book({ response }) {
   const id = parseInt(response.params.id, 10);
   const book = books.find(b => b.id === id);
   if (!book) {
@@ -799,7 +808,7 @@ export default ({ response }) => {
     </div>
   );
 }`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
       </Section>
       <Section title="Let's go shopping" id="shopping">
@@ -807,14 +816,14 @@ export default ({ response }) => {
           We want to be able to add books to our shopping cart. Since this is a
           play site, we will store the cart data in memory.
         </p>
-        <PrismBlock lang="bash">{`touch src/cart.js`}</PrismBlock>
+        <CodeBlock lang="bash">{`touch src/cart.js`}</CodeBlock>
         <p>
           The shopping cart implementation will be a JavaScript <IJS>Map</IJS>.
           We can call its <IJS>set</IJS> method to add books, its{" "}
           <IJS>clear</IJS> method to reset the cart, and iterate over its{" "}
           <IJS>entries</IJS> with a <IJS>for...of</IJS> loop.
         </p>
-        <PrismBlock lang="javascript">
+        <CodeBlock lang="javascript">
           {`// src/cart.js
 const cart = new Map();
 
@@ -836,7 +845,7 @@ export default {
     cart.clear();
   }
 };`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           Before we edit the <Cmp>Book</Cmp> component, we should quickly
           revisit the <Cmp>Router</Cmp>'s <IJS>children</IJS> function. In
@@ -844,7 +853,7 @@ export default {
           <IJS>response.body</IJS>, we should also pass it our router. This will
           allow us to do programmatic navigation.
         </p>
-        <PrismBlock lang="jsx" data-line="19,27">
+        <CodeBlock lang="jsx" data-line="19,27">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -879,7 +888,7 @@ ReactDOM.render((
   </Router>
 ), document.getElementById('root'));
 registerServiceWorker();`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           We can now access our <IJS>router</IJS> in the <Cmp>Book</Cmp>{" "}
           component. The router's <IJS>navigate()</IJS> function can be used to
@@ -897,19 +906,19 @@ registerServiceWorker();`}
             <IJS>PUSH</IJS> pushes a new location after the current index,
             removing any locations after the current location.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "New", method: "PUSH" });
 // session = ['/one', '/two', '/new'], index = 2`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             <IJS>REPLACE</IJS> replaces the location at the current index.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "Replace", method: "REPLACE" });
 // session = ['/one', '/replacement', '/three'], index = 1`}
-          </PrismBlock>
+          </CodeBlock>
           <p>
             <IJS>ANCHOR</IJS> is a mix between <IJS>PUSH</IJS> and{" "}
             <IJS>REPLACE</IJS>. It mimics the behavior of clicking on links, so
@@ -920,26 +929,26 @@ router.navigate({ name: "Replace", method: "REPLACE" });
             If <IJS>method.navigate()</IJS> is called without a navigation{" "}
             <IJS>method</IJS>, it will default to <IJS>ANCHOR</IJS>.
           </p>
-          <PrismBlock lang="javascript">
+          <CodeBlock lang="javascript">
             {`// session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "Two", method: "ANCHOR" });
 // session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "New", method: "ANCHOR" });
 // session = ['/one', '/two', '/new'], index = 2`}`}
-          </PrismBlock>
+          </CodeBlock>
         </Subsection>
         <p>
           We also want to import our shopping cart API so that we can add a book
           to the cart.
         </p>
-        <PrismBlock lang="jsx" data-line="5,19-28">
+        <CodeBlock lang="jsx" data-line="5,19-28">
           {`// src/components/Book.js
 import React from 'react';
 
 import books from '../books';
 import cart from '../cart';
 
-export default ({ response, router }) => {
+export default function Book({ response, router }) {
   const id = parseInt(response.params.id, 10);
   const book = books.find(b => b.id === id);
   if (!book) {
@@ -963,7 +972,7 @@ export default ({ response, router }) => {
     </div>
   );
 }`}
-        </PrismBlock>
+        </CodeBlock>
         <p>
           Finally, we can update our <Cmp>Checkout</Cmp> component to display
           the books in the shopping cart. To do this, we will import our cart
@@ -977,13 +986,13 @@ export default ({ response, router }) => {
           in the URI, we can render a "Thanks for your purchase" message to
           "confirm" the purchase.
         </p>
-        <PrismBlock lang="jsx">
+        <CodeBlock lang="jsx">
           {`// src/components/Checkout.js
 import React from 'react';
 
 import cart from '../cart';
 
-export default ({ router, response }) => {
+export default function Checkout({ router, response }) {
   const books = cart.items();  
   if (!books.length) {
     return response.location.hash === 'thanks'
@@ -1026,7 +1035,7 @@ export default ({ router, response }) => {
     </div>
   );
 };`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
       <Section title="What's next?" id="next">
         <p>
@@ -1036,6 +1045,6 @@ export default ({ router, response }) => {
           techniques.
         </p>
       </Section>
-    </BaseTutorial>
+    </React.Fragment>
   );
 }

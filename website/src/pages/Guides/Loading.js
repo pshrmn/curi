@@ -1,128 +1,112 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import BaseGuide from "./base/BaseGuide";
 import {
-  PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../components/PrismBlocks";
+} from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section } from "../../components/Sections";
-import {
-  SideBySide,
-  CodeBlock,
-  Explanation
-} from "../../components/SideBySide";
+import { Section } from "../../components/layout/Sections";
+import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
-export default function LoadingGuide({ name }) {
+export default function LoadingGuide() {
   return (
-    <BaseGuide>
-      <h1>{name}</h1>
-      <SideBySide>
-        <Explanation>
-          <p>
-            In the code splitting guide, we added a function that calls{" "}
-            <IJS>import()</IJS> to a route's <IJS>resolve</IJS> object in order
-            to dynamically load modules. We can do the same thing for other
-            data.
-          </p>
-        </Explanation>
-      </SideBySide>
+    <React.Fragment>
+      <Explanation>
+        <p>
+          In the code splitting guide, we added a function that calls{" "}
+          <IJS>import()</IJS> to a route's <IJS>resolve</IJS> object in order to
+          dynamically load modules. We can do the same thing for other data.
+        </p>
+      </Explanation>
 
       <Section title="resolve" id="resolve">
-        <SideBySide>
-          <Explanation>
-            <p>
-              An async function (with any name you want it to have) can be added
-              to the <IJS>resolve</IJS> object and the value it resolves will be
-              available in the route's <IJS>response()</IJS> function (as a
-              property of the <IJS>resolved</IJS> object).
-            </p>
-            <p>
-              When the <IJS>Recipe</IJS> route matches, we want to fetch data
-              for that specific recipe (using the <IJS>id</IJS> param from the
-              path).
-            </p>
-          </Explanation>
-          <CodeBlock>
-            {`const routes = [
+        <Explanation>
+          <p>
+            An async function (with any name you want it to have) can be added
+            to the <IJS>resolve</IJS> object and the value it resolves will be
+            available in the route's <IJS>response()</IJS> function (as a
+            property of the <IJS>resolved</IJS> object).
+          </p>
+          <p>
+            When the <IJS>Recipe</IJS> route matches, we want to fetch data for
+            that specific recipe (using the <IJS>id</IJS> param from the path).
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`const routes = [
   {
     name: 'Recipe',
     path: 'recipe/:id'
   }
 ];`}
-          </CodeBlock>
-        </SideBySide>
+        </CodeBlock>
 
-        <SideBySide>
-          <Explanation>
-            <p>
-              Here, we will name the <IJS>resolve</IJS> function for fetching
-              data <IJS>"data"</IJS>.
-            </p>
-            <p>
-              The <IJS>resolve.data()</IJS> function will be passed an object
-              that contains the matched route response properties, including the
-              route <IJS>params</IJS>.
-            </p>
-            <p>
-              All <IJS>resolve</IJS> functions are expected to return a Promise.
-            </p>
-            <p>
-              Now, when we navigate to <IJS>/recipe/chocolate-chip-cookies</IJS>,
-              the <IJS>resolve.data()</IJS> function will call the fake API
-              function to load the <IJS>"chocolate-chip-cookies"</IJS> recipe.
-              The function will resolve with the loaded data.
-            </p>
-          </Explanation>
-          <CodeBlock>
-            {`{
+        <Explanation>
+          <p>
+            Here, we will name the <IJS>resolve</IJS> function for fetching data{" "}
+            <IJS>"data"</IJS>.
+          </p>
+          <p>
+            The <IJS>resolve.data()</IJS> function will be passed an object that
+            contains the matched route response properties, including the route{" "}
+            <IJS>params</IJS>.
+          </p>
+          <p>
+            All <IJS>resolve</IJS> functions are expected to return a Promise.
+          </p>
+          <p>
+            Now, when we navigate to <IJS>/recipe/chocolate-chip-cookies</IJS>,
+            the <IJS>resolve.data()</IJS> function will call the fake API
+            function to load the <IJS>"chocolate-chip-cookies"</IJS> recipe. The
+            function will resolve with the loaded data.
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`{
   name: 'Recipe',
   path: 'recipe/:id',
   resolve: {
     data: ({ params }) => fakeAPI.getRecipe(params.id)
   }
 }`}
-          </CodeBlock>
-        </SideBySide>
+        </CodeBlock>
       </Section>
 
       <Section title="response" id="response">
-        <SideBySide>
-          <Explanation>
-            <p>
-              While <IJS>resolve.data()</IJS> starts our data loading, it
-              doesn't actually do anything. Instead, we should handle any loaded
-              data with the <IJS>response()</IJS> function.
-            </p>
+        <Explanation>
+          <p>
+            While <IJS>resolve.data()</IJS> starts our data loading, it doesn't
+            actually do anything. Instead, we should handle any loaded data with
+            the <IJS>response()</IJS> function.
+          </p>
 
-            <p>
-              The <IJS>response()</IJS> and <IJS>resolve.data()</IJS> are
-              separate because while a route is resolving, the user may navigate
-              again, which overrides the current navigation. We cannot cancel
-              the <IJS>resolve.data()</IJS> function for the current navigation,
-              so if it performs any side effects, our application is stuck with
-              them. To avoid this, the <IJS>response()</IJS> function is not
-              called until we know that the current navigation will complete.
-            </p>
+          <p>
+            The <IJS>response()</IJS> and <IJS>resolve.data()</IJS> are separate
+            because while a route is resolving, the user may navigate again,
+            which overrides the current navigation. We cannot cancel the{" "}
+            <IJS>resolve.data()</IJS> function for the current navigation, so if
+            it performs any side effects, our application is stuck with them. To
+            avoid this, the <IJS>response()</IJS> function is not called until
+            we know that the current navigation will complete.
+          </p>
 
-            <p>
-              The <IJS>response()</IJS> function will receive an object with a
-              number of properties. These are covered in in the{" "}
-              <Link
-                to="Guide"
-                params={{ slug: "routes-and-responses" }}
-                hash="route-response"
-              >
-                Routes and Responses
-              </Link>{" "}
-              guide, but the only one we care about right now is{" "}
-              <IJS>resolved</IJS>.
-            </p>
-          </Explanation>
-          <CodeBlock>
-            {`{
+          <p>
+            The <IJS>response()</IJS> function will receive an object with a
+            number of properties. These are covered in in the{" "}
+            <Link
+              to="Guide"
+              params={{ slug: "routes-and-responses" }}
+              hash="route-response"
+            >
+              Routes and Responses
+            </Link>{" "}
+            guide, but the only one we care about right now is{" "}
+            <IJS>resolved</IJS>.
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`{
   name: 'Recipe',
   path: 'recipe/:id',
   resolve: {
@@ -135,31 +119,29 @@ export default function LoadingGuide({ name }) {
     }
   }
 }`}
-          </CodeBlock>
-        </SideBySide>
+        </CodeBlock>
 
-        <SideBySide>
-          <Explanation>
-            <p>
-              If at some point in time we decide that we want to change our URI
-              pathname structure, we can also use the <IJS>response()</IJS>{" "}
-              function to redirect.
-            </p>
+        <Explanation>
+          <p>
+            If at some point in time we decide that we want to change our URI
+            pathname structure, we can also use the <IJS>response()</IJS>{" "}
+            function to redirect.
+          </p>
 
-            <p>
-              You can specify the route to redirect to with{" "}
-              <IJS>redirectTo</IJS>. This takes the <IJS>name</IJS> of the route
-              to redirect to, <IJS>params</IJS> if the route (or ancestor
-              routes) have route params. <IJS>hash</IJS>, <IJS>query</IJS>, and{" "}
-              <IJS>state</IJS> can also be provided.
-            </p>
-            <p>
-              After Curi emits the response, it will also automatically redirect
-              to the new location!
-            </p>
-          </Explanation>
-          <CodeBlock>
-            {`{
+          <p>
+            You can specify the route to redirect to with <IJS>redirectTo</IJS>.
+            This takes the <IJS>name</IJS> of the route to redirect to,{" "}
+            <IJS>params</IJS> if the route (or ancestor routes) have route
+            params. <IJS>hash</IJS>, <IJS>query</IJS>, and <IJS>state</IJS> can
+            also be provided.
+          </p>
+          <p>
+            After Curi emits the response, it will also automatically redirect
+            to the new location!
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`{
   name: 'Old Recipe',
   path: 'r/:id',
   response: ({ params }) => {
@@ -174,8 +156,7 @@ export default function LoadingGuide({ name }) {
     };
   }
 }`}
-          </CodeBlock>
-        </SideBySide>
+        </CodeBlock>
       </Section>
       <p>
         A route's <IJS>resolve</IJS> object and <IJS>response()</IJS> functions
@@ -189,6 +170,6 @@ export default function LoadingGuide({ name }) {
         </Link>{" "}
         shows one approach to how to do this.
       </p>
-    </BaseGuide>
+    </React.Fragment>
   );
 }

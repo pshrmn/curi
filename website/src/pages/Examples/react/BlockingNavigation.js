@@ -1,16 +1,15 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+} from "../../../components/highlight/Inline";
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function BlockingNavigationExample({ name }) {
+export default function BlockingNavigationExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           Sometimes, you don't want the user to leave the page. Ideally, this is
@@ -35,6 +34,6 @@ export default function BlockingNavigationExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }

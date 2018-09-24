@@ -1,17 +1,16 @@
 import React from "react";
-import BaseExample from "../base/BaseExample";
+
 import {
-  PrismBlock,
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../../components/PrismBlocks";
-import { Section } from "../../../components/Sections";
+} from "../../../components/highlight/Inline";
+import { CodeBlock } from "../../../components/layout/Groups";
+import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
-export default function AsyncNavExample({ name }) {
+export default function AsyncNavExample() {
   return (
-    <BaseExample>
-      <h1>{name}</h1>
+    <React.Fragment>
       <Section title="Explanation" id="explanation">
         <p>
           Use the <Cmp>Link</Cmp>'s <IJS>children</IJS> as a render-invoked
@@ -19,7 +18,7 @@ export default function AsyncNavExample({ name }) {
           navigating.
         </p>
 
-        <PrismBlock lang="jsx">
+        <CodeBlock lang="jsx">
           {`<Link to="Movie" params={{ id: 'some_movie' }}>
     {navigating => (
       <React.Fragment>
@@ -31,7 +30,7 @@ export default function AsyncNavExample({ name }) {
       </React.Fragment>
     )}
   </Link>`}
-        </PrismBlock>
+        </CodeBlock>
       </Section>
 
       <Section title="Live Demo" id="demo">
@@ -45,6 +44,6 @@ export default function AsyncNavExample({ name }) {
           here
         </a>.
       </Section>
-    </BaseExample>
+    </React.Fragment>
   );
 }
