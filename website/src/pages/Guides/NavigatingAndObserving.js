@@ -19,27 +19,37 @@ export default function NavigationAndObservingGuide({ name }) {
   return (
     <BaseGuide>
       <h1>{name}</h1>
+      <SideBySide>
+        <Explanation>
+          <p>
+            Navigation and observation are closely linked. Navigation is used to
+            change locations, while observation is used to detect navigation
+            changes and react (e.g. re-render the application).
+          </p>
+        </Explanation>
+      </SideBySide>
       <Section title="Navigation" id="navigation">
         <SideBySide>
           <Explanation>
             <p>
-              The history object that you provide when creating a router is
-              responsible for tracking all navigation within your application.
-              Navigation can be triggered a variety of ways.
+              When you create a router, you pass it a history object. That
+              history object is responsible for tracking all navigation within
+              your application. Navigation can be triggered a variety of ways.
             </p>
             <p>
-              There first type is "external" navigation, meaning it comes from
+              The first type is "external" navigation, meaning it comes from
               outside of the application. For a website, this would be
               navigating by entering a URL in the address bar or by pressing the
               browser's forward/back buttons.
             </p>
             <p>
               The second type of navigation is "internal", where you use code to
-              navigate to a new location.
+              navigate to a new location. This is predominantly done by clicking
+              links.
             </p>
             <p>
               This guide is only going to discuss how to perform internal
-              navigation since that is the only type that you need to perform
+              navigation, since that is the only type that you need to perform
               with code.
             </p>
           </Explanation>
@@ -59,14 +69,14 @@ const router = curi(history, routes);`}
           <SideBySide>
             <Explanation>
               <p>
-                Locations are stored in what is essentially an array (the exact
-                mechanism varies by history type). An index is used to keep
-                track of which location in the array is the current location.
+                Locations are stored in what is essentially an array (this
+                varies by history type). An index is used to keep track of which
+                location in the array is the current location.
               </p>
               <Note>
                 With the browser and hash histories, you cannot actually access
-                the array of locations/index because doing so could cause
-                security issues.
+                the array of locations/index. Browsers do not expose this
+                because accessing this data could cause security issues.
               </Note>
             </Explanation>
             <CodeBlock>
@@ -83,31 +93,34 @@ const router = curi(history, routes);`}
             <Explanation>
               <p>
                 There are three ways to change locations: popping, pushing, and
-                replacing.
+                replacing and two methods for making these changes:{" "}
+                <IJS>history.go()</IJS> and <IJS>history.navigate()</IJS>.
               </p>
             </Explanation>
           </SideBySide>
-          <SideBySide>
-            <Explanation>
-              <p>
-                Popping means that you change the index to another (valid) index
-                in the array. Popping is performed by specifying how many
-                locations forward (positive numbers) or backward (negative
-                numbers) you want to go. When you click a browser's back button,
-                that is essentially popping by negative one.
-              </p>
-              <p>
-                The history object's <IJS>go()</IJS> function is used for
-                popping between locations.
-              </p>
-            </Explanation>
-            <CodeBlock data-line="8,15">
-              {`locations = [
+          <Subsection tag="h4" title="Pop" id="navigation-pop">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  Popping means that you change the index to another (valid)
+                  index in the array. Popping is performed by specifying how
+                  many locations forward (positive numbers) or backward
+                  (negative numbers) you want to go. When you click a browser's
+                  back button, that is essentially popping by negative one.
+                </p>
+                <p>
+                  The history object's <IJS>go()</IJS> function is used for
+                  popping between locations.
+                </p>
+              </Explanation>
+              <CodeBlock data-line="9,16">
+                {`locations = [
   { pathname: "/one" },
   { pathname: "/two" },
   { pathname: "/three" }
 ]
 index = 2
+// current location = { pathname: "/three" }
 
 history.go(-2)
 
@@ -116,31 +129,35 @@ locations = [
   { pathname: "/two" },
   { pathname: "/three" }
 ]
-index = 0`}
-            </CodeBlock>
-          </SideBySide>
-          <SideBySide>
-            <Explanation>
-              <p>
-                Pushing adds a new location after the current location in the
-                array. Pushing is destructive because if there were any
-                locations after the current location, they are lost when you
-                push a new location.
-              </p>
-              <p>
-                The history object's <IJS>navigate()</IJS> method is used for
-                pushing new locations. In order to ensure that a location is
-                pushed, the <IJS>"PUSH"</IJS> argument should be passed to the
-                method call.
-              </p>
-            </Explanation>
-            <CodeBlock data-line="8,12,14">
-              {`locations = [
+index = 0
+// current location = { pathname: "/one" }`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+          <Subsection tag="h4" title="Push" id="navigation-push">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  Pushing adds a new location after the current location in the
+                  array. Pushing is destructive because if there were any
+                  locations after the current location, they are lost when you
+                  push a new location.
+                </p>
+                <p>
+                  The history object's <IJS>navigate()</IJS> method is used for
+                  pushing new locations. In order to ensure that a location is
+                  pushed, the <IJS>"PUSH"</IJS> argument should be passed to the
+                  method call.
+                </p>
+              </Explanation>
+              <CodeBlock data-line="9,13,15">
+                {`locations = [
   { pathname: "/one" },
   { pathname: "/two" },
   { pathname: "/three" }
 ]
 index = 0
+// current location = { pathname: "/one" }
 
 history.navigate("/four", "PUSH")
 
@@ -148,31 +165,34 @@ locations = [
   { pathname: "/one" },
   { pathname: "/four" }
 ]
-index = 1`}
-            </CodeBlock>
-          </SideBySide>
-
-          <SideBySide>
-            <Explanation>
-              <p>
-                Replacing replaces the location at the current index with a new
-                location. When you replace the current location, it has no
-                effect on locations after the current one.
-              </p>
-              <p>
-                The history object's <IJS>navigate()</IJS> method is used for
-                replacing locations. In order to ensure that a location is
-                replaced, the <IJS>"REPLACE"</IJS> argument should be passed to
-                the method call.
-              </p>
-            </Explanation>
-            <CodeBlock data-line="8,13">
-              {`locations = [
+index = 1
+// current location = { pathname: "/four" }`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+          <Subsection tag="h4" title="Replace" id="navigation-replace">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  Replacing replaces the location at the current index with a
+                  new location. When you replace the current location, it has no
+                  effect on locations after the current one.
+                </p>
+                <p>
+                  The history object's <IJS>navigate()</IJS> method is used for
+                  replacing locations. In order to ensure that a location is
+                  replaced, the <IJS>"REPLACE"</IJS> argument should be passed
+                  to the method call.
+                </p>
+              </Explanation>
+              <CodeBlock data-line="9,14">
+                {`locations = [
   { pathname: "/one" },
   { pathname: "/two" },
   { pathname: "/three" }
 ]
 index = 2
+// current location = { pathname: "/three" }
 
 history.navigate("/four", "REPLACE")
 
@@ -181,31 +201,35 @@ locations = [
   { pathname: "/two" },
   { pathname: "/four" }
 ]
-index = 2`}
-            </CodeBlock>
-          </SideBySide>
-          <SideBySide>
-            <Explanation>
-              <p>
-                The <IJS>history.navigate()</IJS> method has one other way of
-                navigating, which is also its default method. This method is
-                called <IJS>"ANCHOR"</IJS> because it simulates how clicking an
-                anchor in a non-single-page application works.
-              </p>
-              <p>
-                Anchor navigation is a hybrid of pushing and replacing. If you
-                attempt to navigate to the same location as the current location
-                (same <IJS>pathname</IJS>, <IJS>query</IJS>, and <IJS>hash</IJS>),
-                then the current location will be replaced. If you attempt to
-                navigate to a new location, it will be pushed.
-              </p>
-              <p>
-                Unless you have a reason to explicitly push/replace, anchor
-                navigation is what you should use for navigation.
-              </p>
-            </Explanation>
-            <CodeBlock data-line="8,18,25,27">
-              {`locations = [
+index = 2
+// current location = { pathname: "/four" }`}
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
+          <Subsection tag="h4" title="Anchor" id="navigation-anchor">
+            <SideBySide>
+              <Explanation>
+                <p>
+                  The <IJS>history.navigate()</IJS> method has one other way of
+                  navigating, which is also its default method. This method is
+                  called <IJS>"ANCHOR"</IJS> because it simulates how clicking
+                  an anchor in a non-single-page application works.
+                </p>
+                <p>
+                  Anchor navigation is a hybrid of pushing and replacing. If you
+                  attempt to navigate to the same location as the current
+                  location (same <IJS>pathname</IJS>, <IJS>query</IJS>, and{" "}
+                  <IJS>hash</IJS>), then the current location will be replaced.
+                  If you attempt to navigate to a new location, it will be
+                  pushed.
+                </p>
+                <p>
+                  Unless you have a reason to explicitly push/replace, anchor
+                  navigation is what you should use for navigation.
+                </p>
+              </Explanation>
+              <CodeBlock data-line="8,18,25,27">
+                {`locations = [
   { pathname: "/one" },
   { pathname: "/two" },
   { pathname: "/three" }
@@ -232,8 +256,9 @@ locations = [
   { pathname: "/four" }
 ]
 index = 3`}
-            </CodeBlock>
-          </SideBySide>
+              </CodeBlock>
+            </SideBySide>
+          </Subsection>
         </Subsection>
 
         <Subsection title="Navigation with the Router" id="with-router">
@@ -248,9 +273,8 @@ index = 3`}
               <p>
                 <IJS>router.navigate()</IJS> takes an object with the{" "}
                 <IJS>name</IJS> of the route to navigate to. If the route (or
-                any of its ancestors) requires
-                <IJS>params</IJS>, they should also be provided through the
-                object.
+                any of its ancestors) requires <IJS>params</IJS>, they should
+                also be provided through the object.
               </p>
               <p>
                 <IJS>query</IJS>, <IJS>hash</IJS>, and <IJS>state</IJS>{" "}

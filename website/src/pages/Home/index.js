@@ -16,12 +16,25 @@ export default function HomePage() {
   return (
     <Content>
       <h1>Curi is a JavaScript router for single-page applications</h1>
+      <CodeBlock>
+        {`import { curi } from '@curi/router';
+import Browser from '@hickory/browser';
 
+const history = Browser();
+const routes = [
+  { name: 'Home', path: '', ... },
+  { name: 'User', path: 'u/:userID', ... },
+  // more routes...
+  { name: 'Not Found', path: '(.*)', ... }
+];
+
+const router = curi(history, routes);`}
+      </CodeBlock>
       <SideBySide>
         <Explanation>
-          <p>Curi cares about routing, you choose how you render.</p>
           <p>
-            Currently, there are packages to support using Curi with{" "}
+            Curi cares about routing, you choose how you render. Curi currently
+            supports{" "}
             <Link to="Package" params={{ package: "react-dom" }}>
               React DOM
             </Link>,{" "}
@@ -33,8 +46,8 @@ export default function HomePage() {
             </Link>, and{" "}
             <Link to="Package" params={{ package: "svelte" }}>
               Svelte
-            </Link>. With a little elbow grease Curi should work with any
-            rendering library.
+            </Link>. With a little elbow grease, Curi should work with any UI
+            library.
           </p>
           <p>
             Ready to learn more? Get started with the{" "}
@@ -49,20 +62,6 @@ export default function HomePage() {
             Curi.
           </p>
         </Explanation>
-        <CodeBlock>
-          {`import { curi } from '@curi/router';
-import Browser from '@hickory/browser';
-
-const history = Browser();
-const routes = [
-  { name: 'Home', path: '', ... },
-  { name: 'User', path: 'u/:userID', ... },
-  // more routes...
-  { name: 'Not Found', path: '(.*)', ... }
-];
-
-const router = curi(history, routes);`}
-        </CodeBlock>
       </SideBySide>
     </Content>
   );

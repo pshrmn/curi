@@ -29,6 +29,13 @@ export default class ReactPkg extends React.PureComponent {
               The <IJS>@curi/react-dom</IJS> package provides a number of React
               components that you can use for rendering your application.
             </p>
+            <p>
+              For more information on using Curi with React DOM, please check
+              out the{" "}
+              <Link to="Guide" params={{ slug: "react-dom" }}>
+                React DOM guide
+              </Link>.
+            </p>
           </div>
         }
       >

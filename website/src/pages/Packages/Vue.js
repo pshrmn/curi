@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "@curi/react-dom";
+
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
 import {
@@ -21,7 +23,17 @@ export default class VuePkg extends React.PureComponent {
         name={name}
         version={version}
         globalName={globalName}
-        about={<p>This package enables you to use Curi alongside VueJS.</p>}
+        about={
+          <div>
+            <p>This package enables you to use Curi alongside VueJS.</p>
+            <p>
+              For more information on using Curi with Vue, please check out the{" "}
+              <Link to="Guide" params={{ slug: "vue" }}>
+                Vue guide
+              </Link>.
+            </p>
+          </div>
+        }
       >
         <APIBlock>
           <Section title="CuriPlugin" id="curiplugin">

@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "@curi/react-dom";
+
 import BasePackage from "./base/BasePackage";
 import APIBlock from "./base/APIBlock";
 import {
@@ -21,10 +23,19 @@ export default class SveltePkg extends React.PureComponent {
         version={version}
         globalName={globalName}
         about={
-          <p>
-            This package enables you to use Curi alongside Svelte.{" "}
-            <strong>This package relies on the Svelte store.</strong>
-          </p>
+          <div>
+            <p>
+              This package enables you to use Curi alongside Svelte.{" "}
+              <strong>This package relies on the Svelte store.</strong>
+            </p>
+            <p>
+              For more information on using Curi with Svelte, please check out
+              the{" "}
+              <Link to="Guide" params={{ slug: "svelte" }}>
+                Svelte guide
+              </Link>.
+            </p>
+          </div>
         }
       >
         <APIBlock>

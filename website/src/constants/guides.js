@@ -33,9 +33,9 @@ const guides = [
   },
 
   {
-    name: "React",
-    slug: "react",
-    description: "Learn the basics of using Curi and React",
+    name: "React DOM",
+    slug: "react-dom",
+    description: "Learn the basics of using Curi and React DOM",
     type: "rendering"
   },
   {

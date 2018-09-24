@@ -4,7 +4,7 @@ import RoutesAndResponses from "./RoutesAndResponses";
 import SyncAsync from "./SyncAsync";
 import NavigatingAndObserving from "./NavigatingAndObserving";
 
-import ReactRendering from "./React";
+import ReactDOMRendering from "./ReactDOM";
 import ReactNativeRendering from "./ReactNative";
 import VueRendering from "./Vue";
 import SvelteRendering from "./Svelte";
@@ -29,7 +29,7 @@ export default {
   "navigating-and-observing": NavigatingAndObserving,
 
   // rendering
-  react: ReactRendering,
+  "react-dom": ReactDOMRendering,
   "react-native": ReactNativeRendering,
   vue: VueRendering,
   svelte: SvelteRendering,
