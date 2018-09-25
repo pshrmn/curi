@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React DOM Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>React DOM</h1><div class="section" id="rendering"><h2>Rendering Responses<a class="header-link" href="/guides/react-dom/#rendering">#</a></h2><div class="explanation"><p>The <code class="inline-code language-javascript">curiProvider()</code> function is used to create the component at the root of a Curi + React application. You can call this component anything that you want, but here it will be referred to as the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>.</p><div class="note"><strong>Note:</strong> <p>Why does <code class="inline-code language-javascript">@curi/react-dom</code> export a function to create a component and not just a component? Props signify values that can change, but an application should only ever have one router. By hard-coding the <code class="inline-code language-javascript">router</code> into a component, we avoid having to handle the possibility of switching routers (which should not happen).</p></div><p><code class="inline-code language-javascript">curiProvider()</code> is passed the application&#x27;s Curi router. The returned component will automatically add an<!-- --> <a href="/guides/navigating/#observer">observer</a> <!-- -->to the Curi router when it mounts, so that it can re-render when there are new responses.</p><p>The <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> takes a render-invoked function as its<!-- --> <code class="inline-code language-javascript">children</code> prop. This function will be called with an object that has three properties— <code class="inline-code language-javascript">response</code>,<!-- --> <code class="inline-code language-javascript">router</code>, and <code class="inline-code language-javascript">navigation</code>—and returns the React element(s) that form the root of the application.</p></div><div class="code-block"><pre><code class="language-jsx">import { curiProvider } from &#x27;@curi/react-dom&#x27;;
+
+import router from &quot;./router&quot;;
+const Router = curiProvider(router);
+
+// router.once() is used to delay rendering in case
+// the initially matched route is asynchronous
+router.once(() =&gt; {
+  ReactDOM.render((
+    &lt;Router&gt;
+      {({ response, router, navigation }) =&gt; {
+        return &lt;response.body /&gt;;
+      }}
+    &lt;/Router&gt;
+  ), document.getElementById(&quot;root&quot;));
+});</code></pre></div><div class="subsection" id="children-return"><h3>What to return from children()<a class="header-link" href="/guides/react-dom/#children-return">#</a></h3><div class="explanation"><p>The render-invoked <code class="inline-code language-javascript">children()</code> is responsible for rendering the root elements for an application.</p><p>If you set React components as the <code class="inline-code language-javascript">body</code> properties on your responses, you can create a React element for the<!-- --> <code class="inline-code language-javascript">body</code> component in this function.</p><p>The <code class="inline-code language-jsx">&lt;<!-- -->Body<!-- -->&gt;</code> element (it is useful to rename the<!-- --> <code class="inline-code language-javascript">response</code>&#x27;s <code class="inline-code language-javascript">body</code> to <code class="inline-code language-javascript">Body</code> for JSX transformation) is a placeholder for the &quot;real&quot; component that you render for a route. This means that the &quot;real&quot; component will be different for every route. When it comes to passing props to the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Body<!-- -->&gt;</code>, you <em>could</em> use <code class="inline-code language-javascript">response.name</code> <!-- -->to determine what props to pass based on which route matched, but passing the same props to every route&#x27;s <code class="inline-code language-jsx">&lt;<!-- -->Body<!-- -->&gt;</code> is usually sufficient. Passing the entire <code class="inline-code language-javascript">response</code> is generally useful so that the route components can access any<!-- --> <code class="inline-code language-javascript">params</code>, <code class="inline-code language-javascript">data</code>, and other properties of the<!-- --> <code class="inline-code language-javascript">response</code>.</p></div><div class="code-block"><pre><code class="language-jsx">ReactDOM.render((
+  &lt;Router&gt;
+    {({ response, router, navigation }) =&gt; {
+      // rename body to Body for JSX transformation
+      const { body:Body } = response;
+      return (
+        &lt;React.Fragment&gt;
+          &lt;header&gt;
+            &lt;NavLinks /&gt;
+          &lt;/header&gt;
+          &lt;main&gt;
+            &lt;Body response={response} /&gt;
+          &lt;/main&gt;
+        &lt;/React.Fragment&gt;
+      );
+    }}
+  &lt;/Router&gt;
+), document.getElementById(&quot;root&quot;));</code></pre></div><div class="explanation"><p>If your routes use an object to attach multiple components to a response, the <code class="inline-code language-javascript">children()</code> function also provides a good place to split these apart.</p><p>If you do take this approach, please remember that you want every route to set the same <code class="inline-code language-javascript">body</code> shape. Otherwise, you&#x27;ll have to determine the shape and change how you render in the<!-- --> <code class="inline-code language-javascript">children()</code> function, which can quickly become messy.</p></div><div class="code-block"><pre data-line="20,24,27"><code class="language-jsx">const routes = [
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;,
+    response() {
+      return {
+        body: {
+          Main: HomeMain,
+          Menu: HomeMenu
+        }
+      }
+    }
+  },
+  // ...
+];
+
+ReactDOM.render((
+  &lt;Router&gt;
+    {({ response, router, navigation }) =&gt; {
+      const { Main, Menu } = response.body;
+      return (
+        &lt;React.Fragment&gt;
+          &lt;header&gt;
+            &lt;Menu /&gt;
+          &lt;/header&gt;
+          &lt;main&gt;
+            &lt;Main response={response} /&gt;
+          &lt;/main&gt;
+        &lt;/React.Fragment&gt;
+      );
+    }}
+  &lt;/Router&gt;
+), document.getElementById(&quot;root&quot;));</code></pre></div><div class="explanation"><div class="note"><strong>Note:</strong> <p>There is a <code class="inline-code language-jsx">&lt;<!-- -->Curious<!-- -->&gt;</code> component that you can render to access the <code class="inline-code language-javascript">response</code>, <code class="inline-code language-javascript">router</code>, and<!-- --> <code class="inline-code language-javascript">navigation</code> objects anywhere* in your application. This can help prevent having to pass props through multiple layers of components.</p><p>* anywhere that is a child of your <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>.</p></div></div><div class="code-block"><pre><code class="language-jsx">import { Curious } from &quot;@curi/react-dom&quot;;
+            
+const BaseRouteName = ({ response }) =&gt; (
+  &lt;div&gt;{response.name}&lt;/div&gt;
+);
+
+export default function RouteName() {
+  return (
+    &lt;Curious&gt;
+      {({ response }) =&gt; &lt;BaseRouteName response={response} /&gt;}
+    &lt;/Curious&gt;
+  );
+}</code></pre></div></div><div class="subsection" id="accessibility"><h3>Accessibility<a class="header-link" href="/guides/react-dom/#accessibility">#</a></h3><div class="explanation"><p>Managing the application&#x27;s focus when navigating is useful for users who use screen readers. The <code class="inline-code language-jsx">&lt;<!-- -->Focus<!-- -->&gt;</code> component provides a convenient way to focus a page&#x27;s main content when it renders a new response.</p><p>You can read some more about accessibility in the<!-- --> <a href="/guides/accessibility/">accessibility</a> <!-- -->guide.</p></div><div class="code-block"><pre data-line="12-18"><code class="language-jsx">import { Focus } from &quot;@curi/react-dom&quot;;
+            
+ReactDOM.render((
+  &lt;Router&gt;
+    {({ response }) =&gt; {
+      const { body:Body } = response;
+      return (
+        &lt;React.Fragment&gt;
+          &lt;header&gt;
+            &lt;NavLinks /&gt;
+          &lt;/header&gt;
+          &lt;Focus&gt;
+            {ref =&gt; (
+              &lt;main ref={ref} tabIndex={-1}&gt;
+                &lt;Body response={response} /&gt;
+              &lt;/main&gt;
+            )}
+          &lt;/Focus&gt;
+        &lt;/React.Fragment&gt;
+      );
+    }}
+  &lt;/Router&gt;
+), document.getElementById(&quot;root&quot;));</code></pre></div></div></div><div class="section" id="navigating"><h2>Navigating<a class="header-link" href="/guides/react-dom/#navigating">#</a></h2><div class="explanation"><p>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> component is used to navigate between routes within an application. When it renders in the DOM, it will render as an anchor (<code class="inline-code language-jsx">&lt;<!-- -->a<!-- -->&gt;</code>) element.</p><p>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">to</code> prop describes which route clicking the link should navigate to. If you pass an invalid route name, Curi will warn you.</p><p>If a route has any params (or if any of a route&#x27;s ancestors have params for nested routes), the <code class="inline-code language-javascript">params</code> prop is used to pass these to the <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code>.</p></div><div class="code-block"><pre><code class="language-jsx">import { Link } from &quot;@curi/react-dom&quot;;
+          
+const NavLinks = () =&gt; (
+  &lt;nav&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;Link to=&quot;Home&quot;&gt;Home&lt;/Link&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;Link to=&quot;About&quot;&gt;About&lt;/Link&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;Link to=&quot;User&quot; params={{ id: &quot;red&quot; }}&gt;Red&lt;/Link&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+);</code></pre></div><div class="explanation"><p>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> also takes <code class="inline-code language-javascript">hash</code>, <code class="inline-code language-javascript">query</code>, and <code class="inline-code language-javascript">state</code> props to attach their values to the location that will be navigated to.</p></div><div class="code-block"><pre><code class="language-jsx">&lt;Link to=&quot;Home&quot; hash=&quot;details&quot;&gt;Home&lt;/Link&gt;
+// renders
+&lt;a href=&quot;/#details&quot;&gt;Home&lt;/a&gt;</code></pre></div></div><div class="explanation"><p>Please check out the full<!-- --> <a href="/packages/@curi/react-dom/#API"><code class="inline-code language-javascript">@curi/react-dom</code></a> <!-- -->API documentation to see every component that the package provides.</p></div>;</div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>basic</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/creating-a-router/">Creating a Router</a></li><li class="solo"><a class=" " href="/guides/routes-and-responses/">Routes &amp; Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/navigating-and-observing/">Navigating &amp; Observing</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>rendering</button></div><ul class="link-list"><li class="solo"><a class=" active" href="/guides/react-dom/">React DOM</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li><li class="solo"><a class=" " href="/guides/vue/">Vue</a></li><li class="solo"><a class=" " href="/guides/svelte/">Svelte</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>advanced</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li><li class="solo"><a class=" " href="/guides/dev-tips/">Development Tips</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>migration</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
+    <script src="https://unpkg.com/react@16.5.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
