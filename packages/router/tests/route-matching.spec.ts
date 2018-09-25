@@ -68,7 +68,7 @@ describe("route matching/response generation", () => {
     });
 
     describe("nested routes", () => {
-      it("includes parent if partials if a child matches", () => {
+      it("includes parent in partials if a child matches", () => {
         const history = InMemory({ locations: ["/ND/Fargo"] });
         const routes = [
           {
@@ -86,6 +86,29 @@ describe("route matching/response generation", () => {
         const { response } = router.current();
         expect(response.name).toBe("City");
         expect(response.partials).toEqual(["State"]);
+      });
+
+      it("matches children when parent has trailing slash", () => {
+        const history = InMemory({ locations: ["/ND/Fargo/"] });
+        const routes = [
+          {
+            name: "State",
+            path: ":state/",
+            children: [
+              {
+                name: "City",
+                path: ":city/"
+              }
+            ]
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ];
+        const router = curi(history, routes);
+        const { response } = router.current();
+        expect(response.name).toBe("City");
       });
 
       it("does non-end parent matching when there are child routes, even if pathOptions.end=true", () => {
