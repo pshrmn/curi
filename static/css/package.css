@@ -23,6 +23,12 @@
   .subsection {
     max-width: 800px; } }
 
+#API > .section {
+  border-bottom: 3px double #222233; }
+
+#API .section {
+  margin-bottom: 5px; }
+
 .package-info {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -37,10 +43,4 @@
   .package-info > * {
     margin-right: 5px;
     margin-bottom: 5px; }
-
-#API > .section {
-  border-bottom: 3px double #222233; }
-
-#API .section {
-  margin-bottom: 5px; }
 

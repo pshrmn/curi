@@ -35,10 +35,10 @@ npm run start</code></pre></div></div><div class="section" id="async"><h2>Async 
       }
     }
   }
-];</code></pre></div><div class="explanation"><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet. When a user loads your application and the first route that matches has asynchronous functions, there is no response to render until the async code finishes. This means that if you attempt to render immediately after creating a router, the<!-- --> <code class="inline-code language-javascript">response</code> that will be passed to the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s<!-- --> <code class="inline-code language-javascript">children()</code> will be <code class="inline-code language-javascript">null</code>.</p><p>There are a few possible ways to handle this situation. The first is to delay rendering by placing your <code class="inline-code language-javascript">ReactDOM.render()</code> call inside of a <code class="inline-code language-javascript">router.once()</code> callback. This will guarantee that the render isn&#x27;t called until the first response is ready. Alternatively, you can update the render-invoked<!-- --> <code class="inline-code language-javascript">children()</code> function to know what to do when<!-- --> <code class="inline-code language-javascript">response</code> is <code class="inline-code language-javascript">null</code>.</p><p>Which approach is best will depend on the specifics of an application. If there are routes that will take a long time for the initial load, you will probably want to render something while they load. For async code with short loading times, a blank screen might be more acceptable.</p></div><div class="code-block"><pre><code class="language-javascript">// delay rendering
-const router = curi(...);
+];</code></pre></div><div class="explanation"><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet. When a user loads your application and the first route that matches has asynchronous functions, there is no response to render until the async code finishes. This means that if you attempt to render immediately after creating a router, the<!-- --> <code class="inline-code language-javascript">response</code> that will be passed to the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s<!-- --> <code class="inline-code language-javascript">children()</code> will be <code class="inline-code language-javascript">null</code>.</p><p>There are a few possible ways to handle this situation. The first is to delay rendering by placing your <code class="inline-code language-javascript">ReactDOM.render()</code> call inside of a <code class="inline-code language-javascript">router.once()</code> callback. This will guarantee that the render isn&#x27;t called until the first response is ready. Alternatively, you can update the render-invoked<!-- --> <code class="inline-code language-javascript">children()</code> function to know what to do when<!-- --> <code class="inline-code language-javascript">response</code> is <code class="inline-code language-javascript">null</code>.</p><p>Which approach is best will depend on the specifics of an application. If there are routes that will take a long time for the initial load, you will probably want to render something while they load. For async code with short loading times, a blank screen might be more acceptable.</p></div><div class="code-block"><pre><code class="language-javascript">const router = curi(...);
 const Router = curiProvider(router);
 
+// delay rendering
 router.once(() =&gt; {
   ReactDOM.render((
     &lt;Router&gt;
@@ -47,7 +47,7 @@ router.once(() =&gt; {
   ), holder);
 });
 
-// render using null response
+// alternatively, render using null response
 ReactDOM.render((
   &lt;Router&gt;
     {({ response }) =&gt; {
@@ -269,28 +269,30 @@ export default [
       };
     }
   }
-];</code></pre></div><div class="explanation"><p>With the data attached to our responses, we can remove the data imports from the components and just read from the response.</p></div><div class="explanation"><p>In the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component&#x27;s module, we can remove the<!-- --> <code class="inline-code language-javascript">books.js</code> import and grab the response from the component&#x27;s props. The books data can be access as<!-- --> <code class="inline-code language-javascript">response.data.books</code>.</p></div><div class="code-block"><pre data-line="5,8"><code class="language-jsx">// src/components/Home.js
+];</code></pre></div><div class="explanation"><p>With the data attached to our responses, we can remove the data imports from the components and just read from the response.</p></div><div class="explanation"><p>In the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component&#x27;s module, we can remove the<!-- --> <code class="inline-code language-javascript">books.js</code> import and grab the response from the component&#x27;s props. The books data can be access as<!-- --> <code class="inline-code language-javascript">response.data.books</code>.</p></div><div class="code-block"><pre data-line="5,9"><code class="language-jsx">// src/components/Home.js
 import React from &#x27;react&#x27;;
 import { Link } from &#x27;@curi/react-dom&#x27;;
 
-export default ({ response }) =&gt; (
-  &lt;div&gt;
-    &lt;ul&gt;
-      {response.data.books.map(book =&gt; (
-        &lt;li key={book.id}&gt;
-          &lt;Link to=&quot;Book&quot; params={{ id: book.id }} &gt;
-            {book.title} by {book.author}
-          &lt;/Link&gt;
-        &lt;/li&gt;
-      ))}
-    &lt;/ul&gt;
-  &lt;/div&gt;
-);</code></pre></div><div class="explanation"><p>Likewise, we can remove the <code class="inline-code language-javascript">books.js</code> import from the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component&#x27;s module and grab the book data from<!-- --> <code class="inline-code language-javascript">response.data</code> instead of searching for it in the books array.</p></div><div class="code-block"><pre data-line="7"><code class="language-jsx">// src/components/Book.js
+export default function Home({ response }) {
+  return (
+    &lt;div&gt;
+      &lt;ul&gt;
+        {response.data.books.map(book =&gt; (
+          &lt;li key={book.id}&gt;
+            &lt;Link to=&quot;Book&quot; params={{ id: book.id }} &gt;
+              {book.title} by {book.author}
+            &lt;/Link&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}</code></pre></div><div class="explanation"><p>Likewise, we can remove the <code class="inline-code language-javascript">books.js</code> import from the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component&#x27;s module and grab the book data from<!-- --> <code class="inline-code language-javascript">response.data</code> instead of searching for it in the books array.</p></div><div class="code-block"><pre data-line="7"><code class="language-jsx">// src/components/Book.js
 import React from &#x27;react&#x27;;
 
 import cart from &#x27;../cart&#x27;;
 
-export default ({ response, router }) =&gt; {
+export default function Book({ response, router }) {
   const { book } = response.data;
   if (!book) {
     return &lt;div&gt;The requested book could not be found&lt;/div&gt;;
@@ -343,29 +345,31 @@ export const BOOK = id =&gt; new Promise(resolve =&gt; {
       {navigating ? &lt;Spinner /&gt; : null}
     &lt;/React.Fragment&gt;
   )}
-&lt;/Link&gt;</code></pre></div><div class="explanation"><p><a href="https://github.com/KyleAMathews/react-spinkit"><code class="inline-code language-javascript">react-spinkit</code></a> <!-- -->provides some pretty loading spinners, so we will use that.</p></div><div class="code-block"><pre><code class="language-bash">yarn add react-spinkit</code></pre></div><div class="explanation"><p>In the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component&#x27;s module, we need to import the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Spinner<!-- -->&gt;</code> component. The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> needs to be swapped from a React element to a render-invoked function. We wrap the contents in a <code class="inline-code language-jsx">&lt;<!-- -->React.Fragment<!-- -->&gt;</code> to avoid unnecessary DOM elements. In the function, we render a <code class="inline-code language-jsx">&lt;<!-- -->Spinner<!-- -->&gt;</code> when the <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> is navigating and <code class="inline-code language-javascript">null</code> when it is not.</p><div class="note"><strong>Note:</strong> <code class="inline-code language-javascript">react-spinkit</code> is highly customizable, but we are sticking with the defaults here. <code class="inline-code language-javascript">react-spinkit</code> has a default one second render delay, which is why the spinner does not display immediately.</div></div><div class="code-block"><pre data-line="4,12-17"><code class="language-jsx">// src/components/Home.js
+&lt;/Link&gt;</code></pre></div><div class="explanation"><p><a href="https://github.com/KyleAMathews/react-spinkit"><code class="inline-code language-javascript">react-spinkit</code></a> <!-- -->provides some pretty loading spinners, so we will use that.</p></div><div class="code-block"><pre><code class="language-bash">yarn add react-spinkit</code></pre></div><div class="explanation"><p>In the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component&#x27;s module, we need to import the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Spinner<!-- -->&gt;</code> component. The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> needs to be swapped from a React element to a render-invoked function. We wrap the contents in a <code class="inline-code language-jsx">&lt;<!-- -->React.Fragment<!-- -->&gt;</code> to avoid unnecessary DOM elements. In the function, we render a <code class="inline-code language-jsx">&lt;<!-- -->Spinner<!-- -->&gt;</code> when the <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> is navigating and <code class="inline-code language-javascript">null</code> when it is not.</p><div class="note"><strong>Note:</strong> <code class="inline-code language-javascript">react-spinkit</code> is highly customizable, but we are sticking with the defaults here. <code class="inline-code language-javascript">react-spinkit</code> has a default one second render delay, which is why the spinner does not display immediately.</div></div><div class="code-block"><pre data-line="4,13-18"><code class="language-jsx">// src/components/Home.js
 import React from &#x27;react&#x27;;
 import { Link } from &#x27;@curi/react-dom&#x27;;
 import Spinner from &quot;react-spinkit&quot;;
 
-export default ({ response }) =&gt; (
-  &lt;div&gt;
-    &lt;ul&gt;
-      {response.data.books.map(book =&gt; (
-        &lt;li key={book.id}&gt;
-          &lt;Link to=&quot;Book&quot; params={{ id: book.id }} &gt;
-            {navigating =&gt; (
-              &lt;React.Fragment&gt;
-                {book.title} by {book.author}
-                {navigating ? &lt;Spinner /&gt; : null}
-              &lt;/React.Fragment&gt;
-            )}
-          &lt;/Link&gt;
-        &lt;/li&gt;
-      ))}
-    &lt;/ul&gt;
-  &lt;/div&gt;
-);</code></pre></div></div></div><div class="section" id="caveats"><h2>Async Caveats<a class="header-link" href="/tutorial/react-advanced#caveats">#</a></h2><div class="explanation"><p>Adding asynchronous loading to an application can help reduce initial load size and speed up user interactions, however it also has some issues that you will need to consider.</p><p>The biggest consideration is that there is nothing the frontend can do to get the data for the initial render faster. Your application&#x27;s frontend can only fetch data as it discovers it needs it. If you are performing server-side rendering, you may want to load the initial data on the server and inject it into the page&#x27;s HTML output. The implementation details for this vary greatly and are more related to how you store data (e.g.<!-- --> <a href="https://redux.js.org/recipes/server-rendering#the-server-side">with redux</a>).</p><p>Another consideration is whether or not you want to &quot;hoist&quot; data requirements. Curi&#x27;s async functionality relies on you knowing all of the data requirements for a route, but you might prefer to keep the data associated with individual components. React Suspense will help with this (and Curi will support it once it releases), but this is still a ways out. At the very least, I would recommend using Curi for code splitting routes. Whether your should hoist other data requirements is something that should be determined on a case-by-case basis.</p></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Tutorials</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>Basic</button></div><ul class="link-list"><li class="solo"><a class=" " href="/tutorial/react-basics">React Basics</a></li><li class="solo"><a class=" " href="/tutorial/vue-basics">Vue Basics</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>Advanced</button></div><ul class="link-list"><li class="solo"><a class=" active" href="/tutorial/react-advanced">React Advanced</a></li></ul></li></ul></div></div></div></main></div>
+export default function Home({ response }) {
+  return (
+    &lt;div&gt;
+      &lt;ul&gt;
+        {response.data.books.map(book =&gt; (
+          &lt;li key={book.id}&gt;
+            &lt;Link to=&quot;Book&quot; params={{ id: book.id }} &gt;
+              {navigating =&gt; (
+                &lt;React.Fragment&gt;
+                  {book.title} by {book.author}
+                  {navigating ? &lt;Spinner /&gt; : null}
+                &lt;/React.Fragment&gt;
+              )}
+            &lt;/Link&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}</code></pre></div></div></div><div class="section" id="caveats"><h2>Async Caveats<a class="header-link" href="/tutorial/react-advanced#caveats">#</a></h2><div class="explanation"><p>Adding asynchronous loading to an application can help reduce initial load size and speed up user interactions, however it also has some issues that you will need to consider.</p><p>The biggest consideration is that there is nothing the frontend can do to get the data for the initial render faster. Your application&#x27;s frontend can only fetch data as it discovers it needs it. If you are performing server-side rendering, you may want to load the initial data on the server and inject it into the page&#x27;s HTML output. The implementation details for this vary greatly and are more related to how you store data (e.g.<!-- --> <a href="https://redux.js.org/recipes/server-rendering#the-server-side">with redux</a>).</p><p>Another consideration is whether or not you want to &quot;hoist&quot; data requirements. Curi&#x27;s async functionality relies on you knowing all of the data requirements for a route, but you might prefer to keep the data associated with individual components. React Suspense will help with this (and Curi will support it once it releases), but this is still a ways out. At the very least, I would recommend using Curi for code splitting routes. Whether your should hoist other data requirements is something that should be determined on a case-by-case basis.</p></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Tutorials</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>Basic</button></div><ul class="link-list"><li class="solo"><a class=" " href="/tutorial/react-basics">React Basics</a></li><li class="solo"><a class=" " href="/tutorial/vue-basics">Vue Basics</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>Advanced</button></div><ul class="link-list"><li class="solo"><a class=" active" href="/tutorial/react-advanced">React Advanced</a></li></ul></li></ul></div></div></div></main></div>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
     <script src="https://unpkg.com/react@16.5.1/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.production.min.js"></script>
