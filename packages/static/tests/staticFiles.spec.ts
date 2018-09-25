@@ -231,4 +231,43 @@ describe("staticFiles()", () => {
       expect(getRouterOptions.mock.calls.length).toBe(2);
     });
   });
+
+  describe("errors", () => {
+    describe("async routes", () => {
+      it("catches errors", async () => {
+        const fixtures = join(FIXTURES_ROOT, "render-errors");
+        await remove(fixtures);
+        await ensureDir(fixtures);
+
+        const routes = [
+          {
+            name: "Home",
+            path: "",
+            resolve: {
+              async: () => Promise.resolve(true)
+            },
+            response() {
+              return { body: "Home" };
+            }
+          }
+        ];
+        const pages = [{ name: "Home" }];
+        const getRouterOptions = jest.fn();
+        const results = await staticFiles({
+          routes,
+          pages,
+          render: () => {
+            throw new Error("uh oh");
+          },
+          insert: DEFAULT_INSERT,
+          outputDir: fixtures,
+          getRouterOptions
+        });
+        expect(results[0]).toMatchObject({
+          pathname: "/",
+          success: false
+        });
+      });
+    });
+  });
 });
