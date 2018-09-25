@@ -1,4 +1,4 @@
-import { stripLeadingSlash } from "./utils/path";
+import { withLeadingSlash } from "./utils/path";
 import parseParams from "./utils/parseParams";
 
 import { HickoryLocation } from "@hickory/root";
@@ -14,6 +14,7 @@ function matchRoute(
   const regExpMatch: RegExpMatchArray | null = route.pathMatching.re.exec(
     testPath
   );
+
   if (!regExpMatch) {
     return [];
   }
@@ -33,12 +34,17 @@ function matchRoute(
 
   // children only need to match against unmatched segments
   const remainingSegments = testPath.slice(matchedSegment.length);
-  const childrenLength = route.children.length;
-  for (let i = 0; i < childrenLength; i++) {
-    const matched = matchRoute(route.children[i], remainingSegments);
-    if (matched.length) {
-      matches = matches.concat(matched);
-      break;
+  if (remainingSegments !== "") {
+    const childrenLength = route.children.length;
+    // a parent that ends with a slash will have stripped the leading
+    // slash from remaining segments, so re-add it
+    const fullSegments = withLeadingSlash(remainingSegments);
+    for (let i = 0; i < childrenLength; i++) {
+      const matched = matchRoute(route.children[i], fullSegments);
+      if (matched.length) {
+        matches = matches.concat(matched);
+        break;
+      }
     }
   }
 

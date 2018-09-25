@@ -1,3 +1,7 @@
+## Next
+
+* Fix bug in route matching when parent route ends with a forward slash.
+
 ## 1.0.1
 
 * Add `automaticRedirects` option to router. When `false`, redirects will have to be triggered by the user. This is mostly useful for server-side rendering.
