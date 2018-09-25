@@ -63,21 +63,25 @@ export default async function staticFiles(
 
           router.once(
             (emitted: Emitted) => {
-              const { response } = emitted;
-              if (response.redirectTo && !outputRedirects) {
-                resolve({
-                  pathname,
-                  success: false,
-                  error: new Error("redirect")
+              try {
+                const { response } = emitted;
+                if (response.redirectTo && !outputRedirects) {
+                  resolve({
+                    pathname,
+                    success: false,
+                    error: new Error("redirect")
+                  });
+                  return;
+                }
+                const markup = render(emitted);
+                const html = insert(markup);
+                const outputFilename = join(outputDir, pathname, "index.html");
+                outputFile(outputFilename, html).then(() => {
+                  resolve({ pathname, success: true });
                 });
-                return;
+              } catch (e) {
+                resolve({ pathname, success: false, error: e });
               }
-              const markup = render(emitted);
-              const html = insert(markup);
-              const outputFilename = join(outputDir, pathname, "index.html");
-              outputFile(outputFilename, html).then(() => {
-                resolve({ pathname, success: true });
-              });
             },
             { initial: true }
           );
