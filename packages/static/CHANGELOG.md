@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-alpha.2
 
 * Catch errors that occur while rendering/inserting/saving asynchronous routes.
 

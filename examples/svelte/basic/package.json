@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/basic-svelte",
   "private": true,
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Add Curi routing to a Svelte application",
   "main": "index.js",
   "keywords": [
@@ -12,7 +12,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.1",
+    "@curi/router": "^1.0.2",
     "@curi/svelte": "^1.0.0-beta.8",
     "@hickory/browser": "^1.0.0",
     "svelte": "^2.8.1"

@@ -1,6 +1,6 @@
 {
   "name": "@curi/static",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Generate static HTML files from Curi routes",
   "main": "dist/curi-static.js",
   "types": "types/index.d.ts",
@@ -29,7 +29,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.1",
+    "@curi/router": "^1.0.2",
     "@hickory/in-memory": "^1.0.2",
     "@types/express": "^4.16.0",
     "@types/fs-extra": "^5.0.4",

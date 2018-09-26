@@ -32,7 +32,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.1"
+    "@curi/router": "^1.0.2"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",
