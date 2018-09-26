@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Creating a Router Guide | Curi Documentation</title>
@@ -9,7 +10,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Creating a Router</h1><div class="section" id="router-object"><h2>The Router<a class="header-link" href="/guides/creating-a-router/#router-object">#</a></h2><div class="explanation"><p>The router is the controller of the single-page application. A router is created using a <code class="inline-code language-javascript">history</code> object and a<!-- --> <code class="inline-code language-javascript">routes</code> array.</p></div><div class="code-block"><pre><code class="language-javascript">import { curi } from &#x27;@curi/router&#x27;;
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" active" href="/guides/">Guides</a></li><li><a class=" " href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Creating a Router</h1><div class="section" id="router-object"><h2>The Router<a class="header-link" href="/guides/creating-a-router/#router-object">#</a></h2><div class="explanation"><p>The router is the controller of the single-page application. A router is created using a <code class="inline-code language-javascript">history</code> object and a<!-- --> <code class="inline-code language-javascript">routes</code> array.</p></div><div class="code-block"><pre><code class="language-javascript">import { curi } from &#x27;@curi/router&#x27;;
 
 const history = Browser();
 const routes = [...];
@@ -84,7 +85,7 @@ stop();
 // no longer observing</code></pre></div><div class="explanation"><p>If you have any asynchronous routes (routes with <code class="inline-code language-javascript">resolve</code> <!-- -->functions), <code class="inline-code language-javascript">router.once()</code> should be used to delay the initial render until after the initial response is ready.</p></div><div class="code-block"><pre><code class="language-javascript">// wait for initial response to be ready
 router.once(() =&gt; {
   // safe to render async routes now
-});</code></pre></div></div><div class="section" id="rendering"><h2>Rendering<a class="header-link" href="/guides/creating-a-router/#rendering">#</a></h2><div class="explanation"><p>Rendering is left to whatever rendering library you are using. The way that Curi interfaces with each of them varies, but they all use observers to be notified when there is a new response.</p></div><div class="explanation"><p><code class="inline-code language-javascript">@curi/react-dom</code> uses a <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> with a render-invoked <code class="inline-code language-javascript">children</code> function that will be called whenever there is a new response.</p><p>In React applications, <code class="inline-code language-javascript">response.body</code> should be a React component, so rendering the application means creating an element from <code class="inline-code language-javascript">response.body</code>.</p><p>The<!-- --> <a href="/tutorial/react-basics">React Basics Tutorial</a> <!-- -->gets into more detail about how this works.</p></div><div class="code-block"><pre><code class="language-javascript">// React
+});</code></pre></div></div><div class="section" id="rendering"><h2>Rendering<a class="header-link" href="/guides/creating-a-router/#rendering">#</a></h2><div class="explanation"><p>Rendering is left to whatever rendering library you are using. The way that Curi interfaces with each of them varies, but they all use observers to be notified when there is a new response.</p></div><div class="explanation"><p><code class="inline-code language-javascript">@curi/react-dom</code> uses a <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> with a render-invoked <code class="inline-code language-javascript">children</code> function that will be called whenever there is a new response.</p><p>In React applications, <code class="inline-code language-javascript">response.body</code> should be a React component, so rendering the application means creating an element from <code class="inline-code language-javascript">response.body</code>.</p><p>The<!-- --> <a href="/tutorial/react-basics/">React Basics Tutorial</a> <!-- -->gets into more detail about how this works.</p></div><div class="code-block"><pre><code class="language-javascript">// React
 const Router = curiProvider(router);
 
 ReactDOM.render((
@@ -94,7 +95,7 @@ ReactDOM.render((
       return &lt;Body /&gt;;
     }}
   &lt;/Router&gt;
-), document.getElementById(&#x27;root&#x27;));</code></pre></div><div class="explanation"><p><code class="inline-code language-javascript">@curi/vue</code> sets up reactive objects that update when there is a new response. <code class="inline-code language-jsx">&lt;<!-- -->component :is<!-- -->&gt;</code> can be used to render the <code class="inline-code language-javascript">body</code> component.</p><p>The<!-- --> <a href="/tutorial/react-basics">Vue Basics Tutorial</a> <!-- -->details how to use Vue and Curi.</p></div><div class="code-block"><pre><code class="language-javascript">// Vue
+), document.getElementById(&#x27;root&#x27;));</code></pre></div><div class="explanation"><p><code class="inline-code language-javascript">@curi/vue</code> sets up reactive objects that update when there is a new response. <code class="inline-code language-jsx">&lt;<!-- -->component :is<!-- -->&gt;</code> can be used to render the <code class="inline-code language-javascript">body</code> component.</p><p>The<!-- --> <a href="/tutorial/react-basics/">Vue Basics Tutorial</a> <!-- -->details how to use Vue and Curi.</p></div><div class="code-block"><pre><code class="language-javascript">// Vue
 Vue.use(CuriPlugin, { router });
 new Vue({
   el: &#x27;#app&#x27;,

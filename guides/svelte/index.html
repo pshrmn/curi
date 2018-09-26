@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Svelte Guide | Curi Documentation</title>
@@ -9,7 +10,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages">Packages</a></li><li><a class=" active" href="/guides">Guides</a></li><li><a class=" " href="/tutorial">Tutorials</a></li><li><a class=" " href="/examples">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Svelte</h1><div class="section" id="store"><h2>Store Integration<a class="header-link" href="/guides/svelte/#store">#</a></h2><div class="explanation"><p>Curi relies on Svelte&#x27;s store to interface with an application. By adding the <code class="inline-code language-javascript">response</code> (plus the <code class="inline-code language-javascript">router</code> and<!-- --> <code class="inline-code language-javascript">navigation</code> objects) to the store, they are accessible throughout the application.</p><p><code class="inline-code language-javascript">@curi/svelte</code> provides a function to link the router to the store. This sets up an<!-- --> <a href="/guides/navigating/#observer">observer</a>, so that whenever there is a new response, the parts of your application that use the response will be re-rendered.</p></div><div class="code-block"><pre><code class="language-jsx">import store from &quot;svelte/store&quot;;
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" active" href="/guides/">Guides</a></li><li><a class=" " href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Svelte</h1><div class="section" id="store"><h2>Store Integration<a class="header-link" href="/guides/svelte/#store">#</a></h2><div class="explanation"><p>Curi relies on Svelte&#x27;s store to interface with an application. By adding the <code class="inline-code language-javascript">response</code> (plus the <code class="inline-code language-javascript">router</code> and<!-- --> <code class="inline-code language-javascript">navigation</code> objects) to the store, they are accessible throughout the application.</p><p><code class="inline-code language-javascript">@curi/svelte</code> provides a function to link the router to the store. This sets up an<!-- --> <a href="/guides/navigating/#observer">observer</a>, so that whenever there is a new response, the parts of your application that use the response will be re-rendered.</p></div><div class="code-block"><pre><code class="language-jsx">import store from &quot;svelte/store&quot;;
 import { curiStore } from &quot;@curi/svelte&quot;;
 
 import router from &quot;./router&quot;;
