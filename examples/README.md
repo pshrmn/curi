@@ -33,8 +33,11 @@ npm install
 While most of these examples are client side only, they still use browser history objects, which require a server to handle dynamic requests. This directory contains a `server.js` file that you can run to serve the examples.
 
 ```sh
-# make sure to any dependencies are installed
+# make sure dependencies are installed
 npm install
+# if you want to run using source code, install by
+# bootstrapping from the repo's root
+npm run bootstrap:all
 
 # build an example
 node build.js <example-folder> <example-type>

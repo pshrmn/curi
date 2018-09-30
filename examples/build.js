@@ -14,8 +14,11 @@ const config = path.join(
   `webpack.${type}.config.js`
 );
 
-execSync(`npx webpack \
+execSync(
+  `npx webpack \
   --config=${config} \
   --entry=${entry} \
   --output-path=${outputPath} \
-`);
+`,
+  { stdio: [0, 1, 2] }
+);
