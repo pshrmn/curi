@@ -12,6 +12,7 @@ import BasicReact from "./react/Basic";
 import BlockingNavigationReact from "./react/BlockingNavigation";
 import BreadcrumbsReact from "./react/Breadcrumbs";
 import DataLoadingReact from "./react/DataLoading";
+import InfiniteReact from "./react/Infinite";
 import ModalReact from "./react/Modal";
 import MultiBodyReact from "./react/MultiBody";
 
@@ -47,6 +48,7 @@ export default {
     "blocking-navigation": BlockingNavigationReact,
     breadcrumbs: BreadcrumbsReact,
     "data-loading": DataLoadingReact,
+    infinite: InfiniteReact,
     modal: ModalReact,
     "multi-body": MultiBodyReact,
     transitions: TransitionsReact
