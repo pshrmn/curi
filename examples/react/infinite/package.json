@@ -1,22 +1,19 @@
 {
-  "name": "@curi-example/breadcrumbs-react",
+  "name": "@curi-example/infinite-react",
   "private": true,
-  "version": "0.1.14",
-  "description": "Render breadcrumb links",
+  "version": "0.1.0",
+  "description": "Update the location while scrolling",
   "main": "index.js",
   "keywords": [
-    "Curi",
-    "link",
-    "breadcrumbs"
+    "Curi"
   ],
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/addon-ancestors": "^1.0.0-beta.5",
     "@curi/react-dom": "^1.0.0",
-    "@curi/route-ancestors": "^1.0.0",
     "@curi/router": "^1.0.2",
     "@hickory/browser": "^1.0.0",
+    "lorem-ipsum": "^1.0.6",
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
   }
