@@ -6,7 +6,8 @@ import { Response } from "@curi/router";
 
 export interface FocusProps {
   children(ref: Ref<any>): ReactNode;
-  preventScroll: boolean;
+  preventScroll?: boolean;
+  preserve?: boolean;
 }
 
 interface FocusPropsWithResponse extends FocusProps {
@@ -59,10 +60,22 @@ class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
           );
         }
       }
+      if (
+        this.props.preserve &&
+        this.eleToFocus.contains(document.activeElement)
+      ) {
+        return;
+      }
       setTimeout(() => {
         // @ts-ignore
         this.eleToFocus.focus({ preventScroll: this.props.preventScroll });
       });
+    } else {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          "There is no element to focus. Did you forget to add the ref to an element?"
+        );
+      }
     }
   }
 }

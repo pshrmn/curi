@@ -1,3 +1,7 @@
+## Next
+
+* Add `preserve` prop to `<Focus>` to preserve an existing focus (do not steal). Only works if the existing focused element is a child of the one the `ref` is attached to.
+
 ## 1.0.0-beta.4
 
 * Revert dual-mode (not ready yet!).
