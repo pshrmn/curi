@@ -30,107 +30,114 @@ describe("curi-focus directive", () => {
     document.body.innerHTML = "";
   });
 
-  it("focuses when it renders", done => {
-    vueWrapper = new Vue({
-      template: `
-        <div>
-          <main
-            v-curi-focus="$curi.response"
-            tabIndex="-1"
-          />
-        </div>
-      `,
-      el: node
-    });
-
-    setTimeout(() => {
-      const main = document.querySelector("main");
-      expect(document.activeElement).toBe(main);
-      done();
-    }, 25);
-  });
-
-  it("does not re-focus for regular re-renders", done => {
-    vueWrapper = new Vue({
-      template: `
-        <div>
-          <main
-            v-curi-focus="$curi.response"
-            tabIndex="-1"
-          >
-            <input :type="type" />
-          </main>
-        </div>
-      `,
-      el: node,
-      data: {
-        type: "text"
-      }
-    });
-
-    setTimeout(() => {
-      const wrapper = document.querySelector("main");
-      const initialFocus = document.activeElement;
-      expect(initialFocus).toBe(wrapper);
-
-      const input = document.querySelector("input");
-      // steal the focus
-      input.focus();
-      const stolenFocus = document.activeElement;
-      expect(stolenFocus).toBe(input);
-
-      vueWrapper.type = "number";
+  describe("mounting", () => {
+    it("focuses when it renders", done => {
+      vueWrapper = new Vue({
+        template: `
+          <div>
+            <main
+              v-curi-focus="{ key: $curi.response }"
+              tabIndex="-1"
+            />
+          </div>
+        `,
+        el: node
+      });
 
       setTimeout(() => {
+        const main = document.querySelector("main");
+        expect(document.activeElement).toBe(main);
+        done();
+      }, 25);
+    });
+  });
+
+  describe("updates", () => {
+    it("does not re-focus for regular re-renders", done => {
+      vueWrapper = new Vue({
+        template: `
+          <div>
+            <main
+              v-curi-focus="{ key: $curi.response }"
+              tabIndex="-1"
+            >
+              <input :type="type" />
+            </main>
+          </div>
+        `,
+        el: node,
+        data: {
+          type: "text"
+        }
+      });
+
+      setTimeout(() => {
+        const wrapper = document.querySelector("main");
+        const initialFocus = document.activeElement;
+        expect(initialFocus).toBe(wrapper);
+
+        const input = document.querySelector("input");
+        // steal the focus
+        input.focus();
+        const stolenFocus = document.activeElement;
         expect(stolenFocus).toBe(input);
-        done();
-      }, 25);
-    }, 25);
-  });
 
-  it("re-focuses for new response re-renders", done => {
-    vueWrapper = new Vue({
-      template: `
-        <div>
-          <main
-            v-curi-focus="$curi.response"
-            tabIndex="-1"
-          >
-            <input />
-          </main>
-        </div>
-      `,
-      el: node
+        vueWrapper.type = "number";
+
+        setTimeout(() => {
+          expect(stolenFocus).toBe(input);
+          done();
+        }, 25);
+      }, 25);
     });
 
-    setTimeout(() => {
-      const input = document.querySelector("input");
-      const wrapper = input.parentElement;
-      const initialFocused = document.activeElement;
-
-      expect(initialFocused).toBe(wrapper);
-
-      // steal the focus
-      input.focus();
-      const stolenFocus = document.activeElement;
-      expect(stolenFocus).toBe(input);
-
-      // navigate and verify wrapper is re-focused
-      router.navigate({ name: "Place", params: { name: "Hawaii" } });
+    it("re-focuses for new response re-renders", done => {
+      vueWrapper = new Vue({
+        template: `
+          <div>
+            <main
+              v-curi-focus="{ key: $curi.response }"
+              tabIndex="-1"
+            >
+              <input />
+            </main>
+          </div>
+        `,
+        el: node
+      });
 
       setTimeout(() => {
-        const postNavFocus = document.activeElement;
-        expect(postNavFocus).toBe(wrapper);
-        done();
+        const input = document.querySelector("input");
+        const wrapper = input.parentElement;
+        const initialFocused = document.activeElement;
+
+        expect(initialFocused).toBe(wrapper);
+
+        // steal the focus
+        input.focus();
+        const stolenFocus = document.activeElement;
+        expect(stolenFocus).toBe(input);
+
+        // navigate and verify wrapper is re-focused
+        router.navigate({ name: "Place", params: { name: "Hawaii" } });
+        setTimeout(() => {
+          const postNavFocus = document.activeElement;
+          expect(postNavFocus).toBe(wrapper);
+          done();
+        }, 25);
       }, 25);
-    }, 25);
+    });
   });
 
   it("isn't affected by prop changes", done => {
     vueWrapper = new Vue({
       template: `
         <div>
-          <main v-curi-focus="$curi.response" tabIndex="-1" :class="wat">
+          <main
+            v-curi-focus="{ key: $curi.response }"
+            tabIndex="-1"
+            :class="wat"
+          >
             <input />
           </main>
         </div>
@@ -166,6 +173,168 @@ describe("curi-focus directive", () => {
     }, 25);
   });
 
+  describe("preserve", () => {
+    describe("false (default)", () => {
+      it("re-focuses for new response re-renders", done => {
+        vueWrapper = new Vue({
+          template: `
+            <div>
+              <main
+                v-curi-focus="{ key: $curi.response }"
+                tabIndex="-1"
+              >
+                <input />
+              </main>
+            </div>
+          `,
+          el: node
+        });
+
+        setTimeout(() => {
+          const input = document.querySelector("input");
+          const wrapper = input.parentElement;
+          const initialFocused = document.activeElement;
+
+          expect(wrapper).toBe(initialFocused);
+
+          // steal the focus
+          input.focus();
+          const stolenFocus = document.activeElement;
+          expect(input).toBe(stolenFocus);
+
+          // navigate and verify wrapper is re-focused
+          router.navigate({ name: "Place", params: { name: "maybe" } });
+
+          setTimeout(() => {
+            const postNavFocus = document.activeElement;
+            expect(wrapper).toBe(postNavFocus);
+            done();
+          }, 25);
+        }, 25);
+      });
+    });
+
+    describe("true", () => {
+      it("does not focus ref if something is already ", done => {
+        vueWrapper = new Vue({
+          template: `
+            <div>
+              <main
+                v-curi-focus="{ key: $curi.response, preserve: true }"
+                tabIndex="-1"
+              >
+                <input />
+              </main>
+            </div>
+          `,
+          el: node
+        });
+
+        setTimeout(() => {
+          const input = document.querySelector("input");
+          const wrapper = input.parentElement;
+          const initialFocused = document.activeElement;
+
+          expect(wrapper).toBe(initialFocused);
+
+          // steal the focus
+          input.focus();
+          const stolenFocus = document.activeElement;
+          expect(input).toBe(stolenFocus);
+
+          // navigate and verify wrapper is re-focused
+          router.navigate({ name: "Place", params: { name: "maybe" } });
+
+          setTimeout(() => {
+            const postNavFocus = document.activeElement;
+            expect(postNavFocus).toBe(input);
+            done();
+          }, 25);
+        }, 25);
+      });
+    });
+  });
+
+  describe("preventScroll", () => {
+    const realFocus = HTMLElement.prototype.focus;
+    let fakeFocus;
+
+    beforeEach(() => {
+      fakeFocus = HTMLElement.prototype.focus = jest.fn();
+    });
+
+    afterEach(() => {
+      fakeFocus.mockReset();
+      HTMLElement.prototype.focus = realFocus;
+    });
+
+    it("calls focus({ preventScroll: false }} when not provided", done => {
+      vueWrapper = new Vue({
+        template: `
+          <div>
+            <main
+              v-curi-focus="{ key: $curi.response }"
+              tabIndex="-1"
+            >
+              <input />
+            </main>
+          </div>
+        `,
+        el: node
+      });
+      setTimeout(() => {
+        expect(fakeFocus.mock.calls[0][0]).toMatchObject({
+          preventScroll: false
+        });
+        done();
+      }, 25);
+    });
+
+    it("calls focus({ preventScroll: true }} when preventScroll = true", done => {
+      vueWrapper = new Vue({
+        template: `
+          <div>
+            <main
+              v-curi-focus="{ key: $curi.response, preventScroll: true }"
+              tabIndex="-1"
+            >
+              <input />
+            </main>
+          </div>
+        `,
+        el: node
+      });
+      setTimeout(() => {
+        expect(fakeFocus.mock.calls[0][0]).toMatchObject({
+          preventScroll: true
+        });
+        done();
+      }, 25);
+    });
+
+    it("calls focus({ preventScroll: false }} when preventScroll = false", done => {
+      vueWrapper = new Vue({
+        template: `
+          <div>
+            <main
+              v-curi-focus="{ key: $curi.response, preventScroll: false }"
+              tabIndex="-1"
+            >
+              <input />
+            </main>
+          </div>
+        `,
+        el: node
+      });
+      setTimeout(() => {
+        expect(fakeFocus.mock.calls[0][0]).toMatchObject({
+          preventScroll: false
+        });
+        done();
+      }, 25);
+    });
+  });
+
   describe("tabIndex", () => {
     it("warns when element with directive does not have a tabIndex attribute", () => {
       const realWarn = console.warn;
@@ -174,7 +343,7 @@ describe("curi-focus directive", () => {
       vueWrapper = new Vue({
         template: `
           <div>
-            <main v-curi-focus="$curi.response" />
+            <main v-curi-focus="{ key: $curi.response }" />
           </div>
         `,
         el: node
@@ -193,7 +362,7 @@ describe("curi-focus directive", () => {
           <div>
             <input
               type="text"
-              v-curi-focus="$curi.response"
+              v-curi-focus="{ key: $curi.response }"
             />
           </div>
         `,

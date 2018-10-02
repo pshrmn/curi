@@ -1,3 +1,7 @@
+## Next
+
+* `v-curi-focus` takes a `FocusDirectiveProperties` object with `key` (re-focus on `key` value change), `preserve` (don't steal focus from already focused child element), and `preventScroll` (don't scroll to focused element) properties.
+
 ## 1.0.0-beta.23
 
 * Revert dual-mode (not ready yet!).
