@@ -235,79 +235,80 @@ Vue.use(CuriPlugin, { router });`}
             </Explanation>
             <CodeBlock lang="html">
               {`<template>
-  <main :tabIndex="-1" v-curi-focus="$curi.response">
+  <main :tabIndex="-1" v-curi-focus="{ key: $curi.response }">
     <component :is="$curi.response.body" />
   </main>
 </template>`}
             </CodeBlock>
-          </Section>
-        </APIBlock>
-
-        <Section title="Usage" id="usage">
-          <Explanation>
-            <p>
-              You can either use a Vue component or a render function to render
-              Curi responses.
-            </p>
-          </Explanation>
-
-          <CodeBlock lang="html">
-            {`<!-- App.vue -->
+            <Section tag="h3" title="Properties" id="focus-properties">
+              <Subsection tag="h4" title="key" id="focus-key">
+                <Explanation>
+                  <p>
+                    A value that changes when there is a new response; the{" "}
+                    <IJS>response</IJS> is usually fine for this.
+                  </p>
+                </Explanation>
+              </Subsection>
+              <Subsection tag="h4" title="preserve" id="focus-preserve">
+                <Explanation>
+                  <p>
+                    When <IJS>true</IJS> (<IJS>false</IJS> by default), the
+                    element will not be focused if one of its children elements
+                    is already focused.
+                  </p>
+                  <p>
+                    This is useful if the element has children that are
+                    automatically focused (<Cmp>input autofocus</Cmp>).
+                  </p>
+                </Explanation>
+                <CodeBlock lang="html">
+                  {`<!-- <input> will be focused -->
 <template>
-  <div>
-    <NavLinks />
-    <component :is="$curi.response.body" />
-  </div>
+  <main
+    :tabIndex="-1"
+    v-curi-focus="{ key: $curi.response, preserve: true}"
+  >
+    <input autofocus />
+  </main>
 </template>
 
-<script>
-  import NavLinks from './NavLinks';
-  export default {
-    name: 'app',
-    components: { NavLinks }
-  }
-</script>
-`}
-          </CodeBlock>
-
-          <Explanation />
-          <CodeBlock>
-            {`// renderFunction.js
-import NavLinks from './NavLinks';
-export default function renderFunction(h) {
-  return h('div', [
-    h(NavLinks),
-    h(this.$curi.response.body)
-  ]);
-}`}
-          </CodeBlock>
-
-          <Explanation>
-            <p>
-              If the router has async routes, you will need to wait for it to
-              emit its first response before you can render. This can be done by
-              calling your rendering code in an observer function passed to{" "}
-              <IJS>router.once()</IJS>.
-            </p>
-          </Explanation>
-          <CodeBlock>
-            {`router.once(() => {
-  const vm = new Vue({
-    el: '#app',
-      
-    // either use a template or a render function
-    // TEMPLATE
-    template: '<app />',
-    components: { app: App },
-
-    // RENDER FUNCTION
-    render: function(h) {
-      return h(this.$curi.response.body)
-    }
-  });
-});`}
-          </CodeBlock>
-        </Section>
+<!-- <main> will be focused -->
+<template>
+  <main :tabIndex="-1" v-curi-focus="{ key: $curi.response }">
+    <input autofocus />
+  </main>
+</template>`}
+                </CodeBlock>
+              </Subsection>
+              <Subsection
+                tag="h4"
+                title="preventScroll"
+                id="focus-preventScroll"
+              >
+                <Explanation>
+                  <p>
+                    When <IJS>true</IJS> (<IJS>false</IJS> by default), the
+                    element will not be scrolled to when it is focused.
+                  </p>
+                  <p>
+                    This only works in browsers that support the{" "}
+                    <IJS>preventScroll</IJS> option for <IJS>focus()</IJS>.
+                  </p>
+                </Explanation>
+                <CodeBlock lang="html">
+                  {`<template>
+  <main
+    :tabIndex="-1"
+    v-curi-focus="{ key: $curi.response, preventScroll: true}"
+  >
+  <component :is="$curi.response.body" />
+  </main>
+</template>`}
+                </CodeBlock>
+              </Subsection>
+            </Section>
+          </Section>
+        </APIBlock>
       </React.Fragment>
     );
   }
