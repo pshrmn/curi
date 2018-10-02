@@ -51,12 +51,6 @@ const examples = {
       description: "Display a loading bar while waiting for data to load"
     },*/
     {
-      name: "Infinite Scrolling",
-      category: "react",
-      slug: "infinite",
-      description: "Navigate while scrolling"
-    },
-    {
       name: "Modal Routes",
       category: "react",
       slug: "modal",
