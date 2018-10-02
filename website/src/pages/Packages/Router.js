@@ -659,7 +659,7 @@ router.refresh(newRoutes);
               </Subsection>
             </Section>
           </Section>
-          <Section title="once" id="once">
+          <Section title="once" id="router-once">
             <Explanation>
               <p>
                 <IJS>once</IJS> takes a function as its argument and returns a
@@ -979,7 +979,7 @@ const routes = [
               </CodeBlock>
 
               <ul>
-                <Subsection tag="li" title="match" id="response-match">
+                <Subsection wrapper="li" title="match" id="response-match">
                   <Explanation>
                     <p>
                       An object with the matched route properties of a response.
@@ -1022,7 +1022,11 @@ const routes = [
                     </table>
                   </Explanation>
                 </Subsection>
-                <Subsection tag="li" title="resolved" id="response-resolved">
+                <Subsection
+                  wrapper="li"
+                  title="resolved"
+                  id="response-resolved"
+                >
                   <Explanation>
                     <p>
                       <IJS>resolved</IJS> is an object with the values resolved
@@ -1052,7 +1056,7 @@ const user = {
 }`}
                   </CodeBlock>
                 </Subsection>
-                <Subsection tag="li" title="error" id="response-error">
+                <Subsection wrapper="li" title="error" id="response-error">
                   <Explanation>
                     <p>
                       <IJS>error</IJS> is an error thrown by one of the route's{" "}
