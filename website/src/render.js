@@ -10,7 +10,7 @@ export default function render({ response }) {
   return (
     <React.Fragment>
       <Header />
-      <Focus>
+      <Focus preventScroll={true}>
         {ref => (
           <main ref={ref} tabIndex={-1} style={{ outline: "none" }}>
             <Body response={response} />
