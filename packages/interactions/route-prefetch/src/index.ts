@@ -16,14 +16,16 @@ export default function prefetchRoute(): Interaction {
     name: "prefetch",
     register: (route: Route) => {
       const { name, resolve } = route;
-      if (loaders[name] !== undefined) {
-        console.warn(
-          '[@curi/route-prefetch] A route with the name "' +
-            name +
-            '" already exists. Each route should' +
-            "have a unique name. By registering a function with a name that already exists, " +
-            "you are overwriting the existing one. This may break your application."
-        );
+      if (process.env.NODE_ENV !== "production") {
+        if (loaders[name] !== undefined) {
+          console.warn(
+            '[@curi/route-prefetch] A route with the name "' +
+              name +
+              '" already exists. Each route should' +
+              "have a unique name. By registering a function with a name that already exists, " +
+              "you are overwriting the existing one. This may break your application."
+          );
+        }
       }
       if (resolve && Object.keys(resolve).length) {
         loaders[name] = resolve;

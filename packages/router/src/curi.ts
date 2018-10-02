@@ -101,13 +101,15 @@ export default function createRouter(
     const match = matchLocation(pendingNav.location, routes);
     // if no routes match, do nothing
     if (!match.route) {
-      console.error(
-        `The current location (${
-          pendingNav.location.pathname
-        }) has no matching route, ` +
-          'so a response could not be emitted. A catch-all route ({ path: "(.*)" }) ' +
-          "can be used to match locations with no other matching route."
-      );
+      if (process.env.NODE_ENV !== "production") {
+        console.error(
+          `The current location (${
+            pendingNav.location.pathname
+          }) has no matching route, ` +
+            'so a response could not be emitted. A catch-all route ({ path: "(.*)" }) ' +
+            "can be used to match locations with no other matching route."
+        );
+      }
       pendingNav.finish();
       if (finishCallback) {
         finishCallback();
