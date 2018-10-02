@@ -2,9 +2,20 @@ import Vue, { DirectiveOptions } from "vue";
 
 export interface FocusComponent extends Vue {}
 
-function scheduleFocus(el: HTMLElement) {
+export interface FocusDirectiveProperties {
+  key: any;
+  preventScroll?: boolean;
+  preserve?: boolean;
+}
+
+function focus(el: HTMLElement, options: FocusDirectiveProperties) {
+  const { preserve = false, preventScroll = false } = options;
+  if (preserve && el.contains(document.activeElement)) {
+    return;
+  }
   setTimeout(() => {
-    el.focus();
+    // @ts-ignore
+    el.focus({ preventScroll });
   });
 }
 
@@ -19,11 +30,11 @@ const focusDirection: DirectiveOptions = {
         );
       }
     }
-    scheduleFocus(el);
+    focus(el, binding.value);
   },
   update(el, binding) {
-    if (binding.value !== binding.oldValue) {
-      scheduleFocus(el);
+    if (binding.value.key !== binding.oldValue.key) {
+      focus(el, binding.value);
     }
   }
 };
