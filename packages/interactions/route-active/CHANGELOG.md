@@ -1,3 +1,7 @@
+## Next
+
+* Add dev guard to log to only call in development.
+
 ## 1.0.0-beta.11
 
 * Revert dual-mode (not ready yet!).

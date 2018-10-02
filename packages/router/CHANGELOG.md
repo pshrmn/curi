@@ -1,3 +1,7 @@
+## Next
+
+* Add dev guard to log to only call in development.
+
 ## 1.0.2
 
 * Fix bug in route matching when parent route ends with a forward slash.
