@@ -26,14 +26,16 @@ export default function getRouteAncestors(): Interaction {
       parentRoutes: Array<string> = []
     ): Array<string> => {
       let { name } = route;
-      if (routeAncestors[name] !== undefined) {
-        console.warn(
-          '[@curi/route-ancestors] A route with the name "' +
-            name +
-            '" already exists. Each route should' +
-            "have a unique name. By registering a route with a name that already exists, " +
-            "you are overwriting the existing one. This may break your application."
-        );
+      if (process.env.NODE_ENV !== "production") {
+        if (routeAncestors[name] !== undefined) {
+          console.warn(
+            '[@curi/route-ancestors] A route with the name "' +
+              name +
+              '" already exists. Each route should' +
+              "have a unique name. By registering a route with a name that already exists, " +
+              "you are overwriting the existing one. This may break your application."
+          );
+        }
       }
       routeAncestors[name] = parentRoutes;
       return [name, ...parentRoutes];
