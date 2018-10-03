@@ -2,7 +2,7 @@
   <div>
     <NavLinks />
     <transition name="component-fade">
-      <component :key="$curi.response.location.key" :is="$curi.response.body" />
+      <component :key="$curi.response.location.pathname" :is="$curi.response.body" />
     </transition>
   </div>
 </template>
