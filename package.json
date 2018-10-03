@@ -10,7 +10,7 @@
     "postinstall": "npm run bootstrap",
     "precommit": "pretty-quick --staged",
     "versions": "lerna publish --skip-git --skip-npm",
-    "postversions": "node ./website./scripts/updatePackageVersions",
+    "postversions": "node ./website/scripts/updatePackageVersions",
     "test": "lerna run test",
     "coverage": "lerna run coverage"
   },

@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/accessibility",
   "private": true,
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Add Curi routing to a Vue application",
   "main": "index.js",
   "keywords": [
@@ -12,8 +12,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.2",
-    "@curi/vue": "^1.0.0-beta.23",
+    "@curi/router": "^1.0.3",
+    "@curi/vue": "^1.0.0-beta.24",
     "@hickory/browser": "^1.0.0",
     "vue": "^2.5.17"
   }

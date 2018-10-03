@@ -1,4 +1,4 @@
-## Next
+## 1.0.3
 
 * Add dev guard to log to only call in development.
 

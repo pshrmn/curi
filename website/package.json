@@ -1,7 +1,7 @@
 {
   "name": "@curi/docs-website",
   "private": true,
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "The documentation website for the Curi router",
   "scripts": {
     "prebuild": "npm run setupBuild && npm run versions && webpack-cli --config webpack.config.prod.js",
@@ -19,13 +19,13 @@
   "author": "Paul Sherman",
   "license": "UNLICENSED",
   "dependencies": {
-    "@curi/react-dom": "^1.0.0",
-    "@curi/route-active": "^1.0.0",
-    "@curi/router": "^1.0.2",
+    "@curi/react-dom": "^1.1.0",
+    "@curi/route-active": "^1.0.1",
+    "@curi/router": "^1.0.3",
     "@curi/side-effect-aria-live": "^1.0.0",
     "@curi/side-effect-scroll": "^1.0.0",
     "@curi/side-effect-title": "^1.0.0",
-    "@curi/static": "^1.0.0-alpha.2",
+    "@curi/static": "^1.0.0-alpha.3",
     "@hickory/browser": "^1.0.0",
     "@hickory/in-memory": "^1.0.0",
     "react": "^16.3.2",
