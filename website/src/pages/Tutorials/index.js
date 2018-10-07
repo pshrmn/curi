@@ -1,6 +1,6 @@
-import ReactBasics from "./ReactBasics";
-import ReactAdvanced from "./ReactAdvanced";
-import VueBasics from "./VueBasics";
+import ReactBasics from "./react-basics";
+import ReactAdvanced from "./react-advanced";
+import VueBasics from "./vue-basics";
 
 export default {
   "react-basics": ReactBasics,

@@ -1,15 +1,15 @@
-import Router from "./Router";
-import RouteActive from "./RouteActive";
-import RouteAncestors from "./RouteAncestors";
-import RoutePrefetch from "./RoutePrefetch";
-import SideEffectAriaLive from "./SideEffectAriaLive";
-import SideEffectTitle from "./SideEffectTitle";
-import SideEffectScroll from "./SideEffectScroll";
-import ReactPkg from "./ReactPkg";
-import ReactNativePkg from "./ReactNativePkg";
-import Static from "./Static";
-import Svelte from "./Svelte";
-import Vue from "./Vue";
+import Router from "./router";
+import RouteActive from "./route-active";
+import RouteAncestors from "./route-ancestors";
+import RoutePrefetch from "./route-prefetch";
+import SideEffectAriaLive from "./side-effect-aria-live";
+import SideEffectScroll from "./side-effect-scroll";
+import SideEffectTitle from "./side-effect-title";
+import ReactPkg from "./react-dom";
+import ReactNativePkg from "./react-native";
+import Static from "./static";
+import Svelte from "./svelte";
+import Vue from "./vue";
 
 export default {
   router: Router,

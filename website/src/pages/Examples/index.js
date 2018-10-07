@@ -1,35 +1,34 @@
 // misc
-import CodeSplitting from "./misc/CodeSplitting";
-import ScriptTags from "./misc/ScriptTags";
-import ServerRendering from "./misc/ServerRendering";
-import SideEffect from "./misc/SideEffect";
+import CodeSplitting from "./misc/code-splitting";
+import ScriptTags from "./misc/script-tags";
+import ServerRendering from "./misc/server-rendering";
+import SideEffect from "./misc/side-effect";
 // react
-import A11yReact from "./react/Accessibility";
-import ActiveLinksReact from "./react/ActiveLinks";
-import AsyncNavReact from "./react/AsyncNav";
-import AuthenticationReact from "./react/Authentication";
-import BasicReact from "./react/Basic";
-import BlockingNavigationReact from "./react/BlockingNavigation";
-import BreadcrumbsReact from "./react/Breadcrumbs";
-import DataLoadingReact from "./react/DataLoading";
-import ModalReact from "./react/Modal";
-import MultiBodyReact from "./react/MultiBody";
-
-import TransitionsReact from "./react/Transitions";
+import A11yReact from "./react/accessibility";
+import ActiveLinksReact from "./react/active-links";
+import AsyncNavReact from "./react/async-nav";
+import AuthenticationReact from "./react/authentication";
+import BasicReact from "./react/basic";
+import BlockingNavigationReact from "./react/blocking-navigation";
+import BreadcrumbsReact from "./react/breadcrumbs";
+import DataLoadingReact from "./react/data-loading";
+import ModalReact from "./react/modal";
+import MultiBodyReact from "./react/multi-body";
+import TransitionsReact from "./react/transitions";
 // vue
-import A11yVue from "./vue/Accessibility";
-import ActiveLinksVue from "./vue/ActiveLinks";
-import AsyncNavVue from "./vue/AsyncNav";
-import AuthenticationVue from "./vue/Authentication";
-import BasicVue from "./vue/Basic";
-import BlockingNavigationVue from "./vue/BlockingNavigation";
-import BreadcrumbsVue from "./vue/Breadcrumbs";
-import ModalVue from "./vue/Modal";
-import TransitionsVue from "./vue/Transitions";
+import A11yVue from "./vue/accessibility";
+import ActiveLinksVue from "./vue/active-links";
+import AsyncNavVue from "./vue/async-nav";
+import AuthenticationVue from "./vue/authentication";
+import BasicVue from "./vue/basic";
+import BlockingNavigationVue from "./vue/blocking-navigation";
+import BreadcrumbsVue from "./vue/breadcrumbs";
+import ModalVue from "./vue/modal";
+import TransitionsVue from "./vue/transitions";
 // svelte
-import BasicSvelte from "./svelte/Basic";
+import BasicSvelte from "./svelte/basic";
 // full
-import TwitchFull from "./full/Twitch";
+import TwitchFull from "./full/twitch";
 
 export default {
   misc: {

@@ -1,24 +1,24 @@
-import Installation from "./Installation";
-import CreatingARouter from "./CreatingARouter";
-import RoutesAndResponses from "./RoutesAndResponses";
-import SyncAsync from "./SyncAsync";
-import NavigatingAndObserving from "./NavigatingAndObserving";
+import Installation from "./installation";
+import CreatingARouter from "./creating-a-router";
+import RoutesAndResponses from "./routes-and-responses";
+import SyncAsync from "./sync-or-async";
+import NavigatingAndObserving from "./navigating-and-observing";
 
-import ReactDOMRendering from "./ReactDOM";
-import ReactNativeRendering from "./ReactNative";
-import VueRendering from "./Vue";
-import SvelteRendering from "./Svelte";
+import ReactDOMRendering from "./react-dom";
+import ReactNativeRendering from "./react-native";
+import SvelteRendering from "./svelte";
+import VueRendering from "./vue";
 
-import RouteInteractions from "./RouteInteractions";
-import SideEffects from "./UsingSideEffects";
-import CodeSplitting from "./CodeSplitting";
-import LoadingData from "./Loading";
-import Accessibility from "./Accessibility";
-import Apollo from "./Apollo";
-import DevTips from "./DevTips";
+import RouteInteractions from "./routes-and-responses";
+import SideEffects from "./side-effects";
+import CodeSplitting from "./code-splitting";
+import LoadingData from "./loading";
+import Accessibility from "./accessibility";
+import Apollo from "./apollo";
+import DevTips from "./dev-tips";
 
-import MigrateReactRouterv3 from "./MigrateReactRouterv3";
-import MigrateReactRouterv4 from "./MigrateReactRouterv4";
+import MigrateReactRouterv3 from "./migrate-rrv3";
+import MigrateReactRouterv4 from "./migrate-rrv4";
 
 export default {
   // basic
