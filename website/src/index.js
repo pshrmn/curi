@@ -10,6 +10,14 @@ import active from "@curi/route-active";
 import routes from "./routes";
 import renderFunction from "./render";
 
+// This is dumb, but I haven't figured out how to get
+// Webpack to hoist these modules automatically and they
+// were creating a ton of duplicate code...
+import { Section } from "./components/layout/Sections";
+import CodeSandboxDemo from "./components/CodeSandboxDemo";
+import APIBlock from "./components/package/APIBlock";
+import About from "./components/package/About";
+
 const setTitle = titleSideEffect(
   ({ response }) => `${response.title} | Curi Documentation`
 );
@@ -27,25 +35,25 @@ const router = curi(history, routes, {
 });
 const Router = curiProvider(router);
 
-router.once(() => {
-  if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production") {
+  router.once(() => {
     ReactDOM.render(
       <Router>{renderFunction}</Router>,
       document.getElementById("root")
     );
-  } else {
-    ReactDOM.hydrate(
-      <Router>{renderFunction}</Router>,
-      document.getElementById("root")
-    );
-  }
-});
+  });
 
-if (process.env.NODE_ENV !== "production") {
   if (module.hot) {
     module.hot.accept("./routes", () => {
       const nextRoutes = require("./routes").default;
       router.refresh(nextRoutes);
     });
   }
+} else {
+  router.once(() => {
+    ReactDOM.hydrate(
+      <Router>{renderFunction}</Router>,
+      document.getElementById("root")
+    );
+  });
 }

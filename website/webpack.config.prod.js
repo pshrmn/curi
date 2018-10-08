@@ -1,5 +1,7 @@
 const webpack = require("webpack");
 const MiniCSS = require("mini-css-extract-plugin");
+//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 const path = require("path");
 
 const configBase = require("./webpack.config.base.js");
@@ -28,7 +30,11 @@ const config = {
     new MiniCSS({
       filename: "css/[name].css"
     })
-  ]
+    //new BundleAnalyzerPlugin()
+  ],
+  optimization: {
+    //minimize: false
+  }
 };
 
 module.exports = config;

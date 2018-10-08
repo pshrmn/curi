@@ -12,6 +12,7 @@ import PACKAGE_API from "./constants/packages";
 import EXAMPLE_API from "./constants/examples";
 
 import catchImportError from "./catchImportError";
+import preferDefault from "./preferDefault";
 
 export default [
   {
@@ -39,15 +40,29 @@ export default [
         path: ":slug/",
         resolve: {
           body: () =>
-            import(/* webpackChunkName: 'tutorial' */ "./components/routes/Tutorial").then(
-              module => module.default,
-              catchImportError("tutorial")
-            )
+            preferDefault(
+              import(/* webpackChunkName: 'tutorial', webpackPrefetch: true */
+              "./components/routes/Tutorial")
+            ).catch(catchImportError("tutorial")),
+          content: ({ params }) => {
+            const tutorial = TUTORIAL_API.find(params.slug);
+            return tutorial
+              ? tutorial
+                  .import()
+                  .catch(catchImportError(`tutorial: ${params.slug}`))
+              : preferDefault(
+                  import(/* webpackChunkName: 'tutorial404' */
+                  "./pages/Tutorials/404.js")
+                ).catch(catchImportError(`tutorial 404`));
+          }
         },
         response: ({ match, resolved }) => {
           const tutorial = TUTORIAL_API.find(match.params.slug);
           return {
             body: resolved.body,
+            data: {
+              content: resolved.content
+            },
             title: tutorial
               ? `Tutorial ${tutorial.title}`
               : "Tutorial Not Found"
@@ -69,18 +84,33 @@ export default [
       {
         name: "Guide",
         path: ":slug/",
+        pathOptions: {
+          strict: true
+        },
         resolve: {
           body: () =>
-            import(/* webpackChunkName: 'guide' */ "./components/routes/Guide").then(
-              module => module.default,
-              catchImportError("guide")
-            )
+            preferDefault(
+              import(/* webpackChunkName: 'guide', webpackPrefetch: true */
+              "./components/routes/Guide")
+            ).catch(catchImportError("guide")),
+          content: ({ params }) => {
+            const guide = GUIDE_API.find(params.slug);
+            return guide
+              ? guide.import().catch(catchImportError(`guide: ${params.slug}`))
+              : preferDefault(
+                  import(/* webpackChunkName: 'guide404' */
+                  "./pages/Guides/404.js")
+                ).catch(catchImportError(`guide 404`));
+          }
         },
-        response: ({ match, resolved, set }) => {
+        response: ({ match, resolved }) => {
           const guide = GUIDE_API.find(match.params.slug);
           return {
             body: resolved.body,
-            data: guide,
+            data: {
+              ...guide,
+              content: resolved.content
+            },
             title: guide ? `${guide.name} Guide` : "Guide Not Found"
           };
         }
@@ -102,17 +132,31 @@ export default [
         path: "@curi/:package/",
         resolve: {
           body: () =>
-            import(/* webpackChunkName: 'package' */ "./components/routes/Package").then(
-              module => module.default,
-              catchImportError("package")
-            )
+            preferDefault(
+              import(/* webpackChunkName: 'package', webpackPrefetch: true */
+              "./components/routes/Package")
+            ).catch(catchImportError("package")),
+          content: ({ params }) => {
+            const pkg = PACKAGE_API.find(params.package);
+            return pkg
+              ? pkg
+                  .import()
+                  .catch(catchImportError(`package: ${params.package}`))
+              : preferDefault(
+                  import(/* webpackChunkName: 'package404' */
+                  "./pages/Packages/404.js")
+                ).catch(catchImportError(`package 404`));
+          }
         },
         response: ({ match, resolved }) => {
           const pkg = PACKAGE_API.find(match.params.package);
           return {
             body: resolved.body,
             title: `@curi/${match.params.package}`,
-            data: pkg
+            data: {
+              ...pkg,
+              content: resolved.content
+            }
           };
         }
       }
@@ -133,17 +177,35 @@ export default [
         path: ":category/:slug/",
         resolve: {
           body: () =>
-            import(/* webpackChunkName: 'example' */ "./components/routes/Example").then(
-              module => module.default,
-              catchImportError("example")
-            )
+            preferDefault(
+              import(/* webpackChunkName: 'example', webpackPrefetch: true */
+              "./components/routes/Example")
+            ).catch(catchImportError("example")),
+          content: ({ params }) => {
+            const example = EXAMPLE_API.find(params.category, params.slug);
+            return example
+              ? example
+                  .import()
+                  .catch(
+                    catchImportError(
+                      `example: ${params.category}/${params.slug}`
+                    )
+                  )
+              : preferDefault(
+                  import(/* webpackChunkName: 'example404' */
+                  "./pages/Examples/404.js")
+                ).catch(catchImportError(`example 404`));
+          }
         },
         response: ({ match, resolved }) => {
           const { category, slug } = match.params;
           const example = EXAMPLE_API.find(category, slug);
           return {
             body: resolved.body,
-            data: example,
+            data: {
+              ...example,
+              content: resolved.content
+            },
             title: example ? `${example.name} Example` : "Example Not Found"
           };
         }

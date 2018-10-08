@@ -1,4 +1,5 @@
 import versions from "./versions";
+import preferDefault from "../preferDefault";
 
 const packages = [
   {
@@ -6,84 +7,144 @@ const packages = [
     version: versions["router"],
     globalName: "Curi",
     type: "router",
-    script: true
+    script: true,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--router' */
+        `../pages/Packages/router.js`)
+      )
   },
   {
     name: "react-dom",
     version: versions["react-dom"],
     globalName: "CuriReactDOM",
     type: "render",
-    script: true
+    script: true,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--react-dom' */
+        `../pages/Packages/react-dom.js`)
+      )
   },
   {
     name: "react-native",
     version: versions["react-native"],
     globalName: "CuriReactNative",
     type: "render",
-    script: false
+    script: false,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--react-native' */
+        `../pages/Packages/react-native.js`)
+      )
   },
   {
     name: "svelte",
     version: versions["svelte"],
     globalName: "CuriSvelte",
     type: "render",
-    script: false
+    script: false,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--svelte' */
+        `../pages/Packages/svelte.js`)
+      )
   },
   {
     name: "vue",
     version: versions["vue"],
     globalName: "CuriVue",
     type: "render",
-    script: true
+    script: true,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--vue' */
+        `../pages/Packages/vue.js`)
+      )
   },
   {
     name: "route-active",
     version: versions["route-active"],
     globalName: "CuriRouteActive",
     type: "route interactions",
-    script: true
+    script: true,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--route-active' */
+        `../pages/Packages/route-active.js`)
+      )
   },
   {
     name: "route-ancestors",
     version: versions["route-ancestors"],
     globalName: "CuriRouteAncestors",
     type: "route interactions",
-    script: true
+    script: true,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--route-ancestors' */
+        `../pages/Packages/route-ancestors.js`)
+      )
   },
   {
     name: "route-prefetch",
     version: versions["route-prefetch"],
     globalName: "CuriRoutePrefetch",
     type: "route interactions",
-    script: true
+    script: true,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--route-prefetch' */
+        `../pages/Packages/route-prefetch.js`)
+      )
   },
   {
     name: "side-effect-aria-live",
     version: versions["side-effect-aria-live"],
     globalName: "CuriSideEffectAriaLive",
     type: "side effects",
-    script: true
-  },
-  {
-    name: "side-effect-title",
-    version: versions["side-effect-title"],
-    globalName: "CuriSideEffectTitle",
-    type: "side effects",
-    script: true
+    script: true,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--side-effect-aria-live' */
+        `../pages/Packages/side-effect-aria-live.js`)
+      )
   },
   {
     name: "side-effect-scroll",
     version: versions["side-effect-scroll"],
     globalName: "CuriSideEffectScroll",
     type: "side effects",
-    script: true
+    script: true,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--side-effect-scroll' */
+        `../pages/Packages/side-effect-scroll.js`)
+      )
+  },
+  {
+    name: "side-effect-title",
+    version: versions["side-effect-title"],
+    globalName: "CuriSideEffectTitle",
+    type: "side effects",
+    script: true,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--side-effect-title' */
+        `../pages/Packages/side-effect-title.js`)
+      )
   },
   {
     name: "static",
     version: versions["static"],
     globalName: "CuriStatic",
     type: "dev",
-    script: false
+    script: false,
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'package--static' */
+        `../pages/Packages/static.js`)
+      )
   }
 ];
 

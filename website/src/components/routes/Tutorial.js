@@ -1,17 +1,12 @@
 import React from "react";
 
-import TutorialComponents from "../../pages/Tutorials";
 import TutorialTemplate from "../templates/Tutorial";
 
 export default function TutorialPage({ response }) {
-  const Component = TutorialComponents[response.params.slug];
+  const Content = response.data.content;
   return (
     <TutorialTemplate>
-      {Component ? (
-        <Component />
-      ) : (
-        <div>The requested tutorial could not be found.</div>
-      )}
+      <Content />
     </TutorialTemplate>
   );
 }

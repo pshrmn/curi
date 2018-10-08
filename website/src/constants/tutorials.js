@@ -1,23 +1,40 @@
+import preferDefault from "../preferDefault";
+
 const tutorials = [
   {
     title: "React Basics",
     slug: "react-basics",
     type: "Basic",
     description:
-      "Learn the basics of setting up a single-page application using Curi and React"
+      "Learn the basics of setting up a single-page application using Curi and React",
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'tutorial--react-basics' */
+        `../pages/Tutorials/react-basics.js`)
+      )
   },
   {
     title: "React Advanced",
     slug: "react-advanced",
     type: "Advanced",
-    description: "Add code splitting and data preloading to an application."
+    description: "Add code splitting and data preloading to an application",
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'tutorial--react-advanced' */
+        `../pages/Tutorials/react-advanced.js`)
+      )
   },
   {
     title: "Vue Basics",
     slug: "vue-basics",
     type: "Basic",
     description:
-      "Learn the basics of setting up a single-page application using Curi and Vue"
+      "Learn the basics of setting up a single-page application using Curi and Vue",
+    import: () =>
+      preferDefault(
+        import(/* webpackChunkName: 'tutorial--vue-basics' */
+        `../pages/Tutorials/vue-basics.js`)
+      )
   }
 ];
 

@@ -23,7 +23,7 @@ export default function BasePackage({
   children,
   script = true
 }) {
-  return (
+  return name !== undefined ? (
     <React.Fragment>
       <h1>@curi/{name}</h1>
       <div className="package-info">
@@ -39,5 +39,7 @@ export default function BasePackage({
       />
       {children || null}
     </React.Fragment>
+  ) : (
+    children
   );
 }
