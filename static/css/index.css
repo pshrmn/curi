@@ -292,3 +292,39 @@ main {
   main {
     padding: 50px 25px 0; } }
 
+.section,
+.subsection {
+  margin-top: 15px; }
+  .section .header-link,
+  .subsection .header-link {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #666; }
+
+.aside {
+  padding: 5px 10px;
+  border-left: 2px solid #4caf50;
+  background: #e8f5e9;
+  margin-top: 15px; }
+  .aside .header-link {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #666; }
+  .aside .inline-code {
+    background: #81c784 !important; }
+  @media only screen and (min-width: 641px) {
+  .section,
+  .subsection {
+    max-width: 800px; } }
+
+.demo p {
+  font-style: italic;
+  text-align: center;
+  margin: 0; }
+
+#API > .section {
+  border-bottom: 3px double #222233; }
+
+#API .section {
+  margin-bottom: 5px; }
+
