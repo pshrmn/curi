@@ -7,9 +7,15 @@ import {
 import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
+const meta = {
+  title: "Blocking Navigation"
+};
+
 export default function BlockingNavigationExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           Sometimes, you don't want the user to leave the page. Ideally, this is

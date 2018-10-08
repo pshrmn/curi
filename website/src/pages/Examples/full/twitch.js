@@ -8,11 +8,15 @@ import {
 import { Note } from "../../../components/Messages";
 import { Section } from "../../../components/layout/Sections";
 
-export const slug = "twitch";
+const meta = {
+  title: "Twitch Clone"
+};
 
 export default function TwitchExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           A clone of <a href="https://twitch.tv">Twitch</a> without all of the

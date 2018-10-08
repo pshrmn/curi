@@ -6,9 +6,15 @@ import { InlineJS as IJS } from "../../../components/highlight/Inline";
 import { CodeBlock } from "../../../components/layout/Groups";
 import { Note } from "../../../components/Messages";
 
+const meta = {
+  title: "Multiple Body Components"
+};
+
 export default function MultiBodyExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           The <IJS>body</IJS> property of a response doesn't have to be a single

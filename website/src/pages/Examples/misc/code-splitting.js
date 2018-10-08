@@ -4,9 +4,15 @@ import { Link } from "@curi/react-dom";
 import { Section } from "../../../components/layout/Sections";
 import { InlineJS as IJS } from "../../../components/highlight/Inline";
 
+const meta = {
+  title: "Code Splitting"
+};
+
 export default function CodeSplittingExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           Code splitting with Curi routes is done using a <IJS>resolve</IJS>{" "}

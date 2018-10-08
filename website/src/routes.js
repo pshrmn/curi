@@ -41,8 +41,8 @@ export default [
         resolve: {
           body: () =>
             preferDefault(
-              import(/* webpackChunkName: 'tutorial', webpackPrefetch: true */
-              "./components/routes/Tutorial")
+              /* webpackChunkName: 'tutorial', webpackPrefetch: true */
+              import("./components/routes/Tutorial")
             ).catch(catchImportError("tutorial")),
           content: ({ params }) => {
             const tutorial = TUTORIAL_API.find(params.slug);
@@ -51,8 +51,8 @@ export default [
                   .import()
                   .catch(catchImportError(`tutorial: ${params.slug}`))
               : preferDefault(
-                  import(/* webpackChunkName: 'tutorial404' */
-                  "./pages/Tutorials/404.js")
+                  /* webpackChunkName: 'tutorial404' */
+                  import("./pages/Tutorials/404.js")
                 ).catch(catchImportError(`tutorial 404`));
           }
         },
@@ -84,22 +84,19 @@ export default [
       {
         name: "Guide",
         path: ":slug/",
-        pathOptions: {
-          strict: true
-        },
         resolve: {
           body: () =>
             preferDefault(
-              import(/* webpackChunkName: 'guide', webpackPrefetch: true */
-              "./components/routes/Guide")
+              /* webpackChunkName: 'guide', webpackPrefetch: true */
+              import("./components/routes/Guide")
             ).catch(catchImportError("guide")),
           content: ({ params }) => {
             const guide = GUIDE_API.find(params.slug);
             return guide
               ? guide.import().catch(catchImportError(`guide: ${params.slug}`))
               : preferDefault(
-                  import(/* webpackChunkName: 'guide404' */
-                  "./pages/Guides/404.js")
+                  /* webpackChunkName: 'guide404' */
+                  import("./pages/Guides/404.js")
                 ).catch(catchImportError(`guide 404`));
           }
         },
@@ -108,7 +105,6 @@ export default [
           return {
             body: resolved.body,
             data: {
-              ...guide,
               content: resolved.content
             },
             title: guide ? `${guide.name} Guide` : "Guide Not Found"
@@ -133,8 +129,8 @@ export default [
         resolve: {
           body: () =>
             preferDefault(
-              import(/* webpackChunkName: 'package', webpackPrefetch: true */
-              "./components/routes/Package")
+              /* webpackChunkName: 'package', webpackPrefetch: true */
+              import("./components/routes/Package")
             ).catch(catchImportError("package")),
           content: ({ params }) => {
             const pkg = PACKAGE_API.find(params.package);
@@ -143,8 +139,8 @@ export default [
                   .import()
                   .catch(catchImportError(`package: ${params.package}`))
               : preferDefault(
-                  import(/* webpackChunkName: 'package404' */
-                  "./pages/Packages/404.js")
+                  /* webpackChunkName: 'package404' */
+                  import("./pages/Packages/404.js")
                 ).catch(catchImportError(`package 404`));
           }
         },
@@ -178,8 +174,8 @@ export default [
         resolve: {
           body: () =>
             preferDefault(
-              import(/* webpackChunkName: 'example', webpackPrefetch: true */
-              "./components/routes/Example")
+              /* webpackChunkName: 'example', webpackPrefetch: true */
+              import("./components/routes/Example")
             ).catch(catchImportError("example")),
           content: ({ params }) => {
             const example = EXAMPLE_API.find(params.category, params.slug);
@@ -192,8 +188,8 @@ export default [
                     )
                   )
               : preferDefault(
-                  import(/* webpackChunkName: 'example404' */
-                  "./pages/Examples/404.js")
+                  /* webpackChunkName: 'example404' */
+                  import("./pages/Examples/404.js")
                 ).catch(catchImportError(`example 404`));
           }
         },
@@ -203,7 +199,6 @@ export default [
           return {
             body: resolved.body,
             data: {
-              ...example,
               content: resolved.content
             },
             title: example ? `${example.name} Example` : "Example Not Found"

@@ -8,9 +8,15 @@ import {
 import { Note } from "../../../components/Messages";
 import { Section } from "../../../components/layout/Sections";
 
+const meta = {
+  title: "Accessibility"
+};
+
 export default function AccessibilityExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           This example demonstrates how to increase the accessibility of an

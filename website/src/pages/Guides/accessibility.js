@@ -9,9 +9,15 @@ import { Warning } from "../../components/Messages";
 import { Section, Subsection } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "Accessibility"
+};
+
 export default function AccessibilityGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Explanation>
         <p>
           It is important to keep in mind that some visitors to your site rely

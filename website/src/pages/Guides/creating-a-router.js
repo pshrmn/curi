@@ -9,9 +9,15 @@ import { Section, Subsection } from "../../components/layout/Sections";
 import { Note } from "../../components/Messages";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "Creating a Router"
+};
+
 export default function CreatingARouterGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="The Router" id="router-object">
         <Explanation>
           <p>

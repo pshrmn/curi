@@ -5,9 +5,15 @@ import { CodeBlock } from "../../../components/layout/Groups";
 import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
+const meta = {
+  title: "Side Effects"
+};
+
 export default function SideEffectExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           Once a response has completed (the route's <IJS>resolve</IJS>{" "}

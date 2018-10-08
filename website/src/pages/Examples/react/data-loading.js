@@ -3,9 +3,15 @@ import React from "react";
 import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
+const meta = {
+  title: "Data Loading"
+};
+
 export default function DataLoadingExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>TBD</p>
       </Section>

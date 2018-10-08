@@ -9,9 +9,15 @@ import { Note } from "../../components/Messages";
 import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "Loading Route Data"
+};
+
 export default function LoadingGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Explanation>
         <p>
           In the code splitting guide, we added a function that calls{" "}

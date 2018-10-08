@@ -9,9 +9,15 @@ import { Note } from "../../components/Messages";
 import { Section, Subsection } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "React Native"
+};
+
 export default function ReactNativeGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Rendering Responses" id="rendering">
         <Explanation>
           <p>

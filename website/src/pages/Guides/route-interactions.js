@@ -5,9 +5,15 @@ import { InlineJS as IJS } from "../../components/highlight/Inline";
 import { Section, Subsection } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "Route Interactions"
+};
+
 export default function RouterInteractionsGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Explanation>
         <p>
           Route interactions let you interact with a registered route using its

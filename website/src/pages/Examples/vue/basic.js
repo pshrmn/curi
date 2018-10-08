@@ -8,9 +8,15 @@ import {
 import { Note } from "../../../components/Messages";
 import { Section } from "../../../components/layout/Sections";
 
+const meta = {
+  title: "Basics"
+};
+
 export default function BasicExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           While Vue does have an official router, this project shows how you

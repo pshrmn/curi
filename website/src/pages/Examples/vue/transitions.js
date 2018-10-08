@@ -8,9 +8,15 @@ import { CodeBlock } from "../../../components/layout/Groups";
 import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
+const meta = {
+  title: "Transitions"
+};
+
 export default function TransitionsExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           You can easily animate transitions between locations with Vue using

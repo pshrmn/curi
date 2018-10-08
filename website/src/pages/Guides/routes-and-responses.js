@@ -6,9 +6,15 @@ import { Note, Warning } from "../../components/Messages";
 import { Section, Subsection } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "Routes & Responses"
+};
+
 export default function RoutesAndResponsesGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Explanation>
         <p>
           Routes describe the valid locations within an application. Responses

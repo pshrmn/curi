@@ -6,9 +6,15 @@ import {
 } from "../../../components/highlight/Inline";
 import { Section } from "../../../components/layout/Sections";
 
+const meta = {
+  title: "Script Tags"
+};
+
 export default function ScriptTagExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           This example uses unbundled JavaScript and script tags to serve its

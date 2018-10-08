@@ -7,9 +7,15 @@ import {
 import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
+const meta = {
+  title: "Active Links"
+};
+
 export default function ActiveLinksExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           You may want to style a link differently when it is "active" (based on

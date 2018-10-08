@@ -4,9 +4,15 @@ import { InlineJS as IJS } from "../../../components/highlight/Inline";
 import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 
+const meta = {
+  title: "Modal Routes"
+};
+
 export default function ModalExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           This example mimics the way that Pinterest works. Whether or not this

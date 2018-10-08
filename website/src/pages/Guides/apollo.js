@@ -9,9 +9,15 @@ import { Note } from "../../components/Messages";
 import { Section, Subsection } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "Apollo Integration"
+};
+
 export default function ApolloGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Explanation>
         <p>
           <a href="https://apollographql.com">Apollo</a> is a great solution for

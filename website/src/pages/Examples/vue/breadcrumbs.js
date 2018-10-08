@@ -4,9 +4,15 @@ import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 import { InlineJS as IJS } from "../../../components/highlight/Inline";
 
+const meta = {
+  title: "Breadcrumbs"
+};
+
 export default function BreadcrumbsExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           You can easily generate breadcrumb navigation links for the current

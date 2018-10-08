@@ -5,9 +5,15 @@ import { InlineJS as IJS } from "../../components/highlight/Inline";
 import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "Installation"
+};
+
 export default function InstallationGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Explanation>
         <p>
           Every application that uses Curi needs to install is{" "}

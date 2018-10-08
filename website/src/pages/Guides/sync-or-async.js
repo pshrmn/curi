@@ -6,9 +6,15 @@ import { Section } from "../../components/layout/Sections";
 import { Note } from "../../components/Messages";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "Sync or Async"
+};
+
 export default function SyncAndAsyncGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Explanation>
         <p>Curi can have synchronous and asynchronous routes.</p>
 

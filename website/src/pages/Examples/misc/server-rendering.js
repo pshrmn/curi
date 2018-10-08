@@ -4,9 +4,15 @@ import { Section } from "../../../components/layout/Sections";
 import { InlineJS as IJS } from "../../../components/highlight/Inline";
 import { CodeBlock } from "../../../components/layout/Groups";
 
+const meta = {
+  title: "Server Rendering"
+};
+
 export default function ServerRenderingExample() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="Explanation" id="explanation">
         <p>
           Server rendering with Curi is pretty similar to client side rendering.

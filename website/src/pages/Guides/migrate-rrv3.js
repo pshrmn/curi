@@ -9,9 +9,15 @@ import { Note } from "../../components/Messages";
 import { Section, Subsection } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "React Router v2/3"
+};
+
 export default function MigrateReactRouterv3Guide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Explanation>
         <p>
           Curi is mostly conceptually similar to React Router versions 2 and 3.

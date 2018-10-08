@@ -9,9 +9,15 @@ import { Note } from "../../components/Messages";
 import { Section, Subsection } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
+const meta = {
+  title: "Vue"
+};
+
 export default function VueGuide() {
   return (
     <React.Fragment>
+      <h1>{meta.title}</h1>
+
       <Section title="The Curi Plugin" id="plugin">
         <Explanation>
           <p>
