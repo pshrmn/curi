@@ -71,39 +71,6 @@ if (module.hot) {
   });
 }`}
         </CodeBlock>
-
-        <Explanation>
-          <Note>
-            <p>
-              This approach does not automatically work with code splitting
-              because the "main" module cannot be hot reloaded. Using a single
-              bundle in development is one way to fix that.
-            </p>
-            <p>
-              If you are using code splitting (importing module with{" "}
-              <IJS>import()</IJS>) and compiling with Babel using the{" "}
-              <IJS>@babel/plugin-syntax-dynamic-import</IJS> plugin, you will
-              want to use the <IJS>dynamic-import-node</IJS> in development
-              instead. This will produce a single bundle (no actual code
-              splitting), so it should only be used in development.
-            </p>
-          </Note>
-        </Explanation>
-        <CodeBlock>
-          {`// .babelrc.js
-
-// you will need to set the NODE_ENV to "production"
-// for your production build
-const __DEV__ = process.env.NODE_ENV !== "production";
-
-module.exports = {
-  plugins: [
-    __DEV__
-      ? "dynamic-import-node"
-      : "@babel/plugin-syntax-dynamic-import"
-  ]
-};`}
-        </CodeBlock>
       </Section>
     </React.Fragment>
   );
