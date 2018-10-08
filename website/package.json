@@ -5,9 +5,8 @@
   "description": "The documentation website for the Curi router",
   "scripts": {
     "prebuild": "npm run setupBuild && npm run versions && webpack-cli --config webpack.config.prod.js",
-    "build": "npm run generate",
+    "build": "cross-env BABEL_ENV=node node ./scripts/build",
     "dev": "cross-env BABEL_ENV=dev webpack-dev-server --config webpack.config.dev.js",
-    "generate": "cross-env BABEL_ENV=build node ./scripts/build",
     "prettier": "prettier --single-quote --write \"src/**/*.js\"",
     "setupBuild": "node ./scripts/buildSetup",
     "versions": "node ./scripts/updatePackageVersions"

@@ -3,20 +3,20 @@ const plugins = [
   "@babel/plugin-proposal-object-rest-spread"
 ];
 
+let modules;
 switch (process.env.BABEL_ENV) {
-  case "dev":
-    plugins.push("dynamic-import-node");
-    break;
-  case "build":
+  case "node":
     plugins.push("dynamic-import-node", [
       "babel-plugin-transform-require-ignore",
       {
         extensions: [".scss"]
       }
     ]);
+    modules = "commonjs";
     break;
   default:
     plugins.push("@babel/plugin-syntax-dynamic-import");
+    modules = false;
 }
 
 const config = {
@@ -25,7 +25,7 @@ const config = {
     [
       "@babel/preset-env",
       {
-        modules: "commonjs",
+        modules,
         targets: {
           browsers: ["> 1%"]
         }
