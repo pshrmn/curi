@@ -10,14 +10,6 @@ import active from "@curi/route-active";
 import routes from "./routes";
 import renderFunction from "./render";
 
-// This is dumb, but I haven't figured out how to get
-// Webpack to hoist these modules automatically and they
-// were creating a ton of duplicate code...
-import { Section } from "./components/layout/Sections";
-import CodeSandboxDemo from "./components/CodeSandboxDemo";
-import APIBlock from "./components/package/APIBlock";
-import About from "./components/package/About";
-
 const setTitle = titleSideEffect(
   ({ response }) => `${response.title} | Curi Documentation`
 );

@@ -33,7 +33,16 @@ const config = {
     //new BundleAnalyzerPlugin()
   ],
   optimization: {
-    //minimize: false
+    minimize: true,
+    splitChunks: {
+      cacheGroups: {
+        async: {
+          chunks: "async",
+          minSize: 0,
+          minChunks: 2
+        }
+      }
+    }
   }
 };
 
