@@ -37,7 +37,7 @@
   "devDependencies": {
     "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
-    "jest": "^22.1.1",
+    "jest": "^23.6.0",
     "ts-jest": "^21.2.3"
   }
 }

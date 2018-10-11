@@ -41,7 +41,7 @@
     "@hickory/in-memory": "^1.0.0",
     "babel-core": "bridge",
     "babel-jest": "^23.0.0",
-    "jest": "^22.1.1",
+    "jest": "^23.6.0",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-svelte": "^4.3.0",
     "simulant": "^0.2.2",
