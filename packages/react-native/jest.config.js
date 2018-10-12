@@ -18,7 +18,8 @@ module.exports = {
   transformIgnorePatterns: ["node_modules/(?!react-native)/"],
   globals: {
     "ts-jest": {
-      module: "es6"
+      module: "es6",
+      diagnostics: false
     }
   },
   moduleNameMapper: {

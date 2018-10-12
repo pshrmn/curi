@@ -11,14 +11,13 @@ switch (process.env.TEST_ENV) {
 }
 
 module.exports = {
+  preset: "ts-jest",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
   testMatch: ["**/tests/**/*.spec.tsx"],
-  transform: {
-    "\\.tsx?$": "ts-jest"
-  },
   globals: {
     "ts-jest": {
-      module: "es6"
+      module: "es6",
+      diagnostics: false
     }
   },
   setupFiles: ["<rootDir>/tests/setup/rAF.js"],

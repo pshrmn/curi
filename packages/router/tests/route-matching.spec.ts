@@ -1,7 +1,7 @@
 import "jest";
 import InMemory from "@hickory/in-memory";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import { curi } from "@curi/router";
 
 describe("route matching/response generation", () => {
