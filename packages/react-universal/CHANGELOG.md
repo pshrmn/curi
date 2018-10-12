@@ -1,3 +1,7 @@
+## Next
+
+* Component returned by `curiProvider()` fully stores `emitted` value in state.
+
 ## 1.0.0-beta.3
 
 * Revert dual-mode (not ready yet!).
