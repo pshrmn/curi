@@ -2,10 +2,10 @@
   "name": "curi-monorepo",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap --concurrency=1 --ignore @curi-example/* --ignore @curi/docs-website",
+    "bootstrap": "lerna bootstrap --concurrency=1 --scope=@curi/*",
     "bootstrap:all": "lerna bootstrap",
     "postbootstrap": "lerna run prepare",
-    "build": "lerna run build --ignore @curi-example/* --ignore @curi/docs-website",
+    "build": "lerna run build --scope=@curi/*",
     "clean": "lerna clean",
     "postinstall": "npm run bootstrap",
     "precommit": "pretty-quick --staged",

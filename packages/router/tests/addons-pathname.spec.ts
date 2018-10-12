@@ -1,5 +1,7 @@
 import "jest";
-import { pathname } from "../src";
+
+// @ts-ignore (resolved by jest)
+import { pathname } from "@curi/router";
 
 describe("pathnameInteraction route interaction", () => {
   let pathnameInteraction;

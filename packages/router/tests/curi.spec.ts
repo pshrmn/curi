@@ -4,7 +4,7 @@ import { RemoveObserver } from "../src/types";
 
 import { NavType } from "@hickory/root";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import { curi } from "@curi/router";
 
 describe("curi", () => {

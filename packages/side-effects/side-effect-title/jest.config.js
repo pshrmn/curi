@@ -11,14 +11,13 @@ switch (process.env.TEST_ENV) {
 }
 
 module.exports = {
+  preset: "ts-jest",
   moduleFileExtensions: ["ts", "js"],
   testMatch: ["**/tests/**/*.spec.ts"],
-  transform: {
-    "\\.ts$": "ts-jest"
-  },
   globals: {
     "ts-jest": {
-      module: "es6"
+      module: "es6",
+      diagnostics: false
     }
   },
   testURL: "http://localhost",

@@ -1,5 +1,5 @@
 {
-  "name": "@curi/docs-website",
+  "name": "@curi-docs/website",
   "private": true,
   "version": "0.1.16",
   "description": "The documentation website for the Curi router",

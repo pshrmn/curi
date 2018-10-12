@@ -2,7 +2,7 @@ import "jest";
 import { Route, Interaction } from "../src/types";
 import InMemory from "@hickory/in-memory";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import { curi } from "@curi/router";
 
 function PropertyReporter(): Interaction {

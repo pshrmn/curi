@@ -1,5 +1,7 @@
 import "jest";
-import { once } from "../src/index";
+
+// @ts-ignore (resolved by jest)
+import { once } from "@curi/router";
 
 describe("once()", () => {
   it("wraps a promise returning function", () => {
