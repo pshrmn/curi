@@ -1,11 +1,11 @@
 import React from "react";
-import { CuriRouter, CurrentResponse, Emitted } from "@curi/router";
+import { CuriRouter, Emitted } from "@curi/router";
 export declare type CuriRenderFn = (props: Emitted) => React.ReactNode;
 export interface RouterProps {
     children: CuriRenderFn;
 }
 export interface RouterState {
-    emitted: CurrentResponse;
+    emitted: Emitted;
 }
 export default function curiProvider(router: CuriRouter): {
     new (props: RouterProps): {

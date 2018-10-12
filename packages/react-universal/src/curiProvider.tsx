@@ -1,12 +1,7 @@
 import React from "react";
 import { Provider } from "./Context";
 
-import {
-  CuriRouter,
-  CurrentResponse,
-  Emitted,
-  RemoveObserver
-} from "@curi/router";
+import { CuriRouter, Emitted } from "@curi/router";
 
 export type CuriRenderFn = (props: Emitted) => React.ReactNode;
 
@@ -15,7 +10,7 @@ export interface RouterProps {
 }
 
 export interface RouterState {
-  emitted: CurrentResponse;
+  emitted: Emitted;
 }
 
 export default function curiProvider(router: CuriRouter) {
@@ -26,7 +21,10 @@ export default function curiProvider(router: CuriRouter) {
     constructor(props: RouterProps) {
       super(props);
       this.state = {
-        emitted: router.current()
+        emitted: {
+          ...router.current(),
+          router
+        }
       };
     }
 
@@ -36,11 +34,9 @@ export default function curiProvider(router: CuriRouter) {
 
     setupRespond(router: CuriRouter) {
       this.stopResponding = router.observe(
-        ({ response, navigation }) => {
+        (emitted: Emitted) => {
           if (!this.removed) {
-            this.setState({
-              emitted: { response, navigation }
-            });
+            this.setState({ emitted });
           }
         },
         { initial: false }
@@ -57,10 +53,11 @@ export default function curiProvider(router: CuriRouter) {
 
     render() {
       const { children } = this.props;
-      const { response, navigation } = this.state.emitted;
-      const value = { router, response, navigation };
-
-      return <Provider value={value}>{children(value)}</Provider>;
+      return (
+        <Provider value={this.state.emitted}>
+          {children(this.state.emitted)}
+        </Provider>
+      );
     }
   };
 }
