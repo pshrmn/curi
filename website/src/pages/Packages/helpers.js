@@ -57,7 +57,7 @@ const routes = [
 ];`}
             </CodeBlock>
           </Section>
-          <Section title="preferDefault()" id="preferDefault">
+          <Section title="preferDefault" id="preferDefault">
             <Explanation>
               <p>
                 When using dynamic import syntax (<IJS>
