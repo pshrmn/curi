@@ -1,5 +1,3 @@
-import preferDefault from "../preferDefault";
-
 const guides = [
   {
     name: "Installation",
@@ -7,10 +5,8 @@ const guides = [
     description: "Learn how to install Curi",
     type: "basic",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--installation' */
-        `../pages/Guides/installation.js`)
-      )
+      import(/* webpackChunkName: 'guide--installation' */
+      `../pages/Guides/installation.js`)
   },
   {
     name: "Creating a Router",
@@ -19,10 +15,8 @@ const guides = [
       "Learn the basic concepts that you'll need to know to setup your project",
     type: "basic",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--creating-a-router' */
-        `../pages/Guides/creating-a-router.js`)
-      )
+      import(/* webpackChunkName: 'guide--creating-a-router' */
+      `../pages/Guides/creating-a-router.js`)
   },
   {
     name: "Routes & Responses",
@@ -30,10 +24,8 @@ const guides = [
     description: "An introduction to how routes and responses work",
     type: "basic",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--routes-and-responses' */
-        `../pages/Guides/routes-and-responses.js`)
-      )
+      import(/* webpackChunkName: 'guide--routes-and-responses' */
+      `../pages/Guides/routes-and-responses.js`)
   },
   {
     name: "Sync or Async",
@@ -41,10 +33,8 @@ const guides = [
     description: "Match routes synchronously or asynchronously",
     type: "basic",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--sync-or-async' */
-        `../pages/Guides/sync-or-async.js`)
-      )
+      import(/* webpackChunkName: 'guide--sync-or-async' */
+      `../pages/Guides/sync-or-async.js`)
   },
   {
     name: "Navigating & Observing",
@@ -53,10 +43,8 @@ const guides = [
       "Learn how to programmatically navigate and use observers to detect navigation",
     type: "basic",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--navigating-and-observing' */
-        `../pages/Guides/navigating-and-observing.js`)
-      )
+      import(/* webpackChunkName: 'guide--navigating-and-observing' */
+      `../pages/Guides/navigating-and-observing.js`)
   },
 
   {
@@ -65,10 +53,8 @@ const guides = [
     description: "Learn the basics of using Curi and React DOM",
     type: "rendering",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--react-dom' */
-        `../pages/Guides/react-dom.js`)
-      )
+      import(/* webpackChunkName: 'guide--react-dom' */
+      `../pages/Guides/react-dom.js`)
   },
   {
     name: "React Native",
@@ -76,10 +62,8 @@ const guides = [
     description: "Learn the basics of using Curi and React Native",
     type: "rendering",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--react-native' */
-        `../pages/Guides/react-native.js`)
-      )
+      import(/* webpackChunkName: 'guide--react-native' */
+      `../pages/Guides/react-native.js`)
   },
   {
     name: "Svelte",
@@ -87,10 +71,8 @@ const guides = [
     description: "Learn the basics of using Curi and Svelte",
     type: "rendering",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--svelte' */
-        `../pages/Guides/svelte.js`)
-      )
+      import(/* webpackChunkName: 'guide--svelte' */
+      `../pages/Guides/svelte.js`)
   },
   {
     name: "Vue",
@@ -98,10 +80,8 @@ const guides = [
     description: "Learn the basics of using Curi and Vue",
     type: "rendering",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--vue' */
-        `../pages/Guides/vue.js`)
-      )
+      import(/* webpackChunkName: 'guide--vue' */
+      `../pages/Guides/vue.js`)
   },
 
   {
@@ -110,10 +90,8 @@ const guides = [
     description: "Learn how to interact with your routes",
     type: "advanced",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--route-interactions' */
-        `../pages/Guides/route-interactions.js`)
-      )
+      import(/* webpackChunkName: 'guide--route-interactions' */
+      `../pages/Guides/route-interactions.js`)
   },
   {
     name: "Side Effects",
@@ -122,10 +100,8 @@ const guides = [
       "Learn how to use side effect functions to trigger behavior after navigation",
     type: "advanced",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--side-effects' */
-        `../pages/Guides/side-effects.js`)
-      )
+      import(/* webpackChunkName: 'guide--side-effects' */
+      `../pages/Guides/side-effects.js`)
   },
   {
     name: "Code Splitting",
@@ -133,10 +109,8 @@ const guides = [
     description: "Learn how to code split your project using Webpack",
     type: "advanced",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--code-splitting' */
-        `../pages/Guides/code-splitting.js`)
-      )
+      import(/* webpackChunkName: 'guide--code-splitting' */
+      `../pages/Guides/code-splitting.js`)
   },
   {
     name: "Loading Route Data",
@@ -145,10 +119,8 @@ const guides = [
       "Learn how to load data for a route and modify the response object",
     type: "advanced",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--loading' */
-        `../pages/Guides/loading.js`)
-      )
+      import(/* webpackChunkName: 'guide--loading' */
+      `../pages/Guides/loading.js`)
   },
   {
     name: "Accessibility",
@@ -156,10 +128,8 @@ const guides = [
     description: "Make your site inclusive to users who use screen readers.",
     type: "advanced",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--accessibility' */
-        `../pages/Guides/accessibility.js`)
-      )
+      import(/* webpackChunkName: 'guide--accessibility' */
+      `../pages/Guides/accessibility.js`)
   },
   {
     name: "Apollo Integration",
@@ -167,10 +137,8 @@ const guides = [
     description: "Integrating Curi and Apollo",
     type: "advanced",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--apollo' */
-        `../pages/Guides/apollo.js`)
-      )
+      import(/* webpackChunkName: 'guide--apollo' */
+      `../pages/Guides/apollo.js`)
   },
   {
     name: "Development Tips",
@@ -178,10 +146,8 @@ const guides = [
     description: "Tips on developing using Curi",
     type: "advanced",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--dev-tips' */
-        `../pages/Guides/dev-tips.js`)
-      )
+      import(/* webpackChunkName: 'guide--dev-tips' */
+      `../pages/Guides/dev-tips.js`)
   },
   {
     name: "React Router v2/3",
@@ -190,10 +156,8 @@ const guides = [
       "Learn how to migrate an application from React Router v2 or v3 to Curi",
     type: "migration",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--migrate-rrv3' */
-        `../pages/Guides/migrate-rrv3.js`)
-      )
+      import(/* webpackChunkName: 'guide--migrate-rrv3' */
+      `../pages/Guides/migrate-rrv3.js`)
   },
   {
     name: "React Router v4",
@@ -202,10 +166,8 @@ const guides = [
       "Learn how to migrate an application from React Router v4 to Curi",
     type: "migration",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'guide--migrate-rrv4' */
-        `../pages/Guides/migrate-rrv4.js`)
-      )
+      import(/* webpackChunkName: 'guide--migrate-rrv4' */
+      `../pages/Guides/migrate-rrv4.js`)
   }
 ];
 

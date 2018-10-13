@@ -1,9 +1,9 @@
 {
-  "name": "@curi/router",
-  "version": "1.0.3",
-  "description": "A JavaScript router that doesn't care how you render",
-  "main": "dist/curi-router.js",
-  "module": "dist/curi-router.es.js",
+  "name": "@curi/helpers",
+  "version": "1.0.0",
+  "description": "Functions that can be useful in Curi apps",
+  "main": "dist/curi-helpers.js",
+  "module": "dist/curi-helpers.es.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",
@@ -20,23 +20,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pshrmn/curi/tree/master/packages/router"
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/helpers"
   },
   "keywords": [
-    "URL",
-    "URI",
-    "routing",
-    "navigation"
+    "Curi"
   ],
   "author": "Paul Sherman",
   "license": "MIT",
-  "dependencies": {
-    "@curi/helpers": "^1.0.0",
-    "@hickory/root": "^1.0.0",
-    "path-to-regexp": "^2.1.0"
-  },
   "devDependencies": {
-    "@hickory/in-memory": "^1.0.0",
     "@types/jest": "^22.0.1",
     "jest": "^23.6.0",
     "ts-jest": "^23.10.4"

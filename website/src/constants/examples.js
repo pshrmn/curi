@@ -8,10 +8,8 @@ const examples = {
       slug: "accessibility",
       description: "Focus content after navigating",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-accessibility' */
-          `../pages/Examples/react/accessibility.js`)
-        )
+        import(/* webpackChunkName: 'example--react-accessibility' */
+        `../pages/Examples/react/accessibility.js`)
     },
     {
       name: "Active Links",
@@ -19,10 +17,8 @@ const examples = {
       slug: "active-links",
       description: "Style links when they match the current location",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-active-links' */
-          `../pages/Examples/react/active-links.js`)
-        )
+        import(/* webpackChunkName: 'example--react-active-links' */
+        `../pages/Examples/react/active-links.js`)
     },
     {
       name: "Async Navigation",
@@ -31,10 +27,8 @@ const examples = {
       description:
         "Display a spinner to indicate that navigation is loading content for async routes",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-async-nav' */
-          `../pages/Examples/react/async-nav.js`)
-        )
+        import(/* webpackChunkName: 'example--react-async-nav' */
+        `../pages/Examples/react/async-nav.js`)
     },
     {
       name: "Authentication",
@@ -43,10 +37,8 @@ const examples = {
       description:
         "Automatically redirect to a login page when attempting to access private content",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-authentication' */
-          `../pages/Examples/react/authentication.js`)
-        )
+        import(/* webpackChunkName: 'example--react-authentication' */
+        `../pages/Examples/react/authentication.js`)
     },
     {
       name: "Basic",
@@ -54,10 +46,8 @@ const examples = {
       slug: "basic",
       description: "A simple Curi app rendered using React",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-basic' */
-          `../pages/Examples/react/basic.js`)
-        )
+        import(/* webpackChunkName: 'example--react-basic' */
+        `../pages/Examples/react/basic.js`)
     },
     {
       name: "Blocking Navigation",
@@ -65,10 +55,8 @@ const examples = {
       slug: "blocking-navigation",
       description: "Prevent navigation away from a half-filled form",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-blocking-navigation' */
-          `../pages/Examples/react/blocking-navigation.js`)
-        )
+        import(/* webpackChunkName: 'example--react-blocking-navigation' */
+        `../pages/Examples/react/blocking-navigation.js`)
     },
     {
       name: "Breadcrumbs",
@@ -76,21 +64,18 @@ const examples = {
       slug: "breadcrumbs",
       description: "Render breadcrumb links to ancestor routes",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-breadcrumbs' */
-          `../pages/Examples/react/breadcrumbs.js`)
-        )
+        import(/* webpackChunkName: 'example--react-breadcrumbs' */
+        `../pages/Examples/react/breadcrumbs.js`)
     },
     /*{
       name: "Data Loading",
       category: "react",
       slug: "data-loading",
       description: "Display a loading bar while waiting for data to load",
-      import: () => preferDefault(
+      import: () =>
         import(
           /* webpackChunkName: 'example--react-data-loading'
           `../pages/Examples/react/data-loading.js`
-          )
         )
     },*/
     {
@@ -99,10 +84,8 @@ const examples = {
       slug: "modal",
       description: "Load a route in a modal (the Pinterest model)",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-modal' */
-          `../pages/Examples/react/modal.js`)
-        )
+        import(/* webpackChunkName: 'example--react-modal' */
+        `../pages/Examples/react/modal.js`)
     },
     {
       name: "Multiple Body Components",
@@ -110,10 +93,8 @@ const examples = {
       slug: "multi-body",
       description: "Attach multiple components to a route",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-multi-body' */
-          `../pages/Examples/react/multi-body.js`)
-        )
+        import(/* webpackChunkName: 'example--react-multi-body' */
+        `../pages/Examples/react/multi-body.js`)
     },
     {
       name: "Transitions",
@@ -121,10 +102,8 @@ const examples = {
       slug: "transitions",
       description: "Transition between routes using react-transition-group",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--react-transitions' */
-          `../pages/Examples/react/transitions.js`)
-        )
+        import(/* webpackChunkName: 'example--react-transitions' */
+        `../pages/Examples/react/transitions.js`)
     }
   ],
   vue: [
@@ -134,10 +113,8 @@ const examples = {
       slug: "accessibility",
       description: "Focus content after navigating",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--vue-accessibility' */
-          `../pages/Examples/vue/accessibility.js`)
-        )
+        import(/* webpackChunkName: 'example--vue-accessibility' */
+        `../pages/Examples/vue/accessibility.js`)
     },
     {
       name: "Active Links",
@@ -145,10 +122,8 @@ const examples = {
       slug: "active-links",
       description: "Style links when they match the current location",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--vue-active-links' */
-          `../pages/Examples/vue/active-links.js`)
-        )
+        import(/* webpackChunkName: 'example--vue-active-links' */
+        `../pages/Examples/vue/active-links.js`)
     },
     {
       name: "Async Navigation",
@@ -157,10 +132,8 @@ const examples = {
       description:
         "Display a spinner to indicate that navigation is loading content for async routes",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--vue-async-nav' */
-          `../pages/Examples/vue/async-nav.js`)
-        )
+        import(/* webpackChunkName: 'example--vue-async-nav' */
+        `../pages/Examples/vue/async-nav.js`)
     },
     {
       name: "Authentication",
@@ -169,10 +142,8 @@ const examples = {
       description:
         "Automatically redirect to a login page when attempting to access private content",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--vue-authentication' */
-          `../pages/Examples/vue/authentication.js`)
-        )
+        import(/* webpackChunkName: 'example--vue-authentication' */
+        `../pages/Examples/vue/authentication.js`)
     },
     {
       name: "Basic",
@@ -180,10 +151,8 @@ const examples = {
       slug: "basic",
       description: "A simple Curi app rendered using Vue",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--vue-basic' */
-          `../pages/Examples/vue/basic.js`)
-        )
+        import(/* webpackChunkName: 'example--vue-basic' */
+        `../pages/Examples/vue/basic.js`)
     },
     {
       name: "Breadcrumbs",
@@ -191,10 +160,8 @@ const examples = {
       slug: "breadcrumbs",
       description: "Render breadcrumb links to ancestor routes",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--vue-breadcrumbs' */
-          `../pages/Examples/vue/breadcrumbs.js`)
-        )
+        import(/* webpackChunkName: 'example--vue-breadcrumbs' */
+        `../pages/Examples/vue/breadcrumbs.js`)
     },
     {
       name: "Blocking Navigation",
@@ -202,10 +169,8 @@ const examples = {
       slug: "blocking-navigation",
       description: "Prevent navigation away from a half-filled form",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--vue-blocking-navigation' */
-          `../pages/Examples/vue/blocking-navigation.js`)
-        )
+        import(/* webpackChunkName: 'example--vue-blocking-navigation' */
+        `../pages/Examples/vue/blocking-navigation.js`)
     },
     {
       name: "Modal Routes",
@@ -213,10 +178,8 @@ const examples = {
       slug: "modal",
       description: "Load a route in a modal (the Pinterest model)",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--vue-modal' */
-          `../pages/Examples/vue/modal.js`)
-        )
+        import(/* webpackChunkName: 'example--vue-modal' */
+        `../pages/Examples/vue/modal.js`)
     },
     {
       name: "Transitions",
@@ -224,10 +187,8 @@ const examples = {
       slug: "transitions",
       description: "Transition between routes",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--vue-transitions' */
-          `../pages/Examples/vue/transitions.js`)
-        )
+        import(/* webpackChunkName: 'example--vue-transitions' */
+        `../pages/Examples/vue/transitions.js`)
     }
   ],
   /*svelte: [
@@ -236,12 +197,9 @@ const examples = {
       category: "svelte",
       slug: "basic",
       description: "A simple Curi app rendered using Svelte",
-      import: () => preferDefault(
-        import(
-          /* webpackChunkName: 'example--svelte-basic'
-          `../pages/Examples/svelte/basic.js`
-          )
-        )
+      import: () =>
+        import(/* webpackChunkName: 'example--svelte-basic'
+          `../pages/Examples/svelte/basic.js`)
     }
   ],*/
   /*full: [
@@ -250,12 +208,9 @@ const examples = {
       category: "full",
       slug: "twitch",
       description: "A clone of Twitch.tv built with Curi + Vue",
-      import: () => preferDefault(
-        import(
-          /* webpackChunkName: 'example--full-twitch'
-          `../pages/Examples/full/twitch.js`
-          )
-        )
+      import: () => 
+        import(/* webpackChunkName: 'example--full-twitch'
+          `../pages/Examples/full/twitch.js`)
     }
   ],*/
   misc: [
@@ -265,10 +220,8 @@ const examples = {
       slug: "code-splitting",
       description: "Use import() to enable Webpack code splitting",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--misc-code-splitting' */
-          `../pages/Examples/misc/code-splitting`)
-        )
+        import(/* webpackChunkName: 'example--misc-code-splitting' */
+        `../pages/Examples/misc/code-splitting`)
     },
     {
       name: "Script Tags",
@@ -276,10 +229,8 @@ const examples = {
       slug: "script-tags",
       description: "Load Curi packages using script tags instead of a bundle",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--misc-script-tags' */
-          `../pages/Examples/misc/script-tags`)
-        )
+        import(/* webpackChunkName: 'example--misc-script-tags' */
+        `../pages/Examples/misc/script-tags`)
     },
     {
       name: "Server Rendering",
@@ -288,10 +239,8 @@ const examples = {
       description:
         "Render your application on the server using Node (this example uses Express)",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--misc-server-rendering' */
-          `../pages/Examples/misc/server-rendering`)
-        )
+        import(/* webpackChunkName: 'example--misc-server-rendering' */
+        `../pages/Examples/misc/server-rendering`)
     },
     {
       name: "Side Effects",
@@ -299,10 +248,8 @@ const examples = {
       slug: "side-effect",
       description: "Add side effects that always respond to navigation",
       import: () =>
-        preferDefault(
-          import(/* webpackChunkName: 'example--misc-side-effect' */
-          `../pages/Examples/misc/side-effect`)
-        )
+        import(/* webpackChunkName: 'example--misc-side-effect' */
+        `../pages/Examples/misc/side-effect`)
     }
   ]
 };

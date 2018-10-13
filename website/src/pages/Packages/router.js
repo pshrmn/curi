@@ -659,43 +659,6 @@ router.refresh(newRoutes);
               </Subsection>
             </Section>
           </Section>
-          <Section title="once" id="router-once">
-            <Explanation>
-              <p>
-                <IJS>once</IJS> takes a function as its argument and returns a
-                new function. The first time the returned function is called, it
-                will call the function passed to <IJS>once()</IJS>. Every call
-                after that will re-use the result from the first call.
-              </p>
-              <p>
-                The <IJS>once()</IJS> function is useful for any async route{" "}
-                <IJS>resolve</IJS> functions that only need to be called once.
-              </p>
-              <Note>
-                This will not work for functions whose result depends on
-                variables that will change for a route (i.e. loading data based
-                on route params).
-              </Note>
-            </Explanation>
-            <CodeBlock>
-              {`import { once } from "@curi/router";
-            
-const routes = [
-  {
-    name: "Menu",
-    path: "menu",
-    resolve: {
-      // this function will be called every time the user
-      // navigates to the "Menu" route
-      nonCached: () => api.getItems(),
-      // this function is only called the first time the
-      // user navigates to the "Menu" route
-      cached: once(() => api.getItems)
-    }
-  }
-];`}
-            </CodeBlock>
-          </Section>
           <Section title="pathname" id="pathname">
             <Explanation>
               <p>

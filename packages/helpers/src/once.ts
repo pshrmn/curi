@@ -1,4 +1,4 @@
-type AnyFn = (...args: Array<any>) => Promise<any>;
+export type AnyFn = (...args: Array<any>) => Promise<any>;
 
 export default function once(fn: AnyFn): AnyFn {
   let promise: Promise<any>;
