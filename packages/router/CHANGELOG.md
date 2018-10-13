@@ -1,6 +1,6 @@
 ## Next
 
-* Remove the `once()` export (moved to `@curi/helpers`).
+* Deprecate `once()` export (moved to `@curi/helpers`).
 
 ## 1.0.3
 
