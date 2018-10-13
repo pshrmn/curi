@@ -8,10 +8,8 @@ const tutorials = [
     description:
       "Learn the basics of setting up a single-page application using Curi and React",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'tutorial--react-basics' */
-        `../pages/Tutorials/react-basics.js`)
-      )
+      import(/* webpackChunkName: 'tutorial--react-basics' */
+      `../pages/Tutorials/react-basics.js`)
   },
   {
     title: "React Advanced",
@@ -19,10 +17,8 @@ const tutorials = [
     type: "Advanced",
     description: "Add code splitting and data preloading to an application",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'tutorial--react-advanced' */
-        `../pages/Tutorials/react-advanced.js`)
-      )
+      import(/* webpackChunkName: 'tutorial--react-advanced' */
+      `../pages/Tutorials/react-advanced.js`)
   },
   {
     title: "Vue Basics",
@@ -31,10 +27,8 @@ const tutorials = [
     description:
       "Learn the basics of setting up a single-page application using Curi and Vue",
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'tutorial--vue-basics' */
-        `../pages/Tutorials/vue-basics.js`)
-      )
+      import(/* webpackChunkName: 'tutorial--vue-basics' */
+      `../pages/Tutorials/vue-basics.js`)
   }
 ];
 

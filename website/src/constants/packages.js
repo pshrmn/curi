@@ -9,10 +9,8 @@ const packages = [
     type: "router",
     script: true,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--router' */
-        `../pages/Packages/router.js`)
-      )
+      import(/* webpackChunkName: 'package--router' */
+      `../pages/Packages/router.js`)
   },
   {
     name: "react-dom",
@@ -21,10 +19,8 @@ const packages = [
     type: "render",
     script: true,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--react-dom' */
-        `../pages/Packages/react-dom.js`)
-      )
+      import(/* webpackChunkName: 'package--react-dom' */
+      `../pages/Packages/react-dom.js`)
   },
   {
     name: "react-native",
@@ -33,10 +29,8 @@ const packages = [
     type: "render",
     script: false,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--react-native' */
-        `../pages/Packages/react-native.js`)
-      )
+      import(/* webpackChunkName: 'package--react-native' */
+      `../pages/Packages/react-native.js`)
   },
   {
     name: "svelte",
@@ -45,10 +39,8 @@ const packages = [
     type: "render",
     script: false,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--svelte' */
-        `../pages/Packages/svelte.js`)
-      )
+      import(/* webpackChunkName: 'package--svelte' */
+      `../pages/Packages/svelte.js`)
   },
   {
     name: "vue",
@@ -57,10 +49,8 @@ const packages = [
     type: "render",
     script: true,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--vue' */
-        `../pages/Packages/vue.js`)
-      )
+      import(/* webpackChunkName: 'package--vue' */
+      `../pages/Packages/vue.js`)
   },
   {
     name: "route-active",
@@ -69,10 +59,8 @@ const packages = [
     type: "route interactions",
     script: true,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--route-active' */
-        `../pages/Packages/route-active.js`)
-      )
+      import(/* webpackChunkName: 'package--route-active' */
+      `../pages/Packages/route-active.js`)
   },
   {
     name: "route-ancestors",
@@ -81,10 +69,8 @@ const packages = [
     type: "route interactions",
     script: true,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--route-ancestors' */
-        `../pages/Packages/route-ancestors.js`)
-      )
+      import(/* webpackChunkName: 'package--route-ancestors' */
+      `../pages/Packages/route-ancestors.js`)
   },
   {
     name: "route-prefetch",
@@ -93,10 +79,8 @@ const packages = [
     type: "route interactions",
     script: true,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--route-prefetch' */
-        `../pages/Packages/route-prefetch.js`)
-      )
+      import(/* webpackChunkName: 'package--route-prefetch' */
+      `../pages/Packages/route-prefetch.js`)
   },
   {
     name: "side-effect-aria-live",
@@ -105,10 +89,8 @@ const packages = [
     type: "side effects",
     script: true,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--side-effect-aria-live' */
-        `../pages/Packages/side-effect-aria-live.js`)
-      )
+      import(/* webpackChunkName: 'package--side-effect-aria-live' */
+      `../pages/Packages/side-effect-aria-live.js`)
   },
   {
     name: "side-effect-scroll",
@@ -117,10 +99,8 @@ const packages = [
     type: "side effects",
     script: true,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--side-effect-scroll' */
-        `../pages/Packages/side-effect-scroll.js`)
-      )
+      import(/* webpackChunkName: 'package--side-effect-scroll' */
+      `../pages/Packages/side-effect-scroll.js`)
   },
   {
     name: "side-effect-title",
@@ -129,22 +109,28 @@ const packages = [
     type: "side effects",
     script: true,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--side-effect-title' */
-        `../pages/Packages/side-effect-title.js`)
-      )
+      import(/* webpackChunkName: 'package--side-effect-title' */
+      `../pages/Packages/side-effect-title.js`)
   },
   {
     name: "static",
     version: versions["static"],
     globalName: "CuriStatic",
-    type: "dev",
+    type: "other",
     script: false,
     import: () =>
-      preferDefault(
-        import(/* webpackChunkName: 'package--static' */
-        `../pages/Packages/static.js`)
-      )
+      import(/* webpackChunkName: 'package--static' */
+      `../pages/Packages/static.js`)
+  },
+  {
+    name: "helpers",
+    version: versions["helpers"],
+    globalName: "CuriHelpers",
+    type: "other",
+    script: true,
+    import: () =>
+      import(/* webpackChunkName: 'package--helpers' */
+      `../pages/Packages/helpers.js`)
   }
 ];
 

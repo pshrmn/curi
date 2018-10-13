@@ -1,0 +1,31 @@
+{
+  "dist/curi-helpers.es.js": {
+    "bundled": 381,
+    "minified": 175,
+    "gzipped": 139,
+    "treeshaked": {
+      "rollup": {
+        "code": 0,
+        "import_statements": 0
+      },
+      "webpack": {
+        "code": 951
+      }
+    }
+  },
+  "dist/curi-helpers.js": {
+    "bundled": 488,
+    "minified": 270,
+    "gzipped": 190
+  },
+  "dist/curi-helpers.umd.js": {
+    "bundled": 793,
+    "minified": 395,
+    "gzipped": 261
+  },
+  "dist/curi-helpers.min.js": {
+    "bundled": 793,
+    "minified": 395,
+    "gzipped": 261
+  }
+}
