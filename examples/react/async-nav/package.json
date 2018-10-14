@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/async-nav-react",
   "private": true,
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "Display a spinner while navigation is happening",
   "main": "index.js",
   "keywords": [
@@ -13,9 +13,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "^1.1.0",
-    "@curi/route-prefetch": "^1.0.1",
-    "@curi/router": "^1.0.3",
+    "@curi/react-dom": "^1.1.1",
+    "@curi/route-prefetch": "^1.0.2",
+    "@curi/router": "^1.0.4",
     "@hickory/browser": "^1.0.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",

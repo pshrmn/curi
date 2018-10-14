@@ -1,6 +1,6 @@
 {
   "name": "@curi/react-universal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React components to use with Curi",
   "main": "dist/curi-react-universal.js",
   "module": "dist/curi-react-universal.es.js",
@@ -36,8 +36,8 @@
     "react": ">=16.3"
   },
   "dependencies": {
-    "@curi/route-active": "^1.0.1",
-    "@curi/router": "^1.0.3",
+    "@curi/route-active": "^1.0.2",
+    "@curi/router": "^1.0.4",
     "@hickory/root": "^1.0.0",
     "@types/react": "^16.3.11"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@curi/react-native",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Native components to use with Curi",
   "main": "dist/curi-react-native.js",
   "module": "dist/curi-react-native.es.js",
@@ -39,8 +39,8 @@
     "react-native": ">=0.55.0"
   },
   "dependencies": {
-    "@curi/react-universal": "^1.0.0",
-    "@curi/router": "^1.0.3",
+    "@curi/react-universal": "^1.0.1",
+    "@curi/router": "^1.0.4",
     "@hickory/root": "^1.0.0",
     "@types/invariant": "^2.2.29",
     "@types/react": "^16.3.11",
@@ -48,8 +48,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "@curi/route-active": "^1.0.1",
-    "@curi/router": "^1.0.3",
+    "@curi/route-active": "^1.0.2",
+    "@curi/router": "^1.0.4",
     "@hickory/in-memory": "^1.0.0",
     "@types/enzyme": "^2.8.8",
     "@types/jest": "^23.3.1",
