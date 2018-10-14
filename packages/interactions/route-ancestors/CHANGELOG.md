@@ -1,4 +1,4 @@
-## Next
+## 1.0.2
 
 * Add `sideEffects: false` hint for Webpack.
 
