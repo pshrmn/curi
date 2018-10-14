@@ -450,7 +450,6 @@ describe("<Link>", () => {
                       console.error = realError;
                       done();
                     });
-                    //});
                   }, 100);
                 });
               }
