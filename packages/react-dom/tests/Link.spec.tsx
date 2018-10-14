@@ -428,6 +428,67 @@ describe("<Link>", () => {
           { initial: false }
         );
       });
+
+      it("does not call setState if component has unmounted", done => {
+        const realError = console.error;
+        const mockError = jest.fn();
+        console.error = mockError;
+
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          {
+            name: "Slow",
+            path: "slow",
+            resolve: {
+              test: () => {
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("Finally finished");
+                    setTimeout(() => {
+                      expect(mockError.mock.calls.length).toBe(0);
+                      console.error = realError;
+                      done();
+                    });
+                  }, 100);
+                });
+              }
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const Router = curiProvider(router);
+
+        ReactDOM.render(
+          <Router>
+            {() => (
+              <Link to="Slow">
+                {navigating => {
+                  return <div>{navigating.toString()}</div>;
+                }}
+              </Link>
+            )}
+          </Router>,
+          node
+        );
+        const a = node.querySelector("a");
+        expect(a.textContent).toBe("false");
+        const leftClickEvent = {
+          defaultPrevented: false,
+          preventDefault() {
+            this.defaultPrevented = true;
+          },
+          metaKey: null,
+          altKey: null,
+          ctrlKey: null,
+          shiftKey: null,
+          button: 0
+        };
+        Simulate.click(a, leftClickEvent);
+
+        // unmount the Link to verify that it doesn't call setState()
+        ReactDOM.unmountComponentAtNode(node);
+      });
     });
 
     it("includes hash, query, and state in location passed to history.navigate", () => {
