@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/accessibility",
   "private": true,
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Add Curi routing to a Vue application",
   "main": "index.js",
   "keywords": [

@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/modal-react",
   "private": true,
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Render a modal (pinterest/twitter)",
   "main": "index.js",
   "keywords": [
@@ -13,7 +13,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "^1.1.1",
+    "@curi/react-dom": "^1.1.2",
     "@curi/router": "^1.0.4",
     "@hickory/browser": "^1.0.0",
     "prop-types": "^15.6.0",

@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/async-nav-vue",
   "private": true,
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Display a spinner while navigation is happening",
   "main": "index.js",
   "keywords": [

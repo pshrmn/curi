@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/authentication-react",
   "private": true,
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Curi routes that redirect when not authenticated",
   "main": "index.js",
   "keywords": [
@@ -12,7 +12,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "^1.1.1",
+    "@curi/react-dom": "^1.1.2",
     "@curi/router": "^1.0.4",
     "@hickory/browser": "^1.0.0",
     "qs": "^6.4.0",

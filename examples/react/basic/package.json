@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/basic-react",
   "private": true,
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "A simple application that uses Curi + React",
   "main": "index.js",
   "keywords": [
@@ -10,7 +10,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "^1.1.1",
+    "@curi/react-dom": "^1.1.2",
     "@curi/router": "^1.0.4",
     "@hickory/browser": "^1.0.0",
     "react": "^16.5.0",

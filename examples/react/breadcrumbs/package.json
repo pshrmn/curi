@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/breadcrumbs-react",
   "private": true,
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Render breadcrumb links",
   "main": "index.js",
   "keywords": [
@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@curi/addon-ancestors": "^1.0.0-beta.5",
-    "@curi/react-dom": "^1.1.1",
+    "@curi/react-dom": "^1.1.2",
     "@curi/route-ancestors": "^1.0.2",
     "@curi/router": "^1.0.4",
     "@hickory/browser": "^1.0.0",
