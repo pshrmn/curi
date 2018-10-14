@@ -1,5 +1,6 @@
 ## Next
 
+* Add `sideEffects: false` hint for Webpack.
 * Component returned by `curiProvider()` fully stores `emitted` value in state.
 
 ## 1.0.0-beta.3

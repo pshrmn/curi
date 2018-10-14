@@ -1,5 +1,6 @@
 ## Next
 
+* Add `sideEffects: false` hint for Webpack.
 * Deprecate `once()` export (moved to `@curi/helpers`).
 
 ## 1.0.3

@@ -9,6 +9,7 @@
     "LICENSE",
     "*.md"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "node ./scripts/build",
     "coverage": "jest --coverage",

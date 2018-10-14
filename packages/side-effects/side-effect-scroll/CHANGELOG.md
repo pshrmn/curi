@@ -1,3 +1,7 @@
+## Next
+
+* Add `sideEffects: false` hint for Webpack.
+
 ## 1.0.0-beta.12
 
 * Revert dual-mode (not ready yet!).

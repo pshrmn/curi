@@ -9,6 +9,7 @@
     "LICENSE",
     "*.md"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "BABEL_ENV=build node ./scripts/build",
     "prepare": "npm run build",

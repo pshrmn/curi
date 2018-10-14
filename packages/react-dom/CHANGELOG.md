@@ -1,3 +1,8 @@
+## Next
+
+* Add `sideEffects: false` hint for Webpack.
+* Component returned by `curiProvider()` fully stores `emitted` value in state.
+
 ## 1.1.0
 
 * Add `preserve` prop to `<Focus>` to preserve an existing focus (do not steal). Only works if the existing focused element is a child of the one the `ref` is attached to.

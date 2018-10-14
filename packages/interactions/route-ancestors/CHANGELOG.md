@@ -1,3 +1,7 @@
+## Next
+
+* Add `sideEffects: false` hint for Webpack.
+
 ## 1.0.1
 
 * Add dev guard to log to only call in development.
