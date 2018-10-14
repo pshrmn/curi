@@ -36,6 +36,8 @@ export interface LinkState {
 }
 
 class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
+  removed: boolean;
+
   state = {
     navigating: false
   };
@@ -53,9 +55,13 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
       // only trigger re-renders when children uses state
       if (typeof this.props.children === "function") {
         cancelled = finished = () => {
-          this.setState({ navigating: false });
+          if (!this.removed) {
+            this.setState({ navigating: false });
+          }
         };
-        this.setState({ navigating: true });
+        if (!this.removed) {
+          this.setState({ navigating: true });
+        }
       }
       router.navigate({
         name,
@@ -102,10 +108,14 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
         ref={forwardedRef}
       >
         {typeof children === "function"
-          ? children(this.state.navigating)
+          ? (children as NavigatingChildren)(this.state.navigating)
           : children}
       </Anchor>
     );
+  }
+
+  componentWillUnmount() {
+    this.removed = true;
   }
 }
 

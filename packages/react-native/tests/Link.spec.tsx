@@ -340,7 +340,7 @@ describe("<Link>", () => {
       it("children(true) after clicking", () => {
         // if a link has no on methods, finished will be called almost
         // immediately (although this style should only be used for routes
-        // with on methods)
+        // with resolve methods)
         const history = InMemory();
         const router = curi(history, [
           {
@@ -480,6 +480,55 @@ describe("<Link>", () => {
           },
           { initial: false }
         );
+      });
+
+      it("does not call setState if component has unmounted", done => {
+        const realError = console.error;
+        const mockError = jest.fn();
+        console.error = mockError;
+
+        const history = InMemory();
+        const router = curi(history, [
+          { name: "Test", path: "test" },
+          {
+            name: "Blork",
+            path: "blork",
+            resolve: {
+              test: () => {
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("Finally finished");
+                    // need to verify error in another timeout
+                    setTimeout(() => {
+                      expect(mockError.mock.calls.length).toBe(0);
+                      console.error = realError;
+                      done();
+                    });
+                  }, 500);
+                });
+              }
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const Router = curiProvider(router);
+
+        const tree = renderer.create(
+          <Router>
+            {() => (
+              <Link to="Blork">
+                {navigating => {
+                  return <Text>{navigating.toString()}</Text>;
+                }}
+              </Link>
+            )}
+          </Router>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+
+        anchor.props.onPress(fakeEvent());
+
+        tree.unmount();
       });
     });
 

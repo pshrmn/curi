@@ -1,3 +1,7 @@
+## Next
+
+* Guard `setState()` calls for unmounted `<Link>`.
+
 ## 1.0.1
 
 * Add `sideEffects: false` hint for Webpack.
