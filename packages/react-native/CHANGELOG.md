@@ -1,4 +1,4 @@
-## Next
+## 1.0.2
 
 * Guard `setState()` calls for unmounted `<Link>`.
 
