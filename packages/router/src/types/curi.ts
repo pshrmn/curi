@@ -23,6 +23,10 @@ export interface ResponseHandlerOptions {
 }
 export type RemoveObserver = () => void;
 
+export type CancelActiveNavigation = () => void;
+export type Cancellable = (cancelActive?: CancelActiveNavigation) => void;
+export type RemoveCancellable = () => void;
+
 export interface RouterOptions {
   route?: Array<Interaction>;
   sideEffects?: Array<Observer>;
@@ -52,6 +56,7 @@ export interface CuriRouter {
   refresh: (routeArray?: UserRoutes) => void;
   observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
   once: (fn: Observer, options?: ResponseHandlerOptions) => void;
+  whileNavigating: (fn: Cancellable) => RemoveCancellable;
   route: Interactions;
   history: History;
   current(): CurrentResponse;

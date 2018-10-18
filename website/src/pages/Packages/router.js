@@ -598,7 +598,45 @@ stopObserving();
                 </Section>
               </Section>
 
-              <Section tag="h5" title="current()" id="current-property">
+              <Subsection
+                tag="h5"
+                title="whileNavigating(fn)"
+                id="while-navigating-property"
+              >
+                <Explanation>
+                  <p>
+                    With asynchronous routes, after a user begins navigation,
+                    but before the route's asynchronous actions have finished,
+                    the user does not have a good way to cancel the navigation.
+                    They can either refresh the page (causing a full reload) or
+                    click a link with the same URL as the current location, but
+                    neither of these are intuitive or ideal.
+                  </p>
+                  <p>
+                    <IJS>whileNavigating()</IJS> takes an observer function that
+                    will be called when navigation starts and when the
+                    navigation is finished. When the navigation starts, the
+                    observer function will be given a function to cancel the
+                    navigation. When the navigation finishes, the function will
+                    be called with <IJS>undefined</IJS>.
+                  </p>
+                  <p>
+                    Calling <IJS>whileNavigating()</IJS> returns a function to
+                    stop observing.
+                  </p>
+                </Explanation>
+                <CodeBlock>
+                  {`const stopCancelling = router.whileNavigating(fn => {
+  if (fn === undefined) {
+    // the navigation has finished/been cancelled
+  } else {
+    // calling fn will cancel the navigation
+  }
+});`}
+                </CodeBlock>
+              </Subsection>
+
+              <Subsection tag="h5" title="current()" id="current-property">
                 <Explanation>
                   <p>
                     The <IJS>router.current()</IJS> method returns the current{" "}

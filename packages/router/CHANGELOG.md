@@ -1,5 +1,6 @@
 ## Next
 
+* Add `router.whileNavigating()` function, which let's a function know what the router is navigating and gives it the opportunity to cancel the navigation.
 * Add `globals` option when creating router. This value will be available to `route.resolve` functions and `route.response()`.
 * Export `prepareRoutes()` function to pre-build routes. Pre-building routes is encouraged and a warning message will be displayed to users who do not pre-build. In `@curi/router` v2, pre-building routes will be required.
 * Throw if routes have duplicate names.
