@@ -8,9 +8,15 @@ import { renderResponse } from "./src/render";
 
 export default function(req, res) {
   const history = InMemory({ locations: [req.url] });
-  const router = curi(history, routes);
+  const router = curi(history, routes, {
+    automaticRedirects: false
+  });
   const Router = curiProvider(router);
-  router.once(() => {
+  router.once(({ response }) => {
+    if (response.redirectTo !== undefined) {
+      res.redirect(302, response.redirectTo.pathname);
+      return;
+    }
     const markup = renderToString(<Router>{renderResponse}</Router>);
     res.send(renderFullPage(markup));
   });

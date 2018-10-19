@@ -8,7 +8,9 @@ import routes from "./routes";
 import { renderResponse } from "./render";
 
 const history = Browser();
-const router = curi(history, routes);
+const router = curi(history, routes, {
+  emitRedirects: false
+});
 const Router = curiProvider(router);
 const root = document.getElementById("root");
 

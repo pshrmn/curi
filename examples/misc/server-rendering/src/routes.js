@@ -40,6 +40,17 @@ export default [
     ]
   },
   {
+    name: "Redirect",
+    path: "redirect",
+    response: () => {
+      return {
+        redirectTo: {
+          name: "Home"
+        }
+      };
+    }
+  },
+  {
     name: "Not Found",
     path: "(.*)",
     resolve: {

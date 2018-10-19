@@ -17,6 +17,9 @@ const NavLinks = () => (
           </li>
         </ol>
       </li>
+      <li>
+        <Link to="Redirect">Redirect (to Home)</Link>
+      </li>
     </ul>
   </nav>
 );
