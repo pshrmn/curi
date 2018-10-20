@@ -140,6 +140,15 @@ const guides = [
       `../pages/Guides/loading.js`)
   },
   {
+    name: "Server-Side Rendering",
+    slug: "ssr",
+    description: "Cover the basics of server-side rendering an application",
+    type: "advanced",
+    import: () =>
+      import(/* webpackChunkName: 'guide--ssr' */
+      `../pages/Guides/ssr.js`)
+  },
+  {
     name: "Accessibility",
     slug: "accessibility",
     description: "Make your site inclusive to users who use screen readers.",

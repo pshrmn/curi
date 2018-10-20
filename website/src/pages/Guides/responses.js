@@ -205,7 +205,7 @@ const routes = prepareRoutes([
           {`{
   // The redirectTo property provides information on
   // where you should redirect to
-  redirectTo: { pathname: '/login' }
+  redirectTo: { url: '/login' }
 }`}
         </CodeBlock>
 
