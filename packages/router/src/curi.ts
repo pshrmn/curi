@@ -142,7 +142,12 @@ export default function createRouter(
     navigation: Navigation,
     resolved: ResolveResults | null
   ) {
-    const response = finishResponse(match, routeInteractions, resolved);
+    const response = finishResponse(
+      match,
+      routeInteractions,
+      resolved,
+      history
+    );
     pending.finish();
     emitImmediate(response, navigation);
     activeNavigation = undefined;

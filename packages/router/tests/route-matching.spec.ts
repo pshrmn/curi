@@ -562,7 +562,8 @@ describe("route matching/response generation", () => {
       });
 
       describe("redirectTo", () => {
-        it("is the redirectTo value of the object returned by route.response()", () => {
+        it("contains the expected properties", () => {
+          const history = InMemory({ locations: ["/"] });
           const routes = [
             {
               name: "A Route",
@@ -570,21 +571,33 @@ describe("route matching/response generation", () => {
               response: () => {
                 return {
                   redirectTo: {
-                    name: "B Route"
+                    name: "B Route",
+                    params: { id: "bee" },
+                    hash: "bay",
+                    query: "type=honey",
+                    state: { why: "not" }
                   }
                 };
               }
             },
             {
               name: "B Route",
-              path: "b"
+              path: "b/:id"
             }
           ];
-          const history = InMemory({ locations: ["/"] });
+
           let firstCall = true;
           const logger = ({ response }) => {
             if (firstCall) {
-              expect(response.redirectTo).toMatchObject({ pathname: "/b" });
+              expect(response.redirectTo).toMatchObject({
+                pathname: "/b/bee",
+                hash: "bay",
+                query: "type=honey",
+                url: "/b/bee?type=honey#bay",
+                state: { why: "not" },
+                name: "B Route",
+                params: { id: "bee" }
+              });
               firstCall = false;
             }
           };

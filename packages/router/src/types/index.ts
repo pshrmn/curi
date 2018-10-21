@@ -19,6 +19,7 @@ export {
   Response,
   RawParams,
   Params,
+  RedirectLocation,
   MatchResponseProperties,
   SettableResponseProperties
 } from "./response";
