@@ -19,13 +19,18 @@ export interface SettableResponseProperties {
     title?: string;
     redirectTo?: RedirectProps;
 }
+export interface RedirectLocation extends PartialLocation {
+    name: string;
+    params?: Params;
+    url: string;
+}
 export interface Response extends MatchResponseProperties {
     status?: number;
     error?: any;
     body?: any;
     data?: any;
     title?: string;
-    redirectTo?: PartialLocation;
+    redirectTo?: RedirectLocation;
 }
 export interface RedirectProps {
     name: string;

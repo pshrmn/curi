@@ -1,3 +1,7 @@
+## Next
+
+* Add `url` property to `response.redirectTo`, which is the `pathname`, `query` and `hash` concatenated. Also adds the `name` and `params` to the `redirectTo` object.
+
 ## 1.0.4
 
 * Add `sideEffects: false` hint for Webpack.

@@ -1,25 +1,34 @@
+import { History } from "@hickory/root";
 import { Interactions } from "./types/interaction";
-import { Response, SettableResponseProperties } from "./types/response";
+import {
+  Response,
+  RedirectLocation,
+  SettableResponseProperties
+} from "./types/response";
 import { ResolveResults } from "./types/route";
 import { Match } from "./types/match";
-import { PartialLocation } from "@hickory/root";
 
 function createRedirect(
   redirectTo: any,
-  interactions: Interactions
-): PartialLocation {
+  interactions: Interactions,
+  history: History
+): RedirectLocation {
   const { name, params, ...rest } = redirectTo;
   const pathname = interactions.pathname(name, params);
   return {
+    name,
+    params,
     pathname,
-    ...rest
+    ...rest,
+    url: history.toHref({ pathname, ...rest })
   };
 }
 
 export default function finishResponse(
   routeMatch: Match,
   interactions: Interactions,
-  resolvedResults: ResolveResults | null
+  resolvedResults: ResolveResults | null,
+  history: History
 ): Response {
   const { route, match } = routeMatch;
   const response: Response = match;
@@ -48,7 +57,11 @@ export default function finishResponse(
     if (responseModifiers.hasOwnProperty(p)) {
       if (p === "redirectTo") {
         // special case
-        response[p] = createRedirect(responseModifiers[p], interactions);
+        response[p] = createRedirect(
+          responseModifiers[p],
+          interactions,
+          history
+        );
       } else {
         response[p] = responseModifiers[p];
       }
