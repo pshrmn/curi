@@ -3,7 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import { InlineJS as IJS } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {

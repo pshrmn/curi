@@ -8,7 +8,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Note, Warning } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 export default class ReactPkg extends React.PureComponent {
@@ -73,7 +73,7 @@ const App = () => (
             </CodeBlock>
 
             <Section tag="h3" title="Arguments" id="curiProvider-arguments">
-              <Subsection tag="h4" title="router" id="curiProvider-router">
+              <Section tag="h4" title="router" id="curiProvider-router">
                 <Explanation>
                   <p>A Curi router.</p>
                 </Explanation>
@@ -83,10 +83,10 @@ const App = () => (
 const router = curi(history, routes);
 const Router = curiProvider(router);`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
             </Section>
             <Section tag="h3" title="Props" id="curiProvider-props">
-              <Subsection tag="h4" title="children" id="curiProvider-render">
+              <Section tag="h4" title="children" id="curiProvider-render">
                 <Explanation>
                   <p>
                     <IJS>children</IJS> is a render-invoked function. When it is
@@ -120,7 +120,7 @@ const Router = curiProvider(router);`}
                     </tbody>
                   </table>
                 </Explanation>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
 
@@ -148,7 +148,7 @@ const Router = curiProvider(router);`}
             </CodeBlock>
 
             <Section tag="h3" title="Props" id="Link-props">
-              <Subsection tag="h4" title="to" id="Link-to">
+              <Section tag="h4" title="to" id="Link-to">
                 <Explanation>
                   <p>The name of the route that you want to navigate to.</p>
                   <p>
@@ -161,9 +161,9 @@ const Router = curiProvider(router);`}
                   {`// Home route is { name: "Home", path: "" }
 <Link to="Home">Home</Link>`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h4" title="params" id="Link-params">
+              <Section tag="h4" title="params" id="Link-params">
                 <Explanation>
                   <p>
                     If the route that you want to navigate to (or any of its
@@ -175,9 +175,9 @@ const Router = curiProvider(router);`}
                   {`// User route is { name: 'User', path: '/user/:id' }
 <Link to='User' params={{ id: 16 }}>User 16</Link>`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection
+              <Section
                 tag="h4"
                 title="hash, query &amp; state"
                 id="Link-hash-query-state"
@@ -206,9 +206,9 @@ const Router = curiProvider(router);`}
 //  DJ Roomba
 // </a>`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h4" title="children" id="Link-children">
+              <Section tag="h4" title="children" id="Link-children">
                 <Explanation>
                   <p>
                     The <IJS>children</IJS> prop can take two forms: either a
@@ -241,9 +241,9 @@ const Router = curiProvider(router);`}
   )}
 </Link>`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h4" title="anchor" id="Link-anchor">
+              <Section tag="h4" title="anchor" id="Link-anchor">
                 <Explanation>
                   <p>
                     By default, when you render a <Cmp>Link</Cmp>, an anchor
@@ -262,7 +262,7 @@ const Router = curiProvider(router);`}
                     you from making your link render a button, div, span, etc.
                   </Warning>
                 </Explanation>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
 
@@ -300,7 +300,7 @@ const Router = curiProvider(router);`}
 </Focus>`}
             </CodeBlock>
             <Section tag="h3" title="Props" id="focus-props">
-              <Subsection tag="h4" title="children()" id="focus-children">
+              <Section tag="h4" title="children()" id="focus-children">
                 <Explanation>
                   <p>
                     The <IJS>children()</IJS> function is a render-invoked prop
@@ -325,12 +325,8 @@ const Router = curiProvider(router);`}
   {ref => <SomeComponent innerRef={ref} />}
 </Focus>`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection
-                tag="h4"
-                title="preventScroll"
-                id="focus-preventScroll"
-              >
+              </Section>
+              <Section tag="h4" title="preventScroll" id="focus-preventScroll">
                 <Explanation>
                   <p>
                     The default behavior for focusing an element is to scroll to
@@ -346,8 +342,8 @@ const Router = curiProvider(router);`}
 // does not scroll
 <Focus preventScroll={true}>{ref => ...}</Focus>`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection tag="h4" title="preserve" id="focus-preserve">
+              </Section>
+              <Section tag="h4" title="preserve" id="focus-preserve">
                 <Explanation>
                   <p>
                     The default focus behavior is to always focus the element
@@ -381,7 +377,7 @@ const Router = curiProvider(router);`}
   )}
 </Focus>`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
 
@@ -411,7 +407,7 @@ const MyComponent = () => (
             </CodeBlock>
 
             <Section tag="h3" title="Props" id="curious-props">
-              <Subsection tag="h4" title="children" id="curious-children">
+              <Section tag="h4" title="children" id="curious-children">
                 <Explanation>
                   <p>
                     A render-invoked function that returns a React element. This
@@ -419,7 +415,7 @@ const MyComponent = () => (
                     <IJS>response</IJS> and <IJS>navigation</IJS> properties.
                   </p>
                 </Explanation>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
 
@@ -471,25 +467,25 @@ const router = curi(history, routes, {
             </Note>
 
             <Section tag="h3" title="Props" id="Active-props">
-              <Subsection tag="h4" title="name" id="Active-name">
+              <Section tag="h4" title="name" id="Active-name">
                 <Explanation>
                   <p>
                     The name of the route to compare against the response
                     object.
                   </p>
                 </Explanation>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h4" title="params" id="Active-params">
+              <Section tag="h4" title="params" id="Active-params">
                 <Explanation>
                   <p>
                     An object containing route parameters. These will be
                     compared against the route params of the response object.
                   </p>
                 </Explanation>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h4" title="children" id="Active-children">
+              <Section tag="h4" title="children" id="Active-children">
                 <Explanation>
                   <p>
                     A render-invoked function whose first argument is whether
@@ -536,9 +532,9 @@ const router = curi(history, routes, {
   }}
 </Active>`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h4" title="partial" id="Active-partial">
+              <Section tag="h4" title="partial" id="Active-partial">
                 <Explanation>
                   <p>
                     When <IJS>true</IJS>, <IJS>partial</IJS> allows ancestor
@@ -563,7 +559,7 @@ const router = curi(history, routes, {
 </Active>
 // <Album className="active" />`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
 
@@ -583,7 +579,7 @@ const router = curi(history, routes, {
             </CodeBlock>
 
             <Section tag="h3" title="Props" id="Block-props">
-              <Subsection tag="h4" title="active" id="Block-active">
+              <Section tag="h4" title="active" id="Block-active">
                 <Explanation>
                   <p>
                     A boolean, which is true by default. When it is true, the
@@ -598,9 +594,9 @@ const router = curi(history, routes, {
 // will not block navigation
 <Block active={false} confirm={confirm} />`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h4" title="confirm" id="Block-confirm">
+              <Section tag="h4" title="confirm" id="Block-confirm">
                 <Explanation>
                   <p>
                     The confirm prop is a function that will be called whenever
@@ -650,7 +646,7 @@ const router = curi(history, routes, {
   }}
 />`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
         </APIBlock>

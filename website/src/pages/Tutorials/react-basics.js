@@ -8,7 +8,7 @@ import {
 } from "../../components/highlight/Inline";
 import { CodeBlock } from "../../components/layout/Groups";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 export default function ReactBasicsTutorial() {
@@ -154,7 +154,13 @@ registerServiceWorker();`}
           when we navigate within the application. A route's <IJS>path</IJS>{" "}
           describes the location pathname that it should match.
         </p>
-        <Subsection title="Path basics" id="path-basics" type="aside">
+
+        <Section
+          title="Path basics"
+          id="path-basics"
+          className="aside"
+          tag="h3"
+        >
           <p>
             Route paths are strings describing the pathname segments they should
             match.
@@ -197,7 +203,7 @@ registerServiceWorker();`}
   ]
 }`}
           </CodeBlock>
-        </Subsection>
+        </Section>
         <p>The website will start with four routes.</p>
         <table>
           <thead>
@@ -343,10 +349,11 @@ const Router = curiProvider(router);
         <p>
           The <IJS>router</IJS> is our Curi router, but what are the other two?
         </p>
-        <Subsection
+        <Section
           title="Responses and Navigation"
           id="responses"
-          type="aside"
+          className="aside"
+          tag="h3"
         >
           <p>
             Whenever Curi receives a location, it matches its routes against it
@@ -382,7 +389,7 @@ const Router = curiProvider(router);
             </IJS>, <IJS>POP</IJS>, or <IJS>REPLACE</IJS>) and the previous
             response object.
           </p>
-        </Subsection>
+        </Section>
         <p>
           Most of the time, the response is the only property you will need to
           use to render, but the other two may occasionally be useful.
@@ -574,14 +581,15 @@ registerServiceWorker();`}
           component that we can use to navigate between locations within our
           application.
         </p>
-        <Subsection
+        <Section
           title={
             <span>
               The <Cmp>Link</Cmp> Component
             </span>
           }
           id="link-component"
-          type="aside"
+          className="aside"
+          tag="h3"
         >
           <p>
             Navigation isn't done by manually typing the pathname of the
@@ -623,8 +631,9 @@ registerServiceWorker();`}
 <Link to="Checkout" query='affiliate=123'>Checkout</Link>
 // <a href="/checkout?affiliate=123">Checkout</a>`}
           </CodeBlock>
-        </Subsection>
-        <Subsection title="A Navigation Menu" id="nav-menu">
+        </Section>
+
+        <Section title="A Navigation Menu" id="nav-menu" tag="h3">
           <p>
             We will start with creating a navigation menu component with links
             to our home page and checkout page.
@@ -692,8 +701,9 @@ ReactDOM.render((
 ), document.getElementById('root'));
 registerServiceWorker();`}
           </CodeBlock>
-        </Subsection>
-        <Subsection title="Linking to Books" id="book-links">
+        </Section>
+
+        <Section title="Linking to Books" id="book-links" tag="h3">
           <p>
             We want to be able to link to individual books from the home page.
             First, we need data about the books. For now, we're going to
@@ -809,7 +819,7 @@ export default function Book({ response }) {
   );
 }`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
       <Section title="Let's go shopping" id="shopping">
         <p>
@@ -896,7 +906,13 @@ registerServiceWorker();`}
           button to add a book to their shopping cart, we can automatically
           navigate to the checkout page.
         </p>
-        <Subsection title="Navigate Method" id="nav-method" type="aside">
+
+        <Section
+          title="Navigate Method"
+          id="nav-method"
+          className="aside"
+          tag="h3"
+        >
           <p>
             <IJS>router.navigate()</IJS> is used to navigate to new locations.
             There are three methods of navigation: <IJS>PUSH</IJS>,{" "}
@@ -936,7 +952,7 @@ router.navigate({ name: "Two", method: "ANCHOR" });
 router.navigate({ name: "New", method: "ANCHOR" });
 // session = ['/one', '/two', '/new'], index = 2`}`}
           </CodeBlock>
-        </Subsection>
+        </Section>
         <p>
           We also want to import our shopping cart API so that we can add a book
           to the cart.

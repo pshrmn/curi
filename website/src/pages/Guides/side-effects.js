@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -73,7 +73,7 @@ router.observe(render);
 // called before logResponse`}
         </CodeBlock>
 
-        <Subsection title="Official Side Effects" id="official">
+        <Section title="Official Side Effects" id="official" tag="h3">
           <Explanation>
             <p>Curi has two "official" side effect packages:</p>
             <ul>
@@ -97,7 +97,7 @@ const router = curi(history, routes, {
   sideEffect: [titleEffect(), scrollEffect()]
 });`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
 
       <Section title="Creating Side Effects" id="creating">

@@ -6,7 +6,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -54,7 +54,11 @@ export default function MigrateReactRouterv3Guide() {
       </Explanation>
       <Section title="Routes" id="routes">
         <p>Let’s get started with setting up our routes.</p>
-        <Subsection title="With React Router" id="routes-with-react-router">
+        <Section
+          title="With React Router"
+          id="routes-with-react-router"
+          tag="h3"
+        >
           <Explanation>
             <p>
               In React Router v2/3, there are two ways to define routes. You can
@@ -105,8 +109,9 @@ export default function MigrateReactRouterv3Guide() {
   </Route>
 </Route>`}
           </CodeBlock>
-        </Subsection>
-        <Subsection title="With Curi" id="routes-with-curi">
+        </Section>
+
+        <Section title="With Curi" id="routes-with-curi" tag="h3">
           <Explanation>
             <p>
               Routes in Curi are always JavaScript objects. Like React Router,
@@ -286,7 +291,7 @@ const routes = [
   }
 ];`}
           </CodeBlock>
-        </Subsection>
+        </Section>
         <p>
           Once your routes have been defined, you can move on to creating your
           Curi router.
@@ -342,7 +347,7 @@ const router = curi(history, routes);`}
           </p>
         </Explanation>
 
-        <Subsection title="React Router v2/3" id="rendering-react-router">
+        <Section title="React Router v2/3" id="rendering-react-router" tag="h3">
           <Explanation>
             <p>
               React Router uses the <Cmp>Router</Cmp> component to subscribe to
@@ -382,8 +387,9 @@ const router = curi(history, routes);`}
   </Inbox>
 </App>`}
           </CodeBlock>
-        </Subsection>
-        <Subsection title="Curi" id="rendering-with-curi">
+        </Section>
+
+        <Section title="Curi" id="rendering-with-curi" tag="h3">
           <Explanation>
             <p>
               With Curi, we also need to re-render our application every time
@@ -532,7 +538,7 @@ function render({ response }) {
   return <Body response={response} />;
 }`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
 
       <Section title="Links" id="links">

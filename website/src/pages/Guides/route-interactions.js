@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -201,7 +201,11 @@ router.route.confirm('Home'); // true
 router.route.confirm('Elsewhere'); // false`}
         </CodeBlock>
 
-        <Subsection title="Slightly more advanced" id="Slightly-more-advanced">
+        <Section
+          title="Slightly more advanced"
+          id="Slightly-more-advanced"
+          tag="h3"
+        >
           <Explanation>
             <p>
               You might want to write an interaction that uses data from parent
@@ -237,7 +241,7 @@ router.route.confirm('Elsewhere'); // false`}
   }
 }`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
     </React.Fragment>
   );

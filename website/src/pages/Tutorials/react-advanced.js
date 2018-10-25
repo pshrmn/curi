@@ -6,7 +6,7 @@ import {
   InlineJS as IJS,
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 import { Note } from "../../components/Messages";
 import CodeSandboxDemo from "../../components/CodeSandboxDemo";
@@ -475,7 +475,7 @@ registerServiceWorker();`}
           </p>
         </Explanation>
 
-        <Subsection title="The Fake API" id="fake-api">
+        <Section title="The Fake API" id="fake-api" tag="h3">
           <Explanation>
             <p>
               The fake API will simulate asynchronous calls to the server by
@@ -515,7 +515,7 @@ export const BOOK = id => Promise.resolve(
   books.find(b => b.id === id)
 );`}
           </CodeBlock>
-        </Subsection>
+        </Section>
 
         <Explanation>
           <p>
@@ -739,13 +739,14 @@ export const BOOK = id => new Promise(resolve => {
 });`}
         </CodeBlock>
 
-        <Subsection
+        <Section
           title={
             <span>
               <Cmp>Link</Cmp> is navigating?
             </span>
           }
           id="link-navigating"
+          tag="h3"
         >
           <Explanation>
             <p>
@@ -830,7 +831,7 @@ export default function Home({ response }) {
   );
 }`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
       <Section title="Async Caveats" id="caveats">
         <Explanation>

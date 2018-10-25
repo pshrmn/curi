@@ -6,7 +6,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -363,7 +363,7 @@ const Verb = ({ response }) => (
   </Query>
 )`}
         </CodeBlock>
-        <Subsection title="Prefetching" id="prefetch">
+        <Section title="Prefetching" id="prefetch" tag="h3">
           <Explanation>
             <p>
               One additional benefit of adding queries to routes using{" "}
@@ -409,7 +409,7 @@ router.route.prefetch(
   { params: { id: 2 }}
 );`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
     </React.Fragment>
   );

@@ -5,7 +5,7 @@ import {
   InlineJS as IJS,
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { Note, Warning } from "../../components/Messages";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
@@ -46,7 +46,7 @@ const router = curi(history, routes);`}
           </p>
         </Explanation>
 
-        <Subsection title="Browser History" id="browser">
+        <Section title="Browser History" id="browser" tag="h3">
           <Explanation>
             <CodeBlock>
               {`import Browser from "@hickory/browser";
@@ -76,9 +76,9 @@ const browserHistory = Browser();`}
               </li>
             </ol>
           </Explanation>
-        </Subsection>
+        </Section>
 
-        <Subsection title="Hash History" id="hash">
+        <Section title="Hash History" id="hash" tag="h3">
           <CodeBlock>
             {`import Hash from "@hickory/hash";
 const hashHistory = Hash();`}
@@ -95,9 +95,9 @@ const hashHistory = Hash();`}
               history is almost always a better choice.
             </Warning>
           </Explanation>
-        </Subsection>
+        </Section>
 
-        <Subsection title="In Memory History" id="in-memory">
+        <Section title="In Memory History" id="in-memory" tag="h3">
           <CodeBlock>
             {`import InMemory from "@hickory/in-memory";
 const inMemoryHistory = InMemory();`}
@@ -110,7 +110,7 @@ const inMemoryHistory = InMemory();`}
               testing.
             </p>
           </Explanation>
-        </Subsection>
+        </Section>
 
         <Explanation>
           <Note>
@@ -145,7 +145,7 @@ hash: "trending"
 }`}
         </CodeBlock>
 
-        <Subsection title="Query Objects" id="query-objects">
+        <Section title="Query Objects" id="query-objects" tag="h3">
           <Explanation>
             <p>
               The <IJS>query</IJS> value of a location is a string by default,
@@ -181,7 +181,7 @@ query: { key: "value" }
 hash: "trending"
 }`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
 
       <Section title="Navigation" id="navigation">

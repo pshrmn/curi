@@ -1,7 +1,6 @@
 @import "./variables.scss";
 
-.section,
-.subsection {
+.section {
   margin-top: 15px;
 
   .header-link {
@@ -29,8 +28,7 @@
 }
 
 @media only screen and (min-width: $mediumScreen) {
-  .section,
-  .subsection {
+  .section {
     max-width: 800px;
   }
 }

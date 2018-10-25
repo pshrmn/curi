@@ -4,7 +4,7 @@ import { Link } from "@curi/react-dom";
 import APIBlock from "../../components/package/APIBlock";
 import About from "../../components/package/About";
 import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 import { Note, Warning } from "../../components/Messages";
 
@@ -36,7 +36,7 @@ const router = curi(history, routes, options);`}
             </CodeBlock>
 
             <Section tag="h4" title="Arguments" id="arguments">
-              <Subsection tag="h5" title="history" id="history">
+              <Section tag="h5" title="history" id="history">
                 <Explanation>
                   <p>
                     A <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
@@ -59,9 +59,9 @@ const router = curi(history, routes, options);`}
 const history = Browser();
 const router = curi(history, routes);`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h5" title="routes" id="routes">
+              <Section tag="h5" title="routes" id="routes">
                 <Explanation>
                   <p>
                     An array of{" "}
@@ -79,9 +79,9 @@ const router = curi(history, routes);`}
 
 const router = curi(history, routes);`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h5" title="options" id="options">
+              <Section tag="h5" title="options" id="options">
                 <p>
                   An optional object with additional properties that can be
                   passed to the router.
@@ -289,7 +289,7 @@ router.once(({ response }) => {
                     </CodeBlock>
                   </li>
                 </ul>
-              </Subsection>
+              </Section>
             </Section>
 
             <Section tag="h4" title="Router Properties" id="properties">
@@ -297,7 +297,7 @@ router.once(({ response }) => {
                 The router has a number of properties for you to use when
                 rendering your application.
               </p>
-              <Subsection tag="h5" title="navigate(details)" id="navigate">
+              <Section tag="h5" title="navigate(details)" id="navigate">
                 <Explanation>
                   <p>
                     The <IJS>navigate()</IJS> method is used to navigate
@@ -386,8 +386,8 @@ router.navigate({
 // navigates to "/photos/123/456"
 // using default "ANCHOR" method`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection tag="h5" title="once(fn, options)" id="once">
+              </Section>
+              <Section tag="h5" title="once(fn, options)" id="once">
                 <Explanation>
                   <p>
                     The <IJS>once()</IJS> method takes a response handler
@@ -436,7 +436,7 @@ router.navigate({
 });`}
                 </CodeBlock>
 
-                <Subsection tag="h6" title="options" id="once-options">
+                <Section tag="h6" title="options" id="once-options">
                   <Explanation>
                     <table>
                       <thead>
@@ -465,9 +465,9 @@ router.navigate({
   initial: false
 });`}
                   </CodeBlock>
-                </Subsection>
-              </Subsection>
-              <Subsection tag="h5" title="observe(fn, options)" id="observe">
+                </Section>
+              </Section>
+              <Section tag="h5" title="observe(fn, options)" id="observe">
                 <Explanation>
                   <p>
                     The <IJS>observe()</IJS> method takes a response handler
@@ -516,7 +516,7 @@ router.navigate({
 });`}
                 </CodeBlock>
 
-                <Subsection tag="h6" title="options" id="observe-options">
+                <Section tag="h6" title="options" id="observe-options">
                   <Explanation>
                     <table>
                       <thead>
@@ -561,10 +561,10 @@ router.navigate({
 stopObserving();
 // the router no longer calls the observer`}
                   </CodeBlock>
-                </Subsection>
-              </Subsection>
+                </Section>
+              </Section>
 
-              <Subsection tag="h5" title="current()" id="current-property">
+              <Section tag="h5" title="current()" id="current-property">
                 <Explanation>
                   <p>
                     The <IJS>router.current()</IJS> method returns the current{" "}
@@ -588,9 +588,9 @@ router.once(({ response, navigation }) => {
   // perfect.navigation === navigation
 });`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h5" title="route" id="router-route">
+              <Section tag="h5" title="route" id="router-route">
                 <Explanation>
                   <p>
                     The router's{" "}
@@ -602,7 +602,7 @@ router.once(({ response, navigation }) => {
                   </p>
                 </Explanation>
 
-                <Subsection tag="h6" title="pathname" id="pathname-interaction">
+                <Section tag="h6" title="pathname" id="pathname-interaction">
                   <Explanation>
                     <p>
                       Curi includes one built-in interaction,{" "}
@@ -622,10 +622,10 @@ const userPathname = router.route.pathname(
 );
 // userPathname === '/user/12345'`}
                   </CodeBlock>
-                </Subsection>
-              </Subsection>
+                </Section>
+              </Section>
 
-              <Subsection tag="h5" title="refresh()" id="refresh-property">
+              <Section tag="h5" title="refresh()" id="refresh-property">
                 <Explanation>
                   <p>
                     The <IJS>refresh()</IJS> function takes an array of new
@@ -647,16 +647,16 @@ const router = curi(history, oldRoutes);
 router.refresh(newRoutes);
 // generates responses using new routes`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
 
-              <Subsection tag="h5" title="history" id="history-property">
+              <Section tag="h5" title="history" id="history-property">
                 <Explanation>
                   <p>
                     The route's history object, in case you need to interact
                     directly with that.
                   </p>
                 </Explanation>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
           <Section title="pathname" id="pathname">
@@ -679,8 +679,9 @@ const path = pathnameGenerator.get("Yo", { name: "joey" })
 // path = "/yo/joey"`}
             </CodeBlock>
           </Section>
+
           <Section title="Route properties" id="route-properties">
-            <Subsection title="route.name" id="name">
+            <Section title="route.name" id="name" tag="h3">
               <Explanation>
                 <p>A string, this must be unique for every route.</p>
               </Explanation>
@@ -691,9 +692,9 @@ const path = pathnameGenerator.get("Yo", { name: "joey" })
   { name: 'Not Found' }
 ];`}
               </CodeBlock>
-            </Subsection>
+            </Section>
 
-            <Subsection title="route.path" id="path">
+            <Section title="route.path" id="path" tag="h3">
               <Explanation>
                 <p>
                   A string pattern describing what the route matches. Whenever
@@ -736,9 +737,9 @@ const path = pathnameGenerator.get("Yo", { name: "joey" })
 // don't include a leading forward slash
 // { name: 'Home', path: '/' }`}
               </CodeBlock>
-            </Subsection>
+            </Section>
 
-            <Subsection title="route.resolve" id="resolve">
+            <Section title="route.resolve" id="resolve" tag="h3">
               <Explanation>
                 <p>
                   The <IJS>resolve</IJS> object groups async functions that will
@@ -780,8 +781,8 @@ const path = pathnameGenerator.get("Yo", { name: "joey" })
   }
 };`}
               </CodeBlock>
-            </Subsection>
-            <Subsection title="route.response()" id="response">
+            </Section>
+            <Section title="route.response()" id="response">
               <Explanation>
                 <p>
                   A function for modifying the response object. This returns an
@@ -942,7 +943,12 @@ const routes = [
               </CodeBlock>
 
               <ul>
-                <Subsection wrapper="li" title="match" id="response-match">
+                <Section
+                  wrapper="li"
+                  title="match"
+                  id="response-match"
+                  tag="h3"
+                >
                   <Explanation>
                     <p>
                       An object with the matched route properties of a response.
@@ -984,11 +990,13 @@ const routes = [
                       </tbody>
                     </table>
                   </Explanation>
-                </Subsection>
-                <Subsection
+                </Section>
+
+                <Section
                   wrapper="li"
                   title="resolved"
                   id="response-resolved"
+                  tag="h3"
                 >
                   <Explanation>
                     <p>
@@ -1018,8 +1026,14 @@ const user = {
   }
 }`}
                   </CodeBlock>
-                </Subsection>
-                <Subsection wrapper="li" title="error" id="response-error">
+                </Section>
+
+                <Section
+                  wrapper="li"
+                  title="error"
+                  id="response-error"
+                  tag="h3"
+                >
                   <Explanation>
                     <p>
                       <IJS>error</IJS> is an error thrown by one of the route's{" "}
@@ -1047,11 +1061,11 @@ const user = {
   }
 }`}
                   </CodeBlock>
-                </Subsection>
+                </Section>
               </ul>
-            </Subsection>
+            </Section>
 
-            <Subsection title="children" id="children">
+            <Section title="children" id="children" tag="h3">
               <Explanation>
                 <p>
                   An optional array of route objects for creating nested routes.
@@ -1077,9 +1091,9 @@ const user = {
   ]
 }`}
               </CodeBlock>
-            </Subsection>
+            </Section>
 
-            <Subsection title="params" id="params">
+            <Section title="params" id="params" tag="h3">
               <Explanation>
                 <p>
                   When <IJS>path-to-regexp</IJS> matches your paths, all
@@ -1109,9 +1123,9 @@ const user = {
 // response.params will be { num: 1 }
 // instead of { num: "1" }`}
               </CodeBlock>
-            </Subsection>
+            </Section>
 
-            <Subsection title="pathOptions" id="pathOptions">
+            <Section title="pathOptions" id="pathOptions" tag="h3">
               <Explanation>
                 <p>
                   If you need to provide different path options than{" "}
@@ -1127,9 +1141,9 @@ const user = {
                   set to false.
                 </Note>
               </Explanation>
-            </Subsection>
+            </Section>
 
-            <Subsection title="extra" id="extra">
+            <Section title="extra" id="extra" tag="h3">
               <Explanation>
                 <p>
                   If you have any additional properties that you want attached
@@ -1156,7 +1170,7 @@ const user = {
   }
 ];`}
               </CodeBlock>
-            </Subsection>
+            </Section>
           </Section>
         </APIBlock>
       </React.Fragment>

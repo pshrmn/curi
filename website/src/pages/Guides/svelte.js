@@ -6,7 +6,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -45,7 +45,11 @@ const store = new Store();
 curiStore(router, store);`}
         </CodeBlock>
 
-        <Subsection title="Rendering with the response" id="rendering-response">
+        <Section
+          title="Rendering with the response"
+          id="rendering-response"
+          tag="h3"
+        >
           <Explanation>
             <p>
               Svelte allows you to render dynamic components using the{" "}
@@ -133,7 +137,7 @@ const routes = [
   }
 </script>`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
 
       <Section title="Navigating" id="navigating">

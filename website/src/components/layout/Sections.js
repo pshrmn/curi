@@ -3,15 +3,15 @@ import { Link } from "@curi/react-dom";
 
 import "../../scss/section.scss";
 
-const Sectional = ({
+export const Section = ({
   title,
   id,
   children,
-  tag: Tag,
+  tag: Tag = "h2",
   wrapper: Wrapper = "div",
-  type = "section"
+  className = "section"
 }) => (
-  <Wrapper className={type} id={id}>
+  <Wrapper className={className} id={id}>
     <Tag>
       {title}
       <Link className="header-link" hash={id}>
@@ -20,12 +20,4 @@ const Sectional = ({
     </Tag>
     {children}
   </Wrapper>
-);
-
-export const Section = ({ tag = "h2", ...rest }) => (
-  <Sectional type="section" tag={tag} {...rest} />
-);
-
-export const Subsection = ({ tag = "h3", ...rest }) => (
-  <Sectional type="subsection" tag={tag} {...rest} />
 );

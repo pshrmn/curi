@@ -6,7 +6,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -68,7 +68,11 @@ const App = () => (
 );`}
         </CodeBlock>
 
-        <Subsection title="What to return from children()" id="children-return">
+        <Section
+          title="What to return from children()"
+          id="children-return"
+          tag="h3"
+        >
           <Explanation>
             <p>
               The render-invoked <IJS>children()</IJS> is responsible for
@@ -197,7 +201,7 @@ export default function RouteName() {
   );
 }`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
 
       <Section title="Navigating" id="navigating">
@@ -268,7 +272,7 @@ const NavLinks = () => (
           </Note>
         </Explanation>
 
-        <Subsection title="Back Button" id="back-button">
+        <Section title="Back Button" id="back-button" tag="h3">
           <Explanation>
             <p>
               To add back button support, you need to use your{" "}
@@ -305,7 +309,7 @@ BackHandler.addEventListener(
   }
 );`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
     </React.Fragment>
   );

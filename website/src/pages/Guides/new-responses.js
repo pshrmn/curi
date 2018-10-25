@@ -6,7 +6,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -28,7 +28,7 @@ export default function NewResponsesGuide() {
         </p>
       </Explanation>
 
-      <Subsection title="Response Handlers" id="response-handlers">
+      <Section title="Response Handlers" id="response-handlers" tag="h3">
         <Explanation>
           <p>
             When response handlers are called, they are passed an object with
@@ -58,9 +58,9 @@ export default function NewResponsesGuide() {
   // ...
 }`}
         </CodeBlock>
-      </Subsection>
+      </Section>
 
-      <Subsection title="Registering Response Handlers" id="registering">
+      <Section title="Registering Response Handlers" id="registering" tag="h3">
         <Explanation>
           <p>
             There are three ways to attach response handlers to the router:{" "}
@@ -88,11 +88,11 @@ router.once(fn);
 // obs will be called for every new response
 const stop = router.observe(fn);`}
         </CodeBlock>
-      </Subsection>
+      </Section>
 
-      <Subsection title="Use Cases" id="use-cases">
+      <Section title="Use Cases" id="use-cases" tag="h3">
         <p>What should you use response handlers for?</p>
-        <Subsection title="Setup" id="setup">
+        <Section title="Setup" id="setup" tag="h4">
           <Explanation>
             <p>
               If any of the routes in an application have <IJS>resolve</IJS>{" "}
@@ -124,8 +124,9 @@ function setup() {
 
 router.once(setup);`}
           </CodeBlock>
-        </Subsection>
-        <Subsection title="Rendering" id="rendering">
+        </Section>
+
+        <Section title="Rendering" id="rendering" tag="h4">
           <Explanation>
             <p>
               Rendering libraries need to know when there is a new response so
@@ -162,8 +163,9 @@ router.once(setup);`}
 
 router.observe(observer);`}
           </CodeBlock>
-        </Subsection>
-        <Subsection title="Side Effects" id="side-effects">
+        </Section>
+
+        <Section title="Side Effects" id="side-effects" tag="h4">
           <Explanation>
             <p>
               Side effects are observers that are provided to the router at
@@ -211,8 +213,8 @@ const router = curi(history, routes, {
 // as an observer
 router.observe(logger);`}
           </CodeBlock>
-        </Subsection>
-      </Subsection>
+        </Section>
+      </Section>
     </React.Fragment>
   );
 }

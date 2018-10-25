@@ -6,7 +6,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -72,7 +72,11 @@ router.once(() => {
 });`}
         </CodeBlock>
 
-        <Subsection title="What to return from children()" id="children-return">
+        <Section
+          title="What to return from children()"
+          id="children-return"
+          tag="h3"
+        >
           <Explanation>
             <p>
               The render-invoked <IJS>children()</IJS> is responsible for
@@ -197,9 +201,9 @@ export default function RouteName() {
   );
 }`}
           </CodeBlock>
-        </Subsection>
+        </Section>
 
-        <Subsection title="Accessibility" id="accessibility">
+        <Section title="Accessibility" id="accessibility" tag="h3">
           <Explanation>
             <p>
               Managing the application's focus when navigating is useful for
@@ -240,7 +244,7 @@ ReactDOM.render((
   </Router>
 ), document.getElementById("root"));`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
 
       <Section title="Navigating" id="navigating">

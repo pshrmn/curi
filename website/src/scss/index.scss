@@ -42,11 +42,11 @@ p {
 }
 
 h1 {
-  font-size: 1.5em;
+  font-size: 1.75em;
 }
 
 h2 {
-  font-size: 1.3em;
+  font-size: 1.5em;
 }
 
 h3 {
@@ -70,6 +70,10 @@ th,
 td {
   border: 1px solid $border-gray;
   border-collapse: collapse;
+}
+
+table {
+  margin-bottom: 10px;
 }
 
 th {

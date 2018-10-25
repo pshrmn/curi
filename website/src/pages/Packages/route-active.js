@@ -3,7 +3,7 @@ import React from "react";
 import APIBlock from "../../components/package/APIBlock";
 import About from "../../components/package/About";
 import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 export default class RouteActivePkg extends React.PureComponent {
@@ -45,7 +45,7 @@ const router = curi(history, routes, {
 });`}
             </CodeBlock>
 
-            <Subsection title="Arguments" id="arguments">
+            <Section title="Arguments" id="arguments" tag="h3">
               <Explanation>
                 <table>
                   <thead>
@@ -87,7 +87,7 @@ const router = curi(history, routes, {
   false
 );`}
               </CodeBlock>
-            </Subsection>
+            </Section>
           </Section>
         </APIBlock>
       </React.Fragment>

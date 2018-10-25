@@ -4,7 +4,7 @@ import APIBlock from "../../components/package/APIBlock";
 import About from "../../components/package/About";
 import { InlineJS as IJS } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 export default class RoutePrefetchPkg extends React.PureComponent {
@@ -56,7 +56,7 @@ const router = curi(history, routes, {
 router.route.prefetch("Some Route");`}
             </CodeBlock>
 
-            <Subsection title="Arguments" id="arguments">
+            <Section title="Arguments" id="arguments" tag="h3">
               <Explanation>
                 <table>
                   <thead>
@@ -121,7 +121,7 @@ router.route.prefetch(
   ['one']
 );`}
               </CodeBlock>
-            </Subsection>
+            </Section>
           </Section>
         </APIBlock>
       </React.Fragment>

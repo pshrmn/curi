@@ -8,7 +8,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 export default class VuePkg extends React.PureComponent {
@@ -64,7 +64,7 @@ Vue.use(CuriPlugin, { router });`}
               </Cmp>) element.
             </p>
 
-            <Subsection tag="h4" title="to" id="Link-to">
+            <Section tag="h4" title="to" id="Link-to">
               <Explanation>
                 <p>
                   <IJS>to</IJS> - The name of the route to navigate to.{" "}
@@ -75,9 +75,9 @@ Vue.use(CuriPlugin, { router });`}
                 {`<curi-link to='Home'>Home</curi-link>
 <!-- <a href="/">Home</a> -->`}
               </CodeBlock>
-            </Subsection>
+            </Section>
 
-            <Subsection tag="h4" title="params" id="Link-params">
+            <Section tag="h4" title="params" id="Link-params">
               <Explanation>
                 <p>
                   <IJS>params</IJS> - An object containing the key-value params
@@ -94,9 +94,9 @@ Vue.use(CuriPlugin, { router });`}
   Coloring Book
 </curi-link>`}
               </CodeBlock>
-            </Subsection>
+            </Section>
 
-            <Subsection tag="h4" title="hash" id="Link-hash">
+            <Section tag="h4" title="hash" id="Link-hash">
               <Explanation>
                 <p>
                   <IJS>hash</IJS> - the hash for the location to link to
@@ -106,9 +106,9 @@ Vue.use(CuriPlugin, { router });`}
                 {`<curi-link to="Home" hash="test">Home</curi-link>
 <!-- <a href="/#test">Home</a> -->`}
               </CodeBlock>
-            </Subsection>
+            </Section>
 
-            <Subsection tag="h4" title="query" id="Link-query">
+            <Section tag="h4" title="query" id="Link-query">
               <Explanation>
                 <p>
                   <IJS>query</IJS> - the query for the location to link to
@@ -118,15 +118,15 @@ Vue.use(CuriPlugin, { router });`}
                 {`<curi-link to="Home" query="one=1">Home</curi-link>
 <!-- <a href="/?one=1">Home</a> -->`}
               </CodeBlock>
-            </Subsection>
+            </Section>
 
-            <Subsection tag="h4" title="state" id="Link-state">
+            <Section tag="h4" title="state" id="Link-state">
               <Explanation>
                 <IJS>state</IJS> - the state to associated with the location
               </Explanation>
-            </Subsection>
+            </Section>
 
-            <Subsection tag="h4" title="slots" id="Link-slots">
+            <Section tag="h4" title="slots" id="Link-slots">
               <Explanation>
                 <p>
                   The <Cmp>curi-link</Cmp>'s can take either a regular slot or a
@@ -155,7 +155,7 @@ Vue.use(CuriPlugin, { router });`}
   </template>
 </curi-ink>`}
               </CodeBlock>
-            </Subsection>
+            </Section>
           </Section>
 
           <Section title={<Cmp>curi-block</Cmp>} id="block">
@@ -241,15 +241,16 @@ Vue.use(CuriPlugin, { router });`}
 </template>`}
             </CodeBlock>
             <Section tag="h3" title="Properties" id="focus-properties">
-              <Subsection tag="h4" title="key" id="focus-key">
+              <Section tag="h4" title="key" id="focus-key">
                 <Explanation>
                   <p>
                     A value that changes when there is a new response; the{" "}
                     <IJS>response</IJS> is usually fine for this.
                   </p>
                 </Explanation>
-              </Subsection>
-              <Subsection tag="h4" title="preserve" id="focus-preserve">
+              </Section>
+
+              <Section tag="h4" title="preserve" id="focus-preserve">
                 <Explanation>
                   <p>
                     When <IJS>true</IJS> (<IJS>false</IJS> by default), the
@@ -279,12 +280,9 @@ Vue.use(CuriPlugin, { router });`}
   </main>
 </template>`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection
-                tag="h4"
-                title="preventScroll"
-                id="focus-preventScroll"
-              >
+              </Section>
+
+              <Section tag="h4" title="preventScroll" id="focus-preventScroll">
                 <Explanation>
                   <p>
                     When <IJS>true</IJS> (<IJS>false</IJS> by default), the
@@ -305,7 +303,7 @@ Vue.use(CuriPlugin, { router });`}
   </main>
 </template>`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
         </APIBlock>

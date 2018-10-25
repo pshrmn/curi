@@ -1,11 +1,13 @@
 @import "./variables.scss";
 
 #API {
-  > .section {
-    border-bottom: 3px double $purple;
+  .section {
+    border-left: 2px solid $border-gray;
+    padding-left: 10px;
+    margin-bottom: 5px;
   }
 
-  .section {
-    margin-bottom: 5px;
+  > .section {
+    border-left: 0;
   }
 }

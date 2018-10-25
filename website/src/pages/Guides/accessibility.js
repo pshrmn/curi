@@ -6,7 +6,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Warning } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -139,7 +139,11 @@ const router = curi(history, routes, {
 <!-- but not me -->
 <div></div>`}
         </CodeBlock>
-        <Subsection title="Focusing in React Applications" id="focus-react">
+        <Section
+          title="Focusing in React Applications"
+          id="focus-react"
+          tag="h3"
+        >
           <Explanation>
             <p>
               The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Focus</Cmp>{" "}
@@ -171,8 +175,9 @@ ReactDOM.render((
   </Router>
 ), holder);`}
           </CodeBlock>
-        </Subsection>
-        <Subsection title="Focusing in Vue Applications" id="focus-vue">
+        </Section>
+
+        <Section title="Focusing in Vue Applications" id="focus-vue" tag="h3">
           <Explanation>
             <p>
               The <IJS>@curi/vue</IJS> package provides a directive for focusing
@@ -189,7 +194,7 @@ ReactDOM.render((
   </main>
 </template>`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
 
       <Section title="More Resources" id="more">

@@ -1,30 +1,6 @@
 import React from "react";
 
-function Down() {
-  return (
-    <svg
-      width="25"
-      height="15"
-      viewBox="0 0 25 15"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M2,5 l5,5 l5,-5" fill="none" stroke="black" strokeWidth={3} />
-    </svg>
-  );
-}
-
-function Up() {
-  return (
-    <svg
-      width="25"
-      height="15"
-      viewBox="0 0 25 15"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" strokeWidth={3} />
-    </svg>
-  );
-}
+import { Up, Down } from "../svg";
 
 export default class CollapsibleGroup extends React.Component {
   state = { collapsed: false };

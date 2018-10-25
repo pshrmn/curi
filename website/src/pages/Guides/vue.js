@@ -6,7 +6,7 @@ import {
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
 import { Note } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -43,7 +43,11 @@ import router from "./router";
 Vue.use(CuriPlugin, { router });`}
         </CodeBlock>
 
-        <Subsection title="Rendering with the response" id="rendering-response">
+        <Section
+          title="Rendering with the response"
+          id="rendering-response"
+          tag="h3"
+        >
           <Explanation>
             <p>
               Vue allows you to render dynamic components using the{" "}
@@ -142,9 +146,9 @@ const routes = [
               The router is globally available as <IJS>$router</IJS>.
             </p>
           </Explanation>
-        </Subsection>
+        </Section>
 
-        <Subsection title="Accessibility" id="accessibility">
+        <Section title="Accessibility" id="accessibility" tag="h3">
           <Explanation>
             <p>
               Managing the application's focus when navigating is useful for
@@ -177,7 +181,7 @@ const routes = [
   };
 </script>`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
 
       <Section title="Navigating" id="navigating">

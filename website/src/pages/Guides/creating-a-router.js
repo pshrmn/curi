@@ -5,7 +5,7 @@ import {
   InlineJS as IJS,
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { Note } from "../../components/Messages";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 

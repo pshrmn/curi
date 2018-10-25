@@ -7,7 +7,7 @@ import {
   InlineJS as IJS,
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 import { Note } from "../../components/Messages";
 
@@ -83,7 +83,7 @@ staticFiles({
             </CodeBlock>
 
             <Section tag="h4" title="Arguments" id="staticFiles-arguments">
-              <Subsection tag="h5" title="routes" id="staticFiles-routes">
+              <Section tag="h5" title="routes" id="staticFiles-routes">
                 <Explanation>
                   <p>
                     The array of route descriptors that is passed to a router.
@@ -107,8 +107,9 @@ staticFiles({
   routes
 });`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection tag="h5" title="pages" id="staticFiles-pages">
+              </Section>
+
+              <Section tag="h5" title="pages" id="staticFiles-pages">
                 <Explanation>
                   <p>
                     An array of page descriptors. A page descriptor is an object
@@ -131,8 +132,9 @@ staticFiles({
   pages
 });`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection tag="h5" title="render()" id="staticFiles-render">
+              </Section>
+
+              <Section tag="h5" title="render()" id="staticFiles-render">
                 <Explanation>
                   <p>
                     A function that takes the emitted <IJS>response</IJS>,{" "}
@@ -175,8 +177,9 @@ staticFiles({
   render
 });`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection tag="h5" title="insert()" id="staticFiles-insert">
+              </Section>
+
+              <Section tag="h5" title="insert()" id="staticFiles-insert">
                 <Explanation>
                   <p>
                     A function that takes the value returned by the{" "}
@@ -208,15 +211,17 @@ staticFiles({
   insert
 });`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection tag="h5" title="outputDir" id="staticFiles-outputDir">
+              </Section>
+
+              <Section tag="h5" title="outputDir" id="staticFiles-outputDir">
                 <Explanation>
                   <p>
                     The folder where the generated HTML files should be saved.
                   </p>
                 </Explanation>
-              </Subsection>
-              <Subsection
+              </Section>
+
+              <Section
                 tag="h5"
                 title="outputRedirects"
                 id="staticFiles-outputRedirects"
@@ -241,8 +246,9 @@ staticFiles({
                     render redirects.
                   </Note>
                 </Explanation>
-              </Subsection>
-              <Subsection
+              </Section>
+
+              <Section
                 tag="h5"
                 title="getRouterOptions()"
                 id="staticFiles-getRouterOptions"
@@ -277,7 +283,7 @@ staticFiles({
   getRouterOptions
 });`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
 
@@ -291,7 +297,7 @@ staticFiles({
             </Explanation>
 
             <Section tag="h4" title="Arguments" id="pathnames-arguments">
-              <Subsection tag="h5" title="routes" id="pathnames-routes">
+              <Section tag="h5" title="routes" id="pathnames-routes">
                 <Explanation>
                   <p>
                     The array of route descriptors that is passed to a router.
@@ -315,8 +321,9 @@ const paths = pathnames({
   routes
 });`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection tag="h5" title="pages" id="pathnames-pages">
+              </Section>
+
+              <Section tag="h5" title="pages" id="pathnames-pages">
                 <Explanation>
                   <p>
                     An array of page descriptors. A page descriptor is an object
@@ -339,8 +346,9 @@ const paths = pathnames({
   pages
 });`}
                 </CodeBlock>
-              </Subsection>
-              <Subsection
+              </Section>
+
+              <Section
                 tag="h5"
                 title="routerOptions"
                 id="pathnames-routerOptions"
@@ -363,7 +371,7 @@ const paths = pathnames({
   routerOptions
 });`}
                 </CodeBlock>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
         </APIBlock>

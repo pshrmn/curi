@@ -7,7 +7,7 @@ import {
   InlineJS as IJS,
   InlineComponent as Cmp
 } from "../../components/highlight/Inline";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 export default class SveltePkg extends React.PureComponent {
@@ -88,7 +88,7 @@ curiStore(router, store);`}
 </script>`}
             </CodeBlock>
 
-            <Subsection title="Props" id="link-props">
+            <Section title="Props" id="link-props" tag="h3">
               <ul>
                 <li>
                   <Explanation>
@@ -142,7 +142,7 @@ curiStore(router, store);`}
                   </Explanation>
                 </li>
               </ul>
-            </Subsection>
+            </Section>
           </Section>
         </APIBlock>
 

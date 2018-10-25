@@ -3,7 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import { InlineJS as IJS } from "../../components/highlight/Inline";
 import { Note, Warning } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -57,7 +57,7 @@ export default function RoutesGuide() {
 ];`}
       </CodeBlock>
 
-      <Subsection title="Route names" id="route-names">
+      <Section title="Route names" id="route-names" tag="h3">
         <Explanation>
           <p>
             Why do routes have names? Curi lets you interact with routes using
@@ -78,9 +78,9 @@ export default function RoutesGuide() {
 );
 // pathname = "/a/abcd"`}
         </CodeBlock>
-      </Subsection>
+      </Section>
 
-      <Subsection title="Asynchronous Routes" id="async">
+      <Section title="Asynchronous Routes" id="async" tag="h3">
         <Explanation>
           <p>
             When a route matches, you might want to perform some actions before
@@ -124,8 +124,8 @@ export default function RoutesGuide() {
             guide.
           </p>
         </Explanation>
-      </Subsection>
-      <Subsection title="The Response Function" id="route-response">
+      </Section>
+      <Section title="The Response Function" id="route-response" tag="h3">
         <Explanation>
           <p>
             Each route can have a <IJS>response()</IJS> function, which returns
@@ -188,7 +188,7 @@ const routes = [
             </li>
           </ol>
         </Explanation>
-      </Subsection>
+      </Section>
       <Section title="Matching Routes" id="matching-routes">
         <Explanation>
           <p>
@@ -200,7 +200,7 @@ const routes = [
             route's nest sibling.
           </p>
         </Explanation>
-        <Subsection title="No Matching Route" id="catch-all">
+        <Section title="No Matching Route" id="catch-all" tag="h3">
           <Explanation>
             <Warning>
               If none of your routes match a location, Curi will do nothing!
@@ -216,8 +216,12 @@ const routes = [
   path: '(.*)',
 }`}
           </CodeBlock>
-        </Subsection>
-        <Subsection title="Route Matching Walkthrough" id="match-walkthrough">
+        </Section>
+        <Section
+          title="Route Matching Walkthrough"
+          id="match-walkthrough"
+          tag="h3"
+        >
           <CodeBlock>
             {`const routes = [
   {
@@ -272,8 +276,8 @@ const routes = [
   ]
 }`}
           </CodeBlock>
-        </Subsection>
-        <Subsection title="Path Matching Options" id="options">
+        </Section>
+        <Section title="Path Matching Options" id="options" tag="h3">
           <Explanation>
             <p>
               You can control whether a route does exact or partial matching
@@ -298,7 +302,7 @@ const routes = [
   }
 }`}
           </CodeBlock>
-        </Subsection>
+        </Section>
       </Section>
     </React.Fragment>
   );

@@ -3,7 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import { InlineJS as IJS } from "../../components/highlight/Inline";
 import { Note, Warning } from "../../components/Messages";
-import { Section, Subsection } from "../../components/layout/Sections";
+import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
@@ -140,7 +140,8 @@ export default function RoutesAndResponsesGuide() {
 }`}
         </CodeBlock>
       </Section>
-      <Subsection title="Response Body" id="response-body">
+
+      <Section title="Response Body" id="response-body">
         <Explanation>
           <p>
             Curi isn't strict about how you use responses, but you will most
@@ -184,8 +185,9 @@ const routes = [
   }
 ];`}
         </CodeBlock>
-      </Subsection>
-      <Subsection title="Redirect Response" id="redirect-properties">
+      </Section>
+
+      <Section title="Redirect Response" id="redirect-properties">
         <Explanation>
           <p>
             When a route's <IJS>response()</IJS> function returns an object with
@@ -220,7 +222,7 @@ const routes = [
   emitRedirects: false
 });`}
         </CodeBlock>
-      </Subsection>
+      </Section>
     </React.Fragment>
   );
 }
