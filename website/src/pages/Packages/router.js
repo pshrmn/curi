@@ -219,7 +219,7 @@ const router = curi(history, routes, {
                         matched route is synchronous and redirects, the router's
                         automatic redirect will occur before any response
                         handlers (registered with <IJS>once()</IJS> or{" "}
-                        <IJS>observer()</IJS>) are called. This means that they
+                        <IJS>observe()</IJS>) are called. This means that they
                         will be called with the response for the location that
                         was redirected to instead of the initial location. This
                         is fine on the client side, but causes issues with

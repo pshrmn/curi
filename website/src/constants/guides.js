@@ -19,13 +19,31 @@ const guides = [
       `../pages/Guides/creating-a-router.js`)
   },
   {
-    name: "Routes & Responses",
-    slug: "routes-and-responses",
-    description: "An introduction to how routes and responses work",
+    name: "History",
+    slug: "history",
+    description: "Learn about navigation and locations.",
     type: "basic",
     import: () =>
-      import(/* webpackChunkName: 'guide--routes-and-responses' */
-      `../pages/Guides/routes-and-responses.js`)
+      import(/* webpackChunkName: 'guide--history' */
+      `../pages/Guides/history.js`)
+  },
+  {
+    name: "Routes",
+    slug: "routes",
+    description: "An introduction to route objects",
+    type: "basic",
+    import: () =>
+      import(/* webpackChunkName: 'guide--routes' */
+      `../pages/Guides/routes.js`)
+  },
+  {
+    name: "Responses",
+    slug: "responses",
+    description: "An introduction to response objects",
+    type: "basic",
+    import: () =>
+      import(/* webpackChunkName: 'guide--responses' */
+      `../pages/Guides/responses.js`)
   },
   {
     name: "Sync or Async",
@@ -37,14 +55,13 @@ const guides = [
       `../pages/Guides/sync-or-async.js`)
   },
   {
-    name: "Navigating & Observing",
-    slug: "navigating-and-observing",
-    description:
-      "Learn how to programmatically navigate and use observers to detect navigation",
+    name: "New Responses",
+    slug: "new-responses",
+    description: "Learn how to use observers to react to new responses",
     type: "basic",
     import: () =>
-      import(/* webpackChunkName: 'guide--navigating-and-observing' */
-      `../pages/Guides/navigating-and-observing.js`)
+      import(/* webpackChunkName: 'guide--new-responses' */
+      `../pages/Guides/new-responses.js`)
   },
 
   {
