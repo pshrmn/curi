@@ -35,12 +35,12 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=16.3"
+    "react": "16.7.0-alpha.2"
   },
   "dependencies": {
     "@curi/react-universal": "file:../react-universal",
     "@curi/router": "file:../router",
-    "@types/react": "^16.3.11",
+    "@types/react": "^16.7.18",
     "@types/shallowequal": "^0.2.3",
     "shallowequal": "^1.1.0"
   }

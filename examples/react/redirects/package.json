@@ -15,7 +15,7 @@
     "@curi/router": "file:../../../packages/router",
     "@hickory/browser": "^1.0.0",
     "qs": "^6.4.0",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "react": "^16.7.0-alpha.0",
+    "react-dom": "^16.7.0-alpha.0"
   }
 }

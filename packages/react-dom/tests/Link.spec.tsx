@@ -10,7 +10,7 @@ import { curiProvider, Link } from "@curi/react-dom";
 
 describe("<Link>", () => {
   let node;
-  let history, router, Router;
+  let history, router, Router: React.FunctionComponent;
   const routes = prepareRoutes([
     { name: "Test", path: "" },
     { name: "Best", path: "best" },
@@ -26,37 +26,6 @@ describe("<Link>", () => {
 
   afterEach(() => {
     ReactDOM.unmountComponentAtNode(node);
-  });
-
-  describe("to", () => {
-    it('warns about using "to" instead of "name"', () => {
-      // this test needs to be called first in order to catch the warning
-      const realWarn = console.warn;
-      const fakeWarn = jest.fn();
-      console.warn = fakeWarn;
-
-      ReactDOM.render(
-        <Router>{() => <Link to="Test">Test</Link>}</Router>,
-        node
-      );
-
-      expect(fakeWarn.mock.calls.length).toBe(1);
-      expect(fakeWarn.mock.calls[0][0]).toBe(`Deprecation warning:
-The "to" prop should be replaced with the "name" prop. The "to" prop will be removed in @curi/react-dom v2.
-
-<Link name="Route Name">...</Link>`);
-
-      console.warn = realWarn;
-    });
-
-    it("sets the href attribute using the named route's path", () => {
-      ReactDOM.render(
-        <Router>{() => <Link to="Test">Test</Link>}</Router>,
-        node
-      );
-      const a = node.querySelector("a");
-      expect(a.getAttribute("href")).toBe("/");
-    });
   });
 
   describe("anchor", () => {
@@ -89,6 +58,7 @@ The "to" prop should be replaced with the "name" prop. The "to" prop will be rem
     });
 
     it("re-renders if the anchor changes", () => {
+      // TODO: figure out <Link> memoization
       let count = 0;
       function renderCounter() {
         return <div>{count++}</div>;
@@ -163,6 +133,7 @@ The "to" prop should be replaced with the "name" prop. The "to" prop will be rem
     });
 
     it("re-renders if to changes", () => {
+      // TODO: figure out <Link> memoization
       let count = 0;
       function renderCounter() {
         return <div>{count++}</div>;
@@ -250,6 +221,7 @@ The "to" prop should be replaced with the "name" prop. The "to" prop will be rem
     });
 
     it("does not re-render if new params object is shallowly equal to current", () => {
+      // TODO: figure out <Link> memoization
       let count = 0;
       function renderCounter() {
         return <div>{count++}</div>;
@@ -308,51 +280,6 @@ The "to" prop should be replaced with the "name" prop. The "to" prop will be rem
   });
 
   describe("forward", () => {
-    describe("additional props (deprecated)", () => {
-      it("warns when passing additional props to the <Link>", () => {
-        const realWarn = console.warn;
-        const fakeWarn = jest.fn();
-        console.warn = fakeWarn;
-
-        ReactDOM.render(
-          <Router>
-            {() => (
-              <Link to="Test" className="hi">
-                Test
-              </Link>
-            )}
-          </Router>,
-          node
-        );
-
-        expect(fakeWarn.mock.calls.length).toBe(1);
-        expect(fakeWarn.mock.calls[0][0]).toBe(`Deprecation warning:
-Passing additional props to a <Link> will no longer be forwarded to the rendered component in v2.
-
-Instead, please use the "forward" prop to pass an object of props to be attached to the component.
-
-<Link to="Route Name" forward={{ className: "test" }}>`);
-
-        console.warn = realWarn;
-      });
-
-      it("passes additional props to the anchor", () => {
-        ReactDOM.render(
-          <Router>
-            {() => (
-              <Link to="Test" className="hi">
-                Test
-              </Link>
-            )}
-          </Router>,
-          node
-        );
-
-        const a = node.querySelector("a");
-        expect(a.classList.contains("hi")).toBe(true);
-      });
-    });
-
     it("passes forward to the rendered anchor", () => {
       ReactDOM.render(
         <Router>
@@ -752,12 +679,12 @@ Instead, please use the "forward" prop to pass an object of props to be attached
       });
     });
 
-    describe("onClick", () => {
-      it("calls onClick prop func if provided", () => {
+    describe("onNav", () => {
+      it("calls onNav prop func if provided", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
         history.navigate = mockNavigate;
-        const onClick = jest.fn();
+        const onNav = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
@@ -768,7 +695,7 @@ Instead, please use the "forward" prop to pass an object of props to be attached
         ReactDOM.render(
           <Router>
             {() => (
-              <Link name="Test" onClick={onClick}>
+              <Link name="Test" onNav={onNav}>
                 Test
               </Link>
             )}
@@ -788,15 +715,15 @@ Instead, please use the "forward" prop to pass an object of props to be attached
           button: 0
         };
         Simulate.click(a, leftClickEvent);
-        expect(onClick.mock.calls.length).toBe(1);
+        expect(onNav.mock.calls.length).toBe(1);
         expect(mockNavigate.mock.calls.length).toBe(1);
       });
 
-      it("does not call history.navigate if onClick prevents default", () => {
+      it("does not call history.navigate if onNav prevents default", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
         history.navigate = mockNavigate;
-        const onClick = jest.fn(event => {
+        const onNav = jest.fn(event => {
           event.preventDefault();
         });
         const routes = prepareRoutes([
@@ -809,7 +736,7 @@ Instead, please use the "forward" prop to pass an object of props to be attached
         ReactDOM.render(
           <Router>
             {() => (
-              <Link name="Test" onClick={onClick}>
+              <Link name="Test" onNav={onNav}>
                 Test
               </Link>
             )}
@@ -829,7 +756,7 @@ Instead, please use the "forward" prop to pass an object of props to be attached
           button: 0
         };
         Simulate.click(a, leftClickEvent);
-        expect(onClick.mock.calls.length).toBe(1);
+        expect(onNav.mock.calls.length).toBe(1);
         expect(mockNavigate.mock.calls.length).toBe(0);
       });
     });
