@@ -10,7 +10,11 @@ export default function deprecatedPathname(
   if (process.env.NODE_ENV !== "production") {
     if (!hasWarned) {
       console.warn(`Deprecation warning:
-pathname() should not be called manually. It will be removed in the next major version of @curi/router.`);
+pathname() should not be called manually. It will be removed in the next major version of @curi/router.
+Please use router.route.pathname() instead.
+
+const router = curi(history, routes);
+router.route.pathname("Route Name");`);
       hasWarned = true;
     }
   }
