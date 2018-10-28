@@ -29,13 +29,6 @@ removed in the next major version. Instead, you should pass a compiled routes ar
 
 import { curi, prepareRoutes } from "@curi/router";
 
-const router = curi(
-  history,
-  prepareRoutes(routes)
-);
-
-or
-
 const routes = prepareRoutes([...]);
 const router = curi(history, routes);`);
         hasWarned = true;
