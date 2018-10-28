@@ -1,3 +1,5 @@
+import { buildRoutes } from "@curi/router";
+
 import api from "./api";
 
 import Home from "./components/Home";
@@ -6,7 +8,7 @@ import Category from "./components/Category";
 import Product from "./components/Product";
 import NotFound from "./components/NotFound";
 
-export default [
+export default buildRoutes([
   {
     name: "Home",
     path: "",
@@ -83,4 +85,4 @@ export default [
       };
     }
   }
-];
+]);

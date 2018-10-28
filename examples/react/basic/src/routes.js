@@ -1,3 +1,5 @@
+import { buildRoutes } from "@curi/router";
+
 import Home from "./components/Home";
 import Contact from "./components/Contact";
 import Method from "./components/Method";
@@ -44,4 +46,4 @@ const routes = [
   }
 ];
 
-export default routes;
+export default buildRoutes(routes);
