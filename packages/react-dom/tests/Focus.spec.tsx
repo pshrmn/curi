@@ -2,9 +2,9 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
-import { curi } from "@curi/router";
+import { curi, buildRoutes } from "@curi/router";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import { curiProvider, Focus } from "@curi/react-dom";
 
 jest.useFakeTimers();
@@ -12,7 +12,10 @@ jest.useFakeTimers();
 describe("<Focus>", () => {
   let node;
   let history, router, Router;
-  const routes = [{ name: "Home", path: "" }, { name: "About", path: "about" }];
+  const routes = buildRoutes([
+    { name: "Home", path: "" },
+    { name: "About", path: "about" }
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");
@@ -59,7 +62,7 @@ describe("<Focus>", () => {
         </div>
       );
 
-      const routes = [
+      const routes = buildRoutes([
         {
           name: "Home",
           path: "",
@@ -67,7 +70,7 @@ describe("<Focus>", () => {
             return { body: Home };
           }
         }
-      ];
+      ]);
 
       const history = InMemory();
       const router = curi(history, routes);
@@ -191,7 +194,7 @@ describe("<Focus>", () => {
             <h1>About</h1>
           </div>
         ));
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "Home",
             path: "",
@@ -206,7 +209,7 @@ describe("<Focus>", () => {
               return { body: About };
             }
           }
-        ];
+        ]);
 
         const history = InMemory();
         const router = curi(history, routes);
@@ -249,7 +252,7 @@ describe("<Focus>", () => {
           </div>
         );
 
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "Home",
             path: "",
@@ -264,7 +267,7 @@ describe("<Focus>", () => {
               return { body: About };
             }
           }
-        ];
+        ]);
 
         const history = InMemory();
         const router = curi(history, routes);

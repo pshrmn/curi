@@ -3,15 +3,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
 import InMemory from "@hickory/in-memory";
-import { curi } from "@curi/router";
+import { curi, buildRoutes } from "@curi/router";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import { curiProvider, Link } from "@curi/react-dom";
 
 describe("<Link>", () => {
   let node;
   let history, router, Router;
-  const routes = [{ name: "Test", path: "" }];
+  const routes = buildRoutes([{ name: "Test", path: "" }]);
 
   beforeEach(() => {
     node = document.createElement("div");
@@ -68,7 +68,8 @@ describe("<Link>", () => {
       const history = InMemory({
         locations: ["/the-initial-location"]
       });
-      const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
+      const routes = buildRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
       ReactDOM.render(
         <Router>{() => <Link to={null}>Test</Link>}</Router>,
@@ -81,10 +82,10 @@ describe("<Link>", () => {
 
   describe("params", () => {
     let history, router, Router;
-    const routes = [
+    const routes = buildRoutes([
       { name: "Park", path: "park/:name" },
       { name: "Catch All", path: "(.*)" }
-    ];
+    ]);
 
     beforeEach(() => {
       history = InMemory();
@@ -142,10 +143,11 @@ describe("<Link>", () => {
   describe("hash & query", () => {
     it("merges hash & query props with the pathname when creating href", () => {
       const history = InMemory();
-      const router = curi(history, [
+      const routes = buildRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
       ReactDOM.render(
         <Router>
@@ -165,10 +167,11 @@ describe("<Link>", () => {
   describe("ref", () => {
     it("returns the anchor's ref, not the link's", () => {
       const history = InMemory();
-      const router = curi(history, [
+      const routes = buildRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
       const ref = React.createRef();
       ReactDOM.render(
@@ -190,10 +193,11 @@ describe("<Link>", () => {
     describe("React Node", () => {
       it("renders the provided children value(s)", () => {
         const history = InMemory();
-        const router = curi(history, [
+        const routes = buildRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
         const children = "Test Value";
         ReactDOM.render(
@@ -208,10 +212,11 @@ describe("<Link>", () => {
     describe("render-invoked function", () => {
       it("calls the function with the component's navigating state (initial navigating=false)", () => {
         const history = InMemory();
-        const router = curi(history, [
+        const routes = buildRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
         ReactDOM.render(
           <Router>
@@ -236,8 +241,11 @@ describe("<Link>", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
-
-      const router = curi(history, [{ name: "Test", path: "" }]);
+      const routes = buildRoutes([
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
       ReactDOM.render(
         <Router>{() => <Link to="Test">Test</Link>}</Router>,
@@ -265,7 +273,7 @@ describe("<Link>", () => {
         // immediately (although this style should only be used for routes
         // with on methods)
         const history = InMemory();
-        const router = curi(history, [
+        const routes = buildRoutes([
           {
             name: "Test",
             path: "test",
@@ -281,6 +289,7 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -314,7 +323,7 @@ describe("<Link>", () => {
 
       it("children(false) when navigation is cancelled", () => {
         const history = InMemory();
-        const router = curi(history, [
+        const routes = buildRoutes([
           { name: "Test", path: "test" },
           {
             name: "Slow",
@@ -336,6 +345,7 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -379,7 +389,7 @@ describe("<Link>", () => {
 
       it("children(false) when navigation is finished", done => {
         const history = InMemory();
-        const router = curi(history, [
+        const routes = buildRoutes([
           { name: "Test", path: "test" },
           {
             name: "Loader",
@@ -390,6 +400,7 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -435,7 +446,7 @@ describe("<Link>", () => {
         console.error = mockError;
 
         const history = InMemory();
-        const router = curi(history, [
+        const routes = buildRoutes([
           { name: "Test", path: "test" },
           {
             name: "Slow",
@@ -457,6 +468,7 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -495,8 +507,11 @@ describe("<Link>", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
-
-      const router = curi(history, [{ name: "Test", path: "" }]);
+      const routes = buildRoutes([
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
 
       ReactDOM.render(
@@ -524,7 +539,7 @@ describe("<Link>", () => {
       Simulate.click(a, leftClickEvent);
       const mockLocation = mockNavigate.mock.calls[0][0];
       expect(mockLocation).toMatchObject({
-        pathname: "/",
+        pathname: "/test",
         hash: "thing",
         query: "one=1",
         state: "yo"
@@ -537,7 +552,11 @@ describe("<Link>", () => {
         const mockNavigate = jest.fn();
         history.navigate = mockNavigate;
         const onClick = jest.fn();
-        const router = curi(history, [{ name: "Test", path: "" }]);
+        const routes = buildRoutes([
+          { name: "Test", path: "test" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -574,7 +593,11 @@ describe("<Link>", () => {
         const onClick = jest.fn(event => {
           event.preventDefault();
         });
-        const router = curi(history, [{ name: "Test", path: "" }]);
+        const routes = buildRoutes([
+          { name: "Test", path: "test" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -610,7 +633,11 @@ describe("<Link>", () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const router = curi(history, [{ name: "Test", path: "" }]);
+      const routes = buildRoutes([
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
 
       ReactDOM.render(
@@ -643,7 +670,11 @@ describe("<Link>", () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const router = curi(history, [{ name: "Test", path: "" }]);
+      const routes = buildRoutes([
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
 
       ReactDOM.render(

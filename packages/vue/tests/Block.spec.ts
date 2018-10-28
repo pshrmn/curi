@@ -1,9 +1,9 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import InMemory from "@hickory/in-memory";
-import { curi } from "@curi/router";
+import { curi, buildRoutes } from "@curi/router";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import { CuriPlugin } from "@curi/vue";
 
 describe("<curi-block>", () => {
@@ -13,10 +13,10 @@ describe("<curi-block>", () => {
   history.confirmWith = mockConfirmWith;
   history.removeConfirmation = mockRemoveConfirmation;
 
-  const routes = [
+  const routes = buildRoutes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
-  ];
+  ]);
   const router = curi(history, routes);
 
   const Vue = createLocalVue();
