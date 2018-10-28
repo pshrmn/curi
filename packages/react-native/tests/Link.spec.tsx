@@ -3,7 +3,7 @@ import React from "react";
 import "react-native";
 import renderer from "react-test-renderer";
 import InMemory from "@hickory/in-memory";
-import { curi, buildRoutes } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 import { TouchableHighlight, Text } from "react-native";
 
 // @ts-ignore (resolved by jest)
@@ -26,7 +26,7 @@ describe("<Link>", () => {
   describe("anchor", () => {
     it("renders a <TouchableHighlight> by default", () => {
       const history = InMemory();
-      const routes = buildRoutes([
+      const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -47,7 +47,7 @@ describe("<Link>", () => {
 
     it("when provided, it renders the component instead of an anchor", () => {
       const history = InMemory();
-      const routes = buildRoutes([
+      const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -77,7 +77,7 @@ describe("<Link>", () => {
       const history = InMemory({ locations: ["/the-initial-location"] });
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
-      const routes = buildRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
       const router = curi(history, routes);
       const Router = curiProvider(router);
 
@@ -99,7 +99,7 @@ describe("<Link>", () => {
   });
 
   describe("params", () => {
-    const routes = buildRoutes([
+    const routes = prepareRoutes([
       { name: "Park", path: "park/:name" },
       { name: "Catch All", path: "(.*)" }
     ]);
@@ -169,7 +169,7 @@ describe("<Link>", () => {
       const history = InMemory({ locations: ["/the-initial-location"] });
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
-      const routes = buildRoutes([
+      const routes = prepareRoutes([
         { name: "Parks", path: "parks" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -195,7 +195,7 @@ describe("<Link>", () => {
     describe("React Node", () => {
       it("renders the provided children value(s)", () => {
         const history = InMemory();
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -222,7 +222,7 @@ describe("<Link>", () => {
     describe("render-invoked function", () => {
       it("calls the function with the component's navigating state (initial navigating=false)", () => {
         const history = InMemory();
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -255,7 +255,7 @@ describe("<Link>", () => {
       });
 
       it("[default] navigates as ANCHOR", () => {
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -277,7 +277,7 @@ describe("<Link>", () => {
       });
 
       it("method='ANCHOR'", () => {
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -299,7 +299,7 @@ describe("<Link>", () => {
       });
 
       it("method='PUSH'", () => {
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -321,7 +321,7 @@ describe("<Link>", () => {
       });
 
       it("method='REPLACE'", () => {
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -343,7 +343,7 @@ describe("<Link>", () => {
       });
 
       it("[unknown] uses ANCHOR", () => {
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -371,7 +371,7 @@ describe("<Link>", () => {
         // immediately (although this style should only be used for routes
         // with resolve methods)
         const history = InMemory();
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           {
             name: "Test",
             path: "test",
@@ -412,7 +412,7 @@ describe("<Link>", () => {
 
       it("children(false) when navigation is cancelled", () => {
         const history = InMemory();
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           {
             name: "Slow",
@@ -472,7 +472,7 @@ describe("<Link>", () => {
 
       it("children(false) when navigation is finished", done => {
         const history = InMemory();
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           {
             name: "Loader",
@@ -520,7 +520,7 @@ describe("<Link>", () => {
         console.error = mockError;
 
         const history = InMemory();
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           {
             name: "Blork",
@@ -570,7 +570,7 @@ describe("<Link>", () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const routes = buildRoutes([
+      const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -604,7 +604,7 @@ describe("<Link>", () => {
         history.navigate = mockNavigate;
         const onPress = jest.fn();
 
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -635,7 +635,7 @@ describe("<Link>", () => {
           event.preventDefault();
         });
 
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -663,7 +663,7 @@ describe("<Link>", () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const routes = buildRoutes([
+      const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);

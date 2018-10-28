@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
-import { curi, buildRoutes } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { curiProvider, Curious } from "@curi/react-universal";
@@ -10,7 +10,7 @@ import { curiProvider, Curious } from "@curi/react-universal";
 describe("<Curious>", () => {
   let node;
   let history, router, Router;
-  const routes = buildRoutes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "Catch All", path: "(.*)" }
   ]);

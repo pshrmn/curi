@@ -1,4 +1,4 @@
-import { buildRoutes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
 import api from "./api";
 
@@ -8,7 +8,7 @@ import Category from "./components/Category";
 import Product from "./components/Product";
 import NotFound from "./components/NotFound";
 
-export default buildRoutes([
+export default prepareRoutes([
   {
     name: "Home",
     path: "",

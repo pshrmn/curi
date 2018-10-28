@@ -1,7 +1,7 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { curi, buildRoutes } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
 // @ts-ignore (resolved by jest)
@@ -19,7 +19,7 @@ describe("Block", () => {
   // overwrite with jest
   history.confirmWith = confirmWith;
   history.removeConfirmation = removeConfirmation;
-  const routes = buildRoutes([{ name: "Catch All", path: "(.*)" }]);
+  const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
   const router = curi(history, routes);
   const Router = curiProvider(router);
 

@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
-import { curi, buildRoutes } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 import activeInteraction from "@curi/route-active";
 
 // @ts-ignore (resolved by jest)
@@ -12,7 +12,7 @@ describe("<Active>", () => {
   let node;
   let history;
   let router, Router;
-  const routes = buildRoutes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     {
       name: "Contact",

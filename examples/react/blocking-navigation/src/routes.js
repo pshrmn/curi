@@ -1,9 +1,9 @@
-import { buildRoutes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
 import Home from "./components/Home";
 import Contact from "./components/Contact";
 
-export default buildRoutes([
+export default prepareRoutes([
   {
     name: "Home",
     path: "",

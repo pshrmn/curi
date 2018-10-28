@@ -1,14 +1,14 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import InMemory from "@hickory/in-memory";
-import { curi, buildRoutes } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { CuriPlugin } from "@curi/vue";
 
 describe("CuriPlugin", () => {
   const history = InMemory();
-  const routes = buildRoutes([{ name: "Catch All", path: "(.*)" }]);
+  const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
   const router = curi(history, routes);
 
   describe("$router", () => {
@@ -59,7 +59,7 @@ describe("CuriPlugin", () => {
       }
 
       let history, router;
-      const routes = buildRoutes([
+      const routes = prepareRoutes([
         { name: "Contact", path: "contact" },
         { name: "Catch All", path: "(.*)" }
       ]);

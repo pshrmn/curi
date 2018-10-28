@@ -1,9 +1,9 @@
 import "jest";
 
 // @ts-ignore (resolved by jest)
-import { buildRoutes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
-describe("buildRoutes()", () => {
+describe("prepareRoutes()", () => {
   describe("paths beginning with forward slash", () => {
     const realWarn = console.warn;
     const fakeWarn = (console.warn = jest.fn());
@@ -17,7 +17,7 @@ describe("buildRoutes()", () => {
     });
 
     it("removes the leading slash", () => {
-      const routes = buildRoutes([
+      const routes = prepareRoutes([
         { name: "Home", path: "/" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -25,7 +25,7 @@ describe("buildRoutes()", () => {
     });
 
     it("warns", () => {
-      const routes = buildRoutes([
+      const routes = prepareRoutes([
         { name: "Home", path: "/" },
         { name: "Catch All", path: "(.*)" }
       ]);

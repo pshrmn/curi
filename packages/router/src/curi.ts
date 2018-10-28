@@ -3,7 +3,7 @@ import pathnameInteraction from "./interactions/pathname";
 import finishResponse from "./finishResponse";
 import matchLocation from "./matchLocation";
 import resolveMatchedRoute from "./resolveMatchedRoute";
-import { privateBuildRoutes } from "./buildRoutes";
+import { privatePrepareRoutes } from "./prepareRoutes";
 
 import { History, PendingNavigation } from "@hickory/root";
 
@@ -64,7 +64,7 @@ export default function createRouter(
 
   function setupRoutesAndInteractions(userRoutes?: UserRoutes): void {
     if (userRoutes) {
-      routes = privateBuildRoutes(userRoutes, true);
+      routes = privatePrepareRoutes(userRoutes, true);
       for (let key in routeInteractions) {
         delete routeInteractions[key];
       }

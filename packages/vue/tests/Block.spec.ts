@@ -1,7 +1,7 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import InMemory from "@hickory/in-memory";
-import { curi, buildRoutes } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { CuriPlugin } from "@curi/vue";
@@ -13,7 +13,7 @@ describe("<curi-block>", () => {
   history.confirmWith = mockConfirmWith;
   history.removeConfirmation = mockRemoveConfirmation;
 
-  const routes = buildRoutes([
+  const routes = prepareRoutes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ]);

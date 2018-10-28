@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
-import { curi, buildRoutes } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { curiProvider, Focus } from "@curi/react-dom";
@@ -12,7 +12,7 @@ jest.useFakeTimers();
 describe("<Focus>", () => {
   let node;
   let history, router, Router;
-  const routes = buildRoutes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" }
   ]);
@@ -62,7 +62,7 @@ describe("<Focus>", () => {
         </div>
       );
 
-      const routes = buildRoutes([
+      const routes = prepareRoutes([
         {
           name: "Home",
           path: "",
@@ -194,7 +194,7 @@ describe("<Focus>", () => {
             <h1>About</h1>
           </div>
         ));
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           {
             name: "Home",
             path: "",
@@ -252,7 +252,7 @@ describe("<Focus>", () => {
           </div>
         );
 
-        const routes = buildRoutes([
+        const routes = prepareRoutes([
           {
             name: "Home",
             path: "",

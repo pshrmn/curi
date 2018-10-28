@@ -7,13 +7,13 @@ import {
   CompiledRouteArray
 } from "./types/route";
 
-export default function buildRoutes(
+export default function prepareRoutes(
   userRoutes: UserRoutes
 ): CompiledRouteArray {
-  return privateBuildRoutes(userRoutes);
+  return privatePrepareRoutes(userRoutes);
 }
 
-export function privateBuildRoutes(
+export function privatePrepareRoutes(
   userRoutes: UserRoutes,
   _privateInternalCall: boolean = false
 ): CompiledRouteArray {
@@ -27,16 +27,16 @@ export function privateBuildRoutes(
         console.warn(`Deprecation Warning: You passed a plain array to your curi() call. This will be
 removed in the next major version. Instead, you should pass a compiled routes array.
 
-import { curi, buildRoutes } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 
 const router = curi(
   history,
-  buildRoutes(routes)
+  prepareRoutes(routes)
 );
 
 or
 
-const routes = buildRoutes([...]);
+const routes = prepareRoutes([...]);
 const router = curi(history, routes);`);
         hasWarned = true;
       }
