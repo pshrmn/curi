@@ -18,6 +18,7 @@ export function privatePrepareRoutes(
   _privateInternalCall: boolean = false
 ): CompiledRouteArray {
   let hasWarned = false;
+  const usedNames: Set<string> = new Set();
   return userRoutes.map(route => {
     if ((route as CompiledRoute).public !== undefined) {
       return route as CompiledRoute;
@@ -34,6 +35,6 @@ const router = curi(history, routes);`);
         hasWarned = true;
       }
     }
-    return createRoute(route as RouteDescriptor);
+    return createRoute(route as RouteDescriptor, usedNames);
   });
 }

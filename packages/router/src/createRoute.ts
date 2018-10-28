@@ -5,7 +5,19 @@ import { withLeadingSlash } from "./utils/path";
 import { RouteDescriptor, CompiledRoute } from "./types/route";
 import { Key } from "path-to-regexp";
 
-const createRoute = (options: RouteDescriptor): CompiledRoute => {
+const createRoute = (
+  options: RouteDescriptor,
+  usedNames: Set<string>
+): CompiledRoute => {
+  if (usedNames.has(options.name)) {
+    throw new Error(
+      `Multiple routes have the name "${
+        options.name
+      }". Route names must be unique.`
+    );
+  }
+  usedNames.add(options.name);
+
   let path = options.path;
 
   if (path.charAt(0) === "/") {
@@ -27,7 +39,9 @@ const createRoute = (options: RouteDescriptor): CompiledRoute => {
   // create route objects for each child
   if (options.children && options.children.length) {
     pathOptions.end = false;
-    children = options.children.map(createRoute);
+    children = options.children.map(child => {
+      return createRoute(child, usedNames);
+    });
   }
 
   // keys is populated by PathToRegexp
