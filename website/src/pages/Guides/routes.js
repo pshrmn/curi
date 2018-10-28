@@ -44,7 +44,7 @@ export default function RoutesGuide() {
         </Note>
       </Explanation>
       <CodeBlock>
-        {`const routes = [
+        {`const routes = prepareRoutes([
   {
     name: "Home",
     path: ""
@@ -54,8 +54,26 @@ export default function RoutesGuide() {
     // the "id" segment can be any value
     path: "a/:id"
   }
-];`}
+]);`}
       </CodeBlock>
+
+      <Section title="Preparing Routes" id="prepareRoutes" tag="h3">
+        <Explanation>
+          <p>
+            The routes array should be wrapped in a <IJS>prepareRoutes()</IJS>{" "}
+            call. This will pre-build the routes for the router.
+          </p>
+        </Explanation>
+        <CodeBlock>
+          {`import { prepareRoutes } from "@curi/router";
+
+// plain routes
+const routes = [...]
+
+// prepared routes
+export default prepareRoutes(routes);`}
+        </CodeBlock>
+      </Section>
 
       <Section title="Route names" id="route-names" tag="h3">
         <Explanation>
@@ -140,7 +158,7 @@ export default function RoutesGuide() {
         <CodeBlock>
           {`import User from "./components/User";
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: "User",
     path: "u/:id",
@@ -158,7 +176,7 @@ const routes = [
       };
     }
   }
-];`}
+]);`}
         </CodeBlock>
         <Explanation>
           <p>
@@ -223,7 +241,7 @@ const routes = [
           tag="h3"
         >
           <CodeBlock>
-            {`const routes = [
+            {`const routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -236,7 +254,7 @@ const routes = [
     name: 'Not Found',
     path: '(.*)' // this matches EVERY pathname
   }
-];`}
+]);`}
           </CodeBlock>
 
           <Explanation>

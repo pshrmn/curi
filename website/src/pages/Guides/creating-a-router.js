@@ -27,10 +27,10 @@ export default function CreatingARouterGuide() {
           </p>
         </Explanation>
         <CodeBlock>
-          {`import { curi } from '@curi/router';
+          {`import { curi, prepareRoutes } from '@curi/router';
 
 const history = Browser();
-const routes = [...];
+const routes = prepareRoutes([...]);
 const router = curi(history, routes);`}
         </CodeBlock>
         <Explanation>

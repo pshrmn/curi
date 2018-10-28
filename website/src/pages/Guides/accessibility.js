@@ -62,7 +62,7 @@ const announcer = ariaLive(
   ({ response }) => \`Navigated to \${response.title}\`
 );
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -72,7 +72,7 @@ const routes = [
       };
     }
   }
-]
+]);
 
 const router = curi(history, routes, {
   sideEffects: [announcer]

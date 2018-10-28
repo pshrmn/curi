@@ -39,7 +39,7 @@ export default class RouteAncestorsPkg extends React.PureComponent {
               {`import { curi } from '@curi/router';
 import ancestors from '@curi/route-ancestors';
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: 'Grandparent', path: 'g',
     children: [
@@ -51,7 +51,7 @@ const routes = [
       }
     ]
   }
-];
+]);
 
 const router = curi(history,routes, {
   route: [ancestors()]

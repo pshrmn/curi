@@ -97,7 +97,7 @@ ReactDOM.render((
 import Noun from "./pages/Noun";
 
 // nothing Apollo related in here
-const routes = [
+const routes = prepareRoutes([
   {
     name: 'Noun',
     path: 'noun/:word',
@@ -107,7 +107,7 @@ const routes = [
       };
     }
   }
-];`}
+]);`}
         </CodeBlock>
 
         <Explanation>
@@ -196,7 +196,7 @@ const Noun = ({ response }) => (
           {`import client from "./apollo";
 import { EXAMPLE_QUERY } from "./queries";
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: "Example",
     path: "example/:id",
@@ -209,7 +209,7 @@ const routes = [
       }
     }
   }
-];`}
+]);`}
         </CodeBlock>
 
         <Explanation>
@@ -383,7 +383,7 @@ const Verb = ({ response }) => (
             {`// index.js
 import prefetch from "@curi/route-prefetch";
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: "Example",
     path: "example/:id",
@@ -396,7 +396,7 @@ const routes = [
       }
     }
   }
-]
+]);
 
 const router = curi(history, routes, {
   route: [prefetch()]

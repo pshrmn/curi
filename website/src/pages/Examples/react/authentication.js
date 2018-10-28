@@ -30,26 +30,26 @@ export default function AuthenticationExample() {
         </p>
 
         <CodeBlock lang="javascript">
-          {`const routes = [
-    // ...,
-    {
-      name: 'Protected',
-      path: 'super-secret',
-      response: () => {
-        if (!store.userIsAuthenticated) {
-          return {
-            redirectTo: { name: "Login" },
-            status: 302
-          };
-        }
+          {`const routes = prepareRoutes([
+  // ...,
+  {
+    name: 'Protected',
+    path: 'super-secret',
+    response: () => {
+      if (!store.userIsAuthenticated) {
+        return {
+          redirectTo: { name: "Login" },
+          status: 302
+        };
       }
-    },
-    {
-      name: 'Login',
-      path: 'login',
-      ...
     }
-  ];`}
+  },
+  {
+    name: 'Login',
+    path: 'login',
+    ...
+  }
+]);`}
         </CodeBlock>
       </Section>
 

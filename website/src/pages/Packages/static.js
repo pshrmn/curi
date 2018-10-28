@@ -90,7 +90,7 @@ staticFiles({
                   </p>
                 </Explanation>
                 <CodeBlock>
-                  {`routes = [
+                  {`routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -99,7 +99,7 @@ staticFiles({
     name: "User",
     path: "u/:id"
   }
-];
+]);
 
 
 staticFiles({
@@ -304,7 +304,7 @@ staticFiles({
                   </p>
                 </Explanation>
                 <CodeBlock>
-                  {`routes = [
+                  {`routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -313,7 +313,7 @@ staticFiles({
     name: "User",
     path: "u/:id"
   }
-];
+]);
 
 
 const paths = pathnames({

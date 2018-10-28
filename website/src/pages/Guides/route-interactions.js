@@ -188,10 +188,10 @@ export default function confirmInteraction() {
           </p>
         </Explanation>
         <CodeBlock>
-          {`import { curi } from '@curi/router';
+          {`import { curi, prepareRoutes } from '@curi/router';
 import confirmFactory from './interactions/confirm'
 
-const routes = [{ name: 'Home', path: '' }];
+const routes = prepareRoutes([{ name: 'Home', path: '' }]);
 
 const router = curi(history, routes, {
   route: [confirmFactory()]

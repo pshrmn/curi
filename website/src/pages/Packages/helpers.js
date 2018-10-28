@@ -41,7 +41,7 @@ export default class RouteActivePkg extends React.PureComponent {
             <CodeBlock>
               {`import { once } from "@curi/helpers";
             
-const routes = [
+const routes = prepareRoutes([
   {
     name: "Menu",
     path: "menu",
@@ -54,7 +54,7 @@ const routes = [
       cached: once(() => api.getItems)
     }
   }
-];`}
+]);`}
             </CodeBlock>
           </Section>
           <Section title="preferDefault" id="preferDefault">
@@ -74,7 +74,7 @@ const routes = [
             <CodeBlock>
               {`import { preferDefault } from "@curi/helpers";
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: "Menu",
     path: "menu",
@@ -86,7 +86,7 @@ const routes = [
       return { body: resolved.body }
     }
   }
-]`}
+]);`}
             </CodeBlock>
           </Section>
         </APIBlock>

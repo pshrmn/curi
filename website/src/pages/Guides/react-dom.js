@@ -137,7 +137,7 @@ router.once(() => {
             </p>
           </Explanation>
           <CodeBlock lang="jsx" data-line="20,24,27">
-            {`const routes = [
+            {`const routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -151,7 +151,7 @@ router.once(() => {
     }
   },
   // ...
-];
+]);
 
 ReactDOM.render((
   <Router>
