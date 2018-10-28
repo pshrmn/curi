@@ -33,6 +33,14 @@ export interface RouteDescriptor {
         [key: string]: any;
     };
 }
+export interface CompiledRoute {
+    public: Route;
+    sync: boolean;
+    children: Array<CompiledRoute>;
+    response?: ResponseFn;
+    pathMatching: PathMatching;
+    paramParsers?: ParamParsers;
+}
 export interface Route {
     name: string;
     path: string;
@@ -47,11 +55,5 @@ export interface PathMatching {
     re: RegExp;
     keys: Array<Key>;
 }
-export interface InternalRoute {
-    public: Route;
-    sync: boolean;
-    children: Array<InternalRoute>;
-    response?: ResponseFn;
-    pathMatching: PathMatching;
-    paramParsers?: ParamParsers;
-}
+export declare type CompiledRouteArray = Array<CompiledRoute>;
+export declare type UserRoutes = Array<CompiledRoute | RouteDescriptor>;

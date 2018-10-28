@@ -1,7 +1,7 @@
-import { InternalRoute } from "./route";
+import { CompiledRoute } from "./route";
 import { Params, MatchResponseProperties } from "./response";
 export interface MatchingRoute {
-    route: InternalRoute;
+    route: CompiledRoute;
     params: Params;
 }
 export interface MissMatch {
@@ -9,7 +9,7 @@ export interface MissMatch {
     match: undefined;
 }
 export interface Match {
-    route: InternalRoute;
+    route: CompiledRoute;
     match: MatchResponseProperties;
 }
 export declare type PossibleMatch = Match | MissMatch;

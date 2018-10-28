@@ -1,3 +1,3 @@
-import { InternalRoute } from "../types/route";
+import { CompiledRoute } from "../types/route";
 import { Interaction } from "../types/interaction";
-export default function registerRoutes(routes: Array<InternalRoute>, interaction: Interaction, parentData?: any): void;
+export default function registerRoutes(routes: Array<CompiledRoute>, interaction: Interaction, parentData?: any): void;

@@ -2,10 +2,10 @@ import PathToRegexp from "path-to-regexp";
 
 import { withLeadingSlash } from "./utils/path";
 
-import { RouteDescriptor, InternalRoute } from "./types/route";
+import { RouteDescriptor, CompiledRoute } from "./types/route";
 import { Key } from "path-to-regexp";
 
-const createRoute = (options: RouteDescriptor): InternalRoute => {
+const createRoute = (options: RouteDescriptor): CompiledRoute => {
   let path = options.path;
 
   if (path.charAt(0) === "/") {
@@ -22,7 +22,7 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
   // set this resolve setting pathOptions.end for children
   const mustBeExact = pathOptions.end == null || pathOptions.end;
 
-  let children: Array<InternalRoute> = [];
+  let children: Array<CompiledRoute> = [];
   // when we have child routes, we need to perform non-end matching and
   // create route objects for each child
   if (options.children && options.children.length) {

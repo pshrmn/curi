@@ -2,18 +2,18 @@ import "jest";
 import InMemory from "@hickory/in-memory";
 
 // @ts-ignore (resolved by jest)
-import { curi } from "@curi/router";
+import { curi, buildRoutes } from "@curi/router";
 
 describe("route matching/response generation", () => {
   describe("route matching", () => {
     it("ignores leading slash on the pathname", () => {
       const history = InMemory({ locations: ["/test"] });
-      const routes = [
+      const routes = buildRoutes([
         {
           name: "Test",
           path: "test"
         }
-      ];
+      ]);
       const router = curi(history, routes);
       const { response } = router.current();
       expect(response.name).toBe("Test");
@@ -21,7 +21,7 @@ describe("route matching/response generation", () => {
 
     it("does exact matching", () => {
       const history = InMemory({ locations: ["/test/leftovers"] });
-      const routes = [
+      const routes = buildRoutes([
         {
           name: "Test",
           path: "test"
@@ -30,7 +30,7 @@ describe("route matching/response generation", () => {
           name: "Not Found",
           path: "(.*)"
         }
-      ];
+      ]);
       const router = curi(history, routes);
       const { response } = router.current();
       expect(response.name).toBe("Not Found");
@@ -46,7 +46,7 @@ describe("route matching/response generation", () => {
 
       it("no response is emitted", () => {
         const history = InMemory({ locations: ["/test"] });
-        const routes = [];
+        const routes = buildRoutes([]);
         const router = curi(history, routes);
 
         const observer = jest.fn();
@@ -56,7 +56,7 @@ describe("route matching/response generation", () => {
 
       it("warns that no route matched", () => {
         const history = InMemory({ locations: ["/test"] });
-        const routes = [];
+        const routes = buildRoutes([]);
         const router = curi(history, routes);
         const observer = jest.fn();
 
@@ -70,7 +70,7 @@ describe("route matching/response generation", () => {
     describe("nested routes", () => {
       it("includes parent in partials if a child matches", () => {
         const history = InMemory({ locations: ["/ND/Fargo"] });
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "State",
             path: ":state",
@@ -81,7 +81,7 @@ describe("route matching/response generation", () => {
               }
             ]
           }
-        ];
+        ]);
         const router = curi(history, routes);
         const { response } = router.current();
         expect(response.name).toBe("City");
@@ -90,7 +90,7 @@ describe("route matching/response generation", () => {
 
       it("matches children when parent has trailing slash", () => {
         const history = InMemory({ locations: ["/ND/Fargo/"] });
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "State",
             path: ":state/",
@@ -105,7 +105,7 @@ describe("route matching/response generation", () => {
             name: "Not Found",
             path: "(.*)"
           }
-        ];
+        ]);
         const router = curi(history, routes);
         const { response } = router.current();
         expect(response.name).toBe("City");
@@ -113,7 +113,7 @@ describe("route matching/response generation", () => {
 
       it("does non-end parent matching when there are child routes, even if pathOptions.end=true", () => {
         const history = InMemory({ locations: ["/ND/Fargo"] });
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "State",
             path: ":state",
@@ -125,7 +125,7 @@ describe("route matching/response generation", () => {
               }
             ]
           }
-        ];
+        ]);
         const router = curi(history, routes);
         const { response } = router.current();
         expect(response.name).toBe("City");
@@ -134,7 +134,7 @@ describe("route matching/response generation", () => {
 
       it("skips parent match if no children match", () => {
         const history = InMemory({ locations: ["/MT/Bozeman"] });
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "State",
             path: ":state",
@@ -149,7 +149,7 @@ describe("route matching/response generation", () => {
             name: "Not Found",
             path: "(.*)"
           }
-        ];
+        ]);
         const router = curi(history, routes);
         const { response } = router.current();
         expect(response.name).toBe("Not Found");
@@ -159,7 +159,7 @@ describe("route matching/response generation", () => {
 
     it("matches partial routes if route.pathOptions.end=false", () => {
       const history = InMemory({ locations: ["/SD/Sioux City"] });
-      const routes = [
+      const routes = buildRoutes([
         {
           name: "State",
           path: ":state",
@@ -169,7 +169,7 @@ describe("route matching/response generation", () => {
           name: "Not Found",
           path: "(.*)"
         }
-      ];
+      ]);
       const router = curi(history, routes);
       const { response } = router.current();
       expect(response.name).toBe("State");
@@ -178,7 +178,7 @@ describe("route matching/response generation", () => {
     describe("optional path parameters", () => {
       it("works when optional param is included", () => {
         const history = InMemory({ locations: ["/NY/about"] });
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "State",
             path: ":state?/about",
@@ -188,7 +188,7 @@ describe("route matching/response generation", () => {
             name: "Not Found",
             path: "(.*)"
           }
-        ];
+        ]);
         const router = curi(history, routes);
         const { response } = router.current();
         expect(response.name).toBe("State");
@@ -196,7 +196,7 @@ describe("route matching/response generation", () => {
 
       it("works when optional param is NOT included", () => {
         const history = InMemory({ locations: ["/about"] });
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "State",
             path: ":state?/about",
@@ -206,7 +206,7 @@ describe("route matching/response generation", () => {
             name: "Not Found",
             path: "(.*)"
           }
-        ];
+        ]);
         const router = curi(history, routes);
         const { response } = router.current();
         expect(response.name).toBe("State");
@@ -218,7 +218,7 @@ describe("route matching/response generation", () => {
     describe("properties", () => {
       describe("location", () => {
         it("is the location used to match routes", () => {
-          const routes = [{ name: "Catch All", path: "(.*)" }];
+          const routes = buildRoutes([{ name: "Catch All", path: "(.*)" }]);
           const history = InMemory({ locations: ["/other-page"] });
           const router = curi(history, routes);
           const { response } = router.current();
@@ -229,12 +229,12 @@ describe("route matching/response generation", () => {
       describe("body", () => {
         it("is undefined if not set by route.response()", () => {
           const history = InMemory({ locations: ["/test"] });
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Test",
               path: "test"
             }
-          ];
+          ]);
           const router = curi(history, routes);
           const { response } = router.current();
           expect(response.body).toBeUndefined();
@@ -243,7 +243,7 @@ describe("route matching/response generation", () => {
         it("is the body value of the object returned by route.response()", () => {
           const history = InMemory({ locations: ["/test"] });
           const body = () => "anybody out there?";
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Test",
               path: "test",
@@ -253,7 +253,7 @@ describe("route matching/response generation", () => {
                 };
               }
             }
-          ];
+          ]);
           const router = curi(history, routes);
           const { response } = router.current();
           expect(response.body).toBe(body);
@@ -262,7 +262,7 @@ describe("route matching/response generation", () => {
 
       describe("status", () => {
         it("is undefined if not set by route.response()", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Contact",
               path: "contact",
@@ -271,7 +271,7 @@ describe("route matching/response generation", () => {
                 { name: "Phone", path: "phone" }
               ]
             }
-          ];
+          ]);
           const history = InMemory({ locations: ["/contact"] });
           const router = curi(history, routes);
           const { response } = router.current();
@@ -279,7 +279,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is the status value of object returned by route.response()", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "A Route",
               path: "",
@@ -289,7 +289,7 @@ describe("route matching/response generation", () => {
                 };
               }
             }
-          ];
+          ]);
           const history = InMemory({ locations: ["/"] });
           const router = curi(history, routes);
           const { response } = router.current();
@@ -299,12 +299,12 @@ describe("route matching/response generation", () => {
 
       describe("data", () => {
         it("is undefined if not set by route.response()", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "A Route",
               path: ""
             }
-          ];
+          ]);
           const history = InMemory({ locations: ["/"] });
           const router = curi(history, routes);
           const { response } = router.current();
@@ -312,7 +312,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is the data value of the object returned by route.response()", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "A Route",
               path: "",
@@ -324,7 +324,7 @@ describe("route matching/response generation", () => {
                 };
               }
             }
-          ];
+          ]);
           const history = InMemory({ locations: ["/"] });
           const router = curi(history, routes);
           const { response } = router.current();
@@ -334,12 +334,12 @@ describe("route matching/response generation", () => {
 
       describe("title", () => {
         it("is undefined if not set by route.response()", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "State",
               path: ":state"
             }
-          ];
+          ]);
           const history = InMemory({ locations: ["/AZ"] });
           const router = curi(history, routes);
 
@@ -348,7 +348,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is the title value of the object returned by route.response()", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "State",
               path: ":state",
@@ -358,7 +358,7 @@ describe("route matching/response generation", () => {
                 };
               }
             }
-          ];
+          ]);
           const history = InMemory({ locations: ["/VA"] });
           const router = curi(history, routes);
 
@@ -369,12 +369,14 @@ describe("route matching/response generation", () => {
 
       describe("name", () => {
         it("is the name of the best matching route", () => {
-          const Route = {
-            name: "A Route",
-            path: "a-route"
-          };
+          const routes = buildRoutes([
+            {
+              name: "A Route",
+              path: "a-route"
+            }
+          ]);
           const history = InMemory({ locations: ["/a-route"] });
-          const router = curi(history, [Route]);
+          const router = curi(history, routes);
           const { response } = router.current();
           expect(response.name).toBe("A Route");
         });
@@ -383,7 +385,7 @@ describe("route matching/response generation", () => {
       describe("partials", () => {
         it("is set using the names of all partially matching routes", () => {
           const history = InMemory({ locations: ["/TX/Austin"] });
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "State",
               path: ":state",
@@ -394,7 +396,7 @@ describe("route matching/response generation", () => {
                 }
               ]
             }
-          ];
+          ]);
           const router = curi(history, routes);
           const { response } = router.current();
           expect(response.partials).toEqual(["State"]);
@@ -404,7 +406,7 @@ describe("route matching/response generation", () => {
       describe("params", () => {
         it("includes params from partially matched routes", () => {
           const history = InMemory({ locations: ["/MT/Bozeman"] });
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "State",
               path: ":state",
@@ -415,7 +417,7 @@ describe("route matching/response generation", () => {
                 }
               ]
             }
-          ];
+          ]);
           const router = curi(history, routes);
           const { response } = router.current();
           expect(response.params).toEqual({
@@ -426,13 +428,13 @@ describe("route matching/response generation", () => {
 
         it("overwrites param name conflicts", () => {
           const history = InMemory({ locations: ["/1/2"] });
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "One",
               path: ":id",
               children: [{ name: "Two", path: ":id" }]
             }
-          ];
+          ]);
           const router = curi(history, routes);
           const { response } = router.current();
           expect(response.params["id"]).toBe("2");
@@ -441,7 +443,7 @@ describe("route matching/response generation", () => {
         describe("parsing params", () => {
           it("uses route.params to parse params", () => {
             const history = InMemory({ locations: ["/123"] });
-            const routes = [
+            const routes = buildRoutes([
               {
                 name: "number",
                 path: ":num",
@@ -449,7 +451,7 @@ describe("route matching/response generation", () => {
                   num: n => parseInt(n, 10)
                 }
               }
-            ];
+            ]);
             const router = curi(history, routes);
             const { response } = router.current();
             expect(response.params).toEqual({ num: 123 });
@@ -457,7 +459,7 @@ describe("route matching/response generation", () => {
 
           it("parses params from parent routes", () => {
             const history = InMemory({ locations: ["/123/456"] });
-            const routes = [
+            const routes = buildRoutes([
               {
                 name: "first",
                 path: ":first",
@@ -474,7 +476,7 @@ describe("route matching/response generation", () => {
                   first: n => parseInt(n, 10)
                 }
               }
-            ];
+            ]);
             const router = curi(history, routes);
             const { response } = router.current();
             expect(response.params).toEqual({
@@ -485,7 +487,7 @@ describe("route matching/response generation", () => {
 
           it("uses string for any params not in route.params", () => {
             const history = InMemory({ locations: ["/123/456"] });
-            const routes = [
+            const routes = buildRoutes([
               {
                 name: "combo",
                 path: ":first/:second",
@@ -493,7 +495,7 @@ describe("route matching/response generation", () => {
                   first: n => parseInt(n, 10)
                 }
               }
-            ];
+            ]);
             const router = curi(history, routes);
             const { response } = router.current();
             expect(response.params).toEqual({
@@ -508,7 +510,7 @@ describe("route matching/response generation", () => {
             console.error = errorMock;
 
             const history = InMemory({ locations: ["/123"] });
-            const routes = [
+            const routes = buildRoutes([
               {
                 name: "number",
                 path: ":num",
@@ -518,7 +520,7 @@ describe("route matching/response generation", () => {
                   }
                 }
               }
-            ];
+            ]);
             const router = curi(history, routes);
             const { response } = router.current();
             expect(response.params).toEqual({
@@ -533,7 +535,7 @@ describe("route matching/response generation", () => {
 
       describe("error", () => {
         it("is undefined for good responses", () => {
-          const routes = [{ name: "Contact", path: "contact" }];
+          const routes = buildRoutes([{ name: "Contact", path: "contact" }]);
           const history = InMemory({
             locations: ["/contact"]
           });
@@ -543,7 +545,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is the error value on the object returned by route.response()", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "A Route",
               path: "",
@@ -553,7 +555,7 @@ describe("route matching/response generation", () => {
                 };
               }
             }
-          ];
+          ]);
           const history = InMemory({ locations: ["/"] });
           const router = curi(history, routes);
           const { response } = router.current();
@@ -564,7 +566,7 @@ describe("route matching/response generation", () => {
       describe("redirectTo", () => {
         it("contains the expected properties", () => {
           const history = InMemory({ locations: ["/"] });
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "A Route",
               path: "",
@@ -584,7 +586,7 @@ describe("route matching/response generation", () => {
               name: "B Route",
               path: "b/:id"
             }
-          ];
+          ]);
 
           let firstCall = true;
           const logger = ({ response }) => {
@@ -624,30 +626,34 @@ describe("route matching/response generation", () => {
           done();
         });
 
-        const CatchAll = {
-          name: "Catch All",
-          path: ":anything",
-          resolve: { spy }
-        };
+        const routes = buildRoutes([
+          {
+            name: "Catch All",
+            path: ":anything",
+            resolve: { spy }
+          }
+        ]);
 
         const history = InMemory({ locations: ["/hello?one=two"] });
-        curi(history, [CatchAll]);
+        curi(history, routes);
       });
 
       it("calls all resolve functions", done => {
         const one = jest.fn();
         const two = jest.fn();
-        const CatchAll = {
-          name: "Catch All",
-          path: ":anything",
-          resolve: {
-            one,
-            two
+        const routes = buildRoutes([
+          {
+            name: "Catch All",
+            path: ":anything",
+            resolve: {
+              one,
+              two
+            }
           }
-        };
+        ]);
 
         const history = InMemory({ locations: ["/hello?one=two"] });
-        const router = curi(history, [CatchAll]);
+        const router = curi(history, routes);
         router.once(() => {
           expect(one.mock.calls.length).toBe(1);
           expect(one.mock.calls.length).toBe(1);
@@ -669,7 +675,7 @@ describe("route matching/response generation", () => {
           });
         });
 
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "First",
             path: "first",
@@ -695,7 +701,7 @@ describe("route matching/response generation", () => {
               spy
             }
           }
-        ];
+        ]);
 
         const history = InMemory({ locations: ["/first"] });
         const router = curi(history, routes);
@@ -704,53 +710,59 @@ describe("route matching/response generation", () => {
 
       describe("resolved", () => {
         it("is null when route has no resolve functions", () => {
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            response: ({ resolved }) => {
-              expect(resolved).toBe(null);
-              return {};
+          const routes = buildRoutes([
+            {
+              name: "Catch All",
+              path: ":anything",
+              response: ({ resolved }) => {
+                expect(resolved).toBe(null);
+                return {};
+              }
             }
-          };
+          ]);
 
           const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
+          const router = curi(history, routes);
         });
 
         it("is null when a resolve function throws", () => {
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            resolve: {
-              fails: () => Promise.reject("woops!")
-            },
-            response: ({ resolved }) => {
-              expect(resolved).toBe(null);
-              return {};
+          const routes = buildRoutes([
+            {
+              name: "Catch All",
+              path: ":anything",
+              resolve: {
+                fails: () => Promise.reject("woops!")
+              },
+              response: ({ resolved }) => {
+                expect(resolved).toBe(null);
+                return {};
+              }
             }
-          };
+          ]);
 
           const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
+          const router = curi(history, routes);
         });
 
         it("is an object with named resolve function properties for async routes", () => {
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            response: ({ resolved }) => {
-              expect(resolved.test).toBe(1);
-              expect(resolved.yo).toBe("yo!");
-              return {};
-            },
-            resolve: {
-              test: () => Promise.resolve(1),
-              yo: () => Promise.resolve("yo!")
+          const routes = buildRoutes([
+            {
+              name: "Catch All",
+              path: ":anything",
+              response: ({ resolved }) => {
+                expect(resolved.test).toBe(1);
+                expect(resolved.yo).toBe("yo!");
+                return {};
+              },
+              resolve: {
+                test: () => Promise.resolve(1),
+                yo: () => Promise.resolve("yo!")
+              }
             }
-          };
+          ]);
 
           const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
+          const router = curi(history, routes);
         });
       });
 
@@ -761,17 +773,19 @@ describe("route matching/response generation", () => {
             done();
           });
 
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            response: spy,
-            resolve: {
-              fails: () => Promise.reject("rejected")
+          const routes = buildRoutes([
+            {
+              name: "Catch All",
+              path: ":anything",
+              response: spy,
+              resolve: {
+                fails: () => Promise.reject("rejected")
+              }
             }
-          };
+          ]);
 
           const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
+          const router = curi(history, routes);
         });
 
         it("is null when all resolve functions succeed", done => {
@@ -780,41 +794,45 @@ describe("route matching/response generation", () => {
             done();
           });
 
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            response: spy,
-            resolve: {
-              succeed: () => Promise.resolve("hurray!")
+          const routes = buildRoutes([
+            {
+              name: "Catch All",
+              path: ":anything",
+              response: spy,
+              resolve: {
+                succeed: () => Promise.resolve("hurray!")
+              }
             }
-          };
+          ]);
 
           const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
+          const router = curi(history, routes);
         });
       });
 
       describe("match", () => {
         it("receives the response properties based on the matched route", () => {
-          const CatchAll = {
-            name: "Catch All",
-            path: ":anything",
-            response: props => {
-              expect(props.match).toMatchObject({
-                name: "Catch All",
-                params: { anything: "hello" },
-                partials: [],
-                location: {
-                  pathname: "/hello",
-                  query: "one=two"
-                }
-              });
-              return {};
+          const routes = buildRoutes([
+            {
+              name: "Catch All",
+              path: ":anything",
+              response: props => {
+                expect(props.match).toMatchObject({
+                  name: "Catch All",
+                  params: { anything: "hello" },
+                  partials: [],
+                  location: {
+                    pathname: "/hello",
+                    query: "one=two"
+                  }
+                });
+                return {};
+              }
             }
-          };
+          ]);
 
           const history = InMemory({ locations: ["/hello?one=two"] });
-          const router = curi(history, [CatchAll]);
+          const router = curi(history, routes);
         });
       });
     });

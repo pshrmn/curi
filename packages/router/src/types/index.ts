@@ -13,7 +13,10 @@ export {
   AsyncMatchFn,
   AsyncGroup,
   Resolved,
-  ResolveResults
+  ResolveResults,
+  CompiledRoute,
+  CompiledRouteArray,
+  UserRoutes
 } from "./route";
 export {
   Response,

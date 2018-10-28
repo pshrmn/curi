@@ -5,7 +5,7 @@ import { RemoveObserver } from "../src/types";
 import { NavType } from "@hickory/root";
 
 // @ts-ignore (resolved by jest)
-import { curi } from "@curi/router";
+import { curi, buildRoutes } from "@curi/router";
 
 describe("curi", () => {
   let history;
@@ -18,11 +18,11 @@ describe("curi", () => {
     // these tests rely on the fact that the pathname generator
     // is a default interaction
     it("registers routes", () => {
-      const routes = [
+      const routes = buildRoutes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
-      ];
+      ]);
       const router = curi(history, routes);
 
       const names = ["Home", "About", "Contact"];
@@ -32,6 +32,29 @@ describe("curi", () => {
     });
 
     it("registers nested routes", () => {
+      const routes = buildRoutes([
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
+        {
+          name: "Contact",
+          path: "contact",
+          children: [
+            { name: "Email", path: "email" },
+            { name: "Phone", path: "phone" }
+          ]
+        }
+      ]);
+      const router = curi(history, routes);
+      const names = ["Email", "Phone"];
+      names.forEach(n => {
+        expect(router.route.pathname(n)).toBeDefined();
+      });
+    });
+
+    it("warns when passed a non-compiled routes array", () => {
+      const realWarn = console.warn;
+      const fakeWarn = (console.warn = jest.fn());
+
       const routes = [
         { name: "Home", path: "" },
         { name: "About", path: "about" },
@@ -45,43 +68,12 @@ describe("curi", () => {
         }
       ];
       const router = curi(history, routes);
-      const names = ["Email", "Phone"];
-      names.forEach(n => {
-        expect(router.route.pathname(n)).toBeDefined();
-      });
-    });
-
-    describe("paths beginning with forward slash", () => {
-      const realWarn = console.warn;
-      const fakeWarn = (console.warn = jest.fn());
-
-      const routes = [
-        { name: "Home", path: "/" },
-        { name: "Catch All", path: "(.*)" }
-      ];
-
-      afterEach(() => {
-        fakeWarn.mockReset();
-      });
-
-      afterAll(() => {
-        console.warn = realWarn;
-      });
-
-      it("removes the leading slash", () => {
-        const router = curi(history, routes);
-        const { response } = router.current();
-        expect(response.name).toBe("Home");
-      });
-
-      it("warns", () => {
-        const router = curi(history, routes);
-        expect(fakeWarn.mock.calls.length).toBe(1);
-      });
+      expect(fakeWarn.mock.calls.length).toBe(1);
+      console.warn = realWarn;
     });
 
     it("makes interactions available through router.route", () => {
-      const routes = [{ name: "Home", path: "" }];
+      const routes = buildRoutes([{ name: "Home", path: "" }]);
       const createfakeInteraction = () => ({
         name: "fake",
         register: () => {},
@@ -97,7 +89,7 @@ describe("curi", () => {
     describe("options", () => {
       describe("interactions", () => {
         it("includes pathname interaction by default", () => {
-          const routes = [{ name: "Home", path: "" }];
+          const routes = buildRoutes([{ name: "Home", path: "" }]);
           const router = curi(history, routes);
           expect(router.route.pathname).toBeDefined();
         });
@@ -115,7 +107,7 @@ describe("curi", () => {
             };
           };
 
-          const routes = [{ name: "Home", path: "" }];
+          const routes = buildRoutes([{ name: "Home", path: "" }]);
           const router = curi(history, routes, {
             route: [createfirstInteraction()]
           });
@@ -152,7 +144,7 @@ describe("curi", () => {
             };
           };
 
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Grandparent",
               path: "grandparent",
@@ -168,7 +160,7 @@ describe("curi", () => {
               name: "Cousin",
               path: "cousin"
             }
-          ];
+          ]);
           const history = InMemory({ locations: ["/grandparent"] });
           const router = curi(history, routes, {
             route: [createfirstInteraction(), createsecondInteraction()]
@@ -201,7 +193,7 @@ describe("curi", () => {
 
       describe("sideEffects", () => {
         it("calls side effect methods AFTER a response is generated, passing response, navigation, and router", done => {
-          const routes = [{ name: "All", path: "(.*)" }];
+          const routes = buildRoutes([{ name: "All", path: "(.*)" }]);
           const sideEffect = jest.fn();
 
           const router = curi(history, routes, {
@@ -217,7 +209,7 @@ describe("curi", () => {
         });
 
         it("passes response, navigation, and router object to side effect", done => {
-          const routes = [{ name: "All", path: "(.*)" }];
+          const routes = buildRoutes([{ name: "All", path: "(.*)" }]);
           const sideEffect = function({ response, navigation, router }) {
             expect(response).toMatchObject({
               name: "All",
@@ -238,7 +230,7 @@ describe("curi", () => {
 
       describe("emitRedirects", () => {
         it("emits redirects by default", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Start",
               path: "",
@@ -254,7 +246,7 @@ describe("curi", () => {
               name: "Other",
               path: "other"
             }
-          ];
+          ]);
           let firstCall = true;
           const logger = ({ response }) => {
             if (firstCall) {
@@ -268,7 +260,7 @@ describe("curi", () => {
         });
 
         it("does not emit redirects when emitRedirects = false", done => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Start",
               path: "",
@@ -284,7 +276,7 @@ describe("curi", () => {
               name: "Other",
               path: "other"
             }
-          ];
+          ]);
 
           const router = curi(history, routes, {
             emitRedirects: false
@@ -299,7 +291,7 @@ describe("curi", () => {
 
       describe("automaticRedirects", () => {
         it("automatically redirects by default", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Start",
               path: "",
@@ -315,7 +307,7 @@ describe("curi", () => {
               name: "Other",
               path: "other"
             }
-          ];
+          ]);
           const router = curi(history, routes);
           // because the routes are not asynchronous, an automatic redirect
           // will be triggered before once is called, so its response
@@ -334,7 +326,7 @@ describe("curi", () => {
         });
 
         it("does not automatically redirect when automaticRedirects = false", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Start",
               path: "",
@@ -350,7 +342,7 @@ describe("curi", () => {
               name: "Other",
               path: "other"
             }
-          ];
+          ]);
           const router = curi(history, routes, {
             automaticRedirects: false
           });
@@ -369,7 +361,7 @@ describe("curi", () => {
 
     describe("sync/async matching", () => {
       it("does synchronous matching by default", () => {
-        const routes = [{ name: "Home", path: "" }];
+        const routes = buildRoutes([{ name: "Home", path: "" }]);
         const router = curi(history, routes);
         const after = jest.fn();
         router.once(r => {
@@ -379,7 +371,7 @@ describe("curi", () => {
       });
 
       it("does asynchronous matching when route.resolve isn't empty", () => {
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "Home",
             path: "",
@@ -387,7 +379,7 @@ describe("curi", () => {
               test: () => Promise.resolve()
             }
           }
-        ];
+        ]);
         const router = curi(history, routes);
         const after = jest.fn();
         router.once(r => {
@@ -397,7 +389,7 @@ describe("curi", () => {
       });
 
       it("still does synchronous matching when a different route is async", done => {
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "Parent",
             path: "parent",
@@ -411,7 +403,7 @@ describe("curi", () => {
               }
             ]
           }
-        ];
+        ]);
         const history = InMemory({ locations: ["/parent/child"] });
         const router = curi(history, routes);
         const after = jest.fn();
@@ -433,7 +425,8 @@ describe("curi", () => {
   describe("current", () => {
     describe("sync", () => {
       it("initial value is an object with resolved response and navigation properties", () => {
-        const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
+        const routes = buildRoutes([{ name: "Catch All", path: "(.*)" }]);
+        const router = curi(history, routes);
         expect(router.current()).toMatchObject({
           response: { name: "Catch All" },
           navigation: { action: "PUSH" }
@@ -443,7 +436,7 @@ describe("curi", () => {
 
     describe("async", () => {
       it("initial value is an object with null response and navigation properties", () => {
-        const router = curi(history, [
+        const routes = buildRoutes([
           {
             name: "Catch All",
             path: "(.*)",
@@ -452,6 +445,7 @@ describe("curi", () => {
             }
           }
         ]);
+        const router = curi(history, routes);
         expect(router.current()).toMatchObject({
           response: null,
           navigation: null
@@ -460,7 +454,8 @@ describe("curi", () => {
     });
 
     it("response and navigation are the last resolved response and navigation", () => {
-      const router = curi(history, [{ name: "Home", path: "" }]);
+      const routes = buildRoutes([{ name: "Home", path: "" }]);
+      const router = curi(history, routes);
       router.once(({ response, navigation }) => {
         expect(router.current()).toMatchObject({
           response,
@@ -470,10 +465,11 @@ describe("curi", () => {
     });
 
     it("updates properties when a new response is resolved", done => {
-      const router = curi(history, [
+      const routes = buildRoutes([
         { name: "Home", path: "" },
         { name: "About", path: "about" }
       ]);
+      const router = curi(history, routes);
       let calls = 0;
       router.observe(({ response, navigation }) => {
         calls++;
@@ -502,16 +498,16 @@ describe("curi", () => {
     });
 
     it("resets and replaces registered routes", () => {
-      const englishRoutes = [
+      const englishRoutes = buildRoutes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
-      ];
-      const spanishRoutes = [
+      ]);
+      const spanishRoutes = buildRoutes([
         { name: "Casa", path: "" },
         { name: "Acerca De", path: "acerca-de" },
         { name: "Contacto", path: "contacto" }
-      ];
+      ]);
 
       const router = curi(history, englishRoutes);
 
@@ -532,15 +528,15 @@ describe("curi", () => {
       const history = InMemory({
         locations: ["/admin"]
       });
-      const nonAuthRoutes = [
+      const nonAuthRoutes = buildRoutes([
         { name: "Home", path: "" },
         { name: "Not Found", path: "(.*)" }
-      ];
-      const authRoutes = [
+      ]);
+      const authRoutes = buildRoutes([
         { name: "Home", path: "" },
         { name: "Admin", path: "admin" },
         { name: "Not Found", path: "(.*)" }
-      ];
+      ]);
 
       const router = curi(history, nonAuthRoutes);
 
@@ -554,11 +550,11 @@ describe("curi", () => {
     });
 
     it("emits a response when called with no argument", done => {
-      const englishRoutes = [
+      const englishRoutes = buildRoutes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
-      ];
+      ]);
       const history = InMemory({ locations: ["/about"] });
       const router = curi(history, englishRoutes);
 
@@ -581,11 +577,11 @@ describe("curi", () => {
     });
 
     it("re-uses previously emitted navigation.previous", done => {
-      const englishRoutes = [
+      const englishRoutes = buildRoutes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
-      ];
+      ]);
       const history = InMemory({ locations: ["/about"] });
       const router = curi(history, englishRoutes);
 
@@ -613,21 +609,19 @@ describe("curi", () => {
     });
 
     it("returns a function to unsubscribe when called", () => {
-      const router = curi(history, [
+      const routes = buildRoutes([
         { name: "Home", path: "" },
         { name: "Not Found", path: "(.*)" }
       ]);
+      const router = curi(history, routes);
 
       const sub1 = jest.fn();
       const sub2 = jest.fn();
 
       // wait for the first response to be generated to ensure that both
       // response handler functions are called when subscribing
-      const unsub1 = router.observe(sub1, {
-        observe: true,
-        initial: false
-      }) as RemoveObserver;
-      const unsub2 = router.observe(sub2, { observe: true, initial: false });
+      const unsub1 = router.observe(sub1, { initial: false });
+      const unsub2 = router.observe(sub2, { initial: false });
 
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(0);
@@ -640,7 +634,7 @@ describe("curi", () => {
 
     describe("response handler", () => {
       it("is passed object with response, navigation, and router", done => {
-        const routes = [{ name: "All", path: "(.*)" }];
+        const routes = buildRoutes([{ name: "All", path: "(.*)" }]);
         const responseHandler = function({ response, navigation, router }) {
           expect(response).toMatchObject({
             name: "All",
@@ -659,11 +653,11 @@ describe("curi", () => {
 
       it("is called when response is emitted", () => {
         const How = { name: "How", path: ":method" };
-        const routes = [
+        const routes = buildRoutes([
           { name: "Home", path: "" },
           { name: "About", path: "about" },
           { name: "Contact", path: "contact", children: [How] }
-        ];
+        ]);
 
         const check = ({ response, navigation }) => {
           expect(response).toMatchObject({
@@ -685,11 +679,11 @@ describe("curi", () => {
       });
 
       it("is re-called for new responses", done => {
-        const routes = [
+        const routes = buildRoutes([
           { name: "Home", path: "" },
           { name: "Contact", path: "contact" },
           { name: "Not Found", path: "(.*)" }
-        ];
+        ]);
         const everyTime = jest.fn();
         let called = false;
         const responseHandler = jest.fn(() => {
@@ -712,7 +706,7 @@ describe("curi", () => {
       it("is called BEFORE once() response handlers", done => {
         // need to use an async route so that handlers are registered before
         // the initial response is ready
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "Home",
             path: "",
@@ -721,7 +715,7 @@ describe("curi", () => {
             }
           },
           { name: "Catch All", path: "(.*)" }
-        ];
+        ]);
         const oneTime = jest.fn();
         let called = false;
         const responseHandler = jest.fn(() => {
@@ -736,7 +730,7 @@ describe("curi", () => {
       describe("matched route is async", () => {
         it("is called AFTER promises have resolved", done => {
           let promiseResolved = false;
-          const routes = [
+          const routes = buildRoutes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             {
@@ -755,7 +749,7 @@ describe("curi", () => {
                 }
               ]
             }
-          ];
+          ]);
 
           const check = response => {
             expect(promiseResolved).toBe(true);
@@ -767,7 +761,7 @@ describe("curi", () => {
         });
 
         it("does not emit responses for cancelled navigation", done => {
-          const routes = [
+          const routes = buildRoutes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             {
@@ -783,7 +777,7 @@ describe("curi", () => {
                 }
               ]
             }
-          ];
+          ]);
           const check = ({ response }) => {
             expect(response.params.method).toBe("mail");
             done();
@@ -800,7 +794,7 @@ describe("curi", () => {
     describe("response handler options", () => {
       describe("{ initial: true } (default)", () => {
         it("immediately called with most recent response/navigation", () => {
-          const routes = [{ name: "Home", path: "" }];
+          const routes = buildRoutes([{ name: "Home", path: "" }]);
           const sub = jest.fn();
           const router = curi(history, routes);
           const { response, navigation } = router.current();
@@ -815,7 +809,7 @@ describe("curi", () => {
         });
 
         it("[async] immediately called if initial response has resolved", done => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Home",
               path: "",
@@ -823,7 +817,7 @@ describe("curi", () => {
                 test: () => Promise.resolve()
               }
             }
-          ];
+          ]);
           const sub = jest.fn();
           const router = curi(history, routes);
           router.once(() => {
@@ -834,7 +828,7 @@ describe("curi", () => {
         });
 
         it("[async] not immediately called if initial response hasn't resolved", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Home",
               path: "",
@@ -842,7 +836,7 @@ describe("curi", () => {
                 test: () => Promise.resolve()
               }
             }
-          ];
+          ]);
           const sub = jest.fn();
           const router = curi(history, routes);
           router.observe(sub, { initial: true });
@@ -852,7 +846,7 @@ describe("curi", () => {
 
       describe("{ initial: false }", () => {
         it("has response, is not immediately called", done => {
-          const routes = [{ name: "Home", path: "" }];
+          const routes = buildRoutes([{ name: "Home", path: "" }]);
           const everyTime = jest.fn();
           const router = curi(history, routes);
           router.once(() => {
@@ -863,10 +857,10 @@ describe("curi", () => {
         });
 
         it("is called AFTER next navigation", done => {
-          const routes = [
+          const routes = buildRoutes([
             { name: "Home", path: "" },
             { name: "Catch All", path: "(.*)" }
-          ];
+          ]);
           const everyTime = jest.fn(({ response }) => {
             expect(response.name).toBe("Catch All");
             done();
@@ -890,7 +884,7 @@ describe("curi", () => {
 
     describe("response handler", () => {
       it("is passed object with response, navigation, and router", done => {
-        const routes = [{ name: "All", path: "(.*)" }];
+        const routes = buildRoutes([{ name: "All", path: "(.*)" }]);
         const responseHandler = function({ response, navigation, router }) {
           expect(response).toMatchObject({
             name: "All",
@@ -908,11 +902,11 @@ describe("curi", () => {
       });
 
       it("is called when response is emitted", () => {
-        const routes = [
+        const routes = buildRoutes([
           { name: "Home", path: "" },
           { name: "Contact", path: "contact" },
           { name: "Not Found", path: "(.*)" }
-        ];
+        ]);
         const oneTime = jest.fn();
         const router = curi(history, routes);
         router.once(oneTime);
@@ -921,11 +915,11 @@ describe("curi", () => {
 
       it("isn't re-called for new responses", () => {
         //
-        const routes = [
+        const routes = buildRoutes([
           { name: "Home", path: "" },
           { name: "Contact", path: "contact" },
           { name: "Not Found", path: "(.*)" }
-        ];
+        ]);
         const firstOnce = jest.fn();
         const secondOnce = jest.fn();
         const router = curi(history, routes);
@@ -950,7 +944,7 @@ describe("curi", () => {
       it("is called AFTER observe() response handlers", done => {
         // need to use an async route so that handlers are registered before
         // the initial response is ready
-        const routes = [
+        const routes = buildRoutes([
           {
             name: "Home",
             path: "",
@@ -959,7 +953,7 @@ describe("curi", () => {
             }
           },
           { name: "Catch All", path: "(.*)" }
-        ];
+        ]);
         const oneTime = jest.fn(() => {
           expect(responseHandler.mock.calls.length).toBe(1);
           done();
@@ -974,7 +968,7 @@ describe("curi", () => {
       describe("matched route is async", () => {
         it("is called AFTER promises have resolved", done => {
           let promiseResolved = false;
-          const routes = [
+          const routes = buildRoutes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             {
@@ -993,7 +987,7 @@ describe("curi", () => {
                 }
               ]
             }
-          ];
+          ]);
 
           const check = response => {
             expect(promiseResolved).toBe(true);
@@ -1005,7 +999,7 @@ describe("curi", () => {
         });
 
         it("does not emit responses for cancelled navigation", done => {
-          const routes = [
+          const routes = buildRoutes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             {
@@ -1021,7 +1015,7 @@ describe("curi", () => {
                 }
               ]
             }
-          ];
+          ]);
           const check = ({ response }) => {
             expect(response.params.method).toBe("mail");
             done();
@@ -1038,7 +1032,7 @@ describe("curi", () => {
     describe("response handler options", () => {
       describe("{ initial: true } (default)", () => {
         it("immediately called with most recent response/navigation", () => {
-          const routes = [{ name: "Home", path: "" }];
+          const routes = buildRoutes([{ name: "Home", path: "" }]);
           const sub = jest.fn();
           const router = curi(history, routes);
           const { response, navigation } = router.current();
@@ -1053,7 +1047,7 @@ describe("curi", () => {
         });
 
         it("[async] immediately called if initial response has resolved", done => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Home",
               path: "",
@@ -1061,7 +1055,7 @@ describe("curi", () => {
                 test: () => Promise.resolve()
               }
             }
-          ];
+          ]);
           const sub = jest.fn();
           const router = curi(history, routes);
           router.once(() => {
@@ -1072,7 +1066,7 @@ describe("curi", () => {
         });
 
         it("[async] not immediately called if initial response hasn't resolved", () => {
-          const routes = [
+          const routes = buildRoutes([
             {
               name: "Home",
               path: "",
@@ -1080,7 +1074,7 @@ describe("curi", () => {
                 test: () => Promise.resolve()
               }
             }
-          ];
+          ]);
           const sub = jest.fn();
           const router = curi(history, routes);
           router.once(sub, { initial: true });
@@ -1090,7 +1084,7 @@ describe("curi", () => {
 
       describe("{ initial: false }", () => {
         it("has response, is not immediately called", done => {
-          const routes = [{ name: "Home", path: "" }];
+          const routes = buildRoutes([{ name: "Home", path: "" }]);
           const oneTime = jest.fn();
           const router = curi(history, routes);
           router.once(() => {
@@ -1101,10 +1095,10 @@ describe("curi", () => {
         });
 
         it("is called AFTER next navigation", done => {
-          const routes = [
+          const routes = buildRoutes([
             { name: "Home", path: "" },
             { name: "Catch All", path: "(.*)" }
-          ];
+          ]);
           const oneTime = jest.fn(({ response }) => {
             expect(response.name).toBe("Catch All");
             done();
@@ -1121,7 +1115,7 @@ describe("curi", () => {
   });
 
   describe("navigate()", () => {
-    const routes = [
+    const routes = buildRoutes([
       { name: "Home", path: "" },
       {
         name: "Contact",
@@ -1129,7 +1123,7 @@ describe("curi", () => {
         children: [{ name: "Method", path: ":method" }]
       },
       { name: "Catch All", path: "(.*)" }
-    ];
+    ]);
     const history = InMemory();
     const router = curi(history, routes);
     const mockNavigate = (history.navigate = jest.fn());
@@ -1215,7 +1209,7 @@ describe("curi", () => {
 
     describe("cancelling a navigation", () => {
       it("calls the navigation's cancelled function", () => {
-        const routes = [
+        const routes = buildRoutes([
           { name: "Home", path: "" },
           {
             name: "Slow",
@@ -1239,7 +1233,7 @@ describe("curi", () => {
             }
           },
           { name: "Catch All", path: "(.*)" }
-        ];
+        ]);
         const history = InMemory();
         const router = curi(history, routes);
         const cancelled = jest.fn();
@@ -1253,7 +1247,7 @@ describe("curi", () => {
       });
 
       it("does not call the previous navigation's cancelled function", done => {
-        const routes = [
+        const routes = buildRoutes([
           { name: "Home", path: "" },
           {
             name: "Loader",
@@ -1263,7 +1257,7 @@ describe("curi", () => {
             }
           },
           { name: "Catch All", path: "(.*)" }
-        ];
+        ]);
         const history = InMemory();
         const router = curi(history, routes);
         const cancelled = jest.fn();
@@ -1292,7 +1286,7 @@ describe("curi", () => {
 
     describe("finishing a navigation", () => {
       it("does not calls the navigation's finished function when the navigation is cancelled", () => {
-        const routes = [
+        const routes = buildRoutes([
           { name: "Home", path: "" },
           {
             name: "Slow",
@@ -1316,7 +1310,7 @@ describe("curi", () => {
             }
           },
           { name: "Catch All", path: "(.*)" }
-        ];
+        ]);
         const history = InMemory();
         const router = curi(history, routes);
         const finished = jest.fn();
@@ -1329,7 +1323,7 @@ describe("curi", () => {
       });
 
       it("calls the navigation's finished function", done => {
-        const routes = [
+        const routes = buildRoutes([
           { name: "Home", path: "" },
           {
             name: "Loader",
@@ -1339,7 +1333,7 @@ describe("curi", () => {
             }
           },
           { name: "Catch All", path: "(.*)" }
-        ];
+        ]);
         const history = InMemory();
         const router = curi(history, routes);
         const finished = jest.fn();
@@ -1365,7 +1359,7 @@ describe("curi", () => {
   describe("response.redirectTo", () => {
     it("triggers a replace navigation AFTER emitting initial response", done => {
       let callPosition = 0;
-      const routes = [
+      const routes = buildRoutes([
         {
           name: "A Route",
           path: "",
@@ -1382,7 +1376,7 @@ describe("curi", () => {
           name: "B Route",
           path: "somewhere-else"
         }
-      ];
+      ]);
       let hasEmitted = false;
 
       history.navigate = jest.fn((loc, navType) => {
