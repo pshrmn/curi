@@ -25,8 +25,8 @@ export function privatePrepareRoutes(
     }
     if (process.env.NODE_ENV !== "production") {
       if (_privateInternalCall && !hasWarned) {
-        console.warn(`Deprecation Warning: You passed a plain array to your curi() call. This will be
-removed in the next major version. Instead, you should pass a compiled routes array.
+        console.warn(`Deprecation Warning:
+You passed a plain array to your curi() call. This will be removed in the next major version. Instead, you should pass a compiled routes array.
 
 import { curi, prepareRoutes } from "@curi/router";
 
@@ -35,6 +35,6 @@ const router = curi(history, routes);`);
         hasWarned = true;
       }
     }
-    return createRoute(route as RouteDescriptor, usedNames);
+    return createRoute(route as RouteDescriptor, null, usedNames);
   });
 }

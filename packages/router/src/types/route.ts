@@ -1,4 +1,4 @@
-import { RegExpOptions, Key } from "path-to-regexp";
+import { RegExpOptions, Key, PathFunction } from "path-to-regexp";
 
 import {
   MatchResponseProperties,
@@ -61,6 +61,7 @@ export interface Route {
   keys: Array<string | number>;
   resolve: AsyncGroup;
   extra?: { [key: string]: any };
+  pathname: PathFunction;
 }
 
 export interface PathMatching {

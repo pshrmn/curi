@@ -1,12 +1,13 @@
 import PathToRegexp from "path-to-regexp";
 
-import { withLeadingSlash } from "./utils/path";
+import { withLeadingSlash, join } from "./utils/path";
 
 import { RouteDescriptor, CompiledRoute } from "./types/route";
 import { Key } from "path-to-regexp";
 
 const createRoute = (
   options: RouteDescriptor,
+  parentPath: string | null,
   usedNames: Set<string>
 ): CompiledRoute => {
   if (usedNames.has(options.name)) {
@@ -28,6 +29,7 @@ const createRoute = (
     }
     path = path.slice(1);
   }
+  let fullPath = withLeadingSlash(join(parentPath || "", path));
 
   const pathOptions = options.pathOptions || {};
   // end defaults to true, so end has to be hardcoded for it to be false
@@ -40,7 +42,7 @@ const createRoute = (
   if (options.children && options.children.length) {
     pathOptions.end = false;
     children = options.children.map(child => {
-      return createRoute(child, usedNames);
+      return createRoute(child, fullPath, usedNames);
     });
   }
 
@@ -50,6 +52,8 @@ const createRoute = (
   // for optional initial params
   const re = PathToRegexp(withLeadingSlash(path), keys, pathOptions);
 
+  const pathname = PathToRegexp.compile(fullPath);
+
   const resolve = options.resolve || {};
 
   return {
@@ -58,7 +62,8 @@ const createRoute = (
       path: path,
       keys: keys.map(key => key.name),
       resolve,
-      extra: options.extra
+      extra: options.extra,
+      pathname
     },
     pathMatching: {
       re,

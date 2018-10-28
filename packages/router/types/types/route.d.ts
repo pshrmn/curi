@@ -1,4 +1,4 @@
-import { RegExpOptions, Key } from "path-to-regexp";
+import { RegExpOptions, Key, PathFunction } from "path-to-regexp";
 import { MatchResponseProperties, SettableResponseProperties } from "./response";
 export interface Resolved {
     [key: string]: any;
@@ -49,6 +49,7 @@ export interface Route {
     extra?: {
         [key: string]: any;
     };
+    pathname: PathFunction;
 }
 export interface PathMatching {
     mustBeExact: boolean;
