@@ -12,16 +12,16 @@ export default function HomePage() {
     <React.Fragment>
       <h1>Curi is a JavaScript router for single-page applications</h1>
       <CodeBlock>
-        {`import { curi } from '@curi/router';
+        {`import { curi, prepareRoutes } from '@curi/router';
 import Browser from '@hickory/browser';
 
 const history = Browser();
-const routes = [
+const routes = prepareRoutes([
   { name: 'Home', path: '', ... },
   { name: 'User', path: 'u/:userID', ... },
   // more routes...
   { name: 'Not Found', path: '(.*)', ... }
-];
+]);
 
 const router = curi(history, routes);`}
       </CodeBlock>

@@ -3,11 +3,16 @@ import pathnameInteraction from "./interactions/pathname";
 import finishResponse from "./finishResponse";
 import matchLocation from "./matchLocation";
 import resolveMatchedRoute from "./resolveMatchedRoute";
-import createRoute from "./route";
+import { privatePrepareRoutes } from "./prepareRoutes";
 
 import { History, PendingNavigation } from "@hickory/root";
 
-import { RouteDescriptor, InternalRoute, ResolveResults } from "./types/route";
+import {
+  RouteDescriptor,
+  UserRoutes,
+  CompiledRouteArray,
+  ResolveResults
+} from "./types/route";
 import { Response } from "./types/response";
 import { Interactions } from "./types/interaction";
 import { Match } from "./types/match";
@@ -25,7 +30,7 @@ import {
 
 export default function createRouter(
   history: History,
-  routeArray: Array<RouteDescriptor>,
+  routeArray: UserRoutes,
   options: RouterOptions = {}
 ): CuriRouter {
   const {
@@ -35,7 +40,7 @@ export default function createRouter(
     automaticRedirects = true
   } = options;
 
-  let routes: Array<InternalRoute> = [];
+  let routes: CompiledRouteArray;
   const routeInteractions: Interactions = {};
 
   // the navigation currently being processed
@@ -57,11 +62,9 @@ export default function createRouter(
   let observers: Array<Observer> = [];
   const oneTimers: Array<Observer> = [];
 
-  function setupRoutesAndInteractions(
-    routeArray?: Array<RouteDescriptor>
-  ): void {
-    if (routeArray) {
-      routes = routeArray.map(createRoute);
+  function setupRoutesAndInteractions(userRoutes?: UserRoutes): void {
+    if (userRoutes) {
+      routes = privatePrepareRoutes(userRoutes, true);
       for (let key in routeInteractions) {
         delete routeInteractions[key];
       }

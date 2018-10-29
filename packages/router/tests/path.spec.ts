@@ -2,13 +2,13 @@ import "jest";
 import InMemory from "@hickory/in-memory";
 
 // @ts-ignore (resolved by jest)
-import { curi } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 
 describe("route.pathOptions matching", () => {
   describe("default options", () => {
     it("sensitive = false", () => {
       const history = InMemory({ locations: ["/Here"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here"
@@ -17,7 +17,7 @@ describe("route.pathOptions matching", () => {
           name: "Not Found",
           path: "(.*)"
         }
-      ];
+      ]);
       const router = curi(history, routes);
       const { response } = router.current();
       expect(response.name).toBe("Test");
@@ -25,7 +25,7 @@ describe("route.pathOptions matching", () => {
 
     it("strict = false", () => {
       const history = InMemory({ locations: ["/here/"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here"
@@ -34,7 +34,7 @@ describe("route.pathOptions matching", () => {
           name: "Not Found",
           path: "(.*)"
         }
-      ];
+      ]);
       const router = curi(history, routes);
       const { response } = router.current();
       expect(response.name).toBe("Test");
@@ -42,7 +42,7 @@ describe("route.pathOptions matching", () => {
 
     it("end = true", () => {
       const history = InMemory({ locations: ["/here/again"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here"
@@ -51,7 +51,7 @@ describe("route.pathOptions matching", () => {
           name: "Not Found",
           path: "(.*)"
         }
-      ];
+      ]);
       const router = curi(history, routes);
       const { response } = router.current();
       expect(response.name).toBe("Not Found");
@@ -61,7 +61,7 @@ describe("route.pathOptions matching", () => {
   describe("user provided options", () => {
     it("sensitive = true", () => {
       const history = InMemory({ locations: ["/Here"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here",
@@ -71,7 +71,7 @@ describe("route.pathOptions matching", () => {
           name: "Not Found",
           path: "(.*)"
         }
-      ];
+      ]);
       const router = curi(history, routes);
       const { response } = router.current();
       expect(response.name).toBe("Not Found");
@@ -79,7 +79,7 @@ describe("route.pathOptions matching", () => {
 
     it("strict = true", () => {
       const history = InMemory({ locations: ["/here/"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here",
@@ -89,7 +89,7 @@ describe("route.pathOptions matching", () => {
           name: "Not Found",
           path: "(.*)"
         }
-      ];
+      ]);
       const router = curi(history, routes);
       const { response } = router.current();
       expect(response.name).toBe("Not Found");
@@ -97,7 +97,7 @@ describe("route.pathOptions matching", () => {
 
     it("end = false", () => {
       const history = InMemory({ locations: ["/here/again"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here",
@@ -107,7 +107,7 @@ describe("route.pathOptions matching", () => {
           name: "Not Found",
           path: "(.*)"
         }
-      ];
+      ]);
       const router = curi(history, routes);
       const { response } = router.current();
       expect(response.name).toBe("Test");

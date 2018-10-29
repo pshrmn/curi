@@ -40,12 +40,12 @@ export default function LoadingGuide() {
           </p>
         </Explanation>
         <CodeBlock>
-          {`const routes = [
+          {`const routes = prepareRoutes([
   {
     name: 'Recipe',
     path: 'recipe/:id'
   }
-];`}
+]);`}
         </CodeBlock>
 
         <Explanation>

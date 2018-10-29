@@ -1,178 +1,201 @@
 import "jest";
+import InMemory from "@hickory/in-memory";
+import { curi, prepareRoutes } from "@curi/router";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import createActive from "@curi/route-active";
 
 describe("active route interaction", () => {
-  let active;
+  const history = InMemory();
 
-  beforeEach(() => {
-    active = createActive();
+  it("is called using router.route.ancestors()", () => {
+    const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+    const router = curi(history, routes, {
+      route: [createActive()]
+    });
+    expect(router.route.active).toBeDefined();
   });
 
-  describe("name", () => {
-    it("is active", () => {
-      expect(active.name).toBe("active");
-    });
-  });
+  describe("routes", () => {
+    it("returns false if the route is not registered", () => {
+      const history = InMemory({
+        locations: ["/"]
+      });
+      const routes = prepareRoutes([
+        {
+          name: "Player",
+          path: "player/:id"
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createActive()]
+      });
 
-  describe("register", () => {
-    it("returns the array of param keys for the route", () => {
-      const player = {
-        name: "Player",
-        path: "player/:id",
-        keys: ["id"]
-      };
-      const storedKeys = active.register(player);
-      expect(storedKeys).toEqual(["id"]);
-    });
-
-    it("also stores any ancestor route's keys", () => {
-      const album = {
-        name: "Album",
-        path: "a/:albumId",
-        keys: ["albumId"]
-      };
-      const photo = {
-        name: "Photo",
-        path: ":photoId",
-        keys: ["photoId"]
-      };
-      const parentKeys = active.register(album);
-      const storedKeys = active.register(photo, parentKeys);
-      expect(storedKeys).toEqual(["albumId", "photoId"]);
+      const { response } = router.current();
+      const playerIsActive = router.route.active("Does Not Exist", response, {
+        id: "6"
+      });
+      expect(playerIsActive).toBe(false);
     });
 
-    it("stores empty array when route has no params", () => {
-      const empty = {
-        name: "Empty",
-        path: "empty",
-        keys: undefined
-      };
-      const storedKeys = active.register(empty);
-      expect(storedKeys).toEqual([]);
-    });
-
-    it("warns when registering the same name", () => {
-      const warn = console.warn;
-      const mockWarn = (console.warn = jest.fn());
-
-      const first = {
-        name: "Test",
-        path: ":first",
-        keys: ["first"]
-      };
-      const second = {
-        name: "Test",
-        path: ":second",
-        keys: ["second"]
-      };
-
-      active.register(first);
-      expect(mockWarn.mock.calls.length).toBe(0);
-
-      active.register(second);
-      expect(mockWarn.mock.calls.length).toBe(1);
-
-      console.warn = warn;
-    });
-  });
-
-  describe("get", () => {
     it("returns false when name does not match", () => {
-      const player = {
-        name: "Player",
-        path: "player/:id",
-        keys: ["id"]
-      };
-      active.register(player);
-      const playerIsActive = active.get("Player", { name: "Coach" }, { id: 6 });
+      const history = InMemory({
+        locations: ["/"]
+      });
+      const routes = prepareRoutes([
+        {
+          name: "Player",
+          path: "player/:id"
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createActive()]
+      });
+
+      const { response } = router.current();
+      const playerIsActive = router.route.active("Player", response, {
+        id: "6"
+      });
       expect(playerIsActive).toBe(false);
     });
 
     it("returns false when name matches but params do not", () => {
-      const player = {
-        name: "Player",
-        path: "player/:id",
-        keys: ["id"]
-      };
-      active.register(player);
-      const playerIsActive = active.get(
-        "Player",
-        { name: "Player", params: { id: 7 } },
-        { id: 6 }
-      );
+      const history = InMemory({
+        locations: ["/player/7"]
+      });
+      const routes = prepareRoutes([
+        {
+          name: "Player",
+          path: "player/:id"
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createActive()]
+      });
+
+      const { response } = router.current();
+      const playerIsActive = router.route.active("Player", response, {
+        id: "6"
+      });
       expect(playerIsActive).toBe(false);
     });
 
     it("returns false when name is partial match but partial is not true", () => {
-      const player = {
-        name: "Player",
-        path: "player/:id",
-        keys: ["id"]
-      };
-      active.register(player);
-      const playerIsActive = active.get(
-        "Player",
-        { name: "Coach", partials: ["Player"], params: { id: 6 } },
-        { id: 6 }
-      );
+      const history = InMemory({
+        locations: ["/player/6/coach"]
+      });
+      const routes = prepareRoutes([
+        {
+          name: "Player",
+          path: "player/:id",
+          children: [
+            {
+              name: "Coach",
+              path: "coach"
+            }
+          ]
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createActive()]
+      });
+
+      const { response } = router.current();
+      const playerIsActive = router.route.active("Player", response, {
+        id: "6"
+      });
       expect(playerIsActive).toBe(false);
     });
 
     it("returns true when name matches and params match", () => {
-      const player = {
-        name: "Player",
-        path: "player/:id",
-        keys: ["id"]
-      };
-      active.register(player);
-      const playerIsActive = active.get(
-        "Player",
-        { name: "Player", params: { id: 7 } },
-        { id: 7 }
-      );
+      const history = InMemory({
+        locations: ["/player/7"]
+      });
+      const routes = prepareRoutes([
+        {
+          name: "Player",
+          path: "player/:id"
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createActive()]
+      });
+
+      const { response } = router.current();
+      const playerIsActive = router.route.active("Player", response, {
+        id: "7"
+      });
       expect(playerIsActive).toBe(true);
     });
 
     it("returns true when name is partial match and partial is true", () => {
-      const player = {
-        name: "Player",
-        path: "player/:id",
-        keys: ["id"]
-      };
-      active.register(player);
-      const playerIsActive = active.get(
+      const history = InMemory({
+        locations: ["/player/6/coach"]
+      });
+      const routes = prepareRoutes([
+        {
+          name: "Player",
+          path: "player/:id",
+          children: [
+            {
+              name: "Coach",
+              path: "coach"
+            }
+          ]
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createActive()]
+      });
+
+      const { response } = router.current();
+      const playerIsActive = router.route.active(
         "Player",
-        { name: "Coach", partials: ["Player"], params: { id: 6 } },
-        { id: 6 },
+        response,
+        { id: "6" },
         true
       );
       expect(playerIsActive).toBe(true);
     });
   });
 
-  describe("reset", () => {
-    it("removes the registered routes", () => {
-      const player = {
-        name: "Player",
-        path: "player/:id",
-        keys: ["id"]
-      };
-      active.register(player);
-      const playerIsActive = active.get(
-        "Player",
-        { name: "Player", params: { id: 7 } },
-        { id: 7 }
-      );
-      expect(playerIsActive).toBe(true);
-      active.reset();
-      const playerIsActiveAfterReset = active.get(
-        "Player",
-        { name: "Player", params: { id: 7 } },
-        { id: 7 }
-      );
-      expect(playerIsActiveAfterReset).toBe(false);
+  it("refreshing removes the registered routes", () => {
+    const history = InMemory({
+      locations: ["/player/7"]
     });
+    const routes = prepareRoutes([
+      {
+        name: "Player",
+        path: "player/:id"
+      },
+      { name: "Catch All", path: "(.*)" }
+    ]);
+    const emptyRoutes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+
+    const router = curi(history, routes, {
+      route: [createActive()]
+    });
+
+    const playerIsActive = router.route.active(
+      "Player",
+      router.current().response,
+      { id: "7" }
+    );
+    expect(playerIsActive).toBe(true);
+
+    router.refresh(emptyRoutes);
+
+    const playerIsActiveAfterRefresh = router.route.active(
+      "Player",
+      router.current().response,
+      { id: "7" }
+    );
+    expect(playerIsActiveAfterRefresh).toBe(false);
   });
 });

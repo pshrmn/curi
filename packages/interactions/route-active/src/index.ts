@@ -24,17 +24,6 @@ export default function checkIfActive(): Interaction {
       const fullKeys = Array.isArray(parentKeys)
         ? [...parentKeys, ...keys]
         : keys;
-      if (process.env.NODE_ENV !== "production") {
-        if (routeParams[name] !== undefined) {
-          console.warn(
-            '[@curi/route-active] A route with the name "' +
-              name +
-              '" already exists. Each route should' +
-              "have a unique name. By registering a route function with a name that already exists, " +
-              "you are overwriting the existing one. This may break your application."
-          );
-        }
-      }
       routeParams[name] = fullKeys;
       return fullKeys;
     },

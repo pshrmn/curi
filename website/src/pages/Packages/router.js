@@ -64,18 +64,18 @@ const router = curi(history, routes);`}
               <Section tag="h5" title="routes" id="routes">
                 <Explanation>
                   <p>
-                    An array of{" "}
+                    An array of prepared{" "}
                     <Link to="Guide" params={{ slug: "routes" }}>
                       route
                     </Link>{" "}
-                    objects for all valid routes in the application.
+                    objects describing all valid routes in the application.
                   </p>
                 </Explanation>
                 <CodeBlock lang="jsx">
-                  {`const routes = [
+                  {`const routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "About", path: "about" }
-];
+]);
 
 const router = curi(history, routes);`}
                 </CodeBlock>
@@ -109,7 +109,7 @@ const router = curi(history, routes);`}
                       {`import active from "@curi/route-active";
 import ancestors from "@curi/route-ancestors";
 
-const routes = [{ name: "Home", path: "" }];
+const routes = prepareRoutes([{ name: "Home", path: "" }]);
 
 const router = curi(history, routes, {
   route: [active(), ancestors()]
@@ -185,7 +185,7 @@ const router = curi(history, routes, {
                       </p>
                     </Explanation>
                     <CodeBlock>
-                      {`const routes = [
+                      {`const routes = prepareRoutes([
   {
     name: "Old",
     path: "old/:id",
@@ -203,7 +203,7 @@ const router = curi(history, routes, {
     name: "New",
     path: "new/:id"
   }
-];
+]);
 
 const router = curi(history, routes, {
   emitRedirects: false                 
@@ -233,7 +233,7 @@ const router = curi(history, routes, {
                       </p>
                     </Explanation>
                     <CodeBlock>
-                      {`const routes = [
+                      {`const routes = prepareRoutes([
   {
     name: "Old",
     path: "old/:id",
@@ -251,7 +251,7 @@ const router = curi(history, routes, {
     name: "New",
     path: "new/:id"
   }
-];
+]);
 const history = InMemory({ locations: ["old/1" ]});
 const router = curi(history, routes, {
   automaticRedirects: false                 
@@ -367,7 +367,7 @@ router.once(({ response }) => {
                   </table>
                 </Explanation>
                 <CodeBlock>
-                  {`const routes = [
+                  {`const routes = prepareRoutes([
   {
     name: "Album",
     path: "photos/:albumID",
@@ -376,7 +376,7 @@ router.once(({ response }) => {
     ]
   },
   // ...
-];
+]);
 const router = curi(history, routes);
 
 router.navigate({
@@ -612,9 +612,9 @@ router.once(({ response, navigation }) => {
                     </p>
                   </Explanation>
                   <CodeBlock>
-                    {`const routes = [
+                    {`const routes = prepareRoutes([
   { name: 'User', path: 'user/:id' }
-];
+]);
 const router = curi(history, routes);
 const userPathname = router.route.pathname(
   'User',
@@ -638,8 +638,8 @@ const userPathname = router.route.pathname(
                   </p>
                 </Explanation>
                 <CodeBlock>
-                  {`const oldRoutes = [...];
-const newRoutes = [...];
+                  {`const oldRoutes = prepareRoutes([...]);
+const newRoutes = prepareRoutes([...]);
 
 const router = curi(history, oldRoutes);
 // generates responses using old routes
@@ -659,25 +659,32 @@ router.refresh(newRoutes);
               </Section>
             </Section>
           </Section>
-          <Section title="pathname" id="pathname">
+
+          <Section title="prepareRoutes" id="prepareRoutes">
             <Explanation>
               <p>
-                Curi automatically includes a <IJS>pathname</IJS> route
-                interaction for you to generate URL pathnames for routes. If you
-                need to access this same ability outside of a router, you can
-                import the <IJS>pathname</IJS> route interaction.
+                The <IJS>prepareRoutes()</IJS> export is used to build the
+                routes for Curi. This will pre-compile paths for location
+                matching and pathname building, which is particularly useful for
+                server rendering.
               </p>
             </Explanation>
             <CodeBlock>
-              {`import { pathname } from "@curi/router";
+              {`import { prepareRoutes } from '@curi/router';
 
-const pathnameGenerator = pathname();
-// register routes
-pathnameGenerator.register({ name: "Yo", path: "yo/:name" });
-// generate pathname
-const path = pathnameGenerator.get("Yo", { name: "joey" })
-// path = "/yo/joey"`}
+const routes = prepareRoutes([
+  { name: "Home", path: "" },
+  // ...
+  { name: "Not Found", path: "(.*)" }
+]);`}
             </CodeBlock>
+            <Explanation>
+              <Warning>
+                Passing a non-prepared routes array to <IJS>curi()</IJS> is
+                still supported, but deprecated and will be removed in the next
+                major version.
+              </Warning>
+            </Explanation>
           </Section>
 
           <Section title="Route properties" id="route-properties">
@@ -804,7 +811,7 @@ const path = pathnameGenerator.get("Yo", { name: "joey" })
                   </Explanation>
                   <CodeBlock>
                     {`import Home from "./components/Home";
-const routes = [
+const routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -813,7 +820,7 @@ const routes = [
     }
   },
   // ...
-];
+]);
 // response = { body: Home, ... }`}
                   </CodeBlock>
                 </li>
@@ -1110,7 +1117,7 @@ const user = {
                 </p>
               </Explanation>
               <CodeBlock>
-                {`const routes = [
+                {`const routes = prepareRoutes([
   {
     name: 'Number',
     path: 'number/:num',
@@ -1118,7 +1125,8 @@ const user = {
       num: n => parseInt(n, 10)
     }
   }
-]
+]);
+
 // when the user visits /number/1,
 // response.params will be { num: 1 }
 // instead of { num: "1" }`}
@@ -1153,7 +1161,7 @@ const user = {
                 </p>
               </Explanation>
               <CodeBlock>
-                {`const routes = [
+                {`const routes = prepareRoutes([
   {
     name: 'A Route',
     path: 'a-route',
@@ -1168,7 +1176,7 @@ const user = {
       enter: 'slide-right'
     }
   }
-];`}
+]);`}
               </CodeBlock>
             </Section>
           </Section>

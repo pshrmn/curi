@@ -1,4 +1,4 @@
-import { RegExpOptions, Key } from "path-to-regexp";
+import { RegExpOptions, Key, PathFunction } from "path-to-regexp";
 import { MatchResponseProperties, SettableResponseProperties } from "./response";
 export interface Resolved {
     [key: string]: any;
@@ -33,6 +33,14 @@ export interface RouteDescriptor {
         [key: string]: any;
     };
 }
+export interface CompiledRoute {
+    public: Route;
+    sync: boolean;
+    children: Array<CompiledRoute>;
+    response?: ResponseFn;
+    pathMatching: PathMatching;
+    paramParsers?: ParamParsers;
+}
 export interface Route {
     name: string;
     path: string;
@@ -41,17 +49,12 @@ export interface Route {
     extra?: {
         [key: string]: any;
     };
+    pathname: PathFunction;
 }
 export interface PathMatching {
     mustBeExact: boolean;
     re: RegExp;
     keys: Array<Key>;
 }
-export interface InternalRoute {
-    public: Route;
-    sync: boolean;
-    children: Array<InternalRoute>;
-    response?: ResponseFn;
-    pathMatching: PathMatching;
-    paramParsers?: ParamParsers;
-}
+export declare type CompiledRouteArray = Array<CompiledRoute>;
+export declare type UserRoutes = Array<CompiledRoute | RouteDescriptor>;

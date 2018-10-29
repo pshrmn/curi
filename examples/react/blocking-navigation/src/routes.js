@@ -1,7 +1,9 @@
+import { prepareRoutes } from "@curi/router";
+
 import Home from "./components/Home";
 import Contact from "./components/Contact";
 
-export default [
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -20,4 +22,4 @@ export default [
       };
     }
   }
-];
+]);

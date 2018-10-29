@@ -94,7 +94,7 @@ const Inbox = ({ match }) => (
             </p>
           </Explanation>
           <CodeBlock>
-            {`const routes = [
+            {`const routes = prepareRoutes([
   {
     name: 'Home',
     path: ''
@@ -109,7 +109,7 @@ const Inbox = ({ match }) => (
       }
     ]
   }
-];`}
+]);`}
           </CodeBlock>
 
           <Explanation>
@@ -123,11 +123,13 @@ const Inbox = ({ match }) => (
             </p>
           </Explanation>
           <CodeBlock>
-            {`import Home from './pages/Home';
+            {`import { prepareRoutes } from "@curi/router";
+            
+import Home from './pages/Home';
 import Inbox from './pages/Inbox';
 import Mesage from './pages/Message';
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -157,7 +159,7 @@ const routes = [
       }
     ]
   }
-];`}
+]);`}
           </CodeBlock>
 
           <Explanation>
@@ -182,7 +184,7 @@ const routes = [
             </p>
           </Explanation>
           <CodeBlock>
-            {`const routes = [
+            {`const routes = prepareRoutes([
   {
     path: '',
     response: () => {
@@ -212,7 +214,7 @@ const routes = [
       }
     ]
   }
-];`}
+]);`}
           </CodeBlock>
         </Section>
         <p>
@@ -255,10 +257,10 @@ ReactDOM.render((
           </p>
         </Explanation>
         <CodeBlock>
-          {`import { curi } from '@curi/router';
+          {`import { curi, prepareRoutes } from '@curi/router';
 import Browser from '@hickory/browser';
 const history = Browser();
-const routes = [...];
+const routes = prepareRoutes([...]);
 const router = curi(history, routes);`}
         </CodeBlock>
       </Section>
@@ -426,7 +428,7 @@ ReactDOM.render((
             </Note>
           </Explanation>
           <CodeBlock>
-            {`const routes = [
+            {`const routes = prepareRoutes([
   // ...,
   {
     name: "Not Found",
@@ -435,7 +437,7 @@ ReactDOM.render((
       return { body: NotFound };
     }
   }
-];`}
+]);`}
           </CodeBlock>
 
           <Explanation>

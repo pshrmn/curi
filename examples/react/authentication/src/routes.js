@@ -1,3 +1,5 @@
+import { prepareRoutes } from "@curi/router";
+
 import Home from "./components/Home";
 import Protected from "./components/Protected";
 import Login from "./components/Login";
@@ -6,7 +8,7 @@ import NotFound from "./components/NotFound";
 
 import fakeAuth from "./fakeAuth";
 
-export default [
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -76,4 +78,4 @@ export default [
       };
     }
   }
-];
+]);

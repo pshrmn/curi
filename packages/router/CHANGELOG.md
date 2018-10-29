@@ -1,5 +1,8 @@
 ## Next
 
+* Export `prepareRoutes()` function to pre-build routes. Pre-building routes is encouraged and a warning message will be displayed to users who do not pre-build. In `@curi/router` v2, pre-building routes will be required.
+* Throw if routes have duplicate names.
+* Deprecate `pathname()` export.
 * Add `url` property to `response.redirectTo`, which is the `pathname`, `query` and `hash` concatenated. Also adds the `name` and `params` to the `redirectTo` object.
 
 ## 1.0.4

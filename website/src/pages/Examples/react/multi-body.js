@@ -26,19 +26,19 @@ export default function MultiBodyExample() {
           components.
         </p>
         <CodeBlock lang="javascript">
-          {`const routes = [
-    {
-      ...,
-      response() {
-        return {
-          body: {
-            main: MainComponent,
-            menu: MenuComponent
-          }
-        };
-      }
+          {`const routes = prepareRoutes([
+  {
+    ...,
+    response() {
+      return {
+        body: {
+          main: MainComponent,
+          menu: MenuComponent
+        }
+      };
     }
-  ];`}
+  }
+]);`}
         </CodeBlock>
         <Note>
           One thing to remember when attaching multiple components to a route is
@@ -48,25 +48,25 @@ export default function MultiBodyExample() {
         </Note>
         <CodeBlock lang="javascript">
           {`// be consistent, don't use
-  // different body types
-  const routes = [
-    {
-      ...,
-      response() {
-        return {
-          body: OneLayout
-        };
-      }
-    },
-    {
-      ...,
-      response() {
-        return {
-          body: { another: Layout }
-        };
-      }
+// different body types
+const routes = prepareRoutes([
+  {
+    ...,
+    response() {
+      return {
+        body: OneLayout
+      };
     }
-  ];`}
+  },
+  {
+    ...,
+    response() {
+      return {
+        body: { another: Layout }
+      };
+    }
+  }
+]);`}
         </CodeBlock>
       </Section>
 

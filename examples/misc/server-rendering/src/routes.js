@@ -1,4 +1,6 @@
-export default [
+import { prepareRoutes } from "@curi/router";
+
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -63,4 +65,4 @@ export default [
       };
     }
   }
-];
+]);

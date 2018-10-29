@@ -98,7 +98,7 @@ curiStore(router, store);`}
           </Explanation>
           <CodeBlock lang="html">
             {`<script>
-const routes = [
+const routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -112,7 +112,7 @@ const routes = [
     }
   },
   // ...
-];
+]);
 </script>
 
 <template>

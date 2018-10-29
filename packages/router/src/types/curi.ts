@@ -2,7 +2,7 @@ import { History, Action, NavType } from "@hickory/root";
 import { PathFunctionOptions } from "path-to-regexp";
 
 import { Interaction, Interactions } from "./interaction";
-import { RouteDescriptor } from "./route";
+import { UserRoutes } from "./route";
 import { Response, Params } from "./response";
 
 export interface Navigation {
@@ -48,7 +48,7 @@ export interface NavigationDetails {
 }
 
 export interface CuriRouter {
-  refresh: (routeArray?: Array<RouteDescriptor>) => void;
+  refresh: (routeArray?: UserRoutes) => void;
   observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
   once: (fn: Observer, options?: ResponseHandlerOptions) => void;
   route: Interactions;

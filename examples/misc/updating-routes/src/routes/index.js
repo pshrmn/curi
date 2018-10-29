@@ -1,7 +1,7 @@
-import baseRoutes from './base';
-import adminRoutes from './admin';
+import { prepareRoutes } from "@curi/router";
 
-export {
-  baseRoutes,
-  adminRoutes
-};
+import plainBaseRoutes from "./base";
+import plainAdminRoutes from "./admin";
+
+export const baseRoutes = prepareRoutes(plainBaseRoutes);
+export const adminRoutes = prepareRoutes(plainAdminRoutes);

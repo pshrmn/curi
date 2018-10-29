@@ -1,15 +1,19 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { curi } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import { curiProvider, Curious } from "@curi/react-universal";
 
 describe("curiProvider()", () => {
   let node;
-  const routes = [{ name: "Home", path: "" }, { name: "About", path: "about" }];
+  const routes = prepareRoutes([
+    { name: "Home", path: "" },
+    { name: "About", path: "about" },
+    { name: "Catch All", path: "(.*)" }
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");
@@ -24,7 +28,8 @@ describe("curiProvider()", () => {
   describe("children prop", () => {
     it("calls children() function when it renders", () => {
       const history = InMemory();
-      const router = curi(history, [{ name: "Catch All", path: "(.*)" }]);
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const router = curi(history, routes);
 
       const fn = jest.fn(() => {
         return null;

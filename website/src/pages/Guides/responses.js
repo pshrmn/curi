@@ -167,7 +167,7 @@ export default function RoutesAndResponsesGuide() {
         <CodeBlock>
           {`// do NOT do this
 // mixing body shapes complicates rendering
-const routes = [
+const routes = prepareRoutes([
   {
     response() {
       return { body: One }
@@ -183,7 +183,7 @@ const routes = [
       }
     }
   }
-];`}
+]);`}
         </CodeBlock>
       </Section>
 

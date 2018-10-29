@@ -139,7 +139,7 @@ export default function MigrateReactRouterv3Guide() {
             </p>
           </Explanation>
           <CodeBlock>
-            {`const routes = [
+            {`const routes = prepareRoutes([
   {
     name: 'Home',
     path: ''
@@ -154,7 +154,7 @@ export default function MigrateReactRouterv3Guide() {
       }
     ]
   }
-];`}
+]);`}
           </CodeBlock>
 
           <Explanation>
@@ -177,11 +177,13 @@ export default function MigrateReactRouterv3Guide() {
             <Note>Only known properties will be merged onto the response.</Note>
           </Explanation>
           <CodeBlock>
-            {`import Home from './pages/Home';
+            {`import { prepareRoutes } from "@curi/router";
+            
+import Home from './pages/Home';
 import Inbox from './pages/Inbox';
 import Mesage from './pages/Message';
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -211,7 +213,7 @@ const routes = [
       }
     ]
   }
-];`}
+]);`}
           </CodeBlock>
 
           <Explanation>
@@ -256,7 +258,7 @@ const routes = [
             </p>
           </Explanation>
           <CodeBlock>
-            {`const routes = [
+            {`const routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -289,7 +291,7 @@ const routes = [
       }
     ]
   }
-];`}
+]);`}
           </CodeBlock>
         </Section>
         <p>
@@ -311,7 +313,7 @@ const routes = [
         </Explanation>
         <CodeBlock lang="jsx">
           {`import { Router, browserHistory } from 'react-router';
-const routes = [...];
+const routes = prepareRoutes([...]);
 ReactDOM.render((
   <Router history={browserHistory} routes={routes} />
 ), holder);`}
@@ -330,10 +332,10 @@ ReactDOM.render((
           </p>
         </Explanation>
         <CodeBlock>
-          {`import { curi } from '@curi/router';
+          {`import { curi, prepareRoutes } from '@curi/router';
 import Browser from '@hickory/browser';
 const history = Browser();
-const routes = [...];
+const routes = prepareRoutes([...]);
 const router = curi(history, routes);`}
         </CodeBlock>
       </Section>
@@ -473,7 +475,7 @@ ReactDOM.render((
             </Note>
           </Explanation>
           <CodeBlock>
-            {`const routes = [
+            {`const routes = prepareRoutes([
   // ...,
   {
     name: "Not Found",
@@ -482,7 +484,7 @@ ReactDOM.render((
       return { body: NotFound };
     }
   }
-];`}
+]);`}
           </CodeBlock>
 
           <Explanation>

@@ -1,9 +1,9 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import InMemory from "@hickory/in-memory";
-import { curi } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import { CuriPlugin } from "@curi/vue";
 
 describe("curi-focus directive", () => {

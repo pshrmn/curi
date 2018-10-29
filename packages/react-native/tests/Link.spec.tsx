@@ -2,12 +2,11 @@ import "jest";
 import React from "react";
 import "react-native";
 import renderer from "react-test-renderer";
-
 import InMemory from "@hickory/in-memory";
-import { curi } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 import { TouchableHighlight, Text } from "react-native";
 
-// resolved by Jest
+// @ts-ignore (resolved by jest)
 import { curiProvider, Link } from "@curi/react-native";
 
 import { NavType } from "@hickory/root";
@@ -27,7 +26,11 @@ describe("<Link>", () => {
   describe("anchor", () => {
     it("renders a <TouchableHighlight> by default", () => {
       const history = InMemory();
-      const router = curi(history, [{ name: "Test", path: "" }]);
+      const routes = prepareRoutes([
+        { name: "Test", path: "" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
       const tree = renderer.create(
         <Router>
@@ -44,7 +47,11 @@ describe("<Link>", () => {
 
     it("when provided, it renders the component instead of an anchor", () => {
       const history = InMemory();
-      const router = curi(history, [{ name: "Test", path: "" }]);
+      const routes = prepareRoutes([
+        { name: "Test", path: "" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
 
       const StyledAnchor = props => (
@@ -70,7 +77,7 @@ describe("<Link>", () => {
       const history = InMemory({ locations: ["/the-initial-location"] });
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
-      const routes = [{ name: "Catch All", path: "(.*)" }];
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
       const router = curi(history, routes);
       const Router = curiProvider(router);
 
@@ -92,10 +99,10 @@ describe("<Link>", () => {
   });
 
   describe("params", () => {
-    const routes = [
+    const routes = prepareRoutes([
       { name: "Park", path: "park/:name" },
       { name: "Catch All", path: "(.*)" }
-    ];
+    ]);
 
     it("uses params to generate the location to navigate to", () => {
       const history = InMemory();
@@ -162,10 +169,10 @@ describe("<Link>", () => {
       const history = InMemory({ locations: ["/the-initial-location"] });
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
-      const routes = [
+      const routes = prepareRoutes([
         { name: "Parks", path: "parks" },
         { name: "Catch All", path: "(.*)" }
-      ];
+      ]);
       const router = curi(history, routes);
       const Router = curiProvider(router);
 
@@ -188,10 +195,11 @@ describe("<Link>", () => {
     describe("React Node", () => {
       it("renders the provided children value(s)", () => {
         const history = InMemory();
-        const router = curi(history, [
-          { name: "Test", path: "test" },
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const children = "Test Value";
@@ -214,10 +222,11 @@ describe("<Link>", () => {
     describe("render-invoked function", () => {
       it("calls the function with the component's navigating state (initial navigating=false)", () => {
         const history = InMemory();
-        const router = curi(history, [
-          { name: "Test", path: "test" },
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -246,7 +255,11 @@ describe("<Link>", () => {
       });
 
       it("[default] navigates as ANCHOR", () => {
-        const router = curi(history, [{ name: "Test", path: "" }]);
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -264,7 +277,11 @@ describe("<Link>", () => {
       });
 
       it("method='ANCHOR'", () => {
-        const router = curi(history, [{ name: "Test", path: "" }]);
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -282,7 +299,11 @@ describe("<Link>", () => {
       });
 
       it("method='PUSH'", () => {
-        const router = curi(history, [{ name: "Test", path: "" }]);
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -300,7 +321,11 @@ describe("<Link>", () => {
       });
 
       it("method='REPLACE'", () => {
-        const router = curi(history, [{ name: "Test", path: "" }]);
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -318,7 +343,11 @@ describe("<Link>", () => {
       });
 
       it("[unknown] uses ANCHOR", () => {
-        const router = curi(history, [{ name: "Test", path: "" }]);
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -342,7 +371,7 @@ describe("<Link>", () => {
         // immediately (although this style should only be used for routes
         // with resolve methods)
         const history = InMemory();
-        const router = curi(history, [
+        const routes = prepareRoutes([
           {
             name: "Test",
             path: "test",
@@ -358,6 +387,7 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -382,7 +412,7 @@ describe("<Link>", () => {
 
       it("children(false) when navigation is cancelled", () => {
         const history = InMemory();
-        const router = curi(history, [
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           {
             name: "Slow",
@@ -404,6 +434,7 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -441,7 +472,7 @@ describe("<Link>", () => {
 
       it("children(false) when navigation is finished", done => {
         const history = InMemory();
-        const router = curi(history, [
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           {
             name: "Loader",
@@ -452,6 +483,7 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -488,7 +520,7 @@ describe("<Link>", () => {
         console.error = mockError;
 
         const history = InMemory();
-        const router = curi(history, [
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           {
             name: "Blork",
@@ -511,6 +543,7 @@ describe("<Link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -537,7 +570,11 @@ describe("<Link>", () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const router = curi(history, [{ name: "Test", path: "" }]);
+      const routes = prepareRoutes([
+        { name: "Test", path: "" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
 
       const tree = renderer.create(
@@ -566,7 +603,12 @@ describe("<Link>", () => {
         const mockNavigate = jest.fn();
         history.navigate = mockNavigate;
         const onPress = jest.fn();
-        const router = curi(history, [{ name: "Test", path: "" }]);
+
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -592,7 +634,12 @@ describe("<Link>", () => {
         const onPress = jest.fn(event => {
           event.preventDefault();
         });
-        const router = curi(history, [{ name: "Test", path: "" }]);
+
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
         const Router = curiProvider(router);
 
         const tree = renderer.create(
@@ -616,7 +663,11 @@ describe("<Link>", () => {
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
 
-      const router = curi(history, [{ name: "Test", path: "" }]);
+      const routes = prepareRoutes([
+        { name: "Test", path: "" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
       const Router = curiProvider(router);
 
       const tree = renderer.create(

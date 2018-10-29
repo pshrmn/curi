@@ -1,6 +1,8 @@
+import { prepareRoutes } from "@curi/router";
+
 import { movies, movie } from "./api";
 
-export default [
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -55,4 +57,4 @@ export default [
       };
     }
   }
-];
+]);

@@ -1,11 +1,24 @@
 import PathToRegexp from "path-to-regexp";
 
-import { withLeadingSlash } from "./utils/path";
+import { withLeadingSlash, join } from "./utils/path";
 
-import { RouteDescriptor, InternalRoute } from "./types/route";
+import { RouteDescriptor, CompiledRoute } from "./types/route";
 import { Key } from "path-to-regexp";
 
-const createRoute = (options: RouteDescriptor): InternalRoute => {
+const createRoute = (
+  options: RouteDescriptor,
+  parentPath: string | null,
+  usedNames: Set<string>
+): CompiledRoute => {
+  if (usedNames.has(options.name)) {
+    throw new Error(
+      `Multiple routes have the name "${
+        options.name
+      }". Route names must be unique.`
+    );
+  }
+  usedNames.add(options.name);
+
   let path = options.path;
 
   if (path.charAt(0) === "/") {
@@ -16,18 +29,21 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
     }
     path = path.slice(1);
   }
+  let fullPath = withLeadingSlash(join(parentPath || "", path));
 
   const pathOptions = options.pathOptions || {};
   // end defaults to true, so end has to be hardcoded for it to be false
   // set this resolve setting pathOptions.end for children
   const mustBeExact = pathOptions.end == null || pathOptions.end;
 
-  let children: Array<InternalRoute> = [];
+  let children: Array<CompiledRoute> = [];
   // when we have child routes, we need to perform non-end matching and
   // create route objects for each child
   if (options.children && options.children.length) {
     pathOptions.end = false;
-    children = options.children.map(createRoute);
+    children = options.children.map(child => {
+      return createRoute(child, fullPath, usedNames);
+    });
   }
 
   // keys is populated by PathToRegexp
@@ -35,6 +51,8 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
   // path is compiled with a leading slash
   // for optional initial params
   const re = PathToRegexp(withLeadingSlash(path), keys, pathOptions);
+
+  const pathname = PathToRegexp.compile(fullPath);
 
   const resolve = options.resolve || {};
 
@@ -44,7 +62,8 @@ const createRoute = (options: RouteDescriptor): InternalRoute => {
       path: path,
       keys: keys.map(key => key.name),
       resolve,
-      extra: options.extra
+      extra: options.extra,
+      pathname
     },
     pathMatching: {
       re,

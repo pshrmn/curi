@@ -141,7 +141,7 @@ const App = () => (
             </p>
           </Explanation>
           <CodeBlock lang="jsx" data-line="20,24,27">
-            {`const routes = [
+            {`const routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -155,7 +155,7 @@ const App = () => (
     }
   },
   // ...
-];
+]);
 
 const App = () => (
   <Router>

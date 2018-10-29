@@ -3,7 +3,7 @@ import { Route, Interaction } from "../src/types";
 import InMemory from "@hickory/in-memory";
 
 // @ts-ignore (resolved by jest)
-import { curi } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 
 function PropertyReporter(): Interaction {
   let knownRoutes = {};
@@ -32,12 +32,12 @@ describe("public route properties", () => {
   describe("name", () => {
     it("is the provided value", () => {
       const history = InMemory({ locations: ["/test"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "test"
         }
-      ];
+      ]);
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });
@@ -49,12 +49,12 @@ describe("public route properties", () => {
   describe("path", () => {
     it("is the provided value", () => {
       const history = InMemory({ locations: ["/test"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "test"
         }
-      ];
+      ]);
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });
@@ -66,12 +66,12 @@ describe("public route properties", () => {
   describe("keys", () => {
     it("is the array of param names parsed from the path", () => {
       const history = InMemory({ locations: ["/four/five/six"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: ":one/:two/:three"
         }
-      ];
+      ]);
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });
@@ -81,12 +81,12 @@ describe("public route properties", () => {
 
     it("is an empty array when the path has no params", () => {
       const history = InMemory({ locations: ["/one/two/three"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "one/two/three"
         }
-      ];
+      ]);
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });
@@ -98,7 +98,7 @@ describe("public route properties", () => {
   describe("resolve", () => {
     it("is the resolve functions", done => {
       const history = InMemory({ locations: ["/test"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "test",
@@ -107,7 +107,7 @@ describe("public route properties", () => {
             eTest: () => Promise.resolve("eTest")
           }
         }
-      ];
+      ]);
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });
@@ -122,12 +122,12 @@ describe("public route properties", () => {
 
     it("is an empty object when route.resolve isn't provided", done => {
       const history = InMemory({ locations: ["/test"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "test"
         }
-      ];
+      ]);
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });
@@ -138,13 +138,13 @@ describe("public route properties", () => {
 
     it("is an empty object when route.resolve is an empty object", done => {
       const history = InMemory({ locations: ["/test"] });
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "test",
           resolve: {}
         }
-      ];
+      ]);
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });
@@ -161,13 +161,13 @@ describe("public route properties", () => {
         unofficial: true,
         another: 1
       };
-      const routes = [
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "test",
           extra
         }
-      ];
+      ]);
       const router = curi(history, routes, {
         route: [PropertyReporter()]
       });

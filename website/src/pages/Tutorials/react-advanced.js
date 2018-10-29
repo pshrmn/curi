@@ -100,7 +100,7 @@ npm run start`}
           </p>
         </Explanation>
         <CodeBlock>
-          {`const routes = [
+          {`const routes = prepareRoutes([
   {
     name: "A Route",
     path: "route/:id",
@@ -119,7 +119,7 @@ npm run start`}
       }
     }
   }
-];`}
+]);`}
         </CodeBlock>
 
         <Explanation>
@@ -228,7 +228,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
           </p>
         </Explanation>
         <CodeBlock>
-          {`const routes = [
+          {`const routes = prepareRoutes([
   {
     name: "Test",
     path: "test",
@@ -236,7 +236,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
       body: () => import(/* webpackChunkName: "Test" */ "./components/Test.js")
     }
   }
-];`}
+]);`}
         </CodeBlock>
 
         <Note>
@@ -262,7 +262,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
             <p>Which you choose is mostly a matter of personal preference.</p>
           </Explanation>
           <CodeBlock>
-            {`const routes = [
+            {`const routes = prepareRoutes([
   {
     name: "One",
     path: "one",
@@ -288,7 +288,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
       };
     }
   }
-];`}
+]);`}
           </CodeBlock>
         </Note>
 
@@ -305,7 +305,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
         <CodeBlock>
           {`import displayLoadError from "./components/LoadError";
         
-const routes = [
+const routes = prepareRoutes([
   {
     name: "One",
     path: "one",
@@ -320,7 +320,7 @@ const routes = [
       };
     }
   }
-];`}
+]);`}
         </CodeBlock>
 
         <Explanation>

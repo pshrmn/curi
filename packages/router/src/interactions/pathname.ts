@@ -13,22 +13,16 @@ function generatePathname(options?: PathFunctionOptions): Interaction {
   return {
     name: "pathname",
     register: (route: Route, parent: string): string => {
-      const { name, path } = route;
-      if (knownPaths[name] !== undefined) {
-        console.warn(
-          'A route with the name "' +
-            name +
-            '" already exists. Each route should' +
-            "have a unique name. By registering a route with a name that already exists, " +
-            "you are overwriting the existing one. This may break your application."
-        );
-      }
+      const { name, path, pathname } = route;
 
       let base;
       if (parent && knownPaths[parent]) {
         base = knownPaths[parent];
       }
       knownPaths[name] = withLeadingSlash(base ? join(base, path) : path);
+      if (pathname) {
+        cache[name] = pathname;
+      }
       return name;
     },
     get: (name: string, params: Params): string | void => {

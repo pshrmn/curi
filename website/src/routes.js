@@ -1,3 +1,4 @@
+import { prepareRoutes } from "@curi/router";
 import { preferDefault } from "@curi/helpers";
 
 // components that are not code split
@@ -15,7 +16,7 @@ import EXAMPLE_API from "./constants/examples";
 
 import catchImportError from "./catchImportError";
 
-export default [
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -229,4 +230,4 @@ export default [
       };
     }
   }
-];
+]);
