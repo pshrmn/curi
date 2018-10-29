@@ -638,6 +638,25 @@ describe("route matching/response generation", () => {
         curi(history, routes);
       });
 
+      it("is called with globals provided to router", done => {
+        const globals = "test";
+        const spy = jest.fn((_, a) => {
+          expect(a).toBe(globals);
+          done();
+        });
+
+        const routes = prepareRoutes([
+          {
+            name: "Catch All",
+            path: ":anything",
+            resolve: { spy }
+          }
+        ]);
+
+        const history = InMemory({ locations: ["/hello?one=two"] });
+        curi(history, routes, { globals });
+      });
+
       it("calls all resolve functions", done => {
         const one = jest.fn();
         const two = jest.fn();
