@@ -1,87 +1,104 @@
 import "jest";
+import InMemory from "@hickory/in-memory";
+import { curi, prepareRoutes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import createAncestors from "@curi/route-ancestors";
 
 describe("ancestors route interaction", () => {
-  let ancestors;
+  const history = InMemory();
 
-  beforeEach(() => {
-    ancestors = createAncestors();
+  it("is called using router.route.ancestors()", () => {
+    const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+    const router = curi(history, routes, {
+      route: [createAncestors()]
+    });
+    expect(router.route.ancestors).toBeDefined();
   });
 
-  describe("name", () => {
-    it("is ancestors", () => {
-      expect(ancestors.name).toBe("ancestors");
+  describe("routes", () => {
+    const routes = prepareRoutes([
+      {
+        name: "League",
+        path: "league/:lID",
+        children: [
+          {
+            name: "Team",
+            path: "team/:tID",
+            children: [
+              {
+                name: "Player",
+                path: "player/:pID"
+              }
+            ]
+          }
+        ]
+      },
+      { name: "Catch All", path: "(.*)" }
+    ]);
+    const router = curi(history, routes, {
+      route: [createAncestors()]
     });
-  });
 
-  describe("register", () => {
-    it("returns an array with the route's name when there are no ancestors", () => {
-      const player = { name: "Player" };
-      const older = ancestors.register(player);
-      expect(older).toEqual(["Player"]);
-    });
-
-    it("prepends the new route to returned ancestors array", () => {
-      const player = { name: "Player" };
-      const older = ancestors.register(player, ["Team"]);
-      expect(older).toEqual(["Player", "Team"]);
-    });
-  });
-
-  describe("get", () => {
     it("returns all ancestors when level is undefined (or null)", () => {
-      const player = { name: "Player" };
-      ancestors.register(player, ["Team", "League"]);
-      expect(ancestors.get("Player")).toEqual(["Team", "League"]);
-      expect(ancestors.get("Player", null)).toEqual(["Team", "League"]);
-    });
-
-    it("returns a copy of the ancestors array, not the original", () => {
-      const player = { name: "Player" };
-      ancestors.register(player, ["Team", "League"]);
-      const older = ancestors.get("Player");
-      older.reverse();
-      const older2 = ancestors.get("Player");
-      expect(older).not.toEqual(older2);
+      expect(router.route.ancestors("Player")).toEqual(["Team", "League"]);
+      expect(router.route.ancestors("Player", null)).toEqual([
+        "Team",
+        "League"
+      ]);
     });
 
     it("returns undefined when level is not a postive integer", () => {
-      const player = { name: "Player" };
-      ancestors.register(player, ["Team"]);
       const badArgs = ["no", 0];
       badArgs.forEach(arg => {
-        expect(ancestors.get("Player", arg)).toBeUndefined();
+        expect(router.route.ancestors("Player", arg)).toBeUndefined();
       });
     });
 
     it("returns undefined when the level is larger than the ancestor count", () => {
-      const player = { name: "Player" };
-      ancestors.register(player, ["Team"]);
-      expect(ancestors.get("Player", 2)).toBeUndefined();
+      expect(router.route.ancestors("Player", 3)).toBeUndefined();
     });
 
     it("returns the ancestor at the requested level", () => {
-      const player = { name: "Player" };
-      ancestors.register(player, ["Team", "League"]);
-      expect(ancestors.get("Player", 1)).toBe("Team");
-      expect(ancestors.get("Player", 2)).toBe("League");
+      expect(router.route.ancestors("Player", 1)).toBe("Team");
+      expect(router.route.ancestors("Player", 2)).toBe("League");
     });
 
     it("returns undefined if route does not exist", () => {
-      expect(ancestors.get("This route does not exist")).toBeUndefined();
+      expect(router.route.ancestors("Houdini")).toBeUndefined();
     });
   });
 
-  describe("reset", () => {
-    it("resets registered routes", () => {
-      const player = { name: "Player" };
-      ancestors.register(player, ["Team", "League"]);
-      expect(ancestors.get("Player")).toEqual(["Team", "League"]);
-      expect(ancestors.get("Player", null)).toEqual(["Team", "League"]);
-      ancestors.reset();
-      expect(ancestors.get("Player")).toBeUndefined();
+  it("resets when routes are refreshed", () => {
+    const routes = prepareRoutes([
+      {
+        name: "League",
+        path: "league/:lID",
+        children: [
+          {
+            name: "Team",
+            path: "team/:tID",
+            children: [
+              {
+                name: "Player",
+                path: "player/:pID"
+              }
+            ]
+          }
+        ]
+      },
+      { name: "Catch All", path: "(.*)" }
+    ]);
+    const router = curi(history, routes, {
+      route: [createAncestors()]
     });
+    const emptyRoutes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+
+    expect(router.route.ancestors("Player")).toEqual(["Team", "League"]);
+    expect(router.route.ancestors("Player", null)).toEqual(["Team", "League"]);
+
+    router.refresh(emptyRoutes);
+
+    expect(router.route.ancestors("Player")).toBeUndefined();
   });
 });

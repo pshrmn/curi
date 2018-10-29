@@ -1,46 +1,53 @@
 import "jest";
+import InMemory from "@hickory/in-memory";
+import { curi, prepareRoutes } from "@curi/router";
+
+import { HickoryLocation } from "@hickory/root";
 
 // @ts-ignore (resolved by jest)
 import createPrefetch from "@curi/route-prefetch";
 
-import { HickoryLocation } from "@hickory/root";
-import { Interaction, Route } from "@curi/router";
-
 describe("prefetch route interaction", () => {
-  let prefetch: Interaction;
+  const history = InMemory();
 
-  beforeEach(() => {
-    prefetch = createPrefetch();
-  });
-
-  describe("name", () => {
-    it("is prefetch", () => {
-      expect(prefetch.name).toBe("prefetch");
+  it("is called using router.route.prefetch()", () => {
+    const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+    const router = curi(history, routes, {
+      route: [createPrefetch()]
     });
+    expect(router.route.prefetch).toBeDefined();
   });
 
-  describe("register", () => {
+  describe("routes", () => {
     it("adds routes with async function(s)", () => {
-      const route = {
-        name: "Player",
-        path: "player",
-        keys: [],
-        resolve: {
-          test: () => Promise.resolve()
-        }
-      };
-      prefetch.register(route);
-
-      expect(prefetch.get("Player")).toBeDefined();
+      const routes = prepareRoutes([
+        {
+          name: "Player",
+          path: "player",
+          resolve: {
+            test: () => Promise.resolve()
+          }
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createPrefetch()]
+      });
+      expect(router.route.prefetch("Player")).toBeDefined();
     });
 
     it("does not register if there are no async functions", () => {
-      const route = { name: "None", path: "player" };
-      prefetch.register(route as Route);
+      const routes = prepareRoutes([
+        { name: "None", path: "player" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createPrefetch()]
+      });
       // This is a bit roundabout, but we verify that the paths did not register
       // by resolving from catch
       expect.assertions(1);
-      return prefetch.get("None").then(resolved => {
+      return router.route.prefetch("None").then(resolved => {
         expect(resolved.error).toBe(
           "Could not prefetch data for None because it is not registered."
         );
@@ -48,23 +55,33 @@ describe("prefetch route interaction", () => {
     });
   });
 
-  describe("get", () => {
+  describe("calling prefetch()", () => {
     it("returns a Promise that resolved with object ({ resolved, error })", () => {
-      const route = {
-        name: "Player",
-        path: "player/:id",
-        keys: ["id"],
-        resolve: {
-          test: () => Promise.resolve()
-        }
-      };
-      prefetch.register(route);
-      expect(prefetch.get("Player").then).toBeDefined();
+      const routes = prepareRoutes([
+        {
+          name: "Player",
+          path: "player/:id",
+          resolve: {
+            test: () => Promise.resolve()
+          }
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createPrefetch()]
+      });
+      expect(router.route.prefetch("Player").then).toBeDefined();
     });
 
     it("returns Promise with error message when path not found", () => {
       const name = "Anonymous";
-      const output = prefetch.get(name, { id: 123 });
+
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const router = curi(history, routes, {
+        route: [createPrefetch()]
+      });
+
+      const output = router.route.prefetch(name, { id: 123 });
       expect.assertions(2);
       expect(output).toBeInstanceOf(Promise);
       return output.then(resolved => {
@@ -77,19 +94,24 @@ describe("prefetch route interaction", () => {
     it("returns Promise with error message when route throws", () => {
       const name = "Thrower";
       const errorMessage = "woops!";
-      const route = {
-        name,
-        path: "throws",
-        keys: [],
-        resolve: {
-          test: () =>
-            new Promise((resolve, reject) => {
-              reject(errorMessage);
-            })
-        }
-      };
-      prefetch.register(route);
-      const output = prefetch.get(name, { id: 123 });
+      const routes = prepareRoutes([
+        {
+          name,
+          path: "throws",
+          resolve: {
+            test: () =>
+              new Promise((resolve, reject) => {
+                reject(errorMessage);
+              })
+          }
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createPrefetch()]
+      });
+
+      const output = router.route.prefetch(name, { id: 123 });
       expect.assertions(2);
       expect(output).toBeInstanceOf(Promise);
       return output.then(resolved => {
@@ -98,26 +120,31 @@ describe("prefetch route interaction", () => {
     });
 
     describe("props", () => {
-      it("passes arguments to route's on.every() function", () => {
-        const route = {
-          name: "Player",
-          path: "player/:id",
-          keys: ["id"],
-          resolve: {
-            test: function(props) {
-              expect(props).toMatchObject({
-                name: "Player",
-                location: locationToPass,
-                params: paramsToPass
-              });
-              return Promise.resolve(true);
+      it("passes arguments to route's on.every() function", done => {
+        const routes = prepareRoutes([
+          {
+            name: "Player",
+            path: "player/:id",
+            resolve: {
+              test: function(props) {
+                expect(props).toMatchObject({
+                  name: "Player",
+                  location: locationToPass,
+                  params: paramsToPass
+                });
+                done();
+                return Promise.resolve(true);
+              }
             }
-          }
-        };
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes, {
+          route: [createPrefetch()]
+        });
         const paramsToPass = { id: 1 };
         const locationToPass = {} as HickoryLocation;
-        prefetch.register(route);
-        prefetch.get("Player", {
+        router.route.prefetch("Player", {
           name: "Player",
           params: paramsToPass,
           location: locationToPass
@@ -126,58 +153,66 @@ describe("prefetch route interaction", () => {
     });
 
     describe("which", () => {
-      const route = {
-        name: "Home",
-        path: "",
-        keys: [],
-        resolve: {
-          one: jest.fn(),
-          two: jest.fn()
-        }
-      };
-      const prefetch = createPrefetch();
-      prefetch.register(route);
+      const one = jest.fn();
+      const two = jest.fn();
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: "",
+          resolve: { one, two }
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes, {
+        route: [createPrefetch()]
+      });
 
-      afterEach(() => {
-        route.resolve.one.mockReset();
-        route.resolve.two.mockReset();
+      beforeEach(() => {
+        one.mockReset();
+        two.mockReset();
       });
 
       it("calls all available async functions when not provided", () => {
-        return prefetch.get("Home").then(resolved => {
-          expect(route.resolve.one.mock.calls.length).toBe(1);
-          expect(route.resolve.two.mock.calls.length).toBe(1);
+        return router.route.prefetch("Home").then(resolved => {
+          expect(one.mock.calls.length).toBe(1);
+          expect(two.mock.calls.length).toBe(1);
         });
       });
 
       it("only calls async.one() when which = ['one']", () => {
-        return prefetch.get("Home", null, ["one"]).then(resolved => {
-          expect(route.resolve.one.mock.calls.length).toBe(1);
-          expect(route.resolve.two.mock.calls.length).toBe(0);
+        return router.route.prefetch("Home", null, ["one"]).then(resolved => {
+          expect(one.mock.calls.length).toBe(1);
+          expect(two.mock.calls.length).toBe(0);
         });
       });
     });
   });
 
-  describe("reset", () => {
-    it("resets the registered routes", () => {
-      const route = {
+  it("resets the registered routes when routes are refreshed", () => {
+    const routes = prepareRoutes([
+      {
         name: "Player",
         path: "player/:id",
-        keys: ["id"],
         resolve: {
           test: () => Promise.resolve()
         }
-      };
-      prefetch.register(route);
-      expect(prefetch.get("Player").then).toBeDefined();
-      prefetch.reset();
-      expect.assertions(2);
-      return prefetch.get("Player").then(resolved => {
-        expect(resolved.error).toBe(
-          `Could not prefetch data for Player because it is not registered.`
-        );
-      });
+      },
+      { name: "Catch All", path: "(.*)" }
+    ]);
+    const router = curi(history, routes, {
+      route: [createPrefetch()]
+    });
+
+    expect(router.route.prefetch("Player").then).toBeDefined();
+
+    const emptyRoutes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+    router.refresh(emptyRoutes);
+
+    expect.assertions(2);
+    return router.route.prefetch("Player").then(resolved => {
+      expect(resolved.error).toBe(
+        `Could not prefetch data for Player because it is not registered.`
+      );
     });
   });
 });
