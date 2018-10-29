@@ -1,6 +1,6 @@
 import "jest";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import createPrefetch from "@curi/route-prefetch";
 
 import { HickoryLocation } from "@hickory/root";
@@ -29,7 +29,7 @@ describe("prefetch route interaction", () => {
           test: () => Promise.resolve()
         }
       };
-      prefetch.register(route as Route);
+      prefetch.register(route);
 
       expect(prefetch.get("Player")).toBeDefined();
     });
@@ -46,37 +46,6 @@ describe("prefetch route interaction", () => {
         );
       });
     });
-
-    it("warns when registering a route the same name as one already registered", () => {
-      const warn = console.warn;
-      const mockWarn = jest.fn();
-      console.warn = mockWarn;
-
-      const first = {
-        name: "Test",
-        path: "first",
-        keys: [],
-        resolve: {
-          test: () => Promise.resolve()
-        }
-      };
-      const second = {
-        name: "Test",
-        path: "second",
-        keys: [],
-        resolve: {
-          test: () => Promise.resolve()
-        }
-      };
-
-      prefetch.register(first as Route);
-      expect(mockWarn.mock.calls.length).toBe(0);
-
-      prefetch.register(second as Route);
-      expect(mockWarn.mock.calls.length).toBe(1);
-
-      console.warn = warn;
-    });
   });
 
   describe("get", () => {
@@ -89,7 +58,7 @@ describe("prefetch route interaction", () => {
           test: () => Promise.resolve()
         }
       };
-      prefetch.register(route as Route);
+      prefetch.register(route);
       expect(prefetch.get("Player").then).toBeDefined();
     });
 
@@ -119,7 +88,7 @@ describe("prefetch route interaction", () => {
             })
         }
       };
-      prefetch.register(route as Route);
+      prefetch.register(route);
       const output = prefetch.get(name, { id: 123 });
       expect.assertions(2);
       expect(output).toBeInstanceOf(Promise);
@@ -147,7 +116,7 @@ describe("prefetch route interaction", () => {
         };
         const paramsToPass = { id: 1 };
         const locationToPass = {} as HickoryLocation;
-        prefetch.register(route as Route);
+        prefetch.register(route);
         prefetch.get("Player", {
           name: "Player",
           params: paramsToPass,
@@ -167,7 +136,7 @@ describe("prefetch route interaction", () => {
         }
       };
       const prefetch = createPrefetch();
-      prefetch.register(route as Route);
+      prefetch.register(route);
 
       afterEach(() => {
         route.resolve.one.mockReset();
@@ -200,7 +169,7 @@ describe("prefetch route interaction", () => {
           test: () => Promise.resolve()
         }
       };
-      prefetch.register(route as Route);
+      prefetch.register(route);
       expect(prefetch.get("Player").then).toBeDefined();
       prefetch.reset();
       expect.assertions(2);

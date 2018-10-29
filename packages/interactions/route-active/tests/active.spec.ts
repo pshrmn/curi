@@ -1,6 +1,6 @@
 import "jest";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import createActive from "@curi/route-active";
 
 describe("active route interaction", () => {
@@ -51,30 +51,6 @@ describe("active route interaction", () => {
       };
       const storedKeys = active.register(empty);
       expect(storedKeys).toEqual([]);
-    });
-
-    it("warns when registering the same name", () => {
-      const warn = console.warn;
-      const mockWarn = (console.warn = jest.fn());
-
-      const first = {
-        name: "Test",
-        path: ":first",
-        keys: ["first"]
-      };
-      const second = {
-        name: "Test",
-        path: ":second",
-        keys: ["second"]
-      };
-
-      active.register(first);
-      expect(mockWarn.mock.calls.length).toBe(0);
-
-      active.register(second);
-      expect(mockWarn.mock.calls.length).toBe(1);
-
-      console.warn = warn;
     });
   });
 

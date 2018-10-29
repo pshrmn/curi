@@ -1,6 +1,6 @@
 import "jest";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import createAncestors from "@curi/route-ancestors";
 
 describe("ancestors route interaction", () => {
@@ -27,23 +27,6 @@ describe("ancestors route interaction", () => {
       const player = { name: "Player" };
       const older = ancestors.register(player, ["Team"]);
       expect(older).toEqual(["Player", "Team"]);
-    });
-
-    it("warns when registering the same name", () => {
-      const warn = console.warn;
-      const mockWarn = jest.fn();
-      console.warn = mockWarn;
-
-      const first = { name: "Test" };
-      const second = { name: "Test" };
-
-      ancestors.register(first);
-      expect(mockWarn.mock.calls.length).toBe(0);
-
-      ancestors.register(second);
-      expect(mockWarn.mock.calls.length).toBe(1);
-
-      console.warn = warn;
     });
   });
 

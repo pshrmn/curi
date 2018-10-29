@@ -1,3 +1,7 @@
+## Next
+
+* No longer warns when adding duplicate route name (should be caught be `prepareRoutes`).
+
 ## 1.0.2
 
 * Add `sideEffects: false` hint for Webpack.
