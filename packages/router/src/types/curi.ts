@@ -29,7 +29,7 @@ export interface RouterOptions {
   pathnameOptions?: PathFunctionOptions;
   emitRedirects?: boolean;
   automaticRedirects?: boolean;
-  globals?: any;
+  external?: any;
 }
 
 export interface CurrentResponse {

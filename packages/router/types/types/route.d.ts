@@ -15,10 +15,10 @@ export interface ResponseBuilder {
     resolved: Resolved | null;
     error: any;
     match: MatchResponseProperties;
-    globals: any;
+    external: any;
 }
 export declare type ResponseFn = (props: ResponseBuilder) => SettableResponseProperties;
-export declare type AsyncMatchFn = (matched?: MatchResponseProperties, globals?: any) => Promise<any>;
+export declare type AsyncMatchFn = (matched?: MatchResponseProperties, external?: any) => Promise<any>;
 export interface AsyncGroup {
     [key: string]: AsyncMatchFn;
 }

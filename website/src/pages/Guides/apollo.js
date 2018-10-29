@@ -176,7 +176,7 @@ const Noun = ({ response }) => (
             until after a route's GraphQL data has been loaded by Apollo.
           </p>
           <p>
-            The <IJS>globals</IJS> option can be used when creating the router
+            The <IJS>external</IJS> option can be used when creating the router
             to make the Apollo client accessible from routes.
           </p>
         </Explanation>
@@ -184,7 +184,7 @@ const Noun = ({ response }) => (
           {`import client from "./apollo";
           
 const router = curi(history, routes, {
-  globals: { client }
+  external: { client }
 });`}
         </CodeBlock>
         <CodeBlock>
@@ -195,8 +195,8 @@ const routes = prepareRoutes([
     name: "Example",
     path: "example/:id",
     resolve: {
-      data({ params }, globals) {
-        return globals.client.query({
+      data({ params }, external) {
+        return external.client.query({
           query: EXAMPLE_QUERY,
           variables: { id: params.id }
         });
@@ -231,8 +231,8 @@ export default [
     name: "Verb",
     path: "verb/:word",
     resolve: {
-      verb({ params }, globals) {
-        return globals.client.query({
+      verb({ params }, external) {
+        return external.client.query({
           query: GET_VERB,
           variables: { word: params.word }
         })
@@ -287,10 +287,10 @@ export default [
     name: "Verb",
     path: "verb/:word",
     resolve: {
-      data({ params, globals }) {
+      data({ params, external }) {
         // load the data so it is cached by
         // your Apollo client
-        return globals.client.query({
+        return external.client.query({
           query: GET_VERB,
           variables: { word: params.word }
         })
@@ -356,8 +356,8 @@ const routes = prepareRoutes([
     name: "Example",
     path: "example/:id",
     resolve: {
-      examples({ params }, globals) {
-        return globals.client.query({
+      examples({ params }, external) {
+        return external.client.query({
           query: GET_EXAMPLES,
           variables: { id: params.id }
         })

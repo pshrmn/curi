@@ -358,17 +358,17 @@ describe("curi", () => {
         });
       });
 
-      describe("globals", () => {
+      describe("external", () => {
         it("gets passed to resolve functions", done => {
           const history = InMemory();
-          const globals = "hey!";
+          const external = "hey!";
           const routes = prepareRoutes([
             {
               name: "Start",
               path: "",
               resolve: {
-                test(match, a) {
-                  expect(a).toBe(globals);
+                test(match, e) {
+                  expect(e).toBe(external);
                   done();
                   return Promise.resolve(true);
                 }
@@ -383,18 +383,18 @@ describe("curi", () => {
               path: "(.*)"
             }
           ]);
-          const router = curi(history, routes, { globals });
+          const router = curi(history, routes, { external });
         });
 
         it("gets passed to response function", () => {
           const history = InMemory();
-          const globals = "hey!";
+          const external = "hey!";
           const routes = prepareRoutes([
             {
               name: "Start",
               path: "",
-              response({ globals: a }) {
-                expect(a).toBe(globals);
+              response({ external: e }) {
+                expect(e).toBe(external);
                 return {};
               }
             },
@@ -403,7 +403,7 @@ describe("curi", () => {
               path: "(.*)"
             }
           ]);
-          const router = curi(history, routes, { globals });
+          const router = curi(history, routes, { external });
         });
       });
     });

@@ -29,7 +29,7 @@ export default function finishResponse(
   interactions: Interactions,
   resolvedResults: ResolveResults | null,
   history: History,
-  globals: any
+  external: any
 ): Response {
   const { route, match } = routeMatch;
   const response: Response = match;
@@ -43,7 +43,7 @@ export default function finishResponse(
     resolved,
     error,
     match,
-    globals
+    external
   });
 
   if (!responseModifiers) {

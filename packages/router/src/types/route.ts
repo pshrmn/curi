@@ -22,14 +22,14 @@ export interface ResponseBuilder {
   resolved: Resolved | null;
   error: any;
   match: MatchResponseProperties;
-  globals: any;
+  external: any;
 }
 
 export type ResponseFn = (props: ResponseBuilder) => SettableResponseProperties;
 
 export type AsyncMatchFn = (
   matched?: MatchResponseProperties,
-  globals?: any
+  external?: any
 ) => Promise<any>;
 export interface AsyncGroup {
   [key: string]: AsyncMatchFn;

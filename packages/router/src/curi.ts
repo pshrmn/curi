@@ -38,7 +38,7 @@ export default function createRouter(
     sideEffects = [],
     emitRedirects = true,
     automaticRedirects = true,
-    globals
+    external
   } = options;
 
   let routes: CompiledRouteArray;
@@ -126,7 +126,7 @@ export default function createRouter(
     if (match.route.sync) {
       finalizeResponseAndEmit(match as Match, pendingNav, navigation, null);
     } else {
-      resolveMatchedRoute(match as Match, globals).then(
+      resolveMatchedRoute(match as Match, external).then(
         (resolved: ResolveResults) => {
           if (pendingNav.cancelled) {
             return;
@@ -153,7 +153,7 @@ export default function createRouter(
       routeInteractions,
       resolved,
       history,
-      globals
+      external
     );
     pending.finish();
     emitImmediate(response, navigation);

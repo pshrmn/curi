@@ -176,12 +176,12 @@ const router = curi(history, routes, {
                   <li>
                     <Explanation>
                       <p>
-                        <IJS>globals</IJS> - Values that should be accessible to
-                        a route's <IJS>resolve</IJS> functions and{" "}
+                        <IJS>external</IJS> - Values that should be accessible
+                        to a route's <IJS>resolve</IJS> functions and{" "}
                         <IJS>response()</IJS> function.
                       </p>
                       <p>
-                        Using <IJS>globals</IJS> allows you to access APIs,
+                        Using <IJS>external</IJS> allows you to access APIs,
                         data, etc. without having to be able to import it in the
                         module where the routes are defined.
                       </p>
@@ -189,7 +189,7 @@ const router = curi(history, routes, {
                     <CodeBlock>
                       {`const client = new ApolloClient();
 const router = curi(history, routes, {
-  globals: { client, greeting: "Hi!" }
+  external: { client, greeting: "Hi!" }
 });`}
                     </CodeBlock>
                     <CodeBlock>
@@ -198,9 +198,9 @@ const router = curi(history, routes, {
     name: "User",
     path: "user/:id",
     resolve: {
-      data(match, globals) {
-        // use the globals object to make a query
-        return globals.client.query()
+      data(match, external) {
+        // use the external object to make a query
+        return external.client.query()
       }
     }
   }
