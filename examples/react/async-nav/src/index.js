@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Browser from "@hickory/browser";
 import { curi } from "@curi/router";
-import { curiProvider } from "@curi/react-dom";
+import { curiProvider, Navigating } from "@curi/react-dom";
 
 import routes from "./routes";
 import Controls from "./components/Controls";
@@ -18,10 +18,23 @@ router.once(() => {
         const { body: Body, data } = response;
 
         return (
-          <div>
+          <React.Fragment>
             <Controls />
+            <Navigating>
+              {cancel => {
+                return cancel ? (
+                  <button
+                    onClick={() => {
+                      cancel();
+                    }}
+                  >
+                    cancel navigation
+                  </button>
+                ) : null;
+              }}
+            </Navigating>
             <Body response={response} />
-          </div>
+          </React.Fragment>
         );
       }}
     </Router>,

@@ -1405,6 +1405,176 @@ describe("curi", () => {
     });
   });
 
+  describe("cancel(fn)", () => {
+    it("does not call function for sync routes", () => {
+      const history = InMemory();
+      const routes = prepareRoutes([
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
+      const cancellable = jest.fn();
+      router.cancel(cancellable);
+
+      router.navigate({ name: "About" });
+
+      const { response } = router.current();
+      // just to verify that navigation did occur
+      expect(response.name).toBe("About");
+      expect(cancellable.mock.calls.length).toBe(0);
+    });
+
+    it("calls function with cancel fn when navigating to async routes", () => {
+      const history = InMemory();
+      const routes = prepareRoutes([
+        { name: "Home", path: "" },
+        {
+          name: "About",
+          path: "about",
+          resolve: {
+            wait: () => Promise.resolve("wait")
+          }
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
+      const cancellable = jest.fn();
+      router.cancel(cancellable);
+
+      router.navigate({ name: "About" });
+      // called immediately after navigation
+      expect(cancellable.mock.calls.length).toBe(1);
+      expect(typeof cancellable.mock.calls[0][0]).toBe("function");
+    });
+
+    describe("non-cancelled navigation", () => {
+      it("calls function with no args once async actions are complete", done => {
+        const history = InMemory();
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "About",
+            path: "about",
+            resolve: {
+              wait: () => Promise.resolve("wait")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
+        const cancellable = jest.fn();
+        router.cancel(cancellable);
+
+        router.navigate({ name: "About" });
+
+        router.once(
+          ({ response }) => {
+            expect(response.name).toBe("About");
+            // second call is for deactivation
+            expect(cancellable.mock.calls.length).toBe(2);
+            expect(cancellable.mock.calls[1][0]).toBeUndefined();
+            done();
+          },
+          { initial: false }
+        );
+      });
+    });
+
+    describe("cancelling active navigation", () => {
+      it("deactivates immediately if cancel function is called", () => {
+        const history = InMemory();
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "About",
+            path: "about",
+            resolve: {
+              wait: () => Promise.resolve("wait")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
+        let cancel;
+        const cancellable = jest.fn(cancelFn => {
+          cancel = cancelFn;
+        });
+        router.cancel(cancellable);
+
+        router.navigate({ name: "About" });
+        // called immediately after navigation
+        expect(cancellable.mock.calls.length).toBe(1);
+        cancel();
+        // called after navigation is cancelled
+        expect(cancellable.mock.calls.length).toBe(2);
+      });
+
+      it("doesn't change locations", () => {
+        const history = InMemory();
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "About",
+            path: "about",
+            resolve: {
+              wait: () => Promise.resolve("wait")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
+        let cancel;
+        const cancellable = jest.fn(cancelFn => {
+          cancel = cancelFn;
+        });
+        router.cancel(cancellable);
+        const { response: beforeResponse } = router.current();
+        expect(beforeResponse.name).toBe("Home");
+
+        router.navigate({ name: "About" });
+        // called immediately after navigation
+        expect(cancellable.mock.calls.length).toBe(1);
+        cancel();
+        const { response: afterResponse } = router.current();
+        expect(afterResponse.name).toBe("Home");
+      });
+    });
+
+    it("returns a function to stop being called", () => {
+      const history = InMemory();
+      const routes = prepareRoutes([
+        { name: "Home", path: "" },
+        {
+          name: "About",
+          path: "about",
+          resolve: {
+            wait: () => Promise.resolve("wait")
+          }
+        },
+        {
+          name: "Contact",
+          path: "contact",
+          resolve: {
+            wait: () => Promise.resolve("wait")
+          }
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
+      const cancellable = jest.fn();
+      const stopCancelling = router.cancel(cancellable);
+
+      router.navigate({ name: "About" });
+      expect(cancellable.mock.calls.length).toBe(1);
+
+      stopCancelling();
+
+      router.navigate({ name: "Contact" });
+      expect(cancellable.mock.calls.length).toBe(1);
+    });
+  });
+
   describe("response.redirectTo", () => {
     it("triggers a replace navigation AFTER emitting initial response", done => {
       let callPosition = 0;

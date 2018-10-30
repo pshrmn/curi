@@ -450,6 +450,57 @@ const router = curi(history, routes, {
             </Section>
           </Section>
 
+          <Section title={<Cmp>Navigating</Cmp>} id="Navigating">
+            <Explanation>
+              <p>
+                The <Cmp>Navigating</Cmp> component lets you know when the
+                application is navigating and let users cancel the navigation.
+                Its <IJS>children</IJS> prop is a render-invoked function that
+                is passed a function to cancel the navigation.
+              </p>
+              <p>
+                When navigation starts, <IJS>children()</IJS> will be called
+                with a function that will cancel navigation when it is called.
+              </p>
+              <p>
+                When navigation finishes, <IJS>children()</IJS> will be called
+                with no arguments.
+              </p>
+            </Explanation>
+            <CodeBlock lang="jsx">
+              {`import { Navigating } from "@curi/react-native";
+              
+<Navigating>
+  {cancel => {
+    if (cancel === undefined) {
+      return null;
+    }
+    return (
+      <TouchableHighlight onPress={cancel}>
+        <Text>Cancel Navigation</Text>
+      </TouchableHighlight>
+    );
+  }}
+</Navigating>`}
+            </CodeBlock>
+            <Section tag="h3" title="Props" id="Navigating-props">
+              <Subsection tag="h4" title="children()" id="Navigating-children">
+                <Explanation>
+                  <p>
+                    A function that returns a React node. The function will be
+                    called with a <IJS>cancel</IJS> function when navigation
+                    starts and with no arguments when the navigation is
+                    finished.
+                  </p>
+                  <p>
+                    Calling the <IJS>cancel</IJS> function after the navigation
+                    is finished has no effect.
+                  </p>
+                </Explanation>
+              </Subsection>
+            </Section>
+          </Section>
+
           <Section title={<Cmp>Block</Cmp>} id="Block">
             <Explanation>
               <p>
