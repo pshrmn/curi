@@ -64,7 +64,7 @@ describe("<Link>", () => {
       expect(a.getAttribute("href")).toBe("/");
     });
 
-    it("uses the pathname from current response's location if 'to' is not provided", () => {
+    it("creates a relative link if 'to' is undefined", () => {
       const history = InMemory({
         locations: ["/the-initial-location"]
       });
@@ -76,7 +76,7 @@ describe("<Link>", () => {
         node
       );
       const a = node.querySelector("a");
-      expect(a.getAttribute("href")).toBe("/the-initial-location");
+      expect(a.getAttribute("href")).toBe("");
     });
   });
 

@@ -1,5 +1,7 @@
 ## Next
 
+* `<Link>` with no `to` prop outputs anchor with relative `href`.
+* `<Link>` is no longer a pure component.
 * Add `<Navigation>` component, which lets the user know when asynchronous routes are navigating and cancel the navigation.
 
 ## 1.1.2

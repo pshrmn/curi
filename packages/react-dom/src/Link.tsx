@@ -1,7 +1,7 @@
 import React from "react";
 import { Curious } from "@curi/react-universal";
 
-import { CuriRouter, Response } from "@curi/router";
+import { CuriRouter } from "@curi/router";
 
 const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   return (
@@ -27,7 +27,6 @@ export interface LinkProps
 
 export interface BaseLinkProps extends LinkProps {
   router: CuriRouter;
-  response: Response;
   forwardedRef: React.Ref<any> | undefined;
 }
 
@@ -35,7 +34,7 @@ export interface LinkState {
   navigating: boolean;
 }
 
-class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
+class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   removed: boolean;
 
   state = {
@@ -85,7 +84,6 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
       onClick,
       anchor,
       router,
-      response,
       forwardedRef,
       children,
       ...rest
@@ -95,9 +93,7 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
       hash,
       query,
       state,
-      pathname: to
-        ? router.route.pathname(to, params)
-        : response.location.pathname
+      pathname: to ? router.route.pathname(to, params) : ""
     });
 
     return (
@@ -122,13 +118,8 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
 const Link = React.forwardRef(
   (props: LinkProps, ref): React.ReactElement<any> => (
     <Curious>
-      {({ router, response }) => (
-        <BaseLink
-          {...props}
-          router={router}
-          response={response}
-          forwardedRef={ref}
-        />
+      {({ router }) => (
+        <BaseLink {...props} router={router} forwardedRef={ref} />
       )}
     </Curious>
   )
