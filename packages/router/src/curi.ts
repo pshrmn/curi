@@ -258,7 +258,7 @@ export default function createRouter(
         oneTimers.push(fn);
       }
     },
-    whileNavigating(fn: Cancellable): RemoveCancellable {
+    cancel(fn: Cancellable): RemoveCancellable {
       cancellers.push(fn);
       return () => {
         cancellers = cancellers.filter(can => {

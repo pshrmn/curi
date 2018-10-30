@@ -50,7 +50,7 @@ class BaseNavigating extends React.Component<
   }
 
   componentDidMount() {
-    this.stopCancelling = this.props.router.whileNavigating(
+    this.stopCancelling = this.props.router.cancel(
       (cancelFn: CancelActiveNavigation) => {
         if (!this.removed) {
           this.setState({

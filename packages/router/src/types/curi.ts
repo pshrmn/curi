@@ -56,7 +56,7 @@ export interface CuriRouter {
   refresh: (routeArray?: UserRoutes) => void;
   observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
   once: (fn: Observer, options?: ResponseHandlerOptions) => void;
-  whileNavigating: (fn: Cancellable) => RemoveCancellable;
+  cancel: (fn: Cancellable) => RemoveCancellable;
   route: Interactions;
   history: History;
   current(): CurrentResponse;

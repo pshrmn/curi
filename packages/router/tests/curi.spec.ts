@@ -1405,7 +1405,7 @@ describe("curi", () => {
     });
   });
 
-  describe("whileNavigating(fn)", () => {
+  describe("cancel(fn)", () => {
     it("does not call function for sync routes", () => {
       const history = InMemory();
       const routes = prepareRoutes([
@@ -1415,7 +1415,7 @@ describe("curi", () => {
       ]);
       const router = curi(history, routes);
       const cancellable = jest.fn();
-      router.whileNavigating(cancellable);
+      router.cancel(cancellable);
 
       router.navigate({ name: "About" });
 
@@ -1440,7 +1440,7 @@ describe("curi", () => {
       ]);
       const router = curi(history, routes);
       const cancellable = jest.fn();
-      router.whileNavigating(cancellable);
+      router.cancel(cancellable);
 
       router.navigate({ name: "About" });
       // called immediately after navigation
@@ -1464,7 +1464,7 @@ describe("curi", () => {
         ]);
         const router = curi(history, routes);
         const cancellable = jest.fn();
-        router.whileNavigating(cancellable);
+        router.cancel(cancellable);
 
         router.navigate({ name: "About" });
 
@@ -1500,7 +1500,7 @@ describe("curi", () => {
         const cancellable = jest.fn(cancelFn => {
           cancel = cancelFn;
         });
-        router.whileNavigating(cancellable);
+        router.cancel(cancellable);
 
         router.navigate({ name: "About" });
         // called immediately after navigation
@@ -1528,7 +1528,7 @@ describe("curi", () => {
         const cancellable = jest.fn(cancelFn => {
           cancel = cancelFn;
         });
-        router.whileNavigating(cancellable);
+        router.cancel(cancellable);
         const { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
 
@@ -1563,7 +1563,7 @@ describe("curi", () => {
       ]);
       const router = curi(history, routes);
       const cancellable = jest.fn();
-      const stopCancelling = router.whileNavigating(cancellable);
+      const stopCancelling = router.cancel(cancellable);
 
       router.navigate({ name: "About" });
       expect(cancellable.mock.calls.length).toBe(1);
