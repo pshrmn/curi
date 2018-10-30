@@ -23,6 +23,7 @@ export interface RouterOptions {
     pathnameOptions?: PathFunctionOptions;
     emitRedirects?: boolean;
     automaticRedirects?: boolean;
+    external?: any;
 }
 export interface CurrentResponse {
     response: Response | null;

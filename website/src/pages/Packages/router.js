@@ -176,6 +176,40 @@ const router = curi(history, routes, {
                   <li>
                     <Explanation>
                       <p>
+                        <IJS>external</IJS> - Values that should be accessible
+                        to a route's <IJS>resolve</IJS> functions and{" "}
+                        <IJS>response()</IJS> function.
+                      </p>
+                      <p>
+                        Using <IJS>external</IJS> allows you to access APIs,
+                        data, etc. without having to be able to import it in the
+                        module where the routes are defined.
+                      </p>
+                    </Explanation>
+                    <CodeBlock>
+                      {`const client = new ApolloClient();
+const router = curi(history, routes, {
+  external: { client, greeting: "Hi!" }
+});`}
+                    </CodeBlock>
+                    <CodeBlock>
+                      {`const routes = prepareRoutes([
+  {
+    name: "User",
+    path: "user/:id",
+    resolve: {
+      data(match, external) {
+        // use the external object to make a query
+        return external.client.query()
+      }
+    }
+  }
+]);`}
+                    </CodeBlock>
+                  </li>
+                  <li>
+                    <Explanation>
+                      <p>
                         <IJS>emitRedirects</IJS> - When <IJS>false</IJS>{" "}
                         (default is <IJS>true</IJS>), response objects with the{" "}
                         <IJS>redirectTo</IJS> property{" "}

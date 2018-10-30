@@ -45,21 +45,6 @@ export default function ApolloGuide() {
       <Section title="Setup" id="setup">
         <Explanation>
           <p>
-            Your application's Apollo client instance should be defined in its
-            own module so that it can be imported throughout the application.
-          </p>
-        </Explanation>
-        <CodeBlock>
-          {`// apollo.js
-import ApolloClient from "apollo-boost";
-
-export default ApolloClient({
-  uri: "https://example.com/graphql"
-});`}
-        </CodeBlock>
-
-        <Explanation>
-          <p>
             Apollo's React package provides an <Cmp>ApolloProvider</Cmp>{" "}
             component for accessing your Apollo client throughout the
             application. The <Cmp>Router</Cmp> (or whatever you name the root
@@ -185,24 +170,33 @@ const Noun = ({ response }) => (
             You can use your Apollo client instance to call queries in a route's{" "}
             <IJS>resolve</IJS> functions. <IJS>resolve</IJS> functions are
             expected to return a Promise, which is exactly what{" "}
-            <IJS>client.query()</IJS> returns, so tightly pairing Curi and
-            Apollo is mostly center around using a <IJS>resolve</IJS> function
-            to return a <IJS>client.query()</IJS> call. This will delay
-            navigation until after a route's GraphQL data has been loaded by
-            Apollo.
+            <IJS>client.query()</IJS> returns. Tightly pairing Curi and Apollo
+            is mostly center around using a <IJS>resolve</IJS> function to
+            return a <IJS>client.query()</IJS> call. This will delay navigation
+            until after a route's GraphQL data has been loaded by Apollo.
+          </p>
+          <p>
+            The <IJS>external</IJS> option can be used when creating the router
+            to make the Apollo client accessible from routes.
           </p>
         </Explanation>
         <CodeBlock>
           {`import client from "./apollo";
-import { EXAMPLE_QUERY } from "./queries";
+          
+const router = curi(history, routes, {
+  external: { client }
+});`}
+        </CodeBlock>
+        <CodeBlock>
+          {`import { EXAMPLE_QUERY } from "./queries";
 
 const routes = prepareRoutes([
   {
     name: "Example",
     path: "example/:id",
     resolve: {
-      data({ params }) {
-        return client.query({
+      data({ params }, external) {
+        return external.client.query({
           query: EXAMPLE_QUERY,
           variables: { id: params.id }
         });
@@ -213,30 +207,7 @@ const routes = prepareRoutes([
         </CodeBlock>
 
         <Explanation>
-          <p>
-            There are two strategies for doing this. Both approaches require you
-            to be able to import your Apollo client in the module where you
-            define your routes, which is why we created client in its own module
-            in the <Link hash="setup">setup</Link> section.
-          </p>
-        </Explanation>
-        <CodeBlock>
-          {`// index.js
-import client from "./apollo";
-
-ReactDOM.render((
-  <ApolloProvider client={client}>
-    /*...*/
-  </ApolloProvider>
-), holder);
-
-// routes.js
-import client from "./apollo";
-
-// ...`}
-        </CodeBlock>
-
-        <Explanation>
+          <p>There are two strategies for doing this.</p>
           <p>
             The first approach is to avoid the <Cmp>Query</Cmp> altogether.
             Instead, you can use a route's <IJS>response()</IJS> property to
@@ -245,13 +216,12 @@ import client from "./apollo";
           </p>
           <p>
             While we know at this point that the query has executed, we should
-            also check <IJS>resolved.error</IJS> in the <IJS>response()</IJS>{" "}
-            function to ensure that the query was executed successfully.
+            also check <IJS>error</IJS> in the <IJS>response()</IJS> function to
+            ensure that the query was executed successfully.
           </p>
         </Explanation>
         <CodeBlock>
           {`// routes.js
-import client from "./apollo";
 import GET_VERB from "./queries";
 
 import Verb from "./pages/Verb";
@@ -261,8 +231,8 @@ export default [
     name: "Verb",
     path: "verb/:word",
     resolve: {
-      verb({ params }) {
-        return client.query({
+      verb({ params }, external) {
+        return external.client.query({
           query: GET_VERB,
           variables: { word: params.word }
         })
@@ -283,9 +253,8 @@ export default [
 
         <Explanation>
           <p>
-            In the response's <IJS>body</IJS> component, you would access the
-            query data through the <IJS>response</IJS>'s <IJS>data</IJS>{" "}
-            property.
+            When rendering, you can access the query data through the{" "}
+            <IJS>response</IJS>'s <IJS>data</IJS> property.
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
@@ -311,7 +280,6 @@ const Verb = ({ response }) => (
         </Explanation>
         <CodeBlock>
           {`// routes.js
-import client from "./apollo";
 import { GET_VERB } from "./queries";
 
 export default [
@@ -319,10 +287,10 @@ export default [
     name: "Verb",
     path: "verb/:word",
     resolve: {
-      data({ params }) {
+      data({ params, external }) {
         // load the data so it is cached by
         // your Apollo client
-        return client.query({
+        return external.client.query({
           query: GET_VERB,
           variables: { word: params.word }
         })
@@ -388,8 +356,8 @@ const routes = prepareRoutes([
     name: "Example",
     path: "example/:id",
     resolve: {
-      examples({ params }) {
-        client.query({
+      examples({ params }, external) {
+        return external.client.query({
           query: GET_EXAMPLES,
           variables: { id: params.id }
         })

@@ -28,7 +28,8 @@ export default function finishResponse(
   routeMatch: Match,
   interactions: Interactions,
   resolvedResults: ResolveResults | null,
-  history: History
+  history: History,
+  external: any
 ): Response {
   const { route, match } = routeMatch;
   const response: Response = match;
@@ -41,7 +42,8 @@ export default function finishResponse(
   const responseModifiers = route.response({
     resolved,
     error,
-    match
+    match,
+    external
   });
 
   if (!responseModifiers) {

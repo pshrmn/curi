@@ -22,11 +22,15 @@ export interface ResponseBuilder {
   resolved: Resolved | null;
   error: any;
   match: MatchResponseProperties;
+  external: any;
 }
 
 export type ResponseFn = (props: ResponseBuilder) => SettableResponseProperties;
 
-export type AsyncMatchFn = (matched?: MatchResponseProperties) => Promise<any>;
+export type AsyncMatchFn = (
+  matched?: MatchResponseProperties,
+  external?: any
+) => Promise<any>;
 export interface AsyncGroup {
   [key: string]: AsyncMatchFn;
 }

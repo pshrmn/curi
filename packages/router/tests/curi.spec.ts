@@ -357,6 +357,55 @@ describe("curi", () => {
           });
         });
       });
+
+      describe("external", () => {
+        it("gets passed to resolve functions", done => {
+          const history = InMemory();
+          const external = "hey!";
+          const routes = prepareRoutes([
+            {
+              name: "Start",
+              path: "",
+              resolve: {
+                test(match, e) {
+                  expect(e).toBe(external);
+                  done();
+                  return Promise.resolve(true);
+                }
+              }
+            },
+            {
+              name: "Other",
+              path: "other"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
+          const router = curi(history, routes, { external });
+        });
+
+        it("gets passed to response function", () => {
+          const history = InMemory();
+          const external = "hey!";
+          const routes = prepareRoutes([
+            {
+              name: "Start",
+              path: "",
+              response({ external: e }) {
+                expect(e).toBe(external);
+                return {};
+              }
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
+          const router = curi(history, routes, { external });
+        });
+      });
     });
 
     describe("sync/async matching", () => {

@@ -37,7 +37,8 @@ export default function createRouter(
     route: userInteractions = [],
     sideEffects = [],
     emitRedirects = true,
-    automaticRedirects = true
+    automaticRedirects = true,
+    external
   } = options;
 
   let routes: CompiledRouteArray;
@@ -125,17 +126,19 @@ export default function createRouter(
     if (match.route.sync) {
       finalizeResponseAndEmit(match as Match, pendingNav, navigation, null);
     } else {
-      resolveMatchedRoute(match as Match).then((resolved: ResolveResults) => {
-        if (pendingNav.cancelled) {
-          return;
+      resolveMatchedRoute(match as Match, external).then(
+        (resolved: ResolveResults) => {
+          if (pendingNav.cancelled) {
+            return;
+          }
+          finalizeResponseAndEmit(
+            match as Match,
+            pendingNav,
+            navigation,
+            resolved
+          );
         }
-        finalizeResponseAndEmit(
-          match as Match,
-          pendingNav,
-          navigation,
-          resolved
-        );
-      });
+      );
     }
   }
 
@@ -149,7 +152,8 @@ export default function createRouter(
       match,
       routeInteractions,
       resolved,
-      history
+      history,
+      external
     );
     pending.finish();
     emitImmediate(response, navigation);

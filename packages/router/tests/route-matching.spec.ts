@@ -638,6 +638,25 @@ describe("route matching/response generation", () => {
         curi(history, routes);
       });
 
+      it("is called with external provided to router", done => {
+        const external = "test";
+        const spy = jest.fn((_, e) => {
+          expect(e).toBe(external);
+          done();
+        });
+
+        const routes = prepareRoutes([
+          {
+            name: "Catch All",
+            path: ":anything",
+            resolve: { spy }
+          }
+        ]);
+
+        const history = InMemory({ locations: ["/hello?one=two"] });
+        curi(history, routes, { external });
+      });
+
       it("calls all resolve functions", done => {
         const one = jest.fn();
         const two = jest.fn();
