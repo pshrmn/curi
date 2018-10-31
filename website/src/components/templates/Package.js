@@ -10,12 +10,10 @@ export default function PackageTemplate({ children }) {
     <Page type="package">
       <Content>{children}</Content>
       <PageLinks>
-        {hide => (
-          <React.Fragment>
-            <h2>Packages</h2>
-            <PackageLinks hide={hide} />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <h2>Packages</h2>
+          <PackageLinks />
+        </React.Fragment>
       </PageLinks>
     </Page>
   );

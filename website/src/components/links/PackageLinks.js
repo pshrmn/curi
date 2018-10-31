@@ -4,19 +4,11 @@ import PACKAGE_API from "../../constants/packages";
 import ActiveLink from "./ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
-const GroupPackages = ({ packages, hide }) => (
+const GroupPackages = ({ packages }) => (
   <ul className="link-list">
     {packages.map(p => (
       <li key={p.name} className="solo">
-        <ActiveLink
-          to="Package"
-          params={{ package: p.name }}
-          onClick={e => {
-            if (hide) {
-              hide();
-            }
-          }}
-        >
+        <ActiveLink to="Package" params={{ package: p.name }}>
           {p.name}
         </ActiveLink>
       </li>
@@ -24,11 +16,11 @@ const GroupPackages = ({ packages, hide }) => (
   </ul>
 );
 
-export default function PackageLinks({ hide }) {
+export default function PackageLinks() {
   const groups = PACKAGE_API.grouped();
   return Object.keys(groups).map(title => (
     <CollapsibleGroup key={title} title={title}>
-      <GroupPackages packages={groups[title]} hide={hide} />
+      <GroupPackages packages={groups[title]} />
     </CollapsibleGroup>
   ));
 }

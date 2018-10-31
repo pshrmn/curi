@@ -597,7 +597,7 @@ const router = curi(history, routes, {
 </Navigating>`}
             </CodeBlock>
             <Section tag="h3" title="Props" id="Navigating-props">
-              <Subsection tag="h4" title="children()" id="Navigating-children">
+              <Section tag="h4" title="children()" id="Navigating-children">
                 <Explanation>
                   <p>
                     A function that returns a React node. The function will be
@@ -610,7 +610,7 @@ const router = curi(history, routes, {
                     is finished has no effect.
                   </p>
                 </Explanation>
-              </Subsection>
+              </Section>
             </Section>
           </Section>
 

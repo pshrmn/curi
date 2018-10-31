@@ -10,12 +10,10 @@ export default function GuideTemplate({ children }) {
     <Page type="guide">
       <Content>{children || null}</Content>
       <PageLinks>
-        {hide => (
-          <React.Fragment>
-            <h2>Guides</h2>
-            <GuideLinks hide={hide} />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <h2>Guides</h2>
+          <GuideLinks />
+        </React.Fragment>
       </PageLinks>
     </Page>
   );
