@@ -1,5 +1,6 @@
 import React from "react";
 import { Curious } from "@curi/react-universal";
+import shallowEqual from "shallowequal";
 
 import { CuriRouter } from "@curi/router";
 
@@ -40,6 +41,16 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   state = {
     navigating: false
   };
+
+  shouldComponentUpdate(nextProps: BaseLinkProps, nextState: LinkState) {
+    const { params: nextParams, ...nextRest } = nextProps;
+    const { params: currentParams, ...currentRest } = this.props;
+    return (
+      !shallowEqual(nextState, this.state) ||
+      !shallowEqual(nextParams, currentParams) ||
+      !shallowEqual(nextRest, currentRest)
+    );
+  }
 
   clickHandler = (event: React.MouseEvent<HTMLElement>) => {
     const { onClick, router, target } = this.props;

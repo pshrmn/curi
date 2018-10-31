@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableHighlight } from "react-native";
 import { Curious } from "@curi/react-universal";
+import shallowEqual from "shallowequal";
 
 import { GestureResponderEvent } from "react-native";
 import { Emitted, CuriRouter } from "@curi/router";
@@ -37,6 +38,16 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   state = {
     navigating: false
   };
+
+  shouldComponentUpdate(nextProps: BaseLinkProps, nextState: LinkState) {
+    const { params: nextParams, ...nextRest } = nextProps;
+    const { params: currentParams, ...currentRest } = this.props;
+    return (
+      !shallowEqual(nextState, this.state) ||
+      !shallowEqual(nextParams, currentParams) ||
+      !shallowEqual(nextRest, currentRest)
+    );
+  }
 
   pressHandler = (event: GestureResponderEvent) => {
     const { onPress, router } = this.props;

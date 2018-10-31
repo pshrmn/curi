@@ -11,7 +11,11 @@ import { curiProvider, Link } from "@curi/react-dom";
 describe("<Link>", () => {
   let node;
   let history, router, Router;
-  const routes = prepareRoutes([{ name: "Test", path: "" }]);
+  const routes = prepareRoutes([
+    { name: "Test", path: "" },
+    { name: "Best", path: "best" },
+    { name: "Catch All", path: "(.*)" }
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");
@@ -52,6 +56,54 @@ describe("<Link>", () => {
       expect(a).toBeDefined();
       expect(getComputedStyle(a).color).toBe("orange");
     });
+
+    it("re-renders if the anchor changes", () => {
+      let count = 0;
+      function renderCounter() {
+        return <div>{count++}</div>;
+      }
+      const StyledAnchor = props => (
+        <a style={{ color: "orange" }} {...props} />
+      );
+      ReactDOM.render(
+        <Router>
+          {() => (
+            <Link anchor={StyledAnchor} to="Test">
+              {renderCounter}
+            </Link>
+          )}
+        </Router>,
+        node
+      );
+      const a0 = node.querySelector("a");
+      expect(a0.textContent).toBe("0");
+
+      ReactDOM.render(
+        <Router>
+          {() => (
+            <Link anchor={StyledAnchor} to="Test">
+              {renderCounter}
+            </Link>
+          )}
+        </Router>,
+        node
+      );
+      const a1 = node.querySelector("a");
+      expect(a1.textContent).toBe("0");
+
+      ReactDOM.render(
+        <Router>
+          {() => (
+            <Link anchor="a" to="Test">
+              {renderCounter}
+            </Link>
+          )}
+        </Router>,
+        node
+      );
+      const a2 = node.querySelector("a");
+      expect(a2.textContent).toBe("1");
+    });
   });
 
   describe("to", () => {
@@ -77,6 +129,33 @@ describe("<Link>", () => {
       );
       const a = node.querySelector("a");
       expect(a.getAttribute("href")).toBe("");
+    });
+
+    it("re-renders if to changes", () => {
+      let count = 0;
+      function renderCounter() {
+        return <div>{count++}</div>;
+      }
+      ReactDOM.render(
+        <Router>{() => <Link to="Test">{renderCounter}</Link>}</Router>,
+        node
+      );
+      const a0 = node.querySelector("a");
+      expect(a0.textContent).toBe("0");
+
+      ReactDOM.render(
+        <Router>{() => <Link to="Test">{renderCounter}</Link>}</Router>,
+        node
+      );
+      const a1 = node.querySelector("a");
+      expect(a1.textContent).toBe("0");
+
+      ReactDOM.render(
+        <Router>{() => <Link to="Best">{renderCounter}</Link>}</Router>,
+        node
+      );
+      const a2 = node.querySelector("a");
+      expect(a2.textContent).toBe("1");
     });
   });
 
@@ -137,6 +216,39 @@ describe("<Link>", () => {
       );
       a = node.querySelector("a");
       expect(a.getAttribute("href")).toBe("/park/Yellowstone");
+    });
+
+    it("does not re-render if new params object is shallowly equal to current", () => {
+      let count = 0;
+      function renderCounter() {
+        return <div>{count++}</div>;
+      }
+      ReactDOM.render(
+        <Router>
+          {() => (
+            <Link to="Park" params={{ name: "Yosemite" }}>
+              {renderCounter}
+            </Link>
+          )}
+        </Router>,
+        node
+      );
+      const a0 = node.querySelector("a");
+      expect(a0.textContent).toBe("0");
+
+      // same params, but new object
+      ReactDOM.render(
+        <Router>
+          {() => (
+            <Link to="Park" params={{ name: "Yosemite" }}>
+              {renderCounter}
+            </Link>
+          )}
+        </Router>,
+        node
+      );
+      const a1 = node.querySelector("a");
+      expect(a1.textContent).toBe("0");
     });
   });
 
