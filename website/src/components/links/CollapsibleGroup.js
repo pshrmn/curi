@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Up, Down } from "../svg";
+import "../../scss/collapse.scss";
 
 export default class CollapsibleGroup extends React.Component {
   state = { collapsed: false };
@@ -21,16 +22,7 @@ export default class CollapsibleGroup extends React.Component {
             <button
               onClick={this.toggle}
               title="Toggle group visibility"
-              style={{
-                cursor: "pointer",
-                fontSize: 24,
-                fontFamily: '"Zilla Slab", serif',
-                textAlign: "left",
-                width: "100%",
-                background: "none",
-                border: 0,
-                padding: 0
-              }}
+              className="collapse-button"
             >
               {collapsed ? <Down /> : <Up />}
               {title}
