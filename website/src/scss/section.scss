@@ -17,17 +17,8 @@
 
 .header-link {
   text-decoration: none;
-  display: inline-block;
 
-  &:before {
-    content: "";
-    display: block;
-    margin-top: -50px;
-    height: 50px;
-    visibility: hidden;
-  }
-
-  span {
+  span.hash {
     margin-left: 5px;
     color: $dark-gray;
   }
@@ -36,5 +27,15 @@
 @media only screen and (min-width: $mediumScreen) {
   .section {
     max-width: 800px;
+  }
+
+  .header-link {
+    &:before {
+      content: "";
+      display: block;
+      margin-top: -50px;
+      height: 50px;
+      visibility: hidden;
+    }
   }
 }

@@ -14,7 +14,7 @@ export const Section = ({
   <Wrapper className={className} id={id}>
     <Tag>
       <Link className="header-link" hash={id}>
-        {title} <span>#</span>
+        {title} <span className="hash">#</span>
       </Link>
     </Tag>
     {children}
