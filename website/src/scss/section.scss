@@ -2,12 +2,6 @@
 
 .section {
   margin-top: 15px;
-
-  .header-link {
-    margin-left: 10px;
-    text-decoration: none;
-    color: $dark-gray;
-  }
 }
 
 .aside {
@@ -16,14 +10,26 @@
   background: $light-green;
   margin-top: 15px;
 
-  .header-link {
-    margin-left: 10px;
-    text-decoration: none;
-    color: $dark-gray;
-  }
-
   .inline-code {
     background: $green !important;
+  }
+}
+
+.header-link {
+  text-decoration: none;
+  display: inline-block;
+
+  &:before {
+    content: "";
+    display: block;
+    margin-top: -50px;
+    height: 50px;
+    visibility: hidden;
+  }
+
+  span {
+    margin-left: 5px;
+    color: $dark-gray;
   }
 }
 
