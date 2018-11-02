@@ -9,7 +9,7 @@ export interface BlockProps {
   confirm: ConfirmationFunction;
 }
 
-export interface BaseBlockProps extends BlockProps {
+interface BaseBlockProps extends BlockProps {
   router: CuriRouter;
 }
 

@@ -26,12 +26,12 @@ export interface LinkProps
   children: NavigatingChildren | React.ReactNode;
 }
 
-export interface BaseLinkProps extends LinkProps {
+interface BaseLinkProps extends LinkProps {
   router: CuriRouter;
   forwardedRef: React.Ref<any> | undefined;
 }
 
-export interface LinkState {
+interface LinkState {
   navigating: boolean;
 }
 
