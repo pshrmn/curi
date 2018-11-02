@@ -5,19 +5,11 @@ import TUTORIAL_API from "../../constants/tutorials";
 import ActiveLink from "./ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
-const GroupTutorials = ({ tutorials, hide }) => (
+const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
     {tutorials.map(g => (
       <li key={g.title} className="solo">
-        <ActiveLink
-          to="Tutorial"
-          params={{ slug: g.slug }}
-          onClick={e => {
-            if (hide) {
-              hide();
-            }
-          }}
-        >
+        <ActiveLink to="Tutorial" params={{ slug: g.slug }}>
           {g.title}
         </ActiveLink>
       </li>
@@ -25,11 +17,11 @@ const GroupTutorials = ({ tutorials, hide }) => (
   </ul>
 );
 
-export default function TutorialLinks({ hide }) {
+export default function TutorialLinks() {
   const groups = TUTORIAL_API.grouped();
   return Object.keys(groups).map(title => (
     <CollapsibleGroup key={title} title={title}>
-      <GroupTutorials tutorials={groups[title]} hide={hide} />
+      <GroupTutorials tutorials={groups[title]} />
     </CollapsibleGroup>
   ));
 }

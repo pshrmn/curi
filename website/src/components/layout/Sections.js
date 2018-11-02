@@ -13,9 +13,8 @@ export const Section = ({
 }) => (
   <Wrapper className={className} id={id}>
     <Tag>
-      {title}
       <Link className="header-link" hash={id}>
-        #
+        {title} <span className="hash">#</span>
       </Link>
     </Tag>
     {children}

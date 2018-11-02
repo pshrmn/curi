@@ -2,12 +2,7 @@
 
 #API {
   .section {
-    border-left: 2px solid $border-gray;
     padding-left: 10px;
     margin-bottom: 5px;
-  }
-
-  > .section {
-    border-left: 0;
   }
 }

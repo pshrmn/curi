@@ -10,12 +10,10 @@ export default function ExampleTemplate({ children }) {
     <Page type="example">
       <Content>{children || null}</Content>
       <PageLinks>
-        {hide => (
-          <React.Fragment>
-            <h2>Examples</h2>
-            <ExampleLinks hide={hide} />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <h2>Examples</h2>
+          <ExampleLinks />
+        </React.Fragment>
       </PageLinks>
     </Page>
   );

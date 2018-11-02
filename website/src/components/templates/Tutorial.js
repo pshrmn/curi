@@ -10,12 +10,10 @@ export default function TutorialTemplate({ children }) {
     <Page type="tutorial">
       <Content>{children}</Content>
       <PageLinks>
-        {hide => (
-          <React.Fragment>
-            <h2>Tutorials</h2>
-            <TutorialLinks hide={hide} />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <h2>Tutorials</h2>
+          <TutorialLinks />
+        </React.Fragment>
       </PageLinks>
     </Page>
   );

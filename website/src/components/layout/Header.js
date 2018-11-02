@@ -3,10 +3,10 @@ import Nav from "./Nav";
 
 import "../../scss/header.scss";
 
-export default function Header() {
+export default React.memo(function Header() {
   return (
     <header>
       <Nav />
     </header>
   );
-}
+});

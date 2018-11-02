@@ -4,19 +4,11 @@ import GUIDE_API from "../../constants/guides";
 import ActiveLink from "./ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
-const GroupGuides = ({ guides, hide }) => (
+const GroupGuides = ({ guides }) => (
   <ul className="link-list">
     {guides.map(g => (
       <li key={g.name} className="solo">
-        <ActiveLink
-          to="Guide"
-          params={{ slug: g.slug }}
-          onClick={e => {
-            if (hide) {
-              hide();
-            }
-          }}
-        >
+        <ActiveLink to="Guide" params={{ slug: g.slug }}>
           {g.name}
         </ActiveLink>
       </li>
@@ -24,11 +16,11 @@ const GroupGuides = ({ guides, hide }) => (
   </ul>
 );
 
-export default function GuideLinks({ hide }) {
+export default function GuideLinks() {
   const groups = GUIDE_API.grouped();
   return Object.keys(groups).map(title => (
     <CollapsibleGroup key={title} title={title}>
-      <GroupGuides guides={groups[title]} hide={hide} />
+      <GroupGuides guides={groups[title]} />
     </CollapsibleGroup>
   ));
 }

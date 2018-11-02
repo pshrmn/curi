@@ -13,8 +13,8 @@ module.exports = function insert(markup) {
   <body>
     <div id="root">${markup.html}</div>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
-    <script src="https://unpkg.com/react@16.5.1/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react@16.6.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.6.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

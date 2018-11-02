@@ -4,7 +4,7 @@ import EXAMPLE_API from "../../constants/examples";
 import ActiveLink from "./ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
-const Category = ({ examples, hide }) => {
+const Category = ({ examples }) => {
   return (
     <ul className="link-list">
       {examples.map(e => (
@@ -12,11 +12,6 @@ const Category = ({ examples, hide }) => {
           <ActiveLink
             to="Example"
             params={{ category: e.category, slug: e.slug }}
-            onClick={e => {
-              if (hide) {
-                hide();
-              }
-            }}
           >
             {e.name}
           </ActiveLink>
@@ -26,12 +21,12 @@ const Category = ({ examples, hide }) => {
   );
 };
 
-export default function ExampleLinks({ hide }) {
+export default function ExampleLinks() {
   const examples = EXAMPLE_API.all();
   const categories = Object.keys(examples);
   return categories.map(title => (
     <CollapsibleGroup key={title} title={title}>
-      <Category examples={examples[title]} hide={hide} />
+      <Category examples={examples[title]} />
     </CollapsibleGroup>
   ));
 }
