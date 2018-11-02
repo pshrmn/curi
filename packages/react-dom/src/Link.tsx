@@ -1,7 +1,8 @@
 import React from "react";
 import { Curious } from "@curi/react-universal";
+import shallowEqual from "shallowequal";
 
-import { CuriRouter, Response } from "@curi/router";
+import { CuriRouter } from "@curi/router";
 
 const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
   return (
@@ -27,7 +28,6 @@ export interface LinkProps
 
 export interface BaseLinkProps extends LinkProps {
   router: CuriRouter;
-  response: Response;
   forwardedRef: React.Ref<any> | undefined;
 }
 
@@ -35,12 +35,22 @@ export interface LinkState {
   navigating: boolean;
 }
 
-class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
+class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   removed: boolean;
 
   state = {
     navigating: false
   };
+
+  shouldComponentUpdate(nextProps: BaseLinkProps, nextState: LinkState) {
+    const { params: nextParams, ...nextRest } = nextProps;
+    const { params: currentParams, ...currentRest } = this.props;
+    return (
+      !shallowEqual(nextState, this.state) ||
+      !shallowEqual(nextParams, currentParams) ||
+      !shallowEqual(nextRest, currentRest)
+    );
+  }
 
   clickHandler = (event: React.MouseEvent<HTMLElement>) => {
     const { onClick, router, target } = this.props;
@@ -85,7 +95,6 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
       onClick,
       anchor,
       router,
-      response,
       forwardedRef,
       children,
       ...rest
@@ -95,9 +104,7 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
       hash,
       query,
       state,
-      pathname: to
-        ? router.route.pathname(to, params)
-        : response.location.pathname
+      pathname: to ? router.route.pathname(to, params) : ""
     });
 
     return (
@@ -122,13 +129,8 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
 const Link = React.forwardRef(
   (props: LinkProps, ref): React.ReactElement<any> => (
     <Curious>
-      {({ router, response }) => (
-        <BaseLink
-          {...props}
-          router={router}
-          response={response}
-          forwardedRef={ref}
-        />
+      {({ router }) => (
+        <BaseLink {...props} router={router} forwardedRef={ref} />
       )}
     </Curious>
   )

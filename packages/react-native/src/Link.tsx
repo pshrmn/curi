@@ -1,9 +1,10 @@
 import React from "react";
 import { TouchableHighlight } from "react-native";
 import { Curious } from "@curi/react-universal";
+import shallowEqual from "shallowequal";
 
 import { GestureResponderEvent } from "react-native";
-import { Emitted, CuriRouter, Response } from "@curi/router";
+import { Emitted, CuriRouter } from "@curi/router";
 import { NavType } from "@hickory/root";
 
 export type NavigatingChildren = (navigating: boolean) => React.ReactNode;
@@ -24,7 +25,6 @@ export interface LinkProps {
 
 export interface BaseLinkProps extends LinkProps {
   router: CuriRouter;
-  response: Response;
   forwardedRef: React.Ref<any> | undefined;
 }
 
@@ -32,12 +32,22 @@ export interface LinkState {
   navigating: boolean;
 }
 
-class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
+class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   removed: boolean;
 
   state = {
     navigating: false
   };
+
+  shouldComponentUpdate(nextProps: BaseLinkProps, nextState: LinkState) {
+    const { params: nextParams, ...nextRest } = nextProps;
+    const { params: currentParams, ...currentRest } = this.props;
+    return (
+      !shallowEqual(nextState, this.state) ||
+      !shallowEqual(nextParams, currentParams) ||
+      !shallowEqual(nextRest, currentRest)
+    );
+  }
 
   pressHandler = (event: GestureResponderEvent) => {
     const { onPress, router } = this.props;
@@ -86,7 +96,6 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
       onPress,
       anchor: Anchor = TouchableHighlight,
       router,
-      response,
       method,
       forwardedRef,
       children,
@@ -109,13 +118,8 @@ class BaseLink extends React.PureComponent<BaseLinkProps, LinkState> {
 
 const Link = React.forwardRef((props: LinkProps, ref) => (
   <Curious>
-    {({ router, response }: Emitted) => (
-      <BaseLink
-        {...props}
-        router={router}
-        response={response}
-        forwardedRef={ref}
-      />
+    {({ router }: Emitted) => (
+      <BaseLink {...props} router={router} forwardedRef={ref} />
     )}
   </Curious>
 ));
