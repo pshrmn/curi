@@ -9,11 +9,13 @@ export interface RouterProps {
   children: CuriRenderFn;
 }
 
-export interface RouterState {
+interface RouterState {
   emitted: Emitted;
 }
 
-export default function curiProvider(router: CuriRouter) {
+export default function curiProvider(
+  router: CuriRouter
+): React.ComponentType<RouterProps> {
   return class Router extends React.Component<RouterProps, RouterState> {
     stopResponding: () => void;
     removed: boolean;
