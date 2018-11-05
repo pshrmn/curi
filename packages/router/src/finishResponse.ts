@@ -13,14 +13,16 @@ function createRedirect(
   interactions: Interactions,
   history: History
 ): RedirectLocation {
-  const { name, params, ...rest } = redirectTo;
+  const { name, params, query, hash, state } = redirectTo;
   const pathname = interactions.pathname(name, params);
   return {
     name,
     params,
     pathname,
-    ...rest,
-    url: history.toHref({ pathname, ...rest })
+    query,
+    hash,
+    state,
+    url: history.toHref({ pathname, query, hash, state })
   };
 }
 

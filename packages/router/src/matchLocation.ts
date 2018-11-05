@@ -19,7 +19,8 @@ function matchRoute(
     return [];
   }
 
-  const [matchedSegment, ...parsed] = regExpMatch;
+  const matchedSegment = regExpMatch[0];
+  const parsed = regExpMatch.slice(1);
   const params: RawParams = {};
   route.pathMatching.keys.forEach((key, index) => {
     params[key.name] = parsed[index];

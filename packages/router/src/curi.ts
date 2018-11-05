@@ -174,7 +174,10 @@ export default function createRouter(
   }
 
   function callOneTimersAndSideEffects(emitted: Emitted) {
-    [...oneTimers.splice(0), ...sideEffects].forEach(fn => {
+    oneTimers.splice(0).forEach(fn => {
+      fn(emitted);
+    });
+    sideEffects.forEach(fn => {
       fn(emitted);
     });
   }
@@ -241,7 +244,11 @@ export default function createRouter(
 
       observers.push(fn);
       if (mostRecent.response && initial) {
-        fn.call(null, { ...mostRecent, router });
+        fn.call(null, {
+          response: mostRecent.response,
+          navigation: mostRecent.navigation,
+          router
+        });
       }
       return () => {
         observers = observers.filter(obs => {
@@ -253,7 +260,11 @@ export default function createRouter(
       const { initial = true } = options || {};
 
       if (mostRecent.response && initial) {
-        fn.call(null, { ...mostRecent, router });
+        fn.call(null, {
+          response: mostRecent.response,
+          navigation: mostRecent.navigation,
+          router
+        });
       } else {
         oneTimers.push(fn);
       }
