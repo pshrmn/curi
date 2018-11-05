@@ -9,7 +9,7 @@ import { Params } from "../types/response";
 function generatePathname(options?: PathFunctionOptions): Interaction {
   let knownPaths: { [key: string]: string } = {};
   let cache: { [key: string]: PathFunction } = {};
-
+  let alreadyCompiled: { [key: string]: string } = {};
   return {
     name: "pathname",
     register: (route: Route, parent: string): string => {
@@ -27,19 +27,29 @@ function generatePathname(options?: PathFunctionOptions): Interaction {
     },
     get: (name: string, params: Params): string | void => {
       if (knownPaths[name] == null) {
-        console.error(
-          `Could not generate pathname for ${name} because it is not registered.`
-        );
+        if (process.env.NODE_ENV !== "production") {
+          console.error(
+            `Could not generate pathname for ${name} because it is not registered.`
+          );
+        }
         return;
       }
+      const hash = `${name}${JSON.stringify(params)}`;
+      if (alreadyCompiled[hash]) {
+        return alreadyCompiled[hash];
+      }
+
       const compile = cache[name]
         ? cache[name]
         : (cache[name] = PathToRegexp.compile(knownPaths[name]));
-      return compile(params, options);
+      const output = compile(params, options);
+      alreadyCompiled[hash] = output;
+      return output;
     },
     reset: () => {
       knownPaths = {};
       cache = {};
+      alreadyCompiled = {};
     }
   };
 }
