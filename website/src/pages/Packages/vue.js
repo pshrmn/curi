@@ -20,7 +20,7 @@ export default class VuePkg extends React.PureComponent {
             <p>This package enables you to use Curi alongside VueJS.</p>
             <p>
               For more information on using Curi with Vue, please check out the{" "}
-              <Link to="Guide" params={{ slug: "vue" }}>
+              <Link name="Guide" params={{ slug: "vue" }}>
                 Vue guide
               </Link>.
             </p>

@@ -10,7 +10,7 @@ const Category = ({ examples }) => {
       {examples.map(e => (
         <li key={`${e.category}/${e.slug}`} className="solo">
           <ActiveLink
-            to="Example"
+            name="Example"
             params={{ category: e.category, slug: e.slug }}
           >
             {e.name}

@@ -101,7 +101,7 @@ export default function LoadingGuide() {
             The <IJS>response()</IJS> function will receive an object with a
             number of properties. These are covered in in the{" "}
             <Link
-              to="Guide"
+              name="Guide"
               params={{ slug: "routes-and-responses" }}
               hash="route-response"
             >
@@ -171,7 +171,10 @@ export default function LoadingGuide() {
         re-rendering until <em>after</em> the fetching has resolved. If you have
         a long running load function, you may wish to implement some sort of
         loading display. The{" "}
-        <Link to="Example" params={{ category: "react", slug: "data-loading" }}>
+        <Link
+          name="Example"
+          params={{ category: "react", slug: "data-loading" }}
+        >
           data loading example
         </Link>{" "}
         shows one approach to how to do this.

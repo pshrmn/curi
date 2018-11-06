@@ -23,7 +23,7 @@ export default class SveltePkg extends React.PureComponent {
             <p>
               For more information on using Curi with Svelte, please check out
               the{" "}
-              <Link to="Guide" params={{ slug: "svelte" }}>
+              <Link name="Guide" params={{ slug: "svelte" }}>
                 Svelte guide
               </Link>.
             </p>

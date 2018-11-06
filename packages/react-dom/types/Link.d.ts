@@ -2,6 +2,7 @@ import React from "react";
 export declare type NavigatingChildren = (navigating: boolean) => React.ReactNode;
 export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     to?: string;
+    name?: string;
     params?: object;
     hash?: string;
     query?: any;

@@ -29,7 +29,7 @@ export default function SvelteGuide() {
           <p>
             <IJS>@curi/svelte</IJS> provides a function to link the router to
             the store. This sets up an{" "}
-            <Link to="Guide" params={{ slug: "navigating" }} hash="observer">
+            <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
               observer
             </Link>, so that whenever there is a new response, the parts of your
             application that use the response will be re-rendered.
@@ -203,7 +203,7 @@ const routes = prepareRoutes([
       <Explanation>
         <p>
           Please check out the full{" "}
-          <Link to="Package" params={{ package: "svelte" }} hash="API">
+          <Link name="Package" params={{ package: "svelte" }} hash="API">
             <IJS>@curi/svelte</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.

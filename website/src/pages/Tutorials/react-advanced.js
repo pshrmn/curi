@@ -17,7 +17,7 @@ export default function ReactAdvancedTutorial() {
       <h1>React Advanced Tutorial</h1>
       <p>
         In this tutorial, we will be expanding on the website built in the{" "}
-        <Link to="Tutorial" params={{ slug: "react-basics" }}>
+        <Link name="Tutorial" params={{ slug: "react-basics" }}>
           React basics tutorial
         </Link>. We will take advantage of Curi's async features to add code
         splitting and data preloading to the application.
@@ -75,7 +75,7 @@ npm run start`}
             have functions that should re-use the results from previous calls,
             you will probably want to implement some caching into your async
             functions. Curi provides a{" "}
-            <Link to="Package" params={{ package: "router" }} hash="once">
+            <Link name="Package" params={{ package: "router" }} hash="once">
               <IJS>once()</IJS>
             </Link>{" "}
             function for simple caching, but leaves more advanced caching
@@ -180,7 +180,7 @@ ReactDOM.render((
         <Explanation>
           <p>
             For more information on async route properties, please refer to the{" "}
-            <Link to="Guide" params={{ slug: "routes" }}>
+            <Link name="Guide" params={{ slug: "routes" }}>
               routes guide
             </Link>.
           </p>
@@ -645,7 +645,7 @@ export default function Home({ response }) {
       <ul>
         {response.data.books.map(book => (
           <li key={book.id}>
-            <Link to="Book" params={{ id: book.id }} >
+            <Link name="Book" params={{ id: book.id }} >
               {book.title} by {book.author}
             </Link>
           </li>
@@ -767,7 +767,7 @@ export const BOOK = id => new Promise(resolve => {
           <CodeBlock lang="jsx">
             {`import { Link } from "@curi/react-dom";
             
-<Link to="Book" params={{ id: 1 }}>
+<Link name="Book" params={{ id: 1 }}>
   {navigating => (
     <React.Fragment>
       Book 1
@@ -816,7 +816,7 @@ export default function Home({ response }) {
       <ul>
         {response.data.books.map(book => (
           <li key={book.id}>
-            <Link to="Book" params={{ id: book.id }} >
+            <Link name="Book" params={{ id: book.id }} >
               {navigating => (
                 <React.Fragment>
                   {book.title} by {book.author}

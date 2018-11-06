@@ -36,12 +36,12 @@ const router = curi(history, routes);`}
         <Explanation>
           <p>
             The{" "}
-            <Link to="Guide" params={{ slug: "history" }}>
+            <Link name="Guide" params={{ slug: "history" }}>
               history
             </Link>{" "}
             is used to navigate between locations within an application. The{" "}
             <Link
-              to="Guide"
+              name="Guide"
               params={{ slug: "routes-and-responses" }}
               hash="routes"
             >
@@ -87,7 +87,7 @@ router.navigate({
         <Explanation>
           <Note>
             Render interfaces, like{" "}
-            <Link to="Package" params={{ package: "react-dom" }}>
+            <Link name="Package" params={{ package: "react-dom" }}>
               <IJS>@curi/react-dom</IJS>
             </Link>, will call <IJS>router.nagivate()</IJS> for you when the
             user clicks a link.
@@ -111,7 +111,7 @@ router.navigate({
             Side effects are passed to the router when you are creating it.
             These are best suited for non-rendering tasks. You can read more
             about them in the{" "}
-            <Link to="Guide" params={{ slug: "side-effects" }}>
+            <Link name="Guide" params={{ slug: "side-effects" }}>
               side effects guide
             </Link>.
           </p>
@@ -184,7 +184,7 @@ router.once(() => {
 
         <Explanation>
           <p>
-            <Link to="Package" params={{ package: "@react-dom" }}>
+            <Link name="Package" params={{ package: "@react-dom" }}>
               <IJS>@curi/react-dom</IJS>
             </Link>{" "}
             uses a <Cmp>Router</Cmp> with a render-invoked <IJS>children</IJS>{" "}
@@ -197,7 +197,7 @@ router.once(() => {
           </p>
           <p>
             The{" "}
-            <Link to="Tutorial" params={{ slug: "react-basics" }}>
+            <Link name="Tutorial" params={{ slug: "react-basics" }}>
               React Basics Tutorial
             </Link>{" "}
             gets into more detail about how this works.
@@ -219,7 +219,7 @@ ReactDOM.render((
 
         <Explanation>
           <p>
-            <Link to="Package" params={{ package: "@react-dom" }}>
+            <Link name="Package" params={{ package: "@react-dom" }}>
               <IJS>@curi/vue</IJS>
             </Link>{" "}
             sets up reactive objects that update when there is a new response.{" "}
@@ -228,7 +228,7 @@ ReactDOM.render((
           </p>
           <p>
             The{" "}
-            <Link to="Tutorial" params={{ slug: "react-basics" }}>
+            <Link name="Tutorial" params={{ slug: "react-basics" }}>
               Vue Basics Tutorial
             </Link>{" "}
             details how to use Vue and Curi.
@@ -246,7 +246,7 @@ new Vue({
 
         <Explanation>
           <p>
-            <Link to="Package" params={{ package: "@react-dom" }}>
+            <Link name="Package" params={{ package: "@react-dom" }}>
               <IJS>@curi/svelte</IJS>
             </Link>{" "}
             uses the Svelte store and <Cmp>svelte:component</Cmp> to render.

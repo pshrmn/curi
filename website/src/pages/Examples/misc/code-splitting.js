@@ -17,7 +17,7 @@ export default function CodeSplittingExample() {
         <p>
           Code splitting with Curi routes is done using a <IJS>resolve</IJS>{" "}
           function. The{" "}
-          <Link to="Guide" params={{ slug: "code-splitting" }}>
+          <Link name="Guide" params={{ slug: "code-splitting" }}>
             code splitting
           </Link>{" "}
           guide covers the basic principles for how to do this. This example

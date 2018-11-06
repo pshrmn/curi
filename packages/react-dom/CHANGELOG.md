@@ -1,5 +1,6 @@
 ## Next
 
+* `<Link>` takes `name` prop, preferable over `to`.
 * Only export public TypeScript types.
 * `<Link>` with no `to` prop outputs anchor with relative `href`.
 * `<Link>` is no longer a pure component.

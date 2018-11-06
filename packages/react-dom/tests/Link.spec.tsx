@@ -28,10 +28,41 @@ describe("<Link>", () => {
     ReactDOM.unmountComponentAtNode(node);
   });
 
+  describe("to", () => {
+    it('warns about using "to" instead of "name"', () => {
+      // this test needs to be called first in order to catch the warning
+      const realWarn = console.warn;
+      const fakeWarn = jest.fn();
+      console.warn = fakeWarn;
+
+      ReactDOM.render(
+        <Router>{() => <Link to="Test">Test</Link>}</Router>,
+        node
+      );
+
+      expect(fakeWarn.mock.calls.length).toBe(1);
+      expect(fakeWarn.mock.calls[0][0]).toBe(`Deprecation warning:
+The "to" prop should be replaced with the "name" prop. The "to" prop will be removed in @curi/react-dom v2.
+
+<Link name="Route Name">...</Link>`);
+
+      console.warn = realWarn;
+    });
+
+    it("sets the href attribute using the named route's path", () => {
+      ReactDOM.render(
+        <Router>{() => <Link to="Test">Test</Link>}</Router>,
+        node
+      );
+      const a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/");
+    });
+  });
+
   describe("anchor", () => {
     it("renders an <a> by default", () => {
       ReactDOM.render(
-        <Router>{() => <Link to="Test">Test</Link>}</Router>,
+        <Router>{() => <Link name="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -45,7 +76,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link anchor={StyledAnchor} to="Test">
+            <Link anchor={StyledAnchor} name="Test">
               Test
             </Link>
           )}
@@ -68,7 +99,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link anchor={StyledAnchor} to="Test">
+            <Link anchor={StyledAnchor} name="Test">
               {renderCounter}
             </Link>
           )}
@@ -81,7 +112,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link anchor={StyledAnchor} to="Test">
+            <Link anchor={StyledAnchor} name="Test">
               {renderCounter}
             </Link>
           )}
@@ -94,7 +125,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link anchor="a" to="Test">
+            <Link anchor="a" name="Test">
               {renderCounter}
             </Link>
           )}
@@ -106,10 +137,10 @@ describe("<Link>", () => {
     });
   });
 
-  describe("to", () => {
+  describe("name", () => {
     it("sets the href attribute using the named route's path", () => {
       ReactDOM.render(
-        <Router>{() => <Link to="Test">Test</Link>}</Router>,
+        <Router>{() => <Link name="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -124,7 +155,7 @@ describe("<Link>", () => {
       const router = curi(history, routes);
       const Router = curiProvider(router);
       ReactDOM.render(
-        <Router>{() => <Link to={null}>Test</Link>}</Router>,
+        <Router>{() => <Link name={null}>Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -137,21 +168,21 @@ describe("<Link>", () => {
         return <div>{count++}</div>;
       }
       ReactDOM.render(
-        <Router>{() => <Link to="Test">{renderCounter}</Link>}</Router>,
+        <Router>{() => <Link name="Test">{renderCounter}</Link>}</Router>,
         node
       );
       const a0 = node.querySelector("a");
       expect(a0.textContent).toBe("0");
 
       ReactDOM.render(
-        <Router>{() => <Link to="Test">{renderCounter}</Link>}</Router>,
+        <Router>{() => <Link name="Test">{renderCounter}</Link>}</Router>,
         node
       );
       const a1 = node.querySelector("a");
       expect(a1.textContent).toBe("0");
 
       ReactDOM.render(
-        <Router>{() => <Link to="Best">{renderCounter}</Link>}</Router>,
+        <Router>{() => <Link name="Best">{renderCounter}</Link>}</Router>,
         node
       );
       const a2 = node.querySelector("a");
@@ -177,7 +208,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link to="Park" params={params}>
+            <Link name="Park" params={params}>
               Test
             </Link>
           )}
@@ -193,7 +224,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link to="Park" params={params}>
+            <Link name="Park" params={params}>
               Test
             </Link>
           )}
@@ -207,7 +238,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link to="Park" params={newParams}>
+            <Link name="Park" params={newParams}>
               Test
             </Link>
           )}
@@ -226,7 +257,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link to="Park" params={{ name: "Yosemite" }}>
+            <Link name="Park" params={{ name: "Yosemite" }}>
               {renderCounter}
             </Link>
           )}
@@ -240,7 +271,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link to="Park" params={{ name: "Yosemite" }}>
+            <Link name="Park" params={{ name: "Yosemite" }}>
               {renderCounter}
             </Link>
           )}
@@ -264,7 +295,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link to="Test" query="one=two" hash="hashtag">
+            <Link name="Test" query="one=two" hash="hashtag">
               Test
             </Link>
           )}
@@ -289,7 +320,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link to="Test" ref={ref}>
+            <Link name="Test" ref={ref}>
               Test
             </Link>
           )}
@@ -313,7 +344,7 @@ describe("<Link>", () => {
         const Router = curiProvider(router);
         const children = "Test Value";
         ReactDOM.render(
-          <Router>{() => <Link to="Test">{children}</Link>}</Router>,
+          <Router>{() => <Link name="Test">{children}</Link>}</Router>,
           node
         );
         const a = node.querySelector("a");
@@ -333,7 +364,7 @@ describe("<Link>", () => {
         ReactDOM.render(
           <Router>
             {() => (
-              <Link to="Test">
+              <Link name="Test">
                 {navigating => {
                   expect(navigating).toBe(false);
                   return null;
@@ -360,7 +391,7 @@ describe("<Link>", () => {
       const router = curi(history, routes);
       const Router = curiProvider(router);
       ReactDOM.render(
-        <Router>{() => <Link to="Test">Test</Link>}</Router>,
+        <Router>{() => <Link name="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -407,7 +438,7 @@ describe("<Link>", () => {
         ReactDOM.render(
           <Router>
             {() => (
-              <Link to="Test">
+              <Link name="Test">
                 {navigating => {
                   return <div>{navigating.toString()}</div>;
                 }}
@@ -464,12 +495,12 @@ describe("<Link>", () => {
           <Router>
             {() => (
               <React.Fragment>
-                <Link to="Slow">
+                <Link name="Slow">
                   {navigating => {
                     return <div>Slow {navigating.toString()}</div>;
                   }}
                 </Link>
-                <Link to="Fast">
+                <Link name="Fast">
                   {navigating => {
                     return <div>Fast {navigating.toString()}</div>;
                   }}
@@ -518,7 +549,7 @@ describe("<Link>", () => {
         ReactDOM.render(
           <Router>
             {() => (
-              <Link to="Loader">
+              <Link name="Loader">
                 {navigating => {
                   return <div>{navigating.toString()}</div>;
                 }}
@@ -586,7 +617,7 @@ describe("<Link>", () => {
         ReactDOM.render(
           <Router>
             {() => (
-              <Link to="Slow">
+              <Link name="Slow">
                 {navigating => {
                   return <div>{navigating.toString()}</div>;
                 }}
@@ -629,7 +660,7 @@ describe("<Link>", () => {
       ReactDOM.render(
         <Router>
           {() => (
-            <Link to="Test" hash="thing" query="one=1" state="yo">
+            <Link name="Test" hash="thing" query="one=1" state="yo">
               Test
             </Link>
           )}
@@ -674,7 +705,7 @@ describe("<Link>", () => {
         ReactDOM.render(
           <Router>
             {() => (
-              <Link to="Test" onClick={onClick}>
+              <Link name="Test" onClick={onClick}>
                 Test
               </Link>
             )}
@@ -715,7 +746,7 @@ describe("<Link>", () => {
         ReactDOM.render(
           <Router>
             {() => (
-              <Link to="Test" onClick={onClick}>
+              <Link name="Test" onClick={onClick}>
                 Test
               </Link>
             )}
@@ -753,7 +784,7 @@ describe("<Link>", () => {
       const Router = curiProvider(router);
 
       ReactDOM.render(
-        <Router>{() => <Link to="Test">Test</Link>}</Router>,
+        <Router>{() => <Link name="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");
@@ -790,7 +821,7 @@ describe("<Link>", () => {
       const Router = curiProvider(router);
 
       ReactDOM.render(
-        <Router>{() => <Link to="Test">Test</Link>}</Router>,
+        <Router>{() => <Link name="Test">Test</Link>}</Router>,
         node
       );
       const a = node.querySelector("a");

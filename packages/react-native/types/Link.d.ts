@@ -4,6 +4,7 @@ import { NavType } from "@hickory/root";
 export declare type NavigatingChildren = (navigating: boolean) => React.ReactNode;
 export interface LinkProps {
     to?: string;
+    name?: string;
     params?: object;
     hash?: string;
     query?: any;

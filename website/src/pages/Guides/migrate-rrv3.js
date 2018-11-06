@@ -248,7 +248,7 @@ const routes = prepareRoutes([
             <p>
               The{" "}
               <Link
-                to="Package"
+                name="Package"
                 params={{ package: "router" }}
                 hash="route-properties"
               >
@@ -569,8 +569,8 @@ function render({ response }) {
 <Link to={\`/inbox/\${message}\`}>Hello</Link>
 
 // Curi
-<Link to='Home'>Home</Link>
-<Link to='Message' params={{ message }}>Hello</Link>`}
+<Link name='Home'>Home</Link>
+<Link name='Message' params={{ message }}>Hello</Link>`}
             </CodeBlock>
           </li>
           <li>
@@ -591,7 +591,7 @@ function render({ response }) {
 </Link>
 
 // Curi
-<Link to='Inbox' hash='test'>Inbox</Link>`}
+<Link name='Inbox' hash='test'>Inbox</Link>`}
             </CodeBlock>
           </li>
           <li>
@@ -630,7 +630,7 @@ const router = curi(history, routes, {
 <Active name="Home">
   {active => (
     <Link
-      to='Home'
+      name='Home'
       className={active ? "active" : ""}
     >Home</Link>
   )}

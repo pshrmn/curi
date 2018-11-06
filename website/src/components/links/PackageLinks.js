@@ -8,7 +8,7 @@ const GroupPackages = ({ packages }) => (
   <ul className="link-list">
     {packages.map(p => (
       <li key={p.name} className="solo">
-        <ActiveLink to="Package" params={{ package: p.name }}>
+        <ActiveLink name="Package" params={{ package: p.name }}>
           {p.name}
         </ActiveLink>
       </li>
