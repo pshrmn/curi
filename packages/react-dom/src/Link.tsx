@@ -48,12 +48,17 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   };
 
   shouldComponentUpdate(nextProps: BaseLinkProps, nextState: LinkState) {
-    const { params: nextParams, ...nextRest } = nextProps;
-    const { params: currentParams, ...currentRest } = this.props;
+    const { params: nextParams, forward: nextForward, ...nextRest } = nextProps;
+    const {
+      params: currentParams,
+      forward: currentForward,
+      ...currentRest
+    } = this.props;
     return (
       !shallowEqual(nextState, this.state) ||
       !shallowEqual(nextParams, currentParams) ||
-      !shallowEqual(nextRest, currentRest)
+      !shallowEqual(nextRest, currentRest) ||
+      !shallowEqual(nextForward, currentForward)
     );
   }
 
