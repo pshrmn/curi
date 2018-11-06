@@ -598,7 +598,7 @@ registerServiceWorker();`}
           </p>
           <CodeBlock lang="jsx">
             {`// { name: "Home", path: "" }
-<Link to="Home">Home</Link>
+<Link name="Home">Home</Link>
 // <a href="/">Home</a>`}
           </CodeBlock>
           <p>
@@ -608,7 +608,7 @@ registerServiceWorker();`}
           </p>
           <CodeBlock lang="jsx">
             {`// { name: "Book", path: "book/:id" }
-<Link to="Book" params={{ id: 7 }}>The Dark Forest</Link>
+<Link name="Book" params={{ id: 7 }}>The Dark Forest</Link>
 // <a href="/book/7">The Dark Forest</a>`}
           </CodeBlock>
           <p>
@@ -617,7 +617,7 @@ registerServiceWorker();`}
           </p>
           <CodeBlock lang="jsx">
             {`// in-app
-<Link to="Some Route">Some Route</Link>
+<Link name="Some Route">Some Route</Link>
 
 // out of app
 <a href="https://github.com">GitHub</a>`}
@@ -628,7 +628,7 @@ registerServiceWorker();`}
           </p>
           <CodeBlock lang="jsx">
             {`// { name: "Checkout", path: "checkout" }
-<Link to="Checkout" query='affiliate=123'>Checkout</Link>
+<Link name="Checkout" query='affiliate=123'>Checkout</Link>
 // <a href="/checkout?affiliate=123">Checkout</a>`}
           </CodeBlock>
         </Section>
@@ -649,10 +649,10 @@ export default function NavMenu() {
     <nav>
       <ul>
         <li>
-          <Link to="Home">Home</Link>
+          <Link name="Home">Home</Link>
         </li>
         <li>
-          <Link to="Checkout">Checkout</Link>
+          <Link name="Checkout">Checkout</Link>
         </li>
       </ul>
     </nav>
@@ -771,7 +771,7 @@ export default function Home() {
       <ul>
         {books.map(book => (
           <li key={book.id}>
-            <Link to="Book" params={{ id: book.id }} >
+            <Link name="Book" params={{ id: book.id }} >
               {book.title} by {book.author}
             </Link>
           </li>
@@ -1057,7 +1057,7 @@ export default function Checkout({ router, response }) {
         <p>
           We now have a functional website built with React and Curi. What
           should you do next? Build another site! You can also check out the{" "}
-          <Link to="Guides">guides</Link> for information on advanced
+          <Link name="Guides">guides</Link> for information on advanced
           techniques.
         </p>
       </Section>

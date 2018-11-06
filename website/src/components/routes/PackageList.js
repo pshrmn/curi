@@ -21,7 +21,7 @@ const PackageList = ({
       <p>
         Curi is split into a number of different packages that you can pick and
         choose from in order to only use what you need. You will always need the{" "}
-        <Link to="Package" params={{ package: "router" }}>
+        <Link name="Package" params={{ package: "router" }}>
           router
         </Link>{" "}
         package, but no other package is necessary.

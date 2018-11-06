@@ -39,7 +39,7 @@ export default function ReactGuide() {
           <p>
             <IJS>curiProvider()</IJS> is passed the application's Curi router.
             The returned component will automatically add an{" "}
-            <Link to="Guide" params={{ slug: "navigating" }} hash="observer">
+            <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
               observer
             </Link>{" "}
             to the Curi router when it mounts, so that it can re-render when
@@ -213,7 +213,7 @@ export default function RouteName() {
             </p>
             <p>
               You can read some more about accessibility in the{" "}
-              <Link to="Guide" params={{ slug: "accessibility" }}>
+              <Link name="Guide" params={{ slug: "accessibility" }}>
                 accessibility
               </Link>{" "}
               guide.
@@ -272,13 +272,13 @@ const NavLinks = () => (
   <nav>
     <ul>
       <li>
-        <Link to="Home">Home</Link>
+        <Link name="Home">Home</Link>
       </li>
       <li>
-        <Link to="About">About</Link>
+        <Link name="About">About</Link>
       </li>
       <li>
-        <Link to="User" params={{ id: "red" }}>Red</Link>
+        <Link name="User" params={{ id: "red" }}>Red</Link>
       </li>
     </ul>
   </nav>
@@ -293,7 +293,7 @@ const NavLinks = () => (
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
-          {`<Link to="Home" hash="details">Home</Link>
+          {`<Link name="Home" hash="details">Home</Link>
 // renders
 <a href="/#details">Home</a>`}
         </CodeBlock>
@@ -302,7 +302,7 @@ const NavLinks = () => (
       <Explanation>
         <p>
           Please check out the full{" "}
-          <Link to="Package" params={{ package: "react-dom" }} hash="API">
+          <Link name="Package" params={{ package: "react-dom" }} hash="API">
             <IJS>@curi/react-dom</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.

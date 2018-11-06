@@ -39,7 +39,7 @@ export default function ReactNativeGuide() {
           <p>
             <IJS>curiProvider()</IJS> is passed the application's Curi router.
             The returned component will automatically add an{" "}
-            <Link to="Guide" params={{ slug: "navigating" }} hash="observer">
+            <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
               observer
             </Link>{" "}
             to the Curi router when it mounts, so that it can re-render when
@@ -228,13 +228,13 @@ export default function RouteName() {
           
 const NavLinks = () => (
   <View>
-    <Link to="Home">
+    <Link name="Home">
       <Text>Home</Text>
     </Link>
-    <Link to="About" anchor={TouchableOpacity}>
+    <Link name="About" anchor={TouchableOpacity}>
       <Text>About</Text>
     </Link>
-    <Link to="User" params={{ id: "blue" }}>
+    <Link name="User" params={{ id: "blue" }}>
       <Text>Blue</Text>
     </Link>
   </View>
@@ -249,7 +249,7 @@ const NavLinks = () => (
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
-          {`<Link to="Home" hash="details">
+          {`<Link name="Home" hash="details">
   <Text>Home</Text>
 </Link>`}
         </CodeBlock>
@@ -258,7 +258,7 @@ const NavLinks = () => (
       <Explanation>
         <p>
           Please check out the full{" "}
-          <Link to="Package" params={{ package: "react-dom" }} hash="API">
+          <Link name="Package" params={{ package: "react-dom" }} hash="API">
             <IJS>@curi/react-dom</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.

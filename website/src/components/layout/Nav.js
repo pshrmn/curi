@@ -6,21 +6,21 @@ export default function Nav() {
     <nav>
       <ul>
         <li>
-          <ActiveLink to="Home" className="home-link">
+          <ActiveLink name="Home" className="home-link">
             Curi
           </ActiveLink>
         </li>
         <li>
-          <ActiveLink to="Packages">Packages</ActiveLink>
+          <ActiveLink name="Packages">Packages</ActiveLink>
         </li>
         <li>
-          <ActiveLink to="Guides">Guides</ActiveLink>
+          <ActiveLink name="Guides">Guides</ActiveLink>
         </li>
         <li>
-          <ActiveLink to="Tutorials">Tutorials</ActiveLink>
+          <ActiveLink name="Tutorials">Tutorials</ActiveLink>
         </li>
         <li>
-          <ActiveLink to="Examples">Examples</ActiveLink>
+          <ActiveLink name="Examples">Examples</ActiveLink>
         </li>
         <li>
           <a href="https://github.com/pshrmn/curi">GitHub</a>

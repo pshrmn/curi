@@ -24,7 +24,7 @@ export default function VueGuide() {
             The <IJS>CuriPlugin</IJS> for Vue allows you to interface your
             router with a Vue application. The plugin sets up a reactive object
             for tracking responses using an{" "}
-            <Link to="Guide" params={{ slug: "navigating" }} hash="observer">
+            <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
               observer
             </Link>, so whenever there is a new response, the parts of your
             application that use the response will be re-rendered.
@@ -158,7 +158,7 @@ const routes = prepareRoutes([
             </p>
             <p>
               You can read some more about accessibility in the{" "}
-              <Link to="Guide" params={{ slug: "accessibility" }}>
+              <Link name="Guide" params={{ slug: "accessibility" }}>
                 accessibility
               </Link>{" "}
               guide.
@@ -239,7 +239,7 @@ const routes = prepareRoutes([
       <Explanation>
         <p>
           Please check out the full{" "}
-          <Link to="Package" params={{ package: "vue" }} hash="API">
+          <Link name="Package" params={{ package: "vue" }} hash="API">
             <IJS>@curi/vue</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.

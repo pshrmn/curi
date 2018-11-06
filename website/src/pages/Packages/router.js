@@ -43,7 +43,7 @@ const router = curi(history, routes, options);`}
                     history object that will power navigation within the
                     application. The{" "}
                     <Link
-                      to="Guide"
+                      name="Guide"
                       params={{ slug: "creating-a-router" }}
                       hash="history-object"
                     >
@@ -65,7 +65,7 @@ const router = curi(history, routes);`}
                 <Explanation>
                   <p>
                     An array of prepared{" "}
-                    <Link to="Guide" params={{ slug: "routes" }}>
+                    <Link name="Guide" params={{ slug: "routes" }}>
                       route
                     </Link>{" "}
                     objects describing all valid routes in the application.
@@ -92,7 +92,7 @@ const router = curi(history, routes);`}
                       <p>
                         <IJS>route</IJS> - An array of{" "}
                         <Link
-                          to="Guide"
+                          name="Guide"
                           params={{ slug: "route-interactions" }}
                         >
                           route interactions
@@ -134,7 +134,7 @@ router.route.pathname("Home");
                     <Explanation>
                       <p>
                         <IJS>sideEffects</IJS> - An array of{" "}
-                        <Link to="Guide" params={{ slug: "side-effects" }}>
+                        <Link name="Guide" params={{ slug: "side-effects" }}>
                           side effect
                         </Link>{" "}
                         objects.
@@ -662,7 +662,7 @@ router.once(({ response, navigation }) => {
                 <Explanation>
                   <p>
                     The router's{" "}
-                    <Link to="Guide" params={{ slug: "route-interactions" }}>
+                    <Link name="Guide" params={{ slug: "route-interactions" }}>
                       route interactions
                     </Link>{" "}
                     are accessed through the <IJS>route</IJS> property. These
@@ -824,7 +824,7 @@ const routes = prepareRoutes([
                   A route with any <IJS>resolve</IJS> functions is asynchronous,
                   while one with no <IJS>resolve</IJS> functions is synchronous.
                   You can read more about this is the{" "}
-                  <Link to="Guide" params={{ slug: "sync-or-async" }}>
+                  <Link name="Guide" params={{ slug: "sync-or-async" }}>
                     sync or async
                   </Link>{" "}
                   guide.

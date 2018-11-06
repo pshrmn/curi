@@ -8,7 +8,7 @@ const GroupGuides = ({ guides }) => (
   <ul className="link-list">
     {guides.map(g => (
       <li key={g.name} className="solo">
-        <ActiveLink to="Guide" params={{ slug: g.slug }}>
+        <ActiveLink name="Guide" params={{ slug: g.slug }}>
           {g.name}
         </ActiveLink>
       </li>

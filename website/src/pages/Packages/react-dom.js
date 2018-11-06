@@ -24,7 +24,7 @@ export default class ReactPkg extends React.PureComponent {
             <p>
               For more information on using Curi with React DOM, please check
               out the{" "}
-              <Link to="Guide" params={{ slug: "react-dom" }}>
+              <Link name="Guide" params={{ slug: "react-dom" }}>
                 React DOM guide
               </Link>.
             </p>
@@ -143,7 +143,7 @@ const Router = curiProvider(router);`}
             <CodeBlock lang="jsx">
               {`import { Link } from '@curi/react-dom';
 
-<Link to='User' params={{ id: 16 }}>User 16</Link>
+<Link name='User' params={{ id: 16 }}>User 16</Link>
 // <a href='/user/16'>User 16</a>`}
             </CodeBlock>
 
@@ -159,7 +159,7 @@ const Router = curiProvider(router);`}
                 </Explanation>
                 <CodeBlock lang="jsx">
                   {`// Home route is { name: "Home", path: "" }
-<Link to="Home">Home</Link>`}
+<Link name="Home">Home</Link>`}
                 </CodeBlock>
               </Section>
 
@@ -173,7 +173,7 @@ const Router = curiProvider(router);`}
                 </Explanation>
                 <CodeBlock lang="jsx">
                   {`// User route is { name: 'User', path: '/user/:id' }
-<Link to='User' params={{ id: 16 }}>User 16</Link>`}
+<Link name='User' params={{ id: 16 }}>User 16</Link>`}
                 </CodeBlock>
               </Section>
 
@@ -193,7 +193,7 @@ const Router = curiProvider(router);`}
                 </Explanation>
                 <CodeBlock lang="jsx">
                   {`<Link
-  to='Products'
+  name='Products'
   params={{ type: 'vacuums' }}
   hash="iroomba"
   query="volume=loud"
@@ -227,12 +227,12 @@ const Router = curiProvider(router);`}
                 </Explanation>
                 <CodeBlock lang="jsx">
                   {`// a React node
-<Link to="Home">
+<Link name="Home">
   Home
 </Link>
 
 // a render-invoked function
-<Link to="User" params={{ id: 1 }}>
+<Link name="User" params={{ id: 1 }}>
   {navigating => (
     <React.Fragment>
       User 1
@@ -431,11 +431,11 @@ const MyComponent = () => (
             <CodeBlock lang="jsx">
               {`import { Active } from '@curi/react-dom';
 
-const ActiveLink = ({ to, params, partial, ...rest}) => (
-  <Active name={to} params={params} partial={partial}>
+const ActiveLink = ({ name, params, partial, ...rest}) => (
+  <Active name={name} params={params} partial={partial}>
     {active => (
       <Link
-        to={to}
+        name={name}
         params={params}
         {...rest}
         className={active ? "active" : ""}
@@ -444,14 +444,14 @@ const ActiveLink = ({ to, params, partial, ...rest}) => (
   </Active>
 );
 
-<ActiveLink to="Home">Home</ActiveLink>`}
+<ActiveLink name="Home">Home</ActiveLink>`}
             </CodeBlock>
 
             <Note>
               <Explanation>
                 <p>
                   This relies on the active route interaction from{" "}
-                  <Link to="Package" params={{ package: "route-active" }}>
+                  <Link name="Package" params={{ package: "route-active" }}>
                     @curi/route-active
                   </Link>{" "}
                   being added to your router.

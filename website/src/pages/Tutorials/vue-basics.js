@@ -984,7 +984,7 @@ router.navigate({ name: "New", method: "ANCHOR" });
         <p>
           We now have a functional website built with Vue and Curi. What should
           you do next? Build another site! You can also check out the{" "}
-          <Link to="Guides">guides</Link> for information on advanced
+          <Link name="Guides">guides</Link> for information on advanced
           techniques.
         </p>
       </Section>

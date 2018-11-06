@@ -78,12 +78,12 @@ router.observe(render);
             <p>Curi has two "official" side effect packages:</p>
             <ul>
               <li>
-                <Link to="Package" params={{ package: "side-effect-title" }}>
+                <Link name="Package" params={{ package: "side-effect-title" }}>
                   @curi/side-effect-title
                 </Link>
               </li>
               <li>
-                <Link to="Package" params={{ package: "side-effect-scroll" }}>
+                <Link name="Package" params={{ package: "side-effect-scroll" }}>
                   @curi/side-effect-scroll
                 </Link>
               </li>
@@ -139,7 +139,7 @@ const router = curi(history, routes, {
           <p>
             You may want to review the{" "}
             <Link
-              to="Guide"
+              name="Guide"
               params={{ slug: "responses" }}
               hash="response-properties"
             >

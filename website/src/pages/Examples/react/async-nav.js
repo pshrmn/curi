@@ -25,7 +25,7 @@ export default function AsyncNavExample() {
         </p>
 
         <CodeBlock lang="jsx">
-          {`<Link to="Movie" params={{ id: 'some_movie' }}>
+          {`<Link name="Movie" params={{ id: 'some_movie' }}>
     {navigating => (
       <React.Fragment>
         Some Movie

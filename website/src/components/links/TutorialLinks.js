@@ -9,7 +9,7 @@ const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
     {tutorials.map(g => (
       <li key={g.title} className="solo">
-        <ActiveLink to="Tutorial" params={{ slug: g.slug }}>
+        <ActiveLink name="Tutorial" params={{ slug: g.slug }}>
           {g.title}
         </ActiveLink>
       </li>

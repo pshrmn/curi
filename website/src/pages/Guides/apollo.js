@@ -340,7 +340,7 @@ const Verb = ({ response }) => (
             </p>
             <p>
               The{" "}
-              <Link to="Package" params={{ package: "route-prefetch" }}>
+              <Link name="Package" params={{ package: "route-prefetch" }}>
                 <IJS>@curi/route-prefetch</IJS>
               </Link>{" "}
               interaction lets you programmatically fetch the data for a route

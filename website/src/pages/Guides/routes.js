@@ -34,7 +34,7 @@ export default function RoutesGuide() {
         <p>
           A route's <IJS>name</IJS> is a unique identifier for a route. The{" "}
           <IJS>name</IJS> is used to{" "}
-          <Link to="Guide" params={{ slug: "route-interactions" }}>
+          <Link name="Guide" params={{ slug: "route-interactions" }}>
             interact
           </Link>{" "}
           with a specific route.
@@ -136,7 +136,7 @@ export default prepareRoutes(routes);`}
           <p>
             A route with <IJS>resolve</IJS> properties is asynchronous, which
             has some effects to be aware of. You can read about these in the{" "}
-            <Link to="Guide" params={{ slug: "sync-or-async" }}>
+            <Link name="Guide" params={{ slug: "sync-or-async" }}>
               Sync or Async
             </Link>{" "}
             guide.
@@ -149,7 +149,7 @@ export default prepareRoutes(routes);`}
             Each route can have a <IJS>response()</IJS> function, which returns
             an object of properties to merge with route's "match" properties.
             This combined object is a{" "}
-            <Link to="Guide" params={{ slug: "responses" }}>
+            <Link name="Guide" params={{ slug: "responses" }}>
               "response"
             </Link>{" "}
             object.

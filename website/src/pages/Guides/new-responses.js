@@ -33,17 +33,21 @@ export default function NewResponsesGuide() {
           <p>
             When response handlers are called, they are passed an object with
             three properties:{" "}
-            <Link to="Package" params={{ package: "router" }} hash="properties">
+            <Link
+              name="Package"
+              params={{ package: "router" }}
+              hash="properties"
+            >
               <IJS>router</IJS>
             </Link>,{" "}
             <Link
-              to="Guide"
+              name="Guide"
               params={{ slug: "routes-and-responses" }}
               hash="responses"
             >
               <IJS>response</IJS>
             </Link>, and{" "}
-            <Link to="Guide" params={{ slug: "navigation-objects" }}>
+            <Link name="Guide" params={{ slug: "navigation-objects" }}>
               <IJS>navigation</IJS>
             </Link>. Which objects/properties you use depends on what the
             response handler is doing.
@@ -134,18 +138,18 @@ router.once(setup);`}
             </p>
             <p>
               The Curi rendering packages (<Link
-                to="Package"
+                name="Package"
                 params={{ package: "react-dom" }}
               >
                 <IJS>@curi/react-dom</IJS>
               </Link>,{" "}
-              <Link to="Package" params={{ package: "react-native" }}>
+              <Link name="Package" params={{ package: "react-native" }}>
                 <IJS>@curi/react-native</IJS>
               </Link>,{" "}
-              <Link to="Package" params={{ package: "vue" }}>
+              <Link name="Package" params={{ package: "vue" }}>
                 <IJS>@curi/vue</IJS>
               </Link>, and{" "}
-              <Link to="Package" params={{ package: "svelte" }}>
+              <Link name="Package" params={{ package: "svelte" }}>
                 <IJS>@curi/svelte</IJS>
               </Link>) setup an observer internally so that they can
               automatically re-render.
@@ -175,7 +179,7 @@ router.observe(observer);`}
             </p>
             <p>
               The{" "}
-              <Link to="Package" params={{ package: "side-effect-title" }}>
+              <Link name="Package" params={{ package: "side-effect-title" }}>
                 <IJS>@curi/side-effect-title</IJS>
               </Link>{" "}
               package provides a side effect that will use{" "}
@@ -185,7 +189,7 @@ router.observe(observer);`}
             <p>
               With single-page applications, clicking on links wish hashes won't
               always scroll to the matching element in the page. The{" "}
-              <Link to="Package" params={{ package: "side-effect-scroll" }}>
+              <Link name="Package" params={{ package: "side-effect-scroll" }}>
                 <IJS>@curi/side-effect-scroll</IJS>
               </Link>{" "}
               package adds this behavior by scrolling the page to the element

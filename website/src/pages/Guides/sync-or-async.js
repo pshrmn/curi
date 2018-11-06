@@ -89,7 +89,7 @@ router.once(() => {
               <p>
                 You can see an example of this in the{" "}
                 <Link
-                  to="Example"
+                  name="Example"
                   params={{ category: "react", slug: "data-loading" }}
                 >
                   Data Loading Example
@@ -98,7 +98,7 @@ router.once(() => {
             </Explanation>
             <CodeBlock lang="jsx">
               {`<Link
-  to="User"
+  name="User"
   params={{ id: 1 }}
   onClick={() => {
     // display a loading bar when
