@@ -22,6 +22,7 @@ export interface LinkProps {
   style?: any;
   method?: NavType;
   children: NavigatingChildren | React.ReactNode;
+  anchorProps?: object;
 }
 
 interface BaseLinkProps extends LinkProps {
@@ -34,6 +35,7 @@ interface LinkState {
 }
 
 let hasWarnedTo = false;
+let hasWarnedAnchorProps = false;
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   removed: boolean;
@@ -104,6 +106,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       method,
       forwardedRef,
       children,
+      anchorProps,
       ...rest
     } = this.props;
     if (process.env.NODE_ENV !== "production") {
@@ -114,10 +117,31 @@ The "to" prop should be replaced with the "name" prop. The "to" prop will be rem
 
 <Link name="Route Name">...</Link>`);
       }
+
+      if (!hasWarnedAnchorProps && Object.keys(rest).length > 0) {
+        hasWarnedAnchorProps = true;
+        console.warn(`Deprecation warning:
+Passing additional props to a <Link> will no longer be forwarded to the rendered component in v2.
+
+Instead, please use the "anchorProps" prop to pass an object of props to be attached to the component.
+
+<Link to="Route Name" anchorProps={{ className: "test" }}>`);
+      }
     }
+    
     const routeName = name || to;
+
+    const additionalProps = {
+      ...rest,
+      ...anchorProps
+    };
+
     return (
-      <Anchor {...rest} onPress={this.pressHandler} ref={forwardedRef}>
+      <Anchor
+        {...additionalProps}
+        onPress={this.pressHandler}
+        ref={forwardedRef}
+      >
         {typeof children === "function"
           ? (children as NavigatingChildren)(this.state.navigating)
           : children}

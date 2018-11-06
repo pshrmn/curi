@@ -15,6 +15,7 @@ export interface LinkProps {
     style?: any;
     method?: NavType;
     children: NavigatingChildren | React.ReactNode;
+    anchorProps?: object;
 }
 declare const Link: React.ComponentType<LinkProps & React.ClassAttributes<{}>>;
 export default Link;

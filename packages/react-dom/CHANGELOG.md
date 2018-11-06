@@ -1,5 +1,7 @@
 ## Next
 
+* Add `anchorProps` prop to `Link` for passing props to rendered component.
+* Deprecate passing props from `Link` to rendered component.
 * `<Link>` takes `name` prop, preferable over `to`.
 * Only export public TypeScript types.
 * `<Link>` with no `to` prop outputs anchor with relative `href`.
