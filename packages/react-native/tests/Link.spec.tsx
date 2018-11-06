@@ -23,6 +23,67 @@ function fakeEvent(props = {}) {
 }
 
 describe("<Link>", () => {
+  describe("to", () => {
+    it('warns when using "to" instead of "name"', () => {
+      // this test needs to be called first in order to catch the warning
+      const realWarn = console.warn;
+      const fakeWarn = jest.fn();
+      console.warn = fakeWarn;
+
+      const history = InMemory();
+      const routes = prepareRoutes([
+        { name: "Test", path: "" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
+      const Router = curiProvider(router);
+
+      const tree = renderer.create(
+        <Router>
+          {() => (
+            <Link to="Test">
+              <Text>Test</Text>
+            </Link>
+          )}
+        </Router>
+      );
+
+      expect(fakeWarn.mock.calls.length).toBe(1);
+      expect(fakeWarn.mock.calls[0][0]).toBe(`Deprecation warning:
+The "to" prop should be replaced with the "name" prop. The "to" prop will be removed in @curi/react-dom v2.
+
+<Link name="Route Name">...</Link>`);
+
+      console.warn = realWarn;
+    });
+
+    it('works the same as "name"', () => {
+      const history = InMemory();
+      const mockNavigate = jest.fn();
+      history.navigate = mockNavigate;
+      const routes = prepareRoutes([
+        { name: "Test", path: "" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
+      const Router = curiProvider(router);
+
+      const tree = renderer.create(
+        <Router>
+          {() => (
+            <Link to="Test">
+              <Text>Test</Text>
+            </Link>
+          )}
+        </Router>
+      );
+
+      const anchor = tree.root.findByType(TouchableHighlight);
+      anchor.props.onPress(fakeEvent());
+      expect(mockNavigate.mock.calls[0][0].pathname).toBe("/");
+    });
+  });
+
   describe("anchor", () => {
     it("renders a <TouchableHighlight> by default", () => {
       const history = InMemory();
@@ -35,7 +96,7 @@ describe("<Link>", () => {
       const tree = renderer.create(
         <Router>
           {() => (
-            <Link to="Test">
+            <Link name="Test">
               <Text>Test</Text>
             </Link>
           )}
@@ -61,7 +122,7 @@ describe("<Link>", () => {
       const tree = renderer.create(
         <Router>
           {() => (
-            <Link to="Test" anchor={StyledAnchor}>
+            <Link name="Test" anchor={StyledAnchor}>
               <Text>Test</Text>
             </Link>
           )}
@@ -72,8 +133,8 @@ describe("<Link>", () => {
     });
   });
 
-  describe("to", () => {
-    it("uses the pathname from current response's location if 'to' is not provided", () => {
+  describe("name", () => {
+    it("uses the pathname from current response's location if 'name' is not provided", () => {
       const history = InMemory({ locations: ["/the-initial-location"] });
       const mockNavigate = jest.fn();
       history.navigate = mockNavigate;
@@ -84,7 +145,7 @@ describe("<Link>", () => {
       const tree = renderer.create(
         <Router>
           {() => (
-            <Link to={null}>
+            <Link name={null}>
               <Text>Test</Text>
             </Link>
           )}
@@ -116,7 +177,7 @@ describe("<Link>", () => {
       const tree = renderer.create(
         <Router>
           {() => (
-            <Link to="Park" params={params}>
+            <Link name="Park" params={params}>
               <Text>Test</Text>
             </Link>
           )}
@@ -139,7 +200,7 @@ describe("<Link>", () => {
       const tree = renderer.create(
         <Router>
           {() => (
-            <Link to="Park" params={params}>
+            <Link name="Park" params={params}>
               <Text>Test</Text>
             </Link>
           )}
@@ -153,7 +214,7 @@ describe("<Link>", () => {
       tree.update(
         <Router>
           {() => (
-            <Link to="Park" params={newParams}>
+            <Link name="Park" params={newParams}>
               <Text>Test</Text>
             </Link>
           )}
@@ -180,7 +241,7 @@ describe("<Link>", () => {
       const tree = renderer.create(
         <Router>
           {() => (
-            <Link to="Parks" ref={ref}>
+            <Link name="Parks" ref={ref}>
               <Text>Test</Text>
             </Link>
           )}
@@ -206,7 +267,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test">
+              <Link name="Test">
                 <Text>{children}</Text>
               </Link>
             )}
@@ -232,7 +293,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test">
+              <Link name="Test">
                 {navigating => {
                   expect(navigating).toBe(false);
                   return <Text>Test</Text>;
@@ -265,7 +326,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test">
+              <Link name="Test">
                 <Text>Test</Text>
               </Link>
             )}
@@ -287,7 +348,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test" method="ANCHOR">
+              <Link name="Test" method="ANCHOR">
                 <Text>Test</Text>
               </Link>
             )}
@@ -309,7 +370,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test" method="PUSH">
+              <Link name="Test" method="PUSH">
                 <Text>Test</Text>
               </Link>
             )}
@@ -331,7 +392,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test" method="REPLACE">
+              <Link name="Test" method="REPLACE">
                 <Text>Test</Text>
               </Link>
             )}
@@ -353,7 +414,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test" method={"whatchamacallit" as NavType}>
+              <Link name="Test" method={"whatchamacallit" as NavType}>
                 <Text>Test</Text>
               </Link>
             )}
@@ -393,7 +454,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test">
+              <Link name="Test">
                 {navigating => {
                   return <Text>{navigating.toString()}</Text>;
                 }}
@@ -441,12 +502,12 @@ describe("<Link>", () => {
           <Router>
             {() => (
               <React.Fragment>
-                <Link to="Slow">
+                <Link name="Slow">
                   {navigating => {
                     return <Text>{`Slow ${navigating.toString()}`}</Text>;
                   }}
                 </Link>
-                <Link to="Fast">
+                <Link name="Fast">
                   {navigating => {
                     return <Text>{`Fast ${navigating.toString()}`}</Text>;
                   }}
@@ -489,7 +550,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Loader">
+              <Link name="Loader">
                 {navigating => {
                   return <Text>{navigating.toString()}</Text>;
                 }}
@@ -549,7 +610,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Blork">
+              <Link name="Blork">
                 {navigating => {
                   return <Text>{navigating.toString()}</Text>;
                 }}
@@ -580,7 +641,7 @@ describe("<Link>", () => {
       const tree = renderer.create(
         <Router>
           {() => (
-            <Link to="Test" hash="thing" query="one=1" state="yo">
+            <Link name="Test" hash="thing" query="one=1" state="yo">
               <Text>Test</Text>
             </Link>
           )}
@@ -614,7 +675,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test" onPress={onPress}>
+              <Link name="Test" onPress={onPress}>
                 <Text>Test</Text>
               </Link>
             )}
@@ -645,7 +706,7 @@ describe("<Link>", () => {
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link to="Test" onPress={onPress}>
+              <Link name="Test" onPress={onPress}>
                 <Text>Test</Text>
               </Link>
             )}
@@ -673,7 +734,7 @@ describe("<Link>", () => {
       const tree = renderer.create(
         <Router>
           {() => (
-            <Link to="Test">
+            <Link name="Test">
               <Text>Test</Text>
             </Link>
           )}

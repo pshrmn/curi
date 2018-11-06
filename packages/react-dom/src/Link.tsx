@@ -17,6 +17,7 @@ export type NavigatingChildren = (navigating: boolean) => React.ReactNode;
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   to?: string;
+  name?: string;
   params?: object;
   hash?: string;
   query?: any;
@@ -34,6 +35,8 @@ interface BaseLinkProps extends LinkProps {
 interface LinkState {
   navigating: boolean;
 }
+
+let hasWarnedTo = false;
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   removed: boolean;
@@ -60,7 +63,8 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
 
     if (canNavigate(event) && !target) {
       event.preventDefault();
-      const { to: name, params, query, state, hash } = this.props;
+      const { to, name, params, query, state, hash } = this.props;
+      const routeName = name || to;
       let cancelled, finished;
       // only trigger re-renders when children uses state
       if (typeof this.props.children === "function") {
@@ -74,7 +78,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
         }
       }
       router.navigate({
-        name,
+        name: routeName,
         params,
         query,
         state,
@@ -88,6 +92,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   render(): React.ReactNode {
     const {
       to,
+      name,
       params,
       hash,
       query,
@@ -99,12 +104,22 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       children,
       ...rest
     } = this.props;
+    if (process.env.NODE_ENV !== "production") {
+      if (!hasWarnedTo && to !== undefined) {
+        hasWarnedTo = true;
+        console.warn(`Deprecation warning:
+The "to" prop should be replaced with the "name" prop. The "to" prop will be removed in @curi/react-dom v2.
+
+<Link name="Route Name">...</Link>`);
+      }
+    }
+    const routeName = name || to;
     const Anchor: React.ReactType = anchor ? anchor : "a";
     const href: string = router.history.toHref({
       hash,
       query,
       state,
-      pathname: to ? router.route.pathname(to, params) : ""
+      pathname: routeName ? router.route.pathname(routeName, params) : ""
     });
 
     return (
