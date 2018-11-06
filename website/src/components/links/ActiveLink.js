@@ -2,18 +2,21 @@ import React from "react";
 import { Active, Link } from "@curi/react-dom";
 
 const ActiveLink = React.forwardRef(
-  ({ name, params, children, className = "", ...rest }, ref) => (
+  ({ name, params, forward, ...rest }, ref) => (
     <Active name={name} params={params} partial={true}>
       {active => (
         <Link
-          {...rest}
           ref={ref}
           name={name}
           params={params}
-          className={[className, active ? "active" : ""].join(" ")}
-        >
-          {children}
-        </Link>
+          {...rest}
+          forward={{
+            ...forward,
+            className: [forward.className || "", active ? "active" : ""].join(
+              " "
+            )
+          }}
+        />
       )}
     </Active>
   )

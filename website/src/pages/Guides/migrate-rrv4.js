@@ -585,7 +585,9 @@ const router = curi(history, routes, {
   {active => (
     <Link
       name='Home'
-      className={active ? "active" : ""}
+      forward={{
+        className: active ? "active" : ""
+      }}
     >Home</Link>
   )}
 </Active>`}

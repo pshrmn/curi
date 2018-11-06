@@ -319,18 +319,28 @@ const  MyComponent = () => (
             <CodeBlock lang="jsx">
               {`import { Active } from '@curi/react-native';
 
-const ActiveLink = ({ name, params, partial, ...rest}) => (
+const ActiveLink = ({
+  name,
+  params,
+  partial,
+  forward,
+  ...rest
+}) => (
   <Active name={name} params={params} partial={partial}>
     {active => (
       <Link
         name={name}
         params={params}
         {...rest}
-        className={active ? "active" : ""}
+        forward={{
+          ...forward,
+          style: [...forward.style, activeStyle]
+        }}
       />
     )}
   </Active>
 );
+
 
 <ActiveLink name="Home">Home</ActiveLink>`}
             </CodeBlock>

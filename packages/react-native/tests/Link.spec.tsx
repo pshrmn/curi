@@ -225,6 +225,97 @@ The "to" prop should be replaced with the "name" prop. The "to" prop will be rem
     });
   });
 
+  describe("forward", () => {
+    describe("additional props (deprecated)", () => {
+      it("warns when passing additional props to the <Link>", () => {
+        const realWarn = console.warn;
+        const fakeWarn = jest.fn();
+        console.warn = fakeWarn;
+
+        const history = InMemory({ locations: ["/the-initial-location"] });
+        const mockNavigate = jest.fn();
+        history.navigate = mockNavigate;
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
+        const Router = curiProvider(router);
+
+        const style = { backgroundColor: "red" };
+        const tree = renderer.create(
+          <Router>
+            {() => (
+              <Link to="Test" style={style}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </Router>
+        );
+
+        expect(fakeWarn.mock.calls.length).toBe(1);
+        expect(fakeWarn.mock.calls[0][0]).toBe(`Deprecation warning:
+Passing additional props to a <Link> will no longer be forwarded to the rendered component in v2.
+
+Instead, please use the "forward" prop to pass an object of props to be attached to the component.
+
+<Link to="Route Name" forward={{ className: "test" }}>`);
+
+        console.warn = realWarn;
+      });
+
+      it("passes additional props to the anchor", () => {
+        const history = InMemory({ locations: ["/the-initial-location"] });
+        const mockNavigate = jest.fn();
+        history.navigate = mockNavigate;
+        const routes = prepareRoutes([
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
+        const Router = curiProvider(router);
+
+        const style = { backgroundColor: "red" };
+        const tree = renderer.create(
+          <Router>
+            {() => (
+              <Link to="Test" style={style}>
+                <Text>Test</Text>
+              </Link>
+            )}
+          </Router>
+        );
+        const anchor = tree.root.findByType(TouchableHighlight);
+        expect(anchor.props.style).toMatchObject(style);
+      });
+    });
+
+    it("passes forward to the rendered anchor", () => {
+      const history = InMemory({ locations: ["/the-initial-location"] });
+      const mockNavigate = jest.fn();
+      history.navigate = mockNavigate;
+      const routes = prepareRoutes([
+        { name: "Test", path: "" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = curi(history, routes);
+      const Router = curiProvider(router);
+
+      const style = { backgroundColor: "red" };
+      const tree = renderer.create(
+        <Router>
+          {() => (
+            <Link to="Test" forward={{ style }}>
+              <Text>Test</Text>
+            </Link>
+          )}
+        </Router>
+      );
+      const anchor = tree.root.findByType(TouchableHighlight);
+      expect(anchor.props.style).toMatchObject(style);
+    });
+  });
+
   describe("ref", () => {
     it("returns the anchor's ref, not the link's", () => {
       const history = InMemory({ locations: ["/the-initial-location"] });

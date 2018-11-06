@@ -13,7 +13,7 @@ export const Section = ({
 }) => (
   <Wrapper className={className} id={id}>
     <Tag>
-      <Link className="header-link" hash={id}>
+      <Link hash={id} forward={{ className: "header-link" }}>
         {title} <span className="hash">#</span>
       </Link>
     </Tag>

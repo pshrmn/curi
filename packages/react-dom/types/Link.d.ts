@@ -10,6 +10,7 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     anchor?: React.ReactType;
     children: NavigatingChildren | React.ReactNode;
+    forward?: React.AnchorHTMLAttributes<HTMLAnchorElement>;
 }
 declare const Link: React.ComponentType<LinkProps & React.ClassAttributes<{}>>;
 export default Link;

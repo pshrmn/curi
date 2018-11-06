@@ -22,6 +22,7 @@ export interface LinkProps {
   style?: any;
   method?: NavType;
   children: NavigatingChildren | React.ReactNode;
+  forward?: object;
 }
 
 interface BaseLinkProps extends LinkProps {
@@ -34,6 +35,7 @@ interface LinkState {
 }
 
 let hasWarnedTo = false;
+let hasWarnedForward = false;
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   removed: boolean;
@@ -43,12 +45,17 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
   };
 
   shouldComponentUpdate(nextProps: BaseLinkProps, nextState: LinkState) {
-    const { params: nextParams, ...nextRest } = nextProps;
-    const { params: currentParams, ...currentRest } = this.props;
+    const { params: nextParams, forward: nextForward, ...nextRest } = nextProps;
+    const {
+      params: currentParams,
+      forward: currentForward,
+      ...currentRest
+    } = this.props;
     return (
       !shallowEqual(nextState, this.state) ||
       !shallowEqual(nextParams, currentParams) ||
-      !shallowEqual(nextRest, currentRest)
+      !shallowEqual(nextRest, currentRest) ||
+      !shallowEqual(nextForward, currentForward)
     );
   }
 
@@ -78,7 +85,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
         }
       }
       router.navigate({
-        name,
+        name: routeName,
         params,
         hash,
         query,
@@ -104,6 +111,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       method,
       forwardedRef,
       children,
+      forward,
       ...rest
     } = this.props;
     if (process.env.NODE_ENV !== "production") {
@@ -114,10 +122,31 @@ The "to" prop should be replaced with the "name" prop. The "to" prop will be rem
 
 <Link name="Route Name">...</Link>`);
       }
+
+      if (!hasWarnedForward && Object.keys(rest).length > 0) {
+        hasWarnedForward = true;
+        console.warn(`Deprecation warning:
+Passing additional props to a <Link> will no longer be forwarded to the rendered component in v2.
+
+Instead, please use the "forward" prop to pass an object of props to be attached to the component.
+
+<Link to="Route Name" forward={{ className: "test" }}>`);
+      }
     }
+
     const routeName = name || to;
+
+    const additionalProps = {
+      ...rest,
+      ...forward
+    };
+
     return (
-      <Anchor {...rest} onPress={this.pressHandler} ref={forwardedRef}>
+      <Anchor
+        {...additionalProps}
+        onPress={this.pressHandler}
+        ref={forwardedRef}
+      >
         {typeof children === "function"
           ? (children as NavigatingChildren)(this.state.navigating)
           : children}
