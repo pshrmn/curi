@@ -85,7 +85,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
         }
       }
       router.navigate({
-        name,
+        name: routeName,
         params,
         hash,
         query,
