@@ -12,9 +12,10 @@ const ActiveLink = React.forwardRef(
           {...rest}
           forward={{
             ...forward,
-            className: [forward.className || "", active ? "active" : ""].join(
-              " "
-            )
+            className: [
+              (forward && forward.className) || "",
+              active ? "active" : ""
+            ].join(" ")
           }}
         />
       )}
