@@ -12,6 +12,7 @@ rimraf.sync(types);
 // don't bundle dependencies for es/cjs builds
 const pkg = require("../package.json");
 const deps = Object.keys(pkg.dependencies).map(key => key);
+deps.push("path");
 
 const base = {
   name: "CuriStatic",

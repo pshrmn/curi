@@ -134,8 +134,6 @@ Instead, please use the "forward" prop to pass an object of props to be attached
       }
     }
 
-    const routeName = name || to;
-
     const additionalProps = {
       ...rest,
       ...forward
@@ -159,12 +157,10 @@ Instead, please use the "forward" prop to pass an object of props to be attached
   }
 }
 
-const Link = React.forwardRef((props: LinkProps, ref) => (
+export default /** #__PURE__ */ React.forwardRef((props: LinkProps, ref) => (
   <Curious>
     {({ router }: Emitted) => (
       <BaseLink {...props} router={router} forwardedRef={ref} />
     )}
   </Curious>
 ));
-
-export default Link;

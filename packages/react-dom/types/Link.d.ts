@@ -12,5 +12,5 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
     children: NavigatingChildren | React.ReactNode;
     forward?: React.AnchorHTMLAttributes<HTMLAnchorElement>;
 }
-declare const Link: React.ComponentType<LinkProps & React.ClassAttributes<{}>>;
-export default Link;
+declare const _default: React.ComponentType<LinkProps & React.ClassAttributes<{}>>;
+export default /** #__PURE__ */ _default;

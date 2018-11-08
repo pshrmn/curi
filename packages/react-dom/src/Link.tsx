@@ -4,13 +4,13 @@ import shallowEqual from "shallowequal";
 
 import { CuriRouter } from "@curi/router";
 
-const canNavigate = (event: React.MouseEvent<HTMLElement>) => {
+function canNavigate(event: React.MouseEvent<HTMLElement>) {
   return (
     !event.defaultPrevented &&
     event.button === 0 &&
     !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
   );
-};
+}
 
 export type NavigatingChildren = (navigating: boolean) => React.ReactNode;
 
@@ -166,7 +166,7 @@ Instead, please use the "forward" prop to pass an object of props to be attached
   }
 }
 
-const Link = React.forwardRef(
+export default /** #__PURE__ */ React.forwardRef(
   (props: LinkProps, ref): React.ReactElement<any> => (
     <Curious>
       {({ router }) => (
@@ -175,5 +175,3 @@ const Link = React.forwardRef(
     </Curious>
   )
 );
-
-export default Link;
