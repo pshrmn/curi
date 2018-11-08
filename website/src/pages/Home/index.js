@@ -46,8 +46,8 @@ const router = curi(history, routes);`}
         </p>
         <p>
           Ready to learn more? Get started with the{" "}
-          <Link name="Guide" params={{ slug: "creating-a-router" }}>
-            creating a router
+          <Link name="Guide" params={{ slug: "getting-started" }}>
+            getting started
           </Link>{" "}
           guide.
         </p>

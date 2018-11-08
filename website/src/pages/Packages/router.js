@@ -44,10 +44,10 @@ const router = curi(history, routes, options);`}
                     application. The{" "}
                     <Link
                       name="Guide"
-                      params={{ slug: "creating-a-router" }}
+                      params={{ slug: "getting-started" }}
                       hash="history-object"
                     >
-                      Creating a Router guide
+                      getting started guide
                     </Link>{" "}
                     provides more information on how to choose which history
                     type is right for an application.

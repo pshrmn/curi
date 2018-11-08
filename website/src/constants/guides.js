@@ -9,14 +9,14 @@ const guides = [
       `../pages/Guides/installation.js`)
   },
   {
-    name: "Creating a Router",
-    slug: "creating-a-router",
+    name: "Getting Started",
+    slug: "getting-started",
     description:
-      "Learn the basic concepts that you'll need to know to setup your project",
+      "Learn the core concepts that you'll need to know to setup your project",
     type: "basic",
     import: () =>
-      import(/* webpackChunkName: 'guide--creating-a-router' */
-      `../pages/Guides/creating-a-router.js`)
+      import(/* webpackChunkName: 'guide--getting-started' */
+      `../pages/Guides/getting-started.js`)
   },
   {
     name: "History",

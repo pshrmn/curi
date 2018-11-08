@@ -10,10 +10,10 @@ import { Note } from "../../components/Messages";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
 
 const meta = {
-  title: "Creating a Router"
+  title: "Getting Started"
 };
 
-export default function CreatingARouterGuide() {
+export default function GettingStartedGuide() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
