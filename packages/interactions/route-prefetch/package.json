@@ -1,6 +1,6 @@
 {
   "name": "@curi/route-prefetch",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A route interaction to prefetching Curi route data",
   "main": "dist/curi-route-prefetch.js",
   "module": "dist/curi-route-prefetch.es.js",
@@ -33,7 +33,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "^1.0.4",
+    "@curi/router": "^1.1.0",
     "@hickory/root": "^1.0.0"
   },
   "devDependencies": {

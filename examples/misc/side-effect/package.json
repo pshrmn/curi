@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/side-effect",
   "private": true,
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "Use side effects in a Curi application",
   "main": "index.js",
   "keywords": [
@@ -11,8 +11,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "^1.1.2",
-    "@curi/router": "^1.0.4",
+    "@curi/react-dom": "^1.2.0",
+    "@curi/router": "^1.1.0",
     "@curi/side-effect-title": "^1.0.1",
     "@hickory/browser": "^1.0.0",
     "react": "^16.5.0",

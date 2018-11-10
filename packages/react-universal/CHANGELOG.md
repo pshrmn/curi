@@ -1,4 +1,4 @@
-## Next
+## 1.1.0
 
 * Only export public TypeScript types.
 * Add `<Navigating>` component, which lets the user know when asynchronous routes are navigating and cancel the navigation.

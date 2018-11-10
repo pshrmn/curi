@@ -1,4 +1,4 @@
-## Next
+## 1.1.0
 
 * Add `forward` prop to `Link` for passing props to rendered component.
 * Deprecate passing props from `Link` to rendered component.
