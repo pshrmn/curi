@@ -69,12 +69,12 @@ class BaseNavigating extends React.Component<
   }
 }
 
-const Navigating = (props: NavigatingProps) => {
+export default function Navigating(
+  props: NavigatingProps
+): React.ReactElement<any> {
   return (
     <Curious>
       {({ router }) => <BaseNavigating {...props} router={router} />}
     </Curious>
   );
-};
-
-export default Navigating;
+}

@@ -1,4 +1,3 @@
-import React from "react";
 import { ReactNode } from "react";
 import { Response } from "@curi/router";
 export interface ActiveProps {
@@ -7,5 +6,4 @@ export interface ActiveProps {
     params?: object;
     partial?: boolean;
 }
-declare const Active: (props: ActiveProps) => React.ReactNode;
-export default Active;
+export default function (props: ActiveProps): ReactNode;

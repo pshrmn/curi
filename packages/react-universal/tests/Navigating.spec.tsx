@@ -2,14 +2,14 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
-import { curi } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 
 // resolved by jest
 import { curiProvider, Navigating } from "@curi/react-universal";
 
 describe("<Navigating>", () => {
   let node;
-  const routes = [
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "Sync", path: "sync" },
     {
@@ -35,7 +35,7 @@ describe("<Navigating>", () => {
       }
     },
     { name: "Catch All", path: "(.*)" }
-  ];
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");

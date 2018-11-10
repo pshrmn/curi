@@ -80,14 +80,14 @@ class FocusWithResponse extends React.Component<FocusPropsWithResponse> {
   }
 }
 
-const Focus = (props: FocusProps) => (
-  <Curious>
-    {({ response }) => (
-      <FocusWithResponse response={response} {...props}>
-        {props.children}
-      </FocusWithResponse>
-    )}
-  </Curious>
-);
-
-export default Focus;
+export default function Focus(props: FocusProps): React.ReactElement<any> {
+  return (
+    <Curious>
+      {({ response }) => (
+        <FocusWithResponse response={response} {...props}>
+          {props.children}
+        </FocusWithResponse>
+      )}
+    </Curious>
+  );
+}

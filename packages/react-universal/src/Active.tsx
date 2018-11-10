@@ -11,13 +11,14 @@ export interface ActiveProps {
   partial?: boolean;
 }
 
-const Active = (props: ActiveProps): ReactNode => (
-  <Curious>
-    {({ router, response }) => {
-      if (process.env.NODE_ENV !== "production") {
-        if (!router.route.active) {
-          throw new Error(
-            `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
+export default function(props: ActiveProps): ReactNode {
+  return (
+    <Curious>
+      {({ router, response }) => {
+        if (process.env.NODE_ENV !== "production") {
+          if (!router.route.active) {
+            throw new Error(
+              `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
 
 import curi from "@curi/router";
 import active from "@curi/route-active";
@@ -25,16 +26,20 @@ import active from "@curi/route-active";
 const router = curi(history, routes, {
   route: [active()]
 });`
-          );
+            );
+          }
         }
-      }
 
-      return props.children(
-        router.route.active(props.name, response, props.params, props.partial),
-        response
-      );
-    }}
-  </Curious>
-);
-
-export default Active;
+        return props.children(
+          router.route.active(
+            props.name,
+            response,
+            props.params,
+            props.partial
+          ),
+          response
+        );
+      }}
+    </Curious>
+  );
+}

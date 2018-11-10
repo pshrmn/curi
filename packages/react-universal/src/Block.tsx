@@ -54,8 +54,10 @@ class BaseBlock extends React.Component<BaseBlockProps> {
   }
 }
 
-const Block = (props: BlockProps): React.ReactElement<any> => (
-  <Curious>{({ router }) => <BaseBlock {...props} router={router} />}</Curious>
-);
-
-export default Block;
+export default function Block(props: BlockProps): React.ReactElement<any> {
+  return (
+    <Curious>
+      {({ router }) => <BaseBlock {...props} router={router} />}
+    </Curious>
+  );
+}
