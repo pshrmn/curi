@@ -6,7 +6,7 @@ export default function Nav() {
     <nav>
       <ul>
         <li>
-          <ActiveLink name="Home" className="home-link">
+          <ActiveLink name="Home" forward={{ className: "home-link" }}>
             Curi
           </ActiveLink>
         </li>

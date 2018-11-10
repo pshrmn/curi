@@ -5,7 +5,7 @@
 * `<Link>` takes `name` prop, preferable over `to`.
 * Only export public TypeScript types.
 * `<Link>` is no longer a pure component.
-* Add `<Navigation>` component, which lets the user know when asynchronous routes are navigating and cancel the navigation.
+* Add `<Navigating>` component, which lets the user know when asynchronous routes are navigating and cancel the navigation.
 
 ## 1.0.2
 

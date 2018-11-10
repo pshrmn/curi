@@ -148,11 +148,11 @@ const Router = curiProvider(router);`}
             </CodeBlock>
 
             <Section tag="h3" title="Props" id="Link-props">
-              <Section tag="h4" title="to" id="Link-to">
+              <Section tag="h4" title="name" id="Link-name">
                 <Explanation>
                   <p>The name of the route that you want to navigate to.</p>
                   <p>
-                    If <IJS>to</IJS> is not provided, the <Cmp>Link</Cmp> will
+                    If <IJS>name</IJS> is not provided, the <Cmp>Link</Cmp> will
                     re-use the current location's <IJS>pathname</IJS>. This is
                     useful for linking to hashes within the current page.
                   </p>
@@ -161,6 +161,14 @@ const Router = curiProvider(router);`}
                   {`// Home route is { name: "Home", path: "" }
 <Link name="Home">Home</Link>`}
                 </CodeBlock>
+                <Explanation>
+                  <Note>
+                    The <IJS>name</IJS> prop is a replacement for the{" "}
+                    <IJS>to</IJS> prop from previous versions. You can continue
+                    to use <IJS>to</IJS> in <IJS>@curi/react-dom</IJS> v1, but
+                    it will be removed in v2.
+                  </Note>
+                </Explanation>
               </Section>
 
               <Section tag="h4" title="params" id="Link-params">
@@ -263,6 +271,33 @@ const Router = curiProvider(router);`}
                   </Warning>
                 </Explanation>
               </Section>
+
+              <Section tag="h4" title="forward" id="Link-forward">
+                <Explanation>
+                  <p>
+                    The <IJS>forward</IJS> prop is an object of props to pass on
+                    to the rendered anchor component.
+                  </p>
+                </Explanation>
+                <CodeBlock lang="jsx">
+                  {`<Link
+  name="Home"
+  forward={{
+    className: "home"
+  }}
+>Home</Link>
+// <a href="/" class="home">Home</a>`}
+                </CodeBlock>
+                <Explanation>
+                  <Note>
+                    Previously, any extra props passed to a <Cmp>Link</Cmp>{" "}
+                    would be forwarded to the anchor component. This behavior is
+                    now deprecated and will be removed in{" "}
+                    <IJS>@curi/react-native</IJS> v2. Please use the{" "}
+                    <IJS>forward</IJS> prop instead.
+                  </Note>
+                </Explanation>
+              </Section>
             </Section>
           </Section>
 
@@ -285,7 +320,7 @@ const Router = curiProvider(router);`}
                 <IJS>outline</IJS> of <IJS>"none"</IJS>.
               </p>
               <Note>
-                You should only have one <Cmp>Focus</Cmp> in an app.
+                Only one <Cmp>Focus</Cmp> should be rendered at a time.
               </Note>
             </Explanation>
             <CodeBlock lang="jsx">

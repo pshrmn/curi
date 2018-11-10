@@ -12,9 +12,9 @@ export const Section = ({
   className = "section"
 }) => (
   <Wrapper className={className} id={id}>
-    <Tag>
+    <Tag className="displaced-header">
       <Link hash={id} forward={{ className: "header-link" }}>
-        {title} <span className="hash">#</span>
+        {title}
       </Link>
     </Tag>
     {children}

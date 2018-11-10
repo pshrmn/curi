@@ -18,9 +18,15 @@
 .header-link {
   text-decoration: none;
 
-  span.hash {
-    margin-left: 5px;
+  &::after {
+    content: "#";
     color: $dark-gray;
+    margin-left: 5px;
+    display: none;
+  }
+
+  &:hover::after {
+    display: inline-block;
   }
 }
 
@@ -29,7 +35,7 @@
     max-width: 800px;
   }
 
-  .header-link {
+  .displaced-header {
     &:before {
       content: "";
       display: block;
