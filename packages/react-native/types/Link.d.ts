@@ -17,5 +17,5 @@ export interface LinkProps {
     children: NavigatingChildren | React.ReactNode;
     forward?: object;
 }
-declare const _default: React.ComponentType<LinkProps & React.ClassAttributes<{}>>;
+declare const _default: React.ForwardRefExoticComponent<LinkProps & React.ClassAttributes<{}>>;
 export default /** #__PURE__ */ _default;
