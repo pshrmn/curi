@@ -10,12 +10,7 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" active" href="/guides/">Guides</a></li><li><a class=" " href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Apollo Integration</h1><div class="explanation"><p><a href="https://apollographql.com">Apollo</a> is a great solution for managing an application&#x27;s data using<!-- --> <a href="http://graphql.org">GraphQL</a>.</p><p>There are a few different implementation strategies for integrating Apollo and Curi based on how tightly you want them to be paired.</p><div class="note"><strong>Note:</strong> <p>This guide only covers integration between Curi and Apollo. If you are not already familiar with how to use Apollo, you will want to learn that first.</p><p>Also, this guide will only be referencing Apollo&#x27;s React implementation, but the principles are the same no matter how you render your application.</p></div></div><div class="section" id="setup"><h2>Setup<a class="header-link" href="/guides/apollo/#setup">#</a></h2><div class="explanation"><p>Your application&#x27;s Apollo client instance should be defined in its own module so that it can be imported throughout the application.</p></div><div class="code-block"><pre><code class="language-javascript">// apollo.js
-import ApolloClient from &quot;apollo-boost&quot;;
-
-export default ApolloClient({
-  uri: &quot;https://example.com/graphql&quot;
-});</code></pre></div><div class="explanation"><p>Apollo&#x27;s React package provides an <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> <!-- -->component for accessing your Apollo client throughout the application. The <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> (or whatever you name the root Curi component) should be a descendant of the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> because we don&#x27;t need to re-render the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> for every new response.</p></div><div class="code-block"><pre><code class="language-jsx">import { ApolloProvider } from &quot;react-apollo&quot;;
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" active" href="/guides/">Guides</a></li><li><a class=" " href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Apollo Integration</h1><div class="explanation"><p><a href="https://apollographql.com">Apollo</a> is a great solution for managing an application&#x27;s data using<!-- --> <a href="http://graphql.org">GraphQL</a>.</p><p>There are a few different implementation strategies for integrating Apollo and Curi based on how tightly you want them to be paired.</p><div class="note"><strong>Note:</strong> <p>This guide only covers integration between Curi and Apollo. If you are not already familiar with how to use Apollo, you will want to learn that first.</p><p>Also, this guide will only be referencing Apollo&#x27;s React implementation, but the principles are the same no matter how you render your application.</p></div></div><div class="section" id="setup"><h2 class="displaced-header"><a class="header-link" href="#setup">Setup</a></h2><div class="explanation"><p>Apollo&#x27;s React package provides an <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> <!-- -->component for accessing your Apollo client throughout the application. The <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> (or whatever you name the root Curi component) should be a descendant of the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> because we don&#x27;t need to re-render the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->ApolloProvider<!-- -->&gt;</code> for every new response.</p></div><div class="code-block"><pre><code class="language-jsx">import { ApolloProvider } from &quot;react-apollo&quot;;
 import { curiProvider } from &quot;@curi/react-dom&quot;;
 
 const Router = curiProvider(router);
@@ -26,11 +21,11 @@ ReactDOM.render((
       {() =&gt; {...}}
     &lt;/Router&gt;
   &lt;/ApolloProvider&gt;
-), holder);</code></pre></div></div><div class="section" id="loose-pairing"><h2>Loose Pairing<a class="header-link" href="/guides/apollo/#loose-pairing">#</a></h2><div class="explanation"><p>Apollo and Curi don&#x27;t actually have to know about each other. Curi can create a response without doing any data fetching and let Apollo handle that with its <code class="inline-code language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code> component.</p></div><div class="code-block"><pre><code class="language-javascript">// routes.js
+), holder);</code></pre></div></div><div class="section" id="loose-pairing"><h2 class="displaced-header"><a class="header-link" href="#loose-pairing">Loose Pairing</a></h2><div class="explanation"><p>Apollo and Curi don&#x27;t actually have to know about each other. Curi can create a response without doing any data fetching and let Apollo handle that with its <code class="inline-code language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code> component.</p></div><div class="code-block"><pre><code class="language-javascript">// routes.js
 import Noun from &quot;./pages/Noun&quot;;
 
 // nothing Apollo related in here
-const routes = [
+const routes = prepareRoutes([
   {
     name: &#x27;Noun&#x27;,
     path: &#x27;noun/:word&#x27;,
@@ -40,7 +35,7 @@ const routes = [
       };
     }
   }
-];</code></pre></div><div class="explanation"><p>Any location data that a query needs can be taken from the response object. The best way to access this from your components would be to pass the <code class="inline-code language-javascript">response</code> to the components rendered in the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children</code> prop, which is a render-invoked function.</p></div><div class="code-block"><pre><code class="language-jsx">// index.js
+]);</code></pre></div><div class="explanation"><p>Any location data that a query needs can be taken from the response object. The best way to access this from your components would be to pass the <code class="inline-code language-javascript">response</code> to the components rendered in the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children</code> prop, which is a render-invoked function.</p></div><div class="code-block"><pre><code class="language-jsx">// index.js
 ReactDOM.render((
   &lt;ApolloProvider client={client}&gt;
     &lt;Router&gt;
@@ -84,36 +79,26 @@ const Noun = ({ response }) =&gt; (
       )
     }}
   &lt;/Query&gt;
-);</code></pre></div></div><div class="section" id="tight-pairing"><h2>Tight Pairing<a class="header-link" href="/guides/apollo/#tight-pairing">#</a></h2><div class="explanation"><p>You can use your Apollo client instance to call queries in a route&#x27;s<!-- --> <code class="inline-code language-javascript">resolve</code> functions. <code class="inline-code language-javascript">resolve</code> functions are expected to return a Promise, which is exactly what<!-- --> <code class="inline-code language-javascript">client.query()</code> returns, so tightly pairing Curi and Apollo is mostly center around using a <code class="inline-code language-javascript">resolve</code> function to return a <code class="inline-code language-javascript">client.query()</code> call. This will delay navigation until after a route&#x27;s GraphQL data has been loaded by Apollo.</p></div><div class="code-block"><pre><code class="language-javascript">import client from &quot;./apollo&quot;;
-import { EXAMPLE_QUERY } from &quot;./queries&quot;;
+);</code></pre></div></div><div class="section" id="tight-pairing"><h2 class="displaced-header"><a class="header-link" href="#tight-pairing">Tight Pairing</a></h2><div class="explanation"><p>You can use your Apollo client instance to call queries in a route&#x27;s<!-- --> <code class="inline-code language-javascript">resolve</code> functions. <code class="inline-code language-javascript">resolve</code> functions are expected to return a Promise, which is exactly what<!-- --> <code class="inline-code language-javascript">client.query()</code> returns. Tightly pairing Curi and Apollo is mostly center around using a <code class="inline-code language-javascript">resolve</code> function to return a <code class="inline-code language-javascript">client.query()</code> call. This will delay navigation until after a route&#x27;s GraphQL data has been loaded by Apollo.</p><p>The <code class="inline-code language-javascript">external</code> option can be used when creating the router to make the Apollo client accessible from routes.</p></div><div class="code-block"><pre><code class="language-javascript">import client from &quot;./apollo&quot;;
+          
+const router = curi(history, routes, {
+  external: { client }
+});</code></pre></div><div class="code-block"><pre><code class="language-javascript">import { EXAMPLE_QUERY } from &quot;./queries&quot;;
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: &quot;Example&quot;,
     path: &quot;example/:id&quot;,
     resolve: {
-      data({ params }) {
-        return client.query({
+      data({ params }, external) {
+        return external.client.query({
           query: EXAMPLE_QUERY,
           variables: { id: params.id }
         });
       }
     }
   }
-];</code></pre></div><div class="explanation"><p>There are two strategies for doing this. Both approaches require you to be able to import your Apollo client in the module where you define your routes, which is why we created client in its own module in the <a href="/guides/apollo/#setup">setup</a> section.</p></div><div class="code-block"><pre><code class="language-javascript">// index.js
-import client from &quot;./apollo&quot;;
-
-ReactDOM.render((
-  &lt;ApolloProvider client={client}&gt;
-    /*...*/
-  &lt;/ApolloProvider&gt;
-), holder);
-
-// routes.js
-import client from &quot;./apollo&quot;;
-
-// ...</code></pre></div><div class="explanation"><p>The first approach is to avoid the <code class="inline-code language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code> altogether. Instead, you can use a route&#x27;s <code class="inline-code language-javascript">response()</code> property to attach the data fetched by Apollo directly to a response through its<!-- --> <code class="inline-code language-javascript">data</code> property.</p><p>While we know at this point that the query has executed, we should also check <code class="inline-code language-javascript">resolved.error</code> in the <code class="inline-code language-javascript">response()</code> <!-- -->function to ensure that the query was executed successfully.</p></div><div class="code-block"><pre><code class="language-javascript">// routes.js
-import client from &quot;./apollo&quot;;
+]);</code></pre></div><div class="explanation"><p>There are two strategies for doing this.</p><p>The first approach is to avoid the <code class="inline-code language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code> altogether. Instead, you can use a route&#x27;s <code class="inline-code language-javascript">response()</code> property to attach the data fetched by Apollo directly to a response through its<!-- --> <code class="inline-code language-javascript">data</code> property.</p><p>While we know at this point that the query has executed, we should also check <code class="inline-code language-javascript">error</code> in the <code class="inline-code language-javascript">response()</code> function to ensure that the query was executed successfully.</p></div><div class="code-block"><pre><code class="language-javascript">// routes.js
 import GET_VERB from &quot;./queries&quot;;
 
 import Verb from &quot;./pages/Verb&quot;;
@@ -123,8 +108,8 @@ export default [
     name: &quot;Verb&quot;,
     path: &quot;verb/:word&quot;,
     resolve: {
-      verb({ params }) {
-        return client.query({
+      verb({ params }, external) {
+        return external.client.query({
           query: GET_VERB,
           variables: { word: params.word }
         })
@@ -140,7 +125,7 @@ export default [
       }
     }
   }
-];</code></pre></div><div class="explanation"><p>In the response&#x27;s <code class="inline-code language-javascript">body</code> component, you would access the query data through the <code class="inline-code language-javascript">response</code>&#x27;s <code class="inline-code language-javascript">data</code> <!-- -->property.</p></div><div class="code-block"><pre><code class="language-jsx">// pages/Verb.js
+];</code></pre></div><div class="explanation"><p>When rendering, you can access the query data through the<!-- --> <code class="inline-code language-javascript">response</code>&#x27;s <code class="inline-code language-javascript">data</code> property.</p></div><div class="code-block"><pre><code class="language-jsx">// pages/Verb.js
 const Verb = ({ response }) =&gt; (
   &lt;div&gt;
     &lt;h1&gt;{response.data.verb.word}&lt;/h1&gt;
@@ -149,7 +134,6 @@ const Verb = ({ response }) =&gt; (
     &lt;/p&gt;
   &lt;/div&gt;
 )</code></pre></div><div class="explanation"><p>The second approach is to use a <code class="inline-code language-javascript">resolve</code> function as a way to cache the data, but also use <code class="inline-code language-jsx">&lt;<!-- -->Query<!-- -->&gt;</code>. With this approach, we do not have to attach the query data to the response; we are just relying on the fact that Apollo will execute and cache the results prior to navigation.</p></div><div class="code-block"><pre><code class="language-javascript">// routes.js
-import client from &quot;./apollo&quot;;
 import { GET_VERB } from &quot;./queries&quot;;
 
 export default [
@@ -157,10 +141,10 @@ export default [
     name: &quot;Verb&quot;,
     path: &quot;verb/:word&quot;,
     resolve: {
-      data({ params }) {
+      data({ params, external }) {
         // load the data so it is cached by
         // your Apollo client
-        return client.query({
+        return external.client.query({
           query: GET_VERB,
           variables: { word: params.word }
         })
@@ -187,23 +171,23 @@ const Verb = ({ response }) =&gt; (
       );
     }}
   &lt;/Query&gt;
-)</code></pre></div><div class="subsection" id="prefetch"><h3>Prefetching<a class="header-link" href="/guides/apollo/#prefetch">#</a></h3><div class="explanation"><p>One additional benefit of adding queries to routes using<!-- --> <code class="inline-code language-javascript">resolve</code> functions is that you can prefetch data for a route.</p><p>The<!-- --> <a href="/packages/@curi/route-prefetch/"><code class="inline-code language-javascript">@curi/route-prefetch</code></a> <!-- -->interaction lets you programmatically fetch the data for a route prior to navigating to a location.</p></div><div class="code-block"><pre><code class="language-javascript">// index.js
+)</code></pre></div><div class="section" id="prefetch"><h3 class="displaced-header"><a class="header-link" href="#prefetch">Prefetching</a></h3><div class="explanation"><p>One additional benefit of adding queries to routes using<!-- --> <code class="inline-code language-javascript">resolve</code> functions is that you can prefetch data for a route.</p><p>The<!-- --> <a href="/packages/@curi/route-prefetch/"><code class="inline-code language-javascript">@curi/route-prefetch</code></a> <!-- -->interaction lets you programmatically fetch the data for a route prior to navigating to a location.</p></div><div class="code-block"><pre><code class="language-javascript">// index.js
 import prefetch from &quot;@curi/route-prefetch&quot;;
 
-const routes = [
+const routes = prepareRoutes([
   {
     name: &quot;Example&quot;,
     path: &quot;example/:id&quot;,
     resolve: {
-      examples({ params }) {
-        client.query({
+      examples({ params }, external) {
+        return external.client.query({
           query: GET_EXAMPLES,
           variables: { id: params.id }
         })
       }
     }
   }
-]
+]);
 
 const router = curi(history, routes, {
   route: [prefetch()]
@@ -214,10 +198,10 @@ const router = curi(history, routes, {
 router.route.prefetch(
   &quot;Example&quot;,
   { params: { id: 2 }}
-);</code></pre></div></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>basic</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/creating-a-router/">Creating a Router</a></li><li class="solo"><a class=" " href="/guides/routes-and-responses/">Routes &amp; Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/navigating-and-observing/">Navigating &amp; Observing</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>rendering</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/react-dom/">React DOM</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li><li class="solo"><a class=" " href="/guides/svelte/">Svelte</a></li><li class="solo"><a class=" " href="/guides/vue/">Vue</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>advanced</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" active" href="/guides/apollo/">Apollo Integration</a></li><li class="solo"><a class=" " href="/guides/dev-tips/">Development Tips</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" style="cursor:pointer;font-size:24px;font-family:&quot;Zilla Slab&quot;, serif;text-align:left;width:100%;background:none;border:0;padding:0"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>migration</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+);</code></pre></div></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>basic</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/history/">History</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/new-responses/">New Responses</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>rendering</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/react-dom/">React DOM</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li><li class="solo"><a class=" " href="/guides/svelte/">Svelte</a></li><li class="solo"><a class=" " href="/guides/vue/">Vue</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>advanced</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" active" href="/guides/apollo/">Apollo Integration</a></li><li class="solo"><a class=" " href="/guides/dev-tips/">Development Tips</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>migration</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
-    <script src="https://unpkg.com/react@16.5.1/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react@16.6.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.6.0/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

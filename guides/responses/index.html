@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responses Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" active" href="/guides/">Guides</a></li><li><a class=" " href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Responses</h1><div class="explanation"><p>When Curi receives a location, it compares the location&#x27;s<!-- --> <code class="inline-code language-javascript">pathname</code> to each route&#x27;s <code class="inline-code language-javascript">path</code> to find which one matches best and uses that route to create a response object.</p></div><div class="section" id="response-properties"><h2 class="displaced-header"><a class="header-link" href="#response-properties">The Properties of a Response Object</a></h2><div class="explanation"><p>There are two types of response properties.</p></div><div class="explanation"><p>The &quot;match&quot; properties are set based on the route that matches a location. A response always has these properties.</p></div><div class="code-block"><pre><code class="language-javascript">// match properties
+{
+  // The location object used to generate the response.
+  location: { pathname: &#x27;/photos/6789/12345&#x27;, ... },
+
+  // The name of the best matching route
+  name: &#x27;Photo&#x27;,
+
+  // The name of ancestor routes that matched
+  // part of the location&#x27;s pathname
+  partials: [&#x27;Album&#x27;],
+
+  // An object containing the values parsed
+  // from the pathname by path-to-regexp.
+  // This includes params from ancestor routes.
+  params: { photoID: 12345, albumID: 6789 },
+}</code></pre></div><div class="explanation"><p>The &quot;settable&quot; properties are ones that are added by a matched route&#x27;s <code class="inline-code language-javascript">response()</code> function. These only exist on the response when they are returned by a route&#x27;s <code class="inline-code language-javascript">response()</code> <!-- -->function.</p><p>The &quot;settable&quot; properties are:</p><table><thead><tr><th>property</th><th>description</th></tr></thead><tbody><tr><td>body</td><td>The component(s) that should be rendered for a route.</td></tr><tr><td>status</td><td>An http status, mostly useful for server side rendering.</td></tr><tr><td>data</td><td>A place to attach any data you want to the response, such as data loaded in the route&#x27;s <code class="inline-code language-javascript">resolve</code> functions.</td></tr><tr><td>title</td><td>The response&#x27;s title, which can be used with<!-- --> <a href="/packages/@curi/side-effect-title/"><code class="inline-code language-javascript">@curi/side-effect-title</code></a> <!-- -->to set the browsers tab&#x27;s title.</td></tr><tr><td>error</td><td>A convenient place to attach any errors to the response.</td></tr><tr><td>redirectTo</td><td>An object describing a route that Curi should automatically redirect to.</td></tr></tbody></table></div><div class="code-block"><pre><code class="language-javascript">// settable properties (optional)
+{
+  body: Photo,
+  // or maybe
+  body: {
+    menu: PhotoMenu,
+    main: Photo
+  },
+  // Please see below for more information
+  // about this property
+
+  status: 200,
+
+  data: {...},
+
+  title: &#x27;Photo 12345&#x27;,
+
+  error: undefined,
+
+  redirectTo: {...}
+}</code></pre></div></div><div class="section" id="response-body"><h2 class="displaced-header"><a class="header-link" href="#response-body">Response Body</a></h2><div class="explanation"><p>Curi isn&#x27;t strict about how you use responses, but you will most likely always want to use a route&#x27;s <code class="inline-code language-javascript">response()</code> function to attach a <code class="inline-code language-javascript">body</code> property to a response. The usual pattern is to use a route&#x27;s <code class="inline-code language-javascript">body</code> property to describe which component(s) to render when a route matches. This can either be a single component for basic layouts or an object with a number of components for<!-- --> <a href="/examples/react/multi-body/">advanced layouts</a>.</p><div class="note"><strong>Note:</strong> <!-- -->Each route should use the same <code class="inline-code language-javascript">body</code> &quot;shape&quot;. If one route returns a single component while another route return an object, you will be making rendering more complicated for yourself.</div></div><div class="code-block"><pre><code class="language-javascript">// do NOT do this
+// mixing body shapes complicates rendering
+const routes = prepareRoutes([
+  {
+    response() {
+      return { body: One }
+    }
+  },
+  {
+    response() {
+      return {
+        body: {
+          main: Main,
+          menu: Menu
+        }
+      }
+    }
+  }
+]);</code></pre></div></div><div class="section" id="redirect-properties"><h2 class="displaced-header"><a class="header-link" href="#redirect-properties">Redirect Response</a></h2><div class="explanation"><p>When a route&#x27;s <code class="inline-code language-javascript">response()</code> function returns an object with a<!-- --> <a href="/packages/@curi/router/#response"><code class="inline-code language-javascript">redirectTo</code> property</a>, the router will use it to generate a location object that Curi will automatically redirect to.</p></div><div class="code-block"><pre><code class="language-javascript">{
+  // The redirectTo property provides information on
+  // where you should redirect to
+  redirectTo: { pathname: &#x27;/login&#x27; }
+}</code></pre></div><div class="explanation"><p>You can choose whether or not you want responses with a<!-- --> <code class="inline-code language-javascript">redirectTo</code> property to be emitted. If they are not emitted, then the router will redirect without the application&#x27;s observers knowing about the redirect. The default behavior is to emit redirects, but this also means that you have to render using the redirect response. The <code class="inline-code language-javascript">{ emitRedirects: false }</code> <!-- -->option prevents this.</p></div><div class="code-block"><pre><code class="language-javascript">const router = curi(history, routes, {
+  emitRedirects: false
+});</code></pre></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>basic</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/history/">History</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" active" href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/new-responses/">New Responses</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>rendering</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/react-dom/">React DOM</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li><li class="solo"><a class=" " href="/guides/svelte/">Svelte</a></li><li class="solo"><a class=" " href="/guides/vue/">Vue</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>advanced</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li><li class="solo"><a class=" " href="/guides/dev-tips/">Development Tips</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>migration</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
+    <script src="https://unpkg.com/react@16.6.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.6.0/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>

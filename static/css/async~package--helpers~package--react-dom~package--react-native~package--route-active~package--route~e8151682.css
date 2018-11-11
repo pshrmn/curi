@@ -1,6 +1,4 @@
-#API > .section {
-  border-bottom: 3px double #222233; }
-
 #API .section {
+  padding-left: 10px;
   margin-bottom: 5px; }
 

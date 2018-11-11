@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Routes Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" active" href="/guides/">Guides</a></li><li><a class=" " href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Routes</h1><div class="explanation"><p>Routes are JavaScript objects with two required properties—<code class="inline-code language-javascript">name</code> <!-- -->and <code class="inline-code language-javascript">path</code>—and a number of optional properties.</p><p>A route&#x27;s <code class="inline-code language-javascript">path</code> is used to determine if a route matches a location. Path strings use<!-- --> <a href="https://github.com/pillarjs/path-to-regexp"><code class="inline-code language-javascript">path-to-regexp</code></a> <!-- -->formatting, which allows you to define dynamic path parameters that a route should match.</p><p>A route&#x27;s <code class="inline-code language-javascript">name</code> is a unique identifier for a route. The<!-- --> <code class="inline-code language-javascript">name</code> is used to<!-- --> <a href="/guides/route-interactions/">interact</a> <!-- -->with a specific route.</p><div class="note"><strong>Note:</strong> <code class="inline-code language-javascript">path</code> strings do not start with a slash.</div></div><div class="code-block"><pre><code class="language-javascript">const routes = prepareRoutes([
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;
+  },
+  {
+    name: &quot;Album&quot;,
+    // the &quot;id&quot; segment can be any value
+    path: &quot;a/:id&quot;
+  }
+]);</code></pre></div><div class="section" id="prepareRoutes"><h3 class="displaced-header"><a class="header-link" href="#prepareRoutes">Preparing Routes</a></h3><div class="explanation"><p>The routes array should be wrapped in a <code class="inline-code language-javascript">prepareRoutes()</code> <!-- -->call. This will pre-build the routes for the router.</p></div><div class="code-block"><pre><code class="language-javascript">import { prepareRoutes } from &quot;@curi/router&quot;;
+
+// plain routes
+const routes = [...]
+
+// prepared routes
+export default prepareRoutes(routes);</code></pre></div></div><div class="section" id="route-names"><h3 class="displaced-header"><a class="header-link" href="#route-names">Route names</a></h3><div class="explanation"><p>Why do routes have names? Curi lets you interact with routes using their names.</p><p>For example, Curi provides a <code class="inline-code language-javascript">pathname</code> route interaction to generate the <code class="inline-code language-javascript">pathname</code> of a location to navigate to. Instead of manually writing <code class="inline-code language-javascript">pathname</code> strings, you tell Curi the name of the route that you want to navigate to (and also any required params) and Curi will create the <code class="inline-code language-javascript">pathname</code> <!-- -->for you.</p></div><div class="code-block"><pre><code class="language-javascript">const pathname = router.route.pathname(
+  &quot;Album&quot;, { id: &quot;abcd&quot; }
+);
+// pathname = &quot;/a/abcd&quot;</code></pre></div></div><div class="section" id="async"><h3 class="displaced-header"><a class="header-link" href="#async">Asynchronous Routes</a></h3><div class="explanation"><p>When a route matches, you might want to perform some actions before the application re-renders. This can include validating that a user is authorized to navigate to a route and loading data based on the path parameters parsed from the location.</p><p>A route&#x27;s <code class="inline-code language-javascript">resolve</code> property is an optional object for attaching functions to a route. A response will not be emitted until after all of a route&#x27;s <code class="inline-code language-javascript">resolve</code> functions have finished.</p></div><div class="code-block"><pre><code class="language-javascript">{
+  name: &quot;User&quot;,
+  path: &quot;u/:id&quot;,
+  resolve: {
+    authorized: () =&gt; {
+      // run code to verify the user can view the page
+      return Promise.resolve(true);
+    },
+    body: () =&gt; {
+      // import the User component using the import() API
+      return import(&quot;./components/User&quot;);
+    },
+    data: ({ name, location, params, partials }) =&gt; {
+      // get specific data using the route&#x27;s params
+      return UserAPI.get(params.id);
+    }
+  }
+}</code></pre></div><div class="explanation"><p>A route with <code class="inline-code language-javascript">resolve</code> properties is asynchronous, which has some effects to be aware of. You can read about these in the<!-- --> <a href="/guides/sync-or-async/">Sync or Async</a> <!-- -->guide.</p></div></div><div class="section" id="route-response"><h3 class="displaced-header"><a class="header-link" href="#route-response">The Response Function</a></h3><div class="explanation"><p>Each route can have a <code class="inline-code language-javascript">response()</code> function, which returns an object of properties to merge with route&#x27;s &quot;match&quot; properties. This combined object is a<!-- --> <a href="/guides/responses/">&quot;response&quot;</a> <!-- -->object.</p></div><div class="code-block"><pre><code class="language-javascript">import User from &quot;./components/User&quot;;
+
+const routes = prepareRoutes([
+  {
+    name: &quot;User&quot;,
+    path: &quot;u/:id&quot;,
+    resolve: {
+      data: ({ params }) =&gt; UserAPI.get(params.id)
+    },
+    response({ match, resolved, error }) {
+      if (error) {
+        // ...
+      }
+      return {
+        body: User,
+        data: resolved.data,
+        title: `User ${match.params.id}`
+      };
+    }
+  }
+]);</code></pre></div><div class="explanation"><p>Only valid response properties will be merged onto the response. These are the optional response properties listed above (<code class="inline-code language-javascript">body</code>, <code class="inline-code language-javascript">title</code>, <code class="inline-code language-javascript">status</code>, <code class="inline-code language-javascript">data</code>,<!-- --> <code class="inline-code language-javascript">redirectTo</code>, and <code class="inline-code language-javascript">error</code>).</p><p>The function receives an object with a number of properties you might find useful.</p><ol><li><code class="inline-code language-javascript">match</code> is an object of properties based on the matched route.</li><li><code class="inline-code language-javascript">resolved</code> is an object with the results of the route&#x27;s<!-- --> <code class="inline-code language-javascript">resolve</code> functions.</li><li><code class="inline-code language-javascript">error</code> is only defined when one of the<!-- --> <code class="inline-code language-javascript">resolve</code> functions throws an error does not catch it itself.</li></ol></div></div><div class="section" id="matching-routes"><h2 class="displaced-header"><a class="header-link" href="#matching-routes">Matching Routes</a></h2><div class="explanation"><p>Whenever Curi receives a new location, it will determine which route has a <code class="inline-code language-javascript">path</code> that matches the new location&#x27;s<!-- --> <code class="inline-code language-javascript">pathname</code>. It does this by walking over the route objects in the order that they are defined in the array. If a route has<!-- --> <code class="inline-code language-javascript">children</code>, those will be checked before moving to the route&#x27;s nest sibling.</p></div><div class="section" id="catch-all"><h3 class="displaced-header"><a class="header-link" href="#catch-all">No Matching Route</a></h3><div class="explanation"><div class="warning"><strong>Warning:</strong> <!-- -->If none of your routes match a location, Curi will do nothing! Your routes should include catch all route to match these locations yourself. The best way to do this is to add a route to the end of your routes array with a <code class="inline-code language-javascript">path</code> of<!-- --> <code class="inline-code language-javascript">&quot;(.*)&quot;</code>, which will match every pathname.</div></div><div class="code-block"><pre><code class="language-javascript">{
+  name: &#x27;Not Found&#x27;,
+  path: &#x27;(.*)&#x27;,
+}</code></pre></div></div><div class="section" id="match-walkthrough"><h3 class="displaced-header"><a class="header-link" href="#match-walkthrough">Route Matching Walkthrough</a></h3><div class="code-block"><pre><code class="language-javascript">const routes = prepareRoutes([
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+  },
+  {
+    name: &#x27;Album&#x27;,
+    path: &#x27;a/:album&#x27;
+  },
+  {
+    name: &#x27;Not Found&#x27;,
+    path: &#x27;(.*)&#x27; // this matches EVERY pathname
+  }
+]);</code></pre></div><div class="explanation"><p>Curi&#x27;s default matching behavior looks for exact matches. This means that when the route only matches part of the pathname, it does not count as a match. Routes can be configured to allow partial matching, but exact matching is usually preferable.</p><p>If the user navigates to a location with the pathname<!-- --> <code class="inline-code language-javascript">&quot;/a/red/yellow&quot;</code>, the <code class="inline-code language-javascript">Album</code> route will only partially match, so Curi will move on to the next route,<!-- --> <code class="inline-code language-javascript">Not Found</code>. <code class="inline-code language-javascript">Not Found</code> has a catch all<!-- --> <code class="inline-code language-javascript">path</code> that matches every pathname, so it will match the location.</p><p>If a route has children, Curi will check if any of those routes form a complete match before moving on to the next route in the routes array.</p></div><div class="code-block"><pre><code class="language-javascript">// when the pathname is &#x27;/a/Coloring+Book/All+Night&#x27;,
+// the Album route will partially match the pathname.
+// Then, its child route Song will be tested and fully
+// match the pathname.
+{
+  name: &#x27;Album&#x27;,
+  path: &#x27;a/:album&#x27;,
+  children: [
+    {
+      name: &#x27;Song&#x27;,
+      path: &#x27;:title&#x27;
+    }
+  ]
+}</code></pre></div></div><div class="section" id="options"><h3 class="displaced-header"><a class="header-link" href="#options">Path Matching Options</a></h3><div class="explanation"><p>You can control whether a route does exact or partial matching with<!-- --> <a href="#pathOptions"><code class="inline-code language-javascript">pathOptions</code></a> <!-- -->property. If you set <code class="inline-code language-javascript">{ end: false }</code>, a route that partially matches will consider itself matched.</p></div><div class="code-block"><pre><code class="language-javascript">// when the pathname is
+// &#x27;/a/Good+Kid,+M.A.A.D+City/Poetic+Justice&#x27;,
+// the Album route will partially match, but because
+// it sets &quot;end&quot; to false, the partial match will still be used.
+{
+  name: &#x27;Album&#x27;,
+  path: &#x27;a/:albumID&#x27;,
+  pathOptions: {
+    end: false
+  }
+}</code></pre></div></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>basic</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/history/">History</a></li><li class="solo"><a class=" active" href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/new-responses/">New Responses</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>rendering</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/react-dom/">React DOM</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li><li class="solo"><a class=" " href="/guides/svelte/">Svelte</a></li><li class="solo"><a class=" " href="/guides/vue/">Vue</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>advanced</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li><li class="solo"><a class=" " href="/guides/dev-tips/">Development Tips</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>migration</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
+    <script src="https://unpkg.com/react@16.6.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.6.0/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>

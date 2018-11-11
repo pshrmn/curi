@@ -65,6 +65,17 @@ pre[class*="language-"] {
     padding: 0;
     overflow: hidden; } }
 
+.collapse-button {
+  cursor: pointer;
+  font-size: 24px;
+  font-family: "Zilla Slab", serif;
+  text-align: left;
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: #222233; }
+
 .page-links ul {
   margin: 3px 0;
   padding-left: 0px;
@@ -244,10 +255,10 @@ p {
   margin: 5px 0; }
 
 h1 {
-  font-size: 1.5em; }
+  font-size: 1.75em; }
 
 h2 {
-  font-size: 1.3em; }
+  font-size: 1.5em; }
 
 h3 {
   font-size: 1.25em; }
@@ -266,6 +277,9 @@ th,
 td {
   border: 1px solid #c7c7c7;
   border-collapse: collapse; }
+
+table {
+  margin-bottom: 10px; }
 
 th {
   text-align: left; }
