@@ -10,32 +10,15 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" " href="/guides/">Guides</a></li><li><a class=" active" href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page tutorial"><div class="content" style="outline:none"><h1>React Basics Tutorial</h1><p>In this tutorial, we will be building a website for a bookstore. This will focus on the front-end part of the application.</p><div class="tutorial-outline"><p>In this tutorial, we will be doing the following:</p><ul><li>Learn how to define routes and setup the Curi router.</li><li>Learn how to render React components based on the current location.</li><li>Learn how to navigate within the application.</li></ul></div><div class="section" id="demo"><h2 class="displaced-header"><a class="header-link" href="#demo">Demo</a></h2><p>You can run a demo of the site we are building with CodeSandbox.</p><div class="demo"><iframe src="https://codesandbox.io/embed/github/curijs/react-basic-tutorial/tree/master/" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu to switch between files.</p></div></div><div class="section" id="setup"><h2 class="displaced-header"><a class="header-link" href="#setup">Setup</a></h2><p>We will be using<!-- --> <a href="https://github.com/facebook/create-react-app"><code class="inline-code language-javascript">create-react-app</code></a> <!-- -->to develop this website.</p><div class="note"><strong>Note:</strong> <!-- -->The instructions here assume that you have NodeJS and NPM &gt; 5.2 installed on your computer. If you do not, cannot, or prefer to avoid setup altogether, you can follow along using<!-- --> <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the boilerplate will be different, but the differences are minor.</div><p>Begin by opening a terminal and navigating to the directory where you want to save your code. Then, we will use <code class="inline-code language-javascript">npx</code> to create the application.</p><div class="code-block"><pre><code class="language-bash">npx create-react-app curi-bookstore # create the app
-cd curi-bookstore # enter the new app directory
-yarn start # start the dev server</code></pre></div><p><code class="inline-code language-javascript">create-react-app</code>&#x27;s dev server will automatically update when we change files, so we can leave that running. We will still be working in the terminal, so you will want to open up a new terminal window/tab and navigate to the application&#x27;s directory. Once you have done that, there are a few packages that need to be installed.</p><div class="code-block"><pre><code class="language-bash">yarn add @hickory/browser @curi/router @curi/react-dom</code></pre></div><p>The <code class="inline-code language-javascript">@hickory/browser</code> package will be used to create an object that interacts with the browser to power navigation (e.g. updates the URI in the address bar when you click a link).<!-- --> <code class="inline-code language-javascript">@curi/router</code> provides the function to actually create the router. <code class="inline-code language-javascript">@curi/react-dom</code> gives us some React components that interact with the router.</p></div><div class="section" id="history"><h2 class="displaced-header"><a class="header-link" href="#history">History and Locations</a></h2><p>URIs can be broken into parts to identify a location. With a single-page application, we don&#x27;t care about the URI&#x27;s protocol (http, https) or its hostname (www.example.com). The properties we care about are the <code class="inline-code language-javascript">pathname</code>, <code class="inline-code language-javascript">hash</code>, and <code class="inline-code language-javascript">query</code>.</p><div class="code-block"><pre><code class="language-javascript">// uri = &quot;https://example.com/one?key=value#id
-{
-  pathname: &quot;/one&quot;,
-  query: &quot;key=value&quot;,
-  hash: &quot;id&quot;
-}</code></pre></div><p>The router will match its routes against a location&#x27;s<!-- --> <code class="inline-code language-javascript">pathname</code> to figure out which route matches. The<!-- --> <code class="inline-code language-javascript">query</code> and <code class="inline-code language-javascript">hash</code> values are not used for matching routes.</p><p>Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->library to create a history object that will enable us to navigate within our application. Hickory provides a few different packages to create history objects for different environments, but the only one we care about right now is the browser history, which comes from the<!-- --> <code class="inline-code language-javascript">@hickory/browser</code> package. A browser history object will interact with the browser&#x27;s native<!-- --> <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">History API</a> <!-- -->so that our application can change locations (and the URI in the address bar) without making a request to a server and reloading the page.</p><p>We can import the <code class="inline-code language-javascript">Browser</code> function from<!-- --> <code class="inline-code language-javascript">@hickory/browser</code> in our index file (<code class="inline-code language-javascript">src/index.js</code>, which <code class="inline-code language-javascript">create-react-app</code> created for us). To create a history object, we call that function.</p><div class="note"><strong>Note:</strong> <!-- -->The history object can be configured with<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">an options object</a>, but we will stick with the defaults.</div><div class="code-block"><pre data-line="4,10"><code class="language-jsx">// src/index.js
-import React from &#x27;react&#x27;;
-import ReactDOM from &#x27;react-dom&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;;
-
-import &#x27;./index.css&#x27;;
-import App from &#x27;./App&#x27;;
-import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
-
-const history = Browser();
-
-ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div></div><div class="section" id="defining-routes"><h2 class="displaced-header"><a class="header-link" href="#defining-routes">Defining the Routes</a></h2><p>Routes are JavaScript objects that define the valid locations for a router. They have a <code class="inline-code language-javascript">name</code> and a <code class="inline-code language-javascript">path</code>.</p><div class="code-block"><pre><code class="language-javascript">// this is a route
-{ name: &quot;Home&quot;, path: &quot;&quot; }</code></pre></div><p>A route&#x27;s <code class="inline-code language-javascript">name</code> needs to be unique. We will use route names when we navigate within the application. A route&#x27;s <code class="inline-code language-javascript">path</code> <!-- -->describes the location pathname that it should match.</p><div class="aside" id="path-basics"><h3 class="displaced-header"><a class="header-link" href="#path-basics">Path basics</a></h3><p>Route paths are strings describing the pathname segments they should match.</p><div class="code-block"><pre><code class="language-javascript">{ path: &#x27;&#x27; } // matches &quot;/&quot;
-{ path: &#x27;about/stuff&#x27; } // matches &quot;/about/stuff&quot;</code></pre></div><p>Paths never begin with a slash.</p><div class="code-block"><pre><code class="language-javascript">// yes
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" " href="/guides/">Guides</a></li><li><a class=" active" href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page tutorial"><div class="content" style="outline:none"><h1>React Basics Tutorial</h1><p>In this tutorial, we will be building the front end of a website for a bookstore.</p><div class="tutorial-outline"><p><strong>We will be doing the following:</strong></p><ul><li>Creating a React application using<!-- --> <a href="https://facebook.github.io/create-react-app/">Create React App</a>.</li><li>Defining the website&#x27;s valid routes</li><li>Setting up a router</li><li>Rendering different content based on the current location.</li><li>Writing links to navigate within the application.</li></ul></div><div class="section" id="demo"><h2 class="displaced-header"><a class="header-link" href="#demo">Demo</a></h2><p>You can run a demo of the site we are building with CodeSandbox.</p><div class="demo"><iframe src="https://codesandbox.io/embed/github/curijs/react-basic-tutorial/tree/master/" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu to switch between files.</p></div></div><div class="section" id="setup"><h2 class="displaced-header"><a class="header-link" href="#setup">Setup</a></h2><div class="explanation"><p>We will be using<!-- --> <a href="https://github.com/facebook/create-react-app"><code class="inline-code language-javascript">create-react-app</code></a> <!-- -->to develop this website.</p><div class="note"><strong>Note:</strong> <!-- -->The instructions here assume that you have NodeJS and NPM installed on your computer. If you do not, cannot, or prefer to avoid setup altogether, you can follow along using<!-- --> <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the boilerplate will be different, but the differences are minor.</div><p>Begin by opening a terminal and navigating to the directory where you want to save your code. Then, we will use <code class="inline-code language-javascript">npx</code> to create the application.</p></div><div class="code-block"><pre><code class="language-bash">npx create-react-app curi-react-bookstore # create the app
+cd curi-react-bookstore # enter the new app directory</code></pre></div><div class="explanation"><p>There are three routing related packages that we will be using, so let&#x27;s install them now.</p><p>The <code class="inline-code language-javascript">@hickory/browser</code> manages locations and navigation within an application. <code class="inline-code language-javascript">@curi/router</code> creates our router.<!-- --> <code class="inline-code language-javascript">@curi/react-dom</code> provides React components that interact with the router.</p></div><div class="code-block"><pre><code class="language-bash">npm install @hickory/browser @curi/router @curi/react-dom</code></pre></div><div class="explanation"><p>Next, we can start <code class="inline-code language-javascript">create-react-app</code>&#x27;s dev server. The dev server will automatically update when we change files, so we can leave that running.</p></div><div class="code-block"><pre><code class="language-bash">npm run start # start the dev server</code></pre></div></div><div class="section" id="routes"><h2 class="displaced-header"><a class="header-link" href="#routes">Routes</a></h2><div class="explanation"><p>A single-page application is made up of a number of &quot;routes&quot;, which are the valid locations within the application. The router matches the application against its routes to determine which one matches.</p><p>With Curi, routes are JavaScript objects. They have two required properties: <code class="inline-code language-javascript">name</code> and <code class="inline-code language-javascript">path</code>.</p></div><div class="code-block"><pre><code class="language-javascript">// this is a route
+{ name: &quot;Home&quot;, path: &quot;&quot; }</code></pre></div><div class="explanation"><p>A route&#x27;s <code class="inline-code language-javascript">name</code> needs to be unique. Route names are used to identify which route to interact with for different functionality, like navigation.</p><p>A route&#x27;s <code class="inline-code language-javascript">path</code> is what the router uses to identify if a location matches the route. The <code class="inline-code language-javascript">path</code> is only matched against the location&#x27;s pathname, the other segments of a URL are not used for matching.</p></div><div class="aside" id="path-basics"><h3 class="displaced-header"><a class="header-link" href="#path-basics">Path basics</a></h3><div class="explanation"><p>Route paths are strings describing the pathname segments of a URL that they should match.</p></div><div class="code-block"><pre><code class="language-javascript">{ path: &#x27;&#x27; } // matches &quot;/&quot;
+{ path: &#x27;about/stuff&#x27; } // matches &quot;/about/stuff&quot;</code></pre></div><div class="explanation"><p>Paths never begin with a slash.</p></div><div class="code-block"><pre><code class="language-javascript">// yes
 { path: &#x27;&#x27; }
 // no
-{ path: &#x27;/&#x27; }</code></pre></div><p>Paths can include dynamic parameters. These are specified with a string that starts with a colon (<code class="inline-code language-javascript">:</code>) followed by the name of the params.</p><div class="code-block"><pre><code class="language-javascript">// a param named &quot;id&quot;
-{ path: &#x27;:id&#x27; }</code></pre></div><p>Routes can be nested using the <code class="inline-code language-javascript">children</code> property of a route. A nested route inherits the path from its ancestor route(s), so its <code class="inline-code language-javascript">path</code> is only the additional part of the pathname that should be matched.</p><div class="code-block"><pre><code class="language-javascript">{
+{ path: &#x27;/&#x27; }</code></pre></div><div class="explanation"><p>Paths can include dynamic parameters. These are specified with a string that starts with a colon (<code class="inline-code language-javascript">:</code>) followed by the name of the params.</p></div><div class="code-block"><pre><code class="language-javascript">// a param named &quot;id&quot;
+{ path: &#x27;user/:id&#x27; }
+// user/abc -&gt; { id: &quot;abc&quot; }</code></pre></div><div class="explanation"><p>Routes can be nested using the <code class="inline-code language-javascript">children</code> property of a route. A nested route inherits the path from its ancestor route(s), so its <code class="inline-code language-javascript">path</code> is only the additional part of the pathname that should be matched.</p></div><div class="code-block"><pre><code class="language-javascript">{
   name: &quot;Parent&quot;,
   path: &quot;parent&quot;, // matches /parent
   children: [
@@ -44,8 +27,10 @@ registerServiceWorker();</code></pre></div></div><div class="section" id="defini
     // matches /parent/son
     { name: &quot;Son&quot;, path: &quot;son&quot; }
   ]
-}</code></pre></div></div><p>The website will start with four routes.</p><table><thead><tr><th>name</th><th>path</th><th>Description</th></tr></thead><tbody><tr><td>Home</td><td><code class="inline-code language-javascript">&quot;&quot;</code></td><td>Lists books available for purchase</td></tr><tr><td>Book</td><td><code class="inline-code language-javascript">&quot;book/:id&quot;</code></td><td>Details about an individual book</td></tr><tr><td>Checkout</td><td><code class="inline-code language-javascript">&quot;checkout&quot;</code></td><td>&quot;Buy&quot; the books in the shopping cart</td></tr><tr><td>Catch All</td><td><code class="inline-code language-javascript">&quot;(.*)&quot;</code></td><td>Display a not found page for all other locations</td></tr></tbody></table><div class="note"><strong>Note:</strong> <!-- -->The catch all route uses a regular expression syntax to indicate that it should match everything. Curi uses the<!-- --> <a href="https://github.com/pillarjs/path-to-regexp"><code class="inline-code language-javascript">path-to-regexp</code></a> <!-- -->package for route matching. We will only be using some of its basic syntax, but you can read its documentation to learn about more advanced path syntax.</div><p>Inside of the <code class="inline-code language-javascript">src</code> directory, we will create a<!-- --> <code class="inline-code language-javascript">routes.js</code> file where we can define the application&#x27;s routes.</p><div class="code-block"><pre><code class="language-bash">touch src/routes.js</code></pre></div><div class="code-block"><pre><code class="language-javascript">// src/routes.js
-export default [
+}</code></pre></div></div><div class="explanation"><p>The website will start with four routes.</p><table><thead><tr><th>name</th><th>path</th><th>use case</th></tr></thead><tbody><tr><td>Home</td><td><code class="inline-code language-javascript">&quot;&quot;</code></td><td>Lists books available for purchase.</td></tr><tr><td>Book</td><td><code class="inline-code language-javascript">&quot;book/:id&quot;</code></td><td>Details about an individual book. The <code class="inline-code language-javascript">id</code> param identifies a specific book.</td></tr><tr><td>Checkout</td><td><code class="inline-code language-javascript">&quot;checkout&quot;</code></td><td>Buy the books in the shopping cart.</td></tr><tr><td>Catch All</td><td><code class="inline-code language-javascript">&quot;(.*)&quot;</code></td><td>Display a not found page. This path matches every location (using a regular expression syntax), so it should be the last route.</td></tr></tbody></table><div class="note"><strong>Note:</strong> <!-- -->Curi uses the<!-- --> <a href="https://github.com/pillarjs/path-to-regexp"><code class="inline-code language-javascript">path-to-regexp</code></a> <!-- -->package for route matching. You can read its documentation to learn about more advanced path syntax.</div><p>Inside of the <code class="inline-code language-javascript">src</code> directory, we will create a<!-- --> <code class="inline-code language-javascript">routes.js</code> file where we can define the application&#x27;s routes.</p></div><div class="code-block"><pre><code class="language-bash">touch src/routes.js</code></pre></div><div class="explanation"><p>We can create an array of routes using the above names and paths.</p><p><code class="inline-code language-javascript">@curi/router</code> provides a <code class="inline-code language-javascript">prepareRoutes</code> <!-- -->function, which is used to setup routes for the router. We will pass the routes array to <code class="inline-code language-javascript">prepareRoutes</code> and export the result of that function call.</p></div><div class="code-block"><pre><code class="language-javascript">// src/routes.js
+import { prepareRoutes } from &quot;@curi/router&quot;;
+
+export default prepareRoutes([
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;
@@ -62,14 +47,37 @@ export default [
     name: &quot;Catch All&quot;,
     path: &quot;(.*)&quot;
   }
-];</code></pre></div></div><div class="section" id="router"><h2 class="displaced-header"><a class="header-link" href="#router">The Router</a></h2><p>With the history object created and the routes defined, we are ready to create the router. Back in the <code class="inline-code language-javascript">src/index.js</code> file, we should import the <code class="inline-code language-javascript">curi</code> function from<!-- --> <code class="inline-code language-javascript">@curi/router</code> as well as our routes from<!-- --> <code class="inline-code language-javascript">src/routes.js</code>. Creating the router is done by calling the<!-- --> <code class="inline-code language-javascript">curi()</code> function and passing it the <code class="inline-code language-javascript">history</code> <!-- -->object and the <code class="inline-code language-javascript">routes</code> array.</p><div class="code-block"><pre data-line="4,8,13"><code class="language-jsx">// src/index.js
+]);</code></pre></div><div class="explanation"><p>We will be creating the router in the <code class="inline-code language-javascript">index.js</code> file, so the routes array should be imported there.</p></div><div class="code-block"><pre data-line="5"><code class="language-jsx">// src/index.js
+import React from &#x27;react&#x27;;
+import ReactDOM from &#x27;react-dom&#x27;;
+
+import routes from &quot;./routes&quot;;
+import &#x27;./index.css&#x27;;
+import App from &#x27;./App&#x27;;
+import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
+registerServiceWorker();</code></pre></div></div><div class="section" id="history"><h2 class="displaced-header"><a class="header-link" href="#history">History</a></h2><div class="explanation"><p>Along with the routes, we also need to create a history object for the router. The history object is responsible for creating locations and navigation within the application.</p><p>Curi uses the<!-- --> <a href="https://github.com/pshrmn/hickory">Hickory</a> library for its history implementations. There are a few Hickory packages to choose from for different environments. For most websites, the<!-- --> <code class="inline-code language-javascript">@hickory/browser</code> is the right choice for the front end, which is what we will be using</p><p>We can import the <code class="inline-code language-javascript">Browser</code> function from<!-- --> <code class="inline-code language-javascript">@hickory/browser</code> in our index file (<code class="inline-code language-javascript">src/index.js</code>, which <code class="inline-code language-javascript">create-react-app</code> created for us) and call the function to create a history object.</p><div class="note"><strong>Note:</strong> <!-- -->The history object can be configured with<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">an options object</a>, but we will stick with the defaults.</div></div><div class="code-block"><pre data-line="4,11"><code class="language-jsx">// src/index.js
+import React from &#x27;react&#x27;;
+import ReactDOM from &#x27;react-dom&#x27;;
+import Browser from &#x27;@hickory/browser&#x27;;
+
+import routes from &quot;./routes&quot;;
+import &#x27;./index.css&#x27;;
+import App from &#x27;./App&#x27;;
+import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
+
+const history = Browser();
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
+registerServiceWorker();</code></pre></div></div><div class="section" id="router"><h2 class="displaced-header"><a class="header-link" href="#router">The Router</a></h2><div class="explanation"><p>We are now ready to create the router. In the<!-- --> <code class="inline-code language-javascript">src/index.js</code> file, we should import the <code class="inline-code language-javascript">curi</code> <!-- -->function from <code class="inline-code language-javascript">@curi/router</code>. To create the router, call the <code class="inline-code language-javascript">curi()</code> function passing it the <code class="inline-code language-javascript">history</code> <!-- -->object and the <code class="inline-code language-javascript">routes</code> array.</p></div><div class="code-block"><pre data-line="4,13"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 
-import &#x27;./index.css&#x27;;
 import routes from &#x27;./routes&#x27;;
+import &#x27;./index.css&#x27;;
 import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
@@ -77,15 +85,46 @@ const history = Browser();
 const router = curi(history, routes);
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div></div><div class="section" id="rendering"><h2 class="displaced-header"><a class="header-link" href="#rendering">Rendering with React</a></h2><p>We can now render our application. To do this, we will use the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->curiProvider()<!-- -->&gt;</code> function from the <code class="inline-code language-javascript">@curi/react-dom</code> <!-- -->package. This function takes the Curi router and returns a component that does two things:</p><ol><li>It places router-related values on the context for other<!-- --> <code class="inline-code language-javascript">@curi/react-dom</code> components</li><li>It re-renders the application whenever the location changes.</li></ol><p>The returned component can be called anything you like, but here we will call it <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>.</p><p>The <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> takes one prop: a render-invoked function, passed as the <code class="inline-code language-javascript">children</code> prop. This function will receive an object that has three properties: <code class="inline-code language-javascript">router</code>,<!-- --> <code class="inline-code language-javascript">response</code>, and <code class="inline-code language-javascript">navigation</code>.</p><div class="code-block"><pre><code class="language-jsx">import { curiProvider } from &quot;@curi/react-dom&quot;;
-        
+registerServiceWorker();</code></pre></div><div class="explanation"><p>The router is now ready and we can render the application.</p></div></div><div class="section" id="rendering"><h2 class="displaced-header"><a class="header-link" href="#rendering">Rendering with React</a></h2><div class="explanation"><p>The <code class="inline-code language-javascript">@curi/react-dom</code> provides the components that we will use to interact with the router.</p><p>We create a <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> component by passing the router to the<!-- --> <code class="inline-code language-javascript">curiProvider</code> higher-order component.</p><div class="note"><strong>Note:</strong> <!-- -->Curi uses a higher-order component to create a component instead of a regular component because the router is a permanent &quot;prop&quot;. An application should only have one router, so this approach discourages trying to swap routers.</div></div><div class="code-block"><pre data-line="6,15"><code class="language-jsx">// src/index.js
+import React from &#x27;react&#x27;;
+import ReactDOM from &#x27;react-dom&#x27;;
+import { curi } from &#x27;@curi/router&#x27;;
+import Browser from &#x27;@hickory/browser&#x27;;
+import { curiProvider } from &quot;@curi/react-dom&quot;;
+
+import routes from &#x27;./routes&#x27;;
+import &#x27;./index.css&#x27;;
+import App from &#x27;./App&#x27;;
+import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
+
+const history = Browser();
+const router = curi(history, routes);
 const Router = curiProvider(router);
-        
-&lt;Router&gt;
-  {({ router, response, navigation }) =&gt; {
-    return &lt;div&gt;This is the website&lt;/div&gt;;
-  }}
-&lt;/Router&gt;</code></pre></div><p>The <code class="inline-code language-javascript">router</code> is our Curi router, but what are the other two?</p><div class="aside" id="responses"><h3 class="displaced-header"><a class="header-link" href="#responses">Responses and Navigation</a></h3><p>Whenever Curi receives a location, it matches its routes against it and generates a response. This is an object with data related to the route that matched the location. Later on we will modify this data ourselves, but for now the important thing to know is that the response lets us know about the current route.</p><div class="code-block"><pre><code class="language-javascript">// a sample response object
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
+registerServiceWorker();</code></pre></div><div class="explanation"><p>The <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> component will re-render the application whenever there is in-app navigation. It also sets up a React context, so the other <code class="inline-code language-javascript">@curi/react-dom</code> components need to be descendants of the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> in order to access the context.</p><p>The <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> takes one prop: <code class="inline-code language-javascript">children</code>.<!-- --> <code class="inline-code language-javascript">children</code> is a render-invoked function that should return the content for the website. This function will receive an object that has three properties: <code class="inline-code language-javascript">router</code>, <code class="inline-code language-javascript">response</code>, and <code class="inline-code language-javascript">navigation</code>. These properties (mostly the<!-- --> <code class="inline-code language-javascript">response</code>) should be useful in determining what to render.</p><p>We can also remove the <code class="inline-code language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> component import and delete the related files.</p></div><div class="code-block"><pre><code class="language-bash">rm src/App.js src/App.css src/App.test.js</code></pre></div><div class="code-block"><pre data-line="16-22"><code class="language-jsx">// src/index.js
+import React from &#x27;react&#x27;;
+import ReactDOM from &#x27;react-dom&#x27;;
+import { curi } from &#x27;@curi/router&#x27;;
+import Browser from &#x27;@hickory/browser&#x27;;
+import { curiProvider } from &quot;@curi/react-dom&quot;;
+
+import routes from &#x27;./routes&#x27;;
+import &#x27;./index.css&#x27;;
+import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
+
+const history = Browser();
+const router = curi(history, routes);
+const Router = curiProvider(router);
+
+ReactDOM.render((
+  &lt;Router&gt;
+    {({ router, response, navigation }) =&gt; {
+      return &lt;div&gt;This is the website&lt;/div&gt;;
+    }}
+  &lt;/Router&gt;
+), document.getElementById(&#x27;root&#x27;));
+registerServiceWorker();</code></pre></div><div class="explanation"><p>The <code class="inline-code language-javascript">router</code> property is our Curi router, but what are the other two?</p></div><div class="aside" id="responses"><h3 class="displaced-header"><a class="header-link" href="#responses">Responses and Navigation</a></h3><div class="explanation"><p>Whenever Curi receives a location, it matches its routes against it and creates a response object, which contains data about the route that matched the location.</p></div><div class="code-block"><pre><code class="language-javascript">// a sample response object
 {
   body: undefined,
   data: undefined,
@@ -95,7 +134,11 @@ const Router = curiProvider(router);
   params: {},
   partials: [],
   status: 200
-}</code></pre></div><p>The router uses an observer model to let functions subscribe to be called when a new response is generated. The <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> <!-- -->observes the router so that it can re-render the application whenever there is a new one.</p><p>The <code class="inline-code language-javascript">navigation</code> object contains additional information about a navigation that doesn&#x27;t make sense to include in the response object. This includes the navigation&#x27;s &quot;action&quot; (<code class="inline-code language-javascript">PUSH</code>, <code class="inline-code language-javascript">POP</code>, or <code class="inline-code language-javascript">REPLACE</code>) and the previous response object.</p></div><p>Most of the time, the response is the only property you will need to use to render, but the other two may occasionally be useful.</p><p>How do we use the response to render? Any way you want. Based on the sample response above, the <code class="inline-code language-javascript">name</code> stands out as the best way to identify which route matched. We can make this even easier by adding another property to the response: <code class="inline-code language-javascript">body</code>.</p><p>Earlier it was mentioned that response objects can be modified. This is done by returning an object from a route&#x27;s <code class="inline-code language-javascript">response()</code> <!-- -->function. <code class="inline-code language-javascript">response()</code> receives an object with a whole bunch of properties that we can use to help determine how to modify the response, but for the time being, we don&#x27;t care about any of those. All we need to know is that if we return an object with a<!-- --> <code class="inline-code language-javascript">body</code> property, that value will be set on our response object.</p><div class="code-block"><pre><code class="language-javascript">{
+}</code></pre></div><div class="explanation"><p>The router uses the<!-- --> <a href="https://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> <!-- -->to register functions that will be called when a new response is created. The <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> automatically observes the router so that it can re-render the application whenever there is a new response.</p><p>The <code class="inline-code language-javascript">navigation</code> object contains additional information about a navigation that doesn&#x27;t make sense to include in the response object. This includes the navigation&#x27;s &quot;action&quot; (<code class="inline-code language-javascript">PUSH</code>, <code class="inline-code language-javascript">POP</code>, or <code class="inline-code language-javascript">REPLACE</code>) and the previous response object.</p></div><div class="code-block"><pre><code class="language-javascript">// a sample navigation object
+{
+  action: &quot;PUSH&quot;,
+  previous: { name: ..., location: ..., ... }
+}</code></pre></div></div><div class="explanation"><p>The response is the most useful of these three properties, but the other two may can be handy. For example, the <code class="inline-code language-javascript">navigation</code> <!-- -->can be useful for animating route transitions.</p><p>How do we render using the <code class="inline-code language-javascript">response</code>? Any way you want! The best way is to use a <code class="inline-code language-javascript">response</code>&#x27;s <code class="inline-code language-javascript">body</code> <!-- -->property.</p></div><div class="aside" id="route-response"><h3 class="displaced-header"><a class="header-link" href="#route-response">route.response()</a></h3><div class="explanation"><p>Route&#x27;s can have a <code class="inline-code language-javascript">response</code> property, which is a function that returns an object. The (valid) properties of the object will be merged onto the response object.</p><p>One of these valid properties is <code class="inline-code language-javascript">body</code>, so if the<!-- --> <code class="inline-code language-javascript">response</code> function returns an object with a<!-- --> <code class="inline-code language-javascript">body</code> property, we can access it from the response as<!-- --> <code class="inline-code language-javascript">response.body</code>.</p></div><div class="code-block"><pre><code class="language-javascript">{
   name: &quot;Home&quot;,
   path: &quot;&quot;,
   response() {
@@ -104,12 +147,14 @@ const Router = curiProvider(router);
     };
     /*
       * response = {
+      *   name: &quot;Home&quot;,
+      *   location: {...},
       *   body: &quot;Home, sweet home.&quot;,
       *   // ...
       * }
       */
   }
-}</code></pre></div><p>If the return object&#x27;s <code class="inline-code language-javascript">body</code> is a React component, we can render it in the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s children function. We haven&#x27;t actually defined components for our routes yet, so we should throw together some placeholders.</p><div class="code-block"><pre><code class="language-bash">mkdir -p src/components
+}</code></pre></div></div><div class="explanation"><p>If a response&#x27;s <code class="inline-code language-javascript">body</code> is a React component, we can render it! We haven&#x27;t actually defined components for our routes yet, so we should throw together some placeholders.</p></div><div class="code-block"><pre><code class="language-bash">mkdir -p src/components
 touch src/components/Home.js src/components/Book.js \
   src/components/Checkout.js src/components/NotFound.js</code></pre></div><div class="code-block"><pre><code class="language-jsx">// src/components/Home.js
 import React from &#x27;react&#x27;;
@@ -121,9 +166,11 @@ export default function Home() {
 }</code></pre></div><div class="code-block"><pre><code class="language-jsx">// src/components/Book.js
 import React from &#x27;react&#x27;;
 
-export default () =&gt; (
-  &lt;div&gt;Book&lt;/div&gt;
-);</code></pre></div><div class="code-block"><pre><code class="language-jsx">// src/components/Checkout.js
+export default function Book(){
+  return (
+    &lt;div&gt;Book&lt;/div&gt;
+  );
+}</code></pre></div><div class="code-block"><pre><code class="language-jsx">// src/components/Checkout.js
 import React from &#x27;react&#x27;;
 
 export default function Checkout() {
@@ -137,58 +184,52 @@ export default function NotFound() {
   return (
     &lt;div&gt;Not Found&lt;/div&gt;
   );
-}</code></pre></div><p>These components can be imported in <code class="inline-code language-javascript">src/routes.js</code> and attached to their respective routes.</p><div class="code-block"><pre data-line="2-5,11-15,20-24,29-33,38-42"><code class="language-javascript">// src/routes.js
+}</code></pre></div><p>These components can be imported in <code class="inline-code language-javascript">src/routes.js</code>. Each route can be given a <code class="inline-code language-javascript">response()</code> function which returns an object with their respective component as its <code class="inline-code language-javascript">body</code>.</p><div class="code-block"><pre data-line="4-7,13-15,20-22,27-29,34-36"><code class="language-javascript">// src/routes.js
+import { prepareRoutes } from &quot;@curi/router&quot;;
+
 import Home from &#x27;./components/Home&#x27;;
 import Book from &#x27;./components/Book&#x27;;
 import Checkout from &#x27;./components/Checkout&#x27;;
 import NotFound from &#x27;./components/NotFound&#x27;;
 
-export default [
+export default prepareRoutes([
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;,
     response() {
-      return {
-        body: Home
-      };
+      return { body: Home };
     }
   },
   {
     name: &quot;Book&quot;,
     path: &quot;book/:id&quot;,
     response() {
-      return {
-        body: Book
-      };
+      return { body: Book };
     }
   },
   {
     name: &quot;Checkout&quot;,
     path: &quot;checkout&quot;,
     response() {
-      return {
-        body: Checkout
-      };
+      return { body: Checkout };
     }
   },
   {
     name: &quot;Catch All&quot;,
     path: &quot;(.*)&quot;,
     response() {
-      return {
-        body: NotFound
-      };
+      return { body: NotFound };
     }
   }
-];</code></pre></div><p>We can now render the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> in our index file. The<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> gets passed a render-invoked function as the component&#x27;s <code class="inline-code language-javascript">children</code>. In the render-invoked function, we can use <code class="inline-code language-javascript">response.body</code> to render the component for the matched route. We will also pass the <code class="inline-code language-javascript">response</code> as a prop to the rendered component, which will be useful soon.</p><div class="code-block"><pre data-line="6,14,16-25"><code class="language-jsx">// src/index.js
+]);</code></pre></div><div class="explanation"><p>We can now update the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children</code> <!-- -->function to render <code class="inline-code language-javascript">response.body</code>.</p><p>We will also pass the <code class="inline-code language-javascript">response</code> as a prop to the rendered component, which means that each of the route components will have access to the <code class="inline-code language-javascript">response</code> when they are rendered.</p></div><div class="code-block"><pre data-line="18-23"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 import { curiProvider } from &#x27;@curi/react-dom&#x27;;
 
-import &#x27;./index.css&#x27;;
 import routes from &#x27;./routes&#x27;;
+import &#x27;./index.css&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
 const history = Browser();
@@ -205,17 +246,17 @@ ReactDOM.render((
     }}
   &lt;/Router&gt;
 ), document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div><p>We can also remove the <code class="inline-code language-jsx">&lt;<!-- -->App<!-- -->&gt;</code> component import and delete the related files.</p><div class="code-block"><pre><code class="language-bash">rm src/App.js src/App.css src/App.test.js</code></pre></div><p>At this point in time our app is rendering, but is isn&#x27;t very interesting because we cannot navigate between locations.</p></div><div class="section" id="navigating"><h2 class="displaced-header"><a class="header-link" href="#navigating">Navigating between locations</a></h2><p>The <code class="inline-code language-javascript">@curi/react-dom</code> package provides a <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> <!-- -->component that we can use to navigate between locations within our application.</p><div class="aside" id="link-component"><h3 class="displaced-header"><a class="header-link" href="#link-component"><span>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> Component</span></a></h3><p>Navigation isn&#x27;t done by manually typing the pathname of the location the link should navigate to. Instead, we specify the name of the route using the <code class="inline-code language-javascript">to</code> prop.</p><div class="code-block"><pre><code class="language-jsx">// { name: &quot;Home&quot;, path: &quot;&quot; }
+registerServiceWorker();</code></pre></div><div class="explanation"><p>At this point in time our app is rendering, but is isn&#x27;t very interesting because we cannot navigate between locations.</p></div></div><div class="section" id="navigating"><h2 class="displaced-header"><a class="header-link" href="#navigating">Navigating between locations</a></h2><div class="explanation"><p>The <code class="inline-code language-javascript">@curi/react-dom</code> package provides a <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> <!-- -->component that we can use to navigate between locations within our application.</p></div><div class="aside" id="link-component"><h3 class="displaced-header"><a class="header-link" href="#link-component"><span>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> Component</span></a></h3><div class="explanation"><p>Navigation isn&#x27;t done by manually typing the pathname of the location the link should navigate to. Instead, we specify the name of the route using the <code class="inline-code language-javascript">name</code> prop.</p></div><div class="code-block"><pre><code class="language-jsx">// { name: &quot;Home&quot;, path: &quot;&quot; }
 &lt;Link name=&quot;Home&quot;&gt;Home&lt;/Link&gt;
-// &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;</code></pre></div><p>If a route has params, we provide these to the <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> as a<!-- --> <code class="inline-code language-javascript">params</code> object. For a nested route, we would also need to provide params for any ancestor routes.</p><div class="code-block"><pre><code class="language-jsx">// { name: &quot;Book&quot;, path: &quot;book/:id&quot; }
+// &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;</code></pre></div><div class="explanation"><p>If a route has params, we provide these to the <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> as a <code class="inline-code language-javascript">params</code> object. For a nested route, we would also need to provide params for any ancestor routes.</p></div><div class="code-block"><pre><code class="language-jsx">// { name: &quot;Book&quot;, path: &quot;book/:id&quot; }
 &lt;Link name=&quot;Book&quot; params={{ id: 7 }}&gt;The Dark Forest&lt;/Link&gt;
-// &lt;a href=&quot;/book/7&quot;&gt;The Dark Forest&lt;/a&gt;</code></pre></div><p>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> is only for in-app navigation. If you want to link to pages outside of the application, use an anchor.</p><div class="code-block"><pre><code class="language-jsx">// in-app
+// &lt;a href=&quot;/book/7&quot;&gt;The Dark Forest&lt;/a&gt;</code></pre></div><div class="explanation"><p>The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> is only for in-app navigation. If you want to link to pages outside of the application, use an anchor.</p></div><div class="code-block"><pre><code class="language-jsx">// in-app
 &lt;Link name=&quot;Some Route&quot;&gt;Some Route&lt;/Link&gt;
 
 // out of app
-&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</code></pre></div><p>If you need to attach query or hash data to a <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code>, use the <code class="inline-code language-javascript">query</code> and <code class="inline-code language-javascript">hash</code> props.</p><div class="code-block"><pre><code class="language-jsx">// { name: &quot;Checkout&quot;, path: &quot;checkout&quot; }
+&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;</code></pre></div><div class="explanation"><p>If you need to attach query or hash data to a <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code>, use the <code class="inline-code language-javascript">query</code> and <code class="inline-code language-javascript">hash</code> props.</p></div><div class="code-block"><pre><code class="language-jsx">// { name: &quot;Checkout&quot;, path: &quot;checkout&quot; }
 &lt;Link name=&quot;Checkout&quot; query=&#x27;affiliate=123&#x27;&gt;Checkout&lt;/Link&gt;
-// &lt;a href=&quot;/checkout?affiliate=123&quot;&gt;Checkout&lt;/a&gt;</code></pre></div></div><div class="section" id="nav-menu"><h3 class="displaced-header"><a class="header-link" href="#nav-menu">A Navigation Menu</a></h3><p>We will start with creating a navigation menu component with links to our home page and checkout page.</p><div class="code-block"><pre><code class="language-bash">touch src/components/NavMenu.js</code></pre></div><div class="code-block"><pre><code class="language-jsx">// src/components/NavMenu.js
+// &lt;a href=&quot;/checkout?affiliate=123&quot;&gt;Checkout&lt;/a&gt;</code></pre></div></div><div class="section" id="nav-menu"><h3 class="displaced-header"><a class="header-link" href="#nav-menu">A Navigation Menu</a></h3><div class="explanation"><p>The application will have a navigation menu component with links to our home page and checkout page.</p></div><div class="code-block"><pre><code class="language-bash">touch src/components/NavMenu.js</code></pre></div><div class="explanation"><p>In order to link to these routes, we only need to know their name, not the actual pathname for the URL.</p></div><div class="code-block"><pre><code class="language-jsx">// src/components/NavMenu.js
 import React from &#x27;react&#x27;;
 import { Link } from &#x27;@curi/react-dom&#x27;;
 
@@ -232,15 +273,15 @@ export default function NavMenu() {
       &lt;/ul&gt;
     &lt;/nav&gt;
   );
-}</code></pre></div><p>We can import that in our index file and add it to our<!-- --> <code class="inline-code language-javascript">children</code> function. This is a good opportunity to also add some structure to the elements returned by the <code class="inline-code language-javascript">children</code> <!-- -->function.</p><div class="code-block"><pre data-line="10,22-29"><code class="language-jsx">// src/index.js
+}</code></pre></div><p>We can import the menu in our index file and render it in the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children</code> function.</p><p>The <code class="inline-code language-javascript">children</code> function can be thought of as the root of the application&#x27;s content. We can add structure to the site by rendering <code class="inline-code language-jsx">&lt;<!-- -->header<!-- -->&gt;</code> and <code class="inline-code language-jsx">&lt;<!-- -->main<!-- -->&gt;</code> elements around their respective content.</p><div class="code-block"><pre data-line="10,22-29"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 import { curiProvider } from &#x27;@curi/react-dom&#x27;;
 
-import &#x27;./index.css&#x27;;
 import routes from &#x27;./routes&#x27;;
+import &#x27;./index.css&#x27;;
 import NavMenu from &#x27;./components/NavMenu&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
@@ -253,19 +294,19 @@ ReactDOM.render((
     {({ response }) =&gt; {
       const { body:Body } = response;
       return (
-        &lt;div&gt;
+        &lt;React.Fragment&gt;
           &lt;header&gt;
             &lt;NavMenu /&gt;
           &lt;/header&gt;
           &lt;main&gt;
             &lt;Body response={response} /&gt;
           &lt;/main&gt;
-        &lt;/div&gt;
+        &lt;/React.Fragment&gt;
       );
     }}
   &lt;/Router&gt;
 ), document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div></div><div class="section" id="book-links"><h3 class="displaced-header"><a class="header-link" href="#book-links">Linking to Books</a></h3><p>We want to be able to link to individual books from the home page. First, we need data about the books. For now, we&#x27;re going to hard-code the books in the <code class="inline-code language-javascript">src/books.js</code> module.</p><div class="code-block"><pre><code class="language-bash">touch src/books.js</code></pre></div><p>You can copy+paste or modify the data, but the structure of the provided data should stay the same.</p><div class="code-block"><pre><code class="language-javascript">// src/books.js
+registerServiceWorker();</code></pre></div></div><div class="section" id="book-links"><h3 class="displaced-header"><a class="header-link" href="#book-links">Linking to Books</a></h3><div class="explanation"><p>The website should link to individual books from its home page. To do this, we need data about the available books. Since we don&#x27;t have a backend to fetch book data from, we&#x27;ll hard-code the books data in the <code class="inline-code language-javascript">src/books.js</code> module.</p></div><div class="code-block"><pre><code class="language-bash">touch src/books.js</code></pre></div><div class="explanation"><p>You can copy+paste or modify the data, but the structure of the provided data should stay the same.</p></div><div class="code-block"><pre><code class="language-javascript">// src/books.js
 export default [
   {
     id: 0,
@@ -302,7 +343,7 @@ export default [
     published: &#x27;2014&#x27;,
     pages: 1087
   }
-];</code></pre></div><p>The data can be imported in the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component. We will iterate over the books with a <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> to each one.</p><div class="code-block"><pre data-line="4,7-17"><code class="language-jsx">// src/components/Home.js
+];</code></pre></div><div class="explanation"><p>The data can be imported in the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component and we can iterate over the books to render a <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> to each one.</p></div><div class="code-block"><pre data-line="5,8-20"><code class="language-jsx">// src/components/Home.js
 import React from &#x27;react&#x27;;
 import { Link } from &#x27;@curi/react-dom&#x27;;
 
@@ -322,7 +363,7 @@ export default function Home() {
       &lt;/ul&gt;
     &lt;/div&gt;
   );
-}</code></pre></div><p>Now that we can navigate to the books, we should fill out the UI for the <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component. Up above, we passed the<!-- --> <code class="inline-code language-javascript">response</code> object as a prop to the <code class="inline-code language-javascript">response.body</code> <!-- -->component. Now, we can use that object in the <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> <!-- -->component to access the captured route params so that we know which book to show.</p><p>We will once again import the <code class="inline-code language-javascript">books.js</code> data. We can use<!-- --> <code class="inline-code language-javascript">params.id</code> to select the correct book.<!-- --> <code class="inline-code language-javascript">params.id</code> is a string, so we will need to parse it into an integer. Sometimes there won&#x27;t be a valid book for the<!-- --> <code class="inline-code language-javascript">params.id</code>. In that case, we will also want to display a message that the requested book could not be found.</p><div class="code-block"><pre data-line="4,6-20"><code class="language-jsx">// src/components/Book.js
+}</code></pre></div><div class="explanation"><p>Now that we can navigate to the books, we should fill out the UI for the <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component. Up above, we passed the<!-- --> <code class="inline-code language-javascript">response</code> object as a prop to the<!-- --> <code class="inline-code language-javascript">response.body</code> component. Now, we can use that object in the <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component to access the captured route params so that we know which book to show.</p><p>We will once again import the <code class="inline-code language-javascript">books.js</code> data. We can use<!-- --> <code class="inline-code language-javascript">params.id</code> to select the correct book.<!-- --> <code class="inline-code language-javascript">params.id</code> is a string, so we will need to parse it into an integer. Sometimes there won&#x27;t be a valid book for the<!-- --> <code class="inline-code language-javascript">params.id</code>. In that case, we will also want to display a message that the requested book could not be found.</p></div><div class="code-block"><pre data-line="4,6-20"><code class="language-jsx">// src/components/Book.js
 import React from &#x27;react&#x27;;
 
 import books from &#x27;../books&#x27;;
@@ -341,7 +382,7 @@ export default function Book({ response }) {
       &lt;p&gt;{book.pages} pages&lt;/p&gt;
     &lt;/div&gt;
   );
-}</code></pre></div></div></div><div class="section" id="shopping"><h2 class="displaced-header"><a class="header-link" href="#shopping">Let&#x27;s go shopping</a></h2><p>We want to be able to add books to our shopping cart. Since this is a play site, we will store the cart data in memory.</p><div class="code-block"><pre><code class="language-bash">touch src/cart.js</code></pre></div><p>The shopping cart implementation will be a JavaScript <code class="inline-code language-javascript">Map</code>. We can call its <code class="inline-code language-javascript">set</code> method to add books, its<!-- --> <code class="inline-code language-javascript">clear</code> method to reset the cart, and iterate over its<!-- --> <code class="inline-code language-javascript">entries</code> with a <code class="inline-code language-javascript">for...of</code> loop.</p><div class="code-block"><pre><code class="language-javascript">// src/cart.js
+}</code></pre></div></div></div><div class="section" id="shopping"><h2 class="displaced-header"><a class="header-link" href="#shopping">Let&#x27;s go shopping</a></h2><div class="explanation"><p>Users of the website should be able to add books to their shopping cart. For brevity, we will store the cart data in memory (i.e. it will be lost when refreshing the page).</p></div><div class="code-block"><pre><code class="language-bash">touch src/cart.js</code></pre></div><div class="explanation"><p>The shopping cart implementation will be a JavaScript <code class="inline-code language-javascript">Map</code>. We can call its <code class="inline-code language-javascript">set</code> method to add books, its<!-- --> <code class="inline-code language-javascript">clear</code> method to reset the cart, and iterate over its<!-- --> <code class="inline-code language-javascript">entries</code> with a <code class="inline-code language-javascript">for...of</code> loop.</p><div class="note"><strong>Note:</strong> <!-- -->The <code class="inline-code language-javascript">Map</code> or some of its features may not work in older browsers.</div></div><div class="code-block"><pre><code class="language-javascript">// src/cart.js
 const cart = new Map();
 
 export default {
@@ -361,15 +402,15 @@ export default {
   reset() {
     cart.clear();
   }
-};</code></pre></div><p>Before we edit the <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component, we should quickly revisit the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children</code> function. In addition to passing the <code class="inline-code language-javascript">response</code> to<!-- --> <code class="inline-code language-javascript">response.body</code>, we should also pass it our router. This will allow us to do programmatic navigation.</p><div class="code-block"><pre data-line="19,27"><code class="language-jsx">// src/index.js
+};</code></pre></div><div class="explanation"><p>Before we edit the <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> component, we should quickly revisit the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s <code class="inline-code language-javascript">children</code> function. In addition to passing the <code class="inline-code language-javascript">response</code> to the <code class="inline-code language-jsx">&lt;<!-- -->Body<!-- -->&gt;</code>, we should also pass it our <code class="inline-code language-javascript">router</code>, which will allow us to do programmatic navigation.</p></div><div class="code-block"><pre data-line="19,27"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 import { curiProvider } from &#x27;@curi/react-dom&#x27;;
 
-import &#x27;./index.css&#x27;;
 import routes from &#x27;./routes&#x27;;
+import &#x27;./index.css&#x27;;
 import NavMenu from &#x27;./components/NavMenu&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
@@ -382,27 +423,27 @@ ReactDOM.render((
     {({ response, router }) =&gt; {
       const { body:Body } = response;
       return (
-        &lt;div&gt;
+        &lt;React.Fragment&gt;
           &lt;header&gt;
             &lt;NavMenu /&gt;
           &lt;/header&gt;
           &lt;main&gt;
             &lt;Body response={response} router={router} /&gt;
           &lt;/main&gt;
-        &lt;/div&gt;
+        &lt;/React.Fragment&gt;
       );
     }}
   &lt;/Router&gt;
 ), document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div><p>We can now access our <code class="inline-code language-javascript">router</code> in the <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> <!-- -->component. The router&#x27;s <code class="inline-code language-javascript">navigate()</code> function can be used to navigate to a new location. This means that when the user clicks a button to add a book to their shopping cart, we can automatically navigate to the checkout page.</p><div class="aside" id="nav-method"><h3 class="displaced-header"><a class="header-link" href="#nav-method">Navigate Method</a></h3><p><code class="inline-code language-javascript">router.navigate()</code> is used to navigate to new locations. There are three methods of navigation: <code class="inline-code language-javascript">PUSH</code>,<!-- --> <code class="inline-code language-javascript">REPLACE</code>, and <code class="inline-code language-javascript">ANCHOR</code>.</p><p><code class="inline-code language-javascript">PUSH</code> pushes a new location after the current index, removing any locations after the current location.</p><div class="code-block"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+registerServiceWorker();</code></pre></div><div class="explanation"><p>We can now access our <code class="inline-code language-javascript">router</code> in the <code class="inline-code language-jsx">&lt;<!-- -->Book<!-- -->&gt;</code> <!-- -->component. The router&#x27;s <code class="inline-code language-javascript">navigate()</code> function can be used to navigate to a new location. This means that when the user clicks a button to add a book to their shopping cart, we can automatically navigate to the checkout page.</p></div><div class="aside" id="nav-method"><h3 class="displaced-header"><a class="header-link" href="#nav-method">The Router&#x27;s Navigate Method</a></h3><div class="explanation"><p><code class="inline-code language-javascript">router.navigate()</code> is used to navigate to new locations. There are three methods of navigation: <code class="inline-code language-javascript">PUSH</code>,<!-- --> <code class="inline-code language-javascript">REPLACE</code>, and <code class="inline-code language-javascript">ANCHOR</code>.</p><p><code class="inline-code language-javascript">PUSH</code> pushes a new location after the current index, removing any locations after the current location.</p></div><div class="code-block"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
 router.navigate({ name: &quot;New&quot;, method: &quot;PUSH&quot; });
-// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2</code></pre></div><p><code class="inline-code language-javascript">REPLACE</code> replaces the location at the current index.</p><div class="code-block"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2</code></pre></div><div class="explanation"><p><code class="inline-code language-javascript">REPLACE</code> replaces the location at the current index.</p></div><div class="code-block"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
 router.navigate({ name: &quot;Replace&quot;, method: &quot;REPLACE&quot; });
-// session = [&#x27;/one&#x27;, &#x27;/replacement&#x27;, &#x27;/three&#x27;], index = 1</code></pre></div><p><code class="inline-code language-javascript">ANCHOR</code> is a mix between <code class="inline-code language-javascript">PUSH</code> and<!-- --> <code class="inline-code language-javascript">REPLACE</code>. It mimics the behavior of clicking on links, so if you navigate to the same location as the current one it will replace, and if you navigate to a new location it will push.</p><p>If <code class="inline-code language-javascript">method.navigate()</code> is called without a navigation<!-- --> <code class="inline-code language-javascript">method</code>, it will default to <code class="inline-code language-javascript">ANCHOR</code>.</p><div class="code-block"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+// session = [&#x27;/one&#x27;, &#x27;/replacement&#x27;, &#x27;/three&#x27;], index = 1</code></pre></div><div class="explanation"><p><code class="inline-code language-javascript">ANCHOR</code> is a mix between <code class="inline-code language-javascript">PUSH</code> and<!-- --> <code class="inline-code language-javascript">REPLACE</code>. It mimics the behavior of clicking on links, so if you navigate to the same location as the current one it will replace, and if you navigate to a new location it will push.</p><p>If <code class="inline-code language-javascript">method.navigate()</code> is called without a navigation<!-- --> <code class="inline-code language-javascript">method</code>, it will default to <code class="inline-code language-javascript">ANCHOR</code>.</p></div><div class="code-block"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
 router.navigate({ name: &quot;Two&quot;, method: &quot;ANCHOR&quot; });
 // session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
 router.navigate({ name: &quot;New&quot;, method: &quot;ANCHOR&quot; });
-// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2<!-- -->`}</code></pre></div></div><p>We also want to import our shopping cart API so that we can add a book to the cart.</p><div class="code-block"><pre data-line="5,19-28"><code class="language-jsx">// src/components/Book.js
+// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2<!-- -->`}</code></pre></div></div><div class="explanation"><p>We also want to import our shopping cart API so that we can add a book to the cart.</p></div><div class="code-block"><pre data-line="5,19-27"><code class="language-jsx">// src/components/Book.js
 import React from &#x27;react&#x27;;
 
 import books from &#x27;../books&#x27;;
@@ -431,7 +472,7 @@ export default function Book({ response, router }) {
       &lt;/button&gt;
     &lt;/div&gt;
   );
-}</code></pre></div><p>Finally, we can update our <code class="inline-code language-jsx">&lt;<!-- -->Checkout<!-- -->&gt;</code> component to display the books in the shopping cart. To do this, we will import our cart and books. Our cart only stores book <code class="inline-code language-javascript">id</code>s, so we will need to merge the book data with the cart data.</p><p>When a user &quot;buys&quot; the books in their shopping cart, we need to clear out the cart. We will also replace the current location with one whose<!-- --> <code class="inline-code language-javascript">location.hash</code> is the string &quot;thanks&quot;. When that is present in the URI, we can render a &quot;Thanks for your purchase&quot; message to &quot;confirm&quot; the purchase.</p><div class="code-block"><pre><code class="language-jsx">// src/components/Checkout.js
+}</code></pre></div><div class="explanation"><p>Finally, we can update our <code class="inline-code language-jsx">&lt;<!-- -->Checkout<!-- -->&gt;</code> component to display the books in the shopping cart. To do this, we will import our cart and books. Our cart only stores book <code class="inline-code language-javascript">id</code>s, so we will need to merge the book data with the cart data.</p><p>When a user &quot;buys&quot; the books in their shopping cart, we need to clear out the cart. We will also replace the current location with one whose <code class="inline-code language-javascript">location.hash</code> is the string &quot;thanks&quot;. When that is present in the location, we can render a &quot;Thanks for your purchase&quot; message.</p></div><div class="code-block"><pre><code class="language-jsx">// src/components/Checkout.js
 import React from &#x27;react&#x27;;
 
 import cart from &#x27;../cart&#x27;;
@@ -478,7 +519,7 @@ export default function Checkout({ router, response }) {
       &lt;/button&gt;
     &lt;/div&gt;
   );
-};</code></pre></div></div><div class="section" id="next"><h2 class="displaced-header"><a class="header-link" href="#next">What&#x27;s next?</a></h2><p>We now have a functional website built with React and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides/">guides</a> for information on advanced techniques.</p></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Tutorials</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>Basic</button></div><ul class="link-list"><li class="solo"><a class=" active" href="/tutorial/react-basics/">React Basics</a></li><li class="solo"><a class=" " href="/tutorial/vue-basics/">Vue Basics</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>Advanced</button></div><ul class="link-list"><li class="solo"><a class=" " href="/tutorial/react-advanced/">React Advanced</a></li></ul></li></ul></div></div></div></main></div>
+};</code></pre></div></div><div class="section" id="next"><h2 class="displaced-header"><a class="header-link" href="#next">What&#x27;s next?</a></h2><div class="explanation"><p>We now have a functional website built with React and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides/">guides</a> for information on advanced techniques.</p></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Tutorials</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>Basic</button></div><ul class="link-list"><li class="solo"><a class=" active" href="/tutorial/react-basics/">React Basics</a></li><li class="solo"><a class=" " href="/tutorial/vue-basics/">Vue Basics</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>Advanced</button></div><ul class="link-list"><li class="solo"><a class=" " href="/tutorial/react-advanced/">React Advanced</a></li></ul></li></ul></div></div></div></main></div>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
     <script src="https://unpkg.com/react@16.6.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.6.0/umd/react-dom.production.min.js"></script>

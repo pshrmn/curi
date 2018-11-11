@@ -49,10 +49,6 @@ pre[class*="language-"] {
         -ms-flex-flow: row nowrap;
             flex-flow: row nowrap; } }
 
-.content ul {
-  padding: 0;
-  list-style: none; }
-
 @media only screen and (min-width: 641px) {
   .content {
     -webkit-box-ordinal-group: 3;
