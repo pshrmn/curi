@@ -15,23 +15,33 @@ export default function ReactAdvancedTutorial() {
   return (
     <React.Fragment>
       <h1>React Advanced Tutorial</h1>
-      <p>
-        In this tutorial, we will be expanding on the website built in the{" "}
-        <Link name="Tutorial" params={{ slug: "react-basics" }}>
-          React basics tutorial
-        </Link>. We will take advantage of Curi's async features to add code
-        splitting and data preloading to the application.
-      </p>
+      <Explanation>
+        <p>
+          In this tutorial, we will be expanding on the website built in the{" "}
+          <Link name="Tutorial" params={{ slug: "react-basics" }}>
+            React basics tutorial
+          </Link>. We will take advantage of Curi's async features to add code
+          splitting and data preloading to the application.
+        </p>
+      </Explanation>
+
       <Outline>
         <ul>
-          <li>Learn how to code split routes.</li>
-          <li>Learn how to preload data for routes.</li>
+          <li>Add code splitting to routes.</li>
+          <li>Preload route data with asynchronous navigation.</li>
         </ul>
       </Outline>
+
       <Section title="Demo" id="demo">
-        <p>You can run a demo of the site we are building with CodeSandbox.</p>
+        <Explanation>
+          <p>
+            You can run a demo of the site we are building with CodeSandbox.
+          </p>
+        </Explanation>
+
         <CodeSandboxDemo id="github/curijs/react-advanced-tutorial/tree/master/" />
       </Section>
+
       <Section title="Setup" id="setup">
         <Explanation>
           <p>
@@ -45,68 +55,95 @@ export default function ReactAdvancedTutorial() {
           </p>
           <p>
             If you are cloning the repo, you should also install its
-            dependencies and then start the development server. The repo was
-            made using <IJS>yarn</IJS>, but if you only have NPM installed, you
-            can use the analagous commands.
+            dependencies and then start the development server.
           </p>
         </Explanation>
+
         <CodeBlock lang="bash">
           {`git clone https://github.com/curijs/react-basic-tutorial react-advanced-tutorial
 cd react-advanced-tutorial
-
-yarn
-yarn start
-# or
 npm install
 npm run start`}
         </CodeBlock>
       </Section>
-      <Section title="Async Routes" id="async">
+
+      <Section title="Asynchronous Routes" id="async">
         <Explanation>
           <p>
-            Curi lets you attach async functions to a route, and when that route
-            matches, a response will not be emitted until the async functions
-            have completed. The results of the async functions will be available
-            in a route's <IJS>response()</IJS> function under the{" "}
-            <IJS>resolved</IJS> object.
+            Curi lets you attach async functions to a route through its{" "}
+            <IJS>resolve</IJS>. When that route matches, a response will not be
+            emitted until the async functions have completed.
           </p>
+          <p>
+            The async functions for a route are grouped under the route's{" "}
+            <IJS>resolve</IJS> object. Async functions will be passed an object
+            of the matched route properties, which you may use to specify what
+            data to load.
+          </p>
+          <p>
+            The results of the async functions will be available in a route's{" "}
+            <IJS>response()</IJS> function through the <IJS>resolved</IJS>{" "}
+            object. Each result will be stored in the object using the async
+            function's name.
+          </p>
+          <p>
+            If any of the async functions throws an uncaught error, that error
+            will be available in the <IJS>response()</IJS> function through the{" "}
+            <IJS>error</IJS> property. That said, it is preferable for you to
+            catch and handle the errors yourself.
+          </p>
+        </Explanation>
+
+        <CodeBlock>
+          {`{
+  name: "A Route",
+  path: "route/:id",
+  resolve: {
+    component: () => import("./components/SomeComponent").then(preferDefault),
+    data: ({ params }) => fetch(\`/api/data/$\{params.id\}\`)
+  },
+  response({ resolved, error }) {
+    // resolved = { component: ..., data: ... }
+    if (error) {
+      // handle an uncaught error
+    }
+    return {
+      body: resolved.component,
+      data: resolved.data
+    }
+  }
+}`}
+        </CodeBlock>
+
+        <Explanation>
           <Note>
             These async functions are called every time a route matches. If you
             have functions that should re-use the results from previous calls,
-            you will probably want to implement some caching into your async
-            functions. Curi provides a{" "}
-            <Link name="Package" params={{ package: "router" }} hash="once">
+            you will probably want to implement some caching. Curi provides a{" "}
+            <Link name="Package" params={{ package: "helpers" }} hash="once">
               <IJS>once()</IJS>
             </Link>{" "}
             function for simple caching, but leaves more advanced caching
             solutions to the user.
           </Note>
-          <p>
-            The async functions for a route are grouped under the route's{" "}
-            <IJS>resolve</IJS> object. The name of each function is the name
-            that the function's result will be available as on the{" "}
-            <IJS>resolved</IJS> object. If any of the async functions throws an
-            error, that error will be available in the <IJS>response()</IJS>{" "}
-            function through the <IJS>error</IJS> property.
-          </p>
-          <p>
-            Async functions will be passed an object of the matched route
-            properties, which you may use to specify what data to load.
-          </p>
+
           <p>
             Curi uses Promises to manage async code, so async functions should
-            return Promises. If you want to return a value, you can use{" "}
-            <IJS>Promise.resolve()</IJS> to return it using a Promise.
+            return Promises. <IJS>Promise.resolve()</IJS> can be used to wrap a
+            return value in a Promise.
           </p>
         </Explanation>
+
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`import { preferDefault } from "@curi/helpers";
+          
+const routes = prepareRoutes([
   {
     name: "A Route",
     path: "route/:id",
     resolve: {
       component: () => import("./components/SomeComponent")
-        .then(module => module.default),
+        .then(preferDefault),
       data: ({ params }) => fetch(\`/api/data/$\{params.id\}\`)
     },
     response({ resolved, error }) {
@@ -122,39 +159,40 @@ npm run start`}
 ]);`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            There is one caveat to async routes: we cannot safely render the
-            application immediately on load because the initial response might
-            not be ready yet. When a user loads your application and the first
-            route that matches has asynchronous functions, there is no response
-            to render until the async code finishes. This means that if you
-            attempt to render immediately after creating a router, the{" "}
-            <IJS>response</IJS> that will be passed to the <Cmp>Router</Cmp>'s{" "}
-            <IJS>children()</IJS> will be <IJS>null</IJS>.
-          </p>
-          <p>
-            There are a few possible ways to handle this situation. The first is
-            to delay rendering by placing your <IJS>ReactDOM.render()</IJS> call
-            inside of a <IJS>router.once()</IJS> callback. This will guarantee
-            that the render isn't called until the first response is ready.
-            Alternatively, you can update the render-invoked{" "}
-            <IJS>children()</IJS> function to know what to do when{" "}
-            <IJS>response</IJS> is <IJS>null</IJS>.
-          </p>
-          <p>
-            Which approach is best will depend on the specifics of an
-            application. If there are routes that will take a long time for the
-            initial load, you will probably want to render something while they
-            load. For async code with short loading times, a blank screen might
-            be more acceptable.
-          </p>
-        </Explanation>
-        <CodeBlock>
-          {`const router = curi(...);
-const Router = curiProvider(router);
-
-// delay rendering
+        <Section
+          title="Initial Render"
+          id="initial-render"
+          className="aside"
+          tag="h3"
+        >
+          <Explanation>
+            <p>
+              There is one caveat to async routes: we cannot safely render the
+              application immediately on load because the initial response might
+              not be ready yet.
+            </p>
+            <p>
+              Curi does not emit a response object to its observers until it is
+              ready. If the initial route that matches is asynchronous, then
+              there is a delay between when the application is ready to render
+              and when there is a response to render.
+            </p>
+            <p>
+              If you attempt to render immediately after creating a router and
+              the initial response is still being created, the{" "}
+              <IJS>response</IJS> that will be passed to the <Cmp>Router</Cmp>'s{" "}
+              <IJS>children()</IJS> will be <IJS>null</IJS>.
+            </p>
+            <p>There are a few possible ways to handle this situation.</p>
+            <p>
+              The first is to delay rendering by placing your{" "}
+              <IJS>ReactDOM.render()</IJS> call inside of a{" "}
+              <IJS>router.once()</IJS> callback. This will guarantee that the
+              render isn't called until the first response is ready.
+            </p>
+          </Explanation>
+          <CodeBlock>
+            {`// delay rendering
 router.once(() => {
   ReactDOM.render((
     <Router>
@@ -162,8 +200,19 @@ router.once(() => {
     </Router>
   ), holder);
 });
+`}
+          </CodeBlock>
 
-// alternatively, render using null response
+          <Explanation>
+            <p>
+              Alternatively, you can update the render-invoked{" "}
+              <IJS>children()</IJS> function to know what to do when{" "}
+              <IJS>response</IJS> is <IJS>null</IJS>.
+            </p>
+          </Explanation>
+
+          <CodeBlock>
+            {`// render fallback when response is null
 ReactDOM.render((
   <Router>
     {({ response }) => {
@@ -175,7 +224,18 @@ ReactDOM.render((
     }}
   </Router>
 ), holder);`}
-        </CodeBlock>
+          </CodeBlock>
+
+          <Explanation>
+            <p>
+              Which approach is best will depend on the specifics of an
+              application. If there are routes that will take a long time for
+              the initial load, you will probably want to render something while
+              they load. For async code with short loading times, a blank screen
+              might be more acceptable.
+            </p>
+          </Explanation>
+        </Section>
 
         <Explanation>
           <p>
@@ -186,111 +246,91 @@ ReactDOM.render((
           </p>
         </Explanation>
       </Section>
-      <Section title="Code Splitting" id="code-splitting">
-        <Explanation>
-          <p>
-            Code splitting works by "dynamically" importing modules using the{" "}
-            <IJS>import()</IJS> function. When bundlers like Webpack see{" "}
-            <IJS>import()</IJS> functions, they know to create a separate bundle
-            for that module (and that module's imports, etc.).
-          </p>
-          <p>
-            You can add a <IJS>/* webpackChunkName: "chunkName" */</IJS> comment
-            to an <IJS>import()</IJS> call to let Webpack know what to name a
-            code split bundle.
-          </p>
-          <p>
-            Create React App's default configuration is already setup to support
-            code splitting, but if you were creating your own Webpack
-            configuration, you would need to use{" "}
-            <a href="https://webpack.js.org/configuration/output/#output-chunkfilename">
-              <IJS>output.chunkFilename</IJS>
-            </a>{" "}
-            to support code splitting.
-          </p>
-        </Explanation>
-        <CodeBlock>
-          {`// this creates a "Test" bundle
-import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
-        </CodeBlock>
 
+      <Section title="Code Splitting in Routes" id="code-splitting-routes">
         <Explanation>
           <p>
             Currently, the <IJS>routes.js</IJS> module imports all of the route
-            modules at the top of the file. In order to add code splitting, we
-            need to switch to using <IJS>import()</IJS>.
+            modules at the top of the file. This results in a single bundle of
+            all of a website's code. This can be improved by adding code
+            splitting to an application, which will result in more, but smaller,
+            bundles.
           </p>
+        </Explanation>
+
+        <Section
+          title="Code Splitting"
+          id="code-splitting"
+          className="aside"
+          tag="h3"
+        >
+          <Explanation>
+            <p>
+              Code splitting works by "dynamically" importing modules using the{" "}
+              <IJS>import()</IJS> function. When bundlers like Webpack see{" "}
+              <IJS>import()</IJS> functions, they know to create a separate
+              bundle for that module (and that module's imports, etc.).
+            </p>
+            <p>
+              You can add a <IJS>/* webpackChunkName: "chunkName" */</IJS>{" "}
+              comment to an <IJS>import()</IJS> call to let Webpack know what to
+              name a code split bundle.
+            </p>
+            <p>
+              Create React App's default configuration is already setup to
+              support code splitting, but if you were creating your own Webpack
+              configuration, you would need to use{" "}
+              <a href="https://webpack.js.org/configuration/output/#output-chunkfilename">
+                <IJS>output.chunkFilename</IJS>
+              </a>{" "}
+              to support code splitting.
+            </p>
+          </Explanation>
+          <CodeBlock>
+            {`// this creates a "Test" bundle
+import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
+          </CodeBlock>
+
+          <Explanation>
+            <IJS>import()</IJS> returns a module object, so if you want to
+            access a module's default export, you can use a <IJS>then</IJS>{" "}
+            function to get that value.
+          </Explanation>
+
+          <CodeBlock>
+            {`import("some-module.js")
+  .then(module => module.default)`}
+          </CodeBlock>
+        </Section>
+
+        <Explanation>
           <p>
             Currently <IJS>response()</IJS> returns an object whose{" "}
             <IJS>body</IJS> property is a module imported at the top of the
-            file. Now we want to change this to have <IJS>body</IJS> be the
-            imported module.
+            file. In order to add code splitting to routes, we can add a{" "}
+            <IJS>resolve</IJS> function that imports the module.
+          </p>
+          <p>
+            The <IJS>@curi/helpers</IJS> package provides a{" "}
+            <IJS>preferDefault</IJS> function. This function will return an
+            imported module's default property if it exists, and returns the
+            entire module if it doesn't have a default property.
           </p>
         </Explanation>
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`import { preferDefault } from "@curi/helpers";
+          
+const routes = prepareRoutes([
   {
     name: "Test",
     path: "test",
     resolve: {
       body: () => import(/* webpackChunkName: "Test" */ "./components/Test.js")
+        .then(preferDefault)
     }
   }
 ]);`}
         </CodeBlock>
-
-        <Note>
-          <Explanation>
-            <p>
-              <IJS>import()</IJS> resolves a module object, not a component. Our
-              components are exported using default exports, so they will be
-              available as the module object's <IJS>default</IJS> property.
-            </p>
-            <p>
-              There are a couple different approaches that you can take to
-              accessing the component from the module object.
-            </p>
-            <p>
-              The first is to use <IJS>import().then()</IJS> to resolve the
-              module object's <IJS>default</IJS> property.
-            </p>
-            <p>
-              The second is to reference <IJS>resolved.body.default</IJS> (or
-              whatever you name the function) in the <IJS>response()</IJS>{" "}
-              functions.
-            </p>
-            <p>Which you choose is mostly a matter of personal preference.</p>
-          </Explanation>
-          <CodeBlock>
-            {`const routes = prepareRoutes([
-  {
-    name: "One",
-    path: "one",
-    resolve: {
-      body: () => import("./components/One.js")
-        .then(module => module.default)
-    },
-    response({ resolved }) {
-      return {
-        body: resolved.body
-      };
-    }
-  },
-  {
-    name: "Two",
-    path: "two",
-    resolve: {
-      body: () => import("./components/Two.js")
-    },
-    response({ resolved }) {
-      return {
-        body: resolved.body.default
-      };
-    }
-  }
-]);`}
-          </CodeBlock>
-        </Note>
 
         <Explanation>
           <p>
@@ -311,8 +351,8 @@ const routes = prepareRoutes([
     path: "one",
     resolve: {
       body: () => import("./components/One.js")
-        .then(module => module.default)
-        .catch(err => displayLoadError(err))
+        .then(preferDefault)
+        .catch(err => displayLoadError(err)
     },
     response({ resolved }) {
       return {
@@ -327,29 +367,32 @@ const routes = prepareRoutes([
           <p>
             We can now update the <IJS>routes.js</IJS> module to remove the
             imports at the top of the file and use <IJS>import()</IJS> to import
-            the route components. We will use <IJS>then()</IJS> to only resolve
-            the component instead of the entire module object.
+            the route components. We will use <IJS>preferDefault</IJS> to only
+            resolve the component instead of the entire module object.
           </p>
           <p>
             The <IJS>response()</IJS> functions should also be updated to set
             the return object's <IJS>body</IJS> property to{" "}
-            <IJS>resolved.body</IJS>
+            <IJS>resolved.body</IJS> instead of the import at the top of the
+            file.
           </p>
         </Explanation>
-        <CodeBlock data-line="6-14,19-27,32-40,45-53">
+
+        <CodeBlock data-line="3,9-15,20-26,31-37,42-48">
           {`// src/routes.js
-export default [
+import { prepareRoutes } from "@curi/router";
+import { preferDefault } from "@curi/helpers";
+
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
     resolve: {
       body: () => import("./components/Home")
-        .then(module => module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   },
   {
@@ -357,12 +400,10 @@ export default [
     path: "book/:id",
     resolve: {
       body: () => import("./components/Book")
-        .then(module => module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   },
   {
@@ -370,12 +411,10 @@ export default [
     path: "checkout",
     resolve: {
       body: () => import("./components/Checkout")
-        .then(module => module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   },
   {
@@ -383,24 +422,24 @@ export default [
     path: "(.*)",
     resolve: {
       body: () => import("./components/NotFound")
-        .then(module => module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   }
-];`}
+]);`}
         </CodeBlock>
 
         <Explanation>
           <p>
-            We will also update the <IJS>index.js</IJS> module to use{" "}
-            <IJS>router.once()</IJS> to delay the initial render.
+            For this tutorial, we will use <IJS>router.once()</IJS> to delay the
+            initial render while we wait for the initial response. We should
+            update the <IJS>index.js</IJS> module to do this.
           </p>
         </Explanation>
-        <CodeBlock data-line="16-34">
+
+        <CodeBlock data-line="17-35">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -408,8 +447,8 @@ import { curi } from '@curi/router';
 import Browser from '@hickory/browser';
 import { curiProvider } from '@curi/react-dom';
 
-import './index.css';
 import routes from './routes';
+import './index.css';
 import NavMenu from './components/NavMenu';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -447,6 +486,7 @@ registerServiceWorker();`}
           </p>
         </Explanation>
       </Section>
+
       <Section title="Preloading Data" id="preloading-data">
         <Explanation>
           <p>
@@ -512,29 +552,80 @@ import books from "./books";
 export const BOOKS = () => Promise.resolve(books);
 
 export const BOOK = id => Promise.resolve(
-  books.find(b => b.id === id)
+  const intID = parseInt(id, 10);
+  books.find(b => b.id === intID)
 );`}
           </CodeBlock>
         </Section>
 
         <Explanation>
           <p>
-            The fake API functions should be imported in the{" "}
-            <IJS>routes.js</IJS> module so that we can call the functions from
-            the routes' async methods.
+            When the router is created, it can take a third argument, which is
+            an options object. One of the properties of this object is{" "}
+            <IJS>external</IJS>, which is used to pass in external values that
+            will be accessible in a route's <IJS>resolve</IJS> and{" "}
+            <IJS>response</IJS> functions. This is particularly useful for data
+            that is initialized at runtime, like an Apollo store, but we will
+            also use it here.
+          </p>
+        </Explanation>
+
+        <CodeBlock data-line="11,15-19">
+          {`// src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { curi } from '@curi/router';
+import Browser from '@hickory/browser';
+import { curiProvider } from '@curi/react-dom';
+
+import routes from './routes';
+import './index.css';
+import NavMenu from './components/NavMenu';
+import * as bookAPI from "./api";
+import registerServiceWorker from './registerServiceWorker';
+
+const history = Browser();
+const router = curi(history, routes, {
+  external: {
+    bookAPI
+  }
+});
+const Router = curiProvider(router);
+
+router.once(() => {
+  ReactDOM.render((
+    <Router>
+      {({ response, router }) => {
+        const { body:Body } = response;
+        return (
+          <div>
+            <header>
+              <NavMenu />
+            </header>
+            <main>
+              <Body response={response} router={router} />
+            </main>
+          </div>
+        );
+      }}
+    </Router>
+  ), document.getElementById('root'));
+});
+registerServiceWorker();`}
+        </CodeBlock>
+
+        <Explanation>
+          <p>
+            What do we want to do with the data loaded from the API calls? Along
+            with the <IJS>body</IJS> property, another valid return property for{" "}
+            <IJS>response</IJS> functions is <IJS>data</IJS>. This is a
+            convenient way to attach any data to a response, which we can read
+            from while rendering.
           </p>
           <p>
-            What do we want to do with the data loaded from the API calls? We
-            can attach it to a response through its <IJS>data</IJS> property.
-            When we render, we will be able to access that data as{" "}
-            <IJS>response.data</IJS>. <IJS>data</IJS> can be anything you want
-            it to be. We will set <IJS>data</IJS> to be an object with
-            appropriately named properties.
-          </p>
-          <p>
-            The <IJS>Home</IJS> route already has an <IJS>import()</IJS>, which
-            we name <IJS>body</IJS>. We will name the async call to load the
-            books data <IJS>"books"</IJS>.
+            The <IJS>Home</IJS> route already has an asynchronous action:
+            importing the <IJS>body</IJS> component. We will name the async call
+            to load the books data <IJS>"books"</IJS>.
           </p>
           <p>
             The <IJS>Book</IJS> route's <IJS>response()</IJS> also needs to be
@@ -552,18 +643,20 @@ export const BOOK = id => Promise.resolve(
             <IJS>params.id</IJS> will be a number instead of a string.
           </p>
         </Explanation>
-        <CodeBlock data-line="2,9-13,16-20,26-28,30-32,35-38">
-          {`// src/routes.js
-import { BOOKS, BOOK } from "./api";
 
-export default [
+        <CodeBlock data-line="12,15-18,27,30-33">
+          {`// src/routes.js
+import { prepareRoutes } from "@curi/router";
+import { preferDefault } from "@curi/helpers";
+
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
     resolve: {
       body: () => import("./components/Home")
-        .then(module => module.default),
-      books: () => BOOKS()
+        .then(preferDefault),
+      books: (match, external) => external.bookAPI.BOOKS()
     },
     response({ resolved }) {
       return {
@@ -575,13 +668,10 @@ export default [
   {
     name: "Book",
     path: "book/:id",
-    params: {
-      id: id => parseInt(id, 10)
-    },
     resolve: {
       body: () => import("./components/Book")
-        .then(module => module.default),
-      book: ({ params }) => BOOK(params.id)
+        .then(preferDefault),
+      book: ({ params }, external) => external.bookAPI.BOOK(params.id)
     },
     response({ resolved }) {
       return {
@@ -595,12 +685,10 @@ export default [
     path: "checkout",
     resolve: {
       body: () => import("./components/Checkout")
-        .then(module => module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   },
   {
@@ -608,15 +696,13 @@ export default [
     path: "(.*)",
     resolve: {
       body: () => import("./components/NotFound")
-        .then(module => module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   }
-];`}
+]);`}
         </CodeBlock>
 
         <Explanation>
@@ -634,6 +720,7 @@ export default [
             <IJS>response.data.books</IJS>.
           </p>
         </Explanation>
+
         <CodeBlock lang="jsx" data-line="5,9">
           {`// src/components/Home.js
 import React from 'react';
@@ -664,6 +751,7 @@ export default function Home({ response }) {
             array.
           </p>
         </Explanation>
+
         <CodeBlock lang="jsx" data-line="7">
           {`// src/components/Book.js
 import React from 'react';
@@ -695,6 +783,7 @@ export default function Book({ response, router }) {
 };`}
         </CodeBlock>
       </Section>
+
       <Section title="Visualizing Loading" id="loading">
         <Explanation>
           <p>
@@ -713,6 +802,7 @@ export default function Book({ response, router }) {
             book is requested (and responds instantly on subsequent calls).
           </p>
         </Explanation>
+
         <CodeBlock>
           {`// src/api.js
 import books from "./books";
@@ -730,6 +820,7 @@ export const BOOK = id => new Promise(resolve => {
     resolve(BOOK_CACHE[id]);
     return;
   }
+  const intID = parseInt(id, 10);
   // artificial delay on first call
   setTimeout(() => {
     const book = books.find(b => b.id === id);
@@ -764,6 +855,7 @@ export const BOOK = id => new Promise(resolve => {
               spinner while we wait for the book data to load.
             </p>
           </Explanation>
+
           <CodeBlock lang="jsx">
             {`import { Link } from "@curi/react-dom";
             
@@ -785,7 +877,8 @@ export const BOOK = id => new Promise(resolve => {
               provides some pretty loading spinners, so we will use that.
             </p>
           </Explanation>
-          <CodeBlock lang="bash">{`yarn add react-spinkit`}</CodeBlock>
+
+          <CodeBlock lang="bash">{`npm install react-spinkit`}</CodeBlock>
 
           <Explanation>
             <p>
@@ -804,6 +897,7 @@ export const BOOK = id => new Promise(resolve => {
               display immediately.
             </Note>
           </Explanation>
+
           <CodeBlock lang="jsx" data-line="4,13-18">
             {`// src/components/Home.js
 import React from 'react';
@@ -833,6 +927,7 @@ export default function Home({ response }) {
           </CodeBlock>
         </Section>
       </Section>
+
       <Section title="Async Caveats" id="caveats">
         <Explanation>
           <p>
