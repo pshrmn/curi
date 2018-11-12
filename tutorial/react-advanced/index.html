@@ -10,20 +10,35 @@
     <link href="/static/css/index.css" rel="stylesheet">
   </head>
   <body>
-    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" " href="/guides/">Guides</a></li><li><a class=" active" href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page tutorial"><div class="content" style="outline:none"><h1>React Advanced Tutorial</h1><p>In this tutorial, we will be expanding on the website built in the<!-- --> <a href="/tutorial/react-basics/">React basics tutorial</a>. We will take advantage of Curi&#x27;s async features to add code splitting and data preloading to the application.</p><div class="tutorial-outline"><p><strong>We will be doing the following:</strong></p><ul><li>Learn how to code split routes.</li><li>Learn how to preload data for routes.</li></ul></div><div class="section" id="demo"><h2 class="displaced-header"><a class="header-link" href="#demo">Demo</a></h2><p>You can run a demo of the site we are building with CodeSandbox.</p><div class="demo"><iframe src="https://codesandbox.io/embed/github/curijs/react-advanced-tutorial/tree/master/" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu to switch between files.</p></div></div><div class="section" id="setup"><h2 class="displaced-header"><a class="header-link" href="#setup">Setup</a></h2><div class="explanation"><p>If you did not complete the React basics tutorial, you should either clone its<!-- --> <a href="https://github.com/curijs/react-basic-tutorial/">repo</a> <!-- -->or fork its<!-- --> <a href="https://codesandbox.io/s/github/curijs/react-basic-tutorial/tree/master/">sandbox</a>.</p><p>If you are cloning the repo, you should also install its dependencies and then start the development server. The repo was made using <code class="inline-code language-javascript">yarn</code>, but if you only have NPM installed, you can use the analagous commands.</p></div><div class="code-block"><pre><code class="language-bash">git clone https://github.com/curijs/react-basic-tutorial react-advanced-tutorial
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" " href="/guides/">Guides</a></li><li><a class=" active" href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page tutorial"><div class="content" style="outline:none"><h1>React Advanced Tutorial</h1><div class="explanation"><p>In this tutorial, we will be expanding on the website built in the<!-- --> <a href="/tutorial/react-basics/">React basics tutorial</a>. We will take advantage of Curi&#x27;s async features to add code splitting and data preloading to the application.</p></div><div class="tutorial-outline"><p><strong>We will be doing the following:</strong></p><ul><li>Add code splitting to routes.</li><li>Preload route data with asynchronous navigation.</li></ul></div><div class="section" id="demo"><h2 class="displaced-header"><a class="header-link" href="#demo">Demo</a></h2><div class="explanation"><p>You can run a demo of the site we are building with CodeSandbox.</p></div><div class="demo"><iframe src="https://codesandbox.io/embed/github/curijs/react-advanced-tutorial/tree/master/" width="100%" height="600px" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe><p>Use the three buttons at the top of the Sandbox to toggle view modes. Clicking the menu button in the top left corner opens a menu to switch between files.</p></div></div><div class="section" id="setup"><h2 class="displaced-header"><a class="header-link" href="#setup">Setup</a></h2><div class="explanation"><p>If you did not complete the React basics tutorial, you should either clone its<!-- --> <a href="https://github.com/curijs/react-basic-tutorial/">repo</a> <!-- -->or fork its<!-- --> <a href="https://codesandbox.io/s/github/curijs/react-basic-tutorial/tree/master/">sandbox</a>.</p><p>If you are cloning the repo, you should also install its dependencies and then start the development server.</p></div><div class="code-block"><pre><code class="language-bash">git clone https://github.com/curijs/react-basic-tutorial react-advanced-tutorial
 cd react-advanced-tutorial
-
-yarn
-yarn start
-# or
 npm install
-npm run start</code></pre></div></div><div class="section" id="async"><h2 class="displaced-header"><a class="header-link" href="#async">Async Routes</a></h2><div class="explanation"><p>Curi lets you attach async functions to a route, and when that route matches, a response will not be emitted until the async functions have completed. The results of the async functions will be available in a route&#x27;s <code class="inline-code language-javascript">response()</code> function under the<!-- --> <code class="inline-code language-javascript">resolved</code> object.</p><div class="note"><strong>Note:</strong> <!-- -->These async functions are called every time a route matches. If you have functions that should re-use the results from previous calls, you will probably want to implement some caching into your async functions. Curi provides a<!-- --> <a href="/packages/@curi/router/#once"><code class="inline-code language-javascript">once()</code></a> <!-- -->function for simple caching, but leaves more advanced caching solutions to the user.</div><p>The async functions for a route are grouped under the route&#x27;s<!-- --> <code class="inline-code language-javascript">resolve</code> object. The name of each function is the name that the function&#x27;s result will be available as on the<!-- --> <code class="inline-code language-javascript">resolved</code> object. If any of the async functions throws an error, that error will be available in the <code class="inline-code language-javascript">response()</code> <!-- -->function through the <code class="inline-code language-javascript">error</code> property.</p><p>Async functions will be passed an object of the matched route properties, which you may use to specify what data to load.</p><p>Curi uses Promises to manage async code, so async functions should return Promises. If you want to return a value, you can use<!-- --> <code class="inline-code language-javascript">Promise.resolve()</code> to return it using a Promise.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = prepareRoutes([
+npm run start</code></pre></div></div><div class="section" id="async"><h2 class="displaced-header"><a class="header-link" href="#async">Asynchronous Routes</a></h2><div class="explanation"><p>Curi lets you attach async functions to a route through its<!-- --> <code class="inline-code language-javascript">resolve</code>. When that route matches, a response will not be emitted until the async functions have completed.</p><p>The async functions for a route are grouped under the route&#x27;s<!-- --> <code class="inline-code language-javascript">resolve</code> object. Async functions will be passed an object of the matched route properties, which you may use to specify what data to load.</p><p>The results of the async functions will be available in a route&#x27;s<!-- --> <code class="inline-code language-javascript">response()</code> function through the <code class="inline-code language-javascript">resolved</code> <!-- -->object. Each result will be stored in the object using the async function&#x27;s name.</p><p>If any of the async functions throws an uncaught error, that error will be available in the <code class="inline-code language-javascript">response()</code> function through the<!-- --> <code class="inline-code language-javascript">error</code> property. That said, it is preferable for you to catch and handle the errors yourself.</p></div><div class="code-block"><pre><code class="language-javascript">{
+  name: &quot;A Route&quot;,
+  path: &quot;route/:id&quot;,
+  resolve: {
+    component: () =&gt; import(&quot;./components/SomeComponent&quot;).then(preferDefault),
+    data: ({ params }) =&gt; fetch(`/api/data/${params.id}`)
+  },
+  response({ resolved, error }) {
+    // resolved = { component: ..., data: ... }
+    if (error) {
+      // handle an uncaught error
+    }
+    return {
+      body: resolved.component,
+      data: resolved.data
+    }
+  }
+}</code></pre></div><div class="explanation"><div class="note"><strong>Note:</strong> <!-- -->These async functions are called every time a route matches. If you have functions that should re-use the results from previous calls, you will probably want to implement some caching. Curi provides a<!-- --> <a href="/packages/@curi/helpers/#once"><code class="inline-code language-javascript">once()</code></a> <!-- -->function for simple caching, but leaves more advanced caching solutions to the user.</div><p>Curi uses Promises to manage async code, so async functions should return Promises. <code class="inline-code language-javascript">Promise.resolve()</code> can be used to wrap a return value in a Promise.</p></div><div class="code-block"><pre><code class="language-javascript">import { preferDefault } from &quot;@curi/helpers&quot;;
+          
+const routes = prepareRoutes([
   {
     name: &quot;A Route&quot;,
     path: &quot;route/:id&quot;,
     resolve: {
       component: () =&gt; import(&quot;./components/SomeComponent&quot;)
-        .then(module =&gt; module.default),
+        .then(preferDefault),
       data: ({ params }) =&gt; fetch(`/api/data/${params.id}`)
     },
     response({ resolved, error }) {
@@ -36,10 +51,7 @@ npm run start</code></pre></div></div><div class="section" id="async"><h2 class=
       }
     }
   }
-]);</code></pre></div><div class="explanation"><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet. When a user loads your application and the first route that matches has asynchronous functions, there is no response to render until the async code finishes. This means that if you attempt to render immediately after creating a router, the<!-- --> <code class="inline-code language-javascript">response</code> that will be passed to the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s<!-- --> <code class="inline-code language-javascript">children()</code> will be <code class="inline-code language-javascript">null</code>.</p><p>There are a few possible ways to handle this situation. The first is to delay rendering by placing your <code class="inline-code language-javascript">ReactDOM.render()</code> call inside of a <code class="inline-code language-javascript">router.once()</code> callback. This will guarantee that the render isn&#x27;t called until the first response is ready. Alternatively, you can update the render-invoked<!-- --> <code class="inline-code language-javascript">children()</code> function to know what to do when<!-- --> <code class="inline-code language-javascript">response</code> is <code class="inline-code language-javascript">null</code>.</p><p>Which approach is best will depend on the specifics of an application. If there are routes that will take a long time for the initial load, you will probably want to render something while they load. For async code with short loading times, a blank screen might be more acceptable.</p></div><div class="code-block"><pre><code class="language-javascript">const router = curi(...);
-const Router = curiProvider(router);
-
-// delay rendering
+]);</code></pre></div><div class="aside" id="initial-render"><h3 class="displaced-header"><a class="header-link" href="#initial-render">Initial Render</a></h3><div class="explanation"><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet.</p><p>Curi does not emit a response object to its observers until it is ready. If the initial route that matches is asynchronous, then there is a delay between when the application is ready to render and when there is a response to render.</p><p>If you attempt to render immediately after creating a router and the initial response is still being created, the<!-- --> <code class="inline-code language-javascript">response</code> that will be passed to the <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code>&#x27;s<!-- --> <code class="inline-code language-javascript">children()</code> will be <code class="inline-code language-javascript">null</code>.</p><p>There are a few possible ways to handle this situation.</p><p>The first is to delay rendering by placing your<!-- --> <code class="inline-code language-javascript">ReactDOM.render()</code> call inside of a<!-- --> <code class="inline-code language-javascript">router.once()</code> callback. This will guarantee that the render isn&#x27;t called until the first response is ready.</p></div><div class="code-block"><pre><code class="language-javascript">// delay rendering
 router.once(() =&gt; {
   ReactDOM.render((
     &lt;Router&gt;
@@ -47,8 +59,7 @@ router.once(() =&gt; {
     &lt;/Router&gt;
   ), holder);
 });
-
-// alternatively, render using null response
+</code></pre></div><div class="explanation"><p>Alternatively, you can update the render-invoked<!-- --> <code class="inline-code language-javascript">children()</code> function to know what to do when<!-- --> <code class="inline-code language-javascript">response</code> is <code class="inline-code language-javascript">null</code>.</p></div><div class="code-block"><pre><code class="language-javascript">// render fallback when response is null
 ReactDOM.render((
   &lt;Router&gt;
     {({ response }) =&gt; {
@@ -59,42 +70,20 @@ ReactDOM.render((
       return &lt;Body response={response} /&gt;;
     }}
   &lt;/Router&gt;
-), holder);</code></pre></div><div class="explanation"><p>For more information on async route properties, please refer to the<!-- --> <a href="/guides/routes/">routes guide</a>.</p></div></div><div class="section" id="code-splitting"><h2 class="displaced-header"><a class="header-link" href="#code-splitting">Code Splitting</a></h2><div class="explanation"><p>Code splitting works by &quot;dynamically&quot; importing modules using the<!-- --> <code class="inline-code language-javascript">import()</code> function. When bundlers like Webpack see<!-- --> <code class="inline-code language-javascript">import()</code> functions, they know to create a separate bundle for that module (and that module&#x27;s imports, etc.).</p><p>You can add a <code class="inline-code language-javascript">/* webpackChunkName: &quot;chunkName&quot; */</code> comment to an <code class="inline-code language-javascript">import()</code> call to let Webpack know what to name a code split bundle.</p><p>Create React App&#x27;s default configuration is already setup to support code splitting, but if you were creating your own Webpack configuration, you would need to use<!-- --> <a href="https://webpack.js.org/configuration/output/#output-chunkfilename"><code class="inline-code language-javascript">output.chunkFilename</code></a> <!-- -->to support code splitting.</p></div><div class="code-block"><pre><code class="language-javascript">// this creates a &quot;Test&quot; bundle
-import(/* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;)</code></pre></div><div class="explanation"><p>Currently, the <code class="inline-code language-javascript">routes.js</code> module imports all of the route modules at the top of the file. In order to add code splitting, we need to switch to using <code class="inline-code language-javascript">import()</code>.</p><p>Currently <code class="inline-code language-javascript">response()</code> returns an object whose<!-- --> <code class="inline-code language-javascript">body</code> property is a module imported at the top of the file. Now we want to change this to have <code class="inline-code language-javascript">body</code> be the imported module.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = prepareRoutes([
+), holder);</code></pre></div><div class="explanation"><p>Which approach is best will depend on the specifics of an application. If there are routes that will take a long time for the initial load, you will probably want to render something while they load. For async code with short loading times, a blank screen might be more acceptable.</p></div></div><div class="explanation"><p>For more information on async route properties, please refer to the<!-- --> <a href="/guides/routes/">routes guide</a>.</p></div></div><div class="section" id="code-splitting-routes"><h2 class="displaced-header"><a class="header-link" href="#code-splitting-routes">Code Splitting in Routes</a></h2><div class="explanation"><p>Currently, the <code class="inline-code language-javascript">routes.js</code> module imports all of the route modules at the top of the file. This results in a single bundle of all of a website&#x27;s code. This can be improved by adding code splitting to an application, which will result in more, but smaller, bundles.</p></div><div class="aside" id="code-splitting"><h3 class="displaced-header"><a class="header-link" href="#code-splitting">Code Splitting</a></h3><div class="explanation"><p>Code splitting works by &quot;dynamically&quot; importing modules using the<!-- --> <code class="inline-code language-javascript">import()</code> function. When bundlers like Webpack see<!-- --> <code class="inline-code language-javascript">import()</code> functions, they know to create a separate bundle for that module (and that module&#x27;s imports, etc.).</p><p>You can add a <code class="inline-code language-javascript">/* webpackChunkName: &quot;chunkName&quot; */</code> <!-- -->comment to an <code class="inline-code language-javascript">import()</code> call to let Webpack know what to name a code split bundle.</p><p>Create React App&#x27;s default configuration is already setup to support code splitting, but if you were creating your own Webpack configuration, you would need to use<!-- --> <a href="https://webpack.js.org/configuration/output/#output-chunkfilename"><code class="inline-code language-javascript">output.chunkFilename</code></a> <!-- -->to support code splitting.</p></div><div class="code-block"><pre><code class="language-javascript">// this creates a &quot;Test&quot; bundle
+import(/* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;)</code></pre></div><div class="explanation"><code class="inline-code language-javascript">import()</code> returns a module object, so if you want to access a module&#x27;s default export, you can use a <code class="inline-code language-javascript">then</code> <!-- -->function to get that value.</div><div class="code-block"><pre><code class="language-javascript">import(&quot;some-module.js&quot;)
+  .then(module =&gt; module.default)</code></pre></div></div><div class="explanation"><p>Currently <code class="inline-code language-javascript">response()</code> returns an object whose<!-- --> <code class="inline-code language-javascript">body</code> property is a module imported at the top of the file. In order to add code splitting to routes, we can add a<!-- --> <code class="inline-code language-javascript">resolve</code> function that imports the module.</p><p>The <code class="inline-code language-javascript">@curi/helpers</code> package provides a<!-- --> <code class="inline-code language-javascript">preferDefault</code> function. This function will return an imported module&#x27;s default property if it exists, and returns the entire module if it doesn&#x27;t have a default property.</p></div><div class="code-block"><pre><code class="language-javascript">import { preferDefault } from &quot;@curi/helpers&quot;;
+          
+const routes = prepareRoutes([
   {
     name: &quot;Test&quot;,
     path: &quot;test&quot;,
     resolve: {
       body: () =&gt; import(/* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;)
+        .then(preferDefault)
     }
   }
-]);</code></pre></div><div class="note"><strong>Note:</strong> <div class="explanation"><p><code class="inline-code language-javascript">import()</code> resolves a module object, not a component. Our components are exported using default exports, so they will be available as the module object&#x27;s <code class="inline-code language-javascript">default</code> property.</p><p>There are a couple different approaches that you can take to accessing the component from the module object.</p><p>The first is to use <code class="inline-code language-javascript">import().then()</code> to resolve the module object&#x27;s <code class="inline-code language-javascript">default</code> property.</p><p>The second is to reference <code class="inline-code language-javascript">resolved.body.default</code> (or whatever you name the function) in the <code class="inline-code language-javascript">response()</code> <!-- -->functions.</p><p>Which you choose is mostly a matter of personal preference.</p></div><div class="code-block"><pre><code class="language-javascript">const routes = prepareRoutes([
-  {
-    name: &quot;One&quot;,
-    path: &quot;one&quot;,
-    resolve: {
-      body: () =&gt; import(&quot;./components/One.js&quot;)
-        .then(module =&gt; module.default)
-    },
-    response({ resolved }) {
-      return {
-        body: resolved.body
-      };
-    }
-  },
-  {
-    name: &quot;Two&quot;,
-    path: &quot;two&quot;,
-    resolve: {
-      body: () =&gt; import(&quot;./components/Two.js&quot;)
-    },
-    response({ resolved }) {
-      return {
-        body: resolved.body.default
-      };
-    }
-  }
-]);</code></pre></div></div><div class="explanation"><p>When a module fails to load, the error will be passed to the<!-- --> <code class="inline-code language-javascript">response()</code> function through the <code class="inline-code language-javascript">error</code> <!-- -->property. We won&#x27;t be incorporating this into the application here, but in a real application you probably want to have a fallback component to display an error message (especially if you have an offline mode with service workers).</p></div><div class="code-block"><pre><code class="language-javascript">import displayLoadError from &quot;./components/LoadError&quot;;
+]);</code></pre></div><div class="explanation"><p>When a module fails to load, the error will be passed to the<!-- --> <code class="inline-code language-javascript">response()</code> function through the <code class="inline-code language-javascript">error</code> <!-- -->property. We won&#x27;t be incorporating this into the application here, but in a real application you probably want to have a fallback component to display an error message (especially if you have an offline mode with service workers).</p></div><div class="code-block"><pre><code class="language-javascript">import displayLoadError from &quot;./components/LoadError&quot;;
         
 const routes = prepareRoutes([
   {
@@ -102,8 +91,8 @@ const routes = prepareRoutes([
     path: &quot;one&quot;,
     resolve: {
       body: () =&gt; import(&quot;./components/One.js&quot;)
-        .then(module =&gt; module.default)
-        .catch(err =&gt; displayLoadError(err))
+        .then(preferDefault)
+        .catch(err =&gt; displayLoadError(err)
     },
     response({ resolved }) {
       return {
@@ -111,19 +100,20 @@ const routes = prepareRoutes([
       };
     }
   }
-]);</code></pre></div><div class="explanation"><p>We can now update the <code class="inline-code language-javascript">routes.js</code> module to remove the imports at the top of the file and use <code class="inline-code language-javascript">import()</code> to import the route components. We will use <code class="inline-code language-javascript">then()</code> to only resolve the component instead of the entire module object.</p><p>The <code class="inline-code language-javascript">response()</code> functions should also be updated to set the return object&#x27;s <code class="inline-code language-javascript">body</code> property to<!-- --> <code class="inline-code language-javascript">resolved.body</code></p></div><div class="code-block"><pre data-line="6-14,19-27,32-40,45-53"><code class="language-javascript">// src/routes.js
-export default [
+]);</code></pre></div><div class="explanation"><p>We can now update the <code class="inline-code language-javascript">routes.js</code> module to remove the imports at the top of the file and use <code class="inline-code language-javascript">import()</code> to import the route components. We will use <code class="inline-code language-javascript">preferDefault</code> to only resolve the component instead of the entire module object.</p><p>The <code class="inline-code language-javascript">response()</code> functions should also be updated to set the return object&#x27;s <code class="inline-code language-javascript">body</code> property to<!-- --> <code class="inline-code language-javascript">resolved.body</code> instead of the import at the top of the file.</p></div><div class="code-block"><pre data-line="3,9-15,20-26,31-37,42-48"><code class="language-javascript">// src/routes.js
+import { prepareRoutes } from &quot;@curi/router&quot;;
+import { preferDefault } from &quot;@curi/helpers&quot;;
+
+export default prepareRoutes([
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;,
     resolve: {
       body: () =&gt; import(&quot;./components/Home&quot;)
-        .then(module =&gt; module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   },
   {
@@ -131,12 +121,10 @@ export default [
     path: &quot;book/:id&quot;,
     resolve: {
       body: () =&gt; import(&quot;./components/Book&quot;)
-        .then(module =&gt; module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   },
   {
@@ -144,12 +132,10 @@ export default [
     path: &quot;checkout&quot;,
     resolve: {
       body: () =&gt; import(&quot;./components/Checkout&quot;)
-        .then(module =&gt; module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   },
   {
@@ -157,23 +143,21 @@ export default [
     path: &quot;(.*)&quot;,
     resolve: {
       body: () =&gt; import(&quot;./components/NotFound&quot;)
-        .then(module =&gt; module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   }
-];</code></pre></div><div class="explanation"><p>We will also update the <code class="inline-code language-javascript">index.js</code> module to use<!-- --> <code class="inline-code language-javascript">router.once()</code> to delay the initial render.</p></div><div class="code-block"><pre data-line="16-34"><code class="language-javascript">// src/index.js
+]);</code></pre></div><div class="explanation"><p>For this tutorial, we will use <code class="inline-code language-javascript">router.once()</code> to delay the initial render while we wait for the initial response. We should update the <code class="inline-code language-javascript">index.js</code> module to do this.</p></div><div class="code-block"><pre data-line="17-35"><code class="language-javascript">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 import { curiProvider } from &#x27;@curi/react-dom&#x27;;
 
-import &#x27;./index.css&#x27;;
 import routes from &#x27;./routes&#x27;;
+import &#x27;./index.css&#x27;;
 import NavMenu from &#x27;./components/NavMenu&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
@@ -206,18 +190,60 @@ import books from &quot;./books&quot;;
 export const BOOKS = () =&gt; Promise.resolve(books);
 
 export const BOOK = id =&gt; Promise.resolve(
-  books.find(b =&gt; b.id === id)
-);</code></pre></div></div><div class="explanation"><p>The fake API functions should be imported in the<!-- --> <code class="inline-code language-javascript">routes.js</code> module so that we can call the functions from the routes&#x27; async methods.</p><p>What do we want to do with the data loaded from the API calls? We can attach it to a response through its <code class="inline-code language-javascript">data</code> property. When we render, we will be able to access that data as<!-- --> <code class="inline-code language-javascript">response.data</code>. <code class="inline-code language-javascript">data</code> can be anything you want it to be. We will set <code class="inline-code language-javascript">data</code> to be an object with appropriately named properties.</p><p>The <code class="inline-code language-javascript">Home</code> route already has an <code class="inline-code language-javascript">import()</code>, which we name <code class="inline-code language-javascript">body</code>. We will name the async call to load the books data <code class="inline-code language-javascript">&quot;books&quot;</code>.</p><p>The <code class="inline-code language-javascript">Book</code> route&#x27;s <code class="inline-code language-javascript">response()</code> also needs to be updated to attach the books data (<code class="inline-code language-javascript">resolved.books</code>) to the response.</p><p>The <code class="inline-code language-javascript">book()</code> API call expects to be given the <code class="inline-code language-javascript">id</code> <!-- -->number of the book it should return data for. We can grab the correct param (<code class="inline-code language-javascript">id</code>) from the <code class="inline-code language-javascript">params</code> property. However, when params are parsed, they are stored as strings. To convert it to a number, we can use the route&#x27;s <code class="inline-code language-javascript">params</code> <!-- -->property to tell Curi how to parse the <code class="inline-code language-javascript">id</code>. By giving it a function that calls <code class="inline-code language-javascript">parseInt()</code> on the provided value,<!-- --> <code class="inline-code language-javascript">params.id</code> will be a number instead of a string.</p></div><div class="code-block"><pre data-line="2,9-13,16-20,26-28,30-32,35-38"><code class="language-javascript">// src/routes.js
-import { BOOKS, BOOK } from &quot;./api&quot;;
+  const intID = parseInt(id, 10);
+  books.find(b =&gt; b.id === intID)
+);</code></pre></div></div><div class="explanation"><p>When the router is created, it can take a third argument, which is an options object. One of the properties of this object is<!-- --> <code class="inline-code language-javascript">external</code>, which is used to pass in external values that will be accessible in a route&#x27;s <code class="inline-code language-javascript">resolve</code> and<!-- --> <code class="inline-code language-javascript">response</code> functions. This is particularly useful for data that is initialized at runtime, like an Apollo store, but we will also use it here.</p></div><div class="code-block"><pre data-line="11,15-19"><code class="language-javascript">// src/index.js
+import React from &#x27;react&#x27;;
+import ReactDOM from &#x27;react-dom&#x27;;
+import { curi } from &#x27;@curi/router&#x27;;
+import Browser from &#x27;@hickory/browser&#x27;;
+import { curiProvider } from &#x27;@curi/react-dom&#x27;;
 
-export default [
+import routes from &#x27;./routes&#x27;;
+import &#x27;./index.css&#x27;;
+import NavMenu from &#x27;./components/NavMenu&#x27;;
+import * as bookAPI from &quot;./api&quot;;
+import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
+
+const history = Browser();
+const router = curi(history, routes, {
+  external: {
+    bookAPI
+  }
+});
+const Router = curiProvider(router);
+
+router.once(() =&gt; {
+  ReactDOM.render((
+    &lt;Router&gt;
+      {({ response, router }) =&gt; {
+        const { body:Body } = response;
+        return (
+          &lt;div&gt;
+            &lt;header&gt;
+              &lt;NavMenu /&gt;
+            &lt;/header&gt;
+            &lt;main&gt;
+              &lt;Body response={response} router={router} /&gt;
+            &lt;/main&gt;
+          &lt;/div&gt;
+        );
+      }}
+    &lt;/Router&gt;
+  ), document.getElementById(&#x27;root&#x27;));
+});
+registerServiceWorker();</code></pre></div><div class="explanation"><p>What do we want to do with the data loaded from the API calls? Along with the <code class="inline-code language-javascript">body</code> property, another valid return property for<!-- --> <code class="inline-code language-javascript">response</code> functions is <code class="inline-code language-javascript">data</code>. This is a convenient way to attach any data to a response, which we can read from while rendering.</p><p>The <code class="inline-code language-javascript">Home</code> route already has an asynchronous action: importing the <code class="inline-code language-javascript">body</code> component. We will name the async call to load the books data <code class="inline-code language-javascript">&quot;books&quot;</code>.</p><p>The <code class="inline-code language-javascript">Book</code> route&#x27;s <code class="inline-code language-javascript">response()</code> also needs to be updated to attach the books data (<code class="inline-code language-javascript">resolved.books</code>) to the response.</p><p>The <code class="inline-code language-javascript">book()</code> API call expects to be given the <code class="inline-code language-javascript">id</code> <!-- -->number of the book it should return data for. We can grab the correct param (<code class="inline-code language-javascript">id</code>) from the <code class="inline-code language-javascript">params</code> property. However, when params are parsed, they are stored as strings. To convert it to a number, we can use the route&#x27;s <code class="inline-code language-javascript">params</code> <!-- -->property to tell Curi how to parse the <code class="inline-code language-javascript">id</code>. By giving it a function that calls <code class="inline-code language-javascript">parseInt()</code> on the provided value,<!-- --> <code class="inline-code language-javascript">params.id</code> will be a number instead of a string.</p></div><div class="code-block"><pre data-line="12,15-18,27,30-33"><code class="language-javascript">// src/routes.js
+import { prepareRoutes } from &quot;@curi/router&quot;;
+import { preferDefault } from &quot;@curi/helpers&quot;;
+
+export default prepareRoutes([
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;,
     resolve: {
       body: () =&gt; import(&quot;./components/Home&quot;)
-        .then(module =&gt; module.default),
-      books: () =&gt; BOOKS()
+        .then(preferDefault),
+      books: (match, external) =&gt; external.bookAPI.BOOKS()
     },
     response({ resolved }) {
       return {
@@ -229,13 +255,10 @@ export default [
   {
     name: &quot;Book&quot;,
     path: &quot;book/:id&quot;,
-    params: {
-      id: id =&gt; parseInt(id, 10)
-    },
     resolve: {
       body: () =&gt; import(&quot;./components/Book&quot;)
-        .then(module =&gt; module.default),
-      book: ({ params }) =&gt; BOOK(params.id)
+        .then(preferDefault),
+      book: ({ params }, external) =&gt; external.bookAPI.BOOK(params.id)
     },
     response({ resolved }) {
       return {
@@ -249,12 +272,10 @@ export default [
     path: &quot;checkout&quot;,
     resolve: {
       body: () =&gt; import(&quot;./components/Checkout&quot;)
-        .then(module =&gt; module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   },
   {
@@ -262,15 +283,13 @@ export default [
     path: &quot;(.*)&quot;,
     resolve: {
       body: () =&gt; import(&quot;./components/NotFound&quot;)
-        .then(module =&gt; module.default)
+        .then(preferDefault)
     },
     response({ resolved }) {
-      return {
-        body: resolved.body
-      };
+      return { body: resolved.body };
     }
   }
-];</code></pre></div><div class="explanation"><p>With the data attached to our responses, we can remove the data imports from the components and just read from the response.</p></div><div class="explanation"><p>In the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component&#x27;s module, we can remove the<!-- --> <code class="inline-code language-javascript">books.js</code> import and grab the response from the component&#x27;s props. The books data can be access as<!-- --> <code class="inline-code language-javascript">response.data.books</code>.</p></div><div class="code-block"><pre data-line="5,9"><code class="language-jsx">// src/components/Home.js
+]);</code></pre></div><div class="explanation"><p>With the data attached to our responses, we can remove the data imports from the components and just read from the response.</p></div><div class="explanation"><p>In the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component&#x27;s module, we can remove the<!-- --> <code class="inline-code language-javascript">books.js</code> import and grab the response from the component&#x27;s props. The books data can be access as<!-- --> <code class="inline-code language-javascript">response.data.books</code>.</p></div><div class="code-block"><pre data-line="5,9"><code class="language-jsx">// src/components/Home.js
 import React from &#x27;react&#x27;;
 import { Link } from &#x27;@curi/react-dom&#x27;;
 
@@ -331,6 +350,7 @@ export const BOOK = id =&gt; new Promise(resolve =&gt; {
     resolve(BOOK_CACHE[id]);
     return;
   }
+  const intID = parseInt(id, 10);
   // artificial delay on first call
   setTimeout(() =&gt; {
     const book = books.find(b =&gt; b.id === id);
@@ -346,7 +366,7 @@ export const BOOK = id =&gt; new Promise(resolve =&gt; {
       {navigating ? &lt;Spinner /&gt; : null}
     &lt;/React.Fragment&gt;
   )}
-&lt;/Link&gt;</code></pre></div><div class="explanation"><p><a href="https://github.com/KyleAMathews/react-spinkit"><code class="inline-code language-javascript">react-spinkit</code></a> <!-- -->provides some pretty loading spinners, so we will use that.</p></div><div class="code-block"><pre><code class="language-bash">yarn add react-spinkit</code></pre></div><div class="explanation"><p>In the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component&#x27;s module, we need to import the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Spinner<!-- -->&gt;</code> component. The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> needs to be swapped from a React element to a render-invoked function. We wrap the contents in a <code class="inline-code language-jsx">&lt;<!-- -->React.Fragment<!-- -->&gt;</code> to avoid unnecessary DOM elements. In the function, we render a <code class="inline-code language-jsx">&lt;<!-- -->Spinner<!-- -->&gt;</code> when the <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> is navigating and <code class="inline-code language-javascript">null</code> when it is not.</p><div class="note"><strong>Note:</strong> <code class="inline-code language-javascript">react-spinkit</code> is highly customizable, but we are sticking with the defaults here. <code class="inline-code language-javascript">react-spinkit</code> has a default one second render delay, which is why the spinner does not display immediately.</div></div><div class="code-block"><pre data-line="4,13-18"><code class="language-jsx">// src/components/Home.js
+&lt;/Link&gt;</code></pre></div><div class="explanation"><p><a href="https://github.com/KyleAMathews/react-spinkit"><code class="inline-code language-javascript">react-spinkit</code></a> <!-- -->provides some pretty loading spinners, so we will use that.</p></div><div class="code-block"><pre><code class="language-bash">npm install react-spinkit</code></pre></div><div class="explanation"><p>In the <code class="inline-code language-jsx">&lt;<!-- -->Home<!-- -->&gt;</code> component&#x27;s module, we need to import the<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->Spinner<!-- -->&gt;</code> component. The <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> needs to be swapped from a React element to a render-invoked function. We wrap the contents in a <code class="inline-code language-jsx">&lt;<!-- -->React.Fragment<!-- -->&gt;</code> to avoid unnecessary DOM elements. In the function, we render a <code class="inline-code language-jsx">&lt;<!-- -->Spinner<!-- -->&gt;</code> when the <code class="inline-code language-jsx">&lt;<!-- -->Link<!-- -->&gt;</code> is navigating and <code class="inline-code language-javascript">null</code> when it is not.</p><div class="note"><strong>Note:</strong> <code class="inline-code language-javascript">react-spinkit</code> is highly customizable, but we are sticking with the defaults here. <code class="inline-code language-javascript">react-spinkit</code> has a default one second render delay, which is why the spinner does not display immediately.</div></div><div class="code-block"><pre data-line="4,13-18"><code class="language-jsx">// src/components/Home.js
 import React from &#x27;react&#x27;;
 import { Link } from &#x27;@curi/react-dom&#x27;;
 import Spinner from &quot;react-spinkit&quot;;
