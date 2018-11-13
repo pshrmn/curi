@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Server-Side Rendering Guide | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><header><nav><ul><li><a class="home-link " href="/">Curi</a></li><li><a class=" " href="/packages/">Packages</a></li><li><a class=" active" href="/guides/">Guides</a></li><li><a class=" " href="/tutorial/">Tutorials</a></li><li><a class=" " href="/examples/">Examples</a></li><li><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><main tabindex="-1" style="outline:none"><div class="page guide"><div class="content" style="outline:none"><h1>Server-Side Rendering</h1><div class="explanation"><p>Server-side rendering (SSR) allows an application to generate the HTML for pages on the server. While not strictly necessary for single-page applications, server-side rendering can potentially be beneficial by:</p><ol><li>Speeding up the initial render time.</li><li>Making it easier for web crawlers to view the application&#x27;s content (which <em>may</em> improve SEO).</li></ol><p>This guide will cover how to setup server-side rendering and some of the issues that you may run into.</p></div><div class="section" id="reuse"><h2 class="displaced-header"><a class="header-link" href="#reuse">Reusing Code</a></h2><div class="explanation"><p>Being able to reuse code on the client and server is one of the benefits of JavaScript. If you are using syntax in your client-side code that Node doesn&#x27;t know how to parse, such as import/export or JSX, you may quickly run into issues.</p><p>The <a href="https://babeljs.io/">Babel</a> package<!-- --> <code class="inline-code language-javascript">@babel/node</code> lets Babel compile your code on the fly to syntax that Node understands. Anywhere that you would call<!-- --> <code class="inline-code language-javascript">node &lt;command&gt;</code>, you should call<!-- --> <code class="inline-code language-javascript">babel-node &lt;command&gt;</code> instead.</p></div><div class="code-block"><pre><code class="language-bash">npm install --save-dev @babel/node</code></pre></div><div class="warning"><strong>Warning:</strong> <code class="inline-code language-javascript">@babel/node</code> should only be used in development. For production, the server&#x27;s modules should be pre-compiled (using Babel).</div></div><div class="section" id="framework"><h2 class="displaced-header"><a class="header-link" href="#framework">Web Framework</a></h2><div class="explanation"><p>In order to render JavaScript on the server, you will need to use Node. This guide will be using the<!-- --> <a href="https://expressjs.com/">Express</a> web framework.</p><div class="note"><strong>Note:</strong> <!-- -->There are ways to mix Node server-side rendering with non-Node frameworks, but that is outside of the scope of this guide.</div><p>Familiarity with Express is not expected, so to get you started, this guide will provide some code snippets for a basic setup.</p></div><div class="code-block"><pre><code class="language-bash">npm install express</code></pre></div><div class="explanation"><p>The server&#x27;s setup code can be placed anywhere, but we will follow Node&#x27;s convention and save it in a <code class="inline-code language-javascript">server.js</code> file.</p></div><div class="code-block"><pre><code class="language-javascript">// server.js
+const express = require(&quot;express&quot;);
+
+const app = express();
+
+// ...
+
+app.listen(&quot;8080&quot;, () =&gt; {
+  console.log(&quot;Server is running.&quot;);
+});</code></pre></div><div class="code-block"><pre><code class="language-bash"># tell node to start the server
+# (development only!)
+babel-node server.js</code></pre></div><div class="explanation"><p>With the server ready to go, we can start configuring it to render a single-page application.</p></div></div><div class="section" id="request-matching"><h2 class="displaced-header"><a class="header-link" href="#request-matching">Request Matching</a></h2><div class="explanation"><p>A web framework receives requests from the client and returns responses.</p><p>In the client-side application, we define the routes that are valid for the application. Similarly, the server needs to define which request paths are valid so that it can properly respond to them.</p><p>Server paths are given handler functions. These can do a variety of things, but we will only be using them to send responses.</p></div><div class="code-block"><pre><code class="language-javascript">app.use(&quot;/hi&quot;, function(req, res) {
+  res.send(&quot;Hey!&quot;);
+})</code></pre></div><div class="section" id="client-side-routes"><h3 class="displaced-header"><a class="header-link" href="#client-side-routes">Client-Side Routes</a></h3><div class="explanation"><p>Instead of telling the server about every single valid client-side route, a wildcard path is used to match every request. Determining what to render for the request will be done by a Curi router, which we will create in the wildcard&#x27;s handler function.</p></div><div class="code-block"><pre><code class="language-javascript">// the wildcard matches every GET request
+app.get(&quot;*&quot;, renderHandler);</code></pre></div><div class="explanation"><div class="note"><strong>Note:</strong> <!-- -->The <code class="inline-code language-javascript">*</code> wildcard handler is similar to the Curi path<!-- --> <code class="inline-code language-javascript">(.*)</code>. Express and Curi both use<!-- --> <code class="inline-code language-javascript">path-to-regexp</code> for path matching. However, Express uses an old version. <code class="inline-code language-javascript">path-to-regexp</code> removed support for the barebones <code class="inline-code language-javascript">*</code> pattern in the version that Curi uses, which is why we have to use <code class="inline-code language-javascript">(.*)</code> in Curi routes.</div></div></div><div class="section" id="static-assets"><h3 class="displaced-header"><a class="header-link" href="#static-assets">Static Assets</a></h3><div class="explanation"><p>Page requests aren&#x27;t the only requests that the framework will handle. Requests for static resources, like scripts, stylesheet, and images shouldn&#x27;t be handled by Curi. Express provides a<!-- --> <code class="inline-code language-javascript">static()</code> method to map request locations &quot;real&quot; (files exist on the server) locations.</p></div><div class="code-block"><pre><code class="language-javascript">app.use(&quot;/static&quot;, express.static());</code></pre></div><div class="explanation"><p>Using the above static file handler, all static file requests in HTML/JavaScript should begin with <code class="inline-code language-javascript">/static</code>.</p></div><div class="code-block"><pre><code class="language-html">&lt;img src=&quot;/static/img/circle.png&quot; /&gt;</code></pre></div></div><div class="section" id="path-order"><h3 class="displaced-header"><a class="header-link" href="#path-order">Path Order</a></h3><div class="explanation"><p>Express matches against paths in the order that they are registered, so the static files path needs to be defined before the wildcard path.</p><p>Any other non-page paths, like APIs, would also need to be defined before the catch-all.</p></div><div class="code-block"><pre><code class="language-javascript">app.use(&quot;/static&quot;, express.static());
+app.use(&quot;/api&quot;, dataHandler);
+app.get(&quot;*&quot;, renderHandler);</code></pre></div></div></div><div class="section" id="handler"><h2 class="displaced-header"><a class="header-link" href="#handler">Render Handler</a></h2><div class="explanation"><p>The render handler function receives the request object and a response object. The response object is used to build and send a response to the user.</p></div><div class="code-block"><pre><code class="language-javascript">// renderer.js
+export default function renderHandler(req, res) {
+
+}
+
+// server.js
+const renderHandler = require(&quot;./renderer&quot;);
+
+app.get(&quot;*&quot;, renderHandler)</code></pre></div><div class="note"><strong>Note:</strong> <!-- -->If you are setting up a server without server-side rendering, the<!-- --> <code class="inline-code language-javascript">renderHandler</code> function could use <code class="inline-code language-javascript">res.sendFile()</code> <!-- -->to return a universal HTML file for every route.</div><div class="code-block"><pre><code class="language-javascript">const index = path.join(__dirname, &quot;public&quot;, &quot;index.html&quot;);
+          
+export default function renderHandler(req, res) {
+  res.sendFile(index);
+}</code></pre></div></div><div class="section" id="router"><h2 class="displaced-header"><a class="header-link" href="#router">Router</a></h2><div class="explanation"><p>A router instance will be created for every single request. This is a big reason why we wrap the routes array in a<!-- --> <code class="inline-code language-javascript">prepareRoutes</code> call. Without <code class="inline-code language-javascript">prepareRoutes</code>, the route pathes would need to be re-compiled for every request!</p><p>The router will match the requested location to its routes and generate a response. Once the response is generated, the handler can render the application.</p></div><div class="code-block"><pre><code class="language-javascript">// renderer.js
+function handler(req, res) {
+  const router = curi(history, routes);
+  router.once(({ response }) =&gt; {
+    // render the response
+  })
+}</code></pre></div><div class="explanation"><p>Where do the history and routes come from?</p></div><div class="section" id="history"><h3 class="displaced-header"><a class="header-link" href="#history">History</a></h3><div class="explanation"><p>On the client-side, a single-page application uses<!-- --> <code class="inline-code language-javascript">@hickory/browser</code> to create a history instance. However, that uses browser only APIs. On the server, the<!-- --> <code class="inline-code language-javascript">@hickory/in-memory</code> package is used to create an equivalent history instance.</p></div><div class="code-block"><pre><code class="language-bash">npm install @hickory/in-memory</code></pre></div><div class="explanation">An in-memory history takes an array of locations. For server-side rendering, we want to pass it the location from the request.</div><div class="code-block"><pre><code class="language-javascript">// handler.js
+import InMemory from &quot;@hickory/in-memory&quot;;
+
+function handler(req, res) {
+  const history = InMemory({ locations: [req.path] });
+  const router = curi(history, routes);
+  // ...
+}</code></pre></div></div><div class="section" id="routes"><h3 class="displaced-header"><a class="header-link" href="#routes">Routes</a></h3><div class="explanation"><p>Ideally, you will be able to re-use your client side routes on the server, but if the client routes use browser only APIs, you may need to adapt the routes to work on the server.</p></div><div class="code-block"><pre><code class="language-javascript">// handler.js
+import routes from &quot;../client/routes&quot;;</code></pre></div><div class="explanation"><p>One approach to client/server routes is to keep two copies: one for the client and one for the server. However, this should be a last resort because it can lead to inconsistencies if you update one file but not the other.</p><p>A more reusable approach would be to use &quot;universal&quot; wrappers around any environment specific APIs. For example, the<!-- --> <a href="https://github.com/matthew-andrews/isomorphic-fetch"><code class="inline-code language-javascript">isomorphic-fetch</code></a> <!-- -->package could be used to support <code class="inline-code language-javascript">fetch()</code> in the browser and Node.</p></div><div class="code-block"><pre><code class="language-javascript">// routes.js
+import fetch from &quot;isomorphic-fetch&quot;;
+import { prepareRoutes } from &quot;@curi/router&quot;;
+
+export default prepareRoutes([
+  {
+    name: &quot;Test&quot;,
+    path: &quot;test&quot;,
+    resolve: {
+      data: () =&gt; fetch(&quot;/test-data&quot;)
+    }
+  }
+]);</code></pre></div></div><div class="section" id="automatic-redirects"><h3 class="displaced-header"><a class="header-link" href="#automatic-redirects">Automatic Redirects</a></h3><div class="explanation"><p>Curi automatically redirects to a new location when a response with a <code class="inline-code language-javascript">redirectTo</code> property is generated. On the client, this is convenient because it saves you from having to detect the redirect and manually redirecting yourself. However, on the server it can cause issues.</p><p>The issue happens because when Curi automatically redirects, another response is created for the location that Curi redirects to. If this response is ready before you try to render the current response, you&#x27;ll render the redirected location&#x27;s response instead of the initial response.</p><p>Curi&#x27;s <code class="inline-code language-javascript">automaticRedirects</code> option lets you disable automatic redirects when its value is <code class="inline-code language-javascript">false</code>. This lets you be certain that you are rendering using the initial response.</p></div><div class="code-block"><pre data-line="3-5"><code class="language-javascript">function renderHandler(req, res) {
+  const history = InMemory({ locations: [req.path] });
+  const router = curi(history, routes, {
+    automaticRedirects: false
+  });
+}</code></pre></div></div></div><div class="section" id="handling-response"><h2 class="displaced-header"><a class="header-link" href="#handling-response">Handling the Response</a></h2><div class="explanation"><p>When the router is created, it will start generating a response by matching its <code class="inline-code language-javascript">history</code> object&#x27;s current location. If the application has any asynchronous routes, the <code class="inline-code language-javascript">response</code> may not be ready immediately. The safest approach is to use<!-- --> <code class="inline-code language-javascript">router.once</code> to wait for the <code class="inline-code language-javascript">response</code>.</p></div><div class="code-block"><pre data-line="6-8"><code class="language-javascript">function renderHandler(req, res) {
+  const history = InMemory({ locations: [req.path] });
+  const router = curi(history, routes, {
+    automaticRedirects: false
+  });
+  router.once(({ response }) =&gt; {
+    // ...
+  });
+}</code></pre></div><div class="explanation"><p>The next step is to render the application to generate an HTML response string that will be sent to the user. How exactly you do this depends on what UI renderer you are using, but the process is approximately the same for most renderering libraries.</p><p>Here, we will assume that you are using React. The<!-- --> <code class="inline-code language-javascript">react-dom</code> package (through its <code class="inline-code language-javascript">server</code> module), provides a <code class="inline-code language-javascript">renderToString</code> method, which will render an application as a string.</p><p>Rendering with React on the server is essentially the same as rendering on the client. We create a <code class="inline-code language-jsx">&lt;<!-- -->Router<!-- -->&gt;</code> and use<!-- --> <code class="inline-code language-javascript">renderToString</code> (instead of <code class="inline-code language-javascript">ReactDOM.render</code>) to render the component, passing it a render-invoked function.</p></div><div class="code-block"><pre data-line="1-2,10-18"><code class="language-javascript">import { renderToString } from &quot;react-dom/server&quot;;
+import { curiProvider } from &quot;@curi/react-dom&quot;;
+         
+function renderHandler(req, res) {
+  const history = InMemory({ locations: [req.path] });
+  const router = curi(history, routes, {
+    automaticRedirects: false
+  });
+  router.once(({ response }) =&gt; {
+    const Router = curiProvider(router);
+    const markup = renderToString(
+      &lt;Router&gt;
+        {({ response }) =&gt; {
+          const { body:Body } = response;
+          return &lt;Body response={response} /&gt;;
+        }}
+      &lt;/Router&gt;
+    );
+  });
+}</code></pre></div><div class="explanation"><p>Rendering with <code class="inline-code language-javascript">renderToString</code> only generates an HTML string for the application. We are missing the <code class="inline-code language-jsx">&lt;<!-- -->html<!-- -->&gt;</code>,<!-- --> <code class="inline-code language-jsx">&lt;<!-- -->head<!-- -->&gt;</code>,<code class="inline-code language-jsx">&lt;<!-- -->body<!-- -->&gt;</code>, <code class="inline-code language-jsx">&lt;<!-- -->script<!-- -->&gt;</code>, etc. tags that are required for the full HTML page.</p><p>We can write a function that takes the string created by<!-- --> <code class="inline-code language-javascript">renderToString</code>and inserts it into the full HTML string for a page.</p><p>For a React application, the markup string should be set as the child of its container element. If you render into the<!-- --> <code class="inline-code language-javascript">#root</code> element on the client, the HTML should have a<!-- --> <code class="inline-code language-javascript">#root</code> element.</p><p>Any JavaScript scripts that need to be rendered should also be included in the HTML. Make sure that their paths are absolute; if the path is relative, then you will run into errors resolving the location for nested routes!</p><p>If your routes set <code class="inline-code language-javascript">title</code> strings on the<!-- --> <code class="inline-code language-javascript">response</code>, you can also pass that value to the markup insertion function and set the title in the HTML string.</p></div><div class="code-block"><pre data-line="4-15,32-33"><code class="language-javascript">import { renderToString } from &quot;react-dom/server&quot;;
+import { curiProvider } from &quot;@curi/react-dom&quot;;
+
+function insertMarkup(markup, title) {
+  return `&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;${title} | My Site&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;${markup}&lt;/div&gt;
+    &lt;script src=&quot;/static/js/bundle.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;`;
+}
+
+function renderHandler(req, res) {
+  const history = InMemory({ locations: [req.path] });
+  const router = curi(history, routes, {
+    automaticRedirects: false
+  });
+  router.once(({ response }) =&gt; {
+    const Router = curiProvider(router);
+    const markup = renderToString(
+      &lt;Router&gt;
+        {({ response }) =&gt; {
+          const { body:Body } = response;
+          return &lt;Body response={response} /&gt;;
+        }}
+      &lt;/Router&gt;
+    );
+    const html = insertMarkup(markup, response.title);
+    res.send(html);
+  });
+}</code></pre></div><div class="explanation"><div class="note"><strong>Note:</strong> <!-- -->If you server render a React application, you should use<!-- --> <code class="inline-code language-javascript">ReactDOM.hydrate</code> instead of <code class="inline-code language-javascript">ReactDOM.render</code> on the client.</div></div><div class="section" id="redirect-responses"><h3 class="displaced-header"><a class="header-link" href="#redirect-responses">Redirect Responses</a></h3><div class="explanation"><p>If a route matches and it redirects, you can handle it without rendering the application. A <code class="inline-code language-javascript">response</code> is a redirect if it has a <code class="inline-code language-javascript">redirectTo</code> property. <code class="inline-code language-javascript">redirectTo.url</code> <!-- -->is that full URL (<code class="inline-code language-javascript">pathname</code>, <code class="inline-code language-javascript">query</code>, and<!-- --> <code class="inline-code language-javascript">hash</code>).</p></div><div class="code-block"><pre data-line="10-13"><code class="language-javascript">import { renderToString } from &quot;react-dom/server&quot;;
+import { curiProvider } from &quot;@curi/react-dom&quot;;
+
+function renderHandler(req, res) {
+  const history = InMemory({ locations: [req.path] });
+  const router = curi(history, routes, {
+    automaticRedirects: false
+  });
+  router.once(({ response }) =&gt; {
+    if (response.redirectTo) {
+      res.redirect(301);
+      return;
+    }
+    // otherwise, render
+  });
+}</code></pre></div></div></div></div><div class="page-links"><button type="button" class="toggler">Menu</button><div class="children"><h2>Guides</h2><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>basic</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/installation/">Installation</a></li><li class="solo"><a class=" " href="/guides/getting-started/">Getting Started</a></li><li class="solo"><a class=" " href="/guides/history/">History</a></li><li class="solo"><a class=" " href="/guides/routes/">Routes</a></li><li class="solo"><a class=" " href="/guides/responses/">Responses</a></li><li class="solo"><a class=" " href="/guides/sync-or-async/">Sync or Async</a></li><li class="solo"><a class=" " href="/guides/new-responses/">New Responses</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>rendering</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/react-dom/">React DOM</a></li><li class="solo"><a class=" " href="/guides/react-native/">React Native</a></li><li class="solo"><a class=" " href="/guides/svelte/">Svelte</a></li><li class="solo"><a class=" " href="/guides/vue/">Vue</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>advanced</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/route-interactions/">Route Interactions</a></li><li class="solo"><a class=" " href="/guides/side-effects/">Side Effects</a></li><li class="solo"><a class=" " href="/guides/code-splitting/">Code Splitting</a></li><li class="solo"><a class=" " href="/guides/loading/">Loading Route Data</a></li><li class="solo"><a class=" active" href="/guides/ssr/">Server-Side Rendering</a></li><li class="solo"><a class=" " href="/guides/accessibility/">Accessibility</a></li><li class="solo"><a class=" " href="/guides/apollo/">Apollo Integration</a></li><li class="solo"><a class=" " href="/guides/dev-tips/">Development Tips</a></li></ul></li></ul><ul class="link-list"><li class="link-group"><div><button title="Toggle group visibility" class="collapse-button"><svg width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg"><path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" stroke-width="3"></path></svg>migration</button></div><ul class="link-list"><li class="solo"><a class=" " href="/guides/migrate-rrv3/">React Router v2/3</a></li><li class="solo"><a class=" " href="/guides/migrate-rrv4/">React Router v4</a></li></ul></li></ul></div></div></div></main></div>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
+    <script src="https://unpkg.com/react@16.6.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.6.0/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
