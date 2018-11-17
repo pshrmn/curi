@@ -1,4 +1,4 @@
-import { outputFile } from "fs-extra";
+import * as fs from "fs-extra";
 import { join } from "path";
 import { curi } from "@curi/router";
 import InMemory from "@hickory/in-memory";
@@ -76,7 +76,7 @@ export default async function staticFiles(
                 const markup = render(emitted);
                 const html = insert(markup);
                 const outputFilename = join(outputDir, pathname, "index.html");
-                outputFile(outputFilename, html).then(() => {
+                fs.outputFile(outputFilename, html).then(() => {
                   resolve({ pathname, success: true });
                 });
               } catch (e) {

@@ -19,13 +19,13 @@
     "gzipped": 3082
   },
   "dist/curi-router.umd.js": {
-    "bundled": 32498,
-    "minified": 10105,
-    "gzipped": 4186
+    "bundled": 32756,
+    "minified": 10328,
+    "gzipped": 4227
   },
   "dist/curi-router.min.js": {
-    "bundled": 30604,
-    "minified": 8867,
-    "gzipped": 3652
+    "bundled": 32696,
+    "minified": 10268,
+    "gzipped": 4211
   }
 }

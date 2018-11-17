@@ -19,13 +19,13 @@
     "gzipped": 1197
   },
   "dist/curi-vue.umd.js": {
-    "bundled": 6007,
-    "minified": 2732,
-    "gzipped": 1192
+    "bundled": 6050,
+    "minified": 2771,
+    "gzipped": 1220
   },
   "dist/curi-vue.min.js": {
-    "bundled": 5606,
-    "minified": 2477,
-    "gzipped": 1050
+    "bundled": 6040,
+    "minified": 2761,
+    "gzipped": 1205
   }
 }

@@ -11,7 +11,8 @@
     "*.md"
   ],
   "scripts": {
-    "build": "node ./scripts/build",
+    "prebuild": "rimraf dist && rimraf types",
+    "build": "rollup -c",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest"
@@ -36,8 +37,11 @@
     "fs-extra": "^7.0.0"
   },
   "devDependencies": {
+    "@types/fs-extra": "^5.0.4",
     "@types/jest": "^22.0.1",
     "jest": "^23.6.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.67.3",
     "ts-jest": "^23.10.4"
   }
 }

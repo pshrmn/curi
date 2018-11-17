@@ -11,7 +11,8 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "BABEL_ENV=build node ./scripts/build",
+    "prebuild": "rimraf dist",
+    "build": "BABEL_ENV=build rollup -c && node ./scripts/copyHTML",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest"
@@ -42,7 +43,10 @@
     "@hickory/in-memory": "^1.0.0",
     "babel-core": "bridge",
     "babel-jest": "^23.0.0",
+    "fs-extra": "^7.0.1",
     "jest": "^23.6.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.67.3",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-svelte": "^4.3.0",
     "simulant": "^0.2.2",

@@ -13,7 +13,8 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "node ./scripts/build",
+    "prebuild": "rimraf dist && rimraf types",
+    "build": "rollup -c",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
@@ -62,6 +63,8 @@
     "react": "^16.3.2",
     "react-native": "^0.52.0",
     "react-test-renderer": "^16.3.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.67.3",
     "ts-jest": "^23.10.4"
   },
   "babel": {
