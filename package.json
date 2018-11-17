@@ -117,6 +117,7 @@
     "@curi-example/transitions-react": "file:examples/react/transitions",
     "@curi-example/transitions-vue": "file:examples/vue/transitions",
     "@curi-example/updating-routes": "file:examples/misc/updating-routes",
+    "@curi/cli": "file:packages/cli",
     "@curi/helpers": "file:packages/helpers",
     "@curi/react-dom": "file:packages/react-dom",
     "@curi/react-native": "file:packages/react-native",
