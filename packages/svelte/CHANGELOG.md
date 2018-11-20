@@ -1,5 +1,6 @@
 ## Next
 
+* Add `Navigating` component to help cancel asynchronous navigation.
 * Rename `Link`'s `to` prop to `name`.
 * `Link`s with no name generate a relative `href`.
 
