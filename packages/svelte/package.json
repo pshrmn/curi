@@ -29,7 +29,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "@curi/router": "^1.0.0-beta.26"
+    "@curi/router": "^1.1.0"
   },
   "dependencies": {
     "svelte": "^2.4.3"

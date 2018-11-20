@@ -1,5 +1,5 @@
 import InMemory from "@hickory/in-memory";
-import { curi } from "@curi/router";
+import { curi, prepareRoutes } from "@curi/router";
 import { Store } from "svelte/store";
 
 // resolved by jest
@@ -7,11 +7,11 @@ import { curiStore } from "@curi/svelte";
 
 describe("curiStore", () => {
   let history, router;
-  const routes = [
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Not Found", path: "(.*)" }
-  ];
+  ]);
 
   beforeEach(() => {
     history = InMemory();
