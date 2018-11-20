@@ -1,0 +1,22 @@
+{
+  "name": "@curi-example/async-nav-svelte",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Let the user cancel asynchronous navigation",
+  "main": "index.js",
+  "keywords": [
+    "curi",
+    "svelte"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "dependencies": {
+    "@curi/svelte": "^1.0.0-beta.9",
+    "@curi/route-prefetch": "^1.1.0",
+    "@curi/router": "^1.1.0",
+    "@hickory/browser": "^1.0.0"
+  },
+  "devDependencies": {
+    "svelte": "^2.8.1"
+  }
+}
