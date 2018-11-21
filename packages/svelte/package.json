@@ -6,12 +6,13 @@
   "module": "dist/curi-svelte.es.js",
   "files": [
     "dist",
+    "components",
     "LICENSE",
     "*.md"
   ],
   "sideEffects": false,
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist && rimraf components",
     "build": "BABEL_ENV=build rollup -c && node ./scripts/copyHTML",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
@@ -29,7 +30,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "@curi/router": "^1.0.0-beta.26"
+    "@curi/router": "^1.1.0"
   },
   "dependencies": {
     "svelte": "^2.4.3"

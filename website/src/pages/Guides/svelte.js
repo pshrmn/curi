@@ -163,13 +163,13 @@ const routes = prepareRoutes([
   <nav>
     <ul>
       <li>
-        <Link to="Home">Home</Link>
+        <Link name="Home">Home</Link>
       </li>
       <li>
-        <Link to="About">About</Link>
+        <Link name="About">About</Link>
       </li>
       <li>
-        <Link to="User" params={{ id: 'blue' }}>
+        <Link name="User" params={{ id: 'blue' }}>
           Blue
         </Link>
       </li>
@@ -178,7 +178,7 @@ const routes = prepareRoutes([
 </template>
 
 <script>
-  import { Link } from "@curi/svelte";
+  import Link from "@curi/svelte/components/Link.html";
 
   export default {
     components: { Link }
@@ -194,7 +194,7 @@ const routes = prepareRoutes([
           </p>
         </Explanation>
         <CodeBlock lang="jsx">
-          {`<Link to="Home" hash="details">Home</Link>
+          {`<Link name="Home" hash="details">Home</Link>
 // renders
 <a href="/#details">Home</a>`}
         </CodeBlock>

@@ -14,7 +14,7 @@
 	export default {
 		data() {
 			return {
-				to: '',
+				name: '',
 				params: {},
 				hash: '',
 				query: '',
@@ -22,11 +22,13 @@
 			};
 		},
 		computed: {
-			location: ({ to, params, hash, query, state, $router, $curi }) => {
-				const pathname = to
-					? $router.route.pathname(to, params)
-					: $curi.response.location.pathname;
-				return { hash, query, state, pathname };
+			location: ({ name, params, hash, query, state, $router }) => {
+				return {
+					pathname: name ? $router.route.pathname(name, params) : "",
+					hash,
+					query,
+					state
+				};
 			},
 			href: ({ location, $router }) => {
 				return $router.history.toHref(location);

@@ -1,3 +1,10 @@
+## Next
+
+* Don't bundle components; components should be imported directly from `@curi/svelte/components`.
+* Add `Navigating` component to help cancel asynchronous navigation.
+* Rename `Link`'s `to` prop to `name`.
+* `Link`s with no name generate a relative `href`.
+
 ## 1.0.0-beta.9
 
 * Add `sideEffects: false` hint for Webpack.

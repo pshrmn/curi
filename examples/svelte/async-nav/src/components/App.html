@@ -1,0 +1,23 @@
+<Controls />
+<Navigating component={Cancel} />
+{#if $curi.response}
+  <svelte:component this={$curi.response.body} />
+{:else}
+  <div>loading...</div>
+{/if}
+
+<script>
+  import Navigating from "@curi/svelte/components/Navigating.html";
+  import Controls from "./Controls.html";
+  import Cancel from "./Cancel.html";
+
+  export default {
+    data() {
+      return { Cancel };
+    },
+    components: {
+      Controls,
+      Navigating
+    }
+  }
+</script>

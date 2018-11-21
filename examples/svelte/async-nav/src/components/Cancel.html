@@ -1,0 +1,14 @@
+{#if typeof cancel === "function"}
+  <button on:click="cancelHandler(event, cancel)">Cancel Navigation</button>
+{/if}
+
+<script>
+  export default {
+    methods: {
+      cancelHandler(event, cancel) {
+        event.preventDefault();
+        cancel();
+      }
+    }
+  };
+</script>

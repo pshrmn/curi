@@ -4,7 +4,7 @@ const fs = require("fs-extra");
 
 const BASE = path.resolve(__dirname, "..");
 const SRC = path.resolve(BASE, "src");
-const DIST = path.resolve(BASE, "dist");
+const DIST = path.resolve(BASE, "components");
 
 function copyHTML() {
   fs.ensureDir(DIST).then(() => {
