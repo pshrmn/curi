@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.10
 
 * Don't bundle components; components should be imported directly from `@curi/svelte/components`.
 * Add `Navigating` component to help cancel asynchronous navigation.
