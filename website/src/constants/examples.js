@@ -191,17 +191,26 @@ const examples = {
         `../pages/Examples/vue/transitions.js`)
     }
   ],
-  /*svelte: [
+  svelte: [
     {
       name: "Basic",
       category: "svelte",
       slug: "basic",
       description: "A simple Curi app rendered using Svelte",
       import: () =>
-        import(/* webpackChunkName: 'example--svelte-basic'
-          `../pages/Examples/svelte/basic.js`)
+        import(/* webpackChunkName: 'example--svelte-basic' */
+        `../pages/Examples/svelte/basic.js`)
+    },
+    {
+      name: "Async Navigation",
+      category: "svelte",
+      slug: "async-nav",
+      description: "A simple Curi app rendered using Svelte",
+      import: () =>
+        import(/* webpackChunkName: 'example--svelte-async-nav' */
+        `../pages/Examples/svelte/async-nav.js`)
     }
-  ],*/
+  ],
   /*full: [
     {
       name: "Twitch Clone",
