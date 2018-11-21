@@ -1,21 +1,21 @@
 {
   "dist/curi-svelte.es.js": {
-    "bundled": 9199,
-    "minified": 5495,
-    "gzipped": 1896,
+    "bundled": 523,
+    "minified": 257,
+    "gzipped": 172,
     "treeshaked": {
       "rollup": {
-        "code": 4378,
+        "code": 21,
         "import_statements": 21
       },
       "webpack": {
-        "code": 5395
+        "code": 1005
       }
     }
   },
   "dist/curi-svelte.js": {
-    "bundled": 9346,
-    "minified": 5613,
-    "gzipped": 1952
+    "bundled": 634,
+    "minified": 343,
+    "gzipped": 227
   }
 }

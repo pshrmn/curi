@@ -6,12 +6,13 @@
   "module": "dist/curi-svelte.es.js",
   "files": [
     "dist",
+    "components",
     "LICENSE",
     "*.md"
   ],
   "sideEffects": false,
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist && rimraf components",
     "build": "BABEL_ENV=build rollup -c && node ./scripts/copyHTML",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
