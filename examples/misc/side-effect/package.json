@@ -1,7 +1,6 @@
 {
   "name": "@curi-example/side-effect",
   "private": true,
-  "version": "0.1.18",
   "description": "Use side effects in a Curi application",
   "main": "index.js",
   "keywords": [

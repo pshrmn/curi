@@ -1,7 +1,6 @@
 {
   "name": "@curi-example/async-nav-react",
   "private": true,
-  "version": "0.1.18",
   "description": "Display a spinner while navigation is happening",
   "main": "index.js",
   "keywords": [

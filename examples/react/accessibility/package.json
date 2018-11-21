@@ -1,7 +1,6 @@
 {
   "name": "@curi-example/accessibility-react",
   "private": true,
-  "version": "0.1.18",
   "description": "Focus content after navigation with Curi's <Focus> component",
   "main": "index.js",
   "keywords": [

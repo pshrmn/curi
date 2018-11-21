@@ -1,7 +1,6 @@
 {
   "name": "@curi-example/modal-react",
   "private": true,
-  "version": "0.1.18",
   "description": "Render a modal (pinterest/twitter)",
   "main": "index.js",
   "keywords": [

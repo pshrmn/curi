@@ -1,7 +1,6 @@
 {
   "name": "@curi-example/async-nav-svelte",
   "private": true,
-  "version": "0.1.0",
   "description": "Let the user cancel asynchronous navigation",
   "main": "index.js",
   "keywords": [

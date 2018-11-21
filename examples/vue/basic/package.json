@@ -1,7 +1,6 @@
 {
   "name": "@curi-example/basic-vue",
   "private": true,
-  "version": "0.1.18",
   "description": "Add Curi routing to a Vue application",
   "main": "index.js",
   "keywords": [

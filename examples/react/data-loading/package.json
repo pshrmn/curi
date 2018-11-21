@@ -1,7 +1,6 @@
 {
   "name": "@curi-example/data-loading-react",
   "private": true,
-  "version": "0.1.18",
   "description": "Prefetch data before navigating",
   "main": "index.js",
   "keywords": [

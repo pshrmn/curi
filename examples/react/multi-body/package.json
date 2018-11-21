@@ -1,7 +1,6 @@
 {
   "name": "@curi-example/multi-body-react",
   "private": true,
-  "version": "0.1.18",
   "description": "Attach multiple components to response.body",
   "main": "index.js",
   "keywords": [
