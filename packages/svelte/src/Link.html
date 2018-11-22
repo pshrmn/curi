@@ -1,5 +1,11 @@
-<a href="{href}" on:click="handleClick(event, location, $router)">
-	<slot></slot>
+<a href="{href}" on:click="handleClick(event)">
+	{#if wrapper}
+		<svelte:component this={wrapper} navigating={navigating}>
+			<slot></slot>
+		</svelte:component>
+	{:else}
+		<slot></slot>
+	{/if}
 </a>
 
 <script>
@@ -18,7 +24,8 @@
 				params: {},
 				hash: '',
 				query: '',
-				state: null
+				state: null,
+				navigating: false
 			};
 		},
 		computed: {
@@ -37,8 +44,16 @@
 		methods: {
 			handleClick(event, location, $router) {
 				if (canNavigate(event)) {
+					const { $router, name, params, hash, query, state, wrapper } = this.get();
 					event.preventDefault();
-					$router.history.navigate(location);
+					let cancelled, finished;
+					if (wrapper) {
+						cancelled = finished = () => {
+							this.set({ navigating: false });
+						}
+						this.set({ navigating: true });
+					}
+					$router.navigate({ name, params, hash, query, state, cancelled, finished });
 				}
 			}
 		}
