@@ -3,7 +3,8 @@
     <Link
       name="Movie"
       params={{ id: movie.id }}
-      key=movie.id
+      key={movie.id}
+      wrapper={SpinWhileNavigating}
       class="link"
     >
       {movie.title}
@@ -13,9 +14,15 @@
 
 <script>
   import Link from "@curi/svelte/components/Link.html";
+  import SpinWhileNavigating from "../components/SpinWhileNavigating";
   export default {
     components: {
       Link
+    },
+    data() {
+      return {
+        SpinWhileNavigating
+      }
     }
   };
 </script>

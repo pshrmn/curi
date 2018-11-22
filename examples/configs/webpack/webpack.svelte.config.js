@@ -24,7 +24,6 @@ const config = {
       },
       {
         test: /\.html$/,
-        exclude: /(node_modules)/,
         use: [
           {
             loader: "svelte-loader",
