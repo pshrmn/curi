@@ -1,3 +1,7 @@
+## 1.0.0-beta.11
+
+* Use `<Link wrapper>` to pass a wrapper component. The wrapper component will be given a `navigating` prop.
+
 ## 1.0.0-beta.10
 
 * Don't bundle components; components should be imported directly from `@curi/svelte/components`.
