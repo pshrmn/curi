@@ -13,7 +13,6 @@
     computed: {
       active({ $curi, $router, name, params, partial }) {
         const active = $router.route.active(name, $curi.response, params, partial);
-        console.log({ active });
         return active;
       },
       className({ active }) {
@@ -23,9 +22,3 @@
     components: { Link }
   }
 </script>
-
-<style>
-  :global(.active) {
-    color: red;
-  }
-</style>
