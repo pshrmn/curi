@@ -193,6 +193,25 @@ const examples = {
   ],
   svelte: [
     {
+      name: "Async Navigation",
+      category: "svelte",
+      slug: "async-nav",
+      description: "A simple Curi app rendered using Svelte",
+      import: () =>
+        import(/* webpackChunkName: 'example--svelte-async-nav' */
+        `../pages/Examples/svelte/async-nav.js`)
+    },
+    {
+      name: "Authentication",
+      category: "svelte",
+      slug: "authentication",
+      description:
+        "Automatically redirect to a login page when attempting to access private content",
+      import: () =>
+        import(/* webpackChunkName: 'example--svelte-authentication' */
+        `../pages/Examples/svelte/authentication.js`)
+    },
+    {
       name: "Basic",
       category: "svelte",
       slug: "basic",
@@ -202,13 +221,13 @@ const examples = {
         `../pages/Examples/svelte/basic.js`)
     },
     {
-      name: "Async Navigation",
+      name: "Breadcrumbs",
       category: "svelte",
-      slug: "async-nav",
-      description: "A simple Curi app rendered using Svelte",
+      slug: "breadcrumbs",
+      description: "Render breadcrumb links to ancestor routes",
       import: () =>
-        import(/* webpackChunkName: 'example--svelte-async-nav' */
-        `../pages/Examples/svelte/async-nav.js`)
+        import(/* webpackChunkName: 'example--svelte-breadcrumbs' */
+        `../pages/Examples/svelte/breadcrumbs.js`)
     }
   ],
   /*full: [

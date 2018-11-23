@@ -1,0 +1,19 @@
+<div>
+  <button type="button" on:click="loginAndRedirect($curi, $router)">
+    Login
+  </button>
+</div>
+
+<script>
+  import fakeAuth from "../fakeAuth";
+
+  export default {
+    methods: {
+      loginAndRedirect($curi, $router) {
+        fakeAuth.login();
+        const { query } = $curi.response.location;
+        $router.history.navigate(query.next || "/", "REPLACE");
+      }
+    }
+  }
+</script>

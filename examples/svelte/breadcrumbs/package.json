@@ -1,0 +1,22 @@
+{
+  "name": "@curi-example/breadcrumbs-svelte",
+  "private": true,
+  "description": "Display route breadcrumbs in a Svelte application",
+  "main": "index.js",
+  "keywords": [
+    "Curi",
+    "Svelte",
+    "router"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "dependencies": {
+    "@curi/router": "^1.1.0",
+    "@curi/route-ancestors": "^1.1.0",
+    "@curi/svelte": "^1.0.0-beta.11",
+    "@hickory/browser": "^1.0.0"
+  },
+  "devDependencies": {
+    "svelte": "^2.8.1"
+  }
+}

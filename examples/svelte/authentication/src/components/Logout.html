@@ -1,0 +1,18 @@
+<div>
+  <button type="button" on:click="logoutAndRedirect($router)">
+    Logout
+  </button>
+</div>
+
+<script>
+  import fakeAuth from "../fakeAuth";
+
+  export default {
+    methods: {
+      logoutAndRedirect($router) {
+        fakeAuth.logout();
+        $router.history.navigate("/", "REPLACE");
+      }
+    }
+  }
+</script>

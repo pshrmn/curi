@@ -1,0 +1,24 @@
+<ul className="breadcrumbs">
+  {#each ancestors as ancestor}
+    <li key={ancestor}>
+      <Link name={ancestor} params={params}>
+        {$router.route.title(ancestor, params)}
+      </Link>
+    </li>
+  {/each}
+</ul>
+
+<script>
+  import Link from "@curi/svelte/components/Link.html";
+
+  export default {
+    computed: {
+      ancestors({ name, $router }) {
+        return $router.route
+          .ancestors(name)
+          .reverse();
+      }
+    },
+    components: { Link }
+  };
+</script>

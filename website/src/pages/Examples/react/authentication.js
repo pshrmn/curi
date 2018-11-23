@@ -25,8 +25,9 @@ export default function AuthenticationExample() {
         </p>
 
         <p>
-          When this happens, your <IJS>response()</IJS> function should modify
-          the response by calling its redirect method.
+          A <IJS>response()</IJS> function can modify the response by setting a{" "}
+          <IJS>redirectTo</IJS> property on its return object. Curi will
+          automatically (unless configured not to) redirect to that location.
         </p>
 
         <CodeBlock lang="javascript">

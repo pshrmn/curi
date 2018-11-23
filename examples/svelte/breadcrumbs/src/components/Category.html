@@ -1,0 +1,31 @@
+<div>
+  <Breadcrumbs name="Category" params={params} />
+  <h1>{params.category}</h1>
+  <p>List of products</p>
+  <ul>
+    {#each products as product}
+      <li key={product.id}>
+        <Link name="Product" params={{ ...params, productID: product.id }}>
+          {$router.route.title("Product", { name: product.name })}
+        </Link>
+      </li>
+    {/each}
+  </ul>
+</div>
+
+<script>
+  import Breadcrumbs from "./Breadcrumbs.html";
+  import Link from "@curi/svelte/components/Link.html";
+
+  export default {
+    computed: {
+      params({ $curi }) {
+        return $curi.response.params;
+      },
+      products({ $curi }) {
+        return $curi.response.data;
+      }
+    },
+    components: { Breadcrumbs, Link }
+  }
+</script>

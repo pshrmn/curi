@@ -39,7 +39,7 @@ export default function AuthenticationExample() {
     response: () => {
       if (!store.userIsAuthenticated) {
         return {
-          name: "Login",
+          redirectTo: { name: "Login" },
           status: 302
         };
       }
@@ -55,13 +55,13 @@ export default function AuthenticationExample() {
       </Section>
 
       <Section title="Live Demo" id="demo">
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/authentication" />
+        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/authentication" />
       </Section>
 
       <Section title="On GitHub" id="source">
         If you want to run this code locally, the source code is available on
         GitHub{" "}
-        <a href="https://github.com/pshrmn/curi/tree/master/examples/vue/authentication">
+        <a href="https://github.com/pshrmn/curi/tree/master/examples/svelte/authentication">
           here
         </a>.
       </Section>
