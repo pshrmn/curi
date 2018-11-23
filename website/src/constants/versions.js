@@ -12,6 +12,6 @@ export default {
   "side-effect-scroll": "1.0.1",
   "side-effect-title": "1.0.1",
   "static": "1.0.0-alpha.3",
-  "svelte": "1.0.0-beta.11",
+  "svelte": "1.0.0-beta.12",
   "vue": "1.0.0-beta.25"
 };
