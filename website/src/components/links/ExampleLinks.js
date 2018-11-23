@@ -21,7 +21,7 @@ const Category = ({ examples }) => {
   );
 };
 
-export default function ExampleLinks() {
+export default React.memo(function ExampleLinks() {
   const examples = EXAMPLE_API.all();
   const categories = Object.keys(examples);
   return categories.map(title => (
@@ -29,4 +29,4 @@ export default function ExampleLinks() {
       <Category examples={examples[title]} />
     </CollapsibleGroup>
   ));
-}
+});

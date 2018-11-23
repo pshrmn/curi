@@ -39,25 +39,21 @@ const router = curi(history, routes);`}
             <Link name="Guide" params={{ slug: "history" }}>
               history
             </Link>{" "}
-            is used to navigate between locations within an application. The{" "}
-            <Link
-              name="Guide"
-              params={{ slug: "routes-and-responses" }}
-              hash="routes"
-            >
+            object is used to navigate between locations within an application.
+            The{" "}
+            <Link name="Guide" params={{ slug: "routes" }}>
               routes
             </Link>{" "}
-            describe valid locations in an application.
+            array describes valid locations in an application.
           </p>
         </Explanation>
       </Section>
       <Section title="Navigation" id="navigation">
         <Explanation>
           <p>
-            When navigation occurs, the router receives the new location from
-            its <IJS>history</IJS> object. This either happens from in-app
-            navigation (e.g. clicking a link) or platform navigation (e.g.
-            clicking the back button or typing URL in the address bar and
+            Navigation within a single-page application can either be caused by
+            in-app navigation (e.g. clicking a link) or platform navigation
+            (e.g. clicking the back button or typing URL in the address bar and
             hitting enter).
           </p>
           <p>
@@ -98,9 +94,8 @@ router.navigate({
       <Section title="Response Handlers" id="response-handlers">
         <Explanation>
           <p>
-            Curi has a concept of "response" objects, which provide the
-            application with information about the route that matches the
-            current location.
+            When Curi matches a location to a route, it creates a "response"
+            object, which provides information about the route that matched.
           </p>
           <p>
             Response handlers are functions that will be called when there is a
@@ -176,87 +171,37 @@ router.once(() => {
       <Section title="Rendering" id="rendering">
         <Explanation>
           <p>
-            Rendering is left to whatever rendering library you are using. The
-            way that Curi interfaces with each of them varies, but they all use
-            observers to be notified when there is a new response.
+            How Curi integrates with UI libraries depends on which one you are
+            using. The way that Curi interfaces with each of them varies, but
+            they all use observers to be notified when there is a new response.
           </p>
+          <p>
+            For the UI libraries that Curi natively supports, you can check out
+            their respective guides to see how to use them.
+          </p>
+          <ul>
+            <li>
+              <Link name="Guide" params={{ slug: "react-dom" }}>
+                React DOM
+              </Link>
+            </li>
+            <li>
+              <Link name="Guide" params={{ slug: "react-native" }}>
+                React Native
+              </Link>
+            </li>
+            <li>
+              <Link name="Guide" params={{ slug: "svelte" }}>
+                Svelte
+              </Link>
+            </li>
+            <li>
+              <Link name="Guide" params={{ slug: "vue" }}>
+                Vue
+              </Link>
+            </li>
+          </ul>
         </Explanation>
-
-        <Explanation>
-          <p>
-            <Link name="Package" params={{ package: "@react-dom" }}>
-              <IJS>@curi/react-dom</IJS>
-            </Link>{" "}
-            uses a <Cmp>Router</Cmp> with a render-invoked <IJS>children</IJS>{" "}
-            function that will be called whenever there is a new response.
-          </p>
-          <p>
-            In React applications, <IJS>response.body</IJS> should be a React
-            component, so rendering the application means creating an element
-            from <IJS>response.body</IJS>.
-          </p>
-          <p>
-            The{" "}
-            <Link name="Tutorial" params={{ slug: "react-basics" }}>
-              React Basics Tutorial
-            </Link>{" "}
-            gets into more detail about how this works.
-          </p>
-        </Explanation>
-        <CodeBlock>
-          {`// React
-const Router = curiProvider(router);
-
-ReactDOM.render((
-  <Router>
-    {({ response }) => {
-      const { body:Body } = response;
-      return <Body />;
-    }}
-  </Router>
-), document.getElementById('root'));`}
-        </CodeBlock>
-
-        <Explanation>
-          <p>
-            <Link name="Package" params={{ package: "@react-dom" }}>
-              <IJS>@curi/vue</IJS>
-            </Link>{" "}
-            sets up reactive objects that update when there is a new response.{" "}
-            <Cmp>component :is</Cmp> can be used to render the <IJS>body</IJS>{" "}
-            component.
-          </p>
-          <p>
-            The{" "}
-            <Link name="Tutorial" params={{ slug: "react-basics" }}>
-              Vue Basics Tutorial
-            </Link>{" "}
-            details how to use Vue and Curi.
-          </p>
-        </Explanation>
-        <CodeBlock>
-          {`// Vue
-Vue.use(CuriPlugin, { router });
-new Vue({
-  el: '#app',
-  template: '<app />',
-  components: { app }
-});`}
-        </CodeBlock>
-
-        <Explanation>
-          <p>
-            <Link name="Package" params={{ package: "@react-dom" }}>
-              <IJS>@curi/svelte</IJS>
-            </Link>{" "}
-            uses the Svelte store and <Cmp>svelte:component</Cmp> to render.
-          </p>
-        </Explanation>
-        <CodeBlock>
-          {`// Svelte
-const store = curiStore(router);
-new app({ target, store });`}
-        </CodeBlock>
       </Section>
     </React.Fragment>
   );
