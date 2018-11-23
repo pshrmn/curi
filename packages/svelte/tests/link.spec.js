@@ -21,6 +21,12 @@ describe("<Link>", () => {
     });
   });
 
+  describe("forward prop", () => {
+    it('forwards "forward" properties to the anchor', () => {
+      test("./cases/link/forward-props");
+    });
+  });
+
   describe("wrapper prop", () => {
     it("renders the wrapper when provided", () => {
       test("./cases/link/wrapper");
