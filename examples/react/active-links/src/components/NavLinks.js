@@ -1,11 +1,6 @@
 import React from "react";
 import { Active, Link } from "@curi/react-dom";
 
-const merge = props => {
-  props.className = "active";
-  return props;
-};
-
 const ActiveLink = ({ to, params, partial, ...rest }) => (
   <Active name={to} params={params} partial={partial}>
     {active => (

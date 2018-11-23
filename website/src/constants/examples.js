@@ -193,6 +193,15 @@ const examples = {
   ],
   svelte: [
     {
+      name: "Active Links",
+      category: "svelte",
+      slug: "active-links",
+      description: "Style links when they match the current location",
+      import: () =>
+        import(/* webpackChunkName: 'example--svelte-active-links' */
+        `../pages/Examples/svelte/active-links.js`)
+    },
+    {
       name: "Async Navigation",
       category: "svelte",
       slug: "async-nav",

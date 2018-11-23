@@ -1,0 +1,31 @@
+<Link
+  name={name}
+  params={params}
+  forward={{ class: className }}
+>
+  <slot></slot>
+</Link>
+
+<script>
+  import Link from "@curi/svelte/components/Link.html";
+
+  export default {
+    computed: {
+      active({ $curi, $router, name, params, partial }) {
+        const active = $router.route.active(name, $curi.response, params, partial);
+        console.log({ active });
+        return active;
+      },
+      className({ active }) {
+        return active ? "active" : ""
+      }
+    },
+    components: { Link }
+  }
+</script>
+
+<style>
+  :global(.active) {
+    color: red;
+  }
+</style>
