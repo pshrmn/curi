@@ -3,6 +3,8 @@ import React from "react";
 import { Section } from "../../../components/layout/Sections";
 import { InlineJS as IJS } from "../../../components/highlight/Inline";
 import { CodeBlock } from "../../../components/layout/Groups";
+import { Explanation } from "../../../components/layout/Groups";
+import OnGithub from "../../../components/example/OnGithub";
 
 const meta = {
   title: "Server Rendering"
@@ -14,11 +16,13 @@ export default function ServerRenderingExample() {
       <h1>{meta.title}</h1>
 
       <Section title="Explanation" id="explanation">
-        <p>
-          Server rendering with Curi is pretty similar to client side rendering.
-          The server should have a catch all route handler that will respond to
-          all (non-static file) requests.
-        </p>
+        <Explanation>
+          <p>
+            Server rendering with Curi is pretty similar to client side
+            rendering. The server should have a catch all route handler that
+            will respond to all (non-static file) requests.
+          </p>
+        </Explanation>
 
         <CodeBlock lang="javascript">
           {`// express
@@ -47,30 +51,31 @@ export default function ServerRenderingExample() {
   app.get("*", catchAll);`}
         </CodeBlock>
 
-        <p>
-          The above example is very basic. Some other things that you might need
-          to consider are:
-        </p>
+        <Explanation>
+          <p>
+            The above example is very basic. Some other things that you might
+            need to consider are:
+          </p>
 
-        <ul>
-          <li>
-            Data loading — You would need to maintain two copies of your routes
-            if you want to handle data fetching on the server differently than
-            it works on the client side. This is not something that I have
-            explored very closely yet, so I don't have any recommendations on
-            exactly how to approach this.
-          </li>
-          <li>
-            Code splitting — In order to use dynamic imports on the server, you
-            will probably need to use a Babel plugin like{" "}
-            <IJS>dynamic-import-node</IJS>. Unfortunately,{" "}
-            <IJS>dynamic-import-node</IJS> breaks Webpack's code splitting. In
-            order for your code to be split into multiple bundles, you should
-            ensure that <IJS>dynamic-import-node</IJS> isn't being run when
-            building your client side bundle. The solution used in this
-            experiment is to use the <IJS>env</IJS> property.
-            <CodeBlock lang="javascript">
-              {`{
+          <ul>
+            <li>
+              Data loading — You would need to maintain two copies of your
+              routes if you want to handle data fetching on the server
+              differently than it works on the client side. This is not
+              something that I have explored very closely yet, so I don't have
+              any recommendations on exactly how to approach this.
+            </li>
+            <li>
+              Code splitting — In order to use dynamic imports on the server,
+              you will probably need to use a Babel plugin like{" "}
+              <IJS>dynamic-import-node</IJS>. Unfortunately,{" "}
+              <IJS>dynamic-import-node</IJS> breaks Webpack's code splitting. In
+              order for your code to be split into multiple bundles, you should
+              ensure that <IJS>dynamic-import-node</IJS> isn't being run when
+              building your client side bundle. The solution used in this
+              experiment is to use the <IJS>env</IJS> property.
+              <CodeBlock lang="javascript">
+                {`{
     "presets": [ "es2015", "react" ],
     "plugins": [
       "syntax-dynamic-import"
@@ -81,22 +86,17 @@ export default function ServerRenderingExample() {
       }
     }
   }`}
-            </CodeBlock>
-            Then, when starting the server, make sure that BABEL_ENV=server.
-            <CodeBlock lang="markup">
-              {`cross-env BABEL_ENV=server npm start`}
-            </CodeBlock>
-          </li>
-        </ul>
+              </CodeBlock>
+              Then, when starting the server, make sure that BABEL_ENV=server.
+              <CodeBlock lang="markup">
+                {`cross-env BABEL_ENV=server npm start`}
+              </CodeBlock>
+            </li>
+          </ul>
+        </Explanation>
       </Section>
 
-      <Section title="On GitHub" id="source">
-        If you want to run this code locally, the source code is available on
-        GitHub{" "}
-        <a href="https://github.com/pshrmn/curi/tree/master/examples/misc/server-rendering">
-          here
-        </a>.
-      </Section>
+      <OnGithub path="misc/server-rendering" />
     </React.Fragment>
   );
 }

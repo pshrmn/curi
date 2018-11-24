@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  export default {
-    name: 'nav-links'
-  };
+export default {
+  name: "nav-links"
+};
 </script>

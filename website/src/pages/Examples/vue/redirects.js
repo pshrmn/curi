@@ -7,6 +7,8 @@ import {
 import { CodeBlock } from "../../../components/layout/Groups";
 import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
+import { Explanation } from "../../../components/layout/Groups";
+import OnGithub from "../../../components/example/OnGithub";
 
 const meta = {
   title: "Authentication"
@@ -18,17 +20,19 @@ export default function AuthenticationExample() {
       <h1>{meta.title}</h1>
 
       <Section title="Explanation" id="explanation">
-        <p>
-          Sometimes you will want to redirect based on the results of your{" "}
-          <IJS>resolve</IJS> functions. For instance, you might see that a user
-          is not authenticated and shouldn't be able to view a page.
-        </p>
+        <Explanation>
+          <p>
+            Sometimes you will want to redirect based on the results of your{" "}
+            <IJS>resolve</IJS> functions. For instance, you might see that a
+            user is not authenticated and shouldn't be able to view a page.
+          </p>
 
-        <p>
-          A <IJS>response()</IJS> function can modify the response by setting a{" "}
-          <IJS>redirectTo</IJS> property on its return object. Curi will
-          automatically (unless configured not to) redirect to that location.
-        </p>
+          <p>
+            A <IJS>response()</IJS> function can modify the response by setting
+            a <IJS>redirectTo</IJS> property on its return object. Curi will
+            automatically (unless configured not to) redirect to that location.
+          </p>
+        </Explanation>
 
         <CodeBlock lang="javascript">
           {`const routes = prepareRoutes([
@@ -55,16 +59,10 @@ export default function AuthenticationExample() {
       </Section>
 
       <Section title="Live Demo" id="demo">
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/authentication" />
+        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/redirects" />
       </Section>
 
-      <Section title="On GitHub" id="source">
-        If you want to run this code locally, the source code is available on
-        GitHub{" "}
-        <a href="https://github.com/pshrmn/curi/tree/master/examples/vue/authentication">
-          here
-        </a>.
-      </Section>
+      <OnGithub path="vue/redirects" />
     </React.Fragment>
   );
 }

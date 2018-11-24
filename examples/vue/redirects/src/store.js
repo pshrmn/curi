@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
 
 Vue.use(Vuex);
 
@@ -9,7 +9,7 @@ const state = {
 
 const mutations = {
   login(state) {
-    state.user = 'User';
+    state.user = "User";
   },
   logout(state) {
     state.user = undefined;

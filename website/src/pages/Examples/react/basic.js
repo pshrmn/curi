@@ -7,6 +7,8 @@ import {
 } from "../../../components/highlight/Inline";
 import { Note } from "../../../components/Messages";
 import { Section } from "../../../components/layout/Sections";
+import { Explanation } from "../../../components/layout/Groups";
+import OnGithub from "../../../components/example/OnGithub";
 
 const meta = {
   title: "Basics"
@@ -18,24 +20,18 @@ export default function BasicExample() {
       <h1>{meta.title}</h1>
 
       <Section title="Explanation" id="explanation">
-        <p>
-          This example demonstrates the basics of a Curi + React application.
-        </p>
+        <Explanation>
+          <p>
+            This example demonstrates the basics of a Curi + React application.
+          </p>
+        </Explanation>
       </Section>
 
       <Section title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/basic" />
       </Section>
 
-      <Section title="On GitHub" id="source">
-        <p>
-          If you want to run this code locally, the source code is available on
-          GitHub{" "}
-          <a href="https://github.com/pshrmn/curi/tree/master/examples/react/basic">
-            here
-          </a>.
-        </p>
-      </Section>
+      <OnGithub path="react/basic" />
     </React.Fragment>
   );
 }

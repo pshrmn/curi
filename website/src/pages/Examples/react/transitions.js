@@ -7,6 +7,8 @@ import {
 import { CodeBlock } from "../../../components/layout/Groups";
 import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
+import { Explanation } from "../../../components/layout/Groups";
+import OnGithub from "../../../components/example/OnGithub";
 
 const meta = {
   title: "Transitions"
@@ -18,28 +20,35 @@ export default function TransitionsExample() {
       <h1>{meta.title}</h1>
 
       <Section title="Explanation" id="explanation">
-        <p>
-          This example uses <IJS>react-transition-group</IJS> (v1) to animate
-          navigation transitions, but it should be relatively straightforward to
-          adapt this for other animation packages (e.g. react-motion).
-        </p>
+        <Explanation>
+          <p>
+            This example uses <IJS>react-transition-group</IJS> to animate
+            navigation transitions.
+          </p>
 
-        <p>
-          All that this does is to render a <Cmp>CSSTransitionGroup</Cmp> around
-          the response's body. The only other thing that you need to do is to
-          set a key on the rendered component, which is necessary for{" "}
-          <Cmp>CSSTransitionGroup</Cmp> to know which of its children are
-          entering/leaving/staying.
-        </p>
+          <p>
+            The <IJS>location.pathname</IJS> from the <IJS>response</IJS> is
+            used to uniquely identify the content. The <IJS>pathname</IJS> is
+            used instead of the <IJS>key</IJS> so that navigating to the same
+            pathname as the current pathname does not cause a transition.
+          </p>
+        </Explanation>
 
         <CodeBlock lang="jsx">
           {`function render({ response }) {
-    return (
-      <CSSTransitionGroup>
-        <response.body key={response.location.pathname} />
-      </CSSTransitionGroup>
-    );
-  }`}
+  const { body:Body } = response;
+  return (
+    <TransitionGroup>
+      <CSSTransition
+        key={location.pathname}
+        classNames="fade"
+        timeout={500}
+      >
+        <Body response={response} />
+      </CSSTransition>
+    </TransitionGroup>
+  );
+}`}
         </CodeBlock>
       </Section>
 
@@ -47,13 +56,7 @@ export default function TransitionsExample() {
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/transitions" />
       </Section>
 
-      <Section title="On GitHub" id="source">
-        If you want to run this code locally, the source code is available on
-        GitHub{" "}
-        <a href="https://github.com/pshrmn/curi/tree/master/examples/react/transitions">
-          here
-        </a>.
-      </Section>
+      <OnGithub path="react/transitions" />
     </React.Fragment>
   );
 }
