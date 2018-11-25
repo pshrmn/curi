@@ -1403,6 +1403,80 @@ describe("curi", () => {
         );
       });
     });
+
+    describe("cancelling callbacks", () => {
+      it("does not call finish callback after navigation finishes", done => {
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "Loader",
+            path: "loader/:id",
+            resolve: {
+              test: () => Promise.resolve("complete")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const history = InMemory();
+        const router = curi(history, routes);
+        const finished = jest.fn();
+        const cancelCallbacks = router.navigate({
+          name: "Loader",
+          params: { id: 1 },
+          finished
+        });
+        cancelCallbacks();
+
+        router.once(
+          ({ response }) => {
+            // verify this is running after the first navigation completes
+            expect(response.name).toBe("Loader");
+
+            expect(finished.mock.calls.length).toBe(0);
+            done();
+          },
+          { initial: false }
+        );
+      });
+
+      it("does not call cancel callback after navigation is cancelled", () => {
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "Slow",
+            path: "slow",
+            resolve: {
+              test: () => {
+                // takes 500ms to resolve
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve("done");
+                  }, 500);
+                });
+              }
+            }
+          },
+          {
+            name: "Fast",
+            path: "fast",
+            resolve: {
+              test: () => Promise.resolve("complete")
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const history = InMemory();
+        const router = curi(history, routes);
+        const cancelled = jest.fn();
+        const cancelCallbacks = router.navigate({
+          name: "Slow",
+          cancelled
+        });
+        cancelCallbacks();
+        router.navigate({ name: "Fast" });
+        expect(cancelled.mock.calls.length).toBe(0);
+      });
+    });
   });
 
   describe("cancel(fn)", () => {

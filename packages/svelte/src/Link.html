@@ -42,19 +42,25 @@
 			}
 		},
 		methods: {
-			handleClick(event, location, $router) {
+			handleClick(event) {
 				if (canNavigate(event)) {
 					const { $router, name, params, hash, query, state, wrapper } = this.get();
 					event.preventDefault();
 					let cancelled, finished;
 					if (wrapper) {
 						cancelled = finished = () => {
+							this.cancelCallbacks = undefined;
 							this.set({ navigating: false });
 						}
 						this.set({ navigating: true });
 					}
-					$router.navigate({ name, params, hash, query, state, cancelled, finished });
+					this.cancelCallbacks = $router.navigate({ name, params, hash, query, state, cancelled, finished });
 				}
+			}
+		},
+		ondestroy() {
+			if (this.cancelCallbacks) {
+				this.cancelCallbacks();
 			}
 		}
 	};

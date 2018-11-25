@@ -52,6 +52,8 @@ export interface NavigationDetails {
   finished?: () => void;
 }
 
+export type CancelNavigateCallbacks = () => void;
+
 export interface CuriRouter {
   refresh: (routeArray?: UserRoutes) => void;
   observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
@@ -60,5 +62,5 @@ export interface CuriRouter {
   route: Interactions;
   history: History;
   current(): CurrentResponse;
-  navigate(options: NavigationDetails): void;
+  navigate(options: NavigationDetails): CancelNavigateCallbacks;
 }

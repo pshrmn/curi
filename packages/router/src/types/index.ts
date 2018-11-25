@@ -37,5 +37,6 @@ export {
   CurrentResponse,
   Cancellable,
   CancelActiveNavigation,
+  CancelNavigateCallbacks,
   RemoveCancellable
 } from "./curi";

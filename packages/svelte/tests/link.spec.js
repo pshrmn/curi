@@ -39,6 +39,10 @@ describe("<Link>", () => {
     it("passes navigating=true to wrapper while navigating", done => {
       test("./cases/link/wrapper-while-navigating", done);
     });
+
+    it("cancels finish/cancel callbacks when destroyed", done => {
+      test("./cases/link/wrapper-destroy-callbacks", done);
+    });
   });
 
   describe("clicking a <Link>", () => {
