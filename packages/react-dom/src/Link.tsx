@@ -2,7 +2,7 @@ import React from "react";
 import { Curious } from "@curi/react-universal";
 import shallowEqual from "shallowequal";
 
-import { CuriRouter } from "@curi/router";
+import { CuriRouter, CancelNavigateCallbacks } from "@curi/router";
 
 function canNavigate(event: React.MouseEvent<HTMLElement>) {
   return (
@@ -41,7 +41,7 @@ let hasWarnedTo = false;
 let hasWarnedForward = false;
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
-  removed: boolean;
+  cancelCallbacks: CancelNavigateCallbacks;
 
   state = {
     navigating: false
@@ -76,15 +76,12 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       // only trigger re-renders when children uses state
       if (typeof this.props.children === "function") {
         cancelled = finished = () => {
-          if (!this.removed) {
-            this.setState({ navigating: false });
-          }
+          this.cancelCallbacks = undefined;
+          this.setState({ navigating: false });
         };
-        if (!this.removed) {
-          this.setState({ navigating: true });
-        }
+        this.setState({ navigating: true });
       }
-      router.navigate({
+      this.cancelCallbacks = router.navigate({
         name: routeName,
         params,
         query,
@@ -162,7 +159,9 @@ Instead, please use the "forward" prop to pass an object of props to be attached
   }
 
   componentWillUnmount() {
-    this.removed = true;
+    if (this.cancelCallbacks) {
+      this.cancelCallbacks();
+    }
   }
 }
 

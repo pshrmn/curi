@@ -4,7 +4,7 @@ import { Curious } from "@curi/react-universal";
 import shallowEqual from "shallowequal";
 
 import { GestureResponderEvent } from "react-native";
-import { Emitted, CuriRouter } from "@curi/router";
+import { Emitted, CuriRouter, CancelNavigateCallbacks } from "@curi/router";
 import { NavType } from "@hickory/root";
 
 export type NavigatingChildren = (navigating: boolean) => React.ReactNode;
@@ -38,7 +38,7 @@ let hasWarnedTo = false;
 let hasWarnedForward = false;
 
 class BaseLink extends React.Component<BaseLinkProps, LinkState> {
-  removed: boolean;
+  cancelCallbacks: CancelNavigateCallbacks;
 
   state = {
     navigating: false
@@ -76,15 +76,12 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       let cancelled, finished;
       if (typeof children === "function") {
         cancelled = finished = () => {
-          if (!this.removed) {
-            this.setState({ navigating: false });
-          }
+          this.cancelCallbacks = undefined;
+          this.setState({ navigating: false });
         };
-        if (!this.removed) {
-          this.setState({ navigating: true });
-        }
+        this.setState({ navigating: true });
       }
-      router.navigate({
+      this.cancelCallbacks = router.navigate({
         name: routeName,
         params,
         hash,
@@ -153,7 +150,9 @@ Instead, please use the "forward" prop to pass an object of props to be attached
   }
 
   componentWillUnmount() {
-    this.removed = true;
+    if (this.cancelCallbacks) {
+      this.cancelCallbacks();
+    }
   }
 }
 

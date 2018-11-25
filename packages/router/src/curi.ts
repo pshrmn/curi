@@ -27,7 +27,8 @@ import {
   Navigation,
   NavigationDetails,
   Cancellable,
-  RemoveCancellable
+  RemoveCancellable,
+  CancelNavigateCallbacks
 } from "./types/curi";
 
 export default function createRouter(
@@ -284,7 +285,7 @@ export default function createRouter(
     current() {
       return mostRecent;
     },
-    navigate(details: NavigationDetails): void {
+    navigate(details: NavigationDetails): CancelNavigateCallbacks {
       if (cancelCallback) {
         cancelCallback();
       }
@@ -311,6 +312,8 @@ export default function createRouter(
         },
         method
       );
+
+      return resetCallbacks;
     }
   };
 

@@ -1,3 +1,7 @@
+## Next
+
+* `<Link>` uses `router.navigate()`'s return function to prevent unnecessary `set`s.
+
 ## 1.0.0-beta.11
 
 * Use `<Link wrapper>` to pass a wrapper component. The wrapper component will be given a `navigating` prop.

@@ -1,3 +1,7 @@
+## Next
+
+* `<Link>` uses `router.navigate()`'s return function to prevent unnecessary `setState`s.
+
 ## 1.1.0
 
 * Add `forward` prop to `Link` for passing props to rendered component.
