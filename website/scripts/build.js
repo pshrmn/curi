@@ -13,16 +13,24 @@ const routes = require("../src/routes").default;
 
 const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
 
-staticFiles({
-  routes,
-  pages,
-  getRouterOptions: () => ({
+function getRouterOptions() {
+  return {
     route: [active()]
-  }),
-  render,
-  insert,
-  outputDir: OUTPUT_DIR,
-  outputRedirects: false
+  };
+}
+
+staticFiles({
+  pages,
+  router: {
+    routes,
+    getRouterOptions
+  },
+  output: {
+    dir: OUTPUT_DIR,
+    redirects: false,
+    render,
+    insert
+  }
 }).then(results => {
   const end = new Date();
   const resultString = results

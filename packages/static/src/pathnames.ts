@@ -1,15 +1,7 @@
 import { curi } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
-// types
-import { RouteDescriptor, RouterOptions } from "@curi/router";
-import { PageDescriptor } from "./types";
-
-export interface PathnamesConfiguration {
-  routes: Array<RouteDescriptor>;
-  pages: Array<PageDescriptor>;
-  routerOptions?: RouterOptions;
-}
+import { PathnamesConfiguration } from "./types";
 
 export default function pathnames(
   config: PathnamesConfiguration
