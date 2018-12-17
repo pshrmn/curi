@@ -49,7 +49,7 @@ import routes from "../src/routes";
 staticFiles({
   routes,
   pages: [{ name: "Home" }, { name: "About" }],
-  outputDir: join(process.cwd(), "public"),
+  dir: join(process.cwd(), "public"),
   render: () => {...},
   insert: () => {...}
 });`}
@@ -83,31 +83,12 @@ staticFiles({
             </CodeBlock>
 
             <Section tag="h4" title="Arguments" id="staticFiles-arguments">
-              <Section tag="h5" title="routes" id="staticFiles-routes">
-                <Explanation>
-                  <p>
-                    The array of route descriptors that is passed to a router.
-                  </p>
-                </Explanation>
-                <CodeBlock>
-                  {`routes = prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-  },
-  {
-    name: "User",
-    path: "u/:id"
-  }
-]);
-
-
-staticFiles({
-  // ...
-  routes
-});`}
-                </CodeBlock>
-              </Section>
+              <Explanation>
+                <p>
+                  The <IJS>staticFiles</IJS> functions is passed an object of
+                  arguments.
+                </p>
+              </Explanation>
 
               <Section tag="h5" title="pages" id="staticFiles-pages">
                 <Explanation>
@@ -134,31 +115,120 @@ staticFiles({
                 </CodeBlock>
               </Section>
 
-              <Section tag="h5" title="render()" id="staticFiles-render">
+              <Section tag="h5" title="router" id="staticFiles-router">
                 <Explanation>
                   <p>
-                    A function that takes the emitted <IJS>response</IJS>,{" "}
-                    <IJS>navigation</IJS>, and <IJS>router</IJS> for a location
-                    and returns the content that should be inserted into the
-                    page's HTML.
-                  </p>
-                  <p>
-                    <IJS>render()</IJS>s behavior will depend on what type of
-                    application is being built. For a React application, this
-                    would call the <IJS>renderToString()</IJS> method from{" "}
-                    <IJS>react-dom/server</IJS>. A Vue application would use{" "}
-                    <IJS>vue-server-renderer</IJS>.
-                  </p>
-                  <p>
-                    <IJS>render()</IJS> can return anything you want it to. This
-                    may be a string for simple rendering, or an object with
-                    multiple properties for more complex rendering (e.g.
-                    title/style properties for the <Cmp>head</Cmp> and rendered
-                    markup to insert in the <Cmp>body</Cmp>).
+                    The router property is an object with two properties:{" "}
+                    <IJS>routes</IJS> and <IJS>getRouterOptions</IJS>.
                   </p>
                 </Explanation>
-                <CodeBlock lang="jsx">
-                  {`// for a React application
+
+                <Section tag="h6" title="routes" id="staticFiles-routes">
+                  <Explanation>
+                    <p>
+                      <IJS>routes</IJS> is an array of route descriptors. This
+                      is the same array that you would use to create a router in
+                      client-side code.
+                    </p>
+                  </Explanation>
+                  <CodeBlock>
+                    {`const routes = prepareRoutes([
+  {
+    name: "Home",
+    path: "",
+  },
+  {
+    name: "User",
+    path: "u/:id"
+  }
+]);
+
+staticFiles({
+  // ...
+  router: {
+    routes
+  }
+});`}
+                  </CodeBlock>
+                </Section>
+
+                <Section
+                  tag="h6"
+                  title="getRouterOptions()"
+                  id="staticFiles-getRouterOptions"
+                >
+                  <Explanation>
+                    <p>
+                      The <IJS>getRouterOptions()</IJS> function returns the
+                      options for a router. This is only necessary if you need
+                      to use route interactions, side effects, or other route
+                      options.
+                    </p>
+                    <p>
+                      When you call <IJS>staticFiles()</IJS>, a router is
+                      created for each page. <IJS>staticFiles()</IJS> creates
+                      its own <IJS>history</IJS> instances, and gets its routes
+                      from the <IJS>routes</IJS> options, but the router may
+                      also need to be provided with other options, like route
+                      interactions.
+                    </p>
+                    <Note>
+                      This is a function so that each router has its own
+                      instances of route interactions in order to avoid any
+                      possible issues with routers resetting other router's
+                      interactions.
+                    </Note>
+                  </Explanation>
+                  <CodeBlock>
+                    {`import active from "@curi/active";
+
+const getRouterOptions = () => ({
+  routes: [active()]
+});
+
+staticFiles({
+  // ...
+  router: {
+    getRouterOptions
+  }
+});`}
+                  </CodeBlock>
+                </Section>
+              </Section>
+
+              <Section tag="h5" title="output" id="staticFiles-output">
+                <Explanation>
+                  <p>
+                    The <IJS>output</IJS> property is used to describe how
+                    output files are generated and where they are stored.
+                  </p>
+                </Explanation>
+
+                <Section tag="h6" title="render()" id="staticFiles-render">
+                  <Explanation>
+                    <p>
+                      A function that takes the emitted <IJS>response</IJS>,{" "}
+                      <IJS>navigation</IJS>, and <IJS>router</IJS> for a
+                      location and returns the content that should be inserted
+                      into the page's HTML.
+                    </p>
+                    <p>
+                      <IJS>render()</IJS>s behavior will depend on what type of
+                      application is being built. For a React application, this
+                      would call the <IJS>renderToString()</IJS> method from{" "}
+                      <IJS>react-dom/server</IJS>. A Vue application would use{" "}
+                      <IJS>vue-server-renderer</IJS>.
+                    </p>
+                    <p>
+                      <IJS>render()</IJS> can return anything you want it to.
+                      This may be a string for simple rendering, or an object
+                      with multiple properties for more complex rendering (e.g.
+                      title/style properties for the <Cmp>head</Cmp> and
+                      rendered markup to insert in the <Cmp>body</Cmp>).
+                    </p>
+                  </Explanation>
+                  <CodeBlock lang="jsx">
+                    {`// for a React application
 import { renderToString } from "react-dom";
 import { curiProvider } from "@curi/react-dom";
 
@@ -174,21 +244,23 @@ function render(emitted) {
 
 staticFiles({
   // ...
-  render
+  output: {
+    render
+  }
 });`}
-                </CodeBlock>
-              </Section>
+                  </CodeBlock>
+                </Section>
 
-              <Section tag="h5" title="insert()" id="staticFiles-insert">
-                <Explanation>
-                  <p>
-                    A function that takes the value returned by the{" "}
-                    <IJS>render()</IJS> function and inserts it into the full
-                    HTML for a page.
-                  </p>
-                </Explanation>
-                <CodeBlock>
-                  {`function insert(markup) {
+                <Section tag="h6" title="insert()" id="staticFiles-insert">
+                  <Explanation>
+                    <p>
+                      A function that takes the value returned by the{" "}
+                      <IJS>render()</IJS> function and inserts it into the full
+                      HTML for a page.
+                    </p>
+                  </Explanation>
+                  <CodeBlock>
+                    {`function insert(markup) {
   return \`<!doctype html>
 <html>
   <head>
@@ -208,81 +280,51 @@ function render() {
 
 staticFiles({
   // ...
-  insert
+  output: {
+    insert
+  }
 });`}
-                </CodeBlock>
-              </Section>
+                  </CodeBlock>
+                </Section>
 
-              <Section tag="h5" title="outputDir" id="staticFiles-outputDir">
-                <Explanation>
-                  <p>
-                    The folder where the generated HTML files should be saved.
-                  </p>
-                </Explanation>
-              </Section>
-
-              <Section
-                tag="h5"
-                title="outputRedirects"
-                id="staticFiles-outputRedirects"
-              >
-                <Explanation>
-                  <p>
-                    If a route automatically redirects, you probably do not need
-                    to create an HTML file for it. If you set{" "}
-                    <IJS>outputRedirects</IJS> to <IJS>true</IJS>, HTML files
-                    will be generated for redirect pages.
-                  </p>
-                  <p>
-                    Your server should be configured to return a fallback page
-                    when there is no content for a route, so you should not need
-                    to create HTML files for redirected pages.
-                  </p>
-                  <Note>
-                    If you do create HTML files for redirects, be sure that your
-                    application knows how to render redirect responses. If you
-                    are using <IJS>emitRedirects = false</IJS> in your client
-                    side code, your application probably doesn't know how to
-                    render redirects.
-                  </Note>
-                </Explanation>
-              </Section>
-
-              <Section
-                tag="h5"
-                title="getRouterOptions()"
-                id="staticFiles-getRouterOptions"
-              >
-                <Explanation>
-                  <p>
-                    The <IJS>getRouterOptions()</IJS> function returns the
-                    options for a router.
-                  </p>
-                  <p>
-                    When you call <IJS>staticFiles()</IJS>, a number of routers
-                    will be created behind the scenes. <IJS>staticFiles()</IJS>{" "}
-                    creates its own <IJS>history</IJS> instances, and gets its
-                    routes from the <IJS>routes</IJS> options, but the router
-                    may also need to be provided with other options, like route
-                    interactions.
-                  </p>
-                  <Note>
-                    This is a function so that each router has its own instances
-                    of route interactions in order to avoid any possible issues
-                    with routers resetting other router's interactions.
-                  </Note>
-                </Explanation>
-                <CodeBlock>
-                  {`import active from "@curi/active";
-const getRouterOptions = () => ({
-  routes: [active()]
-});
-
-staticFiles({
+                <Section tag="h6" title="dir" id="staticFiles-dir">
+                  <Explanation>
+                    <p>
+                      The folder where the generated HTML files should be saved.
+                    </p>
+                  </Explanation>
+                  <CodeBlock>
+                    {`staticFiles({
   // ...
-  getRouterOptions
-});`}
-                </CodeBlock>
+  output: {
+    dir: "dist"
+  }
+})`}
+                  </CodeBlock>
+                </Section>
+
+                <Section tag="h6" title="redirects" id="staticFiles-redirects">
+                  <Explanation>
+                    <p>
+                      If a route automatically redirects, you probably do not
+                      need to create an HTML file for it. If you set{" "}
+                      <IJS>redirects</IJS> to <IJS>true</IJS>, HTML files will
+                      be generated for redirect pages.
+                    </p>
+                    <p>
+                      Your server should be configured to return a fallback page
+                      when there is no content for a route, so you should not
+                      need to create HTML files for redirected pages.
+                    </p>
+                    <Note>
+                      If you do create HTML files for redirects, be sure that
+                      your application knows how to render redirect responses.
+                      If you are using <IJS>emitRedirects = false</IJS> in your
+                      client side code, your application probably doesn't know
+                      how to render redirects.
+                    </Note>
+                  </Explanation>
+                </Section>
               </Section>
             </Section>
           </Section>
