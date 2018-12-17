@@ -5,42 +5,20 @@ import InMemory from "@hickory/in-memory";
 
 import pathnames from "./pathnames";
 
-// types
-import { RouteDescriptor, Params, Emitted } from "@curi/router";
-import { GetRouterOptions } from "./types";
+import { Emitted, RouterOptions } from "@curi/router";
+import { StaticConfiguration, Result } from "./types";
 
-export interface PageDescriptor {
-  name: string;
-  params?: Params;
-}
-
-export interface StaticConfiguration {
-  routes: Array<RouteDescriptor>;
-  pages: Array<PageDescriptor>;
-  render: (emitted: Emitted) => any;
-  insert: (markup: any) => string;
-  outputDir: string;
-  outputRedirects?: boolean;
-  getRouterOptions?: GetRouterOptions;
-}
-
-export interface Result {
-  pathname: string;
-  success: boolean;
-  error?: Error;
+function defaultGetRouterOptions(): RouterOptions {
+  return {};
 }
 
 export default async function staticFiles(
   config: StaticConfiguration
 ): Promise<Array<Result>> {
   const {
-    routes,
     pages,
-    outputDir,
-    render,
-    insert,
-    getRouterOptions = (() => {}) as GetRouterOptions,
-    outputRedirects = false
+    router: { routes, getRouterOptions = defaultGetRouterOptions },
+    output: { render, insert, dir, redirects = false }
   } = config;
 
   return Promise.all<Result>(
@@ -57,15 +35,17 @@ export default async function staticFiles(
 
           const router = curi(history, routes, {
             ...getRouterOptions(),
-            emitRedirects: true, // need to emit redirects or will get stuck waiting forever
-            automaticRedirects: false // and the responses should be for the redirect
+            // need to emit redirects or will get stuck waiting forever
+            emitRedirects: true,
+            // and the responses should be for the redirect
+            automaticRedirects: false
           });
 
           router.once(
             (emitted: Emitted) => {
               try {
                 const { response } = emitted;
-                if (response.redirectTo && !outputRedirects) {
+                if (response.redirectTo && !redirects) {
                   resolve({
                     pathname,
                     success: false,
@@ -75,7 +55,7 @@ export default async function staticFiles(
                 }
                 const markup = render(emitted);
                 const html = insert(markup);
-                const outputFilename = join(outputDir, pathname, "index.html");
+                const outputFilename = join(dir, pathname, "index.html");
                 fs.outputFile(outputFilename, html).then(() => {
                   resolve({ pathname, success: true });
                 });
