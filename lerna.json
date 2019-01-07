@@ -1,15 +1,17 @@
 {
-  "lerna": "2.5.1",
   "version": "independent",
   "packages": [
     "packages/*",
     "packages/interactions/*",
     "packages/side-effects/*",
     "examples",
-    "examples/**",
+    "examples/misc/*",
+    "examples/react/*",
+    "examples/svelte/*",
+    "examples/vue/*",
     "website"
   ],
-  "commands": {
+  "command": {
     "bootstrap": {
       "hoist": "**",
       "nohoist": [
@@ -17,18 +19,14 @@
         "svelte-cli",
         "svelte-loader",
         "rollup-plugin-svelte",
-
         "react-native",
-
         "ts-jest",
         "babel-jest",
-
         "webpack",
         "webpack-cli",
         "webpack-command",
         "webpack-dev-server",
         "mini-css-extract-plugin",
-
         "vue",
         "vue-loader",
         "vue-template-compiler",

@@ -1,5 +1,5 @@
 {
-  "name": "@curi-example/server",
+  "name": "@curi-example/serve-examples",
   "private": true,
   "dependencies": {
     "express": "^4.15.4"
