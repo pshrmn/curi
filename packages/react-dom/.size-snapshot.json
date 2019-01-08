@@ -1,6 +1,6 @@
 {
   "dist/curi-react-dom.es.js": {
-    "bundled": 9588,
+    "bundled": 9621,
     "minified": 4776,
     "gzipped": 1932,
     "treeshaked": {
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-react-dom.js": {
-    "bundled": 9933,
+    "bundled": 9966,
     "minified": 5056,
     "gzipped": 2029
   },
   "dist/curi-react-dom.umd.js": {
-    "bundled": 19440,
+    "bundled": 19481,
     "minified": 8181,
     "gzipped": 2749
   },
   "dist/curi-react-dom.min.js": {
-    "bundled": 19400,
+    "bundled": 19441,
     "minified": 8141,
     "gzipped": 2731
   }

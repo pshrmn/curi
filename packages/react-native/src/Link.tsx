@@ -69,7 +69,7 @@ class BaseLink extends React.Component<BaseLinkProps, LinkState> {
       event.preventDefault();
       const { to, name, params, hash, query, state, children } = this.props;
       const routeName = name || to;
-      let { method = "ANCHOR" } = this.props;
+      let { method = "ANCHOR" as NavType } = this.props;
       if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {
         method = "ANCHOR";
       }
@@ -137,6 +137,7 @@ Instead, please use the "forward" prop to pass an object of props to be attached
     };
 
     return (
+      // @ts-ignore
       <Anchor
         {...additionalProps}
         onPress={this.pressHandler}

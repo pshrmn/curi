@@ -145,6 +145,7 @@ Instead, please use the "forward" prop to pass an object of props to be attached
     };
 
     return (
+      // @ts-ignore
       <Anchor
         {...additionalProps}
         onClick={this.clickHandler}

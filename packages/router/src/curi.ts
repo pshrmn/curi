@@ -5,7 +5,7 @@ import matchLocation from "./matchLocation";
 import resolveMatchedRoute from "./resolveMatchedRoute";
 import { privatePrepareRoutes } from "./prepareRoutes";
 
-import { History, PendingNavigation, Action } from "@hickory/root";
+import { History, PendingNavigation, Action, NavType } from "@hickory/root";
 
 import {
   RouteDescriptor,
@@ -291,7 +291,14 @@ export default function createRouter(
       }
       resetCallbacks();
 
-      let { name, params, hash, query, state, method = "ANCHOR" } = details;
+      let {
+        name,
+        params,
+        hash,
+        query,
+        state,
+        method = "ANCHOR" as NavType
+      } = details;
       const pathname =
         name != null
           ? routeInteractions.pathname(name, params)
