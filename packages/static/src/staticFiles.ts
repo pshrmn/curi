@@ -21,12 +21,31 @@ export default async function staticFiles(
     output: { render, insert, dir, redirects = false }
   } = config;
 
+  // generate input pathname/output filename pairs
+  // for the provided pages
+  const inputOutput = pathnames({
+    routes,
+    pages,
+    routerOptions: getRouterOptions()
+  }).map(pathname => {
+    return {
+      pathname,
+      outputPath: join(dir, pathname, "index.html")
+    };
+  });
+
+  // if there is a catch all page to be generated,
+  // add it to the input/output array
+  if (config.catchAll) {
+    const { pathname, filename } = config.catchAll;
+    inputOutput.push({
+      pathname,
+      outputPath: join(dir, filename, "index.html")
+    });
+  }
+
   return Promise.all<Result>(
-    pathnames({
-      routes,
-      pages,
-      routerOptions: getRouterOptions()
-    }).map(pathname => {
+    inputOutput.map(({ pathname, outputPath }) => {
       return new Promise(resolve => {
         try {
           // create a new router for each so we don't run into any issues
@@ -55,8 +74,7 @@ export default async function staticFiles(
                 }
                 const markup = render(emitted);
                 const html = insert(markup);
-                const outputFilename = join(dir, pathname, "index.html");
-                fs.outputFile(outputFilename, html).then(() => {
+                fs.outputFile(outputPath, html).then(() => {
                   resolve({ pathname, success: true });
                 });
               } catch (e) {

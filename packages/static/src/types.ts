@@ -5,6 +5,11 @@ export interface PageDescriptor {
   params?: Params;
 }
 
+export interface CatchAllDescriptor {
+  filename: string;
+  pathname: string;
+}
+
 export type GetRouterOptions = () => RouterOptions;
 
 export interface StaticOutput {
@@ -21,6 +26,7 @@ export interface StaticRouter {
 
 export interface StaticConfiguration {
   pages: Array<PageDescriptor>;
+  catchAll?: CatchAllDescriptor;
   router: StaticRouter;
   output: StaticOutput;
 }

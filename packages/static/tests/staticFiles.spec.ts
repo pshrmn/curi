@@ -16,45 +16,96 @@ const DEFAULT_INSERT = (markup: string, emitted: Emitted) => {
 };
 
 describe("staticFiles()", () => {
-  it("creates HTML files for each route in the correct location", async () => {
-    const fixtures = join(FIXTURES_ROOT, "basic");
-    await remove(fixtures);
-    await ensureDir(fixtures);
+  describe("output files", () => {
+    it("creates HTML files for each route in the correct location", async () => {
+      const fixtures = join(FIXTURES_ROOT, "basic");
+      await remove(fixtures);
+      await ensureDir(fixtures);
 
-    const routes = prepareRoutes([
-      {
-        name: "Home",
-        path: "",
-        response() {
-          return { body: "Home" };
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: "",
+          response() {
+            return { body: "Home" };
+          }
+        },
+        {
+          name: "About",
+          path: "about",
+          response() {
+            return { body: "About" };
+          }
         }
-      },
-      {
-        name: "About",
-        path: "about",
-        response() {
-          return { body: "About" };
+      ]);
+      const pages = [{ name: "Home" }, { name: "About" }];
+      await staticFiles({
+        pages,
+        router: {
+          routes
+        },
+        output: {
+          render: DEFAULT_RENDER,
+          insert: DEFAULT_INSERT,
+          dir: fixtures
         }
-      }
-    ]);
-    const pages = [{ name: "Home" }, { name: "About" }];
-    await staticFiles({
-      pages,
-      router: {
-        routes
-      },
-      output: {
-        render: DEFAULT_RENDER,
-        insert: DEFAULT_INSERT,
-        dir: fixtures
-      }
+      });
+      const expectedPaths = [
+        join(fixtures, "index.html"),
+        join(fixtures, "about", "index.html")
+      ];
+      expectedPaths.forEach(path => {
+        expect(existsSync(path)).toBe(true);
+      });
     });
-    const expectedPaths = [
-      join(fixtures, "index.html"),
-      join(fixtures, "about", "index.html")
-    ];
-    expectedPaths.forEach(path => {
-      expect(existsSync(path)).toBe(true);
+
+    describe("catchAll", () => {
+      it("generates a catch all file if provided", async () => {
+        const fixtures = join(FIXTURES_ROOT, "basic");
+        await remove(fixtures);
+        await ensureDir(fixtures);
+
+        const routes = prepareRoutes([
+          {
+            name: "Home",
+            path: "",
+            response() {
+              return { body: "Home" };
+            }
+          },
+          {
+            name: "About",
+            path: "about",
+            response() {
+              return { body: "About" };
+            }
+          }
+        ]);
+        const pages = [{ name: "Home" }, { name: "About" }];
+        await staticFiles({
+          pages,
+          catchAll: {
+            filename: "404.html",
+            path: "/404"
+          },
+          router: {
+            routes
+          },
+          output: {
+            render: DEFAULT_RENDER,
+            insert: DEFAULT_INSERT,
+            dir: fixtures
+          }
+        });
+        const expectedPaths = [
+          join(fixtures, "index.html"),
+          join(fixtures, "about", "index.html"),
+          join(fixtures, "404.html")
+        ];
+        expectedPaths.forEach(path => {
+          expect(existsSync(path)).toBe(true);
+        });
+      });
     });
   });
 
