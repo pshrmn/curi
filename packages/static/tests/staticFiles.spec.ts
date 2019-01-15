@@ -86,7 +86,7 @@ describe("staticFiles()", () => {
           pages,
           catchAll: {
             filename: "404.html",
-            path: "/404"
+            pathname: "/404"
           },
           router: {
             routes
