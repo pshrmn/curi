@@ -11,7 +11,7 @@ export default {
   "side-effect-aria-live": "1.0.1",
   "side-effect-scroll": "1.0.1",
   "side-effect-title": "1.0.1",
-  "static": "1.0.0-alpha.4",
+  "static": "1.0.0-alpha.5",
   "svelte": "1.0.0-beta.12",
   "vue": "1.0.0-beta.25"
 };
