@@ -3,7 +3,7 @@ export interface PageDescriptor {
     name: string;
     params?: Params;
 }
-export interface CatchAllDescriptor {
+export interface FallbackDescriptor {
     filename: string;
     pathname: string;
 }
@@ -20,7 +20,7 @@ export interface StaticRouter {
 }
 export interface StaticConfiguration {
     pages: Array<PageDescriptor>;
-    catchAll?: CatchAllDescriptor;
+    fallback?: FallbackDescriptor;
     router: StaticRouter;
     output: StaticOutput;
 }

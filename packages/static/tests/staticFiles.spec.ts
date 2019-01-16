@@ -59,9 +59,9 @@ describe("staticFiles()", () => {
       });
     });
 
-    describe("catchAll", () => {
+    describe("fallback", () => {
       it("generates a catch all file if provided", async () => {
-        const fixtures = join(FIXTURES_ROOT, "basic");
+        const fixtures = join(FIXTURES_ROOT, "basic-fallback");
         await remove(fixtures);
         await ensureDir(fixtures);
 
@@ -79,12 +79,19 @@ describe("staticFiles()", () => {
             response() {
               return { body: "About" };
             }
+          },
+          {
+            name: "Catch All",
+            path: "(.*)",
+            response() {
+              return { body: "404" };
+            }
           }
         ]);
         const pages = [{ name: "Home" }, { name: "About" }];
         await staticFiles({
           pages,
-          catchAll: {
+          fallback: {
             filename: "404.html",
             pathname: "/404"
           },

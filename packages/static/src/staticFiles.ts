@@ -36,11 +36,11 @@ export default async function staticFiles(
 
   // if there is a catch all page to be generated,
   // add it to the input/output array
-  if (config.catchAll) {
-    const { pathname, filename } = config.catchAll;
+  if (config.fallback) {
+    const { pathname, filename } = config.fallback;
     inputOutput.push({
       pathname,
-      outputPath: join(dir, filename, "index.html")
+      outputPath: join(dir, filename)
     });
   }
 
