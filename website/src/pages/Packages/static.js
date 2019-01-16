@@ -196,6 +196,28 @@ staticFiles({
                 </Section>
               </Section>
 
+              <Section tag="h5" title="fallback" id="staticFiles-fallback">
+                <Explanation>
+                  <p>
+                    Some hosts allow you to provide a fallback page for when a
+                    request doesn't match any of your generated HTML files. The{" "}
+                    <IJS>fallback</IJS> option takes the <IJS>pathname</IJS> it
+                    should generate page contents for and the{" "}
+                    <IJS>filename</IJS> to save the file as.
+                  </p>
+                </Explanation>
+
+                <CodeBlock>
+                  {`staticFiles({
+  // ...
+  fallback: {
+    pathname: "/404",
+    filename: "404.html"
+  }
+});`}
+                </CodeBlock>
+              </Section>
+
               <Section tag="h5" title="output" id="staticFiles-output">
                 <Explanation>
                   <p>
