@@ -5,7 +5,7 @@ import InMemory from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, useNavigationFocus, Focus } from "@curi/react-dom";
+import { curiProvider, useNavigationFocus } from "@curi/react-dom";
 
 jest.useFakeTimers();
 

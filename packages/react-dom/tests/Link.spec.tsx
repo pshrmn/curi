@@ -56,55 +56,6 @@ describe("<Link>", () => {
       expect(a).toBeDefined();
       expect(getComputedStyle(a).color).toBe("orange");
     });
-
-    it("re-renders if the anchor changes", () => {
-      // TODO: figure out <Link> memoization
-      let count = 0;
-      function renderCounter() {
-        return <div>{count++}</div>;
-      }
-      const StyledAnchor = props => (
-        <a style={{ color: "orange" }} {...props} />
-      );
-      ReactDOM.render(
-        <Router>
-          {() => (
-            <Link anchor={StyledAnchor} name="Test">
-              {renderCounter}
-            </Link>
-          )}
-        </Router>,
-        node
-      );
-      const a0 = node.querySelector("a");
-      expect(a0.textContent).toBe("0");
-
-      ReactDOM.render(
-        <Router>
-          {() => (
-            <Link anchor={StyledAnchor} name="Test">
-              {renderCounter}
-            </Link>
-          )}
-        </Router>,
-        node
-      );
-      const a1 = node.querySelector("a");
-      expect(a1.textContent).toBe("0");
-
-      ReactDOM.render(
-        <Router>
-          {() => (
-            <Link anchor="a" name="Test">
-              {renderCounter}
-            </Link>
-          )}
-        </Router>,
-        node
-      );
-      const a2 = node.querySelector("a");
-      expect(a2.textContent).toBe("1");
-    });
   });
 
   describe("name", () => {
@@ -130,34 +81,6 @@ describe("<Link>", () => {
       );
       const a = node.querySelector("a");
       expect(a.getAttribute("href")).toBe("");
-    });
-
-    it("re-renders if to changes", () => {
-      // TODO: figure out <Link> memoization
-      let count = 0;
-      function renderCounter() {
-        return <div>{count++}</div>;
-      }
-      ReactDOM.render(
-        <Router>{() => <Link name="Test">{renderCounter}</Link>}</Router>,
-        node
-      );
-      const a0 = node.querySelector("a");
-      expect(a0.textContent).toBe("0");
-
-      ReactDOM.render(
-        <Router>{() => <Link name="Test">{renderCounter}</Link>}</Router>,
-        node
-      );
-      const a1 = node.querySelector("a");
-      expect(a1.textContent).toBe("0");
-
-      ReactDOM.render(
-        <Router>{() => <Link name="Best">{renderCounter}</Link>}</Router>,
-        node
-      );
-      const a2 = node.querySelector("a");
-      expect(a2.textContent).toBe("1");
     });
   });
 
@@ -218,40 +141,6 @@ describe("<Link>", () => {
       );
       a = node.querySelector("a");
       expect(a.getAttribute("href")).toBe("/park/Yellowstone");
-    });
-
-    it("does not re-render if new params object is shallowly equal to current", () => {
-      // TODO: figure out <Link> memoization
-      let count = 0;
-      function renderCounter() {
-        return <div>{count++}</div>;
-      }
-      ReactDOM.render(
-        <Router>
-          {() => (
-            <Link name="Park" params={{ name: "Yosemite" }}>
-              {renderCounter}
-            </Link>
-          )}
-        </Router>,
-        node
-      );
-      const a0 = node.querySelector("a");
-      expect(a0.textContent).toBe("0");
-
-      // same params, but new object
-      ReactDOM.render(
-        <Router>
-          {() => (
-            <Link name="Park" params={{ name: "Yosemite" }}>
-              {renderCounter}
-            </Link>
-          )}
-        </Router>,
-        node
-      );
-      const a1 = node.querySelector("a");
-      expect(a1.textContent).toBe("0");
     });
   });
 
