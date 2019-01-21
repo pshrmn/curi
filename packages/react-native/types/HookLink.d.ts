@@ -8,5 +8,5 @@ export interface LinkProps extends RouteLocation {
     children: NavigatingChildren | React.ReactNode;
     forward?: React.AnchorHTMLAttributes<HTMLAnchorElement>;
 }
-declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<any>>>;
-export default _default;
+declare const HookLink: React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<any>>;
+export default HookLink;

@@ -45,18 +45,4 @@ const HookLink = React.forwardRef((props: LinkProps, ref: React.Ref<any>) => {
   );
 });
 
-function propCompare(prevProps: LinkProps, nextProps: LinkProps) {
-  return (
-    prevProps.children === nextProps.children &&
-    prevProps.name === nextProps.name &&
-    prevProps.hash === nextProps.hash &&
-    prevProps.query === nextProps.query &&
-    prevProps.onNav === nextProps.onNav &&
-    prevProps.anchor === nextProps.anchor &&
-    shallowEqual(prevProps.params, nextProps.params) &&
-    shallowEqual(prevProps.state, nextProps.state) &&
-    shallowEqual(prevProps.forward, nextProps.forward)
-  );
-}
-
-export default React.memo(HookLink, propCompare);
+export default HookLink;
