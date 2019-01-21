@@ -1,4 +1,4 @@
-export { LinkProps } from "./HookLink";
+export { LinkProps } from "./Link";
 export * from "@curi/react-universal";
-import Link from "./HookLink";
+import Link from "./Link";
 export { Link };
