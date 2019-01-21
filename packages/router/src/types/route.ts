@@ -25,10 +25,12 @@ export interface ResponseBuilder {
   external: any;
 }
 
-export type ResponseFn = (props: ResponseBuilder) => SettableResponseProperties;
+export type ResponseFn = (
+  props: Readonly<ResponseBuilder>
+) => SettableResponseProperties;
 
 export type AsyncMatchFn = (
-  matched?: MatchResponseProperties,
+  matched?: Readonly<MatchResponseProperties>,
   external?: any
 ) => Promise<any>;
 export interface AsyncGroup {

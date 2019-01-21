@@ -17,8 +17,8 @@ export interface ResponseBuilder {
     match: MatchResponseProperties;
     external: any;
 }
-export declare type ResponseFn = (props: ResponseBuilder) => SettableResponseProperties;
-export declare type AsyncMatchFn = (matched?: MatchResponseProperties, external?: any) => Promise<any>;
+export declare type ResponseFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
+export declare type AsyncMatchFn = (matched?: Readonly<MatchResponseProperties>, external?: any) => Promise<any>;
 export interface AsyncGroup {
     [key: string]: AsyncMatchFn;
 }
