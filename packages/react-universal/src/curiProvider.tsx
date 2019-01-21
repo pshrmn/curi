@@ -11,7 +11,7 @@ export interface RouterProps {
 
 export default function curiProvider(
   router: CuriRouter
-): React.FunctionComponent {
+): React.FunctionComponent<RouterProps> {
   function initialState() {
     const { response, navigation } = router.current();
     return {
