@@ -5,7 +5,7 @@ import Content from "../layout/Content";
 
 export default function HomeTemplate({ children }) {
   return (
-    <Page type="home">
+    <Page>
       <Content>{children || null}</Content>
     </Page>
   );

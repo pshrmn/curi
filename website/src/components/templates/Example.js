@@ -7,7 +7,7 @@ import Content from "../layout/Content";
 
 export default function ExampleTemplate({ children }) {
   return (
-    <Page type="example">
+    <Page>
       <Content>{children || null}</Content>
       <PageLinks>
         <React.Fragment>

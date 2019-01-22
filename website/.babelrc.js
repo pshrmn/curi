@@ -1,17 +1,13 @@
 const plugins = [
   "@babel/plugin-proposal-class-properties",
-  "@babel/plugin-proposal-object-rest-spread"
+  "@babel/plugin-proposal-object-rest-spread",
+  "emotion"
 ];
 
 let modules;
 switch (process.env.BABEL_ENV) {
   case "node":
-    plugins.push("dynamic-import-node", [
-      "babel-plugin-transform-require-ignore",
-      {
-        extensions: [".scss"]
-      }
-    ]);
+    plugins.push("dynamic-import-node");
     modules = "commonjs";
     break;
   default:

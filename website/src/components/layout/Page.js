@@ -1,7 +1,16 @@
 import React from "react";
+import styled from "@emotion/styled";
 
-import "../../scss/page.scss";
+import { screen } from "../../constants/styles";
 
-export default function Page({ children, type = "" }) {
-  return <div className={`page ${type}`}>{children}</div>;
-}
+const StyledPage = styled("div")`
+  position: relative;
+
+  @media only screen and (min-width: ${screen.medium}) {
+    padding-top: 15px;
+    display: flex;
+    flex-flow: row nowrap;
+  }
+`;
+
+export default StyledPage;

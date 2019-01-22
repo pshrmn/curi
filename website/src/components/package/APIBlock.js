@@ -1,12 +1,19 @@
 import React from "react";
+import styled from "@emotion/styled";
+
 import { Section } from "../layout/Sections";
 
-import "../../scss/api.scss";
+const StyledAPIBlock = styled(Section)`
+  .section {
+    padding-left: 10px;
+    margin-bottom: 5px;
+  }
+`;
 
 export default function APIBlock({ children }) {
   return (
-    <Section title="API" id="API">
+    <StyledAPIBlock title="API" id="API">
       {children}
-    </Section>
+    </StyledAPIBlock>
   );
 }

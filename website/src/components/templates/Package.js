@@ -7,7 +7,7 @@ import Content from "../layout/Content";
 
 export default function PackageTemplate({ children }) {
   return (
-    <Page type="package">
+    <Page>
       <Content>{children}</Content>
       <PageLinks>
         <React.Fragment>

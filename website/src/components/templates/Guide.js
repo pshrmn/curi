@@ -7,7 +7,7 @@ import Content from "../layout/Content";
 
 export default function GuideTemplate({ children }) {
   return (
-    <Page type="guide">
+    <Page>
       <Content>{children || null}</Content>
       <PageLinks>
         <React.Fragment>
