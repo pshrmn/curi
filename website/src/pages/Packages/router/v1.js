@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import APIBlock from "../../components/package/APIBlock";
-import About from "../../components/package/About";
-import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
-import { Note, Warning } from "../../components/Messages";
+import APIBlock from "../../../components/package/APIBlock";
+import About from "../../../components/package/About";
+import { InlineJS as IJS } from "../../../components/highlight/Inline";
+import { Section } from "../../../components/layout/Sections";
+import { CodeBlock, Explanation } from "../../../components/layout/Groups";
+import { Note, Warning } from "../../../components/Messages";
 
 export default class RouterPkg extends React.PureComponent {
   render() {

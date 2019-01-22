@@ -1,5 +1,6 @@
 import React from "react";
 
+import Version from "./Version";
 import Installation from "./Installation";
 import GitHubLink from "./GitHubLink";
 import NPMLink from "./NPMLink";
@@ -18,28 +19,34 @@ function getDir(name) {
 
 export default function BasePackage({
   name,
-  version,
+  params,
+  versions,
+  latest,
   globalName,
   children,
   script = true
 }) {
-  return name !== undefined ? (
-    <React.Fragment>
-      <h1>@curi/{name}</h1>
-      <div className="package-info">
-        <div>v{version}</div>
-        <GitHubLink name={name} dir={getDir(name)} />
-        <NPMLink name={name} />
-      </div>
-      <Installation
-        name={name}
-        version={version}
-        globalName={globalName}
-        script={script}
-      />
-      {children || null}
-    </React.Fragment>
-  ) : (
-    children
-  );
+  if (name !== undefined) {
+    const major = params.version !== undefined ? params.version : latest;
+    const currentVersion = versions[major];
+    return (
+      <React.Fragment>
+        <h1>@curi/{name}</h1>
+        <div className="package-info">
+          <Version major={major} versions={versions} params={params} />
+          <GitHubLink name={name} dir={getDir(name)} />
+          <NPMLink name={name} />
+        </div>
+        <Installation
+          name={name}
+          version={currentVersion}
+          globalName={globalName}
+          script={script}
+        />
+        {children || null}
+      </React.Fragment>
+    );
+  } else {
+    return children;
+  }
 }

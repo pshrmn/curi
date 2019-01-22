@@ -135,7 +135,7 @@ export default prepareRoutes([
     children: [
       {
         name: "Package",
-        path: "@curi/:package/",
+        path: "@curi/:package/:version(v\\d)?/",
         resolve: {
           body: () =>
             import(/* webpackChunkName: 'package', webpackPrefetch: true */ "./components/routes/Package").then(
@@ -146,7 +146,7 @@ export default prepareRoutes([
             const pkg = PACKAGE_API.find(params.package);
             return pkg
               ? pkg
-                  .import()
+                  .import(params.version)
                   .then(
                     preferDefault,
                     catchImportError(`package: ${params.package}`)
@@ -159,6 +159,20 @@ export default prepareRoutes([
         },
         response: ({ match, resolved }) => {
           const pkg = PACKAGE_API.find(match.params.package);
+          if (
+            match.params.version &&
+            pkg.versions[match.params.version] === undefined
+          ) {
+            // redirect to base package for bad major versions
+            return {
+              redirectTo: {
+                name: "Package",
+                params: {
+                  package: match.params.package
+                }
+              }
+            };
+          }
           return {
             body: resolved.body,
             title: `@curi/${match.params.package}`,

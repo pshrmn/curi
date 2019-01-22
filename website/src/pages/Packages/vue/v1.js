@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import APIBlock from "../../components/package/APIBlock";
-import About from "../../components/package/About";
+import APIBlock from "../../../components/package/APIBlock";
+import About from "../../../components/package/About";
 import {
   InlineJS as IJS,
   InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Note } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+} from "../../../components/highlight/Inline";
+import { Note } from "../../../components/Messages";
+import { Section } from "../../../components/layout/Sections";
+import { CodeBlock, Explanation } from "../../../components/layout/Groups";
 
 export default class VuePkg extends React.PureComponent {
   render() {

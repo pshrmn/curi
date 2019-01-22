@@ -1,11 +1,11 @@
 import React from "react";
 
-import APIBlock from "../../components/package/APIBlock";
-import About from "../../components/package/About";
-import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
-import { Note } from "../../components/Messages";
+import APIBlock from "../../../components/package/APIBlock";
+import About from "../../../components/package/About";
+import { InlineJS as IJS } from "../../../components/highlight/Inline";
+import { Section } from "../../../components/layout/Sections";
+import { CodeBlock, Explanation } from "../../../components/layout/Groups";
+import { Note } from "../../../components/Messages";
 
 export default class RouteActivePkg extends React.PureComponent {
   render() {

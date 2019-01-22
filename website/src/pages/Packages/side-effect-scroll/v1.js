@@ -1,11 +1,9 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
-import APIBlock from "../../components/package/APIBlock";
-import About from "../../components/package/About";
-import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+import APIBlock from "../../../components/package/APIBlock";
+import About from "../../../components/package/About";
+import { Section } from "../../../components/layout/Sections";
+import { CodeBlock, Explanation } from "../../../components/layout/Groups";
 
 export default class SideEffectScrollPkg extends React.PureComponent {
   render() {

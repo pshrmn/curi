@@ -1,26 +1,36 @@
 import versions from "./versions";
-import preferDefault from "../preferDefault";
 
 const packages = [
   {
     name: "router",
-    version: versions["router"],
     globalName: "Curi",
     type: "router",
     script: true,
+    latest: "v1",
+    versions: {
+      v1: versions["router"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--router' */
-      `../pages/Packages/router.js`)
+      `../pages/Packages/router/v1.js`)
   },
   {
     name: "react-dom",
-    version: versions["react-dom"],
     globalName: "CuriReactDOM",
     type: "render",
     script: true,
-    import: () =>
-      import(/* webpackChunkName: 'package--react-dom' */
-      `../pages/Packages/react-dom.js`)
+    latest: "v1",
+    versions: {
+      v1: versions["react-dom"]
+    },
+    import: version => {
+      switch (version) {
+        case "v1":
+        default:
+          return import(/* webpackChunkName: 'package--react-dom-v1' */
+          `../pages/Packages/react-dom/v1.js`);
+      }
+    }
   },
   {
     name: "react-native",
@@ -28,9 +38,13 @@ const packages = [
     globalName: "CuriReactNative",
     type: "render",
     script: false,
+    latest: "v1",
+    versions: {
+      v1: versions["react-native"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--react-native' */
-      `../pages/Packages/react-native.js`)
+      `../pages/Packages/react-native/v1.js`)
   },
   {
     name: "svelte",
@@ -38,9 +52,13 @@ const packages = [
     globalName: "CuriSvelte",
     type: "render",
     script: false,
+    latest: "v1",
+    versions: {
+      v1: versions["svelte"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--svelte' */
-      `../pages/Packages/svelte.js`)
+      `../pages/Packages/svelte/v1.js`)
   },
   {
     name: "vue",
@@ -48,9 +66,13 @@ const packages = [
     globalName: "CuriVue",
     type: "render",
     script: true,
+    latest: "v1",
+    versions: {
+      v1: versions["vue"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--vue' */
-      `../pages/Packages/vue.js`)
+      `../pages/Packages/vue/v1.js`)
   },
   {
     name: "route-active",
@@ -58,9 +80,13 @@ const packages = [
     globalName: "CuriRouteActive",
     type: "route interactions",
     script: true,
+    latest: "v1",
+    versions: {
+      v1: versions["route-active"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--route-active' */
-      `../pages/Packages/route-active.js`)
+      `../pages/Packages/route-active/v1.js`)
   },
   {
     name: "route-ancestors",
@@ -68,9 +94,13 @@ const packages = [
     globalName: "CuriRouteAncestors",
     type: "route interactions",
     script: true,
+    latest: "v1",
+    versions: {
+      v1: versions["route-ancestors"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--route-ancestors' */
-      `../pages/Packages/route-ancestors.js`)
+      `../pages/Packages/route-ancestors/v1.js`)
   },
   {
     name: "route-prefetch",
@@ -78,9 +108,13 @@ const packages = [
     globalName: "CuriRoutePrefetch",
     type: "route interactions",
     script: true,
+    latest: "v1",
+    versions: {
+      v1: versions["route-prefetch"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--route-prefetch' */
-      `../pages/Packages/route-prefetch.js`)
+      `../pages/Packages/route-prefetch/v1.js`)
   },
   {
     name: "side-effect-aria-live",
@@ -88,9 +122,13 @@ const packages = [
     globalName: "CuriSideEffectAriaLive",
     type: "side effects",
     script: true,
+    latest: "v1",
+    versions: {
+      v1: versions["side-effect-aria-live"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--side-effect-aria-live' */
-      `../pages/Packages/side-effect-aria-live.js`)
+      `../pages/Packages/side-effect-aria-live/v1.js`)
   },
   {
     name: "side-effect-scroll",
@@ -98,9 +136,13 @@ const packages = [
     globalName: "CuriSideEffectScroll",
     type: "side effects",
     script: true,
+    latest: "v1",
+    versions: {
+      v1: versions["side-effect-scroll"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--side-effect-scroll' */
-      `../pages/Packages/side-effect-scroll.js`)
+      `../pages/Packages/side-effect-scroll/v1.js`)
   },
   {
     name: "side-effect-title",
@@ -108,9 +150,13 @@ const packages = [
     globalName: "CuriSideEffectTitle",
     type: "side effects",
     script: true,
+    latest: "v1",
+    versions: {
+      v1: versions["side-effect-title"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--side-effect-title' */
-      `../pages/Packages/side-effect-title.js`)
+      `../pages/Packages/side-effect-title/v1.js`)
   },
   {
     name: "static",
@@ -118,9 +164,13 @@ const packages = [
     globalName: "CuriStatic",
     type: "other",
     script: false,
+    latest: "v1",
+    versions: {
+      v1: versions["static"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--static' */
-      `../pages/Packages/static.js`)
+      `../pages/Packages/static/v1.js`)
   },
   {
     name: "helpers",
@@ -128,9 +178,13 @@ const packages = [
     globalName: "CuriHelpers",
     type: "other",
     script: true,
+    latest: "v1",
+    versions: {
+      v1: versions["helpers"]
+    },
     import: () =>
       import(/* webpackChunkName: 'package--helpers' */
-      `../pages/Packages/helpers.js`)
+      `../pages/Packages/helpers/v1.js`)
   }
 ];
 
