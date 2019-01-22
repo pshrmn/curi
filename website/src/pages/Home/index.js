@@ -1,20 +1,49 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
+import styled from "@emotion/styled";
 
-import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
 import { Explanation, CodeBlock } from "../../components/layout/Groups";
+import { color } from "../../constants/styles";
+
+const StyledH1 = styled("h1")`
+  font-size: 1.75em;
+  text-align: center;
+  color: ${color.purple};
+`;
+
+const StyledH2 = styled("h2")`
+  font-size: 1.2em;
+  text-align: center;
+  color: ${color.darkGray};
+`;
 
 export default function HomePage() {
   return (
     <React.Fragment>
       <Explanation>
-        <h1>Curi is a JavaScript router for single-page applications</h1>
+        <StyledH1>Curi</StyledH1>
+        <StyledH2>A JavaScript router for single-page applications</StyledH2>
+      </Explanation>
+
+      <CodeBlock>
+        {`import { curi, prepareRoutes } from '@curi/router';
+import Browser from '@hickory/browser';
+
+const history = Browser();
+const routes = prepareRoutes([
+  { name: 'Home', path: '' },
+  { name: 'User', path: 'u/:userID' },
+  // more routes...
+  { name: 'Not Found', path: '(.*)' }
+]);
+
+const router = curi(history, routes);`}
+      </CodeBlock>
+
+      <Explanation>
         <p>
-          Curi can provide routing for any JavaScript application, no matter how
-          it is rendered. Curi provides packages to integrate the router with{" "}
+          Curi is a router for however you render. Curi provides packages to
+          work with{" "}
           <Link name="Package" params={{ package: "react-dom" }}>
             React DOM
           </Link>,{" "}
@@ -28,24 +57,9 @@ export default function HomePage() {
           <Link name="Package" params={{ package: "svelte" }}>
             Svelte
           </Link>{" "}
-          (in beta).
+          (in beta)*.
         </p>
       </Explanation>
-
-      <CodeBlock>
-        {`import { curi, prepareRoutes } from '@curi/router';
-import Browser from '@hickory/browser';
-
-const history = Browser();
-const routes = prepareRoutes([
-  { name: 'Home', path: '', ... },
-  { name: 'User', path: 'u/:userID', ... },
-  // more routes...
-  { name: 'Not Found', path: '(.*)', ... }
-]);
-
-const router = curi(history, routes);`}
-      </CodeBlock>
 
       <Explanation>
         <h2>Ready to learn?</h2>
@@ -72,6 +86,18 @@ const router = curi(history, routes);`}
         <p>
           Want to see Curi in action? The <Link name="Examples">examples</Link>{" "}
           section has a variety of demos showing off what you can do with Curi.
+        </p>
+      </Explanation>
+
+      <Explanation>
+        <p>
+          <em>
+            * Curi "officially" supports React DOM, React Native, Vue, and
+            Svelte, but can work with almost any renderer through custom
+            interfaces. Want to add "official" support for another renderer?
+            Please{" "}
+            <a href="https://github.com/pshrmn/curi/issues">open an issue</a>!
+          </em>
         </p>
       </Explanation>
     </React.Fragment>
