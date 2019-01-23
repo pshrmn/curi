@@ -22,8 +22,7 @@ export const color = {
 };
 
 export const screen = {
-  medium: "641px",
-  large: "1025px"
+  medium: "751px"
 };
 
 export const font = {

@@ -1,7 +1,7 @@
 import React from "react";
 
-import PACKAGE_API from "../../constants/packages";
-import ActiveLink from "./ActiveLink";
+import PACKAGE_API from "../../../constants/packages";
+import ActiveLink from "../ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
 const GroupPackages = ({ packages }) => (
@@ -19,7 +19,7 @@ const GroupPackages = ({ packages }) => (
 function PackageLinks() {
   const groups = PACKAGE_API.grouped();
   return Object.keys(groups).map(title => (
-    <CollapsibleGroup key={title} title={title} initial={true}>
+    <CollapsibleGroup key={title} title={title} initial={false}>
       <GroupPackages packages={groups[title]} />
     </CollapsibleGroup>
   ));

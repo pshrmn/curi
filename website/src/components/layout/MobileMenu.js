@@ -2,11 +2,11 @@ import React from "react";
 import styled from "@emotion/styled";
 
 import ActiveLink from "../links/ActiveLink";
-import CollapsibleGroup from "../links/CollapsibleGroup";
-import PackageLinks from "../links/PackageLinks";
-import GuideLinks from "../links/GuideLinks";
-import ExampleLinks from "../links/ExampleLinks";
-import TutorialLinks from "../links/TutorialLinks";
+import CollapsibleGroup from "../links/collapsible/CollapsibleGroup";
+import PackageLinks from "../links/collapsible/PackageLinks";
+import GuideLinks from "../links/collapsible/GuideLinks";
+import ExampleLinks from "../links/collapsible/ExampleLinks";
+import TutorialLinks from "../links/collapsible/TutorialLinks";
 
 import { color, screen, font } from "../../constants/styles";
 
@@ -66,6 +66,10 @@ const StyledMenu = styled("div")`
 
   @media only screen and (min-width: ${screen.medium}) {
     display: none;
+
+    &.visible {
+      display: none;
+    }
   }
 `;
 
@@ -135,7 +139,7 @@ export default class MobileMenu extends React.Component {
                 </ActiveLink>
               </li>
               <li>
-                <CollapsibleGroup title="Packages" initial={true}>
+                <CollapsibleGroup title="API" initial={true}>
                   <PackageLinks />
                 </CollapsibleGroup>
               </li>

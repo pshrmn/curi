@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import { Up, Down } from "../svg";
-import { color, font } from "../../constants/styles";
+import { Up, Down } from "../../svg";
+import { color, font } from "../../../constants/styles";
 
 const StyledList = styled("ul")`
   a {

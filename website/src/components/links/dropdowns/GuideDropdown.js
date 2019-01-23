@@ -1,8 +1,7 @@
 import React from "react";
 
-import GUIDE_API from "../../constants/guides";
-import ActiveLink from "./ActiveLink";
-import CollapsibleGroup from "./CollapsibleGroup";
+import GUIDE_API from "../../../constants/guides";
+import ActiveLink from "../ActiveLink";
 
 const GroupGuides = ({ guides }) => (
   <ul className="link-list">
@@ -19,9 +18,10 @@ const GroupGuides = ({ guides }) => (
 function GuideLinks() {
   const groups = GUIDE_API.grouped();
   return Object.keys(groups).map(title => (
-    <CollapsibleGroup key={title} title={title} initial={true}>
+    <div key={title}>
+      <h3>{title}</h3>
       <GroupGuides guides={groups[title]} />
-    </CollapsibleGroup>
+    </div>
   ));
 }
 
