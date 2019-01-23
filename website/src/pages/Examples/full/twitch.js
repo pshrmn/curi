@@ -1,11 +1,6 @@
 import React from "react";
 
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
-import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../../components/highlight/Inline";
-import { Note } from "../../../components/Messages";
 import { Section } from "../../../components/layout/Sections";
 
 const meta = {

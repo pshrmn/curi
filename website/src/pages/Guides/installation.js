@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
 import { InlineJS as IJS } from "../../components/highlight/Inline";
 import { Section } from "../../components/layout/Sections";

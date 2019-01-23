@@ -1,9 +1,6 @@
 import React from "react";
 
-import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../../components/highlight/Inline";
+import { InlineJS as IJS } from "../../../components/highlight/Inline";
 import { CodeBlock } from "../../../components/layout/Groups";
 import { Section } from "../../../components/layout/Sections";
 import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
