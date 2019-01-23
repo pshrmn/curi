@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import { color, screen } from "../../constants/styles";
+import { color, screen, font } from "../../constants/styles";
 
 const StyledPageLinks = styled("div")`
   ul {
@@ -47,19 +47,6 @@ const StyledPageLinks = styled("div")`
     p {
       margin: 0;
     }
-  }
-
-  button.toggler {
-    position: fixed;
-    right: 5px;
-    bottom: 5px;
-    width: 75px;
-    height: 75px;
-    border-radius: 40px;
-    border: 0;
-    background: ${color.brightOrange};
-    font-size: 1em;
-    z-index: 1;
   }
 
   .children {

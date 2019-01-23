@@ -4,6 +4,20 @@ import styled from "@emotion/styled";
 import { Up, Down } from "../svg";
 import { color, font } from "../../constants/styles";
 
+const StyledList = styled("ul")`
+  a {
+    color: ${color.purple};
+  }
+
+  ul {
+    margin-left: 10px;
+  }
+
+  > li {
+    margin-bottom: 15px;
+  }
+`;
+
 const StyledButton = styled("button")`
   cursor: pointer;
   font-size: 24px;
@@ -17,7 +31,12 @@ const StyledButton = styled("button")`
 `;
 
 export default class CollapsibleGroup extends React.Component {
-  state = { collapsed: false };
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapsed: props.initial !== undefined ? props.initial : false
+    };
+  }
 
   toggle = () => {
     this.setState(prevState => ({
@@ -29,8 +48,8 @@ export default class CollapsibleGroup extends React.Component {
     const { title, children } = this.props;
     const { collapsed } = this.state;
     return (
-      <ul className="link-list">
-        <li className="link-group">
+      <StyledList>
+        <li>
           <div>
             <StyledButton onClick={this.toggle} title="Toggle group visibility">
               {collapsed ? <Down /> : <Up />}
@@ -39,7 +58,7 @@ export default class CollapsibleGroup extends React.Component {
           </div>
           {collapsed ? null : children}
         </li>
-      </ul>
+      </StyledList>
     );
   }
 }

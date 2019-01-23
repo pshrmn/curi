@@ -3,12 +3,11 @@ import { Curious } from "@curi/react-dom";
 
 class VersionSelect extends React.Component {
   goToVersion = e => {
-    console.log("go to", e.currentTarget.value);
     this.props.router.navigate({
       name: "Package",
       params: {
         ...this.props.params,
-        version: e.currentTarget.value
+        version: e.target.value
       }
     });
   };

@@ -16,11 +16,13 @@ const GroupGuides = ({ guides }) => (
   </ul>
 );
 
-export default React.memo(function GuideLinks() {
+function GuideLinks() {
   const groups = GUIDE_API.grouped();
   return Object.keys(groups).map(title => (
-    <CollapsibleGroup key={title} title={title}>
+    <CollapsibleGroup key={title} title={title} initial={true}>
       <GroupGuides guides={groups[title]} />
     </CollapsibleGroup>
   ));
-});
+}
+
+export default React.memo(GuideLinks);

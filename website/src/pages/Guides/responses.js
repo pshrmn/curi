@@ -5,6 +5,7 @@ import { InlineJS as IJS } from "../../components/highlight/Inline";
 import { Note, Warning } from "../../components/Messages";
 import { Section } from "../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../components/layout/Groups";
+import ScrollableTable from "../../components/layout/ScrollableTable";
 
 const meta = {
   title: "Responses"
@@ -65,7 +66,7 @@ export default function RoutesAndResponsesGuide() {
             function.
           </p>
           <p>The "settable" properties are:</p>
-          <table>
+          <ScrollableTable>
             <thead>
               <tr>
                 <th>property</th>
@@ -117,7 +118,7 @@ export default function RoutesAndResponsesGuide() {
                 </td>
               </tr>
             </tbody>
-          </table>
+          </ScrollableTable>
         </Explanation>
         <CodeBlock>
           {`// settable properties (optional)

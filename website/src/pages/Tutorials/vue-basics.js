@@ -9,7 +9,7 @@ import {
 import { CodeBlock } from "../../components/layout/Groups";
 import { Note } from "../../components/Messages";
 import { Section } from "../../components/layout/Sections";
-import CodeSandboxDemo from "../../components/CodeSandboxDemo";
+import ScrollableTable from "../../components/layout/ScrollableTable";
 
 export default function VueBasicsTutorial() {
   return (
@@ -217,7 +217,7 @@ new Vue({
           </CodeBlock>
         </Section>
         <p>The website will start with four routes.</p>
-        <table>
+        <ScrollableTable>
           <thead>
             <tr>
               <th>name</th>
@@ -255,7 +255,7 @@ new Vue({
               <td>Display a not found page for all other locations</td>
             </tr>
           </tbody>
-        </table>
+        </ScrollableTable>
         <Note>
           The catch all route uses a regular expression syntax to indicate that
           it should match everything. Curi uses the{" "}
@@ -930,7 +930,7 @@ router.navigate({ name: "New", method: "ANCHOR" });
 <template>
   <div v-if="books.length">
     <h1>Checkout</h1>
-    <table>
+    <ScrollableTable>
       <thead>
         <tr>
           <th>Title</th>
@@ -943,7 +943,7 @@ router.navigate({ name: "New", method: "ANCHOR" });
           <td>{{book.quantity}}</td>
         </tr>
       </tbody>
-    </table>
+    </ScrollableTable>
     <button type="button" v-on:click="onClick">
       Buy
     </button>

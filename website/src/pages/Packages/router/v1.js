@@ -7,6 +7,7 @@ import { InlineJS as IJS } from "../../../components/highlight/Inline";
 import { Section } from "../../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../../components/layout/Groups";
 import { Note, Warning } from "../../../components/Messages";
+import ScrollableTable from "../../../components/layout/ScrollableTable";
 
 export default class RouterPkg extends React.PureComponent {
   render() {
@@ -139,7 +140,7 @@ router.route.pathname("Home");
                         </Link>{" "}
                         objects.
                       </p>
-                      <table>
+                      <ScrollableTable>
                         <thead>
                           <tr>
                             <th>property</th>
@@ -163,7 +164,7 @@ router.route.pathname("Home");
                             </td>
                           </tr>
                         </tbody>
-                      </table>
+                      </ScrollableTable>
                     </Explanation>
                     <CodeBlock>
                       {`import scroll from "@curi/side-effect-scroll";
@@ -339,7 +340,7 @@ router.once(({ response }) => {
                     the details of where you want to navigate to as well as the{" "}
                     <IJS>method</IJS> of navigation.
                   </p>
-                  <table>
+                  <ScrollableTable>
                     <thead>
                       <tr>
                         <th>property</th>
@@ -398,7 +399,7 @@ router.once(({ response }) => {
                         </td>
                       </tr>
                     </tbody>
-                  </table>
+                  </ScrollableTable>
                 </Explanation>
                 <CodeBlock>
                   {`const routes = prepareRoutes([
@@ -431,7 +432,7 @@ router.navigate({
                     <IJS>{`\{ initial: false \}`}</IJS> option can be used to
                     prevent an immediate call even if a response already exists.
                   </p>
-                  <table>
+                  <ScrollableTable>
                     <thead>
                       <tr>
                         <th>property</th>
@@ -456,7 +457,7 @@ router.navigate({
                         <td>The Curi router</td>
                       </tr>
                     </tbody>
-                  </table>
+                  </ScrollableTable>
 
                   <p>
                     When a matched route is async (it has <IJS>resolve</IJS>{" "}
@@ -472,27 +473,29 @@ router.navigate({
 
                 <Section tag="h6" title="options" id="once-options">
                   <Explanation>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>option</th>
-                          <th>default</th>
-                          <th>description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>initial</td>
-                          <td>true</td>
-                          <td>
-                            When true, the function will be called immediately
-                            if a response exists. When false, the response
-                            function will not be called until the next response
-                            is emitted.
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div style={{ overflowX: "scroll" }}>
+                      <ScrollableTable>
+                        <thead>
+                          <tr>
+                            <th>option</th>
+                            <th>default</th>
+                            <th>description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>initial</td>
+                            <td>true</td>
+                            <td>
+                              When true, the function will be called immediately
+                              if a response exists. When false, the response
+                              function will not be called until the next
+                              response is emitted.
+                            </td>
+                          </tr>
+                        </tbody>
+                      </ScrollableTable>
+                    </div>
                   </Explanation>
                   <CodeBlock>
                     {`router.once(responseHandler, {
@@ -511,7 +514,7 @@ router.navigate({
                     <IJS>{`\{ initial: false \}`}</IJS> option can be used to
                     prevent an immediate call even if a response already exists.
                   </p>
-                  <table>
+                  <ScrollableTable>
                     <thead>
                       <tr>
                         <th>property</th>
@@ -536,7 +539,7 @@ router.navigate({
                         <td>The Curi router</td>
                       </tr>
                     </tbody>
-                  </table>
+                  </ScrollableTable>
 
                   <p>
                     When a matched route is async (it has <IJS>resolve</IJS>{" "}
@@ -552,27 +555,29 @@ router.navigate({
 
                 <Section tag="h6" title="options" id="observe-options">
                   <Explanation>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>option</th>
-                          <th>default</th>
-                          <th>description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>initial</td>
-                          <td>true</td>
-                          <td>
-                            When true, the function will be called immediately
-                            if a response exists. When false, the response
-                            function will not be called until the next response
-                            is emitted.
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div style={{ overflowX: "scroll" }}>
+                      <ScrollableTable>
+                        <thead>
+                          <tr>
+                            <th>option</th>
+                            <th>default</th>
+                            <th>description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>initial</td>
+                            <td>true</td>
+                            <td>
+                              When true, the function will be called immediately
+                              if a response exists. When false, the response
+                              function will not be called until the next
+                              response is emitted.
+                            </td>
+                          </tr>
+                        </tbody>
+                      </ScrollableTable>
+                    </div>
                   </Explanation>
                   <CodeBlock>
                     {`router.observe(responseHandler, {
@@ -1028,7 +1033,7 @@ const routes = prepareRoutes([
                     <p>
                       An object with the matched route properties of a response.
                     </p>
-                    <table>
+                    <ScrollableTable>
                       <thead>
                         <tr>
                           <th>property</th>
@@ -1063,7 +1068,7 @@ const routes = prepareRoutes([
                           </td>
                         </tr>
                       </tbody>
-                    </table>
+                    </ScrollableTable>
                   </Explanation>
                 </Section>
 

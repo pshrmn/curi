@@ -5,6 +5,7 @@ import About from "../../../components/package/About";
 import { InlineJS as IJS } from "../../../components/highlight/Inline";
 import { Section } from "../../../components/layout/Sections";
 import { CodeBlock, Explanation } from "../../../components/layout/Groups";
+import ScrollableTable from "../../../components/layout/ScrollableTable";
 
 export default class RouteAncestorsPkg extends React.PureComponent {
   render() {
@@ -60,7 +61,7 @@ const router = curi(history,routes, {
 
             <Section title="Arguments" id="arguments" tag="h3">
               <Explanation>
-                <table>
+                <ScrollableTable>
                   <thead>
                     <tr>
                       <th>argument</th>
@@ -82,7 +83,7 @@ const router = curi(history,routes, {
                       </td>
                     </tr>
                   </tbody>
-                </table>
+                </ScrollableTable>
               </Explanation>
               <CodeBlock>
                 {`const parent = router.route.ancestors('Child', 1);

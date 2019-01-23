@@ -16,11 +16,13 @@ const GroupPackages = ({ packages }) => (
   </ul>
 );
 
-export default React.memo(function PackageLinks() {
+function PackageLinks() {
   const groups = PACKAGE_API.grouped();
   return Object.keys(groups).map(title => (
-    <CollapsibleGroup key={title} title={title}>
+    <CollapsibleGroup key={title} title={title} initial={true}>
       <GroupPackages packages={groups[title]} />
     </CollapsibleGroup>
   ));
-});
+}
+
+export default React.memo(PackageLinks);

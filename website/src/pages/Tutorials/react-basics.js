@@ -10,6 +10,7 @@ import { Explanation, CodeBlock } from "../../components/layout/Groups";
 import { Note } from "../../components/Messages";
 import { Section } from "../../components/layout/Sections";
 import CodeSandboxDemo from "../../components/CodeSandboxDemo";
+import ScrollableTable from "../../components/layout/ScrollableTable";
 
 export default function ReactBasicsTutorial() {
   return (
@@ -199,7 +200,7 @@ cd curi-react-bookstore # enter the new app directory`}
         <Explanation>
           <p>The website will start with four routes.</p>
 
-          <table>
+          <ScrollableTable>
             <thead>
               <tr>
                 <th>name</th>
@@ -244,7 +245,7 @@ cd curi-react-bookstore # enter the new app directory`}
                 </td>
               </tr>
             </tbody>
-          </table>
+          </ScrollableTable>
 
           <Note>
             Curi uses the{" "}
@@ -1295,7 +1296,7 @@ export default function Checkout({ router, response }) {
   return (
     <div>
       <h1>Checkout</h1>
-      <table>
+      <ScrollableTable>
         <thead>
           <tr>
             <th>Title</th>
@@ -1310,7 +1311,7 @@ export default function Checkout({ router, response }) {
             </tr>
           ))}
         </tbody>
-      </table>
+      </ScrollableTable>
       <button
         type="button"
         onClick={() => {
