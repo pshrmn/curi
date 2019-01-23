@@ -1,12 +1,12 @@
 import React from "react";
 
 import MobileMenu from "./MobileMenu";
-import Header from "./Header";
+import FullSizeMenu from "./FullSizeMenu";
 
 export default function Menu() {
   return (
     <React.Fragment>
-      <Header />
+      <FullSizeMenu />
       <MobileMenu />
     </React.Fragment>
   );

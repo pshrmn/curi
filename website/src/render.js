@@ -2,8 +2,8 @@ import React from "react";
 import { Focus } from "@curi/react-dom";
 
 import GlobalCSS from "./components/layout/GlobalCSS";
-import Main from "./components/layout/Main";
-import Menu from "./components/layout/Menu";
+import Main from "./components/blocks/Main";
+import Menu from "./components/blocks/Menu";
 
 export default function render({ response }) {
   let { body: Body } = response;
