@@ -1,7 +1,6 @@
 import React from "react";
 
-import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
-import { Section } from "../../../components/layout/Sections";
+import { Section, CodeSandboxDemo } from "../../../components/example/common";
 
 const meta = {
   title: "Twitch Clone"

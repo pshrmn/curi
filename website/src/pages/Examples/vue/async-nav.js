@@ -1,14 +1,14 @@
 import React from "react";
 
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../../components/highlight/Inline";
-import { CodeBlock } from "../../../components/layout/Groups";
-import { Section } from "../../../components/layout/Sections";
-import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
-import { Explanation } from "../../../components/layout/Groups";
-import OnGithub from "../../../components/example/OnGithub";
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  Cmp,
+  CodeSandboxDemo,
+  OnGithub
+} from "../../../components/example/common";
 
 const meta = {
   title: "Async Navigation"

@@ -1,10 +1,12 @@
 import React from "react";
 
-import { Section } from "../../../components/layout/Sections";
-import { InlineJS as IJS } from "../../../components/highlight/Inline";
-import { CodeBlock } from "../../../components/layout/Groups";
-import { Explanation } from "../../../components/layout/Groups";
-import OnGithub from "../../../components/example/OnGithub";
+import {
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  OnGithub
+} from "../../../components/example/common";
 
 const meta = {
   title: "Server Rendering"

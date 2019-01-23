@@ -1,9 +1,11 @@
 import React from "react";
 
-import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
-import { Section } from "../../../components/layout/Sections";
-import { Explanation } from "../../../components/layout/Groups";
-import OnGithub from "../../../components/example/OnGithub";
+import {
+  Section,
+  Explanation,
+  CodeSandboxDemo,
+  OnGithub
+} from "../../../components/example/common";
 
 const meta = {
   title: "Basics"

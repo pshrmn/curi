@@ -1,11 +1,14 @@
 import React from "react";
 
-import { Section } from "../../../components/layout/Sections";
-import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
-import { InlineJS as IJS } from "../../../components/highlight/Inline";
-import { Explanation, CodeBlock } from "../../../components/layout/Groups";
-import { Note } from "../../../components/Messages";
-import OnGithub from "../../../components/example/OnGithub";
+import {
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  Note,
+  CodeSandboxDemo,
+  OnGithub
+} from "../../../components/example/common";
 
 const meta = {
   title: "Multiple Body Components"
