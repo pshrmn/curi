@@ -1,9 +1,12 @@
 import React from "react";
 
-import APIBlock from "../../../components/package/APIBlock";
-import About from "../../../components/package/About";
-import { Section } from "../../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../../components/layout/Groups";
+import {
+  About,
+  APIBlock,
+  Section,
+  Explanation,
+  CodeBlock
+} from "../../../components/package/common";
 
 export default class SideEffectScrollPkg extends React.PureComponent {
   render() {

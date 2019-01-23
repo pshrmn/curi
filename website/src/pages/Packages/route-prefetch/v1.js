@@ -1,12 +1,15 @@
 import React from "react";
 
-import APIBlock from "../../../components/package/APIBlock";
-import About from "../../../components/package/About";
-import { InlineJS as IJS } from "../../../components/highlight/Inline";
-import { Note } from "../../../components/Messages";
-import { Section } from "../../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../../components/layout/Groups";
-import ScrollableTable from "../../../components/layout/ScrollableTable";
+import {
+  About,
+  APIBlock,
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  Note,
+  ScrollableTable
+} from "../../../components/package/common";
 
 export default class RoutePrefetchPkg extends React.PureComponent {
   render() {

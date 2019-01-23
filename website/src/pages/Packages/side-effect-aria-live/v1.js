@@ -1,11 +1,14 @@
 import React from "react";
 
-import APIBlock from "../../../components/package/APIBlock";
-import About from "../../../components/package/About";
-import { InlineJS as IJS } from "../../../components/highlight/Inline";
-import { Section } from "../../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../../components/layout/Groups";
-import { Warning } from "../../../components/Messages";
+import {
+  About,
+  APIBlock,
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  Warning
+} from "../../../components/package/common";
 
 export default class SideEffectAriaLivePkg extends React.PureComponent {
   render() {

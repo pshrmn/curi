@@ -1,16 +1,17 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import APIBlock from "../../../components/package/APIBlock";
-import About from "../../../components/package/About";
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../../components/highlight/Inline";
-import { Note } from "../../../components/Messages";
-import { Section } from "../../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../../components/layout/Groups";
-import ScrollableTable from "../../../components/layout/ScrollableTable";
+  About,
+  APIBlock,
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  Cmp,
+  Note,
+  ScrollableTable
+} from "../../../components/package/common";
 
 export default class ReactNativePkg extends React.PureComponent {
   render() {

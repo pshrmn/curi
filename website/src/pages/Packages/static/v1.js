@@ -1,14 +1,15 @@
 import React from "react";
 
-import APIBlock from "../../../components/package/APIBlock";
-import About from "../../../components/package/About";
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../../components/highlight/Inline";
-import { Section } from "../../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../../components/layout/Groups";
-import { Note } from "../../../components/Messages";
+  About,
+  APIBlock,
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  Cmp,
+  Note
+} from "../../../components/package/common";
 
 export default class StaticPackage extends React.PureComponent {
   render() {
