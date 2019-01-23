@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Warning } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+  Section,
+  Explanation,
+  CodeBlock,
+  Warning,
+  IJS,
+  Cmp
+} from "../../components/guide/common";
 
 const meta = {
   title: "Accessibility"
@@ -41,7 +42,10 @@ export default function AccessibilityGuide() {
             </a>{" "}
             change, the new content will be announced to screen reader users.
             The{" "}
-            <Link name="Package" params={{ package: "side-effect-aria-live" }}>
+            <Link
+              name="Package"
+              params={{ package: "side-effect-aria-live", version: "v1" }}
+            >
               <IJS>@curi/side-effect-aria-live</IJS>
             </Link>{" "}
             package provides a side effect for creating a live region and

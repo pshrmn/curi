@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Note } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+  Section,
+  Explanation,
+  CodeBlock,
+  Note,
+  IJS,
+  Cmp
+} from "../../components/guide/common";
 
 const meta = {
   title: "React DOM"
@@ -302,7 +303,11 @@ const NavLinks = () => (
       <Explanation>
         <p>
           Please check out the full{" "}
-          <Link name="Package" params={{ package: "react-dom" }} hash="API">
+          <Link
+            name="Package"
+            params={{ package: "react-dom", version: "v1" }}
+            hash="API"
+          >
             <IJS>@curi/react-dom</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.

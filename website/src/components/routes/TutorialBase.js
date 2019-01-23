@@ -1,20 +1,19 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
 import TutorialTemplate from "../templates/Tutorial";
+import { Explanation } from "../layout/Groups";
+import TutorialLinks from "../links/lists/TutorialDropdown";
 
-const TutorialBase = ({
-  name,
-  version,
-  globalName,
-  children,
-  about,
-  unpkg = true
-}) => (
-  <TutorialTemplate>
-    <h1>Curi Tutorials</h1>
-    <p>A few tutorials to help get you up to speed with Curi.</p>
-  </TutorialTemplate>
-);
+export default function TutorialBase() {
+  return (
+    <TutorialTemplate>
+      <h1>Curi Tutorials</h1>
 
-export default TutorialBase;
+      <Explanation>
+        <p>A few tutorials to help get you up to speed with Curi.</p>
+      </Explanation>
+
+      <TutorialLinks />
+    </TutorialTemplate>
+  );
+}

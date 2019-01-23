@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section } from "../../components/layout/Sections";
-import { Note } from "../../components/Messages";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+import {
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS
+} from "../../components/guide/common";
 
 const meta = {
   title: "Sync or Async"

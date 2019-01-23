@@ -1,15 +1,18 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import APIBlock from "../../../components/package/APIBlock";
-import About from "../../../components/package/About";
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../../components/highlight/Inline";
-import { Note, Warning } from "../../../components/Messages";
-import { Section } from "../../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../../components/layout/Groups";
+  About,
+  APIBlock,
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  Cmp,
+  Note,
+  Warning,
+  ScrollableTable
+} from "../../../components/package/common";
 
 export default class ReactPkg extends React.PureComponent {
   render() {
@@ -92,7 +95,7 @@ const Router = curiProvider(router);`}
                     <IJS>children</IJS> is a render-invoked function. When it is
                     called, it will be passed an object with three properties:
                   </p>
-                  <table>
+                  <ScrollableTable>
                     <thead>
                       <tr>
                         <th>property</th>
@@ -118,7 +121,7 @@ const Router = curiProvider(router);`}
                         <td>the Curi router</td>
                       </tr>
                     </tbody>
-                  </table>
+                  </ScrollableTable>
                 </Explanation>
               </Section>
             </Section>
@@ -497,7 +500,10 @@ const ActiveLink = ({
               <Explanation>
                 <p>
                   This relies on the active route interaction from{" "}
-                  <Link name="Package" params={{ package: "route-active" }}>
+                  <Link
+                    name="Package"
+                    params={{ package: "route-active", version: "v1" }}
+                  >
                     @curi/route-active
                   </Link>{" "}
                   being added to your router.
@@ -699,7 +705,7 @@ const router = curi(history, routes, {
                     The confirm prop is a function that will be called whenever
                     there is navigation.
                   </p>
-                  <table>
+                  <ScrollableTable>
                     <thead>
                       <tr>
                         <th>argument</th>
@@ -729,7 +735,7 @@ const router = curi(history, routes, {
                         </td>
                       </tr>
                     </tbody>
-                  </table>
+                  </ScrollableTable>
                 </Explanation>
                 <CodeBlock lang="jsx">
                   {`<Block

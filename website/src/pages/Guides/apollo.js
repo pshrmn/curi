@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Note } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+  Section,
+  Explanation,
+  CodeBlock,
+  Note,
+  IJS,
+  Cmp
+} from "../../components/guide/common";
 
 const meta = {
   title: "Apollo Integration"
@@ -340,7 +341,10 @@ const Verb = ({ response }) => (
             </p>
             <p>
               The{" "}
-              <Link name="Package" params={{ package: "route-prefetch" }}>
+              <Link
+                name="Package"
+                params={{ package: "route-prefetch", version: "v1" }}
+              >
                 <IJS>@curi/route-prefetch</IJS>
               </Link>{" "}
               interaction lets you programmatically fetch the data for a route

@@ -1,7 +1,7 @@
 import React from "react";
 
-import EXAMPLE_API from "../../constants/examples";
-import ActiveLink from "./ActiveLink";
+import EXAMPLE_API from "../../../constants/examples";
+import ActiveLink from "../ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
 const Category = ({ examples }) => {
@@ -21,12 +21,14 @@ const Category = ({ examples }) => {
   );
 };
 
-export default React.memo(function ExampleLinks() {
+function ExampleLinks() {
   const examples = EXAMPLE_API.all();
   const categories = Object.keys(examples);
   return categories.map(title => (
-    <CollapsibleGroup key={title} title={title}>
+    <CollapsibleGroup key={title} title={title} initial={false}>
       <Category examples={examples[title]} />
     </CollapsibleGroup>
   ));
-});
+}
+
+export default React.memo(ExampleLinks);

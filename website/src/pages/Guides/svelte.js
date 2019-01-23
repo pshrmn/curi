@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Note } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  Cmp
+} from "../../components/guide/common";
 
 const meta = {
   title: "Svelte"
@@ -203,7 +203,11 @@ const routes = prepareRoutes([
       <Explanation>
         <p>
           Please check out the full{" "}
-          <Link name="Package" params={{ package: "svelte" }} hash="API">
+          <Link
+            name="Package"
+            params={{ package: "svelte", version: "v1" }}
+            hash="API"
+          >
             <IJS>@curi/svelte</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.

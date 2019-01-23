@@ -1,9 +1,12 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
-import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+import {
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  ScrollableTable
+} from "../../components/guide/common";
 
 const meta = {
   title: "Route Interactions"
@@ -123,7 +126,7 @@ export default function confirmInteraction() {
             <IJS>name</IJS>, <IJS>register</IJS>, <IJS>get</IJS>, and{" "}
             <IJS>reset</IJS>.
           </p>
-          <table>
+          <ScrollableTable>
             <thead>
               <tr>
                 <th>property</th>
@@ -154,7 +157,7 @@ export default function confirmInteraction() {
                 </td>
               </tr>
             </tbody>
-          </table>
+          </ScrollableTable>
         </Explanation>
         <CodeBlock>
           {`export default function confirmInteraction() {

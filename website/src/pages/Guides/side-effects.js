@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+import {
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS
+} from "../../components/guide/common";
 
 const meta = {
   title: "Side Effects"
@@ -78,12 +81,18 @@ router.observe(render);
             <p>Curi has two "official" side effect packages:</p>
             <ul>
               <li>
-                <Link name="Package" params={{ package: "side-effect-title" }}>
+                <Link
+                  name="Package"
+                  params={{ package: "side-effect-title", version: "v1" }}
+                >
                   @curi/side-effect-title
                 </Link>
               </li>
               <li>
-                <Link name="Package" params={{ package: "side-effect-scroll" }}>
+                <Link
+                  name="Package"
+                  params={{ package: "side-effect-scroll", version: "v1" }}
+                >
                   @curi/side-effect-scroll
                 </Link>
               </li>

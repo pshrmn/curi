@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Note, Warning } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+import {
+  Section,
+  Explanation,
+  CodeBlock,
+  Note,
+  IJS,
+  ScrollableTable
+} from "../../components/guide/common";
 
 const meta = {
   title: "Responses"
@@ -65,7 +69,7 @@ export default function RoutesAndResponsesGuide() {
             function.
           </p>
           <p>The "settable" properties are:</p>
-          <table>
+          <ScrollableTable>
             <thead>
               <tr>
                 <th>property</th>
@@ -96,7 +100,7 @@ export default function RoutesAndResponsesGuide() {
                   The response's title, which can be used with{" "}
                   <Link
                     name="Package"
-                    params={{ package: "side-effect-title" }}
+                    params={{ package: "side-effect-title", version: "v1" }}
                   >
                     <IJS>@curi/side-effect-title</IJS>
                   </Link>{" "}
@@ -117,7 +121,7 @@ export default function RoutesAndResponsesGuide() {
                 </td>
               </tr>
             </tbody>
-          </table>
+          </ScrollableTable>
         </Explanation>
         <CodeBlock>
           {`// settable properties (optional)
@@ -195,7 +199,11 @@ const routes = prepareRoutes([
           <p>
             When a route's <IJS>response()</IJS> function returns an object with
             a{" "}
-            <Link name="Package" params={{ package: "router" }} hash="response">
+            <Link
+              name="Package"
+              params={{ package: "router", version: "v1" }}
+              hash="response"
+            >
               <IJS>redirectTo</IJS> property
             </Link>, the router will use it to generate a location object that
             Curi will automatically redirect to.

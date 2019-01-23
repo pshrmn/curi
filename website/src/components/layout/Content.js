@@ -1,11 +1,20 @@
 import React from "react";
+import styled from "@emotion/styled";
 
-import "../../scss/content.scss";
+import { screen } from "../../constants/styles";
+
+const StyledDiv = styled("div")`
+  @media only screen and (min-width: ${screen.medium}) {
+    order: 2;
+    flex: 0 1 800px;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+
+    outline: none;
+  }
+`;
 
 export default function Content({ children }) {
-  return (
-    <div className="content" style={{ outline: "none" }}>
-      {children}
-    </div>
-  );
+  return <StyledDiv>{children}</StyledDiv>;
 }

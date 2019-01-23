@@ -1,9 +1,16 @@
 import React from "react";
+import styled from "@emotion/styled";
 
-import "../scss/demo.scss";
+const StyledDemo = styled("div")`
+  p {
+    font-style: italic;
+    text-align: center;
+    margin: 0;
+  }
+`;
 
 const CodeSandboxDemo = ({ id }) => (
-  <div className="demo">
+  <StyledDemo>
     <iframe
       src={`https://codesandbox.io/embed/${id}`}
       width="100%"
@@ -15,7 +22,7 @@ const CodeSandboxDemo = ({ id }) => (
       Clicking the menu button in the top left corner opens a menu to switch
       between files.
     </p>
-  </div>
+  </StyledDemo>
 );
 
 export default CodeSandboxDemo;

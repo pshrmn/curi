@@ -1,9 +1,7 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
-import TUTORIAL_API from "../../constants/tutorials";
-import ActiveLink from "./ActiveLink";
-import CollapsibleGroup from "./CollapsibleGroup";
+import TUTORIAL_API from "../../../constants/tutorials";
+import ActiveLink from "../ActiveLink";
 
 const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
@@ -17,11 +15,14 @@ const GroupTutorials = ({ tutorials }) => (
   </ul>
 );
 
-export default React.memo(function TutorialLinks() {
+function TutorialLinks() {
   const groups = TUTORIAL_API.grouped();
   return Object.keys(groups).map(title => (
-    <CollapsibleGroup key={title} title={title}>
+    <div key={title}>
+      <h3>{title}</h3>
       <GroupTutorials tutorials={groups[title]} />
-    </CollapsibleGroup>
+    </div>
   ));
-});
+}
+
+export default React.memo(TutorialLinks);

@@ -1,11 +1,15 @@
 import React from "react";
 
-import APIBlock from "../../../components/package/APIBlock";
-import About from "../../../components/package/About";
-import { InlineJS as IJS } from "../../../components/highlight/Inline";
-import { Note } from "../../../components/Messages";
-import { Section } from "../../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../../components/layout/Groups";
+import {
+  About,
+  APIBlock,
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  Note,
+  ScrollableTable
+} from "../../../components/package/common";
 
 export default class RoutePrefetchPkg extends React.PureComponent {
   render() {
@@ -58,7 +62,7 @@ router.route.prefetch("Some Route");`}
 
             <Section title="Arguments" id="arguments" tag="h3">
               <Explanation>
-                <table>
+                <ScrollableTable>
                   <thead>
                     <tr>
                       <th>argument</th>
@@ -87,7 +91,7 @@ router.route.prefetch("Some Route");`}
                       </td>
                     </tr>
                   </tbody>
-                </table>
+                </ScrollableTable>
                 <Note>
                   <p>
                     This route interaction will only register routes that have{" "}

@@ -1,14 +1,11 @@
 import React from "react";
 
-import CodeSandboxDemo from "../../../components/CodeSandboxDemo";
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../../components/highlight/Inline";
-import { Note } from "../../../components/Messages";
-import { Section } from "../../../components/layout/Sections";
-import { Explanation } from "../../../components/layout/Groups";
-import OnGithub from "../../../components/example/OnGithub";
+  Section,
+  Explanation,
+  CodeSandboxDemo,
+  OnGithub
+} from "../../../components/example/common";
 
 const meta = {
   title: "Basics"

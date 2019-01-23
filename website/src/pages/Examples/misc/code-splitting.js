@@ -1,10 +1,12 @@
 import React from "react";
-
 import { Link } from "@curi/react-dom";
-import { Section } from "../../../components/layout/Sections";
-import { InlineJS as IJS } from "../../../components/highlight/Inline";
-import { Explanation } from "../../../components/layout/Groups";
-import OnGithub from "../../../components/example/OnGithub";
+
+import {
+  Section,
+  Explanation,
+  IJS,
+  OnGithub
+} from "../../../components/example/common";
 
 const meta = {
   title: "Code Splitting"

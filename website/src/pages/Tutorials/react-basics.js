@@ -1,15 +1,17 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import Outline from "../../components/tutorial/Outline";
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Explanation, CodeBlock } from "../../components/layout/Groups";
-import { Note } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import CodeSandboxDemo from "../../components/CodeSandboxDemo";
+  Section,
+  Explanation,
+  CodeBlock,
+  Outline,
+  Note,
+  IJS,
+  Cmp,
+  CodeSandboxDemo,
+  ScrollableTable
+} from "../../components/tutorial/common";
 
 export default function ReactBasicsTutorial() {
   return (
@@ -199,7 +201,7 @@ cd curi-react-bookstore # enter the new app directory`}
         <Explanation>
           <p>The website will start with four routes.</p>
 
-          <table>
+          <ScrollableTable>
             <thead>
               <tr>
                 <th>name</th>
@@ -244,7 +246,7 @@ cd curi-react-bookstore # enter the new app directory`}
                 </td>
               </tr>
             </tbody>
-          </table>
+          </ScrollableTable>
 
           <Note>
             Curi uses the{" "}
@@ -1295,7 +1297,7 @@ export default function Checkout({ router, response }) {
   return (
     <div>
       <h1>Checkout</h1>
-      <table>
+      <ScrollableTable>
         <thead>
           <tr>
             <th>Title</th>
@@ -1310,7 +1312,7 @@ export default function Checkout({ router, response }) {
             </tr>
           ))}
         </tbody>
-      </table>
+      </ScrollableTable>
       <button
         type="button"
         onClick={() => {

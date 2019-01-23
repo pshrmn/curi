@@ -1,11 +1,21 @@
 import React from "react";
+import styled from "@emotion/styled";
 
 import Version from "./Version";
 import Installation from "./Installation";
 import GitHubLink from "./GitHubLink";
 import NPMLink from "./NPMLink";
 
-import "../../scss/package.scss";
+const StyledPackageInfo = styled("div")`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+
+  > * {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+`;
 
 function getDir(name) {
   if (name.indexOf("route-") === 0) {
@@ -32,11 +42,11 @@ export default function BasePackage({
     return (
       <React.Fragment>
         <h1>@curi/{name}</h1>
-        <div className="package-info">
+        <StyledPackageInfo>
           <Version major={major} versions={versions} params={params} />
           <GitHubLink name={name} dir={getDir(name)} />
           <NPMLink name={name} />
-        </div>
+        </StyledPackageInfo>
         <Installation
           name={name}
           version={currentVersion}
