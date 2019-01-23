@@ -99,6 +99,8 @@ export default class MobileMenu extends React.Component {
 
   hideMenu = () => {
     if (this.state.menuVisible) {
+      // cheap menu reset
+      this.key++;
       this.setState({
         menuVisible: false
       });
@@ -122,8 +124,6 @@ export default class MobileMenu extends React.Component {
           onClick={e => {
             if (e.target.tagName === "A") {
               this.hideMenu();
-              // cheap menu reset
-              this.key++;
             }
           }}
         >
