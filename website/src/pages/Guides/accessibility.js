@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Warning } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
+  Section,
+  Explanation,
+  CodeBlock,
+  Warning,
+  IJS,
+  Cmp
+} from "../../components/guide/common";
 
 const meta = {
   title: "Accessibility"

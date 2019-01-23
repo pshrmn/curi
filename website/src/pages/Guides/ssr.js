@@ -1,13 +1,14 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
-import { Note, Warning } from "../../components/Messages";
+  Section,
+  Explanation,
+  CodeBlock,
+  Note,
+  Warning,
+  IJS,
+  Cmp
+} from "../../components/guide/common";
 
 const meta = {
   title: "Server-Side Rendering"

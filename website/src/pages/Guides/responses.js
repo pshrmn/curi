@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Note } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
-import ScrollableTable from "../../components/layout/ScrollableTable";
+import {
+  Section,
+  Explanation,
+  CodeBlock,
+  Note,
+  IJS,
+  ScrollableTable
+} from "../../components/guide/common";
 
 const meta = {
   title: "Responses"

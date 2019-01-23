@@ -1,9 +1,12 @@
 import React from "react";
 
-import { InlineJS as IJS } from "../../components/highlight/Inline";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
-import ScrollableTable from "../../components/layout/ScrollableTable";
+import {
+  Section,
+  Explanation,
+  CodeBlock,
+  IJS,
+  ScrollableTable
+} from "../../components/guide/common";
 
 const meta = {
   title: "Route Interactions"
