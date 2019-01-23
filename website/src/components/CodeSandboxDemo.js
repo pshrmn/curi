@@ -9,10 +9,10 @@ const StyledDemo = styled("div")`
   }
 `;
 
-const CodeSandboxDemo = ({ id }) => (
+const CodeSandboxDemo = ({ id, view = "split" }) => (
   <StyledDemo>
     <iframe
-      src={`https://codesandbox.io/embed/${id}`}
+      src={`https://codesandbox.io/embed/${id}?view=${view}`}
       width="100%"
       height="600px"
       sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"

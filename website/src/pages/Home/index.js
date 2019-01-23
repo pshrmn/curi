@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 
 import { Explanation, CodeBlock } from "../../components/layout/Groups";
 import { color } from "../../constants/styles";
+import CodeSandboxDemo from "../../components/CodeSandboxDemo";
 
 const StyledH1 = styled("h1")`
   font-size: 1.75em;
@@ -25,20 +26,7 @@ export default function HomePage() {
         <StyledH2>A JavaScript router for single-page applications</StyledH2>
       </Explanation>
 
-      <CodeBlock>
-        {`import { curi, prepareRoutes } from '@curi/router';
-import Browser from '@hickory/browser';
-
-const history = Browser();
-const routes = prepareRoutes([
-  { name: 'Home', path: '' },
-  { name: 'User', path: 'u/:userID' },
-  // more routes...
-  { name: 'Not Found', path: '(.*)' }
-]);
-
-const router = curi(history, routes);`}
-      </CodeBlock>
+      <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/basic" />
 
       <Explanation>
         <p>
