@@ -5,7 +5,7 @@ import PackageTemplate from "../templates/Package";
 import { Note } from "../Messages";
 import { InlineJS as IJS } from "../highlight/Inline";
 import { Explanation } from "../layout/Groups";
-import PackageLinks from "../links/dropdowns/PackageDropdown";
+import PackageLinks from "../links/lists/PackageDropdown";
 
 export default function PackageList() {
   return (

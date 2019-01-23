@@ -44,17 +44,20 @@ const router = curi(history, routes);`}
         <p>
           Curi is a router for however you render. Curi provides packages to
           work with{" "}
-          <Link name="Package" params={{ package: "react-dom" }}>
+          <Link name="Package" params={{ package: "react-dom", version: "v1" }}>
             React DOM
           </Link>,{" "}
-          <Link name="Package" params={{ package: "react-native" }}>
+          <Link
+            name="Package"
+            params={{ package: "react-native", version: "v1" }}
+          >
             React Native
           </Link>,{" "}
-          <Link name="Package" params={{ package: "vue" }}>
+          <Link name="Package" params={{ package: "vue", version: "v1" }}>
             Vue
           </Link>{" "}
           (in beta), and{" "}
-          <Link name="Package" params={{ package: "svelte" }}>
+          <Link name="Package" params={{ package: "svelte", version: "v1" }}>
             Svelte
           </Link>{" "}
           (in beta)*.

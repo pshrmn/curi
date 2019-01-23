@@ -2,10 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 
 import ActiveLink from "../links/ActiveLink";
-import PackageDropdown from "../links/dropdowns/PackageDropdown";
-import GuideDropdown from "../links/dropdowns/GuideDropdown";
-import ExampleDropdown from "../links/dropdowns/ExampleDropdown";
-import TutorialDropdown from "../links/dropdowns/TutorialDropdown";
+import PackageDropdown from "../links/lists/PackageDropdown";
+import GuideDropdown from "../links/lists/GuideDropdown";
+import ExampleDropdown from "../links/lists/ExampleDropdown";
+import TutorialDropdown from "../links/lists/TutorialDropdown";
 import { color, screen } from "../../constants/styles";
 
 const StyledHeader = styled("header")`

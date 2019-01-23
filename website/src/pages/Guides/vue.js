@@ -238,7 +238,11 @@ const routes = prepareRoutes([
       <Explanation>
         <p>
           Please check out the full{" "}
-          <Link name="Package" params={{ package: "vue" }} hash="API">
+          <Link
+            name="Package"
+            params={{ package: "vue", version: "v1" }}
+            hash="API"
+          >
             <IJS>@curi/vue</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.

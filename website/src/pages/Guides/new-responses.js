@@ -35,7 +35,7 @@ export default function NewResponsesGuide() {
             three properties:{" "}
             <Link
               name="Package"
-              params={{ package: "router" }}
+              params={{ package: "router", version: "v1" }}
               hash="properties"
             >
               <IJS>router</IJS>
@@ -139,17 +139,23 @@ router.once(setup);`}
             <p>
               The Curi rendering packages (<Link
                 name="Package"
-                params={{ package: "react-dom" }}
+                params={{ package: "react-dom", version: "v1" }}
               >
                 <IJS>@curi/react-dom</IJS>
               </Link>,{" "}
-              <Link name="Package" params={{ package: "react-native" }}>
+              <Link
+                name="Package"
+                params={{ package: "react-native", version: "v1" }}
+              >
                 <IJS>@curi/react-native</IJS>
               </Link>,{" "}
-              <Link name="Package" params={{ package: "vue" }}>
+              <Link name="Package" params={{ package: "vue", version: "v1" }}>
                 <IJS>@curi/vue</IJS>
               </Link>, and{" "}
-              <Link name="Package" params={{ package: "svelte" }}>
+              <Link
+                name="Package"
+                params={{ package: "svelte", version: "v1" }}
+              >
                 <IJS>@curi/svelte</IJS>
               </Link>) setup an observer internally so that they can
               automatically re-render.
@@ -179,7 +185,10 @@ router.observe(observer);`}
             </p>
             <p>
               The{" "}
-              <Link name="Package" params={{ package: "side-effect-title" }}>
+              <Link
+                name="Package"
+                params={{ package: "side-effect-title", version: "v1" }}
+              >
                 <IJS>@curi/side-effect-title</IJS>
               </Link>{" "}
               package provides a side effect that will use{" "}
@@ -189,7 +198,10 @@ router.observe(observer);`}
             <p>
               With single-page applications, clicking on links wish hashes won't
               always scroll to the matching element in the page. The{" "}
-              <Link name="Package" params={{ package: "side-effect-scroll" }}>
+              <Link
+                name="Package"
+                params={{ package: "side-effect-scroll", version: "v1" }}
+              >
                 <IJS>@curi/side-effect-scroll</IJS>
               </Link>{" "}
               package adds this behavior by scrolling the page to the element

@@ -41,7 +41,10 @@ export default function AccessibilityGuide() {
             </a>{" "}
             change, the new content will be announced to screen reader users.
             The{" "}
-            <Link name="Package" params={{ package: "side-effect-aria-live" }}>
+            <Link
+              name="Package"
+              params={{ package: "side-effect-aria-live", version: "v1" }}
+            >
               <IJS>@curi/side-effect-aria-live</IJS>
             </Link>{" "}
             package provides a side effect for creating a live region and

@@ -498,7 +498,10 @@ const ActiveLink = ({
               <Explanation>
                 <p>
                   This relies on the active route interaction from{" "}
-                  <Link name="Package" params={{ package: "route-active" }}>
+                  <Link
+                    name="Package"
+                    params={{ package: "route-active", version: "v1" }}
+                  >
                     @curi/route-active
                   </Link>{" "}
                   being added to your router.

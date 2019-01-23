@@ -97,7 +97,7 @@ export default function RoutesAndResponsesGuide() {
                   The response's title, which can be used with{" "}
                   <Link
                     name="Package"
-                    params={{ package: "side-effect-title" }}
+                    params={{ package: "side-effect-title", version: "v1" }}
                   >
                     <IJS>@curi/side-effect-title</IJS>
                   </Link>{" "}
@@ -196,7 +196,11 @@ const routes = prepareRoutes([
           <p>
             When a route's <IJS>response()</IJS> function returns an object with
             a{" "}
-            <Link name="Package" params={{ package: "router" }} hash="response">
+            <Link
+              name="Package"
+              params={{ package: "router", version: "v1" }}
+              hash="response"
+            >
               <IJS>redirectTo</IJS> property
             </Link>, the router will use it to generate a location object that
             Curi will automatically redirect to.

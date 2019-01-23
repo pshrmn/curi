@@ -160,15 +160,17 @@ export default prepareRoutes([
         response: ({ match, resolved }) => {
           const pkg = PACKAGE_API.find(match.params.package);
           if (
-            match.params.version &&
-            pkg.versions[match.params.version] === undefined
+            match.params.version === undefined ||
+            (match.params.version &&
+              pkg.versions[match.params.version] === undefined)
           ) {
-            // redirect to base package for bad major versions
+            // redirect to current version bad major versions
             return {
               redirectTo: {
                 name: "Package",
                 params: {
-                  package: match.params.package
+                  package: match.params.package,
+                  version: pkg.latest
                 }
               }
             };

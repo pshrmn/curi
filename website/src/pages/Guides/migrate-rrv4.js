@@ -175,7 +175,7 @@ const routes = prepareRoutes([
               The{" "}
               <Link
                 name="Package"
-                params={{ package: "router" }}
+                params={{ package: "router", version: "v1" }}
                 hash="route-properties"
               >
                 <IJS>@curi/router</IJS> route API documentation

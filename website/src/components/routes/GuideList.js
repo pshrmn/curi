@@ -2,7 +2,7 @@ import React from "react";
 
 import GuideTemplate from "../templates/Guide";
 import { Explanation } from "../layout/Groups";
-import GuideLinks from "../links/dropdowns/GuideDropdown";
+import GuideLinks from "../links/lists/GuideDropdown";
 
 export default function GuideList() {
   return (

@@ -2,7 +2,7 @@ import React from "react";
 
 import ExampleTemplate from "../templates/Example";
 import { Explanation } from "../layout/Groups";
-import ExampleLinks from "../links/dropdowns/ExampleDropdown";
+import ExampleLinks from "../links/lists/ExampleDropdown";
 
 export default function ExampleList() {
   return (

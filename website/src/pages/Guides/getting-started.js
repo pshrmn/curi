@@ -83,7 +83,10 @@ router.navigate({
         <Explanation>
           <Note>
             Render interfaces, like{" "}
-            <Link name="Package" params={{ package: "react-dom" }}>
+            <Link
+              name="Package"
+              params={{ package: "react-dom", version: "v1" }}
+            >
               <IJS>@curi/react-dom</IJS>
             </Link>, will call <IJS>router.nagivate()</IJS> for you when the
             user clicks a link.

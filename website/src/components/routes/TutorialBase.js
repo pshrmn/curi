@@ -2,7 +2,7 @@ import React from "react";
 
 import TutorialTemplate from "../templates/Tutorial";
 import { Explanation } from "../layout/Groups";
-import TutorialLinks from "../links/dropdowns/TutorialDropdown";
+import TutorialLinks from "../links/lists/TutorialDropdown";
 
 export default function TutorialBase() {
   return (
