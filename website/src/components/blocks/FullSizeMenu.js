@@ -65,13 +65,18 @@ const StyledNav = styled("nav")`
       color: ${color.brightOrange};
       border-bottom-color: ${color.brightOrange};
     }
+
+    &.activated {
+      color: ${color.borderBlue};
+      border-bottom-color: ${color.borderBlue};
+    }
   }
 `;
 
 const StyledDropdown = styled("div")`
   @media only screen and (min-width: ${screen.medium}) {
-    background ${color.lightGray};
-    border-bottom: 2px solid ${color.brightOrange};
+    background ${color.lightBlue};
+    border-bottom: 2px solid ${color.purple};
 
     > div {
       display: flex;
@@ -94,40 +99,63 @@ const StyledDropdown = styled("div")`
   }
 `;
 
-export default class Header extends React.Component {
-  state = { dropdown: undefined };
+function DropdownLink({ name, text, activated, toggle }) {
+  return (
+    <ActiveLink
+      name={name}
+      onClick={e => {
+        // don't navigate!
+        e.preventDefault();
+        toggle(name);
+      }}
+      forward={{
+        "data-hide": false,
+        className: activated ? "activated" : ""
+      }}
+    >
+      {text}
+    </ActiveLink>
+  );
+}
 
-  toggleDropdown = name => {
+export default class Header extends React.Component {
+  state = { group: undefined, Dropdown: undefined };
+
+  toggleDropdown = group => {
     this.setState(prevState => {
-      let dropdown;
-      switch (name) {
+      if (prevState.group === group) {
+        return {
+          group: undefined,
+          Dropdown: undefined
+        };
+      }
+
+      let Dropdown;
+      switch (group) {
         case "Packages":
-          dropdown = PackageDropdown;
+          Dropdown = PackageDropdown;
           break;
         case "Guides":
-          dropdown = GuideDropdown;
+          Dropdown = GuideDropdown;
           break;
         case "Examples":
-          dropdown = ExampleDropdown;
+          Dropdown = ExampleDropdown;
           break;
         case "Tutorials":
-          dropdown = TutorialDropdown;
+          Dropdown = TutorialDropdown;
           break;
       }
-      if (prevState.dropdown === dropdown) {
-        dropdown = undefined;
-      }
-      return { dropdown };
+
+      return { group, Dropdown };
     });
   };
 
   hideDropdown = () => {
-    this.setState({ dropdown: undefined });
+    this.setState({ group: undefined, Dropdown: undefined });
   };
 
   render() {
-    const { dropdown: Dropdown } = this.state;
-
+    const { group, Dropdown } = this.state;
     return (
       <StyledHeader
         onClick={e => {
@@ -149,72 +177,52 @@ export default class Header extends React.Component {
               </ActiveLink>
             </li>
             <li>
-              <ActiveLink
+              <DropdownLink
                 name="Packages"
-                onClick={e => {
-                  // don't navigate!
-                  e.preventDefault();
-                  this.toggleDropdown("Packages");
-                }}
-                forward={{
-                  "data-hide": false
-                }}
-              >
-                API
-              </ActiveLink>
+                text="API"
+                activated={group === "Packages"}
+                toggle={this.toggleDropdown}
+              />
             </li>
             <li>
-              <ActiveLink
+              <DropdownLink
                 name="Guides"
-                onClick={e => {
-                  // don't navigate!
-                  e.preventDefault();
-                  this.toggleDropdown("Guides");
-                }}
-                forward={{
-                  "data-hide": false
-                }}
-              >
-                Guides
-              </ActiveLink>
+                text="Guides"
+                activated={group === "Guides"}
+                toggle={this.toggleDropdown}
+              />
             </li>
             <li>
-              <ActiveLink
+              <DropdownLink
                 name="Tutorials"
-                onClick={e => {
-                  // don't navigate!
-                  e.preventDefault();
-                  this.toggleDropdown("Tutorials");
-                }}
-                forward={{
-                  "data-hide": false
-                }}
-              >
-                Tutorials
-              </ActiveLink>
+                text="Tutorials"
+                activated={group === "Tutorials"}
+                toggle={this.toggleDropdown}
+              />
             </li>
             <li>
-              <ActiveLink
+              <DropdownLink
                 name="Examples"
-                onClick={e => {
-                  // don't navigate!
-                  e.preventDefault();
-                  this.toggleDropdown("Examples");
-                }}
-                forward={{
-                  "data-hide": false
-                }}
-              >
-                Examples
-              </ActiveLink>
+                text="Examples"
+                activated={group === "Examples"}
+                toggle={this.toggleDropdown}
+              />
             </li>
             <li>
               <a href="https://github.com/pshrmn/curi">GitHub</a>
             </li>
           </ul>
         </StyledNav>
-        <StyledDropdown>
-          <div>{Dropdown && <Dropdown />}</div>
+        <StyledDropdown
+          style={{
+            borderBottomWidth: group !== undefined ? "2px" : "0px"
+          }}
+        >
+          {group ? (
+            <div>
+              <Dropdown />
+            </div>
+          ) : null}
         </StyledDropdown>
       </StyledHeader>
     );
