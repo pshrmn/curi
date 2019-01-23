@@ -340,9 +340,9 @@ staticFiles({
                     <Note>
                       If you do create HTML files for redirects, be sure that
                       your application knows how to render redirect responses.
-                      If you are using <IJS>emitRedirects = false</IJS> in your
-                      client side code, your application probably doesn't know
-                      how to render redirects.
+                      If you are using setting <IJS>emitRedirects</IJS> to{" "}
+                      <IJS>false</IJS> in your client side code, your
+                      application probably doesn't know how to render redirects.
                     </Note>
                   </Explanation>
                 </Section>

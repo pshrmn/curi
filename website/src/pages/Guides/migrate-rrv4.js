@@ -271,7 +271,7 @@ const router = curi(history, routes);`}
           <p>
             We will walk through the rendering differences between React Router
             and Curi by looking at what happens in each when we navigate to the
-            URL with the pathname <IJS>/inbox/test-message-please-ignore</IJS>.
+            URL with the pathname <IJS>/inbox/test</IJS>.
           </p>
         </Explanation>
 
@@ -288,9 +288,9 @@ const router = curi(history, routes);`}
               <IJS>exact</IJS> prop, so it only matches when the pathname is{" "}
               <IJS>"/"</IJS>. Since it is not, the next <Cmp>Route</Cmp> will be
               checked. The next route, <IJS>"/inbox"</IJS> matches the beginning
-              of the pathname <IJS>"/inbox/test-message-please-ignore"</IJS>. It
-              is not an exact match, but that route does not do exact matching,
-              so React Router will render its component, <Cmp>Inbox</Cmp>.
+              of the pathname <IJS>"/inbox/test"</IJS>. It is not an exact
+              match, but that route does not do exact matching, so React Router
+              will render its component, <Cmp>Inbox</Cmp>.
             </p>
 
             <p>
@@ -391,12 +391,11 @@ const Inbox = ({ match }) => (
               rendered: <Cmp>App</Cmp>,
               <Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>. With Curi, only the most
               accurately matched route actually matches. That means that for the
-              URL <IJS>/inbox/test-message-please-ignore</IJS>, the{" "}
-              <IJS>"Message"</IJS> route will match, but its parent route,{" "}
-              <IJS>"Inbox"</IJS> will not, so <IJS>response.body</IJS> will be
-              the <Cmp>Message</Cmp> component. Unlike React Router, we don’t
-              render <Cmp>Inbox</Cmp> because we did not match the{" "}
-              <IJS>inbox</IJS> route.
+              URL <IJS>/inbox/test</IJS>, the <IJS>"Message"</IJS> route will
+              match, but its parent route, <IJS>"Inbox"</IJS> will not, so{" "}
+              <IJS>response.body</IJS> will be the <Cmp>Message</Cmp> component.
+              Unlike React Router, we don’t render <Cmp>Inbox</Cmp> because we
+              did not match the <IJS>inbox</IJS> route.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">

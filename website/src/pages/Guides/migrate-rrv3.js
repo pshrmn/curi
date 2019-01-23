@@ -346,7 +346,7 @@ const router = curi(history, routes);`}
           <p>
             We will walk through the rendering differences between React Router
             and Curi by looking at what happens in each when we navigate to the
-            URI <IJS>/inbox/test-message-please-ignore</IJS>.
+            URI <IJS>/inbox/test</IJS>.
           </p>
         </Explanation>
 
@@ -362,11 +362,8 @@ const router = curi(history, routes);`}
               router, that is the <Cmp>App</Cmp>. Next, our <IJS>inbox</IJS>{" "}
               route also matches, so React Router also renders our{" "}
               <Cmp>Inbox</Cmp> component. Finally, the URI{" "}
-              <IJS>/inbox/test-message-please-ignore</IJS> also matches our <IJS
-              >
-                :message
-              </IJS>{" "}
-              route (which is concatenated with its parents to form the path{" "}
+              <IJS>/inbox/test</IJS> also matches our <IJS>:message</IJS> route
+              (which is concatenated with its parents to form the path{" "}
               <IJS>/inbox/:message</IJS>), so <Cmp>Message</Cmp> is rendered as
               well. Each child component is rendered by its parent, so we end up
               with a component tree that looks something like this:
@@ -377,10 +374,10 @@ const router = curi(history, routes);`}
               need to know how to render based on what type of match they have.
               For example, <Cmp>Inbox</Cmp> needs to know how to render for an
               exact match (the URI is <IJS>/inbox</IJS>) and for a partial match
-              (<IJS>/inbox/test-message-please-ignore</IJS>). Also, if the{" "}
-              <Cmp>Inbox</Cmp> needs to pass any props to <Cmp>Message</Cmp>, it
-              has to use <IJS>React.cloneElement</IJS>, which works but is not
-              the cleanest looking code.
+              (<IJS>/inbox/test</IJS>). Also, if the <Cmp>Inbox</Cmp> needs to
+              pass any props to <Cmp>Message</Cmp>, it has to use{" "}
+              <IJS>React.cloneElement</IJS>, which works but is not the cleanest
+              looking code.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
@@ -438,12 +435,11 @@ const router = curi(history, routes);`}
               rendered: <Cmp>App</Cmp>,
               <Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>. With Curi, only the most
               accurately matched route actually matches. That means that for the
-              URL <IJS>/inbox/test-message-please-ignore</IJS>, the{" "}
-              <IJS>"Message"</IJS> route will match, but its parent route,{" "}
-              <IJS>"Inbox"</IJS> will not, so <IJS>response.body</IJS> will be
-              the <Cmp>Message</Cmp> component. Unlike React Router, we don’t
-              render <Cmp>Inbox</Cmp> because we did not match the{" "}
-              <IJS>inbox</IJS> route.
+              URL <IJS>/inbox/test</IJS>, the <IJS>"Message"</IJS> route will
+              match, but its parent route, <IJS>"Inbox"</IJS> will not, so{" "}
+              <IJS>response.body</IJS> will be the <Cmp>Message</Cmp> component.
+              Unlike React Router, we don’t render <Cmp>Inbox</Cmp> because we
+              did not match the <IJS>inbox</IJS> route.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">

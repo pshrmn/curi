@@ -266,8 +266,9 @@ const router = curi(history, routes, {
                         <IJS>automaticRedirects</IJS> is <IJS>false</IJS>, the
                         automatic redirect will not happen.{" "}
                         <strong>
-                          Using <IJS>automaticRedirects = false</IJS> is
-                          recommend for server side rendering.
+                          Setting <IJS>automaticRedirects</IJS> to{" "}
+                          <IJS>false</IJS> is recommend for server side
+                          rendering.
                         </strong>
                       </p>
                     </Explanation>

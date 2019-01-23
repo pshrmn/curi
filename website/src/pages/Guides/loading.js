@@ -61,10 +61,10 @@ export default function LoadingGuide() {
             All <IJS>resolve</IJS> functions are expected to return a Promise.
           </p>
           <p>
-            Now, when we navigate to <IJS>/recipe/chocolate-chip-cookies</IJS>,
-            the <IJS>resolve.data()</IJS> function will call the fake API
-            function to load the <IJS>"chocolate-chip-cookies"</IJS> recipe. The
-            function will resolve with the loaded data.
+            Now, when we navigate to <IJS>/recipe/cookies</IJS>, the{" "}
+            <IJS>resolve.data()</IJS> function will call the fake API function
+            to load the <IJS>"cookies"</IJS> recipe. The function will resolve
+            with the loaded data.
           </p>
         </Explanation>
         <CodeBlock>

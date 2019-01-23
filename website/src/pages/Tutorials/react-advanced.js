@@ -277,9 +277,11 @@ ReactDOM.render((
               bundle for that module (and that module's imports, etc.).
             </p>
             <p>
-              You can add a <IJS>/* webpackChunkName: "chunkName" */</IJS>{" "}
-              comment to an <IJS>import()</IJS> call to let Webpack know what to
-              name a code split bundle.
+              You can set a chunk's name using the{" "}
+              <a href="https://webpack.js.org/api/module-methods/#magic-comments">
+                <IJS>webpackChunkName</IJS>
+              </a>{" "}
+              magic comment with an <IJS>import()</IJS> call.
             </p>
             <p>
               Create React App's default configuration is already setup to

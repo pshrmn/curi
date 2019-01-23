@@ -258,11 +258,9 @@ const Router = curiProvider(router);`}
                 <Explanation>
                   <p>
                     By default, when you render a <Cmp>Link</Cmp>, an anchor
-                    element will be rendered (<IJS>
-                      React.createElement('a', ...)
-                    </IJS>). <IJS>anchor</IJS> lets you provide your own
-                    component to be rendered instead. This can be useful for
-                    using styled components to navigate.
+                    element will be rendered. <IJS>anchor</IJS> lets you provide
+                    your own component to be rendered instead. This can be
+                    useful for using styled components to navigate.
                   </p>
                   <Warning>
                     You can provide any component that you want, but you{" "}
