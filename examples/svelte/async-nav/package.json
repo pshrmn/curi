@@ -17,6 +17,6 @@
     "svelte-spinner": "^1.0.0"
   },
   "devDependencies": {
-    "svelte": "^2.8.1"
+    "svelte": "^2.16.0"
   }
 }

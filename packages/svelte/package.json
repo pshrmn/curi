@@ -33,7 +33,7 @@
     "@curi/router": "^1.1.0"
   },
   "dependencies": {
-    "svelte": "^2.4.3"
+    "svelte": "^2.16.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -43,13 +43,13 @@
     "@curi/router": "^1.1.0",
     "@hickory/in-memory": "^1.0.0",
     "babel-core": "bridge",
-    "babel-jest": "^23.0.0",
+    "babel-jest": "^23.6.0",
     "fs-extra": "^7.0.1",
     "jest": "^23.6.0",
     "rimraf": "^2.6.2",
-    "rollup": "^0.67.3",
+    "rollup": "^0.67.4",
     "rollup-plugin-babel": "^4.0.3",
-    "rollup-plugin-svelte": "^4.3.0",
+    "rollup-plugin-svelte": "^4.5.0",
     "simulant": "^0.2.2",
     "svelte-cli": "^3.0.0"
   }
