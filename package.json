@@ -9,7 +9,7 @@
     "clean": "lerna clean",
     "postinstall": "npm run bootstrap",
     "precommit": "pretty-quick --staged",
-    "versions": "lerna publish --skip-git --skip-npm",
+    "versions": "lerna version --no-git-tag-version --no-push",
     "postversions": "node ./website/scripts/updatePackageVersions",
     "test": "lerna run test",
     "coverage": "lerna run coverage"
