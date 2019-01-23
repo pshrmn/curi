@@ -1,16 +1,17 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import Outline from "../../components/tutorial/Outline";
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Explanation, CodeBlock } from "../../components/layout/Groups";
-import { Note } from "../../components/Messages";
-import { Section } from "../../components/layout/Sections";
-import CodeSandboxDemo from "../../components/CodeSandboxDemo";
-import ScrollableTable from "../../components/layout/ScrollableTable";
+  Section,
+  Explanation,
+  CodeBlock,
+  Outline,
+  Note,
+  IJS,
+  Cmp,
+  CodeSandboxDemo,
+  ScrollableTable
+} from "../../components/tutorial/common";
 
 export default function ReactBasicsTutorial() {
   return (

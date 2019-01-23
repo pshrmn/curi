@@ -1,15 +1,16 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import Outline from "../../components/tutorial/Outline";
 import {
-  InlineJS as IJS,
-  InlineComponent as Cmp
-} from "../../components/highlight/Inline";
-import { Section } from "../../components/layout/Sections";
-import { CodeBlock, Explanation } from "../../components/layout/Groups";
-import { Note } from "../../components/Messages";
-import CodeSandboxDemo from "../../components/CodeSandboxDemo";
+  Section,
+  Explanation,
+  CodeBlock,
+  Outline,
+  Note,
+  IJS,
+  Cmp,
+  CodeSandboxDemo
+} from "../../components/tutorial/common";
 
 export default function ReactAdvancedTutorial() {
   return (
