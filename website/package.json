@@ -4,12 +4,13 @@
   "version": "0.1.24",
   "description": "The documentation website for the Curi router",
   "scripts": {
-    "prebuild": "npm run setupBuild && npm run versions && webpack-cli --config webpack.config.prod.js",
+    "prebuild": "npm run build:setup && npm run versions && npm run build:bundle",
+    "build:bundle": "webpack-cli --config webpack.config.prod.js",
+    "build:setup": "node ./scripts/buildSetup",
     "build": "cross-env BABEL_ENV=node NODE_ENV=production node ./scripts/build",
     "predev": "node ./scripts/generateDevIndexHtml",
     "dev": "cross-env BABEL_ENV=dev webpack-dev-server --config webpack.config.dev.js",
     "prettier": "prettier --single-quote --write \"src/**/*.js\"",
-    "setupBuild": "node ./scripts/buildSetup",
     "versions": "node ./scripts/updatePackageVersions"
   },
   "repository": {

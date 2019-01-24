@@ -2,16 +2,17 @@
   "name": "curi-monorepo",
   "private": true,
   "scripts": {
-    "build": "lerna run build --scope=@curi/*",
-    "clean": "lerna clean",
-    "example:build": "node ./examples/build",
-    "example:serve": "node ./examples/server",
     "postinstall": "lerna run prepare",
     "precommit": "pretty-quick --staged",
+    "build": "lerna run build --scope=@curi/*",
+    "test": "lerna run test",
+    "coverage": "lerna run coverage",
     "versions": "lerna version --no-git-tag-version --no-push",
     "postversions": "node ./website/scripts/updatePackageVersions",
-    "test": "lerna run test",
-    "coverage": "lerna run coverage"
+    "example:build": "node ./examples/build",
+    "example:serve": "node ./examples/server",
+    "website:dev": "lerna exec --scope=@curi-docs/website -- npm run dev",
+    "website:build": "lerna exec --scope=@curi-docs/website -- npm run build"
   },
   "author": "Paul Sherman",
   "license": "MIT",
@@ -32,8 +33,6 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
-    "@curi/route-active": "^1.1.0",
-    "@curi/router": "file:../router",
     "@hickory/in-memory": "^1.0.2",
     "@types/enzyme": "^2.8.8",
     "@types/fs-extra": "^5.0.4",
@@ -83,9 +82,8 @@
     "vue": "^2.5.22",
     "vue-loader": "^15.5.1",
     "vue-template-compiler": "^2.5.22",
-    "webpack": "^4.29.0",
+    "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
-    "webpack-command": "^0.4.1",
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
