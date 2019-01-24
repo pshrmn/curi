@@ -19,13 +19,13 @@
     "gzipped": 112
   },
   "dist/curi-side-effect-title.umd.js": {
-    "bundled": 452,
-    "minified": 253,
-    "gzipped": 180
+    "bundled": 475,
+    "minified": 263,
+    "gzipped": 187
   },
   "dist/curi-side-effect-title.min.js": {
-    "bundled": 452,
-    "minified": 253,
-    "gzipped": 180
+    "bundled": 475,
+    "minified": 263,
+    "gzipped": 187
   }
 }

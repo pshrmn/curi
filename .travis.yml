@@ -1,22 +1,10 @@
 sudo: false
 language: node_js
 node_js:
-- "10"
+  - "10"
 cache:
   directories:
-  - node_modules
-  - packages/interactions/route-active/node_modules
-  - packages/interactions/route-ancestors/node_modules
-  - packages/interactions/route-prefetch/node_modules
-  - packages/react-dom/node_modules
-  - packages/react-native/node_modules
-  - packages/react-universal/node_modules
-  - packages/router/node_modules
-  - packages/side-effects/side-effect-aria-live/node_modules
-  - packages/side-effects/side-effect-scroll/node_modules
-  - packages/side-effects/side-effect-title/node_modules
-  - packages/svelte/node_modules
-  - packages/vue/node_modules
+    - node_modules
 branches:
   only:
-  - master
+    - master

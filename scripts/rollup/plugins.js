@@ -1,4 +1,4 @@
-const uglifyPlugin = require("rollup-plugin-uglify");
+const { uglify } = require("rollup-plugin-uglify");
 const replace = require("rollup-plugin-replace");
 const commonjs = require("rollup-plugin-commonjs");
 const resolve = require("rollup-plugin-node-resolve");
@@ -23,7 +23,7 @@ exports.commonjs = commonjs({
 
 exports.sizeSnapshot = sizeSnapshot();
 
-exports.minify = uglifyPlugin();
+exports.minify = uglify();
 
 exports.typescript = typescript({
   useTsconfigDeclarationDir: true

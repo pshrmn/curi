@@ -19,13 +19,13 @@
     "gzipped": 320
   },
   "dist/curi-route-active.umd.js": {
-    "bundled": 1722,
-    "minified": 617,
-    "gzipped": 365
+    "bundled": 1745,
+    "minified": 627,
+    "gzipped": 370
   },
   "dist/curi-route-active.min.js": {
-    "bundled": 1722,
-    "minified": 617,
-    "gzipped": 365
+    "bundled": 1745,
+    "minified": 627,
+    "gzipped": 370
   }
 }

@@ -10,28 +10,5 @@
     "examples/svelte/*",
     "examples/vue/*",
     "website"
-  ],
-  "command": {
-    "bootstrap": {
-      "hoist": "**",
-      "nohoist": [
-        "svelte",
-        "svelte-cli",
-        "svelte-loader",
-        "rollup-plugin-svelte",
-        "react-native",
-        "ts-jest",
-        "babel-jest",
-        "webpack",
-        "webpack-cli",
-        "webpack-command",
-        "webpack-dev-server",
-        "mini-css-extract-plugin",
-        "vue",
-        "vue-loader",
-        "vue-template-compiler",
-        "@vue/*"
-      ]
-    }
-  }
+  ]
 }

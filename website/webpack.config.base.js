@@ -3,6 +3,7 @@ const path = require("path");
 
 const SITE_ROOT = path.join(__dirname, "gh-pages");
 const STATIC_ROOT = path.join(SITE_ROOT, "static");
+const BABELRC = path.join(__dirname, ".babelrc.js");
 
 const config = {
   context: path.join(__dirname, "src"),

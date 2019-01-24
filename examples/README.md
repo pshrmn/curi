@@ -33,19 +33,13 @@ npm install
 While most of these examples are client side only, they still use browser history objects, which require a server to handle dynamic requests. This directory contains a `server.js` file that you can run to serve the examples.
 
 ```sh
-# make sure dependencies are installed
-npm install
-# if you want to run using source code, install by
-# bootstrapping from the repo's root
-npm run bootstrap:all
+# build the example
+npm run example:build -- <example-dir>/<example-name> <type>
+# for example
+npm run example:build -- react/active-links react
 
-# build an example
-node build.js <example-folder> <example-type>
-# e.g.
-node build.js react/modal react
-
-# serve the example
-node server.js <example-folder>
-# e.g.
-node server.js react/modal
+# serve the example (port 8000)
+npm run example:serve -- <example-dir>/<example-name>
+# for example
+npm run exampel:serve -- react/active-links
 ```

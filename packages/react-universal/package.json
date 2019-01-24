@@ -37,20 +37,9 @@
     "react": ">=16.3"
   },
   "dependencies": {
-    "@curi/route-active": "^1.1.0",
-    "@curi/router": "^1.1.0",
+    "@curi/route-active": "file:../interactions/route-active",
+    "@curi/router": "file:../router",
     "@hickory/root": "^1.0.0",
     "@types/react": "^16.3.11"
-  },
-  "devDependencies": {
-    "@hickory/in-memory": "^1.0.0",
-    "@types/jest": "^22.0.1",
-    "@types/react-dom": "^16.0.5",
-    "jest": "^23.6.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.67.4",
-    "ts-jest": "^23.10.5"
   }
 }

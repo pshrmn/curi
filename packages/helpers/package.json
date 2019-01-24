@@ -28,12 +28,5 @@
     "Curi"
   ],
   "author": "Paul Sherman",
-  "license": "MIT",
-  "devDependencies": {
-    "@types/jest": "^22.0.1",
-    "jest": "^23.6.0",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.67.4",
-    "ts-jest": "^23.10.5"
-  }
+  "license": "MIT"
 }

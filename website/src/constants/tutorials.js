@@ -1,5 +1,3 @@
-import preferDefault from "../preferDefault";
-
 const tutorials = [
   {
     title: "React Basics",
