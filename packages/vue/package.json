@@ -34,19 +34,10 @@
     "vue": "^2.5.2"
   },
   "dependencies": {
-    "@curi/router": "^1.1.0",
+    "@curi/router": "file:../router",
     "@hickory/root": "^1.0.0"
   },
   "devDependencies": {
-    "@curi/route-active": "^1.1.0",
-    "@hickory/in-memory": "^1.0.0",
-    "@types/jest": "^22.0.1",
-    "@vue/test-utils": "^1.0.0-beta.28",
-    "jest": "^23.6.0",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.67.4",
-    "ts-jest": "^23.10.5",
-    "vue": "^2.5.22",
-    "vue-template-compiler": "^2.5.22"
+    "@curi/route-active": "file:../interactions/route-active"
   }
 }

@@ -4,25 +4,6 @@
   "dependencies": {
     "express": "^4.15.4"
   },
-  "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.5",
-    "css-loader": "^1.0.0",
-    "style-loader": "^0.23.0",
-    "svelte": "^2.13.4",
-    "svelte-cli": "^3.0.0",
-    "svelte-loader": "^2.12.0",
-    "vue": "^2.5.22",
-    "vue-loader": "^15.5.1",
-    "vue-template-compiler": "^2.5.22",
-    "webpack": "^4.29.0",
-    "webpack-command": "^0.4.1"
-  },
   "scripts": {
     "serve-example": "node server.js"
   }
