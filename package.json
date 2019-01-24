@@ -2,8 +2,8 @@
   "name": "curi-monorepo",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap --ci --concurrency=1 --scope=@curi/*",
-    "bootstrap:all": "lerna bootstrap --ci",
+    "bootstrap": "lerna bootstrap --no-ci --concurrency=1 --scope=@curi/*",
+    "bootstrap:all": "lerna bootstrap --no-ci",
     "postbootstrap": "lerna run prepare",
     "build": "lerna run build --scope=@curi/*",
     "clean": "lerna clean",
