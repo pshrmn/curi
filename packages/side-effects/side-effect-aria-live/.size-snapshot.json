@@ -19,13 +19,13 @@
     "gzipped": 228
   },
   "dist/curi-side-effect-aria-live.umd.js": {
-    "bundled": 741,
-    "minified": 439,
-    "gzipped": 289
+    "bundled": 764,
+    "minified": 449,
+    "gzipped": 296
   },
   "dist/curi-side-effect-aria-live.min.js": {
-    "bundled": 741,
-    "minified": 439,
-    "gzipped": 289
+    "bundled": 764,
+    "minified": 449,
+    "gzipped": 296
   }
 }

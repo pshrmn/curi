@@ -19,13 +19,13 @@
     "gzipped": 380
   },
   "dist/curi-route-prefetch.umd.js": {
-    "bundled": 1995,
-    "minified": 832,
-    "gzipped": 442
+    "bundled": 2018,
+    "minified": 842,
+    "gzipped": 450
   },
   "dist/curi-route-prefetch.min.js": {
-    "bundled": 1995,
-    "minified": 832,
-    "gzipped": 442
+    "bundled": 2018,
+    "minified": 842,
+    "gzipped": 450
   }
 }
