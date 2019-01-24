@@ -1,7 +1,6 @@
 import React from "react";
 import { TouchableHighlight } from "react-native";
 import { useNavigationHandler } from "@curi/react-universal";
-import shallowEqual from "shallowequal";
 
 import { GestureResponderEvent } from "react-native";
 import { RouteLocation } from "@curi/router";
