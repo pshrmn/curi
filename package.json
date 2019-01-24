@@ -4,6 +4,8 @@
   "scripts": {
     "build": "lerna run build --scope=@curi/*",
     "clean": "lerna clean",
+    "example:build": "node ./examples/build",
+    "example:serve": "node ./examples/server",
     "postinstall": "lerna run prepare",
     "precommit": "pretty-quick --staged",
     "versions": "lerna version --no-git-tag-version --no-push",
