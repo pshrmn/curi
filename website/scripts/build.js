@@ -1,7 +1,6 @@
 require("@babel/register");
 const start = new Date();
 const path = require("path");
-const React = require("react");
 const { staticFiles } = require("@curi/static");
 const active = require("@curi/route-active");
 
@@ -19,6 +18,40 @@ function getRouterOptions() {
   };
 }
 
+function stringifyResult(result) {
+  return result.success
+    ? `✔ ${result.pathname}`
+    : `✖ ${result.pathname} (${result.error.message})`;
+}
+
+function logResults(results) {
+  const end = new Date();
+
+  const { successes, failures } = results.reduce(
+    (acc, curr) => {
+      if (curr.success) {
+        acc.successes.push(curr);
+      } else {
+        acc.failures.push(curr);
+      }
+      return acc;
+    },
+    { successes: [], failures: [] }
+  );
+
+  const successOutput = successes.map(stringifyResult).join("\n");
+  const failureOutput = failures.map(stringifyResult).join("\n");
+  console.log(
+    `Successes: (${successes.length})
+${successOutput}
+
+Failures: (${failures.length})
+${failureOutput}
+
+Build time: ${end - start}ms`
+  );
+}
+
 staticFiles({
   pages,
   router: {
@@ -31,18 +64,4 @@ staticFiles({
     render,
     insert
   }
-}).then(results => {
-  const end = new Date();
-  const resultString = results
-    .map(result => {
-      return result.success
-        ? `✔ ${result.pathname}`
-        : `✖ ${result.pathname} (${result.error.message})`;
-    })
-    .join("\n");
-  console.log(
-    `${resultString}
-
-Build time: ${end - start}ms`
-  );
-});
+}).then(logResults);
