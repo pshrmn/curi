@@ -11,6 +11,7 @@
     "postversions": "node ./website/scripts/updatePackageVersions",
     "example:build": "node ./examples/build",
     "example:serve": "node ./examples/server",
+    "example:versions": "node ./scripts/setDependenciesInExamples.js",
     "website:dev": "lerna exec --scope=@curi-docs/website -- npm run dev",
     "website:build": "lerna exec --scope=@curi-docs/website -- npm run build",
     "publishUpdated": "lerna publish from-package"
@@ -49,6 +50,7 @@
     "cross-env": "^5.1.1",
     "css-loader": "^1.0.0",
     "fs-extra": "^7.0.1",
+    "glob": "^7.1.3",
     "husky": "^0.14.3",
     "jest": "^23.6.0",
     "lerna": "^3.10.7",

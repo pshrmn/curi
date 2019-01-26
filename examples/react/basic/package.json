@@ -9,8 +9,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "file:../../../packages/react-dom",
-    "@curi/router": "file:../../../packages/router",
+    "@curi/react-dom": "1.2.0",
+    "@curi/router": "1.1.0",
     "@hickory/browser": "^1.0.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
