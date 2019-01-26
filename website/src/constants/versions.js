@@ -4,14 +4,14 @@ export default {
   "route-active": "1.1.0",
   "route-ancestors": "1.1.0",
   "route-prefetch": "1.1.0",
-  "react-dom": "1.2.0",
-  "react-native": "1.1.0",
+  "react-dom": "1.2.1",
+  "react-native": "1.1.1",
   "react-universal": "1.1.0",
-  "router": "1.1.0",
+  "router": "1.1.1",
   "side-effect-aria-live": "1.0.1",
   "side-effect-scroll": "1.0.1",
   "side-effect-title": "1.0.1",
   "static": "1.0.0-alpha.5",
-  "svelte": "1.0.0-beta.12",
+  "svelte": "1.0.0-beta.13",
   "vue": "1.0.0-beta.25"
 };

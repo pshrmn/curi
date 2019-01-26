@@ -1,4 +1,4 @@
-## Next
+## 1.2.1
 
 * `<Link>` uses `router.navigate()`'s return function to prevent unnecessary `setState`s.
 

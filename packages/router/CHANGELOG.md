@@ -1,4 +1,4 @@
-## Next
+## 1.1.1
 
 * `router.navigate()` returns a function that will clear the active navigation's callbacks.
 
