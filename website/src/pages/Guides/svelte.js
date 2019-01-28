@@ -3,7 +3,6 @@ import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   Cmp
@@ -19,23 +18,22 @@ export default function SvelteGuide() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Store Integration" id="store">
-        <Explanation>
-          <p>
-            Curi relies on Svelte's store to interface with an application. By
-            adding the <IJS>response</IJS> (plus the <IJS>router</IJS> and{" "}
-            <IJS>navigation</IJS> objects) to the store, they are accessible
-            throughout the application.
-          </p>
-          <p>
-            <IJS>@curi/svelte</IJS> provides a function to link the router to
-            the store. This sets up an{" "}
-            <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
-              observer
-            </Link>
-            , so that whenever there is a new response, the parts of your
-            application that use the response will be re-rendered.
-          </p>
-        </Explanation>
+        <p>
+          Curi relies on Svelte's store to interface with an application. By
+          adding the <IJS>response</IJS> (plus the <IJS>router</IJS> and{" "}
+          <IJS>navigation</IJS> objects) to the store, they are accessible
+          throughout the application.
+        </p>
+        <p>
+          <IJS>@curi/svelte</IJS> provides a function to link the router to the
+          store. This sets up an{" "}
+          <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
+            observer
+          </Link>
+          , so that whenever there is a new response, the parts of your
+          application that use the response will be re-rendered.
+        </p>
+
         <CodeBlock lang="jsx">
           {`import store from "svelte/store";
 import { curiStore } from "@curi/svelte";
@@ -51,21 +49,20 @@ curiStore(router, store);`}
           id="rendering-response"
           tag="h3"
         >
-          <Explanation>
-            <p>
-              Svelte allows you to render dynamic components using the{" "}
-              <Cmp>svelte:component this</Cmp> syntax. If you set Svelte
-              components as the <IJS>body</IJS> properties on your responses,
-              you can combine <Cmp>svelte:component this</Cmp> and{" "}
-              <IJS>response.body</IJS> to render the appropriate component for a{" "}
-              <IJS>response</IJS>.
-            </p>
-            <p>
-              A root component is a good place to perform general application
-              layout, like menus, in addition to rendering the response's{" "}
-              <IJS>body</IJS>.
-            </p>
-          </Explanation>
+          <p>
+            Svelte allows you to render dynamic components using the{" "}
+            <Cmp>svelte:component this</Cmp> syntax. If you set Svelte
+            components as the <IJS>body</IJS> properties on your responses, you
+            can combine <Cmp>svelte:component this</Cmp> and{" "}
+            <IJS>response.body</IJS> to render the appropriate component for a{" "}
+            <IJS>response</IJS>.
+          </p>
+          <p>
+            A root component is a good place to perform general application
+            layout, like menus, in addition to rendering the response's{" "}
+            <IJS>body</IJS>.
+          </p>
+
           <CodeBlock lang="html">
             {`<template>
   <header>
@@ -84,19 +81,18 @@ curiStore(router, store);`}
 </script>`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              If your routes use an object to attach multiple components to a
-              response, splitting them apart in computed properties may give
-              your templates a cleaner look.
-            </p>
-            <p>
-              If you do attach multiple components to a response, please
-              remember that you want every route to set the same <IJS>body</IJS>{" "}
-              shape. Otherwise, you'll have to determine the shape and change
-              how you render, which can quickly become messy.
-            </p>
-          </Explanation>
+          <p>
+            If your routes use an object to attach multiple components to a
+            response, splitting them apart in computed properties may give your
+            templates a cleaner look.
+          </p>
+          <p>
+            If you do attach multiple components to a response, please remember
+            that you want every route to set the same <IJS>body</IJS> shape.
+            Otherwise, you'll have to determine the shape and change how you
+            render, which can quickly become messy.
+          </p>
+
           <CodeBlock lang="html">
             {`<script>
 const routes = prepareRoutes([
@@ -142,23 +138,22 @@ const routes = prepareRoutes([
       </HashSection>
 
       <HashSection title="Navigating" id="navigating">
-        <Explanation>
-          <p>
-            The <Cmp>Link</Cmp> component is used to navigate between routes
-            within an application. When it renders in the DOM, it will render as
-            an anchor (<Cmp>a</Cmp>) element.
-          </p>
-          <p>
-            The <Cmp>Link</Cmp>'s <IJS>to</IJS> prop describes which route
-            clicking the link should navigate to. If you pass an invalid route
-            name, Curi will warn you.
-          </p>
-          <p>
-            If a route has any params (or if any of a route's ancestors have
-            params for nested routes), the <IJS>params</IJS> prop is used to
-            pass these to the <Cmp>Link</Cmp>.
-          </p>
-        </Explanation>
+        <p>
+          The <Cmp>Link</Cmp> component is used to navigate between routes
+          within an application. When it renders in the DOM, it will render as
+          an anchor (<Cmp>a</Cmp>) element.
+        </p>
+        <p>
+          The <Cmp>Link</Cmp>'s <IJS>to</IJS> prop describes which route
+          clicking the link should navigate to. If you pass an invalid route
+          name, Curi will warn you.
+        </p>
+        <p>
+          If a route has any params (or if any of a route's ancestors have
+          params for nested routes), the <IJS>params</IJS> prop is used to pass
+          these to the <Cmp>Link</Cmp>.
+        </p>
+
         <CodeBlock lang="html">
           {`<template>
   <nav>
@@ -187,13 +182,12 @@ const routes = prepareRoutes([
 </script>`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            The <Cmp>Link</Cmp> also takes <IJS>hash</IJS>, <IJS>query</IJS>,
-            and <IJS>state</IJS> props to attach their values to the location
-            that will be navigated to.
-          </p>
-        </Explanation>
+        <p>
+          The <Cmp>Link</Cmp> also takes <IJS>hash</IJS>, <IJS>query</IJS>, and{" "}
+          <IJS>state</IJS> props to attach their values to the location that
+          will be navigated to.
+        </p>
+
         <CodeBlock lang="jsx">
           {`<Link name="Home" hash="details">Home</Link>
 // renders
@@ -201,19 +195,17 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <Explanation>
-        <p>
-          Please check out the full{" "}
-          <Link
-            name="Package"
-            params={{ package: "svelte", version: "v1" }}
-            hash="API"
-          >
-            <IJS>@curi/svelte</IJS>
-          </Link>{" "}
-          API documentation to see every component that the package provides.
-        </p>
-      </Explanation>
+      <p>
+        Please check out the full{" "}
+        <Link
+          name="Package"
+          params={{ package: "svelte", version: "v1" }}
+          hash="API"
+        >
+          <IJS>@curi/svelte</IJS>
+        </Link>{" "}
+        API documentation to see every component that the package provides.
+      </p>
     </React.Fragment>
   );
 }

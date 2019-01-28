@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   IJS,
   CodeSandboxDemo,
   OnGithub
@@ -18,13 +17,11 @@ export default function BreadcrumbsExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            The <IJS>@curi/route-ancestors</IJS> package lets you know what
-            routes are the ancestors of another route. Using this, we can build
-            breadcrumb links.
-          </p>
-        </Explanation>
+        <p>
+          The <IJS>@curi/route-ancestors</IJS> package lets you know what routes
+          are the ancestors of another route. Using this, we can build
+          breadcrumb links.
+        </p>
       </HashSection>
 
       <HashSection title="Live Demo" id="demo">

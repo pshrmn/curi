@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   CodeSandboxDemo,
@@ -19,19 +18,17 @@ export default function AuthenticationExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            Sometimes you will want to redirect based on the results of your{" "}
-            <IJS>resolve</IJS> functions. For instance, you might see that a
-            user is not authenticated and shouldn't be able to view a page.
-          </p>
+        <p>
+          Sometimes you will want to redirect based on the results of your{" "}
+          <IJS>resolve</IJS> functions. For instance, you might see that a user
+          is not authenticated and shouldn't be able to view a page.
+        </p>
 
-          <p>
-            A <IJS>response()</IJS> function can modify the response by setting
-            a <IJS>redirectTo</IJS> property on its return object. Curi will
-            automatically (unless configured not to) redirect to that location.
-          </p>
-        </Explanation>
+        <p>
+          A <IJS>response()</IJS> function can modify the response by setting a{" "}
+          <IJS>redirectTo</IJS> property on its return object. Curi will
+          automatically (unless configured not to) redirect to that location.
+        </p>
 
         <CodeBlock lang="javascript">
           {`const routes = prepareRoutes([

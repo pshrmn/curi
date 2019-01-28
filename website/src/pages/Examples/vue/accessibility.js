@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   IJS,
   CodeSandboxDemo,
   OnGithub
@@ -17,12 +16,10 @@ export default function AccessibilityExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            This example demonstrates how to increase the accessibility of an
-            application using the <IJS>curi-focus</IJS> directive.
-          </p>
-        </Explanation>
+        <p>
+          This example demonstrates how to increase the accessibility of an
+          application using the <IJS>curi-focus</IJS> directive.
+        </p>
       </HashSection>
 
       <HashSection title="Live Demo" id="demo">

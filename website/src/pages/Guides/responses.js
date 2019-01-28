@@ -3,7 +3,6 @@ import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   Note,
   IJS,
@@ -19,28 +18,23 @@ export default function RoutesAndResponsesGuide() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Explanation>
-        <p>
-          When Curi receives a location, it compares the location's{" "}
-          <IJS>pathname</IJS> to each route's <IJS>path</IJS> to find which one
-          matches best and uses that route to create a response object.
-        </p>
-      </Explanation>
+      <p>
+        When Curi receives a location, it compares the location's{" "}
+        <IJS>pathname</IJS> to each route's <IJS>path</IJS> to find which one
+        matches best and uses that route to create a response object.
+      </p>
 
       <HashSection
         title="The Properties of a Response Object"
         id="response-properties"
       >
-        <Explanation>
-          <p>There are two types of response properties.</p>
-        </Explanation>
+        <p>There are two types of response properties.</p>
 
-        <Explanation>
-          <p>
-            The "match" properties are set based on the route that matches a
-            location. A response always has these properties.
-          </p>
-        </Explanation>
+        <p>
+          The "match" properties are set based on the route that matches a
+          location. A response always has these properties.
+        </p>
+
         <CodeBlock>
           {`// match properties
 {
@@ -61,68 +55,62 @@ export default function RoutesAndResponsesGuide() {
 }`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            The "settable" properties are ones that are added by a matched
-            route's <IJS>response()</IJS> function. These only exist on the
-            response when they are returned by a route's <IJS>response()</IJS>{" "}
-            function.
-          </p>
-          <p>The "settable" properties are:</p>
-          <ScrollableTable>
-            <thead>
-              <tr>
-                <th>property</th>
-                <th>description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>body</td>
-                <td>The component(s) that should be rendered for a route.</td>
-              </tr>
-              <tr>
-                <td>status</td>
-                <td>
-                  An http status, mostly useful for server side rendering.
-                </td>
-              </tr>
-              <tr>
-                <td>data</td>
-                <td>
-                  A place to attach any data you want to the response, such as
-                  data loaded in the route's <IJS>resolve</IJS> functions.
-                </td>
-              </tr>
-              <tr>
-                <td>title</td>
-                <td>
-                  The response's title, which can be used with{" "}
-                  <Link
-                    name="Package"
-                    params={{ package: "side-effect-title", version: "v1" }}
-                  >
-                    <IJS>@curi/side-effect-title</IJS>
-                  </Link>{" "}
-                  to set the browsers tab's title.
-                </td>
-              </tr>
-              <tr>
-                <td>error</td>
-                <td>
-                  A convenient place to attach any errors to the response.
-                </td>
-              </tr>
-              <tr>
-                <td>redirectTo</td>
-                <td>
-                  An object describing a route that Curi should automatically
-                  redirect to.
-                </td>
-              </tr>
-            </tbody>
-          </ScrollableTable>
-        </Explanation>
+        <p>
+          The "settable" properties are ones that are added by a matched route's{" "}
+          <IJS>response()</IJS> function. These only exist on the response when
+          they are returned by a route's <IJS>response()</IJS> function.
+        </p>
+        <p>The "settable" properties are:</p>
+        <ScrollableTable>
+          <thead>
+            <tr>
+              <th>property</th>
+              <th>description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>body</td>
+              <td>The component(s) that should be rendered for a route.</td>
+            </tr>
+            <tr>
+              <td>status</td>
+              <td>An http status, mostly useful for server side rendering.</td>
+            </tr>
+            <tr>
+              <td>data</td>
+              <td>
+                A place to attach any data you want to the response, such as
+                data loaded in the route's <IJS>resolve</IJS> functions.
+              </td>
+            </tr>
+            <tr>
+              <td>title</td>
+              <td>
+                The response's title, which can be used with{" "}
+                <Link
+                  name="Package"
+                  params={{ package: "side-effect-title", version: "v1" }}
+                >
+                  <IJS>@curi/side-effect-title</IJS>
+                </Link>{" "}
+                to set the browsers tab's title.
+              </td>
+            </tr>
+            <tr>
+              <td>error</td>
+              <td>A convenient place to attach any errors to the response.</td>
+            </tr>
+            <tr>
+              <td>redirectTo</td>
+              <td>
+                An object describing a route that Curi should automatically
+                redirect to.
+              </td>
+            </tr>
+          </tbody>
+        </ScrollableTable>
+
         <CodeBlock>
           {`// settable properties (optional)
 {
@@ -149,29 +137,30 @@ export default function RoutesAndResponsesGuide() {
       </HashSection>
 
       <HashSection title="Response Body" id="response-body">
-        <Explanation>
+        <p>
+          Curi isn't strict about how you use responses, but you will most
+          likely always want to use a route's <IJS>response()</IJS> function to
+          attach a <IJS>body</IJS> property to a response. The usual pattern is
+          to use a route's <IJS>body</IJS> property to describe which
+          component(s) to render when a route matches. This can either be a
+          single component for basic layouts or an object with a number of
+          components for{" "}
+          <Link
+            name="Example"
+            params={{ category: "react", slug: "multi-body" }}
+          >
+            advanced layouts
+          </Link>
+          .
+        </p>
+        <Note>
           <p>
-            Curi isn't strict about how you use responses, but you will most
-            likely always want to use a route's <IJS>response()</IJS> function
-            to attach a <IJS>body</IJS> property to a response. The usual
-            pattern is to use a route's <IJS>body</IJS> property to describe
-            which component(s) to render when a route matches. This can either
-            be a single component for basic layouts or an object with a number
-            of components for{" "}
-            <Link
-              name="Example"
-              params={{ category: "react", slug: "multi-body" }}
-            >
-              advanced layouts
-            </Link>
-            .
-          </p>
-          <Note>
             Each route should use the same <IJS>body</IJS> "shape". If one route
             returns a single component while another route return an object, you
             will be making rendering more complicated for yourself.
-          </Note>
-        </Explanation>
+          </p>
+        </Note>
+
         <CodeBlock>
           {`// do NOT do this
 // mixing body shapes complicates rendering
@@ -196,21 +185,19 @@ const routes = prepareRoutes([
       </HashSection>
 
       <HashSection title="Redirect Response" id="redirect-properties">
-        <Explanation>
-          <p>
-            When a route's <IJS>response()</IJS> function returns an object with
-            a{" "}
-            <Link
-              name="Package"
-              params={{ package: "router", version: "v1" }}
-              hash="response"
-            >
-              <IJS>redirectTo</IJS> property
-            </Link>
-            , the router will use it to generate a location object that Curi
-            will automatically redirect to.
-          </p>
-        </Explanation>
+        <p>
+          When a route's <IJS>response()</IJS> function returns an object with a{" "}
+          <Link
+            name="Package"
+            params={{ package: "router", version: "v1" }}
+            hash="response"
+          >
+            <IJS>redirectTo</IJS> property
+          </Link>
+          , the router will use it to generate a location object that Curi will
+          automatically redirect to.
+        </p>
+
         <CodeBlock>
           {`{
   // The redirectTo property provides information on
@@ -219,17 +206,16 @@ const routes = prepareRoutes([
 }`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            You can choose whether or not you want responses with a{" "}
-            <IJS>redirectTo</IJS> property to be emitted. If they are not
-            emitted, then the router will redirect without the application's
-            observers knowing about the redirect. The default behavior is to
-            emit redirects, but this also means that you have to render using
-            the redirect response. The <IJS>{`{ emitRedirects: false }`}</IJS>{" "}
-            option prevents this.
-          </p>
-        </Explanation>
+        <p>
+          You can choose whether or not you want responses with a{" "}
+          <IJS>redirectTo</IJS> property to be emitted. If they are not emitted,
+          then the router will redirect without the application's observers
+          knowing about the redirect. The default behavior is to emit redirects,
+          but this also means that you have to render using the redirect
+          response. The <IJS>{`{ emitRedirects: false }`}</IJS> option prevents
+          this.
+        </p>
+
         <CodeBlock>
           {`const router = curi(history, routes, {
   emitRedirects: false

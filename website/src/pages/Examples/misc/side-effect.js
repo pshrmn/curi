@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   CodeSandboxDemo,
@@ -19,21 +18,18 @@ export default function SideEffectExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            Side effects are observer functions that are run when a new response
-            is created. They are called after other response handlers (observers
-            that were set using <IJS>router.observe()</IJS> and one time
-            functions that were set using <IJS>router.once()</IJS>). They
-            receive the new response and an object with information about the
-            navigation.
-          </p>
+        <p>
+          Side effects are observer functions that are run when a new response
+          is created. They are called after other response handlers (observers
+          that were set using <IJS>router.observe()</IJS> and one time functions
+          that were set using <IJS>router.once()</IJS>). They receive the new
+          response and an object with information about the navigation.
+        </p>
 
-          <p>
-            Side effect functions are registered when creating a router using
-            the <IJS>sideEffects</IJS> property of the options object.
-          </p>
-        </Explanation>
+        <p>
+          Side effect functions are registered when creating a router using the{" "}
+          <IJS>sideEffects</IJS> property of the options object.
+        </p>
 
         <CodeBlock lang="javascript">
           {`import { curi } from '@curi/router';

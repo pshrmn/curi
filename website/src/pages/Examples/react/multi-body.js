@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   Note,
@@ -20,17 +19,17 @@ export default function MultiBodyExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            The <IJS>body</IJS> property of a response doesn't have to be a
-            single component/function; the <IJS>body</IJS> can be anything you
-            want it to be.
-          </p>
-          <p>
-            For example, you might want to provide the main and menu content for
-            a route.
-          </p>
-        </Explanation>
+        <p>
+          The <IJS>body</IJS> property of a response doesn't have to be a single
+          component/function; the <IJS>body</IJS> can be anything you want it to
+          be.
+        </p>
+
+        <p>
+          For example, you might want to provide the main and menu content for a
+          route.
+        </p>
+
         <CodeBlock lang="javascript">
           {`response() {
   return {
@@ -42,15 +41,13 @@ export default function MultiBodyExample() {
 }`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            Another use case is when you have multiple routes that may share the
-            same root component, but may have different nested components. If
-            the root has state that you want preserved when navigating,
-            rendering a common root component means that React will re-use the
-            existing component.
-          </p>
-        </Explanation>
+        <p>
+          Another use case is when you have multiple routes that may share the
+          same root component, but may have different nested components. If the
+          root has state that you want preserved when navigating, rendering a
+          common root component means that React will re-use the existing
+          component.
+        </p>
 
         <CodeBlock lang="javascript">
           {`response() {
@@ -64,14 +61,14 @@ export default function MultiBodyExample() {
 }`}
         </CodeBlock>
 
-        <Explanation>
-          <Note>
+        <Note>
+          <p>
             One thing to remember when attaching multiple components to a route
             is that all of your routes should have the same structure.
             Otherwise, when you render you will have to adapt your code to deal
             with different <IJS>response.body</IJS> layouts.
-          </Note>
-        </Explanation>
+          </p>
+        </Note>
 
         <CodeBlock lang="javascript">
           {`// be consistent, don't use

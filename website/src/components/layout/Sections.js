@@ -19,6 +19,25 @@ const sectionCSS = css`
     }
   }
 
+  @media only screen and (min-width: ${screen.medium}) {
+    max-width: 800px;
+  }
+`;
+
+const hashSectionCSS = css`
+  margin-top: 15px;
+
+  .aside {
+    padding: 5px 10px;
+    border-left: 2px solid $border-green;
+    background: ${color.lightGreen};
+    margin-top: 15px;
+
+    .inline-code {
+      background: ${color.green} !important;
+    }
+  }
+
   .header-link {
     text-decoration: none;
 
@@ -49,20 +68,34 @@ const sectionCSS = css`
   }
 `;
 
-export const HashSection = ({
+export function Plain({
+  children,
+  wrapper: Wrapper = "div",
+  className = "section"
+}) {
+  return (
+    <Wrapper css={sectionCSS} className={className} id={id}>
+      {children}
+    </Wrapper>
+  );
+}
+
+export function HashSection({
   title,
   id,
   children,
   tag: Tag = "h2",
   wrapper: Wrapper = "div",
   className = "section"
-}) => (
-  <Wrapper css={sectionCSS} className={className} id={id}>
-    <Tag className="displaced-header">
-      <Link hash={id} forward={{ className: "header-link" }}>
-        {title}
-      </Link>
-    </Tag>
-    {children}
-  </Wrapper>
-);
+}) {
+  return (
+    <Wrapper css={hashSectionCSS} className={className} id={id}>
+      <Tag className="displaced-header">
+        <Link hash={id} forward={{ className: "header-link" }}>
+          {title}
+        </Link>
+      </Tag>
+      {children}
+    </Wrapper>
+  );
+}

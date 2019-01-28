@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   Cmp,
@@ -20,15 +19,13 @@ export default function AsyncNavExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            If the <Cmp>Link</Cmp>'s <IJS>children</IJS> prop is a
-            render-invoked function, it will be passed a boolean to indicate
-            whether or not it is currently navigating. We can modify what the
-            function returns to render a loading indicator while waiting for the
-            navigation to complete.
-          </p>
-        </Explanation>
+        <p>
+          If the <Cmp>Link</Cmp>'s <IJS>children</IJS> prop is a render-invoked
+          function, it will be passed a boolean to indicate whether or not it is
+          currently navigating. We can modify what the function returns to
+          render a loading indicator while waiting for the navigation to
+          complete.
+        </p>
 
         <CodeBlock lang="jsx">
           {`<Link name="Movie" params={{ id: 'some_movie' }}>

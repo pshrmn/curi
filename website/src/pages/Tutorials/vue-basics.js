@@ -41,11 +41,13 @@ export default function VueBasicsTutorial() {
           to develop this website.
         </p>
         <Note>
-          The instructions here assume that you have NodeJS and NPM > 5.2
-          installed on your computer. If you do not, cannot, or prefer to avoid
-          setup altogether, you can follow along using{" "}
-          <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the
-          boilerplate will be different, but the differences are minor.
+          <p>
+            The instructions here assume that you have NodeJS and NPM > 5.2
+            installed on your computer. If you do not, cannot, or prefer to
+            avoid setup altogether, you can follow along using{" "}
+            <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the
+            boilerplate will be different, but the differences are minor.
+          </p>
         </Note>
         <p>
           Begin by opening a terminal and navigating to the directory where you
@@ -126,11 +128,13 @@ yarn serve`}
           we call that function.
         </p>
         <Note>
-          The history object can be configured with{" "}
-          <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
-            an options object
-          </a>
-          , but we will stick with the defaults.
+          <p>
+            The history object can be configured with{" "}
+            <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
+              an options object
+            </a>
+            , but we will stick with the defaults.
+          </p>
         </Note>
         <CodeBlock lang="javascript" data-line="3,9">
           {`// src/main.js
@@ -148,9 +152,11 @@ new Vue({
 }).$mount('#app')`}
         </CodeBlock>
         <Note>
-          Eslint will complain here because we haven't actually used the new{" "}
-          <IJS>history</IJS> object. We can ignore that warning for now because
-          we'll get rid of it soon enough.
+          <p>
+            Eslint will complain here because we haven't actually used the new{" "}
+            <IJS>history</IJS> object. We can ignore that warning for now
+            because we'll get rid of it soon enough.
+          </p>
         </Note>
       </HashSection>
       <HashSection title="Defining the Routes" id="defining-routes">
@@ -258,14 +264,16 @@ new Vue({
           </tbody>
         </ScrollableTable>
         <Note>
-          The catch all route uses a regular expression syntax to indicate that
-          it should match everything. Curi uses the{" "}
-          <a href="https://github.com/pillarjs/path-to-regexp">
-            <IJS>path-to-regexp</IJS>
-          </a>{" "}
-          package for route matching. We will only be using some of its basic
-          syntax, but you can read its documentation to learn about more
-          advanced path syntax.
+          <p>
+            The catch all route uses a regular expression syntax to indicate
+            that it should match everything. Curi uses the{" "}
+            <a href="https://github.com/pillarjs/path-to-regexp">
+              <IJS>path-to-regexp</IJS>
+            </a>{" "}
+            package for route matching. We will only be using some of its basic
+            syntax, but you can read its documentation to learn about more
+            advanced path syntax.
+          </p>
         </Note>
         <p>
           Inside of the <IJS>src</IJS> directory, we will create a{" "}
@@ -324,8 +332,10 @@ new Vue({
 }).$mount('#app')`}
         </CodeBlock>
         <Note>
-          The Eslint warning has now moved to the <IJS>router</IJS>, but this is
-          still nothing to worry about.
+          <p>
+            The Eslint warning has now moved to the <IJS>router</IJS>, but this
+            is still nothing to worry about.
+          </p>
         </Note>
         <p>
           We will add router support to the Vue application using a plugin. This

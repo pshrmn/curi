@@ -1,24 +1,22 @@
 import React from "react";
 import { InlineJS as IJS } from "../highlight/Inline";
 import { HashSection } from "../layout/Sections";
-import { Explanation, CodeBlock } from "../layout/Groups";
+import { CodeBlock } from "../layout/Groups";
 
 function NPM({ name }) {
   return (
     <React.Fragment>
-      <Explanation>
-        <p>
-          The package can be installed through <IJS>npm</IJS> (you need to have
-          Node & NPM installed).
-        </p>
-      </Explanation>
+      <p>
+        The package can be installed through <IJS>npm</IJS> (you need to have
+        Node & NPM installed).
+      </p>
       <CodeBlock lang="bash">{`npm install @curi/${name}`}</CodeBlock>
     </React.Fragment>
   );
 }
 
-const Unpkg = ({ name, version, globalName }) => (
-  <Explanation>
+function Unpkg({ name, version, globalName }) {
+  return (
     <p>
       Prefer inline scripts? A full (<IJS>.umd.js</IJS>) and minified (
       <IJS>.min.js</IJS>) script is available for every version through{" "}
@@ -26,8 +24,8 @@ const Unpkg = ({ name, version, globalName }) => (
       You can access the package's exports through{" "}
       <IJS>window.{globalName}</IJS>.
     </p>
-  </Explanation>
-);
+  );
+}
 
 export default function Installation({ name, version, globalName, script }) {
   return (

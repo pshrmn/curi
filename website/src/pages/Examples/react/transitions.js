@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   CodeSandboxDemo,
@@ -19,19 +18,17 @@ export default function TransitionsExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            This example uses <IJS>react-transition-group</IJS> to animate
-            navigation transitions.
-          </p>
+        <p>
+          This example uses <IJS>react-transition-group</IJS> to animate
+          navigation transitions.
+        </p>
 
-          <p>
-            The <IJS>location.pathname</IJS> from the <IJS>response</IJS> is
-            used to uniquely identify the content. The <IJS>pathname</IJS> is
-            used instead of the <IJS>key</IJS> so that navigating to the same
-            pathname as the current pathname does not cause a transition.
-          </p>
-        </Explanation>
+        <p>
+          The <IJS>location.pathname</IJS> from the <IJS>response</IJS> is used
+          to uniquely identify the content. The <IJS>pathname</IJS> is used
+          instead of the <IJS>key</IJS> so that navigating to the same pathname
+          as the current pathname does not cause a transition.
+        </p>
 
         <CodeBlock lang="jsx">
           {`function render({ response }) {

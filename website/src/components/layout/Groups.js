@@ -48,4 +48,4 @@ const CodeBlock = ({ children, lang = "javascript", ...rest }) => (
   </StyledCodeBlock>
 );
 
-export { StyledExplanation as Explanation, CodeBlock };
+export { CodeBlock };

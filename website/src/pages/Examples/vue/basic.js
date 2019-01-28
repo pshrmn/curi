@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeSandboxDemo,
   OnGithub
 } from "../../../components/example/common";
@@ -17,12 +16,10 @@ export default function BasicExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            While Vue does have an official router, this project shows how you
-            could use Curi as the router for a Vue project instead.
-          </p>
-        </Explanation>
+        <p>
+          While Vue does have an official router, this project shows how you
+          could use Curi as the router for a Vue project instead.
+        </p>
       </HashSection>
 
       <HashSection title="Live Demo" id="demo">

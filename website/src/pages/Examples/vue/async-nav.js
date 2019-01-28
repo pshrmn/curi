@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   Cmp,
@@ -20,12 +19,10 @@ export default function AsyncNavExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            Use the <Cmp>curi-link</Cmp>'s <IJS>slot</IJS> as scoped-slot so you
-            can know whether or not the link is currently navigating.
-          </p>
-        </Explanation>
+        <p>
+          Use the <Cmp>curi-link</Cmp>'s <IJS>slot</IJS> as scoped-slot so you
+          can know whether or not the link is currently navigating.
+        </p>
 
         <CodeBlock lang="jsx">
           {`<curi-link to="Movie" :params="{ id: 'some_movie' }">

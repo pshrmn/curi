@@ -5,7 +5,6 @@ import {
   About,
   APIBlock,
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   Note,
@@ -18,22 +17,19 @@ export default class RouterPkg extends React.PureComponent {
     return (
       <React.Fragment>
         <About>
-          <Explanation>
-            <p>
-              The <IJS>@curi/router</IJS> package is used to create a router.
-            </p>
-          </Explanation>
+          <p>
+            The <IJS>@curi/router</IJS> package is used to create a router.
+          </p>
         </About>
         <APIBlock>
           <HashSection title="curi" id="curi">
-            <Explanation>
-              <p>
-                The <IJS>curi</IJS> export is a function to create a router. It
-                has two required arguments: a <IJS>history</IJS> object and a{" "}
-                <IJS>routes</IJS> array, and an optional third argument: an{" "}
-                <IJS>options</IJS> object.
-              </p>
-            </Explanation>
+            <p>
+              The <IJS>curi</IJS> export is a function to create a router. It
+              has two required arguments: a <IJS>history</IJS> object and a{" "}
+              <IJS>routes</IJS> array, and an optional third argument: an{" "}
+              <IJS>options</IJS> object.
+            </p>
+
             <CodeBlock>
               {`import { curi } from '@curi/router';
 
@@ -42,22 +38,21 @@ const router = curi(history, routes, options);`}
 
             <HashSection tag="h4" title="Arguments" id="arguments">
               <HashSection tag="h5" title="history" id="history">
-                <Explanation>
-                  <p>
-                    A <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
-                    history object that will power navigation within the
-                    application. The{" "}
-                    <Link
-                      name="Guide"
-                      params={{ slug: "getting-started" }}
-                      hash="history-object"
-                    >
-                      getting started guide
-                    </Link>{" "}
-                    provides more information on how to choose which history
-                    type is right for an application.
-                  </p>
-                </Explanation>
+                <p>
+                  A <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
+                  history object that will power navigation within the
+                  application. The{" "}
+                  <Link
+                    name="Guide"
+                    params={{ slug: "getting-started" }}
+                    hash="history-object"
+                  >
+                    getting started guide
+                  </Link>{" "}
+                  provides more information on how to choose which history type
+                  is right for an application.
+                </p>
+
                 <CodeBlock lang="jsx">
                   {`import Browser from "@hickory/browser";
 
@@ -67,15 +62,14 @@ const router = curi(history, routes);`}
               </HashSection>
 
               <HashSection tag="h5" title="routes" id="routes">
-                <Explanation>
-                  <p>
-                    An array of prepared{" "}
-                    <Link name="Guide" params={{ slug: "routes" }}>
-                      route
-                    </Link>{" "}
-                    objects describing all valid routes in the application.
-                  </p>
-                </Explanation>
+                <p>
+                  An array of prepared{" "}
+                  <Link name="Guide" params={{ slug: "routes" }}>
+                    route
+                  </Link>{" "}
+                  objects describing all valid routes in the application.
+                </p>
+
                 <CodeBlock lang="jsx">
                   {`const routes = prepareRoutes([
   { name: "Home", path: "" },
@@ -93,24 +87,23 @@ const router = curi(history, routes);`}
                 </p>
                 <ul>
                   <li>
-                    <Explanation>
-                      <p>
-                        <IJS>route</IJS> - An array of{" "}
-                        <Link
-                          name="Guide"
-                          params={{ slug: "route-interactions" }}
-                        >
-                          route interactions
-                        </Link>
-                        . These are functions for interacting with routes based
-                        on their <IJS>name</IJS>.
-                      </p>
-                      <p>
-                        The <IJS>pathname</IJS> interaction is included by
-                        default; any other interactions are provided through
-                        this array.
-                      </p>
-                    </Explanation>
+                    <p>
+                      <IJS>route</IJS> - An array of{" "}
+                      <Link
+                        name="Guide"
+                        params={{ slug: "route-interactions" }}
+                      >
+                        route interactions
+                      </Link>
+                      . These are functions for interacting with routes based on
+                      their <IJS>name</IJS>.
+                    </p>
+                    <p>
+                      The <IJS>pathname</IJS> interaction is included by
+                      default; any other interactions are provided through this
+                      array.
+                    </p>
+
                     <CodeBlock>
                       {`import active from "@curi/route-active";
 import ancestors from "@curi/route-ancestors";
@@ -122,12 +115,11 @@ const router = curi(history, routes, {
 });`}
                     </CodeBlock>
 
-                    <Explanation>
-                      <p>
-                        Route interactions are called via the router's{" "}
-                        <IJS>route</IJS> object.
-                      </p>
-                    </Explanation>
+                    <p>
+                      Route interactions are called via the router's{" "}
+                      <IJS>route</IJS> object.
+                    </p>
+
                     <CodeBlock>
                       {`router.route.active("Home");
 // returns true when location.pathname = "/"
@@ -137,40 +129,39 @@ router.route.pathname("Home");
                     </CodeBlock>
                   </li>
                   <li>
-                    <Explanation>
-                      <p>
-                        <IJS>sideEffects</IJS> - An array of{" "}
-                        <Link name="Guide" params={{ slug: "side-effects" }}>
-                          side effect
-                        </Link>{" "}
-                        objects.
-                      </p>
-                      <ScrollableTable>
-                        <thead>
-                          <tr>
-                            <th>property</th>
-                            <th>description</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>effect</td>
-                            <td>
-                              An observer that will be called whenever a
-                              response is generated.
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>after</td>
-                            <td>
-                              (default <IJS>false</IJS>) controls whether the
-                              side effect is called before or after non-side
-                              effect observers.
-                            </td>
-                          </tr>
-                        </tbody>
-                      </ScrollableTable>
-                    </Explanation>
+                    <p>
+                      <IJS>sideEffects</IJS> - An array of{" "}
+                      <Link name="Guide" params={{ slug: "side-effects" }}>
+                        side effect
+                      </Link>{" "}
+                      objects.
+                    </p>
+                    <ScrollableTable>
+                      <thead>
+                        <tr>
+                          <th>property</th>
+                          <th>description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>effect</td>
+                          <td>
+                            An observer that will be called whenever a response
+                            is generated.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>after</td>
+                          <td>
+                            (default <IJS>false</IJS>) controls whether the side
+                            effect is called before or after non-side effect
+                            observers.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ScrollableTable>
+
                     <CodeBlock>
                       {`import scroll from "@curi/side-effect-scroll";
 
@@ -180,18 +171,17 @@ const router = curi(history, routes, {
                     </CodeBlock>
                   </li>
                   <li>
-                    <Explanation>
-                      <p>
-                        <IJS>external</IJS> - Values that should be accessible
-                        to a route's <IJS>resolve</IJS> functions and{" "}
-                        <IJS>response()</IJS> function.
-                      </p>
-                      <p>
-                        Using <IJS>external</IJS> allows you to access APIs,
-                        data, etc. without having to be able to import it in the
-                        module where the routes are defined.
-                      </p>
-                    </Explanation>
+                    <p>
+                      <IJS>external</IJS> - Values that should be accessible to
+                      a route's <IJS>resolve</IJS> functions and{" "}
+                      <IJS>response()</IJS> function.
+                    </p>
+                    <p>
+                      Using <IJS>external</IJS> allows you to access APIs, data,
+                      etc. without having to be able to import it in the module
+                      where the routes are defined.
+                    </p>
+
                     <CodeBlock>
                       {`const client = new ApolloClient();
 const router = curi(history, routes, {
@@ -214,16 +204,15 @@ const router = curi(history, routes, {
                     </CodeBlock>
                   </li>
                   <li>
-                    <Explanation>
-                      <p>
-                        <IJS>emitRedirects</IJS> - When <IJS>false</IJS>{" "}
-                        (default is <IJS>true</IJS>), response objects with the{" "}
-                        <IJS>redirectTo</IJS> property{" "}
-                        <strong>will not be emitted</strong> to observers. This
-                        can be useful for avoiding an extra render, but should
-                        not be used on the server.
-                      </p>
-                    </Explanation>
+                    <p>
+                      <IJS>emitRedirects</IJS> - When <IJS>false</IJS> (default
+                      is <IJS>true</IJS>), response objects with the{" "}
+                      <IJS>redirectTo</IJS> property{" "}
+                      <strong>will not be emitted</strong> to observers. This
+                      can be useful for avoiding an extra render, but should not
+                      be used on the server.
+                    </p>
+
                     <CodeBlock>
                       {`const routes = prepareRoutes([
   {
@@ -253,26 +242,23 @@ const router = curi(history, routes, {
                     </CodeBlock>
                   </li>
                   <li>
-                    <Explanation>
-                      <p>
-                        <IJS>automaticRedirects</IJS> - When the initially
-                        matched route is synchronous and redirects, the router's
-                        automatic redirect will occur before any response
-                        handlers (registered with <IJS>once()</IJS> or{" "}
-                        <IJS>observe()</IJS>) are called. This means that they
-                        will be called with the response for the location that
-                        was redirected to instead of the initial location. This
-                        is fine on the client side, but causes issues with
-                        server side rendering. When{" "}
-                        <IJS>automaticRedirects</IJS> is <IJS>false</IJS>, the
-                        automatic redirect will not happen.{" "}
-                        <strong>
-                          Setting <IJS>automaticRedirects</IJS> to{" "}
-                          <IJS>false</IJS> is recommend for server side
-                          rendering.
-                        </strong>
-                      </p>
-                    </Explanation>
+                    <p>
+                      <IJS>automaticRedirects</IJS> - When the initially matched
+                      route is synchronous and redirects, the router's automatic
+                      redirect will occur before any response handlers
+                      (registered with <IJS>once()</IJS> or <IJS>observe()</IJS>
+                      ) are called. This means that they will be called with the
+                      response for the location that was redirected to instead
+                      of the initial location. This is fine on the client side,
+                      but causes issues with server side rendering. When{" "}
+                      <IJS>automaticRedirects</IJS> is <IJS>false</IJS>, the
+                      automatic redirect will not happen.{" "}
+                      <strong>
+                        Setting <IJS>automaticRedirects</IJS> to{" "}
+                        <IJS>false</IJS> is recommend for server side rendering.
+                      </strong>
+                    </p>
+
                     <CodeBlock>
                       {`const routes = prepareRoutes([
   {
@@ -303,24 +289,23 @@ router.once(({ response }) => {
                     </CodeBlock>
                   </li>
                   <li>
-                    <Explanation>
-                      <p>
-                        <IJS>pathnameOptions</IJS> - Curi uses{" "}
-                        <a href="https://github.com/pillarjs/path-to-regexp">
-                          <IJS>path-to-regexp</IJS>
-                        </a>{" "}
-                        to handle route matching and pathname generation.{" "}
-                        <IJS>path-to-regexp</IJS> can take a custom{" "}
-                        <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp">
-                          <IJS>encode</IJS>
-                        </a>{" "}
-                        function for creating pathnames, which you can specify
-                        with this options.{" "}
-                        <strong>
-                          You most likely will never need to use this.
-                        </strong>
-                      </p>
-                    </Explanation>
+                    <p>
+                      <IJS>pathnameOptions</IJS> - Curi uses{" "}
+                      <a href="https://github.com/pillarjs/path-to-regexp">
+                        <IJS>path-to-regexp</IJS>
+                      </a>{" "}
+                      to handle route matching and pathname generation.{" "}
+                      <IJS>path-to-regexp</IJS> can take a custom{" "}
+                      <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp">
+                        <IJS>encode</IJS>
+                      </a>{" "}
+                      function for creating pathnames, which you can specify
+                      with this options.{" "}
+                      <strong>
+                        You most likely will never need to use this.
+                      </strong>
+                    </p>
+
                     <CodeBlock>
                       {`const router = curi(history, routes, {
   pathOptions: {
@@ -339,74 +324,71 @@ router.once(({ response }) => {
                 rendering your application.
               </p>
               <HashSection tag="h5" title="navigate(details)" id="navigate">
-                <Explanation>
-                  <p>
-                    The <IJS>navigate()</IJS> method is used to navigate
-                    programmatically. It takes a <IJS>details</IJS> object with
-                    the details of where you want to navigate to as well as the{" "}
-                    <IJS>method</IJS> of navigation.
-                  </p>
-                  <ScrollableTable>
-                    <thead>
-                      <tr>
-                        <th>property</th>
-                        <th>description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>name</td>
-                        <td>The name of the route to navigate to</td>
-                      </tr>
-                      <tr>
-                        <td>params</td>
-                        <td>
-                          An object of any route params for the named route (and
-                          any of its ancestors that require params).
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>hash</td>
-                        <td>The hash string of the location to navigate to.</td>
-                      </tr>
-                      <tr>
-                        <td>query</td>
-                        <td>The query value of the location to navigate to.</td>
-                      </tr>
-                      <tr>
-                        <td>state</td>
-                        <td>
-                          Any serializable state to attach to the location.
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>method</td>
-                        <td>
-                          How to navigate. <IJS>"PUSH"</IJS> appends the new
-                          location after the current one. <IJS>"REPLACE"</IJS>{" "}
-                          replaces the current location. <IJS>"ANCHOR"</IJS> is
-                          the default method and acts like clicking a link. This
-                          behavior is a mix of <IJS>"PUSH"</IJS> and{" "}
-                          <IJS>"REPLACE"</IJS> where the current location is
-                          replaced if the new location has the exact same URL.
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>finished</td>
-                        <td>
-                          A function to call once the navigation has finished.
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>cancelled</td>
-                        <td>
-                          A function to call if the navigation is superseded by
-                          another navigation.
-                        </td>
-                      </tr>
-                    </tbody>
-                  </ScrollableTable>
-                </Explanation>
+                <p>
+                  The <IJS>navigate()</IJS> method is used to navigate
+                  programmatically. It takes a <IJS>details</IJS> object with
+                  the details of where you want to navigate to as well as the{" "}
+                  <IJS>method</IJS> of navigation.
+                </p>
+                <ScrollableTable>
+                  <thead>
+                    <tr>
+                      <th>property</th>
+                      <th>description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>name</td>
+                      <td>The name of the route to navigate to</td>
+                    </tr>
+                    <tr>
+                      <td>params</td>
+                      <td>
+                        An object of any route params for the named route (and
+                        any of its ancestors that require params).
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>hash</td>
+                      <td>The hash string of the location to navigate to.</td>
+                    </tr>
+                    <tr>
+                      <td>query</td>
+                      <td>The query value of the location to navigate to.</td>
+                    </tr>
+                    <tr>
+                      <td>state</td>
+                      <td>Any serializable state to attach to the location.</td>
+                    </tr>
+                    <tr>
+                      <td>method</td>
+                      <td>
+                        How to navigate. <IJS>"PUSH"</IJS> appends the new
+                        location after the current one. <IJS>"REPLACE"</IJS>{" "}
+                        replaces the current location. <IJS>"ANCHOR"</IJS> is
+                        the default method and acts like clicking a link. This
+                        behavior is a mix of <IJS>"PUSH"</IJS> and{" "}
+                        <IJS>"REPLACE"</IJS> where the current location is
+                        replaced if the new location has the exact same URL.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>finished</td>
+                      <td>
+                        A function to call once the navigation has finished.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>cancelled</td>
+                      <td>
+                        A function to call if the navigation is superseded by
+                        another navigation.
+                      </td>
+                    </tr>
+                  </tbody>
+                </ScrollableTable>
+
                 <CodeBlock>
                   {`const routes = prepareRoutes([
   {
@@ -429,48 +411,47 @@ router.navigate({
                 </CodeBlock>
               </HashSection>
               <HashSection tag="h5" title="once(fn, options)" id="once">
-                <Explanation>
-                  <p>
-                    The <IJS>once()</IJS> method takes a response handler
-                    function. If a response already exists, the function will be
-                    called immediately. Otherwise, the function will be called
-                    once a new response is created. The{" "}
-                    <IJS>{`\{ initial: false \}`}</IJS> option can be used to
-                    prevent an immediate call even if a response already exists.
-                  </p>
-                  <ScrollableTable>
-                    <thead>
-                      <tr>
-                        <th>property</th>
-                        <th>description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>response</td>
-                        <td>The generated response object.</td>
-                      </tr>
-                      <tr>
-                        <td>navigation</td>
-                        <td>
-                          The navigation's <IJS>action</IJS> (<IJS>PUSH</IJS>,{" "}
-                          <IJS>REPLACE</IJS>, or <IJS>POP</IJS>) and the{" "}
-                          <IJS>previous</IJS> response object.
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>router</td>
-                        <td>The Curi router</td>
-                      </tr>
-                    </tbody>
-                  </ScrollableTable>
+                <p>
+                  The <IJS>once()</IJS> method takes a response handler
+                  function. If a response already exists, the function will be
+                  called immediately. Otherwise, the function will be called
+                  once a new response is created. The{" "}
+                  <IJS>{`\{ initial: false \}`}</IJS> option can be used to
+                  prevent an immediate call even if a response already exists.
+                </p>
+                <ScrollableTable>
+                  <thead>
+                    <tr>
+                      <th>property</th>
+                      <th>description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>response</td>
+                      <td>The generated response object.</td>
+                    </tr>
+                    <tr>
+                      <td>navigation</td>
+                      <td>
+                        The navigation's <IJS>action</IJS> (<IJS>PUSH</IJS>,{" "}
+                        <IJS>REPLACE</IJS>, or <IJS>POP</IJS>) and the{" "}
+                        <IJS>previous</IJS> response object.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>router</td>
+                      <td>The Curi router</td>
+                    </tr>
+                  </tbody>
+                </ScrollableTable>
 
-                  <p>
-                    When a matched route is async (it has <IJS>resolve</IJS>{" "}
-                    functions), a response will not be created until the async
-                    function(s) have resolved.
-                  </p>
-                </Explanation>
+                <p>
+                  When a matched route is async (it has <IJS>resolve</IJS>{" "}
+                  functions), a response will not be created until the async
+                  function(s) have resolved.
+                </p>
+
                 <CodeBlock>
                   {`router.once(({ response }) => {
   // render the application based on the response
@@ -478,31 +459,30 @@ router.navigate({
                 </CodeBlock>
 
                 <HashSection tag="h6" title="options" id="once-options">
-                  <Explanation>
-                    <div style={{ overflowX: "scroll" }}>
-                      <ScrollableTable>
-                        <thead>
-                          <tr>
-                            <th>option</th>
-                            <th>default</th>
-                            <th>description</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>initial</td>
-                            <td>true</td>
-                            <td>
-                              When true, the function will be called immediately
-                              if a response exists. When false, the response
-                              function will not be called until the next
-                              response is emitted.
-                            </td>
-                          </tr>
-                        </tbody>
-                      </ScrollableTable>
-                    </div>
-                  </Explanation>
+                  <div style={{ overflowX: "scroll" }}>
+                    <ScrollableTable>
+                      <thead>
+                        <tr>
+                          <th>option</th>
+                          <th>default</th>
+                          <th>description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>initial</td>
+                          <td>true</td>
+                          <td>
+                            When true, the function will be called immediately
+                            if a response exists. When false, the response
+                            function will not be called until the next response
+                            is emitted.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ScrollableTable>
+                  </div>
+
                   <CodeBlock>
                     {`router.once(responseHandler, {
   initial: false
@@ -511,48 +491,47 @@ router.navigate({
                 </HashSection>
               </HashSection>
               <HashSection tag="h5" title="observe(fn, options)" id="observe">
-                <Explanation>
-                  <p>
-                    The <IJS>observe()</IJS> method takes a response handler
-                    function. The response handler will be called every time a
-                    new response is emitted (and it a response already exists,
-                    the function will be called immediately). The{" "}
-                    <IJS>{`\{ initial: false \}`}</IJS> option can be used to
-                    prevent an immediate call even if a response already exists.
-                  </p>
-                  <ScrollableTable>
-                    <thead>
-                      <tr>
-                        <th>property</th>
-                        <th>description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>response</td>
-                        <td>The generated response object.</td>
-                      </tr>
-                      <tr>
-                        <td>navigation</td>
-                        <td>
-                          The navigation's <IJS>action</IJS> (<IJS>PUSH</IJS>,{" "}
-                          <IJS>REPLACE</IJS>, or <IJS>POP</IJS>) and the{" "}
-                          <IJS>previous</IJS> response object.
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>router</td>
-                        <td>The Curi router</td>
-                      </tr>
-                    </tbody>
-                  </ScrollableTable>
+                <p>
+                  The <IJS>observe()</IJS> method takes a response handler
+                  function. The response handler will be called every time a new
+                  response is emitted (and it a response already exists, the
+                  function will be called immediately). The{" "}
+                  <IJS>{`\{ initial: false \}`}</IJS> option can be used to
+                  prevent an immediate call even if a response already exists.
+                </p>
+                <ScrollableTable>
+                  <thead>
+                    <tr>
+                      <th>property</th>
+                      <th>description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>response</td>
+                      <td>The generated response object.</td>
+                    </tr>
+                    <tr>
+                      <td>navigation</td>
+                      <td>
+                        The navigation's <IJS>action</IJS> (<IJS>PUSH</IJS>,{" "}
+                        <IJS>REPLACE</IJS>, or <IJS>POP</IJS>) and the{" "}
+                        <IJS>previous</IJS> response object.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>router</td>
+                      <td>The Curi router</td>
+                    </tr>
+                  </tbody>
+                </ScrollableTable>
 
-                  <p>
-                    When a matched route is async (it has <IJS>resolve</IJS>{" "}
-                    functions), a response will not be created until the async
-                    function(s) have resolved.
-                  </p>
-                </Explanation>
+                <p>
+                  When a matched route is async (it has <IJS>resolve</IJS>{" "}
+                  functions), a response will not be created until the async
+                  function(s) have resolved.
+                </p>
+
                 <CodeBlock>
                   {`router.observe(({ response }) => {
   // render the application based on the response
@@ -560,43 +539,41 @@ router.navigate({
                 </CodeBlock>
 
                 <HashSection tag="h6" title="options" id="observe-options">
-                  <Explanation>
-                    <div style={{ overflowX: "scroll" }}>
-                      <ScrollableTable>
-                        <thead>
-                          <tr>
-                            <th>option</th>
-                            <th>default</th>
-                            <th>description</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>initial</td>
-                            <td>true</td>
-                            <td>
-                              When true, the function will be called immediately
-                              if a response exists. When false, the response
-                              function will not be called until the next
-                              response is emitted.
-                            </td>
-                          </tr>
-                        </tbody>
-                      </ScrollableTable>
-                    </div>
-                  </Explanation>
+                  <div style={{ overflowX: "scroll" }}>
+                    <ScrollableTable>
+                      <thead>
+                        <tr>
+                          <th>option</th>
+                          <th>default</th>
+                          <th>description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>initial</td>
+                          <td>true</td>
+                          <td>
+                            When true, the function will be called immediately
+                            if a response exists. When false, the response
+                            function will not be called until the next response
+                            is emitted.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ScrollableTable>
+                  </div>
+
                   <CodeBlock>
                     {`router.observe(responseHandler, {
   initial: false
 });`}
                   </CodeBlock>
 
-                  <Explanation>
-                    <p>
-                      <IJS>observe()</IJS> returns a function to stop calling
-                      the response handler function for new responses.
-                    </p>
-                  </Explanation>
+                  <p>
+                    <IJS>observe()</IJS> returns a function to stop calling the
+                    response handler function for new responses.
+                  </p>
+
                   <CodeBlock>
                     {`const stopObserving = router.observe(
   () => {...}
@@ -610,28 +587,27 @@ stopObserving();
               </HashSection>
 
               <HashSection tag="h5" title="cancel(fn)" id="cancel-property">
-                <Explanation>
-                  <p>
-                    With asynchronous routes, after a user begins navigation,
-                    but before the route's asynchronous actions have finished,
-                    the user does not have a good way to cancel the navigation.
-                    They can either refresh the page (causing a full reload) or
-                    click a link with the same URL as the current location, but
-                    neither of these are intuitive or ideal.
-                  </p>
-                  <p>
-                    <IJS>cancel()</IJS> takes an observer function that will be
-                    called when navigation starts and when the navigation is
-                    finished. When the navigation starts, the observer function
-                    will be given a function to cancel the navigation. When the
-                    navigation finishes, the function will be called with{" "}
-                    <IJS>undefined</IJS>.
-                  </p>
-                  <p>
-                    Calling <IJS>cancel()</IJS> returns a function to stop
-                    observing.
-                  </p>
-                </Explanation>
+                <p>
+                  With asynchronous routes, after a user begins navigation, but
+                  before the route's asynchronous actions have finished, the
+                  user does not have a good way to cancel the navigation. They
+                  can either refresh the page (causing a full reload) or click a
+                  link with the same URL as the current location, but neither of
+                  these are intuitive or ideal.
+                </p>
+                <p>
+                  <IJS>cancel()</IJS> takes an observer function that will be
+                  called when navigation starts and when the navigation is
+                  finished. When the navigation starts, the observer function
+                  will be given a function to cancel the navigation. When the
+                  navigation finishes, the function will be called with{" "}
+                  <IJS>undefined</IJS>.
+                </p>
+                <p>
+                  Calling <IJS>cancel()</IJS> returns a function to stop
+                  observing.
+                </p>
+
                 <CodeBlock>
                   {`const stopCancelling = router.cancel(fn => {
   if (fn === undefined) {
@@ -644,17 +620,18 @@ stopObserving();
               </HashSection>
 
               <HashSection tag="h5" title="current()" id="current-property">
-                <Explanation>
+                <p>
+                  The <IJS>router.current()</IJS> method returns the current{" "}
+                  <IJS>response</IJS> and <IJS>navigation</IJS> objects.
+                </p>
+                <Note>
                   <p>
-                    The <IJS>router.current()</IJS> method returns the current{" "}
-                    <IJS>response</IJS> and <IJS>navigation</IJS> objects.
-                  </p>
-                  <Note>
                     If you call <IJS>router.current()</IJS> before the initial
                     response has been emitted, the <IJS>response</IJS> and{" "}
                     <IJS>navigation</IJS> properties will be <IJS>null</IJS>.
-                  </Note>
-                </Explanation>
+                  </p>
+                </Note>
+
                 <CodeBlock>
                   {`const router = curi(history, routes);
 const tooSoon = router.current();
@@ -670,30 +647,26 @@ router.once(({ response, navigation }) => {
               </HashSection>
 
               <HashSection tag="h5" title="route" id="router-route">
-                <Explanation>
-                  <p>
-                    The router's{" "}
-                    <Link name="Guide" params={{ slug: "route-interactions" }}>
-                      route interactions
-                    </Link>{" "}
-                    are accessed through the <IJS>route</IJS> property. These
-                    are used to interact with routes using their names.
-                  </p>
-                </Explanation>
+                <p>
+                  The router's{" "}
+                  <Link name="Guide" params={{ slug: "route-interactions" }}>
+                    route interactions
+                  </Link>{" "}
+                  are accessed through the <IJS>route</IJS> property. These are
+                  used to interact with routes using their names.
+                </p>
 
                 <HashSection
                   tag="h6"
                   title="pathname"
                   id="pathname-interaction"
                 >
-                  <Explanation>
-                    <p>
-                      Curi includes one built-in interaction,{" "}
-                      <IJS>pathname</IJS>, which generates location pathnames
-                      using the name of a route and an optional object
-                      containing any necessary params.
-                    </p>
-                  </Explanation>
+                  <p>
+                    Curi includes one built-in interaction, <IJS>pathname</IJS>,
+                    which generates location pathnames using the name of a route
+                    and an optional object containing any necessary params.
+                  </p>
+
                   <CodeBlock>
                     {`const routes = prepareRoutes([
   { name: 'User', path: 'user/:id' }
@@ -709,17 +682,16 @@ const userPathname = router.route.pathname(
               </HashSection>
 
               <HashSection tag="h5" title="refresh()" id="refresh-property">
-                <Explanation>
-                  <p>
-                    The <IJS>refresh()</IJS> function takes an array of new
-                    routes, which will replace the existing routes. The router
-                    will emit a new response based on the current location.
-                  </p>
-                  <p>
-                    The function can be called without any arguments and it will
-                    emit a response using the existing routes.
-                  </p>
-                </Explanation>
+                <p>
+                  The <IJS>refresh()</IJS> function takes an array of new
+                  routes, which will replace the existing routes. The router
+                  will emit a new response based on the current location.
+                </p>
+                <p>
+                  The function can be called without any arguments and it will
+                  emit a response using the existing routes.
+                </p>
+
                 <CodeBlock>
                   {`const oldRoutes = prepareRoutes([...]);
 const newRoutes = prepareRoutes([...]);
@@ -733,25 +705,22 @@ router.refresh(newRoutes);
               </HashSection>
 
               <HashSection tag="h5" title="history" id="history-property">
-                <Explanation>
-                  <p>
-                    The route's history object, in case you need to interact
-                    directly with that.
-                  </p>
-                </Explanation>
+                <p>
+                  The route's history object, in case you need to interact
+                  directly with that.
+                </p>
               </HashSection>
             </HashSection>
           </HashSection>
 
           <HashSection title="prepareRoutes" id="prepareRoutes">
-            <Explanation>
-              <p>
-                The <IJS>prepareRoutes()</IJS> export is used to build the
-                routes for Curi. This will pre-compile paths for location
-                matching and pathname building, which is particularly useful for
-                server rendering.
-              </p>
-            </Explanation>
+            <p>
+              The <IJS>prepareRoutes()</IJS> export is used to build the routes
+              for Curi. This will pre-compile paths for location matching and
+              pathname building, which is particularly useful for server
+              rendering.
+            </p>
+
             <CodeBlock>
               {`import { prepareRoutes } from '@curi/router';
 
@@ -761,20 +730,18 @@ const routes = prepareRoutes([
   { name: "Not Found", path: "(.*)" }
 ]);`}
             </CodeBlock>
-            <Explanation>
-              <Warning>
-                Passing a non-prepared routes array to <IJS>curi()</IJS> is
-                still supported, but deprecated and will be removed in the next
-                major version.
-              </Warning>
-            </Explanation>
+
+            <Warning>
+              Passing a non-prepared routes array to <IJS>curi()</IJS> is still
+              supported, but deprecated and will be removed in the next major
+              version.
+            </Warning>
           </HashSection>
 
           <HashSection title="Route properties" id="route-properties">
             <HashSection title="route.name" id="name" tag="h3">
-              <Explanation>
-                <p>A string, this must be unique for every route.</p>
-              </Explanation>
+              <p>A string, this must be unique for every route.</p>
+
               <CodeBlock>
                 {`[
   { name: 'Home' },
@@ -785,37 +752,36 @@ const routes = prepareRoutes([
             </HashSection>
 
             <HashSection title="route.path" id="path" tag="h3">
-              <Explanation>
-                <p>
-                  A string pattern describing what the route matches. Whenever
-                  the router receives a new location, it will loop through the
-                  known route paths to determine which one matches the new
-                  location's <IJS>pathname</IJS> the best.
-                </p>
-                <p>
-                  Curi uses
-                  <a href="https://github.com/pillarjs/path-to-regexp#parameters">
-                    <IJS>path-to-regexp</IJS>
-                  </a>{" "}
-                  for paths, which enables routes to have
-                  <a href="https://github.com/pillarjs/path-to-regexp#parameters">
-                    path parameters
-                  </a>
-                  . When a route with parameters matches a location, the
-                  parameters will be be parsed from the location's{" "}
-                  <IJS>pathname</IJS>.
-                </p>
-                <p>
-                  <IJS>path</IJS> strings should <strong>not</strong> have a
-                  leading slash.
-                </p>
-                <Warning>
-                  <IJS>path-to-regexp</IJS> supports arrays and RegExps, but
-                  Curi only supports string paths. This is because Curi uses{" "}
-                  <IJS>path-to-regexp</IJS> to generate pathnames from a route's
-                  name, which it can only do from strings paths.
-                </Warning>
-              </Explanation>
+              <p>
+                A string pattern describing what the route matches. Whenever the
+                router receives a new location, it will loop through the known
+                route paths to determine which one matches the new location's{" "}
+                <IJS>pathname</IJS> the best.
+              </p>
+              <p>
+                Curi uses
+                <a href="https://github.com/pillarjs/path-to-regexp#parameters">
+                  <IJS>path-to-regexp</IJS>
+                </a>{" "}
+                for paths, which enables routes to have
+                <a href="https://github.com/pillarjs/path-to-regexp#parameters">
+                  path parameters
+                </a>
+                . When a route with parameters matches a location, the
+                parameters will be be parsed from the location's{" "}
+                <IJS>pathname</IJS>.
+              </p>
+              <p>
+                <IJS>path</IJS> strings should <strong>not</strong> have a
+                leading slash.
+              </p>
+              <Warning>
+                <IJS>path-to-regexp</IJS> supports arrays and RegExps, but Curi
+                only supports string paths. This is because Curi uses{" "}
+                <IJS>path-to-regexp</IJS> to generate pathnames from a route's
+                name, which it can only do from strings paths.
+              </Warning>
+
               <CodeBlock>
                 {`[
   { name: 'Home', path: '' },
@@ -831,37 +797,38 @@ const routes = prepareRoutes([
             </HashSection>
 
             <HashSection title="route.resolve" id="resolve" tag="h3">
-              <Explanation>
+              <p>
+                The <IJS>resolve</IJS> object groups async functions that will
+                be called when the route matches.
+              </p>
+              <p>
+                A route with any <IJS>resolve</IJS> functions is asynchronous,
+                while one with no <IJS>resolve</IJS> functions is synchronous.
+                You can read more about this is the{" "}
+                <Link name="Guide" params={{ slug: "sync-or-async" }}>
+                  sync or async
+                </Link>{" "}
+                guide.
+              </p>
+              <p>
+                <IJS>resolve</IJS> functions are called every time that a route
+                matches the current location.
+              </p>
+              <p>
+                <IJS>resolve</IJS> functions will be passed an object with the
+                matched route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
+                <IJS>partials</IJS>, and <IJS>location</IJS>.
+              </p>
+              <Note>
                 <p>
-                  The <IJS>resolve</IJS> object groups async functions that will
-                  be called when the route matches.
-                </p>
-                <p>
-                  A route with any <IJS>resolve</IJS> functions is asynchronous,
-                  while one with no <IJS>resolve</IJS> functions is synchronous.
-                  You can read more about this is the{" "}
-                  <Link name="Guide" params={{ slug: "sync-or-async" }}>
-                    sync or async
-                  </Link>{" "}
-                  guide.
-                </p>
-                <p>
-                  <IJS>resolve</IJS> functions are called every time that a
-                  route matches the current location.
-                </p>
-                <p>
-                  <IJS>resolve</IJS> functions will be passed an object with the
-                  matched route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
-                  <IJS>partials</IJS>, and <IJS>location</IJS>.
-                </p>
-                <Note>
                   You should not perform side effects (e.g. passing the loaded
                   data to a Redux store) in <IJS>resolve</IJS> functions because
                   it is possible that navigating to the route might be
                   cancelled. If you must perform side effects for a route, you
                   should do so in <IJS>response()</IJS>.
-                </Note>
-              </Explanation>
+                </p>
+              </Note>
+
               <CodeBlock>
                 {`const about = {
   name: 'About',
@@ -874,25 +841,22 @@ const routes = prepareRoutes([
               </CodeBlock>
             </HashSection>
             <HashSection title="route.response()" id="response">
-              <Explanation>
-                <p>
-                  A function for modifying the response object. This returns an
-                  object whose properties will be merged with the matched route
-                  properties to create the "final" response.
-                </p>
-                <p>
-                  Only valid properties will be merged onto the response;
-                  everything else will be ignored. The valid properties are:
-                </p>
-              </Explanation>
+              <p>
+                A function for modifying the response object. This returns an
+                object whose properties will be merged with the matched route
+                properties to create the "final" response.
+              </p>
+              <p>
+                Only valid properties will be merged onto the response;
+                everything else will be ignored. The valid properties are:
+              </p>
 
               <ol>
                 <li>
-                  <Explanation>
-                    <p>
-                      <IJS>body</IJS> - This is usually what you will render.
-                    </p>
-                  </Explanation>
+                  <p>
+                    <IJS>body</IJS> - This is usually what you will render.
+                  </p>
+
                   <CodeBlock>
                     {`import Home from "./components/Home";
 const routes = prepareRoutes([
@@ -909,14 +873,13 @@ const routes = prepareRoutes([
                   </CodeBlock>
                 </li>
                 <li>
-                  <Explanation>
-                    <p>
-                      <IJS>status</IJS> - A number. This is useful for redirects
-                      or locations caught by your catch-all route while using
-                      server-side rendering. The default status value is{" "}
-                      <IJS>200</IJS>.
-                    </p>
-                  </Explanation>
+                  <p>
+                    <IJS>status</IJS> - A number. This is useful for redirects
+                    or locations caught by your catch-all route while using
+                    server-side rendering. The default status value is{" "}
+                    <IJS>200</IJS>.
+                  </p>
+
                   <CodeBlock>
                     {`{
   response(){
@@ -930,13 +893,12 @@ const routes = prepareRoutes([
                   </CodeBlock>
                 </li>
                 <li>
-                  <Explanation>
-                    <p>
-                      <IJS>error</IJS> - If an error occurs with the route's{" "}
-                      <IJS>resolve</IJS> methods, you might want to attach an
-                      error message to the response.
-                    </p>
-                  </Explanation>
+                  <p>
+                    <IJS>error</IJS> - If an error occurs with the route's{" "}
+                    <IJS>resolve</IJS> methods, you might want to attach an
+                    error message to the response.
+                  </p>
+
                   <CodeBlock>
                     {`{
   resolve: {
@@ -950,11 +912,10 @@ const routes = prepareRoutes([
                   </CodeBlock>
                 </li>
                 <li>
-                  <Explanation>
-                    <p>
-                      <IJS>data</IJS> - Anything you want it to be.
-                    </p>
-                  </Explanation>
+                  <p>
+                    <IJS>data</IJS> - Anything you want it to be.
+                  </p>
+
                   <CodeBlock>
                     {`{
   response() {
@@ -965,13 +926,12 @@ const routes = prepareRoutes([
                   </CodeBlock>
                 </li>
                 <li>
-                  <Explanation>
-                    <p>
-                      <IJS>title</IJS> - This can be used with{" "}
-                      <IJS>@curi/side-effect-title</IJS> to update the page's{" "}
-                      <IJS>document.title</IJS>.
-                    </p>
-                  </Explanation>
+                  <p>
+                    <IJS>title</IJS> - This can be used with{" "}
+                    <IJS>@curi/side-effect-title</IJS> to update the page's{" "}
+                    <IJS>document.title</IJS>.
+                  </p>
+
                   <CodeBlock>
                     {`{
   response({ params }) {
@@ -983,20 +943,19 @@ const routes = prepareRoutes([
                   </CodeBlock>
                 </li>
                 <li>
-                  <Explanation>
-                    <p>
-                      <IJS>redirectTo</IJS> - An object with the <IJS>name</IJS>{" "}
-                      of the route to redirect to, <IJS>params</IJS> (if
-                      required), and optional <IJS>hash</IJS>, <IJS>query</IJS>,
-                      and <IJS>state</IJS> properties.
-                    </p>
-                    <p>
-                      The other values are copied directly, but{" "}
-                      <IJS>redirectTo</IJS> will be turned into a location
-                      object using the object's <IJS>name</IJS> (and{" "}
-                      <IJS>params</IJS> if required).
-                    </p>
-                  </Explanation>
+                  <p>
+                    <IJS>redirectTo</IJS> - An object with the <IJS>name</IJS>{" "}
+                    of the route to redirect to, <IJS>params</IJS> (if
+                    required), and optional <IJS>hash</IJS>, <IJS>query</IJS>,
+                    and <IJS>state</IJS> properties.
+                  </p>
+                  <p>
+                    The other values are copied directly, but{" "}
+                    <IJS>redirectTo</IJS> will be turned into a location object
+                    using the object's <IJS>name</IJS> (and <IJS>params</IJS> if
+                    required).
+                  </p>
+
                   <CodeBlock>
                     {`[
   {
@@ -1019,12 +978,11 @@ const routes = prepareRoutes([
                 </li>
               </ol>
 
-              <Explanation>
-                <p>
-                  This function is passed an object with a number of properties
-                  that can be useful for modifying the response.
-                </p>
-              </Explanation>
+              <p>
+                This function is passed an object with a number of properties
+                that can be useful for modifying the response.
+              </p>
+
               <CodeBlock>
                 {`{
   response: ({ match, resolved }) => {
@@ -1040,47 +998,44 @@ const routes = prepareRoutes([
                   id="response-match"
                   tag="h3"
                 >
-                  <Explanation>
-                    <p>
-                      An object with the matched route properties of a response.
-                    </p>
-                    <ScrollableTable>
-                      <thead>
-                        <tr>
-                          <th>property</th>
-                          <th>description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>name</td>
-                          <td>the name of the matched route</td>
-                        </tr>
-                        <tr>
-                          <td>params</td>
-                          <td>route parameters parsed from the location</td>
-                        </tr>
-                        <tr>
-                          <td>partials</td>
-                          <td>
-                            the names of any ancestor routes of the matched
-                            route
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>location</td>
-                          <td>the location that was used to match the route</td>
-                        </tr>
-                        <tr>
-                          <td>key</td>
-                          <td>
-                            the location's <IJS>key</IJS>, which is a unique
-                            identifier
-                          </td>
-                        </tr>
-                      </tbody>
-                    </ScrollableTable>
-                  </Explanation>
+                  <p>
+                    An object with the matched route properties of a response.
+                  </p>
+                  <ScrollableTable>
+                    <thead>
+                      <tr>
+                        <th>property</th>
+                        <th>description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>name</td>
+                        <td>the name of the matched route</td>
+                      </tr>
+                      <tr>
+                        <td>params</td>
+                        <td>route parameters parsed from the location</td>
+                      </tr>
+                      <tr>
+                        <td>partials</td>
+                        <td>
+                          the names of any ancestor routes of the matched route
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>location</td>
+                        <td>the location that was used to match the route</td>
+                      </tr>
+                      <tr>
+                        <td>key</td>
+                        <td>
+                          the location's <IJS>key</IJS>, which is a unique
+                          identifier
+                        </td>
+                      </tr>
+                    </tbody>
+                  </ScrollableTable>
                 </HashSection>
 
                 <HashSection
@@ -1089,16 +1044,15 @@ const routes = prepareRoutes([
                   id="response-resolved"
                   tag="h3"
                 >
-                  <Explanation>
-                    <p>
-                      <IJS>resolved</IJS> is an object with the values resolved
-                      by the <IJS>resolve</IJS> functions.
-                    </p>
-                    <p>
-                      If a route isn't async, <IJS>resolved</IJS> will be{" "}
-                      <IJS>null</IJS>.
-                    </p>
-                  </Explanation>
+                  <p>
+                    <IJS>resolved</IJS> is an object with the values resolved by
+                    the <IJS>resolve</IJS> functions.
+                  </p>
+                  <p>
+                    If a route isn't async, <IJS>resolved</IJS> will be{" "}
+                    <IJS>null</IJS>.
+                  </p>
+
                   <CodeBlock>
                     {`// attach resolved data to the response
 const user = {
@@ -1125,12 +1079,11 @@ const user = {
                   id="response-error"
                   tag="h3"
                 >
-                  <Explanation>
-                    <p>
-                      <IJS>error</IJS> is an error thrown by one of the route's{" "}
-                      <IJS>resolve</IJS> functions.
-                    </p>
-                  </Explanation>
+                  <p>
+                    <IJS>error</IJS> is an error thrown by one of the route's{" "}
+                    <IJS>resolve</IJS> functions.
+                  </p>
+
                   <CodeBlock>
                     {`// check if any of a route's resolve functions threw
 const user = {
@@ -1157,16 +1110,15 @@ const user = {
             </HashSection>
 
             <HashSection title="children" id="children" tag="h3">
-              <Explanation>
-                <p>
-                  An optional array of route objects for creating nested routes.
-                  Any child routes will be matched relative to their parent
-                  route's <IJS>path</IJS>. This means that if a parent route's{" "}
-                  <IJS>path</IJS> string is <IJS>'one'</IJS> and a child route's{" "}
-                  <IJS>path</IJS> string is <IJS>'two'</IJS>, the child will
-                  match when the pathname is <IJS>'one/two'</IJS>.
-                </p>
-              </Explanation>
+              <p>
+                An optional array of route objects for creating nested routes.
+                Any child routes will be matched relative to their parent
+                route's <IJS>path</IJS>. This means that if a parent route's{" "}
+                <IJS>path</IJS> string is <IJS>'one'</IJS> and a child route's{" "}
+                <IJS>path</IJS> string is <IJS>'two'</IJS>, the child will match
+                when the pathname is <IJS>'one/two'</IJS>.
+              </p>
+
               <CodeBlock>
                 {`// '/a/Coloring+Book/All+Night' will be matched
 // by the "Song" route, with the params
@@ -1185,21 +1137,20 @@ const user = {
             </HashSection>
 
             <HashSection title="params" id="params" tag="h3">
-              <Explanation>
-                <p>
-                  When <IJS>path-to-regexp</IJS> matches your paths, all
-                  parameters are extracted as strings. If you prefer for some
-                  route params to be other types, you can provide functions to
-                  transform params using the <IJS>route.params</IJS> object.
-                </p>
-                <p>
-                  Properties of the <IJS>route.params</IJS> object are the names
-                  of params to be parsed. The paired value should be a function
-                  that takes a string (the value from the <IJS>pathname</IJS>)
-                  and returns a new value (transformed using the function you
-                  provide).
-                </p>
-              </Explanation>
+              <p>
+                When <IJS>path-to-regexp</IJS> matches your paths, all
+                parameters are extracted as strings. If you prefer for some
+                route params to be other types, you can provide functions to
+                transform params using the <IJS>route.params</IJS> object.
+              </p>
+              <p>
+                Properties of the <IJS>route.params</IJS> object are the names
+                of params to be parsed. The paired value should be a function
+                that takes a string (the value from the <IJS>pathname</IJS>) and
+                returns a new value (transformed using the function you
+                provide).
+              </p>
+
               <CodeBlock>
                 {`const routes = prepareRoutes([
   {
@@ -1218,32 +1169,30 @@ const user = {
             </HashSection>
 
             <HashSection title="pathOptions" id="pathOptions" tag="h3">
-              <Explanation>
+              <p>
+                If you need to provide different path options than{" "}
+                <a href="https://github.com/pillarjs/path-to-regexp#usage">
+                  the defaults
+                </a>{" "}
+                used by <IJS>path-to-regexp</IJS>, you can provide them with a{" "}
+                <IJS>pathOptions</IJS> object.
+              </p>
+              <Note>
                 <p>
-                  If you need to provide different path options than{" "}
-                  <a href="https://github.com/pillarjs/path-to-regexp#usage">
-                    the defaults
-                  </a>{" "}
-                  used by <IJS>path-to-regexp</IJS>, you can provide them with a{" "}
-                  <IJS>pathOptions</IJS> object.
-                </p>
-                <Note>
                   If a route has a children array property, it will{" "}
                   <strong>always</strong> have the <IJS>end</IJS> path option
                   set to false.
-                </Note>
-              </Explanation>
+                </p>
+              </Note>
             </HashSection>
 
             <HashSection title="extra" id="extra" tag="h3">
-              <Explanation>
-                <p>
-                  If you have any additional properties that you want attached
-                  to a route, use the <IJS>extra</IJS> property. You will be
-                  able to use <IJS>route.extra</IJS> in any custom route
-                  interactions.
-                </p>
-              </Explanation>
+              <p>
+                If you have any additional properties that you want attached to
+                a route, use the <IJS>extra</IJS> property. You will be able to
+                use <IJS>route.extra</IJS> in any custom route interactions.
+              </p>
+
               <CodeBlock>
                 {`const routes = prepareRoutes([
   {

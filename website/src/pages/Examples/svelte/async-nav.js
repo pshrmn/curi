@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   Cmp,
   CodeSandboxDemo,
   OnGithub
@@ -18,13 +17,11 @@ export default function BasicExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            This example uses the <Cmp>Navigating</Cmp> component to render a
-            button when there is an active asynchronous navigation. Clicking the
-            button will cancel the navigation.
-          </p>
-        </Explanation>
+        <p>
+          This example uses the <Cmp>Navigating</Cmp> component to render a
+          button when there is an active asynchronous navigation. Clicking the
+          button will cancel the navigation.
+        </p>
       </HashSection>
 
       <HashSection title="Live Demo" id="demo">

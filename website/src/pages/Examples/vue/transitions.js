@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   Cmp,
@@ -20,17 +19,16 @@ export default function TransitionsExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            Route transitions can be performed using Vue's <Cmp>transition</Cmp>{" "}
-            component.
-          </p>
-          <p>
-            Transitions generally need a key to identify when to perform a
-            transition. The location's <IJS>pathname</IJS> is generally ideal
-            for this.
-          </p>
-        </Explanation>
+        <p>
+          Route transitions can be performed using Vue's <Cmp>transition</Cmp>{" "}
+          component.
+        </p>
+
+        <p>
+          Transitions generally need a key to identify when to perform a
+          transition. The location's <IJS>pathname</IJS> is generally ideal for
+          this.
+        </p>
 
         <CodeBlock lang="html">
           {`<transition>

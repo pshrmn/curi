@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeSandboxDemo,
   OnGithub
 } from "../../../components/example/common";
@@ -17,12 +16,10 @@ export default function BasicExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            Curi's Svelte implementation relies on the Svelte store to access
-            route related data throughout the application.
-          </p>
-        </Explanation>
+        <p>
+          Curi's Svelte implementation relies on the Svelte store to access
+          route related data throughout the application.
+        </p>
       </HashSection>
 
       <HashSection title="Live Demo" id="demo">

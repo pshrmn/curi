@@ -3,7 +3,6 @@ import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
-  Explanation,
   CodeBlock,
   Outline,
   Note,
@@ -43,58 +42,54 @@ export default function ReactBasicsTutorial() {
       </HashSection>
 
       <HashSection title="Setup" id="setup">
-        <Explanation>
+        <p>
+          We will be using{" "}
+          <a href="https://github.com/facebook/create-react-app">
+            <IJS>create-react-app</IJS>
+          </a>{" "}
+          to develop this website.
+        </p>
+        <Note>
           <p>
-            We will be using{" "}
-            <a href="https://github.com/facebook/create-react-app">
-              <IJS>create-react-app</IJS>
-            </a>{" "}
-            to develop this website.
-          </p>
-          <Note>
             The instructions here assume that you have NodeJS and NPM installed
             on your computer. If you do not, cannot, or prefer to avoid setup
             altogether, you can follow along using{" "}
             <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the
             boilerplate will be different, but the differences are minor.
-          </Note>
-          <p>
-            Begin by opening a terminal and navigating to the directory where
-            you want to save your code. Then, we will use <IJS>npx</IJS> to
-            create the application.
           </p>
-        </Explanation>
+        </Note>
+        <p>
+          Begin by opening a terminal and navigating to the directory where you
+          want to save your code. Then, we will use <IJS>npx</IJS> to create the
+          application.
+        </p>
 
         <CodeBlock lang="bash">
           {`npx create-react-app curi-react-bookstore # create the app
 cd curi-react-bookstore # enter the new app directory`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            There are three routing related packages that we will be using, so
-            let's install them now.
-          </p>
+        <p>
+          There are three routing related packages that we will be using, so
+          let's install them now.
+        </p>
 
-          <p>
-            The <IJS>@hickory/browser</IJS> manages locations and navigation
-            within an application. <IJS>@curi/router</IJS> creates our router.{" "}
-            <IJS>@curi/react-dom</IJS> provides React components that interact
-            with the router.
-          </p>
-        </Explanation>
+        <p>
+          The <IJS>@hickory/browser</IJS> manages locations and navigation
+          within an application. <IJS>@curi/router</IJS> creates our router.{" "}
+          <IJS>@curi/react-dom</IJS> provides React components that interact
+          with the router.
+        </p>
 
         <CodeBlock lang="bash">
           {`npm install @hickory/browser @curi/router @curi/react-dom`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            Next, we can start <IJS>create-react-app</IJS>'s dev server. The dev
-            server will automatically update when we change files, so we can
-            leave that running.
-          </p>
-        </Explanation>
+        <p>
+          Next, we can start <IJS>create-react-app</IJS>'s dev server. The dev
+          server will automatically update when we change files, so we can leave
+          that running.
+        </p>
 
         <CodeBlock lang="bash">
           {`npm run start # start the dev server`}
@@ -102,36 +97,32 @@ cd curi-react-bookstore # enter the new app directory`}
       </HashSection>
 
       <HashSection title="Routes" id="routes">
-        <Explanation>
-          <p>
-            A single-page application is made up of a number of "routes", which
-            are the valid locations within the application. The router matches
-            the application against its routes to determine which one matches.
-          </p>
-          <p>
-            With Curi, routes are JavaScript objects. They have two required
-            properties: <IJS>name</IJS> and <IJS>path</IJS>.
-          </p>
-        </Explanation>
+        <p>
+          A single-page application is made up of a number of "routes", which
+          are the valid locations within the application. The router matches the
+          application against its routes to determine which one matches.
+        </p>
+        <p>
+          With Curi, routes are JavaScript objects. They have two required
+          properties: <IJS>name</IJS> and <IJS>path</IJS>.
+        </p>
 
         <CodeBlock>
           {`// this is a route
 { name: "Home", path: "" }`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            A route's <IJS>name</IJS> needs to be unique. Route names are used
-            to identify which route to interact with for different
-            functionality, like navigation.
-          </p>
-          <p>
-            A route's <IJS>path</IJS> is what the router uses to identify if a
-            location matches the route. The <IJS>path</IJS> is only matched
-            against the location's pathname, the other segments of a URL are not
-            used for matching.
-          </p>
-        </Explanation>
+        <p>
+          A route's <IJS>name</IJS> needs to be unique. Route names are used to
+          identify which route to interact with for different functionality,
+          like navigation.
+        </p>
+        <p>
+          A route's <IJS>path</IJS> is what the router uses to identify if a
+          location matches the route. The <IJS>path</IJS> is only matched
+          against the location's pathname, the other segments of a URL are not
+          used for matching.
+        </p>
 
         <HashSection
           title="Path basics"
@@ -139,21 +130,17 @@ cd curi-react-bookstore # enter the new app directory`}
           className="aside"
           tag="h3"
         >
-          <Explanation>
-            <p>
-              Route paths are strings describing the pathname segments of a URL
-              that they should match.
-            </p>
-          </Explanation>
+          <p>
+            Route paths are strings describing the pathname segments of a URL
+            that they should match.
+          </p>
 
           <CodeBlock>
             {`{ path: '' } // matches "/"
 { path: 'about/stuff' } // matches "/about/stuff"`}
           </CodeBlock>
 
-          <Explanation>
-            <p>Paths never begin with a slash.</p>
-          </Explanation>
+          <p>Paths never begin with a slash.</p>
 
           <CodeBlock>
             {`// yes
@@ -162,13 +149,11 @@ cd curi-react-bookstore # enter the new app directory`}
 { path: '/' }`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              Paths can include dynamic parameters. These are specified with a
-              string that starts with a colon (<IJS>:</IJS>) followed by the
-              name of the params.
-            </p>
-          </Explanation>
+          <p>
+            Paths can include dynamic parameters. These are specified with a
+            string that starts with a colon (<IJS>:</IJS>) followed by the name
+            of the params.
+          </p>
 
           <CodeBlock>
             {`// a param named "id"
@@ -176,14 +161,12 @@ cd curi-react-bookstore # enter the new app directory`}
 // user/abc -> { id: "abc" }`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              Routes can be nested using the <IJS>children</IJS> property of a
-              route. A nested route inherits the path from its ancestor
-              route(s), so its <IJS>path</IJS> is only the additional part of
-              the pathname that should be matched.
-            </p>
-          </Explanation>
+          <p>
+            Routes can be nested using the <IJS>children</IJS> property of a
+            route. A nested route inherits the path from its ancestor route(s),
+            so its <IJS>path</IJS> is only the additional part of the pathname
+            that should be matched.
+          </p>
 
           <CodeBlock>
             {`{
@@ -199,84 +182,80 @@ cd curi-react-bookstore # enter the new app directory`}
           </CodeBlock>
         </HashSection>
 
-        <Explanation>
-          <p>The website will start with four routes.</p>
+        <p>The website will start with four routes.</p>
 
-          <ScrollableTable>
-            <thead>
-              <tr>
-                <th>name</th>
-                <th>path</th>
-                <th>use case</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Home</td>
-                <td>
-                  <IJS>""</IJS>
-                </td>
-                <td>Lists books available for purchase.</td>
-              </tr>
-              <tr>
-                <td>Book</td>
-                <td>
-                  <IJS>"book/:id"</IJS>
-                </td>
-                <td>
-                  Details about an individual book. The <IJS>id</IJS> param
-                  identifies a specific book.
-                </td>
-              </tr>
-              <tr>
-                <td>Checkout</td>
-                <td>
-                  <IJS>"checkout"</IJS>
-                </td>
-                <td>Buy the books in the shopping cart.</td>
-              </tr>
-              <tr>
-                <td>Catch All</td>
-                <td>
-                  <IJS>"(.*)"</IJS>
-                </td>
-                <td>
-                  Display a not found page. This path matches every location
-                  (using a regular expression syntax), so it should be the last
-                  route.
-                </td>
-              </tr>
-            </tbody>
-          </ScrollableTable>
+        <ScrollableTable>
+          <thead>
+            <tr>
+              <th>name</th>
+              <th>path</th>
+              <th>use case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Home</td>
+              <td>
+                <IJS>""</IJS>
+              </td>
+              <td>Lists books available for purchase.</td>
+            </tr>
+            <tr>
+              <td>Book</td>
+              <td>
+                <IJS>"book/:id"</IJS>
+              </td>
+              <td>
+                Details about an individual book. The <IJS>id</IJS> param
+                identifies a specific book.
+              </td>
+            </tr>
+            <tr>
+              <td>Checkout</td>
+              <td>
+                <IJS>"checkout"</IJS>
+              </td>
+              <td>Buy the books in the shopping cart.</td>
+            </tr>
+            <tr>
+              <td>Catch All</td>
+              <td>
+                <IJS>"(.*)"</IJS>
+              </td>
+              <td>
+                Display a not found page. This path matches every location
+                (using a regular expression syntax), so it should be the last
+                route.
+              </td>
+            </tr>
+          </tbody>
+        </ScrollableTable>
 
-          <Note>
+        <Note>
+          <p>
             Curi uses the{" "}
             <a href="https://github.com/pillarjs/path-to-regexp">
               <IJS>path-to-regexp</IJS>
             </a>{" "}
             package for route matching. You can read its documentation to learn
             about more advanced path syntax.
-          </Note>
-          <p>
-            Inside of the <IJS>src</IJS> directory, we will create a{" "}
-            <IJS>routes.js</IJS> file where we can define the application's
-            routes.
           </p>
-        </Explanation>
+        </Note>
+        <p>
+          Inside of the <IJS>src</IJS> directory, we will create a{" "}
+          <IJS>routes.js</IJS> file where we can define the application's
+          routes.
+        </p>
 
         <CodeBlock lang="bash">{`touch src/routes.js`}</CodeBlock>
 
-        <Explanation>
-          <p>
-            We can create an array of routes using the above names and paths.
-          </p>
-          <p>
-            <IJS>@curi/router</IJS> provides a <IJS>prepareRoutes</IJS>{" "}
-            function, which is used to setup routes for the router. We will pass
-            the routes array to <IJS>prepareRoutes</IJS> and export the result
-            of that function call.
-          </p>
-        </Explanation>
+        <p>We can create an array of routes using the above names and paths.</p>
+        <p>
+          <IJS>@curi/router</IJS> provides a <IJS>prepareRoutes</IJS> function,
+          which is used to setup routes for the router. We will pass the routes
+          array to <IJS>prepareRoutes</IJS> and export the result of that
+          function call.
+        </p>
 
         <CodeBlock>
           {`// src/routes.js
@@ -302,12 +281,10 @@ export default prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            We will be creating the router in the <IJS>index.js</IJS> file, so
-            the routes array should be imported there.
-          </p>
-        </Explanation>
+        <p>
+          We will be creating the router in the <IJS>index.js</IJS> file, so the
+          routes array should be imported there.
+        </p>
 
         <CodeBlock lang="jsx" data-line="5">
           {`// src/index.js
@@ -325,34 +302,33 @@ registerServiceWorker();`}
       </HashSection>
 
       <HashSection title="History" id="history">
-        <Explanation>
+        <p>
+          Along with the routes, we also need to create a history object for the
+          router. The history object is responsible for creating locations and
+          navigation within the application.
+        </p>
+        <p>
+          Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
+          library for its history implementations. There are a few Hickory
+          packages to choose from for different environments. For most websites,
+          the <IJS>@hickory/browser</IJS> is the right choice for the front end,
+          which is what we will be using
+        </p>
+        <p>
+          We can import the <IJS>Browser</IJS> function from{" "}
+          <IJS>@hickory/browser</IJS> in our index file (<IJS>src/index.js</IJS>
+          , which <IJS>create-react-app</IJS> created for us) and call the
+          function to create a history object.
+        </p>
+        <Note>
           <p>
-            Along with the routes, we also need to create a history object for
-            the router. The history object is responsible for creating locations
-            and navigation within the application.
-          </p>
-          <p>
-            Curi uses the{" "}
-            <a href="https://github.com/pshrmn/hickory">Hickory</a> library for
-            its history implementations. There are a few Hickory packages to
-            choose from for different environments. For most websites, the{" "}
-            <IJS>@hickory/browser</IJS> is the right choice for the front end,
-            which is what we will be using
-          </p>
-          <p>
-            We can import the <IJS>Browser</IJS> function from{" "}
-            <IJS>@hickory/browser</IJS> in our index file (
-            <IJS>src/index.js</IJS>, which <IJS>create-react-app</IJS> created
-            for us) and call the function to create a history object.
-          </p>
-          <Note>
             The history object can be configured with{" "}
             <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
               an options object
             </a>
             , but we will stick with the defaults.
-          </Note>
-        </Explanation>
+          </p>
+        </Note>
 
         <CodeBlock lang="jsx" data-line="4,11">
           {`// src/index.js
@@ -373,15 +349,13 @@ registerServiceWorker();`}
       </HashSection>
 
       <HashSection title="The Router" id="router">
-        <Explanation>
-          <p>
-            We are now ready to create the router. In the{" "}
-            <IJS>src/index.js</IJS> file, we should import the <IJS>curi</IJS>{" "}
-            function from <IJS>@curi/router</IJS>. To create the router, call
-            the <IJS>curi()</IJS> function passing it the <IJS>history</IJS>{" "}
-            object and the <IJS>routes</IJS> array.
-          </p>
-        </Explanation>
+        <p>
+          We are now ready to create the router. In the <IJS>src/index.js</IJS>{" "}
+          file, we should import the <IJS>curi</IJS> function from{" "}
+          <IJS>@curi/router</IJS>. To create the router, call the{" "}
+          <IJS>curi()</IJS> function passing it the <IJS>history</IJS> object
+          and the <IJS>routes</IJS> array.
+        </p>
 
         <CodeBlock lang="jsx" data-line="4,13">
           {`// src/index.js
@@ -402,29 +376,27 @@ ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
         </CodeBlock>
 
-        <Explanation>
-          <p>The router is now ready and we can render the application.</p>
-        </Explanation>
+        <p>The router is now ready and we can render the application.</p>
       </HashSection>
 
       <HashSection title="Rendering with React" id="rendering">
-        <Explanation>
-          <p>
-            The <IJS>@curi/react-dom</IJS> provides the components that we will
-            use to interact with the router.
-          </p>
-          <p>
-            We create a <Cmp>Router</Cmp> component by passing the router to the{" "}
-            <IJS>curiProvider</IJS> higher-order component.
-          </p>
+        <p>
+          The <IJS>@curi/react-dom</IJS> provides the components that we will
+          use to interact with the router.
+        </p>
+        <p>
+          We create a <Cmp>Router</Cmp> component by passing the router to the{" "}
+          <IJS>curiProvider</IJS> higher-order component.
+        </p>
 
-          <Note>
+        <Note>
+          <p>
             Curi uses a higher-order component to create a component instead of
             a regular component because the router is a permanent "prop". An
             application should only have one router, so this approach
             discourages trying to swap routers.
-          </Note>
-        </Explanation>
+          </p>
+        </Note>
 
         <CodeBlock lang="jsx" data-line="6,15">
           {`// src/index.js
@@ -447,27 +419,24 @@ ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            The <Cmp>Router</Cmp> component will re-render the application
-            whenever there is in-app navigation. It also sets up a React
-            context, so the other <IJS>@curi/react-dom</IJS> components need to
-            be descendants of the <Cmp>Router</Cmp> in order to access the
-            context.
-          </p>
-          <p>
-            The <Cmp>Router</Cmp> takes one prop: <IJS>children</IJS>.{" "}
-            <IJS>children</IJS> is a render-invoked function that should return
-            the content for the website. This function will receive an object
-            that has three properties: <IJS>router</IJS>, <IJS>response</IJS>,
-            and <IJS>navigation</IJS>. These properties (mostly the{" "}
-            <IJS>response</IJS>) should be useful in determining what to render.
-          </p>
-          <p>
-            We can also remove the <Cmp>App</Cmp> component import and delete
-            the related files.
-          </p>
-        </Explanation>
+        <p>
+          The <Cmp>Router</Cmp> component will re-render the application
+          whenever there is in-app navigation. It also sets up a React context,
+          so the other <IJS>@curi/react-dom</IJS> components need to be
+          descendants of the <Cmp>Router</Cmp> in order to access the context.
+        </p>
+        <p>
+          The <Cmp>Router</Cmp> takes one prop: <IJS>children</IJS>.{" "}
+          <IJS>children</IJS> is a render-invoked function that should return
+          the content for the website. This function will receive an object that
+          has three properties: <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
+          <IJS>navigation</IJS>. These properties (mostly the{" "}
+          <IJS>response</IJS>) should be useful in determining what to render.
+        </p>
+        <p>
+          We can also remove the <Cmp>App</Cmp> component import and delete the
+          related files.
+        </p>
 
         <CodeBlock lang="bash">
           {`rm src/App.js src/App.css src/App.test.js`}
@@ -499,12 +468,10 @@ ReactDOM.render((
 registerServiceWorker();`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            The <IJS>router</IJS> property is our Curi router, but what are the
-            other two?
-          </p>
-        </Explanation>
+        <p>
+          The <IJS>router</IJS> property is our Curi router, but what are the
+          other two?
+        </p>
 
         <HashSection
           title="Responses and Navigation"
@@ -512,13 +479,11 @@ registerServiceWorker();`}
           className="aside"
           tag="h3"
         >
-          <Explanation>
-            <p>
-              Whenever Curi receives a location, it matches its routes against
-              it and creates a response object, which contains data about the
-              route that matched the location.
-            </p>
-          </Explanation>
+          <p>
+            Whenever Curi receives a location, it matches its routes against it
+            and creates a response object, which contains data about the route
+            that matched the location.
+          </p>
 
           <CodeBlock>
             {`// a sample response object
@@ -534,25 +499,24 @@ registerServiceWorker();`}
 }`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              The router uses the{" "}
-              <a href="https://en.wikipedia.org/wiki/Observer_pattern">
-                observer pattern
-              </a>{" "}
-              to register functions that will be called when a new response is
-              created. The <Cmp>Router</Cmp> automatically observes the router
-              so that it can re-render the application whenever there is a new
-              response.
-            </p>
-            <p>
-              The <IJS>navigation</IJS> object contains additional information
-              about a navigation that doesn't make sense to include in the
-              response object. This includes the navigation's "action" (
-              <IJS>PUSH</IJS>, <IJS>POP</IJS>, or <IJS>REPLACE</IJS>) and the
-              previous response object.
-            </p>
-          </Explanation>
+          <p>
+            The router uses the{" "}
+            <a href="https://en.wikipedia.org/wiki/Observer_pattern">
+              observer pattern
+            </a>{" "}
+            to register functions that will be called when a new response is
+            created. The <Cmp>Router</Cmp> automatically observes the router so
+            that it can re-render the application whenever there is a new
+            response.
+          </p>
+          <p>
+            The <IJS>navigation</IJS> object contains additional information
+            about a navigation that doesn't make sense to include in the
+            response object. This includes the navigation's "action" (
+            <IJS>PUSH</IJS>, <IJS>POP</IJS>, or <IJS>REPLACE</IJS>) and the
+            previous response object.
+          </p>
+
           <CodeBlock>
             {`// a sample navigation object
 {
@@ -562,18 +526,15 @@ registerServiceWorker();`}
           </CodeBlock>
         </HashSection>
 
-        <Explanation>
-          <p>
-            The response is the most useful of these three properties, but the
-            other two may can be handy. For example, the <IJS>navigation</IJS>{" "}
-            can be useful for animating route transitions.
-          </p>
-          <p>
-            How do we render using the <IJS>response</IJS>? Any way you want!
-            The best way is to use a <IJS>response</IJS>'s <IJS>body</IJS>{" "}
-            property.
-          </p>
-        </Explanation>
+        <p>
+          The response is the most useful of these three properties, but the
+          other two may can be handy. For example, the <IJS>navigation</IJS> can
+          be useful for animating route transitions.
+        </p>
+        <p>
+          How do we render using the <IJS>response</IJS>? Any way you want! The
+          best way is to use a <IJS>response</IJS>'s <IJS>body</IJS> property.
+        </p>
 
         <HashSection
           title="route.response()"
@@ -581,20 +542,18 @@ registerServiceWorker();`}
           className="aside"
           tag="h3"
         >
-          <Explanation>
-            <p>
-              Route's can have a <IJS>response</IJS> property, which is a
-              function that returns an object. The (valid) properties of the
-              object will be merged onto the response object.
-            </p>
+          <p>
+            Route's can have a <IJS>response</IJS> property, which is a function
+            that returns an object. The (valid) properties of the object will be
+            merged onto the response object.
+          </p>
 
-            <p>
-              One of these valid properties is <IJS>body</IJS>, so if the{" "}
-              <IJS>response</IJS> function returns an object with a{" "}
-              <IJS>body</IJS> property, we can access it from the response as{" "}
-              <IJS>response.body</IJS>.
-            </p>
-          </Explanation>
+          <p>
+            One of these valid properties is <IJS>body</IJS>, so if the{" "}
+            <IJS>response</IJS> function returns an object with a{" "}
+            <IJS>body</IJS> property, we can access it from the response as{" "}
+            <IJS>response.body</IJS>.
+          </p>
 
           <CodeBlock>
             {`{
@@ -617,13 +576,11 @@ registerServiceWorker();`}
           </CodeBlock>
         </HashSection>
 
-        <Explanation>
-          <p>
-            If a response's <IJS>body</IJS> is a React component, we can render
-            it! We haven't actually defined components for our routes yet, so we
-            should throw together some placeholders.
-          </p>
-        </Explanation>
+        <p>
+          If a response's <IJS>body</IJS> is a React component, we can render
+          it! We haven't actually defined components for our routes yet, so we
+          should throw together some placeholders.
+        </p>
 
         <CodeBlock lang="bash">
           {`mkdir -p src/components
@@ -716,17 +673,15 @@ export default prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            We can now update the <Cmp>Router</Cmp>'s <IJS>children</IJS>{" "}
-            function to render <IJS>response.body</IJS>.
-          </p>
-          <p>
-            We will also pass the <IJS>response</IJS> as a prop to the rendered
-            component, which means that each of the route components will have
-            access to the <IJS>response</IJS> when they are rendered.
-          </p>
-        </Explanation>
+        <p>
+          We can now update the <Cmp>Router</Cmp>'s <IJS>children</IJS> function
+          to render <IJS>response.body</IJS>.
+        </p>
+        <p>
+          We will also pass the <IJS>response</IJS> as a prop to the rendered
+          component, which means that each of the route components will have
+          access to the <IJS>response</IJS> when they are rendered.
+        </p>
 
         <CodeBlock lang="jsx" data-line="18-23">
           {`// src/index.js
@@ -757,22 +712,18 @@ ReactDOM.render((
 registerServiceWorker();`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            At this point in time our app is rendering, but is isn't very
-            interesting because we cannot navigate between locations.
-          </p>
-        </Explanation>
+        <p>
+          At this point in time our app is rendering, but is isn't very
+          interesting because we cannot navigate between locations.
+        </p>
       </HashSection>
 
       <HashSection title="Navigating between locations" id="navigating">
-        <Explanation>
-          <p>
-            The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Link</Cmp>{" "}
-            component that we can use to navigate between locations within our
-            application.
-          </p>
-        </Explanation>
+        <p>
+          The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Link</Cmp>{" "}
+          component that we can use to navigate between locations within our
+          application.
+        </p>
 
         <HashSection
           title={
@@ -784,13 +735,11 @@ registerServiceWorker();`}
           className="aside"
           tag="h3"
         >
-          <Explanation>
-            <p>
-              Navigation isn't done by manually typing the pathname of the
-              location the link should navigate to. Instead, we specify the name
-              of the route using the <IJS>name</IJS> prop.
-            </p>
-          </Explanation>
+          <p>
+            Navigation isn't done by manually typing the pathname of the
+            location the link should navigate to. Instead, we specify the name
+            of the route using the <IJS>name</IJS> prop.
+          </p>
 
           <CodeBlock lang="jsx">
             {`// { name: "Home", path: "" }
@@ -798,13 +747,11 @@ registerServiceWorker();`}
 // <a href="/">Home</a>`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              If a route has params, we provide these to the <Cmp>Link</Cmp> as
-              a <IJS>params</IJS> object. For a nested route, we would also need
-              to provide params for any ancestor routes.
-            </p>
-          </Explanation>
+          <p>
+            If a route has params, we provide these to the <Cmp>Link</Cmp> as a{" "}
+            <IJS>params</IJS> object. For a nested route, we would also need to
+            provide params for any ancestor routes.
+          </p>
 
           <CodeBlock lang="jsx">
             {`// { name: "Book", path: "book/:id" }
@@ -812,12 +759,10 @@ registerServiceWorker();`}
 // <a href="/book/7">The Dark Forest</a>`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              The <Cmp>Link</Cmp> is only for in-app navigation. If you want to
-              link to pages outside of the application, use an anchor.
-            </p>
-          </Explanation>
+          <p>
+            The <Cmp>Link</Cmp> is only for in-app navigation. If you want to
+            link to pages outside of the application, use an anchor.
+          </p>
 
           <CodeBlock lang="jsx">
             {`// in-app
@@ -827,12 +772,10 @@ registerServiceWorker();`}
 <a href="https://github.com">GitHub</a>`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              If you need to attach query or hash data to a <Cmp>Link</Cmp>, use
-              the <IJS>query</IJS> and <IJS>hash</IJS> props.
-            </p>
-          </Explanation>
+          <p>
+            If you need to attach query or hash data to a <Cmp>Link</Cmp>, use
+            the <IJS>query</IJS> and <IJS>hash</IJS> props.
+          </p>
 
           <CodeBlock lang="jsx">
             {`// { name: "Checkout", path: "checkout" }
@@ -842,21 +785,17 @@ registerServiceWorker();`}
         </HashSection>
 
         <HashSection title="A Navigation Menu" id="nav-menu" tag="h3">
-          <Explanation>
-            <p>
-              The application will have a navigation menu component with links
-              to our home page and checkout page.
-            </p>
-          </Explanation>
+          <p>
+            The application will have a navigation menu component with links to
+            our home page and checkout page.
+          </p>
 
           <CodeBlock lang="bash">{`touch src/components/NavMenu.js`}</CodeBlock>
 
-          <Explanation>
-            <p>
-              In order to link to these routes, we only need to know their name,
-              not the actual pathname for the URL.
-            </p>
-          </Explanation>
+          <p>
+            In order to link to these routes, we only need to know their name,
+            not the actual pathname for the URL.
+          </p>
 
           <CodeBlock lang="jsx">
             {`// src/components/NavMenu.js
@@ -927,23 +866,19 @@ registerServiceWorker();`}
         </HashSection>
 
         <HashSection title="Linking to Books" id="book-links" tag="h3">
-          <Explanation>
-            <p>
-              The website should link to individual books from its home page. To
-              do this, we need data about the available books. Since we don't
-              have a backend to fetch book data from, we'll hard-code the books
-              data in the <IJS>src/books.js</IJS> module.
-            </p>
-          </Explanation>
+          <p>
+            The website should link to individual books from its home page. To
+            do this, we need data about the available books. Since we don't have
+            a backend to fetch book data from, we'll hard-code the books data in
+            the <IJS>src/books.js</IJS> module.
+          </p>
 
           <CodeBlock lang="bash">{`touch src/books.js`}</CodeBlock>
 
-          <Explanation>
-            <p>
-              You can copy+paste or modify the data, but the structure of the
-              provided data should stay the same.
-            </p>
-          </Explanation>
+          <p>
+            You can copy+paste or modify the data, but the structure of the
+            provided data should stay the same.
+          </p>
 
           <CodeBlock>
             {`// src/books.js
@@ -986,13 +921,10 @@ export default [
 ];`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              The data can be imported in the <Cmp>Home</Cmp> component and we
-              can iterate over the books to render a <Cmp>Link</Cmp> to each
-              one.
-            </p>
-          </Explanation>
+          <p>
+            The data can be imported in the <Cmp>Home</Cmp> component and we can
+            iterate over the books to render a <Cmp>Link</Cmp> to each one.
+          </p>
 
           <CodeBlock lang="jsx" data-line="5,8-20">
             {`// src/components/Home.js
@@ -1018,24 +950,22 @@ export default function Home() {
 }`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              Now that we can navigate to the books, we should fill out the UI
-              for the <Cmp>Book</Cmp> component. Up above, we passed the{" "}
-              <IJS>response</IJS> object as a prop to the{" "}
-              <IJS>response.body</IJS> component. Now, we can use that object in
-              the <Cmp>Book</Cmp> component to access the captured route params
-              so that we know which book to show.
-            </p>
-            <p>
-              We will once again import the <IJS>books.js</IJS> data. We can use{" "}
-              <IJS>params.id</IJS> to select the correct book.{" "}
-              <IJS>params.id</IJS> is a string, so we will need to parse it into
-              an integer. Sometimes there won't be a valid book for the{" "}
-              <IJS>params.id</IJS>. In that case, we will also want to display a
-              message that the requested book could not be found.
-            </p>
-          </Explanation>
+          <p>
+            Now that we can navigate to the books, we should fill out the UI for
+            the <Cmp>Book</Cmp> component. Up above, we passed the{" "}
+            <IJS>response</IJS> object as a prop to the <IJS>response.body</IJS>{" "}
+            component. Now, we can use that object in the <Cmp>Book</Cmp>{" "}
+            component to access the captured route params so that we know which
+            book to show.
+          </p>
+          <p>
+            We will once again import the <IJS>books.js</IJS> data. We can use{" "}
+            <IJS>params.id</IJS> to select the correct book.{" "}
+            <IJS>params.id</IJS> is a string, so we will need to parse it into
+            an integer. Sometimes there won't be a valid book for the{" "}
+            <IJS>params.id</IJS>. In that case, we will also want to display a
+            message that the requested book could not be found.
+          </p>
 
           <CodeBlock lang="jsx" data-line="4,6-20">
             {`// src/components/Book.js
@@ -1063,28 +993,26 @@ export default function Book({ response }) {
       </HashSection>
 
       <HashSection title="Let's go shopping" id="shopping">
-        <Explanation>
-          <p>
-            Users of the website should be able to add books to their shopping
-            cart. For brevity, we will store the cart data in memory (i.e. it
-            will be lost when refreshing the page).
-          </p>
-        </Explanation>
+        <p>
+          Users of the website should be able to add books to their shopping
+          cart. For brevity, we will store the cart data in memory (i.e. it will
+          be lost when refreshing the page).
+        </p>
 
         <CodeBlock lang="bash">{`touch src/cart.js`}</CodeBlock>
 
-        <Explanation>
+        <p>
+          The shopping cart implementation will be a JavaScript <IJS>Map</IJS>.
+          We can call its <IJS>set</IJS> method to add books, its{" "}
+          <IJS>clear</IJS> method to reset the cart, and iterate over its{" "}
+          <IJS>entries</IJS> with a <IJS>for...of</IJS> loop.
+        </p>
+        <Note>
           <p>
-            The shopping cart implementation will be a JavaScript <IJS>Map</IJS>
-            . We can call its <IJS>set</IJS> method to add books, its{" "}
-            <IJS>clear</IJS> method to reset the cart, and iterate over its{" "}
-            <IJS>entries</IJS> with a <IJS>for...of</IJS> loop.
-          </p>
-          <Note>
             The <IJS>Map</IJS> or some of its features may not work in older
             browsers.
-          </Note>
-        </Explanation>
+          </p>
+        </Note>
 
         <CodeBlock>
           {`// src/cart.js
@@ -1110,15 +1038,13 @@ export default {
 };`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            Before we edit the <Cmp>Book</Cmp> component, we should quickly
-            revisit the <Cmp>Router</Cmp>'s <IJS>children</IJS> function. In
-            addition to passing the <IJS>response</IJS> to the <Cmp>Body</Cmp>,
-            we should also pass it our <IJS>router</IJS>, which will allow us to
-            do programmatic navigation.
-          </p>
-        </Explanation>
+        <p>
+          Before we edit the <Cmp>Book</Cmp> component, we should quickly
+          revisit the <Cmp>Router</Cmp>'s <IJS>children</IJS> function. In
+          addition to passing the <IJS>response</IJS> to the <Cmp>Body</Cmp>, we
+          should also pass it our <IJS>router</IJS>, which will allow us to do
+          programmatic navigation.
+        </p>
 
         <CodeBlock lang="jsx" data-line="19,27">
           {`// src/index.js
@@ -1157,15 +1083,13 @@ ReactDOM.render((
 registerServiceWorker();`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            We can now access our <IJS>router</IJS> in the <Cmp>Book</Cmp>{" "}
-            component. The router's <IJS>navigate()</IJS> function can be used
-            to navigate to a new location. This means that when the user clicks
-            a button to add a book to their shopping cart, we can automatically
-            navigate to the checkout page.
-          </p>
-        </Explanation>
+        <p>
+          We can now access our <IJS>router</IJS> in the <Cmp>Book</Cmp>{" "}
+          component. The router's <IJS>navigate()</IJS> function can be used to
+          navigate to a new location. This means that when the user clicks a
+          button to add a book to their shopping cart, we can automatically
+          navigate to the checkout page.
+        </p>
 
         <HashSection
           title="The Router's Navigate Method"
@@ -1173,17 +1097,15 @@ registerServiceWorker();`}
           className="aside"
           tag="h3"
         >
-          <Explanation>
-            <p>
-              <IJS>router.navigate()</IJS> is used to navigate to new locations.
-              There are three methods of navigation: <IJS>PUSH</IJS>,{" "}
-              <IJS>REPLACE</IJS>, and <IJS>ANCHOR</IJS>.
-            </p>
-            <p>
-              <IJS>PUSH</IJS> pushes a new location after the current index,
-              removing any locations after the current location.
-            </p>
-          </Explanation>
+          <p>
+            <IJS>router.navigate()</IJS> is used to navigate to new locations.
+            There are three methods of navigation: <IJS>PUSH</IJS>,{" "}
+            <IJS>REPLACE</IJS>, and <IJS>ANCHOR</IJS>.
+          </p>
+          <p>
+            <IJS>PUSH</IJS> pushes a new location after the current index,
+            removing any locations after the current location.
+          </p>
 
           <CodeBlock>
             {`// session = ['/one', '/two', '/three'], index = 1
@@ -1191,11 +1113,9 @@ router.navigate({ name: "New", method: "PUSH" });
 // session = ['/one', '/two', '/new'], index = 2`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              <IJS>REPLACE</IJS> replaces the location at the current index.
-            </p>
-          </Explanation>
+          <p>
+            <IJS>REPLACE</IJS> replaces the location at the current index.
+          </p>
 
           <CodeBlock>
             {`// session = ['/one', '/two', '/three'], index = 1
@@ -1203,18 +1123,16 @@ router.navigate({ name: "Replace", method: "REPLACE" });
 // session = ['/one', '/replacement', '/three'], index = 1`}
           </CodeBlock>
 
-          <Explanation>
-            <p>
-              <IJS>ANCHOR</IJS> is a mix between <IJS>PUSH</IJS> and{" "}
-              <IJS>REPLACE</IJS>. It mimics the behavior of clicking on links,
-              so if you navigate to the same location as the current one it will
-              replace, and if you navigate to a new location it will push.
-            </p>
-            <p>
-              If <IJS>method.navigate()</IJS> is called without a navigation{" "}
-              <IJS>method</IJS>, it will default to <IJS>ANCHOR</IJS>.
-            </p>
-          </Explanation>
+          <p>
+            <IJS>ANCHOR</IJS> is a mix between <IJS>PUSH</IJS> and{" "}
+            <IJS>REPLACE</IJS>. It mimics the behavior of clicking on links, so
+            if you navigate to the same location as the current one it will
+            replace, and if you navigate to a new location it will push.
+          </p>
+          <p>
+            If <IJS>method.navigate()</IJS> is called without a navigation{" "}
+            <IJS>method</IJS>, it will default to <IJS>ANCHOR</IJS>.
+          </p>
 
           <CodeBlock>
             {`// session = ['/one', '/two', '/three'], index = 1
@@ -1226,12 +1144,10 @@ router.navigate({ name: "New", method: "ANCHOR" });
           </CodeBlock>
         </HashSection>
 
-        <Explanation>
-          <p>
-            We also want to import our shopping cart API so that we can add a
-            book to the cart.
-          </p>
-        </Explanation>
+        <p>
+          We also want to import our shopping cart API so that we can add a book
+          to the cart.
+        </p>
 
         <CodeBlock lang="jsx" data-line="5,19-27">
           {`// src/components/Book.js
@@ -1266,21 +1182,18 @@ export default function Book({ response, router }) {
 }`}
         </CodeBlock>
 
-        <Explanation>
-          <p>
-            Finally, we can update our <Cmp>Checkout</Cmp> component to display
-            the books in the shopping cart. To do this, we will import our cart
-            and books. Our cart only stores book <IJS>id</IJS>s, so we will need
-            to merge the book data with the cart data.
-          </p>
-          <p>
-            When a user "buys" the books in their shopping cart, we need to
-            clear out the cart. We will also replace the current location with
-            one whose <IJS>location.hash</IJS> is the string "thanks". When that
-            is present in the location, we can render a "Thanks for your
-            purchase" message.
-          </p>
-        </Explanation>
+        <p>
+          Finally, we can update our <Cmp>Checkout</Cmp> component to display
+          the books in the shopping cart. To do this, we will import our cart
+          and books. Our cart only stores book <IJS>id</IJS>s, so we will need
+          to merge the book data with the cart data.
+        </p>
+        <p>
+          When a user "buys" the books in their shopping cart, we need to clear
+          out the cart. We will also replace the current location with one whose{" "}
+          <IJS>location.hash</IJS> is the string "thanks". When that is present
+          in the location, we can render a "Thanks for your purchase" message.
+        </p>
 
         <CodeBlock lang="jsx">
           {`// src/components/Checkout.js
@@ -1334,14 +1247,12 @@ export default function Checkout({ router, response }) {
         </CodeBlock>
       </HashSection>
       <HashSection title="What's next?" id="next">
-        <Explanation>
-          <p>
-            We now have a functional website built with React and Curi. What
-            should you do next? Build another site! You can also check out the{" "}
-            <Link name="Guides">guides</Link> for information on advanced
-            techniques.
-          </p>
-        </Explanation>
+        <p>
+          We now have a functional website built with React and Curi. What
+          should you do next? Build another site! You can also check out the{" "}
+          <Link name="Guides">guides</Link> for information on advanced
+          techniques.
+        </p>
       </HashSection>
     </React.Fragment>
   );

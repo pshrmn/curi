@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   Cmp,
   CodeSandboxDemo,
   OnGithub
@@ -18,13 +17,11 @@ export default function ActiveLinksExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            You may want to style a link differently when it is "active" (based
-            on the current response). You can do so using the <Cmp>Active</Cmp>{" "}
-            and <Cmp>Link</Cmp> components.
-          </p>
-        </Explanation>
+        <p>
+          You may want to style a link differently when it is "active" (based on
+          the current response). You can do so using the <Cmp>Active</Cmp> and{" "}
+          <Cmp>Link</Cmp> components.
+        </p>
       </HashSection>
 
       <HashSection title="Live Demo" id="demo">

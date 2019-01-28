@@ -5,7 +5,6 @@ import {
   About,
   APIBlock,
   HashSection,
-  Explanation,
   CodeBlock,
   IJS,
   Cmp
@@ -16,36 +15,31 @@ export default class SveltePkg extends React.PureComponent {
     return (
       <React.Fragment>
         <About>
-          <Explanation>
-            <p>
-              This package enables you to use Curi alongside Svelte.{" "}
-              <strong>This package relies on the Svelte store.</strong>
-            </p>
-            <p>
-              For more information on using Curi with Svelte, please check out
-              the{" "}
-              <Link name="Guide" params={{ slug: "svelte" }}>
-                Svelte guide
-              </Link>
-              .
-            </p>
-          </Explanation>
+          <p>
+            This package enables you to use Curi alongside Svelte.{" "}
+            <strong>This package relies on the Svelte store.</strong>
+          </p>
+          <p>
+            For more information on using Curi with Svelte, please check out the{" "}
+            <Link name="Guide" params={{ slug: "svelte" }}>
+              Svelte guide
+            </Link>
+            .
+          </p>
         </About>
         <APIBlock>
           <HashSection tag="h3" title="curiStore" id="curiStore">
-            <Explanation>
-              <p>
-                <IJS>@curi/svelte</IJS> components rely on being able to access
-                router related values (<IJS>router</IJS>, <IJS>response</IJS>,
-                and <IJS>navigation</IJS>) from a Svelte store. While you can
-                set this up manually, the <IJS>curiStore</IJS> will handle this
-                for you.
-              </p>
-              <p>
-                This will setup an observer to automatically update the store
-                when new responses are emitted by the router.
-              </p>
-            </Explanation>
+            <p>
+              <IJS>@curi/svelte</IJS> components rely on being able to access
+              router related values (<IJS>router</IJS>, <IJS>response</IJS>, and{" "}
+              <IJS>navigation</IJS>) from a Svelte store. While you can set this
+              up manually, the <IJS>curiStore</IJS> will handle this for you.
+            </p>
+            <p>
+              This will setup an observer to automatically update the store when
+              new responses are emitted by the router.
+            </p>
+
             <CodeBlock>
               {`import { curiStore } from '@curi/svelte';
 
@@ -53,12 +47,11 @@ const router = curi(history, routes);
 const store = curiStore(router);`}
             </CodeBlock>
 
-            <Explanation>
-              <p>
-                If you already have a store, you can pass it to{" "}
-                <IJS>curiStore</IJS> and the Curi values will be added to it.
-              </p>
-            </Explanation>
+            <p>
+              If you already have a store, you can pass it to{" "}
+              <IJS>curiStore</IJS> and the Curi values will be added to it.
+            </p>
+
             <CodeBlock>
               {`import { curiStore } from '@curi/svelte';
 import { Store } from 'svelte/store';
@@ -70,12 +63,11 @@ curiStore(router, store);`}
           </HashSection>
 
           <HashSection tag="h3" title={<Cmp>Link</Cmp>} id="link">
-            <Explanation>
-              <p>
-                The <Cmp>Link</Cmp> component is used to create an anchor for
-                navigating to another route.
-              </p>
-            </Explanation>
+            <p>
+              The <Cmp>Link</Cmp> component is used to create an anchor for
+              navigating to another route.
+            </p>
+
             <CodeBlock lang="html">
               {`<div>
   <Link name='Home'>Home</Link>
@@ -94,9 +86,8 @@ curiStore(router, store);`}
 
             <HashSection title="Props" id="link-props" tag="h3">
               <HashSection title="name" id="link-name" tag="h4">
-                <Explanation>
-                  <p>The name of the route to link to.</p>
-                </Explanation>
+                <p>The name of the route to link to.</p>
+
                 <CodeBlock lang="html">
                   {`<Link name="Home">Home</Link>
 <!-- <a href="/">Home</a> -->`}
@@ -104,9 +95,8 @@ curiStore(router, store);`}
               </HashSection>
 
               <HashSection title="params" id="link-params" tag="h4">
-                <Explanation>
-                  <p>An object of route params for the linked route.</p>
-                </Explanation>
+                <p>An object of route params for the linked route.</p>
+
                 <CodeBlock lang="html">
                   {`<Link name="User" params={{ userID: 5 }}>
   Profile
@@ -116,9 +106,8 @@ curiStore(router, store);`}
               </HashSection>
 
               <HashSection title="hash" id="link-hash" tag="h4">
-                <Explanation>
-                  <p>The hash for the location to link to.</p>
-                </Explanation>
+                <p>The hash for the location to link to.</p>
+
                 <CodeBlock lang="html">
                   {`<Link name="Home" hash="test">Home</Link>
 <!-- <a href="/#test">Home</a> -->`}
@@ -126,9 +115,8 @@ curiStore(router, store);`}
               </HashSection>
 
               <HashSection title="query" id="link-query" tag="h4">
-                <Explanation>
-                  <p>The query for the location to link to.</p>
-                </Explanation>
+                <p>The query for the location to link to.</p>
+
                 <CodeBlock lang="html">
                   {`<Link name="Home" query="one=1">Home</Link>
 <!-- <a href="/?one=1">Home</a> -->`}
@@ -136,26 +124,23 @@ curiStore(router, store);`}
               </HashSection>
 
               <HashSection title="state" id="link-state" tag="h4">
-                <Explanation>
-                  Some (ephemeral) state associated with the location.
-                </Explanation>
+                Some (ephemeral) state associated with the location.
               </HashSection>
             </HashSection>
 
             <HashSection tag="h3" title={<Cmp>Navigating</Cmp>} id="navigating">
-              <Explanation>
-                <p>
-                  The <Cmp>Navigating</Cmp> component is used to cancel an
-                  active asynchronous navigation.
-                </p>
-                <p>
-                  A component is passed to <Cmp>Navigating</Cmp>. When there is
-                  an active asynchronous navigation, the component will be given
-                  a <IJS>cancel</IJS> function. When there is not an active
-                  asynchronous navigation, <IJS>cancel</IJS> will be{" "}
-                  <IJS>undefined</IJS>.
-                </p>
-              </Explanation>
+              <p>
+                The <Cmp>Navigating</Cmp> component is used to cancel an active
+                asynchronous navigation.
+              </p>
+              <p>
+                A component is passed to <Cmp>Navigating</Cmp>. When there is an
+                active asynchronous navigation, the component will be given a{" "}
+                <IJS>cancel</IJS> function. When there is not an active
+                asynchronous navigation, <IJS>cancel</IJS> will be{" "}
+                <IJS>undefined</IJS>.
+              </p>
+
               <CodeBlock lang="html">
                 {`<Navigating component={Cancel} />
 
@@ -178,12 +163,11 @@ curiStore(router, store);`}
                   id="navigating-component"
                   tag="h4"
                 >
-                  <Explanation>
-                    <p>
-                      A component that receives a <IJS>cancel</IJS> function
-                      when there is an active asynchronous navigation.
-                    </p>
-                  </Explanation>
+                  <p>
+                    A component that receives a <IJS>cancel</IJS> function when
+                    there is an active asynchronous navigation.
+                  </p>
+
                   <CodeBlock lang="html">
                     {`{#if typeof cancel === "function"}
   <button on:click="cancelHandler(event, cancel)">

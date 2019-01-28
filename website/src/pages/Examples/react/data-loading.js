@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   HashSection,
-  Explanation,
   CodeSandboxDemo,
   OnGithub
 } from "../../../components/example/common";
@@ -17,9 +16,7 @@ export default function DataLoadingExample() {
       <h1>{meta.title}</h1>
 
       <HashSection title="Explanation" id="explanation">
-        <Explanation>
-          <p>TBD</p>
-        </Explanation>
+        <p>TBD</p>
       </HashSection>
 
       <HashSection title="Live Demo" id="demo">
