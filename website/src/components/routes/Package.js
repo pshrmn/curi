@@ -1,13 +1,12 @@
 import React from "react";
 
-import PackageTemplate from "../templates/Package";
+import Page from "../layout/Page";
 import BasePackage from "../package";
-import { InlineJS as IJS } from "../highlight/Inline";
 
 export default function PackagePage({ response }) {
   const { content: Content } = response.data;
   return (
-    <PackageTemplate>
+    <Page>
       <BasePackage
         name={response.data.name}
         params={response.params}
@@ -18,6 +17,6 @@ export default function PackagePage({ response }) {
       >
         <Content />
       </BasePackage>
-    </PackageTemplate>
+    </Page>
   );
 }

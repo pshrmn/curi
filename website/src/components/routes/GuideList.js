@@ -1,11 +1,11 @@
 import React from "react";
 
-import GuideTemplate from "../templates/Guide";
+import Page from "../layout/Page";
 import GuideLinks from "../links/lists/GuideDropdown";
 
 export default function GuideList() {
   return (
-    <GuideTemplate>
+    <Page>
       <h1>Curi Guides</h1>
 
       <p>
@@ -30,6 +30,6 @@ export default function GuideList() {
       </p>
 
       <GuideLinks />
-    </GuideTemplate>
+    </Page>
   );
 }

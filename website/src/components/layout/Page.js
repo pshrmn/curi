@@ -8,8 +8,6 @@ const StyledPage = styled("div")`
 
   @media only screen and (min-width: ${screen.medium}) {
     padding-top: 15px;
-    display: flex;
-    flex-flow: row nowrap;
   }
 `;
 

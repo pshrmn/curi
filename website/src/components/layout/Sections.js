@@ -5,7 +5,7 @@ import { jsx, css } from "@emotion/core";
 
 import { color, screen } from "../../constants/styles";
 
-const sectionCSS = css`
+const allSectionCSS = css`
   margin-top: 15px;
 
   .aside {
@@ -24,18 +24,28 @@ const sectionCSS = css`
   }
 `;
 
+const sectionCSS = css`
+  ${allSectionCSS}
+`;
+
+export function Plain({
+  children,
+  wrapper: Wrapper = "div",
+  className = "section"
+}) {
+  return (
+    <Wrapper css={sectionCSS} className={className} id={id}>
+      {children}
+    </Wrapper>
+  );
+}
+
 const hashSectionCSS = css`
-  margin-top: 15px;
+  ${allSectionCSS}
 
-  .aside {
-    padding: 5px 10px;
-    border-left: 2px solid $border-green;
-    background: ${color.lightGreen};
-    margin-top: 15px;
-
-    .inline-code {
-      background: ${color.green} !important;
-    }
+  p {
+    margin: 0 0 25px;
+    font-size: 0.8em;
   }
 
   .header-link {
@@ -54,7 +64,9 @@ const hashSectionCSS = css`
   }
 
   @media only screen and (min-width: ${screen.medium}) {
-    max-width: 800px;
+    p {
+      font-size: 1em;
+    }
 
     .displaced-header {
       &:before {
@@ -67,18 +79,6 @@ const hashSectionCSS = css`
     }
   }
 `;
-
-export function Plain({
-  children,
-  wrapper: Wrapper = "div",
-  className = "section"
-}) {
-  return (
-    <Wrapper css={sectionCSS} className={className} id={id}>
-      {children}
-    </Wrapper>
-  );
-}
 
 export function HashSection({
   title,

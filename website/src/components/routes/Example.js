@@ -1,12 +1,12 @@
 import React from "react";
 
-import ExampleTemplate from "../templates/Example";
+import Page from "../layout/Page";
 
 export default function ExamplePage({ response }) {
   const Content = response.data.content;
   return (
-    <ExampleTemplate>
+    <Page>
       <Content />
-    </ExampleTemplate>
+    </Page>
   );
 }

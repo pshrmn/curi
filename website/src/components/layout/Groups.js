@@ -23,21 +23,6 @@ const StyledCodeBlock = styled("div")`
   }
 `;
 
-const StyledExplanation = styled("div")`
-  width: 100%;
-
-  p {
-    margin: 0 0 25px;
-    font-size: 0.8em;
-  }
-
-  @media only screen and (min-width: ${screen.medium}) {
-    p {
-      font-size: 1em;
-    }
-  }
-`;
-
 const CodeBlock = ({ children, lang = "javascript", ...rest }) => (
   <StyledCodeBlock>
     <pre {...rest}>

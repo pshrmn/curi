@@ -1,12 +1,12 @@
 import React from "react";
 
-import GuideTemplate from "../templates/Guide";
+import Page from "../layout/Page";
 
 export default function GuidePage({ response }) {
   const Content = response.data.content;
   return (
-    <GuideTemplate>
+    <Page>
       <Content />
-    </GuideTemplate>
+    </Page>
   );
 }

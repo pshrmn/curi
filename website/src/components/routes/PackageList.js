@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import PackageTemplate from "../templates/Package";
+import Page from "../layout/Page";
 import { Note } from "../Messages";
 import { InlineJS as IJS } from "../highlight/Inline";
 import PackageLinks from "../links/lists/PackageDropdown";
 
 export default function PackageList() {
   return (
-    <PackageTemplate>
+    <Page>
       <h1>Curi Packages</h1>
 
       <p>
@@ -28,6 +28,6 @@ export default function PackageList() {
         </p>
       </Note>
       <PackageLinks />
-    </PackageTemplate>
+    </Page>
   );
 }

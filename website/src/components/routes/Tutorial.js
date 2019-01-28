@@ -1,12 +1,12 @@
 import React from "react";
 
-import TutorialTemplate from "../templates/Tutorial";
+import Page from "../layout/Page";
 
 export default function TutorialPage({ response }) {
   const Content = response.data.content;
   return (
-    <TutorialTemplate>
+    <Page>
       <Content />
-    </TutorialTemplate>
+    </Page>
   );
 }

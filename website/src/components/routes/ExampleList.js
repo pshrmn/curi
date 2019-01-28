@@ -1,11 +1,11 @@
 import React from "react";
 
-import ExampleTemplate from "../templates/Example";
+import Page from "../layout/Page";
 import ExampleLinks from "../links/lists/ExampleDropdown";
 
 export default function ExampleList() {
   return (
-    <ExampleTemplate>
+    <Page>
       <h1>Curi Examples</h1>
 
       <p>
@@ -19,6 +19,6 @@ export default function ExampleList() {
       </p>
 
       <ExampleLinks />
-    </ExampleTemplate>
+    </Page>
   );
 }
