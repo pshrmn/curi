@@ -55,17 +55,22 @@ const hashSectionCSS = css`
       content: "#";
       color: ${color.darkGray};
       margin-left: 5px;
-      display: none;
-    }
-
-    &:hover::after {
-      display: inline-block;
     }
   }
 
   @media only screen and (min-width: ${screen.medium}) {
     p {
       font-size: 1em;
+    }
+
+    .header-link {
+      &::after {
+        display: none;
+      }
+
+      &:hover::after {
+        display: inline-block;
+      }
     }
 
     .displaced-header {
