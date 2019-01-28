@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -18,7 +18,7 @@ export default function VueGuide() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="The Curi Plugin" id="plugin">
+      <HashSection title="The Curi Plugin" id="plugin">
         <Explanation>
           <p>
             The <IJS>CuriPlugin</IJS> for Vue allows you to interface your
@@ -26,8 +26,9 @@ export default function VueGuide() {
             for tracking responses using an{" "}
             <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
               observer
-            </Link>, so whenever there is a new response, the parts of your
-            application that use the response will be re-rendered.
+            </Link>
+            , so whenever there is a new response, the parts of your application
+            that use the response will be re-rendered.
           </p>
           <p>
             The plugin also makes the <IJS>response</IJS> accessible to every
@@ -43,7 +44,7 @@ import router from "./router";
 Vue.use(CuriPlugin, { router });`}
         </CodeBlock>
 
-        <Section
+        <HashSection
           title="Rendering with the response"
           id="rendering-response"
           tag="h3"
@@ -146,9 +147,9 @@ const routes = prepareRoutes([
               The router is globally available as <IJS>$router</IJS>.
             </p>
           </Explanation>
-        </Section>
+        </HashSection>
 
-        <Section title="Accessibility" id="accessibility" tag="h3">
+        <HashSection title="Accessibility" id="accessibility" tag="h3">
           <Explanation>
             <p>
               Managing the application's focus when navigating is useful for
@@ -181,10 +182,10 @@ const routes = prepareRoutes([
   };
 </script>`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Navigating" id="navigating">
+      <HashSection title="Navigating" id="navigating">
         <Explanation>
           <p>
             The <Cmp>curi-link</Cmp> component is used to navigate between
@@ -234,7 +235,7 @@ const routes = prepareRoutes([
 // renders
 <a href="/#details">Home</a>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
       <Explanation>
         <p>

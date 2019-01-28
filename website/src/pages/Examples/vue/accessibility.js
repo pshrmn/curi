@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   IJS,
   CodeSandboxDemo,
@@ -16,18 +16,18 @@ export default function AccessibilityExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             This example demonstrates how to increase the accessibility of an
             application using the <IJS>curi-focus</IJS> directive.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/accessibility" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="vue/accessibility" />
     </React.Fragment>

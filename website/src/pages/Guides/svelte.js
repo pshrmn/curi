@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -18,7 +18,7 @@ export default function SvelteGuide() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Store Integration" id="store">
+      <HashSection title="Store Integration" id="store">
         <Explanation>
           <p>
             Curi relies on Svelte's store to interface with an application. By
@@ -31,7 +31,8 @@ export default function SvelteGuide() {
             the store. This sets up an{" "}
             <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
               observer
-            </Link>, so that whenever there is a new response, the parts of your
+            </Link>
+            , so that whenever there is a new response, the parts of your
             application that use the response will be re-rendered.
           </p>
         </Explanation>
@@ -45,7 +46,7 @@ const store = new Store();
 curiStore(router, store);`}
         </CodeBlock>
 
-        <Section
+        <HashSection
           title="Rendering with the response"
           id="rendering-response"
           tag="h3"
@@ -137,10 +138,10 @@ const routes = prepareRoutes([
   }
 </script>`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Navigating" id="navigating">
+      <HashSection title="Navigating" id="navigating">
         <Explanation>
           <p>
             The <Cmp>Link</Cmp> component is used to navigate between routes
@@ -198,7 +199,7 @@ const routes = prepareRoutes([
 // renders
 <a href="/#details">Home</a>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
       <Explanation>
         <p>

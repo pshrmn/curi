@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -39,7 +39,7 @@ export default function CreatingARouterGuide() {
 const router = curi(history, routes);`}
       </CodeBlock>
 
-      <Section title="Types of History" id="types">
+      <HashSection title="Types of History" id="types">
         <Explanation>
           <p>
             There are three types of <IJS>history</IJS> to choose from; which
@@ -47,7 +47,7 @@ const router = curi(history, routes);`}
           </p>
         </Explanation>
 
-        <Section title="Browser History" id="browser" tag="h3">
+        <HashSection title="Browser History" id="browser" tag="h3">
           <Explanation>
             <CodeBlock>
               {`import Browser from "@hickory/browser";
@@ -77,9 +77,9 @@ const browserHistory = Browser();`}
               </li>
             </ol>
           </Explanation>
-        </Section>
+        </HashSection>
 
-        <Section title="Hash History" id="hash" tag="h3">
+        <HashSection title="Hash History" id="hash" tag="h3">
           <CodeBlock>
             {`import Hash from "@hickory/hash";
 const hashHistory = Hash();`}
@@ -96,9 +96,9 @@ const hashHistory = Hash();`}
               history is almost always a better choice.
             </Warning>
           </Explanation>
-        </Section>
+        </HashSection>
 
-        <Section title="In Memory History" id="in-memory" tag="h3">
+        <HashSection title="In Memory History" id="in-memory" tag="h3">
           <CodeBlock>
             {`import InMemory from "@hickory/in-memory";
 const inMemoryHistory = InMemory();`}
@@ -111,7 +111,7 @@ const inMemoryHistory = InMemory();`}
               testing.
             </p>
           </Explanation>
-        </Section>
+        </HashSection>
 
         <Explanation>
           <Note>
@@ -119,12 +119,13 @@ const inMemoryHistory = InMemory();`}
             with a server, this article should help:{" "}
             <a href="https://medium.com/@pshrmn/single-page-applications-and-the-server-32a23d67936">
               Single-Page Applications and the Server
-            </a>.
+            </a>
+            .
           </Note>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Locations" id="locations">
+      <HashSection title="Locations" id="locations">
         <Explanation>
           <p>
             The <IJS>history</IJS> object will map URLs into location objects.
@@ -146,7 +147,7 @@ hash: "trending"
 }`}
         </CodeBlock>
 
-        <Section title="Query Objects" id="query-objects" tag="h3">
+        <HashSection title="Query Objects" id="query-objects" tag="h3">
           <Explanation>
             <p>
               The <IJS>query</IJS> value of a location is a string by default,
@@ -158,13 +159,16 @@ hash: "trending"
               prefer. Some of the most popular are{" "}
               <a href="http://npmjs.com/package/qs">
                 <IJS>qs</IJS>
-              </a>,{" "}
+              </a>
+              ,{" "}
               <a href="http://npmjs.com/package/query-string">
                 <IJS>query-string</IJS>
-              </a>, and{" "}
+              </a>
+              , and{" "}
               <a href="https://www.npmjs.com/package/querystring">
                 <IJS>querystring</IJS>
-              </a>.
+              </a>
+              .
             </p>
           </Explanation>
           <CodeBlock>
@@ -182,10 +186,10 @@ query: { key: "value" }
 hash: "trending"
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Navigation" id="navigation">
+      <HashSection title="Navigation" id="navigation">
         <Explanation>
           <p>
             The <IJS>history</IJS> object supports four kinds of navigation. You
@@ -226,7 +230,7 @@ hash: "trending"
         <CodeBlock>
           {`history.navigate({ pathname: "/test" }, "PUSH");`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
       <Explanation>
         <p>
@@ -234,7 +238,8 @@ hash: "trending"
           out the{" "}
           <a href="https://github.com/pshrmn/hickory/tree/master/docs">
             Hickory documentation
-          </a>.
+          </a>
+          .
         </p>
       </Explanation>
     </React.Fragment>

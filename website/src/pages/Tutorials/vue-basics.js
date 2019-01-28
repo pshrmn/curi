@@ -2,14 +2,12 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   CodeBlock,
   Outline,
   Note,
   IJS,
   Cmp,
-  CodeSandboxDemo,
   ScrollableTable
 } from "../../components/tutorial/common";
 
@@ -30,11 +28,11 @@ export default function VueBasicsTutorial() {
           <li>Learn how to navigate within the application.</li>
         </ul>
       </Outline>
-      {/*<Section title="Demo" id="demo">
+      {/*<HashSection title="Demo" id="demo">
       <p>You can run a demo of the site we are building with CodeSandbox.</p>
       <CodeSandboxDemo id="github/curijs/vue-basic-tutorial/tree/master/" />
-</Section>*/}
-      <Section title="Setup" id="setup">
+</HashSection>*/}
+      <HashSection title="Setup" id="setup">
         <p>
           We will be using{" "}
           <a href="https://github.com/vuejs/vue-cli">
@@ -84,8 +82,8 @@ yarn serve`}
           router. <IJS>@curi/vue</IJS> gives us a plugin for Vue and some Vue
           components that interact with the router.
         </p>
-      </Section>
-      <Section title="History and Locations" id="history">
+      </HashSection>
+      <HashSection title="History and Locations" id="history">
         <p>
           URIs can be broken into parts to identify a location. With a
           single-page application, we don't care about the URI's protocol (http,
@@ -131,7 +129,8 @@ yarn serve`}
           The history object can be configured with{" "}
           <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
             an options object
-          </a>, but we will stick with the defaults.
+          </a>
+          , but we will stick with the defaults.
         </Note>
         <CodeBlock lang="javascript" data-line="3,9">
           {`// src/main.js
@@ -153,8 +152,8 @@ new Vue({
           <IJS>history</IJS> object. We can ignore that warning for now because
           we'll get rid of it soon enough.
         </Note>
-      </Section>
-      <Section title="Defining the Routes" id="defining-routes">
+      </HashSection>
+      <HashSection title="Defining the Routes" id="defining-routes">
         <p>
           Routes are JavaScript objects that define the valid locations for a
           router. They have a <IJS>name</IJS> and a <IJS>path</IJS>.
@@ -169,7 +168,7 @@ new Vue({
           describes the location pathname that it should match.
         </p>
 
-        <Section
+        <HashSection
           title="Path basics"
           id="path-basics"
           className="aside"
@@ -217,7 +216,7 @@ new Vue({
   ]
 }`}
           </CodeBlock>
-        </Section>
+        </HashSection>
         <p>The website will start with four routes.</p>
         <ScrollableTable>
           <thead>
@@ -295,8 +294,8 @@ export default [
   }
 ];`}
         </CodeBlock>
-      </Section>
-      <Section title="The Router" id="router">
+      </HashSection>
+      <HashSection title="The Router" id="router">
         <p>
           With the history object created and the routes defined, we are ready
           to create the router. Back in the <IJS>src/index.js</IJS> file, we
@@ -360,13 +359,13 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')`}
         </CodeBlock>
-      </Section>
-      <Section title="Rendering with Vue" id="rendering">
+      </HashSection>
+      <HashSection title="Rendering with Vue" id="rendering">
         <p>
           We can now render our application. We will re-use the provide{" "}
           <IJS>App.vue</IJS> file.
         </p>
-        <Section
+        <HashSection
           title="Responses and Navigation"
           id="responses"
           className="aside"
@@ -401,12 +400,12 @@ new Vue({
           <p>
             The <IJS>navigation</IJS> object contains additional information
             about a navigation that doesn't make sense to include in the
-            response object. This includes the navigation's "action" (<IJS>
-              PUSH
-            </IJS>, <IJS>POP</IJS>, or <IJS>REPLACE</IJS>) and the previous
-            response object. This can be useful for animation and modals.
+            response object. This includes the navigation's "action" (
+            <IJS>PUSH</IJS>, <IJS>POP</IJS>, or <IJS>REPLACE</IJS>) and the
+            previous response object. This can be useful for animation and
+            modals.
           </p>
-        </Section>
+        </HashSection>
         <p>
           Most of the time, the response is the only property you will need to
           use to render, but the other two may occasionally be useful.
@@ -551,14 +550,14 @@ export default [
           At this point in time our app is rendering, but is isn't very
           interesting because we cannot navigate between locations.
         </p>
-      </Section>
-      <Section title="Navigating between locations" id="navigating">
+      </HashSection>
+      <HashSection title="Navigating between locations" id="navigating">
         <p>
           The <IJS>CuriPlugin</IJS> makes a <Cmp>curi-link</Cmp> component
           available with the appliaction. We can use that to navigate between
           locations within our application.
         </p>
-        <Section
+        <HashSection
           title={
             <span>
               The <Cmp>curi-link</Cmp> Component
@@ -608,9 +607,9 @@ export default [
 <curi-link to="Checkout" :query="a=123">Checkout</curi-link>
 <!-- <a href="/checkout?a=123">Checkout</a> -->`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="A Navigation Menu" id="nav-menu" tag="h3">
+        <HashSection title="A Navigation Menu" id="nav-menu" tag="h3">
           <p>
             We will start with creating a navigation menu component with links
             to our home page and checkout page.
@@ -660,9 +659,9 @@ export default [
   };
 </script>`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="Linking to Books" id="book-links" tag="h3">
+        <HashSection title="Linking to Books" id="book-links" tag="h3">
           <p>
             We want to be able to link to individual books from the home page.
             First, we need data about the books. For now, we're going to
@@ -779,9 +778,9 @@ export default [
   }
 </script>`}
           </CodeBlock>
-        </Section>
-      </Section>
-      <Section title="Let's go shopping" id="shopping">
+        </HashSection>
+      </HashSection>
+      <HashSection title="Let's go shopping" id="shopping">
         <p>
           We want to be able to add books to our shopping cart. Since this is a
           play site, we will store the cart data in memory.
@@ -826,7 +825,7 @@ export default {
           page.
         </p>
 
-        <Section
+        <HashSection
           title="Navigate Method"
           id="nav-method"
           className="aside"
@@ -869,9 +868,10 @@ router.navigate({ name: "Replace", method: "REPLACE" });
 router.navigate({ name: "Two", method: "ANCHOR" });
 // session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "New", method: "ANCHOR" });
-// session = ['/one', '/two', '/new'], index = 2`}`}
+// session = ['/one', '/two', '/new'], index = 2`}
+            `}
           </CodeBlock>
-        </Section>
+        </HashSection>
         <p>
           We also want to import our shopping cart API so that we can add a book
           to the cart.
@@ -981,15 +981,15 @@ router.navigate({ name: "New", method: "ANCHOR" });
   }
 </script>`}
         </CodeBlock>
-      </Section>
-      <Section title="What's next?" id="next">
+      </HashSection>
+      <HashSection title="What's next?" id="next">
         <p>
           We now have a functional website built with Vue and Curi. What should
           you do next? Build another site! You can also check out the{" "}
           <Link name="Guides">guides</Link> for information on advanced
           techniques.
         </p>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

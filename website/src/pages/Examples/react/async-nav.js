@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -19,7 +19,7 @@ export default function AsyncNavExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             If the <Cmp>Link</Cmp>'s <IJS>children</IJS> prop is a
@@ -39,11 +39,11 @@ export default function AsyncNavExample() {
   )}
 </Link>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/async-nav" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/async-nav" />
     </React.Fragment>

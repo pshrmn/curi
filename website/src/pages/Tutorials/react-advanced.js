@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Outline,
@@ -21,7 +21,8 @@ export default function ReactAdvancedTutorial() {
           In this tutorial, we will be expanding on the website built in the{" "}
           <Link name="Tutorial" params={{ slug: "react-basics" }}>
             React basics tutorial
-          </Link>. We will take advantage of Curi's async features to add code
+          </Link>
+          . We will take advantage of Curi's async features to add code
           splitting and data preloading to the application.
         </p>
       </Explanation>
@@ -33,7 +34,7 @@ export default function ReactAdvancedTutorial() {
         </ul>
       </Outline>
 
-      <Section title="Demo" id="demo">
+      <HashSection title="Demo" id="demo">
         <Explanation>
           <p>
             You can run a demo of the site we are building with CodeSandbox.
@@ -41,9 +42,9 @@ export default function ReactAdvancedTutorial() {
         </Explanation>
 
         <CodeSandboxDemo id="github/curijs/react-advanced-tutorial/tree/master/" />
-      </Section>
+      </HashSection>
 
-      <Section title="Setup" id="setup">
+      <HashSection title="Setup" id="setup">
         <Explanation>
           <p>
             If you did not complete the React basics tutorial, you should either
@@ -52,7 +53,8 @@ export default function ReactAdvancedTutorial() {
             or fork its{" "}
             <a href="https://codesandbox.io/s/github/curijs/react-basic-tutorial/tree/master/">
               sandbox
-            </a>.
+            </a>
+            .
           </p>
           <p>
             If you are cloning the repo, you should also install its
@@ -66,9 +68,9 @@ cd react-advanced-tutorial
 npm install
 npm run start`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Asynchronous Routes" id="async">
+      <HashSection title="Asynchronous Routes" id="async">
         <Explanation>
           <p>
             Curi lets you attach async functions to a route through its{" "}
@@ -164,7 +166,7 @@ const routes = prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <Section
+        <HashSection
           title="Initial Render"
           id="initial-render"
           className="aside"
@@ -240,19 +242,20 @@ ReactDOM.render((
               might be more acceptable.
             </p>
           </Explanation>
-        </Section>
+        </HashSection>
 
         <Explanation>
           <p>
             For more information on async route properties, please refer to the{" "}
             <Link name="Guide" params={{ slug: "routes" }}>
               routes guide
-            </Link>.
+            </Link>
+            .
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Code Splitting in Routes" id="code-splitting-routes">
+      <HashSection title="Code Splitting in Routes" id="code-splitting-routes">
         <Explanation>
           <p>
             Currently, the <IJS>routes.js</IJS> module imports all of the route
@@ -263,7 +266,7 @@ ReactDOM.render((
           </p>
         </Explanation>
 
-        <Section
+        <HashSection
           title="Code Splitting"
           id="code-splitting"
           className="aside"
@@ -308,7 +311,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
             {`import("some-module.js")
   .then(module => module.default)`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
         <Explanation>
           <p>
@@ -492,9 +495,9 @@ registerServiceWorker();`}
             code split bundle for the first route has been loaded.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Preloading Data" id="preloading-data">
+      <HashSection title="Preloading Data" id="preloading-data">
         <Explanation>
           <p>
             Preloading data lets you delay navigation until after the data for a
@@ -522,14 +525,15 @@ registerServiceWorker();`}
           </p>
         </Explanation>
 
-        <Section title="The Fake API" id="fake-api" tag="h3">
+        <HashSection title="The Fake API" id="fake-api" tag="h3">
           <Explanation>
             <p>
               The fake API will simulate asynchronous calls to the server by
               returning Promises, similarly to the{" "}
               <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">
                 Fetch API
-              </a>.
+              </a>
+              .
             </p>
           </Explanation>
 
@@ -563,7 +567,7 @@ export const BOOK = id => Promise.resolve(
   books.find(b => b.id === intID)
 );`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
         <Explanation>
           <p>
@@ -789,9 +793,9 @@ export default function Book({ response, router }) {
   );
 };`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Visualizing Loading" id="loading">
+      <HashSection title="Visualizing Loading" id="loading">
         <Explanation>
           <p>
             At this point, we have the same functionality as the basic tutorial,
@@ -837,7 +841,7 @@ export const BOOK = id => new Promise(resolve => {
 });`}
         </CodeBlock>
 
-        <Section
+        <HashSection
           title={
             <span>
               <Cmp>Link</Cmp> is navigating?
@@ -932,10 +936,10 @@ export default function Home({ response }) {
   );
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Async Caveats" id="caveats">
+      <HashSection title="Async Caveats" id="caveats">
         <Explanation>
           <p>
             Adding asynchronous loading to an application can help reduce
@@ -952,7 +956,8 @@ export default function Home({ response }) {
             how you store data (e.g.{" "}
             <a href="https://redux.js.org/recipes/server-rendering#the-server-side">
               with redux
-            </a>).
+            </a>
+            ).
           </p>
           <p>
             Another consideration is whether or not you want to "hoist" data
@@ -966,7 +971,7 @@ export default function Home({ response }) {
             case-by-case basis.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

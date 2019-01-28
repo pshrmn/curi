@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS
@@ -47,7 +47,7 @@ export default function InstallationGuide() {
 ></script>`}
       </CodeBlock>
 
-      <Section title="Promises" id="promises">
+      <HashSection title="Promises" id="promises">
         <Explanation>
           <p>
             Curi uses Promises, so you may need to include a polyfill to add
@@ -73,7 +73,7 @@ export default function InstallationGuide() {
   src="https://cdn.polyfill.io/v2/polyfill.js?features=Promise"
 ></script>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS
@@ -25,7 +25,7 @@ export default function LoadingGuide() {
         </p>
       </Explanation>
 
-      <Section title="resolve" id="resolve">
+      <HashSection title="resolve" id="resolve">
         <Explanation>
           <p>
             An async function (with any name you want it to have) can be added
@@ -76,9 +76,9 @@ export default function LoadingGuide() {
   }
 }`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="response" id="response">
+      <HashSection title="response" id="response">
         <Explanation>
           <p>
             While <IJS>resolve.data()</IJS> starts our data loading, it doesn't
@@ -162,7 +162,7 @@ export default function LoadingGuide() {
   }
 }`}
         </CodeBlock>
-      </Section>
+      </HashSection>
       <p>
         A route's <IJS>resolve</IJS> object and <IJS>response()</IJS> functions
         offer a convenient way to do data loading prior to actually rendering

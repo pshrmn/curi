@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -27,9 +27,9 @@ export default function MigrateReactRouterv4Guide() {
         </p>
       </Explanation>
 
-      <Section title="Routes" id="routes">
+      <HashSection title="Routes" id="routes">
         <p>Let’s get started with setting up our routes.</p>
-        <Section
+        <HashSection
           title="With React Router"
           id="routes-with-react-router"
           tag="h3"
@@ -70,9 +70,9 @@ const Inbox = ({ match }) => (
   </Switch>
 );`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="With Curi" id="routes-with-curi" tag="h3">
+        <HashSection title="With Curi" id="routes-with-curi" tag="h3">
           <Explanation>
             <p>
               Routes in Curi are JavaScript objects. They are grouped together
@@ -217,14 +217,14 @@ const routes = prepareRoutes([
   }
 ]);`}
           </CodeBlock>
-        </Section>
+        </HashSection>
         <p>
           Once your routes have been defined, you can move on to creating your
           Curi router.
         </p>
-      </Section>
+      </HashSection>
 
-      <Section title="Creating the router" id="creating-the-router">
+      <HashSection title="Creating the router" id="creating-the-router">
         <Explanation>
           <p>
             With React Router, you create your router by rendering a{" "}
@@ -264,9 +264,9 @@ const history = Browser();
 const routes = prepareRoutes([...]);
 const router = curi(history, routes);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Rendering" id="rendering">
+      <HashSection title="Rendering" id="rendering">
         <Explanation>
           <p>
             We will walk through the rendering differences between React Router
@@ -275,7 +275,7 @@ const router = curi(history, routes);`}
           </p>
         </Explanation>
 
-        <Section title="React Router" id="rendering-react-router" tag="h3">
+        <HashSection title="React Router" id="rendering-react-router" tag="h3">
           <Explanation>
             <p>
               React Router matches routes while it renders. It uses the{" "}
@@ -343,9 +343,9 @@ const Inbox = ({ match }) => (
 </BrowserRouter>
 */`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="Curi" id="rendering-with-curi" tag="h3">
+        <HashSection title="Curi" id="rendering-with-curi" tag="h3">
           <Explanation>
             <p>
               With Curi, we also need to re-render our application every time
@@ -387,15 +387,15 @@ const Inbox = ({ match }) => (
               components.
             </p>
             <p>
-              In the React Router section, we had three components that were
-              rendered: <Cmp>App</Cmp>,
-              <Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>. With Curi, only the most
-              accurately matched route actually matches. That means that for the
-              URL <IJS>/inbox/test</IJS>, the <IJS>"Message"</IJS> route will
-              match, but its parent route, <IJS>"Inbox"</IJS> will not, so{" "}
-              <IJS>response.body</IJS> will be the <Cmp>Message</Cmp> component.
-              Unlike React Router, we don’t render <Cmp>Inbox</Cmp> because we
-              did not match the <IJS>inbox</IJS> route.
+              In the React Router HashSection, we had three components that were
+              rendered: <Cmp>App</Cmp>,<Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>.
+              With Curi, only the most accurately matched route actually
+              matches. That means that for the URL <IJS>/inbox/test</IJS>, the{" "}
+              <IJS>"Message"</IJS> route will match, but its parent route,{" "}
+              <IJS>"Inbox"</IJS> will not, so <IJS>response.body</IJS> will be
+              the <Cmp>Message</Cmp> component. Unlike React Router, we don’t
+              render <Cmp>Inbox</Cmp> because we did not match the{" "}
+              <IJS>inbox</IJS> route.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
@@ -493,10 +493,10 @@ function render({ response }) {
   return <Body response={response} />;
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Links" id="links">
+      <HashSection title="Links" id="links">
         <Explanation>
           <p>
             You will want to be able to navigate between routes in your
@@ -532,9 +532,8 @@ function render({ response }) {
               <p>
                 With React Router, any additional location properties are passed
                 to the <Cmp>Link</Cmp> using the <IJS>to</IJS> object. With
-                Curi, these properties are passed using the prop name (<IJS>
-                  hash
-                </IJS>, <IJS>query</IJS> &amp;
+                Curi, these properties are passed using the prop name (
+                <IJS>hash</IJS>, <IJS>query</IJS> &amp;
                 <IJS>state</IJS>).
               </p>
             </Explanation>
@@ -594,9 +593,9 @@ const router = curi(history, routes, {
             </CodeBlock>
           </li>
         </ul>
-      </Section>
+      </HashSection>
 
-      <Section
+      <HashSection
         title="Accessing router props from nested components"
         id="router-props"
       >
@@ -629,7 +628,7 @@ export default () => (
   </Curious>
 );`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
       <p>
         At this point, hopefully you are comfortable with migrating from React

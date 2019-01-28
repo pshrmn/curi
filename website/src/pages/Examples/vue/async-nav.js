@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -19,7 +19,7 @@ export default function AsyncNavExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             Use the <Cmp>curi-link</Cmp>'s <IJS>slot</IJS> as scoped-slot so you
@@ -35,11 +35,11 @@ export default function AsyncNavExample() {
   </template>
 </curi-link>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/async-nav" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="vue/async-nav" />
     </React.Fragment>

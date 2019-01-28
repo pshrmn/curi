@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -18,7 +18,7 @@ export default function GettingStartedGuide() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="The Router" id="router-object">
+      <HashSection title="The Router" id="router-object">
         <Explanation>
           <p>
             The router is the controller of the single-page application. A
@@ -47,8 +47,8 @@ const router = curi(history, routes);`}
             array describes valid locations in an application.
           </p>
         </Explanation>
-      </Section>
-      <Section title="Navigation" id="navigation">
+      </HashSection>
+      <HashSection title="Navigation" id="navigation">
         <Explanation>
           <p>
             Navigation within a single-page application can either be caused by
@@ -88,13 +88,14 @@ router.navigate({
               params={{ package: "react-dom", version: "v1" }}
             >
               <IJS>@curi/react-dom</IJS>
-            </Link>, will call <IJS>router.nagivate()</IJS> for you when the
-            user clicks a link.
+            </Link>
+            , will call <IJS>router.nagivate()</IJS> for you when the user
+            clicks a link.
           </Note>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Response Handlers" id="response-handlers">
+      <HashSection title="Response Handlers" id="response-handlers">
         <Explanation>
           <p>
             When Curi matches a location to a route, it creates a "response"
@@ -111,7 +112,8 @@ router.navigate({
             about them in the{" "}
             <Link name="Guide" params={{ slug: "side-effects" }}>
               side effects guide
-            </Link>.
+            </Link>
+            .
           </p>
         </Explanation>
         <CodeBlock>
@@ -141,8 +143,8 @@ router.once(() => {
         </CodeBlock>
         <Explanation>
           <p>
-            Observers are passed to the router using <IJS>router.observe()</IJS>.
-            Unlike one time functions, these will be called for every response
+            Observers are passed to the router using <IJS>router.observe()</IJS>
+            . Unlike one time functions, these will be called for every response
             emitted by the router (until you tell the router to stop calling
             it). You most likely will not need to call this yourself because the
             renderer implementations setup observers for you.
@@ -170,8 +172,8 @@ router.once(() => {
   // safe to render async routes now
 });`}
         </CodeBlock>
-      </Section>
-      <Section title="Rendering" id="rendering">
+      </HashSection>
+      <HashSection title="Rendering" id="rendering">
         <Explanation>
           <p>
             How Curi integrates with UI libraries depends on which one you are
@@ -205,7 +207,7 @@ router.once(() => {
             </li>
           </ul>
         </Explanation>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

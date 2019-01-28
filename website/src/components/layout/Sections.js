@@ -49,7 +49,7 @@ const sectionCSS = css`
   }
 `;
 
-export const Section = ({
+export const HashSection = ({
   title,
   id,
   children,

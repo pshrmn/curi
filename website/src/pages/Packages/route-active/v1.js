@@ -3,7 +3,7 @@ import React from "react";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -26,7 +26,7 @@ export default class RouteActivePkg extends React.PureComponent {
           </Explanation>
         </About>
         <APIBlock>
-          <Section tag="h3" title="active" id="active">
+          <HashSection tag="h3" title="active" id="active">
             <Explanation>
               <p>
                 A function to create the active route interaction. When you
@@ -49,7 +49,7 @@ const router = curi(history, routes, {
 });`}
             </CodeBlock>
 
-            <Section title="Arguments" id="arguments" tag="h3">
+            <HashSection title="Arguments" id="arguments" tag="h3">
               <Explanation>
                 <ScrollableTable>
                   <thead>
@@ -91,8 +91,8 @@ const router = curi(history, routes, {
   false
 );`}
               </CodeBlock>
-            </Section>
-          </Section>
+            </HashSection>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

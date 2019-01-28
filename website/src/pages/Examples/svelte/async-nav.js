@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   Cmp,
   CodeSandboxDemo,
@@ -17,7 +17,7 @@ export default function BasicExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             This example uses the <Cmp>Navigating</Cmp> component to render a
@@ -25,11 +25,11 @@ export default function BasicExample() {
             button will cancel the navigation.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/async-nav" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="svelte/async-nav" />
     </React.Fragment>

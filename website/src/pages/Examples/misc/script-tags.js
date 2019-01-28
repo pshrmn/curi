@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   Cmp,
   OnGithub
@@ -16,7 +16,7 @@ export default function ScriptTagExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             This example uses unbundled JavaScript and script tags to serve its
@@ -26,7 +26,7 @@ export default function ScriptTagExample() {
             download and serve them yourself.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
       <OnGithub path="misc/script-tags" />
     </React.Fragment>

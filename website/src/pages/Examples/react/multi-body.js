@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -19,7 +19,7 @@ export default function MultiBodyExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             The <IJS>body</IJS> property of a response doesn't have to be a
@@ -95,11 +95,11 @@ const routes = prepareRoutes([
   }
 ]);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/multi-body" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/multi-body" />
     </React.Fragment>

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -21,10 +21,9 @@ export default function RoutesGuide() {
 
       <Explanation>
         <p>
-          Routes are JavaScript objects with two required properties—<IJS>
-            name
-          </IJS>{" "}
-          and <IJS>path</IJS>—and a number of optional properties.
+          Routes are JavaScript objects with two required properties—
+          <IJS>name</IJS> and <IJS>path</IJS>—and a number of optional
+          properties.
         </p>
         <p>
           A route's <IJS>path</IJS> is used to determine if a route matches a
@@ -61,7 +60,7 @@ export default function RoutesGuide() {
 ]);`}
       </CodeBlock>
 
-      <Section title="Preparing Routes" id="prepareRoutes" tag="h3">
+      <HashSection title="Preparing Routes" id="prepareRoutes" tag="h3">
         <Explanation>
           <p>
             The routes array should be wrapped in a <IJS>prepareRoutes()</IJS>{" "}
@@ -77,9 +76,9 @@ const routes = [...]
 // prepared routes
 export default prepareRoutes(routes);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Route names" id="route-names" tag="h3">
+      <HashSection title="Route names" id="route-names" tag="h3">
         <Explanation>
           <p>
             Why do routes have names? Curi lets you interact with routes using
@@ -100,9 +99,9 @@ export default prepareRoutes(routes);`}
 );
 // pathname = "/a/abcd"`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Asynchronous Routes" id="async" tag="h3">
+      <HashSection title="Asynchronous Routes" id="async" tag="h3">
         <Explanation>
           <p>
             When a route matches, you might want to perform some actions before
@@ -146,8 +145,8 @@ export default prepareRoutes(routes);`}
             guide.
           </p>
         </Explanation>
-      </Section>
-      <Section title="The Response Function" id="route-response" tag="h3">
+      </HashSection>
+      <HashSection title="The Response Function" id="route-response" tag="h3">
         <Explanation>
           <p>
             Each route can have a <IJS>response()</IJS> function, which returns
@@ -185,10 +184,9 @@ const routes = prepareRoutes([
         <Explanation>
           <p>
             Only valid response properties will be merged onto the response.
-            These are the optional response properties listed above (<IJS>
-              body
-            </IJS>, <IJS>title</IJS>, <IJS>status</IJS>, <IJS>data</IJS>,{" "}
-            <IJS>redirectTo</IJS>, and <IJS>error</IJS>).
+            These are the optional response properties listed above (
+            <IJS>body</IJS>, <IJS>title</IJS>, <IJS>status</IJS>,{" "}
+            <IJS>data</IJS>, <IJS>redirectTo</IJS>, and <IJS>error</IJS>).
           </p>
           <p>
             The function receives an object with a number of properties you
@@ -210,8 +208,8 @@ const routes = prepareRoutes([
             </li>
           </ol>
         </Explanation>
-      </Section>
-      <Section title="Matching Routes" id="matching-routes">
+      </HashSection>
+      <HashSection title="Matching Routes" id="matching-routes">
         <Explanation>
           <p>
             Whenever Curi receives a new location, it will determine which route
@@ -222,7 +220,7 @@ const routes = prepareRoutes([
             route's nest sibling.
           </p>
         </Explanation>
-        <Section title="No Matching Route" id="catch-all" tag="h3">
+        <HashSection title="No Matching Route" id="catch-all" tag="h3">
           <Explanation>
             <Warning>
               If none of your routes match a location, Curi will do nothing!
@@ -238,8 +236,8 @@ const routes = prepareRoutes([
   path: '(.*)',
 }`}
           </CodeBlock>
-        </Section>
-        <Section
+        </HashSection>
+        <HashSection
           title="Route Matching Walkthrough"
           id="match-walkthrough"
           tag="h3"
@@ -298,8 +296,8 @@ const routes = prepareRoutes([
   ]
 }`}
           </CodeBlock>
-        </Section>
-        <Section title="Path Matching Options" id="options" tag="h3">
+        </HashSection>
+        <HashSection title="Path Matching Options" id="options" tag="h3">
           <Explanation>
             <p>
               You can control whether a route does exact or partial matching
@@ -324,8 +322,8 @@ const routes = prepareRoutes([
   }
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
     </React.Fragment>
   );
 }

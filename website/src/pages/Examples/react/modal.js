@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   IJS,
   CodeSandboxDemo,
@@ -17,7 +17,7 @@ export default function ModalExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             This example mimics the way that Pinterest works. Whether or not
@@ -49,11 +49,11 @@ export default function ModalExample() {
             testing the modal's behavior.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/modal" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/modal" />
     </React.Fragment>

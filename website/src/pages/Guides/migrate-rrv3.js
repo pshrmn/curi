@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -53,9 +53,9 @@ export default function MigrateReactRouterv3Guide() {
           </li>
         </ol>
       </Explanation>
-      <Section title="Routes" id="routes">
+      <HashSection title="Routes" id="routes">
         <p>Let’s get started with setting up our routes.</p>
-        <Section
+        <HashSection
           title="With React Router"
           id="routes-with-react-router"
           tag="h3"
@@ -110,9 +110,9 @@ export default function MigrateReactRouterv3Guide() {
   </Route>
 </Route>`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="With Curi" id="routes-with-curi" tag="h3">
+        <HashSection title="With Curi" id="routes-with-curi" tag="h3">
           <Explanation>
             <p>
               Routes in Curi are always JavaScript objects. Like React Router,
@@ -122,7 +122,8 @@ export default function MigrateReactRouterv3Guide() {
               read learn how to format paths from the{" "}
               <a href="https://github.com/pillarjs/path-to-regexp">
                 <IJS>path-to-regexp</IJS> repo
-              </a>.
+              </a>
+              .
             </p>
 
             <p>First, we will define the names and paths for our routes.</p>
@@ -220,13 +221,12 @@ const routes = prepareRoutes([
           <Explanation>
             <p>
               We are close to replicating our React Router routes, but we still
-              need to implement the <IJS>on___</IJS> methods for our <IJS>
-                :message
-              </IJS>{" "}
-              route. With Curi, routes can have functions that are called when
-              they match the new location. These are grouped under the route's{" "}
-              <IJS>resolve</IJS> object. The <IJS>resolve</IJS> functions are
-              called every time that a route matches a location.
+              need to implement the <IJS>on___</IJS> methods for our 
+              <IJS>:message</IJS> route. With Curi, routes can have functions
+              that are called when they match the new location. These are
+              grouped under the route's <IJS>resolve</IJS> object. The{" "}
+              <IJS>resolve</IJS> functions are called every time that a route
+              matches a location.
             </p>
             <p>
               With React Router, <IJS>onEnter</IJS> is called when the route
@@ -294,14 +294,14 @@ const routes = prepareRoutes([
   }
 ]);`}
           </CodeBlock>
-        </Section>
+        </HashSection>
         <p>
           Once your routes have been defined, you can move on to creating your
           Curi router.
         </p>
-      </Section>
+      </HashSection>
 
-      <Section title="Creating the router" id="creating-the-router">
+      <HashSection title="Creating the router" id="creating-the-router">
         <Explanation>
           <p>
             With React Router, you create your router by rendering a{" "}
@@ -339,9 +339,9 @@ const history = Browser();
 const routes = prepareRoutes([...]);
 const router = curi(history, routes);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Rendering" id="rendering">
+      <HashSection title="Rendering" id="rendering">
         <Explanation>
           <p>
             We will walk through the rendering differences between React Router
@@ -350,7 +350,11 @@ const router = curi(history, routes);`}
           </p>
         </Explanation>
 
-        <Section title="React Router v2/3" id="rendering-react-router" tag="h3">
+        <HashSection
+          title="React Router v2/3"
+          id="rendering-react-router"
+          tag="h3"
+        >
           <Explanation>
             <p>
               React Router uses the <Cmp>Router</Cmp> component to subscribe to
@@ -387,9 +391,9 @@ const router = curi(history, routes);`}
   </Inbox>
 </App>`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="Curi" id="rendering-with-curi" tag="h3">
+        <HashSection title="Curi" id="rendering-with-curi" tag="h3">
           <Explanation>
             <p>
               With Curi, we also need to re-render our application every time
@@ -431,15 +435,15 @@ const router = curi(history, routes);`}
               components.
             </p>
             <p>
-              In the React Router section, we had three components that were
-              rendered: <Cmp>App</Cmp>,
-              <Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>. With Curi, only the most
-              accurately matched route actually matches. That means that for the
-              URL <IJS>/inbox/test</IJS>, the <IJS>"Message"</IJS> route will
-              match, but its parent route, <IJS>"Inbox"</IJS> will not, so{" "}
-              <IJS>response.body</IJS> will be the <Cmp>Message</Cmp> component.
-              Unlike React Router, we don’t render <Cmp>Inbox</Cmp> because we
-              did not match the <IJS>inbox</IJS> route.
+              In the React Router HashSection, we had three components that were
+              rendered: <Cmp>App</Cmp>,<Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>.
+              With Curi, only the most accurately matched route actually
+              matches. That means that for the URL <IJS>/inbox/test</IJS>, the{" "}
+              <IJS>"Message"</IJS> route will match, but its parent route,{" "}
+              <IJS>"Inbox"</IJS> will not, so <IJS>response.body</IJS> will be
+              the <Cmp>Message</Cmp> component. Unlike React Router, we don’t
+              render <Cmp>Inbox</Cmp> because we did not match the{" "}
+              <IJS>inbox</IJS> route.
             </p>
           </Explanation>
           <CodeBlock lang="jsx">
@@ -537,10 +541,10 @@ function render({ response }) {
   return <Body response={response} />;
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Links" id="links">
+      <HashSection title="Links" id="links">
         <Explanation>
           <p>
             You will want to be able to navigate between routes in your
@@ -575,9 +579,8 @@ function render({ response }) {
               <p>
                 With React Router, any additional location properties are passed
                 to the <Cmp>Link</Cmp> using the <IJS>to</IJS> object. With
-                Curi, these properties are passed using the prop name (<IJS>
-                  hash
-                </IJS>, <IJS>query</IJS> &amp;
+                Curi, these properties are passed using the prop name (
+                <IJS>hash</IJS>, <IJS>query</IJS> &amp;
                 <IJS>state</IJS>).
               </p>
             </Explanation>
@@ -637,9 +640,9 @@ const router = curi(history, routes, {
             </CodeBlock>
           </li>
         </ul>
-      </Section>
+      </HashSection>
 
-      <Section
+      <HashSection
         title="Accessing router props from nested components"
         id="router-props"
       >
@@ -672,7 +675,7 @@ export default () => (
   </Curious>
 );`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
       <p>
         At this point, hopefully you are comfortable with migrating from React

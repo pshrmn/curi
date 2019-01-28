@@ -9,7 +9,6 @@ const StyledDiv = styled("div")`
     flex: 0 1 800px;
     position: relative;
     padding: 0;
-    overflow: hidden;
 
     outline: none;
   }

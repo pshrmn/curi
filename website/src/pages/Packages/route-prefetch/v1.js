@@ -3,7 +3,7 @@ import React from "react";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -39,7 +39,7 @@ export default class RoutePrefetchPkg extends React.PureComponent {
         </Explanation>
 
         <APIBlock>
-          <Section tag="h3" title="prefetch" id="prefetch">
+          <HashSection tag="h3" title="prefetch" id="prefetch">
             <Explanation>
               <p>
                 A function to create the prefetch route interaction. When you
@@ -60,7 +60,7 @@ const router = curi(history, routes, {
 router.route.prefetch("Some Route");`}
             </CodeBlock>
 
-            <Section title="Arguments" id="arguments" tag="h3">
+            <HashSection title="Arguments" id="arguments" tag="h3">
               <Explanation>
                 <ScrollableTable>
                   <thead>
@@ -125,8 +125,8 @@ router.route.prefetch(
   ['one']
 );`}
               </CodeBlock>
-            </Section>
-          </Section>
+            </HashSection>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

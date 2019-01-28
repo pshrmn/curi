@@ -3,7 +3,7 @@ import React from "react";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -25,7 +25,7 @@ export default class StaticPackage extends React.PureComponent {
           </Explanation>
         </About>
         <APIBlock>
-          <Section tag="h3" title="staticFiles()" id="staticFiles">
+          <HashSection tag="h3" title="staticFiles()" id="staticFiles">
             <Explanation>
               <p>
                 The <IJS>staticFiles()</IJS> function is used to generate HTML
@@ -81,7 +81,7 @@ staticFiles({
   });`}
             </CodeBlock>
 
-            <Section tag="h4" title="Arguments" id="staticFiles-arguments">
+            <HashSection tag="h4" title="Arguments" id="staticFiles-arguments">
               <Explanation>
                 <p>
                   The <IJS>staticFiles</IJS> functions is passed an object of
@@ -89,7 +89,7 @@ staticFiles({
                 </p>
               </Explanation>
 
-              <Section tag="h5" title="pages" id="staticFiles-pages">
+              <HashSection tag="h5" title="pages" id="staticFiles-pages">
                 <Explanation>
                   <p>
                     An array of page descriptors. A page descriptor is an object
@@ -112,9 +112,9 @@ staticFiles({
   pages
 });`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h5" title="router" id="staticFiles-router">
+              <HashSection tag="h5" title="router" id="staticFiles-router">
                 <Explanation>
                   <p>
                     The router property is an object with two properties:{" "}
@@ -122,7 +122,7 @@ staticFiles({
                   </p>
                 </Explanation>
 
-                <Section tag="h6" title="routes" id="staticFiles-routes">
+                <HashSection tag="h6" title="routes" id="staticFiles-routes">
                   <Explanation>
                     <p>
                       <IJS>routes</IJS> is an array of route descriptors. This
@@ -149,9 +149,9 @@ staticFiles({
   }
 });`}
                   </CodeBlock>
-                </Section>
+                </HashSection>
 
-                <Section
+                <HashSection
                   tag="h6"
                   title="getRouterOptions()"
                   id="staticFiles-getRouterOptions"
@@ -192,10 +192,10 @@ staticFiles({
   }
 });`}
                   </CodeBlock>
-                </Section>
-              </Section>
+                </HashSection>
+              </HashSection>
 
-              <Section tag="h5" title="fallback" id="staticFiles-fallback">
+              <HashSection tag="h5" title="fallback" id="staticFiles-fallback">
                 <Explanation>
                   <p>
                     Some hosts allow you to provide a fallback page for when a
@@ -215,9 +215,9 @@ staticFiles({
   }
 });`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h5" title="output" id="staticFiles-output">
+              <HashSection tag="h5" title="output" id="staticFiles-output">
                 <Explanation>
                   <p>
                     The <IJS>output</IJS> property is used to describe how
@@ -225,7 +225,7 @@ staticFiles({
                   </p>
                 </Explanation>
 
-                <Section tag="h6" title="render()" id="staticFiles-render">
+                <HashSection tag="h6" title="render()" id="staticFiles-render">
                   <Explanation>
                     <p>
                       A function that takes the emitted <IJS>response</IJS>,{" "}
@@ -270,9 +270,9 @@ staticFiles({
   }
 });`}
                   </CodeBlock>
-                </Section>
+                </HashSection>
 
-                <Section tag="h6" title="insert()" id="staticFiles-insert">
+                <HashSection tag="h6" title="insert()" id="staticFiles-insert">
                   <Explanation>
                     <p>
                       A function that takes the value returned by the{" "}
@@ -306,9 +306,9 @@ staticFiles({
   }
 });`}
                   </CodeBlock>
-                </Section>
+                </HashSection>
 
-                <Section tag="h6" title="dir" id="staticFiles-dir">
+                <HashSection tag="h6" title="dir" id="staticFiles-dir">
                   <Explanation>
                     <p>
                       The folder where the generated HTML files should be saved.
@@ -322,9 +322,13 @@ staticFiles({
   }
 })`}
                   </CodeBlock>
-                </Section>
+                </HashSection>
 
-                <Section tag="h6" title="redirects" id="staticFiles-redirects">
+                <HashSection
+                  tag="h6"
+                  title="redirects"
+                  id="staticFiles-redirects"
+                >
                   <Explanation>
                     <p>
                       If a route automatically redirects, you probably do not
@@ -345,12 +349,12 @@ staticFiles({
                       application probably doesn't know how to render redirects.
                     </Note>
                   </Explanation>
-                </Section>
-              </Section>
-            </Section>
-          </Section>
+                </HashSection>
+              </HashSection>
+            </HashSection>
+          </HashSection>
 
-          <Section tag="h3" title="pathnames()" id="pathnames">
+          <HashSection tag="h3" title="pathnames()" id="pathnames">
             <Explanation>
               <p>
                 The <IJS>pathnames()</IJS> function is used to generate
@@ -359,8 +363,8 @@ staticFiles({
               </p>
             </Explanation>
 
-            <Section tag="h4" title="Arguments" id="pathnames-arguments">
-              <Section tag="h5" title="routes" id="pathnames-routes">
+            <HashSection tag="h4" title="Arguments" id="pathnames-arguments">
+              <HashSection tag="h5" title="routes" id="pathnames-routes">
                 <Explanation>
                   <p>
                     The array of route descriptors that is passed to a router.
@@ -384,9 +388,9 @@ const paths = pathnames({
   routes
 });`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h5" title="pages" id="pathnames-pages">
+              <HashSection tag="h5" title="pages" id="pathnames-pages">
                 <Explanation>
                   <p>
                     An array of page descriptors. A page descriptor is an object
@@ -409,9 +413,9 @@ const paths = pathnames({
   pages
 });`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section
+              <HashSection
                 tag="h5"
                 title="routerOptions"
                 id="pathnames-routerOptions"
@@ -434,9 +438,9 @@ const paths = pathnames({
   routerOptions
 });`}
                 </CodeBlock>
-              </Section>
-            </Section>
-          </Section>
+              </HashSection>
+            </HashSection>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

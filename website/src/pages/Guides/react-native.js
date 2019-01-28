@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -19,7 +19,7 @@ export default function ReactNativeGuide() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Rendering Responses" id="rendering">
+      <HashSection title="Rendering Responses" id="rendering">
         <Explanation>
           <p>
             The <IJS>curiProvider()</IJS> function is used to create the
@@ -69,7 +69,7 @@ const App = () => (
 );`}
         </CodeBlock>
 
-        <Section
+        <HashSection
           title="What to return from children()"
           id="children-return"
           tag="h3"
@@ -202,10 +202,10 @@ export default function RouteName() {
   );
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Navigating" id="navigating">
+      <HashSection title="Navigating" id="navigating">
         <Explanation>
           <p>
             The <Cmp>Link</Cmp> component is used to navigate between routes
@@ -254,7 +254,7 @@ const NavLinks = () => (
   <Text>Home</Text>
 </Link>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
       <Explanation>
         <p>
@@ -270,14 +270,14 @@ const NavLinks = () => (
         </p>
       </Explanation>
 
-      <Section title="React Native Tips" id="tips">
+      <HashSection title="React Native Tips" id="tips">
         <Explanation>
           <Note>
             This guide assumes that you are already familiar with React Native.
           </Note>
         </Explanation>
 
-        <Section title="Back Button" id="back-button" tag="h3">
+        <HashSection title="Back Button" id="back-button" tag="h3">
           <Explanation>
             <p>
               To add back button support, you need to use your{" "}
@@ -314,8 +314,8 @@ BackHandler.addEventListener(
   }
 );`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
     </React.Fragment>
   );
 }

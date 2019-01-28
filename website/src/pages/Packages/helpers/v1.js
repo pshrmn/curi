@@ -3,7 +3,7 @@ import React from "react";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -23,7 +23,7 @@ export default class RouteActivePkg extends React.PureComponent {
           </Explanation>
         </About>
         <APIBlock>
-          <Section title="once()" id="once">
+          <HashSection title="once()" id="once">
             <Explanation>
               <p>
                 <IJS>once()</IJS> takes a function as its argument and returns a
@@ -59,16 +59,15 @@ const routes = prepareRoutes([
   }
 ]);`}
             </CodeBlock>
-          </Section>
-          <Section title="preferDefault" id="preferDefault">
+          </HashSection>
+          <HashSection title="preferDefault" id="preferDefault">
             <Explanation>
               <p>
-                When using dynamic import syntax (<IJS>
-                  import("someModule")
-                </IJS>), the resolved module is a module object containing all
-                of the exports from that module. If the module has a default
-                export (<IJS>export default ...</IJS>), that will be the
-                module's <IJS>default</IJS> property. The{" "}
+                When using dynamic import syntax (
+                <IJS>import("someModule")</IJS>), the resolved module is a
+                module object containing all of the exports from that module. If
+                the module has a default export (<IJS>export default ...</IJS>),
+                that will be the module's <IJS>default</IJS> property. The{" "}
                 <IJS>preferDefault()</IJS> function will resolve with the{" "}
                 <IJS>default</IJS> property of the module if it exists and with
                 the module if it does not.
@@ -91,7 +90,7 @@ const routes = prepareRoutes([
   }
 ]);`}
             </CodeBlock>
-          </Section>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

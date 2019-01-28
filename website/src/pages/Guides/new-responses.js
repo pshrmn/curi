@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -28,7 +28,7 @@ export default function NewResponsesGuide() {
         </p>
       </Explanation>
 
-      <Section title="Response Handlers" id="response-handlers" tag="h3">
+      <HashSection title="Response Handlers" id="response-handlers" tag="h3">
         <Explanation>
           <p>
             When response handlers are called, they are passed an object with
@@ -39,18 +39,21 @@ export default function NewResponsesGuide() {
               hash="properties"
             >
               <IJS>router</IJS>
-            </Link>,{" "}
+            </Link>
+            ,{" "}
             <Link
               name="Guide"
               params={{ slug: "routes-and-responses" }}
               hash="responses"
             >
               <IJS>response</IJS>
-            </Link>, and{" "}
+            </Link>
+            , and{" "}
             <Link name="Guide" params={{ slug: "navigation-objects" }}>
               <IJS>navigation</IJS>
-            </Link>. Which objects/properties you use depends on what the
-            response handler is doing.
+            </Link>
+            . Which objects/properties you use depends on what the response
+            handler is doing.
           </p>
         </Explanation>
         <CodeBlock>
@@ -62,9 +65,13 @@ export default function NewResponsesGuide() {
   // ...
 }`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Registering Response Handlers" id="registering" tag="h3">
+      <HashSection
+        title="Registering Response Handlers"
+        id="registering"
+        tag="h3"
+      >
         <Explanation>
           <p>
             There are three ways to attach response handlers to the router:{" "}
@@ -92,11 +99,11 @@ router.once(fn);
 // obs will be called for every new response
 const stop = router.observe(fn);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Use Cases" id="use-cases" tag="h3">
+      <HashSection title="Use Cases" id="use-cases" tag="h3">
         <p>What should you use response handlers for?</p>
-        <Section title="Setup" id="setup" tag="h4">
+        <HashSection title="Setup" id="setup" tag="h4">
           <Explanation>
             <p>
               If any of the routes in an application have <IJS>resolve</IJS>{" "}
@@ -128,37 +135,42 @@ function setup() {
 
 router.once(setup);`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="Rendering" id="rendering" tag="h4">
+        <HashSection title="Rendering" id="rendering" tag="h4">
           <Explanation>
             <p>
               Rendering libraries need to know when there is a new response so
               that they can re-render the application.
             </p>
             <p>
-              The Curi rendering packages (<Link
+              The Curi rendering packages (
+              <Link
                 name="Package"
                 params={{ package: "react-dom", version: "v1" }}
               >
                 <IJS>@curi/react-dom</IJS>
-              </Link>,{" "}
+              </Link>
+              ,{" "}
               <Link
                 name="Package"
                 params={{ package: "react-native", version: "v1" }}
               >
                 <IJS>@curi/react-native</IJS>
-              </Link>,{" "}
+              </Link>
+              ,{" "}
               <Link name="Package" params={{ package: "vue", version: "v1" }}>
                 <IJS>@curi/vue</IJS>
-              </Link>, and{" "}
+              </Link>
+              , and{" "}
               <Link
                 name="Package"
                 params={{ package: "svelte", version: "v1" }}
               >
                 <IJS>@curi/svelte</IJS>
-              </Link>) setup an observer internally so that they can
-              automatically re-render.
+              </Link>
+              ) setup an observer internally so that they can automatically
+              re-render.
             </p>
             <p>
               If you are using vanilla JavaScript to render your application or
@@ -173,9 +185,9 @@ router.once(setup);`}
 
 router.observe(observer);`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="Side Effects" id="side-effects" tag="h4">
+        <HashSection title="Side Effects" id="side-effects" tag="h4">
           <Explanation>
             <p>
               Side effects are observers that are provided to the router at
@@ -205,9 +217,9 @@ router.observe(observer);`}
                 <IJS>@curi/side-effect-scroll</IJS>
               </Link>{" "}
               package adds this behavior by scrolling the page to the element
-              that matches the new response's hash (<IJS>
-                response.location.hash
-              </IJS>) after the new response has rendered.
+              that matches the new response's hash (
+              <IJS>response.location.hash</IJS>) after the new response has
+              rendered.
             </p>
             <p>
               If you need to add logging to your application, you could write
@@ -229,8 +241,8 @@ const router = curi(history, routes, {
 // as an observer
 router.observe(logger);`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
     </React.Fragment>
   );
 }

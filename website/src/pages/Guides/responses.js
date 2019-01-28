@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -27,7 +27,7 @@ export default function RoutesAndResponsesGuide() {
         </p>
       </Explanation>
 
-      <Section
+      <HashSection
         title="The Properties of a Response Object"
         id="response-properties"
       >
@@ -146,9 +146,9 @@ export default function RoutesAndResponsesGuide() {
   redirectTo: {...}
 }`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Response Body" id="response-body">
+      <HashSection title="Response Body" id="response-body">
         <Explanation>
           <p>
             Curi isn't strict about how you use responses, but you will most
@@ -163,7 +163,8 @@ export default function RoutesAndResponsesGuide() {
               params={{ category: "react", slug: "multi-body" }}
             >
               advanced layouts
-            </Link>.
+            </Link>
+            .
           </p>
           <Note>
             Each route should use the same <IJS>body</IJS> "shape". If one route
@@ -192,9 +193,9 @@ const routes = prepareRoutes([
   }
 ]);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Redirect Response" id="redirect-properties">
+      <HashSection title="Redirect Response" id="redirect-properties">
         <Explanation>
           <p>
             When a route's <IJS>response()</IJS> function returns an object with
@@ -205,8 +206,9 @@ const routes = prepareRoutes([
               hash="response"
             >
               <IJS>redirectTo</IJS> property
-            </Link>, the router will use it to generate a location object that
-            Curi will automatically redirect to.
+            </Link>
+            , the router will use it to generate a location object that Curi
+            will automatically redirect to.
           </p>
         </Explanation>
         <CodeBlock>
@@ -233,7 +235,7 @@ const routes = prepareRoutes([
   emitRedirects: false
 });`}
         </CodeBlock>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

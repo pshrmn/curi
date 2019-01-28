@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -38,7 +38,7 @@ export default function UsingSideEffectsGuide() {
         </p>
       </Explanation>
 
-      <Section title="Reusing Code" id="reuse">
+      <HashSection title="Reusing Code" id="reuse">
         <Explanation>
           <p>
             Being able to reuse code on the client and server is one of the
@@ -61,9 +61,9 @@ export default function UsingSideEffectsGuide() {
           <IJS>@babel/node</IJS> should only be used in development. For
           production, the server's modules should be pre-compiled (using Babel).
         </Warning>
-      </Section>
+      </HashSection>
 
-      <Section title="Web Framework" id="framework">
+      <HashSection title="Web Framework" id="framework">
         <Explanation>
           <p>
             In order to render JavaScript on the server, you will need to use
@@ -110,9 +110,9 @@ babel-node server.js`}
             single-page application.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Request Matching" id="request-matching">
+      <HashSection title="Request Matching" id="request-matching">
         <Explanation>
           <p>
             A web framework receives requests from the client and returns
@@ -133,7 +133,11 @@ babel-node server.js`}
   res.send("Hey!");
 })`}
         </CodeBlock>
-        <Section tag="h3" title="Client-Side Routes" id="client-side-routes">
+        <HashSection
+          tag="h3"
+          title="Client-Side Routes"
+          id="client-side-routes"
+        >
           <Explanation>
             <p>
               Instead of telling the server about every single valid client-side
@@ -156,9 +160,9 @@ app.get("*", renderHandler);`}
               which is why we have to use <IJS>(.*)</IJS> in Curi routes.
             </Note>
           </Explanation>
-        </Section>
+        </HashSection>
 
-        <Section tag="h3" title="Static Assets" id="static-assets">
+        <HashSection tag="h3" title="Static Assets" id="static-assets">
           <Explanation>
             <p>
               Page requests aren't the only requests that the framework will
@@ -178,9 +182,9 @@ app.get("*", renderHandler);`}
           <CodeBlock lang="html">
             {`<img src="/static/img/circle.png" />`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section tag="h3" title="Path Order" id="path-order">
+        <HashSection tag="h3" title="Path Order" id="path-order">
           <Explanation>
             <p>
               Express matches against paths in the order that they are
@@ -197,10 +201,10 @@ app.get("*", renderHandler);`}
 app.use("/api", dataHandler);
 app.get("*", renderHandler);`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Render Handler" id="handler">
+      <HashSection title="Render Handler" id="handler">
         <Explanation>
           <p>
             The render handler function receives the request object and a
@@ -231,9 +235,9 @@ export default function renderHandler(req, res) {
   res.sendFile(index);
 }`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Router" id="router">
+      <HashSection title="Router" id="router">
         <Explanation>
           <p>
             A router instance will be created for every single request. This is
@@ -260,7 +264,7 @@ function handler(req, res) {
           <p>Where do the history and routes come from?</p>
         </Explanation>
 
-        <Section tag="h3" title="History" id="history">
+        <HashSection tag="h3" title="History" id="history">
           <Explanation>
             <p>
               On the client-side, a single-page application uses{" "}
@@ -285,9 +289,9 @@ function handler(req, res) {
   // ...
 }`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section tag="h3" title="Routes" id="routes">
+        <HashSection tag="h3" title="Routes" id="routes">
           <Explanation>
             <p>
               Ideally, you will be able to re-use your client side routes on the
@@ -331,9 +335,13 @@ export default prepareRoutes([
   }
 ]);`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section tag="h3" title="Automatic Redirects" id="automatic-redirects">
+        <HashSection
+          tag="h3"
+          title="Automatic Redirects"
+          id="automatic-redirects"
+        >
           <Explanation>
             <p>
               Curi automatically redirects to a new location when a response
@@ -363,10 +371,10 @@ export default prepareRoutes([
   });
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Handling the Response" id="handling-response">
+      <HashSection title="Handling the Response" id="handling-response">
         <Explanation>
           <p>
             When the router is created, it will start generating a response by
@@ -436,9 +444,8 @@ function renderHandler(req, res) {
           <p>
             Rendering with <IJS>renderToString</IJS> only generates an HTML
             string for the application. We are missing the <Cmp>html</Cmp>,{" "}
-            <Cmp>head</Cmp>,
-            <Cmp>body</Cmp>, <Cmp>script</Cmp>, etc. tags that are required for
-            the full HTML page.
+            <Cmp>head</Cmp>,<Cmp>body</Cmp>, <Cmp>script</Cmp>, etc. tags that
+            are required for the full HTML page.
           </p>
           <p>
             We can write a function that takes the string created by{" "}
@@ -510,7 +517,11 @@ function renderHandler(req, res) {
           </Note>
         </Explanation>
 
-        <Section tag="h3" title="Redirect Responses" id="redirect-responses">
+        <HashSection
+          tag="h3"
+          title="Redirect Responses"
+          id="redirect-responses"
+        >
           <Explanation>
             <p>
               If a route matches and it redirects, you can handle it without
@@ -539,8 +550,8 @@ function renderHandler(req, res) {
   });
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
     </React.Fragment>
   );
 }

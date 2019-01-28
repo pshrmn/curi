@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -33,7 +33,7 @@ export default function CodeSplittingGuide() {
         </Note>
       </Explanation>
 
-      <Section title="An app without code splitting" id="no-split">
+      <HashSection title="An app without code splitting" id="no-split">
         <Explanation>
           <p>
             Let's start out by describing our application's routes without code
@@ -78,9 +78,9 @@ const routes = prepareRoutes([
   }
 ]);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="import() in resolve" id="import">
+      <HashSection title="import() in resolve" id="import">
         <Explanation>
           <p>
             Instead of having static imports, we will use the{" "}
@@ -165,16 +165,17 @@ const routes = prepareRoutes([
   }
 ]);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Other Approaches" id="other">
+      <HashSection title="Other Approaches" id="other">
         <p>
           The approaches taken here are not the only way to do code splitting.
           Another approach is to skip the <IJS>resolve</IJS> method and do code
           splitting at other points in your application (e.g.{" "}
           <a href="https://github.com/jamiebuilds/react-loadable">
             <IJS>react-loadable</IJS>
-          </a>).
+          </a>
+          ).
         </p>
         <p>
           Whatever path you decide to go, hopefully this has shown you that
@@ -183,7 +184,7 @@ const routes = prepareRoutes([
           bundle size, <IJS>resolve</IJS> functions are a good way to accomplish
           this.
         </p>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

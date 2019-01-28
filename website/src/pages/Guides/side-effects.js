@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS
@@ -38,7 +38,7 @@ export default function UsingSideEffectsGuide() {
 }`}
       </CodeBlock>
 
-      <Section title="Adding Side Effects" id="adding">
+      <HashSection title="Adding Side Effects" id="adding">
         <Explanation>
           <p>
             Side effects are provided to your router with the{" "}
@@ -76,7 +76,7 @@ router.observe(render);
 // called before logResponse`}
         </CodeBlock>
 
-        <Section title="Official Side Effects" id="official" tag="h3">
+        <HashSection title="Official Side Effects" id="official" tag="h3">
           <Explanation>
             <p>Curi has two "official" side effect packages:</p>
             <ul>
@@ -106,10 +106,10 @@ const router = curi(history, routes, {
   sideEffect: [titleEffect(), scrollEffect()]
 });`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Creating Side Effects" id="creating">
+      <HashSection title="Creating Side Effects" id="creating">
         <Explanation>
           <p>
             When creating your own side effect, you can write a regular function
@@ -157,7 +157,7 @@ const router = curi(history, routes, {
             to know which properties you should expect a response to have.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

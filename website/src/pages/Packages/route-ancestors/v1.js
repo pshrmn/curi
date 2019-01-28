@@ -3,7 +3,7 @@ import React from "react";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -24,7 +24,7 @@ export default class RouteAncestorsPkg extends React.PureComponent {
           </Explanation>
         </About>
         <APIBlock>
-          <Section tag="h3" title="ancestors" id="ancestors">
+          <HashSection tag="h3" title="ancestors" id="ancestors">
             <Explanation>
               <p>
                 A function to create the ancestors route interaction. When you
@@ -62,7 +62,7 @@ const router = curi(history,routes, {
 });`}
             </CodeBlock>
 
-            <Section title="Arguments" id="arguments" tag="h3">
+            <HashSection title="Arguments" id="arguments" tag="h3">
               <Explanation>
                 <ScrollableTable>
                   <thead>
@@ -94,8 +94,8 @@ const router = curi(history,routes, {
 const ancestors = router.route.ancestors('Child');
 // ancestors === ['Grandparent', 'Parent']`}
               </CodeBlock>
-            </Section>
-          </Section>
+            </HashSection>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

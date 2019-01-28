@@ -4,7 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -25,7 +25,7 @@ export default class RouterPkg extends React.PureComponent {
           </Explanation>
         </About>
         <APIBlock>
-          <Section title="curi" id="curi">
+          <HashSection title="curi" id="curi">
             <Explanation>
               <p>
                 The <IJS>curi</IJS> export is a function to create a router. It
@@ -40,8 +40,8 @@ export default class RouterPkg extends React.PureComponent {
 const router = curi(history, routes, options);`}
             </CodeBlock>
 
-            <Section tag="h4" title="Arguments" id="arguments">
-              <Section tag="h5" title="history" id="history">
+            <HashSection tag="h4" title="Arguments" id="arguments">
+              <HashSection tag="h5" title="history" id="history">
                 <Explanation>
                   <p>
                     A <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
@@ -64,9 +64,9 @@ const router = curi(history, routes, options);`}
 const history = Browser();
 const router = curi(history, routes);`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h5" title="routes" id="routes">
+              <HashSection tag="h5" title="routes" id="routes">
                 <Explanation>
                   <p>
                     An array of prepared{" "}
@@ -84,9 +84,9 @@ const router = curi(history, routes);`}
 
 const router = curi(history, routes);`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h5" title="options" id="options">
+              <HashSection tag="h5" title="options" id="options">
                 <p>
                   An optional object with additional properties that can be
                   passed to the router.
@@ -101,8 +101,9 @@ const router = curi(history, routes);`}
                           params={{ slug: "route-interactions" }}
                         >
                           route interactions
-                        </Link>. These are functions for interacting with routes
-                        based on their <IJS>name</IJS>.
+                        </Link>
+                        . These are functions for interacting with routes based
+                        on their <IJS>name</IJS>.
                       </p>
                       <p>
                         The <IJS>pathname</IJS> interaction is included by
@@ -329,15 +330,15 @@ router.once(({ response }) => {
                     </CodeBlock>
                   </li>
                 </ul>
-              </Section>
-            </Section>
+              </HashSection>
+            </HashSection>
 
-            <Section tag="h4" title="Router Properties" id="properties">
+            <HashSection tag="h4" title="Router Properties" id="properties">
               <p>
                 The router has a number of properties for you to use when
                 rendering your application.
               </p>
-              <Section tag="h5" title="navigate(details)" id="navigate">
+              <HashSection tag="h5" title="navigate(details)" id="navigate">
                 <Explanation>
                   <p>
                     The <IJS>navigate()</IJS> method is used to navigate
@@ -426,8 +427,8 @@ router.navigate({
 // navigates to "/photos/123/456"
 // using default "ANCHOR" method`}
                 </CodeBlock>
-              </Section>
-              <Section tag="h5" title="once(fn, options)" id="once">
+              </HashSection>
+              <HashSection tag="h5" title="once(fn, options)" id="once">
                 <Explanation>
                   <p>
                     The <IJS>once()</IJS> method takes a response handler
@@ -476,7 +477,7 @@ router.navigate({
 });`}
                 </CodeBlock>
 
-                <Section tag="h6" title="options" id="once-options">
+                <HashSection tag="h6" title="options" id="once-options">
                   <Explanation>
                     <div style={{ overflowX: "scroll" }}>
                       <ScrollableTable>
@@ -507,9 +508,9 @@ router.navigate({
   initial: false
 });`}
                   </CodeBlock>
-                </Section>
-              </Section>
-              <Section tag="h5" title="observe(fn, options)" id="observe">
+                </HashSection>
+              </HashSection>
+              <HashSection tag="h5" title="observe(fn, options)" id="observe">
                 <Explanation>
                   <p>
                     The <IJS>observe()</IJS> method takes a response handler
@@ -558,7 +559,7 @@ router.navigate({
 });`}
                 </CodeBlock>
 
-                <Section tag="h6" title="options" id="observe-options">
+                <HashSection tag="h6" title="options" id="observe-options">
                   <Explanation>
                     <div style={{ overflowX: "scroll" }}>
                       <ScrollableTable>
@@ -605,10 +606,10 @@ router.navigate({
 stopObserving();
 // the router no longer calls the observer`}
                   </CodeBlock>
-                </Section>
-              </Section>
+                </HashSection>
+              </HashSection>
 
-              <Section tag="h5" title="cancel(fn)" id="cancel-property">
+              <HashSection tag="h5" title="cancel(fn)" id="cancel-property">
                 <Explanation>
                   <p>
                     With asynchronous routes, after a user begins navigation,
@@ -640,9 +641,9 @@ stopObserving();
   }
 });`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h5" title="current()" id="current-property">
+              <HashSection tag="h5" title="current()" id="current-property">
                 <Explanation>
                   <p>
                     The <IJS>router.current()</IJS> method returns the current{" "}
@@ -666,9 +667,9 @@ router.once(({ response, navigation }) => {
   // perfect.navigation === navigation
 });`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h5" title="route" id="router-route">
+              <HashSection tag="h5" title="route" id="router-route">
                 <Explanation>
                   <p>
                     The router's{" "}
@@ -680,7 +681,11 @@ router.once(({ response, navigation }) => {
                   </p>
                 </Explanation>
 
-                <Section tag="h6" title="pathname" id="pathname-interaction">
+                <HashSection
+                  tag="h6"
+                  title="pathname"
+                  id="pathname-interaction"
+                >
                   <Explanation>
                     <p>
                       Curi includes one built-in interaction,{" "}
@@ -700,10 +705,10 @@ const userPathname = router.route.pathname(
 );
 // userPathname === '/user/12345'`}
                   </CodeBlock>
-                </Section>
-              </Section>
+                </HashSection>
+              </HashSection>
 
-              <Section tag="h5" title="refresh()" id="refresh-property">
+              <HashSection tag="h5" title="refresh()" id="refresh-property">
                 <Explanation>
                   <p>
                     The <IJS>refresh()</IJS> function takes an array of new
@@ -725,20 +730,20 @@ const router = curi(history, oldRoutes);
 router.refresh(newRoutes);
 // generates responses using new routes`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h5" title="history" id="history-property">
+              <HashSection tag="h5" title="history" id="history-property">
                 <Explanation>
                   <p>
                     The route's history object, in case you need to interact
                     directly with that.
                   </p>
                 </Explanation>
-              </Section>
-            </Section>
-          </Section>
+              </HashSection>
+            </HashSection>
+          </HashSection>
 
-          <Section title="prepareRoutes" id="prepareRoutes">
+          <HashSection title="prepareRoutes" id="prepareRoutes">
             <Explanation>
               <p>
                 The <IJS>prepareRoutes()</IJS> export is used to build the
@@ -763,10 +768,10 @@ const routes = prepareRoutes([
                 major version.
               </Warning>
             </Explanation>
-          </Section>
+          </HashSection>
 
-          <Section title="Route properties" id="route-properties">
-            <Section title="route.name" id="name" tag="h3">
+          <HashSection title="Route properties" id="route-properties">
+            <HashSection title="route.name" id="name" tag="h3">
               <Explanation>
                 <p>A string, this must be unique for every route.</p>
               </Explanation>
@@ -777,9 +782,9 @@ const routes = prepareRoutes([
   { name: 'Not Found' }
 ];`}
               </CodeBlock>
-            </Section>
+            </HashSection>
 
-            <Section title="route.path" id="path" tag="h3">
+            <HashSection title="route.path" id="path" tag="h3">
               <Explanation>
                 <p>
                   A string pattern describing what the route matches. Whenever
@@ -795,7 +800,8 @@ const routes = prepareRoutes([
                   for paths, which enables routes to have
                   <a href="https://github.com/pillarjs/path-to-regexp#parameters">
                     path parameters
-                  </a>. When a route with parameters matches a location, the
+                  </a>
+                  . When a route with parameters matches a location, the
                   parameters will be be parsed from the location's{" "}
                   <IJS>pathname</IJS>.
                 </p>
@@ -822,9 +828,9 @@ const routes = prepareRoutes([
 // don't include a leading forward slash
 // { name: 'Home', path: '/' }`}
               </CodeBlock>
-            </Section>
+            </HashSection>
 
-            <Section title="route.resolve" id="resolve" tag="h3">
+            <HashSection title="route.resolve" id="resolve" tag="h3">
               <Explanation>
                 <p>
                   The <IJS>resolve</IJS> object groups async functions that will
@@ -866,8 +872,8 @@ const routes = prepareRoutes([
   }
 };`}
               </CodeBlock>
-            </Section>
-            <Section title="route.response()" id="response">
+            </HashSection>
+            <HashSection title="route.response()" id="response">
               <Explanation>
                 <p>
                   A function for modifying the response object. This returns an
@@ -1028,7 +1034,7 @@ const routes = prepareRoutes([
               </CodeBlock>
 
               <ul>
-                <Section
+                <HashSection
                   wrapper="li"
                   title="match"
                   id="response-match"
@@ -1075,9 +1081,9 @@ const routes = prepareRoutes([
                       </tbody>
                     </ScrollableTable>
                   </Explanation>
-                </Section>
+                </HashSection>
 
-                <Section
+                <HashSection
                   wrapper="li"
                   title="resolved"
                   id="response-resolved"
@@ -1111,9 +1117,9 @@ const user = {
   }
 }`}
                   </CodeBlock>
-                </Section>
+                </HashSection>
 
-                <Section
+                <HashSection
                   wrapper="li"
                   title="error"
                   id="response-error"
@@ -1146,11 +1152,11 @@ const user = {
   }
 }`}
                   </CodeBlock>
-                </Section>
+                </HashSection>
               </ul>
-            </Section>
+            </HashSection>
 
-            <Section title="children" id="children" tag="h3">
+            <HashSection title="children" id="children" tag="h3">
               <Explanation>
                 <p>
                   An optional array of route objects for creating nested routes.
@@ -1176,9 +1182,9 @@ const user = {
   ]
 }`}
               </CodeBlock>
-            </Section>
+            </HashSection>
 
-            <Section title="params" id="params" tag="h3">
+            <HashSection title="params" id="params" tag="h3">
               <Explanation>
                 <p>
                   When <IJS>path-to-regexp</IJS> matches your paths, all
@@ -1209,9 +1215,9 @@ const user = {
 // response.params will be { num: 1 }
 // instead of { num: "1" }`}
               </CodeBlock>
-            </Section>
+            </HashSection>
 
-            <Section title="pathOptions" id="pathOptions" tag="h3">
+            <HashSection title="pathOptions" id="pathOptions" tag="h3">
               <Explanation>
                 <p>
                   If you need to provide different path options than{" "}
@@ -1227,9 +1233,9 @@ const user = {
                   set to false.
                 </Note>
               </Explanation>
-            </Section>
+            </HashSection>
 
-            <Section title="extra" id="extra" tag="h3">
+            <HashSection title="extra" id="extra" tag="h3">
               <Explanation>
                 <p>
                   If you have any additional properties that you want attached
@@ -1256,8 +1262,8 @@ const user = {
   }
 ]);`}
               </CodeBlock>
-            </Section>
-          </Section>
+            </HashSection>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

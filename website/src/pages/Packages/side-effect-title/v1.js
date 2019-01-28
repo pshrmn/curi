@@ -3,7 +3,7 @@ import React from "react";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS
@@ -22,7 +22,7 @@ export default class SideEffectTitlePkg extends React.PureComponent {
           </Explanation>
         </About>
         <APIBlock>
-          <Section tag="h3" title="titleEffect" id="titleEffect">
+          <HashSection tag="h3" title="titleEffect" id="titleEffect">
             <Explanation>
               <p>
                 <IJS>@curi/side-effect-title</IJS> exports a function for
@@ -71,7 +71,7 @@ const router = curi(history, routes, {
 }
 // when the About route matches, document.title = "About | My Site"`}
             </CodeBlock>
-          </Section>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

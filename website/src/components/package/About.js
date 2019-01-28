@@ -1,10 +1,10 @@
 import React from "react";
-import { Section } from "../layout/Sections";
+import { HashSection } from "../layout/Sections";
 
 export default function AboutBlock({ children }) {
   return (
-    <Section title="About" id="about">
+    <HashSection title="About" id="about">
       {children}
-    </Section>
+    </HashSection>
   );
 }

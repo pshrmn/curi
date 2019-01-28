@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -43,7 +43,7 @@ export default function ApolloGuide() {
         </Note>
       </Explanation>
 
-      <Section title="Setup" id="setup">
+      <HashSection title="Setup" id="setup">
         <Explanation>
           <p>
             Apollo's React package provides an <Cmp>ApolloProvider</Cmp>{" "}
@@ -68,9 +68,9 @@ ReactDOM.render((
   </ApolloProvider>
 ), holder);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Loose Pairing" id="loose-pairing">
+      <HashSection title="Loose Pairing" id="loose-pairing">
         <Explanation>
           <p>
             Apollo and Curi don't actually have to know about each other. Curi
@@ -163,9 +163,9 @@ const Noun = ({ response }) => (
   </Query>
 );`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Tight Pairing" id="tight-pairing">
+      <HashSection title="Tight Pairing" id="tight-pairing">
         <Explanation>
           <p>
             You can use your Apollo client instance to call queries in a route's{" "}
@@ -332,7 +332,7 @@ const Verb = ({ response }) => (
   </Query>
 )`}
         </CodeBlock>
-        <Section title="Prefetching" id="prefetch" tag="h3">
+        <HashSection title="Prefetching" id="prefetch" tag="h3">
           <Explanation>
             <p>
               One additional benefit of adding queries to routes using{" "}
@@ -381,8 +381,8 @@ router.route.prefetch(
   { params: { id: 2 }}
 );`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
     </React.Fragment>
   );
 }

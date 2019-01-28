@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS
@@ -10,7 +10,7 @@ import {
 export default function NavigationObjectGuide() {
   return (
     <React.Fragment>
-      <Section
+      <HashSection
         title="The Properties of a Navigation Object"
         id="navigation-properties"
       >
@@ -35,8 +35,8 @@ export default function NavigationObjectGuide() {
   }
 }`}
         </CodeBlock>
-      </Section>
-      <Section title="Usage" id="usage">
+      </HashSection>
+      <HashSection title="Usage" id="usage">
         <Explanation>
           <p>
             What is the point of the <IJS>navigation</IJS> object? It is there
@@ -55,7 +55,7 @@ export default function NavigationObjectGuide() {
             response to map between two routes.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

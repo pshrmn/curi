@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -19,7 +19,7 @@ export default function TransitionsExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             Route transitions can be performed using Vue's <Cmp>transition</Cmp>{" "}
@@ -40,11 +40,11 @@ export default function TransitionsExample() {
   />
 </transition>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/transitions" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="vue/transitions" />
     </React.Fragment>

@@ -4,7 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -23,12 +23,13 @@ export default class VuePkg extends React.PureComponent {
               For more information on using Curi with Vue, please check out the{" "}
               <Link name="Guide" params={{ slug: "vue" }}>
                 Vue guide
-              </Link>.
+              </Link>
+              .
             </p>
           </Explanation>
         </About>
         <APIBlock>
-          <Section title="CuriPlugin" id="curiplugin">
+          <HashSection title="CuriPlugin" id="curiplugin">
             <Explanation>
               <p>What does the plugin do?</p>
               <ol>
@@ -56,16 +57,15 @@ export default class VuePkg extends React.PureComponent {
 const router = curi(history, routes);
 Vue.use(CuriPlugin, { router });`}
             </CodeBlock>
-          </Section>
+          </HashSection>
 
-          <Section title={<Cmp>curi-link</Cmp>} id="link">
+          <HashSection title={<Cmp>curi-link</Cmp>} id="link">
             <p>
-              The <Cmp>curi-link</Cmp> component will render an anchor (<Cmp>
-                a
-              </Cmp>) element.
+              The <Cmp>curi-link</Cmp> component will render an anchor (
+              <Cmp>a</Cmp>) element.
             </p>
 
-            <Section tag="h4" title="to" id="Link-to">
+            <HashSection tag="h4" title="to" id="Link-to">
               <Explanation>
                 <p>
                   <IJS>to</IJS> - The name of the route to navigate to.{" "}
@@ -76,9 +76,9 @@ Vue.use(CuriPlugin, { router });`}
                 {`<curi-link to='Home'>Home</curi-link>
 <!-- <a href="/">Home</a> -->`}
               </CodeBlock>
-            </Section>
+            </HashSection>
 
-            <Section tag="h4" title="params" id="Link-params">
+            <HashSection tag="h4" title="params" id="Link-params">
               <Explanation>
                 <p>
                   <IJS>params</IJS> - An object containing the key-value params
@@ -95,9 +95,9 @@ Vue.use(CuriPlugin, { router });`}
   Coloring Book
 </curi-link>`}
               </CodeBlock>
-            </Section>
+            </HashSection>
 
-            <Section tag="h4" title="hash" id="Link-hash">
+            <HashSection tag="h4" title="hash" id="Link-hash">
               <Explanation>
                 <p>
                   <IJS>hash</IJS> - the hash for the location to link to
@@ -107,9 +107,9 @@ Vue.use(CuriPlugin, { router });`}
                 {`<curi-link to="Home" hash="test">Home</curi-link>
 <!-- <a href="/#test">Home</a> -->`}
               </CodeBlock>
-            </Section>
+            </HashSection>
 
-            <Section tag="h4" title="query" id="Link-query">
+            <HashSection tag="h4" title="query" id="Link-query">
               <Explanation>
                 <p>
                   <IJS>query</IJS> - the query for the location to link to
@@ -119,15 +119,15 @@ Vue.use(CuriPlugin, { router });`}
                 {`<curi-link to="Home" query="one=1">Home</curi-link>
 <!-- <a href="/?one=1">Home</a> -->`}
               </CodeBlock>
-            </Section>
+            </HashSection>
 
-            <Section tag="h4" title="state" id="Link-state">
+            <HashSection tag="h4" title="state" id="Link-state">
               <Explanation>
                 <IJS>state</IJS> - the state to associated with the location
               </Explanation>
-            </Section>
+            </HashSection>
 
-            <Section tag="h4" title="slots" id="Link-slots">
+            <HashSection tag="h4" title="slots" id="Link-slots">
               <Explanation>
                 <p>
                   The <Cmp>curi-link</Cmp>'s can take either a regular slot or a
@@ -156,10 +156,10 @@ Vue.use(CuriPlugin, { router });`}
   </template>
 </curi-ink>`}
               </CodeBlock>
-            </Section>
-          </Section>
+            </HashSection>
+          </HashSection>
 
-          <Section title={<Cmp>curi-block</Cmp>} id="block">
+          <HashSection title={<Cmp>curi-block</Cmp>} id="block">
             <Explanation>
               <p>
                 The <Cmp>curi-block</Cmp> component can be used to automatically
@@ -210,9 +210,9 @@ Vue.use(CuriPlugin, { router });`}
   }
 </script>`}
             </CodeBlock>
-          </Section>
+          </HashSection>
 
-          <Section title={<IJS>curi-focus</IJS>} id="curi-focus">
+          <HashSection title={<IJS>curi-focus</IJS>} id="curi-focus">
             <Explanation>
               <p>
                 The <IJS>curi-focus</IJS> directive is used to specify an
@@ -241,17 +241,17 @@ Vue.use(CuriPlugin, { router });`}
   </main>
 </template>`}
             </CodeBlock>
-            <Section tag="h3" title="Properties" id="focus-properties">
-              <Section tag="h4" title="key" id="focus-key">
+            <HashSection tag="h3" title="Properties" id="focus-properties">
+              <HashSection tag="h4" title="key" id="focus-key">
                 <Explanation>
                   <p>
                     A value that changes when there is a new response; the{" "}
                     <IJS>response</IJS> is usually fine for this.
                   </p>
                 </Explanation>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="preserve" id="focus-preserve">
+              <HashSection tag="h4" title="preserve" id="focus-preserve">
                 <Explanation>
                   <p>
                     When <IJS>true</IJS> (<IJS>false</IJS> by default), the
@@ -281,9 +281,13 @@ Vue.use(CuriPlugin, { router });`}
   </main>
 </template>`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="preventScroll" id="focus-preventScroll">
+              <HashSection
+                tag="h4"
+                title="preventScroll"
+                id="focus-preventScroll"
+              >
                 <Explanation>
                   <p>
                     When <IJS>true</IJS> (<IJS>false</IJS> by default), the
@@ -304,9 +308,9 @@ Vue.use(CuriPlugin, { router });`}
   </main>
 </template>`}
                 </CodeBlock>
-              </Section>
-            </Section>
-          </Section>
+              </HashSection>
+            </HashSection>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

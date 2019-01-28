@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   IJS,
   Cmp,
@@ -18,7 +18,7 @@ export default function ActiveLinksExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             You may want to style a link differently when it is "active" (based
@@ -27,11 +27,11 @@ export default function ActiveLinksExample() {
             <Cmp>curi-link</Cmp> component.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/active-links" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="vue/active-links" />
     </React.Fragment>

@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS
@@ -16,7 +16,7 @@ export default function DevTipsGuide() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Hot Module Replacement" id="hmr">
+      <HashSection title="Hot Module Replacement" id="hmr">
         <Explanation>
           <p>
             Hot module replacement (HMR) can make development more convenient by
@@ -75,7 +75,7 @@ if (module.hot) {
   });
 }`}
         </CodeBlock>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Warning,
@@ -33,7 +33,7 @@ export default function AccessibilityGuide() {
         </p>
       </Explanation>
 
-      <Section title="Announcing Navigation" id="aria-live">
+      <HashSection title="Announcing Navigation" id="aria-live">
         <Explanation>
           <p>
             When the content of{" "}
@@ -85,9 +85,9 @@ const router = curi(history, routes, {
 // when the user navigates to "/", the screen reader
 // will read: "Navigated to Home"`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Focusing Content" id="focus">
+      <HashSection title="Focusing Content" id="focus">
         <Explanation>
           <p>
             Screen readers read the content of elements in the page that are
@@ -143,7 +143,7 @@ const router = curi(history, routes, {
 <!-- but not me -->
 <div></div>`}
         </CodeBlock>
-        <Section
+        <HashSection
           title="Focusing in React Applications"
           id="focus-react"
           tag="h3"
@@ -179,9 +179,13 @@ ReactDOM.render((
   </Router>
 ), holder);`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="Focusing in Vue Applications" id="focus-vue" tag="h3">
+        <HashSection
+          title="Focusing in Vue Applications"
+          id="focus-vue"
+          tag="h3"
+        >
           <Explanation>
             <p>
               The <IJS>@curi/vue</IJS> package provides a directive for focusing
@@ -198,10 +202,10 @@ ReactDOM.render((
   </main>
 </template>`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="More Resources" id="more">
+      <HashSection title="More Resources" id="more">
         <Explanation>
           <p>
             The above content is great for making navigation within your
@@ -213,7 +217,8 @@ ReactDOM.render((
             accessibility of your website, I would recommend Google's{" "}
             <a href="https://developers.google.com/web/fundamentals/accessibility/">
               collection of accessibility articles
-            </a>. WebAIM also provides a good{" "}
+            </a>
+            . WebAIM also provides a good{" "}
             <a href="https://webaim.org/standards/wcag/checklist">checklist</a>{" "}
             to consult.
           </p>
@@ -229,7 +234,7 @@ ReactDOM.render((
             navigating throughout this site.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

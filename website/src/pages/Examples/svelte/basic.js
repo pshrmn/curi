@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeSandboxDemo,
   OnGithub
@@ -16,18 +16,18 @@ export default function BasicExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             Curi's Svelte implementation relies on the Svelte store to access
             route related data throughout the application.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/basic" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="svelte/basic" />
     </React.Fragment>

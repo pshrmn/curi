@@ -3,7 +3,7 @@ import React from "react";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -33,7 +33,7 @@ export default class SideEffectAriaLivePkg extends React.PureComponent {
           </Explanation>
         </About>
         <APIBlock>
-          <Section tag="h3" title="ariaLiveEffect" id="ariaLiveEffect">
+          <HashSection tag="h3" title="ariaLiveEffect" id="ariaLiveEffect">
             <Explanation>
               <p>
                 When you create an ARIA live side effect, an element with a{" "}
@@ -75,7 +75,7 @@ const router = curi(history, routes, {
   sideEffects: [announcer]
 });`}
             </CodeBlock>
-          </Section>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

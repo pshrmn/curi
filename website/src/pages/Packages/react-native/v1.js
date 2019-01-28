@@ -4,7 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -28,12 +28,13 @@ export default class ReactNativePkg extends React.PureComponent {
               out the{" "}
               <Link name="Guide" params={{ slug: "react-native" }}>
                 React Native guide
-              </Link>.
+              </Link>
+              .
             </p>
           </Explanation>
         </About>
         <APIBlock>
-          <Section title={<IJS>curiProvider()</IJS>} id="curiProvider">
+          <HashSection title={<IJS>curiProvider()</IJS>} id="curiProvider">
             <Explanation>
               <p>
                 The application needs a component at its root to re-render the
@@ -74,8 +75,8 @@ const App = () => (
 );`}
             </CodeBlock>
 
-            <Section tag="h3" title="Arguments" id="curiProvider-arguments">
-              <Section tag="h4" title="router" id="curiProvider-router">
+            <HashSection tag="h3" title="Arguments" id="curiProvider-arguments">
+              <HashSection tag="h4" title="router" id="curiProvider-router">
                 <Explanation>
                   <p>A Curi router.</p>
                 </Explanation>
@@ -85,10 +86,10 @@ const App = () => (
 const router = curi(history, routes);
 const Router = curiProvider(router);`}
                 </CodeBlock>
-              </Section>
-            </Section>
-            <Section tag="h3" title="Props" id="curiProvider-props">
-              <Section tag="h4" title="children" id="curiProvider-render">
+              </HashSection>
+            </HashSection>
+            <HashSection tag="h3" title="Props" id="curiProvider-props">
+              <HashSection tag="h4" title="children" id="curiProvider-render">
                 <Explanation>
                   <p>
                     <IJS>children</IJS> is a render-invoked function. When it is
@@ -122,11 +123,11 @@ const Router = curiProvider(router);`}
                     </tbody>
                   </ScrollableTable>
                 </Explanation>
-              </Section>
-            </Section>
-          </Section>
+              </HashSection>
+            </HashSection>
+          </HashSection>
 
-          <Section title={<Cmp>Link</Cmp>} id="Link">
+          <HashSection title={<Cmp>Link</Cmp>} id="Link">
             <Explanation>
               <p>
                 A <Cmp>Link</Cmp> is used for navigating within your
@@ -155,8 +156,8 @@ const Router = curiProvider(router);`}
 // </TouchableHighlight>`}
             </CodeBlock>
 
-            <Section tag="h3" title="Props" id="Link-props">
-              <Section tag="h4" title="name" id="Link-to">
+            <HashSection tag="h3" title="Props" id="Link-props">
+              <HashSection tag="h4" title="name" id="Link-to">
                 <Explanation>
                   <p>The name of the route that you want to navigate to.</p>
                   <p>
@@ -177,9 +178,9 @@ const Router = curiProvider(router);`}
                     it will be removed in v2.
                   </Note>
                 </Explanation>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="params" id="Link-params">
+              <HashSection tag="h4" title="params" id="Link-params">
                 <Explanation>
                   <p>
                     If the route that you want to navigate to (or any of its
@@ -191,9 +192,9 @@ const Router = curiProvider(router);`}
                   {`// User route is { name: 'User', path: '/user/:id' }
 <Link name='User' params={{ id: 16 }}>User 16</Link>`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section
+              <HashSection
                 tag="h4"
                 title="hash, query &amp; state"
                 id="Link-hash-query-state"
@@ -218,9 +219,9 @@ const Router = curiProvider(router);`}
   DJ Roomba
 </Link>`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="children" id="Link-children">
+              <HashSection tag="h4" title="children" id="Link-children">
                 <Explanation>
                   <p>
                     The <IJS>children</IJS> prop can take two forms: either a
@@ -253,9 +254,9 @@ const Router = curiProvider(router);`}
   )}
 </Link>`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="anchor" id="Link-anchor">
+              <HashSection tag="h4" title="anchor" id="Link-anchor">
                 <Explanation>
                   <p>
                     By default, when you render a <Cmp>Link</Cmp>, a{" "}
@@ -276,9 +277,9 @@ const Router = curiProvider(router);`}
 //   <Text>User 16</Text>
 // </TouchableOpacity>`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="forward" id="Link-forward">
+              <HashSection tag="h4" title="forward" id="Link-forward">
                 <Explanation>
                   <p>
                     The <IJS>forward</IJS> prop is an object of props to pass on
@@ -307,11 +308,11 @@ const Router = curiProvider(router);`}
                     <IJS>forward</IJS> prop instead.
                   </Note>
                 </Explanation>
-              </Section>
-            </Section>
-          </Section>
+              </HashSection>
+            </HashSection>
+          </HashSection>
 
-          <Section title={<Cmp>Curious</Cmp>} id="Curious">
+          <HashSection title={<Cmp>Curious</Cmp>} id="Curious">
             <Explanation>
               <p>
                 A context consumer component for injecting router values into
@@ -333,8 +334,8 @@ const  MyComponent = () => (
 );`}
             </CodeBlock>
 
-            <Section tag="h3" title="Props" id="curious-props">
-              <Section tag="h4" title="children" id="curious-children">
+            <HashSection tag="h3" title="Props" id="curious-props">
+              <HashSection tag="h4" title="children" id="curious-children">
                 <Explanation>
                   <p>
                     A render-invoked function that returns a React element. This
@@ -342,11 +343,11 @@ const  MyComponent = () => (
                     <IJS>response</IJS> and <IJS>navigation</IJS> properties.
                   </p>
                 </Explanation>
-              </Section>
-            </Section>
-          </Section>
+              </HashSection>
+            </HashSection>
+          </HashSection>
 
-          <Section title={<Cmp>Active</Cmp>} id="Active">
+          <HashSection title={<Cmp>Active</Cmp>} id="Active">
             <Explanation>
               <p>
                 The <Cmp>Active</Cmp> component is used to render based on
@@ -406,26 +407,26 @@ const router = curi(history, routes, {
               </CodeBlock>
             </Note>
 
-            <Section tag="h3" title="Props" id="Active-props">
-              <Section tag="h4" title="name" id="Active-name">
+            <HashSection tag="h3" title="Props" id="Active-props">
+              <HashSection tag="h4" title="name" id="Active-name">
                 <Explanation>
                   <p>
                     The name of the route to compare against the response
                     object.
                   </p>
                 </Explanation>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="params" id="Active-params">
+              <HashSection tag="h4" title="params" id="Active-params">
                 <Explanation>
                   <p>
                     An object containing route parameters. These will be
                     compared against the route params of the response object.
                   </p>
                 </Explanation>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="children" id="Active-children">
+              <HashSection tag="h4" title="children" id="Active-children">
                 <Explanation>
                   <p>
                     A render-invoked function whose first argument is whether
@@ -471,13 +472,14 @@ const router = curi(history, routes, {
   }}
 </Active>`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="partial" id="Active-partial">
+              <HashSection tag="h4" title="partial" id="Active-partial">
                 <Explanation>
                   <p>
                     When <IJS>true</IJS>, <IJS>partial</IJS> allows ancestor
-                    routes to be considered active. Defaults to <IJS>false</IJS>.
+                    routes to be considered active. Defaults to <IJS>false</IJS>
+                    .
                   </p>
                 </Explanation>
                 <CodeBlock lang="jsx">
@@ -498,11 +500,11 @@ const router = curi(history, routes, {
 </Active>
 // <Album className="active" />`}
                 </CodeBlock>
-              </Section>
-            </Section>
-          </Section>
+              </HashSection>
+            </HashSection>
+          </HashSection>
 
-          <Section title={<Cmp>Navigating</Cmp>} id="Navigating">
+          <HashSection title={<Cmp>Navigating</Cmp>} id="Navigating">
             <Explanation>
               <p>
                 The <Cmp>Navigating</Cmp> component lets you know when the
@@ -535,8 +537,8 @@ const router = curi(history, routes, {
   }}
 </Navigating>`}
             </CodeBlock>
-            <Section tag="h3" title="Props" id="Navigating-props">
-              <Section tag="h4" title="children()" id="Navigating-children">
+            <HashSection tag="h3" title="Props" id="Navigating-props">
+              <HashSection tag="h4" title="children()" id="Navigating-children">
                 <Explanation>
                   <p>
                     A function that returns a React node. The function will be
@@ -549,11 +551,11 @@ const router = curi(history, routes, {
                     is finished has no effect.
                   </p>
                 </Explanation>
-              </Section>
-            </Section>
-          </Section>
+              </HashSection>
+            </HashSection>
+          </HashSection>
 
-          <Section title={<Cmp>Block</Cmp>} id="Block">
+          <HashSection title={<Cmp>Block</Cmp>} id="Block">
             <Explanation>
               <p>
                 The <Cmp>Block</Cmp> component lets you prevent navigation until
@@ -562,11 +564,10 @@ const router = curi(history, routes, {
                 filled form.
               </p>
             </Explanation>
-            <CodeBlock
-            >{`import { Block } from '@curi/react-native';`}</CodeBlock>
+            <CodeBlock>{`import { Block } from '@curi/react-native';`}</CodeBlock>
 
-            <Section tag="h3" title="Props" id="Block-props">
-              <Section tag="h4" title="active" id="Block-active">
+            <HashSection tag="h3" title="Props" id="Block-props">
+              <HashSection tag="h4" title="active" id="Block-active">
                 <Explanation>
                   <p>
                     A boolean, which is <IJS>true</IJS> by default. When it is{" "}
@@ -581,9 +582,9 @@ const router = curi(history, routes, {
 // will not block navigation
 <Block active={false} confirm={confirm} />`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section tag="h4" title="confirm" id="Block-confirm">
+              <HashSection tag="h4" title="confirm" id="Block-confirm">
                 <Explanation>
                   <p>
                     The confirm prop is a function that will be called whenever
@@ -633,9 +634,9 @@ const router = curi(history, routes, {
   }}
 />`}
                 </CodeBlock>
-              </Section>
-            </Section>
-          </Section>
+              </HashSection>
+            </HashSection>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

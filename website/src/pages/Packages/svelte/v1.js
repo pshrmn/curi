@@ -4,7 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   About,
   APIBlock,
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -26,12 +26,13 @@ export default class SveltePkg extends React.PureComponent {
               the{" "}
               <Link name="Guide" params={{ slug: "svelte" }}>
                 Svelte guide
-              </Link>.
+              </Link>
+              .
             </p>
           </Explanation>
         </About>
         <APIBlock>
-          <Section tag="h3" title="curiStore" id="curiStore">
+          <HashSection tag="h3" title="curiStore" id="curiStore">
             <Explanation>
               <p>
                 <IJS>@curi/svelte</IJS> components rely on being able to access
@@ -66,9 +67,9 @@ const router = curi(history, routes);
 const store = new Store({...});
 curiStore(router, store);`}
             </CodeBlock>
-          </Section>
+          </HashSection>
 
-          <Section tag="h3" title={<Cmp>Link</Cmp>} id="link">
+          <HashSection tag="h3" title={<Cmp>Link</Cmp>} id="link">
             <Explanation>
               <p>
                 The <Cmp>Link</Cmp> component is used to create an anchor for
@@ -91,8 +92,8 @@ curiStore(router, store);`}
 </script>`}
             </CodeBlock>
 
-            <Section title="Props" id="link-props" tag="h3">
-              <Section title="name" id="link-name" tag="h4">
+            <HashSection title="Props" id="link-props" tag="h3">
+              <HashSection title="name" id="link-name" tag="h4">
                 <Explanation>
                   <p>The name of the route to link to.</p>
                 </Explanation>
@@ -100,9 +101,9 @@ curiStore(router, store);`}
                   {`<Link name="Home">Home</Link>
 <!-- <a href="/">Home</a> -->`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section title="params" id="link-params" tag="h4">
+              <HashSection title="params" id="link-params" tag="h4">
                 <Explanation>
                   <p>An object of route params for the linked route.</p>
                 </Explanation>
@@ -112,9 +113,9 @@ curiStore(router, store);`}
 </Link>
 <!-- <a href="/user/5">Profile</a> -->`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section title="hash" id="link-hash" tag="h4">
+              <HashSection title="hash" id="link-hash" tag="h4">
                 <Explanation>
                   <p>The hash for the location to link to.</p>
                 </Explanation>
@@ -122,9 +123,9 @@ curiStore(router, store);`}
                   {`<Link name="Home" hash="test">Home</Link>
 <!-- <a href="/#test">Home</a> -->`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section title="query" id="link-query" tag="h4">
+              <HashSection title="query" id="link-query" tag="h4">
                 <Explanation>
                   <p>The query for the location to link to.</p>
                 </Explanation>
@@ -132,16 +133,16 @@ curiStore(router, store);`}
                   {`<Link name="Home" query="one=1">Home</Link>
 <!-- <a href="/?one=1">Home</a> -->`}
                 </CodeBlock>
-              </Section>
+              </HashSection>
 
-              <Section title="state" id="link-state" tag="h4">
+              <HashSection title="state" id="link-state" tag="h4">
                 <Explanation>
                   Some (ephemeral) state associated with the location.
                 </Explanation>
-              </Section>
-            </Section>
+              </HashSection>
+            </HashSection>
 
-            <Section tag="h3" title={<Cmp>Navigating</Cmp>} id="navigating">
+            <HashSection tag="h3" title={<Cmp>Navigating</Cmp>} id="navigating">
               <Explanation>
                 <p>
                   The <Cmp>Navigating</Cmp> component is used to cancel an
@@ -171,8 +172,12 @@ curiStore(router, store);`}
 </script>`}
               </CodeBlock>
 
-              <Section title="Props" id="navigating-props" tag="h3">
-                <Section title="component" id="navigating-component" tag="h4">
+              <HashSection title="Props" id="navigating-props" tag="h3">
+                <HashSection
+                  title="component"
+                  id="navigating-component"
+                  tag="h4"
+                >
                   <Explanation>
                     <p>
                       A component that receives a <IJS>cancel</IJS> function
@@ -197,10 +202,10 @@ curiStore(router, store);`}
   };
 </script>`}
                   </CodeBlock>
-                </Section>
-              </Section>
-            </Section>
-          </Section>
+                </HashSection>
+              </HashSection>
+            </HashSection>
+          </HashSection>
         </APIBlock>
       </React.Fragment>
     );

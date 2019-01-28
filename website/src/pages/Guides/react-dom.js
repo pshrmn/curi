@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Note,
@@ -19,7 +19,7 @@ export default function ReactGuide() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Rendering Responses" id="rendering">
+      <HashSection title="Rendering Responses" id="rendering">
         <Explanation>
           <p>
             The <IJS>curiProvider()</IJS> function is used to create the
@@ -73,7 +73,7 @@ router.once(() => {
 });`}
         </CodeBlock>
 
-        <Section
+        <HashSection
           title="What to return from children()"
           id="children-return"
           tag="h3"
@@ -202,9 +202,9 @@ export default function RouteName() {
   );
 }`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="Accessibility" id="accessibility" tag="h3">
+        <HashSection title="Accessibility" id="accessibility" tag="h3">
           <Explanation>
             <p>
               Managing the application's focus when navigating is useful for
@@ -245,10 +245,10 @@ ReactDOM.render((
   </Router>
 ), document.getElementById("root"));`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Navigating" id="navigating">
+      <HashSection title="Navigating" id="navigating">
         <Explanation>
           <p>
             The <Cmp>Link</Cmp> component is used to navigate between routes
@@ -298,7 +298,7 @@ const NavLinks = () => (
 // renders
 <a href="/#details">Home</a>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
       <Explanation>
         <p>

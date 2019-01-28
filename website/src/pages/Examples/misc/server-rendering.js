@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -17,7 +17,7 @@ export default function ServerRenderingExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             Server rendering with Curi is pretty similar to client side
@@ -96,7 +96,7 @@ export default function ServerRenderingExample() {
             </li>
           </ul>
         </Explanation>
-      </Section>
+      </HashSection>
 
       <OnGithub path="misc/server-rendering" />
     </React.Fragment>

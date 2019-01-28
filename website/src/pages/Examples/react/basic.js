@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeSandboxDemo,
   OnGithub
@@ -16,17 +16,17 @@ export default function BasicExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             This example demonstrates the basics of a Curi + React application.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/basic" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/basic" />
     </React.Fragment>

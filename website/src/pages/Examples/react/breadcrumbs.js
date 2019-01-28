@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   IJS,
   CodeSandboxDemo,
@@ -17,7 +17,7 @@ export default function BreadcrumbsExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             The <IJS>@curi/route-ancestors</IJS> package lets you know what
@@ -25,11 +25,11 @@ export default function BreadcrumbsExample() {
             breadcrumb links.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/breadcrumbs" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/breadcrumbs" />
     </React.Fragment>

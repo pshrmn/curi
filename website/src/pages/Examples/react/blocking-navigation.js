@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   Cmp,
   CodeSandboxDemo,
@@ -17,7 +17,7 @@ export default function BlockingNavigationExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             Sometimes, you don't want the user to leave the page. Ideally, this
@@ -29,11 +29,11 @@ export default function BlockingNavigationExample() {
             requires user input before navigation will occur.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/blocking-navigation" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/blocking-navigation" />
     </React.Fragment>

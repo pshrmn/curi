@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   Outline,
@@ -27,7 +27,8 @@ export default function ReactBasicsTutorial() {
             Creating a React application using{" "}
             <a href="https://facebook.github.io/create-react-app/">
               Create React App
-            </a>.
+            </a>
+            .
           </li>
           <li>Defining the website's valid routes</li>
           <li>Setting up a router</li>
@@ -36,12 +37,12 @@ export default function ReactBasicsTutorial() {
         </ul>
       </Outline>
 
-      <Section title="Demo" id="demo">
+      <HashSection title="Demo" id="demo">
         <p>You can run a demo of the site we are building with CodeSandbox.</p>
         <CodeSandboxDemo id="github/curijs/react-basic-tutorial/tree/master/" />
-      </Section>
+      </HashSection>
 
-      <Section title="Setup" id="setup">
+      <HashSection title="Setup" id="setup">
         <Explanation>
           <p>
             We will be using{" "}
@@ -98,9 +99,9 @@ cd curi-react-bookstore # enter the new app directory`}
         <CodeBlock lang="bash">
           {`npm run start # start the dev server`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Routes" id="routes">
+      <HashSection title="Routes" id="routes">
         <Explanation>
           <p>
             A single-page application is made up of a number of "routes", which
@@ -132,7 +133,7 @@ cd curi-react-bookstore # enter the new app directory`}
           </p>
         </Explanation>
 
-        <Section
+        <HashSection
           title="Path basics"
           id="path-basics"
           className="aside"
@@ -196,7 +197,7 @@ cd curi-react-bookstore # enter the new app directory`}
   ]
 }`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
         <Explanation>
           <p>The website will start with four routes.</p>
@@ -321,9 +322,9 @@ import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="History" id="history">
+      <HashSection title="History" id="history">
         <Explanation>
           <p>
             Along with the routes, we also need to create a history object for
@@ -340,16 +341,16 @@ registerServiceWorker();`}
           </p>
           <p>
             We can import the <IJS>Browser</IJS> function from{" "}
-            <IJS>@hickory/browser</IJS> in our index file (<IJS>
-              src/index.js
-            </IJS>, which <IJS>create-react-app</IJS> created for us) and call
-            the function to create a history object.
+            <IJS>@hickory/browser</IJS> in our index file (
+            <IJS>src/index.js</IJS>, which <IJS>create-react-app</IJS> created
+            for us) and call the function to create a history object.
           </p>
           <Note>
             The history object can be configured with{" "}
             <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
               an options object
-            </a>, but we will stick with the defaults.
+            </a>
+            , but we will stick with the defaults.
           </Note>
         </Explanation>
 
@@ -369,9 +370,9 @@ const history = Browser();
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="The Router" id="router">
+      <HashSection title="The Router" id="router">
         <Explanation>
           <p>
             We are now ready to create the router. In the{" "}
@@ -404,9 +405,9 @@ registerServiceWorker();`}
         <Explanation>
           <p>The router is now ready and we can render the application.</p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Rendering with React" id="rendering">
+      <HashSection title="Rendering with React" id="rendering">
         <Explanation>
           <p>
             The <IJS>@curi/react-dom</IJS> provides the components that we will
@@ -505,7 +506,7 @@ registerServiceWorker();`}
           </p>
         </Explanation>
 
-        <Section
+        <HashSection
           title="Responses and Navigation"
           id="responses"
           className="aside"
@@ -547,10 +548,9 @@ registerServiceWorker();`}
             <p>
               The <IJS>navigation</IJS> object contains additional information
               about a navigation that doesn't make sense to include in the
-              response object. This includes the navigation's "action" (<IJS>
-                PUSH
-              </IJS>, <IJS>POP</IJS>, or <IJS>REPLACE</IJS>) and the previous
-              response object.
+              response object. This includes the navigation's "action" (
+              <IJS>PUSH</IJS>, <IJS>POP</IJS>, or <IJS>REPLACE</IJS>) and the
+              previous response object.
             </p>
           </Explanation>
           <CodeBlock>
@@ -560,7 +560,7 @@ registerServiceWorker();`}
   previous: { name: ..., location: ..., ... }
 }`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
         <Explanation>
           <p>
@@ -575,7 +575,7 @@ registerServiceWorker();`}
           </p>
         </Explanation>
 
-        <Section
+        <HashSection
           title="route.response()"
           id="route-response"
           className="aside"
@@ -615,7 +615,7 @@ registerServiceWorker();`}
   }
 }`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
         <Explanation>
           <p>
@@ -763,9 +763,9 @@ registerServiceWorker();`}
             interesting because we cannot navigate between locations.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
 
-      <Section title="Navigating between locations" id="navigating">
+      <HashSection title="Navigating between locations" id="navigating">
         <Explanation>
           <p>
             The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Link</Cmp>{" "}
@@ -774,7 +774,7 @@ registerServiceWorker();`}
           </p>
         </Explanation>
 
-        <Section
+        <HashSection
           title={
             <span>
               The <Cmp>Link</Cmp> Component
@@ -839,9 +839,9 @@ registerServiceWorker();`}
 <Link name="Checkout" query='affiliate=123'>Checkout</Link>
 // <a href="/checkout?affiliate=123">Checkout</a>`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="A Navigation Menu" id="nav-menu" tag="h3">
+        <HashSection title="A Navigation Menu" id="nav-menu" tag="h3">
           <Explanation>
             <p>
               The application will have a navigation menu component with links
@@ -924,9 +924,9 @@ ReactDOM.render((
 ), document.getElementById('root'));
 registerServiceWorker();`}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
-        <Section title="Linking to Books" id="book-links" tag="h3">
+        <HashSection title="Linking to Books" id="book-links" tag="h3">
           <Explanation>
             <p>
               The website should link to individual books from its home page. To
@@ -1059,10 +1059,10 @@ export default function Book({ response }) {
   );
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
 
-      <Section title="Let's go shopping" id="shopping">
+      <HashSection title="Let's go shopping" id="shopping">
         <Explanation>
           <p>
             Users of the website should be able to add books to their shopping
@@ -1075,8 +1075,8 @@ export default function Book({ response }) {
 
         <Explanation>
           <p>
-            The shopping cart implementation will be a JavaScript <IJS>Map</IJS>.
-            We can call its <IJS>set</IJS> method to add books, its{" "}
+            The shopping cart implementation will be a JavaScript <IJS>Map</IJS>
+            . We can call its <IJS>set</IJS> method to add books, its{" "}
             <IJS>clear</IJS> method to reset the cart, and iterate over its{" "}
             <IJS>entries</IJS> with a <IJS>for...of</IJS> loop.
           </p>
@@ -1167,7 +1167,7 @@ registerServiceWorker();`}
           </p>
         </Explanation>
 
-        <Section
+        <HashSection
           title="The Router's Navigate Method"
           id="nav-method"
           className="aside"
@@ -1221,9 +1221,10 @@ router.navigate({ name: "Replace", method: "REPLACE" });
 router.navigate({ name: "Two", method: "ANCHOR" });
 // session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "New", method: "ANCHOR" });
-// session = ['/one', '/two', '/new'], index = 2`}`}
+// session = ['/one', '/two', '/new'], index = 2`}
+            `}
           </CodeBlock>
-        </Section>
+        </HashSection>
 
         <Explanation>
           <p>
@@ -1331,8 +1332,8 @@ export default function Checkout({ router, response }) {
   );
 };`}
         </CodeBlock>
-      </Section>
-      <Section title="What's next?" id="next">
+      </HashSection>
+      <HashSection title="What's next?" id="next">
         <Explanation>
           <p>
             We now have a functional website built with React and Curi. What
@@ -1341,7 +1342,7 @@ export default function Checkout({ router, response }) {
             techniques.
           </p>
         </Explanation>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

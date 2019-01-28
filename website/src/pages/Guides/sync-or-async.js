@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS
@@ -49,7 +49,7 @@ export default function SyncAndAsyncGuide() {
 }`}
       </CodeBlock>
 
-      <Section title="Async Things to Think About" id="think">
+      <HashSection title="Async Things to Think About" id="think">
         <Explanation>
           <p>
             For the most part, it shouldn't matter to you (or your users)
@@ -95,7 +95,8 @@ router.once(() => {
                   params={{ category: "react", slug: "data-loading" }}
                 >
                   Data Loading Example
-                </Link>.
+                </Link>
+                .
               </p>
             </Explanation>
             <CodeBlock lang="jsx">
@@ -122,7 +123,7 @@ const router = curi(history, routes, {
             </CodeBlock>
           </li>
         </ol>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -18,7 +18,7 @@ export default function AuthenticationExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
+      <HashSection title="Explanation" id="explanation">
         <Explanation>
           <p>
             Sometimes you will want to redirect based on the results of your{" "}
@@ -56,11 +56,11 @@ export default function AuthenticationExample() {
   }
 ]);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection title="Live Demo" id="demo">
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/redirects" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/redirects" />
     </React.Fragment>

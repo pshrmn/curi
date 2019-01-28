@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  Section,
+  HashSection,
   Explanation,
   CodeBlock,
   IJS,
@@ -77,7 +77,7 @@ import createMyInteraction from "./interactions/my";
 const interaction = createMyInteraction();`}
       </CodeBlock>
 
-      <Section title="Adding Interactions" id="adding">
+      <HashSection title="Adding Interactions" id="adding">
         <Explanation>
           <p>
             Route interactions are provided to the router call as an array using
@@ -101,9 +101,9 @@ const interaction = createMyInteraction();`}
         <CodeBlock>
           {`const myValue = router.route.my('Some Route', ...);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Creating Route Interactions" id="creating">
+      <HashSection title="Creating Route Interactions" id="creating">
         <Explanation>
           <p>There are a few steps to creating your own route interactions.</p>
 
@@ -204,7 +204,7 @@ router.route.confirm('Home'); // true
 router.route.confirm('Elsewhere'); // false`}
         </CodeBlock>
 
-        <Section
+        <HashSection
           title="Slightly more advanced"
           id="Slightly-more-advanced"
           tag="h3"
@@ -244,8 +244,8 @@ router.route.confirm('Elsewhere'); // false`}
   }
 }`}
           </CodeBlock>
-        </Section>
-      </Section>
+        </HashSection>
+      </HashSection>
     </React.Fragment>
   );
 }
