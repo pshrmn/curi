@@ -1,4 +1,4 @@
-import { meta as ancestorsMeta } from "./ancestors";
+import { meta as ancestorsMeta } from "./api/ancestors";
 
 export default [
   {

@@ -1,4 +1,4 @@
-import { meta as prefetchMeta } from "./prefetch";
+import { meta as prefetchMeta } from "./api/prefetch";
 
 export default [
   {

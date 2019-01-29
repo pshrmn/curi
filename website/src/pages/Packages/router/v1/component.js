@@ -1,9 +1,9 @@
 import React from "react";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { CuriAPI } from "./curi";
-import { PrepareRoutesAPI } from "./prepareRoutes";
-import { RoutePropertiesAPI } from "./route-properties";
+import { CuriAPI } from "./api/curi";
+import { PrepareRoutesAPI } from "./api/prepareRoutes";
+import { RoutePropertiesAPI } from "./api/route-properties";
 
 export default class RouterPkg extends React.PureComponent {
   render() {

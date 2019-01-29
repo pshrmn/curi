@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import { About, APIBlock } from "../../../../components/package/common";
-import { CuriPluginAPI } from "./curiPlugin";
-import { LinkAPI } from "./link";
-import { BlockAPI } from "./block";
-import { FocusAPI } from "./focus";
+import { CuriPluginAPI } from "./api/curiPlugin";
+import { LinkAPI } from "./api/link";
+import { BlockAPI } from "./api/block";
+import { FocusAPI } from "./api/focus";
 
 export default class VuePkg extends React.PureComponent {
   render() {

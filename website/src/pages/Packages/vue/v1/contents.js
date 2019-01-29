@@ -1,7 +1,7 @@
-import { meta as curiPluginMeta } from "./curiPlugin";
-import { meta as linkMeta } from "./link";
-import { meta as blockMeta } from "./block";
-import { meta as focusMeta } from "./focus";
+import { meta as curiPluginMeta } from "./api/curiPlugin";
+import { meta as linkMeta } from "./api/link";
+import { meta as blockMeta } from "./api/block";
+import { meta as focusMeta } from "./api/focus";
 
 export default [
   {

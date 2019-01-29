@@ -6,7 +6,7 @@ import {
   IJS,
   Note
 } from "../../../../components/package/common";
-import { PrefetchAPI } from "./prefetch";
+import { PrefetchAPI } from "./api/prefetch";
 
 export default class RoutePrefetchPkg extends React.PureComponent {
   render() {

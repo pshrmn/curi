@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import { About, APIBlock } from "../../../../components/package/common";
-import { CuriStoreAPI } from "./curiStore";
-import { LinkAPI } from "./link";
+import { CuriStoreAPI } from "./api/curiStore";
+import { LinkAPI } from "./api/link";
 
 export default class SveltePkg extends React.PureComponent {
   render() {

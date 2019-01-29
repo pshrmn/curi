@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { CuriProviderAPI } from "./curiProvider";
-import { LinkAPI } from "./link";
-import { CuriousAPI } from "./curious";
-import { ActiveAPI } from "./active";
-import { NavigatingAPI } from "./navigating";
-import { BlockAPI } from "./block";
+import { CuriProviderAPI } from "./api/curiProvider";
+import { LinkAPI } from "./api/link";
+import { CuriousAPI } from "./api/curious";
+import { ActiveAPI } from "./api/active";
+import { NavigatingAPI } from "./api/navigating";
+import { BlockAPI } from "./api/block";
 
 export default class ReactNativePkg extends React.PureComponent {
   render() {

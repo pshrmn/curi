@@ -1,4 +1,4 @@
-import { meta as ariaLiveMeta } from "./ariaLive";
+import { meta as ariaLiveMeta } from "./api/ariaLive";
 
 export default [
   {

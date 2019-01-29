@@ -1,4 +1,4 @@
-import { meta as titleMeta } from "./title";
+import { meta as titleMeta } from "./api/title";
 
 export default [
   {

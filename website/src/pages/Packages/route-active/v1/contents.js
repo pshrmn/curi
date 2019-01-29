@@ -1,4 +1,4 @@
-import { meta as activeMeta } from "./active";
+import { meta as activeMeta } from "./api/active";
 
 export default [
   {

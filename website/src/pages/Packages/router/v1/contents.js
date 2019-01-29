@@ -1,6 +1,6 @@
-import { meta as curiMeta } from "./curi";
-import { meta as prepareRoutesMeta } from "./prepareRoutes";
-import { meta as RoutePropertiesMeta } from "./route-properties";
+import { meta as curiMeta } from "./api/curi";
+import { meta as prepareRoutesMeta } from "./api/prepareRoutes";
+import { meta as RoutePropertiesMeta } from "./api/route-properties";
 
 export default [
   {

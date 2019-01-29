@@ -1,7 +1,7 @@
 import React from "react";
 
 import { About, APIBlock } from "../../../../components/package/common";
-import { ScrollAPI } from "./scroll";
+import { ScrollAPI } from "./api/scroll";
 
 export default class SideEffectScrollPkg extends React.PureComponent {
   render() {

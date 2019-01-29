@@ -1,5 +1,5 @@
-import { meta as staticFilesMeta } from "./staticFiles";
-import { meta as pathnamesMeta } from "./pathnames";
+import { meta as staticFilesMeta } from "./api/staticFiles";
+import { meta as pathnamesMeta } from "./api/pathnames";
 
 export default [
   {

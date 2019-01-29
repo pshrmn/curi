@@ -1,4 +1,4 @@
-import { meta as scrollMeta } from "./scroll";
+import { meta as scrollMeta } from "./api/scroll";
 
 export default [
   {

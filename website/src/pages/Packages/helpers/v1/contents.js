@@ -1,5 +1,5 @@
-import { meta as onceMeta } from "./once";
-import { meta as preferDefaultMeta } from "./preferDefault";
+import { meta as onceMeta } from "./api/once";
+import { meta as preferDefaultMeta } from "./api/preferDefault";
 
 export default [
   {

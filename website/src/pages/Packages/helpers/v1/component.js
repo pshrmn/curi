@@ -1,8 +1,8 @@
 import React from "react";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { OnceAPI } from "./once";
-import { PreferDefaultAPI } from "./preferDefault";
+import { OnceAPI } from "./api/once";
+import { PreferDefaultAPI } from "./api/preferDefault";
 
 export default class RouteActivePkg extends React.PureComponent {
   render() {

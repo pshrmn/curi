@@ -1,5 +1,5 @@
-import { meta as curiStoreMeta } from "./curiStore";
-import { meta as LinkMeta } from "./link";
+import { meta as curiStoreMeta } from "./api/curiStore";
+import { meta as LinkMeta } from "./api/link";
 
 export default [
   {

@@ -1,10 +1,10 @@
-import { meta as curiProviderMeta } from "./curiProvider";
-import { meta as LinkMeta } from "./link";
-import { meta as FocusMeta } from "./focus";
-import { meta as CuriousMeta } from "./curious";
-import { meta as ActiveMeta } from "./active";
-import { meta as NavigatingMeta } from "./navigating";
-import { meta as BlockMeta } from "./block";
+import { meta as curiProviderMeta } from "./api/curiProvider";
+import { meta as LinkMeta } from "./api/link";
+import { meta as FocusMeta } from "./api/focus";
+import { meta as CuriousMeta } from "./api/curious";
+import { meta as ActiveMeta } from "./api/active";
+import { meta as NavigatingMeta } from "./api/navigating";
+import { meta as BlockMeta } from "./api/block";
 
 export default [
   {

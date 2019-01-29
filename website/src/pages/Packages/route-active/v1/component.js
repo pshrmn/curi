@@ -1,7 +1,7 @@
 import React from "react";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { ActiveAPI } from "./active";
+import { ActiveAPI } from "./api/active";
 
 export default class RouteActivePkg extends React.PureComponent {
   render() {

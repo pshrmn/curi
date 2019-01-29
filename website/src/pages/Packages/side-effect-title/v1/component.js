@@ -1,7 +1,7 @@
 import React from "react";
 
 import { About, APIBlock } from "../../../../components/package/common";
-import { TitleAPI } from "./title";
+import { TitleAPI } from "./api/title";
 
 export default class SideEffectTitlePkg extends React.PureComponent {
   render() {

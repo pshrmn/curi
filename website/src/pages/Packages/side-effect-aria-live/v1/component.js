@@ -1,7 +1,7 @@
 import React from "react";
 
 import { About, APIBlock } from "../../../../components/package/common";
-import { AriaLiveAPI } from "./ariaLive";
+import { AriaLiveAPI } from "./api/ariaLive";
 
 export default class SideEffectAriaLivePkg extends React.PureComponent {
   render() {

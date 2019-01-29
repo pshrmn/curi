@@ -1,7 +1,7 @@
 import React from "react";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { AncestorsAPI } from "./ancestors";
+import { AncestorsAPI } from "./api/ancestors";
 
 export default class RouteAncestorsPkg extends React.PureComponent {
   render() {

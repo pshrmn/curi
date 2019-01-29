@@ -1,8 +1,8 @@
 import React from "react";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { StaticFilesAPI } from "./staticFiles";
-import { PathnamesAPI } from "./pathnames";
+import { StaticFilesAPI } from "./api/staticFiles";
+import { PathnamesAPI } from "./api/pathnames";
 
 export default class StaticPackage extends React.PureComponent {
   render() {
