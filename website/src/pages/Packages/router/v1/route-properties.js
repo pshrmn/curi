@@ -10,17 +10,14 @@ import {
   ScrollableTable
 } from "../../../../components/package/common";
 
-export const RoutePropertiesAPIMeta = {
+export const meta = {
   title: "Route Properties",
   hash: "route-properties"
 };
 
 export function RoutePropertiesAPI() {
   return (
-    <HashSection
-      title={RoutePropertiesAPIMeta.title}
-      id={RoutePropertiesAPIMeta.hash}
-    >
+    <HashSection title={meta.title} id={meta.hash}>
       <HashSection title="route.name" id="name" tag="h3">
         <p>A string, this must be unique for every route.</p>
 

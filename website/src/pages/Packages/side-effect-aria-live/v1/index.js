@@ -1,12 +1,33 @@
 import React from "react";
 
-import { About, APIBlock } from "../../../../components/package/common";
-import { AriaLiveAPI } from "./ariaLive";
+import {
+  About,
+  APIBlock,
+  PageMenu
+} from "../../../../components/package/common";
+import { AriaLiveAPI, meta as ariaLiveMeta } from "./ariaLive";
+
+const contents = [
+  {
+    title: "Installation",
+    hash: "installation"
+  },
+  {
+    title: "About",
+    hash: "about"
+  },
+  {
+    title: "API",
+    hash: "API",
+    children: [ariaLiveMeta]
+  }
+];
 
 export default class SideEffectAriaLivePkg extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
+        <PageMenu contents={contents} />
         <About>
           <p>
             When you navigate in a non-single-page application, users who rely

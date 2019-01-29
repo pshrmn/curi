@@ -8,14 +8,14 @@ import {
   Note
 } from "../../../../components/package/common";
 
-export const StaticFilesAPIMeta = {
+export const meta = {
   title: "staticFiles()",
   hash: "staticFiles"
 };
 
 export function StaticFilesAPI() {
   return (
-    <HashSection title={StaticFilesAPIMeta.title} id={StaticFilesAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <IJS>staticFiles()</IJS> function is used to generate HTML files for
         a static website and save them to the disk. An HTML file will be created

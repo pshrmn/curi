@@ -6,14 +6,14 @@ import {
   IJS
 } from "../../../../components/package/common";
 
-export const PathnamesAPIMeta = {
+export const meta = {
   title: "pathnames()",
   hash: "pathnames"
 };
 
 export function PathnamesAPI() {
   return (
-    <HashSection title={PathnamesAPIMeta.title} id={PathnamesAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <IJS>pathnames()</IJS> function is used to generate pathnames from
         an array of provided page descriptors. This can be useful for generating

@@ -8,14 +8,20 @@ import {
   Note
 } from "../../../../components/package/common";
 
-export const LinkAPIMeta = {
+export const meta = {
   title: <Cmp>Link</Cmp>,
-  hash: "Link"
+  hash: "Link",
+  children: [
+    {
+      title: "Props",
+      hash: "Link-props"
+    }
+  ]
 };
 
 export function LinkAPI() {
   return (
-    <HashSection title={LinkAPIMeta.title} id={LinkAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         A <Cmp>Link</Cmp> is used for navigating within your application. By
         default, this will render a <Cmp>TouchableHighlight</Cmp>, but you can

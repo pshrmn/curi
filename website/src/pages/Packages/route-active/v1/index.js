@@ -1,12 +1,34 @@
 import React from "react";
 
-import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { ActiveAPI } from "./active";
+import {
+  About,
+  APIBlock,
+  IJS,
+  PageMenu
+} from "../../../../components/package/common";
+import { ActiveAPI, meta as activeMeta } from "./active";
+
+const contents = [
+  {
+    title: "Installation",
+    hash: "installation"
+  },
+  {
+    title: "About",
+    hash: "about"
+  },
+  {
+    title: "API",
+    hash: "API",
+    children: [activeMeta]
+  }
+];
 
 export default class RouteActivePkg extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
+        <PageMenu contents={contents} />
         <About>
           <p>
             The <IJS>@curi/route-active</IJS> package determines whether a route

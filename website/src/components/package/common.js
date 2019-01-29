@@ -5,6 +5,7 @@ import { Note, Warning } from "../Messages";
 import { HashSection } from "../layout/Sections";
 import { CodeBlock } from "../layout/Groups";
 import ScrollableTable from "../layout/ScrollableTable";
+import PageMenu from "../layout/PageMenu";
 
 export {
   About,
@@ -15,5 +16,6 @@ export {
   Cmp,
   Note,
   Warning,
-  ScrollableTable
+  ScrollableTable,
+  PageMenu
 };

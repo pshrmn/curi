@@ -8,17 +8,24 @@ import {
   ScrollableTable
 } from "../../../../components/package/common";
 
-export const curiProviderAPIMeta = {
+export const meta = {
   title: <IJS>curiProvider()</IJS>,
-  hash: "curiProvider"
+  hash: "curiProvider",
+  children: [
+    {
+      title: "Arguments",
+      hash: "curiProvider-arguments"
+    },
+    {
+      title: "Props",
+      hash: "curiProvider-props"
+    }
+  ]
 };
 
 export function CuriProviderAPI() {
   return (
-    <HashSection
-      title={curiProviderAPIMeta.title}
-      id={curiProviderAPIMeta.hash}
-    >
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The application needs a component at its root to re-render the
         application when new responses are emitted and to make routing related
@@ -72,6 +79,7 @@ const Router = curiProvider(router);`}
           </CodeBlock>
         </HashSection>
       </HashSection>
+
       <HashSection tag="h3" title="Props" id="curiProvider-props">
         <HashSection tag="h4" title="children" id="curiProvider-render">
           <p>

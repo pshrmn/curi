@@ -6,17 +6,14 @@ import {
   IJS
 } from "../../../../components/package/common";
 
-export const preferDefaultAPIMeta = {
+export const meta = {
   title: "preferDefault()",
   hash: "preferDefault"
 };
 
 export function PreferDefaultAPI() {
   return (
-    <HashSection
-      title={preferDefaultAPIMeta.title}
-      id={preferDefaultAPIMeta.hash}
-    >
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         When using dynamic import syntax (<IJS>import("someModule")</IJS>
         ), the resolved module is a module object containing all of the exports

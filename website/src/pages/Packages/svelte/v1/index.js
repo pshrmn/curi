@@ -1,14 +1,35 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { About, APIBlock } from "../../../../components/package/common";
-import { CuriStoreAPI } from "./curiStore";
-import { LinkAPI } from "./link";
+import {
+  About,
+  APIBlock,
+  PageMenu
+} from "../../../../components/package/common";
+import { CuriStoreAPI, meta as curiStoreMeta } from "./curiStore";
+import { LinkAPI, meta as LinkMeta } from "./link";
+
+const contents = [
+  {
+    title: "Installation",
+    hash: "installation"
+  },
+  {
+    title: "About",
+    hash: "about"
+  },
+  {
+    title: "API",
+    hash: "API",
+    children: [curiStoreMeta, LinkMeta]
+  }
+];
 
 export default class SveltePkg extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
+        <PageMenu contents={contents} />
         <About>
           <p>
             This package enables you to use Curi alongside Svelte.{" "}

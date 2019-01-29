@@ -8,14 +8,14 @@ import {
   Note
 } from "../../../../components/package/common";
 
-export const FocusAPIMeta = {
+export const meta = {
   title: <IJS>curi-focus</IJS>,
   hash: "focus"
 };
 
 export function FocusAPI() {
   return (
-    <HashSection title={FocusAPIMeta.title} id={FocusAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <IJS>curi-focus</IJS> directive is used to specify an element that
         should be focused when a new response is emitted.

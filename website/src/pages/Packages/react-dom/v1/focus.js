@@ -8,14 +8,20 @@ import {
   Note
 } from "../../../../components/package/common";
 
-export const FocusAPIMeta = {
+export const meta = {
   title: <Cmp>Focus</Cmp>,
-  hash: "Focus"
+  hash: "Focus",
+  children: [
+    {
+      title: "Props",
+      hash: "Focus-props"
+    }
+  ]
 };
 
 export function FocusAPI() {
   return (
-    <HashSection title={FocusAPIMeta.title} id={FocusAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         <Cmp>Focus</Cmp> lets you focus a DOM element whenever there is a new
         response.
@@ -49,8 +55,8 @@ export function FocusAPI() {
   )}
 </Focus>`}
       </CodeBlock>
-      <HashSection tag="h3" title="Props" id="focus-props">
-        <HashSection tag="h4" title="children()" id="focus-children">
+      <HashSection tag="h3" title="Props" id="Focus-props">
+        <HashSection tag="h4" title="children()" id="Focus-children">
           <p>
             The <IJS>children()</IJS> function is a render-invoked prop that
             will be passed a <IJS>ref</IJS>. The <IJS>ref</IJS> should be

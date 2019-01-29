@@ -8,14 +8,14 @@ import {
   ScrollableTable
 } from "../../../../components/package/common";
 
-export const PrefetchAPIMeta = {
+export const meta = {
   title: "prefetch",
   hash: "prefetch"
 };
 
 export function PrefetchAPI() {
   return (
-    <HashSection title={PrefetchAPIMeta.title} id={PrefetchAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         A function to create the prefetch route interaction. When you create
         your router, the result is passed to the router using the `route`

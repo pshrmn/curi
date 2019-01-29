@@ -7,14 +7,14 @@ import {
   Cmp
 } from "../../../../components/package/common";
 
-export const LinkAPIMeta = {
+export const meta = {
   title: <Cmp>Link</Cmp>,
   hash: "link"
 };
 
 export function LinkAPI() {
   return (
-    <HashSection title={LinkAPIMeta.title} id={LinkAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <Cmp>Link</Cmp> component is used to create an anchor for navigating
         to another route.

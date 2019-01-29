@@ -7,14 +7,20 @@ import {
   ScrollableTable
 } from "../../../../components/package/common";
 
-export const BlockAPIMeta = {
+export const meta = {
   title: <Cmp>Block</Cmp>,
-  hash: "Block"
+  hash: "Block",
+  children: [
+    {
+      title: "Props",
+      hash: "Block-props"
+    }
+  ]
 };
 
 export function BlockAPI() {
   return (
-    <HashSection title={BlockAPIMeta.title} id={BlockAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <Cmp>Block</Cmp> component lets you prevent navigation until a user
         has confirmed that they want to navigate. This can be useful when the

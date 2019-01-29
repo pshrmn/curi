@@ -7,14 +7,14 @@ import {
   Note
 } from "../../../../components/package/common";
 
-export const onceAPIMeta = {
+export const meta = {
   title: "once()",
   hash: "once"
 };
 
 export function OnceAPI() {
   return (
-    <HashSection title={onceAPIMeta.title} id={onceAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         <IJS>once()</IJS> takes a function as its argument and returns a new
         function. The first time the returned function is called, it will call

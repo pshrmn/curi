@@ -13,9 +13,12 @@ const StyledMain = styled("main")`
   }
 
   @media only screen and (min-width: ${screen.medium}) {
-    padding: 50px 25px 0;
-    width: ${screen.medium};
-    margin: 0 auto;
+    padding: 50px 0 0;
+
+    > * {
+      width: ${screen.medium};
+      margin: 0 auto;
+    }
   }
 `;
 

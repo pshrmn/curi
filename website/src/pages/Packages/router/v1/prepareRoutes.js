@@ -7,17 +7,14 @@ import {
   Warning
 } from "../../../../components/package/common";
 
-export const PrepareRoutesAPIMeta = {
+export const meta = {
   title: "prepareRoutes",
   hash: "prepareRoutes"
 };
 
 export function PrepareRoutesAPI() {
   return (
-    <HashSection
-      title={PrepareRoutesAPIMeta.title}
-      id={PrepareRoutesAPIMeta.hash}
-    >
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <IJS>prepareRoutes()</IJS> export is used to build the routes for
         Curi. This will pre-compile paths for location matching and pathname

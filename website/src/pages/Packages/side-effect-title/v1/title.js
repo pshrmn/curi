@@ -7,14 +7,14 @@ import {
   Note
 } from "../../../../components/package/common";
 
-export const TitleAPIMeta = {
+export const meta = {
   title: "titleEffect",
   hash: "titleEffect"
 };
 
 export function TitleAPI() {
   return (
-    <HashSection title={TitleAPIMeta.title} id={TitleAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         <IJS>@curi/side-effect-title</IJS> exports a function for creating a
         side effect that will update the page's title whenever a new response is

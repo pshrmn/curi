@@ -7,14 +7,14 @@ import {
   Warning
 } from "../../../../components/package/common";
 
-export const ariaLiveAPIMeta = {
+export const meta = {
   title: "ariaLiveEffect",
   hash: "ariaLiveEffect"
 };
 
 export function AriaLiveAPI() {
   return (
-    <HashSection title={ariaLiveAPIMeta.title} id={ariaLiveAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         When you create an ARIA live side effect, an element with a{" "}
         <IJS>aria-live</IJS> attribute will be added to the DOM. This element

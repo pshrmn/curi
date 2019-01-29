@@ -7,14 +7,14 @@ import {
   Cmp
 } from "../../../../components/package/common";
 
-export const curiPluginAPIMeta = {
+export const meta = {
   title: "CuriPlugin",
   hash: "curiPlugin"
 };
 
 export function CuriPluginAPI() {
   return (
-    <HashSection title={curiPluginAPIMeta.title} id={curiPluginAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>What does the plugin do?</p>
       <ol>
         <li>

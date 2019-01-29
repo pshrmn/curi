@@ -6,14 +6,14 @@ import {
   IJS
 } from "../../../../components/package/common";
 
-export const curiStoreAPIMeta = {
+export const meta = {
   title: "curiStore",
   hash: "curiStore"
 };
 
 export function CuriStoreAPI() {
   return (
-    <HashSection title={curiStoreAPIMeta.title} id={curiStoreAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         <IJS>@curi/svelte</IJS> components rely on being able to access router
         related values (<IJS>router</IJS>, <IJS>response</IJS>, and{" "}

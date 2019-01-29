@@ -7,14 +7,20 @@ import {
   Cmp
 } from "../../../../components/package/common";
 
-export const CuriousAPIMeta = {
+export const meta = {
   title: <Cmp>Curious</Cmp>,
-  hash: "Curious"
+  hash: "Curious",
+  children: [
+    {
+      title: "Props",
+      hash: "Curious-props"
+    }
+  ]
 };
 
 export function CuriousAPI() {
   return (
-    <HashSection title={CuriousAPIMeta.title} id={CuriousAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         A context consumer component for injecting router values into
         components.
@@ -40,8 +46,8 @@ function MyComponent() {
 }`}
       </CodeBlock>
 
-      <HashSection tag="h3" title="Props" id="curious-props">
-        <HashSection tag="h4" title="children" id="curious-children">
+      <HashSection tag="h3" title="Props" id="Curious-props">
+        <HashSection tag="h4" title="children" id="Curious-children">
           <p>
             A render-invoked function that returns a React element. This
             function will receive an object with <IJS>router</IJS>,{" "}

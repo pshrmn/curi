@@ -9,14 +9,20 @@ import {
   Note
 } from "../../../../components/package/common";
 
-export const ActiveAPIMeta = {
+export const meta = {
   title: <Cmp>Active</Cmp>,
-  hash: "Active"
+  hash: "Active",
+  children: [
+    {
+      title: "Props",
+      hash: "Active-props"
+    }
+  ]
 };
 
 export function ActiveAPI() {
   return (
-    <HashSection title={ActiveAPIMeta.title} id={ActiveAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <Cmp>Active</Cmp> component is used to render based on whether or
         not a route is "active" (its name and params match the current

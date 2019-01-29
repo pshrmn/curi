@@ -7,14 +7,14 @@ import {
   Cmp
 } from "../../../../components/package/common";
 
-export const LinkAPIMeta = {
-  title: "<Cmp>curi-link</Cmp>",
+export const meta = {
+  title: <Cmp>curi-link</Cmp>,
   hash: "link"
 };
 
 export function LinkAPI() {
   return (
-    <HashSection title={LinkAPIMeta.title} id={LinkAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <Cmp>curi-link</Cmp> component will render an anchor (<Cmp>a</Cmp>)
         element.

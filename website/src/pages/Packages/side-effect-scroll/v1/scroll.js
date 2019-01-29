@@ -2,14 +2,14 @@ import React from "react";
 
 import { HashSection, CodeBlock } from "../../../../components/package/common";
 
-export const ScrollAPIMeta = {
+export const meta = {
   title: "scrollEffect",
   hash: "scrollEffect"
 };
 
 export function ScrollAPI() {
   return (
-    <HashSection title={ScrollAPIMeta.title} id={ScrollAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <CodeBlock>
         {`import { curi } from '@curi/router';
 import scroll from '@curi/side-effect-scroll';

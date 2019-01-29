@@ -9,14 +9,14 @@ import {
   ScrollableTable
 } from "../../../../components/package/common";
 
-export const CuriAPIMeta = {
+export const meta = {
   title: "curi",
   hash: "curi"
 };
 
 export function CuriAPI() {
   return (
-    <HashSection title={CuriAPIMeta.title} id={CuriAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <IJS>curi</IJS> export is a function to create a router. It has two
         required arguments: a <IJS>history</IJS> object and a <IJS>routes</IJS>{" "}

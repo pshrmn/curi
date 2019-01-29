@@ -4,14 +4,32 @@ import {
   About,
   APIBlock,
   IJS,
-  Note
+  Note,
+  PageMenu
 } from "../../../../components/package/common";
-import { PrefetchAPI } from "./prefetch";
+import { PrefetchAPI, meta as prefetchMeta } from "./prefetch";
+
+const contents = [
+  {
+    title: "Installation",
+    hash: "installation"
+  },
+  {
+    title: "About",
+    hash: "about"
+  },
+  {
+    title: "API",
+    hash: "API",
+    children: [prefetchMeta]
+  }
+];
 
 export default class RoutePrefetchPkg extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
+        <PageMenu contents={contents} />
         <About>
           <p>
             The prefetch route interaction can be used fetch data for a route

@@ -7,14 +7,14 @@ import {
   ScrollableTable
 } from "../../../../components/package/common";
 
-export const AncestorsAPIMeta = {
+export const meta = {
   title: "ancestors",
   hash: "ancestors"
 };
 
 export function AncestorsAPI() {
   return (
-    <HashSection title={AncestorsAPIMeta.title} id={AncestorsAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         A function to create the ancestors route interaction. When you create
         your router, the result is passed to the router using the `route`

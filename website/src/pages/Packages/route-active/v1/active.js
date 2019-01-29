@@ -7,14 +7,14 @@ import {
   ScrollableTable
 } from "../../../../components/package/common";
 
-export const ActiveAPIMeta = {
+export const meta = {
   title: "active",
   hash: "active"
 };
 
 export function ActiveAPI() {
   return (
-    <HashSection title={ActiveAPIMeta.title} id={ActiveAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         A function to create the active route interaction. When you create your
         router, the result is passed to the router using the `route` option,

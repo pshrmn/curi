@@ -3,15 +3,31 @@ import React from "react";
 import {
   About,
   APIBlock,
-  HashSection,
-  CodeBlock
+  PageMenu
 } from "../../../../components/package/common";
-import { ScrollAPI } from "./scroll";
+import { ScrollAPI, meta as scrollMeta } from "./scroll";
+
+const contents = [
+  {
+    title: "Installation",
+    hash: "installation"
+  },
+  {
+    title: "About",
+    hash: "about"
+  },
+  {
+    title: "API",
+    hash: "API",
+    children: [scrollMeta]
+  }
+];
 
 export default class SideEffectScrollPkg extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
+        <PageMenu contents={contents} />
         <About>
           <p>
             When Curi is running in a browser, it relies on the{" "}

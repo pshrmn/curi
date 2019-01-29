@@ -7,14 +7,20 @@ import {
   Cmp
 } from "../../../../components/package/common";
 
-export const NavigatingAPIMeta = {
+export const meta = {
   title: <Cmp>Navigating</Cmp>,
-  hash: "Navigating"
+  hash: "Navigating",
+  children: [
+    {
+      title: "Props",
+      hash: "Navigating-props"
+    }
+  ]
 };
 
 export function NavigatingAPI() {
   return (
-    <HashSection title={NavigatingAPIMeta.title} id={NavigatingAPIMeta.hash}>
+    <HashSection title={meta.title} id={meta.hash}>
       <p>
         The <Cmp>Navigating</Cmp> component lets you know when the application
         is navigating and let users cancel the navigation. Its{" "}
