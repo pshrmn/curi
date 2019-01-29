@@ -9,7 +9,7 @@ import {
 } from "../../../../components/package/common";
 
 export const meta = {
-  title: <IJS>curiProvider()</IJS>,
+  title: "curiProvider()",
   hash: "curiProvider",
   children: [
     {

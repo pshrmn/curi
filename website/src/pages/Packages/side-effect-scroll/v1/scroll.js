@@ -3,7 +3,7 @@ import React from "react";
 import { HashSection, CodeBlock } from "../../../../components/package/common";
 
 export const meta = {
-  title: "scrollEffect",
+  title: "scrollEffect()",
   hash: "scrollEffect"
 };
 

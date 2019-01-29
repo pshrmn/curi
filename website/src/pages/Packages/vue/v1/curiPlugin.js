@@ -9,7 +9,7 @@ import {
 
 export const meta = {
   title: "CuriPlugin",
-  hash: "curiPlugin"
+  hash: "CuriPlugin"
 };
 
 export function CuriPluginAPI() {

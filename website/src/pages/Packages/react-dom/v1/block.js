@@ -8,7 +8,7 @@ import {
 } from "../../../../components/package/common";
 
 export const meta = {
-  title: <Cmp>Block</Cmp>,
+  title: "<Block>",
   hash: "Block",
   children: [
     {

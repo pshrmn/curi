@@ -8,6 +8,11 @@ import { color, screen } from "../../constants/styles";
 const allSectionCSS = css`
   margin-top: 15px;
 
+  p {
+    margin: 0 0 25px;
+    font-size: 0.8em;
+  }
+
   .aside {
     padding: 5px 10px;
     border-left: 2px solid $border-green;
@@ -28,13 +33,13 @@ const sectionCSS = css`
   ${allSectionCSS}
 `;
 
-export function Plain({
+export function PlainSection({
   children,
   wrapper: Wrapper = "div",
   className = "section"
 }) {
   return (
-    <Wrapper css={sectionCSS} className={className} id={id}>
+    <Wrapper css={sectionCSS} className={className}>
       {children}
     </Wrapper>
   );
@@ -42,11 +47,6 @@ export function Plain({
 
 const hashSectionCSS = css`
   ${allSectionCSS}
-
-  p {
-    margin: 0 0 25px;
-    font-size: 0.8em;
-  }
 
   .header-link {
     text-decoration: none;

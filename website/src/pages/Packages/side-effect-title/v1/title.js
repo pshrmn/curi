@@ -8,7 +8,7 @@ import {
 } from "../../../../components/package/common";
 
 export const meta = {
-  title: "titleEffect",
+  title: "titleEffect()",
   hash: "titleEffect"
 };
 

@@ -12,14 +12,26 @@ const StyledPage = styled(Page)`
   }
 `;
 
+const StyledBase = styled("div")`
+  @media only screen and (min-width: ${screen.medium}) {
+    margin-left: 250px;
+  }
+`;
+
 const StyledMenu = styled("div")`
-  background: ${color.lightGray};
-  padding: 25px;
+  display: none;
 
   @media only screen and (min-width: ${screen.medium}) {
-    width: 250px;
+    background: ${color.lightGray};
+    display: block;
+    position: fixed;
+    top: 50px;
+    bottom: 0px;
+    overflow: auto;
+
+    flex: 0 0;
     order: -1;
-    flex-shrink: 0;
+    padding: 25px;
     margin-right: 25px;
   }
 `;
@@ -28,17 +40,19 @@ export default function PackagePage({ response }) {
   const { component: Component, contents } = response.data.content;
   return (
     <StyledPage>
-      <BasePackage
-        name={response.data.name}
-        params={response.params}
-        versions={response.data.versions}
-        latest={response.data.latest}
-        globalName={response.data.globalName}
-        script={response.data.script}
-        contents={contents}
-      >
-        <Component />
-      </BasePackage>
+      <StyledBase>
+        <BasePackage
+          name={response.data.name}
+          params={response.params}
+          versions={response.data.versions}
+          latest={response.data.latest}
+          globalName={response.data.globalName}
+          script={response.data.script}
+          contents={contents}
+        >
+          <Component />
+        </BasePackage>
+      </StyledBase>
       <StyledMenu>
         <PageMenu contents={contents} />
       </StyledMenu>

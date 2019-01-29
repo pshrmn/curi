@@ -9,7 +9,7 @@ import {
 } from "../../../../components/package/common";
 
 export const meta = {
-  title: <IJS>curi-focus</IJS>,
+  title: "<curi-focus>",
   hash: "focus"
 };
 

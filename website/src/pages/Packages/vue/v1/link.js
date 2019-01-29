@@ -8,7 +8,7 @@ import {
 } from "../../../../components/package/common";
 
 export const meta = {
-  title: <Cmp>curi-link</Cmp>,
+  title: "<curi-link>",
   hash: "link"
 };
 

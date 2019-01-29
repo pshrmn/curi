@@ -5,6 +5,7 @@ import { screen, color } from "../../constants/styles";
 
 const StyledMain = styled("main")`
   width: 100vw;
+  max-width: 100%;
   padding: 10px 10px 0;
   margin-bottom: 20px;
 
@@ -15,8 +16,6 @@ const StyledMain = styled("main")`
   @media only screen and (min-width: ${screen.medium}) {
     padding: 50px 0 0;
     margin-bottom: 0;
-
-    max-width: 100%;
   }
 `;
 

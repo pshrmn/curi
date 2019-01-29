@@ -8,7 +8,7 @@ import {
 } from "../../../../components/package/common";
 
 export const meta = {
-  title: <Cmp>curi-block</Cmp>,
+  title: "<curi-block>",
   hash: "block"
 };
 

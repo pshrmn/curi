@@ -3,7 +3,7 @@ import { Link } from "@curi/react-dom";
 import styled from "@emotion/styled";
 
 const StyledDiv = styled("div")`
-  position: fixed;
+  width: 150px;
 
   p {
     margin: 0;
@@ -11,16 +11,16 @@ const StyledDiv = styled("div")`
 
   a {
     text-decoration: none;
+    display: block;
   }
 
   ol {
-    padding-left: 15px;
+    padding-left: 0;
     margin-top: 0;
-
+    list-style-type: none;
     ol {
-      ol {
-        list-style-type: lower-roman;
-      }
+      padding-left: 15px;
+      font-size: 0.9em;
     }
   }
 `;

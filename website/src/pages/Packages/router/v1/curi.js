@@ -10,7 +10,7 @@ import {
 } from "../../../../components/package/common";
 
 export const meta = {
-  title: "curi",
+  title: "curi()",
   hash: "curi"
 };
 

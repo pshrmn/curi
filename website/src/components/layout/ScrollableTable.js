@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const ScrollableContainer = styled("div")`
-  overflow-x: scroll;
+  overflow-x: auto;
 `;
 
 export default function ScrollableTable(props) {

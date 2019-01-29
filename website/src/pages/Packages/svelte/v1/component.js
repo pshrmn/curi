@@ -10,10 +10,7 @@ export default class SveltePkg extends React.PureComponent {
     return (
       <React.Fragment>
         <About>
-          <p>
-            This package enables you to use Curi alongside Svelte.{" "}
-            <strong>This package relies on the Svelte store.</strong>
-          </p>
+          <p>This package enables you to use Curi alongside Svelte.</p>
           <p>
             For more information on using Curi with Svelte, please check out the{" "}
             <Link name="Guide" params={{ slug: "svelte" }}>

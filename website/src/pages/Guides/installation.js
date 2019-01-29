@@ -1,6 +1,11 @@
 import React from "react";
 
-import { HashSection, CodeBlock, IJS } from "../../components/guide/common";
+import {
+  HashSection,
+  PlainSection,
+  CodeBlock,
+  IJS
+} from "../../components/guide/common";
 
 const meta = {
   title: "Installation"
@@ -9,28 +14,30 @@ const meta = {
 export default function InstallationGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        Every application that uses Curi needs to install is{" "}
-        <IJS>@curi/router</IJS>.
-      </p>
+        <p>
+          Every application that uses Curi needs to install is{" "}
+          <IJS>@curi/router</IJS>.
+        </p>
 
-      <p>
-        You will also need a Hickory package (<IJS>@hickory/browser</IJS>,{" "}
-        <IJS>@hickory/hash</IJS>, or <IJS>@hickory/in-memory</IJS>). Which
-        package you need depends on the application, but the browser package is
-        best for most websites.
-      </p>
+        <p>
+          You will also need a Hickory package (<IJS>@hickory/browser</IJS>,{" "}
+          <IJS>@hickory/hash</IJS>, or <IJS>@hickory/in-memory</IJS>). Which
+          package you need depends on the application, but the browser package
+          is best for most websites.
+        </p>
 
-      <CodeBlock lang="bash">
-        npm install @hickory/browser @curi/router
-      </CodeBlock>
+        <CodeBlock lang="bash">
+          npm install @hickory/browser @curi/router
+        </CodeBlock>
 
-      <p>
-        These packages can also be loaded from{" "}
-        <a href="https://unpkg.com">Unpkg</a>.
-      </p>
+        <p>
+          These packages can also be loaded from{" "}
+          <a href="https://unpkg.com">Unpkg</a>.
+        </p>
+      </PlainSection>
 
       <CodeBlock lang="markup">
         {`<script

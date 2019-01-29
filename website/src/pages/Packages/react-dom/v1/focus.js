@@ -9,7 +9,7 @@ import {
 } from "../../../../components/package/common";
 
 export const meta = {
-  title: <Cmp>Focus</Cmp>,
+  title: "<Focus>",
   hash: "Focus",
   children: [
     {

@@ -9,7 +9,7 @@ import {
 } from "../../../../components/package/common";
 
 export const meta = {
-  title: "prefetch",
+  title: "prefetch()",
   hash: "prefetch"
 };
 
