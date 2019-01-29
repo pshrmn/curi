@@ -5,6 +5,7 @@ import Version from "./Version";
 import Installation from "./Installation";
 import GitHubLink from "./GitHubLink";
 import NPMLink from "./NPMLink";
+import PageMenu from "../layout/PageMenu";
 
 const StyledPackageInfo = styled("div")`
   display: flex;
@@ -34,7 +35,8 @@ export default function BasePackage({
   latest,
   globalName,
   children,
-  script = true
+  script = true,
+  contents
 }) {
   if (name !== undefined) {
     const major = params.version !== undefined ? params.version : latest;
@@ -47,6 +49,7 @@ export default function BasePackage({
           <GitHubLink name={name} dir={getDir(name)} />
           <NPMLink name={name} />
         </StyledPackageInfo>
+        <PageMenu contents={contents} />
         <Installation
           name={name}
           version={currentVersion}

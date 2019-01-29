@@ -147,10 +147,7 @@ export default prepareRoutes([
             return pkg
               ? pkg
                   .import(params.version)
-                  .then(
-                    preferDefault,
-                    catchImportError(`package: ${params.package}`)
-                  )
+                  .catch(catchImportError(`package: ${params.package}`))
               : import(/* webpackChunkName: 'package404' */ "./pages/Packages/404.js").then(
                   preferDefault,
                   catchImportError(`package 404`)

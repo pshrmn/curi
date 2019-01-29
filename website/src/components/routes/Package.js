@@ -4,7 +4,7 @@ import Page from "../layout/Page";
 import BasePackage from "../package";
 
 export default function PackagePage({ response }) {
-  const { content: Content } = response.data;
+  const { component: Component, contents } = response.data.content;
   return (
     <Page>
       <BasePackage
@@ -14,8 +14,9 @@ export default function PackagePage({ response }) {
         latest={response.data.latest}
         globalName={response.data.globalName}
         script={response.data.script}
+        contents={contents}
       >
-        <Content />
+        <Component />
       </BasePackage>
     </Page>
   );
