@@ -5,7 +5,8 @@ import {
   APIBlock,
   HashSection,
   CodeBlock
-} from "../../../components/package/common";
+} from "../../../../components/package/common";
+import { ScrollAPI } from "./scroll";
 
 export default class SideEffectScrollPkg extends React.PureComponent {
   render() {
@@ -31,16 +32,7 @@ export default class SideEffectScrollPkg extends React.PureComponent {
         </About>
 
         <APIBlock>
-          <HashSection tag="h3" title="scrollEffect" id="scrollEffect">
-            <CodeBlock>
-              {`import { curi } from '@curi/router';
-import scroll from '@curi/side-effect-scroll';
-
-const router = curi(history, routes, {
-  sideEffects: [scroll()]
-});`}
-            </CodeBlock>
-          </HashSection>
+          <ScrollAPI />
         </APIBlock>
       </React.Fragment>
     );
