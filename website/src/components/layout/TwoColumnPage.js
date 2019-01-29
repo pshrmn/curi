@@ -7,8 +7,8 @@ const StyledPage = styled("div")`
   position: relative;
 
   @media only screen and (min-width: ${screen.medium}) {
-    width: ${screen.medium};
-    margin: 0 auto;
+    display: flex;
+    flex-flow: row nowrap;
   }
 `;
 

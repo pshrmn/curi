@@ -17,8 +17,10 @@ const StyledCodeBlock = styled("div")`
 
   @media only screen and (min-width: ${screen.medium}) {
     font-size: 1em;
+
     code {
       min-width: 200px;
+      white-space: pre-wrap;
     }
   }
 `;

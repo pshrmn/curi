@@ -20,7 +20,7 @@ const allSectionCSS = css`
   }
 
   @media only screen and (min-width: ${screen.medium}) {
-    max-width: 800px;
+    max-width: ${screen.medium};
   }
 `;
 

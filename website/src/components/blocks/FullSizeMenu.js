@@ -14,6 +14,7 @@ const StyledHeader = styled("header")`
   @media only screen and (min-width: ${screen.medium}) {
     display: block;
     width: 100vw;
+    max-width: 100%;
     background: ${color.purple};
     padding: 0;
     position: fixed;
@@ -27,9 +28,6 @@ const StyledHeader = styled("header")`
 `;
 
 const StyledNav = styled("nav")`
-  width: ${screen.medium};
-  margin: 0 auto;
-
   color: ${color.lightGray};
 
   ul {
@@ -83,7 +81,6 @@ const StyledDropdown = styled("div")`
       flex-flow: row wrap;
       justify-content: space-around;
       width: ${screen.medium};
-      margin: 0 auto;
     }
 
     a {

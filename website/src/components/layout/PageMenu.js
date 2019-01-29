@@ -3,6 +3,8 @@ import { Link } from "@curi/react-dom";
 import styled from "@emotion/styled";
 
 const StyledDiv = styled("div")`
+  position: fixed;
+
   p {
     margin: 0;
   }
@@ -45,7 +47,6 @@ function Group({ items }) {
 export default function PageMenu({ contents }) {
   return (
     <StyledDiv>
-      <p>Contents:</p>
       <Group items={contents} />
     </StyledDiv>
   );
