@@ -1,8 +1,8 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  PlainSection,
+  HashSection,
   CodeBlock,
   Note,
   IJS
@@ -12,12 +12,27 @@ const meta = {
   title: "Code Splitting"
 };
 
-export default function CodeSplittingGuide() {
+const noSplitMeta = {
+  title: "An app without code splitting",
+  hash: "no-split"
+};
+const importMeta = {
+  title: "import() in resolve",
+  hash: "import"
+};
+const otherMeta = {
+  title: "Other Approaches",
+  hash: "other"
+};
+
+const contents = [noSplitMeta, importMeta, otherMeta];
+
+function CodeSplittingGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <Explanation>
         <p>
           If you are bundling an application with a lot of routes, users of your
           application may be downloading a lot of unnecessary content for the
@@ -28,19 +43,20 @@ export default function CodeSplittingGuide() {
         </p>
 
         <Note>
-          This guide assumes that you are using Webpack 2+ to bundle your
-          application.
-        </Note>
-      </Explanation>
-
-      <Section title="An app without code splitting" id="no-split">
-        <Explanation>
           <p>
-            Let's start out by describing our application's routes without code
-            splitting. We will import each route's component from the files
-            where they are defined.
+            This guide assumes that you are using Webpack 2+ to bundle your
+            application.
           </p>
-        </Explanation>
+        </Note>
+      </PlainSection>
+
+      <HashSection meta={noSplitMeta}>
+        <p>
+          Let's start out by describing our application's routes without code
+          splitting. We will import each route's component from the files where
+          they are defined.
+        </p>
+
         <CodeBlock>
           {`import Home from './components/Home';
 import Contact from './components/Contact';
@@ -78,42 +94,45 @@ const routes = prepareRoutes([
   }
 ]);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="import() in resolve" id="import">
-        <Explanation>
-          <p>
-            Instead of having static imports, we will use the{" "}
-            <IJS>import()</IJS> function to import our modules. We will import
-            our components by adding a property to a route's <IJS>resolve</IJS>{" "}
-            object. The property name for the function is how we will access the
-            resolved data in the route's <IJS>response()</IJS> function.
-          </p>
-          <p>
-            <IJS>resolve</IJS> functions are called every time a route matches.
-            However, <IJS>import()</IJS> calls automatically re-use the results
-            of a previous call, so we do not have to worry about extra network
-            requests.
-          </p>
-          <p>
-            Here we will name the <IJS>resolve</IJS> function for importing a
-            component <IJS>body</IJS>, since it will be set as the response's{" "}
-            <IJS>body</IJS> property.
-          </p>
-          <p>
-            <IJS>resolve.body()</IJS> should return a Promise;{" "}
-            <IJS>import()</IJS>, conveniently, returns a Promise. In our{" "}
-            <IJS>response()</IJS> function, instead of referencing values
-            imported at the top of the file, we can reference the result of the{" "}
-            <IJS>resolve.body()</IJS> function using <IJS>resolved.body</IJS>.
-          </p>
-          <p>
-            <IJS>import()</IJS> resolves with a module object. If the component
-            is a default export (<IJS>export default MyComponent</IJS>), we can
-            access the component through the imported module object's{" "}
-            <IJS>default</IJS> property.
-          </p>
-        </Explanation>
+      <HashSection meta={importMeta}>
+        <p>
+          Instead of having static imports, we will use the <IJS>import()</IJS>{" "}
+          function to import our modules. We will import our components by
+          adding a property to a route's <IJS>resolve</IJS> object. The property
+          name for the function is how we will access the resolved data in the
+          route's <IJS>response()</IJS> function.
+        </p>
+
+        <p>
+          <IJS>resolve</IJS> functions are called every time a route matches.
+          However, <IJS>import()</IJS> calls automatically re-use the results of
+          a previous call, so we do not have to worry about extra network
+          requests.
+        </p>
+
+        <p>
+          Here we will name the <IJS>resolve</IJS> function for importing a
+          component <IJS>body</IJS>, since it will be set as the response's{" "}
+          <IJS>body</IJS> property.
+        </p>
+
+        <p>
+          <IJS>resolve.body()</IJS> should return a Promise; <IJS>import()</IJS>
+          , conveniently, returns a Promise. In our <IJS>response()</IJS>{" "}
+          function, instead of referencing values imported at the top of the
+          file, we can reference the result of the <IJS>resolve.body()</IJS>{" "}
+          function using <IJS>resolved.body</IJS>.
+        </p>
+
+        <p>
+          <IJS>import()</IJS> resolves with a module object. If the component is
+          a default export (<IJS>export default MyComponent</IJS>), we can
+          access the component through the imported module object's{" "}
+          <IJS>default</IJS> property.
+        </p>
+
         <CodeBlock>
           {`const routes = prepareRoutes([
   {
@@ -165,16 +184,17 @@ const routes = prepareRoutes([
   }
 ]);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Other Approaches" id="other">
+      <HashSection meta={otherMeta}>
         <p>
           The approaches taken here are not the only way to do code splitting.
           Another approach is to skip the <IJS>resolve</IJS> method and do code
           splitting at other points in your application (e.g.{" "}
           <a href="https://github.com/jamiebuilds/react-loadable">
             <IJS>react-loadable</IJS>
-          </a>).
+          </a>
+          ).
         </p>
         <p>
           Whatever path you decide to go, hopefully this has shown you that
@@ -183,7 +203,9 @@ const routes = prepareRoutes([
           bundle size, <IJS>resolve</IJS> functions are a good way to accomplish
           this.
         </p>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }
+
+export { CodeSplittingGuide as component, contents };

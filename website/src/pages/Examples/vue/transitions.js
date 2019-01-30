@@ -1,36 +1,46 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   CodeBlock,
   IJS,
   Cmp,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Transitions"
 };
 
-export default function TransitionsExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function TransitionsExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            Route transitions can be performed using Vue's <Cmp>transition</Cmp>{" "}
-            component.
-          </p>
-          <p>
-            Transitions generally need a key to identify when to perform a
-            transition. The location's <IJS>pathname</IJS> is generally ideal
-            for this.
-          </p>
-        </Explanation>
+      <HashSection meta={explanationMeta}>
+        <p>
+          Route transitions can be performed using Vue's <Cmp>transition</Cmp>{" "}
+          component.
+        </p>
+
+        <p>
+          Transitions generally need a key to identify when to perform a
+          transition. The location's <IJS>pathname</IJS> is generally ideal for
+          this.
+        </p>
 
         <CodeBlock lang="html">
           {`<transition>
@@ -40,13 +50,15 @@ export default function TransitionsExample() {
   />
 </transition>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/transitions" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="vue/transitions" />
     </React.Fragment>
   );
 }
+
+export { TransitionsExample as component, contents };

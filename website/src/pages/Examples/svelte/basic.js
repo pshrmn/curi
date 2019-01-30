@@ -1,35 +1,46 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Basics"
 };
 
-export default function BasicExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function BasicExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            Curi's Svelte implementation relies on the Svelte store to access
-            route related data throughout the application.
-          </p>
-        </Explanation>
-      </Section>
+      <HashSection meta={explanationMeta}>
+        <p>
+          Curi's Svelte implementation relies on the Svelte store to access
+          route related data throughout the application.
+        </p>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/basic" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="svelte/basic" />
     </React.Fragment>
   );
 }
+
+export { BasicExample as component, contents };

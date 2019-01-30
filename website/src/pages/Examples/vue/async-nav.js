@@ -1,31 +1,40 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   CodeBlock,
   IJS,
   Cmp,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Async Navigation"
 };
 
-export default function AsyncNavExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function AsyncNavExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            Use the <Cmp>curi-link</Cmp>'s <IJS>slot</IJS> as scoped-slot so you
-            can know whether or not the link is currently navigating.
-          </p>
-        </Explanation>
+      <HashSection meta={explanationMeta}>
+        <p>
+          Use the <Cmp>curi-link</Cmp>'s <IJS>slot</IJS> as scoped-slot so you
+          can know whether or not the link is currently navigating.
+        </p>
 
         <CodeBlock lang="jsx">
           {`<curi-link to="Movie" :params="{ id: 'some_movie' }">
@@ -35,13 +44,15 @@ export default function AsyncNavExample() {
   </template>
 </curi-link>`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/async-nav" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="vue/async-nav" />
     </React.Fragment>
   );
 }
+
+export { AsyncNavExample as component, contents };

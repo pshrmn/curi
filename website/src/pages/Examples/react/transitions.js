@@ -1,37 +1,46 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   CodeBlock,
   IJS,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Transitions"
 };
 
-export default function TransitionsExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function TransitionsExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            This example uses <IJS>react-transition-group</IJS> to animate
-            navigation transitions.
-          </p>
+      <HashSection meta={explanationMeta}>
+        <p>
+          This example uses <IJS>react-transition-group</IJS> to animate
+          navigation transitions.
+        </p>
 
-          <p>
-            The <IJS>location.pathname</IJS> from the <IJS>response</IJS> is
-            used to uniquely identify the content. The <IJS>pathname</IJS> is
-            used instead of the <IJS>key</IJS> so that navigating to the same
-            pathname as the current pathname does not cause a transition.
-          </p>
-        </Explanation>
+        <p>
+          The <IJS>location.pathname</IJS> from the <IJS>response</IJS> is used
+          to uniquely identify the content. The <IJS>pathname</IJS> is used
+          instead of the <IJS>key</IJS> so that navigating to the same pathname
+          as the current pathname does not cause a transition.
+        </p>
 
         <CodeBlock lang="jsx">
           {`function render({ response }) {
@@ -49,13 +58,15 @@ export default function TransitionsExample() {
   );
 }`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/transitions" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/transitions" />
     </React.Fragment>
   );
 }
+
+export { TransitionsExample as component, contents };

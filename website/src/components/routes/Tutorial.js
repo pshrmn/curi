@@ -1,12 +1,11 @@
 import React from "react";
 
-import TutorialTemplate from "../templates/Tutorial";
+import FancyPage from "../layout/FancyPage";
+import PageMenu from "../layout/PageMenu";
 
-export default function TutorialPage({ response }) {
-  const Content = response.data.content;
+export default function ExamplePage({ response }) {
+  const { component: Component, contents } = response.data.content;
   return (
-    <TutorialTemplate>
-      <Content />
-    </TutorialTemplate>
+    <FancyPage base={<Component />} menu={<PageMenu contents={contents} />} />
   );
 }

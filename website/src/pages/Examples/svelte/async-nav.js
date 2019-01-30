@@ -1,37 +1,48 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   Cmp,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Basics"
 };
 
-export default function BasicExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function AsyncExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            This example uses the <Cmp>Navigating</Cmp> component to render a
-            button when there is an active asynchronous navigation. Clicking the
-            button will cancel the navigation.
-          </p>
-        </Explanation>
-      </Section>
+      <HashSection meta={explanationMeta}>
+        <p>
+          This example uses the <Cmp>Navigating</Cmp> component to render a
+          button when there is an active asynchronous navigation. Clicking the
+          button will cancel the navigation.
+        </p>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/async-nav" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="svelte/async-nav" />
     </React.Fragment>
   );
 }
+
+export { AsyncExample as component, contents };

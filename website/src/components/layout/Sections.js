@@ -5,8 +5,13 @@ import { jsx, css } from "@emotion/core";
 
 import { color, screen } from "../../constants/styles";
 
-const sectionCSS = css`
+const allSectionCSS = css`
   margin-top: 15px;
+
+  p {
+    margin: 0 0 25px;
+    font-size: 0.8em;
+  }
 
   .aside {
     padding: 5px 10px;
@@ -19,6 +24,34 @@ const sectionCSS = css`
     }
   }
 
+  @media only screen and (min-width: ${screen.medium}) {
+    max-width: ${screen.medium};
+
+    p {
+      font-size: 1em;
+    }
+  }
+`;
+
+const sectionCSS = css`
+  ${allSectionCSS}
+`;
+
+export function PlainSection({
+  children,
+  wrapper: Wrapper = "div",
+  className = "section"
+}) {
+  return (
+    <Wrapper css={sectionCSS} className={className}>
+      {children}
+    </Wrapper>
+  );
+}
+
+const hashSectionCSS = css`
+  ${allSectionCSS}
+
   .header-link {
     text-decoration: none;
 
@@ -26,16 +59,23 @@ const sectionCSS = css`
       content: "#";
       color: ${color.darkGray};
       margin-left: 5px;
-      display: none;
-    }
-
-    &:hover::after {
-      display: inline-block;
     }
   }
 
   @media only screen and (min-width: ${screen.medium}) {
-    max-width: 800px;
+    p {
+      font-size: 1em;
+    }
+
+    .header-link {
+      &::after {
+        display: none;
+      }
+
+      &:hover::after {
+        display: inline-block;
+      }
+    }
 
     .displaced-header {
       &:before {
@@ -49,20 +89,21 @@ const sectionCSS = css`
   }
 `;
 
-export const Section = ({
-  title,
-  id,
+export function HashSection({
+  meta: { title, hash },
   children,
   tag: Tag = "h2",
   wrapper: Wrapper = "div",
   className = "section"
-}) => (
-  <Wrapper css={sectionCSS} className={className} id={id}>
-    <Tag className="displaced-header">
-      <Link hash={id} forward={{ className: "header-link" }}>
-        {title}
-      </Link>
-    </Tag>
-    {children}
-  </Wrapper>
-);
+}) {
+  return (
+    <Wrapper css={hashSectionCSS} className={className} id={hash}>
+      <Tag className="displaced-header">
+        <Link hash={hash} forward={{ className: "header-link" }}>
+          {title}
+        </Link>
+      </Tag>
+      {children}
+    </Wrapper>
+  );
+}

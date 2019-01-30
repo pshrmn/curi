@@ -1,32 +1,42 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Data Loading"
 };
 
-export default function DataLoadingExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+function DataLoadingExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
-        <Explanation>
-          <p>TBD</p>
-        </Explanation>
-      </Section>
+      <HashSection meta={explanationMeta}>
+        <p>TBD</p>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/data-loading" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/data-loading" />
     </React.Fragment>
   );
 }
+
+export { DataLoadingExample as component, contents };

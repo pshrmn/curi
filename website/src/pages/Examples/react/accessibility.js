@@ -1,37 +1,48 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   Cmp,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Accessibility"
 };
 
-export default function AccessibilityExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function AccessibilityExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            This example demonstrates how to increase the accessibility of an
-            application using the <Cmp>Focus</Cmp> component to handle focus
-            management.
-          </p>
-        </Explanation>
-      </Section>
+      <HashSection meta={explanationMeta}>
+        <p>
+          This example demonstrates how to increase the accessibility of an
+          application using the <Cmp>Focus</Cmp> component to handle focus
+          management.
+        </p>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/accessibility" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/accessibility" />
     </React.Fragment>
   );
 }
+
+export { AccessibilityExample as component, contents };

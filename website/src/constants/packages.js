@@ -12,7 +12,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--router' */
-      `../pages/Packages/router/v1.js`)
+      `../pages/Packages/router/v1/index.js`)
   },
   {
     name: "react-dom",
@@ -28,7 +28,7 @@ const packages = [
         case "v1":
         default:
           return import(/* webpackChunkName: 'package--react-dom-v1' */
-          `../pages/Packages/react-dom/v1.js`);
+          `../pages/Packages/react-dom/v1/index.js`);
       }
     }
   },
@@ -44,7 +44,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--react-native' */
-      `../pages/Packages/react-native/v1.js`)
+      `../pages/Packages/react-native/v1/index.js`)
   },
   {
     name: "svelte",
@@ -58,7 +58,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--svelte' */
-      `../pages/Packages/svelte/v1.js`)
+      `../pages/Packages/svelte/v1/index.js`)
   },
   {
     name: "vue",
@@ -72,7 +72,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--vue' */
-      `../pages/Packages/vue/v1.js`)
+      `../pages/Packages/vue/v1/index.js`)
   },
   {
     name: "route-active",
@@ -86,7 +86,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--route-active' */
-      `../pages/Packages/route-active/v1.js`)
+      `../pages/Packages/route-active/v1/index.js`)
   },
   {
     name: "route-ancestors",
@@ -100,7 +100,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--route-ancestors' */
-      `../pages/Packages/route-ancestors/v1.js`)
+      `../pages/Packages/route-ancestors/v1/index.js`)
   },
   {
     name: "route-prefetch",
@@ -114,7 +114,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--route-prefetch' */
-      `../pages/Packages/route-prefetch/v1.js`)
+      `../pages/Packages/route-prefetch/v1/index.js`)
   },
   {
     name: "side-effect-aria-live",
@@ -128,7 +128,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--side-effect-aria-live' */
-      `../pages/Packages/side-effect-aria-live/v1.js`)
+      `../pages/Packages/side-effect-aria-live/v1/index.js`)
   },
   {
     name: "side-effect-scroll",
@@ -142,7 +142,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--side-effect-scroll' */
-      `../pages/Packages/side-effect-scroll/v1.js`)
+      `../pages/Packages/side-effect-scroll/v1/index.js`)
   },
   {
     name: "side-effect-title",
@@ -156,7 +156,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--side-effect-title' */
-      `../pages/Packages/side-effect-title/v1.js`)
+      `../pages/Packages/side-effect-title/v1/index.js`)
   },
   {
     name: "static",
@@ -170,7 +170,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--static' */
-      `../pages/Packages/static/v1.js`)
+      `../pages/Packages/static/v1/index.js`)
   },
   {
     name: "helpers",
@@ -184,7 +184,7 @@ const packages = [
     },
     import: () =>
       import(/* webpackChunkName: 'package--helpers' */
-      `../pages/Packages/helpers/v1.js`)
+      `../pages/Packages/helpers/v1/index.js`)
   }
 ];
 

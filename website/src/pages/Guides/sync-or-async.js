@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  Section,
-  Explanation,
+  PlainSection,
+  HashSection,
   CodeBlock,
   IJS
 } from "../../components/guide/common";
@@ -12,12 +12,19 @@ const meta = {
   title: "Sync or Async"
 };
 
-export default function SyncAndAsyncGuide() {
+const thinkMeta = {
+  title: "Async Things to Think About",
+  hash: "think"
+};
+
+const contents = [thinkMeta];
+
+function SyncAndAsyncGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <Explanation>
         <p>Curi can have synchronous and asynchronous routes.</p>
 
         <p>
@@ -33,9 +40,9 @@ export default function SyncAndAsyncGuide() {
           By default, routes are synchronous. If a route has any functions in
           its <IJS>resolve</IJS> object, it becomes async.
         </p>
-      </Explanation>
-      <CodeBlock>
-        {`// sync
+
+        <CodeBlock>
+          {`// sync
 { name: "Home", path: "" },
 
 // async
@@ -47,28 +54,26 @@ export default function SyncAndAsyncGuide() {
     body: () => import("./components/User"),
   }
 }`}
-      </CodeBlock>
+        </CodeBlock>
+      </PlainSection>
 
-      <Section title="Async Things to Think About" id="think">
-        <Explanation>
-          <p>
-            For the most part, it shouldn't matter to you (or your users)
-            whether Curi is sync or async, but there are a couple of things that
-            you should be aware of when it comes to async matching.
-          </p>
-        </Explanation>
+      <HashSection meta={thinkMeta}>
+        <p>
+          For the most part, it shouldn't matter to you (or your users) whether
+          Curi is sync or async, but there are a couple of things that you
+          should be aware of when it comes to async matching.
+        </p>
 
         <ol>
           <li>
-            <Explanation>
-              <p>
-                If the initial route that matches is async and you try to render
-                immediately, the <IJS>response</IJS> will be <IJS>null</IJS>.
-                You can wait to render until the initial response is ready with{" "}
-                <IJS>router.oncd()</IJS>. The function you pass to that will be
-                called one time, once the initial response is ready.
-              </p>
-            </Explanation>
+            <p>
+              If the initial route that matches is async and you try to render
+              immediately, the <IJS>response</IJS> will be <IJS>null</IJS>. You
+              can wait to render until the initial response is ready with{" "}
+              <IJS>router.oncd()</IJS>. The function you pass to that will be
+              called one time, once the initial response is ready.
+            </p>
+
             <CodeBlock>
               {`const router = curi(history, routes);
 router.once(() => {
@@ -79,25 +84,24 @@ router.once(() => {
             </CodeBlock>
           </li>
           <li>
-            <Explanation>
-              <p>
-                With async routes, there is a delay between when the user clicks
-                a link and when the new response is emitted. During this time,
-                the navigation can be interrupted with a new navigation. Curi
-                handles this internally, but you might want to update your UI
-                after a link/button is clicked to indicate that the next page is
-                loading.
-              </p>
-              <p>
-                You can see an example of this in the{" "}
-                <Link
-                  name="Example"
-                  params={{ category: "react", slug: "data-loading" }}
-                >
-                  Data Loading Example
-                </Link>.
-              </p>
-            </Explanation>
+            <p>
+              With async routes, there is a delay between when the user clicks a
+              link and when the new response is emitted. During this time, the
+              navigation can be interrupted with a new navigation. Curi handles
+              this internally, but you might want to update your UI after a
+              link/button is clicked to indicate that the next page is loading.
+            </p>
+            <p>
+              You can see an example of this in the{" "}
+              <Link
+                name="Example"
+                params={{ category: "react", slug: "data-loading" }}
+              >
+                Data Loading Example
+              </Link>
+              .
+            </p>
+
             <CodeBlock lang="jsx">
               {`<Link
   name="User"
@@ -122,7 +126,9 @@ const router = curi(history, routes, {
             </CodeBlock>
           </li>
         </ol>
-      </Section>
+      </HashSection>
     </React.Fragment>
   );
 }
+
+export { SyncAndAsyncGuide as component, contents };

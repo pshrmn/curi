@@ -1,35 +1,46 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   IJS,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 const meta = {
   title: "Accessibility"
 };
 
-export default function AccessibilityExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function AccessibilityExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            This example demonstrates how to increase the accessibility of an
-            application using the <IJS>curi-focus</IJS> directive.
-          </p>
-        </Explanation>
-      </Section>
+      <HashSection meta={explanationMeta}>
+        <p>
+          This example demonstrates how to increase the accessibility of an
+          application using the <IJS>curi-focus</IJS> directive.
+        </p>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/accessibility" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="vue/accessibility" />
     </React.Fragment>
   );
 }
+
+export { AccessibilityExample as component, contents };

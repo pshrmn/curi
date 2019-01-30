@@ -1,23 +1,26 @@
 import React from "react";
 
-import PackageTemplate from "../templates/Package";
+import FancyPage from "../layout/FancyPage";
+import PageMenu from "../layout/PageMenu";
 import BasePackage from "../package";
-import { InlineJS as IJS } from "../highlight/Inline";
 
 export default function PackagePage({ response }) {
-  const { content: Content } = response.data;
+  const { component: Component, contents } = response.data.content;
   return (
-    <PackageTemplate>
-      <BasePackage
-        name={response.data.name}
-        params={response.params}
-        versions={response.data.versions}
-        latest={response.data.latest}
-        globalName={response.data.globalName}
-        script={response.data.script}
-      >
-        <Content />
-      </BasePackage>
-    </PackageTemplate>
+    <FancyPage
+      base={
+        <BasePackage
+          name={response.data.name}
+          params={response.params}
+          versions={response.data.versions}
+          latest={response.data.latest}
+          globalName={response.data.globalName}
+          script={response.data.script}
+        >
+          <Component />
+        </BasePackage>
+      }
+      menu={<PageMenu contents={contents} />}
+    />
   );
 }

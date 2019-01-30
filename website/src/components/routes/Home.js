@@ -1,12 +1,12 @@
 import React from "react";
 
 import Home from "../../pages/Home";
-import HomeTemplate from "../templates/Home";
+import Page from "../layout/Page";
 
 export default function HomePage() {
   return (
-    <HomeTemplate>
+    <Page>
       <Home />
-    </HomeTemplate>
+    </Page>
   );
 }

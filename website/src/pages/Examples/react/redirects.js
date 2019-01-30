@@ -1,37 +1,46 @@
 import React from "react";
 
 import {
-  Section,
-  Explanation,
+  HashSection,
   CodeBlock,
   IJS,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Redirects"
 };
 
-export default function AuthenticationExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function AuthenticationExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <Section title="Explanation" id="explanation">
-        <Explanation>
-          <p>
-            Sometimes you will want to redirect based on the results of your{" "}
-            <IJS>resolve</IJS> functions. For instance, you might see that a
-            user is not authenticated and shouldn't be able to view a page.
-          </p>
+      <HashSection meta={explanationMeta}>
+        <p>
+          Sometimes you will want to redirect based on the results of your{" "}
+          <IJS>resolve</IJS> functions. For instance, you might see that a user
+          is not authenticated and shouldn't be able to view a page.
+        </p>
 
-          <p>
-            A <IJS>response()</IJS> function can modify the response by setting
-            a <IJS>redirectTo</IJS> property on its return object. Curi will
-            automatically (unless configured not to) redirect to that location.
-          </p>
-        </Explanation>
+        <p>
+          A <IJS>response()</IJS> function can modify the response by setting a{" "}
+          <IJS>redirectTo</IJS> property on its return object. Curi will
+          automatically (unless configured not to) redirect to that location.
+        </p>
 
         <CodeBlock lang="javascript">
           {`const routes = prepareRoutes([
@@ -56,13 +65,15 @@ export default function AuthenticationExample() {
   }
 ]);`}
         </CodeBlock>
-      </Section>
+      </HashSection>
 
-      <Section title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/redirects" />
-      </Section>
+      </HashSection>
 
       <OnGithub path="react/redirects" />
     </React.Fragment>
   );
 }
+
+export { AuthenticationExample as component, contents };

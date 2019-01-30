@@ -1,12 +1,11 @@
 import React from "react";
 
-import GuideTemplate from "../templates/Guide";
+import FancyPage from "../layout/FancyPage";
+import PageMenu from "../layout/PageMenu";
 
 export default function GuidePage({ response }) {
-  const Content = response.data.content;
+  const { component: Component, contents } = response.data.content;
   return (
-    <GuideTemplate>
-      <Content />
-    </GuideTemplate>
+    <FancyPage base={<Component />} menu={<PageMenu contents={contents} />} />
   );
 }

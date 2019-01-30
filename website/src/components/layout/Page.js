@@ -7,9 +7,8 @@ const StyledPage = styled("div")`
   position: relative;
 
   @media only screen and (min-width: ${screen.medium}) {
-    padding-top: 15px;
-    display: flex;
-    flex-flow: row nowrap;
+    width: ${screen.medium};
+    margin: 0 auto;
   }
 `;
 
