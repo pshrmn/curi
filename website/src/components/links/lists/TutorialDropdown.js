@@ -2,6 +2,7 @@ import React from "react";
 
 import TUTORIAL_API from "../../../constants/tutorials";
 import ActiveLink from "../ActiveLink";
+import Container from "./Container";
 
 const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
@@ -15,14 +16,18 @@ const GroupTutorials = ({ tutorials }) => (
   </ul>
 );
 
-function TutorialLinks() {
+function TutorialLinks({ active }) {
   const groups = TUTORIAL_API.grouped();
-  return Object.keys(groups).map(title => (
-    <div key={title}>
-      <h3>{title}</h3>
-      <GroupTutorials tutorials={groups[title]} />
-    </div>
-  ));
+  return (
+    <Container active={active}>
+      {Object.keys(groups).map(title => (
+        <div key={title}>
+          <h3>{title}</h3>
+          <GroupTutorials tutorials={groups[title]} />
+        </div>
+      ))}
+    </Container>
+  );
 }
 
 export default React.memo(TutorialLinks);

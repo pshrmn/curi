@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  PlainSection,
   About,
   APIBlock,
   IJS,
@@ -24,15 +25,17 @@ export default class RoutePrefetchPkg extends React.PureComponent {
           </p>
         </About>
 
-        <Note>
-          <p>
-            Prefetching <IJS>resolve</IJS> function calls is only beneficial if
-            you cache the results because the function will be re-called when
-            the user navigates to that route. Functions wrapped by the{" "}
-            <IJS>once()</IJS> wrapper (from <IJS>@curi/helpers</IJS>) will
-            automatically re-use the results from their first call.
-          </p>
-        </Note>
+        <PlainSection>
+          <Note>
+            <p>
+              Prefetching <IJS>resolve</IJS> function calls is only beneficial
+              if you cache the results because the function will be re-called
+              when the user navigates to that route. Functions wrapped by the{" "}
+              <IJS>once()</IJS> wrapper (from <IJS>@curi/helpers</IJS>) will
+              automatically re-use the results from their first call.
+            </p>
+          </Note>
+        </PlainSection>
 
         <APIBlock>
           <PrefetchAPI />

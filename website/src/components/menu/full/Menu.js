@@ -20,79 +20,58 @@ const StyledHeader = styled("header")`
     position: fixed;
     z-index: 1;
 
-    .home-link {
+    #home-link {
       font-size: 1.5em;
       color: ${color.brightOrange};
     }
   }
 `;
 
+const FlexList = styled("ul")`
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+`;
+
 const StyledNav = styled("nav")`
   color: ${color.lightGray};
-
-  ul {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: flex-end;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-width: 100%;
-  }
 
   li {
     margin-right: 20px;
     padding: 0;
+
+    &.base > a {
+      color: ${color.lightGray};
+      font-size: 1.1em;
+      display: flex;
+      height: 50px;
+      align-items: center;
+      border-bottom: 3px solid ${color.purple};
+      padding: 0 5px;
+  
+      &:hover {
+        color: ${color.brightOrange};
+      }
+  
+      &.active {
+        color: ${color.brightOrange};
+        border-bottom-color: ${color.brightOrange};
+      }
+  
+      &.activated {
+        color: ${color.borderBlue};
+        border-bottom-color: ${color.borderBlue};
+      }
+    }
+    }
   }
 
   a {
-    color: ${color.lightGray};
-    font-size: 1.1em;
-    text-decoration: none;
-    display: flex;
-    height: 50px;
-    align-items: center;
-    border-bottom: 3px solid ${color.purple};
-    padding: 0 5px;
-
-    &:hover {
-      color: ${color.brightOrange};
-    }
-
-    &.active {
-      color: ${color.brightOrange};
-      border-bottom-color: ${color.brightOrange};
-    }
-
-    &.activated {
-      color: ${color.borderBlue};
-      border-bottom-color: ${color.borderBlue};
-    }
-  }
-`;
-
-const StyledDropdown = styled("div")`
-  @media only screen and (min-width: ${screen.medium}) {
-    background ${color.lightBlue};
-    border-bottom: 2px solid ${color.purple};
-
-    > div {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: space-around;
-      width: ${screen.medium};
-    }
-
-    a {
-      color: ${color.purple};
-      text-decoration: none;
-    }
-
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
+    text-decoration: none;      
   }
 `;
 
@@ -107,7 +86,7 @@ function DropdownLink({ name, text, activated, toggle }) {
       }}
       forward={{
         "data-hide": false,
-        className: activated ? "activated" : ""
+        className: activated ? "activated group" : "group"
       }}
     >
       {text}
@@ -122,28 +101,10 @@ export default class Header extends React.Component {
     this.setState(prevState => {
       if (prevState.group === group) {
         return {
-          group: undefined,
-          Dropdown: undefined
+          group: undefined
         };
       }
-
-      let Dropdown;
-      switch (group) {
-        case "Packages":
-          Dropdown = PackageDropdown;
-          break;
-        case "Guides":
-          Dropdown = GuideDropdown;
-          break;
-        case "Examples":
-          Dropdown = ExampleDropdown;
-          break;
-        case "Tutorials":
-          Dropdown = TutorialDropdown;
-          break;
-      }
-
-      return { group, Dropdown };
+      return { group };
     });
   };
 
@@ -152,7 +113,7 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { group, Dropdown } = this.state;
+    const { group } = this.state;
     return (
       <StyledHeader
         onClick={e => {
@@ -167,60 +128,53 @@ export default class Header extends React.Component {
         }}
       >
         <StyledNav>
-          <ul>
-            <li>
-              <ActiveLink name="Home" forward={{ className: "home-link" }}>
+          <FlexList>
+            <li className="base">
+              <ActiveLink name="Home" forward={{ id: "home-link" }}>
                 Curi
               </ActiveLink>
             </li>
-            <li>
+            <li className="base">
               <DropdownLink
                 name="Packages"
                 text="API"
                 activated={group === "Packages"}
                 toggle={this.toggleDropdown}
               />
+              <PackageDropdown active={group === "Packages"} />
             </li>
-            <li>
+            <li className="base">
               <DropdownLink
                 name="Guides"
                 text="Guides"
                 activated={group === "Guides"}
                 toggle={this.toggleDropdown}
               />
+              <GuideDropdown active={group === "Guides"} />
             </li>
-            <li>
+            <li className="base">
               <DropdownLink
                 name="Tutorials"
                 text="Tutorials"
                 activated={group === "Tutorials"}
                 toggle={this.toggleDropdown}
               />
+              <TutorialDropdown active={group === "Tutorials"} />
             </li>
-            <li>
+            <li className="base">
               <DropdownLink
                 name="Examples"
                 text="Examples"
                 activated={group === "Examples"}
                 toggle={this.toggleDropdown}
               />
+              <ExampleDropdown active={group === "Examples"} />
             </li>
-            <li>
+            <li className="base">
               <a href="https://github.com/pshrmn/curi">GitHub</a>
             </li>
-          </ul>
+          </FlexList>
         </StyledNav>
-        <StyledDropdown
-          style={{
-            borderBottomWidth: group !== undefined ? "2px" : "0px"
-          }}
-        >
-          {group ? (
-            <div>
-              <Dropdown />
-            </div>
-          ) : null}
-        </StyledDropdown>
       </StyledHeader>
     );
   }

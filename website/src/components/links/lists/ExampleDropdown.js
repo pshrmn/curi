@@ -2,6 +2,7 @@ import React from "react";
 
 import EXAMPLE_API from "../../../constants/examples";
 import ActiveLink from "../ActiveLink";
+import Container from "./Container";
 
 const Category = ({ examples }) => {
   return (
@@ -20,15 +21,19 @@ const Category = ({ examples }) => {
   );
 };
 
-function ExampleLinks() {
+function ExampleLinks({ active }) {
   const examples = EXAMPLE_API.all();
   const categories = Object.keys(examples);
-  return categories.map(title => (
-    <div key={title}>
-      <h3>{title}</h3>
-      <Category examples={examples[title]} />
-    </div>
-  ));
+  return (
+    <Container active={active}>
+      {categories.map(title => (
+        <div key={title}>
+          <h3>{title}</h3>
+          <Category examples={examples[title]} />
+        </div>
+      ))}
+    </Container>
+  );
 }
 
 export default React.memo(ExampleLinks);

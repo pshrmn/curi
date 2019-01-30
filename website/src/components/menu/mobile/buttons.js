@@ -22,7 +22,7 @@ const buttonStyles = css`
 
 const StyledButton = styled("button")`
   ${buttonStyles}
-  background: ${color.blue};
+  background: ${color.borderBlue};
 `;
 
 const StyledMiniButton = styled("button")`

@@ -37,8 +37,8 @@ function InstallationGuide() {
 
       <HashSection meta={npmMeta}>
         <p>
-          Every application that uses Curi needs to install is{" "}
-          <IJS>@curi/router</IJS>.
+          The <IJS>@curi/router</IJS> package is always required because it
+          provides the core routing/navigation functionality.
         </p>
 
         <p>

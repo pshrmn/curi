@@ -2,6 +2,7 @@ import React from "react";
 
 import PACKAGE_API from "../../../constants/packages";
 import ActiveLink from "../ActiveLink";
+import Container from "./Container";
 
 const GroupPackages = ({ packages }) => (
   <ul className="link-list">
@@ -18,14 +19,18 @@ const GroupPackages = ({ packages }) => (
   </ul>
 );
 
-function PackageLinks() {
+function PackageLinks({ active }) {
   const groups = PACKAGE_API.grouped();
-  return Object.keys(groups).map(title => (
-    <div key={title}>
-      <h3>{title}</h3>
-      <GroupPackages packages={groups[title]} />
-    </div>
-  ));
+  return (
+    <Container active={active}>
+      {Object.keys(groups).map(title => (
+        <div key={title}>
+          <h3>{title}</h3>
+          <GroupPackages packages={groups[title]} />
+        </div>
+      ))}
+    </Container>
+  );
 }
 
 export default React.memo(PackageLinks);

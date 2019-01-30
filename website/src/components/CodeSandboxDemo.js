@@ -2,6 +2,9 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const StyledDemo = styled("div")`
+  max-width: 80vw;
+  margin: 0 auto;
+
   p {
     font-style: italic;
     text-align: center;
@@ -27,6 +30,7 @@ export default function CodeSandboxDemo({ id, view = "split", help = true }) {
         width="100%"
         height="600px"
         sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+        tabIndex={-1}
       />
       {helpText}
     </StyledDemo>

@@ -30,6 +30,10 @@ const allSectionCSS = css`
     p {
       font-size: 1em;
     }
+
+    &.centered {
+      margin: 0 auto;
+    }
   }
 `;
 
