@@ -29,7 +29,7 @@ function Unpkg({ name, version, globalName }) {
 
 export default function Installation({ name, version, globalName, script }) {
   return (
-    <HashSection title="Installation" id="installation">
+    <HashSection meta={{ title: "Installation", hash: "installation" }}>
       <NPM name={name} />
       {script ? (
         <Unpkg name={name} version={version} globalName={globalName} />

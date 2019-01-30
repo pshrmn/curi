@@ -14,7 +14,7 @@ export const meta = {
 
 export function PrepareRoutesAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The <IJS>prepareRoutes()</IJS> export is used to build the routes for
         Curi. This will pre-compile paths for location matching and pathname

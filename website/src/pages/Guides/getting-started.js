@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -12,12 +13,33 @@ const meta = {
   title: "Getting Started"
 };
 
-export default function GettingStartedGuide() {
+const routerMeta = {
+  title: "The Router",
+  hash: "router-object"
+};
+const navigationMeta = {
+  title: "Navigation",
+  hash: "navigation"
+};
+const handlerMeta = {
+  title: "Response Handlers",
+  hash: "response-handlers"
+};
+const renderingMeta = {
+  title: "Rendering",
+  hash: "rendering"
+};
+
+const contents = [routerMeta, navigationMeta, handlerMeta, renderingMeta];
+
+function GettingStartedGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
+      </PlainSection>
 
-      <HashSection title="The Router" id="router-object">
+      <HashSection meta={routerMeta}>
         <p>
           The router is the controller of the single-page application. A router
           is created using a <IJS>history</IJS> object and a <IJS>routes</IJS>{" "}
@@ -46,7 +68,7 @@ const router = curi(history, routes);`}
         </p>
       </HashSection>
 
-      <HashSection title="Navigation" id="navigation">
+      <HashSection meta={navigationMeta}>
         <p>
           Navigation within a single-page application can either be caused by
           in-app navigation (e.g. clicking a link) or platform navigation (e.g.
@@ -94,7 +116,7 @@ router.navigate({
         </Note>
       </HashSection>
 
-      <HashSection title="Response Handlers" id="response-handlers">
+      <HashSection meta={handlerMeta}>
         <p>
           When Curi matches a location to a route, it creates a "response"
           object, which provides information about the route that matched.
@@ -174,7 +196,7 @@ router.once(() => {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Rendering" id="rendering">
+      <HashSection meta={renderingMeta}>
         <p>
           How Curi integrates with UI libraries depends on which one you are
           using. The way that Curi interfaces with each of them varies, but they
@@ -212,3 +234,5 @@ router.once(() => {
     </React.Fragment>
   );
 }
+
+export { GettingStartedGuide as component, contents };

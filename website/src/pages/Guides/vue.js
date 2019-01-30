@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   IJS,
@@ -12,12 +13,35 @@ const meta = {
   title: "Vue"
 };
 
-export default function VueGuide() {
+const renderingMeta = {
+  title: "Rendering with the response",
+  hash: "rendering-response"
+};
+const a11yMeta = {
+  title: "Accessibility",
+  hash: "accessibility"
+};
+const pluginMeta = {
+  title: "The Curi Plugin",
+  hash: "plugin",
+  children: [renderingMeta]
+};
+
+const navigatingMeta = {
+  title: "Navigating",
+  hash: "navigating"
+};
+
+const contents = [pluginMeta, navigatingMeta];
+
+function VueGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
+      </PlainSection>
 
-      <HashSection title="The Curi Plugin" id="plugin">
+      <HashSection meta={pluginMeta}>
         <p>
           The <IJS>CuriPlugin</IJS> for Vue allows you to interface your router
           with a Vue application. The plugin sets up a reactive object for
@@ -42,11 +66,7 @@ import router from "./router";
 Vue.use(CuriPlugin, { router });`}
         </CodeBlock>
 
-        <HashSection
-          title="Rendering with the response"
-          id="rendering-response"
-          tag="h3"
-        >
+        <HashSection meta={renderingMeta} tag="h3">
           <p>
             Vue allows you to render dynamic components using the{" "}
             <Cmp>component :is</Cmp> syntax. If you set Vue components as the{" "}
@@ -143,7 +163,7 @@ const routes = prepareRoutes([
           </p>
         </HashSection>
 
-        <HashSection title="Accessibility" id="accessibility" tag="h3">
+        <HashSection meta={a11yMeta} tag="h3">
           <p>
             Managing the application's focus when navigating is useful for users
             who use screen readers. The <IJS>curi-focus</IJS> directive provides
@@ -178,7 +198,7 @@ const routes = prepareRoutes([
         </HashSection>
       </HashSection>
 
-      <HashSection title="Navigating" id="navigating">
+      <HashSection meta={navigatingMeta}>
         <p>
           The <Cmp>curi-link</Cmp> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as
@@ -228,17 +248,21 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <p>
-        Please check out the full{" "}
-        <Link
-          name="Package"
-          params={{ package: "vue", version: "v1" }}
-          hash="API"
-        >
-          <IJS>@curi/vue</IJS>
-        </Link>{" "}
-        API documentation to see every component that the package provides.
-      </p>
+      <PlainSection>
+        <p>
+          Please check out the full{" "}
+          <Link
+            name="Package"
+            params={{ package: "vue", version: "v1" }}
+            hash="API"
+          >
+            <IJS>@curi/vue</IJS>
+          </Link>{" "}
+          API documentation to see every component that the package provides.
+        </p>
+      </PlainSection>
     </React.Fragment>
   );
 }
+
+export { VueGuide as component, contents };

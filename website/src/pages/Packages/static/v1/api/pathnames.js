@@ -6,22 +6,30 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
+const argumentsMeta = {
+  title: "Arguments",
+  hash: "pathnames-arguments"
+};
 export const meta = {
   title: "pathnames()",
-  hash: "pathnames"
+  hash: "pathnames",
+  children: [argumentsMeta]
 };
 
 export function PathnamesAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The <IJS>pathnames()</IJS> function is used to generate pathnames from
         an array of provided page descriptors. This can be useful for generating
         a sitemap.
       </p>
 
-      <HashSection tag="h4" title="Arguments" id="pathnames-arguments">
-        <HashSection tag="h5" title="routes" id="pathnames-routes">
+      <HashSection tag="h4" meta={argumentsMeta}>
+        <HashSection
+          tag="h5"
+          meta={{ title: "routes", hash: "pathnames-routes" }}
+        >
           <p>The array of route descriptors that is passed to a router.</p>
 
           <CodeBlock>
@@ -44,7 +52,10 @@ const paths = pathnames({
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" title="pages" id="pathnames-pages">
+        <HashSection
+          tag="h5"
+          meta={{ title: "pages", hash: "pathnames-pages" }}
+        >
           <p>
             An array of page descriptors. A page descriptor is an object with a{" "}
             <IJS>name</IJS> property defining which route to generate a page
@@ -69,8 +80,7 @@ const paths = pathnames({
 
         <HashSection
           tag="h5"
-          title="routerOptions"
-          id="pathnames-routerOptions"
+          meta={{ title: "routerOptions", hash: "pathnames-routerOptions" }}
         >
           <p>
             The options for a router, predominantly useful for passing any route

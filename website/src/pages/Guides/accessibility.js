@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Warning,
@@ -13,24 +14,51 @@ const meta = {
   title: "Accessibility"
 };
 
-export default function AccessibilityGuide() {
+const announceMeta = {
+  title: "Announcing Navigation",
+  hash: "aria-live"
+};
+const focusReactMeta = {
+  title: "Focusing in React Applications",
+  hash: "focus-react"
+};
+const focusVueMeta = {
+  title: "Focusing in Vue Applications",
+  hash: "focus-vue"
+};
+const focusMeta = {
+  title: "Focusing Content",
+  hash: "focus",
+  children: [focusReactMeta, focusVueMeta]
+};
+const moreMeta = {
+  title: "More Resources",
+  hash: "more"
+};
+
+const contents = [announceMeta, focusMeta, moreMeta];
+
+function AccessibilityGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        It is important to keep in mind that some visitors to your site rely on
-        screen readers, so you should ensure that they have a pleasant
-        experience. One "issue" with single-page applications is that they
-        traditionally are more difficult for screen reader users because they do
-        not have a great way for detecting navigation.
-      </p>
+        <p>
+          It is important to keep in mind that some visitors to your site rely
+          on screen readers, so you should ensure that they have a pleasant
+          experience. One "issue" with single-page applications is that they
+          traditionally are more difficult for screen reader users because they
+          do not have a great way for detecting navigation.
+        </p>
 
-      <p>
-        Curi provides a couple approaches to help you make your site accessible.
-      </p>
+        <p>
+          Curi provides a couple approaches to help you make your site
+          accessible.
+        </p>
+      </PlainSection>
 
-      <HashSection title="Announcing Navigation" id="aria-live">
+      <HashSection meta={announceMeta}>
         <p>
           When the content of{" "}
           <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions">
@@ -83,7 +111,7 @@ const router = curi(history, routes, {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Focusing Content" id="focus">
+      <HashSection meta={focusMeta}>
         <p>
           Screen readers read the content of elements in the page that are
           focused. They can move through the page to read different elements.
@@ -135,11 +163,8 @@ const router = curi(history, routes, {
 <!-- but not me -->
 <div></div>`}
         </CodeBlock>
-        <HashSection
-          title="Focusing in React Applications"
-          id="focus-react"
-          tag="h3"
-        >
+
+        <HashSection meta={focusReactMeta} tag="h3">
           <p>
             The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Focus</Cmp>{" "}
             component that gives you a <IJS>ref</IJS> to attach to the component
@@ -172,11 +197,7 @@ ReactDOM.render((
           </CodeBlock>
         </HashSection>
 
-        <HashSection
-          title="Focusing in Vue Applications"
-          id="focus-vue"
-          tag="h3"
-        >
+        <HashSection meta={focusVueMeta} tag="h3">
           <p>
             The <IJS>@curi/vue</IJS> package provides a directive for focusing
             an element. The directive needs to be passed something that changes
@@ -195,7 +216,7 @@ ReactDOM.render((
         </HashSection>
       </HashSection>
 
-      <HashSection title="More Resources" id="more">
+      <HashSection meta={moreMeta}>
         <p>
           The above content is great for making navigation within your
           application accessible, but those aren't the only steps that you
@@ -228,3 +249,5 @@ ReactDOM.render((
     </React.Fragment>
   );
 }
+
+export { AccessibilityGuide as component, contents };

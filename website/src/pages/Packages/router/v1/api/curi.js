@@ -9,14 +9,23 @@ import {
   ScrollableTable
 } from "../../../../../components/package/common";
 
+const argumentsMeta = {
+  title: "Arguments",
+  hash: "arguments"
+};
+const propertiesMeta = {
+  title: "Router Properties",
+  hash: "properties"
+};
 export const meta = {
   title: "curi()",
-  hash: "curi"
+  hash: "curi",
+  children: [argumentsMeta, propertiesMeta]
 };
 
 export function CuriAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The <IJS>curi</IJS> export is a function to create a router. It has two
         required arguments: a <IJS>history</IJS> object and a <IJS>routes</IJS>{" "}
@@ -29,8 +38,8 @@ export function CuriAPI() {
 const router = curi(history, routes, options);`}
       </CodeBlock>
 
-      <HashSection tag="h4" title="Arguments" id="arguments">
-        <HashSection tag="h5" title="history" id="history">
+      <HashSection tag="h4" meta={argumentsMeta}>
+        <HashSection tag="h5" meta={{ title: "history", hash: "history" }}>
           <p>
             A <a href="https://github.com/pshrmn/hickory">Hickory</a> history
             object that will power navigation within the application. The{" "}
@@ -53,7 +62,7 @@ const router = curi(history, routes);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" title="routes" id="routes">
+        <HashSection tag="h5" meta={{ title: "routes", hash: "routes" }}>
           <p>
             An array of prepared{" "}
             <Link name="Guide" params={{ slug: "routes" }}>
@@ -72,7 +81,7 @@ const router = curi(history, routes);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" title="options" id="options">
+        <HashSection tag="h5" meta={{ title: "options", hash: "options" }}>
           <p>
             An optional object with additional properties that can be passed to
             the router.
@@ -303,12 +312,16 @@ router.once(({ response }) => {
         </HashSection>
       </HashSection>
 
-      <HashSection tag="h4" title="Router Properties" id="properties">
+      <HashSection tag="h4" meta={propertiesMeta}>
         <p>
           The router has a number of properties for you to use when rendering
           your application.
         </p>
-        <HashSection tag="h5" title="navigate(details)" id="navigate">
+
+        <HashSection
+          tag="h5"
+          meta={{ title: "navigate(details)", hash: "navigate" }}
+        >
           <p>
             The <IJS>navigate()</IJS> method is used to navigate
             programmatically. It takes a <IJS>details</IJS> object with the
@@ -393,7 +406,11 @@ router.navigate({
 // using default "ANCHOR" method`}
           </CodeBlock>
         </HashSection>
-        <HashSection tag="h5" title="once(fn, options)" id="once">
+
+        <HashSection
+          tag="h5"
+          meta={{ title: "once(fn, options)", hash: "once" }}
+        >
           <p>
             The <IJS>once()</IJS> method takes a response handler function. If a
             response already exists, the function will be called immediately.
@@ -440,7 +457,10 @@ router.navigate({
 });`}
           </CodeBlock>
 
-          <HashSection tag="h6" title="options" id="once-options">
+          <HashSection
+            tag="h6"
+            meta={{ title: "options", hash: "once-options" }}
+          >
             <div style={{ overflowX: "scroll" }}>
               <ScrollableTable>
                 <thead>
@@ -471,7 +491,11 @@ router.navigate({
             </CodeBlock>
           </HashSection>
         </HashSection>
-        <HashSection tag="h5" title="observe(fn, options)" id="observe">
+
+        <HashSection
+          tag="h5"
+          meta={{ title: "observe(fn, options)", hash: "observe" }}
+        >
           <p>
             The <IJS>observe()</IJS> method takes a response handler function.
             The response handler will be called every time a new response is
@@ -519,7 +543,10 @@ router.navigate({
 });`}
           </CodeBlock>
 
-          <HashSection tag="h6" title="options" id="observe-options">
+          <HashSection
+            tag="h6"
+            meta={{ title: "options", hash: "observe-options" }}
+          >
             <div style={{ overflowX: "scroll" }}>
               <ScrollableTable>
                 <thead>
@@ -566,7 +593,10 @@ stopObserving();
           </HashSection>
         </HashSection>
 
-        <HashSection tag="h5" title="cancel(fn)" id="cancel-property">
+        <HashSection
+          tag="h5"
+          meta={{ title: "cancel(fn)", hash: "cancel-property" }}
+        >
           <p>
             With asynchronous routes, after a user begins navigation, but before
             the route's asynchronous actions have finished, the user does not
@@ -597,7 +627,10 @@ stopObserving();
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" title="current()" id="current-property">
+        <HashSection
+          tag="h5"
+          meta={{ title: "current()", hash: "current-property" }}
+        >
           <p>
             The <IJS>router.current()</IJS> method returns the current{" "}
             <IJS>response</IJS> and <IJS>navigation</IJS> objects.
@@ -624,7 +657,7 @@ router.once(({ response, navigation }) => {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" title="route" id="router-route">
+        <HashSection tag="h5" meta={{ title: "route", hash: "router-route" }}>
           <p>
             The router's{" "}
             <Link name="Guide" params={{ slug: "route-interactions" }}>
@@ -634,7 +667,10 @@ router.once(({ response, navigation }) => {
             to interact with routes using their names.
           </p>
 
-          <HashSection tag="h6" title="pathname" id="pathname-interaction">
+          <HashSection
+            tag="h6"
+            meta={{ title: "pathname", hash: "pathname-interaction" }}
+          >
             <p>
               Curi includes one built-in interaction, <IJS>pathname</IJS>, which
               generates location pathnames using the name of a route and an
@@ -655,7 +691,10 @@ const userPathname = router.route.pathname(
           </HashSection>
         </HashSection>
 
-        <HashSection tag="h5" title="refresh()" id="refresh-property">
+        <HashSection
+          tag="h5"
+          meta={{ title: "refresh()", hash: "refresh-property" }}
+        >
           <p>
             The <IJS>refresh()</IJS> function takes an array of new routes,
             which will replace the existing routes. The router will emit a new
@@ -678,7 +717,10 @@ router.refresh(newRoutes);
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" title="history" id="history-property">
+        <HashSection
+          tag="h5"
+          meta={{ title: "history", hash: "history-property" }}
+        >
           <p>
             The route's history object, in case you need to interact directly
             with that.

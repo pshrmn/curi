@@ -51,10 +51,7 @@ export default prepareRoutes([
             return tutorial
               ? tutorial
                   .import()
-                  .then(
-                    preferDefault,
-                    catchImportError(`tutorial: ${params.slug}`)
-                  )
+                  .catch(catchImportError(`tutorial: ${params.slug}`))
               : import(/* webpackChunkName: 'tutorial404' */ "./pages/Tutorials/404.js").then(
                   preferDefault,
                   catchImportError("tutorial 404")
@@ -98,12 +95,7 @@ export default prepareRoutes([
           content: ({ params }) => {
             const guide = GUIDE_API.find(params.slug);
             return guide
-              ? guide
-                  .import()
-                  .then(
-                    preferDefault,
-                    catchImportError(`guide: ${params.slug}`)
-                  )
+              ? guide.import().catch(catchImportError(`guide: ${params.slug}`))
               : import(/* webpackChunkName: 'guide404' */ "./pages/Guides/404.js").then(
                   preferDefault,
                   catchImportError(`guide 404`)
@@ -156,6 +148,14 @@ export default prepareRoutes([
         },
         response: ({ match, resolved }) => {
           const pkg = PACKAGE_API.find(match.params.package);
+          if (!pkg) {
+            return {
+              redirectTo: {
+                name: "Packages"
+              }
+            };
+          }
+
           if (
             match.params.version === undefined ||
             (match.params.version &&

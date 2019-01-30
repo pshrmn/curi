@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -13,12 +14,41 @@ const meta = {
   title: "React Native"
 };
 
-export default function ReactNativeGuide() {
+const childrenMeta = {
+  title: "What to return from children()",
+  hash: "children-return"
+};
+const renderingMeta = {
+  title: "Rendering Responses",
+  hash: "rendering",
+  children: [childrenMeta]
+};
+
+const navigatingMeta = {
+  title: "Navigating",
+  hash: "navigating"
+};
+
+const backMeta = {
+  title: "Back Button",
+  hash: "back-button"
+};
+const tipsMeta = {
+  title: "React Native Tips",
+  hash: "tips",
+  children: [backMeta]
+};
+
+const contents = [renderingMeta, navigatingMeta, tipsMeta];
+
+function ReactNativeGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
+      </PlainSection>
 
-      <HashSection title="Rendering Responses" id="rendering">
+      <HashSection meta={renderingMeta}>
         <p>
           The <IJS>curiProvider()</IJS> function is used to create the component
           at the root of a Curi + React application. You can call this component
@@ -67,11 +97,7 @@ const App = () => (
 );`}
         </CodeBlock>
 
-        <HashSection
-          title="What to return from children()"
-          id="children-return"
-          tag="h3"
-        >
+        <HashSection meta={childrenMeta} tag="h3">
           <p>
             The render-invoked <IJS>children()</IJS> is responsible for
             rendering the root elements for an application.
@@ -188,7 +214,7 @@ const BaseRouteName = ({ response }) => (
   <Text>{response.name}</Text>
 );
 
-export default function RouteName() {
+function RouteName() {
   return (
     <Curious>
       {({ response }) => <BaseRouteName response={response} />}
@@ -199,7 +225,7 @@ export default function RouteName() {
         </HashSection>
       </HashSection>
 
-      <HashSection title="Navigating" id="navigating">
+      <HashSection meta={navigatingMeta}>
         <p>
           The <Cmp>Link</Cmp> component is used to navigate between routes
           within an application. By default, the <Cmp>Link</Cmp> will render as
@@ -260,14 +286,14 @@ const NavLinks = () => (
         API documentation to see every component that the package provides.
       </p>
 
-      <HashSection title="React Native Tips" id="tips">
+      <HashSection meta={tipsMeta}>
         <Note>
           <p>
             This guide assumes that you are already familiar with React Native.
           </p>
         </Note>
 
-        <HashSection title="Back Button" id="back-button" tag="h3">
+        <HashSection meta={backMeta} tag="h3">
           <p>
             To add back button support, you need to use your <IJS>history</IJS>{" "}
             object (which you can use directly or access through your router).
@@ -307,3 +333,5 @@ BackHandler.addEventListener(
     </React.Fragment>
   );
 }
+
+export { ReactNativeGuide as component, contents };

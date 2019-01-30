@@ -8,14 +8,19 @@ import {
   Note
 } from "../../../../../components/package/common";
 
+const argumentsMeta = {
+  title: "Arguments",
+  hash: "staticFiles-arguments"
+};
 export const meta = {
   title: "staticFiles()",
-  hash: "staticFiles"
+  hash: "staticFiles",
+  children: [argumentsMeta]
 };
 
 export function StaticFilesAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The <IJS>staticFiles()</IJS> function is used to generate HTML files for
         a static website and save them to the disk. An HTML file will be created
@@ -67,12 +72,15 @@ staticFiles({
   });`}
       </CodeBlock>
 
-      <HashSection tag="h4" title="Arguments" id="staticFiles-arguments">
+      <HashSection tag="h4" meta={argumentsMeta}>
         <p>
           The <IJS>staticFiles</IJS> functions is passed an object of arguments.
         </p>
 
-        <HashSection tag="h5" title="pages" id="staticFiles-pages">
+        <HashSection
+          tag="h5"
+          meta={{ title: "pages", hash: "staticFiles-pages" }}
+        >
           <p>
             An array of page descriptors. A page descriptor is an object with a{" "}
             <IJS>name</IJS> property defining which route to generate a page
@@ -95,13 +103,19 @@ staticFiles({
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" title="router" id="staticFiles-router">
+        <HashSection
+          tag="h5"
+          meta={{ title: "router", hash: "staticFiles-router" }}
+        >
           <p>
             The router property is an object with two properties:{" "}
             <IJS>routes</IJS> and <IJS>getRouterOptions</IJS>.
           </p>
 
-          <HashSection tag="h6" title="routes" id="staticFiles-routes">
+          <HashSection
+            tag="h6"
+            meta={{ title: "routes", hash: "staticFiles-routes" }}
+          >
             <p>
               <IJS>routes</IJS> is an array of route descriptors. This is the
               same array that you would use to create a router in client-side
@@ -131,8 +145,10 @@ staticFiles({
 
           <HashSection
             tag="h6"
-            title="getRouterOptions()"
-            id="staticFiles-getRouterOptions"
+            meta={{
+              title: "getRouterOptions()",
+              hash: "staticFiles-getRouterOptions"
+            }}
           >
             <p>
               The <IJS>getRouterOptions()</IJS> function returns the options for
@@ -171,7 +187,10 @@ staticFiles({
           </HashSection>
         </HashSection>
 
-        <HashSection tag="h5" title="fallback" id="staticFiles-fallback">
+        <HashSection
+          tag="h5"
+          meta={{ title: "fallback", hash: "staticFiles-fallback" }}
+        >
           <p>
             Some hosts allow you to provide a fallback page for when a request
             doesn't match any of your generated HTML files. The{" "}
@@ -191,13 +210,19 @@ staticFiles({
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" title="output" id="staticFiles-output">
+        <HashSection
+          tag="h5"
+          meta={{ title: "output", hash: "staticFiles-output" }}
+        >
           <p>
             The <IJS>output</IJS> property is used to describe how output files
             are generated and where they are stored.
           </p>
 
-          <HashSection tag="h6" title="render()" id="staticFiles-render">
+          <HashSection
+            tag="h6"
+            meta={{ title: "render()", hash: "staticFiles-render" }}
+          >
             <p>
               A function that takes the emitted <IJS>response</IJS>,{" "}
               <IJS>navigation</IJS>, and <IJS>router</IJS> for a location and
@@ -242,7 +267,10 @@ staticFiles({
             </CodeBlock>
           </HashSection>
 
-          <HashSection tag="h6" title="insert()" id="staticFiles-insert">
+          <HashSection
+            tag="h6"
+            meta={{ title: "insert()", hash: "staticFiles-insert" }}
+          >
             <p>
               A function that takes the value returned by the{" "}
               <IJS>render()</IJS> function and inserts it into the full HTML for
@@ -257,7 +285,7 @@ staticFiles({
     <title>\${markup.title}</title>
   </head>
   <body>
-    <div id="root">\${markup.html}</div>
+    <div, hash: "root">\${markup.html}</div>
     <script src="/static/js/bundle.js"></script>
   </body>
 </html>\`;
@@ -277,7 +305,10 @@ staticFiles({
             </CodeBlock>
           </HashSection>
 
-          <HashSection tag="h6" title="dir" id="staticFiles-dir">
+          <HashSection
+            tag="h6"
+            meta={{ title: "dir", hash: "staticFiles-dir" }}
+          >
             <p>The folder where the generated HTML files should be saved.</p>
 
             <CodeBlock>
@@ -290,7 +321,10 @@ staticFiles({
             </CodeBlock>
           </HashSection>
 
-          <HashSection tag="h6" title="redirects" id="staticFiles-redirects">
+          <HashSection
+            tag="h6"
+            meta={{ title: "redirects", hash: "staticFiles-redirects" }}
+          >
             <p>
               If a route automatically redirects, you probably do not need to
               create an HTML file for it. If you set <IJS>redirects</IJS> to{" "}

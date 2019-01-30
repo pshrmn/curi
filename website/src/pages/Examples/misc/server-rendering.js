@@ -4,19 +4,27 @@ import {
   HashSection,
   CodeBlock,
   IJS,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Server Rendering"
 };
 
-export default function ServerRenderingExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+
+const contents = [explanationMeta, onGitHubMeta];
+
+function ServerRenderingExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           Server rendering with Curi is pretty similar to client side rendering.
           The server should have a catch all route handler that will respond to
@@ -85,7 +93,9 @@ export default function ServerRenderingExample() {
     }
   }`}
             </CodeBlock>
-            Then, when starting the server, make sure that BABEL_ENV=server.
+            <p>
+              Then, when starting the server, make sure that BABEL_ENV=server.
+            </p>
             <CodeBlock lang="markup">
               {`cross-env BABEL_ENV=server npm start`}
             </CodeBlock>
@@ -97,3 +107,5 @@ export default function ServerRenderingExample() {
     </React.Fragment>
   );
 }
+
+export { ServerRenderingExample as component, contents };

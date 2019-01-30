@@ -1,17 +1,30 @@
 import React from "react";
 
-import { HashSection, CodeBlock, IJS } from "../../components/guide/common";
+import {
+  PlainSection,
+  HashSection,
+  CodeBlock,
+  IJS
+} from "../../components/guide/common";
 
 const meta = {
   title: "Development Tips"
 };
 
-export default function DevTipsGuide() {
+const hmrMeta = {
+  title: "Hot Module Replacement",
+  hash: "hmr"
+};
+const contents = [hmrMeta];
+
+function DevTipsGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
+      </PlainSection>
 
-      <HashSection title="Hot Module Replacement" id="hmr">
+      <HashSection meta={hmrMeta}>
         <p>
           Hot module replacement (HMR) can make development more convenient by
           automatically updating page content without refreshing the page. With
@@ -75,3 +88,5 @@ if (module.hot) {
     </React.Fragment>
   );
 }
+
+export { DevTipsGuide as component, contents };

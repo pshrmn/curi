@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -13,37 +14,74 @@ const meta = {
   title: "History"
 };
 
-export default function CreatingARouterGuide() {
+const browserMeta = {
+  title: "Browser History",
+  hash: "browser"
+};
+const hashMeta = {
+  title: "Hash History",
+  hash: "hash"
+};
+const inMemoryMeta = {
+  title: "In Memory History",
+  hash: "in-memory"
+};
+const typesMeta = {
+  title: "Types of History",
+  hash: "types",
+  children: [browserMeta, hashMeta, inMemoryMeta]
+};
+
+const queryMeta = {
+  title: "Query Objects",
+  hash: "query-objects"
+};
+const locationsMeta = {
+  title: "Locations",
+  hash: "locations",
+  children: [queryMeta]
+};
+
+const navigationMeta = {
+  title: "Navigation",
+  hash: "navigation"
+};
+
+const contents = [typesMeta, locationsMeta, navigationMeta];
+
+function HistoryGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        The <IJS>history</IJS> object manages navigation between locations
-        within an application.
-      </p>
-      <p>
-        Curi uses <a href="https://github.com/pshrmn/hickory">Hickory</a> for
-        its history implementation.
-      </p>
-      <p>
-        You should almost never have to interact directly with Hickory, but you
-        do have to create your own <IJS>history</IJS> object for your
-        application and use it when creating the router.
-      </p>
+        <p>
+          The <IJS>history</IJS> object manages navigation between locations
+          within an application.
+        </p>
+        <p>
+          Curi uses <a href="https://github.com/pshrmn/hickory">Hickory</a> for
+          its history implementation.
+        </p>
+        <p>
+          You should almost never have to interact directly with Hickory, but
+          you do have to create your own <IJS>history</IJS> object for your
+          application and use it when creating the router.
+        </p>
 
-      <CodeBlock>
-        {`const history = Browser();
+        <CodeBlock>
+          {`const history = Browser();
 const router = curi(history, routes);`}
-      </CodeBlock>
+        </CodeBlock>
+      </PlainSection>
 
-      <HashSection title="Types of History" id="types">
+      <HashSection meta={typesMeta}>
         <p>
           There are three types of <IJS>history</IJS> to choose from; which one
           you use depends on where your application is running.
         </p>
 
-        <HashSection title="Browser History" id="browser" tag="h3">
+        <HashSection meta={browserMeta} tag="h3">
           <CodeBlock>
             {`import Browser from "@hickory/browser";
 const browserHistory = Browser();`}
@@ -73,7 +111,7 @@ const browserHistory = Browser();`}
           </ol>
         </HashSection>
 
-        <HashSection title="Hash History" id="hash" tag="h3">
+        <HashSection meta={hashMeta} tag="h3">
           <CodeBlock>
             {`import Hash from "@hickory/hash";
 const hashHistory = Hash();`}
@@ -91,7 +129,7 @@ const hashHistory = Hash();`}
           </Warning>
         </HashSection>
 
-        <HashSection title="In Memory History" id="in-memory" tag="h3">
+        <HashSection meta={inMemoryMeta} tag="h3">
           <CodeBlock>
             {`import InMemory from "@hickory/in-memory";
 const inMemoryHistory = InMemory();`}
@@ -116,7 +154,7 @@ const inMemoryHistory = InMemory();`}
         </Note>
       </HashSection>
 
-      <HashSection title="Locations" id="locations">
+      <HashSection meta={locationsMeta}>
         <p>
           The <IJS>history</IJS> object will map URLs into location objects.
           Only the <IJS>pathname</IJS>, <IJS>query</IJS> (search), and{" "}
@@ -137,7 +175,7 @@ hash: "trending"
 }`}
         </CodeBlock>
 
-        <HashSection title="Query Objects" id="query-objects" tag="h3">
+        <HashSection meta={queryMeta} tag="h3">
           <p>
             The <IJS>query</IJS> value of a location is a string by default, but
             the history object can be configured to automatically parse it into
@@ -178,7 +216,7 @@ hash: "trending"
         </HashSection>
       </HashSection>
 
-      <HashSection title="Navigation" id="navigation">
+      <HashSection meta={navigationMeta}>
         <p>
           The <IJS>history</IJS> object supports four kinds of navigation. You
           can think of the <IJS>history</IJS> as storing an array of locations
@@ -217,14 +255,18 @@ hash: "trending"
         </CodeBlock>
       </HashSection>
 
-      <p>
-        For more details on the history objects and their APIs, please check out
-        the{" "}
-        <a href="https://github.com/pshrmn/hickory/tree/master/docs">
-          Hickory documentation
-        </a>
-        .
-      </p>
+      <PlainSection>
+        <p>
+          For more details on the history objects and their APIs, please check
+          out the{" "}
+          <a href="https://github.com/pshrmn/hickory/tree/master/docs">
+            Hickory documentation
+          </a>
+          .
+        </p>
+      </PlainSection>
     </React.Fragment>
   );
 }
+
+export { HistoryGuide as component, contents };

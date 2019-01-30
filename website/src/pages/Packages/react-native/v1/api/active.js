@@ -9,20 +9,19 @@ import {
   Note
 } from "../../../../../components/package/common";
 
+const propsMeta = {
+  title: "Props",
+  hash: "Active-props"
+};
 export const meta = {
   title: "<Active>",
   hash: "Active",
-  children: [
-    {
-      title: "Props",
-      hash: "Active-props"
-    }
-  ]
+  children: [propsMeta]
 };
 
 export function ActiveAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The <Cmp>Active</Cmp> component is used to render based on whether or
         not a route is "active" (its name and params match the current
@@ -81,19 +80,22 @@ const router = curi(history, routes, {
         </CodeBlock>
       </Note>
 
-      <HashSection tag="h3" title="Props" id="Active-props">
-        <HashSection tag="h4" title="name" id="Active-name">
+      <HashSection tag="h3" meta={propsMeta}>
+        <HashSection tag="h4" meta={{ title: "name", hash: "Active-name" }}>
           <p>The name of the route to compare against the response object.</p>
         </HashSection>
 
-        <HashSection tag="h4" title="params" id="Active-params">
+        <HashSection tag="h4" meta={{ title: "params", hash: "Active-params" }}>
           <p>
             An object containing route parameters. These will be compared
             against the route params of the response object.
           </p>
         </HashSection>
 
-        <HashSection tag="h4" title="children" id="Active-children">
+        <HashSection
+          tag="h4"
+          meta={{ title: "children", hash: "Active-children" }}
+        >
           <p>
             A render-invoked function whose first argument is whether the route
             (determined using the <IJS>name</IJS> and <IJS>params</IJS>) is
@@ -138,7 +140,10 @@ const router = curi(history, routes, {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h4" title="partial" id="Active-partial">
+        <HashSection
+          tag="h4"
+          meta={{ title: "partial", hash: "Active-partial" }}
+        >
           <p>
             When <IJS>true</IJS>, <IJS>partial</IJS> allows ancestor routes to
             be considered active. Defaults to <IJS>false</IJS>.

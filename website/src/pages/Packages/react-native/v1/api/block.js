@@ -8,20 +8,19 @@ import {
   ScrollableTable
 } from "../../../../../components/package/common";
 
+const propsMeta = {
+  title: "Props",
+  hash: "Block-props"
+};
 export const meta = {
   title: "<Block>",
   hash: "Block",
-  children: [
-    {
-      title: "Props",
-      hash: "Block-props"
-    }
-  ]
+  children: [propsMeta]
 };
 
 export function BlockAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The <Cmp>Block</Cmp> component lets you prevent navigation until a user
         has confirmed that they want to navigate. This can be useful when the
@@ -30,8 +29,8 @@ export function BlockAPI() {
 
       <CodeBlock>{`import { Block } from '@curi/react-native';`}</CodeBlock>
 
-      <HashSection tag="h3" title="Props" id="Block-props">
-        <HashSection tag="h4" title="active" id="Block-active">
+      <HashSection tag="h3" meta={propsMeta}>
+        <HashSection tag="h4" meta={{ title: "active", hash: "Block-active" }}>
           <p>
             A boolean, which is <IJS>true</IJS> by default. When it is{" "}
             <IJS>true</IJS>, the navigation will be blocked. When it is{" "}
@@ -47,7 +46,10 @@ export function BlockAPI() {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h4" title="confirm" id="Block-confirm">
+        <HashSection
+          tag="h4"
+          meta={{ title: "confirm", hash: "Block-confirm" }}
+        >
           <p>
             The confirm prop is a function that will be called whenever there is
             navigation.

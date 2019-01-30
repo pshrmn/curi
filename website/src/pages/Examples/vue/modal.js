@@ -4,19 +4,31 @@ import {
   HashSection,
   IJS,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Modals"
 };
 
-export default function ModalExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function ModalExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           This example mimics the way that Pinterest works. Whether or not this
           is a good design pattern is up for debate, but at the very least it is
@@ -47,7 +59,7 @@ export default function ModalExample() {
         </p>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/modal" />
       </HashSection>
 
@@ -55,3 +67,5 @@ export default function ModalExample() {
     </React.Fragment>
   );
 }
+
+export { ModalExample as component, contents };

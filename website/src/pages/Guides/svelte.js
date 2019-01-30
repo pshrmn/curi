@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   IJS,
@@ -12,12 +13,31 @@ const meta = {
   title: "Svelte"
 };
 
-export default function SvelteGuide() {
+const renderingMeta = {
+  title: "Rendering with the response",
+  hash: "rendering-response"
+};
+const storeMeta = {
+  title: "Store Integration",
+  hash: "store",
+  children: [renderingMeta]
+};
+
+const navigatingMeta = {
+  title: "Navigating",
+  hash: "navigating"
+};
+
+const contents = [storeMeta, navigatingMeta];
+
+function SvelteGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
+      </PlainSection>
 
-      <HashSection title="Store Integration" id="store">
+      <HashSection meta={storeMeta}>
         <p>
           Curi relies on Svelte's store to interface with an application. By
           adding the <IJS>response</IJS> (plus the <IJS>router</IJS> and{" "}
@@ -44,11 +64,7 @@ const store = new Store();
 curiStore(router, store);`}
         </CodeBlock>
 
-        <HashSection
-          title="Rendering with the response"
-          id="rendering-response"
-          tag="h3"
-        >
+        <HashSection meta={renderingMeta} tag="h3">
           <p>
             Svelte allows you to render dynamic components using the{" "}
             <Cmp>svelte:component this</Cmp> syntax. If you set Svelte
@@ -137,7 +153,7 @@ const routes = prepareRoutes([
         </HashSection>
       </HashSection>
 
-      <HashSection title="Navigating" id="navigating">
+      <HashSection meta={navigatingMeta}>
         <p>
           The <Cmp>Link</Cmp> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as
@@ -195,17 +211,21 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <p>
-        Please check out the full{" "}
-        <Link
-          name="Package"
-          params={{ package: "svelte", version: "v1" }}
-          hash="API"
-        >
-          <IJS>@curi/svelte</IJS>
-        </Link>{" "}
-        API documentation to see every component that the package provides.
-      </p>
+      <PlainSection>
+        <p>
+          Please check out the full{" "}
+          <Link
+            name="Package"
+            params={{ package: "svelte", version: "v1" }}
+            hash="API"
+          >
+            <IJS>@curi/svelte</IJS>
+          </Link>{" "}
+          API documentation to see every component that the package provides.
+        </p>
+      </PlainSection>
     </React.Fragment>
   );
 }
+
+export { SvelteGuide as component, contents };

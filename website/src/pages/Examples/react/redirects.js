@@ -5,19 +5,31 @@ import {
   CodeBlock,
   IJS,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Redirects"
 };
 
-export default function AuthenticationExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function AuthenticationExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           Sometimes you will want to redirect based on the results of your{" "}
           <IJS>resolve</IJS> functions. For instance, you might see that a user
@@ -55,7 +67,7 @@ export default function AuthenticationExample() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/redirects" />
       </HashSection>
 
@@ -63,3 +75,5 @@ export default function AuthenticationExample() {
     </React.Fragment>
   );
 }
+
+export { AuthenticationExample as component, contents };

@@ -1,38 +1,62 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { HashSection, CodeBlock, IJS } from "../../components/guide/common";
+import {
+  PlainSection,
+  HashSection,
+  CodeBlock,
+  IJS
+} from "../../components/guide/common";
 
 const meta = {
   title: "Side Effects"
 };
 
-export default function UsingSideEffectsGuide() {
+const officialMeta = {
+  title: "Official Side Effects",
+  hash: "official"
+};
+const addingMeta = {
+  title: "Adding Side Effects",
+  hash: "adding",
+  children: [officialMeta]
+};
+
+const creatingMeta = {
+  title: "Creating Side Effects",
+  hash: "creating"
+};
+
+const contents = [addingMeta, creatingMeta];
+
+function UsingSideEffectsGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        Curi side effects are permanent router response handlers that are run
-        after those registered using <IJS>router.observe()</IJS> and{" "}
-        <IJS>router.once()</IJS>.
-      </p>
+        <p>
+          Curi side effects are permanent router response handlers that are run
+          after those registered using <IJS>router.observe()</IJS> and{" "}
+          <IJS>router.once()</IJS>.
+        </p>
 
-      <p>
-        Whenever a new response is generated, all of the side effect functions
-        will be called. They will be given an object with the new{" "}
-        <IJS>response</IJS>, object, a <IJS>navigation</IJS> object with some
-        extra routing data (the navigation action the previous response), and
-        the <IJS>router</IJS> object.
-      </p>
+        <p>
+          Whenever a new response is generated, all of the side effect functions
+          will be called. They will be given an object with the new{" "}
+          <IJS>response</IJS>, object, a <IJS>navigation</IJS> object with some
+          extra routing data (the navigation action the previous response), and
+          the <IJS>router</IJS> object.
+        </p>
 
-      <CodeBlock>
-        {`function logResponse({ response }) {
+        <CodeBlock>
+          {`function logResponse({ response }) {
   // call your logging API to record the response
 }`}
-      </CodeBlock>
+        </CodeBlock>
+      </PlainSection>
 
-      <HashSection title="Adding Side Effects" id="adding">
+      <HashSection meta={addingMeta}>
         <p>
           Side effects are provided to your router with the{" "}
           <IJS>sideEffects</IJS> property of the options object. This is an
@@ -68,7 +92,7 @@ router.observe(render);
 // called before logResponse`}
         </CodeBlock>
 
-        <HashSection title="Official Side Effects" id="official" tag="h3">
+        <HashSection meta={officialMeta} tag="h3">
           <p>Curi has two "official" side effect packages:</p>
           <ul>
             <li>
@@ -100,7 +124,7 @@ const router = curi(history, routes, {
         </HashSection>
       </HashSection>
 
-      <HashSection title="Creating Side Effects" id="creating">
+      <HashSection meta={creatingMeta}>
         <p>
           When creating your own side effect, you can write a regular function
           or a side effect "factory".
@@ -148,3 +172,5 @@ const router = curi(history, routes, {
     </React.Fragment>
   );
 }
+
+export { UsingSideEffectsGuide as component, contents };

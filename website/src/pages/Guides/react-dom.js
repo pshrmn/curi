@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -13,12 +14,35 @@ const meta = {
   title: "React DOM"
 };
 
-export default function ReactGuide() {
+const childrenMeta = {
+  title: "What to return from children()",
+  hash: "children-return"
+};
+const a11yMeta = {
+  title: "Accessibility",
+  hash: "accessibility"
+};
+const renderingMeta = {
+  title: "Rendering Responses",
+  hash: "rendering",
+  children: [childrenMeta, a11yMeta]
+};
+
+const navigatingMeta = {
+  title: "Navigating",
+  hash: "navigating"
+};
+
+const contents = [renderingMeta, navigatingMeta];
+
+function ReactDOMGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
+      </PlainSection>
 
-      <HashSection title="Rendering Responses" id="rendering">
+      <HashSection meta={renderingMeta}>
         <p>
           The <IJS>curiProvider()</IJS> function is used to create the component
           at the root of a Curi + React application. You can call this component
@@ -74,11 +98,7 @@ router.once(() => {
 });`}
         </CodeBlock>
 
-        <HashSection
-          title="What to return from children()"
-          id="children-return"
-          tag="h3"
-        >
+        <HashSection meta={childrenMeta} tag="h3">
           <p>
             The render-invoked <IJS>children()</IJS> is responsible for
             rendering the root elements for an application.
@@ -192,7 +212,7 @@ const BaseRouteName = ({ response }) => (
   <div>{response.name}</div>
 );
 
-export default function RouteName() {
+function RouteName() {
   return (
     <Curious>
       {({ response }) => <BaseRouteName response={response} />}
@@ -202,7 +222,7 @@ export default function RouteName() {
           </CodeBlock>
         </HashSection>
 
-        <HashSection title="Accessibility" id="accessibility" tag="h3">
+        <HashSection meta={a11yMeta} tag="h3">
           <p>
             Managing the application's focus when navigating is useful for users
             who use screen readers. The <Cmp>Focus</Cmp> component provides a
@@ -245,7 +265,7 @@ ReactDOM.render((
         </HashSection>
       </HashSection>
 
-      <HashSection title="Navigating" id="navigating">
+      <HashSection meta={navigatingMeta}>
         <p>
           The <Cmp>Link</Cmp> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as
@@ -295,17 +315,21 @@ const NavLinks = () => (
         </CodeBlock>
       </HashSection>
 
-      <p>
-        Please check out the full{" "}
-        <Link
-          name="Package"
-          params={{ package: "react-dom", version: "v1" }}
-          hash="API"
-        >
-          <IJS>@curi/react-dom</IJS>
-        </Link>{" "}
-        API documentation to see every component that the package provides.
-      </p>
+      <PlainSection>
+        <p>
+          Please check out the full{" "}
+          <Link
+            name="Package"
+            params={{ package: "react-dom", version: "v1" }}
+            hash="API"
+          >
+            <IJS>@curi/react-dom</IJS>
+          </Link>{" "}
+          API documentation to see every component that the package provides.
+        </p>
+      </PlainSection>
     </React.Fragment>
   );
 }
+
+export { ReactDOMGuide as component, contents };

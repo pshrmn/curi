@@ -17,8 +17,8 @@ export const meta = {
 
 export function RoutePropertiesAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
-      <HashSection title="route.name" id="name" tag="h3">
+    <HashSection meta={meta}>
+      <HashSection meta={{ title: "route.name", hash: "name" }} tag="h3">
         <p>A string, this must be unique for every route.</p>
 
         <CodeBlock>
@@ -30,7 +30,7 @@ export function RoutePropertiesAPI() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="route.path" id="path" tag="h3">
+      <HashSection meta={{ title: "route.path", hash: "path" }} tag="h3">
         <p>
           A string pattern describing what the route matches. Whenever the
           router receives a new location, it will loop through the known route
@@ -74,7 +74,7 @@ export function RoutePropertiesAPI() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="route.resolve" id="resolve" tag="h3">
+      <HashSection meta={{ title: "route.resolve", hash: "resolve" }} tag="h3">
         <p>
           The <IJS>resolve</IJS> object groups async functions that will be
           called when the route matches.
@@ -118,7 +118,7 @@ export function RoutePropertiesAPI() {
 };`}
         </CodeBlock>
       </HashSection>
-      <HashSection title="route.response()" id="response">
+      <HashSection meta={{ title: "route.response()", hash: "response" }}>
         <p>
           A function for modifying the response object. This returns an object
           whose properties will be merged with the matched route properties to
@@ -268,7 +268,11 @@ const routes = prepareRoutes([
         </CodeBlock>
 
         <ul>
-          <HashSection wrapper="li" title="match" id="response-match" tag="h3">
+          <HashSection
+            wrapper="li"
+            meta={{ title: "match", hash: "response-match" }}
+            tag="h3"
+          >
             <p>An object with the matched route properties of a response.</p>
             <ScrollableTable>
               <thead>
@@ -306,8 +310,7 @@ const routes = prepareRoutes([
 
           <HashSection
             wrapper="li"
-            title="resolved"
-            id="response-resolved"
+            meta={{ title: "resolved", hash: "response-resolved" }}
             tag="h3"
           >
             <p>
@@ -339,7 +342,11 @@ const user = {
             </CodeBlock>
           </HashSection>
 
-          <HashSection wrapper="li" title="error" id="response-error" tag="h3">
+          <HashSection
+            wrapper="li"
+            meta={{ title: "error", hash: "response-error" }}
+            tag="h3"
+          >
             <p>
               <IJS>error</IJS> is an error thrown by one of the route's{" "}
               <IJS>resolve</IJS> functions.
@@ -370,7 +377,7 @@ const user = {
         </ul>
       </HashSection>
 
-      <HashSection title="children" id="children" tag="h3">
+      <HashSection meta={{ title: "children", hash: "children" }} tag="h3">
         <p>
           An optional array of route objects for creating nested routes. Any
           child routes will be matched relative to their parent route's{" "}
@@ -397,7 +404,7 @@ const user = {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="params" id="params" tag="h3">
+      <HashSection meta={{ title: "params", hash: "params" }} tag="h3">
         <p>
           When <IJS>path-to-regexp</IJS> matches your paths, all parameters are
           extracted as strings. If you prefer for some route params to be other
@@ -428,7 +435,10 @@ const user = {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="pathOptions" id="pathOptions" tag="h3">
+      <HashSection
+        meta={{ title: "pathOptions", hash: "pathOptions" }}
+        tag="h3"
+      >
         <p>
           If you need to provide different path options than{" "}
           <a href="https://github.com/pillarjs/path-to-regexp#usage">
@@ -446,7 +456,7 @@ const user = {
         </Note>
       </HashSection>
 
-      <HashSection title="extra" id="extra" tag="h3">
+      <HashSection meta={{ title: "extra", hash: "extra" }} tag="h3">
         <p>
           If you have any additional properties that you want attached to a
           route, use the <IJS>extra</IJS> property. You will be able to use{" "}

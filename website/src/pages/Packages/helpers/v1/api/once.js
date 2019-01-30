@@ -14,7 +14,7 @@ export const meta = {
 
 export function OnceAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         <IJS>once()</IJS> takes a function as its argument and returns a new
         function. The first time the returned function is called, it will call

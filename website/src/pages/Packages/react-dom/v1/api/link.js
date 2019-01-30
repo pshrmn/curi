@@ -9,20 +9,19 @@ import {
   Warning
 } from "../../../../../components/package/common";
 
+const propsMeta = {
+  title: "Props",
+  hash: "Link-props"
+};
 export const meta = {
   title: "<Link>",
   hash: "Link",
-  children: [
-    {
-      title: "Props",
-      hash: "Link-props"
-    }
-  ]
+  children: [propsMeta]
 };
 
 export function LinkAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         A <Cmp>Link</Cmp> is for navigating within your application using an
         anchor element (<Cmp>a</Cmp>). When the rendered element is clicked,
@@ -44,8 +43,8 @@ export function LinkAPI() {
 // <a href='/user/16'>User 16</a>`}
       </CodeBlock>
 
-      <HashSection tag="h3" title="Props" id="Link-props">
-        <HashSection tag="h4" title="name" id="Link-name">
+      <HashSection tag="h3" meta={propsMeta}>
+        <HashSection tag="h4" meta={{ title: "name", hash: "Link-name" }}>
           <p>The name of the route that you want to navigate to.</p>
           <p>
             If <IJS>name</IJS> is not provided, the <Cmp>Link</Cmp> will re-use
@@ -67,7 +66,7 @@ export function LinkAPI() {
           </Note>
         </HashSection>
 
-        <HashSection tag="h4" title="params" id="Link-params">
+        <HashSection tag="h4" meta={{ title: "params", hash: "Link-params" }}>
           <p>
             If the route that you want to navigate to (or any of its parents)
             include path parameters, you can specify them using the params prop.
@@ -81,8 +80,10 @@ export function LinkAPI() {
 
         <HashSection
           tag="h4"
-          title="hash, query &amp; state"
-          id="Link-hash-query-state"
+          meta={{
+            title: "hash, query &amp; state",
+            hash: "Link-hash-query-state"
+          }}
         >
           <p>
             While the pathname of the location to navigate to will be generated
@@ -108,7 +109,10 @@ export function LinkAPI() {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h4" title="children" id="Link-children">
+        <HashSection
+          tag="h4"
+          meta={{ title: "children", hash: "Link-children" }}
+        >
           <p>
             The <IJS>children</IJS> prop can take two forms: either a valid
             React Node (e.g. a React element, a string, or <IJS>null</IJS>) or a
@@ -140,7 +144,7 @@ export function LinkAPI() {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h4" title="anchor" id="Link-anchor">
+        <HashSection tag="h4" meta={{ title: "anchor", hash: "Link-anchor" }}>
           <p>
             By default, when you render a <Cmp>Link</Cmp>, an anchor element
             will be rendered. <IJS>anchor</IJS> lets you provide your own
@@ -157,7 +161,7 @@ export function LinkAPI() {
           </Warning>
         </HashSection>
 
-        <HashSection tag="h4" title="forward" id="Link-forward">
+        <HashSection tag="h4" meta={{ title: "forward", hash: "Link-forward" }}>
           <p>
             The <IJS>forward</IJS> prop is an object of props to pass on to the
             rendered anchor component.

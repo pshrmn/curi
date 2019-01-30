@@ -11,12 +11,31 @@ const meta = {
   title: "Installation"
 };
 
-export default function InstallationGuide() {
+const npmMeta = {
+  title: "NPM",
+  hash: "npm"
+};
+
+const unpkgMeta = {
+  title: "Unpkg",
+  hash: "unpkg"
+};
+
+const promisesMeta = {
+  title: "Promises",
+  hash: "promises"
+};
+
+const contents = [npmMeta, unpkgMeta, promisesMeta];
+
+function InstallationGuide() {
   return (
     <React.Fragment>
       <PlainSection>
         <h1>{meta.title}</h1>
+      </PlainSection>
 
+      <HashSection meta={npmMeta}>
         <p>
           Every application that uses Curi needs to install is{" "}
           <IJS>@curi/router</IJS>.
@@ -32,23 +51,25 @@ export default function InstallationGuide() {
         <CodeBlock lang="bash">
           npm install @hickory/browser @curi/router
         </CodeBlock>
+      </HashSection>
 
+      <HashSection meta={unpkgMeta}>
         <p>
           These packages can also be loaded from{" "}
           <a href="https://unpkg.com">Unpkg</a>.
         </p>
-      </PlainSection>
 
-      <CodeBlock lang="markup">
-        {`<script
+        <CodeBlock lang="markup">
+          {`<script
   src="https://unpkg.com/@hickory/browser/dist/hickory-browser.min.js"
 ></script>
 <script
   src="https://unpkg.com/@curi/router/dist/curi-router.min.js"
 ></script>`}
-      </CodeBlock>
+        </CodeBlock>
+      </HashSection>
 
-      <HashSection title="Promises" id="promises">
+      <HashSection meta={promisesMeta}>
         <p>
           Curi uses Promises, so you may need to include a polyfill to add
           Promise support for older browsers (including IE 11).
@@ -76,3 +97,5 @@ export default function InstallationGuide() {
     </React.Fragment>
   );
 }
+
+export { InstallationGuide as component, contents };

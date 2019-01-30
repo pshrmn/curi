@@ -6,19 +6,31 @@ import {
   IJS,
   Cmp,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Async Navigation"
 };
 
-export default function AsyncNavExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function AsyncNavExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           Use the <Cmp>curi-link</Cmp>'s <IJS>slot</IJS> as scoped-slot so you
           can know whether or not the link is currently navigating.
@@ -34,7 +46,7 @@ export default function AsyncNavExample() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/async-nav" />
       </HashSection>
 
@@ -42,3 +54,5 @@ export default function AsyncNavExample() {
     </React.Fragment>
   );
 }
+
+export { AsyncNavExample as component, contents };

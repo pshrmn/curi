@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -13,37 +14,59 @@ const meta = {
   title: "Apollo Integration"
 };
 
-export default function ApolloGuide() {
+const setupMeta = {
+  title: "Setup",
+  hash: "setup"
+};
+const looseMeta = {
+  title: "Loose Pairing",
+  hash: "loose-pairing"
+};
+const prefetchMeta = {
+  title: "Prefetching",
+  hash: "prefetch"
+};
+const tightMeta = {
+  title: "Tight Pairing",
+  hash: "tight-pairing",
+  children: [prefetchMeta]
+};
+
+const contents = [setupMeta, looseMeta, tightMeta];
+
+function ApolloGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        <a href="https://apollographql.com">Apollo</a> is a great solution for
-        managing an application's data using{" "}
-        <a href="http://graphql.org">GraphQL</a>.
-      </p>
-
-      <p>
-        There are a few different implementation strategies for integrating
-        Apollo and Curi based on how tightly you want them to be paired.
-      </p>
-
-      <Note>
         <p>
-          This guide only covers integration between Curi and Apollo. If you are
-          not already familiar with how to use Apollo, you will want to learn
-          that first.
+          <a href="https://apollographql.com">Apollo</a> is a great solution for
+          managing an application's data using{" "}
+          <a href="http://graphql.org">GraphQL</a>.
         </p>
 
         <p>
-          Also, this guide will only be referencing Apollo's React
-          implementation, but the principles are the same no matter how you
-          render your application.
+          There are a few different implementation strategies for integrating
+          Apollo and Curi based on how tightly you want them to be paired.
         </p>
-      </Note>
 
-      <HashSection title="Setup" id="setup">
+        <Note>
+          <p>
+            This guide only covers integration between Curi and Apollo. If you
+            are not already familiar with how to use Apollo, you will want to
+            learn that first.
+          </p>
+
+          <p>
+            Also, this guide will only be referencing Apollo's React
+            implementation, but the principles are the same no matter how you
+            render your application.
+          </p>
+        </Note>
+      </PlainSection>
+
+      <HashSection meta={setupMeta}>
         <p>
           Apollo's React package provides an <Cmp>ApolloProvider</Cmp> component
           for accessing your Apollo client throughout the application. The{" "}
@@ -69,7 +92,7 @@ ReactDOM.render((
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Loose Pairing" id="loose-pairing">
+      <HashSection meta={looseMeta}>
         <p>
           Apollo and Curi don't actually have to know about each other. Curi can
           create a response without doing any data fetching and let Apollo
@@ -161,7 +184,7 @@ const Noun = ({ response }) => (
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Tight Pairing" id="tight-pairing">
+      <HashSection meta={tightMeta}>
         <p>
           You can use your Apollo client instance to call queries in a route's{" "}
           <IJS>resolve</IJS> functions. <IJS>resolve</IJS> functions are
@@ -326,7 +349,7 @@ const Verb = ({ response }) => (
 )`}
         </CodeBlock>
 
-        <HashSection title="Prefetching" id="prefetch" tag="h3">
+        <HashSection meta={prefetchMeta} tag="h3">
           <p>
             One additional benefit of adding queries to routes using{" "}
             <IJS>resolve</IJS> functions is that you can prefetch data for a
@@ -380,3 +403,5 @@ router.route.prefetch(
     </React.Fragment>
   );
 }
+
+export { ApolloGuide as component, contents };

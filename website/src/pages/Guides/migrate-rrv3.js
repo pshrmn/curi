@@ -3,6 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
+  PlainSection,
   CodeBlock,
   Note,
   IJS,
@@ -13,50 +14,101 @@ const meta = {
   title: "React Router v2/3"
 };
 
-export default function MigrateReactRouterv3Guide() {
+const rrRoutesMeta = {
+  title: "With React Router",
+  hash: "routes-with-react-router"
+};
+const curiRoutesMeta = {
+  title: "With Curi",
+  hash: "routes-with-curi"
+};
+const routesMeta = {
+  title: "Routes",
+  hash: "routes",
+  children: [rrRoutesMeta, curiRoutesMeta]
+};
+
+const creatingMeta = {
+  title: "Creating the router",
+  hash: "creating-the-router"
+};
+
+const rrRenderingMeta = {
+  title: "React Router v2/3",
+  hash: "rendering-react-router"
+};
+const curiRenderingMeta = {
+  title: "Curi",
+  hash: "rendering-with-curi"
+};
+const renderingMeta = {
+  title: "Rendering",
+  hash: "rendering",
+  children: [rrRenderingMeta, curiRenderingMeta]
+};
+
+const linksMeta = {
+  title: "Links",
+  hash: "links"
+};
+
+const propsMeta = {
+  title: "Accessing router props from nested components",
+  hash: "router-props"
+};
+
+const contents = [
+  routesMeta,
+  creatingMeta,
+  renderingMeta,
+  linksMeta,
+  propsMeta
+];
+
+function MigrateReactRouterv3Guide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        Curi is mostly conceptually similar to React Router versions 2 and 3.
-      </p>
-      <ol>
-        <li>Both use a centralized router.</li>
-        <li>
-          Both routers are made up of route objects (although with React Router
-          some of these are disguised as JSX with <Cmp>Route</Cmp> components).
-        </li>
-        <li>
-          With both Reaft Router and Curi, routes can be nested. This can be
-          used to specify child routes that build off of the paths from their
-          parent routes.
-        </li>
-      </ol>
-      <p>
-        Migration from React Router v2/3 to Curi should not require a complete
-        reworking of your application, but there are some key differences.
-      </p>
-      <ol>
-        <li>
-          Curi's routing is handled entirely outside of React; there are no{" "}
-          <Cmp>Route</Cmp> components.
-        </li>
-        <li>
-          With Curi, when a nested route matches, only that route renders. Any
-          ancestor routes that also (partially) match are not rendered. This is
-          different from React Router, where ancestors of the best matched route
-          also render.
-        </li>
-      </ol>
+        <p>
+          Curi is mostly conceptually similar to React Router versions 2 and 3.
+        </p>
+        <ol>
+          <li>Both use a centralized router.</li>
+          <li>
+            Both routers are made up of route objects (although with React
+            Router some of these are disguised as JSX with <Cmp>Route</Cmp>{" "}
+            components).
+          </li>
+          <li>
+            With both Reaft Router and Curi, routes can be nested. This can be
+            used to specify child routes that build off of the paths from their
+            parent routes.
+          </li>
+        </ol>
+        <p>
+          Migration from React Router v2/3 to Curi should not require a complete
+          reworking of your application, but there are some key differences.
+        </p>
+        <ol>
+          <li>
+            Curi's routing is handled entirely outside of React; there are no{" "}
+            <Cmp>Route</Cmp> components.
+          </li>
+          <li>
+            With Curi, when a nested route matches, only that route renders. Any
+            ancestor routes that also (partially) match are not rendered. This
+            is different from React Router, where ancestors of the best matched
+            route also render.
+          </li>
+        </ol>
+      </PlainSection>
 
-      <HashSection title="Routes" id="routes">
+      <HashSection meta={routesMeta}>
         <p>Let’s get started with setting up our routes.</p>
-        <HashSection
-          title="With React Router"
-          id="routes-with-react-router"
-          tag="h3"
-        >
+
+        <HashSection meta={rrRoutesMeta} tag="h3">
           <p>
             In React Router v2/3, there are two ways to define routes. You can
             either use JavaScript objects or JSX <Cmp>Route</Cmp>s (which React
@@ -108,7 +160,7 @@ export default function MigrateReactRouterv3Guide() {
           </CodeBlock>
         </HashSection>
 
-        <HashSection title="With Curi" id="routes-with-curi" tag="h3">
+        <HashSection meta={curiRoutesMeta} tag="h3">
           <p>
             Routes in Curi are always JavaScript objects. Like React Router,
             each route object has a path property that describes the path
@@ -295,7 +347,7 @@ const routes = prepareRoutes([
         </p>
       </HashSection>
 
-      <HashSection title="Creating the router" id="creating-the-router">
+      <HashSection meta={creatingMeta}>
         <p>
           With React Router, you create your router by rendering a{" "}
           <Cmp>Router</Cmp>. That either takes the <Cmp>Route</Cmp> components
@@ -333,18 +385,14 @@ const router = curi(history, routes);`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Rendering" id="rendering">
+      <HashSection meta={renderingMeta}>
         <p>
           We will walk through the rendering differences between React Router
           and Curi by looking at what happens in each when we navigate to the
           URI <IJS>/inbox/test</IJS>.
         </p>
 
-        <HashSection
-          title="React Router v2/3"
-          id="rendering-react-router"
-          tag="h3"
-        >
+        <HashSection meta={rrRenderingMeta} tag="h3">
           <p>
             React Router uses the <Cmp>Router</Cmp> component to subscribe to
             location changes. Each time that the location changes, it walks over
@@ -381,7 +429,7 @@ const router = curi(history, routes);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection title="Curi" id="rendering-with-curi" tag="h3">
+        <HashSection meta={curiRenderingMeta} tag="h3">
           <p>
             With Curi, we also need to re-render our application every time that
             the location changes. We will do this by creating a root Curi
@@ -529,7 +577,7 @@ function render({ response }) {
         </HashSection>
       </HashSection>
 
-      <HashSection title="Links" id="links">
+      <HashSection meta={linksMeta}>
         <p>
           You will want to be able to navigate between routes in your
           application. React Router provides a <Cmp>Link</Cmp> component to do
@@ -623,10 +671,7 @@ const router = curi(history, routes, {
         </ul>
       </HashSection>
 
-      <HashSection
-        title="Accessing router props from nested components"
-        id="router-props"
-      >
+      <HashSection meta={propsMeta}>
         <p>
           React Router provides a <IJS>withRouter</IJS> higher-order component
           that will inject router props into the wrapped component.
@@ -657,12 +702,16 @@ export default () => (
         </CodeBlock>
       </HashSection>
 
-      <p>
-        At this point, hopefully you are comfortable with migrating from React
-        Router v2/3 to Curi. If there are any concepts not covered here that you
-        think should be, please feel free to open up an issue{" "}
-        <a href="https://github.com/pshrmn/curi/issues">on GitHub</a>.
-      </p>
+      <PlainSection>
+        <p>
+          At this point, hopefully you are comfortable with migrating from React
+          Router v2/3 to Curi. If there are any concepts not covered here that
+          you think should be, please feel free to open up an issue{" "}
+          <a href="https://github.com/pshrmn/curi/issues">on GitHub</a>.
+        </p>
+      </PlainSection>
     </React.Fragment>
   );
 }
+
+export { MigrateReactRouterv3Guide as component, contents };

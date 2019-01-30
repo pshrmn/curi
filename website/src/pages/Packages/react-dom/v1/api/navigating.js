@@ -7,20 +7,19 @@ import {
   Cmp
 } from "../../../../../components/package/common";
 
+const propsMeta = {
+  title: "Props",
+  hash: "Navigating-props"
+};
 export const meta = {
   title: "<Navigating>",
   hash: "Navigating",
-  children: [
-    {
-      title: "Props",
-      hash: "Navigating-props"
-    }
-  ]
+  children: [propsMeta]
 };
 
 export function NavigatingAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The <Cmp>Navigating</Cmp> component lets you know when the application
         is navigating and let users cancel the navigation. Its{" "}
@@ -52,8 +51,11 @@ export function NavigatingAPI() {
   }}
 </Navigating>`}
       </CodeBlock>
-      <HashSection tag="h3" title="Props" id="Navigating-props">
-        <HashSection tag="h4" title="children()" id="Navigating-children">
+      <HashSection tag="h3" meta={propsMeta}>
+        <HashSection
+          tag="h4"
+          meta={{ title: "children()", hash: "Navigating-children" }}
+        >
           <p>
             A function that returns a React node. The function will be called
             with a <IJS>cancel</IJS> function when navigation starts and with no

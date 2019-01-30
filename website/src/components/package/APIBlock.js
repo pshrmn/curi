@@ -12,7 +12,7 @@ const StyledAPIBlock = styled(HashSection)`
 
 export default function APIBlock({ children }) {
   return (
-    <StyledAPIBlock title="API" id="API">
+    <StyledAPIBlock meta={{ title: "API", hash: "API" }}>
       {children}
     </StyledAPIBlock>
   );

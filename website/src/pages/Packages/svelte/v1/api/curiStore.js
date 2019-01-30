@@ -13,7 +13,7 @@ export const meta = {
 
 export function CuriStoreAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         <IJS>@curi/svelte</IJS> components rely on being able to access router
         related values (<IJS>router</IJS>, <IJS>response</IJS>, and{" "}

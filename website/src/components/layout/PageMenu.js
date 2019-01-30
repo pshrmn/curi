@@ -3,7 +3,7 @@ import { Link } from "@curi/react-dom";
 import styled from "@emotion/styled";
 
 const StyledDiv = styled("div")`
-  width: 150px;
+  width: 200px;
 
   p {
     margin: 0;

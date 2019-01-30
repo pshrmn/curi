@@ -1,34 +1,48 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { HashSection, CodeBlock, IJS } from "../../components/guide/common";
+import {
+  PlainSection,
+  HashSection,
+  CodeBlock,
+  IJS
+} from "../../components/guide/common";
 
 const meta = {
   title: "Sync or Async"
 };
 
-export default function SyncAndAsyncGuide() {
+const thinkMeta = {
+  title: "Async Things to Think About",
+  hash: "think"
+};
+
+const contents = [thinkMeta];
+
+function SyncAndAsyncGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>Curi can have synchronous and asynchronous routes.</p>
+        <p>Curi can have synchronous and asynchronous routes.</p>
 
-      <p>
-        When a navigation event is triggered (e.g. clicking a link or button),
-        the router will match a route. If the route is synchronous, the response
-        will be emitted immediately. If the route is asynchronous, the response
-        will not be emitted until the route's async functions have finished.
-        This is useful for code splitting and preloading data for a route.
-      </p>
+        <p>
+          When a navigation event is triggered (e.g. clicking a link or button),
+          the router will match a route. If the route is synchronous, the
+          response will be emitted immediately. If the route is asynchronous,
+          the response will not be emitted until the route's async functions
+          have finished. This is useful for code splitting and preloading data
+          for a route.
+        </p>
 
-      <p>
-        By default, routes are synchronous. If a route has any functions in its{" "}
-        <IJS>resolve</IJS> object, it becomes async.
-      </p>
+        <p>
+          By default, routes are synchronous. If a route has any functions in
+          its <IJS>resolve</IJS> object, it becomes async.
+        </p>
 
-      <CodeBlock>
-        {`// sync
+        <CodeBlock>
+          {`// sync
 { name: "Home", path: "" },
 
 // async
@@ -40,9 +54,10 @@ export default function SyncAndAsyncGuide() {
     body: () => import("./components/User"),
   }
 }`}
-      </CodeBlock>
+        </CodeBlock>
+      </PlainSection>
 
-      <HashSection title="Async Things to Think About" id="think">
+      <HashSection meta={thinkMeta}>
         <p>
           For the most part, it shouldn't matter to you (or your users) whether
           Curi is sync or async, but there are a couple of things that you
@@ -115,3 +130,5 @@ const router = curi(history, routes, {
     </React.Fragment>
   );
 }
+
+export { SyncAndAsyncGuide as component, contents };

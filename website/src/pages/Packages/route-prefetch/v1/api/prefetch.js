@@ -8,14 +8,19 @@ import {
   ScrollableTable
 } from "../../../../../components/package/common";
 
+const argumentsMeta = {
+  title: "Arguments",
+  hash: "arguments"
+};
 export const meta = {
   title: "prefetch()",
-  hash: "prefetch"
+  hash: "prefetch",
+  children: [argumentsMeta]
 };
 
 export function PrefetchAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         A function to create the prefetch route interaction. When you create
         your router, the result is passed to the router using the `route`
@@ -34,7 +39,7 @@ const router = curi(history, routes, {
 router.route.prefetch("Some Route");`}
       </CodeBlock>
 
-      <HashSection title="Arguments" id="arguments" tag="h3">
+      <HashSection meta={argumentsMeta} tag="h3">
         <ScrollableTable>
           <thead>
             <tr>

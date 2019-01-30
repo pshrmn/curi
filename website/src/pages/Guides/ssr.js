@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -13,29 +14,101 @@ const meta = {
   title: "Server-Side Rendering"
 };
 
-export default function UsingSideEffectsGuide() {
+const reuseMeta = {
+  title: "Reusing Code",
+  hash: "reuse"
+};
+
+const frameworkMeta = {
+  title: "Web Framework",
+  hash: "framework"
+};
+
+const clientMeta = {
+  title: "Client-Side Routes",
+  hash: "client-side-routes"
+};
+const staticMeta = {
+  title: "Static Assets",
+  hash: "static-assets"
+};
+const orderMeta = {
+  title: "Path Order",
+  hash: "path-order"
+};
+const requestMeta = {
+  title: "Request Matching",
+  hash: "request-matching",
+  children: [clientMeta, staticMeta, orderMeta]
+};
+
+const handlerMeta = {
+  title: "Render Handler",
+  hash: "handler"
+};
+
+const historyMeta = {
+  title: "History",
+  hash: "history"
+};
+const routesMeta = {
+  title: "Routes",
+  hash: "routes"
+};
+const autoMeta = {
+  title: "Automatic Redirects",
+  hash: "automatic-redirects"
+};
+const routerMeta = {
+  title: "Router",
+  hash: "router",
+  children: [historyMeta, routesMeta, autoMeta]
+};
+
+const redirectMeta = {
+  title: "Redirect Responses",
+  hash: "redirect-responses"
+};
+const responseMeta = {
+  title: "Handling the Response",
+  hash: "handling-response",
+  children: [redirectMeta]
+};
+
+const contents = [
+  reuseMeta,
+  frameworkMeta,
+  requestMeta,
+  handlerMeta,
+  routerMeta,
+  responseMeta
+];
+
+function SSRGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        Server-side rendering (SSR) allows an application to generate the HTML
-        for pages on the server. While not strictly necessary for single-page
-        applications, server-side rendering can potentially be beneficial by:
-      </p>
-      <ol>
-        <li>Speeding up the initial render time.</li>
-        <li>
-          Making it easier for web crawlers to view the application's content
-          (which <em>may</em> improve SEO).
-        </li>
-      </ol>
-      <p>
-        This guide will cover how to setup server-side rendering and some of the
-        issues that you may run into.
-      </p>
+        <p>
+          Server-side rendering (SSR) allows an application to generate the HTML
+          for pages on the server. While not strictly necessary for single-page
+          applications, server-side rendering can potentially be beneficial by:
+        </p>
+        <ol>
+          <li>Speeding up the initial render time.</li>
+          <li>
+            Making it easier for web crawlers to view the application's content
+            (which <em>may</em> improve SEO).
+          </li>
+        </ol>
+        <p>
+          This guide will cover how to setup server-side rendering and some of
+          the issues that you may run into.
+        </p>
+      </PlainSection>
 
-      <HashSection title="Reusing Code" id="reuse">
+      <HashSection meta={reuseMeta}>
         <p>
           Being able to reuse code on the client and server is one of the
           benefits of JavaScript. If you are using syntax in your client-side
@@ -53,24 +126,27 @@ export default function UsingSideEffectsGuide() {
         <CodeBlock lang="bash">
           {`npm install --save-dev @babel/node`}
         </CodeBlock>
+
         <Warning>
           <IJS>@babel/node</IJS> should only be used in development. For
           production, the server's modules should be pre-compiled (using Babel).
         </Warning>
       </HashSection>
 
-      <HashSection title="Web Framework" id="framework">
+      <HashSection meta={frameworkMeta}>
         <p>
           In order to render JavaScript on the server, you will need to use
           Node. This guide will be using the{" "}
           <a href="https://expressjs.com/">Express</a> web framework.
         </p>
+
         <Note>
           <p>
             There are ways to mix Node server-side rendering with non-Node
             frameworks, but that is outside of the scope of this guide.
           </p>
         </Note>
+
         <p>
           Familiarity with Express is not expected, so to get you started, this
           guide will provide some code snippets for a basic setup.
@@ -95,6 +171,7 @@ app.listen("8080", () => {
   console.log("Server is running.");
 });`}
         </CodeBlock>
+
         <CodeBlock lang="bash">
           {`# tell node to start the server
 # (development only!)
@@ -107,7 +184,7 @@ babel-node server.js`}
         </p>
       </HashSection>
 
-      <HashSection title="Request Matching" id="request-matching">
+      <HashSection meta={requestMeta}>
         <p>
           A web framework receives requests from the client and returns
           responses.
@@ -127,11 +204,8 @@ babel-node server.js`}
   res.send("Hey!");
 })`}
         </CodeBlock>
-        <HashSection
-          tag="h3"
-          title="Client-Side Routes"
-          id="client-side-routes"
-        >
+
+        <HashSection tag="h3" meta={clientMeta}>
           <p>
             Instead of telling the server about every single valid client-side
             route, a wildcard path is used to match every request. Determining
@@ -156,7 +230,7 @@ app.get("*", renderHandler);`}
           </Note>
         </HashSection>
 
-        <HashSection tag="h3" title="Static Assets" id="static-assets">
+        <HashSection tag="h3" meta={staticMeta}>
           <p>
             Page requests aren't the only requests that the framework will
             handle. Requests for static resources, like scripts, stylesheet, and
@@ -177,7 +251,7 @@ app.get("*", renderHandler);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h3" title="Path Order" id="path-order">
+        <HashSection tag="h3" meta={orderMeta}>
           <p>
             Express matches against paths in the order that they are registered,
             so the static files path needs to be defined before the wildcard
@@ -196,7 +270,7 @@ app.get("*", renderHandler);`}
         </HashSection>
       </HashSection>
 
-      <HashSection title="Render Handler" id="handler">
+      <HashSection meta={handlerMeta}>
         <p>
           The render handler function receives the request object and a response
           object. The response object is used to build and send a response to
@@ -205,7 +279,7 @@ app.get("*", renderHandler);`}
 
         <CodeBlock>
           {`// renderer.js
-export default function renderHandler(req, res) {
+function renderHandler(req, res) {
 
 }
 
@@ -214,6 +288,7 @@ const renderHandler = require("./renderer");
 
 app.get("*", renderHandler)`}
         </CodeBlock>
+
         <Note>
           <p>
             If you are setting up a server without server-side rendering, the{" "}
@@ -222,16 +297,17 @@ app.get("*", renderHandler)`}
             route.
           </p>
         </Note>
+
         <CodeBlock>
           {`const index = path.join(__dirname, "public", "index.html");
           
-export default function renderHandler(req, res) {
+function renderHandler(req, res) {
   res.sendFile(index);
 }`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Router" id="router">
+      <HashSection meta={routerMeta}>
         <p>
           A router instance will be created for every single request. This is a
           big reason why we wrap the routes array in a <IJS>prepareRoutes</IJS>{" "}
@@ -256,7 +332,7 @@ function handler(req, res) {
 
         <p>Where do the history and routes come from?</p>
 
-        <HashSection tag="h3" title="History" id="history">
+        <HashSection tag="h3" meta={historyMeta}>
           <p>
             On the client-side, a single-page application uses{" "}
             <IJS>@hickory/browser</IJS> to create a history instance. However,
@@ -264,9 +340,14 @@ function handler(req, res) {
             <IJS>@hickory/in-memory</IJS> package is used to create an
             equivalent history instance.
           </p>
+
           <CodeBlock lang="bash">{`npm install @hickory/in-memory`}</CodeBlock>
-          An in-memory history takes an array of locations. For server-side
-          rendering, we want to pass it the location from the request.
+
+          <p>
+            An in-memory history takes an array of locations. For server-side
+            rendering, we want to pass it the location from the request.
+          </p>
+
           <CodeBlock>
             {`// handler.js
 import InMemory from "@hickory/in-memory";
@@ -279,7 +360,7 @@ function handler(req, res) {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h3" title="Routes" id="routes">
+        <HashSection tag="h3" meta={routesMeta}>
           <p>
             Ideally, you will be able to re-use your client side routes on the
             server, but if the client routes use browser only APIs, you may need
@@ -324,11 +405,7 @@ export default prepareRoutes([
           </CodeBlock>
         </HashSection>
 
-        <HashSection
-          tag="h3"
-          title="Automatic Redirects"
-          id="automatic-redirects"
-        >
+        <HashSection tag="h3" meta={autoMeta}>
           <p>
             Curi automatically redirects to a new location when a response with
             a <IJS>redirectTo</IJS> property is generated. On the client, this
@@ -336,6 +413,7 @@ export default prepareRoutes([
             redirect and manually redirecting yourself. However, on the server
             it can cause issues.
           </p>
+
           <p>
             The issue happens because when Curi automatically redirects, another
             response is created for the location that Curi redirects to. If this
@@ -343,6 +421,7 @@ export default prepareRoutes([
             you'll render the redirected location's response instead of the
             initial response.
           </p>
+
           <p>
             Curi's <IJS>automaticRedirects</IJS> option lets you disable
             automatic redirects when its value is <IJS>false</IJS>. This lets
@@ -360,7 +439,7 @@ export default prepareRoutes([
         </HashSection>
       </HashSection>
 
-      <HashSection title="Handling the Response" id="handling-response">
+      <HashSection meta={responseMeta}>
         <p>
           When the router is created, it will start generating a response by
           matching its <IJS>history</IJS> object's current location. If the
@@ -387,12 +466,14 @@ export default prepareRoutes([
           depends on what UI renderer you are using, but the process is
           approximately the same for most renderering libraries.
         </p>
+
         <p>
           Here, we will assume that you are using React. The{" "}
           <IJS>react-dom</IJS> package (through its <IJS>server</IJS> module),
           provides a <IJS>renderToString</IJS> method, which will render an
           application as a string.
         </p>
+
         <p>
           Rendering with React on the server is essentially the same as
           rendering on the client. We create a <Cmp>Router</Cmp> and use{" "}
@@ -429,23 +510,27 @@ function renderHandler(req, res) {
           <Cmp>head</Cmp>,<Cmp>body</Cmp>, <Cmp>script</Cmp>, etc. tags that are
           required for the full HTML page.
         </p>
+
         <p>
           We can write a function that takes the string created by{" "}
           <IJS>renderToString</IJS>
           and inserts it into the full HTML string for a page.
         </p>
+
         <p>
           For a React application, the markup string should be set as the child
           of its container element. If you render into the <IJS>#root</IJS>{" "}
           element on the client, the HTML should have a <IJS>#root</IJS>{" "}
           element.
         </p>
+
         <p>
           Any JavaScript scripts that need to be rendered should also be
           included in the HTML. Make sure that their paths are absolute; if the
           path is relative, then you will run into errors resolving the location
           for nested routes!
         </p>
+
         <p>
           If your routes set <IJS>title</IJS> strings on the <IJS>response</IJS>
           , you can also pass that value to the markup insertion function and
@@ -498,11 +583,7 @@ function renderHandler(req, res) {
           </p>
         </Note>
 
-        <HashSection
-          tag="h3"
-          title="Redirect Responses"
-          id="redirect-responses"
-        >
+        <HashSection tag="h3" meta={redirectMeta}>
           <p>
             If a route matches and it redirects, you can handle it without
             rendering the application. A <IJS>response</IJS> is a redirect if it
@@ -534,3 +615,5 @@ function renderHandler(req, res) {
     </React.Fragment>
   );
 }
+
+export { SSRGuide as component, contents };

@@ -4,19 +4,31 @@ import {
   HashSection,
   Cmp,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Basics"
 };
 
-export default function BasicExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function AsyncExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           This example uses the <Cmp>Navigating</Cmp> component to render a
           button when there is an active asynchronous navigation. Clicking the
@@ -24,7 +36,7 @@ export default function BasicExample() {
         </p>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/async-nav" />
       </HashSection>
 
@@ -32,3 +44,5 @@ export default function BasicExample() {
     </React.Fragment>
   );
 }
+
+export { AsyncExample as component, contents };

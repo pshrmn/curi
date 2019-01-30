@@ -8,24 +8,23 @@ import {
   ScrollableTable
 } from "../../../../../components/package/common";
 
+const argumentsMeta = {
+  title: "Arguments",
+  hash: "curiProvider-arguments"
+};
+const propsMeta = {
+  title: "Props",
+  hash: "curiProvider-props"
+};
 export const meta = {
   title: "curiProvider()",
   hash: "curiProvider",
-  children: [
-    {
-      title: "Arguments",
-      hash: "curiProvider-arguments"
-    },
-    {
-      title: "Props",
-      hash: "curiProvider-props"
-    }
-  ]
+  children: [argumentsMeta, propsMeta]
 };
 
 export function CuriProviderAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The application needs a component at its root to re-render the
         application when new responses are emitted and to make routing related
@@ -69,8 +68,11 @@ function App() {
 }`}
       </CodeBlock>
 
-      <HashSection tag="h3" title="Arguments" id="curiProvider-arguments">
-        <HashSection tag="h4" title="router" id="curiProvider-router">
+      <HashSection tag="h3" meta={argumentsMeta}>
+        <HashSection
+          tag="h4"
+          meta={{ title: "router", hash: "curiProvider-router" }}
+        >
           <p>A Curi router.</p>
 
           <CodeBlock>
@@ -82,8 +84,14 @@ const Router = curiProvider(router);`}
         </HashSection>
       </HashSection>
 
-      <HashSection tag="h3" title="Props" id="curiProvider-props">
-        <HashSection tag="h4" title="children" id="curiProvider-render">
+      <HashSection
+        tag="h3"
+        meta={{ title: "Props", hash: "curiProvider-props" }}
+      >
+        <HashSection
+          tag="h4"
+          meta={{ title: "children", hash: "curiProvider-render" }}
+        >
           <p>
             <IJS>children</IJS> is a render-invoked function. When it is called,
             it will be passed an object with three properties:

@@ -14,7 +14,7 @@ export const meta = {
 
 export function BlockAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The <Cmp>curi-block</Cmp> component can be used to automatically block
         navigation from a page. This will only block in-app navigation. If the

@@ -13,7 +13,7 @@ export const meta = {
 
 export function PreferDefaultAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         When using dynamic import syntax (<IJS>import("someModule")</IJS>
         ), the resolved module is a module object containing all of the exports

@@ -1,17 +1,28 @@
 import React from "react";
 
-import { HashSection, Cmp, OnGithub } from "../../../components/example/common";
+import {
+  HashSection,
+  Cmp,
+  OnGithub,
+  onGitHubMeta
+} from "../../../components/example/common";
 
 const meta = {
   title: "Script Tags"
 };
 
-export default function ScriptTagExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+
+const contents = [explanationMeta, onGitHubMeta];
+function ScriptTagExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           This example uses unbundled JavaScript and script tags to serve its
           content. If you want to use <Cmp>script</Cmp> tags in your
@@ -25,3 +36,5 @@ export default function ScriptTagExample() {
     </React.Fragment>
   );
 }
+
+export { ScriptTagExample as component, contents };

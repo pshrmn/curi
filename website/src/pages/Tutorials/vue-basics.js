@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Outline,
@@ -11,28 +12,100 @@ import {
   ScrollableTable
 } from "../../components/tutorial/common";
 
-export default function VueBasicsTutorial() {
+const demoMeta = {
+  title: "Demo",
+  hash: "demo"
+};
+
+const setupMeta = { title: "Setup", hash: "setup" };
+
+const historyMeta = { title: "History and Locations", hash: "history" };
+
+const pathMeta = {
+  title: "Path basics",
+  hash: "path-basics"
+};
+const routesMeta = {
+  title: "Defining the Routes",
+  hash: "defining-routes",
+  children: [pathMeta]
+};
+
+const routerMeta = { title: "The Router", hash: "router" };
+
+const responseMeta = {
+  title: "Responses and Navigation",
+  hash: "responses"
+};
+const renderingMeta = {
+  title: "Rendering with Vue",
+  hash: "rendering",
+  children: [responseMeta]
+};
+
+const linkMeta = {
+  title: "The <curi-link> Component",
+  hash: "link-component"
+};
+const menuMeta = { title: "A Navigation Menu", hash: "nav-menu" };
+const bookLinkMeta = { title: "Linking to Books", hash: "book-links" };
+const navigatingMeta = {
+  title: "Navigating between locations",
+  hash: "navigating",
+  children: [linkMeta, menuMeta, bookLinkMeta]
+};
+
+const navigateMeta = {
+  title: "The Router's Navigate Method",
+  hash: "nav-method"
+};
+const shoppingMeta = {
+  title: "Let's go shopping",
+  hash: "shopping",
+  children: [navigateMeta]
+};
+
+const nextMeta = { title: "What's next?", hash: "next" };
+
+const contents = [
+  //demoMeta,
+  setupMeta,
+  historyMeta,
+  routesMeta,
+  routerMeta,
+  renderingMeta,
+  navigatingMeta,
+  shoppingMeta,
+  nextMeta
+];
+
+function VueBasicsTutorial() {
   return (
     <React.Fragment>
-      <h1>Vue Basics Tutorial</h1>
-      <p>
-        In this tutorial, we will be building a website for a bookstore. This
-        will focus on the front-end part of the application.
-      </p>
-      <Outline>
-        <ul>
-          <li>Learn how to define routes and setup the Curi router.</li>
-          <li>
-            Learn how to render Vue components based on the current location.
-          </li>
-          <li>Learn how to navigate within the application.</li>
-        </ul>
-      </Outline>
-      {/*<HashSection title="Demo" id="demo">
+      <PlainSection>
+        <h1>Vue Basics Tutorial</h1>
+        <p>
+          In this tutorial, we will be building a website for a bookstore. This
+          will focus on the front-end part of the application.
+        </p>
+        <Outline>
+          <ul>
+            <li>Learn how to define routes and setup the Curi router.</li>
+            <li>
+              Learn how to render Vue components based on the current location.
+            </li>
+            <li>Learn how to navigate within the application.</li>
+          </ul>
+        </Outline>
+      </PlainSection>
+
+      {/*<HashSection meta={demoMeta}>
       <p>You can run a demo of the site we are building with CodeSandbox.</p>
+
       <CodeSandboxDemo id="github/curijs/vue-basic-tutorial/tree/master/" />
 </HashSection>*/}
-      <HashSection title="Setup" id="setup">
+
+      <HashSection meta={setupMeta}>
         <p>
           We will be using{" "}
           <a href="https://github.com/vuejs/vue-cli">
@@ -40,6 +113,7 @@ export default function VueBasicsTutorial() {
           </a>{" "}
           to develop this website.
         </p>
+
         <Note>
           <p>
             The instructions here assume that you have NodeJS and NPM > 5.2
@@ -49,11 +123,13 @@ export default function VueBasicsTutorial() {
             boilerplate will be different, but the differences are minor.
           </p>
         </Note>
+
         <p>
           Begin by opening a terminal and navigating to the directory where you
           want to save your code. Then, we will use <IJS>@vue/cli</IJS> to
           create the application. We
         </p>
+
         <CodeBlock lang="bash">
           {`# install vue-cli if it isn't already
 npm install --global @vue/cli
@@ -66,6 +142,7 @@ cd curi-bookstore
 # start the dev server
 yarn serve`}
         </CodeBlock>
+
         <p>
           The dev server will automatically update when we change files, so we
           can leave that running. We will still be working in the terminal, so
@@ -73,9 +150,11 @@ yarn serve`}
           application's directory. Once you have done that, there are a few
           packages that need to be installed.
         </p>
+
         <CodeBlock lang="bash">
           {`yarn add @hickory/browser @curi/router @curi/vue`}
         </CodeBlock>
+
         <p>
           The <IJS>@hickory/browser</IJS> package will be used to create an
           object that interacts with the browser to power navigation (e.g.
@@ -85,13 +164,15 @@ yarn serve`}
           components that interact with the router.
         </p>
       </HashSection>
-      <HashSection title="History and Locations" id="history">
+
+      <HashSection meta={historyMeta}>
         <p>
           URIs can be broken into parts to identify a location. With a
           single-page application, we don't care about the URI's protocol (http,
           https) or its hostname (www.example.com). The properties we care about
           are the <IJS>pathname</IJS>, <IJS>hash</IJS>, and <IJS>query</IJS>.
         </p>
+
         <CodeBlock lang="javascript">
           {`// uri = "https://example.com/one?key=value#id
 {
@@ -100,12 +181,14 @@ yarn serve`}
   hash: "id"
 }`}
         </CodeBlock>
+
         <p>
           The router will match its routes against a location's{" "}
           <IJS>pathname</IJS> to figure out which route matches. The{" "}
           <IJS>query</IJS> and <IJS>hash</IJS> values are not used for matching
           routes.
         </p>
+
         <p>
           Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
           library to create a history object that will enable us to navigate
@@ -121,12 +204,14 @@ yarn serve`}
           address bar) without making a request to a server and reloading the
           page.
         </p>
+
         <p>
           We can import the <IJS>Browser</IJS> function from{" "}
           <IJS>@hickory/browser</IJS> in our main file (<IJS>src/main.js</IJS>,
           which <IJS>@vue/cli</IJS> created for us). To create a history object,
           we call that function.
         </p>
+
         <Note>
           <p>
             The history object can be configured with{" "}
@@ -136,6 +221,7 @@ yarn serve`}
             , but we will stick with the defaults.
           </p>
         </Note>
+
         <CodeBlock lang="javascript" data-line="3,9">
           {`// src/main.js
 import Vue from 'vue'
@@ -151,6 +237,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')`}
         </CodeBlock>
+
         <Note>
           <p>
             Eslint will complain here because we haven't actually used the new{" "}
@@ -159,57 +246,62 @@ new Vue({
           </p>
         </Note>
       </HashSection>
-      <HashSection title="Defining the Routes" id="defining-routes">
+
+      <HashSection meta={routesMeta}>
         <p>
           Routes are JavaScript objects that define the valid locations for a
           router. They have a <IJS>name</IJS> and a <IJS>path</IJS>.
         </p>
+
         <CodeBlock lang="javascript">
           {`// this is a route
 { name: "Home", path: "" }`}
         </CodeBlock>
+
         <p>
           A route's <IJS>name</IJS> needs to be unique. We will use route names
           when we navigate within the application. A route's <IJS>path</IJS>{" "}
           describes the location pathname that it should match.
         </p>
 
-        <HashSection
-          title="Path basics"
-          id="path-basics"
-          className="aside"
-          tag="h3"
-        >
+        <HashSection meta={pathMeta} className="aside" tag="h3">
           <p>
             Route paths are strings describing the pathname segments they should
             match.
           </p>
+
           <CodeBlock lang="javascript">
             {`{ path: '' } // matches "/"
 { path: 'about/stuff' } // matches "/about/stuff"`}
           </CodeBlock>
+
           <p>Paths never begin with a slash.</p>
+
           <CodeBlock lang="javascript">
             {`// yes
 { path: '' }
 // no
 { path: '/' }`}
           </CodeBlock>
+
           <p>
             Paths can include dynamic parameters. These are specified with a
             string that starts with a colon (<IJS>:</IJS>) followed by the name
             of the params.
           </p>
+
           <CodeBlock lang="javascript">
             {`// a param named "id"
 { path: ':id' }`}
           </CodeBlock>
+
           <p>
             Routes can be nested using the <IJS>children</IJS> property of a
             route. A nested route inherits the path from its ancestor route(s),
             so its <IJS>path</IJS> is only the additional part of the pathname
             that should be matched.
           </p>
+
           <CodeBlock lang="javascript">
             {`{
   name: "Parent",
@@ -223,7 +315,9 @@ new Vue({
 }`}
           </CodeBlock>
         </HashSection>
+
         <p>The website will start with four routes.</p>
+
         <ScrollableTable>
           <thead>
             <tr>
@@ -263,6 +357,7 @@ new Vue({
             </tr>
           </tbody>
         </ScrollableTable>
+
         <Note>
           <p>
             The catch all route uses a regular expression syntax to indicate
@@ -275,12 +370,15 @@ new Vue({
             advanced path syntax.
           </p>
         </Note>
+
         <p>
           Inside of the <IJS>src</IJS> directory, we will create a{" "}
           <IJS>routes.js</IJS> file where we can define the application's
           routes.
         </p>
+
         <CodeBlock lang="bash">{`touch src/routes.js`}</CodeBlock>
+
         <CodeBlock lang="javascript">
           {`// src/routes.js
 export default [
@@ -303,7 +401,8 @@ export default [
 ];`}
         </CodeBlock>
       </HashSection>
-      <HashSection title="The Router" id="router">
+
+      <HashSection meta={routerMeta}>
         <p>
           With the history object created and the routes defined, we are ready
           to create the router. Back in the <IJS>src/index.js</IJS> file, we
@@ -313,6 +412,7 @@ export default [
           <IJS>curi()</IJS> function and passing it the <IJS>history</IJS>{" "}
           object and the <IJS>routes</IJS> array.
         </p>
+
         <CodeBlock lang="javascript" data-line="3,6,12">
           {`// src/main.js
 import Vue from 'vue'
@@ -331,12 +431,14 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')`}
         </CodeBlock>
+
         <Note>
           <p>
             The Eslint warning has now moved to the <IJS>router</IJS>, but this
             is still nothing to worry about.
           </p>
         </Note>
+
         <p>
           We will add router support to the Vue application using a plugin. This
           plugin does a couple of things. First, it makes some Curi components
@@ -349,6 +451,7 @@ new Vue({
           <IJS>CuriPlugin</IJS> is installed, the <IJS>router</IJS> as passed in
           the options object.
         </p>
+
         <CodeBlock lang="javascript" data-line="5,14">
           {`// src/main.js
 import Vue from 'vue'
@@ -370,17 +473,14 @@ new Vue({
 }).$mount('#app')`}
         </CodeBlock>
       </HashSection>
-      <HashSection title="Rendering with Vue" id="rendering">
+
+      <HashSection meta={renderingMeta}>
         <p>
           We can now render our application. We will re-use the provide{" "}
           <IJS>App.vue</IJS> file.
         </p>
-        <HashSection
-          title="Responses and Navigation"
-          id="responses"
-          className="aside"
-          tag="h3"
-        >
+
+        <HashSection meta={responseMeta} className="aside" tag="h3">
           <p>
             Whenever Curi receives a location, it matches its routes against it
             and generates a response. This is an object with data related to the
@@ -388,6 +488,7 @@ new Vue({
             ourselves, but for now the important thing to know is that the
             response lets us know about the current route.
           </p>
+
           <CodeBlock lang="javascript">
             {`// a sample response object
 {
@@ -401,12 +502,14 @@ new Vue({
   status: 200
 }`}
           </CodeBlock>
+
           <p>
             The router uses an observer model to let functions subscribe to be
             called when a new response is generated. The <IJS>CuriPlugin</IJS>{" "}
             sets up an observer so that it can trigger a re-render whenever
             there is a new one.
           </p>
+
           <p>
             The <IJS>navigation</IJS> object contains additional information
             about a navigation that doesn't make sense to include in the
@@ -416,6 +519,7 @@ new Vue({
             modals.
           </p>
         </HashSection>
+
         <p>
           Most of the time, the response is the only property you will need to
           use to render, but the other two may occasionally be useful.
@@ -426,6 +530,7 @@ new Vue({
           to identify which route matched. We can make this even easier by
           adding another property to the response: <IJS>body</IJS>.
         </p>
+
         <p>
           Earlier it was mentioned that response objects can be modified. This
           is done by returning an object from a route's <IJS>response()</IJS>{" "}
@@ -436,6 +541,7 @@ new Vue({
           <IJS>body</IJS> property, that value will be set on our response
           object.
         </p>
+
         <CodeBlock lang="javascript">
           {`{
   name: "Home",
@@ -453,46 +559,55 @@ new Vue({
   }
 }`}
         </CodeBlock>
+
         <p>
           If the return object's <IJS>body</IJS> property is a Vue component, we
           can render it using <Cmp>Component :is</Cmp>.
         </p>
+
         <p>
           We haven't actually defined components for our routes yet, so we
           should throw together some placeholders.
         </p>
+
         <CodeBlock lang="bash">
           {`touch src/components/Home.vue src/components/Book.vue \\
   src/components/Checkout.vue src/components/NotFound.vue`}
         </CodeBlock>
+
         <CodeBlock lang="html">
           {`<!-- src/components/Home.vue -->
 <template>
   <div>Home</div>
 </template>`}
         </CodeBlock>
+
         <CodeBlock lang="html">
           {`<!-- src/components/Book.vue -->
 <template>
   <div>Book</div>
 </template>`}
         </CodeBlock>
+
         <CodeBlock lang="html">
           {`<!-- src/components/Checkout.vue -->
 <template>
   <div>Checkout</div>
 </template>`}
         </CodeBlock>
+
         <CodeBlock lang="html">
           {`<!-- src/components/NotFound.vue -->
 <template>
   <div>Not Found</div>
 </template>`}
         </CodeBlock>
+
         <p>
           These components can be imported in <IJS>src/routes.js</IJS> and
           attached to their respective routes.
         </p>
+
         <CodeBlock lang="javascript" data-line="2-5,11-15,20-24,29-33,38-42">
           {`// src/routes.js
 import Home from './components/Home';
@@ -539,6 +654,7 @@ export default [
   }
 ];`}
         </CodeBlock>
+
         <p>
           We can now update <IJS>App.vue</IJS> to render{" "}
           <IJS>response.body</IJS> as a component, which as mentioned above is
@@ -552,55 +668,56 @@ export default [
 </template>
 `}
         </CodeBlock>
+
         <p>
           We can also remove the <Cmp>HelloWorld</Cmp> component.
         </p>
+
         <CodeBlock lang="bash">{`rm src/components/HelloWorld.vue`}</CodeBlock>
+
         <p>
           At this point in time our app is rendering, but is isn't very
           interesting because we cannot navigate between locations.
         </p>
       </HashSection>
-      <HashSection title="Navigating between locations" id="navigating">
+
+      <HashSection meta={navigatingMeta}>
         <p>
           The <IJS>CuriPlugin</IJS> makes a <Cmp>curi-link</Cmp> component
           available with the appliaction. We can use that to navigate between
           locations within our application.
         </p>
-        <HashSection
-          title={
-            <span>
-              The <Cmp>curi-link</Cmp> Component
-            </span>
-          }
-          id="link-component"
-          className="aside"
-          tag="h3"
-        >
+
+        <HashSection meta={linkMeta} className="aside" tag="h3">
           <p>
             Navigation isn't done by manually typing the pathname of the
             location the link should navigate to. Instead, we specify the name
             of the route using the <IJS>to</IJS> prop.
           </p>
+
           <CodeBlock lang="html">
             {`<!-- { name: "Home", path: "" } -->
 <curi-link to="Home">Home</curi-link>
 <!-- <a href="/">Home</a> -->`}
           </CodeBlock>
+
           <p>
             If a route has params, we provide these to the <Cmp>curi-link</Cmp>{" "}
             as a <IJS>params</IJS> object. For a nested route, we would also
             need to provide params for any ancestor routes.
           </p>
+
           <CodeBlock lang="html">
             {`<!-- { name: "Book", path: "book/:id" } -->
 <curi-link to="Book" :params="{ id: 7 }">The Dark Forest</curi-link>
 <!-- <a href="/book/7">The Dark Forest</a> -->`}
           </CodeBlock>
+
           <p>
             The <Cmp>curi-link</Cmp> is only for in-app navigation. If you want
             to link to pages outside of the application, use an anchor.
           </p>
+
           <CodeBlock lang="html">
             {`<!-- in-app -->
 <curi-link to="Some Route">Some Route</curi-link>
@@ -608,10 +725,12 @@ export default [
 <!-- out of app -->
 <a href="https://github.com">GitHub</a>`}
           </CodeBlock>
+
           <p>
             If you need to attach query or hash data to a <Cmp>curi-link</Cmp>,
             use the <IJS>query</IJS> and <IJS>hash</IJS> props.
           </p>
+
           <CodeBlock lang="html">
             {`<!-- { name: "Checkout", path: "checkout" } -->
 <curi-link to="Checkout" :query="a=123">Checkout</curi-link>
@@ -619,12 +738,14 @@ export default [
           </CodeBlock>
         </HashSection>
 
-        <HashSection title="A Navigation Menu" id="nav-menu" tag="h3">
+        <HashSection meta={menuMeta} tag="h3">
           <p>
             We will start with creating a navigation menu component with links
             to our home page and checkout page.
           </p>
+
           <CodeBlock lang="bash">{`touch src/components/NavMenu.vue`}</CodeBlock>
+
           <CodeBlock lang="html">
             {`<!-- src/components/NavMenu.vue -->
 <template>
@@ -640,11 +761,13 @@ export default [
   </nav>
 </template>`}
           </CodeBlock>
+
           <p>
             We can import that in our <IJS>App.vue</IJS> file and add it to our
             template. This is a good opportunity to also add some structure to
             the elements in the template.
           </p>
+
           <CodeBlock lang="html">
             {`<!-- src/App.vue -->
 <template>
@@ -671,17 +794,20 @@ export default [
           </CodeBlock>
         </HashSection>
 
-        <HashSection title="Linking to Books" id="book-links" tag="h3">
+        <HashSection meta={bookLinkMeta} tag="h3">
           <p>
             We want to be able to link to individual books from the home page.
             First, we need data about the books. For now, we're going to
             hard-code the books in the <IJS>src/books.js</IJS> module.
           </p>
+
           <CodeBlock lang="bash">{`touch src/books.js`}</CodeBlock>
+
           <p>
             You can copy+paste or modify the data, but the structure of the
             provided data should stay the same.
           </p>
+
           <CodeBlock lang="javascript">
             {`// src/books.js
 export default [
@@ -722,10 +848,12 @@ export default [
   }
 ];`}
           </CodeBlock>
+
           <p>
             The data can be imported in the <Cmp>Home</Cmp> component. We will
             iterate over the books with a <Cmp>Link</Cmp> to each one.
           </p>
+
           <CodeBlock lang="html">
             {`<!-- src/components/Home.vue -->
 <template>
@@ -751,6 +879,7 @@ export default [
   }
 </script>`}
           </CodeBlock>
+
           <p>
             Now that we can navigate to the books, we should fill out the UI for
             the <Cmp>Book</Cmp> component. We will once again import the{" "}
@@ -760,6 +889,7 @@ export default [
             for the <IJS>params.id</IJS>. In that case, we will also want to
             display a message that the requested book could not be found.
           </p>
+
           <CodeBlock lang="html">
             {`<!-- src/components/Book.vue -->
 <template>
@@ -790,18 +920,22 @@ export default [
           </CodeBlock>
         </HashSection>
       </HashSection>
-      <HashSection title="Let's go shopping" id="shopping">
+
+      <HashSection meta={shoppingMeta}>
         <p>
           We want to be able to add books to our shopping cart. Since this is a
           play site, we will store the cart data in memory.
         </p>
+
         <CodeBlock lang="bash">{`touch src/cart.js`}</CodeBlock>
+
         <p>
           The shopping cart implementation will be a JavaScript <IJS>Map</IJS>.
           We can call its <IJS>set</IJS> method to add books, its{" "}
           <IJS>clear</IJS> method to reset the cart, and iterate over its{" "}
           <IJS>entries</IJS> with a <IJS>for...of</IJS> loop.
         </p>
+
         <CodeBlock lang="javascript">
           {`// src/cart.js
 const cart = new Map();
@@ -826,6 +960,7 @@ export default {
   }
 };`}
         </CodeBlock>
+
         <p>
           As stated above, we can access our <IJS>router</IJS> in the{" "}
           <Cmp>Book</Cmp> component using <IJS>this.$router</IJS>. The router's{" "}
@@ -835,44 +970,46 @@ export default {
           page.
         </p>
 
-        <HashSection
-          title="Navigate Method"
-          id="nav-method"
-          className="aside"
-          tag="h3"
-        >
+        <HashSection meta={navigateMeta} className="aside" tag="h3">
           <p>
             <IJS>router.navigate()</IJS> is used to navigate to new locations.
             There are three methods of navigation: <IJS>PUSH</IJS>,{" "}
             <IJS>REPLACE</IJS>, and <IJS>ANCHOR</IJS>.
           </p>
+
           <p>
             <IJS>PUSH</IJS> pushes a new location after the current index,
             removing any locations after the current location.
           </p>
+
           <CodeBlock lang="javascript">
             {`// session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "New", method: "PUSH" });
 // session = ['/one', '/two', '/new'], index = 2`}
           </CodeBlock>
+
           <p>
             <IJS>REPLACE</IJS> replaces the location at the current index.
           </p>
+
           <CodeBlock lang="javascript">
             {`// session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "Replace", method: "REPLACE" });
 // session = ['/one', '/replacement', '/three'], index = 1`}
           </CodeBlock>
+
           <p>
             <IJS>ANCHOR</IJS> is a mix between <IJS>PUSH</IJS> and{" "}
             <IJS>REPLACE</IJS>. It mimics the behavior of clicking on links, so
             if you navigate to the same location as the current one it will
             replace, and if you navigate to a new location it will push.
           </p>
+
           <p>
             If <IJS>method.navigate()</IJS> is called without a navigation{" "}
             <IJS>method</IJS>, it will default to <IJS>ANCHOR</IJS>.
           </p>
+
           <CodeBlock lang="javascript">
             {`// session = ['/one', '/two', '/three'], index = 1
 router.navigate({ name: "Two", method: "ANCHOR" });
@@ -882,10 +1019,12 @@ router.navigate({ name: "New", method: "ANCHOR" });
             `}
           </CodeBlock>
         </HashSection>
+
         <p>
           We also want to import our shopping cart API so that we can add a book
           to the cart.
         </p>
+
         <CodeBlock lang="html" data-line="8-10,19,29-35">
           {`<!-- src/components/Book.vue -->
 <template>
@@ -924,12 +1063,14 @@ router.navigate({ name: "New", method: "ANCHOR" });
   }
 </script>`}
         </CodeBlock>
+
         <p>
           Finally, we can update our <Cmp>Checkout</Cmp> component to display
           the books in the shopping cart. To do this, we will import our cart
           and books. Our cart only stores book <IJS>id</IJS>s, so we will need
           to merge the book data with the cart data.
         </p>
+
         <p>
           When a user "buys" the books in their shopping cart, we need to clear
           out the cart. We will also replace the current location with one whose{" "}
@@ -937,6 +1078,7 @@ router.navigate({ name: "New", method: "ANCHOR" });
           in the URI, we can render a "Thanks for your purchase" message to
           "confirm" the purchase.
         </p>
+
         <CodeBlock lang="html">
           {`<!-- src/components/Checkout.vue -->
 <template>
@@ -992,7 +1134,8 @@ router.navigate({ name: "New", method: "ANCHOR" });
 </script>`}
         </CodeBlock>
       </HashSection>
-      <HashSection title="What's next?" id="next">
+
+      <HashSection meta={nextMeta}>
         <p>
           We now have a functional website built with Vue and Curi. What should
           you do next? Build another site! You can also check out the{" "}
@@ -1003,3 +1146,5 @@ router.navigate({ name: "New", method: "ANCHOR" });
     </React.Fragment>
   );
 }
+
+export { VueBasicsTutorial as component, contents };

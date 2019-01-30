@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import { About, APIBlock } from "../../../../components/package/common";
 import { CuriStoreAPI } from "./api/curiStore";
 import { LinkAPI } from "./api/link";
+import { NavigatingAPI } from "./api/navigating";
 
 export default class SveltePkg extends React.PureComponent {
   render() {
@@ -22,6 +23,7 @@ export default class SveltePkg extends React.PureComponent {
         <APIBlock>
           <CuriStoreAPI />
           <LinkAPI />
+          <NavigatingAPI />
         </APIBlock>
       </React.Fragment>
     );

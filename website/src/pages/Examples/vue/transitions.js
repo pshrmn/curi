@@ -6,19 +6,31 @@ import {
   IJS,
   Cmp,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Transitions"
 };
 
-export default function TransitionsExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function TransitionsExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           Route transitions can be performed using Vue's <Cmp>transition</Cmp>{" "}
           component.
@@ -40,7 +52,7 @@ export default function TransitionsExample() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/transitions" />
       </HashSection>
 
@@ -48,3 +60,5 @@ export default function TransitionsExample() {
     </React.Fragment>
   );
 }
+
+export { TransitionsExample as component, contents };

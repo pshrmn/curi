@@ -5,19 +5,31 @@ import {
   CodeBlock,
   IJS,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Side Effects"
 };
 
-export default function SideEffectExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function SideEffectExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           Side effects are observer functions that are run when a new response
           is created. They are called after other response handlers (observers
@@ -41,7 +53,7 @@ const router = curi(history, routes, {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/misc/side-effect" />
       </HashSection>
 
@@ -49,3 +61,5 @@ const router = curi(history, routes, {
     </React.Fragment>
   );
 }
+
+export { SideEffectExample as component, contents };

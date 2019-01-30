@@ -4,19 +4,31 @@ import {
   HashSection,
   Cmp,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Blocking Navigation"
 };
 
-export default function BlockingNavigationExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function BlockingNavigationExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           Sometimes, you don't want the user to leave the page. Ideally, this is
           when leaving the page would cause content to be lost, like a
@@ -29,7 +41,7 @@ export default function BlockingNavigationExample() {
         </p>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/blocking-navigation" />
       </HashSection>
 
@@ -37,3 +49,5 @@ export default function BlockingNavigationExample() {
     </React.Fragment>
   );
 }
+
+export { BlockingNavigationExample as component, contents };

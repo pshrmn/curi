@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Outline,
@@ -11,34 +12,89 @@ import {
   CodeSandboxDemo
 } from "../../components/tutorial/common";
 
-export default function ReactAdvancedTutorial() {
+const demoMeta = {
+  title: "Demo",
+  hash: "demo"
+};
+
+const setupMeta = { title: "Setup", hash: "setup" };
+
+const initialMeta = { title: "Initial Render", hash: "initial-render" };
+const asyncMeta = {
+  title: "Asynchronous Routes",
+  hash: "async",
+  children: [initialMeta]
+};
+
+const splittingMeta = {
+  title: "Code Splitting",
+  hash: "code-splitting"
+};
+const splitMeta = {
+  title: "Code Splitting in Routes",
+  hash: "code-splitting-routes",
+  children: [splittingMeta]
+};
+
+const fakeMeta = { title: "The Fake API", hash: "fake-api" };
+const preloadMeta = {
+  title: "Preloading Data",
+  hash: "preloading-data",
+  children: [fakeMeta]
+};
+
+const navigatingMeta = {
+  title: "<Link> is navigating?",
+  hash: "link-navigating"
+};
+const loadingMeta = {
+  title: "Visualizing Loading",
+  hash: "loading",
+  children: [navigatingMeta]
+};
+
+const caveatsMeta = { title: "Async Caveats", hash: "caveats" };
+
+const contents = [
+  demoMeta,
+  setupMeta,
+  asyncMeta,
+  splitMeta,
+  preloadMeta,
+  loadingMeta,
+  caveatsMeta
+];
+
+function ReactAdvancedTutorial() {
   return (
     <React.Fragment>
-      <h1>React Advanced Tutorial</h1>
+      <PlainSection>
+        <h1>React Advanced Tutorial</h1>
 
-      <p>
-        In this tutorial, we will be expanding on the website built in the{" "}
-        <Link name="Tutorial" params={{ slug: "react-basics" }}>
-          React basics tutorial
-        </Link>
-        . We will take advantage of Curi's async features to add code splitting
-        and data preloading to the application.
-      </p>
+        <p>
+          In this tutorial, we will be expanding on the website built in the{" "}
+          <Link name="Tutorial" params={{ slug: "react-basics" }}>
+            React basics tutorial
+          </Link>
+          . We will take advantage of Curi's async features to add code
+          splitting and data preloading to the application.
+        </p>
 
-      <Outline>
-        <ul>
-          <li>Add code splitting to routes.</li>
-          <li>Preload route data with asynchronous navigation.</li>
-        </ul>
-      </Outline>
+        <Outline>
+          <ul>
+            <li>Add code splitting to routes.</li>
+            <li>Preload route data with asynchronous navigation.</li>
+          </ul>
+        </Outline>
+      </PlainSection>
 
-      <HashSection title="Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <p>You can run a demo of the site we are building with CodeSandbox.</p>
 
         <CodeSandboxDemo id="github/curijs/react-advanced-tutorial/tree/master/" />
       </HashSection>
 
-      <HashSection title="Setup" id="setup">
+      <HashSection meta={setupMeta}>
         <p>
           If you did not complete the React basics tutorial, you should either
           clone its{" "}
@@ -62,7 +118,7 @@ npm run start`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Asynchronous Routes" id="async">
+      <HashSection meta={asyncMeta}>
         <p>
           Curi lets you attach async functions to a route through its{" "}
           <IJS>resolve</IJS>. When that route matches, a response will not be
@@ -156,12 +212,7 @@ const routes = prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <HashSection
-          title="Initial Render"
-          id="initial-render"
-          className="aside"
-          tag="h3"
-        >
+        <HashSection meta={initialMeta} className="aside" tag="h3">
           <p>
             There is one caveat to async routes: we cannot safely render the
             application immediately on load because the initial response might
@@ -238,7 +289,7 @@ ReactDOM.render((
         </p>
       </HashSection>
 
-      <HashSection title="Code Splitting in Routes" id="code-splitting-routes">
+      <HashSection meta={splitMeta}>
         <p>
           Currently, the <IJS>routes.js</IJS> module imports all of the route
           modules at the top of the file. This results in a single bundle of all
@@ -246,18 +297,14 @@ ReactDOM.render((
           an application, which will result in more, but smaller, bundles.
         </p>
 
-        <HashSection
-          title="Code Splitting"
-          id="code-splitting"
-          className="aside"
-          tag="h3"
-        >
+        <HashSection meta={splittingMeta} className="aside" tag="h3">
           <p>
             Code splitting works by "dynamically" importing modules using the{" "}
             <IJS>import()</IJS> function. When bundlers like Webpack see{" "}
             <IJS>import()</IJS> functions, they know to create a separate bundle
             for that module (and that module's imports, etc.).
           </p>
+
           <p>
             You can set a chunk's name using the{" "}
             <a href="https://webpack.js.org/api/module-methods/#magic-comments">
@@ -265,6 +312,7 @@ ReactDOM.render((
             </a>{" "}
             magic comment with an <IJS>import()</IJS> call.
           </p>
+
           <p>
             Create React App's default configuration is already setup to support
             code splitting, but if you were creating your own Webpack
@@ -274,13 +322,18 @@ ReactDOM.render((
             </a>{" "}
             to support code splitting.
           </p>
+
           <CodeBlock>
             {`// this creates a "Test" bundle
 import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
           </CodeBlock>
-          <IJS>import()</IJS> returns a module object, so if you want to access
-          a module's default export, you can use a <IJS>then</IJS> function to
-          get that value.
+
+          <p>
+            <IJS>import()</IJS> returns a module object, so if you want to
+            access a module's default export, you can use a <IJS>then</IJS>{" "}
+            function to get that value.
+          </p>
+
           <CodeBlock>
             {`import("some-module.js")
   .then(module => module.default)`}
@@ -293,6 +346,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
           In order to add code splitting to routes, we can add a{" "}
           <IJS>resolve</IJS> function that imports the module.
         </p>
+
         <p>
           The <IJS>@curi/helpers</IJS> package provides a{" "}
           <IJS>preferDefault</IJS> function. This function will return an
@@ -462,7 +516,7 @@ registerServiceWorker();`}
         </p>
       </HashSection>
 
-      <HashSection title="Preloading Data" id="preloading-data">
+      <HashSection meta={preloadMeta}>
         <p>
           Preloading data lets you delay navigation until after the data for a
           route has loaded. This can save you from having to render a partial
@@ -487,7 +541,7 @@ registerServiceWorker();`}
           API.
         </p>
 
-        <HashSection title="The Fake API" id="fake-api" tag="h3">
+        <HashSection meta={fakeMeta} tag="h3">
           <p>
             The fake API will simulate asynchronous calls to the server by
             returning Promises, similarly to the{" "}
@@ -742,7 +796,7 @@ export default function Book({ response, router }) {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Visualizing Loading" id="loading">
+      <HashSection meta={loadingMeta}>
         <p>
           At this point, we have the same functionality as the basic tutorial,
           but we have added async data loading. The bundle importing has real
@@ -786,15 +840,7 @@ export const BOOK = id => new Promise(resolve => {
 });`}
         </CodeBlock>
 
-        <HashSection
-          title={
-            <span>
-              <Cmp>Link</Cmp> is navigating?
-            </span>
-          }
-          id="link-navigating"
-          tag="h3"
-        >
+        <HashSection meta={navigatingMeta} tag="h3">
           <p>
             The <Cmp>Link</Cmp> component can be called with a render-invoked{" "}
             <IJS>children()</IJS> function. If you do this, the function will be
@@ -878,7 +924,7 @@ export default function Home({ response }) {
         </HashSection>
       </HashSection>
 
-      <HashSection title="Async Caveats" id="caveats">
+      <HashSection meta={caveatsMeta}>
         <p>
           Adding asynchronous loading to an application can help reduce initial
           load size and speed up user interactions, however it also has some
@@ -912,3 +958,5 @@ export default function Home({ response }) {
     </React.Fragment>
   );
 }
+
+export { ReactAdvancedTutorial as component, contents };

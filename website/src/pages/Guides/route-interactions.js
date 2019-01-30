@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   IJS,
@@ -11,30 +12,48 @@ const meta = {
   title: "Route Interactions"
 };
 
-export default function RouterInteractionsGuide() {
+const addingMeta = {
+  title: "Adding Interactions",
+  hash: "adding"
+};
+
+const advancedMeta = {
+  title: "Slightly more advanced",
+  hash: "Slightly-more-advanced"
+};
+const creatingMeta = {
+  title: "Creating Route Interactions",
+  hash: "creating",
+  children: [advancedMeta]
+};
+
+const contents = [addingMeta, creatingMeta];
+
+function RouterInteractionsGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        Route interactions let you interact with a registered route using its
-        name.
-      </p>
-      <p>
-        A registered route is generally any route that is in the array of routes
-        that you used to create your router. However, some interactions only
-        register routes that meet some criteria. For example, the{" "}
-        <IJS>prefetch</IJS> interaction only registers routes with asynchronous
-        methods.
-      </p>
+        <p>
+          Route interactions let you interact with a registered route using its
+          name.
+        </p>
+        <p>
+          A registered route is generally any route that is in the array of
+          routes that you used to create your router. However, some interactions
+          only register routes that meet some criteria. For example, the{" "}
+          <IJS>prefetch</IJS> interaction only registers routes with
+          asynchronous methods.
+        </p>
 
-      <p>
-        Route interactions are defined using objects with four properties: name,
-        register, get, and reset.
-      </p>
+        <p>
+          Route interactions are defined using objects with four properties:
+          name, register, get, and reset.
+        </p>
 
-      <CodeBlock>
-        {`{
+        <CodeBlock>
+          {`{
   // The string you will use to call the interaction.
   name: 'my',
 
@@ -49,17 +68,17 @@ export default function RouterInteractionsGuide() {
   get: function(route) {...},
   reset: function() {...}
 }`}
-      </CodeBlock>
+        </CodeBlock>
 
-      <p>
-        Instead of importing the actual route interaction object, you typically
-        import a factory function to create the object. This isn't absolutely
-        necessary, but is useful for server-side rendering.
-      </p>
+        <p>
+          Instead of importing the actual route interaction object, you
+          typically import a factory function to create the object. This isn't
+          absolutely necessary, but is useful for server-side rendering.
+        </p>
 
-      <CodeBlock>
-        {`// interactions/my.js
-export default function createMyInteraction() {
+        <CodeBlock>
+          {`// interactions/my.js
+function createMyInteraction() {
   return {
     name: "my",
     register() {...},
@@ -72,9 +91,10 @@ export default function createMyInteraction() {
 import createMyInteraction from "./interactions/my";
 
 const interaction = createMyInteraction();`}
-      </CodeBlock>
+        </CodeBlock>
+      </PlainSection>
 
-      <HashSection title="Adding Interactions" id="adding">
+      <HashSection meta={addingMeta}>
         <p>
           Route interactions are provided to the router call as an array using
           the <IJS>route</IJS> property of the options object (the third
@@ -98,7 +118,7 @@ const interaction = createMyInteraction();`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Creating Route Interactions" id="creating">
+      <HashSection meta={creatingMeta}>
         <p>There are a few steps to creating your own route interactions.</p>
 
         <p>
@@ -109,7 +129,7 @@ const interaction = createMyInteraction();`}
         <CodeBlock>
           {`// we'll create an interaction that confirms
 // a route is registered
-export default function confirmInteraction() {
+function confirmInteraction() {
   ...
 }`}
         </CodeBlock>
@@ -119,6 +139,7 @@ export default function confirmInteraction() {
           <IJS>name</IJS>, <IJS>register</IJS>, <IJS>get</IJS>, and{" "}
           <IJS>reset</IJS>.
         </p>
+
         <ScrollableTable>
           <thead>
             <tr>
@@ -153,7 +174,7 @@ export default function confirmInteraction() {
         </ScrollableTable>
 
         <CodeBlock>
-          {`export default function confirmInteraction() {
+          {`function confirmInteraction() {
   // maintain an object of known routes
   let knownRoutes = {};
   return {
@@ -195,11 +216,7 @@ router.route.confirm('Home'); // true
 router.route.confirm('Elsewhere'); // false`}
         </CodeBlock>
 
-        <HashSection
-          title="Slightly more advanced"
-          id="Slightly-more-advanced"
-          tag="h3"
-        >
+        <HashSection meta={advancedMeta} tag="h3">
           <p>
             You might want to write an interaction that uses data from parent
             routes when registering a route. For example, the built-in pathname
@@ -239,3 +256,5 @@ router.route.confirm('Elsewhere'); // false`}
     </React.Fragment>
   );
 }
+
+export { RouterInteractionsGuide as component, contents };

@@ -26,6 +26,10 @@ const allSectionCSS = css`
 
   @media only screen and (min-width: ${screen.medium}) {
     max-width: ${screen.medium};
+
+    p {
+      font-size: 1em;
+    }
   }
 `;
 
@@ -86,17 +90,16 @@ const hashSectionCSS = css`
 `;
 
 export function HashSection({
-  title,
-  id,
+  meta: { title, hash },
   children,
   tag: Tag = "h2",
   wrapper: Wrapper = "div",
   className = "section"
 }) {
   return (
-    <Wrapper css={hashSectionCSS} className={className} id={id}>
+    <Wrapper css={hashSectionCSS} className={className} id={hash}>
       <Tag className="displaced-header">
-        <Link hash={id} forward={{ className: "header-link" }}>
+        <Link hash={hash} forward={{ className: "header-link" }}>
           {title}
         </Link>
       </Tag>

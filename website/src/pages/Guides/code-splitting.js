@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -11,28 +12,45 @@ const meta = {
   title: "Code Splitting"
 };
 
-export default function CodeSplittingGuide() {
+const noSplitMeta = {
+  title: "An app without code splitting",
+  hash: "no-split"
+};
+const importMeta = {
+  title: "import() in resolve",
+  hash: "import"
+};
+const otherMeta = {
+  title: "Other Approaches",
+  hash: "other"
+};
+
+const contents = [noSplitMeta, importMeta, otherMeta];
+
+function CodeSplittingGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        If you are bundling an application with a lot of routes, users of your
-        application may be downloading a lot of unnecessary content for the
-        initial page render. Using code splitting, you can reduce the initial
-        download size for your application by splitting code that is
-        conditionally loaded into a separate bundle that is only downloaded when
-        it is needed.
-      </p>
-
-      <Note>
         <p>
-          This guide assumes that you are using Webpack 2+ to bundle your
-          application.
+          If you are bundling an application with a lot of routes, users of your
+          application may be downloading a lot of unnecessary content for the
+          initial page render. Using code splitting, you can reduce the initial
+          download size for your application by splitting code that is
+          conditionally loaded into a separate bundle that is only downloaded
+          when it is needed.
         </p>
-      </Note>
 
-      <HashSection title="An app without code splitting" id="no-split">
+        <Note>
+          <p>
+            This guide assumes that you are using Webpack 2+ to bundle your
+            application.
+          </p>
+        </Note>
+      </PlainSection>
+
+      <HashSection meta={noSplitMeta}>
         <p>
           Let's start out by describing our application's routes without code
           splitting. We will import each route's component from the files where
@@ -78,7 +96,7 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="import() in resolve" id="import">
+      <HashSection meta={importMeta}>
         <p>
           Instead of having static imports, we will use the <IJS>import()</IJS>{" "}
           function to import our modules. We will import our components by
@@ -168,7 +186,7 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Other Approaches" id="other">
+      <HashSection meta={otherMeta}>
         <p>
           The approaches taken here are not the only way to do code splitting.
           Another approach is to skip the <IJS>resolve</IJS> method and do code
@@ -189,3 +207,5 @@ const routes = prepareRoutes([
     </React.Fragment>
   );
 }
+
+export { CodeSplittingGuide as component, contents };

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -12,20 +13,52 @@ const meta = {
   title: "New Responses"
 };
 
-export default function NewResponsesGuide() {
+const handlerMeta = {
+  title: "Response Handlers",
+  hash: "response-handlers"
+};
+
+const registeringMeta = {
+  title: "Registering Response Handlers",
+  hash: "registering"
+};
+
+const setupMeta = {
+  title: "Setup",
+  hash: "setup"
+};
+const renderingMeta = {
+  title: "Rendering",
+  hash: "rendering"
+};
+const sideEffectsMeta = {
+  title: "Side Effects",
+  hash: "side-effects"
+};
+const useCaseMeta = {
+  title: "Use Cases",
+  hash: "use-cases",
+  children: [setupMeta, renderingMeta, sideEffectsMeta]
+};
+
+const contents = [handlerMeta, registeringMeta, useCaseMeta];
+
+function NewResponsesGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        The Curi router uses an observer pattern to call registered functions
-        (called response handlers) when there is a new response. The main
-        function for response handlers is to use the new response to render the
-        application, but any other functionality (like logging) can also be
-        performed.
-      </p>
+        <p>
+          The Curi router uses an observer pattern to call registered functions
+          (called response handlers) when there is a new response. The main
+          function for response handlers is to use the new response to render
+          the application, but any other functionality (like logging) can also
+          be performed.
+        </p>
+      </PlainSection>
 
-      <HashSection title="Response Handlers" id="response-handlers" tag="h3">
+      <HashSection meta={handlerMeta} tag="h3">
         <p>
           When response handlers are called, they are passed an object with
           three properties:{" "}
@@ -63,11 +96,7 @@ export default function NewResponsesGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection
-        title="Registering Response Handlers"
-        id="registering"
-        tag="h3"
-      >
+      <HashSection meta={registeringMeta} tag="h3">
         <p>
           There are three ways to attach response handlers to the router:{" "}
           <IJS>router.once()</IJS> and <IJS>router.observe()</IJS> or as a side
@@ -96,9 +125,9 @@ const stop = router.observe(fn);`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Use Cases" id="use-cases" tag="h3">
+      <HashSection meta={useCaseMeta} tag="h3">
         <p>What should you use response handlers for?</p>
-        <HashSection title="Setup" id="setup" tag="h4">
+        <HashSection meta={setupMeta} tag="h4">
           <p>
             If any of the routes in an application have <IJS>resolve</IJS>{" "}
             functions, when they match their responses are created
@@ -133,7 +162,7 @@ router.once(setup);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection title="Rendering" id="rendering" tag="h4">
+        <HashSection meta={renderingMeta} tag="h4">
           <p>
             Rendering libraries need to know when there is a new response so
             that they can re-render the application.
@@ -179,7 +208,7 @@ router.observe(observer);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection title="Side Effects" id="side-effects" tag="h4">
+        <HashSection meta={sideEffectsMeta} tag="h4">
           <p>
             Side effects are observers that are provided to the router at
             creation instead of by calling <IJS>router.observe()</IJS>. These
@@ -236,3 +265,5 @@ router.observe(logger);`}
     </React.Fragment>
   );
 }
+
+export { NewResponsesGuide as component, contents };

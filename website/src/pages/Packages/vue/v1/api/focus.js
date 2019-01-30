@@ -8,18 +8,24 @@ import {
   Note
 } from "../../../../../components/package/common";
 
+const propertiesMeta = {
+  title: "Properties",
+  hash: "focus-properties"
+};
 export const meta = {
   title: "<curi-focus>",
-  hash: "focus"
+  hash: "focus",
+  children: [propertiesMeta]
 };
 
 export function FocusAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         The <IJS>curi-focus</IJS> directive is used to specify an element that
         should be focused when a new response is emitted.
       </p>
+
       <p>
         The DOM component that gets the ref should either already be
         "focusable", like an <Cmp>input</Cmp>, or be given a <IJS>tabIndex</IJS>{" "}
@@ -27,11 +33,13 @@ export function FocusAPI() {
         ). If neither of these conditions is met, then the document's{" "}
         <Cmp>body</Cmp> will be focused.
       </p>
+
       <p>
         The focused element will have an outline (the exact style varies by
         browser). You can remove this visual with a CSS outline of{" "}
         <IJS>"none"</IJS>.
       </p>
+
       <Note>
         <p>You should only have one focused element rendered at a time.</p>
       </Note>
@@ -43,19 +51,24 @@ export function FocusAPI() {
   </main>
 </template>`}
       </CodeBlock>
-      <HashSection tag="h3" title="Properties" id="focus-properties">
-        <HashSection tag="h4" title="key" id="focus-key">
+
+      <HashSection tag="h3" meta={propertiesMeta}>
+        <HashSection tag="h4" meta={{ title: "key", hash: "focus-key" }}>
           <p>
             A value that changes when there is a new response; the{" "}
             <IJS>response</IJS> is usually fine for this.
           </p>
         </HashSection>
 
-        <HashSection tag="h4" title="preserve" id="focus-preserve">
+        <HashSection
+          tag="h4"
+          meta={{ title: "preserve", hash: "focus-preserve" }}
+        >
           <p>
             When <IJS>true</IJS> (<IJS>false</IJS> by default), the element will
             not be focused if one of its children elements is already focused.
           </p>
+
           <p>
             This is useful if the element has children that are automatically
             focused (<Cmp>input autofocus</Cmp>).
@@ -81,11 +94,15 @@ export function FocusAPI() {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h4" title="preventScroll" id="focus-preventScroll">
+        <HashSection
+          tag="h4"
+          meta={{ title: "preventScroll", hash: "focus-preventScroll" }}
+        >
           <p>
             When <IJS>true</IJS> (<IJS>false</IJS> by default), the element will
             not be scrolled to when it is focused.
           </p>
+
           <p>
             This only works in browsers that support the{" "}
             <IJS>preventScroll</IJS> option for <IJS>focus()</IJS>.

@@ -2,19 +2,32 @@ import React from "react";
 
 import {
   HashSection,
-  CodeSandboxDemo
+  CodeSandboxDemo,
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Twitch Clone"
 };
 
-export default function TwitchExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function TwitchExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           A clone of <a href="https://twitch.tv">Twitch</a> without all of the
           "good stuff" (streaming video). This application uses Vue for
@@ -22,16 +35,16 @@ export default function TwitchExample() {
         </p>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/twitch-curi-demo" />
       </HashSection>
 
-      <HashSection title="On GitHub" id="source">
-        <p>
-          If you want to run this code locally, the source code is available on
-          GitHub <a href="https://github.com/pshrmn/twitch-curi-demo">here</a>.
-        </p>
-      </HashSection>
+      <OnGithub
+        path="https://github.com/pshrmn/twitch-curi-demo"
+        repo={false}
+      />
     </React.Fragment>
   );
 }
+
+export { TwitchExample as component, contents };

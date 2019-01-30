@@ -1,18 +1,30 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { HashSection, IJS, OnGithub } from "../../../components/example/common";
+import {
+  HashSection,
+  IJS,
+  OnGithub,
+  onGitHubMeta
+} from "../../../components/example/common";
 
 const meta = {
   title: "Code Splitting"
 };
 
-export default function CodeSplittingExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+
+const contents = [explanationMeta, onGitHubMeta];
+
+function CodeSplittingExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           Code splitting with Curi routes is done using a <IJS>resolve</IJS>{" "}
           function. The{" "}
@@ -29,3 +41,5 @@ export default function CodeSplittingExample() {
     </React.Fragment>
   );
 }
+
+export { CodeSplittingExample as component, contents };

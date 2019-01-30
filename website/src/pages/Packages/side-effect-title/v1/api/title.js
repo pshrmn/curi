@@ -14,7 +14,7 @@ export const meta = {
 
 export function TitleAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         <IJS>@curi/side-effect-title</IJS> exports a function for creating a
         side effect that will update the page's title whenever a new response is

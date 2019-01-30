@@ -2,13 +2,22 @@ import React from "react";
 
 import { HashSection, CodeBlock, IJS } from "../../components/guide/common";
 
-export default function NavigationObjectGuide() {
+const propertiesMeta = {
+  title: "The Properties of a Navigation Object",
+  hash: "navigation-properties"
+};
+
+const usageMeta = {
+  title: "Usage",
+  hash: "usage"
+};
+
+const contents = [propertiesMeta, usageMeta];
+
+function NavigationObjectGuide() {
   return (
     <React.Fragment>
-      <HashSection
-        title="The Properties of a Navigation Object"
-        id="navigation-properties"
-      >
+      <HashSection meta={propertiesMeta}>
         <p>
           The <IJS>navigation</IJS> object contains information about the
           previous navigation. It has two properties: <IJS>action</IJS> and{" "}
@@ -31,7 +40,7 @@ export default function NavigationObjectGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Usage" id="usage">
+      <HashSection meta={usageMeta}>
         <p>
           What is the point of the <IJS>navigation</IJS> object? It is there to
           provide you information about a navigation that doesn't make sense to
@@ -54,3 +63,5 @@ export default function NavigationObjectGuide() {
     </React.Fragment>
   );
 }
+
+export { NavigationObjectGuide as component, contents };

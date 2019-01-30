@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Outline,
@@ -12,36 +13,111 @@ import {
   ScrollableTable
 } from "../../components/tutorial/common";
 
-export default function ReactBasicsTutorial() {
+const demoMeta = {
+  title: "Demo",
+  hash: "demo"
+};
+
+const setupMeta = { title: "Setup", hash: "setup" };
+
+const pathMeta = {
+  title: "Path basics",
+  hash: "path-basics"
+};
+const routesMeta = {
+  title: "Routes",
+  hash: "routes",
+  children: [pathMeta]
+};
+
+const historyMeta = { title: "History", hash: "history" };
+
+const routerMeta = { title: "The Router", hash: "router" };
+
+const responseMeta = {
+  title: "Responses and Navigation",
+  hash: "responses"
+};
+const responseFnMeta = {
+  title: "route.response()",
+  hash: "route-response"
+};
+const renderingMeta = {
+  title: "Rendering with React",
+  hash: "rendering",
+  children: [responseMeta, responseFnMeta]
+};
+
+const linkMeta = {
+  title: "The <Link> Component",
+  hash: "link-component"
+};
+const menuMeta = { title: "A Navigation Menu", hash: "nav-menu" };
+const bookLinkMeta = { title: "Linking to Books", hash: "book-links" };
+const navigatingMeta = {
+  title: "Navigating between locations",
+  hash: "navigating",
+  children: [linkMeta, menuMeta, bookLinkMeta]
+};
+
+const navigateMeta = {
+  title: "The Router's Navigate Method",
+  hash: "nav-method"
+};
+const shoppingMeta = {
+  title: "Let's go shopping",
+  hash: "shopping",
+  children: [navigateMeta]
+};
+
+const nextMeta = { title: "What's next?", hash: "next" };
+
+const contents = [
+  demoMeta,
+  setupMeta,
+  routesMeta,
+  historyMeta,
+  routerMeta,
+  renderingMeta,
+  navigatingMeta,
+  shoppingMeta,
+  nextMeta
+];
+
+function ReactBasicsTutorial() {
   return (
     <React.Fragment>
-      <h1>React Basics Tutorial</h1>
-      <p>
-        In this tutorial, we will be building the front end of a website for a
-        bookstore.
-      </p>
-      <Outline>
-        <ul>
-          <li>
-            Creating a React application using{" "}
-            <a href="https://facebook.github.io/create-react-app/">
-              Create React App
-            </a>
-            .
-          </li>
-          <li>Defining the website's valid routes</li>
-          <li>Setting up a router</li>
-          <li>Rendering different content based on the current location.</li>
-          <li>Writing links to navigate within the application.</li>
-        </ul>
-      </Outline>
+      <PlainSection>
+        <h1>React Basics Tutorial</h1>
 
-      <HashSection title="Demo" id="demo">
+        <p>
+          In this tutorial, we will be building the front end of a website for a
+          bookstore.
+        </p>
+
+        <Outline>
+          <ul>
+            <li>
+              Creating a React application using{" "}
+              <a href="https://facebook.github.io/create-react-app/">
+                Create React App
+              </a>
+              .
+            </li>
+            <li>Defining the website's valid routes</li>
+            <li>Setting up a router</li>
+            <li>Rendering different content based on the current location.</li>
+            <li>Writing links to navigate within the application.</li>
+          </ul>
+        </Outline>
+      </PlainSection>
+
+      <HashSection meta={demoMeta}>
         <p>You can run a demo of the site we are building with CodeSandbox.</p>
         <CodeSandboxDemo id="github/curijs/react-basic-tutorial/tree/master/" />
       </HashSection>
 
-      <HashSection title="Setup" id="setup">
+      <HashSection meta={setupMeta}>
         <p>
           We will be using{" "}
           <a href="https://github.com/facebook/create-react-app">
@@ -49,6 +125,7 @@ export default function ReactBasicsTutorial() {
           </a>{" "}
           to develop this website.
         </p>
+
         <Note>
           <p>
             The instructions here assume that you have NodeJS and NPM installed
@@ -58,6 +135,7 @@ export default function ReactBasicsTutorial() {
             boilerplate will be different, but the differences are minor.
           </p>
         </Note>
+
         <p>
           Begin by opening a terminal and navigating to the directory where you
           want to save your code. Then, we will use <IJS>npx</IJS> to create the
@@ -96,7 +174,7 @@ cd curi-react-bookstore # enter the new app directory`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Routes" id="routes">
+      <HashSection meta={routesMeta}>
         <p>
           A single-page application is made up of a number of "routes", which
           are the valid locations within the application. The router matches the
@@ -124,12 +202,7 @@ cd curi-react-bookstore # enter the new app directory`}
           used for matching.
         </p>
 
-        <HashSection
-          title="Path basics"
-          id="path-basics"
-          className="aside"
-          tag="h3"
-        >
+        <HashSection meta={pathMeta} className="aside" tag="h3">
           <p>
             Route paths are strings describing the pathname segments of a URL
             that they should match.
@@ -301,7 +374,7 @@ registerServiceWorker();`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="History" id="history">
+      <HashSection meta={historyMeta}>
         <p>
           Along with the routes, we also need to create a history object for the
           router. The history object is responsible for creating locations and
@@ -348,7 +421,7 @@ registerServiceWorker();`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="The Router" id="router">
+      <HashSection meta={routerMeta}>
         <p>
           We are now ready to create the router. In the <IJS>src/index.js</IJS>{" "}
           file, we should import the <IJS>curi</IJS> function from{" "}
@@ -379,7 +452,7 @@ registerServiceWorker();`}
         <p>The router is now ready and we can render the application.</p>
       </HashSection>
 
-      <HashSection title="Rendering with React" id="rendering">
+      <HashSection meta={renderingMeta}>
         <p>
           The <IJS>@curi/react-dom</IJS> provides the components that we will
           use to interact with the router.
@@ -473,12 +546,7 @@ registerServiceWorker();`}
           other two?
         </p>
 
-        <HashSection
-          title="Responses and Navigation"
-          id="responses"
-          className="aside"
-          tag="h3"
-        >
+        <HashSection meta={responseMeta} className="aside" tag="h3">
           <p>
             Whenever Curi receives a location, it matches its routes against it
             and creates a response object, which contains data about the route
@@ -536,12 +604,7 @@ registerServiceWorker();`}
           best way is to use a <IJS>response</IJS>'s <IJS>body</IJS> property.
         </p>
 
-        <HashSection
-          title="route.response()"
-          id="route-response"
-          className="aside"
-          tag="h3"
-        >
+        <HashSection meta={responseFnMeta} className="aside" tag="h3">
           <p>
             Route's can have a <IJS>response</IJS> property, which is a function
             that returns an object. The (valid) properties of the object will be
@@ -587,6 +650,7 @@ registerServiceWorker();`}
 touch src/components/Home.js src/components/Book.js \\
   src/components/Checkout.js src/components/NotFound.js`}
         </CodeBlock>
+
         <CodeBlock lang="jsx">
           {`// src/components/Home.js
 import React from 'react';
@@ -597,6 +661,7 @@ export default function Home() {
   );
 }`}
         </CodeBlock>
+
         <CodeBlock lang="jsx">
           {`// src/components/Book.js
 import React from 'react';
@@ -607,6 +672,7 @@ export default function Book(){
   );
 }`}
         </CodeBlock>
+
         <CodeBlock lang="jsx">
           {`// src/components/Checkout.js
 import React from 'react';
@@ -617,6 +683,7 @@ export default function Checkout() {
   );
 }`}
         </CodeBlock>
+
         <CodeBlock lang="jsx">
           {`// src/components/NotFound.js
 import React from 'react';
@@ -627,11 +694,13 @@ export default function NotFound() {
   );
 }`}
         </CodeBlock>
+
         <p>
           These components can be imported in <IJS>src/routes.js</IJS>. Each
           route can be given a <IJS>response()</IJS> function which returns an
           object with their respective component as its <IJS>body</IJS>.
         </p>
+
         <CodeBlock data-line="4-7,13-15,20-22,27-29,34-36">
           {`// src/routes.js
 import { prepareRoutes } from "@curi/router";
@@ -677,6 +746,7 @@ export default prepareRoutes([
           We can now update the <Cmp>Router</Cmp>'s <IJS>children</IJS> function
           to render <IJS>response.body</IJS>.
         </p>
+
         <p>
           We will also pass the <IJS>response</IJS> as a prop to the rendered
           component, which means that each of the route components will have
@@ -718,23 +788,14 @@ registerServiceWorker();`}
         </p>
       </HashSection>
 
-      <HashSection title="Navigating between locations" id="navigating">
+      <HashSection meta={navigatingMeta}>
         <p>
           The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Link</Cmp>{" "}
           component that we can use to navigate between locations within our
           application.
         </p>
 
-        <HashSection
-          title={
-            <span>
-              The <Cmp>Link</Cmp> Component
-            </span>
-          }
-          id="link-component"
-          className="aside"
-          tag="h3"
-        >
+        <HashSection meta={linkMeta} className="aside" tag="h3">
           <p>
             Navigation isn't done by manually typing the pathname of the
             location the link should navigate to. Instead, we specify the name
@@ -784,7 +845,7 @@ registerServiceWorker();`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection title="A Navigation Menu" id="nav-menu" tag="h3">
+        <HashSection meta={menuMeta} tag="h3">
           <p>
             The application will have a navigation menu component with links to
             our home page and checkout page.
@@ -865,7 +926,7 @@ registerServiceWorker();`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection title="Linking to Books" id="book-links" tag="h3">
+        <HashSection meta={bookLinkMeta} tag="h3">
           <p>
             The website should link to individual books from its home page. To
             do this, we need data about the available books. Since we don't have
@@ -992,7 +1053,7 @@ export default function Book({ response }) {
         </HashSection>
       </HashSection>
 
-      <HashSection title="Let's go shopping" id="shopping">
+      <HashSection meta={shoppingMeta}>
         <p>
           Users of the website should be able to add books to their shopping
           cart. For brevity, we will store the cart data in memory (i.e. it will
@@ -1091,12 +1152,7 @@ registerServiceWorker();`}
           navigate to the checkout page.
         </p>
 
-        <HashSection
-          title="The Router's Navigate Method"
-          id="nav-method"
-          className="aside"
-          tag="h3"
-        >
+        <HashSection meta={navigateMeta} className="aside" tag="h3">
           <p>
             <IJS>router.navigate()</IJS> is used to navigate to new locations.
             There are three methods of navigation: <IJS>PUSH</IJS>,{" "}
@@ -1246,7 +1302,8 @@ export default function Checkout({ router, response }) {
 };`}
         </CodeBlock>
       </HashSection>
-      <HashSection title="What's next?" id="next">
+
+      <HashSection meta={nextMeta}>
         <p>
           We now have a functional website built with React and Curi. What
           should you do next? Build another site! You can also check out the{" "}
@@ -1257,3 +1314,5 @@ export default function Checkout({ router, response }) {
     </React.Fragment>
   );
 }
+
+export { ReactBasicsTutorial as component, contents };

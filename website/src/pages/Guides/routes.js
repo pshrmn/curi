@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -13,40 +14,91 @@ const meta = {
   title: "Routes"
 };
 
-export default function RoutesGuide() {
+const prepareMeta = {
+  title: "Preparing Routes",
+  hash: "prepareRoutes"
+};
+
+const namesMeta = {
+  title: "Route names",
+  hash: "route-names"
+};
+
+const asyncMeta = {
+  title: "Asynchronous Routes",
+  hash: "async"
+};
+
+const responseMeta = {
+  title: "The Response Function",
+  hash: "route-response"
+};
+
+const noMatchMeta = {
+  title: "No Matching Route",
+  hash: "no-match"
+};
+const walkthroughMeta = {
+  title: "Route Matching Walkthrough",
+  hash: "match-walkthrough"
+};
+const optionsMeta = {
+  title: "Path Matching Options",
+  hash: "options"
+};
+const matchingMeta = {
+  title: "Matching Routes",
+  hash: "matching-routes",
+  children: [noMatchMeta, walkthroughMeta]
+};
+
+const contents = [
+  prepareMeta,
+  namesMeta,
+  asyncMeta,
+  responseMeta,
+  matchingMeta
+];
+
+function RoutesGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        Routes are JavaScript objects with two required properties—
-        <IJS>name</IJS> and <IJS>path</IJS>—and a number of optional properties.
-      </p>
-      <p>
-        A route's <IJS>path</IJS> is used to determine if a route matches a
-        location. Path strings use{" "}
-        <a href="https://github.com/pillarjs/path-to-regexp">
-          <IJS>path-to-regexp</IJS>
-        </a>{" "}
-        formatting, which allows you to define dynamic path parameters that a
-        route should match.
-      </p>
-      <p>
-        A route's <IJS>name</IJS> is a unique identifier for a route. The{" "}
-        <IJS>name</IJS> is used to{" "}
-        <Link name="Guide" params={{ slug: "route-interactions" }}>
-          interact
-        </Link>{" "}
-        with a specific route.
-      </p>
-      <Note>
         <p>
-          <IJS>path</IJS> strings do not start with a slash.
+          Routes are JavaScript objects with two required properties—
+          <IJS>name</IJS> and <IJS>path</IJS>—and a number of optional
+          properties.
         </p>
-      </Note>
 
-      <CodeBlock>
-        {`const routes = prepareRoutes([
+        <p>
+          A route's <IJS>path</IJS> is used to determine if a route matches a
+          location. Path strings use{" "}
+          <a href="https://github.com/pillarjs/path-to-regexp">
+            <IJS>path-to-regexp</IJS>
+          </a>{" "}
+          formatting, which allows you to define dynamic path parameters that a
+          route should match.
+        </p>
+
+        <p>
+          A route's <IJS>name</IJS> is a unique identifier for a route. The{" "}
+          <IJS>name</IJS> is used to{" "}
+          <Link name="Guide" params={{ slug: "route-interactions" }}>
+            interact
+          </Link>{" "}
+          with a specific route.
+        </p>
+
+        <Note>
+          <p>
+            <IJS>path</IJS> strings do not start with a slash.
+          </p>
+        </Note>
+
+        <CodeBlock>
+          {`const routes = prepareRoutes([
   {
     name: "Home",
     path: ""
@@ -57,9 +109,10 @@ export default function RoutesGuide() {
     path: "a/:id"
   }
 ]);`}
-      </CodeBlock>
+        </CodeBlock>
+      </PlainSection>
 
-      <HashSection title="Preparing Routes" id="prepareRoutes" tag="h3">
+      <HashSection meta={prepareMeta}>
         <p>
           The routes array should be wrapped in a <IJS>prepareRoutes()</IJS>{" "}
           call. This will pre-build the routes for the router.
@@ -76,7 +129,7 @@ export default prepareRoutes(routes);`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Route names" id="route-names" tag="h3">
+      <HashSection meta={namesMeta}>
         <p>
           Why do routes have names? Curi lets you interact with routes using
           their names.
@@ -97,7 +150,7 @@ export default prepareRoutes(routes);`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Asynchronous Routes" id="async" tag="h3">
+      <HashSection meta={asyncMeta}>
         <p>
           When a route matches, you might want to perform some actions before
           the application re-renders. This can include validating that a user is
@@ -140,7 +193,8 @@ export default prepareRoutes(routes);`}
           guide.
         </p>
       </HashSection>
-      <HashSection title="The Response Function" id="route-response" tag="h3">
+
+      <HashSection meta={responseMeta}>
         <p>
           Each route can have a <IJS>response()</IJS> function, which returns an
           object of properties to merge with route's "match" properties. This
@@ -200,7 +254,8 @@ const routes = prepareRoutes([
           </li>
         </ol>
       </HashSection>
-      <HashSection title="Matching Routes" id="matching-routes">
+
+      <HashSection meta={matchingMeta}>
         <p>
           Whenever Curi receives a new location, it will determine which route
           has a <IJS>path</IJS> that matches the new location's{" "}
@@ -210,7 +265,7 @@ const routes = prepareRoutes([
           route's nest sibling.
         </p>
 
-        <HashSection title="No Matching Route" id="catch-all" tag="h3">
+        <HashSection meta={noMatchMeta} tag="h3">
           <Warning>
             If none of your routes match a location, Curi will do nothing! Your
             routes should include catch all route to match these locations
@@ -226,11 +281,8 @@ const routes = prepareRoutes([
 }`}
           </CodeBlock>
         </HashSection>
-        <HashSection
-          title="Route Matching Walkthrough"
-          id="match-walkthrough"
-          tag="h3"
-        >
+
+        <HashSection meta={walkthroughMeta} tag="h3">
           <CodeBlock>
             {`const routes = prepareRoutes([
   {
@@ -285,7 +337,8 @@ const routes = prepareRoutes([
 }`}
           </CodeBlock>
         </HashSection>
-        <HashSection title="Path Matching Options" id="options" tag="h3">
+
+        <HashSection meta={optionsMeta} tag="h3">
           <p>
             You can control whether a route does exact or partial matching with{" "}
             <Link hash="pathOptions">
@@ -313,3 +366,5 @@ const routes = prepareRoutes([
     </React.Fragment>
   );
 }
+
+export { RoutesGuide as component, contents };

@@ -8,20 +8,19 @@ import {
   Note
 } from "../../../../../components/package/common";
 
+const propsMeta = {
+  title: "Props",
+  hash: "Focus-props"
+};
 export const meta = {
   title: "<Focus>",
   hash: "Focus",
-  children: [
-    {
-      title: "Props",
-      hash: "Focus-props"
-    }
-  ]
+  children: [propsMeta]
 };
 
 export function FocusAPI() {
   return (
-    <HashSection title={meta.title} id={meta.hash}>
+    <HashSection meta={meta}>
       <p>
         <Cmp>Focus</Cmp> lets you focus a DOM element whenever there is a new
         response.
@@ -55,8 +54,11 @@ export function FocusAPI() {
   )}
 </Focus>`}
       </CodeBlock>
-      <HashSection tag="h3" title="Props" id="Focus-props">
-        <HashSection tag="h4" title="children()" id="Focus-children">
+      <HashSection tag="h3" meta={propsMeta}>
+        <HashSection
+          tag="h4"
+          meta={{ title: "children()", hash: "Focus-children" }}
+        >
           <p>
             The <IJS>children()</IJS> function is a render-invoked prop that
             will be passed a <IJS>ref</IJS>. The <IJS>ref</IJS> should be
@@ -80,7 +82,10 @@ export function FocusAPI() {
 </Focus>`}
           </CodeBlock>
         </HashSection>
-        <HashSection tag="h4" title="preventScroll" id="focus-preventScroll">
+        <HashSection
+          tag="h4"
+          meta={{ title: "preventScroll", hash: "focus-preventScroll" }}
+        >
           <p>
             The default behavior for focusing an element is to scroll to it. If
             you want to prevent this, pass <IJS>{`preventScroll=\{true\}`}</IJS>{" "}
@@ -95,7 +100,10 @@ export function FocusAPI() {
 <Focus preventScroll={true}>{ref => ...}</Focus>`}
           </CodeBlock>
         </HashSection>
-        <HashSection tag="h4" title="preserve" id="focus-preserve">
+        <HashSection
+          tag="h4"
+          meta={{ title: "preserve", hash: "focus-preserve" }}
+        >
           <p>
             The default focus behavior is to always focus the element that the
             ref is attached to. However, if you want to preserve the focus on

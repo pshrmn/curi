@@ -3,7 +3,7 @@ import { HashSection } from "../layout/Sections";
 
 export default function AboutBlock({ children }) {
   return (
-    <HashSection title="About" id="about">
+    <HashSection meta={{ title: "About", hash: "about" }}>
       {children}
     </HashSection>
   );

@@ -1,24 +1,42 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { HashSection, CodeBlock, IJS } from "../../components/guide/common";
+import {
+  PlainSection,
+  HashSection,
+  CodeBlock,
+  IJS
+} from "../../components/guide/common";
 
 const meta = {
   title: "Loading Route Data"
 };
 
-export default function LoadingGuide() {
+const resolveMeta = {
+  title: "resolve",
+  hash: "resolve"
+};
+const responseMeta = {
+  title: "response",
+  hash: "response"
+};
+
+const contents = [resolveMeta, responseMeta];
+
+function LoadingGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        In the code splitting guide, we added a function that calls{" "}
-        <IJS>import()</IJS> to a route's <IJS>resolve</IJS> object in order to
-        dynamically load modules. We can do the same thing for other data.
-      </p>
+        <p>
+          In the code splitting guide, we added a function that calls{" "}
+          <IJS>import()</IJS> to a route's <IJS>resolve</IJS> object in order to
+          dynamically load modules. We can do the same thing for other data.
+        </p>
+      </PlainSection>
 
-      <HashSection title="resolve" id="resolve">
+      <HashSection meta={resolveMeta}>
         <p>
           An async function (with any name you want it to have) can be added to
           the <IJS>resolve</IJS> object and the value it resolves will be
@@ -73,7 +91,7 @@ export default function LoadingGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="response" id="response">
+      <HashSection meta={responseMeta}>
         <p>
           While <IJS>resolve.data()</IJS> starts our data loading, it doesn't
           actually do anything. Instead, we should handle any loaded data with
@@ -157,21 +175,25 @@ export default function LoadingGuide() {
         </CodeBlock>
       </HashSection>
 
-      <p>
-        A route's <IJS>resolve</IJS> object and <IJS>response()</IJS> functions
-        offer a convenient way to do data loading prior to actually rendering
-        the route, but please remember that your application will not be
-        re-rendering until <em>after</em> the fetching has resolved. If you have
-        a long running load function, you may wish to implement some sort of
-        loading display. The{" "}
-        <Link
-          name="Example"
-          params={{ category: "react", slug: "data-loading" }}
-        >
-          data loading example
-        </Link>{" "}
-        shows one approach to how to do this.
-      </p>
+      <PlainSection>
+        <p>
+          A route's <IJS>resolve</IJS> object and <IJS>response()</IJS>{" "}
+          functions offer a convenient way to do data loading prior to actually
+          rendering the route, but please remember that your application will
+          not be re-rendering until <em>after</em> the fetching has resolved. If
+          you have a long running load function, you may wish to implement some
+          sort of loading display. The{" "}
+          <Link
+            name="Example"
+            params={{ category: "react", slug: "data-loading" }}
+          >
+            data loading example
+          </Link>{" "}
+          shows one approach to how to do this.
+        </p>
+      </PlainSection>
     </React.Fragment>
   );
 }
+
+export { LoadingGuide as component, contents };

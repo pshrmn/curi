@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  PlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -13,21 +14,37 @@ const meta = {
   title: "Responses"
 };
 
-export default function RoutesAndResponsesGuide() {
+const propertiesMeta = {
+  title: "The Properties of a Response Object",
+  hash: "response-properties"
+};
+
+const bodyMeta = {
+  title: "Response Body",
+  hash: "response-body"
+};
+
+const redirectMeta = {
+  title: "Redirect Response",
+  hash: "redirect-properties"
+};
+
+const contents = [propertiesMeta, bodyMeta, redirectMeta];
+
+function ResponsesGuide() {
   return (
     <React.Fragment>
-      <h1>{meta.title}</h1>
+      <PlainSection>
+        <h1>{meta.title}</h1>
 
-      <p>
-        When Curi receives a location, it compares the location's{" "}
-        <IJS>pathname</IJS> to each route's <IJS>path</IJS> to find which one
-        matches best and uses that route to create a response object.
-      </p>
+        <p>
+          When Curi receives a location, it compares the location's{" "}
+          <IJS>pathname</IJS> to each route's <IJS>path</IJS> to find which one
+          matches best and uses that route to create a response object.
+        </p>
+      </PlainSection>
 
-      <HashSection
-        title="The Properties of a Response Object"
-        id="response-properties"
-      >
+      <HashSection meta={propertiesMeta}>
         <p>There are two types of response properties.</p>
 
         <p>
@@ -61,6 +78,7 @@ export default function RoutesAndResponsesGuide() {
           they are returned by a route's <IJS>response()</IJS> function.
         </p>
         <p>The "settable" properties are:</p>
+
         <ScrollableTable>
           <thead>
             <tr>
@@ -136,7 +154,7 @@ export default function RoutesAndResponsesGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Response Body" id="response-body">
+      <HashSection meta={bodyMeta}>
         <p>
           Curi isn't strict about how you use responses, but you will most
           likely always want to use a route's <IJS>response()</IJS> function to
@@ -184,7 +202,7 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Redirect Response" id="redirect-properties">
+      <HashSection meta={redirectMeta}>
         <p>
           When a route's <IJS>response()</IJS> function returns an object with a{" "}
           <Link
@@ -225,3 +243,5 @@ const routes = prepareRoutes([
     </React.Fragment>
   );
 }
+
+export { ResponsesGuide as component, contents };

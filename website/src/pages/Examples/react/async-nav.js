@@ -6,19 +6,31 @@ import {
   IJS,
   Cmp,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Async Navigation"
 };
 
-export default function AsyncNavExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function AsyncNavExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           If the <Cmp>Link</Cmp>'s <IJS>children</IJS> prop is a render-invoked
           function, it will be passed a boolean to indicate whether or not it is
@@ -38,7 +50,7 @@ export default function AsyncNavExample() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/async-nav" />
       </HashSection>
 
@@ -46,3 +58,5 @@ export default function AsyncNavExample() {
     </React.Fragment>
   );
 }
+
+export { AsyncNavExample as component, contents };

@@ -6,19 +6,31 @@ import {
   IJS,
   Note,
   CodeSandboxDemo,
-  OnGithub
+  OnGithub,
+  onGitHubMeta
 } from "../../../components/example/common";
 
 const meta = {
   title: "Multiple Body Components"
 };
 
-export default function MultiBodyExample() {
+const explanationMeta = {
+  title: "Explanation",
+  hash: "explanation"
+};
+const demoMeta = {
+  title: "Live Demo",
+  hash: "demo"
+};
+
+const contents = [explanationMeta, demoMeta, onGitHubMeta];
+
+function MultiBodyExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection title="Explanation" id="explanation">
+      <HashSection meta={explanationMeta}>
         <p>
           The <IJS>body</IJS> property of a response doesn't have to be a single
           component/function; the <IJS>body</IJS> can be anything you want it to
@@ -94,7 +106,7 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <HashSection title="Live Demo" id="demo">
+      <HashSection meta={demoMeta}>
         <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/multi-body" />
       </HashSection>
 
@@ -102,3 +114,5 @@ const routes = prepareRoutes([
     </React.Fragment>
   );
 }
+
+export { MultiBodyExample as component, contents };
