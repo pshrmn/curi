@@ -24,8 +24,8 @@ describe("prefetch route interaction", () => {
         {
           name: "Player",
           path: "player",
-          resolve: {
-            test: () => Promise.resolve()
+          resolve() {
+            return Promise.resolve();
           }
         },
         { name: "Catch All", path: "(.*)" }
@@ -61,8 +61,8 @@ describe("prefetch route interaction", () => {
         {
           name: "Player",
           path: "player/:id",
-          resolve: {
-            test: () => Promise.resolve()
+          resolve() {
+            return Promise.resolve();
           }
         },
         { name: "Catch All", path: "(.*)" }
@@ -98,11 +98,10 @@ describe("prefetch route interaction", () => {
         {
           name,
           path: "throws",
-          resolve: {
-            test: () =>
-              new Promise((resolve, reject) => {
-                reject(errorMessage);
-              })
+          resolve() {
+            return new Promise((resolve, reject) => {
+              reject(errorMessage);
+            });
           }
         },
         { name: "Catch All", path: "(.*)" }
@@ -120,21 +119,19 @@ describe("prefetch route interaction", () => {
     });
 
     describe("props", () => {
-      it("passes arguments to route's on.every() function", done => {
+      it("passes arguments to route's resolve function", done => {
         const routes = prepareRoutes([
           {
             name: "Player",
             path: "player/:id",
-            resolve: {
-              test: function(props) {
-                expect(props).toMatchObject({
-                  name: "Player",
-                  location: locationToPass,
-                  params: paramsToPass
-                });
-                done();
-                return Promise.resolve(true);
-              }
+            resolve(props) {
+              expect(props).toMatchObject({
+                name: "Player",
+                location: locationToPass,
+                params: paramsToPass
+              });
+              done();
+              return Promise.resolve(true);
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -151,41 +148,6 @@ describe("prefetch route interaction", () => {
         });
       });
     });
-
-    describe("which", () => {
-      const one = jest.fn();
-      const two = jest.fn();
-      const routes = prepareRoutes([
-        {
-          name: "Home",
-          path: "",
-          resolve: { one, two }
-        },
-        { name: "Catch All", path: "(.*)" }
-      ]);
-      const router = curi(history, routes, {
-        route: [createPrefetch()]
-      });
-
-      beforeEach(() => {
-        one.mockReset();
-        two.mockReset();
-      });
-
-      it("calls all available async functions when not provided", () => {
-        return router.route.prefetch("Home").then(resolved => {
-          expect(one.mock.calls.length).toBe(1);
-          expect(two.mock.calls.length).toBe(1);
-        });
-      });
-
-      it("only calls async.one() when which = ['one']", () => {
-        return router.route.prefetch("Home", null, ["one"]).then(resolved => {
-          expect(one.mock.calls.length).toBe(1);
-          expect(two.mock.calls.length).toBe(0);
-        });
-      });
-    });
   });
 
   it("resets the registered routes when routes are refreshed", () => {
@@ -193,8 +155,8 @@ describe("prefetch route interaction", () => {
       {
         name: "Player",
         path: "player/:id",
-        resolve: {
-          test: () => Promise.resolve()
+        resolve() {
+          return Promise.resolve();
         }
       },
       { name: "Catch All", path: "(.*)" }

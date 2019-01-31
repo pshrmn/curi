@@ -366,12 +366,10 @@ describe("curi", () => {
             {
               name: "Start",
               path: "",
-              resolve: {
-                test(match, e) {
-                  expect(e).toBe(external);
-                  done();
-                  return Promise.resolve(true);
-                }
+              resolve(match, e) {
+                expect(e).toBe(external);
+                done();
+                return Promise.resolve(true);
               }
             },
             {
@@ -424,8 +422,8 @@ describe("curi", () => {
           {
             name: "Home",
             path: "",
-            resolve: {
-              test: () => Promise.resolve()
+            resolve() {
+              return Promise.resolve();
             }
           }
         ]);
@@ -446,8 +444,8 @@ describe("curi", () => {
               {
                 name: "Child",
                 path: "child",
-                resolve: {
-                  test: () => Promise.resolve()
+                resolve() {
+                  return Promise.resolve();
                 }
               }
             ]
@@ -489,8 +487,8 @@ describe("curi", () => {
           {
             name: "Catch All",
             path: "(.*)",
-            resolve: {
-              test: () => Promise.resolve()
+            resolve() {
+              return Promise.resolve();
             }
           }
         ]);
@@ -759,8 +757,8 @@ describe("curi", () => {
           {
             name: "Home",
             path: "",
-            resolve: {
-              test: () => Promise.resolve()
+            resolve() {
+              return Promise.resolve();
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -789,11 +787,9 @@ describe("curi", () => {
                 {
                   name: "How",
                   path: ":method",
-                  resolve: {
-                    test: () => {
-                      promiseResolved = true;
-                      return Promise.resolve(promiseResolved);
-                    }
+                  resolve() {
+                    promiseResolved = true;
+                    return Promise.resolve(promiseResolved);
                   }
                 }
               ]
@@ -820,8 +816,8 @@ describe("curi", () => {
                 {
                   name: "How",
                   path: ":method",
-                  resolve: {
-                    test: () => Promise.resolve()
+                  resolve() {
+                    return Promise.resolve();
                   }
                 }
               ]
@@ -862,8 +858,8 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              resolve: {
-                test: () => Promise.resolve()
+              resolve() {
+                return Promise.resolve();
               }
             }
           ]);
@@ -881,8 +877,8 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              resolve: {
-                test: () => Promise.resolve()
+              resolve() {
+                return Promise.resolve();
               }
             }
           ]);
@@ -997,8 +993,8 @@ describe("curi", () => {
           {
             name: "Home",
             path: "",
-            resolve: {
-              test: () => Promise.resolve()
+            resolve() {
+              return Promise.resolve();
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1027,11 +1023,9 @@ describe("curi", () => {
                 {
                   name: "How",
                   path: ":method",
-                  resolve: {
-                    test: () => {
-                      promiseResolved = true;
-                      return Promise.resolve(promiseResolved);
-                    }
+                  resolve() {
+                    promiseResolved = true;
+                    return Promise.resolve(promiseResolved);
                   }
                 }
               ]
@@ -1058,8 +1052,8 @@ describe("curi", () => {
                 {
                   name: "How",
                   path: ":method",
-                  resolve: {
-                    test: () => Promise.resolve()
+                  resolve() {
+                    return Promise.resolve();
                   }
                 }
               ]
@@ -1100,8 +1094,8 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              resolve: {
-                test: () => Promise.resolve()
+              resolve() {
+                return Promise.resolve();
               }
             }
           ]);
@@ -1119,8 +1113,8 @@ describe("curi", () => {
             {
               name: "Home",
               path: "",
-              resolve: {
-                test: () => Promise.resolve()
+              resolve() {
+                return Promise.resolve();
               }
             }
           ]);
@@ -1263,22 +1257,20 @@ describe("curi", () => {
           {
             name: "Slow",
             path: "slow",
-            resolve: {
-              test: () => {
-                // takes 500ms to resolve
-                return new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve("done");
-                  }, 500);
-                });
-              }
+            resolve() {
+              // takes 500ms to resolve
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("done");
+                }, 500);
+              });
             }
           },
           {
             name: "Fast",
             path: "fast",
-            resolve: {
-              test: () => Promise.resolve("complete")
+            resolve() {
+              return Promise.resolve("complete");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1301,8 +1293,8 @@ describe("curi", () => {
           {
             name: "Loader",
             path: "loader/:id",
-            resolve: {
-              test: () => Promise.resolve("complete")
+            resolve() {
+              return Promise.resolve("complete");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1340,22 +1332,20 @@ describe("curi", () => {
           {
             name: "Slow",
             path: "slow",
-            resolve: {
-              test: () => {
-                // takes 500ms to resolve
-                return new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve("done");
-                  }, 500);
-                });
-              }
+            resolve() {
+              // takes 500ms to resolve
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("done");
+                }, 500);
+              });
             }
           },
           {
             name: "Fast",
             path: "fast",
-            resolve: {
-              test: () => Promise.resolve("complete")
+            resolve() {
+              return Promise.resolve("complete");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1377,8 +1367,8 @@ describe("curi", () => {
           {
             name: "Loader",
             path: "loader/:id",
-            resolve: {
-              test: () => Promise.resolve("complete")
+            resolve() {
+              return Promise.resolve("complete");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1411,8 +1401,8 @@ describe("curi", () => {
           {
             name: "Loader",
             path: "loader/:id",
-            resolve: {
-              test: () => Promise.resolve("complete")
+            resolve() {
+              return Promise.resolve("complete");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1445,22 +1435,20 @@ describe("curi", () => {
           {
             name: "Slow",
             path: "slow",
-            resolve: {
-              test: () => {
-                // takes 500ms to resolve
-                return new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve("done");
-                  }, 500);
-                });
-              }
+            resolve() {
+              // takes 500ms to resolve
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("done");
+                }, 500);
+              });
             }
           },
           {
             name: "Fast",
             path: "fast",
-            resolve: {
-              test: () => Promise.resolve("complete")
+            resolve() {
+              return Promise.resolve("complete");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1506,8 +1494,8 @@ describe("curi", () => {
         {
           name: "About",
           path: "about",
-          resolve: {
-            wait: () => Promise.resolve("wait")
+          resolve() {
+            return Promise.resolve("wait");
           }
         },
         { name: "Catch All", path: "(.*)" }
@@ -1530,8 +1518,8 @@ describe("curi", () => {
           {
             name: "About",
             path: "about",
-            resolve: {
-              wait: () => Promise.resolve("wait")
+            resolve() {
+              return Promise.resolve("wait");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1563,8 +1551,8 @@ describe("curi", () => {
           {
             name: "About",
             path: "about",
-            resolve: {
-              wait: () => Promise.resolve("wait")
+            resolve() {
+              return Promise.resolve("wait");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1591,8 +1579,8 @@ describe("curi", () => {
           {
             name: "About",
             path: "about",
-            resolve: {
-              wait: () => Promise.resolve("wait")
+            resolve() {
+              return Promise.resolve("wait");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -1622,15 +1610,15 @@ describe("curi", () => {
         {
           name: "About",
           path: "about",
-          resolve: {
-            wait: () => Promise.resolve("wait")
+          resolve() {
+            return Promise.resolve("wait");
           }
         },
         {
           name: "Contact",
           path: "contact",
-          resolve: {
-            wait: () => Promise.resolve("wait")
+          resolve() {
+            return Promise.resolve("wait");
           }
         },
         { name: "Catch All", path: "(.*)" }

@@ -5,9 +5,9 @@
 [badge]: https://img.shields.io/npm/v/@curi/route-prefetch.svg
 [npm-link]: https://npmjs.com/package/@curi/route-prefetch
 
-The `prefetch` route interaction lets you call a route's `on.every()` method outside of route matching.
+The `prefetch` route interaction lets you call a route's `resolve()` method outside of route matching.
 
-**Note:** If you use this route interaction, then your `on.every()` functions should be caching the data. This is because the route's `on.every()` function is always called when matching routes. Caching enables you to bail early with the prefetched data.
+**Note:** If you use this route interaction, then your `resolve` function should be caching the data. This is because the route's `resolve` function is always called when matching routes. Caching enables you to bail early with the prefetched data.
 
 ## Installation
 

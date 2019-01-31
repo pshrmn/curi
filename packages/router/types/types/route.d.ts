@@ -1,10 +1,7 @@
 import { RegExpOptions, Key, PathFunction } from "path-to-regexp";
 import { MatchResponseProperties, SettableResponseProperties } from "./response";
-export interface Resolved {
-    [key: string]: any;
-}
 export interface ResolveResults {
-    resolved: Resolved | null;
+    resolved: any;
     error: any;
 }
 export declare type ParamParser = (input: string) => any;
@@ -12,16 +9,13 @@ export interface ParamParsers {
     [key: string]: ParamParser;
 }
 export interface ResponseBuilder {
-    resolved: Resolved | null;
+    resolved: any;
     error: any;
     match: MatchResponseProperties;
     external: any;
 }
 export declare type ResponseFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
 export declare type AsyncMatchFn = (matched?: Readonly<MatchResponseProperties>, external?: any) => Promise<any>;
-export interface AsyncGroup {
-    [key: string]: AsyncMatchFn;
-}
 export interface RouteDescriptor {
     name: string;
     path: string;
@@ -29,7 +23,7 @@ export interface RouteDescriptor {
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
     response?: ResponseFn;
-    resolve?: AsyncGroup;
+    resolve?: AsyncMatchFn;
     extra?: {
         [key: string]: any;
     };
@@ -42,15 +36,19 @@ export interface CompiledRoute {
     pathMatching: PathMatching;
     paramParsers?: ParamParsers;
 }
-export interface Route {
+export interface Route<R = unknown> {
     name: string;
     path: string;
     keys: Array<string | number>;
-    resolve: AsyncGroup;
     extra?: {
         [key: string]: any;
     };
     pathname: PathFunction;
+    resolve: R;
+}
+export interface SyncRoute extends Route<undefined> {
+}
+export interface AsyncRoute extends Route<AsyncMatchFn> {
 }
 export interface PathMatching {
     mustBeExact: boolean;
