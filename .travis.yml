@@ -8,3 +8,5 @@ cache:
 branches:
   only:
     - master
+    - dev
+    - /dev-*/
