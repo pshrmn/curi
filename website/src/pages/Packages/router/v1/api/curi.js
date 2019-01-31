@@ -14,8 +14,8 @@ const argumentsMeta = {
   hash: "arguments"
 };
 const propertiesMeta = {
-  title: "Router Properties",
-  hash: "properties"
+  title: "Router",
+  hash: "router"
 };
 export const meta = {
   title: "curi()",
@@ -86,23 +86,26 @@ const router = curi(history, routes);`}
             An optional object with additional properties that can be passed to
             the router.
           </p>
-          <ul>
-            <li>
-              <p>
-                <IJS>route</IJS> - An array of{" "}
-                <Link name="Guide" params={{ slug: "route-interactions" }}>
-                  route interactions
-                </Link>
-                . These are functions for interacting with routes based on their{" "}
-                <IJS>name</IJS>.
-              </p>
-              <p>
-                The <IJS>pathname</IJS> interaction is included by default; any
-                other interactions are provided through this array.
-              </p>
 
-              <CodeBlock>
-                {`import active from "@curi/route-active";
+          <HashSection
+            tag="h6"
+            meta={{ title: <IJS>route</IJS>, hash: "options-route" }}
+          >
+            <p>
+              An array of{" "}
+              <Link name="Guide" params={{ slug: "route-interactions" }}>
+                route interactions
+              </Link>
+              . These are functions for interacting with routes based on their{" "}
+              <IJS>name</IJS>.
+            </p>
+            <p>
+              The <IJS>pathname</IJS> interaction is included by default; any
+              other interactions are provided through this array.
+            </p>
+
+            <CodeBlock>
+              {`import active from "@curi/route-active";
 import ancestors from "@curi/route-ancestors";
 
 const routes = prepareRoutes([{ name: "Home", path: "" }]);
@@ -110,83 +113,92 @@ const routes = prepareRoutes([{ name: "Home", path: "" }]);
 const router = curi(history, routes, {
   route: [active(), ancestors()]
 });`}
-              </CodeBlock>
+            </CodeBlock>
 
-              <p>
-                Route interactions are called via the router's <IJS>route</IJS>{" "}
-                object.
-              </p>
+            <p>
+              Route interactions are called via the router's <IJS>route</IJS>{" "}
+              object.
+            </p>
 
-              <CodeBlock>
-                {`router.route.active("Home");
+            <CodeBlock>
+              {`router.route.active("Home");
 // returns true when location.pathname = "/"
 
 router.route.pathname("Home");
 // returns "/"`}
-              </CodeBlock>
-            </li>
-            <li>
-              <p>
-                <IJS>sideEffects</IJS> - An array of{" "}
-                <Link name="Guide" params={{ slug: "side-effects" }}>
-                  side effect
-                </Link>{" "}
-                objects.
-              </p>
-              <ScrollableTable>
-                <thead>
-                  <tr>
-                    <th>property</th>
-                    <th>description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>effect</td>
-                    <td>
-                      An observer that will be called whenever a response is
-                      generated.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>after</td>
-                    <td>
-                      (default <IJS>false</IJS>) controls whether the side
-                      effect is called before or after non-side effect
-                      observers.
-                    </td>
-                  </tr>
-                </tbody>
-              </ScrollableTable>
+            </CodeBlock>
+          </HashSection>
 
-              <CodeBlock>
-                {`import scroll from "@curi/side-effect-scroll";
+          <HashSection
+            tag="h6"
+            meta={{
+              title: <IJS>sideEffects</IJS>,
+              hash: "options-sideEffects"
+            }}
+          >
+            <p>
+              An array of{" "}
+              <Link name="Guide" params={{ slug: "side-effects" }}>
+                side effect
+              </Link>{" "}
+              objects.
+            </p>
+            <ScrollableTable>
+              <thead>
+                <tr>
+                  <th>property</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>effect</td>
+                  <td>
+                    An observer that will be called whenever a response is
+                    generated.
+                  </td>
+                </tr>
+                <tr>
+                  <td>after</td>
+                  <td>
+                    (default <IJS>false</IJS>) controls whether the side effect
+                    is called before or after non-side effect observers.
+                  </td>
+                </tr>
+              </tbody>
+            </ScrollableTable>
+
+            <CodeBlock>
+              {`import scroll from "@curi/side-effect-scroll";
 
 const router = curi(history, routes, {
   sideEffects: [scroll()]
 });`}
-              </CodeBlock>
-            </li>
-            <li>
-              <p>
-                <IJS>external</IJS> - Values that should be accessible to a
-                route's <IJS>resolve</IJS> functions and <IJS>response()</IJS>{" "}
-                function.
-              </p>
-              <p>
-                Using <IJS>external</IJS> allows you to access APIs, data, etc.
-                without having to be able to import it in the module where the
-                routes are defined.
-              </p>
+            </CodeBlock>
+          </HashSection>
 
-              <CodeBlock>
-                {`const client = new ApolloClient();
+          <HashSection
+            tag="h6"
+            meta={{ title: <IJS>external</IJS>, hash: "options-external" }}
+          >
+            <p>
+              Values that should be accessible to a route's <IJS>resolve</IJS>{" "}
+              functions and <IJS>response()</IJS> function.
+            </p>
+            <p>
+              Using <IJS>external</IJS> allows you to access APIs, data, etc.
+              without having to be able to import it in the module where the
+              routes are defined.
+            </p>
+
+            <CodeBlock>
+              {`const client = new ApolloClient();
 const router = curi(history, routes, {
   external: { client, greeting: "Hi!" }
 });`}
-              </CodeBlock>
-              <CodeBlock>
-                {`const routes = prepareRoutes([
+            </CodeBlock>
+            <CodeBlock>
+              {`const routes = prepareRoutes([
   {
     name: "User",
     path: "user/:id",
@@ -198,20 +210,26 @@ const router = curi(history, routes, {
     }
   }
 ]);`}
-              </CodeBlock>
-            </li>
-            <li>
-              <p>
-                <IJS>emitRedirects</IJS> - When <IJS>false</IJS> (default is{" "}
-                <IJS>true</IJS>), response objects with the{" "}
-                <IJS>redirectTo</IJS> property{" "}
-                <strong>will not be emitted</strong> to observers. This can be
-                useful for avoiding an extra render, but should not be used on
-                the server.
-              </p>
+            </CodeBlock>
+          </HashSection>
 
-              <CodeBlock>
-                {`const routes = prepareRoutes([
+          <HashSection
+            tag="h6"
+            meta={{
+              title: <IJS>emitRedirects</IJS>,
+              hash: "options-emitRedirects"
+            }}
+          >
+            <p>
+              When <IJS>false</IJS> (default is <IJS>true</IJS>), response
+              objects with the <IJS>redirectTo</IJS> property{" "}
+              <strong>will not be emitted</strong> to observers. This can be
+              useful for avoiding an extra render, but should not be used on the
+              server.
+            </p>
+
+            <CodeBlock>
+              {`const routes = prepareRoutes([
   {
     name: "Old",
     path: "old/:id",
@@ -236,27 +254,34 @@ const router = curi(history, routes, {
 });
 // navigating to "/old/2" will automatically redirect
 // to "/new/2" without emitting a response`}
-              </CodeBlock>
-            </li>
-            <li>
-              <p>
-                <IJS>automaticRedirects</IJS> - When the initially matched route
-                is synchronous and redirects, the router's automatic redirect
-                will occur before any response handlers (registered with{" "}
-                <IJS>once()</IJS> or <IJS>observe()</IJS>) are called. This
-                means that they will be called with the response for the
-                location that was redirected to instead of the initial location.
-                This is fine on the client side, but causes issues with server
-                side rendering. When <IJS>automaticRedirects</IJS> is{" "}
-                <IJS>false</IJS>, the automatic redirect will not happen.{" "}
-                <strong>
-                  Setting <IJS>automaticRedirects</IJS> to <IJS>false</IJS> is
-                  recommend for server side rendering.
-                </strong>
-              </p>
+            </CodeBlock>
+          </HashSection>
 
-              <CodeBlock>
-                {`const routes = prepareRoutes([
+          <HashSection
+            tag="h6"
+            meta={{
+              title: <IJS>automaticRedirects</IJS>,
+              hash: "options-automaticRedirects"
+            }}
+          >
+            <p>
+              When the initially matched route is synchronous and redirects, the
+              router's automatic redirect will occur before any response
+              handlers (registered with <IJS>once()</IJS> or{" "}
+              <IJS>observe()</IJS>) are called. This means that they will be
+              called with the response for the location that was redirected to
+              instead of the initial location. This is fine on the client side,
+              but causes issues with server side rendering. When{" "}
+              <IJS>automaticRedirects</IJS> is <IJS>false</IJS>, the automatic
+              redirect will not happen.{" "}
+              <strong>
+                Setting <IJS>automaticRedirects</IJS> to <IJS>false</IJS> is
+                recommend for server side rendering.
+              </strong>
+            </p>
+
+            <CodeBlock>
+              {`const routes = prepareRoutes([
   {
     name: "Old",
     path: "old/:id",
@@ -282,33 +307,38 @@ const router = curi(history, routes, {
 router.once(({ response }) => {
   // response = { name: "Old", ... }
 });`}
-              </CodeBlock>
-            </li>
-            <li>
-              <p>
-                <IJS>pathnameOptions</IJS> - Curi uses{" "}
-                <a href="https://github.com/pillarjs/path-to-regexp">
-                  <IJS>path-to-regexp</IJS>
-                </a>{" "}
-                to handle route matching and pathname generation.{" "}
-                <IJS>path-to-regexp</IJS> can take a custom{" "}
-                <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp">
-                  <IJS>encode</IJS>
-                </a>{" "}
-                function for creating pathnames, which you can specify with this
-                options.{" "}
-                <strong>You most likely will never need to use this.</strong>
-              </p>
+            </CodeBlock>
+          </HashSection>
 
-              <CodeBlock>
-                {`const router = curi(history, routes, {
+          <HashSection
+            tag="h6"
+            meta={{
+              title: <IJS>pathnameOptions</IJS>,
+              hash: "options-pathnameOptions"
+            }}
+          >
+            <p>
+              Curi uses{" "}
+              <a href="https://github.com/pillarjs/path-to-regexp">
+                <IJS>path-to-regexp</IJS>
+              </a>{" "}
+              to handle route matching and pathname generation.{" "}
+              <IJS>path-to-regexp</IJS> can take a custom{" "}
+              <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp">
+                <IJS>encode</IJS>
+              </a>{" "}
+              function for creating pathnames, which you can specify with this
+              options.
+            </p>
+
+            <CodeBlock>
+              {`const router = curi(history, routes, {
   pathOptions: {
     encode: (value, token) => { /* ... */ }
   }
 });`}
-              </CodeBlock>
-            </li>
-          </ul>
+            </CodeBlock>
+          </HashSection>
         </HashSection>
       </HashSection>
 

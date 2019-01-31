@@ -22,7 +22,9 @@ export function AriaLiveAPI() {
         so that only screen readers detect it.
       </p>
 
-      <Warning>This side-effect should only be used in the browser.</Warning>
+      <Warning>
+        <p>This side-effect should only be used in the browser.</p>
+      </Warning>
 
       <p>
         The side-effect factory takes a function, which will receives the same

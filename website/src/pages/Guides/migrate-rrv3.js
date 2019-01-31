@@ -297,7 +297,7 @@ const routes = prepareRoutes([
             <Link
               name="Package"
               params={{ package: "router", version: "v1" }}
-              hash="route-properties"
+              hash="route-objects"
             >
               <IJS>@curi/router</IJS> route API documentation
             </Link>{" "}

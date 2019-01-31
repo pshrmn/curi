@@ -42,9 +42,12 @@ const locationsMeta = {
   children: [queryMeta]
 };
 
+const popMeta = { title: "pop", hash: "pop" };
+const praMeta = { title: "push, replace, anchor", hash: "push-replace-anchor" };
 const navigationMeta = {
   title: "Navigation",
-  hash: "navigation"
+  hash: "navigation",
+  children: [popMeta, praMeta]
 };
 
 const contents = [typesMeta, locationsMeta, navigationMeta];
@@ -56,17 +59,17 @@ function HistoryGuide() {
         <h1>{meta.title}</h1>
 
         <p>
-          The <IJS>history</IJS> object manages navigation between locations
-          within an application.
+          A router's history object powers navigation behind the scenes. Besides
+          creating the object and passing it the the <IJS>curi</IJS> function to
+          create a router, you likely will not directly interact with it.
         </p>
+
         <p>
-          Curi uses <a href="https://github.com/pshrmn/hickory">Hickory</a> for
-          its history implementation.
-        </p>
-        <p>
-          You should almost never have to interact directly with Hickory, but
-          you do have to create your own <IJS>history</IJS> object for your
-          application and use it when creating the router.
+          Curi uses <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
+          packages for its history implementations. Hickory is designed with
+          asynchronous navigation in mind. This means that when a user clicks a
+          link, your application can load data for the mastched route before
+          updating the location.
         </p>
 
         <CodeBlock>
@@ -77,8 +80,8 @@ const router = curi(history, routes);`}
 
       <HashSection meta={typesMeta}>
         <p>
-          There are three types of <IJS>history</IJS> to choose from; which one
-          you use depends on where your application is running.
+          There are three Hickory packages to choose from for an application. W
+          hich one you use depends on where your application is running.
         </p>
 
         <HashSection meta={browserMeta} tag="h3">
@@ -86,15 +89,16 @@ const router = curi(history, routes);`}
             {`import Browser from "@hickory/browser";
 const browserHistory = Browser();`}
           </CodeBlock>
+
           <p>
-            The <IJS>browser</IJS> history is used for applications running in a
-            browser.
+            The browser history is used for applications running in a browser.
           </p>
+
           <p>
-            If you use the <IJS>browser</IJS> history, your application should
-            be hosted on a server that can handle dynamic requests. This either
-            means:
+            If you use the browser history, your application should be hosted on
+            a server that can handle dynamic requests. This either means:
           </p>
+
           <ol>
             <li>
               A server with real time route matching (like an Express server).
@@ -118,14 +122,16 @@ const hashHistory = Hash();`}
           </CodeBlock>
 
           <p>
-            The <IJS>hash</IJS> history is a fallback history for applications
-            running in a browser. It should only be used if you cannot configure
-            the server to respond to requests that don't match files on the
-            server.
+            The hash history is a fallback history for applications running in a
+            browser. It should only be used if you cannot configure the server
+            to respond to requests that don't match files on the server.
           </p>
+
           <Warning>
-            This should only be used as a last resort. The <IJS>browser</IJS>{" "}
-            history is almost always a better choice.
+            <p>
+              This should only be used as a last resort. The browser history is
+              almost always a better choice.
+            </p>
           </Warning>
         </HashSection>
 
@@ -136,9 +142,9 @@ const inMemoryHistory = InMemory();`}
           </CodeBlock>
 
           <p>
-            The <IJS>in-memory</IJS> history is used for applications not
-            running in a browser. For example, the <IJS>in-memory</IJS> history
-            is used on the server, in a React Native app, and during testing.
+            The in memory history is used for applications not running in a
+            browser. For example, the in memory history is used on the server,
+            in a React Native app, and during testing.
           </p>
         </HashSection>
 
@@ -156,22 +162,23 @@ const inMemoryHistory = InMemory();`}
 
       <HashSection meta={locationsMeta}>
         <p>
-          The <IJS>history</IJS> object will map URLs into location objects.
-          Only the <IJS>pathname</IJS>, <IJS>query</IJS> (search), and{" "}
-          <IJS>hash</IJS> segments are used; locations ignore the domain and
-          protocol segments of a URL.
+          The history object will map URL strings into location objects. Only
+          the <IJS>pathname</IJS>, <IJS>query</IJS> (search), and{" "}
+          <IJS>hash</IJS> segments of a URL are used; locations ignore the
+          domain and protocol segments of a URL.
         </p>
+
         <p>
-          When matching loactions to routes, only the <IJS>pathname</IJS> is
-          used.
+          Matching locations to routes only uses the location's{" "}
+          <IJS>pathname</IJS>.
         </p>
 
         <CodeBlock>
           {`// https://www.example.com/page?key=value#trending
 location = {
-pathname: "/page",
-query: "key=value"
-hash: "trending"
+  pathname: "/page",
+  query: "key=value"
+  hash: "trending"
 }`}
         </CodeBlock>
 
@@ -181,6 +188,7 @@ hash: "trending"
             the history object can be configured to automatically parse it into
             an object.
           </p>
+
           <p>
             You can choose whichever query parsing/stringifying package you
             prefer. Some of the most popular are{" "}
@@ -203,56 +211,68 @@ hash: "trending"
 import Browser from "@hickory/browser";
 
 const history = Browser({
-query: { parse, stringify }
+  query: { parse, stringify }
 });
 
 // https://www.example.com/page?key=value#trending
 location = {
-pathname: "/page",
-query: { key: "value" }
-hash: "trending"
+  pathname: "/page",
+  query: { key: "value" }
+  hash: "trending"
 }`}
           </CodeBlock>
         </HashSection>
       </HashSection>
 
       <HashSection meta={navigationMeta}>
+        <p>The history object supports four kinds of navigation.</p>
+
         <p>
-          The <IJS>history</IJS> object supports four kinds of navigation. You
-          can think of the <IJS>history</IJS> as storing an array of locations
-          and keeping an index of which location in the array is the current
-          location.
-        </p>
-        <p>
-          Pop navigation is either performed by calling <IJS>history.go(n)</IJS>{" "}
-          (where <IJS>n</IJS> is the number of locations forward/backward to go)
-          or happens natively (e.g. clicking the browser's back button).
+          When a user navigates to your application, this starts a new session.
+          A session is essentially an array of locations that have been visited
+          (but isn't directly accessible in the browser).
         </p>
 
-        <CodeBlock>
-          {`history.go(-1); // go back to the previous location`}
-        </CodeBlock>
+        <HashSection tag="h3" meta={popMeta}>
+          <p>
+            Pop navigation is either performed by calling{" "}
+            <IJS>history.go(n)</IJS> (where <IJS>n</IJS> is the number of
+            locations forward/backward to go) or happens natively (e.g. clicking
+            the browser's back button).
+          </p>
 
-        <p>Push navigation adds a new location after the current location.</p>
-        <p>
-          Replace navigation replaces the current location with a new location.
-        </p>
-        <p>
-          Anchor navigation is a mix between push and replace. If the new
-          location is the same as the current location, it replaces; otherwise,
-          it pushes. This behavior is the same as how clicking an <Cmp>a</Cmp>{" "}
-          in a multi-page application works, hence the name "anchor".
-        </p>
-        <p>
-          Push, replace, and anchor navigation are performed using the{" "}
-          <IJS>history</IJS> object's <IJS>navigate()</IJS> method. That said,
-          the Curi router has a wrapper implementation, so you shouldn't need to
-          call <IJS>history.navigate()</IJS> yourself.
-        </p>
+          <CodeBlock>
+            {`history.go(-1); // go back to the previous location`}
+          </CodeBlock>
+        </HashSection>
 
-        <CodeBlock>
-          {`history.navigate({ pathname: "/test" }, "PUSH");`}
-        </CodeBlock>
+        <HashSection tag="h3" meta={praMeta}>
+          <p>Push navigation adds a new location after the current location.</p>
+
+          <p>
+            Replace navigation replaces the current location with a new
+            location.
+          </p>
+
+          <p>
+            Anchor navigation is a mix between push and replace. If the new
+            location is the same as the current location, it replaces;
+            otherwise, it pushes. This behavior is the same as how clicking an{" "}
+            <Cmp>a</Cmp> in a multi-page application works, hence the name
+            "anchor".
+          </p>
+
+          <p>
+            Push, replace, and anchor navigation are performed using the history
+            object's <IJS>navigate()</IJS> method. That said, the Curi router
+            has a wrapper implementation, so you shouldn't need to call{" "}
+            <IJS>history.navigate()</IJS> yourself.
+          </p>
+
+          <CodeBlock>
+            {`history.navigate({ pathname: "/test" }, "PUSH");`}
+          </CodeBlock>
+        </HashSection>
       </HashSection>
 
       <PlainSection>

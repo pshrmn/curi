@@ -152,12 +152,14 @@ export function LinkAPI() {
             styled components to navigate.
           </p>
           <Warning>
-            You can provide any component that you want, but you <em>should</em>{" "}
-            stick with an anchor (or a component that renders an anchor). There
-            are accessibility issues that will occur when you use other DOM
-            elements as links. The component's prop type is func in an attempt
-            to discourage you from making your link render a button, div, span,
-            etc.
+            <p>
+              You can provide any component that you want, but you{" "}
+              <em>should</em> stick with an anchor (or a component that renders
+              an anchor). There are accessibility issues that will occur when
+              you use other DOM elements as links. The component's prop type is
+              func in an attempt to discourage you from making your link render
+              a button, div, span, etc.
+            </p>
           </Warning>
         </HashSection>
 

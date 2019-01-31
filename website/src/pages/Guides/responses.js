@@ -220,18 +220,15 @@ const routes = prepareRoutes([
           {`{
   // The redirectTo property provides information on
   // where you should redirect to
-  redirectTo: { url: '/login' }
+  redirectTo: { name: "Login" }
 }`}
         </CodeBlock>
 
         <p>
-          You can choose whether or not you want responses with a{" "}
-          <IJS>redirectTo</IJS> property to be emitted. If they are not emitted,
-          then the router will redirect without the application's observers
-          knowing about the redirect. The default behavior is to emit redirects,
-          but this also means that you have to render using the redirect
-          response. The <IJS>{`{ emitRedirects: false }`}</IJS> option prevents
-          this.
+          When creating a router, you can set the <IJS>emitRedirects</IJS>{" "}
+          option to <IJS>false</IJS> and the response will not be sent to
+          observers and one time functions. Redirect responses don't usually
+          have anything to render, so setting this option is usually ideal.
         </p>
 
         <CodeBlock>

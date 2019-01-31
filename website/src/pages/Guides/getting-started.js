@@ -37,13 +37,18 @@ function GettingStartedGuide() {
     <React.Fragment>
       <PlainSection>
         <h1>{meta.title}</h1>
+
+        <p>
+          The core of a single-page application is with its router. The router
+          is responsible for matching locations to its known routes and for
+          powering navigating within the application.
+        </p>
       </PlainSection>
 
       <HashSection meta={routerMeta}>
         <p>
-          The router is the controller of the single-page application. A router
-          is created using a <IJS>history</IJS> object and a <IJS>routes</IJS>{" "}
-          array.
+          A router is created using a <IJS>history</IJS> object and a{" "}
+          <IJS>routes</IJS> array.
         </p>
 
         <CodeBlock>
@@ -70,18 +75,25 @@ const router = curi(history, routes);`}
 
       <HashSection meta={navigationMeta}>
         <p>
-          Navigation within a single-page application can either be caused by
-          in-app navigation (e.g. clicking a link) or platform navigation (e.g.
+          There are two types of navigation within a single-page application:
+          in-app navigation (e.g. clicking a link) and platform navigation (e.g.
           clicking the back button or typing URL in the address bar and hitting
           enter).
         </p>
 
         <p>
-          The router has a <IJS>navigate()</IJS> method to let you navigate with
-          code. The function takes the <IJS>name</IJS> of the route you want to
-          navigate to and any route <IJS>params</IJS>. The navigation{" "}
-          <IJS>method</IJS> controls how the history changes locations, with the
-          default behavior acting like clicking a link.
+          A Curi router object has a <IJS>navigate()</IJS> method to let you
+          navigate with code. Instead of being given a URL, the function takes
+          the <IJS>name</IJS> of the route you want to navigate to and any route{" "}
+          <IJS>params</IJS>. There are also a number of{" "}
+          <Link
+            name="Package"
+            params={{ package: "router", version: "v1" }}
+            hash="navigate"
+          >
+            other optional arguments to <IJS>navigate()</IJS>
+          </Link>
+          .
         </p>
 
         <CodeBlock>
@@ -90,20 +102,12 @@ const router = curi(history, routes);`}
   params: { albumID: 1357, photoID: 02468 },
   hash: "comments"
 });
-// /photos/1357/02468#comments
-
-router.navigate({
-  name: "Login",
-  state: { next: location.pathname },
-  // replace the current location with the Login location
-  // "REPLACE" is ideal for redirects
-  method: "REPLACE"
-});`}
+// navigates to /photos/1357/02468#comments`}
         </CodeBlock>
 
         <Note>
           <p>
-            Render interfaces, like{" "}
+            Render packages, like{" "}
             <Link
               name="Package"
               params={{ package: "react-dom", version: "v1" }}
@@ -119,13 +123,14 @@ router.navigate({
       <HashSection meta={handlerMeta}>
         <p>
           When Curi matches a location to a route, it creates a "response"
-          object, which provides information about the route that matched.
+          object. Respons objects provide information about the route that
+          matched.
         </p>
 
         <p>
           Response handlers are functions that will be called when there is a
-          new response. There are three types of response handlers: observers,
-          one time functions, and side effects.
+          new response. There are three types of response handlers: side
+          effects, one time functions, and observers.
         </p>
 
         <p>
@@ -145,16 +150,9 @@ router.navigate({
         </CodeBlock>
 
         <p>
-          "One time" response handlers, registered with <IJS>router.once()</IJS>
-          , will only be called one time. If a response already exists, then the
-          response handler will be called immediately (unless configured not
-          to). Otherwise, the one time response handler will be called after the
-          next response is emitted.
-        </p>
-
-        <p>
-          The primary use case for one time functions is to wait for the initial
-          response to be generated before rendering.
+          Response handlers registered with <IJS>router.once()</IJS> will only
+          be called one time. This is primarily useful for waiting for
+          asynchronous actions to finish before the initial render.
         </p>
 
         <CodeBlock>
@@ -167,25 +165,26 @@ router.once(() => {
 
         <p>
           Observers are passed to the router using <IJS>router.observe()</IJS>.
-          Unlike one time functions, these will be called for every response
-          emitted by the router (until you tell the router to stop calling it).
-          You most likely will not need to call this yourself because the
-          renderer implementations setup observers for you.
+          Unlike one time functions, these will be called every time there is a
+          new response.
+        </p>
+
+        <p>
+          Render packages, like <IJS>@curi/react-dom</IJS>, use{" "}
+          <IJS>router.observe()</IJS> internally in order to re-render when
+          there is a new response.
         </p>
 
         <CodeBlock>
-          {`const stop = router.observe(({ response }) => {
+          {`router.observe(({ response }) => {
   console.log('new response!', response);
-});
-// ...
-stop();
-// no longer observing`}
+});`}
         </CodeBlock>
 
         <p>
-          If you have any asynchronous routes (routes with <IJS>resolve</IJS>{" "}
-          functions), <IJS>router.once()</IJS> should be used to delay the
-          initial render until after the initial response is ready.
+          If you have any asynchronous routes (route objects with{" "}
+          <IJS>resolve</IJS> functions), <IJS>router.once()</IJS> should be used
+          to delay the initial render until after the initial response is ready.
         </p>
 
         <CodeBlock>
@@ -198,14 +197,9 @@ router.once(() => {
 
       <HashSection meta={renderingMeta}>
         <p>
-          How Curi integrates with UI libraries depends on which one you are
-          using. The way that Curi interfaces with each of them varies, but they
-          all use observers to be notified when there is a new response.
-        </p>
-
-        <p>
-          For the UI libraries that Curi natively supports, you can check out
-          their respective guides to see how to use them.
+          Curi adapts its API to work with different UI libraries. You can check
+          out the respective guides for the officially supported libraries to
+          see how to use them.
         </p>
 
         <ul>

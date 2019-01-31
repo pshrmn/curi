@@ -128,8 +128,11 @@ function SSRGuide() {
         </CodeBlock>
 
         <Warning>
-          <IJS>@babel/node</IJS> should only be used in development. For
-          production, the server's modules should be pre-compiled (using Babel).
+          <p>
+            <IJS>@babel/node</IJS> should only be used in development. For
+            production, the server's modules should be pre-compiled (using
+            Babel).
+          </p>
         </Warning>
       </HashSection>
 

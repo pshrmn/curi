@@ -1,6 +1,15 @@
 import React from "react";
 
-import { HashSection, CodeBlock, IJS } from "../../components/guide/common";
+import {
+  PlainSection,
+  HashSection,
+  CodeBlock,
+  IJS
+} from "../../components/guide/common";
+
+const meta = {
+  title: "Navigation Objects"
+};
 
 const propertiesMeta = {
   title: "The Properties of a Navigation Object",
@@ -17,10 +26,18 @@ const contents = [propertiesMeta, usageMeta];
 function NavigationObjectGuide() {
   return (
     <React.Fragment>
-      <HashSection meta={propertiesMeta}>
+      <PlainSection>
+        <h1>{meta.title}</h1>
+
         <p>
           The <IJS>navigation</IJS> object contains information about the
-          previous navigation. It has two properties: <IJS>action</IJS> and{" "}
+          previous location and how the user navigated to the current location.
+        </p>
+      </PlainSection>
+
+      <HashSection meta={propertiesMeta}>
+        <p>
+          A navigation object has two properties: <IJS>action</IJS> and{" "}
           <IJS>previous</IJS>.
         </p>
 

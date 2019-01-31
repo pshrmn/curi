@@ -37,13 +37,16 @@ function InstallationGuide() {
 
       <HashSection meta={npmMeta}>
         <p>
-          The <IJS>@curi/router</IJS> package is always required because it
-          provides the core routing/navigation functionality.
+          There are a number of Curi packages, all of which can be installed
+          using NPM. The only one that every application requires is{" "}
+          <IJS>@curi/router</IJS>, which provides the core routing/navigation
+          functionality.
         </p>
 
         <p>
-          You will also need a Hickory package (<IJS>@hickory/browser</IJS>,{" "}
-          <IJS>@hickory/hash</IJS>, or <IJS>@hickory/in-memory</IJS>). Which
+          Curi also requires that you create your own history object. There are
+          three packages to choose from: <IJS>@hickory/browser</IJS>,{" "}
+          <IJS>@hickory/hash</IJS>, and <IJS>@hickory/in-memory</IJS>. Which
           package you need depends on the application, but the browser package
           is best for most websites.
         </p>
@@ -81,11 +84,11 @@ function InstallationGuide() {
           <a href="https://babeljs.io/docs/usage/polyfill/#usage-in-browser">
             babel-polyfill
           </a>{" "}
-          package. If you only need a Promise polyfill, then you should check
-          out the{" "}
+          package. If you only need a Promise polyfill,{" "}
           <a href="https://github.com/stefanpenner/es6-promise">es6-promise</a>{" "}
           package or{" "}
-          <a href="https://polyfill.io/v2/docs/features/">polyfill.io</a>.
+          <a href="https://polyfill.io/v2/docs/features/">polyfill.io</a> should
+          do the trick.
         </p>
 
         <CodeBlock lang="html">

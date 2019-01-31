@@ -150,8 +150,10 @@ const router = curi(history, routes, {
         </p>
 
         <Warning>
-          If you try to focus an element that is not focusable, then the
-          document's <Cmp>body</Cmp> will be focused instead.
+          <p>
+            If you try to focus an element that is not focusable, then the
+            document's <Cmp>body</Cmp> will be focused instead.
+          </p>
         </Warning>
 
         <CodeBlock lang="html">

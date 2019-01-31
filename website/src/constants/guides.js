@@ -46,6 +46,15 @@ const guides = [
       `../pages/Guides/responses.js`)
   },
   {
+    name: "Navigation Objects",
+    slug: "navigation-objects",
+    description: "An introduction to navigation objects",
+    type: "basic",
+    import: () =>
+      import(/* webpackChunkName: 'guide--navigation' */
+      `../pages/Guides/navigation-objects.js`)
+  },
+  {
     name: "Sync or Async",
     slug: "sync-or-async",
     description: "Match routes synchronously or asynchronously",

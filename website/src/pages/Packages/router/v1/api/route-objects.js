@@ -11,8 +11,8 @@ import {
 } from "../../../../../components/package/common";
 
 export const meta = {
-  title: "Route Properties",
-  hash: "route-properties"
+  title: "Route Objects",
+  hash: "route-objects"
 };
 
 export function RoutePropertiesAPI() {
@@ -38,11 +38,11 @@ export function RoutePropertiesAPI() {
           <IJS>pathname</IJS> the best.
         </p>
         <p>
-          Curi uses
+          Curi uses{" "}
           <a href="https://github.com/pillarjs/path-to-regexp#parameters">
             <IJS>path-to-regexp</IJS>
           </a>{" "}
-          for paths, which enables routes to have
+          for path matching, which enables routes to have{" "}
           <a href="https://github.com/pillarjs/path-to-regexp#parameters">
             path parameters
           </a>
@@ -53,12 +53,6 @@ export function RoutePropertiesAPI() {
           <IJS>path</IJS> strings should <strong>not</strong> have a leading
           slash.
         </p>
-        <Warning>
-          <IJS>path-to-regexp</IJS> supports arrays and RegExps, but Curi only
-          supports string paths. This is because Curi uses{" "}
-          <IJS>path-to-regexp</IJS> to generate pathnames from a route's name,
-          which it can only do from strings paths.
-        </Warning>
 
         <CodeBlock>
           {`[
@@ -72,6 +66,13 @@ export function RoutePropertiesAPI() {
 // don't include a leading forward slash
 // { name: 'Home', path: '/' }`}
         </CodeBlock>
+
+        <Warning>
+          <p>
+            <IJS>path-to-regexp</IJS> supports arrays and RegExps, but Curi only
+            supports string paths.
+          </p>
+        </Warning>
       </HashSection>
 
       <HashSection meta={{ title: "route.resolve", hash: "resolve" }} tag="h3">

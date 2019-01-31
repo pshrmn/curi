@@ -1,18 +1,27 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { css } from "@emotion/core";
 
 import { color } from "../constants/styles";
 
-const StyledNote = styled("div")`
+const noteCSS = css`
   padding: 10px 5px;
   margin: 5px 0;
+  border: 1px solid ${color.borderGray};
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const StyledNote = styled("div")`
+  ${noteCSS}
 
   .aside & {
     background: ${color.white};
   }
 
   background: ${color.gray};
-  border: 1px solid ${color.borderGray};
 
   .inline-code {
     background: ${color.white} !important;
@@ -20,11 +29,10 @@ const StyledNote = styled("div")`
 `;
 
 const StyledWarning = styled("div")`
-  padding: 10px 5px;
-  margin: 5px 0;
+  ${noteCSS}
 
   background: ${color.lightOrange};
-  border: 1px solid ${color.brightOrange};
+  border-color: ${color.brightOrange};
 
   .inline-code {
     background: ${color.orange} !important;

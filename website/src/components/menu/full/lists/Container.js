@@ -19,6 +19,10 @@ const StyledContainer = styled("div")`
   a {
     color: ${color.purple};
     text-decoration: none;
+
+    &.active {
+      font-weight: bold;
+    }
   }
 
   ul {

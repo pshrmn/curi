@@ -50,11 +50,11 @@ function NewResponsesGuide() {
         <h1>{meta.title}</h1>
 
         <p>
-          The Curi router uses an observer pattern to call registered functions
-          (called response handlers) when there is a new response. The main
-          function for response handlers is to use the new response to render
-          the application, but any other functionality (like logging) can also
-          be performed.
+          Curi uses an observer pattern to call registered functions (called
+          response handlers) when there is a new response. The primary use care
+          for this is to re-render the application whenever there is a new
+          response, but other functionalities (like logging) can also be
+          performed.
         </p>
       </PlainSection>
 
@@ -70,11 +70,7 @@ function NewResponsesGuide() {
             <IJS>router</IJS>
           </Link>
           ,{" "}
-          <Link
-            name="Guide"
-            params={{ slug: "routes-and-responses" }}
-            hash="responses"
-          >
+          <Link name="Guide" params={{ slug: "responses" }}>
             <IJS>response</IJS>
           </Link>
           , and{" "}
