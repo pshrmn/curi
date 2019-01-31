@@ -1,7 +1,7 @@
 import React from "react";
 
-import TUTORIAL_API from "../../../constants/tutorials";
-import ActiveLink from "../ActiveLink";
+import TUTORIAL_API from "../../../../constants/tutorials";
+import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
 
 const GroupTutorials = ({ tutorials }) => (
@@ -16,10 +16,10 @@ const GroupTutorials = ({ tutorials }) => (
   </ul>
 );
 
-function TutorialLinks({ active }) {
+function TutorialLinks({ active, close }) {
   const groups = TUTORIAL_API.grouped();
   return (
-    <Container active={active}>
+    <Container active={active} close={close}>
       {Object.keys(groups).map(title => (
         <div key={title}>
           <h3>{title}</h3>

@@ -1,7 +1,7 @@
 import React from "react";
 
-import GUIDE_API from "../../../constants/guides";
-import ActiveLink from "../ActiveLink";
+import GUIDE_API from "../../../../constants/guides";
+import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
 
 const GroupGuides = ({ guides }) => (
@@ -16,10 +16,10 @@ const GroupGuides = ({ guides }) => (
   </ul>
 );
 
-function GuideLinks({ active }) {
+function GuideLinks({ active, close }) {
   const groups = GUIDE_API.grouped();
   return (
-    <Container active={active}>
+    <Container active={active} close={close}>
       {Object.keys(groups).map(title => (
         <div key={title}>
           <h3>{title}</h3>

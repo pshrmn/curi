@@ -2,10 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 
 import ActiveLink from "../../links/ActiveLink";
-import PackageDropdown from "../../links/lists/PackageDropdown";
-import GuideDropdown from "../../links/lists/GuideDropdown";
-import ExampleDropdown from "../../links/lists/ExampleDropdown";
-import TutorialDropdown from "../../links/lists/TutorialDropdown";
+import PackageDropdown from "./lists/PackageDropdown";
+import GuideDropdown from "./lists/GuideDropdown";
+import ExampleDropdown from "./lists/ExampleDropdown";
+import TutorialDropdown from "./lists/TutorialDropdown";
 import { color, screen } from "../../../constants/styles";
 
 const StyledHeader = styled("header")`
@@ -95,7 +95,7 @@ function DropdownLink({ name, text, activated, toggle }) {
 }
 
 export default class Header extends React.Component {
-  state = { group: undefined, Dropdown: undefined };
+  state = { group: undefined };
 
   toggleDropdown = group => {
     this.setState(prevState => {
@@ -109,7 +109,13 @@ export default class Header extends React.Component {
   };
 
   hideDropdown = () => {
-    this.setState({ group: undefined, Dropdown: undefined });
+    this.setState({ group: undefined });
+  };
+
+  escapeDropdown = e => {
+    if (e.which === 27) {
+      this.hideDropdown();
+    }
   };
 
   render() {
@@ -126,6 +132,7 @@ export default class Header extends React.Component {
             this.hideDropdown();
           }
         }}
+        onKeyDown={group === undefined ? null : this.escapeDropdown}
       >
         <StyledNav>
           <FlexList>
@@ -141,7 +148,10 @@ export default class Header extends React.Component {
                 activated={group === "Packages"}
                 toggle={this.toggleDropdown}
               />
-              <PackageDropdown active={group === "Packages"} />
+              <PackageDropdown
+                active={group === "Packages"}
+                close={this.hideDropdown}
+              />
             </li>
             <li className="base">
               <DropdownLink
@@ -150,7 +160,10 @@ export default class Header extends React.Component {
                 activated={group === "Guides"}
                 toggle={this.toggleDropdown}
               />
-              <GuideDropdown active={group === "Guides"} />
+              <GuideDropdown
+                active={group === "Guides"}
+                close={this.hideDropdown}
+              />
             </li>
             <li className="base">
               <DropdownLink
@@ -159,7 +172,10 @@ export default class Header extends React.Component {
                 activated={group === "Tutorials"}
                 toggle={this.toggleDropdown}
               />
-              <TutorialDropdown active={group === "Tutorials"} />
+              <TutorialDropdown
+                active={group === "Tutorials"}
+                close={this.hideDropdown}
+              />
             </li>
             <li className="base">
               <DropdownLink
@@ -168,7 +184,10 @@ export default class Header extends React.Component {
                 activated={group === "Examples"}
                 toggle={this.toggleDropdown}
               />
-              <ExampleDropdown active={group === "Examples"} />
+              <ExampleDropdown
+                active={group === "Examples"}
+                close={this.hideDropdown}
+              />
             </li>
             <li className="base">
               <a href="https://github.com/pshrmn/curi">GitHub</a>

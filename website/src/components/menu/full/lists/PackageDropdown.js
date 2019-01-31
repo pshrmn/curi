@@ -1,7 +1,7 @@
 import React from "react";
 
-import PACKAGE_API from "../../../constants/packages";
-import ActiveLink from "../ActiveLink";
+import PACKAGE_API from "../../../../constants/packages";
+import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
 
 const GroupPackages = ({ packages }) => (
@@ -19,10 +19,10 @@ const GroupPackages = ({ packages }) => (
   </ul>
 );
 
-function PackageLinks({ active }) {
+function PackageLinks({ active, close }) {
   const groups = PACKAGE_API.grouped();
   return (
-    <Container active={active}>
+    <Container active={active} close={close}>
       {Object.keys(groups).map(title => (
         <div key={title}>
           <h3>{title}</h3>

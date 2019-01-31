@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import { screen, color } from "../../../constants/styles";
+import { color } from "../../../../constants/styles";
 
 const StyledContainer = styled("div")`
   display: none;
@@ -13,10 +13,9 @@ const StyledContainer = styled("div")`
   position: absolute;
   left: 0;
   width: 100vw;
-  background ${color.lightBlue};
   color: ${color.purple};
   border-bottom: 2px solid ${color.purple};
-  
+
   a {
     color: ${color.purple};
     text-decoration: none;
@@ -33,12 +32,23 @@ const FlexContainer = styled("div")`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
+
+  background ${color.lightBlue};
 `;
 
-export default function Container({ active, children, ...rest }) {
+const Background = styled("div")`
+  background: rgba(0.1, 0.1, 0.1, 0.5);
+  width: 100vw;
+  height: 100vh;
+
+  cursor: pointer;
+`;
+
+export default function Container({ active, close, children }) {
   return (
-    <StyledContainer {...rest} className={active ? "active" : ""}>
+    <StyledContainer className={active ? "active" : ""}>
       <FlexContainer>{children}</FlexContainer>
+      <Background onClick={close} />
     </StyledContainer>
   );
 }

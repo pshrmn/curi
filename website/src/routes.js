@@ -6,7 +6,7 @@ import Home from "./components/routes/Home";
 import PackageList from "./components/routes/PackageList";
 import GuideList from "./components/routes/GuideList";
 import ExampleList from "./components/routes/ExampleList";
-import TutorialBase from "./components/routes/TutorialBase";
+import TutorialList from "./components/routes/TutorialList";
 import NotFound from "./components/routes/NotFound";
 
 import TUTORIAL_API from "./constants/tutorials";
@@ -32,7 +32,7 @@ export default prepareRoutes([
     path: "tutorial/",
     response: () => {
       return {
-        body: TutorialBase,
+        body: TutorialList,
         title: "Tutorials"
       };
     },

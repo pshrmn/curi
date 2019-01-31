@@ -1,7 +1,7 @@
 import React from "react";
 
-import EXAMPLE_API from "../../../constants/examples";
-import ActiveLink from "../ActiveLink";
+import EXAMPLE_API from "../../../../constants/examples";
+import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
 
 const Category = ({ examples }) => {
@@ -21,11 +21,11 @@ const Category = ({ examples }) => {
   );
 };
 
-function ExampleLinks({ active }) {
+function ExampleLinks({ active, close }) {
   const examples = EXAMPLE_API.all();
   const categories = Object.keys(examples);
   return (
-    <Container active={active}>
+    <Container active={active} close={close}>
       {categories.map(title => (
         <div key={title}>
           <h3>{title}</h3>

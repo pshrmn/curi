@@ -1,14 +1,18 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-const StyledDemo = styled("div")`
-  max-width: 80vw;
-  margin: 0 auto;
+import { screen } from "../constants/styles";
 
+const StyledDemo = styled("div")`
   p {
     font-style: italic;
     text-align: center;
     margin: 0;
+  }
+
+  @media only screen and (min-width: ${screen.medium}) {
+    max-width: 80vw;
+    margin: 0 auto;
   }
 `;
 
