@@ -23,7 +23,8 @@ export default function prefetchRoute(): Interaction {
     },
     get: (
       name: string,
-      props?: MatchResponseProperties
+      props?: MatchResponseProperties,
+      external?: any
     ): Promise<ResolveResults> => {
       if (loaders[name] == null) {
         return Promise.resolve({
@@ -31,7 +32,7 @@ export default function prefetchRoute(): Interaction {
           resolved: null
         });
       }
-      return loaders[name](props).then(
+      return loaders[name](props, external).then(
         resolved => ({ resolved, error: null }),
         error => ({ error, resolved: null })
       );

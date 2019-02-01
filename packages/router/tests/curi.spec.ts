@@ -403,6 +403,19 @@ describe("curi", () => {
           ]);
           const router = curi(history, routes, { external });
         });
+
+        it("is available from the router", () => {
+          const history = InMemory();
+          const external = "hey!";
+          const routes = prepareRoutes([
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
+          const router = curi(history, routes, { external });
+          expect(router.external).toBe(external);
+        });
       });
     });
 

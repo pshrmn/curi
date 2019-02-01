@@ -148,6 +148,30 @@ describe("prefetch route interaction", () => {
         });
       });
     });
+
+    describe("external", () => {
+      it("passes external argument to resolve function call", done => {
+        const external = {};
+
+        const routes = prepareRoutes([
+          {
+            name: "Player",
+            path: "player",
+            resolve(_, ext) {
+              expect(ext).toBe(external);
+              done();
+              return Promise.resolve();
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes, {
+          route: [createPrefetch()],
+          external
+        });
+        router.route.prefetch("Player", {}, router.external);
+      });
+    });
   });
 
   it("resets the registered routes when routes are refreshed", () => {

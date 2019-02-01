@@ -240,6 +240,7 @@ export default function createRouter(
   const router: CuriRouter = {
     route: routeInteractions,
     history,
+    external,
     observe(fn: Observer, options?: ResponseHandlerOptions): RemoveObserver {
       const { initial = true } = options || {};
 
