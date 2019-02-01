@@ -56,4 +56,3 @@ export interface PathMatching {
     keys: Array<Key>;
 }
 export declare type CompiledRouteArray = Array<CompiledRoute>;
-export declare type UserRoutes = Array<CompiledRoute | RouteDescriptor>;

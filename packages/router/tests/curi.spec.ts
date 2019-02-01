@@ -51,27 +51,6 @@ describe("curi", () => {
       });
     });
 
-    it("warns when passed a non-compiled routes array", () => {
-      const realWarn = console.warn;
-      const fakeWarn = (console.warn = jest.fn());
-
-      const routes = [
-        { name: "Home", path: "" },
-        { name: "About", path: "about" },
-        {
-          name: "Contact",
-          path: "contact",
-          children: [
-            { name: "Email", path: "email" },
-            { name: "Phone", path: "phone" }
-          ]
-        }
-      ];
-      const router = curi(history, routes);
-      expect(fakeWarn.mock.calls.length).toBe(1);
-      console.warn = realWarn;
-    });
-
     it("makes interactions available through router.route", () => {
       const routes = prepareRoutes([{ name: "Home", path: "" }]);
       const createfakeInteraction = () => ({

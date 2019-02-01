@@ -15,8 +15,7 @@ export {
   AsyncMatchFn,
   ResolveResults,
   CompiledRoute,
-  CompiledRouteArray,
-  UserRoutes
+  CompiledRouteArray
 } from "./route";
 export {
   Response,

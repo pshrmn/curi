@@ -3,13 +3,11 @@ import pathnameInteraction from "./interactions/pathname";
 import finishResponse from "./finishResponse";
 import matchLocation from "./matchLocation";
 import resolveMatchedRoute from "./resolveMatchedRoute";
-import { privatePrepareRoutes } from "./prepareRoutes";
 
 import { History, PendingNavigation, Action, NavType } from "@hickory/root";
 
 import {
   RouteDescriptor,
-  UserRoutes,
   CompiledRouteArray,
   ResolveResults
 } from "./types/route";
@@ -33,7 +31,7 @@ import {
 
 export default function createRouter(
   history: History,
-  routeArray: UserRoutes,
+  routeArray: CompiledRouteArray,
   options: RouterOptions = {}
 ): CuriRouter {
   const {
@@ -67,9 +65,9 @@ export default function createRouter(
   const oneTimers: Array<Observer> = [];
   let cancellers: Array<Cancellable> = [];
 
-  function setupRoutesAndInteractions(userRoutes?: UserRoutes): void {
+  function setupRoutesAndInteractions(userRoutes?: CompiledRouteArray): void {
     if (userRoutes) {
-      routes = privatePrepareRoutes(userRoutes, true);
+      routes = userRoutes;
       for (let key in routeInteractions) {
         delete routeInteractions[key];
       }
@@ -279,7 +277,7 @@ export default function createRouter(
         });
       };
     },
-    refresh(routes?: Array<RouteDescriptor>) {
+    refresh(routes?: CompiledRouteArray) {
       refreshing = true;
       setupRoutesAndInteractions(routes);
     },
