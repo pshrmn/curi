@@ -1,29 +1,11 @@
 import "jest";
 import InMemory from "@hickory/in-memory";
-import { Route } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
-import { pathname, prepareRoutes, curi } from "@curi/router";
+import { prepareRoutes, curi } from "@curi/router";
 
 describe("pathname route interaction", () => {
   const history = InMemory();
-
-  describe("using directly", () => {
-    it("warns that using pathname directly is deprecated", () => {
-      const realWarn = console.warn;
-      const fakeWarn = jest.fn();
-      console.warn = fakeWarn;
-
-      const pathnameInteraction = pathname();
-
-      const player = { name: "Player", path: "player" };
-      pathnameInteraction.register(player as Route);
-
-      expect(fakeWarn.mock.calls.length).toBe(1);
-
-      console.warn = realWarn;
-    });
-  });
 
   describe("calling", () => {
     it("it is accessed through route.name()", () => {
