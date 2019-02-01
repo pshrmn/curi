@@ -1,11 +1,11 @@
 import React from "react";
 import { Active, Link } from "@curi/react-dom";
 
-const ActiveLink = ({ to, params, partial, ...rest }) => (
-  <Active name={to} params={params} partial={partial}>
+const ActiveLink = ({ name, params, partial, ...rest }) => (
+  <Active name={name} params={params} partial={partial}>
     {active => (
       <Link
-        to={to}
+        name={name}
         params={params}
         {...rest}
         className={active ? "active" : ""}
@@ -18,20 +18,20 @@ const NavLinks = () => (
   <nav>
     <ul>
       <li>
-        <ActiveLink to="Home">Home</ActiveLink>
+        <ActiveLink name="Home">Home</ActiveLink>
       </li>
       <li>
-        <ActiveLink to="Contact" partial={true}>
+        <ActiveLink name="Contact" partial={true}>
           Contact
         </ActiveLink>
         <ul>
           <li>
-            <ActiveLink to="Method" params={{ method: "phone" }}>
+            <ActiveLink name="Method" params={{ method: "phone" }}>
               By Phone
             </ActiveLink>
           </li>
           <li>
-            <ActiveLink to="Method" params={{ method: "email" }}>
+            <ActiveLink name="Method" params={{ method: "email" }}>
               By Email
             </ActiveLink>
           </li>

@@ -16,7 +16,7 @@ const Product = ({ response }) => (
     Paint color: {response.location.state.name || "Unknown"}
     <Preview color={response.params.color} />
     <Link
-      to="Product Detail"
+      name="Product Detail"
       params={response.params}
       state={{ modal: true, name: "Dark Slate Blue" }}
     >

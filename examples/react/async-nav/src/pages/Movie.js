@@ -6,7 +6,7 @@ const Movie = ({ response }) => {
   return (
     <div>
       <h1>{movie.title}</h1>
-      <Link to="Home">Home</Link>
+      <Link name="Home">Home</Link>
     </div>
   );
 };

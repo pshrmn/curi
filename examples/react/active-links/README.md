@@ -18,14 +18,14 @@ const Nav = () => (
   <nav>
     <ul>
       <li>
-        <Link to='Home' active={{ merge }}>Home</Link>
+        <Link name='Home' active={{ merge }}>Home</Link>
       </li>
       <li>
-        <Link to='Contact' active={{ merge, partial: true }}>Contact</Link>
+        <Link name='Contact' active={{ merge, partial: true }}>Contact</Link>
         <ul>
           <li>
             <Link
-              to='Method'
+              name='Method'
               active={{ merge }}
               params={{ method: 'phone' }}
             >
@@ -34,7 +34,7 @@ const Nav = () => (
           </li>
           <li>
             <Link
-              to='Method'
+              name='Method'
               active={{ merge }}
               params={{ method: 'email' }}
             >

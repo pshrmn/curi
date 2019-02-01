@@ -4,4 +4,4 @@ export declare type CuriRenderFn = (props: Emitted) => React.ReactNode;
 export interface RouterProps {
     children: CuriRenderFn;
 }
-export default function curiProvider(router: CuriRouter): React.ComponentType<RouterProps>;
+export default function curiProvider(router: CuriRouter): React.FunctionComponent<RouterProps>;
