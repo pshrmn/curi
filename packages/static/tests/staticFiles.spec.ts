@@ -325,8 +325,8 @@ describe("staticFiles()", () => {
           {
             name: "Home",
             path: "",
-            resolve: {
-              async: () => Promise.resolve(true)
+            resolve() {
+              return Promise.resolve(true);
             },
             response() {
               return { body: "Home" };

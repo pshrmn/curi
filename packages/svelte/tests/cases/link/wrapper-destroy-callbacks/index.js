@@ -8,7 +8,7 @@ import cleanText from "../../../utils/cleanText";
 /*
  * This test verifies that the Link does not update the wrapper's
  * state after the Link has been destroyed.
- * 
+ *
  * The test relies on the wrapper calling a global method (console.warn)
  * when it updates. console.warn is mocked so that we can track its calls
  * to determine if it is called the expected number of times.
@@ -19,14 +19,12 @@ const routes = prepareRoutes([
   {
     name: "Test",
     path: "test",
-    resolve: {
-      test: () => {
-        return new Promise(resolve => {
-          setTimeout(() => {
-            resolve("done");
-          }, 100);
-        });
-      }
+    resolve() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve("done");
+        }, 100);
+      });
     }
   },
   { name: "Not Found", path: "(.*)" }

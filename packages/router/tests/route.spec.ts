@@ -96,15 +96,17 @@ describe("public route properties", () => {
   });
 
   describe("resolve", () => {
-    it("is the resolve functions", done => {
+    it("is the resolve function", done => {
       const history = InMemory({ locations: ["/test"] });
       const routes = prepareRoutes([
         {
           name: "Test",
           path: "test",
-          resolve: {
-            iTest: () => Promise.resolve("iTest"),
-            eTest: () => Promise.resolve("eTest")
+          resolve() {
+            return Promise.all([
+              Promise.resolve("iTest"),
+              Promise.resolve("eTest")
+            ]);
           }
         }
       ]);
@@ -112,15 +114,15 @@ describe("public route properties", () => {
         route: [PropertyReporter()]
       });
       const routeProperties = router.route.properties("Test");
-      const { iTest, eTest } = routeProperties.resolve;
-      Promise.all([iTest(), eTest()]).then(([iResult, eResult]) => {
+
+      routeProperties.resolve().then(([iResult, eResult]) => {
         expect(iResult).toBe("iTest");
         expect(eResult).toBe("eTest");
         done();
       });
     });
 
-    it("is an empty object when route.resolve isn't provided", done => {
+    it("is undefined when route.resolve isn't provided", done => {
       const history = InMemory({ locations: ["/test"] });
       const routes = prepareRoutes([
         {
@@ -132,24 +134,7 @@ describe("public route properties", () => {
         route: [PropertyReporter()]
       });
       const routeProperties = router.route.properties("Test");
-      expect(routeProperties.resolve).toEqual({});
-      done();
-    });
-
-    it("is an empty object when route.resolve is an empty object", done => {
-      const history = InMemory({ locations: ["/test"] });
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "test",
-          resolve: {}
-        }
-      ]);
-      const router = curi(history, routes, {
-        route: [PropertyReporter()]
-      });
-      const routeProperties = router.route.properties("Test");
-      expect(routeProperties.resolve).toEqual({});
+      expect(routeProperties.resolve).toBeUndefined();
       done();
     });
   });

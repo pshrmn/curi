@@ -5,11 +5,8 @@ import {
   SettableResponseProperties
 } from "./response";
 
-export interface Resolved {
-  [key: string]: any;
-}
 export interface ResolveResults {
-  resolved: Resolved | null;
+  resolved: any;
   error: any;
 }
 
@@ -19,7 +16,7 @@ export interface ParamParsers {
 }
 
 export interface ResponseBuilder {
-  resolved: Resolved | null;
+  resolved: any;
   error: any;
   match: MatchResponseProperties;
   external: any;
@@ -33,9 +30,6 @@ export type AsyncMatchFn = (
   matched?: Readonly<MatchResponseProperties>,
   external?: any
 ) => Promise<any>;
-export interface AsyncGroup {
-  [key: string]: AsyncMatchFn;
-}
 
 export interface RouteDescriptor {
   name: string;
@@ -44,7 +38,7 @@ export interface RouteDescriptor {
   params?: ParamParsers;
   children?: Array<RouteDescriptor>;
   response?: ResponseFn;
-  resolve?: AsyncGroup;
+  resolve?: AsyncMatchFn;
   extra?: { [key: string]: any };
 }
 
@@ -61,14 +55,18 @@ export interface CompiledRoute {
  * These are the route properties that will be available
  * to route interactions
  */
-export interface Route {
+export interface Route<R = unknown> {
   name: string;
   path: string;
   keys: Array<string | number>;
-  resolve: AsyncGroup;
-  extra?: { [key: string]: any };
+  extra?: {
+    [key: string]: any;
+  };
   pathname: PathFunction;
+  resolve: R;
 }
+export interface SyncRoute extends Route<undefined> {}
+export interface AsyncRoute extends Route<AsyncMatchFn> {}
 
 export interface PathMatching {
   mustBeExact: boolean;

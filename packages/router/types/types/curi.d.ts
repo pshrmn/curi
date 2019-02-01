@@ -48,8 +48,9 @@ export interface CuriRouter {
     observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
     once: (fn: Observer, options?: ResponseHandlerOptions) => void;
     cancel: (fn: Cancellable) => RemoveCancellable;
-    route: Interactions;
-    history: History;
     current(): CurrentResponse;
     navigate(options: NavigationDetails): CancelNavigateCallbacks;
+    route: Interactions;
+    history: History;
+    external: any;
 }
