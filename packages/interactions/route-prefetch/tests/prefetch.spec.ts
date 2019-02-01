@@ -24,8 +24,8 @@ describe("prefetch route interaction", () => {
         {
           name: "Player",
           path: "player",
-          resolve: {
-            test: () => Promise.resolve()
+          resolve() {
+            return Promise.resolve();
           }
         },
         { name: "Catch All", path: "(.*)" }
@@ -61,8 +61,8 @@ describe("prefetch route interaction", () => {
         {
           name: "Player",
           path: "player/:id",
-          resolve: {
-            test: () => Promise.resolve()
+          resolve() {
+            return Promise.resolve();
           }
         },
         { name: "Catch All", path: "(.*)" }
@@ -98,11 +98,10 @@ describe("prefetch route interaction", () => {
         {
           name,
           path: "throws",
-          resolve: {
-            test: () =>
-              new Promise((resolve, reject) => {
-                reject(errorMessage);
-              })
+          resolve() {
+            return new Promise((resolve, reject) => {
+              reject(errorMessage);
+            });
           }
         },
         { name: "Catch All", path: "(.*)" }
@@ -120,21 +119,19 @@ describe("prefetch route interaction", () => {
     });
 
     describe("props", () => {
-      it("passes arguments to route's on.every() function", done => {
+      it("passes arguments to route's resolve function", done => {
         const routes = prepareRoutes([
           {
             name: "Player",
             path: "player/:id",
-            resolve: {
-              test: function(props) {
-                expect(props).toMatchObject({
-                  name: "Player",
-                  location: locationToPass,
-                  params: paramsToPass
-                });
-                done();
-                return Promise.resolve(true);
-              }
+            resolve(props) {
+              expect(props).toMatchObject({
+                name: "Player",
+                location: locationToPass,
+                params: paramsToPass
+              });
+              done();
+              return Promise.resolve(true);
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -152,38 +149,27 @@ describe("prefetch route interaction", () => {
       });
     });
 
-    describe("which", () => {
-      const one = jest.fn();
-      const two = jest.fn();
-      const routes = prepareRoutes([
-        {
-          name: "Home",
-          path: "",
-          resolve: { one, two }
-        },
-        { name: "Catch All", path: "(.*)" }
-      ]);
-      const router = curi(history, routes, {
-        route: [createPrefetch()]
-      });
+    describe("external", () => {
+      it("passes external argument to resolve function call", done => {
+        const external = {};
 
-      beforeEach(() => {
-        one.mockReset();
-        two.mockReset();
-      });
-
-      it("calls all available async functions when not provided", () => {
-        return router.route.prefetch("Home").then(resolved => {
-          expect(one.mock.calls.length).toBe(1);
-          expect(two.mock.calls.length).toBe(1);
+        const routes = prepareRoutes([
+          {
+            name: "Player",
+            path: "player",
+            resolve(_, ext) {
+              expect(ext).toBe(external);
+              done();
+              return Promise.resolve();
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes, {
+          route: [createPrefetch()],
+          external
         });
-      });
-
-      it("only calls async.one() when which = ['one']", () => {
-        return router.route.prefetch("Home", null, ["one"]).then(resolved => {
-          expect(one.mock.calls.length).toBe(1);
-          expect(two.mock.calls.length).toBe(0);
-        });
+        router.route.prefetch("Player", {}, router.external);
       });
     });
   });
@@ -193,8 +179,8 @@ describe("prefetch route interaction", () => {
       {
         name: "Player",
         path: "player/:id",
-        resolve: {
-          test: () => Promise.resolve()
+        resolve() {
+          return Promise.resolve();
         }
       },
       { name: "Catch All", path: "(.*)" }

@@ -150,14 +150,12 @@ describe("<curi-link>", () => {
         {
           name: "Test",
           path: "test",
-          resolve: {
-            test: () => {
-              return new Promise(resolve => {
-                setTimeout(() => {
-                  resolve("done");
-                }, 100);
-              });
-            }
+          resolve() {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve("done");
+              }, 100);
+            });
           }
         },
         { name: "Catch All", path: "(.*)" }
@@ -253,21 +251,19 @@ describe("<curi-link>", () => {
           {
             name: "Slow",
             path: "slow",
-            resolve: {
-              test: () => {
-                return new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve("slow");
-                  }, 100);
-                });
-              }
+            resolve() {
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("slow");
+                }, 100);
+              });
             }
           },
           {
             name: "Fast",
             path: "fast",
-            resolve: {
-              test: () => Promise.resolve("fast")
+            resolve() {
+              return Promise.resolve("fast");
             }
           },
           { name: "Catch All", path: "(.*)" }

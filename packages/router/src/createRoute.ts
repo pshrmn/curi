@@ -54,14 +54,12 @@ const createRoute = (
 
   const pathname = PathToRegexp.compile(fullPath);
 
-  const resolve = options.resolve || {};
-
   return {
     public: {
       name: options.name,
       path: path,
       keys: keys.map(key => key.name),
-      resolve,
+      resolve: options.resolve,
       extra: options.extra,
       pathname
     },
@@ -70,7 +68,7 @@ const createRoute = (
       keys,
       mustBeExact
     },
-    sync: !Object.keys(resolve).length,
+    sync: options.resolve === undefined,
     response: options.response,
     children,
     paramParsers: options.params

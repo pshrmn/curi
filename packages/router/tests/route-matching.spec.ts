@@ -624,13 +624,14 @@ describe("route matching/response generation", () => {
             name: "Catch All"
           });
           done();
+          return Promise.resolve();
         });
 
         const routes = prepareRoutes([
           {
             name: "Catch All",
             path: ":anything",
-            resolve: { spy }
+            resolve: spy
           }
         ]);
 
@@ -643,41 +644,19 @@ describe("route matching/response generation", () => {
         const spy = jest.fn((_, e) => {
           expect(e).toBe(external);
           done();
+          return Promise.resolve();
         });
 
         const routes = prepareRoutes([
           {
             name: "Catch All",
             path: ":anything",
-            resolve: { spy }
+            resolve: spy
           }
         ]);
 
         const history = InMemory({ locations: ["/hello?one=two"] });
         curi(history, routes, { external });
-      });
-
-      it("calls all resolve functions", done => {
-        const one = jest.fn();
-        const two = jest.fn();
-        const routes = prepareRoutes([
-          {
-            name: "Catch All",
-            path: ":anything",
-            resolve: {
-              one,
-              two
-            }
-          }
-        ]);
-
-        const history = InMemory({ locations: ["/hello?one=two"] });
-        const router = curi(history, routes);
-        router.once(() => {
-          expect(one.mock.calls.length).toBe(1);
-          expect(one.mock.calls.length).toBe(1);
-          done();
-        });
       });
     });
 
@@ -698,9 +677,7 @@ describe("route matching/response generation", () => {
           {
             name: "First",
             path: "first",
-            resolve: {
-              spy
-            },
+            resolve: spy,
             response: responseSpy
           },
           {
@@ -713,12 +690,10 @@ describe("route matching/response generation", () => {
               done();
               return {};
             },
-            resolve: {
-              // re-use the spy so that this route's response
-              // fn isn't call until after the first route's spy
-              // fn has resolved
-              spy
-            }
+            // re-use the spy so that this route's response
+            // fn isn't call until after the first route's spy
+            // fn has resolved
+            resolve: spy
           }
         ]);
 
@@ -749,8 +724,8 @@ describe("route matching/response generation", () => {
             {
               name: "Catch All",
               path: ":anything",
-              resolve: {
-                fails: () => Promise.reject("woops!")
+              resolve() {
+                return Promise.reject("woops!");
               },
               response: ({ resolved }) => {
                 expect(resolved).toBe(null);
@@ -763,7 +738,7 @@ describe("route matching/response generation", () => {
           const router = curi(history, routes);
         });
 
-        it("is an object with named resolve function properties for async routes", () => {
+        it("is the resolve results", () => {
           const routes = prepareRoutes([
             {
               name: "Catch All",
@@ -773,9 +748,8 @@ describe("route matching/response generation", () => {
                 expect(resolved.yo).toBe("yo!");
                 return {};
               },
-              resolve: {
-                test: () => Promise.resolve(1),
-                yo: () => Promise.resolve("yo!")
+              resolve() {
+                return Promise.resolve({ test: 1, yo: "yo!" });
               }
             }
           ]);
@@ -797,8 +771,8 @@ describe("route matching/response generation", () => {
               name: "Catch All",
               path: ":anything",
               response: spy,
-              resolve: {
-                fails: () => Promise.reject("rejected")
+              resolve() {
+                return Promise.reject("rejected");
               }
             }
           ]);
@@ -818,8 +792,8 @@ describe("route matching/response generation", () => {
               name: "Catch All",
               path: ":anything",
               response: spy,
-              resolve: {
-                succeed: () => Promise.resolve("hurray!")
+              resolve() {
+                return Promise.resolve("hurray!");
               }
             }
           ]);

@@ -10,14 +10,12 @@ const routes = prepareRoutes([
   {
     name: "Test",
     path: "test",
-    resolve: {
-      test: () => {
-        return new Promise(resolve => {
-          setTimeout(() => {
-            resolve("done");
-          }, 100);
-        });
-      }
+    resolve() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve("done");
+        }, 100);
+      });
     }
   },
   { name: "Not Found", path: "(.*)" }

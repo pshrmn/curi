@@ -6,13 +6,13 @@ export {
 } from "./interaction";
 export {
   Route,
+  SyncRoute,
+  AsyncRoute,
   RouteDescriptor,
   ParamParser,
   ParamParsers,
   ResponseBuilder,
   AsyncMatchFn,
-  AsyncGroup,
-  Resolved,
   ResolveResults,
   CompiledRoute,
   CompiledRouteArray,

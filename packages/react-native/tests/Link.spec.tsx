@@ -527,14 +527,12 @@ Instead, please use the "forward" prop to pass an object of props to be attached
           {
             name: "Test",
             path: "test",
-            resolve: {
-              test: () => {
-                return new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve("done");
-                  }, 100);
-                });
-              }
+            resolve() {
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("done");
+                }, 100);
+              });
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -569,15 +567,13 @@ Instead, please use the "forward" prop to pass an object of props to be attached
           {
             name: "Slow",
             path: "slow",
-            resolve: {
-              test: () => {
-                // takes 500ms to resolve
-                return new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve("slow");
-                  }, 500);
-                });
-              }
+            resolve() {
+              // takes 500ms to resolve
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("slow");
+                }, 500);
+              });
             }
           },
           {
@@ -629,8 +625,8 @@ Instead, please use the "forward" prop to pass an object of props to be attached
           {
             name: "Loader",
             path: "load",
-            resolve: {
-              test: () => Promise.resolve("done")
+            resolve() {
+              return Promise.resolve("done");
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -677,20 +673,18 @@ Instead, please use the "forward" prop to pass an object of props to be attached
           {
             name: "Blork",
             path: "blork",
-            resolve: {
-              test: () => {
-                return new Promise(resolve => {
+            resolve() {
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("Finally finished");
+                  // need to verify error in another timeout
                   setTimeout(() => {
-                    resolve("Finally finished");
-                    // need to verify error in another timeout
-                    setTimeout(() => {
-                      expect(mockError.mock.calls.length).toBe(0);
-                      console.error = realError;
-                      done();
-                    });
-                  }, 500);
-                });
-              }
+                    expect(mockError.mock.calls.length).toBe(0);
+                    console.error = realError;
+                    done();
+                  });
+                }, 500);
+              });
             }
           },
           { name: "Catch All", path: "(.*)" }

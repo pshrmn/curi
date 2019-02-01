@@ -15,23 +15,19 @@ describe("<Navigating>", () => {
     {
       name: "Slow",
       path: "slow",
-      resolve: {
-        data() {
-          return new Promise(resolve => {
-            setTimeout(resolve, 1000, "slow");
-          });
-        }
+      resolve() {
+        return new Promise(resolve => {
+          setTimeout(resolve, 1000, "slow");
+        });
       }
     },
     {
       name: "Fast",
       path: "fast",
-      resolve: {
-        data() {
-          return new Promise(resolve => {
-            setTimeout(resolve, 50, "slow");
-          });
-        }
+      resolve() {
+        return new Promise(resolve => {
+          setTimeout(resolve, 50, "slow");
+        });
       }
     },
     { name: "Catch All", path: "(.*)" }

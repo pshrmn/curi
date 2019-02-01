@@ -34,7 +34,6 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "file:../../router",
-    "@hickory/root": "^1.0.0"
+    "@curi/router": "file:../../router"
   }
 }
