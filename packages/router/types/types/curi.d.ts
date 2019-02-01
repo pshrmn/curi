@@ -1,7 +1,7 @@
 import { History, Action, NavType } from "@hickory/root";
 import { PathFunctionOptions } from "path-to-regexp";
 import { Interaction, Interactions } from "./interaction";
-import { UserRoutes } from "./route";
+import { CompiledRouteArray } from "./route";
 import { Response, Params } from "./response";
 export interface Navigation {
     action: Action;
@@ -44,7 +44,7 @@ export interface NavigationDetails {
 }
 export declare type CancelNavigateCallbacks = () => void;
 export interface CuriRouter {
-    refresh: (routeArray?: UserRoutes) => void;
+    refresh: (routeArray?: CompiledRouteArray) => void;
     observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
     once: (fn: Observer, options?: ResponseHandlerOptions) => void;
     cancel: (fn: Cancellable) => RemoveCancellable;

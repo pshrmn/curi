@@ -10,10 +10,10 @@ describe("curi-focus directive", () => {
   let vueWrapper;
   const history = InMemory();
 
-  const routes = [
+  const routes = prepareRoutes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
-  ];
+  ]);
   const router = curi(history, routes);
 
   const Vue = createLocalVue();
