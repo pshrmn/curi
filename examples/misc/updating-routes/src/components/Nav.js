@@ -5,14 +5,14 @@ export default ({ admin, login, logout }) => (
   <nav>
     <ul>
       <li>
-        <Link to="Home">Home</Link>
+        <Link name="Home">Home</Link>
       </li>
       <li>
-        <Link to="About">About</Link>
+        <Link name="About">About</Link>
       </li>
       {admin && (
         <li>
-          <Link to="Admin">Admin</Link>
+          <Link name="Admin">Admin</Link>
         </li>
       )}
       <li>
