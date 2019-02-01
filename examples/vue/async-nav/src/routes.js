@@ -1,59 +1,57 @@
 import { prepareRoutes } from "@curi/router";
+import { preferDefault } from "@curi/helpers";
 
-import { movies, movie } from "./api";
+import { movies as MOVIES, movie as MOVIE } from "./api";
 
 export default prepareRoutes([
   {
     name: "Home",
     path: "",
-    resolve: {
-      body: () =>
-        import("./pages/Home").then(
-          module => (module.default ? module.default : module)
-        ),
-      movies: () => movies()
+    resolve() {
+      const body = import(/* webpackChunkName: "Home" */ "./pages/Home").then(
+        preferDefault
+      );
+      const movies = MOVIES();
+      return Promise.all([body, movies]);
     },
-    response({ resolved }) {
-      return {
-        body: resolved.body,
-        data: resolved.movies
-      };
+    response({ resolved, error }) {
+      console.log({ resolved, error });
+      const [body, data] = resolved;
+      return { body, data };
     }
   },
   {
     name: "Movie",
     path: "movie/:id",
-    resolve: {
-      body: () =>
-        import("./pages/Movie").then(
-          module => (module.default ? module.default : module)
-        ),
-      movie: ({ params }) => movie(params.id)
+    resolve({ params }) {
+      const body = import(/* webpackChunkName: "Movie" */ "./pages/Movie").then(
+        module => module.default
+      );
+      const movie = MOVIE(params.id).then(
+        movie => ({ error: false, movie }),
+        e => ({ error: true })
+      );
+      return Promise.all([body, movie]);
     },
-    response({ error, resolved }) {
-      const modifiers = {
-        body: resolved.body
+    response({ resolved }) {
+      const [body, data] = resolved;
+      return {
+        body,
+        data
       };
-      if (error) {
-        modifiers.error = error;
-      } else {
-        modifiers.data = resolved.movie;
-      }
-      return modifiers;
     }
   },
   {
     name: "Not Found",
     path: "(.*)",
-    resolve: {
-      body: () =>
-        import("./pages/NotFound").then(
-          module => (module.default ? module.default : module)
-        )
+    resolve() {
+      return import(/* webpackChunkName: "NotFound" */ "./pages/NotFound").then(
+        preferDefault
+      );
     },
     response({ resolved }) {
       return {
-        body: resolved.body
+        body: resolved
       };
     }
   }

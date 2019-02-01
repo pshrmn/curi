@@ -19,20 +19,20 @@ export default prepareRoutes([
   {
     name: "Album",
     path: "a/:id",
-    resolve: {
+    resolve({ params }) {
       // the fakeAPI caches results based on id
-      data: ({ params }) => fakeAPI(params.id)
+      return fakeAPI(params.id);
     },
     response({ error, resolved }) {
-      const modifiers = {
+      const resp = {
         body: Album
       };
       if (error) {
-        modifiers.error = error;
+        resp.error = error;
       } else {
-        modifiers.data = resolved.data;
+        resp.data = resolved;
       }
-      return modifiers;
+      return resp;
     }
   },
   {

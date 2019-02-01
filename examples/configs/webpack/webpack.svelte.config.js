@@ -5,7 +5,7 @@ const config = {
   mode: "development",
   output: {
     filename: "js/bundle.js",
-    publicPath: "./static/"
+    publicPath: "/static/"
   },
   resolve: {
     extensions: [".js", ".html"]

@@ -3,12 +3,12 @@
     <curi-link
       to="Movie"
       v-for="movie in $curi.response.data"
-      :key="movie"
+      :key="movie.id"
       :params="{ id: movie.id }"
     >
       <template slot-scope="{ navigating }">
-        {{movie.title}}
-        <HalfCircleSpinner v-if="navigating" size="30" color="#444"/>
+        {{ movie.title }}
+        <HalfCircleSpinner v-if="navigating" :size="30" color="#444" />
       </template>
     </curi-link>
   </div>

@@ -51,7 +51,7 @@ export const movie = id => {
       }, latency);
       return;
     }
-    reject("No movie found");
+    reject("Movie not found");
   });
   cache.set(id, loader);
   return loader;

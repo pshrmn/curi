@@ -5,7 +5,7 @@
       params={{ id: movie.id }}
       key={movie.id}
       wrapper={SpinWhileNavigating}
-      class="link"
+      forward={{ class: "link" }}
     >
       {movie.title}
     </Link>
