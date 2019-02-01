@@ -5,25 +5,24 @@ export default prepareRoutes([
   {
     name: "Home",
     path: "",
-    resolve: {
-      body: () => import("./components/Home.js").then(module => module.default)
+    resolve() {
+      return import("./components/Home.js").then(module => module.default);
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.body
+        body: resolved
       };
     }
   },
   {
     name: "Contact",
     path: "contact",
-    resolve: {
-      body: () =>
-        import("./components/Contact.js").then(module => module.default)
+    resolve() {
+      return import("./components/Contact.js").then(module => module.default);
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.body
+        body: resolved
       };
     }
   },

@@ -4,38 +4,38 @@ export default prepareRoutes([
   {
     name: "Home",
     path: "",
-    resolve: {
-      body: () => import("./components/Home.js").then(module => module.default)
+    resolve() {
+      return import("./components/Home.js").then(module => module.default);
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.body
+        body: resolved
       };
     }
   },
   {
     name: "Contact",
     path: "contact",
-    resolve: {
-      body: () =>
-        import("./components/Contact.js").then(module => module.default)
+    resolve() {
+      return import("./components/Contact.js").then(module => module.default);
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.body
+        body: resolved
       };
     },
     children: [
       {
         name: "Contact Method",
         path: ":method",
-        resolve: {
-          body: () =>
-            import("./components/Method.js").then(module => module.default)
+        resolve() {
+          return import("./components/Method.js").then(
+            module => module.default
+          );
         },
         response: ({ resolved }) => {
           return {
-            body: resolved.body
+            body: resolved
           };
         }
       }
@@ -55,13 +55,12 @@ export default prepareRoutes([
   {
     name: "Not Found",
     path: "(.*)",
-    resolve: {
-      body: () =>
-        import("./components/NotFound.js").then(module => module.default)
+    resolve() {
+      return import("./components/NotFound.js").then(module => module.default);
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.body
+        body: resolved
       };
     }
   }
