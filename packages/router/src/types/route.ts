@@ -75,4 +75,3 @@ export interface PathMatching {
 }
 
 export type CompiledRouteArray = Array<CompiledRoute>;
-export type UserRoutes = Array<CompiledRoute | RouteDescriptor>;
