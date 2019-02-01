@@ -23,67 +23,6 @@ function fakeEvent(props = {}) {
 }
 
 describe("<Link>", () => {
-  describe("to", () => {
-    it('warns when using "to" instead of "name"', () => {
-      // this test needs to be called first in order to catch the warning
-      const realWarn = console.warn;
-      const fakeWarn = jest.fn();
-      console.warn = fakeWarn;
-
-      const history = InMemory();
-      const routes = prepareRoutes([
-        { name: "Test", path: "" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
-      const router = curi(history, routes);
-      const Router = curiProvider(router);
-
-      const tree = renderer.create(
-        <Router>
-          {() => (
-            <Link to="Test">
-              <Text>Test</Text>
-            </Link>
-          )}
-        </Router>
-      );
-
-      expect(fakeWarn.mock.calls.length).toBe(1);
-      expect(fakeWarn.mock.calls[0][0]).toBe(`Deprecation warning:
-The "to" prop should be replaced with the "name" prop. The "to" prop will be removed in @curi/react-dom v2.
-
-<Link name="Route Name">...</Link>`);
-
-      console.warn = realWarn;
-    });
-
-    it('works the same as "name"', () => {
-      const history = InMemory();
-      const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
-      const routes = prepareRoutes([
-        { name: "Test", path: "" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
-      const router = curi(history, routes);
-      const Router = curiProvider(router);
-
-      const tree = renderer.create(
-        <Router>
-          {() => (
-            <Link to="Test">
-              <Text>Test</Text>
-            </Link>
-          )}
-        </Router>
-      );
-
-      const anchor = tree.root.findByType(TouchableHighlight);
-      anchor.props.onPress(fakeEvent());
-      expect(mockNavigate.mock.calls[0][0].pathname).toBe("/");
-    });
-  });
-
   describe("anchor", () => {
     it("renders a <TouchableHighlight> by default", () => {
       const history = InMemory();
@@ -226,70 +165,6 @@ The "to" prop should be replaced with the "name" prop. The "to" prop will be rem
   });
 
   describe("forward", () => {
-    describe("additional props (deprecated)", () => {
-      it("warns when passing additional props to the <Link>", () => {
-        const realWarn = console.warn;
-        const fakeWarn = jest.fn();
-        console.warn = fakeWarn;
-
-        const history = InMemory({ locations: ["/the-initial-location"] });
-        const mockNavigate = jest.fn();
-        history.navigate = mockNavigate;
-        const routes = prepareRoutes([
-          { name: "Test", path: "" },
-          { name: "Catch All", path: "(.*)" }
-        ]);
-        const router = curi(history, routes);
-        const Router = curiProvider(router);
-
-        const style = { backgroundColor: "red" };
-        const tree = renderer.create(
-          <Router>
-            {() => (
-              <Link to="Test" style={style}>
-                <Text>Test</Text>
-              </Link>
-            )}
-          </Router>
-        );
-
-        expect(fakeWarn.mock.calls.length).toBe(1);
-        expect(fakeWarn.mock.calls[0][0]).toBe(`Deprecation warning:
-Passing additional props to a <Link> will no longer be forwarded to the rendered component in v2.
-
-Instead, please use the "forward" prop to pass an object of props to be attached to the component.
-
-<Link to="Route Name" forward={{ className: "test" }}>`);
-
-        console.warn = realWarn;
-      });
-
-      it("passes additional props to the anchor", () => {
-        const history = InMemory({ locations: ["/the-initial-location"] });
-        const mockNavigate = jest.fn();
-        history.navigate = mockNavigate;
-        const routes = prepareRoutes([
-          { name: "Test", path: "" },
-          { name: "Catch All", path: "(.*)" }
-        ]);
-        const router = curi(history, routes);
-        const Router = curiProvider(router);
-
-        const style = { backgroundColor: "red" };
-        const tree = renderer.create(
-          <Router>
-            {() => (
-              <Link to="Test" style={style}>
-                <Text>Test</Text>
-              </Link>
-            )}
-          </Router>
-        );
-        const anchor = tree.root.findByType(TouchableHighlight);
-        expect(anchor.props.style).toMatchObject(style);
-      });
-    });
-
     it("passes forward to the rendered anchor", () => {
       const history = InMemory({ locations: ["/the-initial-location"] });
       const mockNavigate = jest.fn();
@@ -743,12 +618,12 @@ Instead, please use the "forward" prop to pass an object of props to be attached
       });
     });
 
-    describe("onPress", () => {
-      it("calls onPress prop func if provided", () => {
+    describe("onNav", () => {
+      it("calls onNav prop func if provided", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
         history.navigate = mockNavigate;
-        const onPress = jest.fn();
+        const onNav = jest.fn();
 
         const routes = prepareRoutes([
           { name: "Test", path: "" },
@@ -760,7 +635,7 @@ Instead, please use the "forward" prop to pass an object of props to be attached
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link name="Test" onPress={onPress}>
+              <Link name="Test" onNav={onNav}>
                 <Text>Test</Text>
               </Link>
             )}
@@ -769,15 +644,15 @@ Instead, please use the "forward" prop to pass an object of props to be attached
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls.length).toBe(1);
-        expect(onPress.mock.calls.length).toBe(1);
+        expect(onNav.mock.calls.length).toBe(1);
         expect(mockNavigate.mock.calls.length).toBe(1);
       });
 
-      it("does not call history.navigate if onPress prevents default", () => {
+      it("does not call history.navigate if onNav prevents default", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
         history.navigate = mockNavigate;
-        const onPress = jest.fn(event => {
+        const onNav = jest.fn(event => {
           event.preventDefault();
         });
 
@@ -791,7 +666,7 @@ Instead, please use the "forward" prop to pass an object of props to be attached
         const tree = renderer.create(
           <Router>
             {() => (
-              <Link name="Test" onPress={onPress}>
+              <Link name="Test" onNav={onNav}>
                 <Text>Test</Text>
               </Link>
             )}
@@ -799,7 +674,7 @@ Instead, please use the "forward" prop to pass an object of props to be attached
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
-        expect(onPress.mock.calls.length).toBe(1);
+        expect(onNav.mock.calls.length).toBe(1);
         expect(mockNavigate.mock.calls.length).toBe(0);
       });
     });

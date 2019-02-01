@@ -10,7 +10,7 @@ export const HomeMenu = props => {
     <nav>
       <ul>
         <li>
-          <Link to="Contact">Contact</Link>
+          <Link name="Contact">Contact</Link>
         </li>
       </ul>
     </nav>

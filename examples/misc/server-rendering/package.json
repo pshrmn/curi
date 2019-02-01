@@ -22,7 +22,7 @@
     "@hickory/browser": "^1.0.0",
     "@hickory/in-memory": "^1.0.0",
     "express": "^4.16.2",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1"
   }
 }

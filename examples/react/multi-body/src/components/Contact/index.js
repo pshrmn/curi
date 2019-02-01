@@ -10,15 +10,15 @@ export const ContactMenu = props => {
     <nav>
       <ul>
         <li>
-          <Link to="Home">Home</Link>
+          <Link name="Home">Home</Link>
         </li>
         <li>
-          <Link to="Method" params={{ method: "email" }}>
+          <Link name="Method" params={{ method: "email" }}>
             Contact By Email
           </Link>
         </li>
         <li>
-          <Link to="Method" params={{ method: "fax" }}>
+          <Link name="Method" params={{ method: "fax" }}>
             Contact By Fax
           </Link>
         </li>

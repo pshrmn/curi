@@ -1,6 +1,6 @@
 const dev = process.env.NODE_ENV !== "production";
 
-const VERSION = "16.6.3";
+const VERSION = "16.7.0-alpha.0";
 
 const REACT_BUILD = dev ? "react.development.js" : "react.production.min.js";
 const REACT_DOM_BUILD = dev
@@ -20,6 +20,7 @@ module.exports = function insert(markup) {
   </head>
   <body>
     <div id="root">${markup.html}</div>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
     <script src="https://unpkg.com/react@${VERSION}/umd/${REACT_BUILD}"></script>
     <script src="https://unpkg.com/react-dom@${VERSION}/umd/${REACT_DOM_BUILD}"></script>
     <script src="/static/js/prism.js"></script>

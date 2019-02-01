@@ -7,6 +7,9 @@ import InMemory from "@hickory/in-memory";
 // @ts-ignore (resolved by jest)
 import { curiProvider, Block } from "@curi/react-universal";
 
+// TODO: Determine which tests can be removed because the behavior
+// is already tested in the useBlock tests.
+
 describe("Block", () => {
   let confirmationFunction;
   let node;

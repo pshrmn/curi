@@ -10,10 +10,10 @@ export const MethodMenu = props => {
     <nav>
       <ul>
         <li>
-          <Link to="Home">Home</Link>
+          <Link name="Home">Home</Link>
         </li>
         <li>
-          <Link to="Contact">Contact</Link>
+          <Link name="Contact">Contact</Link>
         </li>
       </ul>
     </nav>
