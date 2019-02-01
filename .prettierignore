@@ -5,3 +5,4 @@ README.md
 website/src/constants/versions.js
 website/public/static/js/
 CHANGELOG.md
+examples/svelte

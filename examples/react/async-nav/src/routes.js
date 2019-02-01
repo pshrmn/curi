@@ -1,59 +1,58 @@
 import { prepareRoutes } from "@curi/router";
 
-import { movies, movie } from "./api";
+import { movies as MOVIES, movie as MOVIE } from "./api";
 
 export default prepareRoutes([
   {
     name: "Home",
     path: "",
-    resolve: {
-      body: () =>
-        import(/* webpackChunkName: "Home" */ "./pages/Home").then(
-          module => module.default
-        ),
-      movies: () => movies()
+    resolve() {
+      const body = import(/* webpackChunkName: "Home" */ "./pages/Home").then(
+        module => module.default
+      );
+      const movies = MOVIES();
+      return Promise.all([body, movies]);
     },
     response({ resolved }) {
+      const [body, data] = resolved;
       return {
-        body: resolved.body,
-        data: resolved.movies
+        body,
+        data
       };
     }
   },
   {
     name: "Movie",
     path: "movie/:id",
-    resolve: {
-      body: () =>
-        import(/* webpackChunkName: "Movie" */ "./pages/Movie").then(
-          module => module.default
-        ),
-      movie: ({ params }) => movie(params.id)
+    resolve({ params }) {
+      const body = import(/* webpackChunkName: "Movie" */ "./pages/Movie").then(
+        module => module.default
+      );
+      const movie = MOVIE(params.id).then(
+        movie => ({ error: false, movie }),
+        e => ({ error: true })
+      );
+      return Promise.all([body, movie]);
     },
-    response({ error, resolved }) {
-      const modifiers = {
-        body: resolved.body
+    response({ resolved }) {
+      const [body, data] = resolved;
+      return {
+        body,
+        data
       };
-      if (error) {
-        modifiers.error = error;
-      } else {
-        modifiers.data = resolved.movie;
-      }
-      return modifiers;
     }
   },
   {
     name: "Not Found",
     path: "(.*)",
-    resolve: {
-      body: () =>
-        import(/* webpackChunkName: "NotFound" */ "./pages/NotFound").then(
-          module => module.default
-        )
+    resolve() {
+      return import(/* webpackChunkName: "NotFound" */ "./pages/NotFound").then(
+        module => module.default
+      );
     },
     response({ resolved }) {
       return {
-        body: resolved.body
+        body: resolved
       };
     }
   }
