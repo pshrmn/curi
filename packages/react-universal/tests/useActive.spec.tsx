@@ -43,13 +43,18 @@ describe("useActive", () => {
 
       const Router = curiProvider(router);
 
-      function Curious() {
+      function App() {
         const active = useActive({ name: "Home" });
         return null;
       }
 
       expect(() => {
-        ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+        ReactDOM.render(
+          <Router>
+            <App />
+          </Router>,
+          node
+        );
       }).toThrow(
         `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
 
@@ -66,12 +71,17 @@ const router = curi(history, routes, {
 
   describe("name", () => {
     it('uses the "name" to determine if it is active', () => {
-      function Curious() {
+      function App() {
         const active = useActive({ name: "Home" });
         expect(active).toBe(true);
         return null;
       }
-      ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
     });
   });
 
@@ -82,7 +92,7 @@ const router = curi(history, routes, {
         route: [activeInteraction()]
       });
       const Router = curiProvider(router);
-      function Curious() {
+      function App() {
         const active = useActive({
           name: "Method",
           params: { method: "email" }
@@ -90,7 +100,12 @@ const router = curi(history, routes, {
         expect(active).toBe(true);
         return null;
       }
-      ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
     });
   });
 
@@ -101,12 +116,17 @@ const router = curi(history, routes, {
         route: [activeInteraction()]
       });
       const Router = curiProvider(router);
-      function Curious() {
+      function App() {
         const active = useActive({ name: "Contact", partial: true });
         expect(active).toBe(true);
         return null;
       }
-      ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
     });
   });
 });

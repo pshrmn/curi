@@ -3,10 +3,8 @@ import { Provider } from "./Context";
 
 import { CuriRouter, Emitted } from "@curi/router";
 
-export type CuriRenderFn = (props: Emitted) => React.ReactNode;
-
 export interface RouterProps {
-  children: CuriRenderFn;
+  children: React.ReactNode;
 }
 
 export default function curiProvider(
@@ -40,6 +38,6 @@ export default function curiProvider(
       };
     }, []);
 
-    return <Provider value={state}>{props.children(state)}</Provider>;
+    return <Provider value={state}>{props.children}</Provider>;
   };
 }
