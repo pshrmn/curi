@@ -26,7 +26,7 @@ const Home = ({ response }) => (
   <div style={styles.container}>
     {response.data.map(movie => (
       <Link
-        to="Movie"
+        name="Movie"
         params={{ id: movie.id }}
         key={movie.id}
         style={styles.link}

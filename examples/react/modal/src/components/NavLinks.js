@@ -5,14 +5,14 @@ const NavLinks = () => (
   <nav>
     <ul>
       <li>
-        <Link to="Home">Home</Link>
+        <Link name="Home">Home</Link>
       </li>
       <li>
         Paints
         <ol>
           <li>
             <Link
-              to="Product"
+              name="Product"
               params={{ color: "DarkSlateBlue" }}
               state={{ name: "Dark Slate Blue" }}
             >
@@ -21,7 +21,7 @@ const NavLinks = () => (
           </li>
           <li>
             <Link
-              to="Product"
+              name="Product"
               params={{ color: "SeaGreen" }}
               state={{ name: "Sea Green" }}
             >
@@ -30,7 +30,7 @@ const NavLinks = () => (
           </li>
           <li>
             <Link
-              to="Product"
+              name="Product"
               params={{ color: "Crimson" }}
               state={{ name: "Crimson" }}
             >

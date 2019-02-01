@@ -8,6 +8,9 @@ import activeInteraction from "@curi/route-active";
 // @ts-ignore (resolved by jest)
 import { curiProvider, Active } from "@curi/react-universal";
 
+// TODO: Determine which tests can be removed because the behavior
+// is already tested in the useActive tests.
+
 describe("<Active>", () => {
   let node;
   let history;

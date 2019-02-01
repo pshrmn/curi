@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
-// resolved by jest
+// @ts-ignore (resolved by jest)
 import { curiProvider, Navigating } from "@curi/react-universal";
 
 describe("<Navigating>", () => {
@@ -26,7 +26,7 @@ describe("<Navigating>", () => {
       path: "fast",
       resolve() {
         return new Promise(resolve => {
-          setTimeout(resolve, 50, "slow");
+          setTimeout(resolve, 50, "fast");
         });
       }
     },
@@ -87,7 +87,7 @@ describe("<Navigating>", () => {
     });
 
     describe("to asynchronous routes", () => {
-      it("cancel is a function", done => {
+      it("cancel is a function", () => {
         const history = InMemory();
         const router = curi(history, routes);
         const Router = curiProvider(router);
@@ -96,12 +96,28 @@ describe("<Navigating>", () => {
           <Router>{() => <Navigating>{children}</Navigating>}</Router>,
           node
         );
+
+        const { response: beforeResponse } = router.current();
+        expect(beforeResponse.name).toBe("Home");
+        router.navigate({ name: "Fast" });
+        expect(typeof children.mock.calls[1][0]).toBe("function");
+      });
+
+      it("is undefined once navigation finishes", done => {
+        const history = InMemory();
+        const router = curi(history, routes);
+        const Router = curiProvider(router);
+        const children = jest.fn(() => null);
+        ReactDOM.render(
+          <Router>{() => <Navigating>{children}</Navigating>}</Router>,
+          node
+        );
+
         const { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
 
         router.navigate({ name: "Fast" });
 
-        expect(typeof children.mock.calls[1][0]).toBe("function");
         router.once(
           ({ response }) => {
             expect(response.name).toBe("Fast");

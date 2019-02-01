@@ -1,9 +1,7 @@
 import { ReactNode } from "react";
 import { Response } from "@curi/router";
-export interface ActiveProps {
+import { ActiveHookProps } from "./hooks/useActive";
+export interface ActiveProps extends ActiveHookProps {
     children(active: boolean, response?: Response): ReactNode;
-    name: string;
-    params?: object;
-    partial?: boolean;
 }
-export default function (props: ActiveProps): ReactNode;
+export default function Active(props: ActiveProps): ReactNode;

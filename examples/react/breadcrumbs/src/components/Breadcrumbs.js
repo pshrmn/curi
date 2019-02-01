@@ -10,7 +10,7 @@ const Breadcrumbs = ({ name, params }) => (
           .reverse()
           .map(a => (
             <li key={a}>
-              <Link to={a} params={params}>
+              <Link name={a} params={params}>
                 {router.route.title(a, params)}
               </Link>
             </li>

@@ -10,7 +10,7 @@ export const NotFoundMenu = props => {
     <nav>
       <ul>
         <li>
-          <Link to="Home">Home</Link>
+          <Link name="Home">Home</Link>
         </li>
       </ul>
     </nav>

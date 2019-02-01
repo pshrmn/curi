@@ -1,4 +1,5 @@
 import { HickoryLocation, PartialLocation } from "@hickory/root";
+import { RouteLocation } from "./location";
 export declare type RawParams = {
     [key: string]: string;
 };
@@ -32,10 +33,6 @@ export interface Response extends MatchResponseProperties {
     title?: string;
     redirectTo?: RedirectLocation;
 }
-export interface RedirectProps {
+export interface RedirectProps extends RouteLocation {
     name: string;
-    params?: Params;
-    hash?: string;
-    query?: any;
-    state?: any;
 }

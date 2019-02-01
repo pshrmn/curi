@@ -39,3 +39,4 @@ export {
   CancelNavigateCallbacks,
   RemoveCancellable
 } from "./curi";
+export { RouteLocation } from "./location";

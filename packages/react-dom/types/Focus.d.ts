@@ -1,8 +1,8 @@
 import React from "react";
 import { ReactNode, Ref } from "react";
-export interface FocusProps {
+import { FocusHookProps } from "./hooks/useNavigationFocus";
+export interface FocusProps extends FocusHookProps {
     children(ref: Ref<any>): ReactNode;
-    preventScroll?: boolean;
-    preserve?: boolean;
 }
-export default function Focus(props: FocusProps): React.ReactElement<any>;
+declare const Focus: (props: FocusProps) => React.ReactNode;
+export default Focus;

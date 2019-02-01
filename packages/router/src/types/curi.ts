@@ -4,6 +4,7 @@ import { PathFunctionOptions } from "path-to-regexp";
 import { Interaction, Interactions } from "./interaction";
 import { CompiledRouteArray } from "./route";
 import { Response, Params } from "./response";
+import { RouteLocation } from "./location";
 
 export interface Navigation {
   action: Action;
@@ -41,12 +42,7 @@ export interface CurrentResponse {
   navigation: Navigation | null;
 }
 
-export interface NavigationDetails {
-  name?: string;
-  params?: Params;
-  hash?: string;
-  query?: any;
-  state?: any;
+export interface NavigationDetails extends RouteLocation {
   method?: NavType;
   cancelled?: () => void;
   finished?: () => void;
