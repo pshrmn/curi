@@ -8,7 +8,7 @@ const Products = ({ response: { data }, router }) => (
     <ul>
       {data.map(category => (
         <li key={category}>
-          <Link to="Category" params={{ category }}>
+          <Link name="Category" params={{ category }}>
             {router.route.title("Category", { category })}
           </Link>
         </li>

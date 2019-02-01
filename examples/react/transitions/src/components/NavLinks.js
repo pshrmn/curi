@@ -5,23 +5,23 @@ const NavLinks = () => (
   <nav>
     <ul>
       <li>
-        <Link to="Home">Home</Link>
+        <Link name="Home">Home</Link>
       </li>
       <li>
-        <Link to="Contact">Contact</Link>
+        <Link name="Contact">Contact</Link>
         <ol>
           <li>
-            <Link to="Method" params={{ method: "phone" }}>
+            <Link name="Method" params={{ method: "phone" }}>
               By Phone
             </Link>
           </li>
           <li>
-            <Link to="Method" params={{ method: "email" }}>
+            <Link name="Method" params={{ method: "email" }}>
               By Email
             </Link>
           </li>
           <li>
-            <Link to="Method" params={{ method: "mail" }}>
+            <Link name="Method" params={{ method: "mail" }}>
               By Mail
             </Link>
           </li>

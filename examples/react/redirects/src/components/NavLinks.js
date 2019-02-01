@@ -7,16 +7,16 @@ const NavLinks = () => (
   <nav>
     <ul>
       <li>
-        <Link to="Home">Home</Link>
+        <Link name="Home">Home</Link>
       </li>
       <li>
-        <Link to="Protected">Protected</Link>
+        <Link name="Protected">Protected</Link>
       </li>
       <li>
         {fakeAuth.authenticated() ? (
-          <Link to="Logout">Logout</Link>
+          <Link name="Logout">Logout</Link>
         ) : (
-          <Link to="Login">Login</Link>
+          <Link name="Login">Login</Link>
         )}
       </li>
     </ul>
