@@ -66,7 +66,7 @@ describe("<Navigating>", () => {
 
   describe("while navigating", () => {
     describe("to synchronous routes", () => {
-      it("cancel is undefined", () => {
+      it("cancel is undefined", async () => {
         const history = InMemory();
         const router = curi(history, routes);
         const Router = curiProvider(router);
@@ -81,6 +81,11 @@ describe("<Navigating>", () => {
         expect(beforeResponse.name).toBe("Home");
 
         expect(children.mock.calls.length).toBe(1);
+
+        // wait to navigate until after the effect has setup the observer
+        await new Promise(resolve => {
+          setTimeout(resolve, 15);
+        });
 
         router.navigate({ name: "Sync" });
 

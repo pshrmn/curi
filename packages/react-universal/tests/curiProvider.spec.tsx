@@ -67,21 +67,17 @@ describe("curiProvider()", () => {
       expect(Two.mock.calls.length).toBe(1);
     });
 
-    it("re-renders when the location changes", done => {
+    it("re-renders when the location changes", async () => {
       const history = InMemory();
       const router = curi(history, routes);
       let pushedHistory = false;
       let firstCall = true;
 
+      let currentResponse;
+
       const App = jest.fn(() => {
-        const { response } = useCuri();
-        if (firstCall) {
-          expect(response.name).toBe("Home");
-          firstCall = false;
-        } else {
-          expect(response.name).toBe("About");
-          done();
-        }
+        const { response, router } = useCuri();
+        currentResponse = response;
         return null;
       });
 
@@ -92,7 +88,17 @@ describe("curiProvider()", () => {
         </Router>,
         node
       );
+
+      expect(currentResponse.name).toBe("Home");
+
+      // wait to navigate until after the effect has setup the observer
+      await new Promise(resolve => {
+        setTimeout(resolve, 15);
+      });
+
       history.navigate("/about");
+
+      expect(currentResponse.name).toBe("About");
     });
   });
 
