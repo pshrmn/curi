@@ -29,76 +29,106 @@ describe("useLocation", () => {
 
   describe("pathname", () => {
     it("returns route's pathname", () => {
-      function Curious() {
+      function App() {
         const result = useLocation({ name: "Home" });
         expect(result).toMatchObject({
           pathname: "/"
         });
         return null;
       }
-      ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
     });
 
     it("returns route's pathname using params", () => {
-      function Curious() {
+      function App() {
         const result = useLocation({ name: "User", params: { id: "1" } });
         expect(result).toMatchObject({
           pathname: "/u/1"
         });
         return null;
       }
-      ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
     });
 
     it("returns empty string if name is not provided", () => {
-      function Curious() {
+      function App() {
         const result = useLocation({});
         expect(result).toMatchObject({
           pathname: ""
         });
         return null;
       }
-      ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
     });
   });
 
   describe("query", () => {
     it("returns provided query", () => {
-      function Curious() {
+      function App() {
         const result = useLocation({ name: "Home", query: "hi=yo" });
         expect(result).toMatchObject({
           query: "hi=yo"
         });
         return null;
       }
-      ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
     });
   });
 
   describe("hash", () => {
     it("returns provided hash", () => {
-      function Curious() {
+      function App() {
         const result = useLocation({ name: "Home", hash: "test" });
         expect(result).toMatchObject({
           hash: "test"
         });
         return null;
       }
-      ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
     });
   });
 
   describe("state", () => {
     it("returns provided state", () => {
       const state = { key: "value" };
-      function Curious() {
+      function App() {
         const result = useLocation({ name: "Home", state });
         expect(result).toMatchObject({
           state
         });
         return null;
       }
-      ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
     });
   });
 });

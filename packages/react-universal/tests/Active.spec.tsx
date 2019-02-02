@@ -49,7 +49,7 @@ describe("<Active>", () => {
       expect(() => {
         ReactDOM.render(
           <Router>
-            {() => <Active name="Home">{active => null}</Active>}
+            <Active name="Home">{active => null}</Active>
           </Router>,
           node
         );
@@ -71,14 +71,12 @@ const router = curi(history, routes, {
     it('uses the "name" to determine if it is active', () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Active name="Home">
-              {active => {
-                expect(active).toBe(true);
-                return null;
-              }}
-            </Active>
-          )}
+          <Active name="Home">
+            {active => {
+              expect(active).toBe(true);
+              return null;
+            }}
+          </Active>
         </Router>,
         node
       );
@@ -94,14 +92,12 @@ const router = curi(history, routes, {
       const Router = curiProvider(router);
       ReactDOM.render(
         <Router>
-          {() => (
-            <Active name="Method" params={{ method: "email" }}>
-              {active => {
-                expect(active).toBe(true);
-                return null;
-              }}
-            </Active>
-          )}
+          <Active name="Method" params={{ method: "email" }}>
+            {active => {
+              expect(active).toBe(true);
+              return null;
+            }}
+          </Active>
         </Router>,
         node
       );
@@ -114,7 +110,9 @@ const router = curi(history, routes, {
         return null;
       });
       ReactDOM.render(
-        <Router>{() => <Active name="Home">{childrenMock}</Active>}</Router>,
+        <Router>
+          <Active name="Home">{childrenMock}</Active>
+        </Router>,
         node,
         () => {
           expect(childrenMock.mock.calls.length).toBe(1);
@@ -125,14 +123,12 @@ const router = curi(history, routes, {
     it("children(true) if the specified route is active", () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Active name="Home">
-              {active => {
-                expect(active).toBe(true);
-                return null;
-              }}
-            </Active>
-          )}
+          <Active name="Home">
+            {active => {
+              expect(active).toBe(true);
+              return null;
+            }}
+          </Active>
         </Router>,
         node
       );
@@ -141,14 +137,12 @@ const router = curi(history, routes, {
     it("children(false) if the specified route is NOT active", () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Active name="Contact">
-              {active => {
-                expect(active).toBe(false);
-                return null;
-              }}
-            </Active>
-          )}
+          <Active name="Contact">
+            {active => {
+              expect(active).toBe(false);
+              return null;
+            }}
+          </Active>
         </Router>,
         node
       );
@@ -157,16 +151,14 @@ const router = curi(history, routes, {
     it("receives the current response object as its second argument", () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Active name="Home">
-              {(active, response) => {
-                expect(response).toMatchObject({
-                  name: "Home"
-                });
-                return null;
-              }}
-            </Active>
-          )}
+          <Active name="Home">
+            {(active, response) => {
+              expect(response).toMatchObject({
+                name: "Home"
+              });
+              return null;
+            }}
+          </Active>
         </Router>,
         node
       );
@@ -182,14 +174,12 @@ const router = curi(history, routes, {
       const Router = curiProvider(router);
       ReactDOM.render(
         <Router>
-          {() => (
-            <Active name="Contact" partial={true}>
-              {active => {
-                expect(active).toBe(true);
-                return null;
-              }}
-            </Active>
-          )}
+          <Active name="Contact" partial={true}>
+            {active => {
+              expect(active).toBe(true);
+              return null;
+            }}
+          </Active>
         </Router>,
         node
       );
