@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
+import wait from "./utils/wait";
+
 // @ts-ignore (resolved by jest)
 import { curiProvider, useBlock } from "@curi/react-universal";
 
@@ -33,7 +35,7 @@ describe("useBlock", () => {
     removeConfirmation.mockClear();
   });
 
-  it("if active=true when mounting, adds block", () => {
+  it("if active=true when mounting, adds block", async () => {
     const confirm = jest.fn();
 
     function Blocker() {
@@ -47,11 +49,13 @@ describe("useBlock", () => {
       node
     );
 
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(confirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
-  it("if active=false when mounting, does not add block", () => {
+  it("if active=false when mounting, does not add block", async () => {
     const confirm = jest.fn();
     function Blocker() {
       const result = useBlock(false, confirm);
@@ -63,10 +67,13 @@ describe("useBlock", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(0);
   });
 
-  it("removes block if active goes true->false while updating", () => {
+  it("removes block if active goes true->false while updating", async () => {
     const confirm = jest.fn();
 
     function Blocker(props) {
@@ -80,6 +87,8 @@ describe("useBlock", () => {
       node
     );
 
+    await wait(15);
+
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
     ReactDOM.render(
@@ -88,10 +97,13 @@ describe("useBlock", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(removeConfirmation.mock.calls.length).toBe(1);
   });
 
-  it("adds block if active goes false->true while updating", () => {
+  it("adds block if active goes false->true while updating", async () => {
     const confirm = jest.fn();
 
     function Blocker(props) {
@@ -106,6 +118,8 @@ describe("useBlock", () => {
       node
     );
 
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(0);
 
     ReactDOM.render(
@@ -115,10 +129,12 @@ describe("useBlock", () => {
       node
     );
 
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(1);
   });
 
-  it("resets block on updates if confirm function changes", () => {
+  it("resets block on updates if confirm function changes", async () => {
     const confirm = jest.fn();
     const confirm2 = jest.fn();
 
@@ -134,6 +150,8 @@ describe("useBlock", () => {
       node
     );
 
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
@@ -144,11 +162,13 @@ describe("useBlock", () => {
       node
     );
 
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(2);
     expect(removeConfirmation.mock.calls.length).toBe(1);
   });
 
-  it("does not reset block if both active and confirm stay the same", () => {
+  it("does not reset block if both active and confirm stay the same", async () => {
     const confirm = jest.fn();
 
     function Blocker(props) {
@@ -163,6 +183,8 @@ describe("useBlock", () => {
       node
     );
 
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
@@ -172,12 +194,14 @@ describe("useBlock", () => {
       </Router>,
       node
     );
+
+    await wait(15);
 
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
   });
 
-  it("unblocks when unmounting", () => {
+  it("unblocks when unmounting", async () => {
     const confirm = jest.fn();
     function Blocker(props) {
       const result = useBlock(true, confirm);
@@ -190,8 +214,14 @@ describe("useBlock", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(removeConfirmation.mock.calls.length).toBe(0);
     ReactDOM.unmountComponentAtNode(node);
+
+    await wait(15);
+
     expect(removeConfirmation.mock.calls.length).toBe(1);
   });
 });
