@@ -31,7 +31,9 @@ describe("<Link>", () => {
   describe("anchor", () => {
     it("renders an <a> by default", () => {
       ReactDOM.render(
-        <Router>{() => <Link name="Test">Test</Link>}</Router>,
+        <Router>
+          <Link name="Test">Test</Link>}
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -44,11 +46,9 @@ describe("<Link>", () => {
       );
       ReactDOM.render(
         <Router>
-          {() => (
-            <Link anchor={StyledAnchor} name="Test">
-              Test
-            </Link>
-          )}
+          <Link anchor={StyledAnchor} name="Test">
+            Test
+          </Link>
         </Router>,
         node
       );
@@ -61,7 +61,9 @@ describe("<Link>", () => {
   describe("name", () => {
     it("sets the href attribute using the named route's path", () => {
       ReactDOM.render(
-        <Router>{() => <Link name="Test">Test</Link>}</Router>,
+        <Router>
+          <Link name="Test">Test</Link>}
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -76,7 +78,9 @@ describe("<Link>", () => {
       const router = curi(history, routes);
       const Router = curiProvider(router);
       ReactDOM.render(
-        <Router>{() => <Link name={null}>Test</Link>}</Router>,
+        <Router>
+          <Link name={null}>Test</Link>
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -101,11 +105,9 @@ describe("<Link>", () => {
       const params = { name: "Glacier" };
       ReactDOM.render(
         <Router>
-          {() => (
-            <Link name="Park" params={params}>
-              Test
-            </Link>
-          )}
+          <Link name="Park" params={params}>
+            Test
+          </Link>
         </Router>,
         node
       );
@@ -117,11 +119,9 @@ describe("<Link>", () => {
       const params = { name: "Glacier" };
       ReactDOM.render(
         <Router>
-          {() => (
-            <Link name="Park" params={params}>
-              Test
-            </Link>
-          )}
+          <Link name="Park" params={params}>
+            Test
+          </Link>
         </Router>,
         node
       );
@@ -131,11 +131,9 @@ describe("<Link>", () => {
       const newParams = { name: "Yellowstone" };
       ReactDOM.render(
         <Router>
-          {() => (
-            <Link name="Park" params={newParams}>
-              Test
-            </Link>
-          )}
+          <Link name="Park" params={newParams}>
+            Test
+          </Link>
         </Router>,
         node
       );
@@ -155,11 +153,9 @@ describe("<Link>", () => {
       const Router = curiProvider(router);
       ReactDOM.render(
         <Router>
-          {() => (
-            <Link name="Test" query="one=two" hash="hashtag">
-              Test
-            </Link>
-          )}
+          <Link name="Test" query="one=two" hash="hashtag">
+            Test
+          </Link>
         </Router>,
         node
       );
@@ -172,11 +168,9 @@ describe("<Link>", () => {
     it("passes forward to the rendered anchor", () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Link to="Test" forward={{ className: "hi" }}>
-              Test
-            </Link>
-          )}
+          <Link name="Test" forward={{ className: "hi" }}>
+            Test
+          </Link>
         </Router>,
         node
       );
@@ -198,11 +192,9 @@ describe("<Link>", () => {
       const ref = React.createRef();
       ReactDOM.render(
         <Router>
-          {() => (
-            <Link name="Test" ref={ref}>
-              Test
-            </Link>
-          )}
+          <Link name="Test" ref={ref}>
+            Test
+          </Link>
         </Router>,
         node
       );
@@ -223,7 +215,9 @@ describe("<Link>", () => {
         const Router = curiProvider(router);
         const children = "Test Value";
         ReactDOM.render(
-          <Router>{() => <Link name="Test">{children}</Link>}</Router>,
+          <Router>
+            <Link name="Test">{children}</Link>
+          </Router>,
           node
         );
         const a = node.querySelector("a");
@@ -242,14 +236,12 @@ describe("<Link>", () => {
         const Router = curiProvider(router);
         ReactDOM.render(
           <Router>
-            {() => (
-              <Link name="Test">
-                {navigating => {
-                  expect(navigating).toBe(false);
-                  return null;
-                }}
-              </Link>
-            )}
+            <Link name="Test">
+              {navigating => {
+                expect(navigating).toBe(false);
+                return null;
+              }}
+            </Link>
           </Router>,
           node
         );
@@ -270,7 +262,9 @@ describe("<Link>", () => {
       const router = curi(history, routes);
       const Router = curiProvider(router);
       ReactDOM.render(
-        <Router>{() => <Link name="Test">Test</Link>}</Router>,
+        <Router>
+          <Link name="Test">Test</Link>
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -316,13 +310,11 @@ describe("<Link>", () => {
 
         ReactDOM.render(
           <Router>
-            {() => (
-              <Link name="Test">
-                {navigating => {
-                  return <div>{navigating.toString()}</div>;
-                }}
-              </Link>
-            )}
+            <Link name="Test">
+              {navigating => {
+                return <div>{navigating.toString()}</div>;
+              }}
+            </Link>
           </Router>,
           node
         );
@@ -372,20 +364,18 @@ describe("<Link>", () => {
 
         ReactDOM.render(
           <Router>
-            {() => (
-              <React.Fragment>
-                <Link name="Slow">
-                  {navigating => {
-                    return <div>Slow {navigating.toString()}</div>;
-                  }}
-                </Link>
-                <Link name="Fast">
-                  {navigating => {
-                    return <div>Fast {navigating.toString()}</div>;
-                  }}
-                </Link>
-              </React.Fragment>
-            )}
+            <React.Fragment>
+              <Link name="Slow">
+                {navigating => {
+                  return <div>Slow {navigating.toString()}</div>;
+                }}
+              </Link>
+              <Link name="Fast">
+                {navigating => {
+                  return <div>Fast {navigating.toString()}</div>;
+                }}
+              </Link>
+            </React.Fragment>
           </Router>,
           node
         );
@@ -427,13 +417,11 @@ describe("<Link>", () => {
 
         ReactDOM.render(
           <Router>
-            {() => (
-              <Link name="Loader">
-                {navigating => {
-                  return <div>{navigating.toString()}</div>;
-                }}
-              </Link>
-            )}
+            <Link name="Loader">
+              {navigating => {
+                return <div>{navigating.toString()}</div>;
+              }}
+            </Link>
           </Router>,
           node
         );
@@ -495,13 +483,11 @@ describe("<Link>", () => {
 
         ReactDOM.render(
           <Router>
-            {() => (
-              <Link name="Slow">
-                {navigating => {
-                  return <div>{navigating.toString()}</div>;
-                }}
-              </Link>
-            )}
+            <Link name="Slow">
+              {navigating => {
+                return <div>{navigating.toString()}</div>;
+              }}
+            </Link>
           </Router>,
           node
         );
@@ -538,11 +524,9 @@ describe("<Link>", () => {
 
       ReactDOM.render(
         <Router>
-          {() => (
-            <Link name="Test" hash="thing" query="one=1" state="yo">
-              Test
-            </Link>
-          )}
+          <Link name="Test" hash="thing" query="one=1" state="yo">
+            Test
+          </Link>
         </Router>,
         node
       );
@@ -583,11 +567,9 @@ describe("<Link>", () => {
 
         ReactDOM.render(
           <Router>
-            {() => (
-              <Link name="Test" onNav={onNav}>
-                Test
-              </Link>
-            )}
+            <Link name="Test" onNav={onNav}>
+              Test
+            </Link>
           </Router>,
           node
         );
@@ -624,11 +606,9 @@ describe("<Link>", () => {
 
         ReactDOM.render(
           <Router>
-            {() => (
-              <Link name="Test" onNav={onNav}>
-                Test
-              </Link>
-            )}
+            <Link name="Test" onNav={onNav}>
+              Test
+            </Link>
           </Router>,
           node
         );
@@ -663,7 +643,9 @@ describe("<Link>", () => {
       const Router = curiProvider(router);
 
       ReactDOM.render(
-        <Router>{() => <Link name="Test">Test</Link>}</Router>,
+        <Router>
+          <Link name="Test">Test</Link>
+        </Router>,
         node
       );
       const a = node.querySelector("a");
@@ -700,7 +682,9 @@ describe("<Link>", () => {
       const Router = curiProvider(router);
 
       ReactDOM.render(
-        <Router>{() => <Link name="Test">Test</Link>}</Router>,
+        <Router>
+          <Link name="Test">Test</Link>
+        </Router>,
         node
       );
       const a = node.querySelector("a");

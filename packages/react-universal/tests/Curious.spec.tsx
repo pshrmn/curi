@@ -30,16 +30,14 @@ describe("<Curious>", () => {
     const { response, navigation } = router.current();
     ReactDOM.render(
       <Router>
-        {() => (
-          <Curious>
-            {value => {
-              expect(value.router).toBe(router);
-              expect(value.response).toBe(response);
-              expect(value.navigation).toBe(navigation);
-              return null;
-            }}
-          </Curious>
-        )}
+        <Curious>
+          {value => {
+            expect(value.router).toBe(router);
+            expect(value.response).toBe(response);
+            expect(value.navigation).toBe(navigation);
+            return null;
+          }}
+        </Curious>
       </Router>,
       node
     );

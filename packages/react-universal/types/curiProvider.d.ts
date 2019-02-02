@@ -1,7 +1,6 @@
 import React from "react";
-import { CuriRouter, Emitted } from "@curi/router";
-export declare type CuriRenderFn = (props: Emitted) => React.ReactNode;
+import { CuriRouter } from "@curi/router";
 export interface RouterProps {
-    children: CuriRenderFn;
+    children: React.ReactNode;
 }
 export default function curiProvider(router: CuriRouter): React.FunctionComponent<RouterProps>;

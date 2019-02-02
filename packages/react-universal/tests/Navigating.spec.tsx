@@ -52,14 +52,12 @@ describe("<Navigating>", () => {
       const Router = curiProvider(router);
       ReactDOM.render(
         <Router>
-          {() => (
-            <Navigating>
-              {cancel => {
-                expect(cancel).toBeUndefined();
-                return null;
-              }}
-            </Navigating>
-          )}
+          <Navigating>
+            {cancel => {
+              expect(cancel).toBeUndefined();
+              return null;
+            }}
+          </Navigating>
         </Router>,
         node
       );
@@ -74,7 +72,9 @@ describe("<Navigating>", () => {
         const Router = curiProvider(router);
         const children = jest.fn(() => null);
         ReactDOM.render(
-          <Router>{() => <Navigating>{children}</Navigating>}</Router>,
+          <Router>
+            <Navigating>{children}</Navigating>
+          </Router>,
           node
         );
         const { response: beforeResponse } = router.current();
@@ -97,7 +97,9 @@ describe("<Navigating>", () => {
         const Router = curiProvider(router);
         const children = jest.fn(() => null);
         ReactDOM.render(
-          <Router>{() => <Navigating>{children}</Navigating>}</Router>,
+          <Router>
+            <Navigating>{children}</Navigating>
+          </Router>,
           node
         );
 
@@ -113,7 +115,9 @@ describe("<Navigating>", () => {
         const Router = curiProvider(router);
         const children = jest.fn(() => null);
         ReactDOM.render(
-          <Router>{() => <Navigating>{children}</Navigating>}</Router>,
+          <Router>
+            <Navigating>{children}</Navigating>
+          </Router>,
           node
         );
 
@@ -148,7 +152,9 @@ describe("<Navigating>", () => {
         return null;
       });
       ReactDOM.render(
-        <Router>{() => <Navigating>{children}</Navigating>}</Router>,
+        <Router>
+          <Navigating>{children}</Navigating>
+        </Router>,
         node
       );
       const { response: beforeResponse } = router.current();
@@ -179,7 +185,9 @@ describe("<Navigating>", () => {
         return null;
       });
       ReactDOM.render(
-        <Router>{() => <Navigating>{children}</Navigating>}</Router>,
+        <Router>
+          <Navigating>{children}</Navigating>
+        </Router>,
         node
       );
       const { response: beforeResponse } = router.current();

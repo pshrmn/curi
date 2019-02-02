@@ -39,7 +39,9 @@ describe("Block", () => {
   it("if active=true when mounting, adds block", () => {
     const confirm = jest.fn();
     ReactDOM.render(
-      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={true} confirm={confirm} />
+      </Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(1);
@@ -48,7 +50,12 @@ describe("Block", () => {
 
   it("defaults to active=true", () => {
     const confirm = jest.fn();
-    ReactDOM.render(<Router>{() => <Block confirm={confirm} />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Block confirm={confirm} />
+      </Router>,
+      node
+    );
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(confirmWith.mock.calls[0][0]).toBe(confirm);
   });
@@ -56,7 +63,9 @@ describe("Block", () => {
   it("if active=false when mounting, does not add block", () => {
     const confirm = jest.fn();
     ReactDOM.render(
-      <Router>{() => <Block active={false} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={false} confirm={confirm} />
+      </Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(0);
@@ -66,13 +75,17 @@ describe("Block", () => {
     const confirm = jest.fn();
 
     ReactDOM.render(
-      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={true} confirm={confirm} />
+      </Router>,
       node
     );
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
     ReactDOM.render(
-      <Router>{() => <Block active={false} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={false} confirm={confirm} />
+      </Router>,
       node
     );
     expect(removeConfirmation.mock.calls.length).toBe(1);
@@ -82,13 +95,17 @@ describe("Block", () => {
     const confirm = jest.fn();
 
     ReactDOM.render(
-      <Router>{() => <Block active={false} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={false} confirm={confirm} />
+      </Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(0);
 
     ReactDOM.render(
-      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={true} confirm={confirm} />
+      </Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(1);
@@ -99,14 +116,18 @@ describe("Block", () => {
     const confirm2 = jest.fn();
 
     ReactDOM.render(
-      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={true} confirm={confirm} />
+      </Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
     ReactDOM.render(
-      <Router>{() => <Block active={true} confirm={confirm2} />}</Router>,
+      <Router>
+        <Block active={true} confirm={confirm2} />
+      </Router>,
       node
     );
     expect(confirmWith.mock.calls.length).toBe(2);
@@ -116,14 +137,18 @@ describe("Block", () => {
   it("does not reset block if both active and confirm stay the same", () => {
     const confirm = jest.fn();
     ReactDOM.render(
-      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={true} confirm={confirm} />
+      </Router>,
       node
     );
 
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
     ReactDOM.render(
-      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={true} confirm={confirm} />
+      </Router>,
       node
     );
 
@@ -134,7 +159,9 @@ describe("Block", () => {
   it("unblocks when unmounting", () => {
     const confirm = jest.fn();
     ReactDOM.render(
-      <Router>{() => <Block active={true} confirm={confirm} />}</Router>,
+      <Router>
+        <Block active={true} confirm={confirm} />
+      </Router>,
       node
     );
     expect(removeConfirmation.mock.calls.length).toBe(0);
