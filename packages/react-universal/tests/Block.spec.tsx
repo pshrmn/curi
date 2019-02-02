@@ -10,6 +10,13 @@ import { curiProvider, Block } from "@curi/react-universal";
 // TODO: Determine which tests can be removed because the behavior
 // is already tested in the useBlock tests.
 
+// wait to navigate until after the effect has setup the observer
+function wait(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
+
 describe("Block", () => {
   let confirmationFunction;
   let node;
@@ -36,7 +43,7 @@ describe("Block", () => {
     removeConfirmation.mockClear();
   });
 
-  it("if active=true when mounting, adds block", () => {
+  it("if active=true when mounting, adds block", async () => {
     const confirm = jest.fn();
     ReactDOM.render(
       <Router>
@@ -44,11 +51,14 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(confirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
-  it("defaults to active=true", () => {
+  it("defaults to active=true", async () => {
     const confirm = jest.fn();
     ReactDOM.render(
       <Router>
@@ -56,11 +66,14 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(confirmWith.mock.calls[0][0]).toBe(confirm);
   });
 
-  it("if active=false when mounting, does not add block", () => {
+  it("if active=false when mounting, does not add block", async () => {
     const confirm = jest.fn();
     ReactDOM.render(
       <Router>
@@ -68,10 +81,13 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(0);
   });
 
-  it("removes block if active goes true->false while updating", () => {
+  it("removes block if active goes true->false while updating", async () => {
     const confirm = jest.fn();
 
     ReactDOM.render(
@@ -80,6 +96,9 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
     ReactDOM.render(
@@ -88,10 +107,13 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(removeConfirmation.mock.calls.length).toBe(1);
   });
 
-  it("adds block if active goes false->true while updating", () => {
+  it("adds block if active goes false->true while updating", async () => {
     const confirm = jest.fn();
 
     ReactDOM.render(
@@ -100,6 +122,9 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(0);
 
     ReactDOM.render(
@@ -108,10 +133,13 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(1);
   });
 
-  it("resets block on updates if confirm function changes", () => {
+  it("resets block on updates if confirm function changes", async () => {
     const confirm = jest.fn();
     const confirm2 = jest.fn();
 
@@ -121,6 +149,9 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
@@ -130,11 +161,14 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(confirmWith.mock.calls.length).toBe(2);
     expect(removeConfirmation.mock.calls.length).toBe(1);
   });
 
-  it("does not reset block if both active and confirm stay the same", () => {
+  it("does not reset block if both active and confirm stay the same", async () => {
     const confirm = jest.fn();
     ReactDOM.render(
       <Router>
@@ -142,6 +176,8 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
 
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
@@ -151,12 +187,14 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
 
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
   });
 
-  it("unblocks when unmounting", () => {
+  it("unblocks when unmounting", async () => {
     const confirm = jest.fn();
     ReactDOM.render(
       <Router>
@@ -164,8 +202,14 @@ describe("Block", () => {
       </Router>,
       node
     );
+
+    await wait(15);
+
     expect(removeConfirmation.mock.calls.length).toBe(0);
     ReactDOM.unmountComponentAtNode(node);
+
+    await wait(15);
+
     expect(removeConfirmation.mock.calls.length).toBe(1);
   });
 });
