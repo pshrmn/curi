@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import { curi, prepareRoutes } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
+import wait from "./utils/wait";
+
 // @ts-ignore (resolved by jest)
 import { curiProvider, useCuri } from "@curi/react-universal";
 
@@ -67,21 +69,17 @@ describe("curiProvider()", () => {
       expect(Two.mock.calls.length).toBe(1);
     });
 
-    it("re-renders when the location changes", done => {
+    it("re-renders when the location changes", async () => {
       const history = InMemory();
       const router = curi(history, routes);
       let pushedHistory = false;
       let firstCall = true;
 
+      let currentResponse;
+
       const App = jest.fn(() => {
-        const { response } = useCuri();
-        if (firstCall) {
-          expect(response.name).toBe("Home");
-          firstCall = false;
-        } else {
-          expect(response.name).toBe("About");
-          done();
-        }
+        const { response, router } = useCuri();
+        currentResponse = response;
         return null;
       });
 
@@ -92,7 +90,14 @@ describe("curiProvider()", () => {
         </Router>,
         node
       );
+
+      expect(currentResponse.name).toBe("Home");
+
+      await wait(15);
+
       history.navigate("/about");
+
+      expect(currentResponse.name).toBe("About");
     });
   });
 

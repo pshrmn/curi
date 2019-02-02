@@ -8,13 +8,13 @@ export default function useNavigating() {
   const [cancel, setCancel] = React.useState(undefined);
   const [removed, setRemoved] = React.useState(false);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     return () => {
       setRemoved(true);
     };
   }, []);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     return router.cancel((cancelFn: CancelActiveNavigation) => {
       if (!removed) {
         setCancel(() => cancelFn);
