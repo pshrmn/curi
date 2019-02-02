@@ -5,7 +5,7 @@ import InMemory from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, Focus } from "@curi/react-dom";
+import { curiProvider, Focus, useCuri } from "@curi/react-dom";
 
 jest.useFakeTimers();
 
@@ -34,15 +34,13 @@ describe("<Focus>", () => {
     it("focuses ref when mounting", () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focus>
-              {ref => (
-                <div id="test" tabIndex={-1} ref={ref}>
-                  Testing!
-                </div>
-              )}
-            </Focus>
-          )}
+          <Focus>
+            {ref => (
+              <div id="test" tabIndex={-1} ref={ref}>
+                Testing!
+              </div>
+            )}
+          </Focus>
         </Router>,
         node
       );
@@ -75,12 +73,16 @@ describe("<Focus>", () => {
       const history = InMemory();
       const router = curi(history, routes);
       const Router = curiProvider(router);
+
+      function App() {
+        const { response } = useCuri();
+        const { body: Body } = response;
+        return <Focus>{ref => <Body innerRef={ref} />}</Focus>;
+      }
+
       ReactDOM.render(
         <Router>
-          {({ response }) => {
-            const { body: Body } = response;
-            return <Focus>{ref => <Body innerRef={ref} />}</Focus>;
-          }}
+          <App />
         </Router>,
         node
       );
@@ -98,15 +100,13 @@ describe("<Focus>", () => {
     it("does not re-focus ref for regular re-renders", () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focus>
-              {ref => (
-                <div id="test" tabIndex={-1} ref={ref}>
-                  <input type="text" />
-                </div>
-              )}
-            </Focus>
-          )}
+          <Focus>
+            {ref => (
+              <div id="test" tabIndex={-1} ref={ref}>
+                <input type="text" />
+              </div>
+            )}
+          </Focus>
         </Router>,
         node
       );
@@ -125,15 +125,13 @@ describe("<Focus>", () => {
 
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focus>
-              {ref => (
-                <div id="test" ref={ref}>
-                  <input type="number" />
-                </div>
-              )}
-            </Focus>
-          )}
+          <Focus>
+            {ref => (
+              <div id="test" ref={ref}>
+                <input type="number" />
+              </div>
+            )}
+          </Focus>
         </Router>,
         node
       );
@@ -147,15 +145,13 @@ describe("<Focus>", () => {
       it("re-focuses ref for new response re-renders", () => {
         ReactDOM.render(
           <Router>
-            {() => (
-              <Focus>
-                {ref => (
-                  <div id="test" tabIndex={-1} ref={ref}>
-                    <input type="text" />
-                  </div>
-                )}
-              </Focus>
-            )}
+            <Focus>
+              {ref => (
+                <div id="test" tabIndex={-1} ref={ref}>
+                  <input type="text" />
+                </div>
+              )}
+            </Focus>
           </Router>,
           node
         );
@@ -214,12 +210,15 @@ describe("<Focus>", () => {
         const history = InMemory();
         const router = curi(history, routes);
         const Router = curiProvider(router);
+        function App() {
+          const { response } = useCuri();
+          const { body: Body } = response;
+          return <Focus>{ref => <Body ref={ref} />}</Focus>;
+        }
+
         ReactDOM.render(
           <Router>
-            {({ response }) => {
-              const { body: Body } = response;
-              return <Focus>{ref => <Body ref={ref} />}</Focus>;
-            }}
+            <App />
           </Router>,
           node
         );
@@ -272,12 +271,14 @@ describe("<Focus>", () => {
         const history = InMemory();
         const router = curi(history, routes);
         const Router = curiProvider(router);
+        function App() {
+          const { response } = useCuri();
+          const { body: Body } = response;
+          return <Focus>{ref => <Body innerRef={ref} />}</Focus>;
+        }
         ReactDOM.render(
           <Router>
-            {({ response }) => {
-              const { body: Body } = response;
-              return <Focus>{ref => <Body innerRef={ref} />}</Focus>;
-            }}
+            <App />>
           </Router>,
           node
         );
@@ -305,15 +306,13 @@ describe("<Focus>", () => {
       it("re-focuses for new response re-renders", () => {
         ReactDOM.render(
           <Router>
-            {() => (
-              <Focus>
-                {ref => (
-                  <div id="test" tabIndex={-1} ref={ref}>
-                    <input type="text" />
-                  </div>
-                )}
-              </Focus>
-            )}
+            <Focus>
+              {ref => (
+                <div id="test" tabIndex={-1} ref={ref}>
+                  <input type="text" />
+                </div>
+              )}
+            </Focus>
           </Router>,
           node
         );
@@ -346,15 +345,13 @@ describe("<Focus>", () => {
       it("does not focus ref if something is already ", () => {
         ReactDOM.render(
           <Router>
-            {() => (
-              <Focus preserve={true}>
-                {ref => (
-                  <div id="test" tabIndex={-1} ref={ref}>
-                    <input type="text" />
-                  </div>
-                )}
-              </Focus>
-            )}
+            <Focus preserve={true}>
+              {ref => (
+                <div id="test" tabIndex={-1} ref={ref}>
+                  <input type="text" />
+                </div>
+              )}
+            </Focus>
           </Router>,
           node
         );
@@ -400,15 +397,13 @@ describe("<Focus>", () => {
     it("calls focus({ preventScroll: false }} when not provided", () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focus>
-              {ref => (
-                <div id="test" tabIndex={-1} ref={ref}>
-                  <input type="text" />
-                </div>
-              )}
-            </Focus>
-          )}
+          <Focus>
+            {ref => (
+              <div id="test" tabIndex={-1} ref={ref}>
+                <input type="text" />
+              </div>
+            )}
+          </Focus>
         </Router>,
         node
       );
@@ -421,15 +416,13 @@ describe("<Focus>", () => {
     it("calls focus({ preventScroll: true }} when preventScroll = true", () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focus preventScroll={true}>
-              {ref => (
-                <div id="test" tabIndex={-1} ref={ref}>
-                  <input type="text" />
-                </div>
-              )}
-            </Focus>
-          )}
+          <Focus preventScroll={true}>
+            {ref => (
+              <div id="test" tabIndex={-1} ref={ref}>
+                <input type="text" />
+              </div>
+            )}
+          </Focus>
         </Router>,
         node
       );
@@ -440,15 +433,13 @@ describe("<Focus>", () => {
     it("calls focus({ preventScroll: false }} when preventScroll = false", () => {
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focus preventScroll={false}>
-              {ref => (
-                <div id="test" tabIndex={-1} ref={ref}>
-                  <input type="text" />
-                </div>
-              )}
-            </Focus>
-          )}
+          <Focus preventScroll={false}>
+            {ref => (
+              <div id="test" tabIndex={-1} ref={ref}>
+                <input type="text" />
+              </div>
+            )}
+          </Focus>
         </Router>,
         node
       );
@@ -466,15 +457,13 @@ describe("<Focus>", () => {
 
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focus>
-              {ref => (
-                <div id="test" ref={ref}>
-                  <input type="text" />
-                </div>
-              )}
-            </Focus>
-          )}
+          <Focus>
+            {ref => (
+              <div id="test" ref={ref}>
+                <input type="text" />
+              </div>
+            )}
+          </Focus>
         </Router>,
         node
       );
@@ -488,15 +477,13 @@ describe("<Focus>", () => {
 
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focus>
-              {ref => (
-                <div id="test">
-                  <input type="text" ref={ref} />
-                </div>
-              )}
-            </Focus>
-          )}
+          <Focus>
+            {ref => (
+              <div id="test">
+                <input type="text" ref={ref} />
+              </div>
+            )}
+          </Focus>
         </Router>,
         node
       );

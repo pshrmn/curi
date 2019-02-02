@@ -1,6 +1,6 @@
 export { ActiveProps } from "./Active";
 export { BlockProps } from "./Block";
-export { RouterProps, CuriRenderFn } from "./curiProvider";
+export { RouterProps } from "./curiProvider";
 export { NavigatingProps } from "./Navigating";
 export { ActiveHookProps } from "./hooks/useActive";
 export * from "./types";

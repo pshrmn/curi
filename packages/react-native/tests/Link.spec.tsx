@@ -34,11 +34,9 @@ describe("<Link>", () => {
       const Router = curiProvider(router);
       const tree = renderer.create(
         <Router>
-          {() => (
-            <Link name="Test">
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name="Test">
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -60,11 +58,9 @@ describe("<Link>", () => {
 
       const tree = renderer.create(
         <Router>
-          {() => (
-            <Link name="Test" anchor={StyledAnchor}>
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name="Test" anchor={StyledAnchor}>
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       const anchor = tree.root.find(StyledAnchor);
@@ -83,11 +79,9 @@ describe("<Link>", () => {
 
       const tree = renderer.create(
         <Router>
-          {() => (
-            <Link name={null}>
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name={null}>
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -115,11 +109,9 @@ describe("<Link>", () => {
       const params = { name: "Glacier" };
       const tree = renderer.create(
         <Router>
-          {() => (
-            <Link name="Park" params={params}>
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name="Park" params={params}>
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -138,11 +130,9 @@ describe("<Link>", () => {
       const params = { name: "Glacier" };
       const tree = renderer.create(
         <Router>
-          {() => (
-            <Link name="Park" params={params}>
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name="Park" params={params}>
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -152,11 +142,9 @@ describe("<Link>", () => {
       const newParams = { name: "Yellowstone" };
       tree.update(
         <Router>
-          {() => (
-            <Link name="Park" params={newParams}>
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name="Park" params={newParams}>
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       anchor.props.onPress(fakeEvent());
@@ -179,11 +167,9 @@ describe("<Link>", () => {
       const style = { backgroundColor: "red" };
       const tree = renderer.create(
         <Router>
-          {() => (
-            <Link to="Test" forward={{ style }}>
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name="Test" forward={{ style }}>
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -206,11 +192,9 @@ describe("<Link>", () => {
       const ref = React.createRef();
       const tree = renderer.create(
         <Router>
-          {() => (
-            <Link name="Parks" ref={ref}>
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name="Parks" ref={ref}>
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -232,11 +216,9 @@ describe("<Link>", () => {
         const children = "Test Value";
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test">
-                <Text>{children}</Text>
-              </Link>
-            )}
+            <Link name="Test">
+              <Text>{children}</Text>
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -258,14 +240,12 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test">
-                {navigating => {
-                  expect(navigating).toBe(false);
-                  return <Text>Test</Text>;
-                }}
-              </Link>
-            )}
+            <Link name="Test">
+              {navigating => {
+                expect(navigating).toBe(false);
+                return <Text>Test</Text>;
+              }}
+            </Link>
           </Router>
         );
       });
@@ -291,11 +271,9 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test">
-                <Text>Test</Text>
-              </Link>
-            )}
+            <Link name="Test">
+              <Text>Test</Text>
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -313,11 +291,9 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test" method="ANCHOR">
-                <Text>Test</Text>
-              </Link>
-            )}
+            <Link name="Test" method="ANCHOR">
+              <Text>Test</Text>
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -335,11 +311,9 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test" method="PUSH">
-                <Text>Test</Text>
-              </Link>
-            )}
+            <Link name="Test" method="PUSH">
+              <Text>Test</Text>
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -357,11 +331,9 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test" method="REPLACE">
-                <Text>Test</Text>
-              </Link>
-            )}
+            <Link name="Test" method="REPLACE">
+              <Text>Test</Text>
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -379,11 +351,9 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test" method={"whatchamacallit" as NavType}>
-                <Text>Test</Text>
-              </Link>
-            )}
+            <Link name="Test" method={"whatchamacallit" as NavType}>
+              <Text>Test</Text>
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -417,13 +387,11 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test">
-                {navigating => {
-                  return <Text>{navigating.toString()}</Text>;
-                }}
-              </Link>
-            )}
+            <Link name="Test">
+              {navigating => {
+                return <Text>{navigating.toString()}</Text>;
+              }}
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -462,20 +430,18 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <React.Fragment>
-                <Link name="Slow">
-                  {navigating => {
-                    return <Text>{`Slow ${navigating.toString()}`}</Text>;
-                  }}
-                </Link>
-                <Link name="Fast">
-                  {navigating => {
-                    return <Text>{`Fast ${navigating.toString()}`}</Text>;
-                  }}
-                </Link>
-              </React.Fragment>
-            )}
+            <React.Fragment>
+              <Link name="Slow">
+                {navigating => {
+                  return <Text>{`Slow ${navigating.toString()}`}</Text>;
+                }}
+              </Link>
+              <Link name="Fast">
+                {navigating => {
+                  return <Text>{`Fast ${navigating.toString()}`}</Text>;
+                }}
+              </Link>
+            </React.Fragment>
           </Router>
         );
         const [slowLink, fastLink] = tree.root.findAllByType(
@@ -511,13 +477,11 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Loader">
-                {navigating => {
-                  return <Text>{navigating.toString()}</Text>;
-                }}
-              </Link>
-            )}
+            <Link name="Loader">
+              {navigating => {
+                return <Text>{navigating.toString()}</Text>;
+              }}
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -569,13 +533,11 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Blork">
-                {navigating => {
-                  return <Text>{navigating.toString()}</Text>;
-                }}
-              </Link>
-            )}
+            <Link name="Blork">
+              {navigating => {
+                return <Text>{navigating.toString()}</Text>;
+              }}
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -600,11 +562,9 @@ describe("<Link>", () => {
 
       const tree = renderer.create(
         <Router>
-          {() => (
-            <Link name="Test" hash="thing" query="one=1" state="yo">
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name="Test" hash="thing" query="one=1" state="yo">
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -634,11 +594,9 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test" onNav={onNav}>
-                <Text>Test</Text>
-              </Link>
-            )}
+            <Link name="Test" onNav={onNav}>
+              <Text>Test</Text>
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -665,11 +623,9 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            {() => (
-              <Link name="Test" onNav={onNav}>
-                <Text>Test</Text>
-              </Link>
-            )}
+            <Link name="Test" onNav={onNav}>
+              <Text>Test</Text>
+            </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -693,11 +649,9 @@ describe("<Link>", () => {
 
       const tree = renderer.create(
         <Router>
-          {() => (
-            <Link name="Test">
-              <Text>Test</Text>
-            </Link>
-          )}
+          <Link name="Test">
+            <Text>Test</Text>
+          </Link>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);

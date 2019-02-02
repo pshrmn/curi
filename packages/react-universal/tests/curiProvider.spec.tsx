@@ -5,7 +5,7 @@ import { curi, prepareRoutes } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, Curious } from "@curi/react-universal";
+import { curiProvider, useCuri } from "@curi/react-universal";
 
 describe("curiProvider()", () => {
   let node;
@@ -26,17 +26,45 @@ describe("curiProvider()", () => {
   describe("router argument", () => {});
 
   describe("children prop", () => {
-    it("calls children() function when it renders", () => {
+    it("renders children", () => {
       const history = InMemory();
       const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
       const router = curi(history, routes);
 
-      const fn = jest.fn(() => {
+      const App = jest.fn(() => {
         return null;
       });
       const Router = curiProvider(router);
-      ReactDOM.render(<Router>{fn}</Router>, node);
-      expect(fn.mock.calls.length).toBe(1);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
+      expect(App.mock.calls.length).toBe(1);
+    });
+
+    it("works with multiple children", () => {
+      const history = InMemory();
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const router = curi(history, routes);
+
+      const One = jest.fn(() => {
+        return null;
+      });
+      const Two = jest.fn(() => {
+        return null;
+      });
+      const Router = curiProvider(router);
+      ReactDOM.render(
+        <Router>
+          <One />
+          <Two />
+        </Router>,
+        node
+      );
+      expect(One.mock.calls.length).toBe(1);
+      expect(Two.mock.calls.length).toBe(1);
     });
 
     it("re-renders when the location changes", done => {
@@ -44,7 +72,9 @@ describe("curiProvider()", () => {
       const router = curi(history, routes);
       let pushedHistory = false;
       let firstCall = true;
-      const fn = jest.fn(({ response }) => {
+
+      const App = jest.fn(() => {
+        const { response } = useCuri();
         if (firstCall) {
           expect(response.name).toBe("Home");
           firstCall = false;
@@ -56,44 +86,32 @@ describe("curiProvider()", () => {
       });
 
       const Router = curiProvider(router);
-      ReactDOM.render(<Router>{fn}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <App />
+        </Router>,
+        node
+      );
       history.navigate("/about");
-    });
-
-    it("passes { response, navigation, router } to children()  prop", () => {
-      const history = InMemory();
-      const fn = jest.fn(({ response, navigation, router: routerProp }) => {
-        expect(response).toMatchObject({
-          name: "Home"
-        });
-        expect(navigation).toMatchObject({
-          action: "PUSH"
-        });
-        expect(routerProp).toBe(router);
-        return null;
-      });
-
-      const router = curi(history, routes);
-      const Router = curiProvider(router);
-      ReactDOM.render(<Router>{fn}</Router>, node);
     });
   });
 
   describe("context", () => {
-    it("makes response, navigation, and router available to <Curious>", () => {
+    it("makes response, navigation, and router available on content", () => {
       const history = InMemory();
       const router = curi(history, routes);
 
-      const ContextLogger: React.ComponentType = () => (
-        <Curious>
-          {value => {
-            expect(value.response).toBe(emittedResponse);
-            expect(value.router).toBe(router);
-            expect(value.navigation).toBe(emittedNavigation);
-            return null;
-          }}
-        </Curious>
-      );
+      const ContextLogger: React.ComponentType = () => {
+        const {
+          router: ctxRouter,
+          response: ctxResponse,
+          navigation: ctxNavigation
+        } = useCuri();
+        expect(ctxResponse).toBe(emittedResponse);
+        expect(ctxRouter).toBe(router);
+        expect(ctxNavigation).toBe(emittedNavigation);
+        return null;
+      };
 
       const Router = curiProvider(router);
 
@@ -101,7 +119,12 @@ describe("curiProvider()", () => {
         response: emittedResponse,
         navigation: emittedNavigation
       } = router.current();
-      ReactDOM.render(<Router>{() => <ContextLogger />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <ContextLogger />
+        </Router>,
+        node
+      );
     });
   });
 });

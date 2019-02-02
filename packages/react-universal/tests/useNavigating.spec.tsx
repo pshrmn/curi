@@ -5,7 +5,7 @@ import InMemory from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, Navigating, useNavigating } from "@curi/react-universal";
+import { curiProvider, useNavigating } from "@curi/react-universal";
 
 describe("useNavigating", () => {
   let node;
@@ -56,7 +56,12 @@ describe("useNavigating", () => {
         expect(result).toBeUndefined();
         return null;
       }
-      ReactDOM.render(<Router>{() => <Nav />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Nav />
+        </Router>,
+        node
+      );
     });
   });
 
@@ -72,7 +77,12 @@ describe("useNavigating", () => {
           const result = useNavigating();
           return children(result);
         }
-        ReactDOM.render(<Router>{() => <Nav />}</Router>, node);
+        ReactDOM.render(
+          <Router>
+            <Nav />
+          </Router>,
+          node
+        );
 
         const { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
@@ -98,7 +108,12 @@ describe("useNavigating", () => {
           const result = useNavigating();
           return children(result);
         }
-        ReactDOM.render(<Router>{() => <Nav />}</Router>, node);
+        ReactDOM.render(
+          <Router>
+            <Nav />
+          </Router>,
+          node
+        );
 
         const { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
@@ -115,7 +130,12 @@ describe("useNavigating", () => {
           const result = useNavigating();
           return children(result);
         }
-        ReactDOM.render(<Router>{() => <Nav />}</Router>, node);
+        ReactDOM.render(
+          <Router>
+            <Nav />
+          </Router>,
+          node
+        );
 
         const { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
@@ -152,7 +172,12 @@ describe("useNavigating", () => {
         const result = useNavigating();
         return children(result);
       }
-      ReactDOM.render(<Router>{() => <Nav />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Nav />
+        </Router>,
+        node
+      );
 
       const { response: beforeResponse } = router.current();
       expect(beforeResponse.name).toBe("Home");
@@ -185,7 +210,12 @@ describe("useNavigating", () => {
         const result = useNavigating();
         return children(result);
       }
-      ReactDOM.render(<Router>{() => <Nav />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Nav />
+        </Router>,
+        node
+      );
       const { response: beforeResponse } = router.current();
       expect(beforeResponse.name).toBe("Home");
 

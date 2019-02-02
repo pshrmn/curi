@@ -5,7 +5,7 @@ import InMemory from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, useNavigationFocus } from "@curi/react-dom";
+import { curiProvider, useNavigationFocus, useCuri } from "@curi/react-dom";
 
 jest.useFakeTimers();
 
@@ -38,7 +38,12 @@ describe("useNavigationFocus", () => {
         return <div id="test" tabIndex={-1} ref={ref} />;
       }
 
-      ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Focuser />
+        </Router>,
+        node
+      );
 
       jest.runAllTimers();
       const wrapper = document.querySelector("#test");
@@ -67,7 +72,12 @@ describe("useNavigationFocus", () => {
         return <div id="test" tabIndex={-1} />;
       }
 
-      ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Focuser />
+        </Router>,
+        node
+      );
 
       jest.runAllTimers();
 
@@ -93,11 +103,9 @@ describe("useNavigationFocus", () => {
 
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focuser>
-              <input type="text" />
-            </Focuser>
-          )}
+          <Focuser>
+            <input type="text" />
+          </Focuser>
         </Router>,
         node
       );
@@ -116,11 +124,9 @@ describe("useNavigationFocus", () => {
 
       ReactDOM.render(
         <Router>
-          {() => (
-            <Focuser>
-              <input type="number" />
-            </Focuser>
-          )}
+          <Focuser>
+            <input type="number" />
+          </Focuser>
         </Router>,
         node
       );
@@ -142,7 +148,12 @@ describe("useNavigationFocus", () => {
           );
         }
 
-        ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+        ReactDOM.render(
+          <Router>
+            <Focuser />
+          </Router>,
+          node
+        );
 
         jest.runAllTimers();
 
@@ -199,14 +210,18 @@ describe("useNavigationFocus", () => {
         const router = curi(history, routes);
         const Router = curiProvider(router);
 
-        function Focuser({ cmp: Cmp }) {
+        function Focuser() {
+          const { response } = useCuri();
+          const { body: Body } = response;
           const ref = React.useRef(null);
           useNavigationFocus(ref);
-          return <Cmp ref={ref} />;
+          return <Body ref={ref} />;
         }
 
         ReactDOM.render(
-          <Router>{({ response }) => <Focuser cmp={response.body} />}</Router>,
+          <Router>
+            <Focuser />
+          </Router>,
           node
         );
         jest.runAllTimers();
@@ -259,14 +274,18 @@ describe("useNavigationFocus", () => {
         const router = curi(history, routes);
         const Router = curiProvider(router);
 
-        function Focuser({ cmp: Cmp }) {
+        function Focuser() {
+          const { response } = useCuri();
+          const { body: Body } = response;
           const ref = React.useRef(null);
           useNavigationFocus(ref);
-          return <Cmp innerRef={ref} />;
+          return <Body innerRef={ref} />;
         }
 
         ReactDOM.render(
-          <Router>{({ response }) => <Focuser cmp={response.body} />}</Router>,
+          <Router>
+            <Focuser />
+          </Router>,
           node
         );
 
@@ -302,7 +321,12 @@ describe("useNavigationFocus", () => {
           );
         }
 
-        ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+        ReactDOM.render(
+          <Router>
+            <Focuser />
+          </Router>,
+          node
+        );
 
         jest.runAllTimers();
 
@@ -340,7 +364,12 @@ describe("useNavigationFocus", () => {
           );
         }
 
-        ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+        ReactDOM.render(
+          <Router>
+            <Focuser />
+          </Router>,
+          node
+        );
 
         jest.runAllTimers();
 
@@ -391,7 +420,12 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Focuser />
+        </Router>,
+        node
+      );
 
       jest.runAllTimers();
 
@@ -411,7 +445,12 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Focuser />
+        </Router>,
+        node
+      );
 
       jest.runAllTimers();
 
@@ -429,7 +468,12 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Focuser />
+        </Router>,
+        node
+      );
 
       jest.runAllTimers();
 
@@ -454,7 +498,12 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Focuser />
+        </Router>,
+        node
+      );
 
       expect(fakeWarn.mock.calls.length).toBe(1);
       console.warn = realWarn;
@@ -474,7 +523,12 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(<Router>{() => <Focuser />}</Router>, node);
+      ReactDOM.render(
+        <Router>
+          <Focuser />
+        </Router>,
+        node
+      );
 
       expect(fakeWarn.mock.calls.length).toBe(0);
       console.warn = realWarn;
