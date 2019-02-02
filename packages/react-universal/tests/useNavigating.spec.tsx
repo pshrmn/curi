@@ -7,6 +7,13 @@ import { curi, prepareRoutes } from "@curi/router";
 // @ts-ignore (resolved by jest)
 import { curiProvider, useNavigating } from "@curi/react-universal";
 
+// wait to navigate until after the effect has setup the observer
+function wait(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
+
 describe("useNavigating", () => {
   let node;
   const routes = prepareRoutes([
@@ -103,7 +110,7 @@ describe("useNavigating", () => {
     });
 
     describe("to asynchronous routes", () => {
-      it("cancel is a function", () => {
+      it("cancel is a function", async () => {
         const history = InMemory();
         const router = curi(history, routes);
         const Router = curiProvider(router);
@@ -122,11 +129,14 @@ describe("useNavigating", () => {
 
         const { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
+
+        await wait(15);
+
         router.navigate({ name: "Fast" });
         expect(typeof children.mock.calls[1][0]).toBe("function");
       });
 
-      it("is undefined once navigation finishes", done => {
+      it("is undefined once navigation finishes", async done => {
         const history = InMemory();
         const router = curi(history, routes);
         const Router = curiProvider(router);
@@ -144,6 +154,8 @@ describe("useNavigating", () => {
 
         const { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
+
+        await wait(15);
 
         router.navigate({ name: "Fast" });
 
@@ -160,7 +172,7 @@ describe("useNavigating", () => {
   });
 
   describe("calling the cancel function", () => {
-    it("cancels the navigation", done => {
+    it("cancels the navigation", async done => {
       const history = InMemory();
       const router = curi(history, routes);
       const Router = curiProvider(router);
@@ -188,6 +200,8 @@ describe("useNavigating", () => {
       expect(beforeResponse.name).toBe("Home");
       expect(children.mock.calls[0][0]).toBeUndefined();
 
+      await wait(15);
+
       router.navigate({ name: "Slow" });
 
       expect(children.mock.calls[1][0]).toBeDefined();
@@ -199,7 +213,7 @@ describe("useNavigating", () => {
       }, 25);
     });
 
-    it("does nothing if calling function after navigation finishes", done => {
+    it("does nothing if calling function after navigation finishes", async done => {
       const history = InMemory();
       const router = curi(history, routes);
       const Router = curiProvider(router);
@@ -223,6 +237,8 @@ describe("useNavigating", () => {
       );
       const { response: beforeResponse } = router.current();
       expect(beforeResponse.name).toBe("Home");
+
+      await wait(15);
 
       router.navigate({ name: "Fast" });
       router.once(
