@@ -44,6 +44,29 @@ describe("curiProvider()", () => {
       expect(App.mock.calls.length).toBe(1);
     });
 
+    it("works with multiple children", () => {
+      const history = InMemory();
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const router = curi(history, routes);
+
+      const One = jest.fn(() => {
+        return null;
+      });
+      const Two = jest.fn(() => {
+        return null;
+      });
+      const Router = curiProvider(router);
+      ReactDOM.render(
+        <Router>
+          <One />
+          <Two />
+        </Router>,
+        node
+      );
+      expect(One.mock.calls.length).toBe(1);
+      expect(Two.mock.calls.length).toBe(1);
+    });
+
     it("re-renders when the location changes", done => {
       const history = InMemory();
       const router = curi(history, routes);
