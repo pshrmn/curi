@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import { curi, prepareRoutes } from "@curi/router";
 import InMemory from "@hickory/in-memory";
 
+import wait from "./utils/wait";
+
 // @ts-ignore (resolved by jest)
 import { curiProvider, useCuri } from "@curi/react-universal";
 
@@ -91,10 +93,7 @@ describe("curiProvider()", () => {
 
       expect(currentResponse.name).toBe("Home");
 
-      // wait to navigate until after the effect has setup the observer
-      await new Promise(resolve => {
-        setTimeout(resolve, 15);
-      });
+      await wait(15);
 
       history.navigate("/about");
 

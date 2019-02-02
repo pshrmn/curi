@@ -4,15 +4,10 @@ import ReactDOM from "react-dom";
 import InMemory from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
+import wait from "./utils/wait";
+
 // @ts-ignore (resolved by jest)
 import { curiProvider, useNavigating } from "@curi/react-universal";
-
-// wait to navigate until after the effect has setup the observer
-function wait(ms) {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
-}
 
 describe("useNavigating", () => {
   let node;
@@ -96,10 +91,7 @@ describe("useNavigating", () => {
 
         expect(children.mock.calls.length).toBe(1);
 
-        // wait to navigate until after the effect has setup the observer
-        await new Promise(resolve => {
-          setTimeout(resolve, 15);
-        });
+        await wait(15);
 
         router.navigate({ name: "Sync" });
 
