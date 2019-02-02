@@ -40,7 +40,12 @@ describe("useBlock", () => {
       const result = useBlock(true, confirm);
       return null;
     }
-    ReactDOM.render(<Router>{() => <Blocker />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Blocker />
+      </Router>,
+      node
+    );
 
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(confirmWith.mock.calls[0][0]).toBe(confirm);
@@ -52,7 +57,12 @@ describe("useBlock", () => {
       const result = useBlock(false, confirm);
       return null;
     }
-    ReactDOM.render(<Router>{() => <Blocker />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Blocker />
+      </Router>,
+      node
+    );
     expect(confirmWith.mock.calls.length).toBe(0);
   });
 
@@ -63,11 +73,21 @@ describe("useBlock", () => {
       const result = useBlock(props.block, confirm);
       return null;
     }
-    ReactDOM.render(<Router>{() => <Blocker block={true} />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Blocker block={true} />
+      </Router>,
+      node
+    );
 
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
-    ReactDOM.render(<Router>{() => <Blocker block={false} />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Blocker block={false} />
+      </Router>,
+      node
+    );
     expect(removeConfirmation.mock.calls.length).toBe(1);
   });
 
@@ -79,11 +99,21 @@ describe("useBlock", () => {
       return null;
     }
 
-    ReactDOM.render(<Router>{() => <Blocker active={false} />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Blocker active={false} />
+      </Router>,
+      node
+    );
 
     expect(confirmWith.mock.calls.length).toBe(0);
 
-    ReactDOM.render(<Router>{() => <Blocker block={true} />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Blocker block={true} />
+      </Router>,
+      node
+    );
 
     expect(confirmWith.mock.calls.length).toBe(1);
   });
@@ -98,7 +128,9 @@ describe("useBlock", () => {
     }
 
     ReactDOM.render(
-      <Router>{() => <Blocker confirm={confirm} />}</Router>,
+      <Router>
+        <Blocker confirm={confirm} />
+      </Router>,
       node
     );
 
@@ -106,7 +138,9 @@ describe("useBlock", () => {
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
     ReactDOM.render(
-      <Router>{() => <Blocker confirm={confirm2} />}</Router>,
+      <Router>
+        <Blocker confirm={confirm2} />
+      </Router>,
       node
     );
 
@@ -122,12 +156,22 @@ describe("useBlock", () => {
       return null;
     }
 
-    ReactDOM.render(<Router>{() => <Blocker />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Blocker />
+      </Router>,
+      node
+    );
 
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
 
-    ReactDOM.render(<Router>{() => <Blocker />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Blocker />
+      </Router>,
+      node
+    );
 
     expect(confirmWith.mock.calls.length).toBe(1);
     expect(removeConfirmation.mock.calls.length).toBe(0);
@@ -140,7 +184,12 @@ describe("useBlock", () => {
       return null;
     }
 
-    ReactDOM.render(<Router>{() => <Blocker />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Blocker />
+      </Router>,
+      node
+    );
     expect(removeConfirmation.mock.calls.length).toBe(0);
     ReactDOM.unmountComponentAtNode(node);
     expect(removeConfirmation.mock.calls.length).toBe(1);

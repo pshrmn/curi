@@ -35,6 +35,11 @@ describe("useCuri", () => {
       expect(result.navigation).toBe(navigation);
       return null;
     }
-    ReactDOM.render(<Router>{() => <Curious />}</Router>, node);
+    ReactDOM.render(
+      <Router>
+        <Curious />
+      </Router>,
+      node
+    );
   });
 });
