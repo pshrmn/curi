@@ -505,8 +505,10 @@ describe("useNavigationFocus", () => {
         node
       );
 
-      expect(fakeWarn.mock.calls.length).toBe(1);
-      console.warn = realWarn;
+      setTimeout(() => {
+        expect(fakeWarn.mock.calls.length).toBe(1);
+        console.warn = realWarn;
+      }, 15);
     });
 
     it("does not warn when ref element does not have a tabIndex attribute, but ele is already focusable", () => {
