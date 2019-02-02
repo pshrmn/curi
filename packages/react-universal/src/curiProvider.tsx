@@ -22,7 +22,7 @@ export default function curiProvider(
   return function Router(props: RouterProps) {
     const [state, setState] = React.useState<Emitted>(initialState);
 
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
       let removed = false;
       const stopResponding = router.observe(
         (emitted: Emitted) => {
