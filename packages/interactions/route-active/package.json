@@ -34,6 +34,6 @@
   "license": "MIT",
   "dependencies": {
     "@curi/router": "file:../../router",
-    "@hickory/in-memory": "^1.0.2"
+    "@hickory/root": "^1.0.2"
   }
 }
