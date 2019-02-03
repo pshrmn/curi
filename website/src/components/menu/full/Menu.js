@@ -79,7 +79,7 @@ function DropdownLink({ name, text, activated, toggle }) {
   return (
     <ActiveLink
       name={name}
-      onClick={e => {
+      onNav={e => {
         // don't navigate!
         e.preventDefault();
         toggle(name);
@@ -94,107 +94,101 @@ function DropdownLink({ name, text, activated, toggle }) {
   );
 }
 
-export default class Header extends React.Component {
-  state = { group: undefined };
+export default function Header(props) {
+  const [group, setGroup] = React.useState();
 
-  toggleDropdown = group => {
-    this.setState(prevState => {
-      if (prevState.group === group) {
-        return {
-          group: undefined
-        };
+  const toggleDropdown = group => {
+    setGroup(prevGroup => {
+      if (prevGroup === group) {
+        return undefined;
       }
-      return { group };
+      return group;
     });
   };
 
-  hideDropdown = () => {
-    this.setState({ group: undefined });
+  const hideDropdown = () => {
+    setGroup(undefined);
   };
 
-  escapeDropdown = e => {
-    if (e.which === 27) {
-      this.hideDropdown();
-    }
-  };
-
-  render() {
-    const { group } = this.state;
-    return (
-      <StyledHeader
-        onClick={e => {
-          if (e.target.tagName === "A") {
-            // we don't want to hide a click on the dropdown toggle links,
-            // so they have data-hide="false" attributes
-            if (e.target.dataset.hide && e.target.dataset.hide === "false") {
-              return;
-            }
-            this.hideDropdown();
+  return (
+    <StyledHeader
+      onClick={e => {
+        if (e.target.tagName === "A") {
+          // we don't want to hide a click on the dropdown toggle links,
+          // so they have data-hide="false" attributes
+          if (e.target.dataset.hide && e.target.dataset.hide === "false") {
+            return;
           }
-        }}
-        onKeyDown={group === undefined ? null : this.escapeDropdown}
-      >
-        <StyledNav>
-          <FlexList>
-            <li className="base">
-              <ActiveLink name="Home" forward={{ id: "home-link" }}>
-                Curi
-              </ActiveLink>
-            </li>
-            <li className="base">
-              <DropdownLink
-                name="Packages"
-                text="API"
-                activated={group === "Packages"}
-                toggle={this.toggleDropdown}
-              />
-              <PackageDropdown
-                active={group === "Packages"}
-                close={this.hideDropdown}
-              />
-            </li>
-            <li className="base">
-              <DropdownLink
-                name="Guides"
-                text="Guides"
-                activated={group === "Guides"}
-                toggle={this.toggleDropdown}
-              />
-              <GuideDropdown
-                active={group === "Guides"}
-                close={this.hideDropdown}
-              />
-            </li>
-            <li className="base">
-              <DropdownLink
-                name="Tutorials"
-                text="Tutorials"
-                activated={group === "Tutorials"}
-                toggle={this.toggleDropdown}
-              />
-              <TutorialDropdown
-                active={group === "Tutorials"}
-                close={this.hideDropdown}
-              />
-            </li>
-            <li className="base">
-              <DropdownLink
-                name="Examples"
-                text="Examples"
-                activated={group === "Examples"}
-                toggle={this.toggleDropdown}
-              />
-              <ExampleDropdown
-                active={group === "Examples"}
-                close={this.hideDropdown}
-              />
-            </li>
-            <li className="base">
-              <a href="https://github.com/pshrmn/curi">GitHub</a>
-            </li>
-          </FlexList>
-        </StyledNav>
-      </StyledHeader>
-    );
-  }
+          hideDropdown();
+        }
+      }}
+      onKeyDown={
+        group === undefined
+          ? null
+          : e => {
+              if (e.which === 27) {
+                hideDropdown();
+              }
+            }
+      }
+    >
+      <StyledNav>
+        <FlexList>
+          <li className="base">
+            <ActiveLink name="Home" forward={{ id: "home-link" }}>
+              Curi
+            </ActiveLink>
+          </li>
+          <li className="base">
+            <DropdownLink
+              name="Packages"
+              text="API"
+              activated={group === "Packages"}
+              toggle={toggleDropdown}
+            />
+            <PackageDropdown
+              active={group === "Packages"}
+              close={hideDropdown}
+            />
+          </li>
+          <li className="base">
+            <DropdownLink
+              name="Guides"
+              text="Guides"
+              activated={group === "Guides"}
+              toggle={toggleDropdown}
+            />
+            <GuideDropdown active={group === "Guides"} close={hideDropdown} />
+          </li>
+          <li className="base">
+            <DropdownLink
+              name="Tutorials"
+              text="Tutorials"
+              activated={group === "Tutorials"}
+              toggle={toggleDropdown}
+            />
+            <TutorialDropdown
+              active={group === "Tutorials"}
+              close={hideDropdown}
+            />
+          </li>
+          <li className="base">
+            <DropdownLink
+              name="Examples"
+              text="Examples"
+              activated={group === "Examples"}
+              toggle={toggleDropdown}
+            />
+            <ExampleDropdown
+              active={group === "Examples"}
+              close={hideDropdown}
+            />
+          </li>
+          <li className="base">
+            <a href="https://github.com/pshrmn/curi">GitHub</a>
+          </li>
+        </FlexList>
+      </StyledNav>
+    </StyledHeader>
+  );
 }

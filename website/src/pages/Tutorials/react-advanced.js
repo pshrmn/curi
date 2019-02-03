@@ -218,19 +218,23 @@ const routes = prepareRoutes([
             application immediately on load because the initial response might
             not be ready yet.
           </p>
+
           <p>
             Curi does not emit a response object to its observers until it is
             ready. If the initial route that matches is asynchronous, then there
             is a delay between when the application is ready to render and when
             there is a response to render.
           </p>
+
           <p>
             If you attempt to render immediately after creating a router and the
             initial response is still being created, the <IJS>response</IJS>{" "}
             that will be passed to the <Cmp>Router</Cmp>'s <IJS>children()</IJS>{" "}
             will be <IJS>null</IJS>.
           </p>
+
           <p>There are a few possible ways to handle this situation.</p>
+
           <p>
             The first is to delay rendering by placing your{" "}
             <IJS>ReactDOM.render()</IJS> call inside of a{" "}
@@ -243,7 +247,7 @@ const routes = prepareRoutes([
 router.once(() => {
   ReactDOM.render((
     <Router>
-      {...}
+      <App />
     </Router>
   ), holder);
 });
@@ -251,24 +255,21 @@ router.once(() => {
           </CodeBlock>
 
           <p>
-            Alternatively, you can update the render-invoked{" "}
-            <IJS>children()</IJS> function to know what to do when{" "}
-            <IJS>response</IJS> is <IJS>null</IJS>.
+            Alternatively, you can update the root <Cmp>App</Cmp> component to
+            detect when the <IJS>response</IJS> is <IJS>null</IJS> and render a
+            loading message.
           </p>
 
           <CodeBlock>
             {`// render fallback when response is null
-ReactDOM.render((
-  <Router>
-    {({ response }) => {
-      if (response == null) {
-        return <div>Loading...</div>;
-      }
-      const { body:Body } = response;
-      return <Body response={response} />;
-    }}
-  </Router>
-), holder);`}
+function App() {
+  const { response } = useCuri();
+  if (response == null) {
+    return <div>Loading...</div>;
+  }
+  const { body:Body } = response;
+  return <Body response={response} />;
+}`}
           </CodeBlock>
 
           <p>
@@ -470,7 +471,7 @@ export default prepareRoutes([
           update the <IJS>index.js</IJS> module to do this.
         </p>
 
-        <CodeBlock data-line="17-35">
+        <CodeBlock data-line="17-23">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -490,19 +491,7 @@ const Router = curiProvider(router);
 router.once(() => {
   ReactDOM.render((
     <Router>
-      {({ response, router }) => {
-        const { body:Body } = response;
-        return (
-          <div>
-            <header>
-              <NavMenu />
-            </header>
-            <main>
-              <Body response={response} router={router} />
-            </main>
-          </div>
-        );
-      }}
+      <App />
     </Router>
   ), document.getElementById('root'));
 });
@@ -616,19 +605,7 @@ const Router = curiProvider(router);
 router.once(() => {
   ReactDOM.render((
     <Router>
-      {({ response, router }) => {
-        const { body:Body } = response;
-        return (
-          <div>
-            <header>
-              <NavMenu />
-            </header>
-            <main>
-              <Body response={response} router={router} />
-            </main>
-          </div>
-        );
-      }}
+      <App />
     </Router>
   ), document.getElementById('root'));
 });

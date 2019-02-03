@@ -168,34 +168,35 @@ const router = curi(history, routes, {
 
         <HashSection meta={focusReactMeta} tag="h3">
           <p>
-            The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Focus</Cmp>{" "}
-            component that gives you a <IJS>ref</IJS> to attach to the component
-            that should be focused. Whenever the user navigates, it will
-            re-focus so that the screen reader is focused on the correct
-            content.
+            The <IJS>@curi/react-dom</IJS> package provides a{" "}
+            <Link
+              name="Package"
+              params={{ package: "react-dom", version: "v2" }}
+              hash="useNavigationFocus"
+            >
+              <IJS>useNavigationFocus</IJS> hook
+            </Link>{" "}
+            that gives you a <IJS>ref</IJS> to attach to the component that
+            should be focused. Whenever the user navigates, it will re-focus so
+            that the screen reader is focused on the correct content.
           </p>
 
           <CodeBlock lang="jsx">
-            {`import { curiProvider, Focus } from "@curi/react-dom";
+            {`import { useCuri, useNavigationFocus } from "@curi/react-dom";
 
-const Router = curiProvider(router);
+function App() {
+  const { response } = useCuri();
+  const ref = React.createRef(null);
+  useNavigationFocus(ref);
 
-ReactDOM.render((
-  <Router>
-    {({ response }) => {
-      const { body:Body } = response;
-      return (
-        <Header />
-        <Focus>
-          {ref => (
-            <main ref={ref} tabIndex={-1}>
-            </main>
-          )}
-        </Focus>
-      );
-    }}
-  </Router>
-), holder);`}
+  const { body:Body } = response;
+  return (
+    <Header />
+    <main ref={ref} tabIndex={-1}>
+      <Body />
+    </main>
+  );
+}`}
           </CodeBlock>
         </HashSection>
 

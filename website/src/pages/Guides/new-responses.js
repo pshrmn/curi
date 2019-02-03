@@ -149,7 +149,7 @@ const stop = router.observe(fn);`}
 function setup() {
   ReactDOM.render((
     <Router>
-      {({ response }) => <response.body />}
+      <App />
     </Router>
   ), document.getElementById('root'));
 }

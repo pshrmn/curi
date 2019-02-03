@@ -495,27 +495,16 @@ registerServiceWorker();`}
         <p>
           The <Cmp>Router</Cmp> component will re-render the application
           whenever there is in-app navigation. It also sets up a React context,
-          so the other <IJS>@curi/react-dom</IJS> components need to be
+          so any <IJS>@curi/react-dom</IJS> components and hooks need to be
           descendants of the <Cmp>Router</Cmp> in order to access the context.
         </p>
+
         <p>
-          The <Cmp>Router</Cmp> takes one prop: <IJS>children</IJS>.{" "}
-          <IJS>children</IJS> is a render-invoked function that should return
-          the content for the website. This function will receive an object that
-          has three properties: <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
-          <IJS>navigation</IJS>. These properties (mostly the{" "}
-          <IJS>response</IJS>) should be useful in determining what to render.
-        </p>
-        <p>
-          We can also remove the <Cmp>App</Cmp> component import and delete the
-          related files.
+          We will pass the <Cmp>Router</Cmp> the <Cmp>App</Cmp> element, which
+          is where we will render the application's content.
         </p>
 
-        <CodeBlock lang="bash">
-          {`rm src/App.js src/App.css src/App.test.js`}
-        </CodeBlock>
-
-        <CodeBlock lang="jsx" data-line="16-22">
+        <CodeBlock lang="jsx" data-line="17-21">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -525,6 +514,7 @@ import { curiProvider } from "@curi/react-dom";
 
 import routes from './routes';
 import './index.css';
+import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 const history = Browser();
@@ -533,12 +523,40 @@ const Router = curiProvider(router);
 
 ReactDOM.render((
   <Router>
-    {({ router, response, navigation }) => {
-      return <div>This is the website</div>;
-    }}
+    <App />
   </Router>
 ), document.getElementById('root'));
 registerServiceWorker();`}
+        </CodeBlock>
+
+        <p>
+          The existing content from <IJS>src/App.js</IJS> can be removed and we
+          will start from scratch.
+        </p>
+
+        <p>
+          We will import the{" "}
+          <Link
+            name="Package"
+            params={{ package: "react-dom", version: "v2" }}
+            hash="useCuri"
+          >
+            <IJS>useCuri</IJS> hook
+          </Link>{" "}
+          from <IJS>@curi/react-dom</IJS>. This hook lets us read the context
+          data that was set by the <Cmp>Router</Cmp>. <IJS>useCuri</IJS> returns
+          three objects: <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
+          <IJS>navigation</IJS>.
+        </p>
+
+        <CodeBlock lang="jsx">
+          {`// src/App.js
+import React from "react";
+import { useCuri } from "@curi/react-dom";
+
+export default function App() {
+
+}`}
         </CodeBlock>
 
         <p>
@@ -638,6 +656,21 @@ registerServiceWorker();`}
 }`}
           </CodeBlock>
         </HashSection>
+
+        <p>
+          We can update the <Cmp>App</Cmp> to get the response using{" "}
+          <IJS>useCuri</IJS>.
+        </p>
+
+        <CodeBlock lang="jsx">
+          {`// src/App.js
+import React from "react";
+import { useCuri } from "@curi/react-dom";
+
+export default function App() {
+  const { response } = useCuri();
+}`}
+        </CodeBlock>
 
         <p>
           If a response's <IJS>body</IJS> is a React component, we can render
@@ -743,43 +776,27 @@ export default prepareRoutes([
         </CodeBlock>
 
         <p>
-          We can now update the <Cmp>Router</Cmp>'s <IJS>children</IJS> function
-          to render <IJS>response.body</IJS>.
+          Now that the responses have <IJS>body</IJS> properties that are React
+          components, we can update the <Cmp>App</Cmp> to render them.
         </p>
 
         <p>
           We will also pass the <IJS>response</IJS> as a prop to the rendered
           component, which means that each of the route components will have
-          access to the <IJS>response</IJS> when they are rendered.
+          access to the <IJS>response</IJS> when they are rendered. This isn't
+          strictly necessary, but can come in handy.
         </p>
 
-        <CodeBlock lang="jsx" data-line="18-23">
-          {`// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { curi } from '@curi/router';
-import Browser from '@hickory/browser';
-import { curiProvider } from '@curi/react-dom';
+        <CodeBlock lang="jsx" data-line="7-8">
+          {`// src/App.js
+import React from "react";
+import { useCuri } from "@curi/react-dom";
 
-import routes from './routes';
-import './index.css';
-import registerServiceWorker from './registerServiceWorker';
-
-const history = Browser();
-const router = curi(history, routes);
-const Router = curiProvider(router);
-
-ReactDOM.render((
-  <Router>
-    {({ response }) => {
-      const { body:Body } = response;
-      return (
-        <Body response={response} />
-      );
-    }}
-  </Router>
-), document.getElementById('root'));
-registerServiceWorker();`}
+export default function App() {
+  const { response } = useCuri();
+  const { body:Body } = response;
+  return <Body response={response} />
+}`}
         </CodeBlock>
 
         <p>
@@ -879,50 +896,32 @@ export default function NavMenu() {
 }`}
           </CodeBlock>
           <p>
-            We can import the menu in our index file and render it in the{" "}
-            <Cmp>Router</Cmp>'s <IJS>children</IJS> function.
+            The menu can be rendered by the <Cmp>App</Cmp> component. We can
+            also add structure to the site by rendering <Cmp>header</Cmp> and{" "}
+            <Cmp>main</Cmp> elements around their respective content.
           </p>
-          <p>
-            The <IJS>children</IJS> function can be thought of as the root of
-            the application's content. We can add structure to the site by
-            rendering <Cmp>header</Cmp> and <Cmp>main</Cmp> elements around
-            their respective content.
-          </p>
-          <CodeBlock lang="jsx" data-line="10,22-29">
-            {`// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { curi } from '@curi/router';
-import Browser from '@hickory/browser';
-import { curiProvider } from '@curi/react-dom';
 
-import routes from './routes';
-import './index.css';
+          <CodeBlock lang="jsx" data-line="5,10-19">
+            {`// src/App.js
+import React from "react";
+import { useCuri } from "@curi/react-dom";
+
 import NavMenu from './components/NavMenu';
-import registerServiceWorker from './registerServiceWorker';
 
-const history = Browser();
-const router = curi(history, routes);
-const Router = curiProvider(router);
-
-ReactDOM.render((
-  <Router>
-    {({ response }) => {
-      const { body:Body } = response;
-      return (
-        <React.Fragment>
-          <header>
-            <NavMenu />
-          </header>
-          <main>
-            <Body response={response} />
-          </main>
-        </React.Fragment>
-      );
-    }}
-  </Router>
-), document.getElementById('root'));
-registerServiceWorker();`}
+export default function App() {
+  const { response } = useCuri();
+  const { body:Body } = response;
+  return (
+    <React.Fragment>
+      <header>
+        <NavMenu />
+      </header>
+      <main>
+        <Body response={response} />
+      </main>
+    </React.Fragment>
+  );
+}`}
           </CodeBlock>
         </HashSection>
 
@@ -1101,47 +1100,32 @@ export default {
 
         <p>
           Before we edit the <Cmp>Book</Cmp> component, we should quickly
-          revisit the <Cmp>Router</Cmp>'s <IJS>children</IJS> function. In
-          addition to passing the <IJS>response</IJS> to the <Cmp>Body</Cmp>, we
-          should also pass it our <IJS>router</IJS>, which will allow us to do
-          programmatic navigation.
+          revisit the <Cmp>App</Cmp> component. In addition to passing the{" "}
+          <IJS>response</IJS> to the <Cmp>Body</Cmp>, we should also pass it our{" "}
+          <IJS>router</IJS>, which will allow us to do programmatic navigation.
         </p>
 
-        <CodeBlock lang="jsx" data-line="19,27">
-          {`// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { curi } from '@curi/router';
-import Browser from '@hickory/browser';
-import { curiProvider } from '@curi/react-dom';
+        <CodeBlock lang="jsx" data-line="8,16">
+          {`// src/App.js
+import React from "react";
+import { useCuri } from "@curi/react-dom";
 
-import routes from './routes';
-import './index.css';
 import NavMenu from './components/NavMenu';
-import registerServiceWorker from './registerServiceWorker';
 
-const history = Browser();
-const router = curi(history, routes);
-const Router = curiProvider(router);
-
-ReactDOM.render((
-  <Router>
-    {({ response, router }) => {
-      const { body:Body } = response;
-      return (
-        <React.Fragment>
-          <header>
-            <NavMenu />
-          </header>
-          <main>
-            <Body response={response} router={router} />
-          </main>
-        </React.Fragment>
-      );
-    }}
-  </Router>
-), document.getElementById('root'));
-registerServiceWorker();`}
+export default function App() {
+  const { response, router } = useCuri();
+  const { body:Body } = response;
+  return (
+    <React.Fragment>
+      <header>
+        <NavMenu />
+      </header>
+      <main>
+        <Body response={response} router={router} />
+      </main>
+    </React.Fragment>
+  );
+}`}
         </CodeBlock>
 
         <p>

@@ -497,10 +497,7 @@ function renderHandler(req, res) {
     const Router = curiProvider(router);
     const markup = renderToString(
       <Router>
-        {({ response }) => {
-          const { body:Body } = response;
-          return <Body response={response} />;
-        }}
+        <App />
       </Router>
     );
   });
@@ -566,10 +563,7 @@ function renderHandler(req, res) {
     const Router = curiProvider(router);
     const markup = renderToString(
       <Router>
-        {({ response }) => {
-          const { body:Body } = response;
-          return <Body response={response} />;
-        }}
+        <App />
       </Router>
     );
     const html = insertMarkup(markup, response.title);

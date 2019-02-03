@@ -19,16 +19,20 @@ const packages = [
     globalName: "CuriReactDOM",
     type: "render",
     script: true,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["react-dom"]
+      v1: versions["react-dom"],
+      v2: "2.0.0-alpha.0"
     },
     import: version => {
       switch (version) {
         case "v1":
-        default:
           return import(/* webpackChunkName: 'package--react-dom-v1' */
           `../pages/Packages/react-dom/v1/index.js`);
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--react-dom-v2' */
+          `../pages/Packages/react-dom/v2/index.js`);
       }
     }
   },
@@ -38,13 +42,22 @@ const packages = [
     globalName: "CuriReactNative",
     type: "render",
     script: false,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["react-native"]
+      v1: versions["react-native"],
+      v2: "2.0.0-alpha.0"
     },
-    import: () =>
-      import(/* webpackChunkName: 'package--react-native' */
-      `../pages/Packages/react-native/v1/index.js`)
+    import: version => {
+      switch (version) {
+        case "v1":
+          return import(/* webpackChunkName: 'package--react-native-v1' */
+          `../pages/Packages/react-native/v1/index.js`);
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--react-native-v2' */
+          `../pages/Packages/react-native/v2/index.js`);
+      }
+    }
   },
   {
     name: "svelte",

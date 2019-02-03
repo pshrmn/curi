@@ -5,21 +5,21 @@ import { CuriAPI } from "./api/curi";
 import { PrepareRoutesAPI } from "./api/prepareRoutes";
 import { RoutePropertiesAPI } from "./api/route-objects";
 
-export default class RouterPkg extends React.PureComponent {
-  render() {
-    return (
-      <React.Fragment>
-        <About>
-          <p>
-            The <IJS>@curi/router</IJS> package is used to create a router.
-          </p>
-        </About>
-        <APIBlock>
-          <CuriAPI />
-          <PrepareRoutesAPI />
-          <RoutePropertiesAPI />
-        </APIBlock>
-      </React.Fragment>
-    );
-  }
+function RouterPkg() {
+  return (
+    <React.Fragment>
+      <About>
+        <p>
+          The <IJS>@curi/router</IJS> package is used to create a router.
+        </p>
+      </About>
+      <APIBlock>
+        <CuriAPI />
+        <PrepareRoutesAPI />
+        <RoutePropertiesAPI />
+      </APIBlock>
+    </React.Fragment>
+  );
 }
+
+export default React.memo(RouterPkg);

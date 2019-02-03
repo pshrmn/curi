@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useCuri } from "@curi/react-dom";
 
 import MainContents from "./MainContents";
 import PageMenu from "../../layout/PageMenu";
@@ -88,77 +89,60 @@ function MenuControls(props) {
   );
 }
 
-export default class MobileMenu extends React.Component {
-  state = {
-    menuVisible: false,
-    whichMenu: "main"
-  };
-  key = 0;
+export default function MobileMenu(props) {
+  const [visible, setVisible] = React.useState(false);
+  const [which, setWhich] = React.useState("main");
+  const { response } = useCuri();
 
-  toggleMenuVisibility = () => {
-    this.setState(prevState => ({
-      menuVisible: !prevState.menuVisible
-    }));
-  };
+  React.useEffect(() => {
+    // reset to main when switching pages
+    // this is primarily a safeguard in case
+    // the new page doesn't have
+    setWhich("main");
+  }, [response.location.pathname]);
 
-  toggleMenuType = type => {
-    this.setState({
-      whichMenu: type
-    });
+  const toggleMenuVisibility = () => {
+    setVisible(prev => !prev);
   };
 
-  hideMenu = () => {
-    if (this.state.menuVisible) {
-      // cheap menu reset
-      this.key++;
-      this.setState({
-        menuVisible: false
-      });
+  const toggleMenuType = which => {
+    setWhich(which);
+  };
+
+  const hideMenu = () => {
+    if (visible) {
+      setVisible(false);
     }
   };
 
-  componentDidUpdate() {
-    // reset to the main menu when navigating to a page without
-    // page contents
-    if (this.state.whichMenu === "page" && !this.props.contents) {
-      this.setState({
-        whichMenu: "main"
-      });
-    }
+  const { contents } = props;
+  let menu = null;
+  if (which === "main") {
+    menu = <MainContents />;
+  } else if (which === "page") {
+    menu = contents ? <PageMenu contents={contents} /> : null;
   }
 
-  render() {
-    const { menuVisible, whichMenu } = this.state;
-    let menu = null;
-    if (whichMenu === "main") {
-      menu = <MainContents />;
-    } else if (whichMenu === "page") {
-      menu = this.props.contents ? (
-        <PageMenu contents={this.props.contents} />
-      ) : null;
-    }
-
-    return (
-      <React.Fragment>
-        <MenuControls
-          toggleMenuVisibility={this.toggleMenuVisibility}
-          toggleMenuType={this.toggleMenuType}
-          visible={menuVisible}
-          activeMenu={whichMenu}
-          hasPage={this.props.contents !== undefined}
-        />
-        <StyledMenu
-          hidden={!menuVisible}
-          className={menuVisible ? "visible" : ""}
-          onClick={e => {
-            if (e.target.tagName === "A") {
-              this.hideMenu();
-            }
-          }}
-        >
-          <nav key={this.key}>{menu}</nav>
-        </StyledMenu>
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <MenuControls
+        toggleMenuVisibility={toggleMenuVisibility}
+        toggleMenuType={toggleMenuType}
+        visible={visible}
+        activeMenu={which}
+        hasPage={contents !== undefined}
+      />
+      <StyledMenu
+        hidden={!visible}
+        className={visible ? "visible" : ""}
+        onClick={e => {
+          if (e.target.tagName === "A") {
+            hideMenu();
+          }
+        }}
+      >
+        <nav>{menu}</nav>
+      </StyledMenu>
+    </React.Fragment>
+  );
 }

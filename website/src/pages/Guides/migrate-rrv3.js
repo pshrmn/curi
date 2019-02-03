@@ -469,7 +469,7 @@ const router = curi(history, routes);`}
             components.
           </p>
           <p>
-            In the React Router HashSection, we had three components that were
+            In the React Router section, we had three components that were
             rendered: <Cmp>App</Cmp>,<Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>.
             With Curi, only the most accurately matched route actually matches.
             That means that for the URL <IJS>/inbox/test</IJS>, the{" "}
@@ -481,24 +481,29 @@ const router = curi(history, routes);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`import { curiProvider } from "@curi/react-dom";
+            {`import { curiProvider, useCuri } from "@curi/react-dom";
 
 const router = curi(history, routes);            
 const Router = curiProvider(router);
 
+function App() {
+  const { response } = useCuri();
+  const { body:Body } = response;
+  return <Body response={response} />;
+}
+
 ReactDOM.render((
   <Router>
-    {({ response }) => {
-      const { body:Body } = response;
-      return <Body />;
-    }}
+    <App />
   </Router>
 ), holder);
 
 /*
-  <Router>
+<Router>
+  <App>
     <Message />
-  </Router>
+  </App>
+</Router>
 */`}
           </CodeBlock>
 
@@ -676,15 +681,17 @@ const router = curi(history, routes, {
           React Router provides a <IJS>withRouter</IJS> higher-order component
           that will inject router props into the wrapped component.
         </p>
+
         <p>
-          Curi provides similar functionality with the <IJS>Curious</IJS>{" "}
-          component.
-        </p>
-        <p>
-          <IJS>Curious</IJS> has a render-invoked <IJS>children</IJS> function,
-          which you can use to inject the Curi <IJS>router</IJS>, the current{" "}
-          <IJS>response</IJS>, and the current <IJS>navigation</IJS> object into
-          components.
+          The best way to get router data with Curi is to use the{" "}
+          <Link
+            name="Package"
+            params={{ package: "react-dom", version: "v2" }}
+            hash="useCuri"
+          >
+            <IJS>useCuri</IJS> hook
+          </Link>
+          .
         </p>
 
         <CodeBlock>
@@ -692,13 +699,10 @@ const router = curi(history, routes, {
 export default withRouter(SomeComponent);
 
 // Curi
-export default () => (
-  <Curious>
-    {({ response }) => (
-      <SomeComponent response={response} />
-    )}
-  </Curious>
-);`}
+function SomeComponent() {
+  const { response } = useCuri();
+  return ...
+}`}
         </CodeBlock>
       </HashSection>
 
