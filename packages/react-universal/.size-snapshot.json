@@ -1,8 +1,8 @@
 {
   "dist/curi-react-universal.es.js": {
-    "bundled": 5231,
-    "minified": 2694,
-    "gzipped": 1090,
+    "bundled": 5350,
+    "minified": 2714,
+    "gzipped": 1107,
     "treeshaked": {
       "rollup": {
         "code": 110,
@@ -14,18 +14,18 @@
     }
   },
   "dist/curi-react-universal.js": {
-    "bundled": 5682,
-    "minified": 3076,
-    "gzipped": 1201
+    "bundled": 5801,
+    "minified": 3096,
+    "gzipped": 1217
   },
   "dist/curi-react-universal.umd.js": {
-    "bundled": 6263,
-    "minified": 2719,
-    "gzipped": 1205
+    "bundled": 6390,
+    "minified": 2739,
+    "gzipped": 1216
   },
   "dist/curi-react-universal.min.js": {
-    "bundled": 6253,
-    "minified": 2709,
-    "gzipped": 1190
+    "bundled": 6380,
+    "minified": 2729,
+    "gzipped": 1198
   }
 }

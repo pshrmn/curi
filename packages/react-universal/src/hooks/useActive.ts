@@ -1,6 +1,6 @@
 import useCuri from "./useCuri";
 
-import { Params } from "@curi/router";
+import { Params, Response } from "@curi/router";
 
 export interface ActiveHookProps {
   name: string;
@@ -8,7 +8,12 @@ export interface ActiveHookProps {
   partial?: boolean;
 }
 
-export default function useActive(props: ActiveHookProps) {
+export type ActiveResponse = (resp: Response) => boolean;
+
+export default function useActive(
+  props: ActiveHookProps,
+  respCheck?: ActiveResponse
+) {
   const { router, response } = useCuri();
   if (process.env.NODE_ENV !== "production") {
     if (!router.route.active) {
@@ -24,5 +29,14 @@ const router = curi(history, routes, {
       );
     }
   }
-  return router.route.active(props.name, response, props.params, props.partial);
+  let isActive = router.route.active(
+    props.name,
+    response,
+    props.params,
+    props.partial
+  );
+  if (isActive && respCheck) {
+    return respCheck(response);
+  }
+  return isActive;
 }
