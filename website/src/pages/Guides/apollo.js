@@ -85,7 +85,7 @@ const Router = curiProvider(router);
 ReactDOM.render((
   <ApolloProvider client={client}>
     <Router>
-      {() => {...}}
+      <App />
     </Router>
   </ApolloProvider>
 ), holder);`}
@@ -119,24 +119,19 @@ const routes = prepareRoutes([
 
         <p>
           Any location data that a query needs can be taken from the response
-          object. The best way to access this from your components would be to
-          pass the <IJS>response</IJS> to the components rendered in the{" "}
-          <Cmp>Router</Cmp>'s <IJS>children</IJS> prop, which is a
-          render-invoked function.
+          object. The best way to access this is to read the current{" "}
+          <IJS>response</IJS> from the context. This can either be done in the
+          component or the response can be passed down from the root app.
         </p>
 
         <CodeBlock lang="jsx">
-          {`// index.js
-ReactDOM.render((
-  <ApolloProvider client={client}>
-    <Router>
-      {({ response }) => {
-        const { body:Body } = response;
-        return <Body response={response} />;
-      }}
-    </Router>
-  </ApolloProvider>
-), holder);`}
+          {`import { useCuri } from "@curi/react-dom";
+          
+function App() {
+  const { response } = useCuri();
+  const { body:Body } = response;
+  return <Body response={response} />;
+}`}
         </CodeBlock>
 
         <p>

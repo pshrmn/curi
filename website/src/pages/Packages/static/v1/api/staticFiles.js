@@ -253,7 +253,7 @@ function render(emitted) {
   const Router = curiProvider(router);
   return renderToString(
     <Router>
-      {({ response }) => {...}}
+      <App />
     </Router>
   )
 }
