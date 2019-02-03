@@ -77,7 +77,7 @@ ReactDOM.render((
       >
         <p>
           The <Cmp>Router</Cmp> sets routing context data. Any component that
-          relies on routing data (use)
+          relies on routing data must be a descendant of the <Cmp>Router</Cmp>.
         </p>
 
         <HashSection
