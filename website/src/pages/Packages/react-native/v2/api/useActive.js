@@ -75,7 +75,7 @@ const router = curi(history, routes, {
 
       <HashSection tag="h3" meta={optsMeta}>
         <p>
-          <IJS>useActive</IJS> takes a single argument, an options argument.
+          <IJS>useActive</IJS> takes a single argument, an options object.
         </p>
 
         <HashSection tag="h4" meta={{ title: "name", hash: "useActive-name" }}>
@@ -97,18 +97,39 @@ const router = curi(history, routes, {
           meta={{ title: "partial", hash: "useActive-partial" }}
         >
           <p>
-            When <IJS>true</IJS>, <IJS>partial</IJS> allows ancestor routes to
-            be considered active. Defaults to <IJS>false</IJS>.
+            Allows ancestor routes to be considered active when true. Defaults
+            to false.
           </p>
 
           <CodeBlock lang="jsx">
             {`// response = { name: "User Album", params: { id: "abcde" }}
 // where "User Album" is a child route of "User"
 
-useActive("User"); // false
-useActive("User", { partial: true }); // true`}
+useActive({ name: "User" }); // false
+useActive({ name: "User", partial: true }); // true`}
           </CodeBlock>
         </HashSection>
+      </HashSection>
+
+      <HashSection
+        tag="h4"
+        meta={{ title: "checkLocation", hash: "useActve-checkLocation" }}
+      >
+        <p>
+          The base active check only checks that the route (i.e. pathname) is
+          active. <IJS>checkLocation</IJS> allows you to check if other segments
+          of the location are also active.
+        </p>
+
+        <CodeBlock lang="jsx">
+          {`useActive({
+  name: "Results",
+  checkLocation: loc => location.query === "page=3"
+});
+
+// active for /results?page=3
+// not active for /results?page=1`}
+        </CodeBlock>
       </HashSection>
     </HashSection>
   );
