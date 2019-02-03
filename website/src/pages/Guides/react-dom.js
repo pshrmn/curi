@@ -14,9 +14,9 @@ const meta = {
   title: "React DOM"
 };
 
-const childrenMeta = {
-  title: "What to return from children()",
-  hash: "children-return"
+const responseMeta = {
+  title: "What to render",
+  hash: "render-response"
 };
 const a11yMeta = {
   title: "Accessibility",
@@ -25,7 +25,7 @@ const a11yMeta = {
 const renderingMeta = {
   title: "Rendering Responses",
   hash: "rendering",
-  children: [childrenMeta, a11yMeta]
+  children: [responseMeta, a11yMeta]
 };
 
 const navigatingMeta = {
@@ -62,9 +62,14 @@ function ReactDOMGuide() {
         </Note>
 
         <p>
-          <IJS>curiProvider()</IJS> is passed the application's Curi router. The
-          returned component will automatically add an{" "}
-          <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
+          <IJS>curiProvider()</IJS> is passed the application's Curi router to
+          create a <Cmp>Router</Cmp> component. The <Cmp>Router</Cmp> will
+          automatically add an{" "}
+          <Link
+            name="Package"
+            params={{ package: "router", version: "v1" }}
+            hash="observe"
+          >
             observer
           </Link>{" "}
           to the Curi router when it mounts, so that it can re-render when there
@@ -72,73 +77,86 @@ function ReactDOMGuide() {
         </p>
 
         <p>
-          The <Cmp>Router</Cmp> takes a render-invoked function as its{" "}
-          <IJS>children</IJS> prop. This function will be called with an object
-          that has three properties— <IJS>response</IJS>, <IJS>router</IJS>, and{" "}
-          <IJS>navigation</IJS>—and returns the React element(s) that form the
-          root of the application.
+          Along with setting up an observer to react to new responses, the{" "}
+          <Cmp>Router</Cmp> sets up a context for routing values. These values—
+          <IJS>response</IJS>, <IJS>router</IJS>, and <IJS>navigation</IJS>—can
+          be read using the{" "}
+          <Link name="Package" params={{ package: "react-dom", version: "v2" }}>
+            <IJS>useCuri</IJS> hook
+          </Link>
+          .
         </p>
 
         <CodeBlock lang="jsx">
-          {`import { curiProvider } from '@curi/react-dom';
+          {`import { curiProvider, useCuri } from '@curi/react-dom';
 
 import router from "./router";
 const Router = curiProvider(router);
+
+function App() {
+  const {
+    response,
+    navigation,
+    router
+  } = useCuri();
+  const { body:Body } = response;
+  return <Body />
+}
 
 // router.once() is used to delay rendering in case
 // the initially matched route is asynchronous
 router.once(() => {
   ReactDOM.render((
     <Router>
-      {({ response, router, navigation }) => {
-        return <response.body />;
-      }}
+      <App />
     </Router>
   ), document.getElementById("root"));
 });`}
         </CodeBlock>
 
-        <HashSection meta={childrenMeta} tag="h3">
+        <HashSection meta={responseMeta} tag="h3">
           <p>
-            The render-invoked <IJS>children()</IJS> is responsible for
-            rendering the root elements for an application.
+            The <Cmp>Router</Cmp> component sets up the application's routing,
+            while its children render the application's content. The Curi router
+            generates <IJS>response</IJS> objects from matched locations; those
+            are core for figuring out what to render.
           </p>
+
           <p>
-            If you set React components as the <IJS>body</IJS> properties on
-            your responses, you can create a React element for the{" "}
-            <IJS>body</IJS> component in this function.
+            If you use <IJS>route.response</IJS> to set React components as the{" "}
+            <IJS>body</IJS> properties on your responses, you can create a React
+            element for the <IJS>body</IJS> component.
           </p>
+
           <p>
             The <Cmp>Body</Cmp> element (it is useful to rename the{" "}
             <IJS>response</IJS>'s <IJS>body</IJS> to <IJS>Body</IJS> for JSX
             transformation) is a placeholder for the "real" component that you
             render for a route. This means that the "real" component will be
-            different for every route. When it comes to passing props to the{" "}
-            <Cmp>Body</Cmp>, you <em>could</em> use <IJS>response.name</IJS> to
-            determine what props to pass based on which route matched, but
-            passing the same props to every route's <Cmp>Body</Cmp> is usually
-            sufficient. Passing the entire <IJS>response</IJS> is generally
-            useful so that the route components can access any <IJS>params</IJS>
-            , <IJS>data</IJS>, and other properties of the <IJS>response</IJS>.
+            different for every route.
+          </p>
+
+          <p>
+            While not a strict requirement, it is useful to pass the{" "}
+            <IJS>response</IJS> object as a prop to the rendered <Cmp>Body</Cmp>{" "}
+            component.
           </p>
 
           <CodeBlock lang="jsx">
-            {`ReactDOM.render((
+            {`function App() {
+  const { response } = useCuri();
+  const { body:Body } = response;
+  return <Body response={response} />              
+}
+
+ReactDOM.render((
   <Router>
-    {({ response, router, navigation }) => {
-      // rename body to Body for JSX transformation
-      const { body:Body } = response;
-      return (
-        <React.Fragment>
-          <header>
-            <NavLinks />
-          </header>
-          <main>
-            <Body response={response} />
-          </main>
-        </React.Fragment>
-      );
-    }}
+    <header>
+      <NavLinks />
+    </header>
+    <main>
+      <App />
+    </main>
   </Router>
 ), document.getElementById("root"));`}
           </CodeBlock>
@@ -148,12 +166,15 @@ router.once(() => {
             response, the <IJS>children()</IJS> function also provides a good
             place to split these apart.
           </p>
-          <p>
-            If you do take this approach, please remember that you want every
-            route to set the same <IJS>body</IJS> shape. Otherwise, you'll have
-            to determine the shape and change how you render in the{" "}
-            <IJS>children()</IJS> function, which can quickly become messy.
-          </p>
+
+          <Note>
+            <p>
+              If you do take this approach, please remember that you want every
+              route to set the same <IJS>body</IJS> shape. Otherwise, you'll
+              have to determine the shape and change how you render in the{" "}
+              <IJS>children()</IJS> function, which can quickly become messy.
+            </p>
+          </Note>
 
           <CodeBlock lang="jsx" data-line="20,24,27">
             {`const routes = prepareRoutes([
@@ -172,51 +193,18 @@ router.once(() => {
   // ...
 ]);
 
-ReactDOM.render((
-  <Router>
-    {({ response, router, navigation }) => {
-      const { Main, Menu } = response.body;
-      return (
-        <React.Fragment>
-          <header>
-            <Menu />
-          </header>
-          <main>
-            <Main response={response} />
-          </main>
-        </React.Fragment>
-      );
-    }}
-  </Router>
-), document.getElementById("root"));`}
-          </CodeBlock>
-
-          <Note>
-            <p>
-              There is a <Cmp>Curious</Cmp> component that you can render to
-              access the <IJS>response</IJS>, <IJS>router</IJS>, and{" "}
-              <IJS>navigation</IJS> objects anywhere* in your application. This
-              can help prevent having to pass props through multiple layers of
-              components.
-            </p>
-
-            <p>
-              * anywhere that is a child of your <Cmp>Router</Cmp>.
-            </p>
-          </Note>
-
-          <CodeBlock lang="jsx">
-            {`import { Curious } from "@curi/react-dom";
-            
-const BaseRouteName = ({ response }) => (
-  <div>{response.name}</div>
-);
-
-function RouteName() {
+function App() {
+  const { response } = useCuri();
+  const { Main, Menu } = response.body;
   return (
-    <Curious>
-      {({ response }) => <BaseRouteName response={response} />}
-    </Curious>
+    <React.Fragment>
+      <header>
+        <Menu />
+      </header>
+      <main>
+        <Main response={response} />
+      </main>
+    </React.Fragment>
   );
 }`}
           </CodeBlock>
@@ -225,9 +213,16 @@ function RouteName() {
         <HashSection meta={a11yMeta} tag="h3">
           <p>
             Managing the application's focus when navigating is useful for users
-            who use screen readers. The <Cmp>Focus</Cmp> component provides a
-            convenient way to focus a page's main content when it renders a new
-            response.
+            who use screen readers. The{" "}
+            <Link
+              name="Package"
+              params={{ package: "react-dom", version: "v2" }}
+              hash="useNavigationFocus"
+            >
+              <IJS>useNavigationFocus</IJS> hook
+            </Link>
+            provides a convenient way to focus a page's main content when it
+            renders a new response.
           </p>
           <p>
             You can read some more about accessibility in the{" "}
@@ -237,30 +232,26 @@ function RouteName() {
             guide.
           </p>
 
-          <CodeBlock lang="jsx" data-line="12-18">
-            {`import { Focus } from "@curi/react-dom";
+          <CodeBlock lang="jsx" data-line="5-6,14">
+            {`import { useCuri, useNavigationFocus } from "@curi/react-dom";
             
-ReactDOM.render((
-  <Router>
-    {({ response }) => {
-      const { body:Body } = response;
-      return (
-        <React.Fragment>
-          <header>
-            <NavLinks />
-          </header>
-          <Focus>
-            {ref => (
-              <main ref={ref} tabIndex={-1}>
-                <Body response={response} />
-              </main>
-            )}
-          </Focus>
-        </React.Fragment>
-      );
-    }}
-  </Router>
-), document.getElementById("root"));`}
+function App()
+  const { response } = useCuri();
+  const ref = React.createRef(null);
+  useNavigationFocus(ref);
+
+  const { body:Body } = response;
+  return (
+    <React.Fragment>
+      <header>
+        <NavLinks />
+      </header>
+      <main ref={ref} tabIndex={-1}>
+        <Body response={response} />
+      </main>
+    </React.Fragment>
+  );
+}`}
           </CodeBlock>
         </HashSection>
       </HashSection>

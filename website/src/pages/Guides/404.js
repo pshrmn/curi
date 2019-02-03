@@ -1,5 +1,9 @@
 import React from "react";
 
-export default function Example404() {
+function Guide404() {
   return <div>The requested guide could not be found.</div>;
 }
+
+const contents = [];
+
+export { Guide404 as component, contents };

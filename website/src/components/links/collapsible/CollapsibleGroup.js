@@ -30,35 +30,26 @@ const StyledButton = styled("button")`
   color: ${color.purple};
 `;
 
-export default class CollapsibleGroup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapsed: props.initial !== undefined ? props.initial : false
-    };
-  }
+export default function CollapsibleGroup(props) {
+  const [collapsed, setCollapsed] = React.useState(props.initial || false);
 
-  toggle = () => {
-    this.setState(prevState => ({
-      collapsed: !prevState.collapsed
-    }));
-  };
-
-  render() {
-    const { title, children } = this.props;
-    const { collapsed } = this.state;
-    return (
-      <StyledList>
-        <li>
-          <div>
-            <StyledButton onClick={this.toggle} title="Toggle group visibility">
-              {collapsed ? <Down /> : <Up />}
-              {title}
-            </StyledButton>
-          </div>
-          {collapsed ? null : children}
-        </li>
-      </StyledList>
-    );
-  }
+  const { title, children } = props;
+  return (
+    <StyledList>
+      <li>
+        <div>
+          <StyledButton
+            onClick={e => {
+              setCollapsed(!collapsed);
+            }}
+            title="Toggle group visibility"
+          >
+            {collapsed ? <Down /> : <Up />}
+            {title}
+          </StyledButton>
+        </div>
+        {collapsed ? null : children}
+      </li>
+    </StyledList>
+  );
 }
