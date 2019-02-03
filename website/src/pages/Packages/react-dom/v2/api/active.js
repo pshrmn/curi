@@ -91,12 +91,12 @@ function ActiveChecker({
 
         <HashSection
           tag="h4"
-          meta={{ title: "responseCheck", hash: "Active-responseCheck" }}
+          meta={{ title: "checkLocation", hash: "Active-checkLocation" }}
         >
           <p>
             See{" "}
-            <Link hash="useActive-responseCheck">
-              <IJS>useActive</IJS> <IJS>responseCheck</IJS>
+            <Link hash="useActive-checkLocation">
+              <IJS>useActive</IJS> <IJS>checkLocation</IJS>
             </Link>
           </p>
         </HashSection>

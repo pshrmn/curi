@@ -9,14 +9,14 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-const argsMeta = {
-  title: "Arguments",
-  hash: "useActive-args"
+const optsMeta = {
+  title: "Options",
+  hash: "useActive-opts"
 };
 export const meta = {
   title: "useActive()",
   hash: "useActive",
-  children: [argsMeta]
+  children: [optsMeta]
 };
 
 export function UseActiveAPI() {
@@ -73,79 +73,63 @@ const router = curi(history, routes, {
         </CodeBlock>
       </Note>
 
-      <HashSection tag="h3" meta={argsMeta}>
+      <HashSection tag="h3" meta={optsMeta}>
+        <p>
+          <IJS>useActive</IJS> takes a single argument, an options object.
+        </p>
+
+        <HashSection tag="h4" meta={{ title: "name", hash: "useActive-name" }}>
+          <p>The name of the route to compare against the response object.</p>
+        </HashSection>
+
         <HashSection
           tag="h4"
-          meta={{ title: "Route Options", hash: "useActive-opts" }}
+          meta={{ title: "params", hash: "useActive-params" }}
         >
           <p>
-            The first argument is an options object to describe which route to
-            match.
+            An object containing route parameters. These will be compared
+            against the route params of the response object.
+          </p>
+        </HashSection>
+
+        <HashSection
+          tag="h4"
+          meta={{ title: "partial", hash: "useActive-partial" }}
+        >
+          <p>
+            Allows ancestor routes to be considered active when true. Defaults
+            to false.
           </p>
 
-          <HashSection
-            tag="h5"
-            meta={{ title: "name", hash: "useActive-name" }}
-          >
-            <p>The name of the route to compare against the response object.</p>
-          </HashSection>
-
-          <HashSection
-            tag="h5"
-            meta={{ title: "params", hash: "useActive-params" }}
-          >
-            <p>
-              An object containing route parameters. These will be compared
-              against the route params of the response object.
-            </p>
-          </HashSection>
-
-          <HashSection
-            tag="h5"
-            meta={{ title: "partial", hash: "useActive-partial" }}
-          >
-            <p>
-              Allows ancestor routes to be considered active when true. Defaults
-              to false.
-            </p>
-
-            <CodeBlock lang="jsx">
-              {`// response = { name: "User Album", params: { id: "abcde" }}
+          <CodeBlock lang="jsx">
+            {`// response = { name: "User Album", params: { id: "abcde" }}
 // where "User Album" is a child route of "User"
 
 useActive({ name: "User" }); // false
 useActive({ name: "User", partial: true }); // true`}
-            </CodeBlock>
-          </HashSection>
+          </CodeBlock>
         </HashSection>
+      </HashSection>
 
-        <HashSection
-          tag="h4"
-          meta={{ title: "responseCheck", hash: "useActve-responseCheck" }}
-        >
-          <p>
-            The response check argument is a function that will be given the
-            current response and returns a boolean, true if it is active and
-            false otherwise.
-          </p>
+      <HashSection
+        tag="h4"
+        meta={{ title: "checkLocation", hash: "useActve-checkLocation" }}
+      >
+        <p>
+          The base active check only checks that the route (i.e. pathname) is
+          active. <IJS>checkLocation</IJS> allows you to check if other segments
+          of the location are also active.
+        </p>
 
-          <p>
-            The base active check verifies that the provided route information
-            matches the pathname segment of the current response's location. If
-            you want to perform more specific verification, such as matching a
-            query, you cando so with the response check function.
-          </p>
-
-          <CodeBlock lang="jsx">
-            {`useActive(
-  { name: "Results" },
-  response => response.location.query === "page=3"
-);
+        <CodeBlock lang="jsx">
+          {`useActive({
+  name: "Results",
+  checkLocation: loc => location.query === "page=3"
+});
 
 // active for /results?page=3
 // not active for /results?page=1`}
-          </CodeBlock>
-        </HashSection>
+        </CodeBlock>
       </HashSection>
     </HashSection>
   );
