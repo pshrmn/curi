@@ -5,7 +5,7 @@ import { curi } from "@curi/router";
 import { curiProvider } from "@curi/react-dom";
 
 import routes from "./routes";
-import { renderResponse } from "./render";
+import App from "./components/App";
 
 const history = Browser();
 const router = curi(history, routes, {
@@ -16,7 +16,9 @@ const root = document.getElementById("root");
 
 router.once(() => {
   ReactDOM.hydrate(
-    <Router>{renderResponse}</Router>,
+    <Router>
+      <App />
+    </Router>,
     document.getElementById("root")
   );
 });

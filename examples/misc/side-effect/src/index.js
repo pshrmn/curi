@@ -6,28 +6,20 @@ import createTitleSideEffect from "@curi/side-effect-title";
 import { curiProvider } from "@curi/react-dom";
 
 import routes from "./routes";
-import NavLinks from "./components/NavLinks";
+import App from "./components/App";
 
 const setTitle = createTitleSideEffect(
-  ({ response }) => `${response.title} | Middleware Example`
+  ({ response }) => `${response.title} | Side Effect Example`
 );
 const history = Browser();
 const router = curi(history, routes, {
-  sideEffects: [{ effect: setTitle }]
+  sideEffects: [setTitle]
 });
 const Router = curiProvider(router);
 
 ReactDOM.render(
   <Router>
-    {({ response }) => {
-      const { params, body: Body } = response;
-      return (
-        <div>
-          <NavLinks />
-          <Body params={params} />
-        </div>
-      );
-    }}
+    <App />
   </Router>,
   document.getElementById("root")
 );

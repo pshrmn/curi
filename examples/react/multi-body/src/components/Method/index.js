@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-export const Method = ({ params }) => {
-  return <div>Please do not contact us by {params.method}.</div>;
+export const Method = ({ response }) => {
+  return <div>Please do not contact us by {response.params.method}.</div>;
 };
 
 export const MethodMenu = props => {

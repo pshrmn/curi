@@ -4,7 +4,7 @@ import { curi } from "@curi/router";
 import Browser from "@hickory/browser";
 import { curiProvider } from "@curi/react-dom";
 
-import NavLinks from "./components/NavLinks";
+import App from "./components/App";
 import routes from "./routes";
 
 const history = Browser();
@@ -13,15 +13,7 @@ const Router = curiProvider(router);
 
 ReactDOM.render(
   <Router>
-    {({ response }) => {
-      const { body: Body } = response;
-      return (
-        <div>
-          <NavLinks />
-          <Body />
-        </div>
-      );
-    }}
+    <App />
   </Router>,
   document.getElementById("root")
 );

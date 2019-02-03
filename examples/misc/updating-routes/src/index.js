@@ -13,9 +13,7 @@ const Router = curiProvider(router);
 
 ReactDOM.render(
   <Router>
-    {({ response, router }) => {
-      return <App response={response} router={router} />;
-    }}
+    <App />
   </Router>,
   document.getElementById("root")
 );

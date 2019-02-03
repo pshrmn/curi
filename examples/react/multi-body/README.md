@@ -7,17 +7,17 @@ Sometimes, you may want to have multiple components attached to a route. When th
 ```js
 import { HomeMenu, Home } from './components/Home';
 
-const routes = [
-  {
-    name: 'Home',
-    match: {
-      response({ set }) {
-        set.body({
+{
+  name: 'Home',
+  match: {
+    response() {
+      return {
+        body: {
           main: Home,
           menu: HomeMenu
-        });
-      }
+        }
+      };
     }
   }
-];
+}
 ```

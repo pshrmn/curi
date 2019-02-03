@@ -2,13 +2,13 @@ import React from "react";
 
 import fakeAuth from "../fakeAuth";
 
-const Logout = props => (
+const Logout = ({ router }) => (
   <div>
     <button
       type="button"
       onClick={e => {
         fakeAuth.logout();
-        props.history.navigate("/", "REPLACE");
+        router.navigate({ name: "Home", method: "REPLACE" });
       }}
     >
       Logout

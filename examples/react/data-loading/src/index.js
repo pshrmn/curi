@@ -5,8 +5,8 @@ import Browser from "@hickory/browser";
 import { curi } from "@curi/router";
 import prefetch from "@curi/route-prefetch";
 
-import NavLinks from "./components/NavLinks";
 import routes from "./routes";
+import App from "./components/App";
 
 const history = Browser();
 
@@ -19,16 +19,7 @@ const root = document.getElementById("root");
 router.once(() => {
   ReactDOM.render(
     <Router>
-      {({ response, router }) => {
-        const { body: Body, data } = response;
-
-        return (
-          <div>
-            <NavLinks />
-            <Body response={response} />
-          </div>
-        );
-      }}
+      <App />
     </Router>,
     document.getElementById("root")
   );
