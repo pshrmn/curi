@@ -72,30 +72,9 @@ function ActiveChecker({
           meta={{ title: "children", hash: "Active-children" }}
         >
           <p>
-            A render-invoked function whose first argument is whether the route
-            (determined using the <IJS>name</IJS> and <IJS>params</IJS>) is
-            active.
+            A render-invoked function that is passed a boolean, true when it is
+            active and false when it is not.
           </p>
-
-          <p>
-            The second argument passed to the render-invoked function is the
-            current <IJS>response</IJS>. <Cmp>Active</Cmp> only checks if the
-            route is active (i.e. matches the current location's{" "}
-            <IJS>pathname</IJS>). If you want to check if a <IJS>query</IJS> or{" "}
-            <IJS>hash</IJS> match the current location, you should do this
-            yourself inside of the render-invoked function. You can compare the{" "}
-            <IJS>query</IJS>/<IJS>hash</IJS> against the response's{" "}
-            <IJS>location</IJS>.
-          </p>
-
-          <CodeBlock lang="jsx">
-            {`<Active name="Home">
-  {(active, response) => {
-    const activeHash = response.hash === "ahoy"
-    // ...
-  }}
-</Active>`}
-          </CodeBlock>
         </HashSection>
 
         <HashSection
@@ -106,6 +85,18 @@ function ActiveChecker({
             See{" "}
             <Link hash="useActive-partial">
               <IJS>useActive</IJS> <IJS>partial</IJS>
+            </Link>
+          </p>
+        </HashSection>
+
+        <HashSection
+          tag="h4"
+          meta={{ title: "responseCheck", hash: "Active-responseCheck" }}
+        >
+          <p>
+            See{" "}
+            <Link hash="useActive-responseCheck">
+              <IJS>useActive</IJS> <IJS>responseCheck</IJS>
             </Link>
           </p>
         </HashSection>

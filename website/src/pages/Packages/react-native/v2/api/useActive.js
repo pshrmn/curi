@@ -9,14 +9,14 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-const optsMeta = {
-  title: "Options",
-  hash: "useActive-opts"
+const argsMeta = {
+  title: "Arguments",
+  hash: "useActive-args"
 };
 export const meta = {
   title: "useActive()",
   hash: "useActive",
-  children: [optsMeta]
+  children: [argsMeta]
 };
 
 export function UseActiveAPI() {
@@ -73,40 +73,77 @@ const router = curi(history, routes, {
         </CodeBlock>
       </Note>
 
-      <HashSection tag="h3" meta={optsMeta}>
-        <p>
-          <IJS>useActive</IJS> takes a single argument, an options argument.
-        </p>
-
-        <HashSection tag="h4" meta={{ title: "name", hash: "useActive-name" }}>
-          <p>The name of the route to compare against the response object.</p>
-        </HashSection>
-
+      <HashSection tag="h3" meta={argsMeta}>
         <HashSection
           tag="h4"
-          meta={{ title: "params", hash: "useActive-params" }}
+          meta={{ title: "Route Options", hash: "useActive-opts" }}
         >
           <p>
-            An object containing route parameters. These will be compared
-            against the route params of the response object.
+            The first argument is an options object to describe which route to
+            match.
           </p>
+
+          <HashSection
+            tag="h5"
+            meta={{ title: "name", hash: "useActive-name" }}
+          >
+            <p>The name of the route to compare against the response object.</p>
+          </HashSection>
+
+          <HashSection
+            tag="h5"
+            meta={{ title: "params", hash: "useActive-params" }}
+          >
+            <p>
+              An object containing route parameters. These will be compared
+              against the route params of the response object.
+            </p>
+          </HashSection>
+
+          <HashSection
+            tag="h5"
+            meta={{ title: "partial", hash: "useActive-partial" }}
+          >
+            <p>
+              Allows ancestor routes to be considered active when true. Defaults
+              to false.
+            </p>
+
+            <CodeBlock lang="jsx">
+              {`// response = { name: "User Album", params: { id: "abcde" }}
+// where "User Album" is a child route of "User"
+
+useActive({ name: "User" }); // false
+useActive({ name: "User", partial: true }); // true`}
+            </CodeBlock>
+          </HashSection>
         </HashSection>
 
         <HashSection
           tag="h4"
-          meta={{ title: "partial", hash: "useActive-partial" }}
+          meta={{ title: "responseCheck", hash: "useActve-responseCheck" }}
         >
           <p>
-            When <IJS>true</IJS>, <IJS>partial</IJS> allows ancestor routes to
-            be considered active. Defaults to <IJS>false</IJS>.
+            The response check argument is a function that will be given the
+            current response and returns a boolean, true if it is active and
+            false otherwise.
+          </p>
+
+          <p>
+            The base active check verifies that the provided route information
+            matches the pathname segment of the current response's location. If
+            you want to perform more specific verification, such as matching a
+            query, you cando so with the response check function.
           </p>
 
           <CodeBlock lang="jsx">
-            {`// response = { name: "User Album", params: { id: "abcde" }}
-// where "User Album" is a child route of "User"
+            {`useActive(
+  { name: "Results" },
+  response => response.location.query === "page=3"
+);
 
-useActive("User"); // false
-useActive("User", { partial: true }); // true`}
+// active for /results?page=3
+// not active for /results?page=1`}
           </CodeBlock>
         </HashSection>
       </HashSection>
