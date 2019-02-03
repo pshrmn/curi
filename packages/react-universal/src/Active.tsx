@@ -1,8 +1,8 @@
-import useCuri from "./hooks/useCuri";
+import React from "react";
+
 import useActive from "./hooks/useActive";
 
 import { ReactNode } from "react";
-import { Response } from "@curi/router";
 
 import { ActiveHookProps, CheckActiveResponse } from "./hooks/useActive";
 
