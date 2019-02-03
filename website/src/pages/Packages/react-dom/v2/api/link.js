@@ -73,7 +73,7 @@ export function LinkAPI() {
         <HashSection
           tag="h4"
           meta={{
-            title: "hash, query &amp; state",
+            title: "hash, query & state",
             hash: "Link-hash-query-state"
           }}
         >
