@@ -1,11 +1,15 @@
 import useCuri from "./useCuri";
 
+import { HickoryLocation } from "@hickory/root";
 import { Params } from "@curi/router";
+
+export type LocationCheck = (l: HickoryLocation) => boolean;
 
 export interface ActiveHookProps {
   name: string;
   params?: Params;
   partial?: boolean;
+  checkLocation?: LocationCheck;
 }
 
 export default function useActive(props: ActiveHookProps) {
@@ -24,5 +28,12 @@ const router = curi(history, routes, {
       );
     }
   }
-  return router.route.active(props.name, response, props.params, props.partial);
+  let isActive = router.route.active(
+    props.name,
+    response,
+    props.params,
+    props.partial,
+    props.checkLocation
+  );
+  return isActive;
 }

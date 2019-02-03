@@ -147,22 +147,6 @@ const router = curi(history, routes, {
         node
       );
     });
-
-    it("receives the current response object as its second argument", () => {
-      ReactDOM.render(
-        <Router>
-          <Active name="Home">
-            {(active, response) => {
-              expect(response).toMatchObject({
-                name: "Home"
-              });
-              return null;
-            }}
-          </Active>
-        </Router>,
-        node
-      );
-    });
   });
 
   describe("partial", () => {
@@ -183,6 +167,50 @@ const router = curi(history, routes, {
         </Router>,
         node
       );
+    });
+  });
+
+  describe("locationCheck", () => {
+    it("uses the function to check against the response when route is active", () => {
+      const history = InMemory({ locations: ["/"] });
+      const router = curi(history, routes, {
+        route: [activeInteraction()]
+      });
+      const Router = curiProvider(router);
+      const locationCheck = jest.fn(() => true);
+      ReactDOM.render(
+        <Router>
+          <Active name="Home" checkLocation={locationCheck}>
+            {active => {
+              expect(active).toBe(true);
+              return null;
+            }}
+          </Active>
+        </Router>,
+        node
+      );
+      expect(locationCheck.mock.calls.length).toBe(1);
+    });
+
+    it("will set active to false if it returns false", () => {
+      const history = InMemory({ locations: ["/"] });
+      const router = curi(history, routes, {
+        route: [activeInteraction()]
+      });
+      const Router = curiProvider(router);
+      const locationCheck = jest.fn(() => false);
+      ReactDOM.render(
+        <Router>
+          <Active name="Home" checkLocation={locationCheck}>
+            {active => {
+              expect(active).toBe(false);
+              return null;
+            }}
+          </Active>
+        </Router>,
+        node
+      );
+      expect(locationCheck.mock.calls.length).toBe(1);
     });
   });
 });

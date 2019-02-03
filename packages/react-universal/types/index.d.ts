@@ -2,7 +2,7 @@ export { ActiveProps } from "./Active";
 export { BlockProps } from "./Block";
 export { RouterProps } from "./curiProvider";
 export { NavigatingProps } from "./Navigating";
-export { ActiveHookProps } from "./hooks/useActive";
+export { ActiveHookProps, LocationCheck } from "./hooks/useActive";
 export * from "./types";
 import Active from "./Active";
 import Block from "./Block";
