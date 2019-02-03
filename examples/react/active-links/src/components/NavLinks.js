@@ -1,18 +1,19 @@
 import React from "react";
-import { Active, Link } from "@curi/react-dom";
+import { useActive, Link } from "@curi/react-dom";
 
-const ActiveLink = ({ name, params, partial, ...rest }) => (
-  <Active name={name} params={params} partial={partial}>
-    {active => (
-      <Link
-        name={name}
-        params={params}
-        {...rest}
-        className={active ? "active" : ""}
-      />
-    )}
-  </Active>
-);
+const ActiveLink = ({ name, params, partial, ...rest }) => {
+  const active = useActive({ name, params, partial });
+  return (
+    <Link
+      name={name}
+      params={params}
+      {...rest}
+      forward={{
+        className: active ? "active" : ""
+      }}
+    />
+  );
+};
 
 const NavLinks = () => (
   <nav>

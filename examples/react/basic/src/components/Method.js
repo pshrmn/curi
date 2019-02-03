@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-const ContactMethod = ({ params }) => (
-  <div>Please do not contact us by {params.method}</div>
+const ContactMethod = ({ response }) => (
+  <div>Please do not contact us by {response.params.method}</div>
 );
 
 export default ContactMethod;

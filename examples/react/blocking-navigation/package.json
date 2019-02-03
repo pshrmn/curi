@@ -1,7 +1,7 @@
 {
   "name": "@curi-example/blocking-navigation-react",
   "private": true,
-  "description": "Use the <Block> component to prevent transitions",
+  "description": "Use the useBlock hook to prevent transitions",
   "main": "index.js",
   "author": "Paul Sherman",
   "license": "MIT",

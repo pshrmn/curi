@@ -6,6 +6,7 @@ import { curiProvider } from "@curi/react-dom";
 import ancestors from "@curi/route-ancestors";
 
 import routes from "./routes";
+import App from "./components/App";
 
 /*
  * A simple router interaction that will enable adding a dynamic title
@@ -42,10 +43,7 @@ const root = document.getElementById("root");
 
 ReactDOM.render(
   <Router>
-    {({ response, router }) => {
-      const { body: Body, data } = response;
-      return <Body response={response} router={router} />;
-    }}
+    <App />
   </Router>,
   document.getElementById("root")
 );

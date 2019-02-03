@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { useCuri } from "@curi/react-dom";
 
 import Modal from "./Modal";
 
@@ -8,8 +8,10 @@ import Modal from "./Modal";
  * should be rendered as a modal. If it should, it will use navigation.previous
  * to render the background.
  */
-const Display = ({ response, navigation, render }) => {
-  const { location } = response;
+const Display = ({ render }) => {
+  const { response, navigation } = useCuri();
+  const { body: Body, location } = response;
+
   // check if location.state.modal is set
   // and if there is a previous response
   const isModal = !!(
@@ -17,22 +19,24 @@ const Display = ({ response, navigation, render }) => {
     location.state.modal &&
     navigation.previous
   );
+
+  if (isModal) {
+    const { body: PrevBody } = navigation.previous;
+    return (
+      <div>
+        <PrevBody response={navigation.previous} />
+        <Modal>
+          <Body response={response} />
+        </Modal>
+      </div>
+    );
+  }
+
   return (
     <div>
-      {render(isModal ? navigation.previous : response)}
-      {isModal && <Modal>{render(response)}</Modal>}
+      <Body response={response} />
     </div>
   );
-};
-
-Display.propTypes = {
-  response: PropTypes.shape({
-    location: PropTypes.object.isRequired
-  }).isRequired,
-  navigation: PropTypes.shape({
-    action: PropTypes.string,
-    previous: PropTypes.object
-  }).isRequired
 };
 
 export default Display;

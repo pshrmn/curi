@@ -26,7 +26,12 @@ export default prepareRoutes([
         return {
           redirectTo: {
             name: "Login",
-            query: { next: match.location.pathname }
+            state: {
+              next: {
+                name: match.name,
+                params: match.params
+              }
+            }
           },
           status: 302
         };
