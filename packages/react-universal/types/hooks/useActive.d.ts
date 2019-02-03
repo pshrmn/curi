@@ -4,5 +4,5 @@ export interface ActiveHookProps {
     params?: Params;
     partial?: boolean;
 }
-export declare type ActiveResponse = (resp: Response) => boolean;
-export default function useActive(props: ActiveHookProps, respCheck?: ActiveResponse): any;
+export declare type CheckActiveResponse = (resp: Response) => boolean;
+export default function useActive(props: ActiveHookProps, responseCheck?: CheckActiveResponse): any;

@@ -4,18 +4,21 @@ import useActive from "./hooks/useActive";
 import { ReactNode } from "react";
 import { Response } from "@curi/router";
 
-import { ActiveHookProps } from "./hooks/useActive";
+import { ActiveHookProps, CheckActiveResponse } from "./hooks/useActive";
 
 export interface ActiveProps extends ActiveHookProps {
-  children(active: boolean, response?: Response): ReactNode;
+  responseCheck?: CheckActiveResponse;
+  children(active: boolean): ReactNode;
 }
 
 export default function Active(props: ActiveProps): ReactNode {
-  const { response } = useCuri();
-  const active = useActive({
-    name: props.name,
-    params: props.params,
-    partial: props.partial
-  });
-  return props.children(active, response);
+  const active = useActive(
+    {
+      name: props.name,
+      params: props.params,
+      partial: props.partial
+    },
+    props.responseCheck
+  );
+  return props.children(active);
 }

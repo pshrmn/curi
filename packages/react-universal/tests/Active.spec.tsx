@@ -147,22 +147,6 @@ const router = curi(history, routes, {
         node
       );
     });
-
-    it("receives the current response object as its second argument", () => {
-      ReactDOM.render(
-        <Router>
-          <Active name="Home">
-            {(active, response) => {
-              expect(response).toMatchObject({
-                name: "Home"
-              });
-              return null;
-            }}
-          </Active>
-        </Router>,
-        node
-      );
-    });
   });
 
   describe("partial", () => {
@@ -183,6 +167,40 @@ const router = curi(history, routes, {
         </Router>,
         node
       );
+    });
+  });
+
+  describe("responseCheck", () => {
+    it("uses the function to check against the response when route is active", () => {
+      const responseCheck = jest.fn(() => true);
+      ReactDOM.render(
+        <Router>
+          <Active name="Home" responseCheck={responseCheck}>
+            {active => {
+              expect(active).toBe(true);
+              return null;
+            }}
+          </Active>
+        </Router>,
+        node
+      );
+      expect(responseCheck.mock.calls.length).toBe(1);
+    });
+
+    it("will set active to false if it returns false", () => {
+      const responseCheck = jest.fn(() => false);
+      ReactDOM.render(
+        <Router>
+          <Active name="Home" responseCheck={responseCheck}>
+            {active => {
+              expect(active).toBe(false);
+              return null;
+            }}
+          </Active>
+        </Router>,
+        node
+      );
+      expect(responseCheck.mock.calls.length).toBe(1);
     });
   });
 });

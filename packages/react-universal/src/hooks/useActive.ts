@@ -8,11 +8,11 @@ export interface ActiveHookProps {
   partial?: boolean;
 }
 
-export type ActiveResponse = (resp: Response) => boolean;
+export type CheckActiveResponse = (resp: Response) => boolean;
 
 export default function useActive(
   props: ActiveHookProps,
-  respCheck?: ActiveResponse
+  responseCheck?: CheckActiveResponse
 ) {
   const { router, response } = useCuri();
   if (process.env.NODE_ENV !== "production") {
@@ -35,8 +35,8 @@ const router = curi(history, routes, {
     props.params,
     props.partial
   );
-  if (isActive && respCheck) {
-    return respCheck(response);
+  if (isActive && responseCheck) {
+    return responseCheck(response);
   }
   return isActive;
 }
