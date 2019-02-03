@@ -1,38 +1,28 @@
 import React from "react";
+import { useCuri } from "@curi/react-dom";
 
 import Nav from "./Nav";
 import { baseRoutes, adminRoutes } from "../routes";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { admin: false };
-
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-  }
-
-  login() {
-    this.props.router.refresh(adminRoutes);
-    this.setState({ admin: true });
-  }
-
-  logout() {
-    const { router } = this.props;
-    router.refresh(baseRoutes);
-    this.setState({ admin: false });
-    router.navigate({ name: "Home" });
-  }
-
-  render() {
-    const { body: Body } = this.props.response;
-    return (
-      <div>
-        <Nav admin={this.state.admin} login={this.login} logout={this.logout} />
-        <Body />
-      </div>
-    );
-  }
+export default function App() {
+  const { response, router } = useCuri();
+  const [admin, setAdmin] = React.useState(false);
+  const { body: Body } = response;
+  return (
+    <div>
+      <Nav
+        admin={admin}
+        login={() => {
+          router.refresh(adminRoutes);
+          setAdmin(true);
+        }}
+        logout={() => {
+          router.refresh(baseRoutes);
+          setAdmin(false);
+          router.navigate({ name: "Home" });
+        }}
+      />
+      <Body />
+    </div>
+  );
 }
-
-export default App;

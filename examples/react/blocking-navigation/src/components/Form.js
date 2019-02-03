@@ -1,81 +1,72 @@
 import React from "react";
-import { Block } from "@curi/react-dom";
+import { useBlock } from "@curi/react-dom";
 
-function confirm(info, success, failure) {
+function confirmNavigation(_, confirm, prevent) {
   const resp = window.confirm(
     "Are you sure you want to navigate? The form has not been submitted"
   );
   if (resp) {
-    success();
+    confirm();
   } else {
-    failure();
+    prevent();
   }
 }
 
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.submitForm = this.submitForm.bind(this);
-    this.setEmail = this.setEmail.bind(this);
-    this.setMessage = this.setMessage.bind(this);
-    this.state = {
-      email: "",
-      message: "",
-      dirty: false,
-      submitted: false
-    };
+function Form() {
+  const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const [dirty, setDirty] = React.useState(false);
+  const [submitted, setSubmitted] = React.useState(false);
+
+  useBlock(dirty && !submitted, confirmNavigation);
+
+  React.useEffect(() => {
+    setDirty(email !== "" || message !== "");
+  }, [email, message]);
+
+  if (submitted) {
+    return <div>Thanks you for contacting us!</div>;
   }
 
-  setEmail(event) {
-    const value = event.target.value;
-    this.setState({
-      email: value,
-      dirty: value !== "" || this.state.message !== ""
-    });
-  }
-
-  setMessage(event) {
-    const value = event.target.value;
-    this.setState({
-      message: value,
-      dirty: value !== "" || this.state.email !== ""
-    });
-  }
-
-  submitForm(event) {
-    if (this.state.email === "" || this.state.message === "") {
-      return;
-    }
-    this.setState({
-      submitted: true
-    });
-  }
-
-  render() {
-    const { dirty, email, message, submitted } = this.state;
-    if (submitted) {
-      return <div>Thanks you for contacting us!</div>;
-    }
-    return (
-      <form>
-        <Block active={dirty} confirm={confirm} />
-        <p>
-          <label>
-            Email <input type="text" value={email} onChange={this.setEmail} />
-          </label>
-        </p>
-        <p>
-          <label>
-            Message{" "}
-            <input type="text" value={message} onChange={this.setMessage} />
-          </label>
-        </p>
-        <button type="button" onClick={this.submitForm}>
-          Submit
-        </button>
-      </form>
-    );
-  }
+  return (
+    <form>
+      <p>
+        <label>
+          Email{" "}
+          <input
+            type="text"
+            value={email}
+            onChange={event => {
+              setEmail(event.target.value);
+            }}
+          />
+        </label>
+      </p>
+      <p>
+        <label>
+          Message{" "}
+          <input
+            type="text"
+            value={message}
+            onChange={event => {
+              setMessage(event.target.value);
+            }}
+          />
+        </label>
+      </p>
+      <button
+        type="button"
+        onClick={event => {
+          if (email === "" || message === "") {
+            return;
+          }
+          setSubmitted(true);
+        }}
+      >
+        Submit
+      </button>
+    </form>
+  );
 }
 
 export default Form;

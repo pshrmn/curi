@@ -4,7 +4,7 @@ import InMemory from "@hickory/in-memory";
 import { curi } from "@curi/router";
 import { curiProvider } from "@curi/react-dom";
 import routes from "./src/routes";
-import { renderResponse } from "./src/render";
+import App from "./src/components/App";
 
 export default function(req, res) {
   const history = InMemory({ locations: [req.url] });
@@ -17,7 +17,11 @@ export default function(req, res) {
       res.redirect(302, response.redirectTo.pathname);
       return;
     }
-    const markup = renderToString(<Router>{renderResponse}</Router>);
+    const markup = renderToString(
+      <Router>
+        <App />
+      </Router>
+    );
     res.send(renderFullPage(markup));
   });
 }
