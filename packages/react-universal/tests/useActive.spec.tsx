@@ -130,19 +130,19 @@ const router = curi(history, routes, {
     });
   });
 
-  describe("responseCheck", () => {
-    it("is called with response if route is active", () => {
+  describe("checkLocation", () => {
+    it("is called with location if route is active", () => {
       const history = InMemory({ locations: ["/contact"] });
       const router = curi(history, routes, {
         route: [activeInteraction()]
       });
-      const respCheck = jest.fn();
-      let theResponse;
+      const locCheck = jest.fn();
+      let theLocation;
       const Router = curiProvider(router);
       function App() {
         const { response } = useCuri();
-        theResponse = response;
-        const active = useActive({ name: "Contact" }, respCheck);
+        theLocation = response.location;
+        const active = useActive({ name: "Contact", checkLocation: locCheck });
         return null;
       }
       ReactDOM.render(
@@ -151,8 +151,8 @@ const router = curi(history, routes, {
         </Router>,
         node
       );
-      expect(respCheck.mock.calls.length).toBe(1);
-      expect(respCheck.mock.calls[0][0]).toBe(theResponse);
+      expect(locCheck.mock.calls.length).toBe(1);
+      expect(locCheck.mock.calls[0][0]).toBe(theLocation);
     });
 
     it("is not called if route is not active", () => {
@@ -160,13 +160,13 @@ const router = curi(history, routes, {
       const router = curi(history, routes, {
         route: [activeInteraction()]
       });
-      const respCheck = jest.fn();
+      const locCheck = jest.fn();
       let theResponse;
       const Router = curiProvider(router);
       function App() {
         const { response } = useCuri();
         theResponse = response;
-        const active = useActive({ name: "Contact" }, respCheck);
+        const active = useActive({ name: "Contact", checkLocation: locCheck });
         return null;
       }
       ReactDOM.render(
@@ -175,7 +175,7 @@ const router = curi(history, routes, {
         </Router>,
         node
       );
-      expect(respCheck.mock.calls.length).toBe(0);
+      expect(locCheck.mock.calls.length).toBe(0);
     });
 
     it("returns true if route matches and response check returns true", () => {
@@ -185,10 +185,11 @@ const router = curi(history, routes, {
       });
       const Router = curiProvider(router);
       function App() {
-        const active = useActive(
-          { name: "Contact", partial: true },
-          () => true
-        );
+        const active = useActive({
+          name: "Contact",
+          partial: true,
+          checkLocation: () => true
+        });
         expect(active).toBe(true);
         return null;
       }
@@ -200,17 +201,18 @@ const router = curi(history, routes, {
       );
     });
 
-    it("returns false if route matches, but response check returns false", () => {
+    it("returns false if route matches, but location check returns false", () => {
       const history = InMemory({ locations: ["/contact/email"] });
       const router = curi(history, routes, {
         route: [activeInteraction()]
       });
       const Router = curiProvider(router);
       function App() {
-        const active = useActive(
-          { name: "Contact", partial: true },
-          () => false
-        );
+        const active = useActive({
+          name: "Contact",
+          partial: true,
+          checkLocation: () => false
+        });
         expect(active).toBe(false);
         return null;
       }

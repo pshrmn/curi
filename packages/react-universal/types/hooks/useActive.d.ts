@@ -1,8 +1,10 @@
-import { Params, Response } from "@curi/router";
+import { HickoryLocation } from "@hickory/root";
+import { Params } from "@curi/router";
+export declare type LocationCheck = (l: HickoryLocation) => boolean;
 export interface ActiveHookProps {
     name: string;
     params?: Params;
     partial?: boolean;
+    checkLocation?: LocationCheck;
 }
-export declare type CheckActiveResponse = (resp: Response) => boolean;
-export default function useActive(props: ActiveHookProps, responseCheck?: CheckActiveResponse): any;
+export default function useActive(props: ActiveHookProps): any;

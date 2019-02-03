@@ -1,19 +1,18 @@
 import useCuri from "./useCuri";
 
-import { Params, Response } from "@curi/router";
+import { HickoryLocation } from "@hickory/root";
+import { Params } from "@curi/router";
+
+export type LocationCheck = (l: HickoryLocation) => boolean;
 
 export interface ActiveHookProps {
   name: string;
   params?: Params;
   partial?: boolean;
+  checkLocation?: LocationCheck;
 }
 
-export type CheckActiveResponse = (resp: Response) => boolean;
-
-export default function useActive(
-  props: ActiveHookProps,
-  responseCheck?: CheckActiveResponse
-) {
+export default function useActive(props: ActiveHookProps) {
   const { router, response } = useCuri();
   if (process.env.NODE_ENV !== "production") {
     if (!router.route.active) {
@@ -33,10 +32,8 @@ const router = curi(history, routes, {
     props.name,
     response,
     props.params,
-    props.partial
+    props.partial,
+    props.checkLocation
   );
-  if (isActive && responseCheck) {
-    return responseCheck(response);
-  }
   return isActive;
 }

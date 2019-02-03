@@ -170,12 +170,17 @@ const router = curi(history, routes, {
     });
   });
 
-  describe("responseCheck", () => {
+  describe("locationCheck", () => {
     it("uses the function to check against the response when route is active", () => {
-      const responseCheck = jest.fn(() => true);
+      const history = InMemory({ locations: ["/"] });
+      const router = curi(history, routes, {
+        route: [activeInteraction()]
+      });
+      const Router = curiProvider(router);
+      const locationCheck = jest.fn(() => true);
       ReactDOM.render(
         <Router>
-          <Active name="Home" responseCheck={responseCheck}>
+          <Active name="Home" checkLocation={locationCheck}>
             {active => {
               expect(active).toBe(true);
               return null;
@@ -184,14 +189,19 @@ const router = curi(history, routes, {
         </Router>,
         node
       );
-      expect(responseCheck.mock.calls.length).toBe(1);
+      expect(locationCheck.mock.calls.length).toBe(1);
     });
 
     it("will set active to false if it returns false", () => {
-      const responseCheck = jest.fn(() => false);
+      const history = InMemory({ locations: ["/"] });
+      const router = curi(history, routes, {
+        route: [activeInteraction()]
+      });
+      const Router = curiProvider(router);
+      const locationCheck = jest.fn(() => false);
       ReactDOM.render(
         <Router>
-          <Active name="Home" responseCheck={responseCheck}>
+          <Active name="Home" checkLocation={locationCheck}>
             {active => {
               expect(active).toBe(false);
               return null;
@@ -200,7 +210,7 @@ const router = curi(history, routes, {
         </Router>,
         node
       );
-      expect(responseCheck.mock.calls.length).toBe(1);
+      expect(locationCheck.mock.calls.length).toBe(1);
     });
   });
 });
