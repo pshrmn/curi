@@ -11,11 +11,7 @@ import { UseNavigatingAPI } from "./api/useNavigating";
 import { UseBlockAPI } from "./api/useBlock";
 import { UseLocationAPI } from "./api/useLocation";
 import { UseHrefAPI } from "./api/useHref";
-import { FocusAPI } from "./api/focus";
 import { CuriousAPI } from "./api/curious";
-import { ActiveAPI } from "./api/active";
-import { NavigatingAPI } from "./api/navigating";
-import { BlockAPI } from "./api/block";
 
 function ReactDOMPkg() {
   return (
@@ -44,11 +40,7 @@ function ReactDOMPkg() {
         <UseBlockAPI />
         <UseLocationAPI />
         <UseHrefAPI />
-        <FocusAPI />
         <CuriousAPI />
-        <ActiveAPI />
-        <NavigatingAPI />
-        <BlockAPI />
       </APIBlock>
     </React.Fragment>
   );

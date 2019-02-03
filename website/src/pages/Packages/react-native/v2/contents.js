@@ -7,9 +7,6 @@ import { meta as useBlockMeta } from "./api/useBlock";
 import { meta as useLocationMeta } from "./api/useLocation";
 import { meta as useHrefMeta } from "./api/useHref";
 import { meta as CuriousMeta } from "./api/curious";
-import { meta as ActiveMeta } from "./api/active";
-import { meta as NavigatingMeta } from "./api/navigating";
-import { meta as BlockMeta } from "./api/block";
 
 export default [
   {
@@ -25,17 +22,14 @@ export default [
     hash: "API",
     children: [
       curiProviderMeta,
+      LinkMeta,
       useCuriMeta,
       useActiveMeta,
       useNavigatingMeta,
       useBlockMeta,
       useLocationMeta,
       useHrefMeta,
-      LinkMeta,
-      CuriousMeta,
-      ActiveMeta,
-      NavigatingMeta,
-      BlockMeta
+      CuriousMeta
     ]
   }
 ];

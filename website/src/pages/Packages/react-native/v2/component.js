@@ -11,9 +11,6 @@ import { UseBlockAPI } from "./api/useBlock";
 import { UseLocationAPI } from "./api/useLocation";
 import { UseHrefAPI } from "./api/useHref";
 import { CuriousAPI } from "./api/curious";
-import { ActiveAPI } from "./api/active";
-import { NavigatingAPI } from "./api/navigating";
-import { BlockAPI } from "./api/block";
 
 function ReactNativePkg() {
   return (
@@ -42,9 +39,6 @@ function ReactNativePkg() {
         <UseLocationAPI />
         <UseHrefAPI />
         <CuriousAPI />
-        <ActiveAPI />
-        <NavigatingAPI />
-        <BlockAPI />
       </APIBlock>
     </React.Fragment>
   );
