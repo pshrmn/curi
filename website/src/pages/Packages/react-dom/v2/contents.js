@@ -7,11 +7,7 @@ import { meta as useNavigatingMeta } from "./api/useNavigating";
 import { meta as useBlockMeta } from "./api/useBlock";
 import { meta as useLocationMeta } from "./api/useLocation";
 import { meta as useHrefMeta } from "./api/useHref";
-import { meta as FocusMeta } from "./api/focus";
 import { meta as CuriousMeta } from "./api/curious";
-import { meta as ActiveMeta } from "./api/active";
-import { meta as NavigatingMeta } from "./api/navigating";
-import { meta as BlockMeta } from "./api/block";
 
 export default [
   {
@@ -35,11 +31,7 @@ export default [
       useBlockMeta,
       useLocationMeta,
       useHrefMeta,
-      FocusMeta,
-      CuriousMeta,
-      ActiveMeta,
-      NavigatingMeta,
-      BlockMeta
+      CuriousMeta
     ]
   }
 ];
