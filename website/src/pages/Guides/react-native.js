@@ -14,14 +14,14 @@ const meta = {
   title: "React Native"
 };
 
-const childrenMeta = {
-  title: "What to return from children()",
-  hash: "children-return"
+const responseMeta = {
+  title: "What to render",
+  hash: "render-response"
 };
 const renderingMeta = {
   title: "Rendering Responses",
   hash: "rendering",
-  children: [childrenMeta]
+  children: [responseMeta]
 };
 
 const navigatingMeta = {
@@ -65,21 +65,34 @@ function ReactNativeGuide() {
             happen).
           </p>
         </Note>
+
         <p>
-          <IJS>curiProvider()</IJS> is passed the application's Curi router. The
-          returned component will automatically add an{" "}
-          <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
+          <IJS>curiProvider()</IJS> is passed the application's Curi router to
+          create a <Cmp>Router</Cmp> component. The <Cmp>Router</Cmp> will
+          automatically add an{" "}
+          <Link
+            name="Package"
+            params={{ package: "router", version: "v1" }}
+            hash="observe"
+          >
             observer
           </Link>{" "}
           to the Curi router when it mounts, so that it can re-render when there
           are new responses.
         </p>
+
         <p>
-          The <Cmp>Router</Cmp> takes a render-invoked function as its{" "}
-          <IJS>children</IJS> prop. This function will be called with an object
-          that has three properties— <IJS>response</IJS>, <IJS>router</IJS>, and{" "}
-          <IJS>navigation</IJS>—and returns the React element(s) that form the
-          root of the application.
+          Along with setting up an observer to react to new responses, the{" "}
+          <Cmp>Router</Cmp> sets up a context for routing values. These values—
+          <IJS>response</IJS>, <IJS>router</IJS>, and <IJS>navigation</IJS>—can
+          be read using the{" "}
+          <Link
+            name="Package"
+            params={{ package: "react-native", version: "v2" }}
+          >
+            <IJS>useCuri</IJS> hook
+          </Link>
+          .
         </p>
 
         <CodeBlock lang="jsx">
@@ -88,66 +101,56 @@ function ReactNativeGuide() {
 import router from "./router";
 const Router = curiProvider(router);
 
-const App = () => (
+function MyReactNativeApp = () => (
   <Router>
-    {({ response, router, navigation }) => {
-      return <response.body />;
-    }}
+    <App />
   </Router>
 );`}
         </CodeBlock>
 
-        <HashSection meta={childrenMeta} tag="h3">
+        <HashSection meta={responseMeta} tag="h3">
           <p>
-            The render-invoked <IJS>children()</IJS> is responsible for
-            rendering the root elements for an application.
+            The <Cmp>Router</Cmp> component sets up the application's routing,
+            while its children render the application's content. The Curi router
+            generates <IJS>response</IJS> objects from matched locations; those
+            are core for figuring out what to render.
           </p>
+
           <p>
-            Unlike with the DOM, React Native cannot have its initial render
-            delayed with a <IJS>router.once()</IJS> call. Instead, the{" "}
-            <IJS>children()</IJS> function should check if the{" "}
-            <IJS>response</IJS> exists, and rendering a loading component when
-            it does not.
+            If you use <IJS>route.response</IJS> to set React components as the{" "}
+            <IJS>body</IJS> properties on your responses, you can create a React
+            element for the <IJS>body</IJS> component.
           </p>
-          <p>
-            If you set React components as the <IJS>body</IJS> properties on
-            your responses, you can create a React element for the{" "}
-            <IJS>body</IJS> component in this function.
-          </p>
+
           <p>
             The <Cmp>Body</Cmp> element (it is useful to rename the{" "}
             <IJS>response</IJS>'s <IJS>body</IJS> to <IJS>Body</IJS> for JSX
             transformation) is a placeholder for the "real" component that you
             render for a route. This means that the "real" component will be
-            different for every route. When it comes to passing props to the{" "}
-            <Cmp>Body</Cmp>, you <em>could</em> use <IJS>response.name</IJS> to
-            determine what props to pass based on which route matched, but
-            passing the same props to every route's <Cmp>Body</Cmp> is usually
-            sufficient. Passing the entire <IJS>response</IJS> is generally
-            useful so that the route components can access any <IJS>params</IJS>
-            , <IJS>data</IJS>, and other properties of the <IJS>response</IJS>.
+            different for every route.
+          </p>
+
+          <p>
+            While not a strict requirement, it is useful to pass the{" "}
+            <IJS>response</IJS> object as a prop to the rendered <Cmp>Body</Cmp>{" "}
+            component.
           </p>
 
           <CodeBlock lang="jsx">
-            {`const App = () => (
-  <Router>
-    {({ response, router, navigation }) => {
-      // async route protection
-      if (!response) {
-        return <Loading />;
-      }
+            {`function App() {
+  const { response } = useCuri();
+  const { body:Body } = response;
+  return <Body response={response} />              
+}
 
-      // rename body to Body for JSX transformation
-      const { body:Body } = response;
-      return (
-        <React.Fragment>
-          <NavLinks />
-          <Body response={response} />
-        </React.Fragment>
-      );
-    }}
-  </Router>
-);`}
+function MyReactNativeApp() {
+  return (
+    <Router>
+      <NavLinks />
+      <App />
+    </Router>
+  )
+}`}
           </CodeBlock>
 
           <p>
@@ -155,12 +158,15 @@ const App = () => (
             response, the <IJS>children()</IJS> function also provides a good
             place to split these apart.
           </p>
-          <p>
-            If you do take this approach, please remember that you want every
-            route to set the same <IJS>body</IJS> shape. Otherwise, you'll have
-            to determine the shape and change how you render in the{" "}
-            <IJS>children()</IJS> function, which can quickly become messy.
-          </p>
+
+          <Note>
+            <p>
+              If you do take this approach, please remember that you want every
+              route to set the same <IJS>body</IJS> shape. Otherwise, you'll
+              have to determine the shape and change how you render in the{" "}
+              <IJS>children()</IJS> function, which can quickly become messy.
+            </p>
+          </Note>
 
           <CodeBlock lang="jsx" data-line="20,24,27">
             {`const routes = prepareRoutes([
@@ -179,46 +185,14 @@ const App = () => (
   // ...
 ]);
 
-const App = () => (
-  <Router>
-    {({ response, router, navigation }) => {
-      const { Main, Menu } = response.body;
-      return (
-        <React.Fragment>
-          <Menu />
-          <Main response={response} />
-        </React.Fragment>
-      );
-    }}
-  </Router>
-);`}
-          </CodeBlock>
-
-          <Note>
-            <p>
-              There is a <Cmp>Curious</Cmp> component that you can render to
-              access the <IJS>response</IJS>, <IJS>router</IJS>, and{" "}
-              <IJS>navigation</IJS> objects anywhere* in your application. This
-              can help prevent having to pass props through multiple layers of
-              components.
-            </p>
-            <p>
-              * anywhere that is a child of your <Cmp>Router</Cmp>.
-            </p>
-          </Note>
-
-          <CodeBlock lang="jsx">
-            {`import { Curious } from "@curi/react-native";
-            
-const BaseRouteName = ({ response }) => (
-  <Text>{response.name}</Text>
-);
-
-function RouteName() {
+function App() {
+  const { response } = useCuri();
+  const { Main, Menu } = response.body;
   return (
-    <Curious>
-      {({ response }) => <BaseRouteName response={response} />}
-    </Curious>
+    <React.Fragment>
+      <Menu />
+      <Main response={response} />
+    </React.Fragment>
   );
 }`}
           </CodeBlock>

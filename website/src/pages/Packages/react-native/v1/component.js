@@ -9,33 +9,33 @@ import { ActiveAPI } from "./api/active";
 import { NavigatingAPI } from "./api/navigating";
 import { BlockAPI } from "./api/block";
 
-export default class ReactNativePkg extends React.PureComponent {
-  render() {
-    return (
-      <React.Fragment>
-        <About>
-          <p>
-            The <IJS>@curi/react-native</IJS> package provides components to use
-            Curi routing in a React Native application.
-          </p>
-          <p>
-            For more information on using Curi with React Native, please check
-            out the{" "}
-            <Link name="Guide" params={{ slug: "react-native" }}>
-              React Native guide
-            </Link>
-            .
-          </p>
-        </About>
-        <APIBlock>
-          <CuriProviderAPI />
-          <LinkAPI />
-          <CuriousAPI />
-          <ActiveAPI />
-          <NavigatingAPI />
-          <BlockAPI />
-        </APIBlock>
-      </React.Fragment>
-    );
-  }
+function ReactNativePkg() {
+  return (
+    <React.Fragment>
+      <About>
+        <p>
+          The <IJS>@curi/react-native</IJS> package provides components to use
+          Curi routing in a React Native application.
+        </p>
+        <p>
+          For more information on using Curi with React Native, please check out
+          the{" "}
+          <Link name="Guide" params={{ slug: "react-native" }}>
+            React Native guide
+          </Link>
+          .
+        </p>
+      </About>
+      <APIBlock>
+        <CuriProviderAPI />
+        <LinkAPI />
+        <CuriousAPI />
+        <ActiveAPI />
+        <NavigatingAPI />
+        <BlockAPI />
+      </APIBlock>
+    </React.Fragment>
+  );
 }
+
+export default React.memo(ReactNativePkg);
