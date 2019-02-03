@@ -1,4 +1,7 @@
 import { Route, Response, Interaction } from "@curi/router";
+import { HickoryLocation } from "@hickory/root";
+
+type LocationCheck = (l: HickoryLocation) => boolean;
 
 function acceptableRouteName(
   name: string,
@@ -30,8 +33,9 @@ export default function checkIfActive(): Interaction {
     get: (
       name: string,
       response: Response,
-      params: { [key: string]: string },
-      partial: boolean
+      params?: { [key: string]: string },
+      partial?: boolean,
+      locationCheck?: LocationCheck
     ): boolean => {
       if (
         routeParams[name] == null ||
@@ -46,6 +50,9 @@ export default function checkIfActive(): Interaction {
         if (!param || param !== response.params[key]) {
           return false;
         }
+      }
+      if (locationCheck) {
+        return locationCheck(response.location);
       }
       return true;
     },
