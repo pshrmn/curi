@@ -4,7 +4,6 @@ import { curi, prepareRoutes } from "@curi/router";
 
 import { HickoryLocation } from "@hickory/root";
 
-// @ts-ignore (resolved by jest)
 import createPrefetch from "@curi/route-prefetch";
 
 describe("prefetch route interaction", () => {
@@ -118,14 +117,14 @@ describe("prefetch route interaction", () => {
       });
     });
 
-    describe("props", () => {
+    describe("match", () => {
       it("passes arguments to route's resolve function", done => {
         const routes = prepareRoutes([
           {
             name: "Player",
             path: "player/:id",
-            resolve(props) {
-              expect(props).toMatchObject({
+            resolve(match) {
+              expect(match).toMatchObject({
                 name: "Player",
                 location: locationToPass,
                 params: paramsToPass
@@ -142,9 +141,11 @@ describe("prefetch route interaction", () => {
         const paramsToPass = { id: 1 };
         const locationToPass = {} as HickoryLocation;
         router.route.prefetch("Player", {
-          name: "Player",
-          params: paramsToPass,
-          location: locationToPass
+          match: {
+            name: "Player",
+            params: paramsToPass,
+            location: locationToPass
+          }
         });
       });
     });
@@ -169,7 +170,7 @@ describe("prefetch route interaction", () => {
           route: [createPrefetch()],
           external
         });
-        router.route.prefetch("Player", {}, router.external);
+        router.route.prefetch("Player", { external: router.external });
       });
     });
   });
