@@ -1,6 +1,6 @@
 export { RouterProps } from "./curiProvider";
 export { ActiveHookProps, LocationCheck } from "./hooks/useActive";
-export * from "./types";
+export { NavigatingChildren } from "./hooks/useNavigationHandler";
 import curiProvider from "./curiProvider";
 import { Curious } from "./Context";
 import useCuri from "./hooks/useCuri";
