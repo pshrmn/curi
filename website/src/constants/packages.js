@@ -102,13 +102,22 @@ const packages = [
     globalName: "CuriRouteActive",
     type: "route interactions",
     script: true,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["route-active"]
+      v1: versions["route-active"],
+      v2: "2.0.0-alpha.0"
     },
-    import: () =>
-      import(/* webpackChunkName: 'package--route-active' */
-      `../pages/Packages/route-active/v1/index.js`)
+    import: version => {
+      switch (version) {
+        case "v1":
+          return import(/* webpackChunkName: 'package--route-active-v1' */
+          `../pages/Packages/route-active/v1/index.js`);
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--route-active-v2' */
+          `../pages/Packages/route-active/v2/index.js`);
+      }
+    }
   },
   {
     name: "route-ancestors",
