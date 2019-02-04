@@ -9,14 +9,40 @@ import {
   ScrollableTable
 } from "../../../../../components/package/common";
 
+const historyArgMeta = { title: "history", hash: "history" };
+const routesArgMeta = { title: "routes", hash: "routes" };
+const optionsArgMeta = { title: "options", hash: "options" };
 const argumentsMeta = {
   title: "Arguments",
-  hash: "arguments"
+  hash: "arguments",
+  children: [historyArgMeta, routesArgMeta, optionsArgMeta]
 };
+
+const navigateMeta = { title: "navigate(details)", hash: "navigate" };
+const onceMeta = { title: "once(fn, options)", hash: "once" };
+const observeMeta = { title: "observe(fn, options)", hash: "observe" };
+const cancelMeta = { title: "cancel(fn)", hash: "cancel-property" };
+const currentMeta = { title: "current()", hash: "current-property" };
+const routeMeta = { title: "route", hash: "router-route" };
+const refreshMeta = { title: "refresh()", hash: "refresh-property" };
+const historyMeta = { title: "history", hash: "history-property" };
+const externalMeta = { title: "external", hash: "router-external" };
 const propertiesMeta = {
   title: "Router",
-  hash: "router"
+  hash: "router",
+  children: [
+    navigateMeta,
+    onceMeta,
+    observeMeta,
+    cancelMeta,
+    currentMeta,
+    routeMeta,
+    refreshMeta,
+    historyMeta,
+    externalMeta
+  ]
 };
+
 export const meta = {
   title: "curi()",
   hash: "curi",
@@ -39,7 +65,7 @@ const router = curi(history, routes, options);`}
       </CodeBlock>
 
       <HashSection tag="h4" meta={argumentsMeta}>
-        <HashSection tag="h5" meta={{ title: "history", hash: "history" }}>
+        <HashSection tag="h5" meta={historyArgMeta}>
           <p>
             A <a href="https://github.com/pshrmn/hickory">Hickory</a> history
             object that will power navigation within the application. The{" "}
@@ -62,7 +88,7 @@ const router = curi(history, routes);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" meta={{ title: "routes", hash: "routes" }}>
+        <HashSection tag="h5" meta={routesArgMeta}>
           <p>
             An array of prepared{" "}
             <Link name="Guide" params={{ slug: "routes" }}>
@@ -81,7 +107,7 @@ const router = curi(history, routes);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" meta={{ title: "options", hash: "options" }}>
+        <HashSection tag="h5" meta={optionsArgMeta}>
           <p>
             An optional object with additional properties that can be passed to
             the router.
@@ -346,10 +372,7 @@ router.once(({ response }) => {
           your application.
         </p>
 
-        <HashSection
-          tag="h5"
-          meta={{ title: "navigate(details)", hash: "navigate" }}
-        >
+        <HashSection tag="h5" meta={navigateMeta}>
           <p>
             The <IJS>navigate()</IJS> method is used to navigate
             programmatically. It takes a <IJS>details</IJS> object with the
@@ -435,10 +458,7 @@ router.navigate({
           </CodeBlock>
         </HashSection>
 
-        <HashSection
-          tag="h5"
-          meta={{ title: "once(fn, options)", hash: "once" }}
-        >
+        <HashSection tag="h5" meta={onceMeta}>
           <p>
             The <IJS>once()</IJS> method takes a response handler function. If a
             response already exists, the function will be called immediately.
@@ -520,10 +540,7 @@ router.navigate({
           </HashSection>
         </HashSection>
 
-        <HashSection
-          tag="h5"
-          meta={{ title: "observe(fn, options)", hash: "observe" }}
-        >
+        <HashSection tag="h5" meta={observeMeta}>
           <p>
             The <IJS>observe()</IJS> method takes a response handler function.
             The response handler will be called every time a new response is
@@ -621,10 +638,7 @@ stopObserving();
           </HashSection>
         </HashSection>
 
-        <HashSection
-          tag="h5"
-          meta={{ title: "cancel(fn)", hash: "cancel-property" }}
-        >
+        <HashSection tag="h5" meta={cancelMeta}>
           <p>
             With asynchronous routes, after a user begins navigation, but before
             the route's asynchronous actions have finished, the user does not
@@ -655,10 +669,7 @@ stopObserving();
           </CodeBlock>
         </HashSection>
 
-        <HashSection
-          tag="h5"
-          meta={{ title: "current()", hash: "current-property" }}
-        >
+        <HashSection tag="h5" meta={currentMeta}>
           <p>
             The <IJS>router.current()</IJS> method returns the current{" "}
             <IJS>response</IJS> and <IJS>navigation</IJS> objects.
@@ -685,7 +696,7 @@ router.once(({ response, navigation }) => {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" meta={{ title: "route", hash: "router-route" }}>
+        <HashSection tag="h5" meta={routeMeta}>
           <p>
             The router's{" "}
             <Link name="Guide" params={{ slug: "route-interactions" }}>
@@ -719,10 +730,7 @@ const userPathname = router.route.pathname(
           </HashSection>
         </HashSection>
 
-        <HashSection
-          tag="h5"
-          meta={{ title: "refresh()", hash: "refresh-property" }}
-        >
+        <HashSection tag="h5" meta={refreshMeta}>
           <p>
             The <IJS>refresh()</IJS> function takes an array of new routes,
             which will replace the existing routes. The router will emit a new
@@ -745,13 +753,20 @@ router.refresh(newRoutes);
           </CodeBlock>
         </HashSection>
 
-        <HashSection
-          tag="h5"
-          meta={{ title: "history", hash: "history-property" }}
-        >
+        <HashSection tag="h5" meta={historyMeta}>
           <p>
             The route's history object, in case you need to interact directly
             with that.
+          </p>
+        </HashSection>
+
+        <HashSection tag="h5" meta={externalMeta}>
+          <p>
+            The <IJS>external</IJS> value that was passed through{" "}
+            <Link hash="options-external">
+              <IJS>curi</IJS>'s options
+            </Link>
+            .
           </p>
         </HashSection>
       </HashSection>

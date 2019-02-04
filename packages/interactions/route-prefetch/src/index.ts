@@ -7,6 +7,11 @@ import {
   AsyncMatchFn
 } from "@curi/router";
 
+export interface PrefetchCallOptions {
+  match?: MatchResponseProperties;
+  external?: any;
+}
+
 export default function prefetchRoute(): Interaction {
   let loaders: { [key: string]: AsyncMatchFn } = {};
 
@@ -23,8 +28,7 @@ export default function prefetchRoute(): Interaction {
     },
     get: (
       name: string,
-      props?: MatchResponseProperties,
-      external?: any
+      options: PrefetchCallOptions = {}
     ): Promise<ResolveResults> => {
       if (loaders[name] == null) {
         return Promise.resolve({
@@ -32,7 +36,7 @@ export default function prefetchRoute(): Interaction {
           resolved: null
         });
       }
-      return loaders[name](props, external).then(
+      return loaders[name](options.match, options.external).then(
         resolved => ({ resolved, error: null }),
         error => ({ error, resolved: null })
       );
