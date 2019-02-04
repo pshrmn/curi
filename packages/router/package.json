@@ -33,7 +33,6 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/helpers": "file:../helpers",
     "@hickory/root": "^1.0.0",
     "path-to-regexp": "^2.1.0"
   }
