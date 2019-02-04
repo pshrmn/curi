@@ -121,24 +121,22 @@ npm run start`}
       <HashSection meta={asyncMeta}>
         <p>
           Curi lets you attach async functions to a route through its{" "}
-          <IJS>resolve</IJS>. When that route matches, a response will not be
-          emitted until the async functions have completed.
+          <IJS>resolve</IJS> function. When that route matches, a response will
+          not be emitted until the <IJS>resolve</IJS> has resolved.
         </p>
         <p>
-          The async functions for a route are grouped under the route's{" "}
-          <IJS>resolve</IJS> object. Async functions will be passed an object of
-          the matched route properties, which you may use to specify what data
-          to load.
+          <IJS>resolve</IJS> be passed an object of the matched route
+          properties, which you may use to specify what data to load.
         </p>
         <p>
           The results of the async functions will be available in a route's{" "}
-          <IJS>response()</IJS> function through the <IJS>resolved</IJS> object.
+          <IJS>response</IJS> function through the <IJS>resolved</IJS> object.
           Each result will be stored in the object using the async function's
           name.
         </p>
         <p>
           If any of the async functions throws an uncaught error, that error
-          will be available in the <IJS>response()</IJS> function through the{" "}
+          will be available in the <IJS>response</IJS> function through the{" "}
           <IJS>error</IJS> property. That said, it is preferable for you to
           catch and handle the errors yourself.
         </p>
@@ -147,19 +145,17 @@ npm run start`}
           {`{
   name: "A Route",
   path: "route/:id",
-  resolve: {
-    component: () => import("./components/SomeComponent").then(preferDefault),
-    data: ({ params }) => fetch(\`/api/data/$\{params.id\}\`)
+  resolve({ params }) {
+    const body = import("./components/SomeComponent").then(preferDefault);
+    const data = fetch(\`/api/data/$\{params.id\}\`);
+    return Promise.all([ component, data ]);
   },
   response({ resolved, error }) {
-    // resolved = { component: ..., data: ... }
     if (error) {
       // handle an uncaught error
     }
-    return {
-      body: resolved.component,
-      data: resolved.data
-    }
+    const [body, data] = resolved;
+    return { body, data };
   }
 }`}
         </CodeBlock>
@@ -194,19 +190,17 @@ const routes = prepareRoutes([
   {
     name: "A Route",
     path: "route/:id",
-    resolve: {
-      component: () => import("./components/SomeComponent")
-        .then(preferDefault),
-      data: ({ params }) => fetch(\`/api/data/$\{params.id\}\`)
+    resolve({ params }) {
+      const body = import("./components/SomeComponent").then(preferDefault);
+      const data = fetch(\`/api/data/$\{params.id\}\`);
+      return Promise.all([ component, data ]);
     },
     response({ resolved, error }) {
       if (error) {
-        // ...
+        // handle an uncaught error
       }
-      return {
-        body: resolved.component,
-        data: resolved.data
-      }
+      const [body, data] = resolved;
+      return { body, data };
     }
   }
 ]);`}
@@ -341,10 +335,10 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
         </HashSection>
 
         <p>
-          Currently <IJS>response()</IJS> returns an object whose{" "}
-          <IJS>body</IJS> property is a module imported at the top of the file.
-          In order to add code splitting to routes, we can add a{" "}
-          <IJS>resolve</IJS> function that imports the module.
+          Currently <IJS>response</IJS> returns an object whose <IJS>body</IJS>{" "}
+          property is a module imported at the top of the file. In order to add
+          code splitting to routes, we can add a <IJS>resolve</IJS> function
+          that imports the module.
         </p>
 
         <p>
@@ -361,9 +355,9 @@ const routes = prepareRoutes([
   {
     name: "Test",
     path: "test",
-    resolve: {
-      body: () => import(/* webpackChunkName: "Test" */ "./components/Test.js")
-        .then(preferDefault)
+    resolve() {
+      return import(/* webpackChunkName: "Test" */ "./components/Test.js")
+        .then(preferDefault);
     }
   }
 ]);`}
@@ -371,11 +365,11 @@ const routes = prepareRoutes([
 
         <p>
           When a module fails to load, the error will be passed to the{" "}
-          <IJS>response()</IJS> function through the <IJS>error</IJS> property.
-          We won't be incorporating this into the application here, but in a
-          real application you probably want to have a fallback component to
-          display an error message (especially if you have an offline mode with
-          service workers).
+          <IJS>response</IJS> function through the <IJS>error</IJS> property. We
+          won't be incorporating this into the application here, but in a real
+          application you probably want to have a fallback component to display
+          an error message (especially if you have an offline mode with service
+          workers).
         </p>
 
         <CodeBlock>
@@ -385,14 +379,14 @@ const routes = prepareRoutes([
   {
     name: "One",
     path: "one",
-    resolve: {
-      body: () => import("./components/One.js")
+    resolve() {
+      return import("./components/One.js")
         .then(preferDefault)
-        .catch(err => displayLoadError(err)
+        .catch(err => displayLoadError(err);
     },
     response({ resolved }) {
       return {
-        body: resolved.body
+        body: resolved
       };
     }
   }
@@ -406,7 +400,7 @@ const routes = prepareRoutes([
           resolve the component instead of the entire module object.
         </p>
         <p>
-          The <IJS>response()</IJS> functions should also be updated to set the
+          The <IJS>response</IJS> functions should also be updated to set the
           return object's <IJS>body</IJS> property to <IJS>resolved.body</IJS>{" "}
           instead of the import at the top of the file.
         </p>
@@ -420,45 +414,45 @@ export default prepareRoutes([
   {
     name: "Home",
     path: "",
-    resolve: {
-      body: () => import("./components/Home")
-        .then(preferDefault)
+    resolve() {
+      return import("./components/Home")
+        .then(preferDefault);
     },
     response({ resolved }) {
-      return { body: resolved.body };
+      return { body: resolved };
     }
   },
   {
     name: "Book",
     path: "book/:id",
-    resolve: {
-      body: () => import("./components/Book")
-        .then(preferDefault)
+    resolve() {
+      return import("./components/Book")
+        .then(preferDefault);
     },
     response({ resolved }) {
-      return { body: resolved.body };
+      return { body: resolved };
     }
   },
   {
     name: "Checkout",
     path: "checkout",
-    resolve: {
-      body: () => import("./components/Checkout")
-        .then(preferDefault)
+    resolve() {
+      return import("./components/Checkout")
+        .then(preferDefault);
     },
     response({ resolved }) {
-      return { body: resolved.body };
+      return { body: resolved };
     }
   },
   {
     name: "Catch All",
     path: "(.*)",
-    resolve: {
-      body: () => import("./components/NotFound")
-        .then(preferDefault)
+    resolve() {
+      return import("./components/NotFound")
+        .then(preferDefault);
     },
     response({ resolved }) {
-      return { body: resolved.body };
+      return { body: resolved };
     }
   }
 ]);`}
@@ -648,7 +642,7 @@ registerServiceWorker();`}
           to load the books data <IJS>"books"</IJS>.
         </p>
         <p>
-          The <IJS>Book</IJS> route's <IJS>response()</IJS> also needs to be
+          The <IJS>Book</IJS> route's <IJS>response</IJS> also needs to be
           updated to attach the books data (<IJS>resolved.books</IJS>) to the
           response.
         </p>
@@ -672,53 +666,57 @@ export default prepareRoutes([
   {
     name: "Home",
     path: "",
-    resolve: {
-      body: () => import("./components/Home")
-        .then(preferDefault),
-      books: (match, external) => external.bookAPI.BOOKS()
+    resolve(_, external) {
+      const body = import("./components/Home")
+        .then(preferDefault);
+      const books = external.bookAPI.BOOKS();
+      return Promise.all([body, books]);
     },
     response({ resolved }) {
+      const [body, books] = resolved;
       return {
-        body: resolved.body,
-        data: { books: resolved.books }
+        body,
+        data: { books }
       };
     }
   },
   {
     name: "Book",
     path: "book/:id",
-    resolve: {
-      body: () => import("./components/Book")
-        .then(preferDefault),
-      book: ({ params }, external) => external.bookAPI.BOOK(params.id)
+    resolve({ params }, external) {
+      const body = import("./components/Book")
+        .then(preferDefault);
+      const book = external.bookAPI.BOOK(params.id);
+      return Promise.all([body, books]);
     },
     response({ resolved }) {
+      const [body, book] = resolved;
       return {
-        body: resolved.body,
-        data: { book: resolved.book }
+        body,
+        data: { book }
       };
     }
   },
   {
     name: "Checkout",
     path: "checkout",
-    resolve: {
-      body: () => import("./components/Checkout")
-        .then(preferDefault)
+    resolve() {
+      return import("./components/Checkout")
+        .then(preferDefault);
     },
     response({ resolved }) {
-      return { body: resolved.body };
+      return { body: resolved };
     }
   },
   {
     name: "Catch All",
     path: "(.*)",
-    resolve: {
-      body: () => import("./components/NotFound")
-        .then(preferDefault)
+    resolve() {
+      return import("./components/NotFound")
+        .then(preferDefault);
     },
     response({ resolved }) {
-      return { body: resolved.body };
+      return { body: resolved };
     }
   }
 ]);`}

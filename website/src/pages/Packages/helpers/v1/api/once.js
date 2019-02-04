@@ -23,8 +23,8 @@ export function OnceAPI() {
       </p>
 
       <p>
-        The <IJS>once()</IJS> function is useful for any async route{" "}
-        <IJS>resolve</IJS> functions that only need to be called once.
+        The <IJS>once()</IJS> function is useful for any async functions that
+        only need to be called once.
       </p>
 
       <Note>
@@ -37,19 +37,22 @@ export function OnceAPI() {
 
       <CodeBlock>
         {`import { once } from "@curi/helpers";
-    
+
+const cachedGetItems = once(() => api.getItems);
+
 const routes = prepareRoutes([
   {
   name: "Menu",
   path: "menu",
-  resolve: {
+  resolve() {
     // this function will be called every time the user
     // navigates to the "Menu" route
-    nonCached: () => api.getItems(),
+    const nonCached = api.getItems();
+
     // this function is only called the first time the
     // user navigates to the "Menu" route
-    cached: once(() => api.getItems)
-    }
+    const cached = cachedGetItems();
+    return Promise.all([nonCached, cached]);
   }
 ]);`}
       </CodeBlock>

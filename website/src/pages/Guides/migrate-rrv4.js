@@ -158,7 +158,7 @@ const Inbox = ({ match }) => (
 
           <p>Next, we should add our components to each route.</p>
           <p>
-            Curi routes can have a <IJS>response()</IJS> property, which is a
+            Curi routes can have a <IJS>response</IJS> property, which is a
             function that returns an object of properties to merge onto the
             response that we will be using to render. For this React
             application, we want a response's <IJS>body</IJS> property to be the
@@ -208,10 +208,8 @@ const routes = prepareRoutes([
           <p>
             With React Router v4, a component's lifecycle methods are used for
             loading data, code splitting, and other non-rendering tasks. With
-            Curi, routes can have functions that are called when they match the
-            new location. These are grouped under the route's <IJS>resolve</IJS>{" "}
-            object. The <IJS>resolve</IJS> functions are called every time that
-            a route matches a location.
+            Curi, routes can have a <IJS>resolve</IJS> function that is called
+            when thee routes matches the new location.
           </p>
           <p>
             The{" "}
@@ -250,9 +248,7 @@ const routes = prepareRoutes([
             body: Message
           };
         },
-        resolve: {
-          body: (route) => { return ... },
-        }
+        resolve(match) { return ... },
       }
     ]
   }
@@ -415,7 +411,7 @@ const Inbox = ({ match }) => (
             </li>
           </ol>
           <p>
-            Above, we added <IJS>response()</IJS> functions to each route. The
+            Above, we added <IJS>response</IJS> functions to each route. The
             functions set React components as the <IJS>body</IJS> property of
             responses. We can now use <IJS>response.body</IJS> to render those
             components.

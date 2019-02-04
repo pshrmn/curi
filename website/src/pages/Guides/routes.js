@@ -160,28 +160,26 @@ function RoutesGuide() {
             path parameters parsed from the location.
           </p>
           <p>
-            A route's <IJS>resolve</IJS> property is an optional object for
-            attaching functions to a route. A response will not be emitted until
-            after all of a route's <IJS>resolve</IJS> functions have finished.
+            A route's <IJS>resolve</IJS> property is a function that runs
+            asynchronous actions and returns a Promise. A response will not be
+            emitted until after a route's <IJS>resolve</IJS> function has
+            resolved.
           </p>
 
           <CodeBlock>
             {`{
   name: "User",
   path: "u/:id",
-  resolve: {
-    authorized: () => {
-      // run code to verify the user can view the page
-      return Promise.resolve(true);
-    },
-    body: () => {
-      // import the User component using the import() API
-      return import("./components/User");
-    },
-    data: ({ name, location, params, partials }) => {
-      // get specific data using the route's params
-      return UserAPI.get(params.id);
-    }
+  resolve({ params }) {
+    // run code to verify the user can view the page
+    const authorized = Promise.resolve(true);
+
+    // import the User component using the import() API
+    const body = import("./components/User");
+    
+    // get specific data using the route's params
+    const data = UserAPI.get(params.id);
+    return Promise.all([ authorized, body, data ]);
   }
 }`}
           </CodeBlock>
@@ -198,10 +196,10 @@ function RoutesGuide() {
 
         <HashSection meta={responseMeta} tag="h3">
           <p>
-            Each route can have a <IJS>response()</IJS> function. When a route
+            Each route can have a <IJS>response</IJS> function. When a route
             matches, a response object with "match" properties is generated. An
-            object returned by the <IJS>response()</IJS> function gets merged
-            with the match response object*. The{" "}
+            object returned by the <IJS>response</IJS> function gets merged with
+            the match response object*. The{" "}
             <Link name="Guide" params={{ slug: "responses" }}>
               responses guide
             </Link>{" "}
@@ -213,8 +211,8 @@ function RoutesGuide() {
           </p>
 
           <p>
-            The <IJS>response()</IJS> function receives an object with a number
-            of properties.
+            The <IJS>response</IJS> function receives an object with a number of
+            properties.
           </p>
 
           <ol>
@@ -227,9 +225,8 @@ function RoutesGuide() {
               <IJS>resolve</IJS> functions.
             </li>
             <li>
-              <IJS>error</IJS> is only defined when one of the{" "}
-              <IJS>resolve</IJS> functions throws an error does not catch it
-              itself.
+              <IJS>error</IJS> is only defined when the <IJS>resolve</IJS>{" "}
+              function has an uncaught error.
             </li>
           </ol>
 
@@ -240,8 +237,8 @@ const routes = prepareRoutes([
   {
     name: "User",
     path: "u/:id",
-    resolve: {
-      data: ({ params }) => UserAPI.get(params.id)
+    resolve({ params }) {
+      return UserAPI.get(params.id);
     },
     response({ match, resolved, error }) {
       if (error) {

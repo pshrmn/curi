@@ -400,8 +400,8 @@ export default prepareRoutes([
   {
     name: "Test",
     path: "test",
-    resolve: {
-      data: () => fetch("/test-data")
+    resolve() {
+      return fetch("/test-data");
     }
   }
 ]);`}

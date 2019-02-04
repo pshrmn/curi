@@ -533,9 +533,9 @@ new Vue({
 
         <p>
           Earlier it was mentioned that response objects can be modified. This
-          is done by returning an object from a route's <IJS>response()</IJS>{" "}
-          function. <IJS>response()</IJS> receives an object with a whole bunch
-          of properties that we can use to help determine how to modify the
+          is done by returning an object from a route's <IJS>response</IJS>{" "}
+          function. <IJS>response</IJS> receives an object with a whole bunch of
+          properties that we can use to help determine how to modify the
           response, but for the time being, we don't care about any of those.
           All we need to know is that if we return an object with a{" "}
           <IJS>body</IJS> property, that value will be set on our response

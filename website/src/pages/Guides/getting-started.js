@@ -182,9 +182,9 @@ router.once(() => {
         </CodeBlock>
 
         <p>
-          If you have any asynchronous routes (route objects with{" "}
-          <IJS>resolve</IJS> functions), <IJS>router.once()</IJS> should be used
-          to delay the initial render until after the initial response is ready.
+          If you have any asynchronous routes (a route with a <IJS>resolve</IJS>{" "}
+          function), <IJS>router.once()</IJS> should be used to delay the
+          initial render until after the initial response is ready.
         </p>
 
         <CodeBlock>

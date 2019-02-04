@@ -77,48 +77,75 @@ export function RoutePropertiesAPI() {
 
       <HashSection meta={{ title: "route.resolve", hash: "resolve" }} tag="h3">
         <p>
-          The <IJS>resolve</IJS> object groups async functions that will be
-          called when the route matches.
+          The <IJS>resolve</IJS> property is a function that returns a Promise.
+          It is used to run asynchronous actions for a route prior to rendering.
         </p>
+
         <p>
-          A route with any <IJS>resolve</IJS> functions is asynchronous, while
-          one with no <IJS>resolve</IJS> functions is synchronous. You can read
-          more about this is the{" "}
+          A route with a <IJS>resolve</IJS> function is asynchronous, while one
+          with no <IJS>resolve</IJS> functions is synchronous. You can read more
+          about this in the{" "}
           <Link name="Guide" params={{ slug: "sync-or-async" }}>
             sync or async
           </Link>{" "}
           guide.
         </p>
+
         <p>
-          <IJS>resolve</IJS> functions are called every time that a route
+          The <IJS>resolve</IJS> function is called every time that a route
           matches the current location.
         </p>
+
         <p>
-          <IJS>resolve</IJS> functions will be passed an object with the matched
-          route properties: <IJS>name</IJS>, <IJS>params</IJS>,{" "}
-          <IJS>partials</IJS>, and <IJS>location</IJS>.
+          The function will be passed an object with the matched route
+          properties: <IJS>name</IJS>, <IJS>params</IJS>, <IJS>partials</IJS>,
+          and <IJS>location</IJS>.
         </p>
-        <Note>
-          <p>
-            You should not perform side effects (e.g. passing the loaded data to
-            a Redux store) in <IJS>resolve</IJS> functions because it is
-            possible that navigating to the route might be cancelled. If you
-            must perform side effects for a route, you should do so in{" "}
-            <IJS>response</IJS>.
-          </p>
-        </Note>
 
         <CodeBlock>
           {`const about = {
   name: 'About',
   path: 'about',
-  resolve: {
-    body: () => import('./components/About'),
-    data: () => fetch('/api/about')
+  resolve({ name, params, partials, location }) {
+    return Promise.resolve("hurray!");
+  }
+};`}
+        </CodeBlock>
+
+        <Note>
+          <p>
+            You should not perform side effects (e.g. passing the loaded data to
+            a Redux store) in <IJS>resolve</IJS> because it is possible that
+            navigating to the route might be cancelled. If you must perform side
+            effects for a route, you should do so in the route's{" "}
+            <IJS>response</IJS> function.
+          </p>
+        </Note>
+
+        <p>
+          The value resolved by the <IJS>resolve</IJS> function will be passed
+          to the route's <IJS>response</IJS> function through its{" "}
+          <IJS>resolved</IJS> property. If there is an uncaught error,{" "}
+          <IJS>resolved</IJS> will be <IJS>null</IJS> and the <IJS>error</IJS>{" "}
+          will be passed.
+        </p>
+
+        <CodeBlock>
+          {`const about = {
+  name: 'About',
+  path: 'about',
+  resolve({ name, params, partials, location }) {
+    return Promise.resolve("hurray!");
+  },
+  response({ resolved, error }) {
+    if (error) {
+      // there was an uncaught error in the resolve function
+    }
   }
 };`}
         </CodeBlock>
       </HashSection>
+
       <HashSection meta={{ title: "route.response()", hash: "response" }}>
         <p>
           A function for modifying the response object. This returns an object
@@ -173,14 +200,14 @@ const routes = prepareRoutes([
           <li>
             <p>
               <IJS>error</IJS> - If an error occurs with the route's{" "}
-              <IJS>resolve</IJS> methods, you might want to attach an error
+              <IJS>resolve</IJS> function, you might want to attach an error
               message to the response.
             </p>
 
             <CodeBlock>
               {`{
-  resolve: {
-    test: () => Promise.reject("woops!")
+  resolve() {
+    return Promise.reject("woops!");
   },
   response({ error }) {
     return { error };
@@ -262,107 +289,92 @@ const routes = prepareRoutes([
 
         <CodeBlock>
           {`{
-  response: ({ match, resolved }) => {
+  response: ({ match, resolved, error }) => {
     // ...
   }
 }`}
         </CodeBlock>
 
-        <ul>
-          <HashSection
-            wrapper="li"
-            meta={{ title: "match", hash: "response-match" }}
-            tag="h3"
-          >
-            <p>An object with the matched route properties of a response.</p>
-            <ScrollableTable>
-              <thead>
-                <tr>
-                  <th>property</th>
-                  <th>description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>name</td>
-                  <td>the name of the matched route</td>
-                </tr>
-                <tr>
-                  <td>params</td>
-                  <td>route parameters parsed from the location</td>
-                </tr>
-                <tr>
-                  <td>partials</td>
-                  <td>the names of any ancestor routes of the matched route</td>
-                </tr>
-                <tr>
-                  <td>location</td>
-                  <td>the location that was used to match the route</td>
-                </tr>
-                <tr>
-                  <td>key</td>
-                  <td>
-                    the location's <IJS>key</IJS>, which is a unique identifier
-                  </td>
-                </tr>
-              </tbody>
-            </ScrollableTable>
-          </HashSection>
+        <HashSection meta={{ title: "match", hash: "response-match" }} tag="h3">
+          <p>An object with the matched route properties of a response.</p>
+          <ScrollableTable>
+            <thead>
+              <tr>
+                <th>property</th>
+                <th>description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>name</td>
+                <td>the name of the matched route</td>
+              </tr>
+              <tr>
+                <td>params</td>
+                <td>route parameters parsed from the location</td>
+              </tr>
+              <tr>
+                <td>partials</td>
+                <td>the names of any ancestor routes of the matched route</td>
+              </tr>
+              <tr>
+                <td>location</td>
+                <td>the location that was used to match the route</td>
+              </tr>
+              <tr>
+                <td>key</td>
+                <td>
+                  the location's <IJS>key</IJS>, which is a unique identifier
+                </td>
+              </tr>
+            </tbody>
+          </ScrollableTable>
+        </HashSection>
 
-          <HashSection
-            wrapper="li"
-            meta={{ title: "resolved", hash: "response-resolved" }}
-            tag="h3"
-          >
-            <p>
-              <IJS>resolved</IJS> is an object with the values resolved by the{" "}
-              <IJS>resolve</IJS> functions.
-            </p>
-            <p>
-              If a route isn't async, <IJS>resolved</IJS> will be{" "}
-              <IJS>null</IJS>.
-            </p>
+        <HashSection
+          meta={{ title: "resolved", hash: "response-resolved" }}
+          tag="h3"
+        >
+          <p>
+            <IJS>resolved</IJS> is an object with the values resolved by the{" "}
+            <IJS>resolve</IJS> functions.
+          </p>
+          <p>
+            If a route isn't async, <IJS>resolved</IJS> will be <IJS>null</IJS>.
+          </p>
 
-            <CodeBlock>
-              {`// attach resolved data to the response
+          <CodeBlock>
+            {`// attach resolved data to the response
 const user = {
   name: 'User',
   path: ':id',
-  resolve: {
-    data: ({ params, location }) => (
-      fetch(\`/api/users/$\{params.id\}\`)
-        .then(resp => JSON.parse(resp))
-    ),
+  resolve({ params, location }) {
+    return fetch(\`/api/users/$\{params.id\}\`)
+      .then(resp => JSON.parse(resp));
   },
   response: ({ resolved }) => {
     return {
-      data: resolved.data
+      data: resolved
     };
   }
 }`}
-            </CodeBlock>
-          </HashSection>
+          </CodeBlock>
+        </HashSection>
 
-          <HashSection
-            wrapper="li"
-            meta={{ title: "error", hash: "response-error" }}
-            tag="h3"
-          >
-            <p>
-              <IJS>error</IJS> is an error thrown by one of the route's{" "}
-              <IJS>resolve</IJS> functions.
-            </p>
+        <HashSection meta={{ title: "error", hash: "response-error" }} tag="h3">
+          <p>
+            <IJS>error</IJS> is an uncaught error thrown by the route's{" "}
+            <IJS>resolve</IJS> function.
+          </p>
 
-            <CodeBlock>
-              {`// check if any of a route's resolve functions threw
+          <CodeBlock>
+            {`// check if any of a route's resolve functions threw
 const user = {
   name: 'User',
   path: ':id',
-  resolve: {
-    data: ({ params, location }) => (
-      fetch(\`/api/users/$\{params.id\}\`)
-        .then(resp => JSON.parse(resp))
-    ),
+  resolve({ params, location }) {
+    return fetch(\`/api/users/$\{params.id\}\`)
+      .then(resp => JSON.parse(resp));
   },
   response: ({ error, resolved }) => {
     if (error) {
@@ -373,9 +385,8 @@ const user = {
     };
   }
 }`}
-            </CodeBlock>
-          </HashSection>
-        </ul>
+          </CodeBlock>
+        </HashSection>
       </HashSection>
 
       <HashSection meta={{ title: "children", hash: "children" }} tag="h3">
