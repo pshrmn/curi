@@ -8,8 +8,8 @@ const packages = [
     script: true,
     latest: "v2",
     versions: {
-      v1: versions["router"],
-      v2: "2.0.0-alpha.0"
+      v1: "1.1.1",
+      v2: versions["router"]
     },
     import: version => {
       switch (version) {
@@ -30,8 +30,8 @@ const packages = [
     script: true,
     latest: "v2",
     versions: {
-      v1: versions["react-dom"],
-      v2: "2.0.0-alpha.0"
+      v1: "1.2.1",
+      v2: versions["react-dom"]
     },
     import: version => {
       switch (version) {
@@ -53,8 +53,8 @@ const packages = [
     script: false,
     latest: "v2",
     versions: {
-      v1: versions["react-native"],
-      v2: "2.0.0-alpha.0"
+      v1: "1.1.1",
+      v2: versions["react-native"]
     },
     import: version => {
       switch (version) {
@@ -104,8 +104,8 @@ const packages = [
     script: true,
     latest: "v2",
     versions: {
-      v1: versions["route-active"],
-      v2: "2.0.0-alpha.0"
+      v1: "1.1.0",
+      v2: versions["route-active"]
     },
     import: version => {
       switch (version) {
@@ -141,8 +141,8 @@ const packages = [
     script: true,
     latest: "v2",
     versions: {
-      v1: versions["route-prefetch"],
-      v2: "2.0.0-alpha.0"
+      v1: "1.1.0",
+      v2: versions["route-prefetch"]
     },
     import: version => {
       switch (version) {
