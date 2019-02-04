@@ -187,12 +187,12 @@ const Noun = ({ response }) => (
       <HashSection meta={tightMeta}>
         <p>
           You can use your Apollo client instance to call queries in a route's{" "}
-          <IJS>resolve</IJS> functions. <IJS>resolve</IJS> functions are
-          expected to return a Promise, which is exactly what{" "}
-          <IJS>client.query()</IJS> returns. Tightly pairing Curi and Apollo is
-          mostly center around using a <IJS>resolve</IJS> function to return a{" "}
-          <IJS>client.query()</IJS> call. This will delay navigation until after
-          a route's GraphQL data has been loaded by Apollo.
+          <IJS>resolve</IJS> function. <IJS>resolve</IJS> is expected to return
+          a Promise, which is exactly what <IJS>client.query()</IJS> returns.
+          Tightly pairing Curi and Apollo is mostly center around using{" "}
+          <IJS>resolve</IJS> to return a <IJS>client.query()</IJS> call. This
+          will delay navigation until after a route's GraphQL data has been
+          loaded by Apollo.
         </p>
 
         <p>
@@ -214,13 +214,11 @@ const routes = prepareRoutes([
   {
     name: "Example",
     path: "example/:id",
-    resolve: {
-      data({ params }, external) {
-        return external.client.query({
-          query: EXAMPLE_QUERY,
-          variables: { id: params.id }
-        });
-      }
+    resolve({ params }, external) {
+      return external.client.query({
+        query: EXAMPLE_QUERY,
+        variables: { id: params.id }
+      });
     }
   }
 ]);`}
@@ -230,13 +228,13 @@ const routes = prepareRoutes([
 
         <p>
           The first approach is to avoid the <Cmp>Query</Cmp> altogether.
-          Instead, you can use a route's <IJS>response()</IJS> property to
-          attach the data fetched by Apollo directly to a response through its{" "}
+          Instead, you can use a route's <IJS>response</IJS> property to attach
+          the data fetched by Apollo directly to a response through its{" "}
           <IJS>data</IJS> property.
         </p>
         <p>
           While we know at this point that the query has executed, we should
-          also check <IJS>error</IJS> in the <IJS>response()</IJS> function to
+          also check <IJS>error</IJS> in the <IJS>response</IJS> function to
           ensure that the query was executed successfully.
         </p>
 
@@ -250,13 +248,11 @@ export default [
   {
     name: "Verb",
     path: "verb/:word",
-    resolve: {
-      verb({ params }, external) {
-        return external.client.query({
-          query: GET_VERB,
-          variables: { word: params.word }
-        })
-      }
+    resolve({ params }, external) {
+      return external.client.query({
+        query: GET_VERB,
+        variables: { word: params.word }
+      });
     },
     response({ error, resolved }) {
       if (error) {
@@ -289,7 +285,7 @@ const Verb = ({ response }) => (
         </CodeBlock>
 
         <p>
-          The second approach is to use a <IJS>resolve</IJS> function as a way
+          The second approach is to use the <IJS>resolve</IJS> function as a way
           to cache the data, but also use <Cmp>Query</Cmp>. With this approach,
           we do not have to attach the query data to the response; we are just
           relying on the fact that Apollo will execute and cache the results
@@ -304,15 +300,13 @@ export default [
   {
     name: "Verb",
     path: "verb/:word",
-    resolve: {
-      data({ params, external }) {
-        // load the data so it is cached by
-        // your Apollo client
-        return external.client.query({
-          query: GET_VERB,
-          variables: { word: params.word }
-        })
-      }
+    resolve({ params, external }) {
+      // load the data so it is cached by
+      // your Apollo client
+      return external.client.query({
+        query: GET_VERB,
+        variables: { word: params.word }
+      });
     }
   }
 ];`}
@@ -352,8 +346,7 @@ const Verb = ({ response }) => (
         <HashSection meta={prefetchMeta} tag="h3">
           <p>
             One additional benefit of adding queries to routes using{" "}
-            <IJS>resolve</IJS> functions is that you can prefetch data for a
-            route.
+            <IJS>resolve</IJS> is that you can prefetch data for a route.
           </p>
 
           <p>
@@ -376,13 +369,11 @@ const routes = prepareRoutes([
   {
     name: "Example",
     path: "example/:id",
-    resolve: {
-      examples({ params }, external) {
-        return external.client.query({
-          query: GET_EXAMPLES,
-          variables: { id: params.id }
-        })
-      }
+    resolve({ params }, external) {
+      return external.client.query({
+        query: GET_EXAMPLES,
+        variables: { id: params.id }
+      });
     }
   }
 ]);

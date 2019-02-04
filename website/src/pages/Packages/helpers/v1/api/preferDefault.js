@@ -31,12 +31,12 @@ const routes = prepareRoutes([
   {
     name: "Menu",
     path: "menu",
-    resolve: {
-      body: import("./components/Menu")
-        .then(preferDefault)
+    resolve() {
+      return import("./components/Menu")
+        .then(preferDefault);
     },
     response({ resolved }) {
-      return { body: resolved.body }
+      return { body: resolved }
     }
   }
 ]);`}

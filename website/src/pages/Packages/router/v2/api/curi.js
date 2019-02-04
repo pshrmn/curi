@@ -183,7 +183,7 @@ const router = curi(history, routes, {
           >
             <p>
               Values that should be accessible to a route's <IJS>resolve</IJS>{" "}
-              functions and <IJS>response</IJS> function.
+              function <IJS>response</IJS> functions.
             </p>
             <p>
               Using <IJS>external</IJS> allows you to access APIs, data, etc.
@@ -202,11 +202,9 @@ const router = curi(history, routes, {
   {
     name: "User",
     path: "user/:id",
-    resolve: {
-      data(match, external) {
-        // use the external object to make a query
-        return external.client.query()
-      }
+    resolve(match, external) {
+      // use the external object to make a query
+      return external.client.query();
     }
   }
 ]);`}
@@ -476,8 +474,8 @@ router.navigate({
           </ScrollableTable>
 
           <p>
-            When a matched route is async (it has <IJS>resolve</IJS> functions),
-            a response will not be created until the async function(s) have
+            When a matched route is async (it has a <IJS>resolve</IJS>{" "}
+            function), a response will not be created until the function has
             resolved.
           </p>
 
@@ -562,8 +560,8 @@ router.navigate({
           </ScrollableTable>
 
           <p>
-            When a matched route is async (it has <IJS>resolve</IJS> functions),
-            a response will not be created until the async function(s) have
+            When a matched route is async (it has a <IJS>resolve</IJS>{" "}
+            function), a response will not be created until the function has
             resolved.
           </p>
 

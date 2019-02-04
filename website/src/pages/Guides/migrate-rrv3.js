@@ -215,7 +215,7 @@ function MigrateReactRouterv3Guide() {
             With Curi, the router creates a "response" object when it matches
             locations. Some of the properties of the response are automatically
             set based on the location and the matching route. Others can be set
-            by a route. This is done using the <IJS>response()</IJS> property,
+            by a route. This is done using the <IJS>response</IJS> property,
             which is a function that returns an object whose properties will be
             added to the response. For this React application, we want a
             response's <IJS>body</IJS> property to be the React component
@@ -269,11 +269,11 @@ const routes = prepareRoutes([
           <p>
             We are close to replicating our React Router routes, but we still
             need to implement the <IJS>on___</IJS> methods for our 
-            <IJS>:message</IJS> route. With Curi, routes can have functions that
-            are called when they match the new location. These are grouped under
-            the route's <IJS>resolve</IJS> object. The <IJS>resolve</IJS>{" "}
-            functions are called every time that a route matches a location.
+            <IJS>:message</IJS> route. With Curi, routes can have a{" "}
+            <IJS>resolve</IJS> function that is called when the route matches
+            the new location.
           </p>
+
           <p>
             With React Router, <IJS>onEnter</IJS> is called when the route first
             matches, while <IJS>onChange</IJS> is called when the same route
@@ -285,13 +285,13 @@ const routes = prepareRoutes([
             <IJS>onChange</IJS> can be covered using a <IJS>resolve</IJS>{" "}
             function.
           </p>
+
           <p>
-            There currently is no equivalent to <IJS>onLeave</IJS> with Curi.
-            This is mostly because I haven’t seen a compelling need for it. It
-            certainly could be implemented, but so far I have not found a reason
-            to use that. If you have something you need this functionality for,
-            please open up an issue in the GitHub repo.
+            There is no equivalent to <IJS>onLeave</IJS> with Curi. If you have
+            something you need this functionality for, please open up an issue
+            in the GitHub repo.
           </p>
+
           <p>
             The{" "}
             <Link
@@ -332,9 +332,7 @@ const routes = prepareRoutes([
             body: Message
           };
         },
-        resolve: {
-          data: (route) => { return ... },
-        }
+        resolve(match) { return ... },
       }
     ]
   }
@@ -463,7 +461,7 @@ const router = curi(history, routes);`}
             </li>
           </ol>
           <p>
-            Above, we added <IJS>response()</IJS> functions to each route. The
+            Above, we added <IJS>response</IJS> functions to each route. The
             functions set React components as the <IJS>body</IJS> property of
             responses. We can now use <IJS>response.body</IJS> to render those
             components.

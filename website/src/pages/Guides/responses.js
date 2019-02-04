@@ -74,8 +74,8 @@ function ResponsesGuide() {
 
         <p>
           The "settable" properties are ones that are added by a matched route's{" "}
-          <IJS>response()</IJS> function. These only exist on the response when
-          they are returned by a route's <IJS>response()</IJS> function.
+          <IJS>response</IJS> function. These only exist on the response when
+          they are returned by a route's <IJS>response</IJS> function.
         </p>
         <p>The "settable" properties are:</p>
 
@@ -99,7 +99,7 @@ function ResponsesGuide() {
               <td>data</td>
               <td>
                 A place to attach any data you want to the response, such as
-                data loaded in the route's <IJS>resolve</IJS> functions.
+                data loaded in the route's <IJS>resolve</IJS> function.
               </td>
             </tr>
             <tr>
@@ -157,7 +157,7 @@ function ResponsesGuide() {
       <HashSection meta={bodyMeta}>
         <p>
           Curi isn't strict about how you use responses, but you will most
-          likely always want to use a route's <IJS>response()</IJS> function to
+          likely always want to use a route's <IJS>response</IJS> function to
           attach a <IJS>body</IJS> property to a response. The usual pattern is
           to use a route's <IJS>body</IJS> property to describe which
           component(s) to render when a route matches. This can either be a
@@ -204,7 +204,7 @@ const routes = prepareRoutes([
 
       <HashSection meta={redirectMeta}>
         <p>
-          When a route's <IJS>response()</IJS> function returns an object with a{" "}
+          When a route's <IJS>response</IJS> function returns an object with a{" "}
           <Link
             name="Package"
             params={{ package: "router", version: "v1" }}

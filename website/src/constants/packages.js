@@ -6,13 +6,22 @@ const packages = [
     globalName: "Curi",
     type: "router",
     script: true,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["router"]
+      v1: versions["router"],
+      v2: "2.0.0-alpha.0"
     },
-    import: () =>
-      import(/* webpackChunkName: 'package--router' */
-      `../pages/Packages/router/v1/index.js`)
+    import: version => {
+      switch (version) {
+        case "v1":
+          return import(/* webpackChunkName: 'package--router-v1' */
+          `../pages/Packages/router/v1/index.js`);
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--router-v2' */
+          `../pages/Packages/router/v2/index.js`);
+      }
+    }
   },
   {
     name: "react-dom",

@@ -40,29 +40,27 @@ export default prepareRoutes([
       {
         name: "Tutorial",
         path: ":slug/",
-        resolve: {
-          all({ params }) {
-            const tutorial = TUTORIAL_API.find(params.slug);
-            const body = import(/* webpackChunkName: 'tutorial', webpackPrefetch: true */
-            "./components/routes/Tutorial").then(
-              preferDefault,
-              catchImportError("tutorial")
-            );
-            const content = tutorial
-              ? tutorial
-                  .import()
-                  .catch(catchImportError(`tutorial: ${params.slug}`))
-              : import(/* webpackChunkName: 'tutorial404' */
-                "./pages/Tutorials/404.js").then(
-                  preferDefault,
-                  catchImportError("tutorial 404")
-                );
-            return Promise.all([body, content]);
-          }
+        resolve({ params }) {
+          const tutorial = TUTORIAL_API.find(params.slug);
+          const body = import(/* webpackChunkName: 'tutorial', webpackPrefetch: true */
+          "./components/routes/Tutorial").then(
+            preferDefault,
+            catchImportError("tutorial")
+          );
+          const content = tutorial
+            ? tutorial
+                .import()
+                .catch(catchImportError(`tutorial: ${params.slug}`))
+            : import(/* webpackChunkName: 'tutorial404' */
+              "./pages/Tutorials/404.js").then(
+                preferDefault,
+                catchImportError("tutorial 404")
+              );
+          return Promise.all([body, content]);
         },
         response: ({ match, resolved }) => {
           const tutorial = TUTORIAL_API.find(match.params.slug);
-          const [body, content] = resolved.all;
+          const [body, content] = resolved;
           return {
             body: body,
             data: {
@@ -89,27 +87,25 @@ export default prepareRoutes([
       {
         name: "Guide",
         path: ":slug/",
-        resolve: {
-          all({ params }) {
-            const body = import(/* webpackChunkName: 'guide', webpackPrefetch: true */
-            "./components/routes/Guide").then(
-              preferDefault,
-              catchImportError(`guide`)
-            );
-            const guide = GUIDE_API.find(params.slug);
-            const content = guide
-              ? guide.import().catch(catchImportError(`guide: ${params.slug}`))
-              : import(/* webpackChunkName: 'guide404' */
-                "./pages/Guides/404.js").then(
-                  preferDefault,
-                  catchImportError(`guide 404`)
-                );
-            return Promise.all([body, content]);
-          }
+        resolve({ params }) {
+          const body = import(/* webpackChunkName: 'guide', webpackPrefetch: true */
+          "./components/routes/Guide").then(
+            preferDefault,
+            catchImportError(`guide`)
+          );
+          const guide = GUIDE_API.find(params.slug);
+          const content = guide
+            ? guide.import().catch(catchImportError(`guide: ${params.slug}`))
+            : import(/* webpackChunkName: 'guide404' */
+              "./pages/Guides/404.js").then(
+                preferDefault,
+                catchImportError(`guide 404`)
+              );
+          return Promise.all([body, content]);
         },
         response: ({ match, resolved }) => {
           const guide = GUIDE_API.find(match.params.slug);
-          const [body, content] = resolved.all;
+          const [body, content] = resolved;
           return {
             body: body,
             data: {
@@ -134,29 +130,27 @@ export default prepareRoutes([
       {
         name: "Package",
         path: "@curi/:package/:version(v\\d)?/",
-        resolve: {
-          all({ params }) {
-            const pkg = PACKAGE_API.find(params.package);
-            if (!pkg) {
-              return Promise.reject("Package does not exist");
-            }
-
-            const body = import(/* webpackChunkName: 'package', webpackPrefetch: true */
-            "./components/routes/Package").then(
-              preferDefault,
-              catchImportError(`package`)
-            );
-            const content = pkg
-              ? pkg
-                  .import(params.version)
-                  .catch(catchImportError(`package: ${params.package}`))
-              : import(/* webpackChunkName: 'package404' */
-                "./pages/Packages/404.js").then(
-                  preferDefault,
-                  catchImportError(`package 404`)
-                );
-            return Promise.all([body, content]);
+        resolve({ params }) {
+          const pkg = PACKAGE_API.find(params.package);
+          if (!pkg) {
+            return Promise.reject("Package does not exist");
           }
+
+          const body = import(/* webpackChunkName: 'package', webpackPrefetch: true */
+          "./components/routes/Package").then(
+            preferDefault,
+            catchImportError(`package`)
+          );
+          const content = pkg
+            ? pkg
+                .import(params.version)
+                .catch(catchImportError(`package: ${params.package}`))
+            : import(/* webpackChunkName: 'package404' */
+              "./pages/Packages/404.js").then(
+                preferDefault,
+                catchImportError(`package 404`)
+              );
+          return Promise.all([body, content]);
         },
         response: ({ match, error, resolved }) => {
           // for unknown packages, redirect to Packages list
@@ -169,7 +163,7 @@ export default prepareRoutes([
           }
 
           const pkg = PACKAGE_API.find(match.params.package);
-          const [body, content] = resolved.all;
+          const [body, content] = resolved;
 
           // for unknown versions, redirect to current version
           if (
@@ -213,35 +207,31 @@ export default prepareRoutes([
       {
         name: "Example",
         path: ":category/:slug/",
-        resolve: {
-          all({ params }) {
-            const example = EXAMPLE_API.find(params.category, params.slug);
-            const body = import(/* webpackChunkName: 'example', webpackPrefetch: true */
-            "./components/routes/Example").then(
-              preferDefault,
-              catchImportError(`example`)
-            );
-            const content = example
-              ? example
-                  .import()
-                  .then(
-                    preferDefault,
-                    catchImportError(
-                      `example: ${params.category}/${params.slug}`
-                    )
-                  )
-              : import(/* webpackChunkName: 'example404' */
-                "./pages/Examples/404.js").then(
+        resolve({ params }) {
+          const example = EXAMPLE_API.find(params.category, params.slug);
+          const body = import(/* webpackChunkName: 'example', webpackPrefetch: true */
+          "./components/routes/Example").then(
+            preferDefault,
+            catchImportError(`example`)
+          );
+          const content = example
+            ? example
+                .import()
+                .then(
                   preferDefault,
-                  catchImportError(`example 404`)
-                );
-            return Promise.all([body, content]);
-          }
+                  catchImportError(`example: ${params.category}/${params.slug}`)
+                )
+            : import(/* webpackChunkName: 'example404' */
+              "./pages/Examples/404.js").then(
+                preferDefault,
+                catchImportError(`example 404`)
+              );
+          return Promise.all([body, content]);
         },
         response: ({ match, resolved }) => {
           const { category, slug } = match.params;
           const example = EXAMPLE_API.find(category, slug);
-          const [body, content] = resolved.all;
+          const [body, content] = resolved;
           return {
             body,
             data: {
