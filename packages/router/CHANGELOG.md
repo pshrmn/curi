@@ -1,3 +1,11 @@
+## Next
+
+* `route.resolve` is now a single function.
+* Routes array passed to `curi` must be prepared using `prepareRoutes`.
+* Expose the `external` value passed to `curi` options through `external` property.
+* Remove deprecated `pathname` and `once` exports.
+* Route paths that begin with a forward slash are no longer fixed for you. This will throw in development for easier detection.
+
 ## 1.1.1
 
 * `router.navigate()` returns a function that will clear the active navigation's callbacks.

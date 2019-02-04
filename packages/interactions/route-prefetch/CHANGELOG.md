@@ -1,3 +1,8 @@
+## Next
+
+* Added third argument, `external`, for route's whose `resolve` function uses the router's `external` value.
+* Removed `which` option since `route.resolve` is now a single function.
+
 ## 1.1.0
 
 * No longer warns when adding duplicate route name (should be caught be `prepareRoutes`).
