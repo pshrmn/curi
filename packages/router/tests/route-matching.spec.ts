@@ -37,11 +37,11 @@ describe("route matching/response generation", () => {
     });
 
     describe("no matching routes", () => {
-      const realError = console.error;
-      const fakeError = (console.error = jest.fn());
+      const realWarn = console.warn;
+      const fakeWarn = (console.warn = jest.fn());
 
       afterAll(() => {
-        console.error = realError;
+        console.error = realWarn;
       });
 
       it("no response is emitted", () => {
@@ -61,7 +61,7 @@ describe("route matching/response generation", () => {
         const observer = jest.fn();
 
         router.once(observer);
-        expect(fakeError.mock.calls[0][0]).toBe(
+        expect(fakeWarn.mock.calls[0][0]).toBe(
           `The current location (/test) has no matching route, so a response could not be emitted. A catch-all route ({ path: "(.*)" }) can be used to match locations with no other matching route.`
         );
       });

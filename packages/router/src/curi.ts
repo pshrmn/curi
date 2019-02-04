@@ -105,7 +105,7 @@ export default function createRouter(
     // if no routes match, do nothing
     if (!match.route) {
       if (process.env.NODE_ENV !== "production") {
-        console.error(
+        console.warn(
           `The current location (${
             pendingNav.location.pathname
           }) has no matching route, ` +
