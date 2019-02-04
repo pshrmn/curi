@@ -1,3 +1,8 @@
+## Next
+
+* Optional arguments (`partial`, `params`, and `locationCheck`) are now grouped in the third argument.
+* Add `locationCheck` to check non-pathname segments of the response's location.
+
 ## 1.1.0
 
 * No longer warns when adding duplicate route name (should be caught be `prepareRoutes`).

@@ -1,3 +1,16 @@
+## Next
+
+* Use hooks in `Router` (component created by `curiProvider`).
+* Add `useCuri` React hook for reading context.
+* Add `useActive` React hook for checking if a route is "active".
+* Add `useBlock` React hook for blocking navigation.
+* Add `useNavigating` React hook for cancelling async navigation.
+* Add `useHref` React hook for generating an HREF string.
+* Add `useLocation` React hook for generation a location object.
+* Remove `Active` component (prefer `useActive`).
+* Remove `Block` component (prefer `useBlock`).
+* Remove `Navigating` component (prefer `useNavigating`).
+
 ## 1.1.0
 
 * Only export public TypeScript types.
