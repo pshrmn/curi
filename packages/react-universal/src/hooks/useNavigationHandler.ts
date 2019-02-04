@@ -1,9 +1,11 @@
 import React from "react";
 import useCuri from "./useCuri";
 
+import { ReactNode } from "react";
 import { RouteLocation } from "@curi/router";
-import { NavigatingChildren } from "../types";
 import { NavType } from "@hickory/root";
+
+export type NavigatingChildren = (navigating: boolean) => ReactNode;
 
 export interface NavigationHookProps<T> extends RouteLocation {
   children: NavigatingChildren | React.ReactNode;
