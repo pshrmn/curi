@@ -11,8 +11,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "file:../../../packages/router",
-    "@curi/vue": "file:../../../packages/vue",
+    "@curi/router": "2.0.0-alpha.0",
+    "@curi/vue": "1.0.0-beta.25",
     "@hickory/browser": "^1.0.0",
     "vue": "^2.5.22"
   }
