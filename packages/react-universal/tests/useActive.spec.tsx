@@ -130,7 +130,7 @@ const router = curi(history, routes, {
     });
   });
 
-  describe("checkLocation", () => {
+  describe("locationCheck", () => {
     it("is called with location if route is active", () => {
       const history = InMemory({ locations: ["/contact"] });
       const router = curi(history, routes, {
@@ -142,7 +142,7 @@ const router = curi(history, routes, {
       function App() {
         const { response } = useCuri();
         theLocation = response.location;
-        const active = useActive({ name: "Contact", checkLocation: locCheck });
+        const active = useActive({ name: "Contact", locationCheck: locCheck });
         return null;
       }
       ReactDOM.render(
@@ -166,7 +166,7 @@ const router = curi(history, routes, {
       function App() {
         const { response } = useCuri();
         theResponse = response;
-        const active = useActive({ name: "Contact", checkLocation: locCheck });
+        const active = useActive({ name: "Contact", locationCheck: locCheck });
         return null;
       }
       ReactDOM.render(
@@ -188,7 +188,7 @@ const router = curi(history, routes, {
         const active = useActive({
           name: "Contact",
           partial: true,
-          checkLocation: () => true
+          locationCheck: () => true
         });
         expect(active).toBe(true);
         return null;
@@ -211,7 +211,7 @@ const router = curi(history, routes, {
         const active = useActive({
           name: "Contact",
           partial: true,
-          checkLocation: () => false
+          locationCheck: () => false
         });
         expect(active).toBe(false);
         return null;
