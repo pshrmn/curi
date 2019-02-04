@@ -1,7 +1,5 @@
-import { Route, Response, Interaction } from "@curi/router";
+import { Route, Response, Interaction, Params } from "@curi/router";
 import { HickoryLocation } from "@hickory/root";
-
-type LocationCheck = (l: HickoryLocation) => boolean;
 
 function acceptableRouteName(
   name: string,
@@ -12,6 +10,14 @@ function acceptableRouteName(
     name === response.name ||
     !!(partial && response.partials.some((n: string) => name === n))
   );
+}
+
+export type LocationCheck = (l: HickoryLocation) => boolean;
+
+export interface ActiveCheckOptions {
+  params?: Params;
+  partial?: boolean;
+  locationCheck?: LocationCheck;
 }
 
 export default function checkIfActive(): Interaction {
@@ -33,26 +39,24 @@ export default function checkIfActive(): Interaction {
     get: (
       name: string,
       response: Response,
-      params?: { [key: string]: string },
-      partial?: boolean,
-      locationCheck?: LocationCheck
+      options: ActiveCheckOptions
     ): boolean => {
       if (
         routeParams[name] == null ||
-        !acceptableRouteName(name, response, partial)
+        !acceptableRouteName(name, response, options.partial)
       ) {
         return false;
       }
       const routeKeysToCheck = routeParams[name];
       for (let r = 0, length = routeKeysToCheck.length; r < length; r++) {
         const key = routeKeysToCheck[r];
-        const param = params[key];
+        const param = options.params[key];
         if (!param || param !== response.params[key]) {
           return false;
         }
       }
-      if (locationCheck) {
-        return locationCheck(response.location);
+      if (options.locationCheck) {
+        return options.locationCheck(response.location);
       }
       return true;
     },

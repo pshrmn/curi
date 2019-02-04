@@ -113,18 +113,18 @@ useActive({ name: "User", partial: true }); // true`}
 
       <HashSection
         tag="h4"
-        meta={{ title: "checkLocation", hash: "useActve-checkLocation" }}
+        meta={{ title: "locationCheck", hash: "useActve-locationCheck" }}
       >
         <p>
           The base active check only checks that the route (i.e. pathname) is
-          active. <IJS>checkLocation</IJS> allows you to check if other segments
-          of the location are also active.
+          active. <IJS>locationCheck</IJS> allows you to check if other parts of
+          the location are also active.
         </p>
 
         <CodeBlock lang="jsx">
           {`useActive({
   name: "Results",
-  checkLocation: loc => location.query === "page=3"
+  locationCheck: loc => loc.query === "page=3"
 });
 
 // active for /results?page=3

@@ -9,7 +9,7 @@ export interface ActiveHookProps {
   name: string;
   params?: Params;
   partial?: boolean;
-  checkLocation?: LocationCheck;
+  locationCheck?: LocationCheck;
 }
 
 export default function useActive(props: ActiveHookProps) {
@@ -28,12 +28,10 @@ const router = curi(history, routes, {
       );
     }
   }
-  let isActive = router.route.active(
-    props.name,
-    response,
-    props.params,
-    props.partial,
-    props.checkLocation
-  );
+  let isActive = router.route.active(props.name, response, {
+    params: props.params,
+    partial: props.partial,
+    locationCheck: props.locationCheck
+  });
   return isActive;
 }

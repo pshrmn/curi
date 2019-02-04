@@ -37,7 +37,6 @@
     "react": "16.8.0-alpha.1"
   },
   "dependencies": {
-    "@curi/route-active": "file:../interactions/route-active",
     "@curi/router": "file:../router",
     "@hickory/root": "^1.0.0",
     "@types/react": "^16.7.18"

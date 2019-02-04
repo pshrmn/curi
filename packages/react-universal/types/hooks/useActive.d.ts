@@ -5,6 +5,6 @@ export interface ActiveHookProps {
     name: string;
     params?: Params;
     partial?: boolean;
-    checkLocation?: LocationCheck;
+    locationCheck?: LocationCheck;
 }
 export default function useActive(props: ActiveHookProps): any;

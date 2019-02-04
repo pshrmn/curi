@@ -34,7 +34,7 @@ describe("active route interaction", () => {
 
       const { response } = router.current();
       const playerIsActive = router.route.active("Does Not Exist", response, {
-        id: "6"
+        params: { id: "6" }
       });
       expect(playerIsActive).toBe(false);
     });
@@ -56,7 +56,7 @@ describe("active route interaction", () => {
 
       const { response } = router.current();
       const playerIsActive = router.route.active("Player", response, {
-        id: "6"
+        params: { id: "6" }
       });
       expect(playerIsActive).toBe(false);
     });
@@ -79,7 +79,7 @@ describe("active route interaction", () => {
 
         const { response } = router.current();
         const playerIsActive = router.route.active("Player", response, {
-          id: "7"
+          params: { id: "7" }
         });
         expect(playerIsActive).toBe(true);
       });
@@ -101,13 +101,41 @@ describe("active route interaction", () => {
 
         const { response } = router.current();
         const playerIsActive = router.route.active("Player", response, {
-          id: "6"
+          params: { id: "6" }
         });
         expect(playerIsActive).toBe(false);
       });
     });
 
     describe("partial", () => {
+      it("defaults to false (returns false when name is partial match but partial is not provided)", () => {
+        const history = InMemory({
+          locations: ["/player/6/coach"]
+        });
+        const routes = prepareRoutes([
+          {
+            name: "Player",
+            path: "player/:id",
+            children: [
+              {
+                name: "Coach",
+                path: "coach"
+              }
+            ]
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes, {
+          route: [createActive()]
+        });
+
+        const { response } = router.current();
+        const playerIsActive = router.route.active("Player", response, {
+          params: { id: "6" }
+        });
+        expect(playerIsActive).toBe(false);
+      });
+
       it("returns false when name is partial match but partial is not true", () => {
         const history = InMemory({
           locations: ["/player/6/coach"]
@@ -131,7 +159,8 @@ describe("active route interaction", () => {
 
         const { response } = router.current();
         const playerIsActive = router.route.active("Player", response, {
-          id: "6"
+          params: { id: "6" },
+          partial: false
         });
         expect(playerIsActive).toBe(false);
       });
@@ -158,18 +187,16 @@ describe("active route interaction", () => {
         });
 
         const { response } = router.current();
-        const playerIsActive = router.route.active(
-          "Player",
-          response,
-          { id: "6" },
-          true
-        );
+        const playerIsActive = router.route.active("Player", response, {
+          params: { id: "6" },
+          partial: true
+        });
         expect(playerIsActive).toBe(true);
       });
     });
 
-    describe("location check", () => {
-      it("returns true when route matches and location check returns true", () => {
+    describe("locationCheck", () => {
+      it("returns true when route matches and locationCheck returns true", () => {
         const history = InMemory({
           locations: ["/#test"]
         });
@@ -185,17 +212,13 @@ describe("active route interaction", () => {
         });
 
         const { response } = router.current();
-        const isActive = router.route.active(
-          "Home",
-          response,
-          null,
-          null,
-          location => location.hash === "test"
-        );
+        const isActive = router.route.active("Home", response, {
+          locationCheck: location => location.hash === "test"
+        });
         expect(isActive).toBe(true);
       });
 
-      it("returns false when route matches but location check returns false", () => {
+      it("returns false when route matches but locationCheck returns false", () => {
         const history = InMemory({
           locations: ["/#test"]
         });
@@ -211,17 +234,13 @@ describe("active route interaction", () => {
         });
 
         const { response } = router.current();
-        const isActive = router.route.active(
-          "Home",
-          response,
-          null,
-          null,
-          location => false
-        );
+        const isActive = router.route.active("Home", response, {
+          locationCheck: location => false
+        });
         expect(isActive).toBe(false);
       });
 
-      it("doesn't call location check if route doesn't match", () => {
+      it("doesn't call locationCheck if route doesn't match", () => {
         const history = InMemory({
           locations: ["/not-a#test"]
         });
@@ -237,13 +256,9 @@ describe("active route interaction", () => {
         });
         const locationCheck = jest.fn(() => true);
         const { response } = router.current();
-        const isActive = router.route.active(
-          "Home",
-          response,
-          null,
-          null,
+        const isActive = router.route.active("Home", response, {
           locationCheck
-        );
+        });
         expect(isActive).toBe(false);
         expect(locationCheck.mock.calls.length).toBe(0);
       });
@@ -271,7 +286,9 @@ describe("active route interaction", () => {
       const playerIsActive = router.route.active(
         "Player",
         router.current().response,
-        { id: "7" }
+        {
+          params: { id: "7" }
+        }
       );
       expect(playerIsActive).toBe(true);
 
@@ -280,7 +297,9 @@ describe("active route interaction", () => {
       const playerIsActiveAfterRefresh = router.route.active(
         "Player",
         router.current().response,
-        { id: "7" }
+        {
+          params: { id: "7" }
+        }
       );
       expect(playerIsActiveAfterRefresh).toBe(false);
     });
