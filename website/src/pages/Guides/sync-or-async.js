@@ -37,8 +37,8 @@ function SyncAndAsyncGuide() {
         </p>
 
         <p>
-          By default, routes are synchronous. If a route has any functions in
-          its <IJS>resolve</IJS> object, it becomes async.
+          By default, routes are synchronous. If a route has a{" "}
+          <IJS>resolve</IJS> function, it becomes async.
         </p>
 
         <CodeBlock>
@@ -50,8 +50,8 @@ function SyncAndAsyncGuide() {
   name: "User",
   path: "user/:id,
   // any functions in here makes the route async
-  resolve: {
-    body: () => import("./components/User"),
+  resolve() {
+    return import("./components/User");
   }
 }`}
         </CodeBlock>

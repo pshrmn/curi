@@ -697,7 +697,7 @@ export default function NotFound() {
 
         <p>
           These components can be imported in <IJS>src/routes.js</IJS>. Each
-          route can be given a <IJS>response()</IJS> function which returns an
+          route can be given a <IJS>response</IJS> function which returns an
           object with their respective component as its <IJS>body</IJS>.
         </p>
 

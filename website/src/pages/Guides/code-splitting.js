@@ -99,31 +99,24 @@ const routes = prepareRoutes([
       <HashSection meta={importMeta}>
         <p>
           Instead of having static imports, we will use the <IJS>import()</IJS>{" "}
-          function to import our modules. We will import our components by
-          adding a property to a route's <IJS>resolve</IJS> object. The property
-          name for the function is how we will access the resolved data in the
-          route's <IJS>response()</IJS> function.
+          function to import our modules. We will import our components using a
+          route's <IJS>resolve</IJS> object.
         </p>
 
         <p>
-          <IJS>resolve</IJS> functions are called every time a route matches.
+          A route's <IJS>resolve</IJS> function is called every time it matches.
           However, <IJS>import()</IJS> calls automatically re-use the results of
           a previous call, so we do not have to worry about extra network
           requests.
         </p>
 
         <p>
-          Here we will name the <IJS>resolve</IJS> function for importing a
-          component <IJS>body</IJS>, since it will be set as the response's{" "}
-          <IJS>body</IJS> property.
-        </p>
-
-        <p>
-          <IJS>resolve.body()</IJS> should return a Promise; <IJS>import()</IJS>
-          , conveniently, returns a Promise. In our <IJS>response()</IJS>{" "}
-          function, instead of referencing values imported at the top of the
-          file, we can reference the result of the <IJS>resolve.body()</IJS>{" "}
-          function using <IJS>resolved.body</IJS>.
+          A route's <IJS>resolve</IJS> function should return a Promise;{" "}
+          <IJS>import()</IJS>, conveniently, returns a Promise. In our{" "}
+          <IJS>response</IJS> function, instead of referencing values imported
+          at the top of the file, we can reference the result of the{" "}
+          <IJS>resolve</IJS> function using the <IJS>resolved</IJS> property
+          passed to the <IJS>response</IJS> function.
         </p>
 
         <p>
@@ -138,45 +131,39 @@ const routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
-    resolve: {
-      body: () => (
-        import('./components/Home')
-          .then(module => module.default)
-      ),
+    resolve() {
+      return import('./components/Home')
+        .then(module => module.default);
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.body
+        body: resolved
       };
     }
   },
   {
     name: 'Contact',
     path: 'contact',
-    resolve: {
-      body: () => (
-        import('./components/Contact')
-          .then(module => module.default)
-      ),
+    resolve() {
+      return import('./components/Contact')
+        .then(module => module.default);
     },
     response: ({ resolved }) => {
       return {
-        body: resolved.body
+        body: resolved
       };
     },
     children: [
       {
         name: 'Contact Method',
         path: ':method',
-        resolve: {
-          body: () => (
-            import('./components/ContactMethod')
-              .then(module => module.default)
-          )
+        resolve() {
+          return import('./components/ContactMethod')
+            .then(module => module.default);
         },
         response: ({ resolved }) => {
           return {
-            body: resolved.body
+            body: resolved
           };
         }
       }
@@ -190,9 +177,9 @@ const routes = prepareRoutes([
         <p>
           The approaches taken here are not the only way to do code splitting.
           Another approach is to skip the <IJS>resolve</IJS> method and do code
-          splitting at other points in your application (e.g.{" "}
-          <a href="https://github.com/jamiebuilds/react-loadable">
-            <IJS>react-loadable</IJS>
+          splitting at other points in your application (e.g.
+          <a href="https://reactjs.org/docs/react-api.html#reactlazy">
+            <IJS>React.lazy()</IJS>
           </a>
           ).
         </p>
@@ -200,8 +187,8 @@ const routes = prepareRoutes([
           Whatever path you decide to go, hopefully this has shown you that
           setting up code splitting with a <IJS>resolve</IJS> function is fairly
           simple to do. If you are using Webpack and want to reduce your initial
-          bundle size, <IJS>resolve</IJS> functions are a good way to accomplish
-          this.
+          bundle size, using dynamic <IJS>import()</IJS> calls in a{" "}
+          <IJS>resolve</IJS> functions is a good way to accomplish this.
         </p>
       </HashSection>
     </React.Fragment>

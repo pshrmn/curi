@@ -32,12 +32,12 @@ function AuthenticationExample() {
       <HashSection meta={explanationMeta}>
         <p>
           Sometimes you will want to redirect based on the results of your{" "}
-          <IJS>resolve</IJS> functions. For instance, you might see that a user
+          <IJS>resolve</IJS> function. For instance, you might see that a user
           is not authenticated and shouldn't be able to view a page.
         </p>
 
         <p>
-          A <IJS>response()</IJS> function can modify the response by setting a{" "}
+          A <IJS>response</IJS> function can modify the response by setting a{" "}
           <IJS>redirectTo</IJS> property on its return object. Curi will
           automatically (unless configured not to) redirect to that location.
         </p>
