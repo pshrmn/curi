@@ -39,7 +39,7 @@ export default function checkIfActive(): Interaction {
     get: (
       name: string,
       response: Response,
-      options: ActiveCheckOptions
+      options: ActiveCheckOptions = {}
     ): boolean => {
       if (
         routeParams[name] == null ||
