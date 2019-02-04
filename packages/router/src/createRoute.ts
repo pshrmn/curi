@@ -10,24 +10,24 @@ const createRoute = (
   parentPath: string | null,
   usedNames: Set<string>
 ): CompiledRoute => {
-  if (usedNames.has(options.name)) {
-    throw new Error(
-      `Multiple routes have the name "${
-        options.name
-      }". Route names must be unique.`
-    );
+  if (process.env.NODE_ENV !== "production") {
+    if (usedNames.has(options.name)) {
+      throw new Error(
+        `Multiple routes have the name "${
+          options.name
+        }". Route names must be unique.`
+      );
+    }
+    usedNames.add(options.name);
   }
-  usedNames.add(options.name);
 
-  let path = options.path;
-
-  if (path.charAt(0) === "/") {
-    if (process.env.NODE_ENV !== "production") {
-      console.warn(
+  const path = options.path;
+  if (process.env.NODE_ENV !== "production") {
+    if (path.charAt(0) === "/") {
+      throw new Error(
         `Route paths cannot start with a forward slash (/). (Received "${path}")`
       );
     }
-    path = path.slice(1);
   }
   let fullPath = withLeadingSlash(join(parentPath || "", path));
 
