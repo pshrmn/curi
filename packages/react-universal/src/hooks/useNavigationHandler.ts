@@ -24,13 +24,20 @@ export default function useNavigationHandler<
   T extends React.BaseSyntheticEvent
 >(
   props: NavigationHookProps<T>,
-  setNavigating: (n: boolean) => void,
   canNavigate: CanNavigate<T> = defaultCanNavigate
 ) {
   const { router } = useCuri();
   const cancel = React.useRef(undefined);
+  const [navigating, setNavigating] = React.useState(false);
+  React.useEffect(() => {
+    return () => {
+      if (cancel.current) {
+        cancel.current();
+      }
+    };
+  }, []);
 
-  function handler(event: T) {
+  function eventHandler(event: T) {
     if (props.onNav) {
       props.onNav(event);
     }
@@ -60,5 +67,11 @@ export default function useNavigationHandler<
       });
     }
   }
-  return { handler, cancel };
+  return {
+    eventHandler,
+    children:
+      typeof props.children === "function"
+        ? (props.children as NavigatingChildren)(navigating)
+        : props.children
+  };
 }
