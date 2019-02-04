@@ -1,7 +1,7 @@
 {
   "name": "@curi-docs/website",
   "private": true,
-  "version": "0.1.24",
+  "version": "0.1.25",
   "description": "The documentation website for the Curi router",
   "scripts": {
     "prebuild": "npm run build:setup && npm run versions && npm run build:bundle",
