@@ -164,8 +164,8 @@ const inMemoryHistory = InMemory();`}
         <p>
           The history object will map URL strings into location objects. Only
           the <IJS>pathname</IJS>, <IJS>query</IJS> (search), and{" "}
-          <IJS>hash</IJS> segments of a URL are used; locations ignore the
-          domain and protocol segments of a URL.
+          <IJS>hash</IJS> components of a URL are used; locations ignore a URL's
+          domain and protocol.
         </p>
 
         <p>
