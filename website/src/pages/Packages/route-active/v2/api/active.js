@@ -57,43 +57,52 @@ const isActive = router.route.active(
           <p>The response to check the route against.</p>
         </HashSection>
 
-        <HashSection meta={{ title: "params", hash: "params" }} tag="h4">
-          <p>Any route params for the route that is being checked.</p>
-        </HashSection>
-
-        <HashSection meta={{ title: "partial", hash: "partial" }} tag="h4">
+        <HashSection meta={{ title: "optional", hash: "optional" }} tag="h4">
           <p>
-            When <IJS>true</IJS>, ancestor routes can be considered active.
-            (default <IJS>false</IJS>).
+            An optional argument with additional properties can be passed as the
+            third argument.
           </p>
-        </HashSection>
-
-        <HashSection
-          meta={{ title: "locationCheck", hash: "locationCheck" }}
-          tag="h4"
-        >
-          <p>
-            A function that receives a location object and returns a boolean.
-          </p>
-
-          <p>
-            Route matching determines if the <IJS>pathname</IJS> for the current
-            response's location matches the provided route. If you want to
-            compare other location segments (<IJS>hash</IJS> or <IJS>query</IJS>
-            ), you can use the <IJS>locationCheck</IJS> argument.
-          </p>
-
-          <p>This function will only be called when the route matches.</p>
 
           <CodeBlock>
             {`const isActive = router.route.active(
   'Some Route',
   response,
-  null,
-  false,
-  location => location.hash === "comments"
+  {
+    params: { id: 1 },
+    partial: false,
+    locationCheck: location => location.hash === "comments"
+  }
 );`}
           </CodeBlock>
+          <HashSection meta={{ title: "params", hash: "params" }} tag="h5">
+            <p>Any route params for the route that is being checked.</p>
+          </HashSection>
+
+          <HashSection meta={{ title: "partial", hash: "partial" }} tag="h5">
+            <p>
+              When <IJS>true</IJS>, ancestor routes can be considered active.
+              (default <IJS>false</IJS>).
+            </p>
+          </HashSection>
+
+          <HashSection
+            meta={{ title: "locationCheck", hash: "locationCheck" }}
+            tag="h5"
+          >
+            <p>
+              A function that receives a location object and returns a boolean.
+            </p>
+
+            <p>
+              Route matching determines if the <IJS>pathname</IJS> for the
+              current response's location matches the provided route. If you
+              want to compare other location parts (<IJS>hash</IJS> or{" "}
+              <IJS>query</IJS>
+              ), you can use the <IJS>locationCheck</IJS> argument.
+            </p>
+
+            <p>This function will only be called when the route matches.</p>
+          </HashSection>
         </HashSection>
       </HashSection>
     </HashSection>

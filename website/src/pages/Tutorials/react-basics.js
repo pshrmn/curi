@@ -198,8 +198,8 @@ cd curi-react-bookstore # enter the new app directory`}
         <p>
           A route's <IJS>path</IJS> is what the router uses to identify if a
           location matches the route. The <IJS>path</IJS> is only matched
-          against the location's pathname, the other segments of a URL are not
-          used for matching.
+          against the location's pathname, the other parts of a URL are not used
+          for matching.
         </p>
 
         <HashSection meta={pathMeta} className="aside" tag="h3">
