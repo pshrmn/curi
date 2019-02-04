@@ -1,11 +1,11 @@
 import React from "react";
+import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
   CodeBlock,
   IJS,
-  Note,
-  ScrollableTable
+  Note
 } from "../../../../../components/package/common";
 
 const argumentsMeta = {
@@ -44,22 +44,19 @@ router.route.prefetch("Some Route");`}
           <p>The name of the route to prefetch.</p>
         </HashSection>
 
-        <HashSection tag="h4" meta={{ title: "match", hash: "match" }}>
+        <HashSection tag="h4" meta={{ title: "optional", hash: "optional" }}>
           <p>
-            An object of "match" properties for the <IJS>resolve</IJS> function.
-            The possible properties are <IJS>name</IJS>, <IJS>params</IJS>,{" "}
-            <IJS>location</IJS>, and <IJS>partials</IJS>.
-          </p>
-        </HashSection>
-
-        <HashSection tag="h4" meta={{ title: "external", hash: "external" }}>
-          <p>
-            Any external values passed to the <IJS>resolve</IJS> function.
-          </p>
-
-          <p>
-            To access the <IJS>external</IJS> values set on the router when it
-            was created, you can use <IJS>router.external</IJS>.
+            A route's resolve function is called with two arguments: the{" "}
+            <IJS>match</IJS> object for the matched route and an{" "}
+            <Link
+              name="Package"
+              params={{ package: "router", version: "v2" }}
+              hash="router-external"
+            >
+              <IJS>external</IJS>
+            </Link>
+            value. You can provide filler values for these with the{" "}
+            <IJS>optional</IJS> object argument.
           </p>
 
           <CodeBlock>
@@ -67,8 +64,41 @@ router.route.prefetch("Some Route");`}
   external
 });
 
-router.route.prefetch("Some Route", {}, router.external);`}
+router.route.prefetch("Some Route", {
+  match: { params: {...} },
+  external: router.external
+});`}
           </CodeBlock>
+
+          <HashSection tag="h5" meta={{ title: "match", hash: "match" }}>
+            <p>
+              An object of "match" properties for the <IJS>resolve</IJS>{" "}
+              function. The possible properties are <IJS>name</IJS>,{" "}
+              <IJS>params</IJS>, <IJS>location</IJS>, and <IJS>partials</IJS>.
+            </p>
+          </HashSection>
+
+          <HashSection tag="h5" meta={{ title: "external", hash: "external" }}>
+            <p>
+              Any external values passed to the <IJS>resolve</IJS> function.
+            </p>
+
+            <p>
+              To access the <IJS>external</IJS> values set on the router when it
+              was created, you can use <IJS>router.external</IJS>.
+            </p>
+
+            <CodeBlock>
+              {`const router = curi(history, routes, {
+  external: {...}
+});
+
+router.route.prefetch(
+  "Some Route",
+  { external: router.external }
+);`}
+            </CodeBlock>
+          </HashSection>
         </HashSection>
 
         <Note>
