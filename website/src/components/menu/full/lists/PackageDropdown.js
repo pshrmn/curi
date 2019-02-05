@@ -3,6 +3,7 @@ import React from "react";
 import PACKAGE_API from "../../../../constants/packages";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
+import usePrefetch from "./usePrefetch";
 
 const GroupPackages = ({ packages }) => (
   <ul className="link-list">
@@ -19,8 +20,18 @@ const GroupPackages = ({ packages }) => (
   </ul>
 );
 
+const groups = PACKAGE_API.grouped();
+const pkgs = PACKAGE_API.all().map(pkg => ({
+  name: "Package",
+  params: {
+    package: pkg.name,
+    version: pkg.latest
+  }
+}));
+
 function PackageLinks({ active, close }) {
-  const groups = PACKAGE_API.grouped();
+  usePrefetch(pkgs, active);
+
   return (
     <Container active={active} close={close}>
       {Object.keys(groups).map(title => (

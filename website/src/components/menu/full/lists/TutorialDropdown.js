@@ -3,6 +3,7 @@ import React from "react";
 import TUTORIAL_API from "../../../../constants/tutorials";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
+import usePrefetch from "./usePrefetch";
 
 const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
@@ -16,14 +17,20 @@ const GroupTutorials = ({ tutorials }) => (
   </ul>
 );
 
+const tutorialGroups = TUTORIAL_API.grouped();
+const flatTutorials = TUTORIAL_API.all().map(t => ({
+  name: "Tutorial",
+  params: { slug: t.slug }
+}));
+
 function TutorialLinks({ active, close }) {
-  const groups = TUTORIAL_API.grouped();
+  usePrefetch(flatTutorials, active);
   return (
     <Container active={active} close={close}>
-      {Object.keys(groups).map(title => (
+      {Object.keys(tutorialGroups).map(title => (
         <div key={title}>
           <h3>{title}</h3>
-          <GroupTutorials tutorials={groups[title]} />
+          <GroupTutorials tutorials={tutorialGroups[title]} />
         </div>
       ))}
     </Container>

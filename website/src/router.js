@@ -4,6 +4,7 @@ import titleSideEffect from "@curi/side-effect-title";
 import scrollSideEffect from "@curi/side-effect-scroll";
 import ariaLiveSideEffect from "@curi/side-effect-aria-live";
 import active from "@curi/route-active";
+import prefetch from "@curi/route-prefetch";
 import routes from "./routes";
 
 const setTitle = titleSideEffect(
@@ -17,7 +18,7 @@ const announce = ariaLiveSideEffect(
 const history = Browser();
 
 const router = curi(history, routes, {
-  route: [active()],
+  route: [active(), prefetch()],
   sideEffects: [setTitle, scrollTo, announce],
   emitRedirects: false
 });

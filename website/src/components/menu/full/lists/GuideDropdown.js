@@ -3,6 +3,7 @@ import React from "react";
 import GUIDE_API from "../../../../constants/guides";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
+import usePrefetch from "./usePrefetch";
 
 const GroupGuides = ({ guides }) => (
   <ul className="link-list">
@@ -16,8 +17,17 @@ const GroupGuides = ({ guides }) => (
   </ul>
 );
 
+const groups = GUIDE_API.grouped();
+const guides = GUIDE_API.all().map(g => ({
+  name: "Guide",
+  params: {
+    slug: g.slug
+  }
+}));
+
 function GuideLinks({ active, close }) {
-  const groups = GUIDE_API.grouped();
+  usePrefetch(guides, active);
+
   return (
     <Container active={active} close={close}>
       {Object.keys(groups).map(title => (
