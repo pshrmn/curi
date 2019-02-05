@@ -22,7 +22,7 @@ export function BlockAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <Cmp>Block</Cmp> component lets you prevent navigation until a user
+        The <IJS>Block</IJS> component lets you prevent navigation until a user
         has confirmed that they want to navigate. This can be useful when the
         user attempts to navigate away from a partially filled form.
       </p>

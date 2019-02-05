@@ -21,7 +21,7 @@ export function LinkAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <Cmp>curi-link</Cmp> component will render an anchor (<Cmp>a</Cmp>)
+        The <IJS>curi-link</IJS> component will render an anchor (<Cmp>a</Cmp>)
         element.
       </p>
 
@@ -84,14 +84,14 @@ export function LinkAPI() {
 
         <HashSection tag="h4" meta={{ title: "slots", hash: "Link-slots" }}>
           <p>
-            The <Cmp>curi-link</Cmp>'s can take either a regular slot or a
+            The <IJS>curi-link</IJS>'s can take either a regular slot or a
             scoped slot.
           </p>
           <p>
-            When given a scoped slot, the <Cmp>curi-link</Cmp> will inject the
+            When given a scoped slot, the <IJS>curi-link</IJS> will inject the
             link's navigation state (a <IJS>navigating</IJS> property). The
             navigation state is <IJS>false</IJS> by default, <IJS>true</IJS>{" "}
-            when the <Cmp>curi-link</Cmp> is clicked, and <IJS>false</IJS> when
+            when the <IJS>curi-link</IJS> is clicked, and <IJS>false</IJS> when
             the the navigation finishes/is cancelled.
           </p>
 

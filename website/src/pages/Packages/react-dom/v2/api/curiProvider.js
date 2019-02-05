@@ -76,8 +76,8 @@ ReactDOM.render((
         meta={{ title: "Router", hash: "curiProvider-Router" }}
       >
         <p>
-          The <Cmp>Router</Cmp> sets routing context data. Any component that
-          relies on routing data must be a descendant of the <Cmp>Router</Cmp>.
+          The <IJS>Router</IJS> sets routing context data. Any component that
+          relies on routing data must be a descendant of the <IJS>Router</IJS>.
         </p>
 
         <HashSection
@@ -85,7 +85,7 @@ ReactDOM.render((
           meta={{ title: "children", hash: "curiProvider-render" }}
         >
           <p>
-            The <Cmp>Router</Cmp> takes any valid React node (elements, strings,
+            The <IJS>Router</IJS> takes any valid React node (elements, strings,
             etc.) as its <IJS>children</IJS>.
           </p>
         </HashSection>

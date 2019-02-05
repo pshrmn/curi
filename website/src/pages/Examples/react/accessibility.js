@@ -2,7 +2,7 @@ import React from "react";
 
 import {
   HashSection,
-  Cmp,
+  IJS,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -31,8 +31,8 @@ function AccessibilityExample() {
       <HashSection meta={explanationMeta}>
         <p>
           This example demonstrates how to increase the accessibility of an
-          application using the <Cmp>Focus</Cmp> component to handle focus
-          management.
+          application using the <IJS>useNavigationFocus</IJS> hook to handle
+          focus management.
         </p>
       </HashSection>
 

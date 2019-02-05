@@ -3,7 +3,7 @@ import React from "react";
 import {
   HashSection,
   CodeBlock,
-  Cmp
+  IJS
 } from "../../../../../components/package/common";
 
 const propsMeta = {
@@ -20,7 +20,7 @@ export function LinkAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <Cmp>Link</Cmp> component is used to create an anchor for navigating
+        The <IJS>Link</IJS> component is used to create an anchor for navigating
         to another route.
       </p>
 

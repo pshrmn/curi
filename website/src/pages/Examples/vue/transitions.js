@@ -4,7 +4,6 @@ import {
   HashSection,
   CodeBlock,
   IJS,
-  Cmp,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -32,7 +31,7 @@ function TransitionsExample() {
 
       <HashSection meta={explanationMeta}>
         <p>
-          Route transitions can be performed using Vue's <Cmp>transition</Cmp>{" "}
+          Route transitions can be performed using Vue's <IJS>transition</IJS>{" "}
           component.
         </p>
 

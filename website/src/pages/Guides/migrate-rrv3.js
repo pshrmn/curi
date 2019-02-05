@@ -78,7 +78,7 @@ function MigrateReactRouterv3Guide() {
           <li>Both use a centralized router.</li>
           <li>
             Both routers are made up of route objects (although with React
-            Router some of these are disguised as JSX with <Cmp>Route</Cmp>{" "}
+            Router some of these are disguised as JSX with <IJS>Route</IJS>{" "}
             components).
           </li>
           <li>
@@ -94,7 +94,7 @@ function MigrateReactRouterv3Guide() {
         <ol>
           <li>
             Curi's routing is handled entirely outside of React; there are no{" "}
-            <Cmp>Route</Cmp> components.
+            <IJS>Route</IJS> components.
           </li>
           <li>
             With Curi, when a nested route matches, only that route renders. Any
@@ -111,7 +111,7 @@ function MigrateReactRouterv3Guide() {
         <HashSection meta={rrRoutesMeta} tag="h3">
           <p>
             In React Router v2/3, there are two ways to define routes. You can
-            either use JavaScript objects or JSX <Cmp>Route</Cmp>s (which React
+            either use JavaScript objects or JSX <IJS>Route</IJS>s (which React
             Router converts to JavaScript objects).
           </p>
           <p>
@@ -207,7 +207,7 @@ function MigrateReactRouterv3Guide() {
 
           <p>
             Next, we should add our components to each route. We will ignore the{" "}
-            <Cmp>App</Cmp> component that is used in the React Router routes.
+            <IJS>App</IJS> component that is used in the React Router routes.
             That is not route specific and will be rendered by our application
             (assuming we actually need it).
           </p>
@@ -348,9 +348,9 @@ const routes = prepareRoutes([
       <HashSection meta={creatingMeta}>
         <p>
           With React Router, you create your router by rendering a{" "}
-          <Cmp>Router</Cmp>. That either takes the <Cmp>Route</Cmp> components
+          <IJS>Router</IJS>. That either takes the <IJS>Route</IJS> components
           as props or the route objects through its <IJS>routes</IJS> prop. The{" "}
-          <Cmp>Router</Cmp> also takes a <IJS>history</IJS> prop, which is
+          <IJS>Router</IJS> also takes a <IJS>history</IJS> prop, which is
           either one of the pre-routerured objects (<IJS>browserHistory</IJS> or{" "}
           <IJS>hashHistory</IJS>) or one that you create yourself.
         </p>
@@ -392,17 +392,17 @@ const router = curi(history, routes);`}
 
         <HashSection meta={rrRenderingMeta} tag="h3">
           <p>
-            React Router uses the <Cmp>Router</Cmp> component to subscribe to
+            React Router uses the <IJS>Router</IJS> component to subscribe to
             location changes. Each time that the location changes, it walks over
             its routes and determines which route(s!) match.
           </p>
           <p>
             React Router starts by rendering the root component. In the above
-            router, that is the <Cmp>App</Cmp>. Next, our <IJS>inbox</IJS> route
-            also matches, so React Router also renders our <Cmp>Inbox</Cmp>{" "}
+            router, that is the <IJS>App</IJS>. Next, our <IJS>inbox</IJS> route
+            also matches, so React Router also renders our <IJS>Inbox</IJS>{" "}
             component. Finally, the URI <IJS>/inbox/test</IJS> also matches our 
             <IJS>:message</IJS> route (which is concatenated with its parents to
-            form the path <IJS>/inbox/:message</IJS>), so <Cmp>Message</Cmp> is
+            form the path <IJS>/inbox/:message</IJS>), so <IJS>Message</IJS> is
             rendered as well. Each child component is rendered by its parent, so
             we end up with a component tree that looks something like this:
           </p>
@@ -410,10 +410,10 @@ const router = curi(history, routes);`}
             With this structure, any routes with children will be rendered when
             one of the children matches. That means that those routes need to
             know how to render based on what type of match they have. For
-            example, <Cmp>Inbox</Cmp> needs to know how to render for an exact
+            example, <IJS>Inbox</IJS> needs to know how to render for an exact
             match (the URI is <IJS>/inbox</IJS>) and for a partial match (
-            <IJS>/inbox/test</IJS>). Also, if the <Cmp>Inbox</Cmp> needs to pass
-            any props to <Cmp>Message</Cmp>, it has to use{" "}
+            <IJS>/inbox/test</IJS>). Also, if the <IJS>Inbox</IJS> needs to pass
+            any props to <IJS>Message</IJS>, it has to use{" "}
             <IJS>React.cloneElement</IJS>, which works but is not the cleanest
             looking code.
           </p>
@@ -434,17 +434,17 @@ const router = curi(history, routes);`}
             component by calling the <IJS>curiProvider()</IJS> function, which
             comes from the <IJS>@curi/react-dom</IJS> package, and passing it
             our Curi router. While the name of this component is entirely up to
-            you, we will refer to it as the <Cmp>Router</Cmp> here.
+            you, we will refer to it as the <IJS>Router</IJS> here.
           </p>
           <p>
-            The <Cmp>Router</Cmp> will setup an observer on the provided router
+            The <IJS>Router</IJS> will setup an observer on the provided router
             so that it can re-render your application whenever there is a new{" "}
-            <IJS>response</IJS>. The <Cmp>Router</Cmp> expects a function as its{" "}
+            <IJS>response</IJS>. The <IJS>Router</IJS> expects a function as its{" "}
             <IJS>children</IJS> prop (a render-invoked function). This function
             renders the application using the <IJS>response</IJS>.
           </p>
           <p>
-            When the <Cmp>Router</Cmp>'s <IJS>children()</IJS> function is
+            When the <IJS>Router</IJS>'s <IJS>children()</IJS> function is
             called, it will receive an object with three properties:
           </p>
           <ol>
@@ -468,13 +468,13 @@ const router = curi(history, routes);`}
           </p>
           <p>
             In the React Router section, we had three components that were
-            rendered: <Cmp>App</Cmp>,<Cmp>Inbox</Cmp>, and <Cmp>Message</Cmp>.
+            rendered: <IJS>App</IJS>,<IJS>Inbox</IJS>, and <IJS>Message</IJS>.
             With Curi, only the most accurately matched route actually matches.
             That means that for the URL <IJS>/inbox/test</IJS>, the{" "}
             <IJS>"Message"</IJS> route will match, but its parent route,{" "}
             <IJS>"Inbox"</IJS> will not, so <IJS>response.body</IJS> will be the{" "}
-            <Cmp>Message</Cmp> component. Unlike React Router, we don’t render{" "}
-            <Cmp>Inbox</Cmp> because we did not match the <IJS>inbox</IJS>{" "}
+            <IJS>Message</IJS> component. Unlike React Router, we don’t render{" "}
+            <IJS>Inbox</IJS> because we did not match the <IJS>inbox</IJS>{" "}
             route.
           </p>
 
@@ -527,19 +527,19 @@ ReactDOM.render((
           </CodeBlock>
 
           <p>
-            It was mentioned above that there is no need for the <Cmp>App</Cmp>{" "}
-            component with Curi. If you want to have an <Cmp>App</Cmp>{" "}
+            It was mentioned above that there is no need for the <IJS>App</IJS>{" "}
+            component with Curi. If you want to have an <IJS>App</IJS>{" "}
             component, you can render it either inside of the{" "}
             <IJS>children()</IJS> function or as a parent of your{" "}
-            <Cmp>Router</Cmp>. This can be useful for rendering content that is
+            <IJS>Router</IJS>. This can be useful for rendering content that is
             unrelated to specific routes, like a page header or menu.
           </p>
           <p>
-            Rendering the <Cmp>App</Cmp> inside of the <IJS>children()</IJS>{" "}
+            Rendering the <IJS>App</IJS> inside of the <IJS>children()</IJS>{" "}
             function is necessary if any of the components rendered by the{" "}
-            <Cmp>App</Cmp> are location aware components, since they need to
+            <IJS>App</IJS> are location aware components, since they need to
             access the Curi router (through React’s context, which the{" "}
-            <Cmp>Router</Cmp> provides)
+            <IJS>Router</IJS> provides)
           </p>
 
           <CodeBlock lang="jsx">
@@ -566,7 +566,7 @@ function render({ response }) {
 
           <p>
             What about props that you want to send to your route components?
-            Pass them to the <Cmp>Body</Cmp> component that you render. Props
+            Pass them to the <IJS>Body</IJS> component that you render. Props
             can be passed individually, but passing the whole{" "}
             <IJS>response</IJS> object is recommended.
           </p>
@@ -583,7 +583,7 @@ function render({ response }) {
       <HashSection meta={linksMeta}>
         <p>
           You will want to be able to navigate between routes in your
-          application. React Router provides a <Cmp>Link</Cmp> component to do
+          application. React Router provides a <IJS>Link</IJS> component to do
           this, and so does Curi (through the <IJS>@curi/react-dom</IJS>{" "}
           package). There are a few differences to note between these two
           components:
@@ -595,7 +595,7 @@ function render({ response }) {
               React Router expects you to generate the pathname yourself, while
               Curi expects you to pass the name of the route that you want to
               navigate to. Any path parameters are passed to Curi’s{" "}
-              <Cmp>Link</Cmp> using the <IJS>params</IJS> prop.
+              <IJS>Link</IJS> using the <IJS>params</IJS> prop.
             </p>
 
             <CodeBlock lang="jsx">
@@ -611,7 +611,7 @@ function render({ response }) {
           <li>
             <p>
               With React Router, any additional location properties are passed
-              to the <Cmp>Link</Cmp> using the <IJS>to</IJS> object. With Curi,
+              to the <IJS>Link</IJS> using the <IJS>to</IJS> object. With Curi,
               these properties are passed using the prop name (<IJS>hash</IJS>,{" "}
               <IJS>query</IJS> &amp;
               <IJS>state</IJS>).
@@ -629,13 +629,12 @@ function render({ response }) {
           </li>
           <li>
             <p>
-              Active detection with Curi uses an <Cmp>Active</Cmp> component.{" "}
-              <Cmp>Active</Cmp>'s <IJS>children</IJS> prop is a render-invoked
-              function that receives a boolean <IJS>true</IJS> when the named
-              route is active and <IJS>false</IJS> when it is not. You can also
-              pass <IJS>{`partial=\{true\}`}</IJS> to let partial matches
-              (ancestor routes) be considered active (the opposite of React
-              Router's <IJS>onlyActiveOnIndex</IJS>).
+              Active detection with Curi is done using the <IJS>useActive</IJS>{" "}
+              hook. The hook takes the name of the route (and any required
+              params) and returns a boolean to indicate if the route is active.
+              You can also use its <IJS>partial</IJS> option to detect when
+              ancestor routes are active (the opposite of React Router's{" "}
+              <IJS>onlyActiveOnIndex</IJS>).
             </p>
 
             <CodeBlock lang="jsx">
@@ -659,16 +658,11 @@ const router = curi(history, routes, {
 // The <Active> component determines if a route is active
 // and passes true/false to the render-invoked children
 // function
-<Active name="Home">
-  {active => (
-    <Link
-      name='Home'
-      forward={{
-        className: active ? "active" : ""
-      }}
-    >Home</Link>
-  )}
-</Active>`}
+const active = useActive("Home");
+const className = active ? "active" : "";
+<Link name='Home' forward={{ className }}>
+  Home
+</Link>`}
             </CodeBlock>
           </li>
         </ul>

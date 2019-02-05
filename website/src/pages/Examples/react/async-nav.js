@@ -4,7 +4,6 @@ import {
   HashSection,
   CodeBlock,
   IJS,
-  Cmp,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -32,7 +31,7 @@ function AsyncNavExample() {
 
       <HashSection meta={explanationMeta}>
         <p>
-          If the <Cmp>Link</Cmp>'s <IJS>children</IJS> prop is a render-invoked
+          If the <IJS>Link</IJS>'s <IJS>children</IJS> prop is a render-invoked
           function, it will be passed a boolean to indicate whether or not it is
           currently navigating. We can modify what the function returns to
           render a loading indicator while waiting for the navigation to

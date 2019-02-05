@@ -23,7 +23,7 @@ export function ActiveAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <Cmp>Active</Cmp> component is used to render based on whether or
+        The <IJS>Active</IJS> component is used to render based on whether or
         not a route is "active" (its name and params match the current
         response's name and params) using a render-invoked <IJS>children</IJS>{" "}
         function.
@@ -122,7 +122,7 @@ const router = curi(history, routes, {
 
           <p>
             The second argument passed to the render-invoked function is the
-            current <IJS>response</IJS>. <Cmp>Active</Cmp> only checks if the
+            current <IJS>response</IJS>. <IJS>Active</IJS> only checks if the
             route is active (i.e. matches the current location's{" "}
             <IJS>pathname</IJS>). If you want to check if the <IJS>query</IJS>{" "}
             or <IJS>hash</IJS>, you should do this yourself inside of the

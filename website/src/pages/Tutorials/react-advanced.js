@@ -223,7 +223,7 @@ const routes = prepareRoutes([
           <p>
             If you attempt to render immediately after creating a router and the
             initial response is still being created, the <IJS>response</IJS>{" "}
-            that will be passed to the <Cmp>Router</Cmp>'s <IJS>children()</IJS>{" "}
+            that will be passed to the <IJS>Router</IJS>'s <IJS>children()</IJS>{" "}
             will be <IJS>null</IJS>.
           </p>
 
@@ -249,7 +249,7 @@ router.once(() => {
           </CodeBlock>
 
           <p>
-            Alternatively, you can update the root <Cmp>App</Cmp> component to
+            Alternatively, you can update the root <IJS>App</IJS> component to
             detect when the <IJS>response</IJS> is <IJS>null</IJS> and render a
             loading message.
           </p>
@@ -705,7 +705,7 @@ export default prepareRoutes([
         </p>
 
         <p>
-          In the <Cmp>Home</Cmp> component's module, we can remove the{" "}
+          In the <IJS>Home</IJS> component's module, we can remove the{" "}
           <IJS>books.js</IJS> import and grab the response from the component's
           props. The books data can be access as <IJS>response.data.books</IJS>.
         </p>
@@ -734,7 +734,7 @@ export default function Home({ response }) {
 
         <p>
           Likewise, we can remove the <IJS>books.js</IJS> import from the{" "}
-          <Cmp>Book</Cmp> component's module and grab the book data from{" "}
+          <IJS>Book</IJS> component's module and grab the book data from{" "}
           <IJS>response.data</IJS> instead of searching for it in the books
           array.
         </p>
@@ -817,7 +817,7 @@ export const BOOK = id => new Promise(resolve => {
 
         <HashSection meta={navigatingMeta} tag="h3">
           <p>
-            The <Cmp>Link</Cmp> component can be called with a render-invoked{" "}
+            The <IJS>Link</IJS> component can be called with a render-invoked{" "}
             <IJS>children()</IJS> function. If you do this, the function will be
             called with a <IJS>navigating</IJS> boolean that indicates whether
             the router is currently navigating to that link. This is useful for
@@ -825,7 +825,7 @@ export const BOOK = id => new Promise(resolve => {
             when the user clicks the link and when the navigation will occur.
           </p>
           <p>
-            We can update the <Cmp>Link</Cmp>s in the <Cmp>Home</Cmp> component
+            We can update the <IJS>Link</IJS>s in the <IJS>Home</IJS> component
             to using render-invoked functions and display a loading spinner
             while we wait for the book data to load.
           </p>
@@ -853,12 +853,12 @@ export const BOOK = id => new Promise(resolve => {
           <CodeBlock lang="bash">{`npm install react-spinkit`}</CodeBlock>
 
           <p>
-            In the <Cmp>Home</Cmp> component's module, we need to import the{" "}
-            <Cmp>Spinner</Cmp> component. The <Cmp>Link</Cmp> needs to be
+            In the <IJS>Home</IJS> component's module, we need to import the{" "}
+            <IJS>Spinner</IJS> component. The <IJS>Link</IJS> needs to be
             swapped from a React element to a render-invoked function. We wrap
-            the contents in a <Cmp>React.Fragment</Cmp> to avoid unnecessary DOM
-            elements. In the function, we render a <Cmp>Spinner</Cmp> when the{" "}
-            <Cmp>Link</Cmp> is navigating and <IJS>null</IJS> when it is not.
+            the contents in a <IJS>React.Fragment</IJS> to avoid unnecessary DOM
+            elements. In the function, we render a <IJS>Spinner</IJS> when the{" "}
+            <IJS>Link</IJS> is navigating and <IJS>null</IJS> when it is not.
           </p>
           <Note>
             <p>

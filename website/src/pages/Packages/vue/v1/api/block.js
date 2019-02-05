@@ -16,12 +16,12 @@ export function BlockAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <Cmp>curi-block</Cmp> component can be used to automatically block
+        The <IJS>curi-block</IJS> component can be used to automatically block
         navigation from a page. This will only block in-app navigation. If the
         user attempts to leave your application, they will not be blocked.
       </p>
       <p>
-        The <Cmp>curi-block</Cmp> expects two props: <IJS>active</IJS> and{" "}
+        The <IJS>curi-block</IJS> expects two props: <IJS>active</IJS> and{" "}
         <IJS>confirm</IJS>.
       </p>
       <ul>

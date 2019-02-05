@@ -3,8 +3,7 @@ import React from "react";
 import {
   HashSection,
   CodeBlock,
-  IJS,
-  Cmp
+  IJS
 } from "../../../../../components/package/common";
 
 const propsMeta = {
@@ -21,11 +20,11 @@ export function NavigatingAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <Cmp>Navigating</Cmp> component is used to cancel an active
+        The <IJS>Navigating</IJS> component is used to cancel an active
         asynchronous navigation.
       </p>
       <p>
-        A component is passed to <Cmp>Navigating</Cmp>. When there is an active
+        A component is passed to <IJS>Navigating</IJS>. When there is an active
         asynchronous navigation, the component will be given a <IJS>cancel</IJS>{" "}
         function. When there is not an active asynchronous navigation,{" "}
         <IJS>cancel</IJS> will be <IJS>undefined</IJS>.

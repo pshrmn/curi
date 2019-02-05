@@ -47,7 +47,7 @@ function ReactDOMGuide() {
           The <IJS>curiProvider()</IJS> function is used to create the component
           at the root of a Curi + React application. You can call this component
           anything that you want, but here it will be referred to as the{" "}
-          <Cmp>Router</Cmp>.
+          <IJS>Router</IJS>.
         </p>
 
         <Note>
@@ -63,7 +63,7 @@ function ReactDOMGuide() {
 
         <p>
           <IJS>curiProvider()</IJS> is passed the application's Curi router to
-          create a <Cmp>Router</Cmp> component. The <Cmp>Router</Cmp> will
+          create a <IJS>Router</IJS> component. The <IJS>Router</IJS> will
           automatically add an{" "}
           <Link
             name="Package"
@@ -78,7 +78,7 @@ function ReactDOMGuide() {
 
         <p>
           Along with setting up an observer to react to new responses, the{" "}
-          <Cmp>Router</Cmp> sets up a context for routing values. These values—
+          <IJS>Router</IJS> sets up a context for routing values. These values—
           <IJS>response</IJS>, <IJS>router</IJS>, and <IJS>navigation</IJS>—can
           be read using the{" "}
           <Link name="Package" params={{ package: "react-dom", version: "v2" }}>
@@ -116,7 +116,7 @@ router.once(() => {
 
         <HashSection meta={responseMeta} tag="h3">
           <p>
-            The <Cmp>Router</Cmp> component sets up the application's routing,
+            The <IJS>Router</IJS> component sets up the application's routing,
             while its children render the application's content. The Curi router
             generates <IJS>response</IJS> objects from matched locations; those
             are core for figuring out what to render.
@@ -129,7 +129,7 @@ router.once(() => {
           </p>
 
           <p>
-            The <Cmp>Body</Cmp> element (it is useful to rename the{" "}
+            The <IJS>Body</IJS> element (it is useful to rename the{" "}
             <IJS>response</IJS>'s <IJS>body</IJS> to <IJS>Body</IJS> for JSX
             transformation) is a placeholder for the "real" component that you
             render for a route. This means that the "real" component will be
@@ -138,7 +138,7 @@ router.once(() => {
 
           <p>
             While not a strict requirement, it is useful to pass the{" "}
-            <IJS>response</IJS> object as a prop to the rendered <Cmp>Body</Cmp>{" "}
+            <IJS>response</IJS> object as a prop to the rendered <IJS>Body</IJS>{" "}
             component.
           </p>
 
@@ -258,19 +258,19 @@ function App()
 
       <HashSection meta={navigatingMeta}>
         <p>
-          The <Cmp>Link</Cmp> component is used to navigate between routes
+          The <IJS>Link</IJS> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as
           an anchor (<Cmp>a</Cmp>) element.
         </p>
         <p>
-          The <Cmp>Link</Cmp>'s <IJS>to</IJS> prop describes which route
+          The <IJS>Link</IJS>'s <IJS>to</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
         </p>
         <p>
           If a route has any params (or if any of a route's ancestors have
           params for nested routes), the <IJS>params</IJS> prop is used to pass
-          these to the <Cmp>Link</Cmp>.
+          these to the <IJS>Link</IJS>.
         </p>
 
         <CodeBlock lang="jsx">
@@ -294,7 +294,7 @@ const NavLinks = () => (
         </CodeBlock>
 
         <p>
-          The <Cmp>Link</Cmp> also takes <IJS>hash</IJS>, <IJS>query</IJS>, and{" "}
+          The <IJS>Link</IJS> also takes <IJS>hash</IJS>, <IJS>query</IJS>, and{" "}
           <IJS>state</IJS> props to attach their values to the location that
           will be navigated to.
         </p>

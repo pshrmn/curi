@@ -458,7 +458,7 @@ registerServiceWorker();`}
           use to interact with the router.
         </p>
         <p>
-          We create a <Cmp>Router</Cmp> component by passing the router to the{" "}
+          We create a <IJS>Router</IJS> component by passing the router to the{" "}
           <IJS>curiProvider</IJS> higher-order component.
         </p>
 
@@ -493,14 +493,14 @@ registerServiceWorker();`}
         </CodeBlock>
 
         <p>
-          The <Cmp>Router</Cmp> component will re-render the application
+          The <IJS>Router</IJS> component will re-render the application
           whenever there is in-app navigation. It also sets up a React context,
           so any <IJS>@curi/react-dom</IJS> components and hooks need to be
-          descendants of the <Cmp>Router</Cmp> in order to access the context.
+          descendants of the <IJS>Router</IJS> in order to access the context.
         </p>
 
         <p>
-          We will pass the <Cmp>Router</Cmp> the <Cmp>App</Cmp> element, which
+          We will pass the <IJS>Router</IJS> the <IJS>App</IJS> element, which
           is where we will render the application's content.
         </p>
 
@@ -544,7 +544,7 @@ registerServiceWorker();`}
             <IJS>useCuri</IJS> hook
           </Link>{" "}
           from <IJS>@curi/react-dom</IJS>. This hook lets us read the context
-          data that was set by the <Cmp>Router</Cmp>. <IJS>useCuri</IJS> returns
+          data that was set by the <IJS>Router</IJS>. <IJS>useCuri</IJS> returns
           three objects: <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
           <IJS>navigation</IJS>.
         </p>
@@ -591,7 +591,7 @@ export default function App() {
               observer pattern
             </a>{" "}
             to register functions that will be called when a new response is
-            created. The <Cmp>Router</Cmp> automatically observes the router so
+            created. The <IJS>Router</IJS> automatically observes the router so
             that it can re-render the application whenever there is a new
             response.
           </p>
@@ -658,7 +658,7 @@ export default function App() {
         </HashSection>
 
         <p>
-          We can update the <Cmp>App</Cmp> to get the response using{" "}
+          We can update the <IJS>App</IJS> to get the response using{" "}
           <IJS>useCuri</IJS>.
         </p>
 
@@ -777,7 +777,7 @@ export default prepareRoutes([
 
         <p>
           Now that the responses have <IJS>body</IJS> properties that are React
-          components, we can update the <Cmp>App</Cmp> to render them.
+          components, we can update the <IJS>App</IJS> to render them.
         </p>
 
         <p>
@@ -807,7 +807,7 @@ export default function App() {
 
       <HashSection meta={navigatingMeta}>
         <p>
-          The <IJS>@curi/react-dom</IJS> package provides a <Cmp>Link</Cmp>{" "}
+          The <IJS>@curi/react-dom</IJS> package provides a <IJS>Link</IJS>{" "}
           component that we can use to navigate between locations within our
           application.
         </p>
@@ -826,7 +826,7 @@ export default function App() {
           </CodeBlock>
 
           <p>
-            If a route has params, we provide these to the <Cmp>Link</Cmp> as a{" "}
+            If a route has params, we provide these to the <IJS>Link</IJS> as a{" "}
             <IJS>params</IJS> object. For a nested route, we would also need to
             provide params for any ancestor routes.
           </p>
@@ -838,7 +838,7 @@ export default function App() {
           </CodeBlock>
 
           <p>
-            The <Cmp>Link</Cmp> is only for in-app navigation. If you want to
+            The <IJS>Link</IJS> is only for in-app navigation. If you want to
             link to pages outside of the application, use an anchor.
           </p>
 
@@ -851,7 +851,7 @@ export default function App() {
           </CodeBlock>
 
           <p>
-            If you need to attach query or hash data to a <Cmp>Link</Cmp>, use
+            If you need to attach query or hash data to a <IJS>Link</IJS>, use
             the <IJS>query</IJS> and <IJS>hash</IJS> props.
           </p>
 
@@ -896,7 +896,7 @@ export default function NavMenu() {
 }`}
           </CodeBlock>
           <p>
-            The menu can be rendered by the <Cmp>App</Cmp> component. We can
+            The menu can be rendered by the <IJS>App</IJS> component. We can
             also add structure to the site by rendering <Cmp>header</Cmp> and{" "}
             <Cmp>main</Cmp> elements around their respective content.
           </p>
@@ -982,8 +982,8 @@ export default [
           </CodeBlock>
 
           <p>
-            The data can be imported in the <Cmp>Home</Cmp> component and we can
-            iterate over the books to render a <Cmp>Link</Cmp> to each one.
+            The data can be imported in the <IJS>Home</IJS> component and we can
+            iterate over the books to render a <IJS>Link</IJS> to each one.
           </p>
 
           <CodeBlock lang="jsx" data-line="5,8-20">
@@ -1012,9 +1012,9 @@ export default function Home() {
 
           <p>
             Now that we can navigate to the books, we should fill out the UI for
-            the <Cmp>Book</Cmp> component. Up above, we passed the{" "}
+            the <IJS>Book</IJS> component. Up above, we passed the{" "}
             <IJS>response</IJS> object as a prop to the <IJS>response.body</IJS>{" "}
-            component. Now, we can use that object in the <Cmp>Book</Cmp>{" "}
+            component. Now, we can use that object in the <IJS>Book</IJS>{" "}
             component to access the captured route params so that we know which
             book to show.
           </p>
@@ -1099,9 +1099,9 @@ export default {
         </CodeBlock>
 
         <p>
-          Before we edit the <Cmp>Book</Cmp> component, we should quickly
-          revisit the <Cmp>App</Cmp> component. In addition to passing the{" "}
-          <IJS>response</IJS> to the <Cmp>Body</Cmp>, we should also pass it our{" "}
+          Before we edit the <IJS>Book</IJS> component, we should quickly
+          revisit the <IJS>App</IJS> component. In addition to passing the{" "}
+          <IJS>response</IJS> to the <IJS>Body</IJS>, we should also pass it our{" "}
           <IJS>router</IJS>, which will allow us to do programmatic navigation.
         </p>
 
@@ -1129,7 +1129,7 @@ export default function App() {
         </CodeBlock>
 
         <p>
-          We can now access our <IJS>router</IJS> in the <Cmp>Book</Cmp>{" "}
+          We can now access our <IJS>router</IJS> in the <IJS>Book</IJS>{" "}
           component. The router's <IJS>navigate()</IJS> function can be used to
           navigate to a new location. This means that when the user clicks a
           button to add a book to their shopping cart, we can automatically
@@ -1223,7 +1223,7 @@ export default function Book({ response, router }) {
         </CodeBlock>
 
         <p>
-          Finally, we can update our <Cmp>Checkout</Cmp> component to display
+          Finally, we can update our <IJS>Checkout</IJS> component to display
           the books in the shopping cart. To do this, we will import our cart
           and books. Our cart only stores book <IJS>id</IJS>s, so we will need
           to merge the book data with the cart data.

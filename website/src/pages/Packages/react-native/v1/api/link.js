@@ -22,15 +22,15 @@ export function LinkAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        A <Cmp>Link</Cmp> is used for navigating within your application. By
-        default, this will render a <Cmp>TouchableHighlight</Cmp>, but you can
+        A <IJS>Link</IJS> is used for navigating within your application. By
+        default, this will render a <IJS>TouchableHighlight</IJS>, but you can
         also provide another component. When the rendered element is touched, it
         will use the router's <IJS>history</IJS> object to change locations,
         which will trigger a re-render.
       </p>
 
       <p>
-        With the <Cmp>Link</Cmp>, instead of providing a URI to navigate to, you
+        With the <IJS>Link</IJS>, instead of providing a URI to navigate to, you
         specify the name of the route that you want to link to. Then, the
         pathname of the URI you want the component to link to will be
         automatically generated for you.
@@ -51,7 +51,7 @@ export function LinkAPI() {
         <HashSection tag="h4" meta={{ title: "name", hash: "Link-to" }}>
           <p>The name of the route that you want to navigate to.</p>
           <p>
-            If <IJS>name</IJS> is not provided, the <Cmp>Link</Cmp> will re-use
+            If <IJS>name</IJS> is not provided, the <IJS>Link</IJS> will re-use
             the current location's <IJS>pathname</IJS>. This is useful for
             linking to hashes within the current page.
           </p>
@@ -120,8 +120,8 @@ export function LinkAPI() {
           </p>
           <p>
             The render-invoked <IJS>children</IJS> function will be called with
-            the <Cmp>Link</Cmp>'s navigation state. The navigation state is{" "}
-            <IJS>false</IJS> to start, <IJS>true</IJS> when the <Cmp>Link</Cmp>{" "}
+            the <IJS>Link</IJS>'s navigation state. The navigation state is{" "}
+            <IJS>false</IJS> to start, <IJS>true</IJS> when the <IJS>Link</IJS>{" "}
             is clicked, and <IJS>false</IJS> when the the navigation finishes/is
             cancelled.
           </p>
@@ -146,8 +146,8 @@ export function LinkAPI() {
 
         <HashSection tag="h4" meta={{ title: "anchor", hash: "Link-anchor" }}>
           <p>
-            By default, when you render a <Cmp>Link</Cmp>, a{" "}
-            <Cmp>TouchableHighlight</Cmp> element will be rendered.{" "}
+            By default, when you render a <IJS>Link</IJS>, a{" "}
+            <IJS>TouchableHighlight</IJS> element will be rendered.{" "}
             <IJS>anchor</IJS> lets you provide your own component to be rendered
             instead.
           </p>
@@ -188,7 +188,7 @@ export function LinkAPI() {
 
           <Note>
             <p>
-              Previously, any extra props passed to a <Cmp>Link</Cmp> would be
+              Previously, any extra props passed to a <IJS>Link</IJS> would be
               forwarded to the anchor component. This behavior is now deprecated
               and will be removed in <IJS>@curi/react-native</IJS> v2. Please
               use the <IJS>forward</IJS> prop instead.

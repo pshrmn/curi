@@ -3,8 +3,7 @@ import React from "react";
 import {
   HashSection,
   CodeBlock,
-  IJS,
-  Cmp
+  IJS
 } from "../../../../../components/package/common";
 
 const propsMeta = {
@@ -21,7 +20,7 @@ export function NavigatingAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <Cmp>Navigating</Cmp> component lets you know when the application
+        The <IJS>Navigating</IJS> component lets you know when the application
         is navigating and let users cancel the navigation. Its{" "}
         <IJS>children</IJS> prop is a render-invoked function that is passed a
         function to cancel the navigation.

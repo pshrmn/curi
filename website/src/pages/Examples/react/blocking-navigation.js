@@ -2,7 +2,7 @@ import React from "react";
 
 import {
   HashSection,
-  Cmp,
+  IJS,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -35,7 +35,7 @@ function BlockingNavigationExample() {
           half-filled form, and not becacuse you're running a spam site.
         </p>
         <p>
-          The <Cmp>Block</Cmp> component will display a user confirmation that
+          The <IJS>useBlock</IJS> hook will trigger a user confirmation that
           requires user input before navigation will occur.
         </p>
       </HashSection>

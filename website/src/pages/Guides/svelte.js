@@ -155,19 +155,19 @@ const routes = prepareRoutes([
 
       <HashSection meta={navigatingMeta}>
         <p>
-          The <Cmp>Link</Cmp> component is used to navigate between routes
+          The <IJS>Link</IJS> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as
           an anchor (<Cmp>a</Cmp>) element.
         </p>
         <p>
-          The <Cmp>Link</Cmp>'s <IJS>to</IJS> prop describes which route
+          The <IJS>Link</IJS>'s <IJS>to</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
         </p>
         <p>
           If a route has any params (or if any of a route's ancestors have
           params for nested routes), the <IJS>params</IJS> prop is used to pass
-          these to the <Cmp>Link</Cmp>.
+          these to the <IJS>Link</IJS>.
         </p>
 
         <CodeBlock lang="html">
@@ -199,7 +199,7 @@ const routes = prepareRoutes([
         </CodeBlock>
 
         <p>
-          The <Cmp>Link</Cmp> also takes <IJS>hash</IJS>, <IJS>query</IJS>, and{" "}
+          The <IJS>Link</IJS> also takes <IJS>hash</IJS>, <IJS>query</IJS>, and{" "}
           <IJS>state</IJS> props to attach their values to the location that
           will be navigated to.
         </p>

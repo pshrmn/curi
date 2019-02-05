@@ -443,7 +443,7 @@ new Vue({
           We will add router support to the Vue application using a plugin. This
           plugin does a couple of things. First, it makes some Curi components
           available within the application. The only one of these components
-          that we will be using is the <Cmp>curi-link</Cmp>. Second, it makes
+          that we will be using is the <IJS>curi-link</IJS>. Second, it makes
           router related values accessible to the components in the application.
           The router is available as <IJS>this.$router</IJS> and the{" "}
           <IJS>response</IJS> and <IJS>navigation</IJS> (we will cover these
@@ -670,7 +670,7 @@ export default [
         </CodeBlock>
 
         <p>
-          We can also remove the <Cmp>HelloWorld</Cmp> component.
+          We can also remove the <IJS>HelloWorld</IJS> component.
         </p>
 
         <CodeBlock lang="bash">{`rm src/components/HelloWorld.vue`}</CodeBlock>
@@ -683,7 +683,7 @@ export default [
 
       <HashSection meta={navigatingMeta}>
         <p>
-          The <IJS>CuriPlugin</IJS> makes a <Cmp>curi-link</Cmp> component
+          The <IJS>CuriPlugin</IJS> makes a <IJS>curi-link</IJS> component
           available with the appliaction. We can use that to navigate between
           locations within our application.
         </p>
@@ -702,7 +702,7 @@ export default [
           </CodeBlock>
 
           <p>
-            If a route has params, we provide these to the <Cmp>curi-link</Cmp>{" "}
+            If a route has params, we provide these to the <IJS>curi-link</IJS>{" "}
             as a <IJS>params</IJS> object. For a nested route, we would also
             need to provide params for any ancestor routes.
           </p>
@@ -714,7 +714,7 @@ export default [
           </CodeBlock>
 
           <p>
-            The <Cmp>curi-link</Cmp> is only for in-app navigation. If you want
+            The <IJS>curi-link</IJS> is only for in-app navigation. If you want
             to link to pages outside of the application, use an anchor.
           </p>
 
@@ -727,7 +727,7 @@ export default [
           </CodeBlock>
 
           <p>
-            If you need to attach query or hash data to a <Cmp>curi-link</Cmp>,
+            If you need to attach query or hash data to a <IJS>curi-link</IJS>,
             use the <IJS>query</IJS> and <IJS>hash</IJS> props.
           </p>
 
@@ -850,8 +850,8 @@ export default [
           </CodeBlock>
 
           <p>
-            The data can be imported in the <Cmp>Home</Cmp> component. We will
-            iterate over the books with a <Cmp>Link</Cmp> to each one.
+            The data can be imported in the <IJS>Home</IJS> component. We will
+            iterate over the books with a <IJS>curi-link</IJS> to each one.
           </p>
 
           <CodeBlock lang="html">
@@ -882,7 +882,7 @@ export default [
 
           <p>
             Now that we can navigate to the books, we should fill out the UI for
-            the <Cmp>Book</Cmp> component. We will once again import the{" "}
+            the <IJS>Book</IJS> component. We will once again import the{" "}
             <IJS>books.js</IJS> data. We can use <IJS>params.id</IJS> to select
             the correct book. <IJS>params.id</IJS> is a string, so we will need
             to parse it into an integer. Sometimes there won't be a valid book
@@ -963,7 +963,7 @@ export default {
 
         <p>
           As stated above, we can access our <IJS>router</IJS> in the{" "}
-          <Cmp>Book</Cmp> component using <IJS>this.$router</IJS>. The router's{" "}
+          <IJS>Book</IJS> component using <IJS>this.$router</IJS>. The router's{" "}
           <IJS>navigate()</IJS> function can be used to navigate to a new
           location. This means that when the user clicks a button to add a book
           to their shopping cart, we can automatically navigate to the checkout
@@ -1065,7 +1065,7 @@ router.navigate({ name: "New", method: "ANCHOR" });
         </CodeBlock>
 
         <p>
-          Finally, we can update our <Cmp>Checkout</Cmp> component to display
+          Finally, we can update our <IJS>Checkout</IJS> component to display
           the books in the shopping cart. To do this, we will import our cart
           and books. Our cart only stores book <IJS>id</IJS>s, so we will need
           to merge the book data with the cart data.

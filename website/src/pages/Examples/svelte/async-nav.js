@@ -2,7 +2,7 @@ import React from "react";
 
 import {
   HashSection,
-  Cmp,
+  IJS,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -30,9 +30,9 @@ function AsyncExample() {
 
       <HashSection meta={explanationMeta}>
         <p>
-          This example uses the <Cmp>Navigating</Cmp> component to render a
-          button when there is an active asynchronous navigation. Clicking the
-          button will cancel the navigation.
+          This example uses the <IJS>useNavigating</IJS> hook to render a button
+          when there is an active asynchronous navigation. Clicking the button
+          will cancel the navigation.
         </p>
       </HashSection>
 

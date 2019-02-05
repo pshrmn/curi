@@ -6,8 +6,7 @@ import {
   HashSection,
   CodeBlock,
   Note,
-  IJS,
-  Cmp
+  IJS
 } from "../../components/guide/common";
 
 const meta = {
@@ -68,11 +67,11 @@ function ApolloGuide() {
 
       <HashSection meta={setupMeta}>
         <p>
-          Apollo's React package provides an <Cmp>ApolloProvider</Cmp> component
+          Apollo's React package provides an <IJS>ApolloProvider</IJS> component
           for accessing your Apollo client throughout the application. The{" "}
-          <Cmp>Router</Cmp> (or whatever you name the root Curi component)
-          should be a descendant of the <Cmp>ApolloProvider</Cmp> because we
-          don't need to re-render the <Cmp>ApolloProvider</Cmp> for every new
+          <IJS>Router</IJS> (or whatever you name the root Curi component)
+          should be a descendant of the <IJS>ApolloProvider</IJS> because we
+          don't need to re-render the <IJS>ApolloProvider</IJS> for every new
           response.
         </p>
 
@@ -96,7 +95,7 @@ ReactDOM.render((
         <p>
           Apollo and Curi don't actually have to know about each other. Curi can
           create a response without doing any data fetching and let Apollo
-          handle that with its <Cmp>Query</Cmp> component.
+          handle that with its <IJS>Query</IJS> component.
         </p>
 
         <CodeBlock>
@@ -136,7 +135,7 @@ function App() {
 
         <p>
           Because we pass the <IJS>response</IJS> to the route's <IJS>body</IJS>{" "}
-          component, we can pass a <Cmp>Query</Cmp> the response's location
+          component, we can pass a <IJS>Query</IJS> the response's location
           params using <IJS>props.response.params</IJS>.
         </p>
 
@@ -222,7 +221,7 @@ const routes = prepareRoutes([
         <p>There are two strategies for doing this.</p>
 
         <p>
-          The first approach is to avoid the <Cmp>Query</Cmp> altogether.
+          The first approach is to avoid the <IJS>Query</IJS> altogether.
           Instead, you can use a route's <IJS>response</IJS> property to attach
           the data fetched by Apollo directly to a response through its{" "}
           <IJS>data</IJS> property.
@@ -281,7 +280,7 @@ const Verb = ({ response }) => (
 
         <p>
           The second approach is to use the <IJS>resolve</IJS> function as a way
-          to cache the data, but also use <Cmp>Query</Cmp>. With this approach,
+          to cache the data, but also use <IJS>Query</IJS>. With this approach,
           we do not have to attach the query data to the response; we are just
           relying on the fact that Apollo will execute and cache the results
           prior to navigation.
@@ -308,7 +307,7 @@ export default [
         </CodeBlock>
 
         <p>
-          The route's component will render a <Cmp>Query</Cmp> to also call the
+          The route's component will render a <IJS>Query</IJS> to also call the
           query. Because the query has already been executed, Apollo will grab
           the data from its cache instead of re-sending a request to your
           server.

@@ -4,7 +4,6 @@ import {
   HashSection,
   CodeBlock,
   IJS,
-  Cmp,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -32,7 +31,7 @@ function AsyncNavExample() {
 
       <HashSection meta={explanationMeta}>
         <p>
-          Use the <Cmp>curi-link</Cmp>'s <IJS>slot</IJS> as scoped-slot so you
+          Use the <IJS>curi-link</IJS>'s <IJS>slot</IJS> as scoped-slot so you
           can know whether or not the link is currently navigating.
         </p>
 

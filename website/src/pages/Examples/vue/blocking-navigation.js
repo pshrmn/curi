@@ -2,7 +2,7 @@ import React from "react";
 
 import {
   HashSection,
-  Cmp,
+  IJS,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -36,7 +36,7 @@ function BlockingNavigationExample() {
         </p>
 
         <p>
-          The <Cmp>curi-block</Cmp> component will display a user confirmation
+          The <IJS>curi-block</IJS> component will display a user confirmation
           that requires user input before navigation will occur.
         </p>
       </HashSection>

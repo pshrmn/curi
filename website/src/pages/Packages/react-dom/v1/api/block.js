@@ -3,7 +3,7 @@ import React from "react";
 import {
   HashSection,
   CodeBlock,
-  Cmp,
+  IJS,
   ScrollableTable
 } from "../../../../../components/package/common";
 
@@ -21,7 +21,7 @@ export function BlockAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <Cmp>Block</Cmp> component lets you prevent navigation until a user
+        The <IJS>Block</IJS> component lets you prevent navigation until a user
         has confirmed that they want to navigate. This can be useful when the
         user attempts to navigate away from a partially filled form. This{" "}
         <strong>will not</strong> prevent the user from navigating to another

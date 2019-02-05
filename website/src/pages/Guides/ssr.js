@@ -479,7 +479,7 @@ export default prepareRoutes([
 
         <p>
           Rendering with React on the server is essentially the same as
-          rendering on the client. We create a <Cmp>Router</Cmp> and use{" "}
+          rendering on the client. We create a <IJS>Router</IJS> and use{" "}
           <IJS>renderToString</IJS> (instead of <IJS>ReactDOM.render</IJS>) to
           render the component, passing it a render-invoked function.
         </p>

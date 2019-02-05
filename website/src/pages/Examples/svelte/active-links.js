@@ -3,7 +3,6 @@ import React from "react";
 import {
   HashSection,
   IJS,
-  Cmp,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -33,7 +32,7 @@ function ActiveLinksExample() {
         <p>
           You may want to style a link differently when it is "active" (based on
           the current response object). You can do so using the{" "}
-          <IJS>active</IJS> router interaction combined with the <Cmp>Link</Cmp>{" "}
+          <IJS>active</IJS> router interaction combined with the <IJS>Link</IJS>{" "}
           component.
         </p>
       </HashSection>

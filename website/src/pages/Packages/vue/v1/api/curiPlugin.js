@@ -3,8 +3,7 @@ import React from "react";
 import {
   HashSection,
   CodeBlock,
-  IJS,
-  Cmp
+  IJS
 } from "../../../../../components/package/common";
 
 export const meta = {
@@ -18,7 +17,7 @@ export function CuriPluginAPI() {
       <p>What does the plugin do?</p>
       <ol>
         <li>
-          Register <Cmp>curi-link</Cmp> and <Cmp>curi-block</Cmp> components
+          Register <IJS>curi-link</IJS> and <IJS>curi-block</IJS> components
           with Vue so they can be used anywhere within your application without
           manually importing.
         </li>

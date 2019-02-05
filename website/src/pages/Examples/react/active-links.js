@@ -2,7 +2,7 @@ import React from "react";
 
 import {
   HashSection,
-  Cmp,
+  IJS,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -31,8 +31,8 @@ function ActiveLinksExample() {
       <HashSection meta={explanationMeta}>
         <p>
           You may want to style a link differently when it is "active" (based on
-          the current response). You can do so using the <Cmp>Active</Cmp> and{" "}
-          <Cmp>Link</Cmp> components.
+          the current response). You can do so using the <IJS>useActive</IJS>{" "}
+          and <IJS>Link</IJS> component.
         </p>
       </HashSection>
 

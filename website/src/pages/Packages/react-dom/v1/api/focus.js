@@ -22,7 +22,7 @@ export function FocusAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        <Cmp>Focus</Cmp> lets you focus a DOM element whenever there is a new
+        <IJS>Focus</IJS> lets you focus a DOM element whenever there is a new
         response.
       </p>
       <p>
@@ -39,7 +39,7 @@ export function FocusAPI() {
       </p>
       <Note>
         <p>
-          Only one <Cmp>Focus</Cmp> should be rendered at a time.
+          Only one <IJS>Focus</IJS> should be rendered at a time.
         </p>
       </Note>
 
@@ -89,7 +89,7 @@ export function FocusAPI() {
           <p>
             The default behavior for focusing an element is to scroll to it. If
             you want to prevent this, pass <IJS>{`preventScroll=\{true\}`}</IJS>{" "}
-            to the <Cmp>Focus</Cmp>.
+            to the <IJS>Focus</IJS>.
           </p>
 
           <CodeBlock lang="jsx">
