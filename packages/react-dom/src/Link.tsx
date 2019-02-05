@@ -13,27 +13,18 @@ export interface LinkProps extends RouteLocation {
 }
 
 const HookLink = React.forwardRef((props: LinkProps, ref: React.Ref<any>) => {
-  const [navigating, setNavigating] = React.useState(false);
   const href = useHref(props);
-  const { handler, cancel } = useNavigationHandler<
-    React.MouseEvent<HTMLElement>
-  >(props, setNavigating, canNavigate);
-  React.useEffect(() => {
-    return () => {
-      if (cancel.current) {
-        cancel.current();
-      }
-    };
-  }, []);
 
-  const { anchor: Anchor = "a", children, forward } = props;
+  const { eventHandler, children } = useNavigationHandler<
+    React.MouseEvent<HTMLElement>
+  >(props, canNavigate);
+
+  const { anchor: Anchor = "a", forward } = props;
 
   return (
     // @ts-ignore
-    <Anchor onClick={handler} href={href} ref={ref} {...forward}>
-      {typeof children === "function"
-        ? (children as NavigatingChildren)(navigating)
-        : children}
+    <Anchor onClick={eventHandler} href={href} ref={ref} {...forward}>
+      {children}
     </Anchor>
   );
 });

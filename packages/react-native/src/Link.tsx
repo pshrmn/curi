@@ -20,28 +20,16 @@ function canNavigate(event: GestureResponderEvent) {
 }
 
 const HookLink = React.forwardRef((props: LinkProps, ref: React.Ref<any>) => {
-  const [navigating, setNavigating] = React.useState(false);
-  const { handler, cancel } = useNavigationHandler<GestureResponderEvent>(
-    props,
-    setNavigating,
-    canNavigate
-  );
-  React.useEffect(() => {
-    return () => {
-      if (cancel.current) {
-        cancel.current();
-      }
-    };
-  }, []);
+  const { eventHandler, children } = useNavigationHandler<
+    GestureResponderEvent
+  >(props, canNavigate);
 
-  const { anchor: Anchor = TouchableHighlight, children, forward } = props;
+  const { anchor: Anchor = TouchableHighlight, forward } = props;
 
   return (
     // @ts-ignore
-    <Anchor onPress={handler} ref={ref} {...forward}>
-      {typeof children === "function"
-        ? (children as NavigatingChildren)(navigating)
-        : children}
+    <Anchor onPress={eventHandler} ref={ref} {...forward}>
+      {children}
     </Anchor>
   );
 });
