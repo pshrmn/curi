@@ -1,4 +1,8 @@
-## Next
+## 2.0.0-alpha.1
+
+* Internal `Link` changes.
+
+## 2.0.0-alpha.0
 
 * Use hooks in `Link`.
 * `Link` no longer does shallow prop comparison (this can be added on the user's end using `React.memo`).

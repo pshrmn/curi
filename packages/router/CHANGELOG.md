@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-alpha.0
 
 * `route.resolve` is now a single function.
 * Routes array passed to `curi` must be prepared using `prepareRoutes`.
