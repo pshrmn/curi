@@ -40,34 +40,43 @@ const globalCSS = css`
   h6 {
     font-weight: normal;
     margin: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   p {
     margin: 5px 0;
+    word-break: break-word;
   }
 
   h1 {
     font-size: 1.75em;
+    line-height: 1.5em;
   }
 
   h2 {
     font-size: 1.5em;
+    line-height: 1.2em;
   }
 
   h3 {
     font-size: 1.25em;
+    line-height: 1.1em;
   }
 
   h4 {
     font-size: 1.2em;
+    line-height: 1.1em;
   }
 
   h5 {
     font-size: 1.1em;
+    line-height: 1.1em;
   }
 
   h6 {
     font-size: 1em;
+    line-height: 1.1em;
   }
 
   table,

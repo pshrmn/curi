@@ -1,5 +1,14 @@
 import React from "react";
 import { useCuri } from "@curi/react-dom";
+import styled from "@emotion/styled";
+
+import { font } from "../../constants/styles";
+
+const StyledSelect = styled("select")`
+  font-size: 20px;
+  font-family: ${font.serif};
+  margin: 5px 0;
+`;
 
 export default function Version({ versions, major, params }) {
   const { router } = useCuri();
@@ -7,7 +16,7 @@ export default function Version({ versions, major, params }) {
   // only render dropdown for packages with multiple versions
   if (Object.keys(versions).length > 1) {
     return (
-      <select
+      <StyledSelect
         value={major}
         onChange={e => {
           router.navigate({
@@ -23,7 +32,7 @@ export default function Version({ versions, major, params }) {
             </option>
           );
         })}
-      </select>
+      </StyledSelect>
     );
   }
 
