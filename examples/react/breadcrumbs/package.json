@@ -12,9 +12,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "2.0.0-alpha.1",
-    "@curi/route-ancestors": "1.1.0",
-    "@curi/router": "2.0.0-alpha.0",
+    "@curi/react-dom": "file:../../../packages/react-dom",
+    "@curi/route-ancestors": "file:../../../packages/interactions/route-ancestors",
+    "@curi/router": "file:../../../packages/router",
     "@hickory/browser": "^1.0.0",
     "react": "^16.8.0-alpha.1",
     "react-dom": "^16.8.0-alpha.1"
