@@ -37,7 +37,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "react": "16.8.0-alpha.1"
+    "react": ">=16.8.0"
   },
   "dependencies": {
     "@curi/react-universal": "file:../react-universal",

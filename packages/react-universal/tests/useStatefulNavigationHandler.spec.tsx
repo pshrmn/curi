@@ -5,7 +5,11 @@ import { Simulate } from "react-dom/test-utils";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
-import wait from "./utils/wait";
+function wait(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
 
 import {
   create_router_component,

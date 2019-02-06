@@ -37,8 +37,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "peerDependencies": {
-    "react": "16.8.0-alpha.1",
-    "react-native": ">=0.55.0"
+    "react": ">=16.8.0",
+    "react-native": ">=0.59.0"
   },
   "dependencies": {
     "@curi/react-universal": "file:../react-universal",

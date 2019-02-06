@@ -1,7 +1,7 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Simulate } from "react-dom/test-utils";
+import { act, Simulate } from "react-dom/test-utils";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
@@ -363,7 +363,9 @@ describe("<Link>", () => {
         shiftKey: null,
         button: 0
       };
-      Simulate.click(a, preventedEvent);
+      act(() => {
+        Simulate.click(a, preventedEvent);
+      });
       expect(mockNavigate.mock.calls.length).toBe(0);
     });
   });

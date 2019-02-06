@@ -1,10 +1,9 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
+import { act } from "react-dom/test-utils";
 import { create_router, prepare_routes } from "@curi/router";
 import { in_memory } from "@hickory/in-memory";
-
-import wait from "./utils/wait";
 
 import { create_router_component, useCuri } from "@curi/react-universal";
 
@@ -72,24 +71,27 @@ describe("create_router_component()", () => {
       let currentResponse;
 
       const App = jest.fn(() => {
-        const { response, router } = useCuri();
+        const { response } = useCuri();
         currentResponse = response;
         return null;
       });
 
       const Router = create_router_component(router);
-      ReactDOM.render(
-        <Router>
-          <App />
-        </Router>,
-        node
-      );
+
+      act(() => {
+        ReactDOM.render(
+          <Router>
+            <App />
+          </Router>,
+          node
+        );
+      });
 
       expect(currentResponse.name).toBe("Home");
 
-      await wait(15);
-
-      router.navigate({ name: "About" });
+      act(() => {
+        router.navigate({ name: "About" });
+      });
 
       expect(currentResponse.name).toBe("About");
     });
