@@ -32,6 +32,10 @@ const pkgs = PACKAGE_API.all().map(pkg => ({
 function PackageLinks({ active, close }) {
   usePrefetch(pkgs, active);
 
+  if (!active) {
+    return null;
+  }
+
   return (
     <Container active={active} close={close}>
       {Object.keys(groups).map(title => (

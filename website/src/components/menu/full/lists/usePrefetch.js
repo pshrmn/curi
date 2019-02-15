@@ -1,3 +1,4 @@
+import React from "react";
 import { useCuri } from "@curi/react-dom";
 
 export default function usePrefetch(routes, active) {

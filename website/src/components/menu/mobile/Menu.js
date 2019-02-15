@@ -141,7 +141,7 @@ export default function MobileMenu(props) {
           }
         }}
       >
-        <nav>{menu}</nav>
+        <nav>{visible && menu}</nav>
       </StyledMenu>
     </React.Fragment>
   );

@@ -36,6 +36,11 @@ const flatExamples = Object.keys(examples).reduce((acc, category) => {
 
 function ExampleLinks({ active, close }) {
   usePrefetch(flatExamples, active);
+
+  if (!active) {
+    return null;
+  }
+
   return (
     <Container active={active} close={close}>
       {categories.map(title => (

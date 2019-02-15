@@ -28,6 +28,10 @@ const guides = GUIDE_API.all().map(g => ({
 function GuideLinks({ active, close }) {
   usePrefetch(guides, active);
 
+  if (!active) {
+    return null;
+  }
+
   return (
     <Container active={active} close={close}>
       {Object.keys(groups).map(title => (

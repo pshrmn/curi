@@ -25,6 +25,11 @@ const flatTutorials = TUTORIAL_API.all().map(t => ({
 
 function TutorialLinks({ active, close }) {
   usePrefetch(flatTutorials, active);
+
+  if (!active) {
+    return null;
+  }
+
   return (
     <Container active={active} close={close}>
       {Object.keys(tutorialGroups).map(title => (
