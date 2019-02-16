@@ -54,6 +54,10 @@ Build time: ${end - start}ms`
 
 staticFiles({
   pages,
+  fallback: {
+    filename: "404.html",
+    path: "/404"
+  },
   router: {
     routes,
     getRouterOptions

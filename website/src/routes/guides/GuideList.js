@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import GUIDE_API from "../../constants/guides";
-import Page from "../layout/Page";
-import { PlainSection } from "../layout/Sections";
+import Page from "../../components/layout/Page";
+import { PlainSection } from "../../components/layout/Sections";
 
 const GroupGuides = ({ guides }) => (
   <ul className="link-list">

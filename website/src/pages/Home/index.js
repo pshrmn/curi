@@ -34,7 +34,7 @@ export default function HomePage() {
 
       <PlainSection className="centered">
         <p>
-          Curi is a router for however you render. Curi officially supports{" "}
+          Curi officially supports{" "}
           <Link name="Package" params={{ package: "react-dom", version: "v1" }}>
             React DOM
           </Link>

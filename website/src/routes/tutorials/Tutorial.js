@@ -1,9 +1,9 @@
 import React from "react";
 
-import FancyPage from "../layout/FancyPage";
-import PageMenu from "../layout/PageMenu";
+import FancyPage from "../../components/layout/FancyPage";
+import PageMenu from "../../components/layout/PageMenu";
 
-export default function ExamplePage({ response }) {
+export default function TutorialPage({ response }) {
   const { component: Component, contents } = response.data.content;
   return (
     <FancyPage base={<Component />} menu={<PageMenu contents={contents} />} />

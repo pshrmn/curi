@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import EXAMPLE_API from "../../constants/examples";
-import Page from "../layout/Page";
-import { PlainSection } from "../layout/Sections";
+import Page from "../../components/layout/Page";
+import { PlainSection } from "../../components/layout/Sections";
 
 const Category = ({ examples }) => {
   return (

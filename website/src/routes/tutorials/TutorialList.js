@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import TUTORIAL_API from "../../constants/tutorials";
-import Page from "../layout/Page";
-import { PlainSection } from "../layout/Sections";
+import Page from "../../components/layout/Page";
+import { PlainSection } from "../../components/layout/Sections";
 
 const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">

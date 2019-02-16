@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import PACKAGE_API from "../../constants/packages";
-import Page from "../layout/Page";
-import { PlainSection } from "../layout/Sections";
-import { Note } from "../Messages";
-import { InlineJS as IJS } from "../highlight/Inline";
+import Page from "../../components/layout/Page";
+import { PlainSection } from "../../components/layout/Sections";
+import { Note } from "../../components/Messages";
+import { InlineJS as IJS } from "../../components/highlight/Inline";
 
 const GroupPackages = ({ packages }) => (
   <ul className="link-list">
