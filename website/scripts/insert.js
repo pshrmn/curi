@@ -1,6 +1,6 @@
 const dev = process.env.NODE_ENV !== "production";
 
-const VERSION = "16.8.0-alpha.1";
+const VERSION = "16.8.0";
 
 const REACT_BUILD = dev ? "react.development.js" : "react.production.min.js";
 const REACT_DOM_BUILD = dev

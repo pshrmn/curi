@@ -4,10 +4,13 @@ const guides_api = require("../src/constants/guides").default;
 const examples_api = require("../src/constants/examples").default;
 const tutorials_api = require("../src/constants/tutorials").default;
 
-const packageParams = packages_api.all().map(p => ({
-  package: p.name,
-  version: p.latest
-}));
+const packageParams = packages_api.all().reduce((acc, pkg) => {
+  const pkgs = Object.keys(pkg.versions).map(version => ({
+    package: pkg.name,
+    version
+  }));
+  return acc.concat(pkgs);
+}, []);
 const guideParams = guides_api.all().map(p => ({ slug: p.slug }));
 const categories = examples_api.all();
 const exampleParams = Object.keys(categories)
