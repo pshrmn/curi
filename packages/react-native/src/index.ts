@@ -1,7 +1,7 @@
-export { LinkProps } from "./Link";
+export { LinkProps, NavLinkProps } from "./Link";
 
 export * from "@curi/react-universal";
 
-import Link from "./Link";
+import { Link, NavLink } from "./Link";
 
-export { Link };
+export { Link, NavLink };

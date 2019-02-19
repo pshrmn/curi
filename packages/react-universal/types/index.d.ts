@@ -9,5 +9,5 @@ import useBlock from "./hooks/useBlock";
 import useLocation from "./hooks/useLocation";
 import useHref from "./hooks/useHref";
 import useNavigating from "./hooks/useNavigating";
-import useNavigationHandler from "./hooks/useNavigationHandler";
-export { curiProvider, Curious, useCuri, useActive, useBlock, useLocation, useHref, useNavigating, useNavigationHandler };
+import { useStatefulNavigationHandler, useNavigationHandler } from "./hooks/useNavigationHandler";
+export { curiProvider, Curious, useCuri, useActive, useBlock, useLocation, useHref, useNavigating, useStatefulNavigationHandler, useNavigationHandler };

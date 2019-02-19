@@ -3,14 +3,22 @@ import { ReactNode } from "react";
 import { RouteLocation } from "@curi/router";
 import { NavType } from "@hickory/root";
 export declare type NavigatingChildren = (navigating: boolean) => ReactNode;
-export interface NavigationHookProps<T> extends RouteLocation {
-    children: NavigatingChildren | React.ReactNode;
+export interface NavigationHookProps<T> extends BaseNavigationHookProps<T> {
+    children: React.ReactNode;
+}
+export interface StatefulNavigationHookProps<T> extends BaseNavigationHookProps<T> {
+    children: NavigatingChildren;
+}
+export interface BaseNavigationHookProps<T> extends RouteLocation {
     onNav?: (e: T) => void;
     forward?: object;
     method?: NavType;
 }
 export declare type CanNavigate<T> = (e: T, forward?: object) => boolean;
-export default function useNavigationHandler<T extends React.BaseSyntheticEvent>(props: NavigationHookProps<T>, canNavigate?: CanNavigate<T>): {
+export declare function useNavigationHandler<T extends React.BaseSyntheticEvent>(props: NavigationHookProps<T>, canNavigate?: CanNavigate<T>): {
     eventHandler: (event: T) => void;
-    children: {};
+};
+export declare function useStatefulNavigationHandler<T extends React.BaseSyntheticEvent>(props: StatefulNavigationHookProps<T>, canNavigate?: CanNavigate<T>): {
+    eventHandler: (event: T) => void;
+    navigating: boolean;
 };

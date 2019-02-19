@@ -1,3 +1,7 @@
+## Next
+
+* Split `useNavigationHandler` into `useNavigationHandler` and `useStatefulNavigationHandler`. The latter is for tracking the component's `navigating` state.
+
 ## 2.0.0-alpha.1
 
 * Internal `useNavigationHandler` changes.
