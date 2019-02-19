@@ -3,12 +3,17 @@ import { GestureResponderEvent } from "react-native";
 import { RouteLocation } from "@curi/router";
 import { NavigatingChildren } from "@curi/react-universal";
 import { NavType } from "@hickory/root";
-export interface LinkProps extends RouteLocation {
+export interface BaseLinkProps extends RouteLocation {
     onNav?: (e: GestureResponderEvent) => void;
     anchor?: React.ReactType;
-    children: NavigatingChildren | React.ReactNode;
     forward?: React.AnchorHTMLAttributes<HTMLAnchorElement>;
     method?: NavType;
 }
-declare const HookLink: React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<any>>;
-export default HookLink;
+export interface LinkProps extends BaseLinkProps {
+    children: React.ReactNode;
+}
+export interface NavLinkProps extends BaseLinkProps {
+    children: NavigatingChildren;
+}
+export declare const Link: React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<any>>;
+export declare const NavLink: React.ForwardRefExoticComponent<NavLinkProps & React.RefAttributes<any>>;
