@@ -6,7 +6,6 @@ import InMemory from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 import { TouchableHighlight, Text } from "react-native";
 
-// @ts-ignore (resolved by jest)
 import { curiProvider, NavLink } from "@curi/react-native";
 
 import { NavType } from "@hickory/root";

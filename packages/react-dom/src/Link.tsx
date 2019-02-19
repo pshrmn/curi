@@ -34,7 +34,6 @@ export const Link = React.forwardRef(
     const { anchor: Anchor = "a", forward, children } = props;
 
     return (
-      // @ts-ignore
       <Anchor onClick={eventHandler} href={href} ref={ref} {...forward}>
         {children}
       </Anchor>
@@ -53,7 +52,6 @@ export const NavLink = React.forwardRef(
     const { anchor: Anchor = "a", forward, children } = props;
 
     return (
-      // @ts-ignore
       <Anchor onClick={eventHandler} href={href} ref={ref} {...forward}>
         {children(navigating)}
       </Anchor>

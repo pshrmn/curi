@@ -39,7 +39,6 @@ export const Link = React.forwardRef(
     const { anchor: Anchor = TouchableHighlight, forward, children } = props;
 
     return (
-      // @ts-ignore
       <Anchor onPress={eventHandler} ref={ref} {...forward}>
         {children}
       </Anchor>
@@ -56,7 +55,6 @@ export const NavLink = React.forwardRef(
     const { anchor: Anchor = TouchableHighlight, forward, children } = props;
 
     return (
-      // @ts-ignore
       <Anchor onPress={eventHandler} ref={ref} {...forward}>
         {children(navigating)}
       </Anchor>
