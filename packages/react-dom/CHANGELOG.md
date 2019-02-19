@@ -1,3 +1,7 @@
+## Next
+
+* Split `Link` into `Link` (regular `children`) and `NavLink` (`children` is a render-invoked function).
+
 ## 2.0.0-alpha.1
 
 * Internal `Link` changes.
