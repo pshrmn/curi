@@ -9,6 +9,7 @@ import { RouteLocation } from "./location";
 export interface Navigation {
   action: Action;
   previous: Response | null;
+  finish?: () => void;
 }
 
 export interface Emitted {
@@ -35,6 +36,7 @@ export interface RouterOptions {
   emitRedirects?: boolean;
   automaticRedirects?: boolean;
   external?: any;
+  suspend?: boolean;
 }
 
 export interface CurrentResponse {
@@ -60,4 +62,5 @@ export interface CuriRouter {
   route: Interactions;
   history: History;
   external: any;
+  finish?: () => void;
 }
