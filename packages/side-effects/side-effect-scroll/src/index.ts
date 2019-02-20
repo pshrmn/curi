@@ -2,7 +2,7 @@ import { Observer, Emitted } from "@curi/router";
 
 export default function createScrollSideEffect(): Observer {
   return function({ response, navigation }: Emitted): void {
-    if (navigation.action === "POP") {
+    if (navigation.action === "pop") {
       return;
     }
 

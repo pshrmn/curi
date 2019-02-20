@@ -1,9 +1,6 @@
 <template>
   <div>
-    <button
-      type='button'
-      v-on:click="onClick"
-    >
+    <button type="button" v-on:click="onClick">
       Login
     </button>
   </div>
@@ -16,7 +13,7 @@ export default {
     onClick: function(e) {
       this.$store.commit("login");
       const { query } = this.$curi.response.location;
-      this.$router.history.navigate(query.next || "/", "REPLACE");
+      this.$router.history.navigate(query.next || "/", "replace");
     }
   }
 };

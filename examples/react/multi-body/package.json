@@ -11,7 +11,7 @@
   "dependencies": {
     "@curi/react-dom": "file:../../../packages/react-dom",
     "@curi/router": "file:../../../packages/router",
-    "@hickory/browser": "^1.0.0",
+    "@hickory/browser": "^2.0.0-alpha.1",
     "prop-types": "^15.6.0",
     "react": "^16.8.0-alpha.1",
     "react-dom": "^16.8.0-alpha.1"

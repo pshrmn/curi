@@ -241,7 +241,7 @@ describe("staticFiles()", () => {
         },
         navigation: {
           previous: null,
-          action: "PUSH"
+          action: "push"
         }
       });
     });

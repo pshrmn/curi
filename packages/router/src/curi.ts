@@ -197,7 +197,7 @@ export default function createRouter(
     }
 
     if (response.redirectTo !== undefined && automaticRedirects) {
-      history.navigate(response.redirectTo, "REPLACE");
+      history.navigate(response.redirectTo, "replace");
     }
   }
 
@@ -290,21 +290,11 @@ export default function createRouter(
       }
       resetCallbacks();
 
-      let {
-        name,
-        params,
-        hash,
-        query,
-        state,
-        method = "ANCHOR" as NavType
-      } = details;
+      let { name, params, hash, query, state, method } = details;
       const pathname =
         name != null
           ? routeInteractions.pathname(name, params)
           : history.location.pathname;
-      if (method !== "ANCHOR" && method !== "PUSH" && method !== "REPLACE") {
-        method = "ANCHOR";
-      }
 
       cancelCallback = details.cancelled;
       finishCallback = details.finished;

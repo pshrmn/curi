@@ -43,7 +43,7 @@ export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
       event.preventDefault();
 
       router.navigate({
-        method: props.method || "ANCHOR",
+        method: props.method,
         name: props.name,
         params: props.params,
         query: props.query,
@@ -91,7 +91,7 @@ export function useStatefulNavigationHandler<
       setNavigating(true);
 
       cancel.current = router.navigate({
-        method: props.method || "ANCHOR",
+        method: props.method,
         name: props.name,
         params: props.params,
         query: props.query,

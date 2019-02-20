@@ -1,4 +1,4 @@
-import Browser from "@hickory/browser";
+import { Browser } from "@hickory/browser";
 import { curi } from "@curi/router";
 import { curiStore } from "@curi/svelte";
 import { Store } from "svelte/store";
