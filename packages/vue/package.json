@@ -36,8 +36,5 @@
   "dependencies": {
     "@curi/router": "file:../router",
     "@hickory/root": "^2.0.0-alpha.1"
-  },
-  "devDependencies": {
-    "@curi/route-active": "file:../interactions/route-active"
   }
 }

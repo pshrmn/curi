@@ -46,9 +46,6 @@
     "@types/react": "^16.7.18",
     "@types/react-native": "^0.57.32"
   },
-  "devDependencies": {
-    "@curi/route-active": "file:../interactions/route-active"
-  },
   "babel": {
     "presets": [
       "react-native"
