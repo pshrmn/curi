@@ -1,6 +1,5 @@
 import "jest";
-import InMemory from "@hickory/in-memory";
-import { RemoveObserver } from "../src/types";
+import { InMemory } from "@hickory/in-memory";
 
 import { NavType } from "@hickory/root";
 
@@ -195,7 +194,7 @@ describe("curi", () => {
               location: { pathname: "/" }
             });
             expect(navigation).toMatchObject({
-              action: "PUSH"
+              action: "push"
             });
             expect(router).toBe(router);
             done();
@@ -296,7 +295,7 @@ describe("curi", () => {
               name: "Other"
             });
             expect(navigation).toMatchObject({
-              action: "REPLACE",
+              action: "replace",
               previous: {
                 name: "Start"
               }
@@ -330,7 +329,7 @@ describe("curi", () => {
               name: "Start"
             });
             expect(navigation).toMatchObject({
-              action: "PUSH",
+              action: "push",
               previous: null
             });
           });
@@ -468,7 +467,7 @@ describe("curi", () => {
         const router = curi(history, routes);
         expect(router.current()).toMatchObject({
           response: { name: "Catch All" },
-          navigation: { action: "PUSH" }
+          navigation: { action: "push" }
         });
       });
     });
@@ -680,7 +679,7 @@ describe("curi", () => {
             location: { pathname: "/" }
           });
           expect(navigation).toMatchObject({
-            action: "PUSH"
+            action: "push"
           });
           expect(router).toBe(router);
           done();
@@ -707,7 +706,7 @@ describe("curi", () => {
             }
           });
           expect(navigation).toMatchObject({
-            action: "PUSH"
+            action: "push"
           });
         };
 
@@ -928,7 +927,7 @@ describe("curi", () => {
             location: { pathname: "/" }
           });
           expect(navigation).toMatchObject({
-            action: "PUSH"
+            action: "push"
           });
           expect(router).toBe(router);
           done();
@@ -1168,29 +1167,35 @@ describe("curi", () => {
     });
 
     describe("navigation method", () => {
-      it("defaults to 'ANCHOR' navigation", () => {
-        router.navigate({ name: "Contact" });
-        expect(mockNavigate.mock.calls[0][1]).toBe("ANCHOR");
+      it("lets the history object decide if no method is provided", () => {
+        const history = InMemory();
+        const router = curi(history, routes);
+        expect(() => {
+          router.navigate({ name: "Contact" });
+        }).not.toThrow();
       });
 
-      it("ANCHOR", () => {
-        router.navigate({ name: "Contact", method: "ANCHOR" });
-        expect(mockNavigate.mock.calls[0][1]).toBe("ANCHOR");
+      it("anchor", () => {
+        router.navigate({ name: "Contact", method: "anchor" });
+        expect(mockNavigate.mock.calls[0][1]).toBe("anchor");
       });
 
-      it("PUSH", () => {
-        router.navigate({ name: "Contact", method: "PUSH" });
-        expect(mockNavigate.mock.calls[0][1]).toBe("PUSH");
+      it("push", () => {
+        router.navigate({ name: "Contact", method: "push" });
+        expect(mockNavigate.mock.calls[0][1]).toBe("push");
       });
 
-      it("REPLACE", () => {
-        router.navigate({ name: "Contact", method: "REPLACE" });
-        expect(mockNavigate.mock.calls[0][1]).toBe("REPLACE");
+      it("replace", () => {
+        router.navigate({ name: "Contact", method: "replace" });
+        expect(mockNavigate.mock.calls[0][1]).toBe("replace");
       });
 
-      it("invalid method reverts to 'ANCHOR'", () => {
-        router.navigate({ name: "Contact", method: "BAAAAAAD" as NavType });
-        expect(mockNavigate.mock.calls[0][1]).toBe("ANCHOR");
+      it("throws if given a bad navigation type", () => {
+        const history = InMemory();
+        const router = curi(history, routes);
+        expect(() => {
+          router.navigate({ name: "Contact", method: "BAAAAAAD" as NavType });
+        }).toThrow();
       });
     });
 
@@ -1653,7 +1658,7 @@ describe("curi", () => {
       let hasEmitted = false;
 
       history.navigate = jest.fn((loc, navType) => {
-        expect(navType).toBe("REPLACE");
+        expect(navType).toBe("replace");
         expect(hasEmitted).toBe(true);
         done();
       });

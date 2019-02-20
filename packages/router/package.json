@@ -33,7 +33,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@hickory/root": "^1.0.0",
+    "@hickory/root": "^2.0.0-alpha.1",
     "path-to-regexp": "^2.1.0"
   }
 }

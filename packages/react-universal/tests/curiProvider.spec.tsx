@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { curi, prepareRoutes } from "@curi/router";
-import InMemory from "@hickory/in-memory";
+import { InMemory } from "@hickory/in-memory";
 
 import wait from "./utils/wait";
 

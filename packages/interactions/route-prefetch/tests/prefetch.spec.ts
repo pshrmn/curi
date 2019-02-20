@@ -1,5 +1,5 @@
 import "jest";
-import InMemory from "@hickory/in-memory";
+import { InMemory } from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
 import { HickoryLocation } from "@hickory/root";

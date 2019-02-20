@@ -1,3 +1,7 @@
+## Next
+
+* Use named `InMemory` import (Hickory v2).
+
 ## 1.0.0-alpha.3
 
 * Add dev guard to log to only call in development.

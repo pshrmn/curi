@@ -55,7 +55,7 @@ const router = curi(history, routes, options);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`import Browser from "@hickory/browser";
+            {`import { Browser } from "@hickory/browser";
 
 const history = Browser();
 const router = curi(history, routes);`}

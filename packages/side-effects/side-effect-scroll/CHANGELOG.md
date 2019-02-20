@@ -1,3 +1,7 @@
+## Next
+
+* Use `pop` (Hickory v2), not `POP`.
+
 ## 1.0.1
 
 * Add `sideEffects: false` hint for Webpack.

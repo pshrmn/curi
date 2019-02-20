@@ -599,14 +599,14 @@ export default function App() {
             The <IJS>navigation</IJS> object contains additional information
             about a navigation that doesn't make sense to include in the
             response object. This includes the navigation's "action" (
-            <IJS>PUSH</IJS>, <IJS>POP</IJS>, or <IJS>REPLACE</IJS>) and the
+            <IJS>push</IJS>, <IJS>pop</IJS>, or <IJS>replace</IJS>) and the
             previous response object.
           </p>
 
           <CodeBlock>
             {`// a sample navigation object
 {
-  action: "PUSH",
+  action: "push",
   previous: { name: ..., location: ..., ... }
 }`}
           </CodeBlock>
@@ -1139,46 +1139,46 @@ export default function App() {
         <HashSection meta={navigateMeta} className="aside" tag="h3">
           <p>
             <IJS>router.navigate()</IJS> is used to navigate to new locations.
-            There are three methods of navigation: <IJS>PUSH</IJS>,{" "}
-            <IJS>REPLACE</IJS>, and <IJS>ANCHOR</IJS>.
+            There are three methods of navigation: <IJS>push</IJS>,{" "}
+            <IJS>replace</IJS>, and <IJS>anchor</IJS>.
           </p>
           <p>
-            <IJS>PUSH</IJS> pushes a new location after the current index,
+            <IJS>push</IJS> pushes a new location after the current index,
             removing any locations after the current location.
           </p>
 
           <CodeBlock>
             {`// session = ['/one', '/two', '/three'], index = 1
-router.navigate({ name: "New", method: "PUSH" });
+router.navigate({ name: "New", method: "push" });
 // session = ['/one', '/two', '/new'], index = 2`}
           </CodeBlock>
 
           <p>
-            <IJS>REPLACE</IJS> replaces the location at the current index.
+            <IJS>replace</IJS> replaces the location at the current index.
           </p>
 
           <CodeBlock>
             {`// session = ['/one', '/two', '/three'], index = 1
-router.navigate({ name: "Replace", method: "REPLACE" });
+router.navigate({ name: "Replace", method: "replace" });
 // session = ['/one', '/replacement', '/three'], index = 1`}
           </CodeBlock>
 
           <p>
-            <IJS>ANCHOR</IJS> is a mix between <IJS>PUSH</IJS> and{" "}
-            <IJS>REPLACE</IJS>. It mimics the behavior of clicking on links, so
+            <IJS>anchor</IJS> is a mix between <IJS>push</IJS> and{" "}
+            <IJS>replace</IJS>. It mimics the behavior of clicking on links, so
             if you navigate to the same location as the current one it will
             replace, and if you navigate to a new location it will push.
           </p>
           <p>
             If <IJS>method.navigate()</IJS> is called without a navigation{" "}
-            <IJS>method</IJS>, it will default to <IJS>ANCHOR</IJS>.
+            <IJS>method</IJS>, it will default to <IJS>anchor</IJS>.
           </p>
 
           <CodeBlock>
             {`// session = ['/one', '/two', '/three'], index = 1
-router.navigate({ name: "Two", method: "ANCHOR" });
+router.navigate({ name: "Two", method: "anchor" });
 // session = ['/one', '/two', '/three'], index = 1
-router.navigate({ name: "New", method: "ANCHOR" });
+router.navigate({ name: "New", method: "anchor" });
 // session = ['/one', '/two', '/new'], index = 2`}
             `}
           </CodeBlock>
@@ -1275,7 +1275,7 @@ export default function Checkout({ router, response }) {
           router.navigate({
             name: "Checkout",
             hash: "thanks",
-            method: "REPLACE"
+            method: "replace"
           });
         }}
       >

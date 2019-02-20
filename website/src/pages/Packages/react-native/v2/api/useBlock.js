@@ -92,8 +92,8 @@ useBlock(false, confirm);`}
                 <IJS>from</IJS> - the current location
               </li>
               <li>
-                <IJS>action</IJS> - the type of navigation (PUSH, REPLACE, or
-                POP).
+                <IJS>action</IJS> - the type of navigation (push, replace, or
+                pop).
               </li>
             </ul>
           </HashSection>

@@ -31,8 +31,8 @@
     "@curi/static": "file:../packages/static",
     "@emotion/core": "^10.0.6",
     "@emotion/styled": "^10.0.6",
-    "@hickory/browser": "^1.0.0",
-    "@hickory/in-memory": "^1.0.0",
+    "@hickory/browser": "^2.0.0-alpha.1",
+    "@hickory/in-memory": "^2.0.0-alpha.1",
     "react": "^16.8.0-alpha.1",
     "react-dom": "^16.8.0-alpha.1"
   }

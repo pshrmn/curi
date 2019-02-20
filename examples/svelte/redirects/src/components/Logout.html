@@ -11,7 +11,7 @@
     methods: {
       logoutAndRedirect($router) {
         fakeAuth.logout();
-        $router.history.navigate("/", "REPLACE");
+        $router.history.navigate("/", "replace");
       }
     }
   }

@@ -26,12 +26,12 @@ describe("createScrollSideEffect", () => {
     Element.prototype.scrollIntoView = realScrollIntoView;
   });
 
-  it("does not scroll after POP", () => {
+  it("does not scroll after pop", () => {
     const sideEffect = createScrollSideEffect();
     sideEffect({
       response: { location: {} },
       navigation: {
-        action: "POP",
+        action: "pop",
         previous: {}
       }
     } as Emitted);
@@ -40,12 +40,12 @@ describe("createScrollSideEffect", () => {
     expect(mockScroll.mock.calls.length).toBe(0);
   });
 
-  it("scrolls to 0 after PUSH", () => {
+  it("scrolls to 0 after push", () => {
     const sideEffect = createScrollSideEffect();
     sideEffect({
       response: { location: {} },
       navigation: {
-        action: "PUSH",
+        action: "push",
         previous: {}
       }
     } as Emitted);
@@ -54,12 +54,12 @@ describe("createScrollSideEffect", () => {
     expect(mockScroll.mock.calls.length).toBe(1);
   });
 
-  it("scrolls to 0 after REPLACE", () => {
+  it("scrolls to 0 after replace", () => {
     const sideEffect = createScrollSideEffect();
     sideEffect({
       response: { location: {} },
       navigation: {
-        action: "REPLACE",
+        action: "replace",
         previous: {}
       }
     } as Emitted);
@@ -77,7 +77,7 @@ describe("createScrollSideEffect", () => {
     sideEffect({
       response: { location: { hash: "test" } },
       navigation: {
-        action: "REPLACE",
+        action: "replace",
         previous: {}
       }
     } as Emitted);
@@ -94,7 +94,7 @@ describe("createScrollSideEffect", () => {
     sideEffect({
       response: { location: { hash: "test" } },
       navigation: {
-        action: "REPLACE",
+        action: "replace",
         previous: {}
       }
     } as Emitted);
@@ -109,7 +109,7 @@ describe("createScrollSideEffect", () => {
     sideEffect({
       response: { location: { hash: "" } },
       navigation: {
-        action: "REPLACE",
+        action: "replace",
         previous: {}
       }
     } as Emitted);

@@ -1,4 +1,4 @@
-import InMemory from "@hickory/in-memory";
+import { InMemory } from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 import { curiStore } from "@curi/svelte";
 import simulant from "simulant";
