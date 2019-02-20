@@ -12,7 +12,7 @@
       loginAndRedirect($curi, $router) {
         fakeAuth.login();
         const { query } = $curi.response.location;
-        $router.history.navigate(query.next || "/", "REPLACE");
+        $router.history.navigate(query.next || "/", "replace");
       }
     }
   }

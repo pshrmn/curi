@@ -1,4 +1,4 @@
-import Browser from "@hickory/browser";
+import { Browser } from "@hickory/browser";
 import { curi } from "@curi/router";
 import titleSideEffect from "@curi/side-effect-title";
 import scrollSideEffect from "@curi/side-effect-scroll";

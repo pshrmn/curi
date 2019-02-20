@@ -1,5 +1,5 @@
 import "jest";
-import InMemory from "@hickory/in-memory";
+import { InMemory } from "@hickory/in-memory";
 
 // @ts-ignore (resolved by jest)
 import { prepareRoutes, curi } from "@curi/router";

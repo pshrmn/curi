@@ -81,7 +81,7 @@ const router = curi(history, routes, options);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`import Browser from "@hickory/browser";
+            {`import { Browser } from "@hickory/browser";
 
 const history = Browser();
 const router = curi(history, routes);`}
@@ -413,11 +413,11 @@ router.once(({ response }) => {
               <tr>
                 <td>method</td>
                 <td>
-                  How to navigate. <IJS>"PUSH"</IJS> appends the new location
-                  after the current one. <IJS>"REPLACE"</IJS> replaces the
-                  current location. <IJS>"ANCHOR"</IJS> is the default method
+                  How to navigate. <IJS>"push"</IJS> appends the new location
+                  after the current one. <IJS>"replace"</IJS> replaces the
+                  current location. <IJS>"anchor"</IJS> is the default method
                   and acts like clicking a link. This behavior is a mix of{" "}
-                  <IJS>"PUSH"</IJS> and <IJS>"REPLACE"</IJS> where the current
+                  <IJS>"push"</IJS> and <IJS>"replace"</IJS> where the current
                   location is replaced if the new location has the exact same
                   URL.
                 </td>
@@ -454,7 +454,7 @@ router.navigate({
   params: { albumID: 123, photoID: 456 }
 });
 // navigates to "/photos/123/456"
-// using default "ANCHOR" method`}
+// using default "anchor" method`}
           </CodeBlock>
         </HashSection>
 
@@ -481,8 +481,8 @@ router.navigate({
               <tr>
                 <td>navigation</td>
                 <td>
-                  The navigation's <IJS>action</IJS> (<IJS>PUSH</IJS>,{" "}
-                  <IJS>REPLACE</IJS>, or <IJS>POP</IJS>) and the{" "}
+                  The navigation's <IJS>action</IJS> (<IJS>push</IJS>,{" "}
+                  <IJS>replace</IJS>, or <IJS>pop</IJS>) and the{" "}
                   <IJS>previous</IJS> response object.
                 </td>
               </tr>
@@ -564,8 +564,8 @@ router.navigate({
               <tr>
                 <td>navigation</td>
                 <td>
-                  The navigation's <IJS>action</IJS> (<IJS>PUSH</IJS>,{" "}
-                  <IJS>REPLACE</IJS>, or <IJS>POP</IJS>) and the{" "}
+                  The navigation's <IJS>action</IJS> (<IJS>push</IJS>,{" "}
+                  <IJS>replace</IJS>, or <IJS>pop</IJS>) and the{" "}
                   <IJS>previous</IJS> response object.
                 </td>
               </tr>

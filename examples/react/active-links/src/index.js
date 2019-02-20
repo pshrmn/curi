@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { curi } from "@curi/router";
-import Browser from "@hickory/browser";
+import { Browser } from "@hickory/browser";
 import active from "@curi/route-active";
 import { curiProvider } from "@curi/react-dom";
 

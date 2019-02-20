@@ -86,7 +86,7 @@ const router = curi(history, routes);`}
 
         <HashSection meta={browserMeta} tag="h3">
           <CodeBlock>
-            {`import Browser from "@hickory/browser";
+            {`import { Browser } from "@hickory/browser";
 const browserHistory = Browser();`}
           </CodeBlock>
 
@@ -137,7 +137,7 @@ const hashHistory = Hash();`}
 
         <HashSection meta={inMemoryMeta} tag="h3">
           <CodeBlock>
-            {`import InMemory from "@hickory/in-memory";
+            {`import { InMemory } from "@hickory/in-memory";
 const inMemoryHistory = InMemory();`}
           </CodeBlock>
 
@@ -208,7 +208,7 @@ location = {
 
           <CodeBlock>
             {`import { parse, stringify } from "qs";
-import Browser from "@hickory/browser";
+import { Browser } from "@hickory/browser";
 
 const history = Browser({
   query: { parse, stringify }
@@ -270,7 +270,7 @@ location = {
           </p>
 
           <CodeBlock>
-            {`history.navigate({ pathname: "/test" }, "PUSH");`}
+            {`history.navigate({ pathname: "/test" }, "push");`}
           </CodeBlock>
         </HashSection>
       </HashSection>

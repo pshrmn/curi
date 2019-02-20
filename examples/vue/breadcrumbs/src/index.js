@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { curi } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
-import Browser from "@hickory/browser";
+import { Browser } from "@hickory/browser";
 import ancestors from "@curi/route-ancestors";
 
 import App from "./components/App";
@@ -13,7 +13,7 @@ import routes from "./routes";
  * relies on the user adding a "title" property to their routes'
  * "extra" property. This should be a function that receives
  * parameters and returns a string. This is most likely route
- * params, but you can pass an object containing any values that 
+ * params, but you can pass an object containing any values that
  * you want.
  */
 function titleText() {

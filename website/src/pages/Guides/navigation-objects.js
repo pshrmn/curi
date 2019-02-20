@@ -44,8 +44,8 @@ function NavigationObjectGuide() {
         <CodeBlock>
           {`{
   // the type of navigation,
-  // either PUSH, REPLACE, or POP
-  action: 'PUSH',
+  // either push, replace, or pop
+  action: 'push',
 
   // the previous response object
   // or null for the initial response

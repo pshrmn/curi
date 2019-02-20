@@ -8,7 +8,7 @@ const Logout = ({ router }) => (
       type="button"
       onClick={e => {
         fakeAuth.logout();
-        router.navigate({ name: "Home", method: "REPLACE" });
+        router.navigate({ name: "Home", method: "replace" });
       }}
     >
       Logout

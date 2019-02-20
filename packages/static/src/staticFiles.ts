@@ -1,7 +1,7 @@
 import * as fs from "fs-extra";
 import { join } from "path";
 import { curi } from "@curi/router";
-import InMemory from "@hickory/in-memory";
+import { InMemory } from "@hickory/in-memory";
 
 import pathnames from "./pathnames";
 

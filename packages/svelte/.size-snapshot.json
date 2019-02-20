@@ -14,7 +14,7 @@
     }
   },
   "dist/curi-svelte.js": {
-    "bundled": 634,
+    "bundled": 628,
     "minified": 343,
     "gzipped": 227
   }

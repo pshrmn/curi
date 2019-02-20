@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Browser from "@hickory/browser";
+import { Browser } from "@hickory/browser";
 import { curi } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 import { parse, stringify } from "qs";

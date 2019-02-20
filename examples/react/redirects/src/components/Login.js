@@ -12,7 +12,7 @@ const Login = ({ response, router }) => (
         const to = state && state.next ? state.next : { name: "Home" };
         router.navigate({
           ...to,
-          method: "REPLACE"
+          method: "replace"
         });
       }}
     >

@@ -353,7 +353,7 @@ function handler(req, res) {
 
           <CodeBlock>
             {`// handler.js
-import InMemory from "@hickory/in-memory";
+import { InMemory } from "@hickory/in-memory";
 
 function handler(req, res) {
   const history = InMemory({ locations: [req.path] });

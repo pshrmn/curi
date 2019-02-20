@@ -1,5 +1,5 @@
 import { curi } from "@curi/router";
-import InMemory from "@hickory/in-memory";
+import { InMemory } from "@hickory/in-memory";
 
 import { PathnamesConfiguration } from "./types";
 

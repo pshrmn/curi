@@ -1,9 +1,6 @@
 <template>
   <div>
-    <button
-      type='button'
-      v-on:click="onClick"
-    >
+    <button type="button" v-on:click="onClick">
       Logout
     </button>
   </div>
@@ -15,7 +12,7 @@ export default {
   methods: {
     onClick: function(e) {
       this.$store.commit("logout");
-      this.$router.history.navigate("/", "REPLACE");
+      this.$router.history.navigate("/", "replace");
     }
   }
 };

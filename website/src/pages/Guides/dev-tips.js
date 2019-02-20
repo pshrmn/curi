@@ -71,7 +71,7 @@ function DevTipsGuide() {
         <CodeBlock data-line="9-14">
           {`// index.js
 import { curi } from "@curi/core";
-import Browser from "@hickory/browser";
+import { Browser } from "@hickory/browser";
 import routes from "./routes";
 
 const history = Browser();

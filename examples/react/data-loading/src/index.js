@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { curiProvider } from "@curi/react-dom";
-import Browser from "@hickory/browser";
+import { Browser } from "@hickory/browser";
 import { curi } from "@curi/router";
 import prefetch from "@curi/route-prefetch";
 
