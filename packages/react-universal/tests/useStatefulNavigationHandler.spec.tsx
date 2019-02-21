@@ -60,7 +60,7 @@ describe("useStatefulNavigationHandler", () => {
       const router = curi(history, routes);
       const Router = curiProvider(router);
 
-      function NavLink(props) {
+      function AsyncLink(props) {
         const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
@@ -73,9 +73,9 @@ describe("useStatefulNavigationHandler", () => {
 
       ReactDOM.render(
         <Router>
-          <NavLink name="Test" hash="thing" query="one=1" state="yo">
+          <AsyncLink name="Test" hash="thing" query="one=1" state="yo">
             {() => null}
-          </NavLink>
+          </AsyncLink>
         </Router>,
         node
       );
@@ -103,7 +103,7 @@ describe("useStatefulNavigationHandler", () => {
       const router = curi(history, routes);
       const Router = curiProvider(router);
 
-      function NavLink(props) {
+      function AsyncLink(props) {
         const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
@@ -116,9 +116,9 @@ describe("useStatefulNavigationHandler", () => {
 
       ReactDOM.render(
         <Router>
-          <NavLink name="Test" onNav={onNav}>
+          <AsyncLink name="Test" onNav={onNav}>
             {() => null}
-          </NavLink>
+          </AsyncLink>
         </Router>,
         node
       );
@@ -146,7 +146,7 @@ describe("useStatefulNavigationHandler", () => {
         const router = curi(history, routes);
         const Router = curiProvider(router);
 
-        function NavLink(props) {
+        function AsyncLink(props) {
           const { eventHandler, navigating } = useStatefulNavigationHandler(
             props,
             canNavigate
@@ -160,7 +160,7 @@ describe("useStatefulNavigationHandler", () => {
 
         ReactDOM.render(
           <Router>
-            <NavLink name="Test">{() => null}</NavLink>
+            <AsyncLink name="Test">{() => null}</AsyncLink>
           </Router>,
           node
         );
@@ -185,7 +185,7 @@ describe("useStatefulNavigationHandler", () => {
       const router = curi(history, routes);
       const Router = curiProvider(router);
 
-      function NavLink(props) {
+      function AsyncLink(props) {
         const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
@@ -199,7 +199,9 @@ describe("useStatefulNavigationHandler", () => {
 
       ReactDOM.render(
         <Router>
-          <NavLink name="Test">{navigating => navigating.toString()}</NavLink>
+          <AsyncLink name="Test">
+            {navigating => navigating.toString()}
+          </AsyncLink>
         </Router>,
         node
       );
@@ -231,7 +233,7 @@ describe("useStatefulNavigationHandler", () => {
       const router = curi(history, routes);
       const Router = curiProvider(router);
 
-      function NavLink(props) {
+      function AsyncLink(props) {
         const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
@@ -240,7 +242,9 @@ describe("useStatefulNavigationHandler", () => {
 
       ReactDOM.render(
         <Router>
-          <NavLink name="Slow">{navigating => navigating.toString()}</NavLink>
+          <AsyncLink name="Slow">
+            {navigating => navigating.toString()}
+          </AsyncLink>
         </Router>,
         node
       );
@@ -281,7 +285,7 @@ describe("useStatefulNavigationHandler", () => {
       const router = curi(history, routes);
       const Router = curiProvider(router);
 
-      function NavLink(props) {
+      function AsyncLink(props) {
         const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
@@ -290,7 +294,9 @@ describe("useStatefulNavigationHandler", () => {
 
       ReactDOM.render(
         <Router>
-          <NavLink name="Slow">{navigating => navigating.toString()}</NavLink>
+          <AsyncLink name="Slow">
+            {navigating => navigating.toString()}
+          </AsyncLink>
         </Router>,
         node
       );

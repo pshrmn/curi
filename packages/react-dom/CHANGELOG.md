@@ -1,6 +1,6 @@
 ## Next
 
-* Split `Link` into `Link` (regular `children`) and `NavLink` (`children` is a render-invoked function).
+* Split `Link` into `Link` (regular `children`) and `AsyncLink` (`children` is a render-invoked function).
 
 ## 2.0.0-alpha.1
 
