@@ -9,8 +9,8 @@ export interface BaseLinkProps extends RouteLocation {
 export interface LinkProps extends BaseLinkProps {
     children: React.ReactNode;
 }
-export interface NavLinkProps extends BaseLinkProps {
+export interface AsyncLinkProps extends BaseLinkProps {
     children: NavigatingChildren;
 }
 export declare const Link: React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<any>>;
-export declare const NavLink: React.ForwardRefExoticComponent<NavLinkProps & React.RefAttributes<any>>;
+export declare const AsyncLink: React.ForwardRefExoticComponent<AsyncLinkProps & React.RefAttributes<any>>;

@@ -21,7 +21,7 @@ export interface LinkProps extends BaseLinkProps {
   children: React.ReactNode;
 }
 
-export interface NavLinkProps extends BaseLinkProps {
+export interface AsyncLinkProps extends BaseLinkProps {
   children: NavigatingChildren;
 }
 
@@ -46,8 +46,8 @@ export const Link = React.forwardRef(
   }
 );
 
-export const NavLink = React.forwardRef(
-  (props: NavLinkProps, ref: React.Ref<any>) => {
+export const AsyncLink = React.forwardRef(
+  (props: AsyncLinkProps, ref: React.Ref<any>) => {
     const { eventHandler, navigating } = useStatefulNavigationHandler<
       GestureResponderEvent
     >(props, canNavigate);

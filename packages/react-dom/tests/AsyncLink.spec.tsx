@@ -5,9 +5,9 @@ import { Simulate } from "react-dom/test-utils";
 import { InMemory } from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
-import { curiProvider, NavLink } from "@curi/react-dom";
+import { curiProvider, AsyncLink } from "@curi/react-dom";
 
-describe("<NavLink>", () => {
+describe("<AsyncLink>", () => {
   let node;
   let history, router, Router: React.FunctionComponent;
   const routes = prepareRoutes([
@@ -31,7 +31,7 @@ describe("<NavLink>", () => {
     it("renders an <a> by default", () => {
       ReactDOM.render(
         <Router>
-          <NavLink name="Test">{() => null}</NavLink>}
+          <AsyncLink name="Test">{() => null}</AsyncLink>}
         </Router>,
         node
       );
@@ -45,9 +45,9 @@ describe("<NavLink>", () => {
       );
       ReactDOM.render(
         <Router>
-          <NavLink anchor={StyledAnchor} name="Test">
+          <AsyncLink anchor={StyledAnchor} name="Test">
             {() => null}
-          </NavLink>
+          </AsyncLink>
         </Router>,
         node
       );
@@ -62,7 +62,7 @@ describe("<NavLink>", () => {
       it("sets the href attribute using the named route's path", () => {
         ReactDOM.render(
           <Router>
-            <NavLink name="Test">{() => null}</NavLink>}
+            <AsyncLink name="Test">{() => null}</AsyncLink>}
           </Router>,
           node
         );
@@ -79,7 +79,7 @@ describe("<NavLink>", () => {
         const Router = curiProvider(router);
         ReactDOM.render(
           <Router>
-            <NavLink name={null}>{() => null}</NavLink>
+            <AsyncLink name={null}>{() => null}</AsyncLink>
           </Router>,
           node
         );
@@ -105,9 +105,9 @@ describe("<NavLink>", () => {
         const params = { name: "Glacier" };
         ReactDOM.render(
           <Router>
-            <NavLink name="Park" params={params}>
+            <AsyncLink name="Park" params={params}>
               {() => null}
-            </NavLink>
+            </AsyncLink>
           </Router>,
           node
         );
@@ -119,9 +119,9 @@ describe("<NavLink>", () => {
         const params = { name: "Glacier" };
         ReactDOM.render(
           <Router>
-            <NavLink name="Park" params={params}>
+            <AsyncLink name="Park" params={params}>
               {() => null}
-            </NavLink>
+            </AsyncLink>
           </Router>,
           node
         );
@@ -131,9 +131,9 @@ describe("<NavLink>", () => {
         const newParams = { name: "Yellowstone" };
         ReactDOM.render(
           <Router>
-            <NavLink name="Park" params={newParams}>
+            <AsyncLink name="Park" params={newParams}>
               {() => null}
-            </NavLink>
+            </AsyncLink>
           </Router>,
           node
         );
@@ -153,9 +153,9 @@ describe("<NavLink>", () => {
         const Router = curiProvider(router);
         ReactDOM.render(
           <Router>
-            <NavLink name="Test" query="one=two" hash="hashtag">
+            <AsyncLink name="Test" query="one=two" hash="hashtag">
               {() => null}
-            </NavLink>
+            </AsyncLink>
           </Router>,
           node
         );
@@ -169,9 +169,9 @@ describe("<NavLink>", () => {
     it("passes forward to the rendered anchor", () => {
       ReactDOM.render(
         <Router>
-          <NavLink name="Test" forward={{ className: "hi" }}>
+          <AsyncLink name="Test" forward={{ className: "hi" }}>
             {() => null}
-          </NavLink>
+          </AsyncLink>
         </Router>,
         node
       );
@@ -193,9 +193,9 @@ describe("<NavLink>", () => {
       const ref = React.createRef();
       ReactDOM.render(
         <Router>
-          <NavLink name="Test" ref={ref}>
+          <AsyncLink name="Test" ref={ref}>
             {() => null}
-          </NavLink>
+          </AsyncLink>
         </Router>,
         node
       );
@@ -205,7 +205,7 @@ describe("<NavLink>", () => {
   });
 
   describe("children", () => {
-    it("is called with the <NavLink>'s current navigating state (false on mount)", () => {
+    it("is called with the <AsyncLink>'s current navigating state (false on mount)", () => {
       const history = InMemory();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
@@ -216,7 +216,7 @@ describe("<NavLink>", () => {
       const children = jest.fn(() => null);
       ReactDOM.render(
         <Router>
-          <NavLink name="Test">{children}</NavLink>
+          <AsyncLink name="Test">{children}</AsyncLink>
         </Router>,
         node
       );
@@ -238,7 +238,7 @@ describe("<NavLink>", () => {
       const Router = curiProvider(router);
       ReactDOM.render(
         <Router>
-          <NavLink name="Test">{() => null}</NavLink>
+          <AsyncLink name="Test">{() => null}</AsyncLink>
         </Router>,
         node
       );
@@ -283,11 +283,11 @@ describe("<NavLink>", () => {
 
         ReactDOM.render(
           <Router>
-            <NavLink name="Test">
+            <AsyncLink name="Test">
               {navigating => {
                 return <div>{navigating.toString()}</div>;
               }}
-            </NavLink>
+            </AsyncLink>
           </Router>,
           node
         );
@@ -336,16 +336,16 @@ describe("<NavLink>", () => {
         ReactDOM.render(
           <Router>
             <React.Fragment>
-              <NavLink name="Slow">
+              <AsyncLink name="Slow">
                 {navigating => {
                   return <div>Slow {navigating.toString()}</div>;
                 }}
-              </NavLink>
-              <NavLink name="Fast">
+              </AsyncLink>
+              <AsyncLink name="Fast">
                 {navigating => {
                   return <div>Fast {navigating.toString()}</div>;
                 }}
-              </NavLink>
+              </AsyncLink>
             </React.Fragment>
           </Router>,
           node
@@ -388,11 +388,11 @@ describe("<NavLink>", () => {
 
         ReactDOM.render(
           <Router>
-            <NavLink name="Loader">
+            <AsyncLink name="Loader">
               {navigating => {
                 return <div>{navigating.toString()}</div>;
               }}
-            </NavLink>
+            </AsyncLink>
           </Router>,
           node
         );
@@ -452,11 +452,11 @@ describe("<NavLink>", () => {
 
         ReactDOM.render(
           <Router>
-            <NavLink name="Slow">
+            <AsyncLink name="Slow">
               {navigating => {
                 return <div>{navigating.toString()}</div>;
               }}
-            </NavLink>
+            </AsyncLink>
           </Router>,
           node
         );
@@ -493,9 +493,9 @@ describe("<NavLink>", () => {
 
       ReactDOM.render(
         <Router>
-          <NavLink name="Test" hash="thing" query="one=1" state="yo">
+          <AsyncLink name="Test" hash="thing" query="one=1" state="yo">
             {() => null}
-          </NavLink>
+          </AsyncLink>
         </Router>,
         node
       );
@@ -536,9 +536,9 @@ describe("<NavLink>", () => {
 
         ReactDOM.render(
           <Router>
-            <NavLink name="Test" onNav={onNav}>
+            <AsyncLink name="Test" onNav={onNav}>
               {() => null}
-            </NavLink>
+            </AsyncLink>
           </Router>,
           node
         );
@@ -575,9 +575,9 @@ describe("<NavLink>", () => {
 
         ReactDOM.render(
           <Router>
-            <NavLink name="Test" onNav={onNav}>
+            <AsyncLink name="Test" onNav={onNav}>
               {() => null}
-            </NavLink>
+            </AsyncLink>
           </Router>,
           node
         );
@@ -613,7 +613,7 @@ describe("<NavLink>", () => {
 
       ReactDOM.render(
         <Router>
-          <NavLink name="Test">{() => null}</NavLink>
+          <AsyncLink name="Test">{() => null}</AsyncLink>
         </Router>,
         node
       );
@@ -652,7 +652,7 @@ describe("<NavLink>", () => {
 
       ReactDOM.render(
         <Router>
-          <NavLink name="Test">{() => null}</NavLink>
+          <AsyncLink name="Test">{() => null}</AsyncLink>
         </Router>,
         node
       );

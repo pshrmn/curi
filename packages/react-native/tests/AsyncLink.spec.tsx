@@ -6,9 +6,7 @@ import { InMemory } from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 import { TouchableHighlight, Text } from "react-native";
 
-import { curiProvider, NavLink } from "@curi/react-native";
-
-import { NavType } from "@hickory/root";
+import { curiProvider, AsyncLink } from "@curi/react-native";
 
 // play nice
 function fakeEvent(props = {}) {
@@ -21,7 +19,7 @@ function fakeEvent(props = {}) {
   };
 }
 
-describe("<NavLink>", () => {
+describe("<AsyncLink>", () => {
   describe("anchor", () => {
     it("renders a <TouchableHighlight> by default", () => {
       const history = InMemory();
@@ -33,9 +31,9 @@ describe("<NavLink>", () => {
       const Router = curiProvider(router);
       const tree = renderer.create(
         <Router>
-          <NavLink name="Test">
+          <AsyncLink name="Test">
             {navigating => <Text>{navigating}</Text>}
-          </NavLink>
+          </AsyncLink>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -57,9 +55,9 @@ describe("<NavLink>", () => {
 
       const tree = renderer.create(
         <Router>
-          <NavLink name="Test" anchor={StyledAnchor}>
+          <AsyncLink name="Test" anchor={StyledAnchor}>
             {navigating => <Text>{navigating}</Text>}
-          </NavLink>
+          </AsyncLink>
         </Router>
       );
       const anchor = tree.root.find(StyledAnchor);
@@ -79,9 +77,9 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name={null}>
+            <AsyncLink name={null}>
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -109,9 +107,9 @@ describe("<NavLink>", () => {
         const params = { name: "Glacier" };
         const tree = renderer.create(
           <Router>
-            <NavLink name="Park" params={params}>
+            <AsyncLink name="Park" params={params}>
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -130,9 +128,9 @@ describe("<NavLink>", () => {
         const params = { name: "Glacier" };
         const tree = renderer.create(
           <Router>
-            <NavLink name="Park" params={params}>
+            <AsyncLink name="Park" params={params}>
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -142,9 +140,9 @@ describe("<NavLink>", () => {
         const newParams = { name: "Yellowstone" };
         tree.update(
           <Router>
-            <NavLink name="Park" params={newParams}>
+            <AsyncLink name="Park" params={newParams}>
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         anchor.props.onPress(fakeEvent());
@@ -169,9 +167,9 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name="Test" query="one=two" hash="hashtag">
+            <AsyncLink name="Test" query="one=two" hash="hashtag">
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
 
@@ -201,9 +199,9 @@ describe("<NavLink>", () => {
       const style = { backgroundColor: "red" };
       const tree = renderer.create(
         <Router>
-          <NavLink name="Test" forward={{ style }}>
+          <AsyncLink name="Test" forward={{ style }}>
             {navigating => <Text>{navigating}</Text>}
-          </NavLink>
+          </AsyncLink>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -226,9 +224,9 @@ describe("<NavLink>", () => {
       const ref = React.createRef();
       const tree = renderer.create(
         <Router>
-          <NavLink name="Parks" ref={ref}>
+          <AsyncLink name="Parks" ref={ref}>
             {navigating => <Text>{navigating}</Text>}
-          </NavLink>
+          </AsyncLink>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
@@ -237,7 +235,7 @@ describe("<NavLink>", () => {
   });
 
   describe("children", () => {
-    it("is called with the <NavLink>'s current navigating state (false on mount)", () => {
+    it("is called with the <AsyncLink>'s current navigating state (false on mount)", () => {
       const history = InMemory();
       const routes = prepareRoutes([
         { name: "Test", path: "" },
@@ -248,12 +246,12 @@ describe("<NavLink>", () => {
 
       const tree = renderer.create(
         <Router>
-          <NavLink name="Test">
+          <AsyncLink name="Test">
             {navigating => {
               expect(navigating).toBe(false);
               return <Text>Test</Text>;
             }}
-          </NavLink>
+          </AsyncLink>
         </Router>
       );
     });
@@ -278,9 +276,9 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name="Test" method={"anchor"}>
+            <AsyncLink name="Test" method={"anchor"}>
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -298,9 +296,9 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name="Test" method={"push"}>
+            <AsyncLink name="Test" method={"push"}>
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -318,9 +316,9 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name="Test" method={"replace"}>
+            <AsyncLink name="Test" method={"replace"}>
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -354,11 +352,11 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name="Test">
+            <AsyncLink name="Test">
               {navigating => {
                 return <Text>{navigating.toString()}</Text>;
               }}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -398,16 +396,16 @@ describe("<NavLink>", () => {
         const tree = renderer.create(
           <Router>
             <React.Fragment>
-              <NavLink name="Slow">
+              <AsyncLink name="Slow">
                 {navigating => {
                   return <Text>{`Slow ${navigating.toString()}`}</Text>;
                 }}
-              </NavLink>
-              <NavLink name="Fast">
+              </AsyncLink>
+              <AsyncLink name="Fast">
                 {navigating => {
                   return <Text>{`Fast ${navigating.toString()}`}</Text>;
                 }}
-              </NavLink>
+              </AsyncLink>
             </React.Fragment>
           </Router>
         );
@@ -444,11 +442,11 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name="Loader">
+            <AsyncLink name="Loader">
               {navigating => {
                 return <Text>{navigating.toString()}</Text>;
               }}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -501,11 +499,11 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name="Blork">
+            <AsyncLink name="Blork">
               {navigating => {
                 return <Text>{navigating.toString()}</Text>;
               }}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -532,9 +530,9 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name="Test" onNav={onNav}>
+            <AsyncLink name="Test" onNav={onNav}>
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -561,9 +559,9 @@ describe("<NavLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <NavLink name="Test" onNav={onNav}>
+            <AsyncLink name="Test" onNav={onNav}>
               {navigating => <Text>{navigating}</Text>}
-            </NavLink>
+            </AsyncLink>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
@@ -587,9 +585,9 @@ describe("<NavLink>", () => {
 
       const tree = renderer.create(
         <Router>
-          <NavLink name="Test">
+          <AsyncLink name="Test">
             {navigating => <Text>{navigating}</Text>}
-          </NavLink>
+          </AsyncLink>
         </Router>
       );
       const anchor = tree.root.findByType(TouchableHighlight);
