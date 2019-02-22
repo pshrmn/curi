@@ -501,7 +501,7 @@ describe("<Link>", () => {
         );
       });
 
-      it("does not call setState if component has unmounted", done => {
+      it.skip("does not call setState if component has unmounted", done => {
         const realError = console.error;
         const mockError = jest.fn();
         console.error = mockError;
