@@ -10,6 +10,7 @@ jobs:
       only:
         - master
         - dev
+        - /dev-.*/
 
     steps:
       - checkout
