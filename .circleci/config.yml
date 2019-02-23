@@ -27,3 +27,12 @@ jobs:
       - run:
           name: Run tests
           command: npm test
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build
+    branches:
+      ignore:
+        - gh-pages
