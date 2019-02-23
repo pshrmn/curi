@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/node:11.10.0
 
-    working_directory: ~/curi
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -46,4 +46,6 @@ workflows:
   test:
     jobs:
       - install
-      - test
+      - test:
+          requires:
+            - install
