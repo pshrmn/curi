@@ -1,2 +1,2 @@
 import { ConfirmationFunction } from "@hickory/root";
-export default function useBlock(active: boolean, fn: ConfirmationFunction): void;
+export default function useBlock<Q>(active: boolean, fn: ConfirmationFunction<Q>): void;

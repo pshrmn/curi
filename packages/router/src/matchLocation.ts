@@ -1,7 +1,7 @@
 import { withLeadingSlash } from "./utils/path";
 import parseParams from "./utils/parseParams";
 
-import { HickoryLocation } from "@hickory/root";
+import { SessionLocation } from "@hickory/root";
 import { CompiledRoute } from "./types/route";
 import { PossibleMatch, Match, MatchingRoute } from "./types/match";
 import { Params, RawParams } from "./types/response";
@@ -56,10 +56,10 @@ function matchRoute(
     : [];
 }
 
-function createMatch(
+function createMatch<Q>(
   routeMatches: Array<MatchingRoute>,
-  location: HickoryLocation
-): Match {
+  location: SessionLocation<Q>
+): Match<Q> {
   let partials: Array<string> = [];
   let params: Params = {};
 
@@ -86,10 +86,10 @@ function createMatch(
   };
 }
 
-export default function matchLocation(
-  location: HickoryLocation,
+export default function matchLocation<Q>(
+  location: SessionLocation<Q>,
   routes: Array<CompiledRoute>
-): PossibleMatch {
+): PossibleMatch<Q> {
   // determine which route(s) match, then use the exact match
   // as the matched route and the rest as partial routes
   const routeLength = routes.length;

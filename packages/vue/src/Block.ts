@@ -1,16 +1,17 @@
-import Vue, { CreateElement, ComponentOptions } from 'vue';
-import { ConfirmationFunction } from '@hickory/root';
+import Vue, { CreateElement, ComponentOptions } from "vue";
+import { ConfirmationFunction } from "@hickory/root";
 
-export interface BlockComponent extends Vue {
+export interface BlockComponent<Q> extends Vue {
   active?: boolean;
-  confirm: ConfirmationFunction;
+  confirm: ConfirmationFunction<Q>;
   on(): void;
   off(): void;
   update(): void;
 }
 
-const Block: ComponentOptions<BlockComponent> = {
-  name: 'curi-block',
+// TODO: restrict BlockComponent generic
+const Block: ComponentOptions<BlockComponent<any>> = {
+  name: "curi-block",
 
   props: {
     active: {

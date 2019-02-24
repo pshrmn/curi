@@ -8,11 +8,11 @@ import {
 import { ResolveResults } from "./types/route";
 import { Match } from "./types/match";
 
-function createRedirect(
+function createRedirect<Q>(
   redirectTo: any,
   interactions: Interactions,
-  history: History
-): RedirectLocation {
+  history: History<Q>
+): RedirectLocation<Q> {
   const { name, params, query, hash, state } = redirectTo;
   const pathname = interactions.pathname(name, params);
   return {
@@ -26,15 +26,15 @@ function createRedirect(
   };
 }
 
-export default function finishResponse(
-  routeMatch: Match,
+export default function finishResponse<Q>(
+  routeMatch: Match<Q>,
   interactions: Interactions,
   resolvedResults: ResolveResults | null,
-  history: History,
+  history: History<Q>,
   external: any
-): Response {
+): Response<Q> {
   const { route, match } = routeMatch;
-  const response: Response = match;
+  const response: Response<Q> = match;
   if (!route.response) {
     return response;
   }
@@ -53,7 +53,7 @@ export default function finishResponse(
   }
 
   const settableProperties: Array<
-    keyof Response & keyof SettableResponseProperties
+    keyof Response<Q> & keyof SettableResponseProperties
   > = ["status", "error", "body", "data", "title", "redirectTo"];
 
   // only merge the valid properties onto the response

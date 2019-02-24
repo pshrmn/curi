@@ -11,9 +11,9 @@ export interface MissMatch {
   match: undefined;
 }
 
-export interface Match {
+export interface Match<Q> {
   route: CompiledRoute;
-  match: MatchResponseProperties;
+  match: MatchResponseProperties<Q>;
 }
 
-export type PossibleMatch = Match | MissMatch;
+export type PossibleMatch<Q> = Match<Q> | MissMatch;

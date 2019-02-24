@@ -29,8 +29,8 @@ import {
   CancelNavigateCallbacks
 } from "./types/curi";
 
-export default function createRouter(
-  history: History,
+export default function createRouter<Q>(
+  history: History<Q>,
   routeArray: CompiledRouteArray,
   options: RouterOptions = {}
 ): CuriRouter {
@@ -46,7 +46,7 @@ export default function createRouter(
   const routeInteractions: Interactions = {};
 
   // the navigation currently being processed
-  let activeNavigation: PendingNavigation | undefined;
+  let activeNavigation: PendingNavigation<Q> | undefined;
 
   // the last finish response & navigation
   const mostRecent: CurrentResponse = {
@@ -87,7 +87,7 @@ export default function createRouter(
     history.respondWith(navigationHandler);
   }
 
-  function navigationHandler(pendingNav: PendingNavigation): void {
+  function navigationHandler(pendingNav: PendingNavigation<Q>): void {
     cancelActiveNavigation(pendingNav.action);
     activeNavigation = pendingNav;
 
@@ -123,16 +123,16 @@ export default function createRouter(
     }
 
     if (match.route.sync) {
-      finalizeResponseAndEmit(match as Match, pendingNav, navigation, null);
+      finalizeResponseAndEmit(match as Match<Q>, pendingNav, navigation, null);
     } else {
       activateCancellers(pendingNav.action);
-      resolveMatchedRoute(match as Match, external).then(
+      resolveMatchedRoute(match as Match<Q>, external).then(
         (resolved: ResolveResults) => {
           if (pendingNav.cancelled) {
             return;
           }
           finalizeResponseAndEmit(
-            match as Match,
+            match as Match<Q>,
             pendingNav,
             navigation,
             resolved
@@ -143,8 +143,8 @@ export default function createRouter(
   }
 
   function finalizeResponseAndEmit(
-    match: Match,
-    pending: PendingNavigation,
+    match: Match<Q>,
+    pending: PendingNavigation<Q>,
     navigation: Navigation,
     resolved: ResolveResults | null
   ) {
@@ -181,7 +181,7 @@ export default function createRouter(
     });
   }
 
-  function emitImmediate(response: Response, navigation: Navigation) {
+  function emitImmediate(response: Response<Q>, navigation: Navigation) {
     if (finishCallback) {
       finishCallback();
     }

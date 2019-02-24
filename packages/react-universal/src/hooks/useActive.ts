@@ -1,18 +1,18 @@
 import useCuri from "./useCuri";
 
-import { HickoryLocation } from "@hickory/root";
+import { SessionLocation } from "@hickory/root";
 import { Params } from "@curi/router";
 
-export type LocationCheck = (l: HickoryLocation) => boolean;
+export type LocationCheck<Q> = (l: SessionLocation<Q>) => boolean;
 
-export interface ActiveHookProps {
+export interface ActiveHookProps<Q> {
   name: string;
   params?: Params;
   partial?: boolean;
-  locationCheck?: LocationCheck;
+  locationCheck?: LocationCheck<Q>;
 }
 
-export default function useActive(props: ActiveHookProps) {
+export default function useActive<Q>(props: ActiveHookProps<Q>) {
   const { router, response } = useCuri();
   if (process.env.NODE_ENV !== "production") {
     if (!router.route.active) {

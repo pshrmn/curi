@@ -1,9 +1,9 @@
 import { Route, Response, Interaction, Params } from "@curi/router";
-import { HickoryLocation } from "@hickory/root";
+import { SessionLocation } from "@hickory/root";
 
-function acceptableRouteName(
+function acceptableRouteName<Q>(
   name: string,
-  response: Response,
+  response: Response<Q>,
   partial?: boolean
 ): boolean {
   return (
@@ -12,15 +12,15 @@ function acceptableRouteName(
   );
 }
 
-export type LocationCheck = (l: HickoryLocation) => boolean;
+export type LocationCheck<Q> = (l: SessionLocation<Q>) => boolean;
 
-export interface ActiveCheckOptions {
+export interface ActiveCheckOptions<Q> {
   params?: Params;
   partial?: boolean;
-  locationCheck?: LocationCheck;
+  locationCheck?: LocationCheck<Q>;
 }
 
-export default function checkIfActive(): Interaction {
+export default function checkIfActive<Q>(): Interaction {
   let routeParams: { [key: string]: Array<string> } = {};
 
   return {
@@ -38,8 +38,8 @@ export default function checkIfActive(): Interaction {
     },
     get: (
       name: string,
-      response: Response,
-      options: ActiveCheckOptions = {}
+      response: Response<Q>,
+      options: ActiveCheckOptions<Q> = {}
     ): boolean => {
       if (
         routeParams[name] == null ||

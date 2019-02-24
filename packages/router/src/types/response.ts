@@ -1,11 +1,11 @@
-import { HickoryLocation, PartialLocation } from "@hickory/root";
+import { SessionLocation, PartialLocation } from "@hickory/root";
 import { RouteLocation } from "./location";
 
 export type RawParams = { [key: string]: string };
 export type Params = { [key: string]: any };
 
-export interface MatchResponseProperties {
-  location: HickoryLocation;
+export interface MatchResponseProperties<Q> {
+  location: SessionLocation<Q>;
   name: string;
   params: Params;
   partials: Array<string>;
@@ -20,19 +20,19 @@ export interface SettableResponseProperties {
   redirectTo?: RedirectProps;
 }
 
-export interface RedirectLocation extends PartialLocation {
+export interface RedirectLocation<Q> extends PartialLocation<Q> {
   name: string;
   params?: Params;
   url: string;
 }
 
-export interface Response extends MatchResponseProperties {
+export interface Response<Q> extends MatchResponseProperties<Q> {
   status?: number;
   error?: any;
   body?: any;
   data?: any;
   title?: string;
-  redirectTo?: RedirectLocation;
+  redirectTo?: RedirectLocation<Q>;
 }
 
 export interface RedirectProps extends RouteLocation {

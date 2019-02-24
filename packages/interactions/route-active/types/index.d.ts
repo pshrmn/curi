@@ -1,9 +1,9 @@
 import { Interaction, Params } from "@curi/router";
-import { HickoryLocation } from "@hickory/root";
-export declare type LocationCheck = (l: HickoryLocation) => boolean;
-export interface ActiveCheckOptions {
+import { SessionLocation } from "@hickory/root";
+export declare type LocationCheck<Q> = (l: SessionLocation<Q>) => boolean;
+export interface ActiveCheckOptions<Q> {
     params?: Params;
     partial?: boolean;
-    locationCheck?: LocationCheck;
+    locationCheck?: LocationCheck<Q>;
 }
-export default function checkIfActive(): Interaction;
+export default function checkIfActive<Q>(): Interaction;

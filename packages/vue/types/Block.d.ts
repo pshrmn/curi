@@ -1,11 +1,11 @@
 import Vue, { ComponentOptions } from 'vue';
 import { ConfirmationFunction } from '@hickory/root';
-export interface BlockComponent extends Vue {
+export interface BlockComponent<Q> extends Vue {
     active?: boolean;
-    confirm: ConfirmationFunction;
+    confirm: ConfirmationFunction<Q>;
     on(): void;
     off(): void;
     update(): void;
 }
-declare const Block: ComponentOptions<BlockComponent>;
+declare const Block: ComponentOptions<BlockComponent<any>>;
 export default Block;

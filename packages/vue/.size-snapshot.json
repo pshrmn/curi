@@ -1,6 +1,6 @@
 {
   "dist/curi-vue.es.js": {
-    "bundled": 5274,
+    "bundled": 5357,
     "minified": 2579,
     "gzipped": 1134,
     "treeshaked": {
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-vue.js": {
-    "bundled": 5499,
+    "bundled": 5582,
     "minified": 2757,
     "gzipped": 1197
   },
   "dist/curi-vue.umd.js": {
-    "bundled": 6073,
+    "bundled": 6160,
     "minified": 2781,
     "gzipped": 1228
   },
   "dist/curi-vue.min.js": {
-    "bundled": 6063,
+    "bundled": 6150,
     "minified": 2771,
     "gzipped": 1214
   }

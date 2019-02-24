@@ -8,8 +8,8 @@ export interface MissMatch {
     route: undefined;
     match: undefined;
 }
-export interface Match {
+export interface Match<Q> {
     route: CompiledRoute;
-    match: MatchResponseProperties;
+    match: MatchResponseProperties<Q>;
 }
-export declare type PossibleMatch = Match | MissMatch;
+export declare type PossibleMatch<Q> = Match<Q> | MissMatch;

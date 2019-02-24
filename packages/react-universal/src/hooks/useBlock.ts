@@ -3,7 +3,10 @@ import useCuri from "./useCuri";
 
 import { ConfirmationFunction } from "@hickory/root";
 
-export default function useBlock(active: boolean, fn: ConfirmationFunction) {
+export default function useBlock<Q>(
+  active: boolean,
+  fn: ConfirmationFunction<Q>
+) {
   const { router } = useCuri();
   React.useEffect(() => {
     if (active) {
