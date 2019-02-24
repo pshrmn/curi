@@ -3,7 +3,6 @@ import { InMemory } from "@hickory/in-memory";
 
 import { NavType } from "@hickory/root";
 
-// @ts-ignore (resolved by jest)
 import { curi, prepareRoutes } from "@curi/router";
 
 describe("curi", () => {

@@ -1,6 +1,5 @@
 import "jest";
 
-// @ts-ignore (resolved by jest)
 import { preferDefault } from "@curi/helpers";
 
 describe("preferDefault()", () => {

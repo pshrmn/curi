@@ -2,7 +2,6 @@ import "jest";
 import { InMemory } from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
-// @ts-ignore (resolved by jest)
 import createAncestors from "@curi/route-ancestors";
 
 describe("ancestors route interaction", () => {

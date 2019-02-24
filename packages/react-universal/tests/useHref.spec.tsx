@@ -5,7 +5,6 @@ import { InMemory } from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 import * as qs from "qs";
 
-// @ts-ignore (resolved by jest)
 import { curiProvider, useHref } from "@curi/react-universal";
 
 describe("useHref", () => {

@@ -1,7 +1,6 @@
 import "jest";
 import { InMemory } from "@hickory/in-memory";
 
-// @ts-ignore (resolved by jest)
 import { prepareRoutes, curi } from "@curi/router";
 
 describe("pathname route interaction", () => {

@@ -3,7 +3,6 @@ import { ensureDir, remove, existsSync } from "fs-extra";
 import { join } from "path";
 import { prepareRoutes } from "@curi/router";
 
-// @ts-ignore (resolved by jest)
 import { staticFiles } from "@curi/static";
 
 import { Emitted } from "@curi/router";

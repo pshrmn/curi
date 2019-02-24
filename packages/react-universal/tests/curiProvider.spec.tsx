@@ -6,7 +6,6 @@ import { InMemory } from "@hickory/in-memory";
 
 import wait from "./utils/wait";
 
-// @ts-ignore (resolved by jest)
 import { curiProvider, useCuri } from "@curi/react-universal";
 
 describe("curiProvider()", () => {

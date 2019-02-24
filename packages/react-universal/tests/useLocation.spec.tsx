@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import { InMemory } from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
-// @ts-ignore (resolved by jest)
 import { curiProvider, useLocation } from "@curi/react-universal";
 
 describe("useLocation", () => {

@@ -3,7 +3,6 @@ import { createLocalVue } from "@vue/test-utils";
 import { InMemory } from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
-// @ts-ignore (resolved by jest)
 import { CuriPlugin } from "@curi/vue";
 
 describe("CuriPlugin", () => {

@@ -6,7 +6,6 @@ import { curi, prepareRoutes } from "@curi/router";
 
 import wait from "./utils/wait";
 
-// @ts-ignore (resolved by jest)
 import { curiProvider, useNavigating } from "@curi/react-universal";
 
 describe("useNavigating", () => {
