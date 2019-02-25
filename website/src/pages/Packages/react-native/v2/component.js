@@ -7,7 +7,6 @@ import { LinkAPI } from "./api/link";
 import { UseCuriAPI } from "./api/useCuri";
 import { UseActiveAPI } from "./api/useActive";
 import { UseNavigatingAPI } from "./api/useNavigating";
-import { UseBlockAPI } from "./api/useBlock";
 import { UseLocationAPI } from "./api/useLocation";
 import { UseHrefAPI } from "./api/useHref";
 import { CuriousAPI } from "./api/curious";
@@ -35,7 +34,6 @@ function ReactNativePkg() {
         <UseCuriAPI />
         <UseActiveAPI />
         <UseNavigatingAPI />
-        <UseBlockAPI />
         <UseLocationAPI />
         <UseHrefAPI />
         <CuriousAPI />

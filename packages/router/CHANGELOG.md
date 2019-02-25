@@ -1,5 +1,6 @@
 ## Next
 
+* Use `SessionLocation` type
 * `navigate` does set default `method`.
 
 ## 2.0.0-alpha.0

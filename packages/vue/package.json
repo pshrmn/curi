@@ -35,6 +35,6 @@
   },
   "dependencies": {
     "@curi/router": "file:../router",
-    "@hickory/root": "^2.0.0-alpha.1"
+    "@hickory/root": "^2.0.0-alpha.3"
   }
 }

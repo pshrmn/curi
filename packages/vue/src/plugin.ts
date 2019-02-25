@@ -1,7 +1,6 @@
 import Vue, { PluginObject } from "vue";
 
 import Link from "./Link";
-import Block from "./Block";
 
 import focus from "./focus";
 
@@ -15,7 +14,6 @@ export interface CuriPluginOptions {
 const CuriPlugin: PluginObject<CuriPluginOptions> = {
   install: function(_Vue: typeof Vue, options: CuriPluginOptions) {
     _Vue.component(Link.name, Link);
-    _Vue.component(Block.name, Block);
 
     _Vue.directive("curi-focus", focus);
 
