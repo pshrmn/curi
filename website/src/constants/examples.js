@@ -64,14 +64,6 @@ const reactExamples = [
       `../pages/Examples/react/transitions.js`)
   },
   {
-    name: "Blocking Navigation",
-    category: "react",
-    slug: "blocking-navigation",
-    import: () =>
-      import(/* webpackChunkName: 'example--react-blocking-navigation' */
-      `../pages/Examples/react/blocking-navigation.js`)
-  },
-  {
     name: "Modal Routes",
     category: "react",
     slug: "modal",
@@ -137,14 +129,6 @@ const vueExamples = [
     import: () =>
       import(/* webpackChunkName: 'example--vue-transitions' */
       `../pages/Examples/vue/transitions.js`)
-  },
-  {
-    name: "Blocking Navigation",
-    category: "vue",
-    slug: "blocking-navigation",
-    import: () =>
-      import(/* webpackChunkName: 'example--vue-blocking-navigation' */
-      `../pages/Examples/vue/blocking-navigation.js`)
   },
   {
     name: "Modal Routes",

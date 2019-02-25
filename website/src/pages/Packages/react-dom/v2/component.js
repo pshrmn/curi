@@ -8,7 +8,6 @@ import { UseCuriAPI } from "./api/useCuri";
 import { UseActiveAPI } from "./api/useActive";
 import { UseNavigationFocusAPI } from "./api/useNavigationFocus";
 import { UseNavigatingAPI } from "./api/useNavigating";
-import { UseBlockAPI } from "./api/useBlock";
 import { UseLocationAPI } from "./api/useLocation";
 import { UseHrefAPI } from "./api/useHref";
 import { CuriousAPI } from "./api/curious";
@@ -37,7 +36,6 @@ function ReactDOMPkg() {
         <UseActiveAPI />
         <UseNavigationFocusAPI />
         <UseNavigatingAPI />
-        <UseBlockAPI />
         <UseLocationAPI />
         <UseHrefAPI />
         <CuriousAPI />

@@ -286,10 +286,7 @@ ReactDOM.render((
           Hickory history object, your routes array, and possibly an options
           object. <a href="https://github.com/pshrmn/hickory">Hickory</a> is
           similar to the <IJS>history</IJS> package used by React Router, but
-          has a slight modified API (easier navigation blocking and navigation
-          that imitates how anchors work) and more convenient location objects
-          (you can use a <IJS>query</IJS> object instead of having to manually
-          create a <IJS>search</IJS> string).
+          has an API tailored for asynchronous applications.
         </p>
 
         <CodeBlock>
