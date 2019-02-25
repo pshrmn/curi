@@ -1,3 +1,8 @@
+## Next
+
+* Remove `curi-block` component
+* Use `SessionLocation` type
+
 ## 1.0.0-beta.25
 
 * Add `sideEffects: false` hint for Webpack.

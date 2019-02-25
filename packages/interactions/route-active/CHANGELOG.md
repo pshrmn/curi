@@ -1,3 +1,7 @@
+## Next
+
+* Use `SessionLocation` type
+
 ## 2.0.0-alpha.0
 
 * Optional arguments (`partial`, `params`, and `locationCheck`) are now grouped in the third argument.

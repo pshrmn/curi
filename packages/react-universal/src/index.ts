@@ -7,7 +7,6 @@ import { Curious } from "./Context";
 
 import useCuri from "./hooks/useCuri";
 import useActive from "./hooks/useActive";
-import useBlock from "./hooks/useBlock";
 import useLocation from "./hooks/useLocation";
 import useHref from "./hooks/useHref";
 import useNavigating from "./hooks/useNavigating";
@@ -21,7 +20,6 @@ export {
   Curious,
   useCuri,
   useActive,
-  useBlock,
   useLocation,
   useHref,
   useNavigating,

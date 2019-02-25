@@ -108,11 +108,5 @@ describe("CuriPlugin", () => {
       Vue.use(CuriPlugin, { router });
       expect(Vue.options.components["curi-link"]).toBeDefined();
     });
-
-    it("Registers the Block component as <curi-block>", () => {
-      const Vue = createLocalVue();
-      Vue.use(CuriPlugin, { router });
-      expect(Vue.options.components["curi-block"]).toBeDefined();
-    });
   });
 });

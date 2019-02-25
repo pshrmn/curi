@@ -1,11 +1,11 @@
-import { HickoryLocation, PartialLocation } from "@hickory/root";
+import { SessionLocation, PartialLocation } from "@hickory/root";
 import { RouteLocation } from "./location";
 
 export type RawParams = { [key: string]: string };
 export type Params = { [key: string]: any };
 
 export interface MatchResponseProperties {
-  location: HickoryLocation;
+  location: SessionLocation;
   name: string;
   params: Params;
   partials: Array<string>;

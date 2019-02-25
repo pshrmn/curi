@@ -1,5 +1,5 @@
 import { Route, Response, Interaction, Params } from "@curi/router";
-import { HickoryLocation } from "@hickory/root";
+import { SessionLocation } from "@hickory/root";
 
 function acceptableRouteName(
   name: string,
@@ -12,7 +12,7 @@ function acceptableRouteName(
   );
 }
 
-export type LocationCheck = (l: HickoryLocation) => boolean;
+export type LocationCheck = (l: SessionLocation) => boolean;
 
 export interface ActiveCheckOptions {
   params?: Params;

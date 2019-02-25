@@ -1,9 +1,9 @@
 import useCuri from "./useCuri";
 
-import { HickoryLocation } from "@hickory/root";
+import { SessionLocation } from "@hickory/root";
 import { Params } from "@curi/router";
 
-export type LocationCheck = (l: HickoryLocation) => boolean;
+export type LocationCheck = (l: SessionLocation) => boolean;
 
 export interface ActiveHookProps {
   name: string;

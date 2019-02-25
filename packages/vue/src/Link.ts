@@ -1,5 +1,5 @@
 import Vue, { CreateElement, ComponentOptions } from "vue";
-import { HickoryLocation } from "@hickory/root";
+import { SessionLocation } from "@hickory/root";
 
 export interface LinkComponent extends Vue {
   to: string;
@@ -7,7 +7,7 @@ export interface LinkComponent extends Vue {
   hash?: string;
   query?: any;
   state?: any;
-  location: HickoryLocation;
+  location: SessionLocation;
   href: string;
   click(e: MouseEvent): void;
   navigating: boolean;
