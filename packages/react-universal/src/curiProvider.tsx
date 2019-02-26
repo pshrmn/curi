@@ -1,10 +1,14 @@
 import React from "react";
 import { Provider } from "./Context";
 
-import { CuriRouter, Emitted } from "@curi/router";
+import {
+  CuriRouter,
+  Emitted,
+} from "@curi/router";
 
 export interface RouterProps {
   children: React.ReactNode;
+  suspend?: boolean;
 }
 
 export default function curiProvider(
@@ -27,7 +31,14 @@ export default function curiProvider(
       const stopResponding = router.observe(
         (emitted: Emitted) => {
           if (!removed) {
-            setState(emitted);
+            if (props.suspend) {
+              // setTimeout until schedule is published
+              setTimeout(() => {
+                setState(emitted);
+              });
+            } else {
+              setState(emitted);
+            }
           }
         },
         { initial: false }

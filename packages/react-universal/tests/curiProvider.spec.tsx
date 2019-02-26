@@ -25,8 +25,6 @@ describe("curiProvider()", () => {
     ReactDOM.unmountComponentAtNode(node);
   });
 
-  describe("router argument", () => {});
-
   describe("children prop", () => {
     it("renders children", () => {
       const history = InMemory();

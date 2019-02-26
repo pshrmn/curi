@@ -10,6 +10,7 @@ import useActive from "./hooks/useActive";
 import useLocation from "./hooks/useLocation";
 import useHref from "./hooks/useHref";
 import useNavigating from "./hooks/useNavigating";
+import useFinishNavigation from "./hooks/useFinishNavigation";
 import {
   useStatefulNavigationHandler,
   useNavigationHandler
@@ -24,5 +25,6 @@ export {
   useHref,
   useNavigating,
   useStatefulNavigationHandler,
-  useNavigationHandler
+  useNavigationHandler,
+  useFinishNavigation
 };
