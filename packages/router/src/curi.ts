@@ -45,9 +45,6 @@ export default function createRouter(
   let routes: CompiledRouteArray;
   const routeInteractions: Interactions = {};
 
-  // the navigation currently being processed
-  let activeNavigation: PendingNavigation | undefined;
-
   // the last finish response & navigation
   const mostRecent: CurrentResponse = {
     response: null,
@@ -63,7 +60,7 @@ export default function createRouter(
 
   let observers: Array<Observer> = [];
   const oneTimers: Array<Observer> = [];
-  let cancellers: Array<Cancellable> = [];
+  let asyncNavNotifiers: Array<Cancellable> = [];
 
   function setupRoutesAndInteractions(userRoutes?: CompiledRouteArray): void {
     if (userRoutes) {
@@ -88,9 +85,6 @@ export default function createRouter(
   }
 
   function navigationHandler(pendingNav: PendingNavigation): void {
-    cancelActiveNavigation(pendingNav.action);
-    activeNavigation = pendingNav;
-
     const navigation: Navigation = {
       action: pendingNav.action,
       previous: refreshing
@@ -118,14 +112,13 @@ export default function createRouter(
         finishCallback();
       }
       resetCallbacks();
-      activeNavigation = undefined;
       return;
     }
 
     if (match.route.sync) {
       finalizeResponseAndEmit(match as Match, pendingNav, navigation, null);
     } else {
-      activateCancellers(pendingNav.action);
+      announceAsyncNav();
       resolveMatchedRoute(match as Match, external).then(
         (resolved: ResolveResults) => {
           if (pendingNav.cancelled) {
@@ -148,7 +141,7 @@ export default function createRouter(
     navigation: Navigation,
     resolved: ResolveResults | null
   ) {
-    deactivateCancellers();
+    asyncNavComplete();
     const response = finishResponse(
       match,
       routeInteractions,
@@ -158,7 +151,6 @@ export default function createRouter(
     );
     pending.finish();
     emitImmediate(response, navigation);
-    activeNavigation = undefined;
   }
 
   function resetCallbacks() {
@@ -202,36 +194,29 @@ export default function createRouter(
   }
 
   let canCancel: boolean;
-  function activateCancellers(action: Action) {
-    if (cancellers.length) {
+  function announceAsyncNav() {
+    if (asyncNavNotifiers.length) {
       canCancel = true;
       const cancel = () => {
-        cancelActiveNavigation(action);
-        deactivateCancellers();
+        history.cancel();
+        asyncNavComplete();
         if (cancelCallback) {
           cancelCallback();
         }
         resetCallbacks();
       };
-      cancellers.forEach(fn => {
+      asyncNavNotifiers.forEach(fn => {
         fn(cancel);
       });
     }
   }
 
-  function deactivateCancellers() {
+  function asyncNavComplete() {
     if (canCancel) {
       canCancel = false;
-      cancellers.forEach(fn => {
+      asyncNavNotifiers.forEach(fn => {
         fn();
       });
-    }
-  }
-
-  function cancelActiveNavigation(action: Action) {
-    if (activeNavigation) {
-      activeNavigation.cancel(action);
-      activeNavigation.cancelled = true;
     }
   }
 
@@ -270,9 +255,9 @@ export default function createRouter(
       }
     },
     cancel(fn: Cancellable): RemoveCancellable {
-      cancellers.push(fn);
+      asyncNavNotifiers.push(fn);
       return () => {
-        cancellers = cancellers.filter(can => {
+        asyncNavNotifiers = asyncNavNotifiers.filter(can => {
           return can !== fn;
         });
       };
