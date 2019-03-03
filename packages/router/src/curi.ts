@@ -21,6 +21,7 @@ import {
   Navigation,
   NavigationDetails,
   Cancellable,
+  CancelActiveNavigation,
   RemoveCancellable,
   CancelNavigateCallbacks
 } from "./types/curi";
@@ -136,6 +137,7 @@ export default function createRouter(
     resolved: ResolveResults | null
   ) {
     asyncNavComplete();
+    pending.finish();
     const response = finishResponse(
       match,
       routeInteractions,
@@ -143,7 +145,6 @@ export default function createRouter(
       history,
       external
     );
-    pending.finish();
     finishAndResetNavCallbacks();
     emitImmediate(response, navigation);
   }
@@ -196,26 +197,25 @@ export default function createRouter(
     }
   }
 
-  let canCancel: boolean;
+  let cancelWith: CancelActiveNavigation | undefined;
   // let any async navigation listeners (observers from router.cancel)
   // know that there is an asynchronous navigation happening
   function announceAsyncNav() {
-    if (asyncNavNotifiers.length) {
-      canCancel = true;
-      const cancel = () => {
+    if (asyncNavNotifiers.length && cancelWith === undefined) {
+      cancelWith = () => {
         history.cancel();
         asyncNavComplete();
         cancelAndResetNavCallbacks();
       };
       asyncNavNotifiers.forEach(fn => {
-        fn(cancel);
+        fn(cancelWith);
       });
     }
   }
 
   function asyncNavComplete() {
-    if (canCancel) {
-      canCancel = false;
+    if (cancelWith) {
+      cancelWith = undefined;
       asyncNavNotifiers.forEach(fn => {
         fn();
       });

@@ -1507,6 +1507,79 @@ describe("curi", () => {
       expect(typeof cancellable.mock.calls[0][0]).toBe("function");
     });
 
+    describe("another navigation", () => {
+      it("stays active when a second async navigation starts", () => {
+        const history = InMemory();
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "About",
+            path: "about",
+            resolve() {
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("about");
+                }, 50);
+              });
+            }
+          },
+          {
+            name: "Contact",
+            path: "contact",
+            resolve() {
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("contact");
+                }, 50);
+              });
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
+        const cancellable = jest.fn();
+        router.cancel(cancellable);
+
+        router.navigate({ name: "About" });
+        expect(cancellable.mock.calls.length).toBe(1);
+        router.navigate({ name: "Contact" });
+        expect(cancellable.mock.calls.length).toBe(1);
+      });
+
+      it("is cancelled when a sync navigation starts", () => {
+        const history = InMemory();
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "About",
+            path: "about",
+            resolve() {
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("about");
+                }, 50);
+              });
+            }
+          },
+          {
+            name: "Contact",
+            path: "contact"
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = curi(history, routes);
+        const cancellable = jest.fn();
+        router.cancel(cancellable);
+
+        router.navigate({ name: "About" });
+        expect(cancellable.mock.calls.length).toBe(1);
+        expect(typeof cancellable.mock.calls[0][0]).toBe("function");
+        router.navigate({ name: "Contact" });
+        expect(cancellable.mock.calls.length).toBe(2);
+        expect(cancellable.mock.calls[1][0]).toBeUndefined();
+      });
+    });
+
     describe("non-cancelled navigation", () => {
       it("calls function with no args once async actions are complete", done => {
         const history = InMemory();
