@@ -4,13 +4,9 @@ import finishResponse from "./finishResponse";
 import matchLocation from "./matchLocation";
 import resolveMatchedRoute from "./resolveMatchedRoute";
 
-import { History, PendingNavigation, Action, NavType } from "@hickory/root";
+import { History, PendingNavigation } from "@hickory/root";
 
-import {
-  RouteDescriptor,
-  CompiledRouteArray,
-  ResolveResults
-} from "./types/route";
+import { CompiledRouteArray, ResolveResults } from "./types/route";
 import { Response } from "./types/response";
 import { Interactions } from "./types/interaction";
 import { Match } from "./types/match";
@@ -25,6 +21,7 @@ import {
   Navigation,
   NavigationDetails,
   Cancellable,
+  CancelActiveNavigation,
   RemoveCancellable,
   CancelNavigateCallbacks
 } from "./types/curi";
@@ -45,16 +42,14 @@ export default function createRouter(
   let routes: CompiledRouteArray;
   const routeInteractions: Interactions = {};
 
-  // the navigation currently being processed
-  let activeNavigation: PendingNavigation | undefined;
-
-  // the last finish response & navigation
+  // the last finished response & navigation
   const mostRecent: CurrentResponse = {
     response: null,
     navigation: null
   };
   // when true, navigation.previous will re-use the previous
   // navigation.previous instead of using mostRecent.response
+  // TODO: is there a better approach?
   let refreshing = false;
 
   // router.navigate() hooks
@@ -63,7 +58,7 @@ export default function createRouter(
 
   let observers: Array<Observer> = [];
   const oneTimers: Array<Observer> = [];
-  let cancellers: Array<Cancellable> = [];
+  let asyncNavNotifiers: Array<Cancellable> = [];
 
   function setupRoutesAndInteractions(userRoutes?: CompiledRouteArray): void {
     if (userRoutes) {
@@ -88,9 +83,6 @@ export default function createRouter(
   }
 
   function navigationHandler(pendingNav: PendingNavigation): void {
-    cancelActiveNavigation(pendingNav.action);
-    activeNavigation = pendingNav;
-
     const navigation: Navigation = {
       action: pendingNav.action,
       previous: refreshing
@@ -114,18 +106,14 @@ export default function createRouter(
         );
       }
       pendingNav.finish();
-      if (finishCallback) {
-        finishCallback();
-      }
-      resetCallbacks();
-      activeNavigation = undefined;
+      finishAndResetNavCallbacks();
       return;
     }
 
     if (match.route.sync) {
       finalizeResponseAndEmit(match as Match, pendingNav, navigation, null);
     } else {
-      activateCancellers(pendingNav.action);
+      announceAsyncNav();
       resolveMatchedRoute(match as Match, external).then(
         (resolved: ResolveResults) => {
           if (pendingNav.cancelled) {
@@ -148,7 +136,8 @@ export default function createRouter(
     navigation: Navigation,
     resolved: ResolveResults | null
   ) {
-    deactivateCancellers();
+    asyncNavComplete();
+    pending.finish();
     const response = finishResponse(
       match,
       routeInteractions,
@@ -156,9 +145,22 @@ export default function createRouter(
       history,
       external
     );
-    pending.finish();
+    finishAndResetNavCallbacks();
     emitImmediate(response, navigation);
-    activeNavigation = undefined;
+  }
+
+  function cancelAndResetNavCallbacks() {
+    if (cancelCallback) {
+      cancelCallback();
+    }
+    resetCallbacks();
+  }
+
+  function finishAndResetNavCallbacks() {
+    if (finishCallback) {
+      finishCallback();
+    }
+    resetCallbacks();
   }
 
   function resetCallbacks() {
@@ -182,13 +184,7 @@ export default function createRouter(
   }
 
   function emitImmediate(response: Response, navigation: Navigation) {
-    if (finishCallback) {
-      finishCallback();
-    }
-    resetCallbacks();
-
     if (!response.redirectTo || emitRedirects) {
-      // store for current(), observe(), and once()
       mostRecent.response = response;
       mostRecent.navigation = navigation;
 
@@ -201,37 +197,28 @@ export default function createRouter(
     }
   }
 
-  let canCancel: boolean;
-  function activateCancellers(action: Action) {
-    if (cancellers.length) {
-      canCancel = true;
-      const cancel = () => {
-        cancelActiveNavigation(action);
-        deactivateCancellers();
-        if (cancelCallback) {
-          cancelCallback();
-        }
-        resetCallbacks();
+  let cancelWith: CancelActiveNavigation | undefined;
+  // let any async navigation listeners (observers from router.cancel)
+  // know that there is an asynchronous navigation happening
+  function announceAsyncNav() {
+    if (asyncNavNotifiers.length && cancelWith === undefined) {
+      cancelWith = () => {
+        history.cancel();
+        asyncNavComplete();
+        cancelAndResetNavCallbacks();
       };
-      cancellers.forEach(fn => {
-        fn(cancel);
+      asyncNavNotifiers.forEach(fn => {
+        fn(cancelWith);
       });
     }
   }
 
-  function deactivateCancellers() {
-    if (canCancel) {
-      canCancel = false;
-      cancellers.forEach(fn => {
+  function asyncNavComplete() {
+    if (cancelWith) {
+      cancelWith = undefined;
+      asyncNavNotifiers.forEach(fn => {
         fn();
       });
-    }
-  }
-
-  function cancelActiveNavigation(action: Action) {
-    if (activeNavigation) {
-      activeNavigation.cancel(action);
-      activeNavigation.cancelled = true;
     }
   }
 
@@ -270,9 +257,9 @@ export default function createRouter(
       }
     },
     cancel(fn: Cancellable): RemoveCancellable {
-      cancellers.push(fn);
+      asyncNavNotifiers.push(fn);
       return () => {
-        cancellers = cancellers.filter(can => {
+        asyncNavNotifiers = asyncNavNotifiers.filter(can => {
           return can !== fn;
         });
       };
@@ -285,10 +272,7 @@ export default function createRouter(
       return mostRecent;
     },
     navigate(details: NavigationDetails): CancelNavigateCallbacks {
-      if (cancelCallback) {
-        cancelCallback();
-      }
-      resetCallbacks();
+      cancelAndResetNavCallbacks();
 
       let { name, params, hash, query, state, method } = details;
       const pathname =
