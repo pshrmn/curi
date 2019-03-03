@@ -4,13 +4,9 @@ import finishResponse from "./finishResponse";
 import matchLocation from "./matchLocation";
 import resolveMatchedRoute from "./resolveMatchedRoute";
 
-import { History, PendingNavigation, Action, NavType } from "@hickory/root";
+import { History, PendingNavigation } from "@hickory/root";
 
-import {
-  RouteDescriptor,
-  CompiledRouteArray,
-  ResolveResults
-} from "./types/route";
+import { CompiledRouteArray, ResolveResults } from "./types/route";
 import { Response } from "./types/response";
 import { Interactions } from "./types/interaction";
 import { Match } from "./types/match";
@@ -45,13 +41,14 @@ export default function createRouter(
   let routes: CompiledRouteArray;
   const routeInteractions: Interactions = {};
 
-  // the last finish response & navigation
+  // the last finished response & navigation
   const mostRecent: CurrentResponse = {
     response: null,
     navigation: null
   };
   // when true, navigation.previous will re-use the previous
   // navigation.previous instead of using mostRecent.response
+  // TODO: is there a better approach?
   let refreshing = false;
 
   // router.navigate() hooks
@@ -108,10 +105,7 @@ export default function createRouter(
         );
       }
       pendingNav.finish();
-      if (finishCallback) {
-        finishCallback();
-      }
-      resetCallbacks();
+      finishAndResetNavCallbacks();
       return;
     }
 
@@ -150,7 +144,22 @@ export default function createRouter(
       external
     );
     pending.finish();
+    finishAndResetNavCallbacks();
     emitImmediate(response, navigation);
+  }
+
+  function cancelAndResetNavCallbacks() {
+    if (cancelCallback) {
+      cancelCallback();
+    }
+    resetCallbacks();
+  }
+
+  function finishAndResetNavCallbacks() {
+    if (finishCallback) {
+      finishCallback();
+    }
+    resetCallbacks();
   }
 
   function resetCallbacks() {
@@ -174,13 +183,7 @@ export default function createRouter(
   }
 
   function emitImmediate(response: Response, navigation: Navigation) {
-    if (finishCallback) {
-      finishCallback();
-    }
-    resetCallbacks();
-
     if (!response.redirectTo || emitRedirects) {
-      // store for current(), observe(), and once()
       mostRecent.response = response;
       mostRecent.navigation = navigation;
 
@@ -194,16 +197,15 @@ export default function createRouter(
   }
 
   let canCancel: boolean;
+  // let any async navigation listeners (observers from router.cancel)
+  // know that there is an asynchronous navigation happening
   function announceAsyncNav() {
     if (asyncNavNotifiers.length) {
       canCancel = true;
       const cancel = () => {
         history.cancel();
         asyncNavComplete();
-        if (cancelCallback) {
-          cancelCallback();
-        }
-        resetCallbacks();
+        cancelAndResetNavCallbacks();
       };
       asyncNavNotifiers.forEach(fn => {
         fn(cancel);
@@ -270,10 +272,7 @@ export default function createRouter(
       return mostRecent;
     },
     navigate(details: NavigationDetails): CancelNavigateCallbacks {
-      if (cancelCallback) {
-        cancelCallback();
-      }
-      resetCallbacks();
+      cancelAndResetNavCallbacks();
 
       let { name, params, hash, query, state, method } = details;
       const pathname =
