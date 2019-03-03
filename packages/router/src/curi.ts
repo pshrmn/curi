@@ -39,26 +39,16 @@ export default function createRouter(
     external
   } = options;
 
-  let routes: CompiledRouteArray;
-  const routeInteractions: Interactions = {};
-
   // the last finished response & navigation
   const mostRecent: CurrentResponse = {
     response: null,
     navigation: null
   };
-  // when true, navigation.previous will re-use the previous
-  // navigation.previous instead of using mostRecent.response
-  // TODO: is there a better approach?
-  let refreshing = false;
 
-  // router.navigate() hooks
-  let cancelCallback: (() => void) | undefined;
-  let finishCallback: (() => void) | undefined;
+  /* routes & route interactions */
 
-  let observers: Array<Observer> = [];
-  const oneTimers: Array<Observer> = [];
-  let asyncNavNotifiers: Array<Cancellable> = [];
+  let routes: CompiledRouteArray;
+  const routeInteractions: Interactions = {};
 
   function setupRoutesAndInteractions(userRoutes?: CompiledRouteArray): void {
     if (userRoutes) {
@@ -81,6 +71,8 @@ export default function createRouter(
     // this will be re-called if router.refresh() is called
     history.respondWith(navigationHandler);
   }
+
+  /* history observer */
 
   function navigationHandler(pendingNav: PendingNavigation): void {
     const navigation: Navigation = {
@@ -149,6 +141,105 @@ export default function createRouter(
     emitImmediate(response, navigation);
   }
 
+  function emitImmediate(response: Response, navigation: Navigation) {
+    if (!response.redirectTo || emitRedirects) {
+      mostRecent.response = response;
+      mostRecent.navigation = navigation;
+
+      callObservers({ response, navigation, router });
+      callOneTimersAndSideEffects({ response, navigation, router });
+    }
+
+    if (response.redirectTo !== undefined && automaticRedirects) {
+      history.navigate(response.redirectTo, "replace");
+    }
+  }
+
+  /* router.observer & router.once */
+
+  let observers: Array<Observer> = [];
+  const oneTimers: Array<Observer> = [];
+
+  function observe(
+    fn: Observer,
+    options?: ResponseHandlerOptions
+  ): RemoveObserver {
+    const { initial = true } = options || {};
+
+    observers.push(fn);
+    if (mostRecent.response && initial) {
+      fn.call(null, {
+        response: mostRecent.response,
+        navigation: mostRecent.navigation,
+        router
+      });
+    }
+    return () => {
+      observers = observers.filter(obs => {
+        return obs !== fn;
+      });
+    };
+  }
+
+  function once(fn: Observer, options?: ResponseHandlerOptions) {
+    const { initial = true } = options || {};
+
+    if (mostRecent.response && initial) {
+      fn.call(null, {
+        response: mostRecent.response,
+        navigation: mostRecent.navigation,
+        router
+      });
+    } else {
+      oneTimers.push(fn);
+    }
+  }
+
+  function callObservers(emitted: Emitted) {
+    observers.forEach(fn => {
+      fn(emitted);
+    });
+  }
+
+  function callOneTimersAndSideEffects(emitted: Emitted) {
+    oneTimers.splice(0).forEach(fn => {
+      fn(emitted);
+    });
+    sideEffects.forEach(fn => {
+      fn(emitted);
+    });
+  }
+
+  /* router.navigate */
+
+  let cancelCallback: (() => void) | undefined;
+  let finishCallback: (() => void) | undefined;
+
+  function navigate(details: NavigationDetails): CancelNavigateCallbacks {
+    cancelAndResetNavCallbacks();
+
+    let { name, params, hash, query, state, method } = details;
+    const pathname =
+      name != null
+        ? routeInteractions.pathname(name, params)
+        : history.location.pathname;
+
+    cancelCallback = details.cancelled;
+    finishCallback = details.finished;
+
+    history.navigate(
+      {
+        pathname,
+        hash,
+        query,
+        state
+      },
+      method
+    );
+
+    return resetCallbacks;
+  }
+
   function cancelAndResetNavCallbacks() {
     if (cancelCallback) {
       cancelCallback();
@@ -168,36 +259,20 @@ export default function createRouter(
     finishCallback = undefined;
   }
 
-  function callObservers(emitted: Emitted) {
-    observers.forEach(fn => {
-      fn(emitted);
-    });
-  }
-
-  function callOneTimersAndSideEffects(emitted: Emitted) {
-    oneTimers.splice(0).forEach(fn => {
-      fn(emitted);
-    });
-    sideEffects.forEach(fn => {
-      fn(emitted);
-    });
-  }
-
-  function emitImmediate(response: Response, navigation: Navigation) {
-    if (!response.redirectTo || emitRedirects) {
-      mostRecent.response = response;
-      mostRecent.navigation = navigation;
-
-      callObservers({ response, navigation, router });
-      callOneTimersAndSideEffects({ response, navigation, router });
-    }
-
-    if (response.redirectTo !== undefined && automaticRedirects) {
-      history.navigate(response.redirectTo, "replace");
-    }
-  }
+  /* router.cancel */
 
   let cancelWith: CancelActiveNavigation | undefined;
+  let asyncNavNotifiers: Array<Cancellable> = [];
+
+  function cancel(fn: Cancellable): RemoveCancellable {
+    asyncNavNotifiers.push(fn);
+    return () => {
+      asyncNavNotifiers = asyncNavNotifiers.filter(can => {
+        return can !== fn;
+      });
+    };
+  }
+
   // let any async navigation listeners (observers from router.cancel)
   // know that there is an asynchronous navigation happening
   function announceAsyncNav() {
@@ -222,78 +297,29 @@ export default function createRouter(
     }
   }
 
+  /* router.refresh */
+
+  // when true, navigation.previous will re-use the previous
+  // navigation.previous instead of using mostRecent.response
+  // TODO: is there a better approach?
+  let refreshing = false;
+
+  function refresh(routes?: CompiledRouteArray) {
+    refreshing = true;
+    setupRoutesAndInteractions(routes);
+  }
+
   const router: CuriRouter = {
     route: routeInteractions,
     history,
     external,
-    observe(fn: Observer, options?: ResponseHandlerOptions): RemoveObserver {
-      const { initial = true } = options || {};
-
-      observers.push(fn);
-      if (mostRecent.response && initial) {
-        fn.call(null, {
-          response: mostRecent.response,
-          navigation: mostRecent.navigation,
-          router
-        });
-      }
-      return () => {
-        observers = observers.filter(obs => {
-          return obs !== fn;
-        });
-      };
-    },
-    once(fn: Observer, options?: ResponseHandlerOptions) {
-      const { initial = true } = options || {};
-
-      if (mostRecent.response && initial) {
-        fn.call(null, {
-          response: mostRecent.response,
-          navigation: mostRecent.navigation,
-          router
-        });
-      } else {
-        oneTimers.push(fn);
-      }
-    },
-    cancel(fn: Cancellable): RemoveCancellable {
-      asyncNavNotifiers.push(fn);
-      return () => {
-        asyncNavNotifiers = asyncNavNotifiers.filter(can => {
-          return can !== fn;
-        });
-      };
-    },
-    refresh(routes?: CompiledRouteArray) {
-      refreshing = true;
-      setupRoutesAndInteractions(routes);
-    },
+    observe,
+    once,
+    cancel,
+    navigate,
+    refresh,
     current() {
       return mostRecent;
-    },
-    navigate(details: NavigationDetails): CancelNavigateCallbacks {
-      cancelAndResetNavCallbacks();
-
-      let { name, params, hash, query, state, method } = details;
-      const pathname =
-        name != null
-          ? routeInteractions.pathname(name, params)
-          : history.location.pathname;
-
-      cancelCallback = details.cancelled;
-      finishCallback = details.finished;
-
-      history.navigate(
-        {
-          pathname,
-          hash,
-          query,
-          state
-        },
-        method
-      );
-
-      return resetCallbacks;
     }
   };
 
