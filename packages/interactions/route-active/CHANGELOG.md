@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-alpha.1
 
 * Use `SessionLocation` type
 

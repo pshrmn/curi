@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-alpha.1
 
 * `curi` receives a pending history function.
 * Rely on `history` instance for cancelling navigations.

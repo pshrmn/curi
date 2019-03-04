@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-alpha.0
 
 * Use `pop` (Hickory v2), not `POP`.
 

@@ -1,6 +1,6 @@
 {
   "name": "@curi/static",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "description": "Generate static HTML files from Curi routes",
   "main": "dist/curi-static.js",
   "types": "types/index.d.ts",
