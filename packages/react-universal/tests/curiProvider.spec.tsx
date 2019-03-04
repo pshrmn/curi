@@ -93,7 +93,7 @@ describe("curiProvider()", () => {
 
       await wait(15);
 
-      router.history.navigate("/about");
+      router.navigate({ name: "About" });
 
       expect(currentResponse.name).toBe("About");
     });

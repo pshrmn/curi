@@ -699,7 +699,7 @@ describe("route matching/response generation", () => {
 
         const history = InMemory({ locations: ["/first"] });
         const router = curi(history, routes);
-        router.history.navigate("/second");
+        router.navigate({ name: "Second" });
       });
 
       describe("resolved", () => {
