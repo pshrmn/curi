@@ -213,7 +213,7 @@ describe("<AsyncLink>", () => {
       ]);
       const router = curi(history, routes);
       const Router = curiProvider(router);
-      const children = jest.fn(() => null);
+      const children = jest.fn((a: boolean) => null);
       ReactDOM.render(
         <Router>
           <AsyncLink name="Test">{children}</AsyncLink>
@@ -228,13 +228,13 @@ describe("<AsyncLink>", () => {
   describe("clicking a link", () => {
     it("calls history.navigate", () => {
       const history = InMemory();
-      const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(history, routes);
+      const mockNavigate = jest.fn();
+      router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
       ReactDOM.render(
         <Router>
@@ -483,12 +483,12 @@ describe("<AsyncLink>", () => {
     it("includes hash, query, and state in location passed to history.navigate", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(history, routes);
+      router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
       ReactDOM.render(
@@ -525,13 +525,13 @@ describe("<AsyncLink>", () => {
       it("calls onNav prop func if provided", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
-        history.navigate = mockNavigate;
         const onNav = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(history, routes);
+        router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -562,7 +562,6 @@ describe("<AsyncLink>", () => {
       it("does not call history.navigate if onNav prevents default", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
-        history.navigate = mockNavigate;
         const onNav = jest.fn(event => {
           event.preventDefault();
         });
@@ -571,6 +570,7 @@ describe("<AsyncLink>", () => {
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(history, routes);
+        router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -602,13 +602,12 @@ describe("<AsyncLink>", () => {
     it("doesn't call history.navigate for modified clicks", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
-
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(history, routes);
+      router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
       ReactDOM.render(
@@ -641,13 +640,12 @@ describe("<AsyncLink>", () => {
     it("doesn't call history.navigate if event.preventDefault has been called", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
-
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(history, routes);
+      router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
       ReactDOM.render(

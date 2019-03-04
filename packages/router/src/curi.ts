@@ -26,8 +26,10 @@ import {
   CancelNavigateCallbacks
 } from "./types/curi";
 
+type PendingHistory = (fn: (p: PendingNavigation) => void) => History;
+
 export default function createRouter(
-  history: History,
+  pendingHistory: PendingHistory,
   routeArray: CompiledRouteArray,
   options: RouterOptions = {}
 ): CuriRouter {
@@ -38,6 +40,8 @@ export default function createRouter(
     automaticRedirects = true,
     external
   } = options;
+
+  const history = pendingHistory(navigationHandler);
 
   // the last finished response & navigation
   const mostRecent: CurrentResponse = {
@@ -66,24 +70,20 @@ export default function createRouter(
           registerRoutes(routes, interaction);
         });
     }
-
-    // assign navigation response handler
-    // this will be re-called if router.refresh() is called
-    history.respondWith(navigationHandler);
   }
 
   /* history observer */
 
   function navigationHandler(pendingNav: PendingNavigation): void {
+    let previous: Response | null = refreshing
+      ? mostRecent.navigation
+        ? mostRecent.navigation.previous
+        : null
+      : mostRecent.response;
     const navigation: Navigation = {
       action: pendingNav.action,
-      previous: refreshing
-        ? mostRecent.navigation
-          ? mostRecent.navigation.previous
-          : null
-        : mostRecent.response
+      previous
     };
-    refreshing = false;
 
     const match = matchLocation(pendingNav.location, routes);
     // if no routes match, do nothing
@@ -299,14 +299,11 @@ export default function createRouter(
 
   /* router.refresh */
 
-  // when true, navigation.previous will re-use the previous
-  // navigation.previous instead of using mostRecent.response
-  // TODO: is there a better approach?
   let refreshing = false;
-
   function refresh(routes?: CompiledRouteArray) {
-    refreshing = true;
     setupRoutesAndInteractions(routes);
+    refreshing = true;
+    history.current();
   }
 
   const router: CuriRouter = {
@@ -325,6 +322,6 @@ export default function createRouter(
 
   // now that everything is defined, actually do the setup
   setupRoutesAndInteractions(routeArray);
-
+  history.current();
   return router;
 }

@@ -17,7 +17,8 @@ const store = curiStore(router);
 
 export default function render() {
   const target = document.createElement("div");
-  history.navigate = jest.fn();
+  const mockNavigate = jest.fn();
+  router.history.navigate = mockNavigate;
   new app({ target, store });
 
   const a = target.querySelector("a");
@@ -25,6 +26,6 @@ export default function render() {
   const modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
   modifiers.forEach(m => {
     simulant.fire(a, "click", { [m]: true });
-    expect(history.navigate.mock.calls.length).toBe(0);
+    expect(mockNavigate.mock.calls.length).toBe(0);
   });
 }

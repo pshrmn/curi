@@ -222,7 +222,7 @@ describe("route matching/response generation", () => {
           const history = InMemory({ locations: ["/other-page"] });
           const router = curi(history, routes);
           const { response } = router.current();
-          expect(response.location).toBe(history.location);
+          expect(response.location).toBe(router.history.location);
         });
       });
 
@@ -699,7 +699,7 @@ describe("route matching/response generation", () => {
 
         const history = InMemory({ locations: ["/first"] });
         const router = curi(history, routes);
-        history.navigate("/second");
+        router.history.navigate("/second");
       });
 
       describe("resolved", () => {
