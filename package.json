@@ -101,8 +101,6 @@
     "@curi-example/basic-react": "file:examples/react/basic",
     "@curi-example/basic-svelte": "file:examples/svelte/basic",
     "@curi-example/basic-vue": "file:examples/vue/basic",
-    "@curi-example/blocking-navigation-react": "file:examples/react/blocking-navigation",
-    "@curi-example/blocking-navigation-vue": "file:examples/vue/blocking-navigation",
     "@curi-example/breadcrumbs-react": "file:examples/react/breadcrumbs",
     "@curi-example/breadcrumbs-svelte": "file:examples/svelte/breadcrumbs",
     "@curi-example/breadcrumbs-vue": "file:examples/vue/breadcrumbs",
