@@ -1,5 +1,6 @@
 ## Next
 
+* `curi` receives a pending history function.
 * Rely on `history` instance for cancelling navigations.
 * Use `SessionLocation` type
 * `navigate` does set default `method`.
