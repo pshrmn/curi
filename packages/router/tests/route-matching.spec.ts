@@ -764,6 +764,7 @@ describe("route matching/response generation", () => {
           const spy = jest.fn(({ error }) => {
             expect(error).toBe("rejected");
             done();
+            return {};
           });
 
           const routes = prepareRoutes([
@@ -785,6 +786,7 @@ describe("route matching/response generation", () => {
           const spy = jest.fn(({ error }) => {
             expect(error).toBe(null);
             done();
+            return {};
           });
 
           const routes = prepareRoutes([
