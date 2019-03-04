@@ -17,10 +17,10 @@
   "license": "MIT",
   "dependencies": {
     "@babel/register": "^7.0.0",
-    "@curi/react-dom": "file:../../../packages/react-dom",
-    "@curi/router": "file:../../../packages/router",
-    "@hickory/browser": "^2.0.0-alpha.1",
-    "@hickory/in-memory": "^2.0.0-alpha.1",
+    "@curi/react-dom": "2.0.0-alpha.2",
+    "@curi/router": "2.0.0-alpha.1",
+    "@hickory/browser": "^2.0.0-alpha.5",
+    "@hickory/in-memory": "2.0.0-alpha.5",
     "express": "^4.16.2",
     "react": "^16.8.0-alpha.1",
     "react-dom": "^16.8.0-alpha.1"
