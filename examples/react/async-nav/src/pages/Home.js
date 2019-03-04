@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
+import { AsyncLink } from "@curi/react-dom";
 import Spinner from "react-spinkit";
 
 const styles = {
@@ -25,7 +25,7 @@ const styles = {
 const Home = ({ response }) => (
   <div style={styles.container}>
     {response.data.map(movie => (
-      <Link
+      <AsyncLink
         name="Movie"
         params={{ id: movie.id }}
         key={movie.id}
@@ -44,7 +44,7 @@ const Home = ({ response }) => (
             ) : null}
           </React.Fragment>
         )}
-      </Link>
+      </AsyncLink>
     ))}
   </div>
 );
