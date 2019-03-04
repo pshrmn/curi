@@ -80,6 +80,7 @@ export default function createRouter(
         ? mostRecent.navigation.previous
         : null
       : mostRecent.response;
+    refreshing = false;
     const navigation: Navigation = {
       action: pendingNav.action,
       previous
