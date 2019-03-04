@@ -176,13 +176,22 @@ const packages = [
     globalName: "CuriSideEffectScroll",
     type: "side effects",
     script: true,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["side-effect-scroll"]
+      v1: "1.0.1",
+      v2: versions["side-effect-scroll"]
     },
-    import: () =>
-      import(/* webpackChunkName: 'package--side-effect-scroll' */
-      `../pages/Packages/side-effect-scroll/v1/index.js`)
+    import: version => {
+      switch (version) {
+        case "v1":
+          return import(/* webpackChunkName: 'package--side-effect-scroll-v1' */
+          `../pages/Packages/side-effect-scroll/v1/index.js`);
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--side-effect-scroll-v2' */
+          `../pages/Packages/side-effect-scroll/v2/index.js`);
+      }
+    }
   },
   {
     name: "side-effect-title",
