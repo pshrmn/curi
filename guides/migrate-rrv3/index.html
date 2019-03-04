@@ -127,7 +127,7 @@ const routes = prepareRoutes([
 const routes = prepareRoutes([...]);
 ReactDOM.render((
   &lt;Router history={browserHistory} routes={routes} /&gt;
-), holder);</code></pre></div><p>With Curi, the router is created prior to rendering. It takes a Hickory history object, your routes array, and possibly an options object. <a href="https://github.com/pshrmn/hickory">Hickory</a> is similar to the <code class="inline-code css-jo5c25 eutm4hs0">history</code> package used by React Router, but has a slight modified API (easier navigation blocking and navigation that imitates how anchors work) and more convenient location objects (you can use a <code class="inline-code css-jo5c25 eutm4hs0">query</code> object instead of having to manually create a <code class="inline-code css-jo5c25 eutm4hs0">search</code> string).</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { curi, prepareRoutes } from &#x27;@curi/router&#x27;;
+), holder);</code></pre></div><p>With Curi, the router is created prior to rendering. It takes a Hickory history object, your routes array, and possibly an options object. <a href="https://github.com/pshrmn/hickory">Hickory</a> is similar to the <code class="inline-code css-jo5c25 eutm4hs0">history</code> package used by React Router, but has an API tailored for asynchronous applications.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { curi, prepareRoutes } from &#x27;@curi/router&#x27;;
 import Browser from &#x27;@hickory/browser&#x27;;
 const history = Browser();
 const routes = prepareRoutes([...]);

@@ -44,7 +44,7 @@ function handler(req, res) {
     // render the response
   })
 }</code></pre></div><p>Where do the history and routes come from?</p><div class="section css-1qgx73a" id="history"><h3 class="displaced-header"><a href="#history" class="header-link">History</a></h3><p>On the client-side, a single-page application uses<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> to create a history instance. However, that uses browser only APIs. On the server, the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/in-memory</code> package is used to create an equivalent history instance.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">npm install @hickory/in-memory</code></pre></div><p>An in-memory history takes an array of locations. For server-side rendering, we want to pass it the location from the request.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// handler.js
-import InMemory from &quot;@hickory/in-memory&quot;;
+import { InMemory } from &quot;@hickory/in-memory&quot;;
 
 function handler(req, res) {
   const history = InMemory({ locations: [req.path] });
