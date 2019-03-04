@@ -105,7 +105,7 @@ describe("<curi-link>", () => {
     let mockNavigate;
     beforeEach(() => {
       mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
+      router.history.navigate = mockNavigate;
     });
 
     afterEach(() => {

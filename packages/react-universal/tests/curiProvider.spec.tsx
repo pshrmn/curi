@@ -72,8 +72,6 @@ describe("curiProvider()", () => {
     it("re-renders when the location changes", async () => {
       const history = InMemory();
       const router = curi(history, routes);
-      let pushedHistory = false;
-      let firstCall = true;
 
       let currentResponse;
 
@@ -95,7 +93,7 @@ describe("curiProvider()", () => {
 
       await wait(15);
 
-      history.navigate("/about");
+      router.navigate({ name: "About" });
 
       expect(currentResponse.name).toBe("About");
     });

@@ -42,7 +42,7 @@
   "dependencies": {
     "@curi/react-universal": "file:../react-universal",
     "@curi/router": "file:../router",
-    "@hickory/root": "^2.0.0-alpha.4",
+    "@hickory/root": "^2.0.0-alpha.5",
     "@types/react": "^16.7.18",
     "@types/react-native": "^0.57.32"
   },

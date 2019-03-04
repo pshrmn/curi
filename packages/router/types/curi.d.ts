@@ -1,4 +1,6 @@
-import { History } from "@hickory/root";
+import { History, PendingNavigation } from "@hickory/root";
 import { CompiledRouteArray } from "./types/route";
 import { CuriRouter, RouterOptions } from "./types/curi";
-export default function createRouter(history: History, routeArray: CompiledRouteArray, options?: RouterOptions): CuriRouter;
+declare type PendingHistory = (fn: (p: PendingNavigation) => void) => History;
+export default function createRouter(pendingHistory: PendingHistory, routeArray: CompiledRouteArray, options?: RouterOptions): CuriRouter;
+export {};

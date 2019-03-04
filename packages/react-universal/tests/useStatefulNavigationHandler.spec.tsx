@@ -52,12 +52,12 @@ describe("useStatefulNavigationHandler", () => {
     it("it uses nav props (name, params, hash, query, and state) to generate nav location", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(history, routes);
+      router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
       function AsyncLink(props) {
@@ -94,13 +94,13 @@ describe("useStatefulNavigationHandler", () => {
     it("calls onNav prop func if provided", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
       const onNav = jest.fn();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(history, routes);
+      router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
       function AsyncLink(props) {
@@ -137,13 +137,12 @@ describe("useStatefulNavigationHandler", () => {
       it("does not call history.navigate if canNavigate returns false", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
-        history.navigate = mockNavigate;
-
         const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(history, routes);
+        router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
         function AsyncLink(props) {

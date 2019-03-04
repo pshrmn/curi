@@ -17,12 +17,13 @@ const store = curiStore(router);
 
 export default function render() {
   const target = document.createElement("div");
-  history.navigate = jest.fn();
+  const mockNavigate = jest.fn();
+  router.history.navigate = mockNavigate;
   new app({ target, store });
 
   const a = target.querySelector("a");
   const event = simulant("click");
   event.preventDefault();
   simulant.fire(a, event);
-  expect(history.navigate.mock.calls.length).toBe(0);
+  expect(mockNavigate.mock.calls.length).toBe(0);
 }

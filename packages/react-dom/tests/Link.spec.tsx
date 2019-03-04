@@ -230,13 +230,13 @@ describe("<Link>", () => {
       it("calls onNav prop func if provided", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
-        history.navigate = mockNavigate;
         const onNav = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(history, routes);
+        router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -267,7 +267,6 @@ describe("<Link>", () => {
       it("does not call history.navigate if onNav prevents default", () => {
         const history = InMemory();
         const mockNavigate = jest.fn();
-        history.navigate = mockNavigate;
         const onNav = jest.fn(event => {
           event.preventDefault();
         });
@@ -276,6 +275,7 @@ describe("<Link>", () => {
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(history, routes);
+        router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
         ReactDOM.render(
@@ -307,13 +307,12 @@ describe("<Link>", () => {
     it("doesn't call history.navigate for modified clicks", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
-
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(history, routes);
+      router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
       ReactDOM.render(
@@ -346,13 +345,12 @@ describe("<Link>", () => {
     it("doesn't call history.navigate if event.preventDefault has been called", () => {
       const history = InMemory();
       const mockNavigate = jest.fn();
-      history.navigate = mockNavigate;
-
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(history, routes);
+      router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
       ReactDOM.render(

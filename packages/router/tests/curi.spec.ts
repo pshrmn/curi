@@ -449,7 +449,7 @@ describe("curi", () => {
         router.observe(r => {
           if (!navigated) {
             navigated = true;
-            history.navigate({ pathname: "/parent" });
+            router.navigate({ name: "Parent" });
             after();
             return;
           }
@@ -649,6 +649,7 @@ describe("curi", () => {
     it("returns a function to unsubscribe when called", () => {
       const routes = prepareRoutes([
         { name: "Home", path: "" },
+        { name: "Next", path: "next" },
         { name: "Not Found", path: "(.*)" }
       ]);
       const router = curi(history, routes);
@@ -664,7 +665,7 @@ describe("curi", () => {
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(0);
       unsub1();
-      history.navigate({ pathname: "/next" });
+      router.navigate({ name: "Next" });
 
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(1);
@@ -690,11 +691,14 @@ describe("curi", () => {
       });
 
       it("is called when response is emitted", () => {
-        const How = { name: "How", path: ":method" };
         const routes = prepareRoutes([
           { name: "Home", path: "" },
           { name: "About", path: "about" },
-          { name: "Contact", path: "contact", children: [How] }
+          {
+            name: "Contact",
+            path: "contact",
+            children: [{ name: "How", path: ":method" }]
+          }
         ]);
 
         const check = ({ response, navigation }) => {
@@ -713,7 +717,7 @@ describe("curi", () => {
         const router = curi(history, routes);
         // register before navigation, but don't call with existing response
         router.observe(check, { initial: false });
-        history.navigate("/contact/mail");
+        router.navigate({ name: "How", params: { method: "mail" } });
       });
 
       it("is re-called for new responses", done => {
@@ -821,8 +825,14 @@ describe("curi", () => {
           const history = InMemory({ locations: ["/contact/fax"] });
           const router = curi(history, routes);
           router.observe(check);
-          history.navigate("/contact/phone");
-          history.navigate("/contact/mail");
+          router.navigate({
+            name: "How",
+            params: { method: "phone" }
+          });
+          router.navigate({
+            name: "How",
+            params: { method: "mail" }
+          });
         });
       });
     });
@@ -895,17 +905,18 @@ describe("curi", () => {
         it("is called AFTER next navigation", done => {
           const routes = prepareRoutes([
             { name: "Home", path: "" },
+            { name: "About", path: "about" },
             { name: "Catch All", path: "(.*)" }
           ]);
           const everyTime = jest.fn(({ response }) => {
-            expect(response.name).toBe("Catch All");
+            expect(response.name).toBe("About");
             done();
           });
           const router = curi(history, routes);
           router.once(() => {
             router.observe(everyTime, { initial: false });
             expect(everyTime.mock.calls.length).toBe(0);
-            history.navigate("/somewhere-else");
+            router.navigate({ name: "About" });
           });
         });
       });
@@ -1057,8 +1068,14 @@ describe("curi", () => {
           const history = InMemory({ locations: ["/contact/fax"] });
           const router = curi(history, routes);
           router.once(check);
-          history.navigate("/contact/phone");
-          history.navigate("/contact/mail");
+          router.navigate({
+            name: "How",
+            params: { method: "phone" }
+          });
+          router.navigate({
+            name: "How",
+            params: { method: "mail" }
+          });
         });
       });
     });
@@ -1131,17 +1148,18 @@ describe("curi", () => {
         it("is called AFTER next navigation", done => {
           const routes = prepareRoutes([
             { name: "Home", path: "" },
+            { name: "About", path: "about" },
             { name: "Catch All", path: "(.*)" }
           ]);
           const oneTime = jest.fn(({ response }) => {
-            expect(response.name).toBe("Catch All");
+            expect(response.name).toBe("About");
             done();
           });
           const router = curi(history, routes);
           router.once(() => {
             router.once(oneTime, { initial: false });
             expect(oneTime.mock.calls.length).toBe(0);
-            history.navigate("/somewhere-else");
+            router.navigate({ name: "About" });
           });
         });
       });
@@ -1160,7 +1178,8 @@ describe("curi", () => {
     ]);
     const history = InMemory();
     const router = curi(history, routes);
-    const mockNavigate = (history.navigate = jest.fn());
+    const mockNavigate = jest.fn();
+    router.history.navigate = mockNavigate;
 
     afterEach(() => {
       mockNavigate.mockReset();
@@ -1217,7 +1236,8 @@ describe("curi", () => {
       it("re-uses current pathname if no name is provided", () => {
         const history = InMemory({ locations: ["/reuse"] });
         const router = curi(history, routes);
-        const mockNavigate = (history.navigate = jest.fn());
+        const mockNavigate = jest.fn();
+        router.history.navigate = mockNavigate;
         router.navigate({});
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
           pathname: "/reuse"
@@ -1709,7 +1729,6 @@ describe("curi", () => {
 
   describe("response.redirectTo", () => {
     it("triggers a replace navigation AFTER emitting initial response", done => {
-      let callPosition = 0;
       const routes = prepareRoutes([
         {
           name: "A Route",
@@ -1728,17 +1747,19 @@ describe("curi", () => {
           path: "somewhere-else"
         }
       ]);
-      let hasEmitted = false;
-
-      history.navigate = jest.fn((loc, navType) => {
-        expect(navType).toBe("replace");
-        expect(hasEmitted).toBe(true);
-        done();
-      });
+      let calls = 0;
       const router = curi(history, routes, {
         sideEffects: [
-          () => {
-            hasEmitted = true;
+          ({ response, navigation }) => {
+            switch (calls++) {
+              case 0:
+                expect(response.name).toBe("A Route");
+                break;
+              case 1:
+                expect(response.name).toBe("B Route");
+                expect(navigation.action).toBe("replace");
+                done();
+            }
           }
         ]
       });
