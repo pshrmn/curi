@@ -1,3 +1,8 @@
+## Next
+
+* First argument to `curi` is a history constructor.
+* Add `history` option to `curi` options for history object configuration.
+
 ## 2.0.0-alpha.1
 
 * `curi` receives a pending history function.
