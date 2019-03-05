@@ -11,7 +11,7 @@ jest.useFakeTimers();
 
 describe("useNavigationFocus", () => {
   let node;
-  let history, router, Router;
+  let router, Router;
   const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" }
@@ -20,8 +20,7 @@ describe("useNavigationFocus", () => {
   beforeEach(() => {
     node = document.createElement("div");
     document.body.appendChild(node);
-    history = InMemory();
-    router = curi(history, routes);
+    router = curi(InMemory, routes);
     Router = curiProvider(router);
   });
 
@@ -62,8 +61,7 @@ describe("useNavigationFocus", () => {
         }
       ]);
 
-      const history = InMemory();
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
 
       function Focuser() {
@@ -206,8 +204,7 @@ describe("useNavigationFocus", () => {
           }
         ]);
 
-        const history = InMemory();
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const Router = curiProvider(router);
 
         function Focuser() {
@@ -270,8 +267,7 @@ describe("useNavigationFocus", () => {
           }
         ]);
 
-        const history = InMemory();
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const Router = curiProvider(router);
 
         function Focuser() {

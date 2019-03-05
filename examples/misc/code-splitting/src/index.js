@@ -8,8 +8,7 @@ import { curi } from "@curi/router";
 import routes from "./routes";
 import App from "./components/App";
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 const Router = curiProvider(router);
 
 router.once(() => {

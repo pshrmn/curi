@@ -6,8 +6,7 @@ import { CuriPlugin } from "@curi/vue";
 import routes from "./routes";
 import app from "./components/app";
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 
 Vue.use(CuriPlugin, { router });
 

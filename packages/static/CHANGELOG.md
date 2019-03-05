@@ -1,3 +1,7 @@
+## Next
+
+* Use `InMemory` history constructor when creating router.
+
 ## 1.0.0-alpha.6
 
 * Use named `InMemory` import (Hickory v2).

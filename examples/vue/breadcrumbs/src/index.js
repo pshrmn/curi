@@ -34,8 +34,7 @@ function titleText() {
   };
 }
 
-const history = Browser();
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   route: [ancestors(), titleText()]
 });
 

@@ -11,8 +11,7 @@ import App from "./components/App";
 const setTitle = createTitleSideEffect(
   ({ response }) => `${response.title} | Side Effect Example`
 );
-const history = Browser();
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   sideEffects: [setTitle]
 });
 const Router = curiProvider(router);

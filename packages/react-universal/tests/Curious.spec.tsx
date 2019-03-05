@@ -17,8 +17,7 @@ describe("<Curious>", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    history = InMemory();
-    router = curi(history, routes);
+    router = curi(InMemory, routes);
     Router = curiProvider(router);
   });
 

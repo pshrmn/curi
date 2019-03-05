@@ -10,8 +10,11 @@ const routes = prepareRoutes([
   { name: "Not Found", path: "(.*)" }
 ]);
 
-const history = InMemory({ locations: ["/u/2"] });
-const router = curi(history, routes);
+const router = curi(InMemory, routes, {
+  history: {
+    locations: ["/u/2"]
+  }
+});
 const store = curiStore(router);
 
 export default function render() {

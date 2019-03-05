@@ -7,9 +7,11 @@ import routes from "./src/routes";
 import App from "./src/components/App";
 
 export default function(req, res) {
-  const history = InMemory({ locations: [req.url] });
-  const router = curi(history, routes, {
-    automaticRedirects: false
+  const router = curi(InMemory, routes, {
+    automaticRedirects: false,
+    history: {
+      locations: [req.url]
+    }
   });
   const Router = curiProvider(router);
   router.once(({ response }) => {

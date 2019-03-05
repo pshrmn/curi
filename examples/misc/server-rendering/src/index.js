@@ -7,12 +7,10 @@ import { curiProvider } from "@curi/react-dom";
 import routes from "./routes";
 import App from "./components/App";
 
-const history = Browser();
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   emitRedirects: false
 });
 const Router = curiProvider(router);
-const root = document.getElementById("root");
 
 router.once(() => {
   ReactDOM.hydrate(

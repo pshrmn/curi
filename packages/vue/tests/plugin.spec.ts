@@ -7,9 +7,8 @@ import { curi, prepareRoutes } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 
 describe("CuriPlugin", () => {
-  const history = InMemory();
   const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-  const router = curi(history, routes);
+  const router = curi(InMemory, routes);
 
   describe("$router", () => {
     it("Adds the router to global Vue vars as $router", () => {
@@ -65,8 +64,7 @@ describe("CuriPlugin", () => {
       ]);
 
       beforeEach(() => {
-        history = InMemory();
-        router = curi(history, routes);
+        router = curi(InMemory, routes);
       });
 
       it("re-renders when updating curi object", done => {

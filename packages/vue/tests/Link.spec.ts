@@ -7,7 +7,7 @@ import { curi, prepareRoutes } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 
 describe("<curi-link>", () => {
-  let Vue, node, history, router, wrapper;
+  let Vue, node, router, wrapper;
   const routes = prepareRoutes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
@@ -17,8 +17,7 @@ describe("<curi-link>", () => {
     node = document.createElement("div");
     document.body.appendChild(node);
 
-    history = InMemory();
-    router = curi(history, routes);
+    router = curi(InMemory, routes);
 
     Vue = createLocalVue();
     Vue.use(CuriPlugin, { router });
@@ -67,10 +66,11 @@ describe("<curi-link>", () => {
 
     it('re-uses current pathname if "to" prop is not provided', () => {
       const Vue = createLocalVue();
-      const history = InMemory({
-        locations: ["/place/somewhere"]
+      const router = curi(InMemory, routes, {
+        history: {
+          locations: ["/place/somewhere"]
+        }
       });
-      const router = curi(history, routes);
       Vue.use(CuriPlugin, { router });
 
       wrapper = new Vue({
@@ -145,7 +145,6 @@ describe("<curi-link>", () => {
     });
 
     describe("scoped slot", () => {
-      let history;
       const routes = prepareRoutes([
         {
           name: "Test",
@@ -161,12 +160,8 @@ describe("<curi-link>", () => {
         { name: "Catch All", path: "(.*)" }
       ]);
 
-      beforeEach(() => {
-        history = InMemory();
-      });
-
       it("navigating = true after clicking", done => {
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
 
@@ -208,7 +203,7 @@ describe("<curi-link>", () => {
       });
 
       it("navigating = false after navigation completes", done => {
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
 
@@ -268,7 +263,7 @@ describe("<curi-link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
 

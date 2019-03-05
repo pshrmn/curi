@@ -31,15 +31,17 @@ function PropertyReporter(): Interaction {
 describe("public route properties", () => {
   describe("name", () => {
     it("is the provided value", () => {
-      const history = InMemory({ locations: ["/test"] });
       const routes = prepareRoutes([
         {
           name: "Test",
           path: "test"
         }
       ]);
-      const router = curi(history, routes, {
-        route: [PropertyReporter()]
+      const router = curi(InMemory, routes, {
+        route: [PropertyReporter()],
+        history: {
+          locations: ["/test"]
+        }
       });
       const routeProperties = router.route.properties("Test");
       expect(routeProperties.name).toBe("Test");
@@ -48,15 +50,15 @@ describe("public route properties", () => {
 
   describe("path", () => {
     it("is the provided value", () => {
-      const history = InMemory({ locations: ["/test"] });
       const routes = prepareRoutes([
         {
           name: "Test",
           path: "test"
         }
       ]);
-      const router = curi(history, routes, {
-        route: [PropertyReporter()]
+      const router = curi(InMemory, routes, {
+        route: [PropertyReporter()],
+        history: {}
       });
       const routeProperties = router.route.properties("Test");
       expect(routeProperties.path).toBe("test");
@@ -65,30 +67,34 @@ describe("public route properties", () => {
 
   describe("keys", () => {
     it("is the array of param names parsed from the path", () => {
-      const history = InMemory({ locations: ["/four/five/six"] });
       const routes = prepareRoutes([
         {
           name: "Test",
           path: ":one/:two/:three"
         }
       ]);
-      const router = curi(history, routes, {
-        route: [PropertyReporter()]
+      const router = curi(InMemory, routes, {
+        route: [PropertyReporter()],
+        history: {
+          locations: ["/four/five/six"]
+        }
       });
       const routeProperties = router.route.properties("Test");
       expect(routeProperties.keys).toEqual(["one", "two", "three"]);
     });
 
     it("is an empty array when the path has no params", () => {
-      const history = InMemory({ locations: ["/one/two/three"] });
       const routes = prepareRoutes([
         {
           name: "Test",
           path: "one/two/three"
         }
       ]);
-      const router = curi(history, routes, {
-        route: [PropertyReporter()]
+      const router = curi(InMemory, routes, {
+        route: [PropertyReporter()],
+        history: {
+          locations: ["/one/two/three"]
+        }
       });
       const routeProperties = router.route.properties("Test");
       expect(routeProperties.keys).toEqual([]);
@@ -97,7 +103,6 @@ describe("public route properties", () => {
 
   describe("resolve", () => {
     it("is the resolve function", done => {
-      const history = InMemory({ locations: ["/test"] });
       const routes = prepareRoutes([
         {
           name: "Test",
@@ -110,8 +115,11 @@ describe("public route properties", () => {
           }
         }
       ]);
-      const router = curi(history, routes, {
-        route: [PropertyReporter()]
+      const router = curi(InMemory, routes, {
+        route: [PropertyReporter()],
+        history: {
+          locations: ["/test"]
+        }
       });
       const routeProperties = router.route.properties("Test");
 
@@ -123,15 +131,17 @@ describe("public route properties", () => {
     });
 
     it("is undefined when route.resolve isn't provided", done => {
-      const history = InMemory({ locations: ["/test"] });
       const routes = prepareRoutes([
         {
           name: "Test",
           path: "test"
         }
       ]);
-      const router = curi(history, routes, {
-        route: [PropertyReporter()]
+      const router = curi(InMemory, routes, {
+        route: [PropertyReporter()],
+        history: {
+          locations: ["/test"]
+        }
       });
       const routeProperties = router.route.properties("Test");
       expect(routeProperties.resolve).toBeUndefined();
@@ -141,7 +151,6 @@ describe("public route properties", () => {
 
   describe("extra", () => {
     it("is the provided value", () => {
-      const history = InMemory({ locations: ["/test"] });
       const extra = {
         unofficial: true,
         another: 1
@@ -153,8 +162,11 @@ describe("public route properties", () => {
           extra
         }
       ]);
-      const router = curi(history, routes, {
-        route: [PropertyReporter()]
+      const router = curi(InMemory, routes, {
+        route: [PropertyReporter()],
+        history: {
+          locations: ["/test"]
+        }
       });
       const routeProperties = router.route.properties("Test");
       expect(routeProperties.extra).toBe(extra);

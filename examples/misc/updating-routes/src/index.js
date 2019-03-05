@@ -7,8 +7,7 @@ import { curiProvider } from "@curi/react-dom";
 import App from "./components/App";
 import { baseRoutes } from "./routes";
 
-const history = Browser();
-const router = curi(history, baseRoutes);
+const router = curi(Browser, baseRoutes);
 const Router = curiProvider(router);
 
 ReactDOM.render(

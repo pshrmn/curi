@@ -9,7 +9,7 @@ import { curiProvider, useLocation } from "@curi/react-universal";
 
 describe("useLocation", () => {
   let node;
-  let history, router, Router;
+  let router, Router;
   const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "User", path: "u/:id" },
@@ -18,8 +18,7 @@ describe("useLocation", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    history = InMemory();
-    router = curi(history, routes);
+    router = curi(InMemory, routes);
     Router = curiProvider(router);
   });
 

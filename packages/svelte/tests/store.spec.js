@@ -6,7 +6,7 @@ import { Store } from "svelte/store";
 import { curiStore } from "@curi/svelte";
 
 describe("curiStore", () => {
-  let history, router;
+  let router;
   const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
@@ -14,8 +14,7 @@ describe("curiStore", () => {
   ]);
 
   beforeEach(() => {
-    history = InMemory();
-    router = curi(history, routes);
+    router = curi(InMemory, routes);
   });
 
   describe("existing store", () => {

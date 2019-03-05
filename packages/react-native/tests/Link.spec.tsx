@@ -24,12 +24,11 @@ function fakeEvent(props = {}) {
 describe("<Link>", () => {
   describe("anchor", () => {
     it("renders a <TouchableHighlight> by default", () => {
-      const history = InMemory();
       const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
       const tree = renderer.create(
         <Router>
@@ -43,12 +42,11 @@ describe("<Link>", () => {
     });
 
     it("when provided, it renders the component instead of an anchor", () => {
-      const history = InMemory();
       const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
 
       const StyledAnchor = props => (
@@ -70,10 +68,13 @@ describe("<Link>", () => {
   describe("navigation location", () => {
     describe("name", () => {
       it("uses the pathname from current response's location if 'name' is not provided", () => {
-        const history = InMemory({ locations: ["/the-initial-location"] });
         const mockNavigate = jest.fn();
         const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes, {
+          history: {
+            locations: ["/the-initial-location"]
+          }
+        });
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -99,9 +100,8 @@ describe("<Link>", () => {
       ]);
 
       it("uses params to generate the location to navigate to", () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -119,9 +119,8 @@ describe("<Link>", () => {
       });
 
       it("updates location to navigate to when props change", () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -154,13 +153,12 @@ describe("<Link>", () => {
 
     describe("hash & query", () => {
       it("merges hash & query props with the pathname when creating href", () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -185,13 +183,16 @@ describe("<Link>", () => {
 
   describe("forward", () => {
     it("passes forward to the rendered anchor", () => {
-      const history = InMemory({ locations: ["/the-initial-location"] });
       const mockNavigate = jest.fn();
       const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes, {
+        history: {
+          locations: ["/the-initial-location"]
+        }
+      });
       router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
@@ -210,13 +211,16 @@ describe("<Link>", () => {
 
   describe("ref", () => {
     it("returns the anchor's ref, not the link's", () => {
-      const history = InMemory({ locations: ["/the-initial-location"] });
       const mockNavigate = jest.fn();
       const routes = prepareRoutes([
         { name: "Parks", path: "parks" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes, {
+        history: {
+          locations: ["/the-initial-location"]
+        }
+      });
       router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
@@ -235,12 +239,11 @@ describe("<Link>", () => {
 
   describe("children", () => {
     it("renders the provided children value(s)", () => {
-      const history = InMemory();
       const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
 
       const children = "Test Value";
@@ -261,12 +264,11 @@ describe("<Link>", () => {
   describe("pressing a link", () => {
     describe("navigation method", () => {
       it('method="anchor"', () => {
-        const history = InMemory();
         const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const mockNavigate = jest.fn();
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
@@ -284,13 +286,12 @@ describe("<Link>", () => {
       });
 
       it('method="push"', () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -307,13 +308,12 @@ describe("<Link>", () => {
       });
 
       it('method="replace"', () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -332,14 +332,13 @@ describe("<Link>", () => {
 
     describe("onNav", () => {
       it("calls onNav prop func if provided", () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
         const onNav = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -358,7 +357,6 @@ describe("<Link>", () => {
       });
 
       it("does not call history.navigate if onNav prevents default", () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
         const onNav = jest.fn(event => {
           event.preventDefault();
@@ -367,7 +365,7 @@ describe("<Link>", () => {
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -386,13 +384,12 @@ describe("<Link>", () => {
     });
 
     it("doesn't call history.navigate if event.preventDefault has been called", () => {
-      const history = InMemory();
       const mockNavigate = jest.fn();
       const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 

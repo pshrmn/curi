@@ -45,8 +45,7 @@ describe("useNavigating", () => {
 
   describe("mount", () => {
     it("cancel is undefined", () => {
-      const history = InMemory();
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
 
       function Nav() {
@@ -66,8 +65,7 @@ describe("useNavigating", () => {
   describe("while navigating", () => {
     describe("to synchronous routes", () => {
       it("cancel is undefined", async () => {
-        const history = InMemory();
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const Router = curiProvider(router);
 
         const children = jest.fn(() => null);
@@ -99,8 +97,7 @@ describe("useNavigating", () => {
 
     describe("to asynchronous routes", () => {
       it("cancel is a function", async () => {
-        const history = InMemory();
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const Router = curiProvider(router);
 
         const children = jest.fn(() => null);
@@ -125,8 +122,7 @@ describe("useNavigating", () => {
       });
 
       it("is undefined once navigation finishes", async done => {
-        const history = InMemory();
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const Router = curiProvider(router);
         const children = jest.fn(() => null);
         function Nav() {
@@ -161,8 +157,7 @@ describe("useNavigating", () => {
 
   describe("calling the cancel function", () => {
     it("cancels the navigation", async done => {
-      const history = InMemory();
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
       let cancelFn;
       const children = jest.fn(cancel => {
@@ -202,8 +197,7 @@ describe("useNavigating", () => {
     });
 
     it("does nothing if calling function after navigation finishes", async done => {
-      const history = InMemory();
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
       let cancelFn;
       const children = jest.fn(cancel => {

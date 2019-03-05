@@ -28,8 +28,7 @@ const routes = prepareRoutes([
   { name: "Catch All", path: "(.*)" }
 ]);
 
-const history = InMemory();
-const router = curi(history, routes);
+const router = curi(InMemory, routes);
 const store = curiStore(router);
 
 export default function render(done) {

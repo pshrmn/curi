@@ -9,7 +9,7 @@ import { curiProvider, Link } from "@curi/react-dom";
 
 describe("<Link>", () => {
   let node;
-  let history, router, Router: React.FunctionComponent;
+  let router, Router: React.FunctionComponent;
   const routes = prepareRoutes([
     { name: "Test", path: "" },
     { name: "Best", path: "best" },
@@ -18,8 +18,7 @@ describe("<Link>", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    history = InMemory();
-    router = curi(history, routes);
+    router = curi(InMemory, routes);
     Router = curiProvider(router);
   });
 
@@ -71,11 +70,12 @@ describe("<Link>", () => {
       });
 
       it("creates a relative link if 'name' is undefined", () => {
-        const history = InMemory({
-          locations: ["/the-initial-location"]
-        });
         const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes, {
+          history: {
+            locations: ["/the-initial-location"]
+          }
+        });
         const Router = curiProvider(router);
         ReactDOM.render(
           <Router>
@@ -89,15 +89,14 @@ describe("<Link>", () => {
     });
 
     describe("params", () => {
-      let history, router, Router;
+      let router, Router;
       const routes = prepareRoutes([
         { name: "Park", path: "park/:name" },
         { name: "Catch All", path: "(.*)" }
       ]);
 
       beforeEach(() => {
-        history = InMemory();
-        router = curi(history, routes);
+        router = curi(InMemory, routes);
         Router = curiProvider(router);
       });
 
@@ -144,12 +143,11 @@ describe("<Link>", () => {
 
     describe("hash & query", () => {
       it("merges hash & query props with the pathname when creating href", () => {
-        const history = InMemory();
         const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         const Router = curiProvider(router);
         ReactDOM.render(
           <Router>
@@ -183,12 +181,11 @@ describe("<Link>", () => {
 
   describe("ref", () => {
     it("returns the anchor's ref, not the link's", () => {
-      const history = InMemory();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
       const ref = React.createRef();
       ReactDOM.render(
@@ -206,12 +203,11 @@ describe("<Link>", () => {
 
   describe("children", () => {
     it("renders the provided children", () => {
-      const history = InMemory();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
       const children = "Test Value";
       ReactDOM.render(
@@ -228,14 +224,13 @@ describe("<Link>", () => {
   describe("clicking a link", () => {
     describe("onNav", () => {
       it("calls onNav prop func if provided", () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
         const onNav = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -265,7 +260,6 @@ describe("<Link>", () => {
       });
 
       it("does not call history.navigate if onNav prevents default", () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
         const onNav = jest.fn(event => {
           event.preventDefault();
@@ -274,7 +268,7 @@ describe("<Link>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -305,13 +299,12 @@ describe("<Link>", () => {
     });
 
     it("doesn't call history.navigate for modified clicks", () => {
-      const history = InMemory();
       const mockNavigate = jest.fn();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
@@ -343,13 +336,12 @@ describe("<Link>", () => {
     });
 
     it("doesn't call history.navigate if event.preventDefault has been called", () => {
-      const history = InMemory();
       const mockNavigate = jest.fn();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 

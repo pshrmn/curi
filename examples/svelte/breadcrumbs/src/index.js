@@ -1,7 +1,6 @@
 import { Browser } from "@hickory/browser";
 import { curi } from "@curi/router";
 import { curiStore } from "@curi/svelte";
-import { Store } from "svelte/store";
 import ancestors from "@curi/route-ancestors";
 
 import routes from "./routes";
@@ -33,8 +32,7 @@ function titleText() {
   };
 }
 
-const history = Browser();
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   route: [ancestors(), titleText()]
 });
 

@@ -2,16 +2,14 @@ import "jest";
 import { InMemory } from "@hickory/in-memory";
 import { curi, prepareRoutes } from "@curi/router";
 
-import { HickoryLocation } from "@hickory/root";
+import { SessionLocation } from "@hickory/root";
 
 import createPrefetch from "@curi/route-prefetch";
 
 describe("prefetch route interaction", () => {
-  const history = InMemory();
-
   it("is called using router.route.prefetch()", () => {
     const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-    const router = curi(history, routes, {
+    const router = curi(InMemory, routes, {
       route: [createPrefetch()]
     });
     expect(router.route.prefetch).toBeDefined();
@@ -29,7 +27,7 @@ describe("prefetch route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes, {
+      const router = curi(InMemory, routes, {
         route: [createPrefetch()]
       });
       expect(router.route.prefetch("Player")).toBeDefined();
@@ -40,7 +38,7 @@ describe("prefetch route interaction", () => {
         { name: "None", path: "player" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes, {
+      const router = curi(InMemory, routes, {
         route: [createPrefetch()]
       });
       // This is a bit roundabout, but we verify that the paths did not register
@@ -66,7 +64,7 @@ describe("prefetch route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes, {
+      const router = curi(InMemory, routes, {
         route: [createPrefetch()]
       });
       expect(router.route.prefetch("Player").then).toBeDefined();
@@ -76,7 +74,7 @@ describe("prefetch route interaction", () => {
       const name = "Anonymous";
 
       const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-      const router = curi(history, routes, {
+      const router = curi(InMemory, routes, {
         route: [createPrefetch()]
       });
 
@@ -105,7 +103,7 @@ describe("prefetch route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes, {
+      const router = curi(InMemory, routes, {
         route: [createPrefetch()]
       });
 
@@ -135,11 +133,11 @@ describe("prefetch route interaction", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes, {
+        const router = curi(InMemory, routes, {
           route: [createPrefetch()]
         });
         const paramsToPass = { id: 1 };
-        const locationToPass = {} as HickoryLocation;
+        const locationToPass = {} as SessionLocation;
         router.route.prefetch("Player", {
           match: {
             name: "Player",
@@ -166,7 +164,7 @@ describe("prefetch route interaction", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes, {
+        const router = curi(InMemory, routes, {
           route: [createPrefetch()],
           external
         });
@@ -186,7 +184,7 @@ describe("prefetch route interaction", () => {
       },
       { name: "Catch All", path: "(.*)" }
     ]);
-    const router = curi(history, routes, {
+    const router = curi(InMemory, routes, {
       route: [createPrefetch()]
     });
 
