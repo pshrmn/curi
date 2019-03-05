@@ -270,7 +270,8 @@ const NavLinks = () => (
         <HashSection meta={backMeta} tag="h3">
           <p>
             To add back button support, you need to use your <IJS>history</IJS>{" "}
-            object (which you can use directly or access through your router).
+            object (which you can access through your router as{" "}
+            <IJS>router.history</IJS>).
           </p>
           <p>
             The <IJS>history.go()</IJS> method is used for jumping between
@@ -287,7 +288,7 @@ const NavLinks = () => (
             {`import { BackHandler } from 'react-native';
 
 // create your router
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 
 BackHandler.addEventListener(
   "hardwareBackPress",

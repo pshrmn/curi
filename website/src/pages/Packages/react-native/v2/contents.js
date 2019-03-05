@@ -1,5 +1,6 @@
 import { meta as curiProviderMeta } from "./api/curiProvider";
 import { meta as LinkMeta } from "./api/link";
+import { meta as AsyncLinkMeta } from "./api/asynclink";
 import { meta as useCuriMeta } from "./api/useCuri";
 import { meta as useActiveMeta } from "./api/useActive";
 import { meta as useNavigatingMeta } from "./api/useNavigating";
@@ -22,6 +23,7 @@ export default [
     children: [
       curiProviderMeta,
       LinkMeta,
+      AsyncLinkMeta,
       useCuriMeta,
       useActiveMeta,
       useNavigatingMeta,

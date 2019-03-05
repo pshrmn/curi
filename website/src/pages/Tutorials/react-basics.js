@@ -403,18 +403,16 @@ registerServiceWorker();`}
           </p>
         </Note>
 
-        <CodeBlock lang="jsx" data-line="4,11">
+        <CodeBlock lang="jsx" data-line="4">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Browser from '@hickory/browser';
+import { Browser } from '@hickory/browser';
 
 import routes from "./routes";
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-
-const history = Browser();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
@@ -426,24 +424,23 @@ registerServiceWorker();`}
           We are now ready to create the router. In the <IJS>src/index.js</IJS>{" "}
           file, we should import the <IJS>curi</IJS> function from{" "}
           <IJS>@curi/router</IJS>. To create the router, call the{" "}
-          <IJS>curi()</IJS> function passing it the <IJS>history</IJS> object
-          and the <IJS>routes</IJS> array.
+          <IJS>curi()</IJS> function passing it the history function and the{" "}
+          <IJS>routes</IJS> array.
         </p>
 
-        <CodeBlock lang="jsx" data-line="4,13">
+        <CodeBlock lang="jsx" data-line="4,12">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
-import Browser from '@hickory/browser';
+import { Browser } from '@hickory/browser';
 
 import routes from './routes';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
@@ -471,12 +468,12 @@ registerServiceWorker();`}
           </p>
         </Note>
 
-        <CodeBlock lang="jsx" data-line="6,15">
+        <CodeBlock lang="jsx" data-line="6,14">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
-import Browser from '@hickory/browser';
+import { Browser } from '@hickory/browser';
 import { curiProvider } from "@curi/react-dom";
 
 import routes from './routes';
@@ -484,8 +481,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 const Router = curiProvider(router);
 
 ReactDOM.render(<App />, document.getElementById('root'));
@@ -504,12 +500,12 @@ registerServiceWorker();`}
           is where we will render the application's content.
         </p>
 
-        <CodeBlock lang="jsx" data-line="17-21">
+        <CodeBlock lang="jsx" data-line="16-20">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
-import Browser from '@hickory/browser';
+import { Browser } from '@hickory/browser';
 import { curiProvider } from "@curi/react-dom";
 
 import routes from './routes';
@@ -517,8 +513,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 const Router = curiProvider(router);
 
 ReactDOM.render((

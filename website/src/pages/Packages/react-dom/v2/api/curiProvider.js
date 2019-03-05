@@ -33,7 +33,7 @@ export function CuriProviderAPI() {
       <CodeBlock lang="jsx">
         {`import { curiProvider } from '@curi/react-dom';
 
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 const Router = curiProvider(router);
 
 ReactDOM.render((

@@ -42,12 +42,12 @@ const locationsMeta = {
   children: [queryMeta]
 };
 
-const popMeta = { title: "pop", hash: "pop" };
-const praMeta = { title: "push, replace, anchor", hash: "push-replace-anchor" };
+const goMeta = { title: "go", hash: "go" };
+const navigateMeta = { title: "navigate", hash: "navigate" };
 const navigationMeta = {
   title: "Navigation",
   hash: "navigation",
-  children: [popMeta, praMeta]
+  children: [goMeta, navigateMeta]
 };
 
 const contents = [typesMeta, locationsMeta, navigationMeta];
@@ -59,23 +59,28 @@ function HistoryGuide() {
         <h1>{meta.title}</h1>
 
         <p>
-          A router's history object powers navigation behind the scenes. Besides
-          creating the object and passing it the the <IJS>curi</IJS> function to
-          create a router, you likely will not directly interact with it.
+          A router's history enables navigation. It is responsible for creating
+          the location objects, interfacing with its native environment (e.g. a
+          browser) to perform navigation, and telling the router that navigation
+          has occured.
         </p>
+
+        <Note>
+          <p>
+            You most likely will not need to interact directly with the
+            application's <IJS>history</IJS>.
+          </p>
+        </Note>
 
         <p>
           Curi uses <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
           packages for its history implementations. Hickory is designed with
           asynchronous navigation in mind. This means that when a user clicks a
-          link, your application can load data for the mastched route before
+          link, your application can load data for the matched route before
           updating the location.
         </p>
 
-        <CodeBlock>
-          {`const history = Browser();
-const router = curi(history, routes);`}
-        </CodeBlock>
+        <CodeBlock>{`const router = curi(Browser, routes);`}</CodeBlock>
       </PlainSection>
 
       <HashSection meta={typesMeta}>
@@ -87,7 +92,7 @@ const router = curi(history, routes);`}
         <HashSection meta={browserMeta} tag="h3">
           <CodeBlock>
             {`import { Browser } from "@hickory/browser";
-const browserHistory = Browser();`}
+const router = curi(Browser, routes);`}
           </CodeBlock>
 
           <p>
@@ -117,8 +122,8 @@ const browserHistory = Browser();`}
 
         <HashSection meta={hashMeta} tag="h3">
           <CodeBlock>
-            {`import Hash from "@hickory/hash";
-const hashHistory = Hash();`}
+            {`import { Hash } from "@hickory/hash";
+const router = curi(Hash, routes);`}
           </CodeBlock>
 
           <p>
@@ -138,11 +143,11 @@ const hashHistory = Hash();`}
         <HashSection meta={inMemoryMeta} tag="h3">
           <CodeBlock>
             {`import { InMemory } from "@hickory/in-memory";
-const inMemoryHistory = InMemory();`}
+const router = curi(InMemory, routes);`}
           </CodeBlock>
 
           <p>
-            The in memory history is used for applications not running in a
+            The in-memory history is used for applications not running in a
             browser. For example, the in memory history is used on the server,
             in a React Native app, and during testing.
           </p>
@@ -210,8 +215,10 @@ location = {
             {`import { parse, stringify } from "qs";
 import { Browser } from "@hickory/browser";
 
-const history = Browser({
-  query: { parse, stringify }
+const router = curi(Browser, routes, {
+  history: {
+    query: { parse, stringify }
+  }
 });
 
 // https://www.example.com/page?key=value#trending
@@ -225,20 +232,32 @@ location = {
       </HashSection>
 
       <HashSection meta={navigationMeta}>
-        <p>The history object supports four kinds of navigation.</p>
-
         <p>
-          When a user navigates to your application, this starts a new session.
-          A session is essentially an array of locations that have been visited
-          (but isn't directly accessible in the browser).
+          A history object has two methods for navigation: <IJS>navigate</IJS>{" "}
+          and <IJS>go</IJS>.
         </p>
 
-        <HashSection tag="h3" meta={popMeta}>
+        <Note>
           <p>
-            Pop navigation is either performed by calling{" "}
-            <IJS>history.go(n)</IJS> (where <IJS>n</IJS> is the number of
-            locations forward/backward to go) or happens natively (e.g. clicking
-            the browser's back button).
+            Curi wraps the <IJS>navigate</IJS> method and exposes its own{" "}
+            <IJS>router.navigate</IJS> method. You should use that instead of{" "}
+            <IJS>history.navigate</IJS>.
+          </p>
+        </Note>
+
+        <p>
+          In browsers, there is also "external" navigation. This includes the
+          user typing a URL in the address bar and clicking the browser's
+          forward and back buttons. These navigations are all treated similarly
+          to the <IJS>go</IJS> method.
+        </p>
+
+        <HashSection tag="h3" meta={goMeta}>
+          <p>
+            The <IJS>go</IJS> method allows you to jump to another, already
+            visited, page using pop navigation. <IJS>go</IJS> takes one
+            argument, the number of locations forward (positive numbers) or
+            backward (negative numbers) to go.
           </p>
 
           <CodeBlock>
@@ -246,7 +265,12 @@ location = {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h3" meta={praMeta}>
+        <HashSection tag="h3" meta={navigateMeta}>
+          <p>
+            There are three types of navigation with <IJS>navigate</IJS>: push,
+            replace, and anchor.
+          </p>
+
           <p>Push navigation adds a new location after the current location.</p>
 
           <p>
@@ -261,17 +285,6 @@ location = {
             <Cmp>a</Cmp> in a multi-page application works, hence the name
             "anchor".
           </p>
-
-          <p>
-            Push, replace, and anchor navigation are performed using the history
-            object's <IJS>navigate()</IJS> method. That said, the Curi router
-            has a wrapper implementation, so you shouldn't need to call{" "}
-            <IJS>history.navigate()</IJS> yourself.
-          </p>
-
-          <CodeBlock>
-            {`history.navigate({ pathname: "/test" }, "push");`}
-          </CodeBlock>
         </HashSection>
       </HashSection>
 

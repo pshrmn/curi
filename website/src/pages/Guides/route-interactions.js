@@ -102,7 +102,7 @@ const interaction = createMyInteraction();`}
         </p>
 
         <CodeBlock>
-          {`const router = curi(history, routes, {
+          {`const router = curi(Browser, routes, {
   route: [createMyInteraction()]
 });`}
         </CodeBlock>
@@ -208,7 +208,7 @@ import confirmFactory from './interactions/confirm'
 
 const routes = prepareRoutes([{ name: 'Home', path: '' }]);
 
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   route: [confirmFactory()]
 });
 

@@ -102,7 +102,7 @@ const routes = prepareRoutes([
   }
 ]);
 
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   sideEffects: [announcer]
 });
 

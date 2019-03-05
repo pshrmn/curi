@@ -47,7 +47,7 @@ function SideEffectExample() {
           {`import { curi } from '@curi/router';
 import mySideEffect from './mySideEffect';
 
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   sideEffects: [mySideEffect]
 });`}
         </CodeBlock>

@@ -35,22 +35,24 @@ function ServerRenderingExample() {
           {`// express
           
   function catchAll(req, res) {
-    // 1. Create a memory history using the requested location
-    const history = InMemory({ locations: [req.url]});
-
-    // 2. Create a router and the root React routing component
-    const router = curi(history, routes);
+    // 1. Create a router using the current location
+    //    and the root React routing component
+    const router = curi(InMemory, routes, {
+      history: {
+        locatiosn: [req.url]
+      }
+    });
     const Router = curiProvider(router);
 
-    // 3. Wait for the response to be generated
+    // 2. Wait for the response to be generated
     router.once(({ response, navigation }) => {
-      // 4. Generate the HTML markup by rendering the <Router>
+      // 3. Generate the HTML markup by rendering the <Router>
       const markup = renderToString(
         <Router>
           {renderFunction}
         </Router>
       );
-      // 5. Insert the markup into the page's html and send it
+      // 4. Insert the markup into the page's html and send it
       res.send(renderFullPage(markup));
     });
   }

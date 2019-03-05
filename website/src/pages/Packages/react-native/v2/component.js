@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import { About, APIBlock, IJS } from "../../../../components/package/common";
 import { CuriProviderAPI } from "./api/curiProvider";
 import { LinkAPI } from "./api/link";
+import { AsyncLinkAPI } from "./api/asynclink";
 import { UseCuriAPI } from "./api/useCuri";
 import { UseActiveAPI } from "./api/useActive";
 import { UseNavigatingAPI } from "./api/useNavigating";
@@ -31,6 +32,7 @@ function ReactNativePkg() {
       <APIBlock>
         <CuriProviderAPI />
         <LinkAPI />
+        <AsyncLinkAPI />
         <UseCuriAPI />
         <UseActiveAPI />
         <UseNavigatingAPI />

@@ -470,7 +470,7 @@ export default prepareRoutes([
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
-import Browser from '@hickory/browser';
+import { Browser } from '@hickory/browser';
 import { curiProvider } from '@curi/react-dom';
 
 import routes from './routes';
@@ -478,8 +478,7 @@ import './index.css';
 import NavMenu from './components/NavMenu';
 import registerServiceWorker from './registerServiceWorker';
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 const Router = curiProvider(router);
 
 router.once(() => {
@@ -579,7 +578,7 @@ export const BOOK = id => Promise.resolve(
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
-import Browser from '@hickory/browser';
+import { Browser } from '@hickory/browser';
 import { curiProvider } from '@curi/react-dom';
 
 import routes from './routes';
@@ -588,8 +587,7 @@ import NavMenu from './components/NavMenu';
 import * as bookAPI from "./api";
 import registerServiceWorker from './registerServiceWorker';
 
-const history = Browser();
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   external: {
     bookAPI
   }

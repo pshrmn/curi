@@ -326,7 +326,7 @@ function renderHandler(req, res) {
         <CodeBlock>
           {`// renderer.js
 function handler(req, res) {
-  const router = curi(history, routes);
+  const router = curi(InMemory, routes);
   router.once(({ response }) => {
     // render the response
   })
@@ -356,8 +356,11 @@ function handler(req, res) {
 import { InMemory } from "@hickory/in-memory";
 
 function handler(req, res) {
-  const history = InMemory({ locations: [req.path] });
-  const router = curi(history, routes);
+  const router = curi(InMemory, routes, {
+    history: {
+      locations: [req.path]
+    }
+  });
   // ...
 }`}
           </CodeBlock>
@@ -433,9 +436,11 @@ export default prepareRoutes([
 
           <CodeBlock data-line="3-5">
             {`function renderHandler(req, res) {
-  const history = InMemory({ locations: [req.path] });
-  const router = curi(history, routes, {
-    automaticRedirects: false
+  const router = curi(InMemory, routes, {
+    automaticRedirects: false,
+    history: {
+      locations: [req.path]
+    }
   });
 }`}
           </CodeBlock>
@@ -453,9 +458,11 @@ export default prepareRoutes([
 
         <CodeBlock data-line="6-8">
           {`function renderHandler(req, res) {
-  const history = InMemory({ locations: [req.path] });
-  const router = curi(history, routes, {
-    automaticRedirects: false
+  const router = curi(InMemory, routes, {
+    automaticRedirects: false,
+    history: {
+      locations: [req.path]
+    }
   });
   router.once(({ response }) => {
     // ...
@@ -489,9 +496,11 @@ export default prepareRoutes([
 import { curiProvider } from "@curi/react-dom";
          
 function renderHandler(req, res) {
-  const history = InMemory({ locations: [req.path] });
-  const router = curi(history, routes, {
-    automaticRedirects: false
+  const router = curi(InMemory, routes, {
+    automaticRedirects: false,
+    history: {
+      locations: [req.path]
+    }
   });
   router.once(({ response }) => {
     const Router = curiProvider(router);
@@ -555,9 +564,11 @@ function insertMarkup(markup, title) {
 }
 
 function renderHandler(req, res) {
-  const history = InMemory({ locations: [req.path] });
-  const router = curi(history, routes, {
-    automaticRedirects: false
+  const router = curi(InMemory, routes, {
+    automaticRedirects: false,
+    history: {
+      locations: [req.path]
+    }
   });
   router.once(({ response }) => {
     const Router = curiProvider(router);
@@ -594,9 +605,11 @@ function renderHandler(req, res) {
 import { curiProvider } from "@curi/react-dom";
 
 function renderHandler(req, res) {
-  const history = InMemory({ locations: [req.path] });
-  const router = curi(history, routes, {
-    automaticRedirects: false
+  const router = curi(InMemory, routes, {
+    automaticRedirects: false,
+    history: {
+      locations: [req.path]
+    }
   });
   router.once(({ response }) => {
     if (response.redirectTo) {

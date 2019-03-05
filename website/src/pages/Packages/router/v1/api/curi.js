@@ -300,7 +300,7 @@ const router = curi(history, routes, {
     path: "new/:id"
   }
 ]);
-const history = InMemory({ locations: ["old/1" ]});
+const history = InMemory({ locations: ["/old/1" ]});
 const router = curi(history, routes, {
   automaticRedirects: false                 
 });

@@ -61,7 +61,7 @@ export function CuriAPI() {
       <CodeBlock>
         {`import { curi } from '@curi/router';
 
-const router = curi(history, routes, options);`}
+const router = curi(Browser, routes, options);`}
       </CodeBlock>
 
       <HashSection tag="h4" meta={argumentsMeta}>
@@ -83,8 +83,7 @@ const router = curi(history, routes, options);`}
           <CodeBlock lang="jsx">
             {`import { Browser } from "@hickory/browser";
 
-const history = Browser();
-const router = curi(history, routes);`}
+const router = curi(Browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -103,7 +102,7 @@ const router = curi(history, routes);`}
   { name: "About", path: "about" }
 ]);
 
-const router = curi(history, routes);`}
+const router = curi(Browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -136,7 +135,7 @@ import ancestors from "@curi/route-ancestors";
 
 const routes = prepareRoutes([{ name: "Home", path: "" }]);
 
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   route: [active(), ancestors()]
 });`}
             </CodeBlock>
@@ -197,7 +196,7 @@ router.route.pathname("Home");
             <CodeBlock>
               {`import scroll from "@curi/side-effect-scroll";
 
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   sideEffects: [scroll()]
 });`}
             </CodeBlock>
@@ -219,7 +218,7 @@ const router = curi(history, routes, {
 
             <CodeBlock>
               {`const client = new ApolloClient();
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   external: { client, greeting: "Hi!" }
 });`}
             </CodeBlock>
@@ -273,7 +272,7 @@ const router = curi(history, routes, {
   }
 ]);
 
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   emitRedirects: false                 
 });
 // navigating to "/old/2" will automatically redirect
@@ -324,9 +323,11 @@ const router = curi(history, routes, {
     path: "new/:id"
   }
 ]);
-const history = InMemory({ locations: ["old/1" ]});
-const router = curi(history, routes, {
-  automaticRedirects: false                 
+const router = curi(InMemory, routes, {
+  automaticRedirects: false,
+  history: {
+    locations: ["/old/1"]
+  }
 });
 router.once(({ response }) => {
   // response = { name: "Old", ... }
@@ -356,7 +357,7 @@ router.once(({ response }) => {
             </p>
 
             <CodeBlock>
-              {`const router = curi(history, routes, {
+              {`const router = curi(Browser, routes, {
   pathOptions: {
     encode: (value, token) => { /* ... */ }
   }
@@ -447,7 +448,7 @@ router.once(({ response }) => {
   },
   // ...
 ]);
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 
 router.navigate({
   name: "Photo",
@@ -683,7 +684,7 @@ stopObserving();
           </Note>
 
           <CodeBlock>
-            {`const router = curi(history, routes);
+            {`const router = curi(Browser, routes);
 const tooSoon = router.current();
 // tooSoon.response === null
 // tooSoon.navigation === null
@@ -720,7 +721,7 @@ router.once(({ response, navigation }) => {
               {`const routes = prepareRoutes([
   { name: 'User', path: 'user/:id' }
 ]);
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 const userPathname = router.route.pathname(
   'User',
   { id: '12345' }
@@ -745,7 +746,7 @@ const userPathname = router.route.pathname(
             {`const oldRoutes = prepareRoutes([...]);
 const newRoutes = prepareRoutes([...]);
 
-const router = curi(history, oldRoutes);
+const router = curi(Browser, oldRoutes);
 // generates responses using old routes
 
 router.refresh(newRoutes);

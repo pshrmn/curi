@@ -106,32 +106,13 @@ export function LinkAPI() {
           meta={{ title: "children", hash: "Link-children" }}
         >
           <p>
-            The <IJS>children</IJS> prop can take two forms: either a valid
-            React Node (e.g. a React element, a string, or <IJS>null</IJS>) or a
-            render-invoked <IJS>children</IJS> function.
+            A valid React Node (e.g. a React element, a string, or{" "}
+            <IJS>null</IJS>).
           </p>
-          <p>
-            The render-invoked <IJS>children</IJS> function will be called with
-            the <IJS>Link</IJS>'s navigation state. The navigation state is{" "}
-            <IJS>false</IJS> to start, <IJS>true</IJS> when the <IJS>Link</IJS>{" "}
-            is clicked, and <IJS>false</IJS> when the the navigation finishes/is
-            cancelled.
-          </p>
-
           <CodeBlock lang="jsx">
             {`// a React node
 <Link name="Home">
   Home
-</Link>
-
-// a render-invoked function
-<Link name="User" params={{ id: 1 }}>
-  {navigating => (
-    <React.Fragment>
-      User 1
-      {navigating ? <Spinner /> : null}
-    </React.Fragment>
-  )}
 </Link>`}
           </CodeBlock>
         </HashSection>

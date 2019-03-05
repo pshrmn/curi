@@ -283,7 +283,7 @@ ReactDOM.render((
 
         <p>
           With Curi, the router is created prior to rendering. It takes a
-          Hickory history object, your routes array, and possibly an options
+          Hickory history function, your routes array, and possibly an options
           object. <a href="https://github.com/pshrmn/hickory">Hickory</a> is
           similar to the <IJS>history</IJS> package used by React Router, but
           has an API tailored for asynchronous applications.
@@ -291,10 +291,9 @@ ReactDOM.render((
 
         <CodeBlock>
           {`import { curi, prepareRoutes } from '@curi/router';
-import Browser from '@hickory/browser';
-const history = Browser();
+import { Browser } from '@hickory/browser';
 const routes = prepareRoutes([...]);
-const router = curi(history, routes);`}
+const router = curi(Browser, routes);`}
         </CodeBlock>
       </HashSection>
 
@@ -428,7 +427,7 @@ const Inbox = ({ match }) => (
           <CodeBlock lang="jsx">
             {`import { curiProvider, useCuri } from "@curi/react-dom";
 
-const router = curi(history, routes);            
+const router = curi(Browser, routes);            
 const Router = curiProvider(router);
 
 function App() {
@@ -598,7 +597,7 @@ function render({ response }) {
 // You need to add @curi/route-active
 // to your router object
 import active from '@curi/route-active';
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   route: [active()]
 });
 

@@ -47,30 +47,23 @@ function GettingStartedGuide() {
 
       <HashSection meta={routerMeta}>
         <p>
-          A router is created using a <IJS>history</IJS> object and a{" "}
-          <IJS>routes</IJS> array.
+          A router is created using a{" "}
+          <Link name="Guide" params={{ slug: "history" }}>
+            <IJS>history</IJS> constructor
+          </Link>{" "}
+          and a{" "}
+          <Link name="Guide" params={{ slug: "routes" }}>
+            <IJS>routes</IJS> array.
+          </Link>
         </p>
 
         <CodeBlock>
           {`import { curi, prepareRoutes } from '@curi/router';
+import { Browser } from "@hickory/browser";
 
-const history = Browser();
 const routes = prepareRoutes([...]);
-const router = curi(history, routes);`}
+const router = curi(Browser, routes);`}
         </CodeBlock>
-
-        <p>
-          The{" "}
-          <Link name="Guide" params={{ slug: "history" }}>
-            history
-          </Link>{" "}
-          object is used to navigate between locations within an application.
-          The{" "}
-          <Link name="Guide" params={{ slug: "routes" }}>
-            routes
-          </Link>{" "}
-          array describes valid locations in an application.
-        </p>
       </HashSection>
 
       <HashSection meta={navigationMeta}>
@@ -144,7 +137,7 @@ const router = curi(history, routes);`}
         </p>
 
         <CodeBlock>
-          {`const router = curi(history, routes, {
+          {`const router = curi(Browser, routes, {
   sideEffects: [scroll, title]
 })`}
         </CodeBlock>
@@ -156,7 +149,7 @@ const router = curi(history, routes);`}
         </p>
 
         <CodeBlock>
-          {`const router = cur(history, routes);
+          {`const router = curi(Browser, routes);
 router.once(() => {
   // this is not called until the initial response is ready
   // so we can safely render now

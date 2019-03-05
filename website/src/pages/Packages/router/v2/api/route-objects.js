@@ -324,7 +324,10 @@ const routes = prepareRoutes([
               <tr>
                 <td>key</td>
                 <td>
-                  the location's <IJS>key</IJS>, which is a unique identifier
+                  a two number tuple. The first number is the location's place
+                  in the session array. The second number starts and zero and is
+                  incremented by <IJS>replace</IJS> navigation (<IJS>[1,0]</IJS>{" "}
+                  would be replaced by <IJS>[1,1]</IJS>).
                 </td>
               </tr>
             </tbody>

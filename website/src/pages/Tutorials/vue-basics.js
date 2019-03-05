@@ -222,29 +222,19 @@ yarn serve`}
           </p>
         </Note>
 
-        <CodeBlock lang="javascript" data-line="3,9">
+        <CodeBlock lang="javascript" data-line="3">
           {`// src/main.js
 import Vue from 'vue'
-import Browser from '@hickory/browser'
+import { Browser } from '@hickory/browser'
 
 import App from './App.vue'
 
 Vue.config.productionTip = false
 
-const history = Browser()
-
 new Vue({
   render: h => h(App)
 }).$mount('#app')`}
         </CodeBlock>
-
-        <Note>
-          <p>
-            Eslint will complain here because we haven't actually used the new{" "}
-            <IJS>history</IJS> object. We can ignore that warning for now
-            because we'll get rid of it soon enough.
-          </p>
-        </Note>
       </HashSection>
 
       <HashSection meta={routesMeta}>
@@ -409,23 +399,22 @@ export default [
           should import the <IJS>curi</IJS> function from{" "}
           <IJS>@curi/router</IJS> as well as our routes from{" "}
           <IJS>src/routes.js</IJS>. Creating the router is done by calling the{" "}
-          <IJS>curi()</IJS> function and passing it the <IJS>history</IJS>{" "}
-          object and the <IJS>routes</IJS> array.
+          <IJS>curi()</IJS> function and passing it the history function and the{" "}
+          <IJS>routes</IJS> array.
         </p>
 
-        <CodeBlock lang="javascript" data-line="3,6,12">
+        <CodeBlock lang="javascript" data-line="3,6,11">
           {`// src/main.js
 import Vue from 'vue'
 import { curi } from '@curi/router';
-import Browser from '@hickory/browser'
+import { Browser } from '@hickory/browser'
 
 import routes from './routes';
 import App from './App.vue'
 
 Vue.config.productionTip = false
 
-const history = Browser()
-const router = curi(history, routes)
+const router = curi(Browser, routes)
 
 new Vue({
   render: h => h(App)
@@ -452,11 +441,11 @@ new Vue({
           the options object.
         </p>
 
-        <CodeBlock lang="javascript" data-line="5,14">
+        <CodeBlock lang="javascript" data-line="5,13">
           {`// src/main.js
 import Vue from 'vue'
 import { curi } from '@curi/router';
-import Browser from '@hickory/browser'
+import { Browser } from '@hickory/browser'
 import { CuriPlugin } from '@curi/vue'
 
 import routes from './routes';
@@ -464,8 +453,7 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-const history = Browser()
-const router = curi(history, routes)
+const router = curi(Browser, routes)
 Vue.use(CuriPlugin, { router })
 
 new Vue({
