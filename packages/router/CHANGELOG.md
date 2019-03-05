@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.0
 
 * First argument to `curi` is a history constructor.
 * Add `history` option to `curi` options for history object configuration.
