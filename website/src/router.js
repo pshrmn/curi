@@ -15,9 +15,7 @@ const announce = ariaLiveSideEffect(
   ({ response }) => `Navigated to ${response.title}`
 );
 
-const history = Browser();
-
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   route: [active(), prefetch()],
   sideEffects: [setTitle, scrollTo, announce],
   emitRedirects: false

@@ -7,9 +7,7 @@ import active from "@curi/route-active";
 import routes from "./routes";
 import App from "./components/App";
 
-const history = Browser();
-
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   route: [active()]
 });
 

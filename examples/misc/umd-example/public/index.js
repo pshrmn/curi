@@ -14,7 +14,6 @@ const Nav = () =>
     )
   );
 
-const hashHistory = HickoryHash();
 const routes = [
   {
     name: "Home",
@@ -36,7 +35,7 @@ const routes = [
   }
 ];
 
-const router = Curi.curi(hashHistory, routes);
+const router = Curi.curi(HickoryHash, routes);
 const Router = CuriReactDOM.curiProvider(router);
 const root = document.getElementById("root");
 

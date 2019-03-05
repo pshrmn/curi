@@ -10,7 +10,7 @@ import app from "./components/App.html";
 const history = Browser({
   query: { parse, stringify }
 });
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   emitRedirects: false
 });
 const store = curiStore(router);

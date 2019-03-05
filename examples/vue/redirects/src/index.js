@@ -11,7 +11,7 @@ import App from "./components/App";
 const history = Browser({
   query: { parse, stringify }
 });
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 
 Vue.use(CuriPlugin, { router });
 
