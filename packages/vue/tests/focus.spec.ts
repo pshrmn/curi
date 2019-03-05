@@ -8,13 +8,12 @@ import { CuriPlugin } from "@curi/vue";
 
 describe("curi-focus directive", () => {
   let vueWrapper;
-  const history = InMemory();
 
   const routes = prepareRoutes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ]);
-  const router = curi(history, routes);
+  const router = curi(InMemory, routes);
 
   const Vue = createLocalVue();
   Vue.use(CuriPlugin, { router });

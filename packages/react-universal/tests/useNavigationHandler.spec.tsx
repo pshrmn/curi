@@ -25,18 +25,9 @@ function createClick(opts?: {}) {
 
 describe("useNavigationHandler", () => {
   let node;
-  let history, router, Router: React.FunctionComponent;
-  const routes = prepareRoutes([
-    { name: "Test", path: "" },
-    { name: "Best", path: "best" },
-    { name: "Catch All", path: "(.*)" }
-  ]);
 
   beforeEach(() => {
     node = document.createElement("div");
-    history = InMemory();
-    router = curi(history, routes);
-    Router = curiProvider(router);
   });
 
   afterEach(() => {
@@ -45,13 +36,12 @@ describe("useNavigationHandler", () => {
 
   describe("event handler", () => {
     it("it uses nav props (name, params, hash, query, and state) to generate nav location", () => {
-      const history = InMemory();
       const mockNavigate = jest.fn();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
@@ -85,14 +75,13 @@ describe("useNavigationHandler", () => {
     });
 
     it("calls onNav prop func if provided", () => {
-      const history = InMemory();
       const mockNavigate = jest.fn();
       const onNav = jest.fn();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
@@ -126,13 +115,12 @@ describe("useNavigationHandler", () => {
       }
 
       it("does not call history.navigate if canNavigate returns false", () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 

@@ -6,11 +6,9 @@ import { curi, prepareRoutes } from "@curi/router";
 import createAncestors from "@curi/route-ancestors";
 
 describe("ancestors route interaction", () => {
-  const history = InMemory();
-
   it("is called using router.route.ancestors()", () => {
     const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-    const router = curi(history, routes, {
+    const router = curi(InMemory, routes, {
       route: [createAncestors()]
     });
     expect(router.route.ancestors).toBeDefined();
@@ -36,7 +34,7 @@ describe("ancestors route interaction", () => {
       },
       { name: "Catch All", path: "(.*)" }
     ]);
-    const router = curi(history, routes, {
+    const router = curi(InMemory, routes, {
       route: [createAncestors()]
     });
 
@@ -89,7 +87,7 @@ describe("ancestors route interaction", () => {
       },
       { name: "Catch All", path: "(.*)" }
     ]);
-    const router = curi(history, routes, {
+    const router = curi(InMemory, routes, {
       route: [createAncestors()]
     });
     const emptyRoutes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);

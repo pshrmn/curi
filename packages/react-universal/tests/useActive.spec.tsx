@@ -10,7 +10,6 @@ import { curiProvider, useActive, useCuri } from "@curi/react-universal";
 
 describe("useActive", () => {
   let node;
-  let history;
   let router, Router;
   const routes = prepareRoutes([
     { name: "Home", path: "" },
@@ -23,8 +22,7 @@ describe("useActive", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    history = InMemory();
-    router = curi(history, routes, {
+    router = curi(InMemory, routes, {
       route: [activeInteraction()]
     });
     Router = curiProvider(router);
@@ -36,7 +34,7 @@ describe("useActive", () => {
 
   describe("no route.active()", () => {
     it('throws if attempting to use in a Curi router without the "active" route interaction', () => {
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
 
       const realError = console.error;
       console.error = jest.fn();
@@ -87,9 +85,11 @@ const router = curi(history, routes, {
 
   describe("params", () => {
     it('uses the "params" to determine if it is active', () => {
-      const history = InMemory({ locations: ["/contact/email"] });
-      const router = curi(history, routes, {
-        route: [activeInteraction()]
+      const router = curi(InMemory, routes, {
+        route: [activeInteraction()],
+        history: {
+          locations: ["/contact/email"]
+        }
       });
       const Router = curiProvider(router);
       function App() {
@@ -111,9 +111,11 @@ const router = curi(history, routes, {
 
   describe("partial", () => {
     it("returns true for partial matches when partial=true", () => {
-      const history = InMemory({ locations: ["/contact/email"] });
-      const router = curi(history, routes, {
-        route: [activeInteraction()]
+      const router = curi(InMemory, routes, {
+        route: [activeInteraction()],
+        history: {
+          locations: ["/contact/email"]
+        }
       });
       const Router = curiProvider(router);
       function App() {
@@ -132,9 +134,11 @@ const router = curi(history, routes, {
 
   describe("locationCheck", () => {
     it("is called with location if route is active", () => {
-      const history = InMemory({ locations: ["/contact"] });
-      const router = curi(history, routes, {
-        route: [activeInteraction()]
+      const router = curi(InMemory, routes, {
+        route: [activeInteraction()],
+        history: {
+          locations: ["/contact"]
+        }
       });
       const locCheck = jest.fn();
       let theLocation;
@@ -156,9 +160,11 @@ const router = curi(history, routes, {
     });
 
     it("is not called if route is not active", () => {
-      const history = InMemory({ locations: ["/"] });
-      const router = curi(history, routes, {
-        route: [activeInteraction()]
+      const router = curi(InMemory, routes, {
+        route: [activeInteraction()],
+        history: {
+          locations: ["/"]
+        }
       });
       const locCheck = jest.fn();
       let theResponse;
@@ -179,9 +185,11 @@ const router = curi(history, routes, {
     });
 
     it("returns true if route matches and response check returns true", () => {
-      const history = InMemory({ locations: ["/contact/email"] });
-      const router = curi(history, routes, {
-        route: [activeInteraction()]
+      const router = curi(InMemory, routes, {
+        route: [activeInteraction()],
+        history: {
+          locations: ["/contact/email"]
+        }
       });
       const Router = curiProvider(router);
       function App() {
@@ -202,9 +210,11 @@ const router = curi(history, routes, {
     });
 
     it("returns false if route matches, but location check returns false", () => {
-      const history = InMemory({ locations: ["/contact/email"] });
-      const router = curi(history, routes, {
-        route: [activeInteraction()]
+      const router = curi(InMemory, routes, {
+        route: [activeInteraction()],
+        history: {
+          locations: ["/contact/email"]
+        }
       });
       const Router = curiProvider(router);
       function App() {

@@ -29,9 +29,8 @@ describe("curiProvider()", () => {
 
   describe("children prop", () => {
     it("renders children", () => {
-      const history = InMemory();
       const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
 
       const App = jest.fn(() => {
         return null;
@@ -47,9 +46,8 @@ describe("curiProvider()", () => {
     });
 
     it("works with multiple children", () => {
-      const history = InMemory();
       const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
 
       const One = jest.fn(() => {
         return null;
@@ -70,8 +68,7 @@ describe("curiProvider()", () => {
     });
 
     it("re-renders when the location changes", async () => {
-      const history = InMemory();
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
 
       let currentResponse;
 
@@ -101,8 +98,7 @@ describe("curiProvider()", () => {
 
   describe("context", () => {
     it("makes response, navigation, and router available on content", () => {
-      const history = InMemory();
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
 
       const ContextLogger: React.ComponentType = () => {
         const {

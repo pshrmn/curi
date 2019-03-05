@@ -5,6 +5,7 @@ import { InMemory } from "@hickory/in-memory";
 
 import pathnames from "./pathnames";
 
+import { InMemoryOptions } from "@hickory/in-memory";
 import { Emitted, RouterOptions } from "@curi/router";
 import { StaticConfiguration, Result } from "./types";
 
@@ -50,14 +51,16 @@ export default async function staticFiles(
         try {
           // create a new router for each so we don't run into any issues
           // with overlapping requests
-          const history = InMemory({ locations: [pathname] });
 
-          const router = curi(history, routes, {
+          const router = curi<InMemoryOptions>(InMemory, routes, {
             ...getRouterOptions(),
             // need to emit redirects or will get stuck waiting forever
             emitRedirects: true,
             // and the responses should be for the redirect
-            automaticRedirects: false
+            automaticRedirects: false,
+            history: {
+              locations: [pathname]
+            }
           });
 
           router.once(

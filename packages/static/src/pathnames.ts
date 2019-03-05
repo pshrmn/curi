@@ -8,8 +8,7 @@ export default function pathnames(
 ): Array<string> {
   const { routes, pages, routerOptions } = config;
 
-  const history = InMemory();
-  const router = curi(history, routes, routerOptions);
+  const router = curi(InMemory, routes, routerOptions);
 
   return pages.map(page => {
     const pathname = router.route.pathname(page.name, page.params);

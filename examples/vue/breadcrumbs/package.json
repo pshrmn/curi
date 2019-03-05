@@ -15,7 +15,7 @@
     "@curi/route-ancestors": "file:../../../packages/interactions/route-ancestors",
     "@curi/router": "file:../../../packages/router",
     "@curi/vue": "file:../../../packages/vue",
-    "@hickory/browser": "^2.0.0-alpha.5",
+    "@hickory/browser": "^2.0.0-beta.0",
     "vue": "^2.5.22"
   }
 }

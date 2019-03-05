@@ -10,7 +10,7 @@ import { curiProvider, useHref } from "@curi/react-universal";
 
 describe("useHref", () => {
   let node;
-  let history, router, Router;
+  let router, Router;
   const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "User", path: "u/:id" },
@@ -19,8 +19,7 @@ describe("useHref", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    history = InMemory();
-    router = curi(history, routes);
+    router = curi(InMemory, routes);
     Router = curiProvider(router);
   });
 
@@ -88,13 +87,14 @@ describe("useHref", () => {
     });
 
     it("works with custom history parse/stringifiers", () => {
-      const history = InMemory({
-        query: {
-          parse: qs.parse,
-          stringify: qs.stringify
+      const router = curi(InMemory, routes, {
+        history: {
+          query: {
+            parse: qs.parse,
+            stringify: qs.stringify
+          }
         }
       });
-      const router = curi(history, routes);
       const Router = curiProvider(router);
 
       function App() {

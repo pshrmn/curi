@@ -1,4 +1,4 @@
-import { History, Action, NavType } from "@hickory/root";
+import { History, Action, NavType, HistoryOptions } from "@hickory/root";
 import { PathFunctionOptions } from "path-to-regexp";
 import { Interaction, Interactions } from "./interaction";
 import { CompiledRouteArray } from "./route";
@@ -21,13 +21,14 @@ export declare type RemoveObserver = () => void;
 export declare type CancelActiveNavigation = () => void;
 export declare type Cancellable = (cancelActive?: CancelActiveNavigation) => void;
 export declare type RemoveCancellable = () => void;
-export interface RouterOptions {
+export interface RouterOptions<O = HistoryOptions> {
     route?: Array<Interaction>;
     sideEffects?: Array<Observer>;
     pathnameOptions?: PathFunctionOptions;
     emitRedirects?: boolean;
     automaticRedirects?: boolean;
     external?: any;
+    history?: O;
 }
 export interface CurrentResponse {
     response: Response | null;

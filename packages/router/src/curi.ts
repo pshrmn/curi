@@ -4,7 +4,7 @@ import finishResponse from "./finishResponse";
 import matchLocation from "./matchLocation";
 import resolveMatchedRoute from "./resolveMatchedRoute";
 
-import { History, PendingNavigation } from "@hickory/root";
+import { HistoryConstructor, PendingNavigation } from "@hickory/root";
 
 import { CompiledRouteArray, ResolveResults } from "./types/route";
 import { Response } from "./types/response";
@@ -26,22 +26,21 @@ import {
   CancelNavigateCallbacks
 } from "./types/curi";
 
-type PendingHistory = (fn: (p: PendingNavigation) => void) => History;
-
-export default function createRouter(
-  pendingHistory: PendingHistory,
+export default function createRouter<O>(
+  historyConstructor: HistoryConstructor,
   routeArray: CompiledRouteArray,
-  options: RouterOptions = {}
+  options: RouterOptions<O> = {}
 ): CuriRouter {
   const {
     route: userInteractions = [],
     sideEffects = [],
     emitRedirects = true,
     automaticRedirects = true,
-    external
+    external,
+    history: historyOptions = {}
   } = options;
 
-  const history = pendingHistory(navigationHandler);
+  const history = historyConstructor(navigationHandler, historyOptions);
 
   // the last finished response & navigation
   const mostRecent: CurrentResponse = {

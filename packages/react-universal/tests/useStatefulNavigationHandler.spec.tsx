@@ -30,18 +30,9 @@ function createClick(opts?: {}) {
 
 describe("useStatefulNavigationHandler", () => {
   let node;
-  let history, router, Router: React.FunctionComponent;
-  const routes = prepareRoutes([
-    { name: "Test", path: "" },
-    { name: "Best", path: "best" },
-    { name: "Catch All", path: "(.*)" }
-  ]);
 
   beforeEach(() => {
     node = document.createElement("div");
-    history = InMemory();
-    router = curi(history, routes);
-    Router = curiProvider(router);
   });
 
   afterEach(() => {
@@ -50,13 +41,12 @@ describe("useStatefulNavigationHandler", () => {
 
   describe("event handler", () => {
     it("it uses nav props (name, params, hash, query, and state) to generate nav location", () => {
-      const history = InMemory();
       const mockNavigate = jest.fn();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
@@ -92,14 +82,13 @@ describe("useStatefulNavigationHandler", () => {
     });
 
     it("calls onNav prop func if provided", () => {
-      const history = InMemory();
       const mockNavigate = jest.fn();
       const onNav = jest.fn();
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = curiProvider(router);
 
@@ -135,13 +124,12 @@ describe("useStatefulNavigationHandler", () => {
       }
 
       it("does not call history.navigate if canNavigate returns false", () => {
-        const history = InMemory();
         const mockNavigate = jest.fn();
         const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(history, routes);
+        const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = curiProvider(router);
 
@@ -175,13 +163,11 @@ describe("useStatefulNavigationHandler", () => {
 
   describe("navigating", () => {
     it("is false on initial render", () => {
-      const history = InMemory();
-
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
 
       function AsyncLink(props) {
@@ -207,8 +193,6 @@ describe("useStatefulNavigationHandler", () => {
     });
 
     it("is true when navigation starts", () => {
-      const history = InMemory();
-
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         {
@@ -229,7 +213,7 @@ describe("useStatefulNavigationHandler", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
 
       function AsyncLink(props) {
@@ -259,8 +243,6 @@ describe("useStatefulNavigationHandler", () => {
     });
 
     it("is false when navigation finishes", async () => {
-      const history = InMemory();
-
       const routes = prepareRoutes([
         { name: "Test", path: "test" },
         {
@@ -281,7 +263,7 @@ describe("useStatefulNavigationHandler", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(history, routes);
+      const router = curi(InMemory, routes);
       const Router = curiProvider(router);
 
       function AsyncLink(props) {
