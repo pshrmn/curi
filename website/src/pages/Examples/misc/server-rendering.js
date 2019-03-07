@@ -33,31 +33,33 @@ function ServerRenderingExample() {
 
         <CodeBlock lang="javascript">
           {`// express
-          
-  function catchAll(req, res) {
-    // 1. Create a router using the current location
-    //    and the root React routing component
-    const router = curi(InMemory, routes, {
-      history: {
-        locatiosn: [req.url]
-      }
-    });
-    const Router = curiProvider(router);
+import { createServerHistory } from "@curi/in-memory";
 
-    // 2. Wait for the response to be generated
-    router.once(({ response, navigation }) => {
-      // 3. Generate the HTML markup by rendering the <Router>
-      const markup = renderToString(
-        <Router>
-          {renderFunction}
-        </Router>
-      );
-      // 4. Insert the markup into the page's html and send it
-      res.send(renderFullPage(markup));
-    });
-  }
+// 1. Create a history constructor
+const ServerHistory = createServerHistory();
 
-  app.get("*", catchAll);`}
+function catchAll(req, res) {
+  // 2. Create a router using the current location
+  //    and the root React routing component
+  const router = curi(ServerHistory, routes, {
+    history: { location: req.url }
+  });
+  const Router = curiProvider(router);
+
+  // 3. Wait for the response to be generated
+  router.once(({ response, navigation }) => {
+    // 4. Generate the HTML markup by rendering the <Router>
+    const markup = renderToString(
+      <Router>
+        {renderFunction}
+      </Router>
+    );
+    // 5. Insert the markup into the page's html and send it
+    res.send(renderFullPage(markup));
+  });
+}
+
+app.get("*", catchAll);`}
         </CodeBlock>
 
         <p>

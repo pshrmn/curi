@@ -55,14 +55,10 @@ const routesMeta = {
   title: "Routes",
   hash: "routes"
 };
-const autoMeta = {
-  title: "Automatic Redirects",
-  hash: "automatic-redirects"
-};
 const routerMeta = {
   title: "Router",
   hash: "router",
-  children: [historyMeta, routesMeta, autoMeta]
+  children: [historyMeta, routesMeta]
 };
 
 const redirectMeta = {
@@ -91,9 +87,10 @@ function SSRGuide() {
         <h1>{meta.title}</h1>
 
         <p>
-          Server-side rendering (SSR) allows an application to generate the HTML
-          for pages on the server. While not strictly necessary for single-page
-          applications, server-side rendering can potentially be beneficial by:
+          Server-side rendering (SSR) is used to generate the HTML for pages
+          when the server receives a request for them. While not strictly
+          necessary for single-page applications, server-side rendering can
+          potentially be beneficial by:
         </p>
         <ol>
           <li>Speeding up the initial render time.</li>
@@ -113,7 +110,7 @@ function SSRGuide() {
           Being able to reuse code on the client and server is one of the
           benefits of JavaScript. If you are using syntax in your client-side
           code that Node doesn't know how to parse, such as import/export or
-          JSX, you may quickly run into issues.
+          JSX, you may run into issues.
         </p>
         <p>
           The <a href="https://babeljs.io/">Babel</a> package{" "}
@@ -146,7 +143,7 @@ function SSRGuide() {
         <Note>
           <p>
             There are ways to mix Node server-side rendering with non-Node
-            frameworks, but that is outside of the scope of this guide.
+            frameworks, but that is outside the scope of this guide.
           </p>
         </Note>
 
@@ -212,8 +209,7 @@ babel-node server.js`}
           <p>
             Instead of telling the server about every single valid client-side
             route, a wildcard path is used to match every request. Determining
-            what to render for the request will be done by a Curi router, which
-            we will create in the wildcard's handler function.
+            what to render for the request will be done by Curi.
           </p>
 
           <CodeBlock>
@@ -312,54 +308,90 @@ function renderHandler(req, res) {
 
       <HashSection meta={routerMeta}>
         <p>
-          A router instance will be created for every single request. This is a
-          big reason why we wrap the routes array in a <IJS>prepareRoutes</IJS>{" "}
-          call. Without <IJS>prepareRoutes</IJS>, the route pathes would need to
-          be re-compiled for every request!
+          A router instance will be created for every single request. The router
+          will match the requested location to its routes and generate a
+          response, which can be used to render the HTML.
         </p>
-        <p>
-          The router will match the requested location to its routes and
-          generate a response. Once the response is generated, the handler can
-          render the application.
-        </p>
+
+        <p>Curi has two optimizations to make this more efficient:</p>
+
+        <ol>
+          <li>
+            By wrapping the routes array in a <IJS>prepareRoutes</IJS> call, all
+            of an application's routes are pre-compiled. Without{" "}
+            <IJS>prepareRoutes</IJS>, the route pathes would need to be
+            re-compiled for every request!
+          </li>
+          <li>
+            We will use a lightweight history type created specifically for
+            server-side rendering.
+          </li>
+        </ol>
 
         <CodeBlock>
           {`// renderer.js
+import { curi } from "@curi/router";
+import { createServerHistory } from "@hickory/in-memory";
+
+const ServerHistory = createServerHistory();
+
 function handler(req, res) {
-  const router = curi(InMemory, routes);
+  const router = curi(ServerHistory, routes, {
+    history: { location: req.url }
+  });
   router.once(({ response }) => {
     // render the response
   })
 }`}
         </CodeBlock>
 
-        <p>Where do the history and routes come from?</p>
-
         <HashSection tag="h3" meta={historyMeta}>
           <p>
             On the client-side, a single-page application uses{" "}
             <IJS>@hickory/browser</IJS> to create a history instance. However,
             that uses browser only APIs. On the server, the{" "}
-            <IJS>@hickory/in-memory</IJS> package is used to create an
-            equivalent history instance.
+            <IJS>@hickory/in-memory</IJS> package is used to create a history
+            instance that only exists in memory.
           </p>
 
           <CodeBlock lang="bash">{`npm install @hickory/in-memory`}</CodeBlock>
 
           <p>
-            An in-memory history takes an array of locations. For server-side
-            rendering, we want to pass it the location from the request.
+            The server doesn't need a fully functional history object. Instead,
+            the server only needs a history object that knows its location and
+            how to generate URLs.
+          </p>
+
+          <p>
+            The <IJS>createServerHistory</IJS> function exported by{" "}
+            <IJS>@hickory/in-memory</IJS> is made specifically for this job.
+            This function takes history options and returns a history
+            constructor function.
+          </p>
+
+          <p>
+            <IJS>createServerHistory</IJS> creates internal functions for
+            location parsing/stringifying ahead of time so that they don't need
+            to be recreated for every request.
           </p>
 
           <CodeBlock>
             {`// handler.js
-import { InMemory } from "@hickory/in-memory";
+import { curi } from "@curi/router";
+import { createServerHistory } from "@hickory/in-memory";
 
-function handler(req, res) {
-  const router = curi(InMemory, routes, {
-    history: {
-      locations: [req.path]
-    }
+const ServerHistory = createServerHistory();`}
+          </CodeBlock>
+
+          <p>
+            When creating the router, we must pass a <IJS>history</IJS> option
+            with the location of the request.
+          </p>
+
+          <CodeBlock>
+            {`function handler(req, res) {
+  const router = curi(ServerHistory, routes, {
+    history: { location: req.url }
   });
   // ...
 }`}
@@ -367,6 +399,14 @@ function handler(req, res) {
         </HashSection>
 
         <HashSection tag="h3" meta={routesMeta}>
+          <p>
+            As stated above, the <IJS>prepareRoutes</IJS> function is used to
+            pre-compile routes, which means that they don't end up being
+            re-compiled for every single request. If all of an application's
+            routes are synchronous (they don't use <IJS>route.resolve</IJS>),
+            then they don't need to do anything else for server-side rendering.
+          </p>
+
           <p>
             Ideally, you will be able to re-use your client side routes on the
             server, but if the client routes use browser only APIs, you may need
@@ -410,41 +450,6 @@ export default prepareRoutes([
 ]);`}
           </CodeBlock>
         </HashSection>
-
-        <HashSection tag="h3" meta={autoMeta}>
-          <p>
-            Curi automatically redirects to a new location when a response with
-            a <IJS>redirectTo</IJS> property is generated. On the client, this
-            is convenient because it saves you from having to detect the
-            redirect and manually redirecting yourself. However, on the server
-            it can cause issues.
-          </p>
-
-          <p>
-            The issue happens because when Curi automatically redirects, another
-            response is created for the location that Curi redirects to. If this
-            response is ready before you try to render the current response,
-            you'll render the redirected location's response instead of the
-            initial response.
-          </p>
-
-          <p>
-            Curi's <IJS>automaticRedirects</IJS> option lets you disable
-            automatic redirects when its value is <IJS>false</IJS>. This lets
-            you be certain that you are rendering using the initial response.
-          </p>
-
-          <CodeBlock data-line="3-5">
-            {`function renderHandler(req, res) {
-  const router = curi(InMemory, routes, {
-    automaticRedirects: false,
-    history: {
-      locations: [req.path]
-    }
-  });
-}`}
-          </CodeBlock>
-        </HashSection>
       </HashSection>
 
       <HashSection meta={responseMeta}>
@@ -456,13 +461,10 @@ export default prepareRoutes([
           <IJS>router.once</IJS> to wait for the <IJS>response</IJS>.
         </p>
 
-        <CodeBlock data-line="6-8">
+        <CodeBlock data-line="5-7">
           {`function renderHandler(req, res) {
-  const router = curi(InMemory, routes, {
-    automaticRedirects: false,
-    history: {
-      locations: [req.path]
-    }
+  const router = curi(ServerHistory, routes, {
+    history: { location: req.url }
   });
   router.once(({ response }) => {
     // ...
@@ -471,36 +473,33 @@ export default prepareRoutes([
         </CodeBlock>
 
         <p>
-          The next step is to render the application to generate an HTML
-          response string that will be sent to the user. How exactly you do this
+          Once the response is generated, we are ready to render. This step will
+          generate the HTML string for the application. How exactly you do this
           depends on what UI renderer you are using, but the process is
           approximately the same for most renderering libraries.
         </p>
 
         <p>
           Here, we will assume that you are using React. The{" "}
-          <IJS>react-dom</IJS> package (through its <IJS>server</IJS> module),
-          provides a <IJS>renderToString</IJS> method, which will render an
-          application as a string.
+          <IJS>react-dom/server</IJS> module provides a{" "}
+          <IJS>renderToString</IJS> method, which will render an application as
+          a string.
         </p>
 
         <p>
           Rendering with React on the server is essentially the same as
           rendering on the client. We create a <IJS>Router</IJS> and use{" "}
           <IJS>renderToString</IJS> (instead of <IJS>ReactDOM.render</IJS>) to
-          render the component, passing it a render-invoked function.
+          render the component.
         </p>
 
-        <CodeBlock data-line="1-2,10-18">
+        <CodeBlock data-line="1-2,9-14">
           {`import { renderToString } from "react-dom/server";
 import { curiProvider } from "@curi/react-dom";
          
 function renderHandler(req, res) {
-  const router = curi(InMemory, routes, {
-    automaticRedirects: false,
-    history: {
-      locations: [req.path]
-    }
+  const router = curi(ServerHistory, routes, {
+    history: { location: req.url }
   });
   router.once(({ response }) => {
     const Router = curiProvider(router);
@@ -517,7 +516,7 @@ function renderHandler(req, res) {
           Rendering with <IJS>renderToString</IJS> only generates an HTML string
           for the application. We are missing the <Cmp>html</Cmp>,{" "}
           <Cmp>head</Cmp>,<Cmp>body</Cmp>, <Cmp>script</Cmp>, etc. tags that are
-          required for the full HTML page.
+          required for the full HTML page to properly function.
         </p>
 
         <p>
@@ -546,7 +545,7 @@ function renderHandler(req, res) {
           set the title in the HTML string.
         </p>
 
-        <CodeBlock data-line="4-15,32-33">
+        <CodeBlock data-line="4-15,28-29">
           {`import { renderToString } from "react-dom/server";
 import { curiProvider } from "@curi/react-dom";
 
@@ -564,11 +563,8 @@ function insertMarkup(markup, title) {
 }
 
 function renderHandler(req, res) {
-  const router = curi(InMemory, routes, {
-    automaticRedirects: false,
-    history: {
-      locations: [req.path]
-    }
+  const router = curi(ServerHistory, routes, {
+    history: { location: req.url }
   });
   router.once(({ response }) => {
     const Router = curiProvider(router);
@@ -600,16 +596,13 @@ function renderHandler(req, res) {
             <IJS>hash</IJS>).
           </p>
 
-          <CodeBlock data-line="10-13">
+          <CodeBlock data-line="9-12">
             {`import { renderToString } from "react-dom/server";
 import { curiProvider } from "@curi/react-dom";
 
 function renderHandler(req, res) {
-  const router = curi(InMemory, routes, {
-    automaticRedirects: false,
-    history: {
-      locations: [req.path]
-    }
+  const router = curi(ServerHistory, routes, {
+    history: { location: req.url }
   });
   router.once(({ response }) => {
     if (response.redirectTo) {

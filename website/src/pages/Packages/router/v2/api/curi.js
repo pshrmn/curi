@@ -68,13 +68,9 @@ const router = curi(Browser, routes, options);`}
         <HashSection tag="h5" meta={historyArgMeta}>
           <p>
             A <a href="https://github.com/pshrmn/hickory">Hickory</a> history
-            object that will power navigation within the application. The{" "}
-            <Link
-              name="Guide"
-              params={{ slug: "getting-started" }}
-              hash="history-object"
-            >
-              getting started guide
+            function. The{" "}
+            <Link name="Guide" params={{ slug: "history" }}>
+              history guide
             </Link>{" "}
             provides more information on how to choose which history type is
             right for an application.
@@ -277,61 +273,6 @@ const router = curi(Browser, routes, {
 });
 // navigating to "/old/2" will automatically redirect
 // to "/new/2" without emitting a response`}
-            </CodeBlock>
-          </HashSection>
-
-          <HashSection
-            tag="h6"
-            meta={{
-              title: <IJS>automaticRedirects</IJS>,
-              hash: "options-automaticRedirects"
-            }}
-          >
-            <p>
-              When the initially matched route is synchronous and redirects, the
-              router's automatic redirect will occur before any response
-              handlers (registered with <IJS>once()</IJS> or{" "}
-              <IJS>observe()</IJS>) are called. This means that they will be
-              called with the response for the location that was redirected to
-              instead of the initial location. This is fine on the client side,
-              but causes issues with server side rendering. When{" "}
-              <IJS>automaticRedirects</IJS> is <IJS>false</IJS>, the automatic
-              redirect will not happen.{" "}
-              <strong>
-                Setting <IJS>automaticRedirects</IJS> to <IJS>false</IJS> is
-                recommend for server side rendering.
-              </strong>
-            </p>
-
-            <CodeBlock>
-              {`const routes = prepareRoutes([
-  {
-    name: "Old",
-    path: "old/:id",
-    response({ params }) {
-      // setup a redirect to the "New" route
-      return {
-        redirectTo: {
-          name: "New",
-          params
-        }
-      };
-    }
-  },
-  {
-    name: "New",
-    path: "new/:id"
-  }
-]);
-const router = curi(InMemory, routes, {
-  automaticRedirects: false,
-  history: {
-    locations: ["/old/1"]
-  }
-});
-router.once(({ response }) => {
-  // response = { name: "Old", ... }
-});`}
             </CodeBlock>
           </HashSection>
 
