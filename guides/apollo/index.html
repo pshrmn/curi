@@ -76,7 +76,7 @@ const Noun = ({ response }) =&gt; (
   &lt;/Query&gt;
 );</code></pre></div></div><div class="section css-1qgx73a" id="tight-pairing"><h2 class="displaced-header"><a href="#tight-pairing" class="header-link">Tight Pairing</a></h2><p>You can use your Apollo client instance to call queries in a route&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function. <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> is expected to return a Promise, which is exactly what <code class="inline-code css-jo5c25 eutm4hs0">client.query()</code> returns. Tightly pairing Curi and Apollo is mostly center around using<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> to return a <code class="inline-code css-jo5c25 eutm4hs0">client.query()</code> call. This will delay navigation until after a route&#x27;s GraphQL data has been loaded by Apollo.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">external</code> option can be used when creating the router to make the Apollo client accessible from routes.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import client from &quot;./apollo&quot;;
           
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   external: { client }
 });</code></pre></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { EXAMPLE_QUERY } from &quot;./queries&quot;;
 
@@ -176,7 +176,7 @@ const routes = prepareRoutes([
   }
 ]);
 
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   route: [prefetch()]
 });
 

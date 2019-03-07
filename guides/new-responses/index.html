@@ -38,7 +38,7 @@ router.observe(observer);</code></pre></div></div><div class="section css-1qgx73
 }
 
 // as a side-effect
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   sideEffects: [{ fn: logger }]
 });
 

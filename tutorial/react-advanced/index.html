@@ -145,7 +145,7 @@ export default prepareRoutes([
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;;
+import { Browser } from &#x27;@hickory/browser&#x27;;
 import { curiProvider } from &#x27;@curi/react-dom&#x27;;
 
 import routes from &#x27;./routes&#x27;;
@@ -153,8 +153,7 @@ import &#x27;./index.css&#x27;;
 import NavMenu from &#x27;./components/NavMenu&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 const Router = curiProvider(router);
 
 router.once(() =&gt; {
@@ -176,7 +175,7 @@ export const BOOK = id =&gt; Promise.resolve(
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;;
+import { Browser } from &#x27;@hickory/browser&#x27;;
 import { curiProvider } from &#x27;@curi/react-dom&#x27;;
 
 import routes from &#x27;./routes&#x27;;
@@ -185,8 +184,7 @@ import NavMenu from &#x27;./components/NavMenu&#x27;;
 import * as bookAPI from &quot;./api&quot;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const history = Browser();
-const router = curi(history, routes, {
+const router = curi(Browser, routes, {
   external: {
     bookAPI
   }

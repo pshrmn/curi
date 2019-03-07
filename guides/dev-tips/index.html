@@ -14,8 +14,7 @@ import { curi } from &quot;@curi/core&quot;;
 import { Browser } from &quot;@hickory/browser&quot;;
 import routes from &quot;./routes&quot;;
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 
 if (module.hot) {
   module.hot.accept(&quot;./routes.js&quot;, function() {

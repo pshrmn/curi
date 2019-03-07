@@ -23,19 +23,17 @@ yarn serve</code></pre></div><p>The dev server will automatically update when we
   pathname: &quot;/one&quot;,
   query: &quot;key=value&quot;,
   hash: &quot;id&quot;
-}</code></pre></div><p>The router will match its routes against a location&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">pathname</code> to figure out which route matches. The<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">query</code> and <code class="inline-code css-jo5c25 eutm4hs0">hash</code> values are not used for matching routes.</p><p>Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->library to create a history object that will enable us to navigate within our application. Hickory provides a few different packages to create history objects for different environments, but the only one we care about right now is the browser history, which comes from the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> package. A browser history object will interact with the browser&#x27;s native<!-- --> <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">History API</a> <!-- -->so that our application can change locations (and the URI in the address bar) without making a request to a server and reloading the page.</p><p>We can import the <code class="inline-code css-jo5c25 eutm4hs0">Browser</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> in our main file (<code class="inline-code css-jo5c25 eutm4hs0">src/main.js</code>, which <code class="inline-code css-jo5c25 eutm4hs0">@vue/cli</code> created for us). To create a history object, we call that function.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The history object can be configured with<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">an options object</a>, but we will stick with the defaults.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="3,9"><code class="language-javascript">// src/main.js
+}</code></pre></div><p>The router will match its routes against a location&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">pathname</code> to figure out which route matches. The<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">query</code> and <code class="inline-code css-jo5c25 eutm4hs0">hash</code> values are not used for matching routes.</p><p>Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->library to create a history object that will enable us to navigate within our application. Hickory provides a few different packages to create history objects for different environments, but the only one we care about right now is the browser history, which comes from the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> package. A browser history object will interact with the browser&#x27;s native<!-- --> <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">History API</a> <!-- -->so that our application can change locations (and the URI in the address bar) without making a request to a server and reloading the page.</p><p>We can import the <code class="inline-code css-jo5c25 eutm4hs0">Browser</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> in our main file (<code class="inline-code css-jo5c25 eutm4hs0">src/main.js</code>, which <code class="inline-code css-jo5c25 eutm4hs0">@vue/cli</code> created for us). To create a history object, we call that function.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The history object can be configured with<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">an options object</a>, but we will stick with the defaults.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="3"><code class="language-javascript">// src/main.js
 import Vue from &#x27;vue&#x27;
-import Browser from &#x27;@hickory/browser&#x27;
+import { Browser } from &#x27;@hickory/browser&#x27;
 
 import App from &#x27;./App.vue&#x27;
 
 Vue.config.productionTip = false
 
-const history = Browser()
-
 new Vue({
   render: h =&gt; h(App)
-}).$mount(&#x27;#app&#x27;)</code></pre></div><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Eslint will complain here because we haven&#x27;t actually used the new<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">history</code> object. We can ignore that warning for now because we&#x27;ll get rid of it soon enough.</p></div></div><div class="section css-1qgx73a" id="defining-routes"><h2 class="displaced-header"><a href="#defining-routes" class="header-link">Defining the Routes</a></h2><p>Routes are JavaScript objects that define the valid locations for a router. They have a <code class="inline-code css-jo5c25 eutm4hs0">name</code> and a <code class="inline-code css-jo5c25 eutm4hs0">path</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// this is a route
+}).$mount(&#x27;#app&#x27;)</code></pre></div></div><div class="section css-1qgx73a" id="defining-routes"><h2 class="displaced-header"><a href="#defining-routes" class="header-link">Defining the Routes</a></h2><p>Routes are JavaScript objects that define the valid locations for a router. They have a <code class="inline-code css-jo5c25 eutm4hs0">name</code> and a <code class="inline-code css-jo5c25 eutm4hs0">path</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// this is a route
 { name: &quot;Home&quot;, path: &quot;&quot; }</code></pre></div><p>A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">name</code> needs to be unique. We will use route names when we navigate within the application. A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">path</code> <!-- -->describes the location pathname that it should match.</p><div class="aside css-1qgx73a" id="path-basics"><h3 class="displaced-header"><a href="#path-basics" class="header-link">Path basics</a></h3><p>Route paths are strings describing the pathname segments they should match.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">{ path: &#x27;&#x27; } // matches &quot;/&quot;
 { path: &#x27;about/stuff&#x27; } // matches &quot;/about/stuff&quot;</code></pre></div><p>Paths never begin with a slash.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// yes
 { path: &#x27;&#x27; }
@@ -68,25 +66,24 @@ export default [
     name: &quot;Catch All&quot;,
     path: &quot;(.*)&quot;
   }
-];</code></pre></div></div><div class="section css-1qgx73a" id="router"><h2 class="displaced-header"><a href="#router" class="header-link">The Router</a></h2><p>With the history object created and the routes defined, we are ready to create the router. Back in the <code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code> file, we should import the <code class="inline-code css-jo5c25 eutm4hs0">curi</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code> as well as our routes from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">src/routes.js</code>. Creating the router is done by calling the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">curi()</code> function and passing it the <code class="inline-code css-jo5c25 eutm4hs0">history</code> <!-- -->object and the <code class="inline-code css-jo5c25 eutm4hs0">routes</code> array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,6,12"><code class="language-javascript">// src/main.js
+];</code></pre></div></div><div class="section css-1qgx73a" id="router"><h2 class="displaced-header"><a href="#router" class="header-link">The Router</a></h2><p>With the history object created and the routes defined, we are ready to create the router. Back in the <code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code> file, we should import the <code class="inline-code css-jo5c25 eutm4hs0">curi</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code> as well as our routes from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">src/routes.js</code>. Creating the router is done by calling the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">curi()</code> function and passing it the history function and the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">routes</code> array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,6,11"><code class="language-javascript">// src/main.js
 import Vue from &#x27;vue&#x27;
 import { curi } from &#x27;@curi/router&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;
+import { Browser } from &#x27;@hickory/browser&#x27;
 
 import routes from &#x27;./routes&#x27;;
 import App from &#x27;./App.vue&#x27;
 
 Vue.config.productionTip = false
 
-const history = Browser()
-const router = curi(history, routes)
+const router = curi(Browser, routes)
 
 new Vue({
   render: h =&gt; h(App)
-}).$mount(&#x27;#app&#x27;)</code></pre></div><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The Eslint warning has now moved to the <code class="inline-code css-jo5c25 eutm4hs0">router</code>, but this is still nothing to worry about.</p></div><p>We will add router support to the Vue application using a plugin. This plugin does a couple of things. First, it makes some Curi components available within the application. The only one of these components that we will be using is the <code class="inline-code css-jo5c25 eutm4hs0">curi-link</code>. Second, it makes router related values accessible to the components in the application. The router is available as <code class="inline-code css-jo5c25 eutm4hs0">this.$router</code> and the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> and <code class="inline-code css-jo5c25 eutm4hs0">navigation</code> (we will cover these next) are grouped under <code class="inline-code css-jo5c25 eutm4hs0">this.$curi</code>. When the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">CuriPlugin</code> is installed, the <code class="inline-code css-jo5c25 eutm4hs0">router</code> as passed in the options object.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5,14"><code class="language-javascript">// src/main.js
+}).$mount(&#x27;#app&#x27;)</code></pre></div><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The Eslint warning has now moved to the <code class="inline-code css-jo5c25 eutm4hs0">router</code>, but this is still nothing to worry about.</p></div><p>We will add router support to the Vue application using a plugin. This plugin does a couple of things. First, it makes some Curi components available within the application. The only one of these components that we will be using is the <code class="inline-code css-jo5c25 eutm4hs0">curi-link</code>. Second, it makes router related values accessible to the components in the application. The router is available as <code class="inline-code css-jo5c25 eutm4hs0">this.$router</code> and the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> and <code class="inline-code css-jo5c25 eutm4hs0">navigation</code> (we will cover these next) are grouped under <code class="inline-code css-jo5c25 eutm4hs0">this.$curi</code>. When the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">CuriPlugin</code> is installed, the <code class="inline-code css-jo5c25 eutm4hs0">router</code> as passed in the options object.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5,13"><code class="language-javascript">// src/main.js
 import Vue from &#x27;vue&#x27;
 import { curi } from &#x27;@curi/router&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;
+import { Browser } from &#x27;@hickory/browser&#x27;
 import { CuriPlugin } from &#x27;@curi/vue&#x27;
 
 import routes from &#x27;./routes&#x27;;
@@ -94,8 +91,7 @@ import App from &#x27;./App.vue&#x27;
 
 Vue.config.productionTip = false
 
-const history = Browser()
-const router = curi(history, routes)
+const router = curi(Browser, routes)
 Vue.use(CuriPlugin, { router })
 
 new Vue({

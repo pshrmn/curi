@@ -56,39 +56,36 @@ import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div></div><div class="section css-1qgx73a" id="history"><h2 class="displaced-header"><a href="#history" class="header-link">History</a></h2><p>Along with the routes, we also need to create a history object for the router. The history object is responsible for creating locations and navigation within the application.</p><p>Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->library for its history implementations. There are a few Hickory packages to choose from for different environments. For most websites, the <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> is the right choice for the front end, which is what we will be using</p><p>We can import the <code class="inline-code css-jo5c25 eutm4hs0">Browser</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> in our index file (<code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code>, which <code class="inline-code css-jo5c25 eutm4hs0">create-react-app</code> created for us) and call the function to create a history object.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The history object can be configured with<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">an options object</a>, but we will stick with the defaults.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="4,11"><code class="language-jsx">// src/index.js
+registerServiceWorker();</code></pre></div></div><div class="section css-1qgx73a" id="history"><h2 class="displaced-header"><a href="#history" class="header-link">History</a></h2><p>Along with the routes, we also need to create a history object for the router. The history object is responsible for creating locations and navigation within the application.</p><p>Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->library for its history implementations. There are a few Hickory packages to choose from for different environments. For most websites, the <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> is the right choice for the front end, which is what we will be using</p><p>We can import the <code class="inline-code css-jo5c25 eutm4hs0">Browser</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> in our index file (<code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code>, which <code class="inline-code css-jo5c25 eutm4hs0">create-react-app</code> created for us) and call the function to create a history object.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The history object can be configured with<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">an options object</a>, but we will stick with the defaults.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="4"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;;
+import { Browser } from &#x27;@hickory/browser&#x27;;
 
 import routes from &quot;./routes&quot;;
 import &#x27;./index.css&#x27;;
 import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const history = Browser();
-
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div></div><div class="section css-1qgx73a" id="router"><h2 class="displaced-header"><a href="#router" class="header-link">The Router</a></h2><p>We are now ready to create the router. In the <code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code> <!-- -->file, we should import the <code class="inline-code css-jo5c25 eutm4hs0">curi</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code>. To create the router, call the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">curi()</code> function passing it the <code class="inline-code css-jo5c25 eutm4hs0">history</code> object and the <code class="inline-code css-jo5c25 eutm4hs0">routes</code> array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="4,13"><code class="language-jsx">// src/index.js
+registerServiceWorker();</code></pre></div></div><div class="section css-1qgx73a" id="router"><h2 class="displaced-header"><a href="#router" class="header-link">The Router</a></h2><p>We are now ready to create the router. In the <code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code> <!-- -->file, we should import the <code class="inline-code css-jo5c25 eutm4hs0">curi</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code>. To create the router, call the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">curi()</code> function passing it the history function and the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">routes</code> array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="4,12"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;;
+import { Browser } from &#x27;@hickory/browser&#x27;;
 
 import routes from &#x27;./routes&#x27;;
 import &#x27;./index.css&#x27;;
 import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div><p>The router is now ready and we can render the application.</p></div><div class="section css-1qgx73a" id="rendering"><h2 class="displaced-header"><a href="#rendering" class="header-link">Rendering with React</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> provides the components that we will use to interact with the router.</p><p>We create a <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component by passing the router to the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">curiProvider</code> higher-order component.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Curi uses a higher-order component to create a component instead of a regular component because the router is a permanent &quot;prop&quot;. An application should only have one router, so this approach discourages trying to swap routers.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="6,15"><code class="language-jsx">// src/index.js
+registerServiceWorker();</code></pre></div><p>The router is now ready and we can render the application.</p></div><div class="section css-1qgx73a" id="rendering"><h2 class="displaced-header"><a href="#rendering" class="header-link">Rendering with React</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> provides the components that we will use to interact with the router.</p><p>We create a <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component by passing the router to the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">curiProvider</code> higher-order component.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Curi uses a higher-order component to create a component instead of a regular component because the router is a permanent &quot;prop&quot;. An application should only have one router, so this approach discourages trying to swap routers.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="6,14"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;;
+import { Browser } from &#x27;@hickory/browser&#x27;;
 import { curiProvider } from &quot;@curi/react-dom&quot;;
 
 import routes from &#x27;./routes&#x27;;
@@ -96,16 +93,15 @@ import &#x27;./index.css&#x27;;
 import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 const Router = curiProvider(router);
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div><p>The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component will re-render the application whenever there is in-app navigation. It also sets up a React context, so any <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> components and hooks need to be descendants of the <code class="inline-code css-jo5c25 eutm4hs0">Router</code> in order to access the context.</p><p>We will pass the <code class="inline-code css-jo5c25 eutm4hs0">Router</code> the <code class="inline-code css-jo5c25 eutm4hs0">App</code> element, which is where we will render the application&#x27;s content.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="17-21"><code class="language-jsx">// src/index.js
+registerServiceWorker();</code></pre></div><p>The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component will re-render the application whenever there is in-app navigation. It also sets up a React context, so any <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> components and hooks need to be descendants of the <code class="inline-code css-jo5c25 eutm4hs0">Router</code> in order to access the context.</p><p>We will pass the <code class="inline-code css-jo5c25 eutm4hs0">Router</code> the <code class="inline-code css-jo5c25 eutm4hs0">App</code> element, which is where we will render the application&#x27;s content.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="16-20"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { curi } from &#x27;@curi/router&#x27;;
-import Browser from &#x27;@hickory/browser&#x27;;
+import { Browser } from &#x27;@hickory/browser&#x27;;
 import { curiProvider } from &quot;@curi/react-dom&quot;;
 
 import routes from &#x27;./routes&#x27;;
@@ -113,8 +109,7 @@ import &#x27;./index.css&#x27;;
 import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const history = Browser();
-const router = curi(history, routes);
+const router = curi(Browser, routes);
 const Router = curiProvider(router);
 
 ReactDOM.render((
