@@ -1,5 +1,6 @@
-## Next
+## 1.0.0-beta.0
 
+* `staticFiles` takes `history` option for passing history options.
 * `staticFiles` uses `createServerHistory` to create lightweight history constructors.
 
 ## 1.0.0-alpha.7
