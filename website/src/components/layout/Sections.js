@@ -67,6 +67,14 @@ const hashSectionCSS = css`
   }
 
   @media only screen and (min-width: ${screen.medium}) {
+    &:before {
+      content: "";
+      display: block;
+      margin-top: -50px;
+      height: 50px;
+      visibility: hidden;
+    }
+
     p {
       font-size: 1em;
     }
@@ -78,16 +86,6 @@ const hashSectionCSS = css`
 
       &:hover::after {
         display: inline-block;
-      }
-    }
-
-    .displaced-header {
-      &:before {
-        content: "";
-        display: block;
-        margin-top: -50px;
-        height: 50px;
-        visibility: hidden;
       }
     }
   }
@@ -102,7 +100,7 @@ export function HashSection({
 }) {
   return (
     <Wrapper css={hashSectionCSS} className={className} id={hash}>
-      <Tag className="displaced-header">
+      <Tag>
         <Link hash={hash} forward={{ className: "header-link" }}>
           {title}
         </Link>
