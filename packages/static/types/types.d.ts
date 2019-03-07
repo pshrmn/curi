@@ -1,4 +1,5 @@
 import { CompiledRouteArray, Params, Emitted, RouterOptions } from "@curi/router";
+import { HistoryOptions } from "@hickory/in-memory";
 export interface PageDescriptor {
     name: string;
     params?: Params;
@@ -23,6 +24,7 @@ export interface StaticConfiguration {
     fallback?: FallbackDescriptor;
     router: StaticRouter;
     output: StaticOutput;
+    history?: HistoryOptions;
 }
 export interface Result {
     pathname: string;

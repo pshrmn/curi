@@ -2,6 +2,7 @@ import "jest";
 import { ensureDir, remove, existsSync } from "fs-extra";
 import { join } from "path";
 import { prepareRoutes } from "@curi/router";
+import * as qs from "qs";
 
 // @ts-ignore (resolved by jest)
 import { staticFiles } from "@curi/static";
@@ -311,6 +312,50 @@ describe("staticFiles()", () => {
       });
       // once to static pathnames and again for the Home markup
       expect(getRouterOptions.mock.calls.length).toBe(2);
+    });
+  });
+
+  describe("history", () => {
+    it("uses provided history options in history instance", async done => {
+      const fixtures = join(FIXTURES_ROOT, "history");
+      await remove(fixtures);
+      await ensureDir(fixtures);
+
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: "",
+          response() {
+            return { body: "Home" };
+          }
+        }
+      ]);
+      const pages = [{ name: "Home" }];
+      await staticFiles({
+        pages,
+        router: {
+          routes
+        },
+        history: {
+          query: {
+            parse: qs.parse,
+            stringify: qs.stringify
+          }
+        },
+        output: {
+          render: (emitted: Emitted) => {
+            const href = emitted.router.history.toHref({
+              pathname: "/",
+              query: { x: "y" }
+            });
+            expect(href).toBe("/?x=y");
+            done();
+            return emitted.response.body;
+          },
+          insert: DEFAULT_INSERT,
+          dir: fixtures
+        }
+      });
     });
   });
 

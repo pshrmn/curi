@@ -65,13 +65,6 @@ function HistoryGuide() {
           has occured.
         </p>
 
-        <Note>
-          <p>
-            You most likely will not need to interact directly with the
-            application's <IJS>history</IJS>.
-          </p>
-        </Note>
-
         <p>
           Curi uses <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
           packages for its history implementations. Hickory is designed with
@@ -80,13 +73,20 @@ function HistoryGuide() {
           updating the location.
         </p>
 
-        <CodeBlock>{`const router = curi(Browser, routes);`}</CodeBlock>
+        <CodeBlock>{`import { Browser } from "@hickory/browser";
+const router = curi(Browser, routes);`}</CodeBlock>
+
+        <p>
+          You most likely will not need to interact directly with the
+          application's <IJS>history</IJS>, but you should be familiar with the
+          different choices.
+        </p>
       </PlainSection>
 
       <HashSection meta={typesMeta}>
         <p>
-          There are three Hickory packages to choose from for an application. W
-          hich one you use depends on where your application is running.
+          There are three Hickory packages to choose from for an application.
+          Which one you use depends on where your application is running.
         </p>
 
         <HashSection meta={browserMeta} tag="h3">
@@ -142,14 +142,29 @@ const router = curi(Hash, routes);`}
 
         <HashSection meta={inMemoryMeta} tag="h3">
           <CodeBlock>
-            {`import { InMemory } from "@hickory/in-memory";
-const router = curi(InMemory, routes);`}
+            {`import { InMemory, createServerHistory } from "@hickory/in-memory";
+
+const router = curi(InMemory, routes);
+// or
+const ServerHistory = createServerHistory();
+const router = curi(ServerHistory, routes);`}
           </CodeBlock>
 
           <p>
-            The in-memory history is used for applications not running in a
+            An in-memory history is used for applications not running in a
             browser. For example, the in memory history is used on the server,
             in a React Native app, and during testing.
+          </p>
+
+          <p>
+            The <IJS>InMemory</IJS> function is a full history object, capable
+            of in-app navigation.
+          </p>
+
+          <p>
+            The <IJS>createServerHistory</IJS> function returns lightweight
+            history function for server-side rendering. The returned history
+            cannot navigate, which is fine for server rendering.
           </p>
         </HashSection>
 
@@ -245,24 +260,31 @@ location = {
           </p>
         </Note>
 
-        <p>
-          In browsers, there is also "external" navigation. This includes the
-          user typing a URL in the address bar and clicking the browser's
-          forward and back buttons. These navigations are all treated similarly
-          to the <IJS>go</IJS> method.
-        </p>
-
         <HashSection tag="h3" meta={goMeta}>
           <p>
             The <IJS>go</IJS> method allows you to jump to another, already
-            visited, page using pop navigation. <IJS>go</IJS> takes one
-            argument, the number of locations forward (positive numbers) or
-            backward (negative numbers) to go.
+            visited. <IJS>go</IJS> takes one argument, the number of locations
+            forward (positive numbers) or backward (negative numbers) to go.
           </p>
 
           <CodeBlock>
             {`history.go(-1); // go back to the previous location`}
           </CodeBlock>
+
+          <p>
+            In browsers, there is "external" navigation. This includes the user
+            typing a URL in the address bar and clicking the browser's forward
+            and back buttons. These navigations are all treated similarly to the{" "}
+            <IJS>go</IJS> method.
+          </p>
+
+          <Note>
+            <p>
+              <IJS>go</IJS> is asynchronous, meaning that the navigation happens
+              before the router knows about it. This should not affect your
+              application, but it is useful to be aware of.
+            </p>
+          </Note>
         </HashSection>
 
         <HashSection tag="h3" meta={navigateMeta}>
@@ -271,10 +293,15 @@ location = {
             replace, and anchor.
           </p>
 
-          <p>Push navigation adds a new location after the current location.</p>
+          <p>
+            Push navigation adds a new location after the current location. Any
+            locations that existed after the current location are wiped out by
+            push navigation.
+          </p>
 
           <p>
             Replace navigation replaces the current location with a new
+            location. This has no effect on any locations after the current
             location.
           </p>
 

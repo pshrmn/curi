@@ -1,11 +1,11 @@
 import * as fs from "fs-extra";
 import { join } from "path";
 import { curi } from "@curi/router";
-import { InMemory } from "@hickory/in-memory";
+import { createServerHistory } from "@hickory/in-memory";
 
 import pathnames from "./pathnames";
 
-import { InMemoryOptions } from "@hickory/in-memory";
+import { LocationOptions } from "@hickory/in-memory";
 import { Emitted, RouterOptions } from "@curi/router";
 import { StaticConfiguration, Result } from "./types";
 
@@ -19,7 +19,8 @@ export default async function staticFiles(
   const {
     pages,
     router: { routes, getRouterOptions = defaultGetRouterOptions },
-    output: { render, insert, dir, redirects = false }
+    output: { render, insert, dir, redirects = false },
+    history: historyOptions
   } = config;
 
   // generate input pathname/output filename pairs
@@ -45,6 +46,8 @@ export default async function staticFiles(
     });
   }
 
+  const ServerHistory = createServerHistory(historyOptions);
+
   return Promise.all<Result>(
     inputOutput.map(({ pathname, outputPath }) => {
       return new Promise(resolve => {
@@ -52,14 +55,12 @@ export default async function staticFiles(
           // create a new router for each so we don't run into any issues
           // with overlapping requests
 
-          const router = curi<InMemoryOptions>(InMemory, routes, {
+          const router = curi<LocationOptions>(ServerHistory, routes, {
             ...getRouterOptions(),
             // need to emit redirects or will get stuck waiting forever
             emitRedirects: true,
-            // and the responses should be for the redirect
-            automaticRedirects: false,
             history: {
-              locations: [pathname]
+              location: pathname
             }
           });
 

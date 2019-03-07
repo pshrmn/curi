@@ -26,7 +26,6 @@ export interface RouterOptions<O = HistoryOptions> {
     sideEffects?: Array<Observer>;
     pathnameOptions?: PathFunctionOptions;
     emitRedirects?: boolean;
-    automaticRedirects?: boolean;
     external?: any;
     history?: O;
 }

@@ -4,7 +4,11 @@ import finishResponse from "./finishResponse";
 import matchLocation from "./matchLocation";
 import resolveMatchedRoute from "./resolveMatchedRoute";
 
-import { HistoryConstructor, PendingNavigation } from "@hickory/root";
+import {
+  HistoryConstructor,
+  HistoryOptions,
+  PendingNavigation
+} from "@hickory/root";
 
 import { CompiledRouteArray, ResolveResults } from "./types/route";
 import { Response } from "./types/response";
@@ -26,18 +30,17 @@ import {
   CancelNavigateCallbacks
 } from "./types/curi";
 
-export default function createRouter<O>(
-  historyConstructor: HistoryConstructor,
+export default function createRouter<HOpts = HistoryOptions>(
+  historyConstructor: HistoryConstructor<HOpts>,
   routeArray: CompiledRouteArray,
-  options: RouterOptions<O> = {}
+  options: RouterOptions<HOpts> = {}
 ): CuriRouter {
   const {
     route: userInteractions = [],
     sideEffects = [],
     emitRedirects = true,
-    automaticRedirects = true,
     external,
-    history: historyOptions = {}
+    history: historyOptions = <HOpts>{}
   } = options;
 
   const history = historyConstructor(navigationHandler, historyOptions);
@@ -150,7 +153,7 @@ export default function createRouter<O>(
       callOneTimersAndSideEffects({ response, navigation, router });
     }
 
-    if (response.redirectTo !== undefined && automaticRedirects) {
+    if (response.redirectTo !== undefined) {
       history.navigate(response.redirectTo, "replace");
     }
   }

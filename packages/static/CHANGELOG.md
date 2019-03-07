@@ -1,3 +1,7 @@
+## Next
+
+* `staticFiles` uses `createServerHistory` to create lightweight history constructors.
+
 ## 1.0.0-alpha.7
 
 * Use `InMemory` history constructor when creating router.

@@ -1,3 +1,7 @@
+## Next
+
+* Remove `automaticRedirects` option. `createServerHistory`, from `@hickory/in-memory`, makes `navigate` a no-op and should be used for server rendering.
+
 ## 2.0.0-beta.0
 
 * First argument to `curi` is a history constructor.
