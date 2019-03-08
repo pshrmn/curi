@@ -30,14 +30,6 @@ const routes = prepareRoutes([
   { name: "Not Found", path: "(.*)" }
 ]);`}
       </CodeBlock>
-
-      <Warning>
-        <p>
-          Passing a non-prepared routes array to <IJS>curi()</IJS> is still
-          supported, but deprecated and will be removed in the next major
-          version.
-        </p>
-      </Warning>
     </HashSection>
   );
 }
