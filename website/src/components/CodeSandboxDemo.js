@@ -16,7 +16,12 @@ const StyledDemo = styled("div")`
   }
 `;
 
-export default function CodeSandboxDemo({ id, view = "split", help = true }) {
+export default function CodeSandboxDemo({
+  id,
+  view = "split",
+  help = true,
+  title
+}) {
   let helpText = null;
   if (help) {
     helpText = (
