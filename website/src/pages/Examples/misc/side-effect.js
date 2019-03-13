@@ -54,7 +54,10 @@ const router = curi(Browser, routes, {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/misc/side-effect" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/misc/side-effect"
+          title="Curi side effect demo"
+        />
       </HashSection>
 
       <OnGithub path="misc/side-effect" />

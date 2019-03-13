@@ -35,7 +35,10 @@ function BasicExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/basic" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/vue/basic"
+          title="Curi Vue basic demo"
+        />
       </HashSection>
 
       <OnGithub path="vue/basic" />

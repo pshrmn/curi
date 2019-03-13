@@ -37,7 +37,10 @@ function ActiveLinksExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/active-links" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/active-links"
+          title="Curi React active link demo"
+        />
       </HashSection>
 
       <OnGithub path="react/active-links" />

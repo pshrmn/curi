@@ -38,7 +38,10 @@ function ActiveLinksExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/active-links" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/vue/active-links"
+          title="Curi Vue active link demo"
+        />
       </HashSection>
 
       <OnGithub path="vue/active-links" />

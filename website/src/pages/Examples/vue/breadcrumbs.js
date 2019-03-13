@@ -37,7 +37,10 @@ function BreadcrumbsExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/breadcrumbs" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/vue/breadcrumbs"
+          title="Curi Vue breadcrumbs demo"
+        />
       </HashSection>
 
       <OnGithub path="vue/breadcrumbs" />

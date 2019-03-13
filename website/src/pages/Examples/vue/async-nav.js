@@ -46,7 +46,10 @@ function AsyncNavExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/async-nav" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/vue/async-nav"
+          title="Curi Vue asynchronous navigation demo"
+        />
       </HashSection>
 
       <OnGithub path="vue/async-nav" />

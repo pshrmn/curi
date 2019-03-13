@@ -102,7 +102,10 @@ function VueBasicsTutorial() {
       {/*<HashSection meta={demoMeta}>
       <p>You can run a demo of the site we are building with CodeSandbox.</p>
 
-      <CodeSandboxDemo id="github/curijs/vue-basic-tutorial/tree/master/" />
+      <CodeSandboxDemo
+        id="github/curijs/vue-basic-tutorial/tree/master/"
+        title="Curi Vue basic tutorial"
+      />
 </HashSection>*/}
 
       <HashSection meta={setupMeta}>

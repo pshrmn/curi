@@ -35,7 +35,10 @@ function BasicExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/basic" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/svelte/basic"
+          title="Curi Svelte basic demo"
+        />
       </HashSection>
 
       <OnGithub path="svelte/basic" />

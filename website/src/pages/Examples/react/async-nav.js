@@ -50,7 +50,10 @@ function AsyncNavExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/async-nav" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/async-nav"
+          title="Curi React asynchronous navigation demo"
+        />
       </HashSection>
 
       <OnGithub path="react/async-nav" />

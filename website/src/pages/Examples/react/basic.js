@@ -34,7 +34,10 @@ function BasicExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/basic" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/basic"
+          title="Curi React basic demo"
+        />
       </HashSection>
 
       <OnGithub path="react/basic" />

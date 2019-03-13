@@ -30,6 +30,7 @@ export default function HomePage() {
       <CodeSandboxDemo
         id="github/pshrmn/curi/tree/master/examples/react/basic"
         help={false}
+        title="Curi React basic demo"
       />
 
       <PlainSection className="centered">

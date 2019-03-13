@@ -60,7 +60,10 @@ function ModalExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/modal" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/vue/modal"
+          title="Curi Vue modal demo"
+        />
       </HashSection>
 
       <OnGithub path="vue/modal" />

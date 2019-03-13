@@ -38,7 +38,10 @@ function ActiveLinksExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/active-links" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/svelte/active-links"
+          title="Curi Svelte active link demo"
+        />
       </HashSection>
 
       <OnGithub path="svelte/active-links" />

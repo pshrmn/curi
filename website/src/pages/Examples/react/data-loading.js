@@ -31,7 +31,10 @@ function DataLoadingExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/data-loading" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/data-loading"
+          title="Curi React data loading demo"
+        />
       </HashSection>
 
       <OnGithub path="react/data-loading" />

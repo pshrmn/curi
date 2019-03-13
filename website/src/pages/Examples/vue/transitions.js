@@ -52,7 +52,10 @@ function TransitionsExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/transitions" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/vue/transitions"
+          title="Curi Vue transition demo"
+        />
       </HashSection>
 
       <OnGithub path="vue/transitions" />

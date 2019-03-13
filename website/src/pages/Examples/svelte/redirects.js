@@ -67,7 +67,10 @@ function AuthenticationExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/redirects" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/svelte/redirects"
+          title="Curi Svelte redirect demo"
+        />
       </HashSection>
 
       <OnGithub path="svelte/redirects" />

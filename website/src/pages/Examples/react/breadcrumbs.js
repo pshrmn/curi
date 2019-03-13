@@ -37,7 +37,10 @@ function BreadcrumbsExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/breadcrumbs" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/breadcrumbs"
+          title="Curi React breadcrumbs demo"
+        />
       </HashSection>
 
       <OnGithub path="react/breadcrumbs" />

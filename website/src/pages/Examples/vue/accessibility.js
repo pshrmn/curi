@@ -35,7 +35,10 @@ function AccessibilityExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/accessibility" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/vue/accessibility"
+          title="Curi Vue accessibility demo"
+        />
       </HashSection>
 
       <OnGithub path="vue/accessibility" />

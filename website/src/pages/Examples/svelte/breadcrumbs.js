@@ -37,7 +37,10 @@ function BreadcrumbsExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/breadcrumbs" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/svelte/breadcrumbs"
+          title="Curi Svelte breadcrumbs demo"
+        />
       </HashSection>
 
       <OnGithub path="svelte/breadcrumbs" />

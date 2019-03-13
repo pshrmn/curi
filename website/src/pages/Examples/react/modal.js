@@ -63,7 +63,10 @@ function ModalExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/modal" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/modal"
+          title="Curi React modal demo"
+        />
       </HashSection>
 
       <OnGithub path="react/modal" />

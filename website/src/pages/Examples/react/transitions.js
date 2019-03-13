@@ -61,7 +61,10 @@ function TransitionsExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/transitions" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/transitions"
+          title="Curi React transition demo"
+        />
       </HashSection>
 
       <OnGithub path="react/transitions" />

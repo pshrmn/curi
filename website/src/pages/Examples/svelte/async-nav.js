@@ -37,7 +37,10 @@ function AsyncExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/svelte/async-nav" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/svelte/async-nav"
+          title="Curi Svelte asynchronous navigation demo"
+        />
       </HashSection>
 
       <OnGithub path="svelte/async-nav" />

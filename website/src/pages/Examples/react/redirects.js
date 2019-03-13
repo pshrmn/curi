@@ -68,7 +68,10 @@ function AuthenticationExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/redirects" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/redirects"
+          title="Curi React redirect demo"
+        />
       </HashSection>
 
       <OnGithub path="react/redirects" />

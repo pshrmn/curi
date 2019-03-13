@@ -107,7 +107,10 @@ const routes = prepareRoutes([
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/multi-body" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/multi-body"
+          title="Curi React multiple body components demo"
+        />
       </HashSection>
 
       <OnGithub path="react/multi-body" />

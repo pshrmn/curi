@@ -91,7 +91,10 @@ function ReactAdvancedTutorial() {
       <HashSection meta={demoMeta}>
         <p>You can run a demo of the site we are building with CodeSandbox.</p>
 
-        <CodeSandboxDemo id="github/curijs/react-advanced-tutorial/tree/master/" />
+        <CodeSandboxDemo
+          id="github/curijs/react-advanced-tutorial/tree/master/"
+          title="Curi React advanced tutorial"
+        />
       </HashSection>
 
       <HashSection meta={setupMeta}>
@@ -185,7 +188,7 @@ npm run start`}
 
         <CodeBlock>
           {`import { preferDefault } from "@curi/helpers";
-          
+
 const routes = prepareRoutes([
   {
     name: "A Route",
@@ -351,7 +354,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
 
         <CodeBlock>
           {`import { preferDefault } from "@curi/helpers";
-          
+
 const routes = prepareRoutes([
   {
     name: "Test",
@@ -375,7 +378,7 @@ const routes = prepareRoutes([
 
         <CodeBlock>
           {`import displayLoadError from "./components/LoadError";
-        
+
 const routes = prepareRoutes([
   {
     name: "One",
@@ -830,7 +833,7 @@ export const BOOK = id => new Promise(resolve => {
 
           <CodeBlock lang="jsx">
             {`import { Link } from "@curi/react-dom";
-            
+
 <Link name="Book" params={{ id: 1 }}>
   {navigating => (
     <React.Fragment>

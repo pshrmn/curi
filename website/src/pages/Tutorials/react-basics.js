@@ -114,7 +114,10 @@ function ReactBasicsTutorial() {
 
       <HashSection meta={demoMeta}>
         <p>You can run a demo of the site we are building with CodeSandbox.</p>
-        <CodeSandboxDemo id="github/curijs/react-basic-tutorial/tree/master/" />
+        <CodeSandboxDemo
+          id="github/curijs/react-basic-tutorial/tree/master/"
+          title="Curi React basic tutorial"
+        />
       </HashSection>
 
       <HashSection meta={setupMeta}>
@@ -1237,7 +1240,7 @@ import React from 'react';
 import cart from '../cart';
 
 export default function Checkout({ router, response }) {
-  const books = cart.items();  
+  const books = cart.items();
   if (!books.length) {
     return response.location.hash === 'thanks'
       ? <div>Thanks for your purchase!</div>

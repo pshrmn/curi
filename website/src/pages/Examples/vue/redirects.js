@@ -67,7 +67,10 @@ function AuthenticationExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/vue/redirects" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/vue/redirects"
+          title="Curi Vue redirects demo"
+        />
       </HashSection>
 
       <OnGithub path="vue/redirects" />

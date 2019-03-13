@@ -30,6 +30,7 @@ export default function CodeSandboxDemo({ id, view = "split", help = true }) {
   return (
     <StyledDemo>
       <iframe
+        title={title}
         src={`https://codesandbox.io/embed/${id}?view=${view}`}
         width="100%"
         height="600px"

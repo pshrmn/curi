@@ -37,7 +37,10 @@ function AccessibilityExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/curi/tree/master/examples/react/accessibility" />
+        <CodeSandboxDemo
+          id="github/pshrmn/curi/tree/master/examples/react/accessibility"
+          title="Curi React accessibility demo"
+        />
       </HashSection>
 
       <OnGithub path="react/accessibility" />

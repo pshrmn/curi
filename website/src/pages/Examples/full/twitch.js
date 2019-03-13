@@ -36,7 +36,10 @@ function TwitchExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo id="github/pshrmn/twitch-curi-demo" />
+        <CodeSandboxDemo
+          id="github/pshrmn/twitch-curi-demo"
+          title="Curi Twitch clone demo"
+        />
       </HashSection>
 
       <OnGithub
