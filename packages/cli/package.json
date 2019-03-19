@@ -1,0 +1,50 @@
+{
+  "name": "@curi/cli",
+  "version": "1.0.0-alpha.0",
+  "description": "CLI for Curi projects",
+  "bin": {
+    "curi": "bin/curi-cli.js"
+  },
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "LICENSE",
+    "*.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf bin && rimraf types",
+    "build": "rollup -c",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/cli"
+  },
+  "keywords": [
+    "curi",
+    "router",
+    "cli"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/generator": "^7.2.2",
+    "@babel/parser": "^7.2.3",
+    "@babel/types": "^7.2.2",
+    "@posh/ast": "^0.3.0",
+    "@types/babel__core": "^7.0.4",
+    "@types/babel__generator": "^7.0.1",
+    "@types/cross-spawn": "^6.0.0",
+    "@types/dedent": "^0.7.0",
+    "@types/fs-extra": "^5.0.4",
+    "@types/inquirer": "0.0.43",
+    "commander": "^2.19.0",
+    "cross-spawn": "^6.0.5",
+    "dedent": "^0.7.0",
+    "fs-extra": "^7.0.0",
+    "inquirer": "^6.2.0"
+  }
+}

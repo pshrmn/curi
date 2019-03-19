@@ -1,0 +1,12 @@
+node_modules/
+*.log
+.rpt2_cache/
+
+dist/
+!src/bin/
+tests/fixtures/
+fake-src/
+testing-grounds/
+curi.config.js
+
+coverage/

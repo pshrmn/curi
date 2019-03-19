@@ -1,0 +1,7 @@
+{
+  "bin/curi-cli.js": {
+    "bundled": 31893,
+    "minified": 15435,
+    "gzipped": 4413
+  }
+}
