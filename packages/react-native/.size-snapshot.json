@@ -2,7 +2,7 @@
   "dist/curi-react-native.es.js": {
     "bundled": 2307,
     "minified": 977,
-    "gzipped": 470,
+    "gzipped": 469,
     "treeshaked": {
       "rollup": {
         "code": 757,
