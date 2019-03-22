@@ -10,7 +10,13 @@ export default function useNavigationFocus(
   ref: React.MutableRefObject<HTMLElement | null>,
   props: FocusHookProps = {}
 ) {
+  // The response isn't actually used, but the app should only
+  // re-focus when the response changes. The preserve and preventScroll
+  // values are used, but not used in the comparison array because
+  // changing these values would steal the app's focus even though
+  // the location hasn't changed.
   const { response } = useCuri();
+  const { preserve, preventScroll = false } = props;
   React.useEffect(() => {
     const ele = ref.current;
     if (ele === null) {
@@ -22,7 +28,7 @@ export default function useNavigationFocus(
       return;
     }
 
-    if (props.preserve && ele.contains(document.activeElement)) {
+    if (preserve && ele.contains(document.activeElement)) {
       return;
     }
 
@@ -34,13 +40,7 @@ export default function useNavigationFocus(
         );
       }
     }
-    const { preventScroll = false } = props;
-    const timeout = setTimeout(() => {
-      // @ts-ignore
-      ele.focus({ preventScroll });
-    });
-    return () => {
-      clearTimeout(timeout);
-    };
+    // @ts-ignore
+    ele.focus({ preventScroll });
   }, [response]);
 }
