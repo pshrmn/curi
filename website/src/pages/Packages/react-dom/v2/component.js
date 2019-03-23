@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { CuriProviderAPI } from "./api/curiProvider";
+import { CreateRouterComponentAPI } from "./api/create_router_component";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
 import { UseCuriAPI } from "./api/useCuri";
@@ -31,7 +31,7 @@ function ReactDOMPkg() {
         </p>
       </About>
       <APIBlock>
-        <CuriProviderAPI />
+        <CreateRouterComponentAPI />
         <LinkAPI />
         <AsyncLinkAPI />
         <UseCuriAPI />

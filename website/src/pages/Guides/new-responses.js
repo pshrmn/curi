@@ -144,7 +144,7 @@ const stop = router.observe(fn);`}
           </Note>
 
           <CodeBlock lang="jsx">
-            {`const Router = curiProvider(router);
+            {`const Router = create_router_component(router);
               
 function setup() {
   ReactDOM.render((

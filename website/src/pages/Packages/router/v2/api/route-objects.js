@@ -165,7 +165,7 @@ export function RoutePropertiesAPI() {
 
             <CodeBlock>
               {`import Home from "./components/Home";
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: "Home",
     path: "",
@@ -434,7 +434,7 @@ const user = {
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`const routes = prepare_routes([
   {
     name: 'Number',
     path: 'number/:num',
@@ -479,7 +479,7 @@ const user = {
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`const routes = prepare_routes([
   {
     name: 'A Route',
     path: 'a-route',

@@ -90,7 +90,7 @@ const announcer = ariaLive(
   ({ response }) => \`Navigated to \${response.title}\`
 );
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: "Home",
     path: "",

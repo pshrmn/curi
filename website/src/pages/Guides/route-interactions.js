@@ -203,10 +203,10 @@ function confirmInteraction() {
         </p>
 
         <CodeBlock>
-          {`import { curi, prepareRoutes } from '@curi/router';
+          {`import { curi, prepare_routes } from '@curi/router';
 import confirmFactory from './interactions/confirm'
 
-const routes = prepareRoutes([{ name: 'Home', path: '' }]);
+const routes = prepare_routes([{ name: 'Home', path: '' }]);
 
 const router = curi(Browser, routes, {
   route: [confirmFactory()]

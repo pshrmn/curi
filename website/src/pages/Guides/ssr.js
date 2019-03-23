@@ -317,9 +317,9 @@ function renderHandler(req, res) {
 
         <ol>
           <li>
-            By wrapping the routes array in a <IJS>prepareRoutes</IJS> call, all
-            of an application's routes are pre-compiled. Without{" "}
-            <IJS>prepareRoutes</IJS>, the route pathes would need to be
+            By wrapping the routes array in a <IJS>prepare_routes</IJS> call,
+            all of an application's routes are pre-compiled. Without{" "}
+            <IJS>prepare_routes</IJS>, the route pathes would need to be
             re-compiled for every request!
           </li>
           <li>
@@ -400,7 +400,7 @@ const ServerHistory = create_server_history();`}
 
         <HashSection tag="h3" meta={routesMeta}>
           <p>
-            As stated above, the <IJS>prepareRoutes</IJS> function is used to
+            As stated above, the <IJS>prepare_routes</IJS> function is used to
             pre-compile routes, which means that they don't end up being
             re-compiled for every single request. If all of an application's
             routes are synchronous (they don't use <IJS>route.resolve</IJS>),
@@ -437,9 +437,9 @@ import routes from "../client/routes";`}
           <CodeBlock>
             {`// routes.js
 import fetch from "isomorphic-fetch";
-import { prepareRoutes } from "@curi/router";
+import { prepare_routes } from "@curi/router";
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: "Test",
     path: "test",
@@ -495,14 +495,14 @@ export default prepareRoutes([
 
         <CodeBlock data-line="1-2,9-14">
           {`import { renderToString } from "react-dom/server";
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
          
 function renderHandler(req, res) {
   const router = curi(ServerHistory, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
-    const Router = curiProvider(router);
+    const Router = create_router_component(router);
     const markup = renderToString(
       <Router>
         <App />
@@ -547,7 +547,7 @@ function renderHandler(req, res) {
 
         <CodeBlock data-line="4-15,28-29">
           {`import { renderToString } from "react-dom/server";
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
 
 function insertMarkup(markup, title) {
   return \`<!doctype html>
@@ -567,7 +567,7 @@ function renderHandler(req, res) {
     history: { location: req.url }
   });
   router.once(({ response }) => {
-    const Router = curiProvider(router);
+    const Router = create_router_component(router);
     const markup = renderToString(
       <Router>
         <App />
@@ -598,7 +598,7 @@ function renderHandler(req, res) {
 
           <CodeBlock data-line="9-12">
             {`import { renderToString } from "react-dom/server";
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
 
 function renderHandler(req, res) {
   const router = curi(ServerHistory, routes, {

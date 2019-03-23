@@ -1,5 +1,5 @@
-import { meta as staticFilesMeta } from "./api/static_files";
-import { meta as pathnamesMeta } from "./api/pathnames";
+import { meta as onceMeta } from "./api/once";
+import { meta as preferDefaultMeta } from "./api/prefer_default";
 
 export default [
   {
@@ -13,6 +13,6 @@ export default [
   {
     title: "API",
     hash: "API",
-    children: [staticFilesMeta, pathnamesMeta]
+    children: [onceMeta, preferDefaultMeta]
   }
 ];

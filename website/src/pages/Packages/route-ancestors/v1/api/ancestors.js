@@ -36,7 +36,7 @@ export function AncestorsAPI() {
         {`import { curi } from '@curi/router';
 import ancestors from '@curi/route-ancestors';
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: 'Grandparent', path: 'g',
     children: [

@@ -229,11 +229,20 @@ const packages = [
     script: true,
     latest: "v1",
     versions: {
-      v1: versions["helpers"]
+      v1: versions["helpers"],
+      v2: "2.0.0-alpha.0"
     },
-    import: () =>
-      import(/* webpackChunkName: 'package--helpers' */
-      `../pages/Packages/helpers/v1/index.js`)
+    import: version => {
+      switch (version) {
+        case "v1":
+          return import(/* webpackChunkName: 'package--helpers-v1' */
+          `../pages/Packages/helpers/v1/index.js`);
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--helpers-v2' */
+          `../pages/Packages/helpers/v2/index.js`);
+      }
+    }
   }
 ];
 

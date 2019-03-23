@@ -1,4 +1,4 @@
-import { meta as curiProviderMeta } from "./api/curiProvider";
+import { meta as CreateRouterComponentMeta } from "./api/create_router_component";
 import { meta as LinkMeta } from "./api/link";
 import { meta as AsyncLinkMeta } from "./api/asynclink";
 import { meta as useCuriMeta } from "./api/useCuri";
@@ -21,7 +21,7 @@ export default [
     title: "API",
     hash: "API",
     children: [
-      curiProviderMeta,
+      CreateRouterComponentMeta,
       LinkMeta,
       AsyncLinkMeta,
       useCuriMeta,
