@@ -1,6 +1,6 @@
 import { Browser } from "@hickory/browser";
 import { curi } from "@curi/router";
-import { curiStore } from "@curi/svelte";
+import { curi_store } from "@curi/svelte";
 import ancestors from "@curi/route-ancestors";
 
 import routes from "./routes";
@@ -36,7 +36,7 @@ const router = curi(Browser, routes, {
   route: [ancestors(), titleText()]
 });
 
-const store = curiStore(router);
+const store = curi_store(router);
 
 const target = document.getElementById("root");
 const view = new app({ target, store });

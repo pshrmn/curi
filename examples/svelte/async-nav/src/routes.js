@@ -1,15 +1,15 @@
-import { prepareRoutes } from "@curi/router";
-import { preferDefault } from "@curi/helpers";
+import { prepare_routes } from "@curi/router";
+import { prefer_default } from "@curi/helpers";
 
 import { movies as MOVIES, movie as MOVIE } from "./api";
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: "Home",
     path: "",
     resolve() {
       const body = import(/* webpackChunkName: "Home" */ "./pages/Home.html")
-        .then(preferDefault);
+        .then(prefer_default);
       const movies = MOVIES();
       return Promise.all([ body, movies ]);
     },
@@ -44,7 +44,7 @@ export default prepareRoutes([
     path: "(.*)",
     resolve() {
       return import(/* webpackChunkName: "NotFound" */ "./pages/NotFound.html")
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return {

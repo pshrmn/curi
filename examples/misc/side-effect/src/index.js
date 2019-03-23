@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { curi } from "@curi/router";
 import { Browser } from "@hickory/browser";
 import createTitleSideEffect from "@curi/side-effect-title";
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
 
 import routes from "./routes";
 import App from "./components/App";
@@ -14,7 +14,7 @@ const setTitle = createTitleSideEffect(
 const router = curi(Browser, routes, {
   sideEffects: [setTitle]
 });
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 ReactDOM.render(
   <Router>

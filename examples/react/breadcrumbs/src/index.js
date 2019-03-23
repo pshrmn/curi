@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Browser } from "@hickory/browser";
 import { curi } from "@curi/router";
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
 import ancestors from "@curi/route-ancestors";
 
 import routes from "./routes";
@@ -37,7 +37,7 @@ function titleText() {
 const router = curi(Browser, routes, {
   route: [ancestors(), titleText()]
 });
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 const root = document.getElementById("root");
 
 ReactDOM.render(
