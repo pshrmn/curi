@@ -102,7 +102,7 @@ const routes = prepare_routes([
   }
 ]);
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   side_effects: [announcer]
 });
 

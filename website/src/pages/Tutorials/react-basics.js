@@ -425,17 +425,17 @@ registerServiceWorker();`}
       <HashSection meta={routerMeta}>
         <p>
           We are now ready to create the router. In the <IJS>src/index.js</IJS>{" "}
-          file, we should import the <IJS>curi</IJS> function from{" "}
+          file, we should import the <IJS>create_router</IJS> function from{" "}
           <IJS>@curi/router</IJS>. To create the router, call the{" "}
-          <IJS>curi()</IJS> function passing it the history function and the{" "}
-          <IJS>routes</IJS> array.
+          <IJS>create_router()</IJS> function passing it the history function
+          and the <IJS>routes</IJS> array.
         </p>
 
         <CodeBlock lang="jsx" data-line="4,12">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { curi } from '@curi/router';
+import { create_router } from "@curi/router";
 import { Browser } from '@hickory/browser';
 
 import routes from './routes';
@@ -443,7 +443,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = curi(Browser, routes);
+const router = create_router(Browser, routes);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
@@ -475,7 +475,7 @@ registerServiceWorker();`}
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { curi } from '@curi/router';
+import { create_router } from "@curi/router";
 import { Browser } from '@hickory/browser';
 import { create_router_component } from "@curi/react-dom";
 
@@ -484,7 +484,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = curi(Browser, routes);
+const router = create_router(Browser, routes);
 const Router = create_router_component(router);
 
 ReactDOM.render(<App />, document.getElementById('root'));
@@ -507,7 +507,7 @@ registerServiceWorker();`}
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { curi } from '@curi/router';
+import { create_router } from "@curi/router";
 import { Browser } from '@hickory/browser';
 import { create_router_component } from "@curi/react-dom";
 
@@ -516,7 +516,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = curi(Browser, routes);
+const router = create_router(Browser, routes);
 const Router = create_router_component(router);
 
 ReactDOM.render((

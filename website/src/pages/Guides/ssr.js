@@ -330,13 +330,13 @@ function renderHandler(req, res) {
 
         <CodeBlock>
           {`// renderer.js
-import { curi } from "@curi/router";
+import { create_router } from "@curi/router";
 import { create_server_history } from "@hickory/in-memory";
 
 const ServerHistory = create_server_history();
 
 function handler(req, res) {
-  const router = curi(ServerHistory, routes, {
+  const router = create_router(ServerHistory, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -377,7 +377,7 @@ function handler(req, res) {
 
           <CodeBlock>
             {`// handler.js
-import { curi } from "@curi/router";
+import { create_router } from "@curi/router";
 import { create_server_history } from "@hickory/in-memory";
 
 const ServerHistory = create_server_history();`}
@@ -390,7 +390,7 @@ const ServerHistory = create_server_history();`}
 
           <CodeBlock>
             {`function handler(req, res) {
-  const router = curi(ServerHistory, routes, {
+  const router = create_router(ServerHistory, routes, {
     history: { location: req.url }
   });
   // ...
@@ -463,7 +463,7 @@ export default prepare_routes([
 
         <CodeBlock data-line="5-7">
           {`function renderHandler(req, res) {
-  const router = curi(ServerHistory, routes, {
+  const router = create_router(ServerHistory, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -498,7 +498,7 @@ export default prepare_routes([
 import { create_router_component } from "@curi/react-dom";
          
 function renderHandler(req, res) {
-  const router = curi(ServerHistory, routes, {
+  const router = create_router(ServerHistory, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -563,7 +563,7 @@ function insertMarkup(markup, title) {
 }
 
 function renderHandler(req, res) {
-  const router = curi(ServerHistory, routes, {
+  const router = create_router(ServerHistory, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -601,7 +601,7 @@ function renderHandler(req, res) {
 import { create_router_component } from "@curi/react-dom";
 
 function renderHandler(req, res) {
-  const router = curi(ServerHistory, routes, {
+  const router = create_router(ServerHistory, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {

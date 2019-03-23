@@ -32,7 +32,7 @@ export function CreateRouterComponentAPI() {
       <CodeBlock lang="jsx">
         {`import { create_router_component } from '@curi/react-dom';
 
-const router = curi(Browser, routes);
+const router = create_router(Browser, routes);
 const Router = create_router_component(router);
 
 ReactDOM.render((

@@ -197,7 +197,7 @@ const Noun = ({ response }) => (
         <CodeBlock>
           {`import client from "./apollo";
           
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   external: { client }
 });`}
         </CodeBlock>
@@ -372,7 +372,7 @@ const routes = prepare_routes([
   }
 ]);
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   route: [prefetch()]
 });
 

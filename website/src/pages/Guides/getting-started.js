@@ -62,7 +62,7 @@ function GettingStartedGuide() {
 import { Browser } from "@hickory/browser";
 
 const routes = prepare_routes([...]);
-const router = curi(Browser, routes);`}
+const router = create_router(Browser, routes);`}
         </CodeBlock>
       </HashSection>
 
@@ -137,7 +137,7 @@ const router = curi(Browser, routes);`}
         </p>
 
         <CodeBlock>
-          {`const router = curi(Browser, routes, {
+          {`const router = create_router(Browser, routes, {
   side_effects: [scroll, title]
 })`}
         </CodeBlock>
@@ -149,7 +149,7 @@ const router = curi(Browser, routes);`}
         </p>
 
         <CodeBlock>
-          {`const router = curi(Browser, routes);
+          {`const router = create_router(Browser, routes);
 router.once(() => {
   // this is not called until the initial response is ready
   // so we can safely render now
