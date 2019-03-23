@@ -1,67 +1,83 @@
 <a href="{href}" on:click="handleClick(event)" {...forward}>
-	{#if wrapper}
-		<svelte:component this={wrapper} navigating={navigating}>
-			<slot></slot>
-		</svelte:component>
-	{:else}
-		<slot></slot>
-	{/if}
+  {#if wrapper}
+  <svelte:component this="{wrapper}" navigating="{navigating}">
+    <slot></slot>
+  </svelte:component>
+  {:else}
+  <slot></slot>
+  {/if}
 </a>
 
 <script>
-	const canNavigate = event => {
-		return (
-			!event.defaultPrevented &&
-			event.button === 0 &&
-			!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
-		);
-	};
+  const canNavigate = event => {
+    return (
+      !event.defaultPrevented &&
+      event.button === 0 &&
+      !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
+    );
+  };
 
-	export default {
-		data() {
-			return {
-				name: '',
-				params: {},
-				hash: '',
-				query: '',
-				state: null,
-				navigating: false
-			};
-		},
-		computed: {
-			location: ({ name, params, hash, query, state, $router }) => {
-				return {
-					pathname: name ? $router.route.pathname(name, params) : "",
-					hash,
-					query,
-					state
-				};
-			},
-			href: ({ location, $router }) => {
-				return $router.history.toHref(location);
-			}
-		},
-		methods: {
-			handleClick(event) {
-				if (canNavigate(event)) {
-					const { $router, name, params, hash, query, state, wrapper } = this.get();
-					event.preventDefault();
-					let cancelled, finished;
-					if (wrapper) {
-						cancelled = finished = () => {
-							this.cancelCallbacks = undefined;
-							this.set({ navigating: false });
-						}
-						this.set({ navigating: true });
-					}
-					this.cancelCallbacks = $router.navigate({ name, params, hash, query, state, cancelled, finished });
-				}
-			}
-		},
-		ondestroy() {
-			if (this.cancelCallbacks) {
-				this.cancelCallbacks();
-			}
-		}
-	};
+  export default {
+    data() {
+      return {
+        name: "",
+        params: {},
+        hash: "",
+        query: "",
+        state: null,
+        navigating: false
+      };
+    },
+    computed: {
+      location: ({ name, params, hash, query, state, $router }) => {
+        return {
+          pathname: name ? $router.route.pathname(name, params) : "",
+          hash,
+          query,
+          state
+        };
+      },
+      href: ({ location, $router }) => {
+        return $router.history.to_href(location);
+      }
+    },
+    methods: {
+      handleClick(event) {
+        if (canNavigate(event)) {
+          const {
+            $router,
+            name,
+            params,
+            hash,
+            query,
+            state,
+            wrapper
+          } = this.get();
+          event.preventDefault();
+          let cancelled, finished;
+          if (wrapper) {
+            cancelled = finished = () => {
+              this.cancelCallbacks = undefined;
+              this.set({ navigating: false });
+            };
+            this.set({ navigating: true });
+          }
+          this.cancelCallbacks = $router.navigate({
+            name,
+            params,
+            hash,
+            query,
+            state,
+            cancelled,
+            finished
+          });
+        }
+      }
+    },
+    ondestroy() {
+      if (this.cancelCallbacks) {
+        this.cancelCallbacks();
+      }
+    }
+  };
 </script>

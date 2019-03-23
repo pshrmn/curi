@@ -1,12 +1,12 @@
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { createServerHistory } from "@hickory/in-memory";
+import { create_server_history } from "@hickory/in-memory";
 import { curi } from "@curi/router";
 import { curiProvider } from "@curi/react-dom";
 import routes from "./src/routes";
 import App from "./src/components/App";
 
-const ServerHistory = createServerHistory();
+const ServerHistory = create_server_history();
 
 export default function(req, res) {
   const router = curi(ServerHistory, routes, {

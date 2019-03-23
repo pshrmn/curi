@@ -33,10 +33,10 @@ function ServerRenderingExample() {
 
         <CodeBlock lang="javascript">
           {`// express
-import { createServerHistory } from "@curi/in-memory";
+import { create_server_history } from "@curi/in-memory";
 
 // 1. Create a history constructor
-const ServerHistory = createServerHistory();
+const ServerHistory = create_server_history();
 
 function catchAll(req, res) {
   // 2. Create a router using the current location
