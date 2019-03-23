@@ -1,3 +1,7 @@
+## Next
+
+* Update `createServerHistory` import to new name: `create_server_history`.
+
 ## 1.0.0-beta.0
 
 * `staticFiles` takes `history` option for passing history options.

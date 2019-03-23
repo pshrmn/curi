@@ -1,3 +1,7 @@
+# Next
+
+* Use snake cased `history.to_href`
+
 ## 1.0.0-beta.26
 
 * Remove `curi-block` component

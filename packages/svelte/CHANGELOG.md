@@ -1,3 +1,7 @@
+# Next
+
+* Use snake cased `history.to_href`
+
 ## 1.0.0-beta.13
 
 * `<Link>` uses `router.navigate()`'s return function to prevent unnecessary `set`s.

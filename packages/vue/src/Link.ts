@@ -39,7 +39,7 @@ const Link: ComponentOptions<LinkComponent> = {
       };
     },
     href: function() {
-      return this.$router.history.toHref(this.location);
+      return this.$router.history.to_href(this.location);
     }
   },
 

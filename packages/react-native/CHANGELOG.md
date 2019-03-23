@@ -1,3 +1,7 @@
+# Next
+
+* Use snake cased `history.to_href`
+
 ## 2.0.0-alpha.2
 
 * Split `Link` into `Link` (regular `children`) and `AsyncLink` (`children` is a render-invoked function).

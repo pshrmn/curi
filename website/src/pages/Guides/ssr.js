@@ -331,9 +331,9 @@ function renderHandler(req, res) {
         <CodeBlock>
           {`// renderer.js
 import { curi } from "@curi/router";
-import { createServerHistory } from "@hickory/in-memory";
+import { create_server_history } from "@hickory/in-memory";
 
-const ServerHistory = createServerHistory();
+const ServerHistory = create_server_history();
 
 function handler(req, res) {
   const router = curi(ServerHistory, routes, {
@@ -363,14 +363,14 @@ function handler(req, res) {
           </p>
 
           <p>
-            The <IJS>createServerHistory</IJS> function exported by{" "}
+            The <IJS>create_server_history</IJS> function exported by{" "}
             <IJS>@hickory/in-memory</IJS> is made specifically for this job.
             This function takes history options and returns a history
             constructor function.
           </p>
 
           <p>
-            <IJS>createServerHistory</IJS> creates internal functions for
+            <IJS>create_server_history</IJS> creates internal functions for
             location parsing/stringifying ahead of time so that they don't need
             to be recreated for every request.
           </p>
@@ -378,9 +378,9 @@ function handler(req, res) {
           <CodeBlock>
             {`// handler.js
 import { curi } from "@curi/router";
-import { createServerHistory } from "@hickory/in-memory";
+import { create_server_history } from "@hickory/in-memory";
 
-const ServerHistory = createServerHistory();`}
+const ServerHistory = create_server_history();`}
           </CodeBlock>
 
           <p>

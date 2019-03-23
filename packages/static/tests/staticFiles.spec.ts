@@ -344,7 +344,7 @@ describe("staticFiles()", () => {
         },
         output: {
           render: (emitted: Emitted) => {
-            const href = emitted.router.history.toHref({
+            const href = emitted.router.history.to_href({
               pathname: "/",
               query: { x: "y" }
             });
