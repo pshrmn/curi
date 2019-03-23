@@ -11,7 +11,7 @@ const history = Browser({
   query: { parse, stringify }
 });
 const router = create_router(Browser, routes, {
-  emitRedirects: false
+  emit_redirects: false
 });
 const store = curi_store(router);
 

@@ -21,4 +21,4 @@ const routes = [
 ];
 ```
 
-Curi will automatically generate a new response based on the location that you redirect to. The redirect response _will_ be emitted, so you will have to decide whether to attach a special `body` component to redirect responses or how to "render" the redirect (e.g. show a "redirecting..." string when `response.redirectTo` is defined).
+Curi will automatically generate a new response based on the location that you redirect to. The redirect response _will_ be emitted, so you will have to decide whether to attach a special `body` component to redirect responses or how to "render" the redirect (e.g. show a "redirecting..." string when `response.redirect_to` is defined).

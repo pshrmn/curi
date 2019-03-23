@@ -24,7 +24,7 @@ export default prepare_routes([
     response() {
       if (!store.state.user) {
         return {
-          redirectTo: {
+          redirect_to: {
             name: "Login",
             query: { next: "/protected" }
           },
@@ -43,7 +43,7 @@ export default prepare_routes([
     response() {
       if (store.state.user) {
         return {
-          redirectTo: {
+          redirect_to: {
             name: "Home"
           }
         };
@@ -60,7 +60,7 @@ export default prepare_routes([
     response() {
       if (!store.state.user) {
         return {
-          redirectTo: {
+          redirect_to: {
             name: "Home"
           }
         };

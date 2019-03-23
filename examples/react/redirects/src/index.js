@@ -12,7 +12,7 @@ const history = Browser({
   query: { parse, stringify }
 });
 const router = create_router(Browser, routes, {
-  emitRedirects: false
+  emit_redirects: false
 });
 const Router = create_router_component(router);
 

@@ -28,12 +28,12 @@ function catchAll(req, res) {
 
 The above example is very basic. Some other things that you might need to consider are:
 
-* redirects — You should redirect instead of rendering markup when `redirectTo` is set.
+* redirects — You should redirect instead of rendering markup when `redirect_to` is set.
 
 ```js
 router.once(({ response }) => {
-  if (response.redirectTo) {
-    res.redirect(response.redirectTo);
+  if (response.redirect_to) {
+    res.redirect(response.redirect_to);
   }
   // ...
 });

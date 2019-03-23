@@ -14,8 +14,8 @@ export default function(req, res) {
   });
   const Router = create_router_component(router);
   router.once(({ response }) => {
-    if (response.redirectTo !== undefined) {
-      res.redirect(302, response.redirectTo.pathname);
+    if (response.redirect_to !== undefined) {
+      res.redirect(302, response.redirect_to.pathname);
       return;
     }
     const markup = renderToString(

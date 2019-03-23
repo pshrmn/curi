@@ -24,7 +24,7 @@ export default prepare_routes([
     response: ({ match }) => {
       if (!fakeAuth.authenticated()) {
         return {
-          redirectTo: {
+          redirect_to: {
             name: "Login",
             query: { next: match.location.pathname }
           },
@@ -43,7 +43,7 @@ export default prepare_routes([
     response: () => {
       if (fakeAuth.authenticated()) {
         return {
-          redirectTo: {
+          redirect_to: {
             name: "Home"
           }
         };
@@ -59,7 +59,7 @@ export default prepare_routes([
     response: () => {
       if (!fakeAuth.authenticated()) {
         return {
-          redirectTo: {
+          redirect_to: {
             name: "Home"
           }
         };
