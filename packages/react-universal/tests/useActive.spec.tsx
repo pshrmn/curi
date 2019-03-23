@@ -2,10 +2,9 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 import activeInteraction from "@curi/route-active";
 
-// @ts-ignore (resolved by jest)
 import {
   create_router_component,
   useActive,
@@ -26,7 +25,7 @@ describe("useActive", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = curi(InMemory, routes, {
+    router = create_router(InMemory, routes, {
       route: [activeInteraction()]
     });
     Router = create_router_component(router);
@@ -38,7 +37,7 @@ describe("useActive", () => {
 
   describe("no route.active()", () => {
     it('throws if attempting to use in a Curi router without the "active" route interaction', () => {
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
 
       const realError = console.error;
       console.error = jest.fn();
@@ -63,7 +62,7 @@ describe("useActive", () => {
 import curi from "@curi/router";
 import active from "@curi/route-active";
 
-const router = curi(history, routes, {
+const router = create_router(history, routes, {
   route: [active()]
 });`
       );
@@ -89,7 +88,7 @@ const router = curi(history, routes, {
 
   describe("params", () => {
     it('uses the "params" to determine if it is active', () => {
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
@@ -115,7 +114,7 @@ const router = curi(history, routes, {
 
   describe("partial", () => {
     it("returns true for partial matches when partial=true", () => {
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
@@ -138,7 +137,7 @@ const router = curi(history, routes, {
 
   describe("locationCheck", () => {
     it("is called with location if route is active", () => {
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact"]
@@ -164,7 +163,7 @@ const router = curi(history, routes, {
     });
 
     it("is not called if route is not active", () => {
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/"]
@@ -189,7 +188,7 @@ const router = curi(history, routes, {
     });
 
     it("returns true if route matches and response check returns true", () => {
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
@@ -214,7 +213,7 @@ const router = curi(history, routes, {
     });
 
     it("returns false if route matches, but location check returns false", () => {
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]

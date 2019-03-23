@@ -70,11 +70,11 @@ function DevTipsGuide() {
 
         <CodeBlock data-line="9-14">
           {`// index.js
-import { curi } from "@curi/core";
+import { create_router } from "@curi/router";
 import { Browser } from "@hickory/browser";
 import routes from "./routes";
 
-const router = curi(Browser, routes);
+const router = create_router(Browser, routes);
 
 if (module.hot) {
   module.hot.accept("./routes.js", function() {

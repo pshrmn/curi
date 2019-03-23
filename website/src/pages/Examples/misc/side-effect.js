@@ -44,10 +44,10 @@ function SideEffectExample() {
         </p>
 
         <CodeBlock lang="javascript">
-          {`import { curi } from '@curi/router';
+          {`import { create_router } from "@curi/router";
 import mySideEffect from './mySideEffect';
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   side_effects: [mySideEffect]
 });`}
         </CodeBlock>

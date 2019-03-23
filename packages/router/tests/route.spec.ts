@@ -2,8 +2,7 @@ import "jest";
 import { Route, Interaction } from "../src/types";
 import { InMemory } from "@hickory/in-memory";
 
-// @ts-ignore (resolved by jest)
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
 function PropertyReporter(): Interaction {
   let knownRoutes = {};
@@ -37,7 +36,7 @@ describe("public route properties", () => {
           path: "test"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/test"]
@@ -56,7 +55,7 @@ describe("public route properties", () => {
           path: "test"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [PropertyReporter()],
         history: {}
       });
@@ -73,7 +72,7 @@ describe("public route properties", () => {
           path: ":one/:two/:three"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/four/five/six"]
@@ -90,7 +89,7 @@ describe("public route properties", () => {
           path: "one/two/three"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/one/two/three"]
@@ -115,7 +114,7 @@ describe("public route properties", () => {
           }
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/test"]
@@ -137,7 +136,7 @@ describe("public route properties", () => {
           path: "test"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/test"]
@@ -162,7 +161,7 @@ describe("public route properties", () => {
           extra
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/test"]

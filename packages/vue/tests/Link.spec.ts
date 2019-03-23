@@ -1,7 +1,7 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { CuriPlugin } from "@curi/vue";
@@ -17,7 +17,7 @@ describe("<curi-link>", () => {
     node = document.createElement("div");
     document.body.appendChild(node);
 
-    router = curi(InMemory, routes);
+    router = create_router(InMemory, routes);
 
     Vue = createLocalVue();
     Vue.use(CuriPlugin, { router });
@@ -66,7 +66,7 @@ describe("<curi-link>", () => {
 
     it('re-uses current pathname if "to" prop is not provided', () => {
       const Vue = createLocalVue();
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         history: {
           locations: ["/place/somewhere"]
         }
@@ -161,7 +161,7 @@ describe("<curi-link>", () => {
       ]);
 
       it("navigating = true after clicking", done => {
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
 
@@ -203,7 +203,7 @@ describe("<curi-link>", () => {
       });
 
       it("navigating = false after navigation completes", done => {
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
 
@@ -263,7 +263,7 @@ describe("<curi-link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
 

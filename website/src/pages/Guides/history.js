@@ -74,7 +74,7 @@ function HistoryGuide() {
         </p>
 
         <CodeBlock>{`import { Browser } from "@hickory/browser";
-const router = curi(Browser, routes);`}</CodeBlock>
+const router = create_router(Browser, routes);`}</CodeBlock>
 
         <p>
           You most likely will not need to interact directly with the
@@ -92,7 +92,7 @@ const router = curi(Browser, routes);`}</CodeBlock>
         <HashSection meta={browserMeta} tag="h3">
           <CodeBlock>
             {`import { Browser } from "@hickory/browser";
-const router = curi(Browser, routes);`}
+const router = create_router(Browser, routes);`}
           </CodeBlock>
 
           <p>
@@ -123,7 +123,7 @@ const router = curi(Browser, routes);`}
         <HashSection meta={hashMeta} tag="h3">
           <CodeBlock>
             {`import { Hash } from "@hickory/hash";
-const router = curi(Hash, routes);`}
+const router = create_router(Hash, routes);`}
           </CodeBlock>
 
           <p>
@@ -144,10 +144,10 @@ const router = curi(Hash, routes);`}
           <CodeBlock>
             {`import { InMemory, create_server_history } from "@hickory/in-memory";
 
-const router = curi(InMemory, routes);
+const router = create_router(InMemory, routes);
 // or
 const ServerHistory = create_server_history();
-const router = curi(ServerHistory, routes);`}
+const router = create_router(ServerHistory, routes);`}
           </CodeBlock>
 
           <p>
@@ -230,7 +230,7 @@ location = {
             {`import { parse, stringify } from "qs";
 import { Browser } from "@hickory/browser";
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   history: {
     query: { parse, stringify }
   }

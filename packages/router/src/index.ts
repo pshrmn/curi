@@ -1,6 +1,6 @@
 export * from "./types";
 
-import curi from "./curi";
+import create_router from "./create_router";
 import prepare_routes from "./prepare_routes";
 
-export { curi, prepare_routes };
+export { create_router, prepare_routes };

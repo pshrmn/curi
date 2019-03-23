@@ -1,7 +1,7 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 import { InMemory } from "@hickory/in-memory";
 
 import wait from "./utils/wait";
@@ -29,7 +29,7 @@ describe("create_router_component()", () => {
   describe("children prop", () => {
     it("renders children", () => {
       const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
 
       const App = jest.fn(() => {
         return null;
@@ -46,7 +46,7 @@ describe("create_router_component()", () => {
 
     it("works with multiple children", () => {
       const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
 
       const One = jest.fn(() => {
         return null;
@@ -67,7 +67,7 @@ describe("create_router_component()", () => {
     });
 
     it("re-renders when the location changes", async () => {
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
 
       let currentResponse;
 
@@ -97,7 +97,7 @@ describe("create_router_component()", () => {
 
   describe("context", () => {
     it("makes response, navigation, and router available on content", () => {
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
 
       const ContextLogger: React.ComponentType = () => {
         const {

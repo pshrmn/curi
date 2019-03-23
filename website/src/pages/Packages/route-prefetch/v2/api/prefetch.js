@@ -29,10 +29,10 @@ export function PrefetchAPI() {
       </p>
 
       <CodeBlock>
-        {`import { curi } from '@curi/router';
+        {`import { create_router } from "@curi/router";
 import prefetch from '@curi/route-prefetch';
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   route: [prefetch()]
 });
 
@@ -60,7 +60,7 @@ router.route.prefetch("Some Route");`}
           </p>
 
           <CodeBlock>
-            {`const router = curi(Browser, routes, {
+            {`const router = create_router(Browser, routes, {
   external
 });
 
@@ -89,7 +89,7 @@ router.route.prefetch("Some Route", {
             </p>
 
             <CodeBlock>
-              {`const router = curi(Browser, routes, {
+              {`const router = create_router(Browser, routes, {
   external: {...}
 });
 

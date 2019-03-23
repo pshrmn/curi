@@ -399,17 +399,17 @@ export default [
         <p>
           With the history object created and the routes defined, we are ready
           to create the router. Back in the <IJS>src/index.js</IJS> file, we
-          should import the <IJS>curi</IJS> function from{" "}
+          should import the <IJS>create_router</IJS> function from{" "}
           <IJS>@curi/router</IJS> as well as our routes from{" "}
           <IJS>src/routes.js</IJS>. Creating the router is done by calling the{" "}
-          <IJS>curi()</IJS> function and passing it the history function and the{" "}
-          <IJS>routes</IJS> array.
+          <IJS>create_router()</IJS> function and passing it the history
+          function and the <IJS>routes</IJS> array.
         </p>
 
         <CodeBlock lang="javascript" data-line="3,6,11">
           {`// src/main.js
 import Vue from 'vue'
-import { curi } from '@curi/router';
+import { create_router } from "@curi/router";
 import { Browser } from '@hickory/browser'
 
 import routes from './routes';
@@ -417,7 +417,7 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-const router = curi(Browser, routes)
+const router = create_router(Browser, routes)
 
 new Vue({
   render: h => h(App)
@@ -447,7 +447,7 @@ new Vue({
         <CodeBlock lang="javascript" data-line="5,13">
           {`// src/main.js
 import Vue from 'vue'
-import { curi } from '@curi/router';
+import { create_router } from "@curi/router";
 import { Browser } from '@hickory/browser'
 import { CuriPlugin } from '@curi/vue'
 
@@ -456,7 +456,7 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-const router = curi(Browser, routes)
+const router = create_router(Browser, routes)
 Vue.use(CuriPlugin, { router })
 
 new Vue({

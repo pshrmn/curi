@@ -1,6 +1,6 @@
 import "jest";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
 import { SessionLocation } from "@hickory/root";
 
@@ -9,7 +9,7 @@ import create_prefetch from "@curi/route-prefetch";
 describe("prefetch route interaction", () => {
   it("is called using router.route.prefetch()", () => {
     const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-    const router = curi(InMemory, routes, {
+    const router = create_router(InMemory, routes, {
       route: [create_prefetch()]
     });
     expect(router.route.prefetch).toBeDefined();
@@ -27,7 +27,7 @@ describe("prefetch route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [create_prefetch()]
       });
       expect(router.route.prefetch("Player")).toBeDefined();
@@ -38,7 +38,7 @@ describe("prefetch route interaction", () => {
         { name: "None", path: "player" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [create_prefetch()]
       });
       // This is a bit roundabout, but we verify that the paths did not register
@@ -64,7 +64,7 @@ describe("prefetch route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [create_prefetch()]
       });
       expect(router.route.prefetch("Player").then).toBeDefined();
@@ -74,7 +74,7 @@ describe("prefetch route interaction", () => {
       const name = "Anonymous";
 
       const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [create_prefetch()]
       });
 
@@ -103,7 +103,7 @@ describe("prefetch route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [create_prefetch()]
       });
 
@@ -133,7 +133,7 @@ describe("prefetch route interaction", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes, {
+        const router = create_router(InMemory, routes, {
           route: [create_prefetch()]
         });
         const params_to_pass = { id: 1 };
@@ -164,7 +164,7 @@ describe("prefetch route interaction", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes, {
+        const router = create_router(InMemory, routes, {
           route: [create_prefetch()],
           external
         });
@@ -184,7 +184,7 @@ describe("prefetch route interaction", () => {
       },
       { name: "Catch All", path: "(.*)" }
     ]);
-    const router = curi(InMemory, routes, {
+    const router = create_router(InMemory, routes, {
       route: [create_prefetch()]
     });
 

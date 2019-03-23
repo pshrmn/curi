@@ -41,7 +41,7 @@ const ServerHistory = create_server_history();
 function catchAll(req, res) {
   // 2. Create a router using the current location
   //    and the root React routing component
-  const router = curi(ServerHistory, routes, {
+  const router = create_router(ServerHistory, routes, {
     history: { location: req.url }
   });
   const Router = create_router_component(router);

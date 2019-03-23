@@ -232,7 +232,7 @@ const routes = prepare_routes([
         </p>
 
         <CodeBlock>
-          {`const router = curi(Browser, routes, {
+          {`const router = create_router(Browser, routes, {
   emitRedirects: false
 });`}
         </CodeBlock>

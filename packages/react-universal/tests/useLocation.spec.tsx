@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { create_router_component, useLocation } from "@curi/react-universal";
@@ -18,7 +18,7 @@ describe("useLocation", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = curi(InMemory, routes);
+    router = create_router(InMemory, routes);
     Router = create_router_component(router);
   });
 

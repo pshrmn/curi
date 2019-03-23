@@ -44,7 +44,7 @@ const propertiesMeta = {
 };
 
 export const meta = {
-  title: "curi()",
+  title: "create_router()",
   hash: "curi",
   children: [argumentsMeta, propertiesMeta]
 };
@@ -53,15 +53,16 @@ export function CuriAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>curi</IJS> export is a function to create a router. It has two
-        required arguments: a <IJS>history</IJS> object and a <IJS>routes</IJS>{" "}
-        array, and an optional third argument: an <IJS>options</IJS> object.
+        The <IJS>create_router</IJS> function is used to create a router. It has
+        two required arguments: a <IJS>history</IJS> object and a{" "}
+        <IJS>routes</IJS> array, and an optional third argument: an{" "}
+        <IJS>options</IJS> object.
       </p>
 
       <CodeBlock>
-        {`import { curi } from '@curi/router';
+        {`import { create_router } from "@curi/router";
 
-const router = curi(Browser, routes, options);`}
+const router = create_router(Browser, routes, options);`}
       </CodeBlock>
 
       <HashSection tag="h4" meta={argumentsMeta}>
@@ -79,7 +80,7 @@ const router = curi(Browser, routes, options);`}
           <CodeBlock lang="jsx">
             {`import { Browser } from "@hickory/browser";
 
-const router = curi(Browser, routes);`}
+const router = create_router(Browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -98,7 +99,7 @@ const router = curi(Browser, routes);`}
   { name: "About", path: "about" }
 ]);
 
-const router = curi(Browser, routes);`}
+const router = create_router(Browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -131,7 +132,7 @@ import ancestors from "@curi/route-ancestors";
 
 const routes = prepare_routes([{ name: "Home", path: "" }]);
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   route: [active(), ancestors()]
 });`}
             </CodeBlock>
@@ -192,7 +193,7 @@ router.route.pathname("Home");
             <CodeBlock>
               {`import scroll from "@curi/side-effect-scroll";
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   side_effects: [scroll()]
 });`}
             </CodeBlock>
@@ -214,7 +215,7 @@ const router = curi(Browser, routes, {
 
             <CodeBlock>
               {`const client = new ApolloClient();
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   external: { client, greeting: "Hi!" }
 });`}
             </CodeBlock>
@@ -268,7 +269,7 @@ const router = curi(Browser, routes, {
   }
 ]);
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   emitRedirects: false                 
 });
 // navigating to "/old/2" will automatically redirect
@@ -298,7 +299,7 @@ const router = curi(Browser, routes, {
             </p>
 
             <CodeBlock>
-              {`const router = curi(Browser, routes, {
+              {`const router = create_router(Browser, routes, {
   pathOptions: {
     encode: (value, token) => { /* ... */ }
   }
@@ -389,7 +390,7 @@ const router = curi(Browser, routes, {
   },
   // ...
 ]);
-const router = curi(Browser, routes);
+const router = create_router(Browser, routes);
 
 router.navigate({
   name: "Photo",
@@ -625,7 +626,7 @@ stopObserving();
           </Note>
 
           <CodeBlock>
-            {`const router = curi(Browser, routes);
+            {`const router = create_router(Browser, routes);
 const tooSoon = router.current();
 // tooSoon.response === null
 // tooSoon.navigation === null
@@ -662,7 +663,7 @@ router.once(({ response, navigation }) => {
               {`const routes = prepare_routes([
   { name: 'User', path: 'user/:id' }
 ]);
-const router = curi(Browser, routes);
+const router = create_router(Browser, routes);
 const userPathname = router.route.pathname(
   'User',
   { id: '12345' }
@@ -687,7 +688,7 @@ const userPathname = router.route.pathname(
             {`const oldRoutes = prepare_routes([...]);
 const newRoutes = prepare_routes([...]);
 
-const router = curi(Browser, oldRoutes);
+const router = create_router(Browser, oldRoutes);
 // generates responses using old routes
 
 router.refresh(newRoutes);
@@ -706,7 +707,7 @@ router.refresh(newRoutes);
           <p>
             The <IJS>external</IJS> value that was passed through{" "}
             <Link hash="options-external">
-              <IJS>curi</IJS>'s options
+              <IJS>create_router</IJS>'s options
             </Link>
             .
           </p>

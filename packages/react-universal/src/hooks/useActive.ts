@@ -22,7 +22,7 @@ export default function useActive(props: ActiveHookProps) {
 import curi from "@curi/router";
 import active from "@curi/route-active";
 
-const router = curi(history, routes, {
+const router = create_router(history, routes, {
   route: [active()]
 });`
       );

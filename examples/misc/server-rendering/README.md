@@ -8,7 +8,7 @@ function catchAll(req, res) {
   const history = InMemory({ locations: [req.url]});
 
   // 2. Create a router and the root Curi provider component
-  const router = curi(history, routes);
+  const router = create_router(history, routes);
   const Router = create_router_component(router);
 
   // 3. Wait for the initial location's response to finish

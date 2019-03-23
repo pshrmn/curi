@@ -33,10 +33,10 @@ export function ActiveAPI() {
       </p>
 
       <CodeBlock>
-        {`import { curi } from '@curi/router';
+        {`import { create_router } from "@curi/router";
 import active from '@curi/route-active';
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   route: [active()]
 });
 

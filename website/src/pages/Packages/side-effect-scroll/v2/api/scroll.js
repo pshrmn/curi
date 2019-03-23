@@ -14,10 +14,10 @@ export function ScrollAPI() {
   return (
     <HashSection meta={meta}>
       <CodeBlock>
-        {`import { curi } from '@curi/router';
+        {`import { create_router } from "@curi/router";
 import scroll from '@curi/side-effect-scroll';
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   side_effects: [scroll()]
 });`}
       </CodeBlock>

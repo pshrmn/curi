@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
 import { create_router_component, AsyncLink } from "@curi/react-dom";
 
@@ -18,7 +18,7 @@ describe("<AsyncLink>", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = curi(InMemory, routes);
+    router = create_router(InMemory, routes);
     Router = create_router_component(router);
   });
 
@@ -71,7 +71,7 @@ describe("<AsyncLink>", () => {
 
       it("creates a relative link if 'to' is undefined", () => {
         const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-        const router = curi(InMemory, routes, {
+        const router = create_router(InMemory, routes, {
           history: {
             locations: ["/the-initial-location"]
           }
@@ -96,7 +96,7 @@ describe("<AsyncLink>", () => {
       ]);
 
       beforeEach(() => {
-        router = curi(InMemory, routes);
+        router = create_router(InMemory, routes);
         Router = create_router_component(router);
       });
 
@@ -147,7 +147,7 @@ describe("<AsyncLink>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Router = create_router_component(router);
         ReactDOM.render(
           <Router>
@@ -185,7 +185,7 @@ describe("<AsyncLink>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       const Router = create_router_component(router);
       const ref = React.createRef();
       ReactDOM.render(
@@ -207,7 +207,7 @@ describe("<AsyncLink>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       const Router = create_router_component(router);
       const children = jest.fn((a: boolean) => null);
       ReactDOM.render(
@@ -227,7 +227,7 @@ describe("<AsyncLink>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       const mock_navigate = jest.fn();
       router.history.navigate = mock_navigate;
       const Router = create_router_component(router);
@@ -272,7 +272,7 @@ describe("<AsyncLink>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Router = create_router_component(router);
 
         ReactDOM.render(
@@ -323,7 +323,7 @@ describe("<AsyncLink>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Router = create_router_component(router);
 
         ReactDOM.render(
@@ -375,7 +375,7 @@ describe("<AsyncLink>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Router = create_router_component(router);
 
         ReactDOM.render(
@@ -438,7 +438,7 @@ describe("<AsyncLink>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Router = create_router_component(router);
 
         ReactDOM.render(
@@ -477,7 +477,7 @@ describe("<AsyncLink>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       router.history.navigate = mock_navigate;
       const Router = create_router_component(router);
 
@@ -519,7 +519,7 @@ describe("<AsyncLink>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         router.history.navigate = mock_navigate;
         const Router = create_router_component(router);
 
@@ -557,7 +557,7 @@ describe("<AsyncLink>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         router.history.navigate = mock_navigate;
         const Router = create_router_component(router);
 
@@ -593,7 +593,7 @@ describe("<AsyncLink>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       router.history.navigate = mock_navigate;
       const Router = create_router_component(router);
 
@@ -630,7 +630,7 @@ describe("<AsyncLink>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       router.history.navigate = mock_navigate;
       const Router = create_router_component(router);
 

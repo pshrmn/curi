@@ -74,7 +74,7 @@ function SyncAndAsyncGuide() {
             </p>
 
             <CodeBlock>
-              {`const router = curi(Browser, routes);
+              {`const router = create_router(Browser, routes);
 router.once(() => {
   // the initial response is ready,
   // so it is safe to render
