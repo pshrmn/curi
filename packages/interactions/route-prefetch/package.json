@@ -17,7 +17,6 @@
     "build": "rollup -c",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
   },
   "repository": {
