@@ -1,8 +1,7 @@
 import "jest";
 import { InMemory } from "@hickory/in-memory";
 
-// @ts-ignore (resolved by jest)
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
 describe("route.path_options matching", () => {
   describe("default options", () => {
@@ -17,7 +16,7 @@ describe("route.path_options matching", () => {
           path: "(.*)"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         history: {
           locations: ["/Here"]
         }
@@ -37,7 +36,7 @@ describe("route.path_options matching", () => {
           path: "(.*)"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         history: {
           locations: ["/here/"]
         }
@@ -57,7 +56,7 @@ describe("route.path_options matching", () => {
           path: "(.*)"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         history: {
           locations: ["/here/again"]
         }
@@ -80,7 +79,7 @@ describe("route.path_options matching", () => {
           path: "(.*)"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         history: {
           locations: ["/Here"]
         }
@@ -101,7 +100,7 @@ describe("route.path_options matching", () => {
           path: "(.*)"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         history: {
           locations: ["/here/"]
         }
@@ -122,7 +121,7 @@ describe("route.path_options matching", () => {
           path: "(.*)"
         }
       ]);
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         history: {
           locations: ["/here/again"]
         }

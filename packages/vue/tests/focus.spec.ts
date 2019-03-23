@@ -1,7 +1,7 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { CuriPlugin } from "@curi/vue";
@@ -13,7 +13,7 @@ describe("curi-focus directive", () => {
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ]);
-  const router = curi(InMemory, routes);
+  const router = create_router(InMemory, routes);
 
   const Vue = createLocalVue();
   Vue.use(CuriPlugin, { router });

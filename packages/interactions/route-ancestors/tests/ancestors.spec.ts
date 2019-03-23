@@ -1,13 +1,13 @@
 import "jest";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
 import create_ancestors from "@curi/route-ancestors";
 
 describe("ancestors route interaction", () => {
   it("is called using router.route.ancestors()", () => {
     const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-    const router = curi(InMemory, routes, {
+    const router = create_router(InMemory, routes, {
       route: [create_ancestors()]
     });
     expect(router.route.ancestors).toBeDefined();
@@ -33,7 +33,7 @@ describe("ancestors route interaction", () => {
       },
       { name: "Catch All", path: "(.*)" }
     ]);
-    const router = curi(InMemory, routes, {
+    const router = create_router(InMemory, routes, {
       route: [create_ancestors()]
     });
 
@@ -86,7 +86,7 @@ describe("ancestors route interaction", () => {
       },
       { name: "Catch All", path: "(.*)" }
     ]);
-    const router = curi(InMemory, routes, {
+    const router = create_router(InMemory, routes, {
       route: [create_ancestors()]
     });
     const empty_routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);

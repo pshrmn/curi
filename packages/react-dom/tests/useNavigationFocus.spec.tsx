@@ -2,9 +2,8 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
-// @ts-ignore (resolved by jest)
 import {
   create_router_component,
   useNavigationFocus,
@@ -24,7 +23,7 @@ describe("useNavigationFocus", () => {
   beforeEach(() => {
     node = document.createElement("div");
     document.body.appendChild(node);
-    router = curi(InMemory, routes);
+    router = create_router(InMemory, routes);
     Router = create_router_component(router);
   });
 
@@ -65,7 +64,7 @@ describe("useNavigationFocus", () => {
         }
       ]);
 
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       const Router = create_router_component(router);
 
       function Focuser() {
@@ -208,7 +207,7 @@ describe("useNavigationFocus", () => {
           }
         ]);
 
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Router = create_router_component(router);
 
         function Focuser() {
@@ -271,7 +270,7 @@ describe("useNavigationFocus", () => {
           }
         ]);
 
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const Router = create_router_component(router);
 
         function Focuser() {

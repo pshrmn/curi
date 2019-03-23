@@ -3,8 +3,7 @@ import { InMemory } from "@hickory/in-memory";
 
 import { NavType } from "@hickory/root";
 
-// @ts-ignore (resolved by jest)
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 
 describe("curi", () => {
   describe("constructor", () => {
@@ -16,7 +15,7 @@ describe("curi", () => {
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
 
       const names = ["Home", "About", "Contact"];
       names.forEach(n => {
@@ -37,7 +36,7 @@ describe("curi", () => {
           ]
         }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       const names = ["Email", "Phone"];
       names.forEach(n => {
         expect(router.route.pathname(n)).toBeDefined();
@@ -52,7 +51,7 @@ describe("curi", () => {
         reset: () => {},
         get: () => {}
       });
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         route: [createfakeInteraction()]
       });
       expect(router.route.fake).toBeDefined();
@@ -62,7 +61,7 @@ describe("curi", () => {
       describe("interactions", () => {
         it("includes pathname interaction by default", () => {
           const routes = prepare_routes([{ name: "Home", path: "" }]);
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           expect(router.route.pathname).toBeDefined();
         });
 
@@ -80,7 +79,7 @@ describe("curi", () => {
           };
 
           const routes = prepare_routes([{ name: "Home", path: "" }]);
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             route: [createfirstInteraction()]
           });
           expect(router.route.pathname).toBeDefined();
@@ -133,7 +132,7 @@ describe("curi", () => {
               path: "cousin"
             }
           ]);
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             route: [createfirstInteraction(), createsecondInteraction()],
             history: {
               locations: ["/grandparent"]
@@ -170,7 +169,7 @@ describe("curi", () => {
           const routes = prepare_routes([{ name: "All", path: "(.*)" }]);
           const sideEffect = jest.fn();
 
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             side_effects: [sideEffect]
           });
           router.once(({ response, navigation }) => {
@@ -196,7 +195,7 @@ describe("curi", () => {
             done();
           };
 
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             side_effects: [sideEffect]
           });
         });
@@ -228,7 +227,7 @@ describe("curi", () => {
               firstCall = false;
             }
           };
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             side_effects: [logger]
           });
         });
@@ -252,7 +251,7 @@ describe("curi", () => {
             }
           ]);
 
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             emitRedirects: false
           });
           // the first emitted response is the location that was redirected to
@@ -285,7 +284,7 @@ describe("curi", () => {
               path: "(.*)"
             }
           ]);
-          const router = curi(InMemory, routes, { external });
+          const router = create_router(InMemory, routes, { external });
         });
 
         it("gets passed to response function", () => {
@@ -304,7 +303,7 @@ describe("curi", () => {
               path: "(.*)"
             }
           ]);
-          const router = curi(InMemory, routes, { external });
+          const router = create_router(InMemory, routes, { external });
         });
 
         it("is available from the router", () => {
@@ -315,7 +314,7 @@ describe("curi", () => {
               path: "(.*)"
             }
           ]);
-          const router = curi(InMemory, routes, { external });
+          const router = create_router(InMemory, routes, { external });
           expect(router.external).toBe(external);
         });
       });
@@ -324,7 +323,7 @@ describe("curi", () => {
     describe("sync/async matching", () => {
       it("does synchronous matching by default", () => {
         const routes = prepare_routes([{ name: "Home", path: "" }]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const after = jest.fn();
         router.once(r => {
           expect(after.mock.calls.length).toBe(0);
@@ -342,7 +341,7 @@ describe("curi", () => {
             }
           }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const after = jest.fn();
         router.once(r => {
           expect(after.mock.calls.length).toBe(1);
@@ -366,7 +365,7 @@ describe("curi", () => {
             ]
           }
         ]);
-        const router = curi(InMemory, routes, {
+        const router = create_router(InMemory, routes, {
           history: {
             locations: ["/parent/child"]
           }
@@ -391,7 +390,7 @@ describe("curi", () => {
     describe("sync", () => {
       it("initial value is an object with resolved response and navigation properties", () => {
         const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         expect(router.current()).toMatchObject({
           response: { name: "Catch All" },
           navigation: { action: "push" }
@@ -410,7 +409,7 @@ describe("curi", () => {
             }
           }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         expect(router.current()).toMatchObject({
           response: null,
           navigation: null
@@ -420,7 +419,7 @@ describe("curi", () => {
 
     it("response and navigation are the last resolved response and navigation", () => {
       const routes = prepare_routes([{ name: "Home", path: "" }]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       router.once(({ response, navigation }) => {
         expect(router.current()).toMatchObject({
           response,
@@ -434,7 +433,7 @@ describe("curi", () => {
         { name: "Home", path: "" },
         { name: "About", path: "about" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       let calls = 0;
       router.observe(({ response, navigation }) => {
         calls++;
@@ -474,7 +473,7 @@ describe("curi", () => {
         { name: "Contacto", path: "contacto" }
       ]);
 
-      const router = curi(InMemory, englishRoutes);
+      const router = create_router(InMemory, englishRoutes);
 
       router.refresh(spanishRoutes);
 
@@ -500,7 +499,7 @@ describe("curi", () => {
         { name: "Not Found", path: "(.*)" }
       ]);
 
-      const router = curi(InMemory, nonAuthRoutes, {
+      const router = create_router(InMemory, nonAuthRoutes, {
         history: {
           locations: ["/admin"]
         }
@@ -521,7 +520,7 @@ describe("curi", () => {
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
       ]);
-      const router = curi(InMemory, englishRoutes, {
+      const router = create_router(InMemory, englishRoutes, {
         history: {
           locations: ["/about"]
         }
@@ -551,7 +550,7 @@ describe("curi", () => {
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
       ]);
-      const router = curi(InMemory, englishRoutes, {
+      const router = create_router(InMemory, englishRoutes, {
         history: {
           locations: ["/about"]
         }
@@ -581,7 +580,7 @@ describe("curi", () => {
         { name: "Next", path: "next" },
         { name: "Not Found", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
 
       const sub1 = jest.fn();
       const sub2 = jest.fn();
@@ -614,7 +613,7 @@ describe("curi", () => {
           expect(router).toBe(router);
           done();
         };
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         router.observe(responseHandler);
       });
 
@@ -642,7 +641,7 @@ describe("curi", () => {
           });
         };
 
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         // register before navigation, but don't call with existing response
         router.observe(check, { initial: false });
         router.navigate({ name: "How", params: { method: "mail" } });
@@ -668,7 +667,7 @@ describe("curi", () => {
             router.navigate({ name: "Contact" });
           }
         });
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         router.observe(everyTime);
         router.observe(responseHandler);
       });
@@ -692,7 +691,7 @@ describe("curi", () => {
           expect(oneTime.mock.calls.length).toBe(0);
           done();
         });
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         router.once(oneTime);
         router.observe(responseHandler);
       });
@@ -723,7 +722,7 @@ describe("curi", () => {
             expect(promiseResolved).toBe(true);
             done();
           };
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             history: {
               locations: ["/contact/phone"]
             }
@@ -753,7 +752,7 @@ describe("curi", () => {
             expect(response.params.method).toBe("mail");
             done();
           };
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             history: {
               locations: ["/contact/fax"]
             }
@@ -776,7 +775,7 @@ describe("curi", () => {
         it("immediately called with most recent response/navigation", () => {
           const routes = prepare_routes([{ name: "Home", path: "" }]);
           const sub = jest.fn();
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           const { response, navigation } = router.current();
           router.observe(sub, { initial: true });
           expect(sub.mock.calls.length).toBe(1);
@@ -799,7 +798,7 @@ describe("curi", () => {
             }
           ]);
           const sub = jest.fn();
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           router.once(() => {
             router.observe(sub, { initial: true });
             expect(sub.mock.calls.length).toBe(1);
@@ -818,7 +817,7 @@ describe("curi", () => {
             }
           ]);
           const sub = jest.fn();
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           router.observe(sub, { initial: true });
           expect(sub.mock.calls.length).toBe(0);
         });
@@ -828,7 +827,7 @@ describe("curi", () => {
         it("has response, is not immediately called", done => {
           const routes = prepare_routes([{ name: "Home", path: "" }]);
           const everyTime = jest.fn();
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           router.once(() => {
             router.observe(everyTime, { initial: false });
             expect(everyTime.mock.calls.length).toBe(0);
@@ -846,7 +845,7 @@ describe("curi", () => {
             expect(response.name).toBe("About");
             done();
           });
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           router.once(() => {
             router.observe(everyTime, { initial: false });
             expect(everyTime.mock.calls.length).toBe(0);
@@ -873,7 +872,7 @@ describe("curi", () => {
           done();
         };
 
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         router.once(responseHandler);
       });
 
@@ -884,7 +883,7 @@ describe("curi", () => {
           { name: "Not Found", path: "(.*)" }
         ]);
         const oneTime = jest.fn();
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         router.once(oneTime);
         expect(oneTime.mock.calls.length).toBe(1);
       });
@@ -898,7 +897,7 @@ describe("curi", () => {
         ]);
         const firstOnce = jest.fn();
         const secondOnce = jest.fn();
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         router.once(firstOnce);
         expect(firstOnce.mock.calls.length).toBe(1);
         expect(firstOnce.mock.calls[0][0].response).toMatchObject({
@@ -936,7 +935,7 @@ describe("curi", () => {
         });
         let called = false;
         const responseHandler = jest.fn();
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         router.once(oneTime);
         router.observe(responseHandler);
       });
@@ -967,7 +966,7 @@ describe("curi", () => {
             expect(promiseResolved).toBe(true);
             done();
           };
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             history: {
               locations: ["/contact/phone"]
             }
@@ -997,7 +996,7 @@ describe("curi", () => {
             expect(response.params.method).toBe("mail");
             done();
           };
-          const router = curi(InMemory, routes, {
+          const router = create_router(InMemory, routes, {
             history: {
               locations: ["/contact/fax"]
             }
@@ -1020,7 +1019,7 @@ describe("curi", () => {
         it("immediately called with most recent response/navigation", () => {
           const routes = prepare_routes([{ name: "Home", path: "" }]);
           const sub = jest.fn();
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           const { response, navigation } = router.current();
           router.once(sub, { initial: true });
           expect(sub.mock.calls.length).toBe(1);
@@ -1043,7 +1042,7 @@ describe("curi", () => {
             }
           ]);
           const sub = jest.fn();
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           router.once(() => {
             router.once(sub, { initial: true });
             expect(sub.mock.calls.length).toBe(1);
@@ -1062,7 +1061,7 @@ describe("curi", () => {
             }
           ]);
           const sub = jest.fn();
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           router.once(sub, { initial: true });
           expect(sub.mock.calls.length).toBe(0);
         });
@@ -1072,7 +1071,7 @@ describe("curi", () => {
         it("has response, is not immediately called", done => {
           const routes = prepare_routes([{ name: "Home", path: "" }]);
           const oneTime = jest.fn();
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           router.once(() => {
             router.once(oneTime, { initial: false });
             expect(oneTime.mock.calls.length).toBe(0);
@@ -1090,7 +1089,7 @@ describe("curi", () => {
             expect(response.name).toBe("About");
             done();
           });
-          const router = curi(InMemory, routes);
+          const router = create_router(InMemory, routes);
           router.once(() => {
             router.once(oneTime, { initial: false });
             expect(oneTime.mock.calls.length).toBe(0);
@@ -1111,7 +1110,7 @@ describe("curi", () => {
       },
       { name: "Catch All", path: "(.*)" }
     ]);
-    const router = curi(InMemory, routes);
+    const router = create_router(InMemory, routes);
     const mockNavigate = jest.fn();
     router.history.navigate = mockNavigate;
 
@@ -1121,7 +1120,7 @@ describe("curi", () => {
 
     describe("navigation method", () => {
       it("lets the history object decide if no method is provided", () => {
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         expect(() => {
           router.navigate({ name: "Contact" });
         }).not.toThrow();
@@ -1143,7 +1142,7 @@ describe("curi", () => {
       });
 
       it("throws if given a bad navigation type", () => {
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         expect(() => {
           router.navigate({ name: "Contact", method: "BAAAAAAD" as NavType });
         }).toThrow();
@@ -1166,7 +1165,7 @@ describe("curi", () => {
       });
 
       it("re-uses current pathname if no name is provided", () => {
-        const router = curi(InMemory, routes, {
+        const router = create_router(InMemory, routes, {
           history: {
             locations: ["/reuse"]
           }
@@ -1227,7 +1226,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const cancelled = jest.fn();
         router.navigate({
           name: "Slow",
@@ -1250,7 +1249,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const cancelled = jest.fn();
         router.navigate({
           name: "Loader",
@@ -1300,7 +1299,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const finished = jest.fn();
         router.navigate({
           name: "Slow",
@@ -1322,7 +1321,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const finished = jest.fn();
         router.navigate({
           name: "Loader",
@@ -1355,7 +1354,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const finished = jest.fn();
         const cancelCallbacks = router.navigate({
           name: "Loader",
@@ -1400,7 +1399,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const cancelled = jest.fn();
         const cancelCallbacks = router.navigate({
           name: "Slow",
@@ -1420,7 +1419,7 @@ describe("curi", () => {
         { name: "About", path: "about" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       const cancellable = jest.fn();
       router.cancel(cancellable);
 
@@ -1444,7 +1443,7 @@ describe("curi", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       const cancellable = jest.fn();
       router.cancel(cancellable);
 
@@ -1482,7 +1481,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const cancellable = jest.fn();
         router.cancel(cancellable);
 
@@ -1512,7 +1511,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const cancellable = jest.fn();
         router.cancel(cancellable);
 
@@ -1538,7 +1537,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         const cancellable = jest.fn();
         router.cancel(cancellable);
 
@@ -1570,7 +1569,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         let cancel;
         const cancellable = jest.fn(cancelFn => {
           cancel = cancelFn;
@@ -1597,7 +1596,7 @@ describe("curi", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = curi(InMemory, routes);
+        const router = create_router(InMemory, routes);
         let cancel;
         const cancellable = jest.fn(cancelFn => {
           cancel = cancelFn;
@@ -1634,7 +1633,7 @@ describe("curi", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = curi(InMemory, routes);
+      const router = create_router(InMemory, routes);
       const cancellable = jest.fn();
       const stopCancelling = router.cancel(cancellable);
 
@@ -1669,7 +1668,7 @@ describe("curi", () => {
         }
       ]);
       let calls = 0;
-      const router = curi(InMemory, routes, {
+      const router = create_router(InMemory, routes, {
         side_effects: [
           ({ response, navigation }) => {
             switch (calls++) {

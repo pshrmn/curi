@@ -4,7 +4,6 @@ import { join } from "path";
 import { prepare_routes } from "@curi/router";
 import * as qs from "qs";
 
-// @ts-ignore (resolved by jest)
 import { static_files } from "@curi/static";
 
 import { Emitted } from "@curi/router";
@@ -117,7 +116,7 @@ describe("static_files()", () => {
     });
   });
 
-  describe("outputRedirects", () => {
+  describe("redirects", () => {
     it("when false, does not create a files if the route redirects ", async () => {
       const fixtures = join(FIXTURES_ROOT, "redirects-false");
       await remove(fixtures);

@@ -1,5 +1,5 @@
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepare_routes } from "@curi/router";
+import { create_router, prepare_routes } from "@curi/router";
 import { Store } from "svelte/store";
 
 // resolved by jest
@@ -14,7 +14,7 @@ describe("curi_store", () => {
   ]);
 
   beforeEach(() => {
-    router = curi(InMemory, routes);
+    router = create_router(InMemory, routes);
   });
 
   describe("existing store", () => {

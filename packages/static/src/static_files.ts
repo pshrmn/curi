@@ -1,6 +1,6 @@
 import * as fs from "fs-extra";
 import { join } from "path";
-import { curi } from "@curi/router";
+import { create_router } from "@curi/router";
 import { create_server_history } from "@hickory/in-memory";
 
 import pathnames from "./pathnames";
@@ -55,7 +55,7 @@ export default async function static_files(
           // create a new router for each so we don't run into any issues
           // with overlapping requests
 
-          const router = curi<LocationOptions>(ServerHistory, routes, {
+          const router = create_router<LocationOptions>(ServerHistory, routes, {
             ...get_router_options(),
             // need to emit redirects or will get stuck waiting forever
             emit_redirects: true,
