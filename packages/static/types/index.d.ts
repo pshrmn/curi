@@ -1,4 +1,4 @@
 export * from "./types";
-import staticFiles from "./staticFiles";
+import static_files from "./static_files";
 import pathnames from "./pathnames";
-export { staticFiles, pathnames };
+export { static_files, pathnames };

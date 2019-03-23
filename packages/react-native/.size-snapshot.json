@@ -1,21 +1,21 @@
 {
   "dist/curi-react-native.es.js": {
-    "bundled": 2307,
-    "minified": 977,
-    "gzipped": 469,
+    "bundled": 2316,
+    "minified": 982,
+    "gzipped": 472,
     "treeshaked": {
       "rollup": {
-        "code": 757,
+        "code": 759,
         "import_statements": 166
       },
       "webpack": {
-        "code": 1868
+        "code": 1870
       }
     }
   },
   "dist/curi-react-native.js": {
-    "bundled": 2609,
-    "minified": 1219,
-    "gzipped": 568
+    "bundled": 2618,
+    "minified": 1224,
+    "gzipped": 572
   }
 }

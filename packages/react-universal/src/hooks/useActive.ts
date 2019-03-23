@@ -28,10 +28,9 @@ const router = curi(history, routes, {
       );
     }
   }
-  let isActive = router.route.active(props.name, response, {
+  return router.route.active(props.name, response, {
     params: props.params,
     partial: props.partial,
-    locationCheck: props.locationCheck
+    location_check: props.locationCheck
   });
-  return isActive;
 }

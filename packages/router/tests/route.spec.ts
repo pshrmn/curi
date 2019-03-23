@@ -3,7 +3,7 @@ import { Route, Interaction } from "../src/types";
 import { InMemory } from "@hickory/in-memory";
 
 // @ts-ignore (resolved by jest)
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
 function PropertyReporter(): Interaction {
   let knownRoutes = {};
@@ -31,7 +31,7 @@ function PropertyReporter(): Interaction {
 describe("public route properties", () => {
   describe("name", () => {
     it("is the provided value", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "test"
@@ -50,7 +50,7 @@ describe("public route properties", () => {
 
   describe("path", () => {
     it("is the provided value", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "test"
@@ -67,7 +67,7 @@ describe("public route properties", () => {
 
   describe("keys", () => {
     it("is the array of param names parsed from the path", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: ":one/:two/:three"
@@ -84,7 +84,7 @@ describe("public route properties", () => {
     });
 
     it("is an empty array when the path has no params", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "one/two/three"
@@ -103,7 +103,7 @@ describe("public route properties", () => {
 
   describe("resolve", () => {
     it("is the resolve function", done => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "test",
@@ -131,7 +131,7 @@ describe("public route properties", () => {
     });
 
     it("is undefined when route.resolve isn't provided", done => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "test"
@@ -155,7 +155,7 @@ describe("public route properties", () => {
         unofficial: true,
         another: 1
       };
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "test",

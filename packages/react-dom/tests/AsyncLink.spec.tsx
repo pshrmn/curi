@@ -3,14 +3,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
-import { curiProvider, AsyncLink } from "@curi/react-dom";
+import { create_router_component, AsyncLink } from "@curi/react-dom";
 
 describe("<AsyncLink>", () => {
   let node;
   let router, Router: React.FunctionComponent;
-  const routes = prepareRoutes([
+  const routes = prepare_routes([
     { name: "Test", path: "" },
     { name: "Best", path: "best" },
     { name: "Catch All", path: "(.*)" }
@@ -19,7 +19,7 @@ describe("<AsyncLink>", () => {
   beforeEach(() => {
     node = document.createElement("div");
     router = curi(InMemory, routes);
-    Router = curiProvider(router);
+    Router = create_router_component(router);
   });
 
   afterEach(() => {
@@ -70,13 +70,13 @@ describe("<AsyncLink>", () => {
       });
 
       it("creates a relative link if 'to' is undefined", () => {
-        const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+        const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
         const router = curi(InMemory, routes, {
           history: {
             locations: ["/the-initial-location"]
           }
         });
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
         ReactDOM.render(
           <Router>
             <AsyncLink name={null}>{() => null}</AsyncLink>
@@ -90,14 +90,14 @@ describe("<AsyncLink>", () => {
 
     describe("params", () => {
       let router, Router;
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Park", path: "park/:name" },
         { name: "Catch All", path: "(.*)" }
       ]);
 
       beforeEach(() => {
         router = curi(InMemory, routes);
-        Router = curiProvider(router);
+        Router = create_router_component(router);
       });
 
       it("uses params to generate the href", () => {
@@ -127,10 +127,10 @@ describe("<AsyncLink>", () => {
         let a = node.querySelector("a");
         expect(a.getAttribute("href")).toBe("/park/Glacier");
 
-        const newParams = { name: "Yellowstone" };
+        const new_params = { name: "Yellowstone" };
         ReactDOM.render(
           <Router>
-            <AsyncLink name="Park" params={newParams}>
+            <AsyncLink name="Park" params={new_params}>
               {() => null}
             </AsyncLink>
           </Router>,
@@ -143,12 +143,12 @@ describe("<AsyncLink>", () => {
 
     describe("hash & query", () => {
       it("merges hash & query props with the pathname when creating href", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
         ReactDOM.render(
           <Router>
             <AsyncLink name="Test" query="one=two" hash="hashtag">
@@ -181,12 +181,12 @@ describe("<AsyncLink>", () => {
 
   describe("ref", () => {
     it("returns the anchor's ref, not the link's", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(InMemory, routes);
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       const ref = React.createRef();
       ReactDOM.render(
         <Router>
@@ -203,12 +203,12 @@ describe("<AsyncLink>", () => {
 
   describe("children", () => {
     it("is called with the <AsyncLink>'s current navigating state (false on mount)", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(InMemory, routes);
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       const children = jest.fn((a: boolean) => null);
       ReactDOM.render(
         <Router>
@@ -223,14 +223,14 @@ describe("<AsyncLink>", () => {
 
   describe("clicking a link", () => {
     it("calls history.navigate", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(InMemory, routes);
-      const mockNavigate = jest.fn();
-      router.history.navigate = mockNavigate;
-      const Router = curiProvider(router);
+      const mock_navigate = jest.fn();
+      router.history.navigate = mock_navigate;
+      const Router = create_router_component(router);
       ReactDOM.render(
         <Router>
           <AsyncLink name="Test">{() => null}</AsyncLink>
@@ -238,7 +238,7 @@ describe("<AsyncLink>", () => {
         node
       );
       const a = node.querySelector("a");
-      const leftClickEvent = {
+      const left_click_event = {
         defaultPrevented: false,
         preventDefault() {
           this.defaultPrevented = true;
@@ -249,8 +249,8 @@ describe("<AsyncLink>", () => {
         shiftKey: null,
         button: 0
       };
-      Simulate.click(a, leftClickEvent);
-      expect(mockNavigate.mock.calls.length).toBe(1);
+      Simulate.click(a, left_click_event);
+      expect(mock_navigate.mock.calls.length).toBe(1);
     });
 
     describe("children(navigating)", () => {
@@ -258,7 +258,7 @@ describe("<AsyncLink>", () => {
         // if a link has no on methods, finished will be called almost
         // immediately (although this style should only be used for routes
         // with on methods)
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Test",
             path: "test",
@@ -273,7 +273,7 @@ describe("<AsyncLink>", () => {
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
 
         ReactDOM.render(
           <Router>
@@ -287,7 +287,7 @@ describe("<AsyncLink>", () => {
         );
         const a = node.querySelector("a");
         expect(a.textContent).toBe("false");
-        const leftClickEvent = {
+        const left_click_event = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -298,12 +298,12 @@ describe("<AsyncLink>", () => {
           shiftKey: null,
           button: 0
         };
-        Simulate.click(a, leftClickEvent);
+        Simulate.click(a, left_click_event);
         expect(a.textContent).toBe("true");
       });
 
       it("children(false) when navigation is cancelled", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Test", path: "test" },
           {
             name: "Slow",
@@ -324,7 +324,7 @@ describe("<AsyncLink>", () => {
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
 
         ReactDOM.render(
           <Router>
@@ -345,7 +345,7 @@ describe("<AsyncLink>", () => {
         );
         const [slowLink, fastLink] = node.querySelectorAll("a");
         expect(slowLink.textContent).toBe("Slow false");
-        const leftClickEvent = {
+        const left_click_event = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -356,15 +356,15 @@ describe("<AsyncLink>", () => {
           shiftKey: null,
           button: 0
         };
-        Simulate.click(slowLink, leftClickEvent);
+        Simulate.click(slowLink, left_click_event);
         expect(slowLink.textContent).toBe("Slow true");
 
-        Simulate.click(fastLink, leftClickEvent);
+        Simulate.click(fastLink, left_click_event);
         expect(slowLink.textContent).toBe("Slow false");
       });
 
       it("children(false) when navigation is finished", done => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Test", path: "test" },
           {
             name: "Loader",
@@ -376,7 +376,7 @@ describe("<AsyncLink>", () => {
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
 
         ReactDOM.render(
           <Router>
@@ -390,7 +390,7 @@ describe("<AsyncLink>", () => {
         );
         const a = node.querySelector("a");
         expect(a.textContent).toBe("false");
-        const leftClickEvent = {
+        const left_click_event = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -401,7 +401,7 @@ describe("<AsyncLink>", () => {
           shiftKey: null,
           button: 0
         };
-        Simulate.click(a, leftClickEvent);
+        Simulate.click(a, left_click_event);
         expect(a.textContent).toBe("true");
         router.once(
           ({ response }) => {
@@ -418,7 +418,7 @@ describe("<AsyncLink>", () => {
         const mockError = jest.fn();
         console.error = mockError;
 
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Test", path: "test" },
           {
             name: "Slow",
@@ -439,7 +439,7 @@ describe("<AsyncLink>", () => {
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
 
         ReactDOM.render(
           <Router>
@@ -453,7 +453,7 @@ describe("<AsyncLink>", () => {
         );
         const a = node.querySelector("a");
         expect(a.textContent).toBe("false");
-        const leftClickEvent = {
+        const left_click_event = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -464,7 +464,7 @@ describe("<AsyncLink>", () => {
           shiftKey: null,
           button: 0
         };
-        Simulate.click(a, leftClickEvent);
+        Simulate.click(a, left_click_event);
 
         // unmount the Link to verify that it doesn't call setState()
         ReactDOM.unmountComponentAtNode(node);
@@ -472,14 +472,14 @@ describe("<AsyncLink>", () => {
     });
 
     it("includes hash, query, and state in location passed to history.navigate", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      const mock_navigate = jest.fn();
+      const routes = prepare_routes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(InMemory, routes);
-      router.history.navigate = mockNavigate;
-      const Router = curiProvider(router);
+      router.history.navigate = mock_navigate;
+      const Router = create_router_component(router);
 
       ReactDOM.render(
         <Router>
@@ -490,7 +490,7 @@ describe("<AsyncLink>", () => {
         node
       );
       const a = node.querySelector("a");
-      const leftClickEvent = {
+      const left_click_event = {
         defaultPrevented: false,
         preventDefault() {
           this.defaultPrevented = true;
@@ -501,8 +501,8 @@ describe("<AsyncLink>", () => {
         shiftKey: null,
         button: 0
       };
-      Simulate.click(a, leftClickEvent);
-      const mockLocation = mockNavigate.mock.calls[0][0];
+      Simulate.click(a, left_click_event);
+      const mockLocation = mock_navigate.mock.calls[0][0];
       expect(mockLocation).toMatchObject({
         pathname: "/test",
         hash: "thing",
@@ -513,15 +513,15 @@ describe("<AsyncLink>", () => {
 
     describe("onNav", () => {
       it("calls onNav prop func if provided", () => {
-        const mockNavigate = jest.fn();
+        const mock_navigate = jest.fn();
         const onNav = jest.fn();
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(InMemory, routes);
-        router.history.navigate = mockNavigate;
-        const Router = curiProvider(router);
+        router.history.navigate = mock_navigate;
+        const Router = create_router_component(router);
 
         ReactDOM.render(
           <Router>
@@ -532,7 +532,7 @@ describe("<AsyncLink>", () => {
           node
         );
         const a = node.querySelector("a");
-        const leftClickEvent = {
+        const left_click_event = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -543,23 +543,23 @@ describe("<AsyncLink>", () => {
           shiftKey: null,
           button: 0
         };
-        Simulate.click(a, leftClickEvent);
+        Simulate.click(a, left_click_event);
         expect(onNav.mock.calls.length).toBe(1);
-        expect(mockNavigate.mock.calls.length).toBe(1);
+        expect(mock_navigate.mock.calls.length).toBe(1);
       });
 
       it("does not call history.navigate if onNav prevents default", () => {
-        const mockNavigate = jest.fn();
+        const mock_navigate = jest.fn();
         const onNav = jest.fn(event => {
           event.preventDefault();
         });
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(InMemory, routes);
-        router.history.navigate = mockNavigate;
-        const Router = curiProvider(router);
+        router.history.navigate = mock_navigate;
+        const Router = create_router_component(router);
 
         ReactDOM.render(
           <Router>
@@ -570,7 +570,7 @@ describe("<AsyncLink>", () => {
           node
         );
         const a = node.querySelector("a");
-        const leftClickEvent = {
+        const left_click_event = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -581,21 +581,21 @@ describe("<AsyncLink>", () => {
           shiftKey: null,
           button: 0
         };
-        Simulate.click(a, leftClickEvent);
+        Simulate.click(a, left_click_event);
         expect(onNav.mock.calls.length).toBe(1);
-        expect(mockNavigate.mock.calls.length).toBe(0);
+        expect(mock_navigate.mock.calls.length).toBe(0);
       });
     });
 
     it("doesn't call history.navigate for modified clicks", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      const mock_navigate = jest.fn();
+      const routes = prepare_routes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(InMemory, routes);
-      router.history.navigate = mockNavigate;
-      const Router = curiProvider(router);
+      router.history.navigate = mock_navigate;
+      const Router = create_router_component(router);
 
       ReactDOM.render(
         <Router>
@@ -604,7 +604,7 @@ describe("<AsyncLink>", () => {
         node
       );
       const a = node.querySelector("a");
-      const modifiedClickEvent = {
+      const modified_click_event = {
         defaultPrevented: false,
         preventDefault() {
           this.defaultPrevented = true;
@@ -617,22 +617,22 @@ describe("<AsyncLink>", () => {
       };
       const modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
       modifiers.forEach(m => {
-        const eventCopy = Object.assign({}, modifiedClickEvent);
-        eventCopy[m] = true;
-        Simulate.click(a, eventCopy);
-        expect(mockNavigate.mock.calls.length).toBe(0);
+        const event_copy = Object.assign({}, modified_click_event);
+        event_copy[m] = true;
+        Simulate.click(a, event_copy);
+        expect(mock_navigate.mock.calls.length).toBe(0);
       });
     });
 
     it("doesn't call history.navigate if event.preventDefault has been called", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      const mock_navigate = jest.fn();
+      const routes = prepare_routes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(InMemory, routes);
-      router.history.navigate = mockNavigate;
-      const Router = curiProvider(router);
+      router.history.navigate = mock_navigate;
+      const Router = create_router_component(router);
 
       ReactDOM.render(
         <Router>
@@ -641,7 +641,7 @@ describe("<AsyncLink>", () => {
         node
       );
       const a = node.querySelector("a");
-      const preventedEvent = {
+      const prevented_event = {
         defaultPrevented: true,
         preventDefault() {
           this.defaultPrevented = true;
@@ -652,8 +652,8 @@ describe("<AsyncLink>", () => {
         shiftKey: null,
         button: 0
       };
-      Simulate.click(a, preventedEvent);
-      expect(mockNavigate.mock.calls.length).toBe(0);
+      Simulate.click(a, prevented_event);
+      expect(mock_navigate.mock.calls.length).toBe(0);
     });
   });
 });

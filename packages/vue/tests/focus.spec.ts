@@ -1,7 +1,7 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { CuriPlugin } from "@curi/vue";
@@ -9,7 +9,7 @@ import { CuriPlugin } from "@curi/vue";
 describe("curi-focus directive", () => {
   let vueWrapper;
 
-  const routes = prepareRoutes([
+  const routes = prepare_routes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ]);

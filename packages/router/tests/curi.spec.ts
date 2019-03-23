@@ -4,14 +4,14 @@ import { InMemory } from "@hickory/in-memory";
 import { NavType } from "@hickory/root";
 
 // @ts-ignore (resolved by jest)
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
 describe("curi", () => {
   describe("constructor", () => {
     // these tests rely on the fact that the pathname generator
     // is a default interaction
     it("registers routes", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
@@ -25,7 +25,7 @@ describe("curi", () => {
     });
 
     it("registers nested routes", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         {
@@ -45,7 +45,7 @@ describe("curi", () => {
     });
 
     it("makes interactions available through router.route", () => {
-      const routes = prepareRoutes([{ name: "Home", path: "" }]);
+      const routes = prepare_routes([{ name: "Home", path: "" }]);
       const createfakeInteraction = () => ({
         name: "fake",
         register: () => {},
@@ -61,7 +61,7 @@ describe("curi", () => {
     describe("options", () => {
       describe("interactions", () => {
         it("includes pathname interaction by default", () => {
-          const routes = prepareRoutes([{ name: "Home", path: "" }]);
+          const routes = prepare_routes([{ name: "Home", path: "" }]);
           const router = curi(InMemory, routes);
           expect(router.route.pathname).toBeDefined();
         });
@@ -79,7 +79,7 @@ describe("curi", () => {
             };
           };
 
-          const routes = prepareRoutes([{ name: "Home", path: "" }]);
+          const routes = prepare_routes([{ name: "Home", path: "" }]);
           const router = curi(InMemory, routes, {
             route: [createfirstInteraction()]
           });
@@ -116,7 +116,7 @@ describe("curi", () => {
             };
           };
 
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Grandparent",
               path: "grandparent",
@@ -165,13 +165,13 @@ describe("curi", () => {
         });
       });
 
-      describe("sideEffects", () => {
+      describe("side_effects", () => {
         it("calls side effect methods AFTER a response is generated, passing response, navigation, and router", done => {
-          const routes = prepareRoutes([{ name: "All", path: "(.*)" }]);
+          const routes = prepare_routes([{ name: "All", path: "(.*)" }]);
           const sideEffect = jest.fn();
 
           const router = curi(InMemory, routes, {
-            sideEffects: [sideEffect]
+            side_effects: [sideEffect]
           });
           router.once(({ response, navigation }) => {
             expect(sideEffect.mock.calls.length).toBe(1);
@@ -183,7 +183,7 @@ describe("curi", () => {
         });
 
         it("passes response, navigation, and router object to side effect", done => {
-          const routes = prepareRoutes([{ name: "All", path: "(.*)" }]);
+          const routes = prepare_routes([{ name: "All", path: "(.*)" }]);
           const sideEffect = function({ response, navigation, router }) {
             expect(response).toMatchObject({
               name: "All",
@@ -197,20 +197,20 @@ describe("curi", () => {
           };
 
           const router = curi(InMemory, routes, {
-            sideEffects: [sideEffect]
+            side_effects: [sideEffect]
           });
         });
       });
 
       describe("emitRedirects", () => {
         it("emits redirects by default", () => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Start",
               path: "",
               response: () => {
                 return {
-                  redirectTo: {
+                  redirect_to: {
                     name: "Other"
                   }
                 };
@@ -229,18 +229,18 @@ describe("curi", () => {
             }
           };
           const router = curi(InMemory, routes, {
-            sideEffects: [logger]
+            side_effects: [logger]
           });
         });
 
         it("does not emit redirects when emitRedirects = false", done => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Start",
               path: "",
               response: () => {
                 return {
-                  redirectTo: {
+                  redirect_to: {
                     name: "Other"
                   }
                 };
@@ -266,7 +266,7 @@ describe("curi", () => {
       describe("external", () => {
         it("gets passed to resolve functions", done => {
           const external = "hey!";
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Start",
               path: "",
@@ -290,7 +290,7 @@ describe("curi", () => {
 
         it("gets passed to response function", () => {
           const external = "hey!";
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Start",
               path: "",
@@ -309,7 +309,7 @@ describe("curi", () => {
 
         it("is available from the router", () => {
           const external = "hey!";
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Not Found",
               path: "(.*)"
@@ -323,7 +323,7 @@ describe("curi", () => {
 
     describe("sync/async matching", () => {
       it("does synchronous matching by default", () => {
-        const routes = prepareRoutes([{ name: "Home", path: "" }]);
+        const routes = prepare_routes([{ name: "Home", path: "" }]);
         const router = curi(InMemory, routes);
         const after = jest.fn();
         router.once(r => {
@@ -333,7 +333,7 @@ describe("curi", () => {
       });
 
       it("does asynchronous matching when route.resolve isn't empty", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Home",
             path: "",
@@ -351,7 +351,7 @@ describe("curi", () => {
       });
 
       it("still does synchronous matching when a different route is async", done => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Parent",
             path: "parent",
@@ -390,7 +390,7 @@ describe("curi", () => {
   describe("current", () => {
     describe("sync", () => {
       it("initial value is an object with resolved response and navigation properties", () => {
-        const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+        const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
         const router = curi(InMemory, routes);
         expect(router.current()).toMatchObject({
           response: { name: "Catch All" },
@@ -401,7 +401,7 @@ describe("curi", () => {
 
     describe("async", () => {
       it("initial value is an object with null response and navigation properties", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Catch All",
             path: "(.*)",
@@ -419,7 +419,7 @@ describe("curi", () => {
     });
 
     it("response and navigation are the last resolved response and navigation", () => {
-      const routes = prepareRoutes([{ name: "Home", path: "" }]);
+      const routes = prepare_routes([{ name: "Home", path: "" }]);
       const router = curi(InMemory, routes);
       router.once(({ response, navigation }) => {
         expect(router.current()).toMatchObject({
@@ -430,7 +430,7 @@ describe("curi", () => {
     });
 
     it("updates properties when a new response is resolved", done => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Home", path: "" },
         { name: "About", path: "about" }
       ]);
@@ -463,12 +463,12 @@ describe("curi", () => {
     });
 
     it("resets and replaces registered routes", () => {
-      const englishRoutes = prepareRoutes([
+      const englishRoutes = prepare_routes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
       ]);
-      const spanishRoutes = prepareRoutes([
+      const spanishRoutes = prepare_routes([
         { name: "Casa", path: "" },
         { name: "Acerca De", path: "acerca-de" },
         { name: "Contacto", path: "contacto" }
@@ -490,11 +490,11 @@ describe("curi", () => {
     });
 
     it("emits a new response handler for new routes", () => {
-      const nonAuthRoutes = prepareRoutes([
+      const nonAuthRoutes = prepare_routes([
         { name: "Home", path: "" },
         { name: "Not Found", path: "(.*)" }
       ]);
-      const authRoutes = prepareRoutes([
+      const authRoutes = prepare_routes([
         { name: "Home", path: "" },
         { name: "Admin", path: "admin" },
         { name: "Not Found", path: "(.*)" }
@@ -516,7 +516,7 @@ describe("curi", () => {
     });
 
     it("emits a response when called with no argument", done => {
-      const englishRoutes = prepareRoutes([
+      const englishRoutes = prepare_routes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
@@ -546,7 +546,7 @@ describe("curi", () => {
     });
 
     it("re-uses previously emitted navigation.previous", done => {
-      const englishRoutes = prepareRoutes([
+      const englishRoutes = prepare_routes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         { name: "Contact", path: "contact" }
@@ -576,7 +576,7 @@ describe("curi", () => {
 
   describe("observe(fn)", () => {
     it("returns a function to unsubscribe when called", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Home", path: "" },
         { name: "Next", path: "next" },
         { name: "Not Found", path: "(.*)" }
@@ -602,7 +602,7 @@ describe("curi", () => {
 
     describe("response handler", () => {
       it("is passed object with response, navigation, and router", done => {
-        const routes = prepareRoutes([{ name: "All", path: "(.*)" }]);
+        const routes = prepare_routes([{ name: "All", path: "(.*)" }]);
         const responseHandler = function({ response, navigation, router }) {
           expect(response).toMatchObject({
             name: "All",
@@ -619,7 +619,7 @@ describe("curi", () => {
       });
 
       it("is called when response is emitted", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           { name: "About", path: "about" },
           {
@@ -649,7 +649,7 @@ describe("curi", () => {
       });
 
       it("is re-called for new responses", done => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           { name: "Contact", path: "contact" },
           { name: "Not Found", path: "(.*)" }
@@ -676,7 +676,7 @@ describe("curi", () => {
       it("is called BEFORE once() response handlers", done => {
         // need to use an async route so that handlers are registered before
         // the initial response is ready
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Home",
             path: "",
@@ -700,7 +700,7 @@ describe("curi", () => {
       describe("matched route is async", () => {
         it("is called AFTER promises have resolved", done => {
           let promiseResolved = false;
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             {
@@ -732,7 +732,7 @@ describe("curi", () => {
         });
 
         it("does not emit responses for cancelled navigation", done => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             {
@@ -774,7 +774,7 @@ describe("curi", () => {
     describe("response handler options", () => {
       describe("{ initial: true } (default)", () => {
         it("immediately called with most recent response/navigation", () => {
-          const routes = prepareRoutes([{ name: "Home", path: "" }]);
+          const routes = prepare_routes([{ name: "Home", path: "" }]);
           const sub = jest.fn();
           const router = curi(InMemory, routes);
           const { response, navigation } = router.current();
@@ -789,7 +789,7 @@ describe("curi", () => {
         });
 
         it("[async] immediately called if initial response has resolved", done => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Home",
               path: "",
@@ -808,7 +808,7 @@ describe("curi", () => {
         });
 
         it("[async] not immediately called if initial response hasn't resolved", () => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Home",
               path: "",
@@ -826,7 +826,7 @@ describe("curi", () => {
 
       describe("{ initial: false }", () => {
         it("has response, is not immediately called", done => {
-          const routes = prepareRoutes([{ name: "Home", path: "" }]);
+          const routes = prepare_routes([{ name: "Home", path: "" }]);
           const everyTime = jest.fn();
           const router = curi(InMemory, routes);
           router.once(() => {
@@ -837,7 +837,7 @@ describe("curi", () => {
         });
 
         it("is called AFTER next navigation", done => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             { name: "Catch All", path: "(.*)" }
@@ -860,7 +860,7 @@ describe("curi", () => {
   describe("once(fn)", () => {
     describe("response handler", () => {
       it("is passed object with response, navigation, and router", done => {
-        const routes = prepareRoutes([{ name: "All", path: "(.*)" }]);
+        const routes = prepare_routes([{ name: "All", path: "(.*)" }]);
         const responseHandler = function({ response, navigation, router }) {
           expect(response).toMatchObject({
             name: "All",
@@ -878,7 +878,7 @@ describe("curi", () => {
       });
 
       it("is called when response is emitted", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           { name: "Contact", path: "contact" },
           { name: "Not Found", path: "(.*)" }
@@ -891,7 +891,7 @@ describe("curi", () => {
 
       it("isn't re-called for new responses", () => {
         //
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           { name: "Contact", path: "contact" },
           { name: "Not Found", path: "(.*)" }
@@ -920,7 +920,7 @@ describe("curi", () => {
       it("is called AFTER observe() response handlers", done => {
         // need to use an async route so that handlers are registered before
         // the initial response is ready
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Home",
             path: "",
@@ -944,7 +944,7 @@ describe("curi", () => {
       describe("matched route is async", () => {
         it("is called AFTER promises have resolved", done => {
           let promiseResolved = false;
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             {
@@ -976,7 +976,7 @@ describe("curi", () => {
         });
 
         it("does not emit responses for cancelled navigation", done => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             {
@@ -1018,7 +1018,7 @@ describe("curi", () => {
     describe("response handler options", () => {
       describe("{ initial: true } (default)", () => {
         it("immediately called with most recent response/navigation", () => {
-          const routes = prepareRoutes([{ name: "Home", path: "" }]);
+          const routes = prepare_routes([{ name: "Home", path: "" }]);
           const sub = jest.fn();
           const router = curi(InMemory, routes);
           const { response, navigation } = router.current();
@@ -1033,7 +1033,7 @@ describe("curi", () => {
         });
 
         it("[async] immediately called if initial response has resolved", done => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Home",
               path: "",
@@ -1052,7 +1052,7 @@ describe("curi", () => {
         });
 
         it("[async] not immediately called if initial response hasn't resolved", () => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             {
               name: "Home",
               path: "",
@@ -1070,7 +1070,7 @@ describe("curi", () => {
 
       describe("{ initial: false }", () => {
         it("has response, is not immediately called", done => {
-          const routes = prepareRoutes([{ name: "Home", path: "" }]);
+          const routes = prepare_routes([{ name: "Home", path: "" }]);
           const oneTime = jest.fn();
           const router = curi(InMemory, routes);
           router.once(() => {
@@ -1081,7 +1081,7 @@ describe("curi", () => {
         });
 
         it("is called AFTER next navigation", done => {
-          const routes = prepareRoutes([
+          const routes = prepare_routes([
             { name: "Home", path: "" },
             { name: "About", path: "about" },
             { name: "Catch All", path: "(.*)" }
@@ -1102,7 +1102,7 @@ describe("curi", () => {
   });
 
   describe("navigate()", () => {
-    const routes = prepareRoutes([
+    const routes = prepare_routes([
       { name: "Home", path: "" },
       {
         name: "Contact",
@@ -1204,7 +1204,7 @@ describe("curi", () => {
 
     describe("cancelling a navigation", () => {
       it("calls the navigation's cancelled function", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "Slow",
@@ -1239,7 +1239,7 @@ describe("curi", () => {
       });
 
       it("does not call the previous navigation's cancelled function", done => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "Loader",
@@ -1277,7 +1277,7 @@ describe("curi", () => {
 
     describe("finishing a navigation", () => {
       it("does not calls the navigation's finished function when the navigation is cancelled", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "Slow",
@@ -1311,7 +1311,7 @@ describe("curi", () => {
       });
 
       it("calls the navigation's finished function", done => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "Loader",
@@ -1344,7 +1344,7 @@ describe("curi", () => {
 
     describe("cancelling callbacks", () => {
       it("does not call finish callback after navigation finishes", done => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "Loader",
@@ -1377,7 +1377,7 @@ describe("curi", () => {
       });
 
       it("does not call cancel callback after navigation is cancelled", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "Slow",
@@ -1415,7 +1415,7 @@ describe("curi", () => {
 
   describe("cancel(fn)", () => {
     it("does not call function for sync routes", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Home", path: "" },
         { name: "About", path: "about" },
         { name: "Catch All", path: "(.*)" }
@@ -1433,7 +1433,7 @@ describe("curi", () => {
     });
 
     it("calls function with cancel fn when navigating to async routes", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Home", path: "" },
         {
           name: "About",
@@ -1456,7 +1456,7 @@ describe("curi", () => {
 
     describe("another navigation", () => {
       it("stays active when a second async navigation starts", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "About",
@@ -1493,7 +1493,7 @@ describe("curi", () => {
       });
 
       it("is cancelled when a sync navigation starts", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "About",
@@ -1527,7 +1527,7 @@ describe("curi", () => {
 
     describe("non-cancelled navigation", () => {
       it("calls function with no args once async actions are complete", done => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "About",
@@ -1559,7 +1559,7 @@ describe("curi", () => {
 
     describe("cancelling active navigation", () => {
       it("deactivates immediately if cancel function is called", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "About",
@@ -1586,7 +1586,7 @@ describe("curi", () => {
       });
 
       it("doesn't change locations", () => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "" },
           {
             name: "About",
@@ -1616,7 +1616,7 @@ describe("curi", () => {
     });
 
     it("returns a function to stop being called", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Home", path: "" },
         {
           name: "About",
@@ -1648,16 +1648,16 @@ describe("curi", () => {
     });
   });
 
-  describe("response.redirectTo", () => {
+  describe("response.redirect_to", () => {
     it("triggers a replace navigation AFTER emitting initial response", done => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "A Route",
           path: "",
           response: () => {
             return {
               status: 301,
-              redirectTo: {
+              redirect_to: {
                 name: "B Route"
               }
             };
@@ -1670,7 +1670,7 @@ describe("curi", () => {
       ]);
       let calls = 0;
       const router = curi(InMemory, routes, {
-        sideEffects: [
+        side_effects: [
           ({ response, navigation }) => {
             switch (calls++) {
               case 0:

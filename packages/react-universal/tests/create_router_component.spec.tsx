@@ -1,17 +1,16 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 import { InMemory } from "@hickory/in-memory";
 
 import wait from "./utils/wait";
 
-// @ts-ignore (resolved by jest)
-import { curiProvider, useCuri } from "@curi/react-universal";
+import { create_router_component, useCuri } from "@curi/react-universal";
 
-describe("curiProvider()", () => {
+describe("create_router_component()", () => {
   let node;
-  const routes = prepareRoutes([
+  const routes = prepare_routes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Catch All", path: "(.*)" }
@@ -29,13 +28,13 @@ describe("curiProvider()", () => {
 
   describe("children prop", () => {
     it("renders children", () => {
-      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
       const router = curi(InMemory, routes);
 
       const App = jest.fn(() => {
         return null;
       });
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       ReactDOM.render(
         <Router>
           <App />
@@ -46,7 +45,7 @@ describe("curiProvider()", () => {
     });
 
     it("works with multiple children", () => {
-      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
       const router = curi(InMemory, routes);
 
       const One = jest.fn(() => {
@@ -55,7 +54,7 @@ describe("curiProvider()", () => {
       const Two = jest.fn(() => {
         return null;
       });
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       ReactDOM.render(
         <Router>
           <One />
@@ -78,7 +77,7 @@ describe("curiProvider()", () => {
         return null;
       });
 
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       ReactDOM.render(
         <Router>
           <App />
@@ -112,7 +111,7 @@ describe("curiProvider()", () => {
         return null;
       };
 
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
 
       const {
         response: emittedResponse,

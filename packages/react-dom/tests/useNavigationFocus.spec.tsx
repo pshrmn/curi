@@ -2,17 +2,21 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, useNavigationFocus, useCuri } from "@curi/react-dom";
+import {
+  create_router_component,
+  useNavigationFocus,
+  useCuri
+} from "@curi/react-dom";
 
 jest.useFakeTimers();
 
 describe("useNavigationFocus", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes([
+  const routes = prepare_routes([
     { name: "Home", path: "" },
     { name: "About", path: "about" }
   ]);
@@ -21,7 +25,7 @@ describe("useNavigationFocus", () => {
     node = document.createElement("div");
     document.body.appendChild(node);
     router = curi(InMemory, routes);
-    Router = curiProvider(router);
+    Router = create_router_component(router);
   });
 
   afterEach(() => {
@@ -54,7 +58,7 @@ describe("useNavigationFocus", () => {
       const realWarn = console.warn;
       const fakeWarn = (console.warn = jest.fn());
 
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Home",
           path: ""
@@ -62,7 +66,7 @@ describe("useNavigationFocus", () => {
       ]);
 
       const router = curi(InMemory, routes);
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
 
       function Focuser() {
         const ref = React.useRef(null);
@@ -187,7 +191,7 @@ describe("useNavigationFocus", () => {
             <h1>About</h1>
           </div>
         ));
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Home",
             path: "",
@@ -205,7 +209,7 @@ describe("useNavigationFocus", () => {
         ]);
 
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
 
         function Focuser() {
           const { response } = useCuri();
@@ -250,7 +254,7 @@ describe("useNavigationFocus", () => {
           </div>
         );
 
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Home",
             path: "",
@@ -268,7 +272,7 @@ describe("useNavigationFocus", () => {
         ]);
 
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
 
         function Focuser() {
           const { response } = useCuri();

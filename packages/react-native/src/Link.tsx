@@ -25,21 +25,21 @@ export interface AsyncLinkProps extends BaseLinkProps {
   children: NavigatingChildren;
 }
 
-function canNavigate(event: GestureResponderEvent) {
+function can_navigate(event: GestureResponderEvent) {
   return !event.defaultPrevented;
 }
 
 export const Link = React.forwardRef(
   (props: LinkProps, ref: React.Ref<any>) => {
-    const { eventHandler } = useNavigationHandler<GestureResponderEvent>(
+    const { event_handler } = useNavigationHandler<GestureResponderEvent>(
       props,
-      canNavigate
+      can_navigate
     );
 
     const { anchor: Anchor = TouchableHighlight, forward, children } = props;
 
     return (
-      <Anchor onPress={eventHandler} ref={ref} {...forward}>
+      <Anchor onPress={event_handler} ref={ref} {...forward}>
         {children}
       </Anchor>
     );
@@ -48,14 +48,14 @@ export const Link = React.forwardRef(
 
 export const AsyncLink = React.forwardRef(
   (props: AsyncLinkProps, ref: React.Ref<any>) => {
-    const { eventHandler, navigating } = useStatefulNavigationHandler<
+    const { event_handler, navigating } = useStatefulNavigationHandler<
       GestureResponderEvent
-    >(props, canNavigate);
+    >(props, can_navigate);
 
     const { anchor: Anchor = TouchableHighlight, forward, children } = props;
 
     return (
-      <Anchor onPress={eventHandler} ref={ref} {...forward}>
+      <Anchor onPress={event_handler} ref={ref} {...forward}>
         {children(navigating)}
       </Anchor>
     );

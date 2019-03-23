@@ -1,14 +1,14 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { CuriPlugin } from "@curi/vue";
 
 describe("<curi-link>", () => {
   let Vue, node, router, wrapper;
-  const routes = prepareRoutes([
+  const routes = prepare_routes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ]);
@@ -145,7 +145,7 @@ describe("<curi-link>", () => {
     });
 
     describe("scoped slot", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "test",
@@ -242,7 +242,7 @@ describe("<curi-link>", () => {
       });
 
       it("navigating = false after navigation is cancelled", done => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Slow",
             path: "slow",

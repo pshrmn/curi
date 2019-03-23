@@ -6,5 +6,5 @@ export interface FocusDirectiveProperties {
     preventScroll?: boolean;
     preserve?: boolean;
 }
-declare const focusDirection: DirectiveOptions;
-export default focusDirection;
+declare const focus_directive: DirectiveOptions;
+export default focus_directive;

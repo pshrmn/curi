@@ -8,12 +8,12 @@ import {
 import { ResolveResults } from "./types/route";
 import { Match } from "./types/match";
 
-function createRedirect(
-  redirectTo: any,
+function create_redirect(
+  redirect_to: any,
   interactions: Interactions,
   history: History
 ): RedirectLocation {
-  const { name, params, query, hash, state } = redirectTo;
+  const { name, params, query, hash, state } = redirect_to;
   const pathname = interactions.pathname(name, params);
   return {
     name,
@@ -26,48 +26,48 @@ function createRedirect(
   };
 }
 
-export default function finishResponse(
-  routeMatch: Match,
+export default function finish_response(
+  route_match: Match,
   interactions: Interactions,
-  resolvedResults: ResolveResults | null,
+  resolved_results: ResolveResults | null,
   history: History,
   external: any
 ): Response {
-  const { route, match } = routeMatch;
+  const { route, match } = route_match;
   const response: Response = match;
   if (!route.response) {
     return response;
   }
 
-  const { resolved = null, error = null } = resolvedResults || {};
+  const { resolved = null, error = null } = resolved_results || {};
 
-  const responseModifiers = route.response({
+  const response_modifiers = route.response({
     resolved,
     error,
     match,
     external
   });
 
-  if (!responseModifiers) {
+  if (!response_modifiers) {
     return response;
   }
 
-  const settableProperties: Array<
+  const settable_properties: Array<
     keyof Response & keyof SettableResponseProperties
-  > = ["status", "error", "body", "data", "title", "redirectTo"];
+  > = ["status", "error", "body", "data", "title", "redirect_to"];
 
   // only merge the valid properties onto the response
-  settableProperties.forEach(p => {
-    if (responseModifiers.hasOwnProperty(p)) {
-      if (p === "redirectTo") {
+  settable_properties.forEach(p => {
+    if (response_modifiers.hasOwnProperty(p)) {
+      if (p === "redirect_to") {
         // special case
-        response[p] = createRedirect(
-          responseModifiers[p],
+        response[p] = create_redirect(
+          response_modifiers[p],
           interactions,
           history
         );
       } else {
-        response[p] = responseModifiers[p];
+        response[p] = response_modifiers[p];
       }
     }
   });

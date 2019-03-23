@@ -2,7 +2,7 @@ import { Observer, Emitted } from "@curi/router";
 
 export type TitleBuilder = (emitted: Emitted) => string;
 
-export default function createTitleSideEffect(
+export default function create_title_side_effect(
   callback: TitleBuilder
 ): Observer {
   return function(emitted: Emitted) {

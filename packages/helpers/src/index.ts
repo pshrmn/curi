@@ -1,6 +1,6 @@
 export { AnyFn } from "./once";
 
 import once from "./once";
-import preferDefault from "./preferDefault";
+import prefer_default from "./prefer_default";
 
-export { once, preferDefault };
+export { once, prefer_default };

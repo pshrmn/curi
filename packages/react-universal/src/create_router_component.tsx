@@ -7,10 +7,10 @@ export interface RouterProps {
   children: React.ReactNode;
 }
 
-export default function curiProvider(
+export default function curi_provider(
   router: CuriRouter
 ): React.FunctionComponent<RouterProps> {
-  function initialState() {
+  function initial_state() {
     const { response, navigation } = router.current();
     return {
       router,
@@ -20,21 +20,21 @@ export default function curiProvider(
   }
 
   return function Router(props: RouterProps) {
-    const [state, setState] = React.useState<Emitted>(initialState);
+    const [state, set_state] = React.useState<Emitted>(initial_state);
 
     React.useEffect(() => {
       let removed = false;
-      const stopResponding = router.observe(
+      const stop = router.observe(
         (emitted: Emitted) => {
           if (!removed) {
-            setState(emitted);
+            set_state(emitted);
           }
         },
         { initial: false }
       );
       return () => {
         removed = true;
-        stopResponding();
+        stop();
       };
     }, []);
 

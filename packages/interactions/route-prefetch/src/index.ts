@@ -12,7 +12,7 @@ export interface PrefetchCallOptions {
   external?: any;
 }
 
-export default function prefetchRoute(): Interaction {
+export default function prefetch_route(): Interaction {
   let loaders: { [key: string]: AsyncMatchFn } = {};
 
   return {

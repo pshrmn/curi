@@ -1,10 +1,10 @@
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
-import { curiStore } from "@curi/svelte";
+import { curi, prepare_routes } from "@curi/router";
+import { curi_store } from "@curi/svelte";
 
 import app from "./app.html";
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   { name: "Home", path: "" },
   { name: "User", path: "u/:id" },
   { name: "Not Found", path: "(.*)" }
@@ -15,7 +15,7 @@ const router = curi(InMemory, routes, {
     locations: ["/u/2"]
   }
 });
-const store = curiStore(router);
+const store = curi_store(router);
 
 export default function render() {
   const target = document.createElement("div");
