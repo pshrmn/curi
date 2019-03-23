@@ -4,10 +4,14 @@ jobs:
     docker:
       - image: circleci/node:11.10.0
 
-    working_directory: ~/repo
+    working_directory: ~/curi
 
     steps:
       - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
 
       - run:
           name: Install
