@@ -1,7 +1,7 @@
 require("@babel/register");
 const start = new Date();
 const path = require("path");
-const { staticFiles } = require("@curi/static");
+const { static_files } = require("@curi/static");
 const active = require("@curi/route-active");
 
 const render = require("./render");
@@ -12,7 +12,7 @@ const routes = require("../src/routes").default;
 
 const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
 
-function getRouterOptions() {
+function get_router_options() {
   return {
     route: [active()]
   };
@@ -52,7 +52,7 @@ Build time: ${end - start}ms`
   );
 }
 
-staticFiles({
+static_files({
   pages,
   fallback: {
     filename: "404.html",
@@ -60,7 +60,7 @@ staticFiles({
   },
   router: {
     routes,
-    getRouterOptions
+    get_router_options
   },
   output: {
     dir: OUTPUT_DIR,

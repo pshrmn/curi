@@ -5,7 +5,6 @@ import {
   HashSection,
   CodeBlock,
   IJS,
-  Cmp,
   Note
 } from "../../../../../components/package/common";
 
@@ -18,12 +17,12 @@ const propsMeta = {
   hash: "create_router_component-Router"
 };
 export const meta = {
-  title: "create_router_component()",
+  title: "create_router_component",
   hash: "create_router_component",
   children: [argumentsMeta, propsMeta]
 };
 
-export function CuriProviderAPI() {
+export function CreateRouterComponentAPI() {
   return (
     <HashSection meta={meta}>
       <p>

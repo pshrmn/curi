@@ -1,4 +1,4 @@
-# Next
+## 2.0.0-beta.0
 
 * Rename `curiProvider` to `create_router_component`
 * Use snake cased `history.to_href`

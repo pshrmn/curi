@@ -37,7 +37,7 @@ const setTitle = titleEffect(({ response }) => {
 });
 
 const router = curi(history, routes, {
-  sideEffects: [setTitle]
+  side_effects: [setTitle]
 });`}
       </CodeBlock>
 

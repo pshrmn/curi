@@ -153,8 +153,8 @@ router.route.pathname("Home");
           <HashSection
             tag="h6"
             meta={{
-              title: <IJS>sideEffects</IJS>,
-              hash: "options-sideEffects"
+              title: <IJS>side_effects</IJS>,
+              hash: "options-side_effects"
             }}
           >
             <p>
@@ -193,7 +193,7 @@ router.route.pathname("Home");
               {`import scroll from "@curi/side-effect-scroll";
 
 const router = curi(Browser, routes, {
-  sideEffects: [scroll()]
+  side_effects: [scroll()]
 });`}
             </CodeBlock>
           </HashSection>

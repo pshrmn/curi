@@ -40,7 +40,7 @@ function SideEffectExample() {
 
         <p>
           Side effect functions are registered when creating a router using the{" "}
-          <IJS>sideEffects</IJS> property of the options object.
+          <IJS>side_effects</IJS> property of the options object.
         </p>
 
         <CodeBlock lang="javascript">
@@ -48,7 +48,7 @@ function SideEffectExample() {
 import mySideEffect from './mySideEffect';
 
 const router = curi(Browser, routes, {
-  sideEffects: [mySideEffect]
+  side_effects: [mySideEffect]
 });`}
         </CodeBlock>
       </HashSection>

@@ -17,8 +17,8 @@ const announce = ariaLiveSideEffect(
 
 const router = curi(Browser, routes, {
   route: [active(), prefetch()],
-  sideEffects: [setTitle, scrollTo, announce],
-  emitRedirects: false
+  side_effects: [setTitle, scrollTo, announce],
+  emit_redirects: false
 });
 
 if (process.env.NODE_ENV !== "production") {

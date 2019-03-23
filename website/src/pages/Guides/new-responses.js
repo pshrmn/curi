@@ -250,7 +250,7 @@ router.observe(observer);`}
 
 // as a side-effect
 const router = curi(Browser, routes, {
-  sideEffects: [{ fn: logger }]
+  side_effects: [{ fn: logger }]
 });
 
 // as an observer

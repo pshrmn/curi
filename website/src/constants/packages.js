@@ -125,13 +125,22 @@ const packages = [
     globalName: "CuriRouteAncestors",
     type: "route interactions",
     script: true,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["route-ancestors"]
+      v1: "1.1.0",
+      v2: versions["route-ancestors"]
     },
-    import: () =>
-      import(/* webpackChunkName: 'package--route-ancestors' */
-      `../pages/Packages/route-ancestors/v1/index.js`)
+    import: version => {
+      switch (version) {
+        case "v1":
+          return import(/* webpackChunkName: 'package--route-ancestors-v1' */
+          `../pages/Packages/route-ancestors/v1/index.js`);
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--route-ancestors-v2' */
+          `../pages/Packages/route-ancestors/v2/index.js`);
+      }
+    }
   },
   {
     name: "route-prefetch",
@@ -227,10 +236,10 @@ const packages = [
     globalName: "CuriHelpers",
     type: "other",
     script: true,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["helpers"],
-      v2: "2.0.0-alpha.0"
+      v1: "1.0.0",
+      v2: versions["helpers"]
     },
     import: version => {
       switch (version) {

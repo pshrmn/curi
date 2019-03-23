@@ -2,7 +2,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import { create_server_history } from "@hickory/in-memory";
 import { curi } from "@curi/router";
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
 import routes from "./src/routes";
 import App from "./src/components/App";
 
@@ -12,7 +12,7 @@ export default function(req, res) {
   const router = curi(ServerHistory, routes, {
     history: { location: req.url }
   });
-  const Router = curiProvider(router);
+  const Router = create_router_component(router);
   router.once(({ response }) => {
     if (response.redirectTo !== undefined) {
       res.redirect(302, response.redirectTo.pathname);

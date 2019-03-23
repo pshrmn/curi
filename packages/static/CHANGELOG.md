@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.1
 
 * Rename `staticFiles` to `static_files`.
 * Update `createServerHistory` import to new name: `create_server_history`.

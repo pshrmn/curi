@@ -36,7 +36,7 @@ const routes = [
 ];
 
 const router = Curi.curi(HickoryHash, routes);
-const Router = CuriReactDOM.curiProvider(router);
+const Router = CuriReactDOM.create_router_component(router);
 const root = document.getElementById("root");
 
 function render({ response }) {

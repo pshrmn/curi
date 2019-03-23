@@ -18,7 +18,7 @@ export function ScrollAPI() {
 import scroll from '@curi/side-effect-scroll';
 
 const router = curi(Browser, routes, {
-  sideEffects: [scroll()]
+  side_effects: [scroll()]
 });`}
       </CodeBlock>
     </HashSection>

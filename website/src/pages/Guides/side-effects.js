@@ -59,13 +59,13 @@ function UsingSideEffectsGuide() {
       <HashSection meta={addingMeta}>
         <p>
           Side effects are provided to your router with the{" "}
-          <IJS>sideEffects</IJS> property of the options object. This is an
+          <IJS>side_effects</IJS> property of the options object. This is an
           array of observer functions.
         </p>
 
         <CodeBlock>
           {`const router = curi(Browser, routes, {
-  sideEffects: [logResponse, updateTitle]
+  side_effects: [logResponse, updateTitle]
 });`}
         </CodeBlock>
 
@@ -79,7 +79,7 @@ function UsingSideEffectsGuide() {
 
         <CodeBlock>
           {`const router = curi(Browser, routes, {
-  sideEffects: [logResponse]
+  side_effects: [logResponse]
 });
 
 const render = () => {
@@ -137,7 +137,7 @@ const router = curi(Browser, routes, {
 }
 
 const router = curi(Browser, routes, {
-  sideEffects: [mySideEffect]
+  side_effects: [mySideEffect]
 });`}
         </CodeBlock>
 

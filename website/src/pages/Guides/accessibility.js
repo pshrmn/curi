@@ -103,7 +103,7 @@ const routes = prepare_routes([
 ]);
 
 const router = curi(Browser, routes, {
-  sideEffects: [announcer]
+  side_effects: [announcer]
 });
 
 // when the user navigates to "/", the screen reader

@@ -9,7 +9,7 @@ function catchAll(req, res) {
 
   // 2. Create a router and the root Curi provider component
   const router = curi(history, routes);
-  const Router = curiProvider(router);
+  const Router = create_router_component(router);
 
   // 3. Wait for the initial location's response to finish
   router.response((response, navigation) => {

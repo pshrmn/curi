@@ -138,7 +138,7 @@ const router = curi(Browser, routes);`}
 
         <CodeBlock>
           {`const router = curi(Browser, routes, {
-  sideEffects: [scroll, title]
+  side_effects: [scroll, title]
 })`}
         </CodeBlock>
 
