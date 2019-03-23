@@ -1,6 +1,6 @@
 {
   "name": "@curi/helpers",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.1",
   "description": "Functions that can be useful in Curi apps",
   "main": "dist/curi-helpers.js",
   "module": "dist/curi-helpers.es.js",
@@ -17,7 +17,6 @@
     "build": "rollup -c",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
   },
   "repository": {

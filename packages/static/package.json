@@ -1,6 +1,6 @@
 {
   "name": "@curi/static",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Generate static HTML files from Curi routes",
   "main": "dist/curi-static.js",
   "types": "types/index.d.ts",
@@ -14,7 +14,6 @@
     "prebuild": "rimraf dist && rimraf types",
     "build": "rollup -c",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest"
   },
   "repository": {

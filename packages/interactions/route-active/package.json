@@ -1,6 +1,6 @@
 {
   "name": "@curi/route-active",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "description": "A Curi router interaction to determine if a route is \"active\"",
   "main": "dist/curi-route-active.js",
   "module": "dist/curi-route-active.es.js",
@@ -17,7 +17,6 @@
     "build": "rollup -c",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
   },
   "repository": {

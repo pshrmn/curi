@@ -1,6 +1,6 @@
 {
   "name": "@curi/router",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "A JavaScript router that doesn't care how you render",
   "main": "dist/curi-router.js",
   "module": "dist/curi-router.es.js",
@@ -17,7 +17,6 @@
     "build": "rollup -c",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
   },
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "@curi/react-universal",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "description": "React components to use with Curi",
   "main": "dist/curi-react-universal.js",
   "module": "dist/curi-react-universal.es.js",
@@ -18,7 +18,6 @@
     "build": "rollup -c",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
   },
   "repository": {

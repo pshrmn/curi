@@ -1,3 +1,7 @@
+## 1.0.0-beta.2
+
+* Use `create_router` export from `@curi/router`.
+
 ## 1.0.0-beta.1
 
 * Rename `staticFiles` to `static_files`.

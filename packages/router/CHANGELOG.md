@@ -1,3 +1,7 @@
+## 2.0.0-beta.3
+
+* Rename `curi` export to `create_router`.
+
 ## 2.0.0-beta.2
 
 * Rename `prepareRoutes` to `prepare_routes`

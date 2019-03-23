@@ -1,6 +1,6 @@
 {
   "name": "@curi/side-effect-title",
-  "version": "1.0.2",
+  "version": "2.0.0-alpha.0",
   "description": "Curi side effecft to set the page title when loading a route",
   "main": "dist/curi-side-effect-title.js",
   "module": "dist/curi-side-effect-title.es.js",
@@ -17,7 +17,6 @@
     "build": "rollup -c",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test",
     "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
   },
   "repository": {
