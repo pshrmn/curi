@@ -187,7 +187,7 @@ function MigrateReactRouterv3Guide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   {
     name: 'Home',
     path: ''
@@ -227,13 +227,13 @@ function MigrateReactRouterv3Guide() {
           </Note>
 
           <CodeBlock>
-            {`import { prepareRoutes } from "@curi/router";
+            {`import { prepare_routes } from "@curi/router";
             
 import Home from './pages/Home';
 import Inbox from './pages/Inbox';
 import Mesage from './pages/Message';
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: 'Home',
     path: '',
@@ -305,7 +305,7 @@ const routes = prepareRoutes([
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   {
     name: 'Home',
     path: '',
@@ -357,7 +357,7 @@ const routes = prepareRoutes([
 
         <CodeBlock lang="jsx">
           {`import { Router, browserHistory } from 'react-router';
-const routes = prepareRoutes([...]);
+const routes = prepare_routes([...]);
 ReactDOM.render((
   <Router history={browserHistory} routes={routes} />
 ), holder);`}
@@ -372,9 +372,9 @@ ReactDOM.render((
         </p>
 
         <CodeBlock>
-          {`import { curi, prepareRoutes } from '@curi/router';
+          {`import { curi, prepare_routes } from '@curi/router';
 import { Browser } from '@hickory/browser';
-const routes = prepareRoutes([...]);
+const routes = prepare_routes([...]);
 const router = curi(Browser, routes);`}
         </CodeBlock>
       </HashSection>
@@ -427,10 +427,11 @@ const router = curi(Browser, routes);`}
           <p>
             With Curi, we also need to re-render our application every time that
             the location changes. We will do this by creating a root Curi
-            component by calling the <IJS>curiProvider()</IJS> function, which
-            comes from the <IJS>@curi/react-dom</IJS> package, and passing it
-            our Curi router. While the name of this component is entirely up to
-            you, we will refer to it as the <IJS>Router</IJS> here.
+            component by calling the <IJS>create_router_component()</IJS>{" "}
+            function, which comes from the <IJS>@curi/react-dom</IJS> package,
+            and passing it our Curi router. While the name of this component is
+            entirely up to you, we will refer to it as the <IJS>Router</IJS>{" "}
+            here.
           </p>
           <p>
             The <IJS>Router</IJS> will setup an observer on the provided router
@@ -475,10 +476,10 @@ const router = curi(Browser, routes);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`import { curiProvider, useCuri } from "@curi/react-dom";
+            {`import { create_router_component, useCuri } from "@curi/react-dom";
 
 const router = curi(Browser, routes);            
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 function App() {
   const { response } = useCuri();
@@ -510,7 +511,7 @@ ReactDOM.render((
           </Note>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   // ...,
   {
     name: "Not Found",

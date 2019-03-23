@@ -1,5 +1,6 @@
 # Next
 
+* Rename `curiStore` to `curi_store`
 * Use snake cased `history.to_href`
 
 ## 1.0.0-beta.13

@@ -1,8 +1,8 @@
-export { RouterProps } from "./curiProvider";
+export { RouterProps } from "./create_router_component";
 export { ActiveHookProps, LocationCheck } from "./hooks/useActive";
 export { NavigatingChildren } from "./hooks/useNavigationHandler";
 
-import curiProvider from "./curiProvider";
+import create_router_component from "./create_router_component";
 import { Curious } from "./Context";
 
 import useCuri from "./hooks/useCuri";
@@ -16,7 +16,7 @@ import {
 } from "./hooks/useNavigationHandler";
 
 export {
-  curiProvider,
+  create_router_component,
   Curious,
   useCuri,
   useActive,

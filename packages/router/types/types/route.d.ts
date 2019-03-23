@@ -19,7 +19,7 @@ export declare type AsyncMatchFn = (matched?: Readonly<MatchResponseProperties>,
 export interface RouteDescriptor {
     name: string;
     path: string;
-    pathOptions?: RegExpOptions;
+    path_options?: RegExpOptions;
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
     response?: ResponseFn;
@@ -33,8 +33,8 @@ export interface CompiledRoute {
     sync: boolean;
     children: Array<CompiledRoute>;
     response?: ResponseFn;
-    pathMatching: PathMatching;
-    paramParsers?: ParamParsers;
+    path_matching: PathMatching;
+    param_parsers?: ParamParsers;
 }
 export interface Route<R = unknown> {
     name: string;
@@ -51,7 +51,7 @@ export interface SyncRoute extends Route<undefined> {
 export interface AsyncRoute extends Route<AsyncMatchFn> {
 }
 export interface PathMatching {
-    mustBeExact: boolean;
+    exact: boolean;
     re: RegExp;
     keys: Array<Key>;
 }

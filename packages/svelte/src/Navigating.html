@@ -1,32 +1,29 @@
-<svelte:component this={component} cancel={cancelFn} />
+<svelte:component this="{component}" cancel="{cancel_callback}" />
 
 <script>
   export default {
     data() {
       return {
-        cancelFn: undefined
+        cancel_callback: undefined
       };
     },
     computed: {
-      navigating({ cancelFn }) {
-        return cancelFn !== undefined;
+      navigating({ cancel_callback }) {
+        return cancel_callback !== undefined;
       }
     },
     oncreate() {
-      this.stopCancelling = this.store.get().router.cancel(
-        (cancelFn) => {
-          if (!this.removed) {
-            this.set({ cancelFn });
-          }
+      this.stop = this.store.get().router.cancel(cancel_callback => {
+        if (!this.removed) {
+          this.set({ cancel_callback });
         }
-      );
+      });
     },
     ondestroy() {
       this.removed = true;
-      if (this.stopCancelling) {
-        this.stopCancelling();
+      if (this.stop) {
+        this.stop();
       }
     }
-  }
+  };
 </script>
-

@@ -1,21 +1,20 @@
 import "jest";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
-// @ts-ignore (resolved by jest)
-import createAncestors from "@curi/route-ancestors";
+import create_ancestors from "@curi/route-ancestors";
 
 describe("ancestors route interaction", () => {
   it("is called using router.route.ancestors()", () => {
-    const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+    const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
     const router = curi(InMemory, routes, {
-      route: [createAncestors()]
+      route: [create_ancestors()]
     });
     expect(router.route.ancestors).toBeDefined();
   });
 
   describe("routes", () => {
-    const routes = prepareRoutes([
+    const routes = prepare_routes([
       {
         name: "League",
         path: "league/:lID",
@@ -35,7 +34,7 @@ describe("ancestors route interaction", () => {
       { name: "Catch All", path: "(.*)" }
     ]);
     const router = curi(InMemory, routes, {
-      route: [createAncestors()]
+      route: [create_ancestors()]
     });
 
     it("returns all ancestors when level is undefined (or null)", () => {
@@ -47,8 +46,8 @@ describe("ancestors route interaction", () => {
     });
 
     it("returns undefined when level is not a postive integer", () => {
-      const badArgs = ["no", 0];
-      badArgs.forEach(arg => {
+      const bad_args = ["no", 0];
+      bad_args.forEach(arg => {
         expect(router.route.ancestors("Player", arg)).toBeUndefined();
       });
     });
@@ -68,7 +67,7 @@ describe("ancestors route interaction", () => {
   });
 
   it("resets when routes are refreshed", () => {
-    const routes = prepareRoutes([
+    const routes = prepare_routes([
       {
         name: "League",
         path: "league/:lID",
@@ -88,14 +87,14 @@ describe("ancestors route interaction", () => {
       { name: "Catch All", path: "(.*)" }
     ]);
     const router = curi(InMemory, routes, {
-      route: [createAncestors()]
+      route: [create_ancestors()]
     });
-    const emptyRoutes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+    const empty_routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
 
     expect(router.route.ancestors("Player")).toEqual(["Team", "League"]);
     expect(router.route.ancestors("Player", null)).toEqual(["Team", "League"]);
 
-    router.refresh(emptyRoutes);
+    router.refresh(empty_routes);
 
     expect(router.route.ancestors("Player")).toBeUndefined();
   });

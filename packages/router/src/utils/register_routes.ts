@@ -1,13 +1,13 @@
 import { CompiledRoute } from "../types/route";
 import { Interaction } from "../types/interaction";
 
-export default function registerRoutes(
+export default function register_routes(
   routes: Array<CompiledRoute>,
   interaction: Interaction,
-  parentData?: any
+  parent_data?: any
 ) {
   routes.forEach(route => {
-    const data = interaction.register(route.public, parentData);
-    registerRoutes(route.children, interaction, data);
+    const data = interaction.register(route.public, parent_data);
+    register_routes(route.children, interaction, data);
   });
 }

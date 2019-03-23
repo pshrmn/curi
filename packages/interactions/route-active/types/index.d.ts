@@ -4,6 +4,6 @@ export declare type LocationCheck = (l: SessionLocation) => boolean;
 export interface ActiveCheckOptions {
     params?: Params;
     partial?: boolean;
-    locationCheck?: LocationCheck;
+    location_check?: LocationCheck;
 }
-export default function checkIfActive(): Interaction;
+export default function check_if_active(): Interaction;

@@ -1,8 +1,8 @@
 {
   "dist/curi-route-ancestors.es.js": {
-    "bundled": 829,
-    "minified": 293,
-    "gzipped": 203,
+    "bundled": 842,
+    "minified": 297,
+    "gzipped": 201,
     "treeshaked": {
       "rollup": {
         "code": 0,
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-route-ancestors.js": {
-    "bundled": 846,
-    "minified": 306,
-    "gzipped": 211
+    "bundled": 859,
+    "minified": 310,
+    "gzipped": 208
   },
   "dist/curi-route-ancestors.umd.js": {
-    "bundled": 1181,
+    "bundled": 1194,
     "minified": 452,
     "gzipped": 282
   },
   "dist/curi-route-ancestors.min.js": {
-    "bundled": 1181,
+    "bundled": 1194,
     "minified": 452,
     "gzipped": 282
   }

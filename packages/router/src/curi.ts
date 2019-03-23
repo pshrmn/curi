@@ -1,8 +1,8 @@
-import registerRoutes from "./utils/registerRoutes";
-import pathnameInteraction from "./interactions/pathname";
-import finishResponse from "./finishResponse";
-import matchLocation from "./matchLocation";
-import resolveMatchedRoute from "./resolveMatchedRoute";
+import register_routes from "./utils/register_routes";
+import pathname_interaction from "./interactions/pathname";
+import finish_response from "./finish_response";
+import match_location from "./match_location";
+import resolve_matched_route from "./resolve_matched_route";
 
 import {
   HistoryConstructor,
@@ -30,23 +30,23 @@ import {
   CancelNavigateCallbacks
 } from "./types/curi";
 
-export default function createRouter<HOpts = HistoryOptions>(
-  historyConstructor: HistoryConstructor<HOpts>,
-  routeArray: CompiledRouteArray,
+export default function create_router<HOpts = HistoryOptions>(
+  history_constructor: HistoryConstructor<HOpts>,
+  route_array: CompiledRouteArray,
   options: RouterOptions<HOpts> = {}
 ): CuriRouter {
   const {
-    route: userInteractions = [],
-    sideEffects = [],
-    emitRedirects = true,
+    route: user_interactions = [],
+    side_effects = [],
+    emit_redirects = true,
     external,
-    history: historyOptions = <HOpts>{}
+    history: history_options = <HOpts>{}
   } = options;
 
-  const history = historyConstructor(navigationHandler, historyOptions);
+  const history = history_constructor(navigation_handler, history_options);
 
   // the last finished response & navigation
-  const mostRecent: CurrentResponse = {
+  const most_recent: CurrentResponse = {
     response: null,
     navigation: null
   };
@@ -54,69 +54,71 @@ export default function createRouter<HOpts = HistoryOptions>(
   /* routes & route interactions */
 
   let routes: CompiledRouteArray;
-  const routeInteractions: Interactions = {};
+  const route_interactions: Interactions = {};
 
-  function setupRoutesAndInteractions(userRoutes?: CompiledRouteArray): void {
-    if (userRoutes) {
-      routes = userRoutes;
-      for (let key in routeInteractions) {
-        delete routeInteractions[key];
+  function setup_routes_and_interactions(
+    user_routes?: CompiledRouteArray
+  ): void {
+    if (user_routes) {
+      routes = user_routes;
+      for (let key in route_interactions) {
+        delete route_interactions[key];
       }
 
       // add the pathname interaction to the provided interactions
-      userInteractions
-        .concat(pathnameInteraction(options.pathnameOptions))
+      user_interactions
+        .concat(pathname_interaction(options.pathname_options))
         .forEach(interaction => {
           interaction.reset();
-          routeInteractions[interaction.name] = interaction.get;
-          registerRoutes(routes, interaction);
+          route_interactions[interaction.name] = interaction.get;
+          register_routes(routes, interaction);
         });
     }
   }
 
   /* history observer */
 
-  function navigationHandler(pendingNav: PendingNavigation): void {
+  function navigation_handler(pending_nav: PendingNavigation): void {
     let previous: Response | null = refreshing
-      ? mostRecent.navigation
-        ? mostRecent.navigation.previous
+      ? most_recent.navigation
+        ? most_recent.navigation.previous
         : null
-      : mostRecent.response;
+      : most_recent.response;
     refreshing = false;
     const navigation: Navigation = {
-      action: pendingNav.action,
+      action: pending_nav.action,
       previous
     };
 
-    const match = matchLocation(pendingNav.location, routes);
+    const match = match_location(pending_nav.location, routes);
     // if no routes match, do nothing
     if (!match.route) {
       if (process.env.NODE_ENV !== "production") {
         console.warn(
           `The current location (${
-            pendingNav.location.pathname
+            pending_nav.location.pathname
           }) has no matching route, ` +
             'so a response could not be emitted. A catch-all route ({ path: "(.*)" }) ' +
             "can be used to match locations with no other matching route."
         );
       }
-      pendingNav.finish();
-      finishAndResetNavCallbacks();
+      pending_nav.finish();
+      finish_and_reset_nav_callbacks();
       return;
     }
 
     if (match.route.sync) {
-      finalizeResponseAndEmit(match as Match, pendingNav, navigation, null);
+      finalize_response_and_emit(match as Match, pending_nav, navigation, null);
     } else {
-      announceAsyncNav();
-      resolveMatchedRoute(match as Match, external).then(
+      announe_async_nav();
+      resolve_matched_route(match as Match, external).then(
         (resolved: ResolveResults) => {
-          if (pendingNav.cancelled) {
+          if (pending_nav.cancelled) {
             return;
           }
-          finalizeResponseAndEmit(
+          finalize_response_and_emit(
             match as Match,
-            pendingNav,
+            pending_nav,
             navigation,
             resolved
           );
@@ -125,43 +127,43 @@ export default function createRouter<HOpts = HistoryOptions>(
     }
   }
 
-  function finalizeResponseAndEmit(
+  function finalize_response_and_emit(
     match: Match,
     pending: PendingNavigation,
     navigation: Navigation,
     resolved: ResolveResults | null
   ) {
-    asyncNavComplete();
+    async_nav_complete();
     pending.finish();
-    const response = finishResponse(
+    const response = finish_response(
       match,
-      routeInteractions,
+      route_interactions,
       resolved,
       history,
       external
     );
-    finishAndResetNavCallbacks();
-    emitImmediate(response, navigation);
+    finish_and_reset_nav_callbacks();
+    emit_immediate(response, navigation);
   }
 
-  function emitImmediate(response: Response, navigation: Navigation) {
-    if (!response.redirectTo || emitRedirects) {
-      mostRecent.response = response;
-      mostRecent.navigation = navigation;
+  function emit_immediate(response: Response, navigation: Navigation) {
+    if (!response.redirect_to || emit_redirects) {
+      most_recent.response = response;
+      most_recent.navigation = navigation;
 
-      callObservers({ response, navigation, router });
-      callOneTimersAndSideEffects({ response, navigation, router });
+      call_observers({ response, navigation, router });
+      call_one_timers_and_side_effects({ response, navigation, router });
     }
 
-    if (response.redirectTo !== undefined) {
-      history.navigate(response.redirectTo, "replace");
+    if (response.redirect_to !== undefined) {
+      history.navigate(response.redirect_to, "replace");
     }
   }
 
   /* router.observer & router.once */
 
   let observers: Array<Observer> = [];
-  const oneTimers: Array<Observer> = [];
+  const one_timers: Array<Observer> = [];
 
   function observe(
     fn: Observer,
@@ -170,10 +172,10 @@ export default function createRouter<HOpts = HistoryOptions>(
     const { initial = true } = options || {};
 
     observers.push(fn);
-    if (mostRecent.response && initial) {
+    if (most_recent.response && initial) {
       fn.call(null, {
-        response: mostRecent.response,
-        navigation: mostRecent.navigation,
+        response: most_recent.response,
+        navigation: most_recent.navigation,
         router
       });
     }
@@ -187,48 +189,48 @@ export default function createRouter<HOpts = HistoryOptions>(
   function once(fn: Observer, options?: ResponseHandlerOptions) {
     const { initial = true } = options || {};
 
-    if (mostRecent.response && initial) {
+    if (most_recent.response && initial) {
       fn.call(null, {
-        response: mostRecent.response,
-        navigation: mostRecent.navigation,
+        response: most_recent.response,
+        navigation: most_recent.navigation,
         router
       });
     } else {
-      oneTimers.push(fn);
+      one_timers.push(fn);
     }
   }
 
-  function callObservers(emitted: Emitted) {
+  function call_observers(emitted: Emitted) {
     observers.forEach(fn => {
       fn(emitted);
     });
   }
 
-  function callOneTimersAndSideEffects(emitted: Emitted) {
-    oneTimers.splice(0).forEach(fn => {
+  function call_one_timers_and_side_effects(emitted: Emitted) {
+    one_timers.splice(0).forEach(fn => {
       fn(emitted);
     });
-    sideEffects.forEach(fn => {
+    side_effects.forEach(fn => {
       fn(emitted);
     });
   }
 
   /* router.navigate */
 
-  let cancelCallback: (() => void) | undefined;
-  let finishCallback: (() => void) | undefined;
+  let cancel_callback: (() => void) | undefined;
+  let finish_callback: (() => void) | undefined;
 
   function navigate(details: NavigationDetails): CancelNavigateCallbacks {
-    cancelAndResetNavCallbacks();
+    cancel_and_reset_nav_callbacks();
 
     let { name, params, hash, query, state, method } = details;
     const pathname =
       name != null
-        ? routeInteractions.pathname(name, params)
+        ? route_interactions.pathname(name, params)
         : history.location.pathname;
 
-    cancelCallback = details.cancelled;
-    finishCallback = details.finished;
+    cancel_callback = details.cancelled;
+    finish_callback = details.finished;
 
     history.navigate(
       {
@@ -240,37 +242,37 @@ export default function createRouter<HOpts = HistoryOptions>(
       method
     );
 
-    return resetCallbacks;
+    return reset_callbacks;
   }
 
-  function cancelAndResetNavCallbacks() {
-    if (cancelCallback) {
-      cancelCallback();
+  function cancel_and_reset_nav_callbacks() {
+    if (cancel_callback) {
+      cancel_callback();
     }
-    resetCallbacks();
+    reset_callbacks();
   }
 
-  function finishAndResetNavCallbacks() {
-    if (finishCallback) {
-      finishCallback();
+  function finish_and_reset_nav_callbacks() {
+    if (finish_callback) {
+      finish_callback();
     }
-    resetCallbacks();
+    reset_callbacks();
   }
 
-  function resetCallbacks() {
-    cancelCallback = undefined;
-    finishCallback = undefined;
+  function reset_callbacks() {
+    cancel_callback = undefined;
+    finish_callback = undefined;
   }
 
   /* router.cancel */
 
-  let cancelWith: CancelActiveNavigation | undefined;
-  let asyncNavNotifiers: Array<Cancellable> = [];
+  let cancel_with: CancelActiveNavigation | undefined;
+  let async_nav_notifiers: Array<Cancellable> = [];
 
   function cancel(fn: Cancellable): RemoveCancellable {
-    asyncNavNotifiers.push(fn);
+    async_nav_notifiers.push(fn);
     return () => {
-      asyncNavNotifiers = asyncNavNotifiers.filter(can => {
+      async_nav_notifiers = async_nav_notifiers.filter(can => {
         return can !== fn;
       });
     };
@@ -278,23 +280,23 @@ export default function createRouter<HOpts = HistoryOptions>(
 
   // let any async navigation listeners (observers from router.cancel)
   // know that there is an asynchronous navigation happening
-  function announceAsyncNav() {
-    if (asyncNavNotifiers.length && cancelWith === undefined) {
-      cancelWith = () => {
+  function announe_async_nav() {
+    if (async_nav_notifiers.length && cancel_with === undefined) {
+      cancel_with = () => {
         history.cancel();
-        asyncNavComplete();
-        cancelAndResetNavCallbacks();
+        async_nav_complete();
+        cancel_and_reset_nav_callbacks();
       };
-      asyncNavNotifiers.forEach(fn => {
-        fn(cancelWith);
+      async_nav_notifiers.forEach(fn => {
+        fn(cancel_with);
       });
     }
   }
 
-  function asyncNavComplete() {
-    if (cancelWith) {
-      cancelWith = undefined;
-      asyncNavNotifiers.forEach(fn => {
+  function async_nav_complete() {
+    if (cancel_with) {
+      cancel_with = undefined;
+      async_nav_notifiers.forEach(fn => {
         fn();
       });
     }
@@ -304,13 +306,13 @@ export default function createRouter<HOpts = HistoryOptions>(
 
   let refreshing = false;
   function refresh(routes?: CompiledRouteArray) {
-    setupRoutesAndInteractions(routes);
+    setup_routes_and_interactions(routes);
     refreshing = true;
     history.current();
   }
 
   const router: CuriRouter = {
-    route: routeInteractions,
+    route: route_interactions,
     history,
     external,
     observe,
@@ -319,12 +321,12 @@ export default function createRouter<HOpts = HistoryOptions>(
     navigate,
     refresh,
     current() {
-      return mostRecent;
+      return most_recent;
     }
   };
 
   // now that everything is defined, actually do the setup
-  setupRoutesAndInteractions(routeArray);
+  setup_routes_and_interactions(route_array);
   history.current();
   return router;
 }

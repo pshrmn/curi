@@ -9,30 +9,30 @@ import { LocationOptions } from "@hickory/in-memory";
 import { Emitted, RouterOptions } from "@curi/router";
 import { StaticConfiguration, Result } from "./types";
 
-function defaultGetRouterOptions(): RouterOptions {
+function default_get_router_options(): RouterOptions {
   return {};
 }
 
-export default async function staticFiles(
+export default async function static_files(
   config: StaticConfiguration
 ): Promise<Array<Result>> {
   const {
     pages,
-    router: { routes, getRouterOptions = defaultGetRouterOptions },
+    router: { routes, get_router_options = default_get_router_options },
     output: { render, insert, dir, redirects = false },
-    history: historyOptions
+    history: history_options
   } = config;
 
   // generate input pathname/output filename pairs
   // for the provided pages
-  const inputOutput = pathnames({
+  const input_output = pathnames({
     routes,
     pages,
-    routerOptions: getRouterOptions()
+    router_options: get_router_options()
   }).map(pathname => {
     return {
       pathname,
-      outputPath: join(dir, pathname, "index.html")
+      output_path: join(dir, pathname, "index.html")
     };
   });
 
@@ -40,25 +40,25 @@ export default async function staticFiles(
   // add it to the input/output array
   if (config.fallback) {
     const { pathname, filename } = config.fallback;
-    inputOutput.push({
+    input_output.push({
       pathname,
-      outputPath: join(dir, filename)
+      output_path: join(dir, filename)
     });
   }
 
-  const ServerHistory = create_server_history(historyOptions);
+  const ServerHistory = create_server_history(history_options);
 
   return Promise.all<Result>(
-    inputOutput.map(({ pathname, outputPath }) => {
+    input_output.map(({ pathname, output_path }) => {
       return new Promise(resolve => {
         try {
           // create a new router for each so we don't run into any issues
           // with overlapping requests
 
           const router = curi<LocationOptions>(ServerHistory, routes, {
-            ...getRouterOptions(),
+            ...get_router_options(),
             // need to emit redirects or will get stuck waiting forever
-            emitRedirects: true,
+            emit_redirects: true,
             history: {
               location: pathname
             }
@@ -68,7 +68,7 @@ export default async function staticFiles(
             (emitted: Emitted) => {
               try {
                 const { response } = emitted;
-                if (response.redirectTo && !redirects) {
+                if (response.redirect_to && !redirects) {
                   resolve({
                     pathname,
                     success: false,
@@ -78,7 +78,7 @@ export default async function staticFiles(
                 }
                 const markup = render(emitted);
                 const html = insert(markup);
-                fs.outputFile(outputPath, html).then(() => {
+                fs.outputFile(output_path, html).then(() => {
                   resolve({ pathname, success: true });
                 });
               } catch (e) {

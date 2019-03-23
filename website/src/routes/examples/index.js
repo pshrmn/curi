@@ -1,4 +1,4 @@
-import { preferDefault } from "@curi/helpers";
+import { prefer_default } from "@curi/helpers";
 
 import EXAMPLE_API from "../../constants/examples";
 import ExampleList from "./ExampleList";
@@ -26,7 +26,7 @@ export default {
           ? example
               .import()
               .then(
-                preferDefault,
+                prefer_default,
                 catchImportError(`example: ${params.category}/${params.slug}`)
               )
           : Example404;

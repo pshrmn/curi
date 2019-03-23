@@ -38,7 +38,7 @@ const propertiesMeta = {
 
 const prepareMeta = {
   title: "Preparing Routes",
-  hash: "prepareRoutes"
+  hash: "prepare_routes"
 };
 
 const noMatchMeta = {
@@ -99,7 +99,7 @@ function RoutesGuide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   {
     path: "" // matches the root "/"
   },
@@ -117,7 +117,7 @@ function RoutesGuide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   {
     name: "Home",
     path: ""
@@ -233,7 +233,7 @@ function RoutesGuide() {
           <CodeBlock>
             {`import User from "./components/User";
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: "User",
     path: "u/:id",
@@ -273,7 +273,7 @@ const routes = prepareRoutes([
         </p>
 
         <CodeBlock lang="js">
-          {`const routes = prepareRoutes([
+          {`const routes = prepare_routes([
   { name: "One", path: "one" },
   { name: "Two", path: "two", children: [
     { name: "And a half", path: "point-five" },
@@ -315,7 +315,7 @@ const routes = prepareRoutes([
 
         <HashSection meta={walkthroughMeta} tag="h3">
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   {
     name: 'Home',
     path: '',
@@ -356,7 +356,7 @@ const routes = prepareRoutes([
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   {
     name: 'Home',
     path: '',
@@ -417,20 +417,20 @@ const routes = prepareRoutes([
 
       <HashSection meta={prepareMeta}>
         <p>
-          The routes array should be wrapped in a <IJS>prepareRoutes()</IJS>{" "}
+          The routes array should be wrapped in a <IJS>prepare_routes()</IJS>{" "}
           call. This will pre-build the routes for the router, which is
           especially useful for server rendering, where a new router is created
           for every request.
         </p>
 
         <CodeBlock>
-          {`import { prepareRoutes } from "@curi/router";
+          {`import { prepare_routes } from "@curi/router";
 
 // plain routes
 const routes = [...]
 
 // prepared routes
-export default prepareRoutes(routes);`}
+export default prepare_routes(routes);`}
         </CodeBlock>
       </HashSection>
     </React.Fragment>

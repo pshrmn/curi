@@ -20,10 +20,10 @@ describe("once()", () => {
     let calls = 0;
     const fn = () => Promise.resolve(calls++);
     const wrapped = once(fn);
-    const firstResult = await wrapped();
-    expect(firstResult).toBe(0);
-    const secondResult = await wrapped();
-    expect(secondResult).toBe(0);
+    const first_result = await wrapped();
+    expect(first_result).toBe(0);
+    const second_result = await wrapped();
+    expect(second_result).toBe(0);
     done();
   });
 });

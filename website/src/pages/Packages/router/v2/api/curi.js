@@ -93,7 +93,7 @@ const router = curi(Browser, routes);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   { name: "Home", path: "" },
   { name: "About", path: "about" }
 ]);
@@ -129,7 +129,7 @@ const router = curi(Browser, routes);`}
               {`import active from "@curi/route-active";
 import ancestors from "@curi/route-ancestors";
 
-const routes = prepareRoutes([{ name: "Home", path: "" }]);
+const routes = prepare_routes([{ name: "Home", path: "" }]);
 
 const router = curi(Browser, routes, {
   route: [active(), ancestors()]
@@ -219,7 +219,7 @@ const router = curi(Browser, routes, {
 });`}
             </CodeBlock>
             <CodeBlock>
-              {`const routes = prepareRoutes([
+              {`const routes = prepare_routes([
   {
     name: "User",
     path: "user/:id",
@@ -248,7 +248,7 @@ const router = curi(Browser, routes, {
             </p>
 
             <CodeBlock>
-              {`const routes = prepareRoutes([
+              {`const routes = prepare_routes([
   {
     name: "Old",
     path: "old/:id",
@@ -379,7 +379,7 @@ const router = curi(Browser, routes, {
           </ScrollableTable>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   {
     name: "Album",
     path: "photos/:albumID",
@@ -659,7 +659,7 @@ router.once(({ response, navigation }) => {
             </p>
 
             <CodeBlock>
-              {`const routes = prepareRoutes([
+              {`const routes = prepare_routes([
   { name: 'User', path: 'user/:id' }
 ]);
 const router = curi(Browser, routes);
@@ -684,8 +684,8 @@ const userPathname = router.route.pathname(
           </p>
 
           <CodeBlock>
-            {`const oldRoutes = prepareRoutes([...]);
-const newRoutes = prepareRoutes([...]);
+            {`const oldRoutes = prepare_routes([...]);
+const newRoutes = prepare_routes([...]);
 
 const router = curi(Browser, oldRoutes);
 // generates responses using old routes

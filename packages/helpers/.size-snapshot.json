@@ -1,8 +1,8 @@
 {
   "dist/curi-helpers.es.js": {
-    "bundled": 381,
-    "minified": 175,
-    "gzipped": 139,
+    "bundled": 386,
+    "minified": 177,
+    "gzipped": 137,
     "treeshaked": {
       "rollup": {
         "code": 0,
@@ -14,18 +14,18 @@
     }
   },
   "dist/curi-helpers.js": {
-    "bundled": 488,
-    "minified": 270,
-    "gzipped": 190
+    "bundled": 494,
+    "minified": 273,
+    "gzipped": 188
   },
   "dist/curi-helpers.umd.js": {
-    "bundled": 814,
-    "minified": 405,
+    "bundled": 820,
+    "minified": 406,
     "gzipped": 268
   },
   "dist/curi-helpers.min.js": {
-    "bundled": 814,
-    "minified": 405,
+    "bundled": 820,
+    "minified": 406,
     "gzipped": 268
   }
 }

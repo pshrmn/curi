@@ -10,11 +10,11 @@ import {
 
 const argumentsMeta = {
   title: "Arguments",
-  hash: "staticFiles-arguments"
+  hash: "static_files-arguments"
 };
 export const meta = {
-  title: "staticFiles()",
-  hash: "staticFiles",
+  title: "static_files()",
+  hash: "static_files",
   children: [argumentsMeta]
 };
 
@@ -22,9 +22,9 @@ export function StaticFilesAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>staticFiles()</IJS> function is used to generate HTML files for
-        a static website and save them to the disk. An HTML file will be created
-        for each page that you provide.
+        The <IJS>static_files()</IJS> function is used to generate HTML files
+        for a static website and save them to the disk. An HTML file will be
+        created for each page that you provide.
       </p>
       <p>
         Files will be created as <IJS>index.html</IJS> in the directory for
@@ -33,12 +33,12 @@ export function StaticFilesAPI() {
       </p>
 
       <CodeBlock>
-        {`import { staticFiles } from '@curi/static';
+        {`import { static_files } from '@curi/static';
 import { join } from "path";
 
 import routes from "../src/routes";
 
-staticFiles({
+static_files({
   routes,
   pages: [{ name: "Home" }, { name: "About" }],
   dir: join(process.cwd(), "public"),
@@ -48,8 +48,8 @@ staticFiles({
       </CodeBlock>
 
       <p>
-        <IJS>staticFiles()</IJS> returns a Promise that resolve with an array of
-        results. Each entry in the results array contains the{" "}
+        <IJS>static_files()</IJS> returns a Promise that resolve with an array
+        of results. Each entry in the results array contains the{" "}
         <IJS>pathname</IJS> of the result, a <IJS>success</IJS> boolean, and, if{" "}
         <IJS>success</IJS> is false, the <IJS>error</IJS> that occurred.
       </p>
@@ -59,7 +59,7 @@ staticFiles({
       </p>
 
       <CodeBlock>
-        {`staticFiles({...})
+        {`static_files({...})
   .then(results => {
     const resultString = results
       .map(result => {
@@ -74,12 +74,13 @@ staticFiles({
 
       <HashSection tag="h4" meta={argumentsMeta}>
         <p>
-          The <IJS>staticFiles</IJS> functions is passed an object of arguments.
+          The <IJS>static_files</IJS> functions is passed an object of
+          arguments.
         </p>
 
         <HashSection
           tag="h5"
-          meta={{ title: "pages", hash: "staticFiles-pages" }}
+          meta={{ title: "pages", hash: "static_files-pages" }}
         >
           <p>
             An array of page descriptors. A page descriptor is an object with a{" "}
@@ -96,7 +97,7 @@ staticFiles({
 ];
 
 
-staticFiles({
+static_files({
   // ...
   pages
 });`}
@@ -105,7 +106,7 @@ staticFiles({
 
         <HashSection
           tag="h5"
-          meta={{ title: "router", hash: "staticFiles-router" }}
+          meta={{ title: "router", hash: "static_files-router" }}
         >
           <p>
             The router property is an object with two properties:{" "}
@@ -114,7 +115,7 @@ staticFiles({
 
           <HashSection
             tag="h6"
-            meta={{ title: "routes", hash: "staticFiles-routes" }}
+            meta={{ title: "routes", hash: "static_files-routes" }}
           >
             <p>
               <IJS>routes</IJS> is an array of route descriptors. This is the
@@ -123,7 +124,7 @@ staticFiles({
             </p>
 
             <CodeBlock>
-              {`const routes = prepareRoutes([
+              {`const routes = prepare_routes([
   {
     name: "Home",
     path: "",
@@ -134,7 +135,7 @@ staticFiles({
   }
 ]);
 
-staticFiles({
+static_files({
   // ...
   router: {
     routes
@@ -147,7 +148,7 @@ staticFiles({
             tag="h6"
             meta={{
               title: "getRouterOptions()",
-              hash: "staticFiles-getRouterOptions"
+              hash: "static_files-getRouterOptions"
             }}
           >
             <p>
@@ -156,8 +157,8 @@ staticFiles({
               interactions, side effects, or other route options.
             </p>
             <p>
-              When you call <IJS>staticFiles()</IJS>, a router is created for
-              each page. <IJS>staticFiles()</IJS> creates its own{" "}
+              When you call <IJS>static_files()</IJS>, a router is created for
+              each page. <IJS>static_files()</IJS> creates its own{" "}
               <IJS>history</IJS> instances, and gets its routes from the{" "}
               <IJS>routes</IJS> options, but the router may also need to be
               provided with other options, like route interactions.
@@ -177,7 +178,7 @@ const getRouterOptions = () => ({
   routes: [active()]
 });
 
-staticFiles({
+static_files({
   // ...
   router: {
     getRouterOptions
@@ -189,7 +190,7 @@ staticFiles({
 
         <HashSection
           tag="h5"
-          meta={{ title: "fallback", hash: "staticFiles-fallback" }}
+          meta={{ title: "fallback", hash: "static_files-fallback" }}
         >
           <p>
             Some hosts allow you to provide a fallback page for when a request
@@ -200,7 +201,7 @@ staticFiles({
           </p>
 
           <CodeBlock>
-            {`staticFiles({
+            {`static_files({
   // ...
   fallback: {
     pathname: "/404",
@@ -212,7 +213,7 @@ staticFiles({
 
         <HashSection
           tag="h5"
-          meta={{ title: "output", hash: "staticFiles-output" }}
+          meta={{ title: "output", hash: "static_files-output" }}
         >
           <p>
             The <IJS>output</IJS> property is used to describe how output files
@@ -221,7 +222,7 @@ staticFiles({
 
           <HashSection
             tag="h6"
-            meta={{ title: "render()", hash: "staticFiles-render" }}
+            meta={{ title: "render()", hash: "static_files-render" }}
           >
             <p>
               A function that takes the emitted <IJS>response</IJS>,{" "}
@@ -246,11 +247,11 @@ staticFiles({
             <CodeBlock lang="jsx">
               {`// for a React application
 import { renderToString } from "react-dom";
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
 
 function render(emitted) {
   const { router } = emitted;
-  const Router = curiProvider(router);
+  const Router = create_router_component(router);
   return renderToString(
     <Router>
       <App />
@@ -258,7 +259,7 @@ function render(emitted) {
   )
 }
 
-staticFiles({
+static_files({
   // ...
   output: {
     render
@@ -269,7 +270,7 @@ staticFiles({
 
           <HashSection
             tag="h6"
-            meta={{ title: "insert()", hash: "staticFiles-insert" }}
+            meta={{ title: "insert()", hash: "static_files-insert" }}
           >
             <p>
               A function that takes the value returned by the{" "}
@@ -296,7 +297,7 @@ function render() {
   return { title: "Yo!", html: "<div>Hey!</div>" };
 }
 
-staticFiles({
+static_files({
   // ...
   output: {
     insert
@@ -307,12 +308,12 @@ staticFiles({
 
           <HashSection
             tag="h6"
-            meta={{ title: "dir", hash: "staticFiles-dir" }}
+            meta={{ title: "dir", hash: "static_files-dir" }}
           >
             <p>The folder where the generated HTML files should be saved.</p>
 
             <CodeBlock>
-              {`staticFiles({
+              {`static_files({
   // ...
   output: {
     dir: "dist"
@@ -323,7 +324,7 @@ staticFiles({
 
           <HashSection
             tag="h6"
-            meta={{ title: "redirects", hash: "staticFiles-redirects" }}
+            meta={{ title: "redirects", hash: "static_files-redirects" }}
           >
             <p>
               If a route automatically redirects, you probably do not need to

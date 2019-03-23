@@ -149,7 +149,7 @@ npm run start`}
   name: "A Route",
   path: "route/:id",
   resolve({ params }) {
-    const body = import("./components/SomeComponent").then(preferDefault);
+    const body = import("./components/SomeComponent").then(prefer_default);
     const data = fetch(\`/api/data/$\{params.id\}\`);
     return Promise.all([ component, data ]);
   },
@@ -187,14 +187,14 @@ npm run start`}
         </p>
 
         <CodeBlock>
-          {`import { preferDefault } from "@curi/helpers";
+          {`import { prefer_default } from "@curi/helpers";
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: "A Route",
     path: "route/:id",
     resolve({ params }) {
-      const body = import("./components/SomeComponent").then(preferDefault);
+      const body = import("./components/SomeComponent").then(prefer_default);
       const data = fetch(\`/api/data/$\{params.id\}\`);
       return Promise.all([ component, data ]);
     },
@@ -347,21 +347,21 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
 
         <p>
           The <IJS>@curi/helpers</IJS> package provides a{" "}
-          <IJS>preferDefault</IJS> function. This function will return an
+          <IJS>prefer_default</IJS> function. This function will return an
           imported module's default property if it exists, and returns the
           entire module if it doesn't have a default property.
         </p>
 
         <CodeBlock>
-          {`import { preferDefault } from "@curi/helpers";
+          {`import { prefer_default } from "@curi/helpers";
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: "Test",
     path: "test",
     resolve() {
       return import(/* webpackChunkName: "Test" */ "./components/Test.js")
-        .then(preferDefault);
+        .then(prefer_default);
     }
   }
 ]);`}
@@ -379,13 +379,13 @@ const routes = prepareRoutes([
         <CodeBlock>
           {`import displayLoadError from "./components/LoadError";
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: "One",
     path: "one",
     resolve() {
       return import("./components/One.js")
-        .then(preferDefault)
+        .then(prefer_default)
         .catch(err => displayLoadError(err);
     },
     response({ resolved }) {
@@ -400,7 +400,7 @@ const routes = prepareRoutes([
         <p>
           We can now update the <IJS>routes.js</IJS> module to remove the
           imports at the top of the file and use <IJS>import()</IJS> to import
-          the route components. We will use <IJS>preferDefault</IJS> to only
+          the route components. We will use <IJS>prefer_default</IJS> to only
           resolve the component instead of the entire module object.
         </p>
         <p>
@@ -411,16 +411,16 @@ const routes = prepareRoutes([
 
         <CodeBlock data-line="3,9-15,20-26,31-37,42-48">
           {`// src/routes.js
-import { prepareRoutes } from "@curi/router";
-import { preferDefault } from "@curi/helpers";
+import { prepare_routes } from "@curi/router";
+import { prefer_default } from "@curi/helpers";
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: "Home",
     path: "",
     resolve() {
       return import("./components/Home")
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -431,7 +431,7 @@ export default prepareRoutes([
     path: "book/:id",
     resolve() {
       return import("./components/Book")
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -442,7 +442,7 @@ export default prepareRoutes([
     path: "checkout",
     resolve() {
       return import("./components/Checkout")
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -453,7 +453,7 @@ export default prepareRoutes([
     path: "(.*)",
     resolve() {
       return import("./components/NotFound")
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -474,7 +474,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import { Browser } from '@hickory/browser';
-import { curiProvider } from '@curi/react-dom';
+import { create_router_component } from '@curi/react-dom';
 
 import routes from './routes';
 import './index.css';
@@ -482,7 +482,7 @@ import NavMenu from './components/NavMenu';
 import registerServiceWorker from './registerServiceWorker';
 
 const router = curi(Browser, routes);
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 router.once(() => {
   ReactDOM.render((
@@ -582,7 +582,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import { Browser } from '@hickory/browser';
-import { curiProvider } from '@curi/react-dom';
+import { create_router_component } from '@curi/react-dom';
 
 import routes from './routes';
 import './index.css';
@@ -595,7 +595,7 @@ const router = curi(Browser, routes, {
     bookAPI
   }
 });
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 router.once(() => {
   ReactDOM.render((
@@ -637,16 +637,16 @@ registerServiceWorker();`}
 
         <CodeBlock data-line="12,15-18,27,30-33">
           {`// src/routes.js
-import { prepareRoutes } from "@curi/router";
-import { preferDefault } from "@curi/helpers";
+import { prepare_routes } from "@curi/router";
+import { prefer_default } from "@curi/helpers";
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: "Home",
     path: "",
     resolve(_, external) {
       const body = import("./components/Home")
-        .then(preferDefault);
+        .then(prefer_default);
       const books = external.bookAPI.BOOKS();
       return Promise.all([body, books]);
     },
@@ -663,7 +663,7 @@ export default prepareRoutes([
     path: "book/:id",
     resolve({ params }, external) {
       const body = import("./components/Book")
-        .then(preferDefault);
+        .then(prefer_default);
       const book = external.bookAPI.BOOK(params.id);
       return Promise.all([body, books]);
     },
@@ -680,7 +680,7 @@ export default prepareRoutes([
     path: "checkout",
     resolve() {
       return import("./components/Checkout")
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -691,7 +691,7 @@ export default prepareRoutes([
     path: "(.*)",
     resolve() {
       return import("./components/NotFound")
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };

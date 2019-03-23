@@ -44,10 +44,10 @@ function ReactDOMGuide() {
 
       <HashSection meta={renderingMeta}>
         <p>
-          The <IJS>curiProvider()</IJS> function is used to create the component
-          at the root of a Curi + React application. You can call this component
-          anything that you want, but here it will be referred to as the{" "}
-          <IJS>Router</IJS>.
+          The <IJS>create_router_component()</IJS> function is used to create
+          the component at the root of a Curi + React application. You can call
+          this component anything that you want, but here it will be referred to
+          as the <IJS>Router</IJS>.
         </p>
 
         <Note>
@@ -62,9 +62,9 @@ function ReactDOMGuide() {
         </Note>
 
         <p>
-          <IJS>curiProvider()</IJS> is passed the application's Curi router to
-          create a <IJS>Router</IJS> component. The <IJS>Router</IJS> will
-          automatically add an{" "}
+          <IJS>create_router_component()</IJS> is passed the application's Curi
+          router to create a <IJS>Router</IJS> component. The <IJS>Router</IJS>{" "}
+          will automatically add an{" "}
           <Link
             name="Package"
             params={{ package: "router", version: "v1" }}
@@ -88,10 +88,10 @@ function ReactDOMGuide() {
         </p>
 
         <CodeBlock lang="jsx">
-          {`import { curiProvider, useCuri } from '@curi/react-dom';
+          {`import { create_router_component, useCuri } from '@curi/react-dom';
 
 import router from "./router";
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 function App() {
   const {
@@ -177,7 +177,7 @@ ReactDOM.render((
           </Note>
 
           <CodeBlock lang="jsx" data-line="20,24,27">
-            {`const routes = prepareRoutes([
+            {`const routes = prepare_routes([
   {
     name: "Home",
     path: "",

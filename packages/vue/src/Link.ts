@@ -13,7 +13,7 @@ export interface LinkComponent extends Vue {
   navigating: boolean;
 }
 
-const canNavigate = (event: MouseEvent) => {
+const can_navigate = (event: MouseEvent) => {
   return (
     !event.defaultPrevented &&
     (event.button !== undefined && event.button === 0) &&
@@ -50,11 +50,11 @@ const Link: ComponentOptions<LinkComponent> = {
   },
 
   methods: {
-    clickHandler: function(event: MouseEvent) {
+    click_handler: function(event: MouseEvent) {
       if (this.click) {
         this.click(event);
       }
-      if (canNavigate(event)) {
+      if (can_navigate(event)) {
         event.preventDefault();
         let cancelled, finished;
         if (this.$scopedSlots.default) {
@@ -81,7 +81,7 @@ const Link: ComponentOptions<LinkComponent> = {
       "a",
       {
         attrs: { href: this.href },
-        on: { click: this.clickHandler }
+        on: { click: this.click_handler }
       },
       this.$scopedSlots.default
         ? this.$scopedSlots.default({

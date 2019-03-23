@@ -1,6 +1,6 @@
 import { Browser } from "@hickory/browser";
 import { curi } from "@curi/router";
-import { curiStore } from "@curi/svelte";
+import { curi_store } from "@curi/svelte";
 import { Store } from "svelte/store";
 import { parse, stringify } from "qs";
 
@@ -13,7 +13,7 @@ const history = Browser({
 const router = curi(Browser, routes, {
   emitRedirects: false
 });
-const store = curiStore(router);
+const store = curi_store(router);
 
 const target = document.getElementById("root");
 const view = new app({ target, store });

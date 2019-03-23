@@ -2,12 +2,12 @@ import "jest";
 import { InMemory } from "@hickory/in-memory";
 
 // @ts-ignore (resolved by jest)
-import { prepareRoutes, curi } from "@curi/router";
+import { prepare_routes, curi } from "@curi/router";
 
 describe("pathname route interaction", () => {
   describe("calling", () => {
     it("it is accessed through route.name()", () => {
-      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
       const router = curi(InMemory, routes);
       expect(router.route.pathname).toBeDefined();
     });
@@ -16,7 +16,7 @@ describe("pathname route interaction", () => {
   describe("generating pathnames", () => {
     it("works when paths contain no params", () => {
       // duh?
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Static", path: "this/has/no/params" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -26,7 +26,7 @@ describe("pathname route interaction", () => {
     });
 
     it("returns a pathname using params", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Player", path: "player/:id" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -40,7 +40,7 @@ describe("pathname route interaction", () => {
       const mockError = jest.fn();
       console.error = mockError;
 
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Player", path: "player/:id" },
         { name: "Catch All", path: "(.*)" }
       ]);

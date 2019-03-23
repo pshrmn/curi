@@ -1,7 +1,7 @@
-import { prepareRoutes } from "@curi/router";
+import { prepare_routes } from "@curi/router";
 import NotFound from "./components/NotFound"; // not splitting this
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: "Home",
     path: "",

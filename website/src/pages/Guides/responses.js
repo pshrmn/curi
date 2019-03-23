@@ -182,7 +182,7 @@ function ResponsesGuide() {
         <CodeBlock>
           {`// do NOT do this
 // mixing body shapes complicates rendering
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     response() {
       return { body: One }

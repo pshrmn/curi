@@ -25,14 +25,14 @@ export interface ResponseHandlerOptions {
 export type RemoveObserver = () => void;
 
 export type CancelActiveNavigation = () => void;
-export type Cancellable = (cancelActive?: CancelActiveNavigation) => void;
+export type Cancellable = (cancel?: CancelActiveNavigation) => void;
 export type RemoveCancellable = () => void;
 
 export interface RouterOptions<O = HistoryOptions> {
   route?: Array<Interaction>;
-  sideEffects?: Array<Observer>;
-  pathnameOptions?: PathFunctionOptions;
-  emitRedirects?: boolean;
+  side_effects?: Array<Observer>;
+  pathname_options?: PathFunctionOptions;
+  emit_redirects?: boolean;
   external?: any;
   history?: O;
 }
@@ -51,7 +51,7 @@ export interface NavigationDetails extends RouteLocation {
 export type CancelNavigateCallbacks = () => void;
 
 export interface CuriRouter {
-  refresh: (routeArray?: CompiledRouteArray) => void;
+  refresh: (routes?: CompiledRouteArray) => void;
   observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
   once: (fn: Observer, options?: ResponseHandlerOptions) => void;
   cancel: (fn: Cancellable) => RemoveCancellable;

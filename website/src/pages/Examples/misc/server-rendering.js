@@ -44,7 +44,7 @@ function catchAll(req, res) {
   const router = curi(ServerHistory, routes, {
     history: { location: req.url }
   });
-  const Router = curiProvider(router);
+  const Router = create_router_component(router);
 
   // 3. Wait for the response to be generated
   router.once(({ response, navigation }) => {

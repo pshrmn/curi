@@ -1,12 +1,12 @@
 import "jest";
-import { prepareRoutes } from "@curi/router";
+import { prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
 import { pathnames } from "@curi/static";
 
 describe("pathnames()", () => {
   it("returns an array of pathname strings from the given routes/page descriptors", () => {
-    const routes = prepareRoutes([
+    const routes = prepare_routes([
       {
         name: "Home",
         path: ""

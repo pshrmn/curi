@@ -1,11 +1,11 @@
 import "jest";
 import { ensureDir, remove, existsSync } from "fs-extra";
 import { join } from "path";
-import { prepareRoutes } from "@curi/router";
+import { prepare_routes } from "@curi/router";
 import * as qs from "qs";
 
 // @ts-ignore (resolved by jest)
-import { staticFiles } from "@curi/static";
+import { static_files } from "@curi/static";
 
 import { Emitted } from "@curi/router";
 
@@ -16,14 +16,14 @@ const DEFAULT_INSERT = (markup: string, emitted: Emitted) => {
   return `<html><body>${markup}</body</html>`;
 };
 
-describe("staticFiles()", () => {
+describe("static_files()", () => {
   describe("output files", () => {
     it("creates HTML files for each route in the correct location", async () => {
       const fixtures = join(FIXTURES_ROOT, "basic");
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Home",
           path: "",
@@ -40,7 +40,7 @@ describe("staticFiles()", () => {
         }
       ]);
       const pages = [{ name: "Home" }, { name: "About" }];
-      await staticFiles({
+      await static_files({
         pages,
         router: {
           routes
@@ -66,7 +66,7 @@ describe("staticFiles()", () => {
         await remove(fixtures);
         await ensureDir(fixtures);
 
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Home",
             path: "",
@@ -90,7 +90,7 @@ describe("staticFiles()", () => {
           }
         ]);
         const pages = [{ name: "Home" }, { name: "About" }];
-        await staticFiles({
+        await static_files({
           pages,
           fallback: {
             filename: "404.html",
@@ -123,12 +123,12 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Home",
           path: "",
           response() {
-            return { redirectTo: { name: "About" } };
+            return { redirect_to: { name: "About" } };
           }
         },
         {
@@ -140,7 +140,7 @@ describe("staticFiles()", () => {
         }
       ]);
       const pages = [{ name: "Home" }, { name: "About" }];
-      await staticFiles({
+      await static_files({
         pages,
         router: {
           routes
@@ -166,14 +166,14 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Home",
           path: "",
           response() {
             return {
               body: "Home",
-              redirectTo: { name: "About" }
+              redirect_to: { name: "About" }
             };
           }
         },
@@ -186,7 +186,7 @@ describe("staticFiles()", () => {
         }
       ]);
       const pages = [{ name: "Home" }, { name: "About" }];
-      await staticFiles({
+      await static_files({
         pages,
         router: {
           routes
@@ -214,7 +214,7 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Home",
           path: "",
@@ -225,7 +225,7 @@ describe("staticFiles()", () => {
       ]);
       const pages = [{ name: "Home" }];
       const render = jest.fn(({ response }) => response.body);
-      await staticFiles({
+      await static_files({
         pages,
         router: {
           routes
@@ -254,7 +254,7 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Home",
           path: "",
@@ -266,7 +266,7 @@ describe("staticFiles()", () => {
       const pages = [{ name: "Home" }];
       const render = DEFAULT_RENDER;
       const insert = jest.fn(html => html);
-      await staticFiles({
+      await static_files({
         pages,
         router: {
           routes
@@ -281,13 +281,13 @@ describe("staticFiles()", () => {
     });
   });
 
-  describe("getRouterOptions()", () => {
-    it("calls getRouterOptions function to get options for a router", async () => {
+  describe("get_router_options()", () => {
+    it("calls get_router_options function to get options for a router", async () => {
       const fixtures = join(FIXTURES_ROOT, "routerOptions");
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Home",
           path: "",
@@ -297,12 +297,12 @@ describe("staticFiles()", () => {
         }
       ]);
       const pages = [{ name: "Home" }];
-      const getRouterOptions = jest.fn();
-      await staticFiles({
+      const get_router_options = jest.fn();
+      await static_files({
         pages,
         router: {
           routes,
-          getRouterOptions
+          get_router_options
         },
         output: {
           render: DEFAULT_RENDER,
@@ -311,7 +311,7 @@ describe("staticFiles()", () => {
         }
       });
       // once to static pathnames and again for the Home markup
-      expect(getRouterOptions.mock.calls.length).toBe(2);
+      expect(get_router_options.mock.calls.length).toBe(2);
     });
   });
 
@@ -321,7 +321,7 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Home",
           path: "",
@@ -331,7 +331,7 @@ describe("staticFiles()", () => {
         }
       ]);
       const pages = [{ name: "Home" }];
-      await staticFiles({
+      await static_files({
         pages,
         router: {
           routes
@@ -366,7 +366,7 @@ describe("staticFiles()", () => {
         await remove(fixtures);
         await ensureDir(fixtures);
 
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           {
             name: "Home",
             path: "",
@@ -379,12 +379,12 @@ describe("staticFiles()", () => {
           }
         ]);
         const pages = [{ name: "Home" }];
-        const getRouterOptions = jest.fn();
-        const results = await staticFiles({
+        const get_router_options = jest.fn();
+        const results = await static_files({
           pages,
           router: {
             routes,
-            getRouterOptions
+            get_router_options
           },
           output: {
             render: () => {

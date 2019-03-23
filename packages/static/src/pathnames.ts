@@ -6,9 +6,9 @@ import { PathnamesConfiguration } from "./types";
 export default function pathnames(
   config: PathnamesConfiguration
 ): Array<string> {
-  const { routes, pages, routerOptions } = config;
+  const { routes, pages, router_options } = config;
 
-  const router = curi(InMemory, routes, routerOptions);
+  const router = curi(InMemory, routes, router_options);
 
   return pages.map(page => {
     const pathname = router.route.pathname(page.name, page.params);

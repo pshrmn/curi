@@ -2,12 +2,12 @@ import "jest";
 import { InMemory } from "@hickory/in-memory";
 
 // @ts-ignore (resolved by jest)
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
-describe("route.pathOptions matching", () => {
+describe("route.path_options matching", () => {
   describe("default options", () => {
     it("sensitive = false", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "here"
@@ -27,7 +27,7 @@ describe("route.pathOptions matching", () => {
     });
 
     it("strict = false", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "here"
@@ -47,7 +47,7 @@ describe("route.pathOptions matching", () => {
     });
 
     it("end = true", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "here"
@@ -69,11 +69,11 @@ describe("route.pathOptions matching", () => {
 
   describe("user provided options", () => {
     it("sensitive = true", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "here",
-          pathOptions: { sensitive: true }
+          path_options: { sensitive: true }
         },
         {
           name: "Not Found",
@@ -90,11 +90,11 @@ describe("route.pathOptions matching", () => {
     });
 
     it("strict = true", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "here",
-          pathOptions: { strict: true }
+          path_options: { strict: true }
         },
         {
           name: "Not Found",
@@ -111,11 +111,11 @@ describe("route.pathOptions matching", () => {
     });
 
     it("end = false", () => {
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         {
           name: "Test",
           path: "here",
-          pathOptions: { end: false }
+          path_options: { end: false }
         },
         {
           name: "Not Found",

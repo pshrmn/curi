@@ -85,7 +85,7 @@ function MultiBodyExample() {
         <CodeBlock lang="javascript">
           {`// be consistent, don't use
 // different body types
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     ...,
     response() {

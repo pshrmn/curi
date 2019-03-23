@@ -1,13 +1,13 @@
 import "jest";
 
 // @ts-ignore (resolved by jest)
-import { prepareRoutes } from "@curi/router";
+import { prepare_routes } from "@curi/router";
 
-describe("prepareRoutes()", () => {
+describe("prepare_routes()", () => {
   describe("paths beginning with forward slash", () => {
     it("throws", () => {
       expect(() => {
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Home", path: "/" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -25,7 +25,7 @@ describe("prepareRoutes()", () => {
         { name: "Catch All", path: "(.*)" }
       ];
       expect(() => {
-        prepareRoutes(routes);
+        prepare_routes(routes);
       }).toThrow(
         `Multiple routes have the name "Home". Route names must be unique.`
       );
@@ -46,7 +46,7 @@ describe("prepareRoutes()", () => {
         { name: "Catch All", path: "(.*)" }
       ];
       expect(() => {
-        prepareRoutes(routes);
+        prepare_routes(routes);
       }).toThrow(
         `Multiple routes have the name "Child". Route names must be unique.`
       );

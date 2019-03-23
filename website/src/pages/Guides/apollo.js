@@ -77,9 +77,9 @@ function ApolloGuide() {
 
         <CodeBlock lang="jsx">
           {`import { ApolloProvider } from "react-apollo";
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
 
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 ReactDOM.render((
   <ApolloProvider client={client}>
@@ -103,7 +103,7 @@ ReactDOM.render((
 import Noun from "./pages/Noun";
 
 // nothing Apollo related in here
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: 'Noun',
     path: 'noun/:word',
@@ -204,7 +204,7 @@ const router = curi(Browser, routes, {
         <CodeBlock>
           {`import { EXAMPLE_QUERY } from "./queries";
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: "Example",
     path: "example/:id",
@@ -359,7 +359,7 @@ const Verb = ({ response }) => (
             {`// index.js
 import prefetch from "@curi/route-prefetch";
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: "Example",
     path: "example/:id",

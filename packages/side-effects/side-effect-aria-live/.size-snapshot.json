@@ -1,7 +1,7 @@
 {
   "dist/curi-side-effect-aria-live.es.js": {
-    "bundled": 446,
-    "minified": 300,
+    "bundled": 454,
+    "minified": 308,
     "gzipped": 220,
     "treeshaked": {
       "rollup": {
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-side-effect-aria-live.js": {
-    "bundled": 463,
-    "minified": 313,
+    "bundled": 471,
+    "minified": 321,
     "gzipped": 228
   },
   "dist/curi-side-effect-aria-live.umd.js": {
-    "bundled": 764,
+    "bundled": 772,
     "minified": 449,
     "gzipped": 296
   },
   "dist/curi-side-effect-aria-live.min.js": {
-    "bundled": 764,
+    "bundled": 772,
     "minified": 449,
     "gzipped": 296
   }

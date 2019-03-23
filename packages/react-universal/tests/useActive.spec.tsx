@@ -2,16 +2,20 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 import activeInteraction from "@curi/route-active";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, useActive, useCuri } from "@curi/react-universal";
+import {
+  create_router_component,
+  useActive,
+  useCuri
+} from "@curi/react-universal";
 
 describe("useActive", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes([
+  const routes = prepare_routes([
     { name: "Home", path: "" },
     {
       name: "Contact",
@@ -25,7 +29,7 @@ describe("useActive", () => {
     router = curi(InMemory, routes, {
       route: [activeInteraction()]
     });
-    Router = curiProvider(router);
+    Router = create_router_component(router);
   });
 
   afterEach(() => {
@@ -39,7 +43,7 @@ describe("useActive", () => {
       const realError = console.error;
       console.error = jest.fn();
 
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
 
       function App() {
         const active = useActive({ name: "Home" });
@@ -91,7 +95,7 @@ const router = curi(history, routes, {
           locations: ["/contact/email"]
         }
       });
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       function App() {
         const active = useActive({
           name: "Method",
@@ -117,7 +121,7 @@ const router = curi(history, routes, {
           locations: ["/contact/email"]
         }
       });
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       function App() {
         const active = useActive({ name: "Contact", partial: true });
         expect(active).toBe(true);
@@ -142,7 +146,7 @@ const router = curi(history, routes, {
       });
       const locCheck = jest.fn();
       let theLocation;
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       function App() {
         const { response } = useCuri();
         theLocation = response.location;
@@ -168,7 +172,7 @@ const router = curi(history, routes, {
       });
       const locCheck = jest.fn();
       let theResponse;
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       function App() {
         const { response } = useCuri();
         theResponse = response;
@@ -191,7 +195,7 @@ const router = curi(history, routes, {
           locations: ["/contact/email"]
         }
       });
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       function App() {
         const active = useActive({
           name: "Contact",
@@ -216,7 +220,7 @@ const router = curi(history, routes, {
           locations: ["/contact/email"]
         }
       });
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       function App() {
         const active = useActive({
           name: "Contact",

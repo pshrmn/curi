@@ -1,32 +1,32 @@
 import PathToRegexp from "path-to-regexp";
-import { withLeadingSlash, join } from "../utils/path";
+import { with_leading_slash, join } from "../utils/path";
 
 import { PathFunction, PathFunctionOptions } from "path-to-regexp";
 import { Interaction } from "../types/interaction";
 import { Route } from "../types/route";
 import { Params } from "../types/response";
 
-function generatePathname(options?: PathFunctionOptions): Interaction {
-  let knownPaths: { [key: string]: string } = {};
+function generate_pathname(options?: PathFunctionOptions): Interaction {
+  let known_paths: { [key: string]: string } = {};
   let cache: { [key: string]: PathFunction } = {};
-  let alreadyCompiled: { [key: string]: string } = {};
+  let already_compiled: { [key: string]: string } = {};
   return {
     name: "pathname",
     register: (route: Route, parent: string): string => {
       const { name, path, pathname } = route;
 
       let base;
-      if (parent && knownPaths[parent]) {
-        base = knownPaths[parent];
+      if (parent && known_paths[parent]) {
+        base = known_paths[parent];
       }
-      knownPaths[name] = withLeadingSlash(base ? join(base, path) : path);
+      known_paths[name] = with_leading_slash(base ? join(base, path) : path);
       if (pathname) {
         cache[name] = pathname;
       }
       return name;
     },
     get: (name: string, params: Params): string | void => {
-      if (knownPaths[name] == null) {
+      if (known_paths[name] == null) {
         if (process.env.NODE_ENV !== "production") {
           console.error(
             `Could not generate pathname for ${name} because it is not registered.`
@@ -35,23 +35,23 @@ function generatePathname(options?: PathFunctionOptions): Interaction {
         return;
       }
       const hash = `${name}${JSON.stringify(params)}`;
-      if (alreadyCompiled[hash]) {
-        return alreadyCompiled[hash];
+      if (already_compiled[hash]) {
+        return already_compiled[hash];
       }
 
       const compile = cache[name]
         ? cache[name]
-        : (cache[name] = PathToRegexp.compile(knownPaths[name]));
+        : (cache[name] = PathToRegexp.compile(known_paths[name]));
       const output = compile(params, options);
-      alreadyCompiled[hash] = output;
+      already_compiled[hash] = output;
       return output;
     },
     reset: () => {
-      knownPaths = {};
+      known_paths = {};
       cache = {};
-      alreadyCompiled = {};
+      already_compiled = {};
     }
   };
 }
 
-export default generatePathname;
+export default generate_pathname;

@@ -2,16 +2,16 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
 import wait from "./utils/wait";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, useNavigating } from "@curi/react-universal";
+import { create_router_component, useNavigating } from "@curi/react-universal";
 
 describe("useNavigating", () => {
   let node;
-  const routes = prepareRoutes([
+  const routes = prepare_routes([
     { name: "Home", path: "" },
     { name: "Sync", path: "sync" },
     {
@@ -46,7 +46,7 @@ describe("useNavigating", () => {
   describe("mount", () => {
     it("cancel is undefined", () => {
       const router = curi(InMemory, routes);
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
 
       function Nav() {
         const result = useNavigating();
@@ -66,7 +66,7 @@ describe("useNavigating", () => {
     describe("to synchronous routes", () => {
       it("cancel is undefined", async () => {
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
 
         const children = jest.fn(() => null);
         function Nav() {
@@ -98,7 +98,7 @@ describe("useNavigating", () => {
     describe("to asynchronous routes", () => {
       it("cancel is a function", async () => {
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
 
         const children = jest.fn(() => null);
         function Nav() {
@@ -123,7 +123,7 @@ describe("useNavigating", () => {
 
       it("is undefined once navigation finishes", async done => {
         const router = curi(InMemory, routes);
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
         const children = jest.fn(() => null);
         function Nav() {
           const result = useNavigating();
@@ -158,7 +158,7 @@ describe("useNavigating", () => {
   describe("calling the cancel function", () => {
     it("cancels the navigation", async done => {
       const router = curi(InMemory, routes);
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       let cancelFn;
       const children = jest.fn(cancel => {
         if (cancel === undefined) {
@@ -198,7 +198,7 @@ describe("useNavigating", () => {
 
     it("does nothing if calling function after navigation finishes", async done => {
       const router = curi(InMemory, routes);
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
       let cancelFn;
       const children = jest.fn(cancel => {
         if (cancel === undefined) {

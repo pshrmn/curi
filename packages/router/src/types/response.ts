@@ -17,7 +17,7 @@ export interface SettableResponseProperties {
   body?: any;
   data?: any;
   title?: string;
-  redirectTo?: RedirectProps;
+  redirect_to?: RedirectProps;
 }
 
 export interface RedirectLocation extends PartialLocation {
@@ -32,7 +32,7 @@ export interface Response extends MatchResponseProperties {
   body?: any;
   data?: any;
   title?: string;
-  redirectTo?: RedirectLocation;
+  redirect_to?: RedirectLocation;
 }
 
 export interface RedirectProps extends RouteLocation {

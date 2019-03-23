@@ -1,5 +1,6 @@
 # Next
 
+* Rename `prepareRoutes` to `prepare_routes`
 * Use snake cased `history.to_href`
 
 ## 2.0.0-beta.1

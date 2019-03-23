@@ -2,16 +2,16 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 import * as qs from "qs";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, useHref } from "@curi/react-universal";
+import { create_router_component, useHref } from "@curi/react-universal";
 
 describe("useHref", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes([
+  const routes = prepare_routes([
     { name: "Home", path: "" },
     { name: "User", path: "u/:id" },
     { name: "Catch All", path: "(.*)" }
@@ -20,7 +20,7 @@ describe("useHref", () => {
   beforeEach(() => {
     node = document.createElement("div");
     router = curi(InMemory, routes);
-    Router = curiProvider(router);
+    Router = create_router_component(router);
   });
 
   afterEach(() => {
@@ -95,7 +95,7 @@ describe("useHref", () => {
           }
         }
       });
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
 
       function App() {
         const result = useHref({ name: "Home", query: { hi: "yo" } });

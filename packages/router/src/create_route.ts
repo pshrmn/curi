@@ -1,24 +1,24 @@
 import PathToRegexp from "path-to-regexp";
 
-import { withLeadingSlash, join } from "./utils/path";
+import { with_leading_slash, join } from "./utils/path";
 
 import { RouteDescriptor, CompiledRoute } from "./types/route";
 import { Key } from "path-to-regexp";
 
-const createRoute = (
+const create_route = (
   options: RouteDescriptor,
-  parentPath: string | null,
-  usedNames: Set<string>
+  parent_path: string | null,
+  used_names: Set<string>
 ): CompiledRoute => {
   if (process.env.NODE_ENV !== "production") {
-    if (usedNames.has(options.name)) {
+    if (used_names.has(options.name)) {
       throw new Error(
         `Multiple routes have the name "${
           options.name
         }". Route names must be unique.`
       );
     }
-    usedNames.add(options.name);
+    used_names.add(options.name);
   }
 
   const path = options.path;
@@ -29,20 +29,20 @@ const createRoute = (
       );
     }
   }
-  let fullPath = withLeadingSlash(join(parentPath || "", path));
+  let full_path = with_leading_slash(join(parent_path || "", path));
 
-  const pathOptions = options.pathOptions || {};
+  const path_options = options.path_options || {};
   // end defaults to true, so end has to be hardcoded for it to be false
-  // set this resolve setting pathOptions.end for children
-  const mustBeExact = pathOptions.end == null || pathOptions.end;
+  // set this resolve setting path_options.end for children
+  const exact = path_options.end == null || path_options.end;
 
   let children: Array<CompiledRoute> = [];
   // when we have child routes, we need to perform non-end matching and
   // create route objects for each child
   if (options.children && options.children.length) {
-    pathOptions.end = false;
+    path_options.end = false;
     children = options.children.map(child => {
-      return createRoute(child, fullPath, usedNames);
+      return create_route(child, full_path, used_names);
     });
   }
 
@@ -50,9 +50,9 @@ const createRoute = (
   const keys: Array<Key> = [];
   // path is compiled with a leading slash
   // for optional initial params
-  const re = PathToRegexp(withLeadingSlash(path), keys, pathOptions);
+  const re = PathToRegexp(with_leading_slash(path), keys, path_options);
 
-  const pathname = PathToRegexp.compile(fullPath);
+  const pathname = PathToRegexp.compile(full_path);
 
   return {
     public: {
@@ -63,16 +63,16 @@ const createRoute = (
       extra: options.extra,
       pathname
     },
-    pathMatching: {
+    path_matching: {
       re,
       keys,
-      mustBeExact
+      exact
     },
     sync: options.resolve === undefined,
     response: options.response,
     children,
-    paramParsers: options.params
+    param_parsers: options.params
   };
 };
 
-export default createRoute;
+export default create_route;

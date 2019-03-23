@@ -1,3 +1,7 @@
+## Next
+
+* Rename `locationCheck` option to `location_check`
+
 ## 2.0.0-alpha.1
 
 * Use `SessionLocation` type

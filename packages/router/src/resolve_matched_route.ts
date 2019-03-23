@@ -1,7 +1,7 @@
 import { Match } from "./types/match";
 import { ResolveResults, AsyncRoute } from "./types/route";
 
-export default function resolveRoute(
+export default function resolve_route(
   match: Match,
   global: any
 ): Promise<ResolveResults> {

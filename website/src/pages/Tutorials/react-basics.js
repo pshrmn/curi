@@ -327,17 +327,17 @@ cd curi-react-bookstore # enter the new app directory`}
 
         <p>We can create an array of routes using the above names and paths.</p>
         <p>
-          <IJS>@curi/router</IJS> provides a <IJS>prepareRoutes</IJS> function,
+          <IJS>@curi/router</IJS> provides a <IJS>prepare_routes</IJS> function,
           which is used to setup routes for the router. We will pass the routes
-          array to <IJS>prepareRoutes</IJS> and export the result of that
+          array to <IJS>prepare_routes</IJS> and export the result of that
           function call.
         </p>
 
         <CodeBlock>
           {`// src/routes.js
-import { prepareRoutes } from "@curi/router";
+import { prepare_routes } from "@curi/router";
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: "Home",
     path: ""
@@ -459,7 +459,7 @@ registerServiceWorker();`}
         </p>
         <p>
           We create a <IJS>Router</IJS> component by passing the router to the{" "}
-          <IJS>curiProvider</IJS> higher-order component.
+          <IJS>create_router_component</IJS> higher-order component.
         </p>
 
         <Note>
@@ -477,7 +477,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import { Browser } from '@hickory/browser';
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
 
 import routes from './routes';
 import './index.css';
@@ -485,7 +485,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 const router = curi(Browser, routes);
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
@@ -509,7 +509,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { curi } from '@curi/router';
 import { Browser } from '@hickory/browser';
-import { curiProvider } from "@curi/react-dom";
+import { create_router_component } from "@curi/react-dom";
 
 import routes from './routes';
 import './index.css';
@@ -517,7 +517,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 const router = curi(Browser, routes);
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 ReactDOM.render((
   <Router>
@@ -734,14 +734,14 @@ export default function NotFound() {
 
         <CodeBlock data-line="4-7,13-15,20-22,27-29,34-36">
           {`// src/routes.js
-import { prepareRoutes } from "@curi/router";
+import { prepare_routes } from "@curi/router";
 
 import Home from './components/Home';
 import Book from './components/Book';
 import Checkout from './components/Checkout';
 import NotFound from './components/NotFound';
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: "Home",
     path: "",

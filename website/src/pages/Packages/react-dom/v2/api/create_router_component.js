@@ -11,15 +11,15 @@ import {
 
 const argumentsMeta = {
   title: "Arguments",
-  hash: "curiProvider-arguments"
+  hash: "create_router_component-arguments"
 };
 const propsMeta = {
   title: "Router",
-  hash: "curiProvider-Router"
+  hash: "create_router_component-Router"
 };
 export const meta = {
-  title: "curiProvider()",
-  hash: "curiProvider",
+  title: "create_router_component()",
+  hash: "create_router_component",
   children: [argumentsMeta, propsMeta]
 };
 
@@ -31,10 +31,10 @@ export function CuriProviderAPI() {
       </p>
 
       <CodeBlock lang="jsx">
-        {`import { curiProvider } from '@curi/react-native';
+        {`import { create_router_component } from '@curi/react-dom';
 
 const router = curi(Browser, routes);
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 ReactDOM.render((
   <Router>
@@ -55,7 +55,7 @@ ReactDOM.render((
       <HashSection tag="h3" meta={argumentsMeta}>
         <HashSection
           tag="h4"
-          meta={{ title: "router", hash: "curiProvider-router" }}
+          meta={{ title: "router", hash: "create_router_component-router" }}
         >
           <p>
             A Curi{" "}
@@ -73,7 +73,7 @@ ReactDOM.render((
 
       <HashSection
         tag="h3"
-        meta={{ title: "Router", hash: "curiProvider-Router" }}
+        meta={{ title: "Router", hash: "create_router_component-Router" }}
       >
         <p>
           The <IJS>Router</IJS> sets routing context data. Any component that
@@ -82,7 +82,7 @@ ReactDOM.render((
 
         <HashSection
           tag="h4"
-          meta={{ title: "children", hash: "curiProvider-render" }}
+          meta={{ title: "children", hash: "create_router_component-render" }}
         >
           <p>
             The <IJS>Router</IJS> takes any valid React node (elements, strings,

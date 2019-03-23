@@ -33,7 +33,7 @@ export function PathnamesAPI() {
           <p>The array of route descriptors that is passed to a router.</p>
 
           <CodeBlock>
-            {`routes = prepareRoutes([
+            {`routes = prepare_routes([
   {
     name: "Home",
     path: "",

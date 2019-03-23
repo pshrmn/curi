@@ -3,10 +3,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
 import { InMemory } from "@hickory/in-memory";
-import { curi, prepareRoutes } from "@curi/router";
+import { curi, prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
-import { curiProvider, useNavigationHandler } from "@curi/react-universal";
+import {
+  create_router_component,
+  useNavigationHandler
+} from "@curi/react-universal";
 
 function createClick(opts?: {}) {
   return {
@@ -37,18 +40,18 @@ describe("useNavigationHandler", () => {
   describe("event handler", () => {
     it("it uses nav props (name, params, hash, query, and state) to generate nav location", () => {
       const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(InMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
 
       function Link(props) {
-        const { eventHandler } = useNavigationHandler(props);
+        const { event_handler } = useNavigationHandler(props);
         return (
-          <a href="#" onClick={eventHandler}>
+          <a href="#" onClick={event_handler}>
             {props.children}
           </a>
         );
@@ -77,18 +80,18 @@ describe("useNavigationHandler", () => {
     it("calls onNav prop func if provided", () => {
       const mockNavigate = jest.fn();
       const onNav = jest.fn();
-      const routes = prepareRoutes([
+      const routes = prepare_routes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
       const router = curi(InMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = curiProvider(router);
+      const Router = create_router_component(router);
 
       function Link(props) {
-        const { eventHandler } = useNavigationHandler(props);
+        const { event_handler } = useNavigationHandler(props);
         return (
-          <a href="#" onClick={eventHandler}>
+          <a href="#" onClick={event_handler}>
             {props.children}
           </a>
         );
@@ -116,18 +119,18 @@ describe("useNavigationHandler", () => {
 
       it("does not call history.navigate if canNavigate returns false", () => {
         const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
+        const routes = prepare_routes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
         const router = curi(InMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = curiProvider(router);
+        const Router = create_router_component(router);
 
         function Link(props) {
-          const { eventHandler } = useNavigationHandler(props, canNavigate);
+          const { event_handler } = useNavigationHandler(props, canNavigate);
           return (
-            <a href="#" onClick={eventHandler}>
+            <a href="#" onClick={event_handler}>
               {props.children}
             </a>
           );
