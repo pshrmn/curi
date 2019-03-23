@@ -1,12 +1,12 @@
 import { Browser } from "@hickory/browser";
-import { curi } from "@curi/router";
+import { create_router } from "@curi/router";
 import { curi_store } from "@curi/svelte";
 import active from "@curi/route-active";
 
 import routes from "./routes";
 import app from "./components/App.html";
 
-const router = curi(Browser, routes, {
+const router = create_router(Browser, routes, {
   route: [active()]
 });
 const store = curi_store(router);
