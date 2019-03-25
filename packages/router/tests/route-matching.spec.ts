@@ -1,5 +1,5 @@
 import "jest";
-import { InMemory } from "@hickory/in-memory";
+import { in_memory } from "@hickory/in-memory";
 
 import { create_router, prepare_routes } from "@curi/router";
 
@@ -12,7 +12,7 @@ describe("route matching/response generation", () => {
           path: "test"
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         history: {
           locations: ["/test"]
         }
@@ -32,7 +32,7 @@ describe("route matching/response generation", () => {
           path: "(.*)"
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         history: {
           locations: ["/test/leftovers"]
         }
@@ -51,7 +51,7 @@ describe("route matching/response generation", () => {
 
       it("no response is emitted", () => {
         const routes = prepare_routes([]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/test"]
           }
@@ -64,7 +64,7 @@ describe("route matching/response generation", () => {
 
       it("warns that no route matched", () => {
         const routes = prepare_routes([]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/test"]
           }
@@ -92,7 +92,7 @@ describe("route matching/response generation", () => {
             ]
           }
         ]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/ND/Fargo"]
           }
@@ -119,7 +119,7 @@ describe("route matching/response generation", () => {
             path: "(.*)"
           }
         ]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/ND/Fargo/"]
           }
@@ -142,7 +142,7 @@ describe("route matching/response generation", () => {
             ]
           }
         ]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/ND/Fargo"]
           }
@@ -169,7 +169,7 @@ describe("route matching/response generation", () => {
             path: "(.*)"
           }
         ]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/MT/Bozeman"]
           }
@@ -192,7 +192,7 @@ describe("route matching/response generation", () => {
           path: "(.*)"
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         history: {
           locations: ["/SD/Sioux City"]
         }
@@ -214,7 +214,7 @@ describe("route matching/response generation", () => {
             path: "(.*)"
           }
         ]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/NY/about"]
           }
@@ -235,7 +235,7 @@ describe("route matching/response generation", () => {
             path: "(.*)"
           }
         ]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/about"]
           }
@@ -251,7 +251,7 @@ describe("route matching/response generation", () => {
       describe("location", () => {
         it("is the location used to match routes", () => {
           const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/other-page"]
             }
@@ -269,7 +269,7 @@ describe("route matching/response generation", () => {
               path: "test"
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/test"]
             }
@@ -291,7 +291,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/test"]
             }
@@ -313,7 +313,7 @@ describe("route matching/response generation", () => {
               ]
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/contact"]
             }
@@ -334,7 +334,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/"]
             }
@@ -352,7 +352,7 @@ describe("route matching/response generation", () => {
               path: ""
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/"]
             }
@@ -375,7 +375,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/"]
             }
@@ -393,7 +393,7 @@ describe("route matching/response generation", () => {
               path: ":state"
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/AZ"]
             }
@@ -415,7 +415,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/VA"]
             }
@@ -434,7 +434,7 @@ describe("route matching/response generation", () => {
               path: "a-route"
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/a-route"]
             }
@@ -458,7 +458,7 @@ describe("route matching/response generation", () => {
               ]
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/TX/Austin"]
             }
@@ -482,7 +482,7 @@ describe("route matching/response generation", () => {
               ]
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/MT/Bozeman"]
             }
@@ -502,7 +502,7 @@ describe("route matching/response generation", () => {
               children: [{ name: "Two", path: ":id" }]
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/1/2"]
             }
@@ -522,7 +522,7 @@ describe("route matching/response generation", () => {
                 }
               }
             ]);
-            const router = create_router(InMemory, routes, {
+            const router = create_router(in_memory, routes, {
               history: {
                 locations: ["/123"]
               }
@@ -550,7 +550,7 @@ describe("route matching/response generation", () => {
                 }
               }
             ]);
-            const router = create_router(InMemory, routes, {
+            const router = create_router(in_memory, routes, {
               history: {
                 locations: ["/123/456"]
               }
@@ -572,7 +572,7 @@ describe("route matching/response generation", () => {
                 }
               }
             ]);
-            const router = create_router(InMemory, routes, {
+            const router = create_router(in_memory, routes, {
               history: {
                 locations: ["/123/456"]
               }
@@ -600,7 +600,7 @@ describe("route matching/response generation", () => {
                 }
               }
             ]);
-            const router = create_router(InMemory, routes, {
+            const router = create_router(in_memory, routes, {
               history: {
                 locations: ["/123"]
               }
@@ -619,7 +619,7 @@ describe("route matching/response generation", () => {
       describe("error", () => {
         it("is undefined for good responses", () => {
           const routes = prepare_routes([{ name: "Contact", path: "contact" }]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/contact"]
             }
@@ -640,7 +640,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/"]
             }
@@ -689,7 +689,7 @@ describe("route matching/response generation", () => {
               firstCall = false;
             }
           };
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             side_effects: [logger],
             history: {
               locations: ["/"]
@@ -724,7 +724,7 @@ describe("route matching/response generation", () => {
           }
         ]);
 
-        create_router(InMemory, routes, {
+        create_router(in_memory, routes, {
           history: {
             locations: ["/hello?one=two"]
           }
@@ -746,7 +746,7 @@ describe("route matching/response generation", () => {
             resolve: spy
           }
         ]);
-        create_router(InMemory, routes, {
+        create_router(in_memory, routes, {
           external,
           history: {
             locations: ["/hello?one=two"]
@@ -791,7 +791,7 @@ describe("route matching/response generation", () => {
             resolve: spy
           }
         ]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/first"]
           }
@@ -811,7 +811,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -832,7 +832,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -854,7 +854,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -880,7 +880,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -904,7 +904,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -932,7 +932,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(InMemory, routes, {
+          const router = create_router(in_memory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }

@@ -1,4 +1,4 @@
-import { InMemory } from "@hickory/in-memory";
+import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 import { Store } from "svelte/store";
 
@@ -14,7 +14,7 @@ describe("curi_store", () => {
   ]);
 
   beforeEach(() => {
-    router = create_router(InMemory, routes);
+    router = create_router(in_memory, routes);
   });
 
   describe("existing store", () => {

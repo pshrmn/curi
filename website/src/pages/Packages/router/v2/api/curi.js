@@ -62,7 +62,7 @@ export function CuriAPI() {
       <CodeBlock>
         {`import { create_router } from "@curi/router";
 
-const router = create_router(Browser, routes, options);`}
+const router = create_router(browser, routes, options);`}
       </CodeBlock>
 
       <HashSection tag="h4" meta={argumentsMeta}>
@@ -78,9 +78,9 @@ const router = create_router(Browser, routes, options);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`import { Browser } from "@hickory/browser";
+            {`import { browser } from "@hickory/browser";
 
-const router = create_router(Browser, routes);`}
+const router = create_router(browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -99,7 +99,7 @@ const router = create_router(Browser, routes);`}
   { name: "About", path: "about" }
 ]);
 
-const router = create_router(Browser, routes);`}
+const router = create_router(browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -132,7 +132,7 @@ import ancestors from "@curi/route-ancestors";
 
 const routes = prepare_routes([{ name: "Home", path: "" }]);
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   route: [active(), ancestors()]
 });`}
             </CodeBlock>
@@ -193,7 +193,7 @@ router.route.pathname("Home");
             <CodeBlock>
               {`import scroll from "@curi/side-effect-scroll";
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   side_effects: [scroll()]
 });`}
             </CodeBlock>
@@ -215,7 +215,7 @@ const router = create_router(Browser, routes, {
 
             <CodeBlock>
               {`const client = new ApolloClient();
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   external: { client, greeting: "Hi!" }
 });`}
             </CodeBlock>
@@ -269,7 +269,7 @@ const router = create_router(Browser, routes, {
   }
 ]);
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   emitRedirects: false                 
 });
 // navigating to "/old/2" will automatically redirect
@@ -299,7 +299,7 @@ const router = create_router(Browser, routes, {
             </p>
 
             <CodeBlock>
-              {`const router = create_router(Browser, routes, {
+              {`const router = create_router(browser, routes, {
   pathOptions: {
     encode: (value, token) => { /* ... */ }
   }
@@ -390,7 +390,7 @@ const router = create_router(Browser, routes, {
   },
   // ...
 ]);
-const router = create_router(Browser, routes);
+const router = create_router(browser, routes);
 
 router.navigate({
   name: "Photo",
@@ -626,7 +626,7 @@ stopObserving();
           </Note>
 
           <CodeBlock>
-            {`const router = create_router(Browser, routes);
+            {`const router = create_router(browser, routes);
 const tooSoon = router.current();
 // tooSoon.response === null
 // tooSoon.navigation === null
@@ -663,7 +663,7 @@ router.once(({ response, navigation }) => {
               {`const routes = prepare_routes([
   { name: 'User', path: 'user/:id' }
 ]);
-const router = create_router(Browser, routes);
+const router = create_router(browser, routes);
 const userPathname = router.route.pathname(
   'User',
   { id: '12345' }
@@ -688,7 +688,7 @@ const userPathname = router.route.pathname(
             {`const oldRoutes = prepare_routes([...]);
 const newRoutes = prepare_routes([...]);
 
-const router = create_router(Browser, oldRoutes);
+const router = create_router(browser, oldRoutes);
 // generates responses using old routes
 
 router.refresh(newRoutes);

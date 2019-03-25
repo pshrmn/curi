@@ -1,6 +1,6 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
-import { InMemory } from "@hickory/in-memory";
+import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
@@ -8,7 +8,7 @@ import { CuriPlugin } from "@curi/vue";
 
 describe("CuriPlugin", () => {
   const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-  const router = create_router(InMemory, routes);
+  const router = create_router(in_memory, routes);
 
   describe("$router", () => {
     it("Adds the router to global Vue vars as $router", () => {
@@ -64,7 +64,7 @@ describe("CuriPlugin", () => {
       ]);
 
       beforeEach(() => {
-        router = create_router(InMemory, routes);
+        router = create_router(in_memory, routes);
       });
 
       it("re-renders when updating curi object", done => {

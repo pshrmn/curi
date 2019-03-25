@@ -73,8 +73,8 @@ function HistoryGuide() {
           updating the location.
         </p>
 
-        <CodeBlock>{`import { Browser } from "@hickory/browser";
-const router = create_router(Browser, routes);`}</CodeBlock>
+        <CodeBlock>{`import { browser } from "@hickory/browser";
+const router = create_router(browser, routes);`}</CodeBlock>
 
         <p>
           You most likely will not need to interact directly with the
@@ -91,8 +91,8 @@ const router = create_router(Browser, routes);`}</CodeBlock>
 
         <HashSection meta={browserMeta} tag="h3">
           <CodeBlock>
-            {`import { Browser } from "@hickory/browser";
-const router = create_router(Browser, routes);`}
+            {`import { browser } from "@hickory/browser";
+const router = create_router(browser, routes);`}
           </CodeBlock>
 
           <p>
@@ -122,7 +122,7 @@ const router = create_router(Browser, routes);`}
 
         <HashSection meta={hashMeta} tag="h3">
           <CodeBlock>
-            {`import { Hash } from "@hickory/hash";
+            {`import { hash } from "@hickory/hash";
 const router = create_router(Hash, routes);`}
           </CodeBlock>
 
@@ -142,12 +142,12 @@ const router = create_router(Hash, routes);`}
 
         <HashSection meta={inMemoryMeta} tag="h3">
           <CodeBlock>
-            {`import { InMemory, create_server_history } from "@hickory/in-memory";
+            {`import { in_memory, create_server_history } from "@hickory/in-memory";
 
-const router = create_router(InMemory, routes);
+const router = create_router(in_memory, routes);
 // or
-const ServerHistory = create_server_history();
-const router = create_router(ServerHistory, routes);`}
+const server_history = create_server_history();
+const router = create_router(server_history, routes);`}
           </CodeBlock>
 
           <p>
@@ -157,7 +157,7 @@ const router = create_router(ServerHistory, routes);`}
           </p>
 
           <p>
-            The <IJS>InMemory</IJS> function is a full history object, capable
+            The <IJS>in_memory</IJS> function is a full history object, capable
             of in-app navigation.
           </p>
 
@@ -228,9 +228,9 @@ location = {
 
           <CodeBlock>
             {`import { parse, stringify } from "qs";
-import { Browser } from "@hickory/browser";
+import { browser } from "@hickory/browser";
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   history: {
     query: { parse, stringify }
   }

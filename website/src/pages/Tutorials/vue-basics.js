@@ -218,7 +218,7 @@ yarn serve`}
         <Note>
           <p>
             The history object can be configured with{" "}
-            <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
+            <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/browser.md#options">
               an options object
             </a>
             , but we will stick with the defaults.
@@ -228,7 +228,7 @@ yarn serve`}
         <CodeBlock lang="javascript" data-line="3">
           {`// src/main.js
 import Vue from 'vue'
-import { Browser } from '@hickory/browser'
+import { browser } from '@hickory/browser'
 
 import App from './App.vue'
 
@@ -410,14 +410,14 @@ export default [
           {`// src/main.js
 import Vue from 'vue'
 import { create_router } from "@curi/router";
-import { Browser } from '@hickory/browser'
+import { browser } from '@hickory/browser'
 
 import routes from './routes';
 import App from './App.vue'
 
 Vue.config.productionTip = false
 
-const router = create_router(Browser, routes)
+const router = create_router(browser, routes)
 
 new Vue({
   render: h => h(App)
@@ -448,7 +448,7 @@ new Vue({
           {`// src/main.js
 import Vue from 'vue'
 import { create_router } from "@curi/router";
-import { Browser } from '@hickory/browser'
+import { browser } from '@hickory/browser'
 import { CuriPlugin } from '@curi/vue'
 
 import routes from './routes';
@@ -456,7 +456,7 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-const router = create_router(Browser, routes)
+const router = create_router(browser, routes)
 Vue.use(CuriPlugin, { router })
 
 new Vue({

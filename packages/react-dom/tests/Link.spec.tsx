@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
-import { InMemory } from "@hickory/in-memory";
+import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
 import { create_router_component, Link } from "@curi/react-dom";
@@ -18,7 +18,7 @@ describe("<Link>", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = create_router(InMemory, routes);
+    router = create_router(in_memory, routes);
     Router = create_router_component(router);
   });
 
@@ -71,7 +71,7 @@ describe("<Link>", () => {
 
       it("creates a relative link if 'name' is undefined", () => {
         const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/the-initial-location"]
           }
@@ -96,7 +96,7 @@ describe("<Link>", () => {
       ]);
 
       beforeEach(() => {
-        router = create_router(InMemory, routes);
+        router = create_router(in_memory, routes);
         Router = create_router_component(router);
       });
 
@@ -147,7 +147,7 @@ describe("<Link>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         const Router = create_router_component(router);
         ReactDOM.render(
           <Router>
@@ -185,7 +185,7 @@ describe("<Link>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       const Router = create_router_component(router);
       const ref = React.createRef();
       ReactDOM.render(
@@ -207,7 +207,7 @@ describe("<Link>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       const Router = create_router_component(router);
       const children = "Test Value";
       ReactDOM.render(
@@ -230,7 +230,7 @@ describe("<Link>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 
@@ -268,7 +268,7 @@ describe("<Link>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 
@@ -304,7 +304,7 @@ describe("<Link>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       router.history.navigate = mockNavigate;
       const Router = create_router_component(router);
 
@@ -341,7 +341,7 @@ describe("<Link>", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       router.history.navigate = mockNavigate;
       const Router = create_router_component(router);
 

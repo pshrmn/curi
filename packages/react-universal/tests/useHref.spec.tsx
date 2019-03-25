@@ -1,7 +1,7 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { InMemory } from "@hickory/in-memory";
+import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 import * as qs from "qs";
 
@@ -19,7 +19,7 @@ describe("useHref", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = create_router(InMemory, routes);
+    router = create_router(in_memory, routes);
     Router = create_router_component(router);
   });
 
@@ -87,7 +87,7 @@ describe("useHref", () => {
     });
 
     it("works with custom history parse/stringifiers", () => {
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         history: {
           query: {
             parse: qs.parse,

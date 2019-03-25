@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Browser } from "@hickory/browser";
+import { browser } from "@hickory/browser";
 import { create_router } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 import { parse, stringify } from "qs";
@@ -8,10 +8,11 @@ import routes from "./routes";
 import store from "./store";
 import App from "./components/App";
 
-const history = Browser({
-  query: { parse, stringify }
+const router = create_router(browser, routes, {
+  history: {
+    query: { parse, stringify }
+  }
 });
-const router = create_router(Browser, routes);
 
 Vue.use(CuriPlugin, { router });
 

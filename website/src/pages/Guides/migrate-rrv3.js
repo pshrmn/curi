@@ -373,9 +373,9 @@ ReactDOM.render((
 
         <CodeBlock>
           {`import { curi, prepare_routes } from '@curi/router';
-import { Browser } from '@hickory/browser';
+import { browser } from '@hickory/browser';
 const routes = prepare_routes([...]);
-const router = create_router(Browser, routes);`}
+const router = create_router(browser, routes);`}
         </CodeBlock>
       </HashSection>
 
@@ -478,7 +478,7 @@ const router = create_router(Browser, routes);`}
           <CodeBlock lang="jsx">
             {`import { create_router_component, useCuri } from "@curi/react-dom";
 
-const router = create_router(Browser, routes);            
+const router = create_router(browser, routes);            
 const Router = create_router_component(router);
 
 function App() {
@@ -648,7 +648,7 @@ function render({ response }) {
 // You need to add @curi/route-active
 // to your router object
 import active from '@curi/route-active';
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   route: [active()]
 });
 

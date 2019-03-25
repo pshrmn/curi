@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { create_router } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
-import { Browser } from "@hickory/browser";
+import { browser } from "@hickory/browser";
 import ancestors from "@curi/route-ancestors";
 
 import App from "./components/App";
@@ -34,7 +34,7 @@ function titleText() {
   };
 }
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   route: [ancestors(), titleText()]
 });
 

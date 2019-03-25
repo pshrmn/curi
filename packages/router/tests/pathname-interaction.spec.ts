@@ -1,5 +1,5 @@
 import "jest";
-import { InMemory } from "@hickory/in-memory";
+import { in_memory } from "@hickory/in-memory";
 
 import { prepare_routes, create_router } from "@curi/router";
 
@@ -7,7 +7,7 @@ describe("pathname route interaction", () => {
   describe("calling", () => {
     it("it is accessed through route.name()", () => {
       const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       expect(router.route.pathname).toBeDefined();
     });
   });
@@ -19,7 +19,7 @@ describe("pathname route interaction", () => {
         { name: "Static", path: "this/has/no/params" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       const output = router.route.pathname("Static");
       expect(output).toBe("/this/has/no/params");
     });
@@ -29,7 +29,7 @@ describe("pathname route interaction", () => {
         { name: "Player", path: "player/:id" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       const output = router.route.pathname("Player", { id: 17 });
       expect(output).toBe("/player/17");
     });
@@ -43,7 +43,7 @@ describe("pathname route interaction", () => {
         { name: "Player", path: "player/:id" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       const output = router.route.pathname("Anonymous", { id: 123 });
 
       expect(output).toBe(undefined);

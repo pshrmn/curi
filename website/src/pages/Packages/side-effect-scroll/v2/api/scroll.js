@@ -17,7 +17,7 @@ export function ScrollAPI() {
         {`import { create_router } from "@curi/router";
 import scroll from '@curi/side-effect-scroll';
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   side_effects: [scroll()]
 });`}
       </CodeBlock>

@@ -399,7 +399,7 @@ registerServiceWorker();`}
         <Note>
           <p>
             The history object can be configured with{" "}
-            <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
+            <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/browser.md#options">
               an options object
             </a>
             , but we will stick with the defaults.
@@ -410,7 +410,7 @@ registerServiceWorker();`}
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Browser } from '@hickory/browser';
+import { browser } from '@hickory/browser';
 
 import routes from "./routes";
 import './index.css';
@@ -436,14 +436,14 @@ registerServiceWorker();`}
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { create_router } from "@curi/router";
-import { Browser } from '@hickory/browser';
+import { browser } from '@hickory/browser';
 
 import routes from './routes';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = create_router(Browser, routes);
+const router = create_router(browser, routes);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
@@ -476,7 +476,7 @@ registerServiceWorker();`}
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { create_router } from "@curi/router";
-import { Browser } from '@hickory/browser';
+import { browser } from '@hickory/browser';
 import { create_router_component } from "@curi/react-dom";
 
 import routes from './routes';
@@ -484,7 +484,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = create_router(Browser, routes);
+const router = create_router(browser, routes);
 const Router = create_router_component(router);
 
 ReactDOM.render(<App />, document.getElementById('root'));
@@ -508,7 +508,7 @@ registerServiceWorker();`}
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { create_router } from "@curi/router";
-import { Browser } from '@hickory/browser';
+import { browser } from '@hickory/browser';
 import { create_router_component } from "@curi/react-dom";
 
 import routes from './routes';
@@ -516,7 +516,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = create_router(Browser, routes);
+const router = create_router(browser, routes);
 const Router = create_router_component(router);
 
 ReactDOM.render((

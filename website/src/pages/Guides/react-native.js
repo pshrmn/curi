@@ -288,7 +288,7 @@ const NavLinks = () => (
             {`import { BackHandler } from 'react-native';
 
 // create your router
-const router = create_router(Browser, routes);
+const router = create_router(browser, routes);
 
 BackHandler.addEventListener(
   "hardwareBackPress",

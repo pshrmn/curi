@@ -36,7 +36,7 @@ export function ActiveAPI() {
         {`import { create_router } from "@curi/router";
 import active from '@curi/route-active';
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   route: [active()]
 });
 

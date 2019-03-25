@@ -1,6 +1,6 @@
 import "jest";
 import { Route, Interaction } from "../src/types";
-import { InMemory } from "@hickory/in-memory";
+import { in_memory } from "@hickory/in-memory";
 
 import { create_router, prepare_routes } from "@curi/router";
 
@@ -36,7 +36,7 @@ describe("public route properties", () => {
           path: "test"
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/test"]
@@ -55,7 +55,7 @@ describe("public route properties", () => {
           path: "test"
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         route: [PropertyReporter()],
         history: {}
       });
@@ -72,7 +72,7 @@ describe("public route properties", () => {
           path: ":one/:two/:three"
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/four/five/six"]
@@ -89,7 +89,7 @@ describe("public route properties", () => {
           path: "one/two/three"
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/one/two/three"]
@@ -114,7 +114,7 @@ describe("public route properties", () => {
           }
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/test"]
@@ -136,7 +136,7 @@ describe("public route properties", () => {
           path: "test"
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/test"]
@@ -161,7 +161,7 @@ describe("public route properties", () => {
           extra
         }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         route: [PropertyReporter()],
         history: {
           locations: ["/test"]

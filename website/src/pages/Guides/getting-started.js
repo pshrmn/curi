@@ -59,10 +59,10 @@ function GettingStartedGuide() {
 
         <CodeBlock>
           {`import { curi, prepare_routes } from '@curi/router';
-import { Browser } from "@hickory/browser";
+import { browser } from "@hickory/browser";
 
 const routes = prepare_routes([...]);
-const router = create_router(Browser, routes);`}
+const router = create_router(browser, routes);`}
         </CodeBlock>
       </HashSection>
 
@@ -137,7 +137,7 @@ const router = create_router(Browser, routes);`}
         </p>
 
         <CodeBlock>
-          {`const router = create_router(Browser, routes, {
+          {`const router = create_router(browser, routes, {
   side_effects: [scroll, title]
 })`}
         </CodeBlock>
@@ -149,7 +149,7 @@ const router = create_router(Browser, routes);`}
         </p>
 
         <CodeBlock>
-          {`const router = create_router(Browser, routes);
+          {`const router = create_router(browser, routes);
 router.once(() => {
   // this is not called until the initial response is ready
   // so we can safely render now

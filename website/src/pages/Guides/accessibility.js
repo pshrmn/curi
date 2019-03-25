@@ -102,7 +102,7 @@ const routes = prepare_routes([
   }
 ]);
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   side_effects: [announcer]
 });
 

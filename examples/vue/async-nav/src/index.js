@@ -1,12 +1,12 @@
 import Vue from "vue";
-import { Browser } from "@hickory/browser";
+import { browser } from "@hickory/browser";
 import { create_router } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 
 import routes from "./routes";
 import app from "./components/app";
 
-const router = create_router(Browser, routes);
+const router = create_router(browser, routes);
 
 Vue.use(CuriPlugin, { router });
 

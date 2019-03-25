@@ -47,7 +47,7 @@ function SideEffectExample() {
           {`import { create_router } from "@curi/router";
 import mySideEffect from './mySideEffect';
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   side_effects: [mySideEffect]
 });`}
         </CodeBlock>

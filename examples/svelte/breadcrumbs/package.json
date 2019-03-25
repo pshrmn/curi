@@ -14,6 +14,6 @@
     "@curi/route-ancestors": "file:../../../packages/interactions/route-ancestors",
     "@curi/router": "file:../../../packages/router",
     "@curi/svelte": "file:../../../packages/svelte",
-    "@hickory/browser": "^2.0.0-beta.5"
+    "@hickory/browser": "^2.0.0-beta.7"
   }
 }

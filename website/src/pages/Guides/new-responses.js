@@ -249,7 +249,7 @@ router.observe(observer);`}
 }
 
 // as a side-effect
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   side_effects: [{ fn: logger }]
 });
 

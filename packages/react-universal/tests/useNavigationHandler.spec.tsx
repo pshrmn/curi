@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
-import { InMemory } from "@hickory/in-memory";
+import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
 // @ts-ignore (resolved by jest)
@@ -44,7 +44,7 @@ describe("useNavigationHandler", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       router.history.navigate = mockNavigate;
       const Router = create_router_component(router);
 
@@ -84,7 +84,7 @@ describe("useNavigationHandler", () => {
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       router.history.navigate = mockNavigate;
       const Router = create_router_component(router);
 
@@ -123,7 +123,7 @@ describe("useNavigationHandler", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 

@@ -62,7 +62,7 @@ const href = useHref({
           <p>
             By default, this is expected to be a string, but if you configure
             your history object with the{" "}
-            <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">
+            <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/browser.md#options">
               <IJS>query</IJS>
             </a>{" "}
             option, this may be something else.

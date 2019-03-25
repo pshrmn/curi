@@ -1,3 +1,7 @@
+## Next
+
+* `pathnames` uses `in_memory` history
+
 ## 1.0.0-beta.2
 
 * Use `create_router` export from `@curi/router`.

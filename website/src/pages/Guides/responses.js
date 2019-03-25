@@ -232,7 +232,7 @@ const routes = prepare_routes([
         </p>
 
         <CodeBlock>
-          {`const router = create_router(Browser, routes, {
+          {`const router = create_router(browser, routes, {
   emitRedirects: false
 });`}
         </CodeBlock>

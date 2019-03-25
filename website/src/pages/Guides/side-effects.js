@@ -64,7 +64,7 @@ function UsingSideEffectsGuide() {
         </p>
 
         <CodeBlock>
-          {`const router = create_router(Browser, routes, {
+          {`const router = create_router(browser, routes, {
   side_effects: [logResponse, updateTitle]
 });`}
         </CodeBlock>
@@ -78,7 +78,7 @@ function UsingSideEffectsGuide() {
         </p>
 
         <CodeBlock>
-          {`const router = create_router(Browser, routes, {
+          {`const router = create_router(browser, routes, {
   side_effects: [logResponse]
 });
 
@@ -117,7 +117,7 @@ router.observe(render);
             {`import titleEffect from "@curi/side-effect-title";
 import scrollEffect from "@curi/side-effect-scroll";
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   sideEffect: [titleEffect(), scrollEffect()]
 });`}
           </CodeBlock>
@@ -136,7 +136,7 @@ const router = create_router(Browser, routes, {
   console.log('Navigation action:', navigation.action);
 }
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   side_effects: [mySideEffect]
 });`}
         </CodeBlock>

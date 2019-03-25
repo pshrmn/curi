@@ -2,7 +2,7 @@ import "jest";
 import React from "react";
 import "react-native";
 import renderer from "react-test-renderer";
-import { InMemory } from "@hickory/in-memory";
+import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 import { TouchableHighlight, Text } from "react-native";
 
@@ -26,7 +26,7 @@ describe("<Link>", () => {
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       const Router = create_router_component(router);
       const tree = renderer.create(
         <Router>
@@ -44,7 +44,7 @@ describe("<Link>", () => {
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       const Router = create_router_component(router);
 
       const StyledAnchor = props => (
@@ -68,7 +68,7 @@ describe("<Link>", () => {
       it("uses the pathname from current response's location if 'name' is not provided", () => {
         const mockNavigate = jest.fn();
         const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-        const router = create_router(InMemory, routes, {
+        const router = create_router(in_memory, routes, {
           history: {
             locations: ["/the-initial-location"]
           }
@@ -99,7 +99,7 @@ describe("<Link>", () => {
 
       it("uses params to generate the location to navigate to", () => {
         const mockNavigate = jest.fn();
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 
@@ -118,7 +118,7 @@ describe("<Link>", () => {
 
       it("updates location to navigate to when props change", () => {
         const mockNavigate = jest.fn();
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 
@@ -156,7 +156,7 @@ describe("<Link>", () => {
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 
@@ -186,7 +186,7 @@ describe("<Link>", () => {
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         history: {
           locations: ["/the-initial-location"]
         }
@@ -214,7 +214,7 @@ describe("<Link>", () => {
         { name: "Parks", path: "parks" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes, {
+      const router = create_router(in_memory, routes, {
         history: {
           locations: ["/the-initial-location"]
         }
@@ -241,7 +241,7 @@ describe("<Link>", () => {
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       const Router = create_router_component(router);
 
       const children = "Test Value";
@@ -266,7 +266,7 @@ describe("<Link>", () => {
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         const mockNavigate = jest.fn();
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
@@ -289,7 +289,7 @@ describe("<Link>", () => {
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 
@@ -311,7 +311,7 @@ describe("<Link>", () => {
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 
@@ -336,7 +336,7 @@ describe("<Link>", () => {
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 
@@ -363,7 +363,7 @@ describe("<Link>", () => {
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(InMemory, routes);
+        const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
         const Router = create_router_component(router);
 
@@ -387,7 +387,7 @@ describe("<Link>", () => {
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(InMemory, routes);
+      const router = create_router(in_memory, routes);
       router.history.navigate = mockNavigate;
       const Router = create_router_component(router);
 

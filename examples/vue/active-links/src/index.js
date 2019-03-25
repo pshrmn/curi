@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Browser } from "@hickory/browser";
+import { browser } from "@hickory/browser";
 import { create_router } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 import active from "@curi/route-active";
@@ -7,7 +7,7 @@ import active from "@curi/route-active";
 import routes from "./routes";
 import App from "./components/App";
 
-const router = create_router(Browser, routes, {
+const router = create_router(browser, routes, {
   route: [active()]
 });
 
