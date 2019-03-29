@@ -171,13 +171,22 @@ const packages = [
     globalName: "CuriSideEffectAriaLive",
     type: "side effects",
     script: true,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["side-effect-aria-live"]
+      v1: "1.0.1",
+      v2: versions["side-effect-aria-live"]
     },
-    import: () =>
-      import(/* webpackChunkName: 'package--side-effect-aria-live' */
-      `../pages/Packages/side-effect-aria-live/v1/index.js`)
+    import: version => {
+      switch (version) {
+        case "v1":
+          return import(/* webpackChunkName: 'package--side-effect-aria-live-v1' */
+          `../pages/Packages/side-effect-aria-live/v1/index.js`);
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--side-effect-aria-live-v2' */
+          `../pages/Packages/side-effect-aria-live/v2/index.js`);
+      }
+    }
   },
   {
     name: "side-effect-scroll",
@@ -208,13 +217,22 @@ const packages = [
     globalName: "CuriSideEffectTitle",
     type: "side effects",
     script: true,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["side-effect-title"]
+      v1: "1.0.1",
+      v2: versions["side-effect-title"]
     },
-    import: () =>
-      import(/* webpackChunkName: 'package--side-effect-title' */
-      `../pages/Packages/side-effect-title/v1/index.js`)
+    import: version => {
+      switch (version) {
+        case "v1":
+          return import(/* webpackChunkName: 'package--side-effect-title-v1' */
+          `../pages/Packages/side-effect-title/v1/index.js`);
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--side-effect-title-v2' */
+          `../pages/Packages/side-effect-title/v2/index.js`);
+      }
+    }
   },
   {
     name: "static",
