@@ -343,7 +343,7 @@ describe("static_files()", () => {
         },
         output: {
           render: (emitted: Emitted) => {
-            const href = emitted.router.history.to_href({
+            const href = emitted.router.history.href({
               pathname: "/",
               query: { x: "y" }
             });

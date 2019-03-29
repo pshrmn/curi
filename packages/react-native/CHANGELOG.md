@@ -1,3 +1,7 @@
+## Next
+
+* `<Link>` uses `history.href`.
+
 ## 2.0.0-beta.0
 
 * Rename `curiProvider` to `create_router_component`

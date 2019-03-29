@@ -22,7 +22,7 @@ function create_redirect(
     query,
     hash,
     state,
-    url: history.to_href({ pathname, query, hash, state })
+    url: history.href({ pathname, query, hash, state })
   };
 }
 

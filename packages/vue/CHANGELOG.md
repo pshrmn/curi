@@ -1,3 +1,7 @@
+## Next
+
+* `<curi-link>` uses `history.href`.
+
 ## 1.0.0-beta.27
 
 * Use snake cased `history.to_href`

@@ -14,18 +14,18 @@
     }
   },
   "dist/curi-react-dom.js": {
-    "bundled": 4124,
-    "minified": 2070,
-    "gzipped": 962
+    "bundled": 4219,
+    "minified": 2131,
+    "gzipped": 982
   },
   "dist/curi-react-dom.umd.js": {
-    "bundled": 10619,
-    "minified": 4147,
-    "gzipped": 1754
+    "bundled": 10616,
+    "minified": 4144,
+    "gzipped": 1752
   },
   "dist/curi-react-dom.min.js": {
-    "bundled": 10589,
-    "minified": 4117,
-    "gzipped": 1736
+    "bundled": 10586,
+    "minified": 4114,
+    "gzipped": 1734
   }
 }

@@ -14,8 +14,8 @@
     }
   },
   "dist/curi-react-native.js": {
-    "bundled": 2618,
-    "minified": 1224,
-    "gzipped": 572
+    "bundled": 2735,
+    "minified": 1285,
+    "gzipped": 591
   }
 }

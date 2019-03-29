@@ -6,5 +6,5 @@ import { RouteLocation } from "@curi/router";
 export default function useHref(props: RouteLocation): string {
   const location = useLocation(props);
   const { router } = useCuri();
-  return router.history.to_href(location);
+  return router.history.href(location);
 }
