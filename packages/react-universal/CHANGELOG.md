@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.2
 
 * `useHref` hook uses `history.href`.
 

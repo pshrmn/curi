@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.3
 
 * `pathnames` uses `in_memory` history
 

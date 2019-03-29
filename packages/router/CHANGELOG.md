@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.4
 
 * `redirect_to`'s `url` property generated using `history.href`.
 
