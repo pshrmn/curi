@@ -1,3 +1,7 @@
+## Next
+
+* `redirect_to`'s `url` property generated using `history.href`.
+
 ## 2.0.0-beta.3
 
 * Rename `curi` export to `create_router`.

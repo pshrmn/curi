@@ -1,3 +1,7 @@
+## Next
+
+* `<Link>` uses `history.href`.
+
 ## 1.0.0-beta.14
 
 * Rename `curiStore` to `curi_store`
