@@ -13,7 +13,9 @@
   "dependencies": {
     "@curi/router": "2.0.0-beta.4",
     "@curi/svelte": "1.0.0-beta.16",
-    "@hickory/browser": "^2.0.0-beta.8",
+    "@hickory/browser": "^2.0.0-beta.8"
+  },
+  "devDependencies": {
     "svelte": "^2.16.1"
   }
 }
