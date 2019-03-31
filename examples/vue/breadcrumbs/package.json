@@ -12,9 +12,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/route-ancestors": "2.0.0-alpha.2",
-    "@curi/router": "2.0.0-beta.4",
-    "@curi/vue": "1.0.0-beta.29",
+    "@curi/route-ancestors": "file:../../../packages/interactions/route-ancestors",
+    "@curi/router": "file:../../../packages/router",
+    "@curi/vue": "file:../../../packages/vue",
     "@hickory/browser": "^2.0.0-beta.8",
     "vue": "^2.5.22"
   }
