@@ -16,7 +16,7 @@ npm run start</code></pre></div></div><div class="section css-1kr8jn0" id="async
   name: &quot;A Route&quot;,
   path: &quot;route/:id&quot;,
   resolve({ params }) {
-    const body = import(&quot;./components/SomeComponent&quot;).then(preferDefault);
+    const body = import(&quot;./components/SomeComponent&quot;).then(prefer_default);
     const data = fetch(`/api/data/${params.id}`);
     return Promise.all([ component, data ]);
   },
@@ -27,14 +27,14 @@ npm run start</code></pre></div></div><div class="section css-1kr8jn0" id="async
     const [body, data] = resolved;
     return { body, data };
   }
-}</code></pre></div><style data-emotion-css="o0tph9">.css-o0tph9{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#eeeeee;}.css-o0tph9 p:last-child{margin-bottom:0;}.aside .css-o0tph9{background:#fff;}.css-o0tph9 .inline-code{background:#fff !important;}</style><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>These async functions are called every time a route matches. If you have functions that should re-use the results from previous calls, you will probably want to implement some caching. Curi provides a<!-- --> <a href="/packages/@curi/helpers/v1/#once"><code class="inline-code css-jo5c25 eutm4hs0">once()</code></a> <!-- -->function for simple caching, but leaves more advanced caching solutions to the user.</p></div><p>Curi uses Promises to manage async code, so async functions should return Promises. <code class="inline-code css-jo5c25 eutm4hs0">Promise.resolve()</code> can be used to wrap a return value in a Promise.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { preferDefault } from &quot;@curi/helpers&quot;;
+}</code></pre></div><style data-emotion-css="o0tph9">.css-o0tph9{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#eeeeee;}.css-o0tph9 p:last-child{margin-bottom:0;}.aside .css-o0tph9{background:#fff;}.css-o0tph9 .inline-code{background:#fff !important;}</style><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>These async functions are called every time a route matches. If you have functions that should re-use the results from previous calls, you will probably want to implement some caching. Curi provides a<!-- --> <a href="/packages/@curi/helpers/v1/#once"><code class="inline-code css-jo5c25 eutm4hs0">once()</code></a> <!-- -->function for simple caching, but leaves more advanced caching solutions to the user.</p></div><p>Curi uses Promises to manage async code, so async functions should return Promises. <code class="inline-code css-jo5c25 eutm4hs0">Promise.resolve()</code> can be used to wrap a return value in a Promise.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { prefer_default } from &quot;@curi/helpers&quot;;
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: &quot;A Route&quot;,
     path: &quot;route/:id&quot;,
     resolve({ params }) {
-      const body = import(&quot;./components/SomeComponent&quot;).then(preferDefault);
+      const body = import(&quot;./components/SomeComponent&quot;).then(prefer_default);
       const data = fetch(`/api/data/${params.id}`);
       return Promise.all([ component, data ]);
     },
@@ -64,26 +64,26 @@ function App() {
   return &lt;Body response={response} /&gt;;
 }</code></pre></div><p>Which approach is best will depend on the specifics of an application. If there are routes that will take a long time for the initial load, you will probably want to render something while they load. For async code with short loading times, a blank screen might be more acceptable.</p></div><p>For more information on async route properties, please refer to the<!-- --> <a href="/guides/routes/">routes guide</a>.</p></div><div class="section css-1kr8jn0" id="code-splitting-routes"><h2><a href="#code-splitting-routes" class="header-link">Code Splitting in Routes</a></h2><p>Currently, the <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> module imports all of the route modules at the top of the file. This results in a single bundle of all of a website&#x27;s code. This can be improved by adding code splitting to an application, which will result in more, but smaller, bundles.</p><div class="aside css-1kr8jn0" id="code-splitting"><h3><a href="#code-splitting" class="header-link">Code Splitting</a></h3><p>Code splitting works by &quot;dynamically&quot; importing modules using the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">import()</code> function. When bundlers like Webpack see<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">import()</code> functions, they know to create a separate bundle for that module (and that module&#x27;s imports, etc.).</p><p>You can set a chunk&#x27;s name using the<!-- --> <a href="https://webpack.js.org/api/module-methods/#magic-comments"><code class="inline-code css-jo5c25 eutm4hs0">webpackChunkName</code></a> <!-- -->magic comment with an <code class="inline-code css-jo5c25 eutm4hs0">import()</code> call.</p><p>Create React App&#x27;s default configuration is already setup to support code splitting, but if you were creating your own Webpack configuration, you would need to use<!-- --> <a href="https://webpack.js.org/configuration/output/#output-chunkfilename"><code class="inline-code css-jo5c25 eutm4hs0">output.chunkFilename</code></a> <!-- -->to support code splitting.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// this creates a &quot;Test&quot; bundle
 import(/* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;)</code></pre></div><p><code class="inline-code css-jo5c25 eutm4hs0">import()</code> returns a module object, so if you want to access a module&#x27;s default export, you can use a <code class="inline-code css-jo5c25 eutm4hs0">then</code> <!-- -->function to get that value.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import(&quot;some-module.js&quot;)
-  .then(module =&gt; module.default)</code></pre></div></div><p>Currently <code class="inline-code css-jo5c25 eutm4hs0">response</code> returns an object whose <code class="inline-code css-jo5c25 eutm4hs0">body</code> <!-- -->property is a module imported at the top of the file. In order to add code splitting to routes, we can add a <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function that imports the module.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">@curi/helpers</code> package provides a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">preferDefault</code> function. This function will return an imported module&#x27;s default property if it exists, and returns the entire module if it doesn&#x27;t have a default property.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { preferDefault } from &quot;@curi/helpers&quot;;
+  .then(module =&gt; module.default)</code></pre></div></div><p>Currently <code class="inline-code css-jo5c25 eutm4hs0">response</code> returns an object whose <code class="inline-code css-jo5c25 eutm4hs0">body</code> <!-- -->property is a module imported at the top of the file. In order to add code splitting to routes, we can add a <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function that imports the module.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">@curi/helpers</code> package provides a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">prefer_default</code> function. This function will return an imported module&#x27;s default property if it exists, and returns the entire module if it doesn&#x27;t have a default property.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { prefer_default } from &quot;@curi/helpers&quot;;
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: &quot;Test&quot;,
     path: &quot;test&quot;,
     resolve() {
       return import(/* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;)
-        .then(preferDefault);
+        .then(prefer_default);
     }
   }
 ]);</code></pre></div><p>When a module fails to load, the error will be passed to the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> function through the <code class="inline-code css-jo5c25 eutm4hs0">error</code> property. We won&#x27;t be incorporating this into the application here, but in a real application you probably want to have a fallback component to display an error message (especially if you have an offline mode with service workers).</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import displayLoadError from &quot;./components/LoadError&quot;;
 
-const routes = prepareRoutes([
+const routes = prepare_routes([
   {
     name: &quot;One&quot;,
     path: &quot;one&quot;,
     resolve() {
       return import(&quot;./components/One.js&quot;)
-        .then(preferDefault)
+        .then(prefer_default)
         .catch(err =&gt; displayLoadError(err);
     },
     response({ resolved }) {
@@ -92,17 +92,17 @@ const routes = prepareRoutes([
       };
     }
   }
-]);</code></pre></div><p>We can now update the <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> module to remove the imports at the top of the file and use <code class="inline-code css-jo5c25 eutm4hs0">import()</code> to import the route components. We will use <code class="inline-code css-jo5c25 eutm4hs0">preferDefault</code> to only resolve the component instead of the entire module object.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions should also be updated to set the return object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to <code class="inline-code css-jo5c25 eutm4hs0">resolved.body</code> <!-- -->instead of the import at the top of the file.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,9-15,20-26,31-37,42-48"><code class="language-javascript">// src/routes.js
-import { prepareRoutes } from &quot;@curi/router&quot;;
-import { preferDefault } from &quot;@curi/helpers&quot;;
+]);</code></pre></div><p>We can now update the <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> module to remove the imports at the top of the file and use <code class="inline-code css-jo5c25 eutm4hs0">import()</code> to import the route components. We will use <code class="inline-code css-jo5c25 eutm4hs0">prefer_default</code> to only resolve the component instead of the entire module object.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions should also be updated to set the return object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to <code class="inline-code css-jo5c25 eutm4hs0">resolved.body</code> <!-- -->instead of the import at the top of the file.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,9-15,20-26,31-37,42-48"><code class="language-javascript">// src/routes.js
+import { prepare_routes } from &quot;@curi/router&quot;;
+import { prefer_default } from &quot;@curi/helpers&quot;;
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;,
     resolve() {
       return import(&quot;./components/Home&quot;)
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -113,7 +113,7 @@ export default prepareRoutes([
     path: &quot;book/:id&quot;,
     resolve() {
       return import(&quot;./components/Book&quot;)
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -124,7 +124,7 @@ export default prepareRoutes([
     path: &quot;checkout&quot;,
     resolve() {
       return import(&quot;./components/Checkout&quot;)
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -135,7 +135,7 @@ export default prepareRoutes([
     path: &quot;(.*)&quot;,
     resolve() {
       return import(&quot;./components/NotFound&quot;)
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -144,17 +144,17 @@ export default prepareRoutes([
 ]);</code></pre></div><p>For this tutorial, we will use <code class="inline-code css-jo5c25 eutm4hs0">router.once()</code> to delay the initial render while we wait for the initial response. We should update the <code class="inline-code css-jo5c25 eutm4hs0">index.js</code> module to do this.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="17-23"><code class="language-javascript">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import { curi } from &#x27;@curi/router&#x27;;
-import { Browser } from &#x27;@hickory/browser&#x27;;
-import { curiProvider } from &#x27;@curi/react-dom&#x27;;
+import { create_router } from &quot;@curi/router&quot;;
+import { browser } from &#x27;@hickory/browser&#x27;;
+import { create_router_component } from &#x27;@curi/react-dom&#x27;;
 
 import routes from &#x27;./routes&#x27;;
 import &#x27;./index.css&#x27;;
 import NavMenu from &#x27;./components/NavMenu&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const router = curi(Browser, routes);
-const Router = curiProvider(router);
+const router = create_router(browser, routes);
+const Router = create_router_component(router);
 
 router.once(() =&gt; {
   ReactDOM.render((
@@ -174,9 +174,9 @@ export const BOOK = id =&gt; Promise.resolve(
 );</code></pre></div></div><p>When the router is created, it can take a third argument, which is an options object. One of the properties of this object is<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">external</code>, which is used to pass in external values that will be accessible in a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions. This is particularly useful for data that is initialized at runtime, like an Apollo store, but we will also use it here.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="11,15-19"><code class="language-javascript">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import { curi } from &#x27;@curi/router&#x27;;
-import { Browser } from &#x27;@hickory/browser&#x27;;
-import { curiProvider } from &#x27;@curi/react-dom&#x27;;
+import { create_router } from &quot;@curi/router&quot;;
+import { browser } from &#x27;@hickory/browser&#x27;;
+import { create_router_component } from &#x27;@curi/react-dom&#x27;;
 
 import routes from &#x27;./routes&#x27;;
 import &#x27;./index.css&#x27;;
@@ -184,12 +184,12 @@ import NavMenu from &#x27;./components/NavMenu&#x27;;
 import * as bookAPI from &quot;./api&quot;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const router = curi(Browser, routes, {
+const router = create_router(browser, routes, {
   external: {
     bookAPI
   }
 });
-const Router = curiProvider(router);
+const Router = create_router_component(router);
 
 router.once(() =&gt; {
   ReactDOM.render((
@@ -199,16 +199,16 @@ router.once(() =&gt; {
   ), document.getElementById(&#x27;root&#x27;));
 });
 registerServiceWorker();</code></pre></div><p>What do we want to do with the data loaded from the API calls? Along with the <code class="inline-code css-jo5c25 eutm4hs0">body</code> property, another valid return property for<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions is <code class="inline-code css-jo5c25 eutm4hs0">data</code>. This is a convenient way to attach any data to a response, which we can read from while rendering.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Home</code> route already has an asynchronous action: importing the <code class="inline-code css-jo5c25 eutm4hs0">body</code> component. We will name the async call to load the books data <code class="inline-code css-jo5c25 eutm4hs0">&quot;books&quot;</code>.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Book</code> route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> also needs to be updated to attach the books data (<code class="inline-code css-jo5c25 eutm4hs0">resolved.books</code>) to the response.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">book()</code> API call expects to be given the <code class="inline-code css-jo5c25 eutm4hs0">id</code> <!-- -->number of the book it should return data for. We can grab the correct param (<code class="inline-code css-jo5c25 eutm4hs0">id</code>) from the <code class="inline-code css-jo5c25 eutm4hs0">params</code> property. However, when params are parsed, they are stored as strings. To convert it to a number, we can use the route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">params</code> property to tell Curi how to parse the <code class="inline-code css-jo5c25 eutm4hs0">id</code>. By giving it a function that calls<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">parseInt()</code> on the provided value, <code class="inline-code css-jo5c25 eutm4hs0">params.id</code> will be a number instead of a string.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="12,15-18,27,30-33"><code class="language-javascript">// src/routes.js
-import { prepareRoutes } from &quot;@curi/router&quot;;
-import { preferDefault } from &quot;@curi/helpers&quot;;
+import { prepare_routes } from &quot;@curi/router&quot;;
+import { prefer_default } from &quot;@curi/helpers&quot;;
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;,
     resolve(_, external) {
       const body = import(&quot;./components/Home&quot;)
-        .then(preferDefault);
+        .then(prefer_default);
       const books = external.bookAPI.BOOKS();
       return Promise.all([body, books]);
     },
@@ -225,7 +225,7 @@ export default prepareRoutes([
     path: &quot;book/:id&quot;,
     resolve({ params }, external) {
       const body = import(&quot;./components/Book&quot;)
-        .then(preferDefault);
+        .then(prefer_default);
       const book = external.bookAPI.BOOK(params.id);
       return Promise.all([body, books]);
     },
@@ -242,7 +242,7 @@ export default prepareRoutes([
     path: &quot;checkout&quot;,
     resolve() {
       return import(&quot;./components/Checkout&quot;)
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -253,7 +253,7 @@ export default prepareRoutes([
     path: &quot;(.*)&quot;,
     resolve() {
       return import(&quot;./components/NotFound&quot;)
-        .then(preferDefault);
+        .then(prefer_default);
     },
     response({ resolved }) {
       return { body: resolved };
@@ -362,8 +362,8 @@ export default function Home({ response }) {
   );
 }</code></pre></div></div></div><div class="section css-1kr8jn0" id="caveats"><h2><a href="#caveats" class="header-link">Async Caveats</a></h2><p>Adding asynchronous loading to an application can help reduce initial load size and speed up user interactions, however it also has some issues that you will need to consider.</p><p>The biggest consideration is that there is nothing the frontend can do to get the data for the initial render faster. Your application&#x27;s frontend can only fetch data as it discovers it needs it. If you are performing server-side rendering, you may want to load the initial data on the server and inject it into the page&#x27;s HTML output. The implementation details for this vary greatly and are more related to how you store data (e.g.<!-- --> <a href="https://redux.js.org/recipes/server-rendering#the-server-side">with redux</a>).</p><p>Another consideration is whether or not you want to &quot;hoist&quot; data requirements. Curi&#x27;s async functionality relies on you knowing all of the data requirements for a route, but you might prefer to keep the data associated with individual components. React Suspense will help with this (and Curi will support it once it releases), but this is still a ways out. At the very least, I would recommend using Curi for code splitting routes. Whether your should hoist other data requirements is something that should be determined on a case-by-case basis.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#demo">Demo</a></li><li><a href="#setup">Setup</a></li><li><a href="#async">Asynchronous Routes</a><ol><li><a href="#initial-render">Initial Render</a></li></ol></li><li><a href="#code-splitting-routes">Code Splitting in Routes</a><ol><li><a href="#code-splitting">Code Splitting</a></li></ol></li><li><a href="#preloading-data">Preloading Data</a><ol><li><a href="#fake-api">The Fake API</a></li></ol></li><li><a href="#loading">Visualizing Loading</a><ol><li><a href="#link-navigating">&lt;Link&gt; is navigating?</a></li></ol></li><li><a href="#caveats">Async Caveats</a></li></ol></div></div></div></main></div>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
-    <script src="https://unpkg.com/react@16.8.0/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@16.8.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>

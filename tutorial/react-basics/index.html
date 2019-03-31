@@ -26,10 +26,10 @@ cd curi-react-bookstore # enter the new app directory</code></pre></div><p>There
     // matches /parent/son
     { name: &quot;Son&quot;, path: &quot;son&quot; }
   ]
-}</code></pre></div></div><p>The website will start with four routes.</p><style data-emotion-css="ayshjd">.css-ayshjd{overflow-x:auto;}</style><div class="css-ayshjd e18t55xi0"><table><thead><tr><th>name</th><th>path</th><th>use case</th></tr></thead><tbody><tr><td>Home</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;&quot;</code></td><td>Lists books available for purchase.</td></tr><tr><td>Book</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;book/:id&quot;</code></td><td>Details about an individual book. The <code class="inline-code css-jo5c25 eutm4hs0">id</code> param identifies a specific book.</td></tr><tr><td>Checkout</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;checkout&quot;</code></td><td>Buy the books in the shopping cart.</td></tr><tr><td>Catch All</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;(.*)&quot;</code></td><td>Display a not found page. This path matches every location (using a regular expression syntax), so it should be the last route.</td></tr></tbody></table></div><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Curi uses the<!-- --> <a href="https://github.com/pillarjs/path-to-regexp"><code class="inline-code css-jo5c25 eutm4hs0">path-to-regexp</code></a> <!-- -->package for route matching. You can read its documentation to learn about more advanced path syntax.</p></div><p>Inside of the <code class="inline-code css-jo5c25 eutm4hs0">src</code> directory, we will create a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> file where we can define the application&#x27;s routes.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">touch src/routes.js</code></pre></div><p>We can create an array of routes using the above names and paths.</p><p><code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code> provides a <code class="inline-code css-jo5c25 eutm4hs0">prepareRoutes</code> function, which is used to setup routes for the router. We will pass the routes array to <code class="inline-code css-jo5c25 eutm4hs0">prepareRoutes</code> and export the result of that function call.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// src/routes.js
-import { prepareRoutes } from &quot;@curi/router&quot;;
+}</code></pre></div></div><p>The website will start with four routes.</p><style data-emotion-css="ayshjd">.css-ayshjd{overflow-x:auto;}</style><div class="css-ayshjd e18t55xi0"><table><thead><tr><th>name</th><th>path</th><th>use case</th></tr></thead><tbody><tr><td>Home</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;&quot;</code></td><td>Lists books available for purchase.</td></tr><tr><td>Book</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;book/:id&quot;</code></td><td>Details about an individual book. The <code class="inline-code css-jo5c25 eutm4hs0">id</code> param identifies a specific book.</td></tr><tr><td>Checkout</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;checkout&quot;</code></td><td>Buy the books in the shopping cart.</td></tr><tr><td>Catch All</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;(.*)&quot;</code></td><td>Display a not found page. This path matches every location (using a regular expression syntax), so it should be the last route.</td></tr></tbody></table></div><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Curi uses the<!-- --> <a href="https://github.com/pillarjs/path-to-regexp"><code class="inline-code css-jo5c25 eutm4hs0">path-to-regexp</code></a> <!-- -->package for route matching. You can read its documentation to learn about more advanced path syntax.</p></div><p>Inside of the <code class="inline-code css-jo5c25 eutm4hs0">src</code> directory, we will create a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> file where we can define the application&#x27;s routes.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">touch src/routes.js</code></pre></div><p>We can create an array of routes using the above names and paths.</p><p><code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code> provides a <code class="inline-code css-jo5c25 eutm4hs0">prepare_routes</code> function, which is used to setup routes for the router. We will pass the routes array to <code class="inline-code css-jo5c25 eutm4hs0">prepare_routes</code> and export the result of that function call.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// src/routes.js
+import { prepare_routes } from &quot;@curi/router&quot;;
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;
@@ -56,10 +56,10 @@ import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div></div><div class="section css-1kr8jn0" id="history"><h2><a href="#history" class="header-link">History</a></h2><p>Along with the routes, we also need to create a history object for the router. The history object is responsible for creating locations and navigation within the application.</p><p>Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->library for its history implementations. There are a few Hickory packages to choose from for different environments. For most websites, the <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> is the right choice for the front end, which is what we will be using</p><p>We can import the <code class="inline-code css-jo5c25 eutm4hs0">Browser</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> in our index file (<code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code>, which <code class="inline-code css-jo5c25 eutm4hs0">create-react-app</code> created for us) and call the function to create a history object.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The history object can be configured with<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Browser.md#options">an options object</a>, but we will stick with the defaults.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="4"><code class="language-jsx">// src/index.js
+registerServiceWorker();</code></pre></div></div><div class="section css-1kr8jn0" id="history"><h2><a href="#history" class="header-link">History</a></h2><p>Along with the routes, we also need to create a history object for the router. The history object is responsible for creating locations and navigation within the application.</p><p>Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->library for its history implementations. There are a few Hickory packages to choose from for different environments. For most websites, the <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> is the right choice for the front end, which is what we will be using</p><p>We can import the <code class="inline-code css-jo5c25 eutm4hs0">Browser</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> in our index file (<code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code>, which <code class="inline-code css-jo5c25 eutm4hs0">create-react-app</code> created for us) and call the function to create a history object.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The history object can be configured with<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/browser.md#options">an options object</a>, but we will stick with the defaults.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="4"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import { Browser } from &#x27;@hickory/browser&#x27;;
+import { browser } from &#x27;@hickory/browser&#x27;;
 
 import routes from &quot;./routes&quot;;
 import &#x27;./index.css&#x27;;
@@ -67,50 +67,50 @@ import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div></div><div class="section css-1kr8jn0" id="router"><h2><a href="#router" class="header-link">The Router</a></h2><p>We are now ready to create the router. In the <code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code> <!-- -->file, we should import the <code class="inline-code css-jo5c25 eutm4hs0">curi</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code>. To create the router, call the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">curi()</code> function passing it the history function and the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">routes</code> array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="4,12"><code class="language-jsx">// src/index.js
+registerServiceWorker();</code></pre></div></div><div class="section css-1kr8jn0" id="router"><h2><a href="#router" class="header-link">The Router</a></h2><p>We are now ready to create the router. In the <code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code> <!-- -->file, we should import the <code class="inline-code css-jo5c25 eutm4hs0">create_router</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code>. To create the router, call the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">create_router()</code> function passing it the history function and the <code class="inline-code css-jo5c25 eutm4hs0">routes</code> array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="4,12"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import { curi } from &#x27;@curi/router&#x27;;
-import { Browser } from &#x27;@hickory/browser&#x27;;
+import { create_router } from &quot;@curi/router&quot;;
+import { browser } from &#x27;@hickory/browser&#x27;;
 
 import routes from &#x27;./routes&#x27;;
 import &#x27;./index.css&#x27;;
 import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const router = curi(Browser, routes);
+const router = create_router(browser, routes);
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div><p>The router is now ready and we can render the application.</p></div><div class="section css-1kr8jn0" id="rendering"><h2><a href="#rendering" class="header-link">Rendering with React</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> provides the components that we will use to interact with the router.</p><p>We create a <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component by passing the router to the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">curiProvider</code> higher-order component.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Curi uses a higher-order component to create a component instead of a regular component because the router is a permanent &quot;prop&quot;. An application should only have one router, so this approach discourages trying to swap routers.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="6,14"><code class="language-jsx">// src/index.js
+registerServiceWorker();</code></pre></div><p>The router is now ready and we can render the application.</p></div><div class="section css-1kr8jn0" id="rendering"><h2><a href="#rendering" class="header-link">Rendering with React</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> provides the components that we will use to interact with the router.</p><p>We create a <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component by passing the router to the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">create_router_component</code> higher-order component.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Curi uses a higher-order component to create a component instead of a regular component because the router is a permanent &quot;prop&quot;. An application should only have one router, so this approach discourages trying to swap routers.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="6,14"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import { curi } from &#x27;@curi/router&#x27;;
-import { Browser } from &#x27;@hickory/browser&#x27;;
-import { curiProvider } from &quot;@curi/react-dom&quot;;
+import { create_router } from &quot;@curi/router&quot;;
+import { browser } from &#x27;@hickory/browser&#x27;;
+import { create_router_component } from &quot;@curi/react-dom&quot;;
 
 import routes from &#x27;./routes&#x27;;
 import &#x27;./index.css&#x27;;
 import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const router = curi(Browser, routes);
-const Router = curiProvider(router);
+const router = create_router(browser, routes);
+const Router = create_router_component(router);
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
 registerServiceWorker();</code></pre></div><p>The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component will re-render the application whenever there is in-app navigation. It also sets up a React context, so any <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> components and hooks need to be descendants of the <code class="inline-code css-jo5c25 eutm4hs0">Router</code> in order to access the context.</p><p>We will pass the <code class="inline-code css-jo5c25 eutm4hs0">Router</code> the <code class="inline-code css-jo5c25 eutm4hs0">App</code> element, which is where we will render the application&#x27;s content.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="16-20"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import { curi } from &#x27;@curi/router&#x27;;
-import { Browser } from &#x27;@hickory/browser&#x27;;
-import { curiProvider } from &quot;@curi/react-dom&quot;;
+import { create_router } from &quot;@curi/router&quot;;
+import { browser } from &#x27;@hickory/browser&#x27;;
+import { create_router_component } from &quot;@curi/react-dom&quot;;
 
 import routes from &#x27;./routes&#x27;;
 import &#x27;./index.css&#x27;;
 import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const router = curi(Browser, routes);
-const Router = curiProvider(router);
+const router = create_router(browser, routes);
+const Router = create_router_component(router);
 
 ReactDOM.render((
   &lt;Router&gt;
@@ -190,14 +190,14 @@ export default function NotFound() {
     &lt;div&gt;Not Found&lt;/div&gt;
   );
 }</code></pre></div><p>These components can be imported in <code class="inline-code css-jo5c25 eutm4hs0">src/routes.js</code>. Each route can be given a <code class="inline-code css-jo5c25 eutm4hs0">response</code> function which returns an object with their respective component as its <code class="inline-code css-jo5c25 eutm4hs0">body</code>.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="4-7,13-15,20-22,27-29,34-36"><code class="language-javascript">// src/routes.js
-import { prepareRoutes } from &quot;@curi/router&quot;;
+import { prepare_routes } from &quot;@curi/router&quot;;
 
 import Home from &#x27;./components/Home&#x27;;
 import Book from &#x27;./components/Book&#x27;;
 import Checkout from &#x27;./components/Checkout&#x27;;
 import NotFound from &#x27;./components/NotFound&#x27;;
 
-export default prepareRoutes([
+export default prepare_routes([
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;,
@@ -481,8 +481,8 @@ export default function Checkout({ router, response }) {
   );
 };</code></pre></div></div><div class="section css-1kr8jn0" id="next"><h2><a href="#next" class="header-link">What&#x27;s next?</a></h2><p>We now have a functional website built with React and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides/">guides</a> for information on advanced techniques.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#demo">Demo</a></li><li><a href="#setup">Setup</a></li><li><a href="#routes">Routes</a><ol><li><a href="#path-basics">Path basics</a></li></ol></li><li><a href="#history">History</a></li><li><a href="#router">The Router</a></li><li><a href="#rendering">Rendering with React</a><ol><li><a href="#responses">Responses and Navigation</a></li><li><a href="#route-response">route.response()</a></li></ol></li><li><a href="#navigating">Navigating between locations</a><ol><li><a href="#link-component">The &lt;Link&gt; Component</a></li><li><a href="#nav-menu">A Navigation Menu</a></li><li><a href="#book-links">Linking to Books</a></li></ol></li><li><a href="#shopping">Let&#x27;s go shopping</a><ol><li><a href="#nav-method">The Router&#x27;s Navigate Method</a></li></ol></li><li><a href="#next">What&#x27;s next?</a></li></ol></div></div></div></main></div>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
-    <script src="https://unpkg.com/react@16.8.0/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@16.8.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
     <script src="/static/js/bundle.js"></script>
   </body>
