@@ -1,9 +1,5 @@
 <template>
-  <curi-link
-    :to="to"
-    :params="params"
-    :class="classes"
-  >
+  <curi-link :to="to" :params="params" :class="classes">
     <slot></slot>
   </curi-link>
 </template>
@@ -14,12 +10,10 @@ export default {
   props: ["to", "params", "search", "hash", "state", "partial"],
   computed: {
     classes: function() {
-      return this.$router.route.active(
-        this.to,
-        this.$curi.response,
-        this.params,
-        this.partial
-      )
+      return this.$router.route.active(this.to, this.$curi.response, {
+        params: this.params,
+        partial: this.partial
+      })
         ? "active"
         : "";
     }

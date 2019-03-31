@@ -12,7 +12,7 @@
   export default {
     computed: {
       active({ $curi, $router, name, params, partial }) {
-        const active = $router.route.active(name, $curi.response, params, partial);
+        const active = $router.route.active(name, $curi.response, { params, partial });
         return active;
       },
       className({ active }) {
