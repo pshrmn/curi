@@ -1,3 +1,7 @@
+## Next
+
+* Import common Curi types from `@curi/types`.
+
 ## 2.0.0-beta.2
 
 * `useHref` hook uses `history.href`.

@@ -1,3 +1,7 @@
+## Next
+
+* Import common Curi types from `@curi/types`.
+
 ## 1.0.0-beta.29
 
 * `<curi-link>` uses `history.href`.

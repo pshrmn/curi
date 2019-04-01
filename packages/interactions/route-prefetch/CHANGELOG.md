@@ -1,3 +1,7 @@
+## Next
+
+* Import common Curi types from `@curi/types`.
+
 ## 2.0.0-alpha.0
 
 * Added third argument, `external`, for route's whose `resolve` function uses the router's `external` value.

@@ -1,3 +1,7 @@
+## Next
+
+* Import common Curi types from `@curi/types`.
+
 ## 1.0.0-beta.3
 
 * `pathnames` uses `in_memory` history
