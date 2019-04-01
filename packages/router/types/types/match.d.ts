@@ -1,6 +1,6 @@
-import { CompiledRoute, Params, MatchResponseProperties } from "@curi/types";
+import { PreparedRoute, Params, MatchResponseProperties } from "@curi/types";
 export interface MatchingRoute {
-    route: CompiledRoute;
+    route: PreparedRoute;
     params: Params;
 }
 export interface MissMatch {
@@ -8,7 +8,7 @@ export interface MissMatch {
     match: undefined;
 }
 export interface Match {
-    route: CompiledRoute;
+    route: PreparedRoute;
     match: MatchResponseProperties;
 }
 export declare type PossibleMatch = Match | MissMatch;

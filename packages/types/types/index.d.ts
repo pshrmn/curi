@@ -83,15 +83,15 @@ export interface PathMatching {
     re: RegExp;
     keys: Array<Key>;
 }
-export interface CompiledRoute {
+export interface PreparedRoute {
     public: Route;
     sync: boolean;
-    children: Array<CompiledRoute>;
+    children: Array<PreparedRoute>;
     response?: ResponseFn;
     path_matching: PathMatching;
     param_parsers?: ParamParsers;
 }
-export declare type PreparedRoutes = Array<CompiledRoute>;
+export declare type PreparedRoutes = Array<PreparedRoute>;
 export interface RedirectProps extends RouteLocation {
     name: string;
 }

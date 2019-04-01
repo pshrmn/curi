@@ -2,12 +2,12 @@ import { with_leading_slash } from "./utils/path";
 import parse_params from "./utils/parse_params";
 
 import { SessionLocation } from "@hickory/root";
-import { CompiledRoute, Params } from "@curi/types";
+import { PreparedRoute, Params } from "@curi/types";
 import { PossibleMatch, Match, MatchingRoute } from "./types/match";
 import { RawParams } from "./types/response";
 
 function match_route(
-  route: CompiledRoute,
+  route: PreparedRoute,
   pathname: string
 ): Array<MatchingRoute> {
   const test_path: string = pathname;
@@ -91,7 +91,7 @@ function create_match(
 
 export default function match_location(
   location: SessionLocation,
-  routes: Array<CompiledRoute>
+  routes: Array<PreparedRoute>
 ): PossibleMatch {
   // determine which route(s) match, then use the exact match
   // as the matched route and the rest as partial routes

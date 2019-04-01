@@ -2,14 +2,14 @@ import PathToRegexp from "path-to-regexp";
 import { with_leading_slash, join } from "./utils/path";
 
 import { Key } from "path-to-regexp";
-import { CompiledRoute } from "@curi/types";
+import { PreparedRoute } from "@curi/types";
 import { RouteDescriptor } from "./types/route";
 
 const create_route = (
   options: RouteDescriptor,
   parent_path: string | null,
   used_names: Set<string>
-): CompiledRoute => {
+): PreparedRoute => {
   if (process.env.NODE_ENV !== "production") {
     if (used_names.has(options.name)) {
       throw new Error(
@@ -36,7 +36,7 @@ const create_route = (
   // set this resolve setting path_options.end for children
   const exact = path_options.end == null || path_options.end;
 
-  let children: Array<CompiledRoute> = [];
+  let children: Array<PreparedRoute> = [];
   // when we have child routes, we need to perform non-end matching and
   // create route objects for each child
   if (options.children && options.children.length) {
