@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@curi/react-universal": "file:../react-universal",
-    "@curi/router": "file:../router",
+    "@curi/types": "file:../types",
     "@types/react": "^16.7.18"
   }
 }

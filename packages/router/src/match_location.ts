@@ -2,9 +2,9 @@ import { with_leading_slash } from "./utils/path";
 import parse_params from "./utils/parse_params";
 
 import { SessionLocation } from "@hickory/root";
-import { CompiledRoute } from "./types/route";
+import { CompiledRoute, Params } from "@curi/types";
 import { PossibleMatch, Match, MatchingRoute } from "./types/match";
-import { Params, RawParams } from "./types/response";
+import { RawParams } from "./types/response";
 
 function match_route(
   route: CompiledRoute,

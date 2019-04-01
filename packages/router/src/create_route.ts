@@ -1,9 +1,9 @@
 import PathToRegexp from "path-to-regexp";
-
 import { with_leading_slash, join } from "./utils/path";
 
-import { RouteDescriptor, CompiledRoute } from "./types/route";
 import { Key } from "path-to-regexp";
+import { CompiledRoute } from "@curi/types";
+import { RouteDescriptor } from "./types/route";
 
 const create_route = (
   options: RouteDescriptor,

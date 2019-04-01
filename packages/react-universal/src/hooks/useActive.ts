@@ -1,7 +1,7 @@
 import useCuri from "./useCuri";
 
 import { SessionLocation } from "@hickory/root";
-import { Params } from "@curi/router";
+import { Params } from "@curi/types";
 
 export type LocationCheck = (l: SessionLocation) => boolean;
 

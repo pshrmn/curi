@@ -1,5 +1,4 @@
-import { CompiledRoute } from "../types/route";
-import { Interaction } from "../types/interaction";
+import { CompiledRoute, Interaction } from "@curi/types";
 
 export default function register_routes(
   routes: Array<CompiledRoute>,

@@ -4,7 +4,7 @@ import Link from "./Link";
 
 import focus from "./focus";
 
-import { CuriRouter } from "@curi/router";
+import { CuriRouter } from "@curi/types";
 import { ReactiveResponse } from "./interface";
 
 export interface CuriPluginOptions {

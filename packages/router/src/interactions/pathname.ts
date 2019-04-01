@@ -2,9 +2,7 @@ import PathToRegexp from "path-to-regexp";
 import { with_leading_slash, join } from "../utils/path";
 
 import { PathFunction, PathFunctionOptions } from "path-to-regexp";
-import { Interaction } from "../types/interaction";
-import { Route } from "../types/route";
-import { Params } from "../types/response";
+import { Interaction, Route, Params } from "@curi/types";
 
 function generate_pathname(options?: PathFunctionOptions): Interaction {
   let known_paths: { [key: string]: string } = {};

@@ -1,9 +1,5 @@
-import {
-  CompiledRouteArray,
-  Params,
-  Emitted,
-  RouterOptions
-} from "@curi/router";
+import { PreparedRoutes, Params, Emitted } from "@curi/types";
+import { RouterOptions } from "@curi/router";
 
 import { HistoryOptions } from "@hickory/in-memory";
 
@@ -27,7 +23,7 @@ export interface StaticOutput {
 }
 
 export interface StaticRouter {
-  routes: CompiledRouteArray;
+  routes: PreparedRoutes;
   get_router_options?: GetRouterOptions;
 }
 
@@ -46,7 +42,7 @@ export interface Result {
 }
 
 export interface PathnamesConfiguration {
-  routes: CompiledRouteArray;
+  routes: PreparedRoutes;
   pages: Array<PageDescriptor>;
   router_options?: RouterOptions;
 }

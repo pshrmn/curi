@@ -1,20 +1,9 @@
-import { RegExpOptions, Key, PathFunction } from "path-to-regexp";
-import { MatchResponseProperties, SettableResponseProperties } from "./response";
+import { RegExpOptions, PathFunction } from "path-to-regexp";
+import { MatchResponseProperties, ParamParsers, ResponseFn } from "@curi/types";
 export interface ResolveResults {
     resolved: any;
     error: any;
 }
-export declare type ParamParser = (input: string) => any;
-export interface ParamParsers {
-    [key: string]: ParamParser;
-}
-export interface ResponseBuilder {
-    resolved: any;
-    error: any;
-    match: MatchResponseProperties;
-    external: any;
-}
-export declare type ResponseFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
 export declare type AsyncMatchFn = (matched?: Readonly<MatchResponseProperties>, external?: any) => Promise<any>;
 export interface RouteDescriptor {
     name: string;
@@ -27,14 +16,6 @@ export interface RouteDescriptor {
     extra?: {
         [key: string]: any;
     };
-}
-export interface CompiledRoute {
-    public: Route;
-    sync: boolean;
-    children: Array<CompiledRoute>;
-    response?: ResponseFn;
-    path_matching: PathMatching;
-    param_parsers?: ParamParsers;
 }
 export interface Route<R = unknown> {
     name: string;
@@ -50,9 +31,3 @@ export interface SyncRoute extends Route<undefined> {
 }
 export interface AsyncRoute extends Route<AsyncMatchFn> {
 }
-export interface PathMatching {
-    exact: boolean;
-    re: RegExp;
-    keys: Array<Key>;
-}
-export declare type CompiledRouteArray = Array<CompiledRoute>;

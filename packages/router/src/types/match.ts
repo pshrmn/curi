@@ -1,5 +1,4 @@
-import { CompiledRoute } from "./route";
-import { Params, MatchResponseProperties } from "./response";
+import { CompiledRoute, Params, MatchResponseProperties } from "@curi/types";
 
 export interface MatchingRoute {
   route: CompiledRoute;

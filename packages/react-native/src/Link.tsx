@@ -6,7 +6,7 @@ import {
 } from "@curi/react-universal";
 
 import { GestureResponderEvent } from "react-native";
-import { RouteLocation } from "@curi/router";
+import { RouteLocation } from "@curi/types";
 import { NavigatingChildren } from "@curi/react-universal";
 import { NavType } from "@hickory/root";
 

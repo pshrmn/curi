@@ -6,7 +6,8 @@ import { create_server_history } from "@hickory/in-memory";
 import pathnames from "./pathnames";
 
 import { LocationOptions } from "@hickory/in-memory";
-import { Emitted, RouterOptions } from "@curi/router";
+import { Emitted } from "@curi/types";
+import { RouterOptions } from "@curi/router";
 import { StaticConfiguration, Result } from "./types";
 
 function default_get_router_options(): RouterOptions {

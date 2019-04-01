@@ -10,13 +10,11 @@ import {
   PendingNavigation
 } from "@hickory/root";
 
-import { CompiledRouteArray, ResolveResults } from "./types/route";
-import { Response } from "./types/response";
-import { Interactions } from "./types/interaction";
-import { Match } from "./types/match";
 import {
+  PreparedRoutes,
+  Response,
+  Interactions,
   CuriRouter,
-  RouterOptions,
   Observer,
   Emitted,
   ResponseHandlerOptions,
@@ -28,11 +26,15 @@ import {
   CancelActiveNavigation,
   RemoveCancellable,
   CancelNavigateCallbacks
-} from "./types/curi";
+} from "@curi/types";
+
+import { ResolveResults } from "./types/route";
+import { Match } from "./types/match";
+import { RouterOptions } from "./types/curi";
 
 export default function create_router<HOpts = HistoryOptions>(
   history_constructor: HistoryConstructor<HOpts>,
-  route_array: CompiledRouteArray,
+  route_array: PreparedRoutes,
   options: RouterOptions<HOpts> = {}
 ): CuriRouter {
   const {
@@ -53,12 +55,10 @@ export default function create_router<HOpts = HistoryOptions>(
 
   /* routes & route interactions */
 
-  let routes: CompiledRouteArray;
+  let routes: PreparedRoutes;
   const route_interactions: Interactions = {};
 
-  function setup_routes_and_interactions(
-    user_routes?: CompiledRouteArray
-  ): void {
+  function setup_routes_and_interactions(user_routes?: PreparedRoutes): void {
     if (user_routes) {
       routes = user_routes;
       for (let key in route_interactions) {
@@ -305,7 +305,7 @@ export default function create_router<HOpts = HistoryOptions>(
   /* router.refresh */
 
   let refreshing = false;
-  function refresh(routes?: CompiledRouteArray) {
+  function refresh(routes?: PreparedRoutes) {
     setup_routes_and_interactions(routes);
     refreshing = true;
     history.current();

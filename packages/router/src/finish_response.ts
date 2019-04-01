@@ -1,10 +1,11 @@
 import { History } from "@hickory/root";
-import { Interactions } from "./types/interaction";
 import {
+  Interactions,
   Response,
   RedirectLocation,
   SettableResponseProperties
-} from "./types/response";
+} from "@curi/types";
+
 import { ResolveResults } from "./types/route";
 import { Match } from "./types/match";
 

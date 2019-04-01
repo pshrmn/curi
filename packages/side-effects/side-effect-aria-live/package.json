@@ -33,6 +33,6 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "file:../../router"
+    "@curi/types": "file:../../types"
   }
 }
