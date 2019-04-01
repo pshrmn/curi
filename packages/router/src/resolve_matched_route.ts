@@ -1,9 +1,8 @@
-import { Route } from "@curi/types";
-import { Match } from "./types/match";
-import { ResolveResults, AsyncRoute } from "./types/route";
+import { Route, ResolveResults, AsyncRoute } from "@curi/types";
+import { RealMatch } from "./match_location";
 
 export default function resolve_route(
-  match: Match,
+  match: RealMatch,
   global: any
 ): Promise<ResolveResults> {
   if (!is_async_route(match.route.public)) {

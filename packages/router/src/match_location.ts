@@ -1,10 +1,26 @@
 import { with_leading_slash } from "./utils/path";
-import parse_params from "./utils/parse_params";
 
 import { SessionLocation } from "@hickory/root";
-import { PreparedRoute, Params } from "@curi/types";
-import { PossibleMatch, Match, MatchingRoute } from "./types/match";
-import { RawParams } from "./types/response";
+import { PreparedRoute, ParamParsers, Params, Match } from "@curi/types";
+
+interface MatchingRoute {
+  route: PreparedRoute;
+  params: Params;
+}
+
+interface MissMatch {
+  route: undefined;
+  match: undefined;
+}
+
+type RawParams = { [key: string]: string };
+
+export interface RealMatch {
+  route: PreparedRoute;
+  match: Match;
+}
+
+export type PossibleMatch = RealMatch | MissMatch;
 
 function match_route(
   route: PreparedRoute,
@@ -59,7 +75,7 @@ function match_route(
 function create_match(
   route_matches: Array<MatchingRoute>,
   location: SessionLocation
-): Match {
+): RealMatch {
   let partials: Array<string> = [];
   let params: Params = {};
 
@@ -87,6 +103,29 @@ function create_match(
       partials
     }
   };
+}
+
+function parse_params(params: RawParams, fns?: ParamParsers): Params {
+  if (!fns) {
+    return params;
+  }
+  const output: Params = {};
+  // For each param, attempt to parse it. However, if that
+  // fails, fall back to the string value.
+  for (let key in params) {
+    let value = params[key];
+    let fn = fns[key];
+    if (fn) {
+      try {
+        value = fn(value);
+      } catch (e) {
+        console.error(e);
+        value = params[key];
+      }
+    }
+    output[key] = value;
+  }
+  return output;
 }
 
 export default function match_location(

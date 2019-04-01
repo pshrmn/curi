@@ -25,12 +25,15 @@ import {
   Cancellable,
   CancelActiveNavigation,
   RemoveCancellable,
-  CancelNavigateCallbacks
+  CancelNavigateCallbacks,
+  ResolveResults,
+  RouterOptions
 } from "@curi/types";
+import { PossibleMatch, RealMatch } from "./match_location";
 
-import { ResolveResults } from "./types/route";
-import { Match } from "./types/match";
-import { RouterOptions } from "./types/curi";
+function is_real_match(match: PossibleMatch): match is RealMatch {
+  return match.route !== undefined;
+}
 
 export default function create_router<HOpts = HistoryOptions>(
   history_constructor: HistoryConstructor<HOpts>,
@@ -92,7 +95,7 @@ export default function create_router<HOpts = HistoryOptions>(
 
     const match = match_location(pending_nav.location, routes);
     // if no routes match, do nothing
-    if (!match.route) {
+    if (!is_real_match(match)) {
       if (process.env.NODE_ENV !== "production") {
         console.warn(
           `The current location (${
@@ -108,27 +111,22 @@ export default function create_router<HOpts = HistoryOptions>(
     }
 
     if (match.route.sync) {
-      finalize_response_and_emit(match as Match, pending_nav, navigation, null);
+      finalize_response_and_emit(match, pending_nav, navigation, null);
     } else {
       announe_async_nav();
-      resolve_matched_route(match as Match, external).then(
+      resolve_matched_route(match, external).then(
         (resolved: ResolveResults) => {
           if (pending_nav.cancelled) {
             return;
           }
-          finalize_response_and_emit(
-            match as Match,
-            pending_nav,
-            navigation,
-            resolved
-          );
+          finalize_response_and_emit(match, pending_nav, navigation, resolved);
         }
       );
     }
   }
 
   function finalize_response_and_emit(
-    match: Match,
+    match: RealMatch,
     pending: PendingNavigation,
     navigation: Navigation,
     resolved: ResolveResults | null

@@ -1,6 +1,25 @@
-import { PathFunction, Key } from "path-to-regexp";
-import { History, SessionLocation, PartialLocation, Action, NavType } from "@hickory/root";
-export declare type Observer = (props?: Emitted) => void;
+import { PathFunction, PathFunctionOptions, RegExpOptions, Key } from "path-to-regexp";
+import { History, HistoryOptions, SessionLocation, PartialLocation, Action, NavType } from "@hickory/root";
+export interface RouteDescriptor {
+    name: string;
+    path: string;
+    path_options?: RegExpOptions;
+    params?: ParamParsers;
+    children?: Array<RouteDescriptor>;
+    response?: ResponseFn;
+    resolve?: AsyncMatchFn;
+    extra?: {
+        [key: string]: any;
+    };
+}
+export interface RouterOptions<O = HistoryOptions> {
+    route?: Array<Interaction>;
+    side_effects?: Array<Observer>;
+    pathname_options?: PathFunctionOptions;
+    emit_redirects?: boolean;
+    external?: any;
+    history?: O;
+}
 export interface CuriRouter {
     refresh: (routes?: PreparedRoutes) => void;
     observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
@@ -22,13 +41,23 @@ export interface CurrentResponse {
     response: Response | null;
     navigation: Navigation | null;
 }
+export interface Navigation {
+    action: Action;
+    previous: Response | null;
+}
 export interface ResponseHandlerOptions {
     initial?: boolean;
 }
+export declare type Observer = (props?: Emitted) => void;
 export declare type RemoveObserver = () => void;
-export declare type CancelActiveNavigation = () => void;
 export declare type Cancellable = (cancel?: CancelActiveNavigation) => void;
+export declare type CancelActiveNavigation = () => void;
 export declare type RemoveCancellable = () => void;
+export interface Emitted {
+    response: Response;
+    navigation: Navigation;
+    router: CuriRouter;
+}
 export interface RouteLocation {
     name?: string;
     params?: Params;
@@ -36,19 +65,10 @@ export interface RouteLocation {
     query?: any;
     state?: any;
 }
-export interface Navigation {
-    action: Action;
-    previous: Response | null;
-}
-export interface Emitted {
-    response: Response;
-    navigation: Navigation;
-    router: CuriRouter;
-}
 export declare type Params = {
     [key: string]: any;
 };
-export interface MatchResponseProperties {
+export interface Match {
     location: SessionLocation;
     name: string;
     params: Params;
@@ -59,7 +79,7 @@ export interface RedirectLocation extends PartialLocation {
     params?: Params;
     url: string;
 }
-export interface Response extends MatchResponseProperties {
+export interface Response extends Match {
     status?: number;
     error?: any;
     body?: any;
@@ -77,12 +97,11 @@ export interface Route<R = unknown> {
     pathname: PathFunction;
     resolve: R;
 }
-export declare type ResponseFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
-export interface PathMatching {
-    exact: boolean;
-    re: RegExp;
-    keys: Array<Key>;
+export interface SyncRoute extends Route<undefined> {
 }
+export interface AsyncRoute extends Route<AsyncMatchFn> {
+}
+export declare type AsyncMatchFn = (matched?: Readonly<Match>, external?: any) => Promise<any>;
 export interface PreparedRoute {
     public: Route;
     sync: boolean;
@@ -91,6 +110,12 @@ export interface PreparedRoute {
     path_matching: PathMatching;
     param_parsers?: ParamParsers;
 }
+export interface PathMatching {
+    exact: boolean;
+    re: RegExp;
+    keys: Array<Key>;
+}
+export declare type ResponseFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
 export declare type PreparedRoutes = Array<PreparedRoute>;
 export interface RedirectProps extends RouteLocation {
     name: string;
@@ -110,8 +135,12 @@ export interface ParamParsers {
 export interface ResponseBuilder {
     resolved: any;
     error: any;
-    match: MatchResponseProperties;
+    match: Match;
     external: any;
+}
+export interface ResolveResults {
+    resolved: any;
+    error: any;
 }
 export declare type RegisterInteraction = (route: Route, parent?: any) => any;
 export declare type GetInteraction = (name: string, ...rest: Array<any>) => any;

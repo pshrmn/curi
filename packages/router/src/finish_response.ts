@@ -3,11 +3,11 @@ import {
   Interactions,
   Response,
   RedirectLocation,
-  SettableResponseProperties
+  SettableResponseProperties,
+  ResolveResults
 } from "@curi/types";
 
-import { ResolveResults } from "./types/route";
-import { Match } from "./types/match";
+import { RealMatch } from "./match_location";
 
 function create_redirect(
   redirect_to: any,
@@ -28,7 +28,7 @@ function create_redirect(
 }
 
 export default function finish_response(
-  route_match: Match,
+  route_match: RealMatch,
   interactions: Interactions,
   resolved_results: ResolveResults | null,
   history: History,

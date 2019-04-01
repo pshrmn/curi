@@ -1,8 +1,14 @@
-import { Interaction, Route, MatchResponseProperties } from "@curi/types";
-import { ResolveResults, AsyncRoute, AsyncMatchFn } from "@curi/router";
+import {
+  Interaction,
+  Route,
+  Match,
+  ResolveResults,
+  AsyncRoute,
+  AsyncMatchFn
+} from "@curi/types";
 
 export interface PrefetchCallOptions {
-  match?: MatchResponseProperties;
+  match?: Match;
   external?: any;
 }
 
