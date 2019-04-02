@@ -1,7 +1,7 @@
 import register_routes from "./utils/register_routes";
 import pathname_interaction from "./interactions/pathname";
 import finish_response from "./finish_response";
-import match_location from "./match_location";
+import { match_location, is_real_match } from "./match_location";
 import resolve_matched_route from "./resolve_matched_route";
 
 import {
@@ -29,11 +29,7 @@ import {
   ResolveResults,
   RouterOptions
 } from "@curi/types";
-import { PossibleMatch, RealMatch } from "./match_location";
-
-function is_real_match(match: PossibleMatch): match is RealMatch {
-  return match.route !== undefined;
-}
+import { RealMatch } from "./match_location";
 
 export default function create_router<HOpts = HistoryOptions>(
   history_constructor: HistoryConstructor<HOpts>,

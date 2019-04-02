@@ -8,6 +8,7 @@ export interface RealMatch {
     route: PreparedRoute;
     match: IntrinsicResponse;
 }
-export declare type PossibleMatch = RealMatch | MissMatch;
-export default function match_location(location: SessionLocation, routes: Array<PreparedRoute>): PossibleMatch;
+declare type PossibleMatch = RealMatch | MissMatch;
+export declare function match_location(location: SessionLocation, routes: Array<PreparedRoute>): PossibleMatch;
+export declare function is_real_match(match: PossibleMatch): match is RealMatch;
 export {};

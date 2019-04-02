@@ -25,7 +25,7 @@ export interface RealMatch {
   match: IntrinsicResponse;
 }
 
-export type PossibleMatch = RealMatch | MissMatch;
+type PossibleMatch = RealMatch | MissMatch;
 
 function match_route(
   route: PreparedRoute,
@@ -133,7 +133,7 @@ function parse_params(params: RawParams, fns?: ParamParsers): Params {
   return output;
 }
 
-export default function match_location(
+export function match_location(
   location: SessionLocation,
   routes: Array<PreparedRoute>
 ): PossibleMatch {
@@ -152,4 +152,8 @@ export default function match_location(
     route: undefined,
     match: undefined
   };
+}
+
+export function is_real_match(match: PossibleMatch): match is RealMatch {
+  return match.route !== undefined;
 }
