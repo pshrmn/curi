@@ -130,6 +130,7 @@
     "@curi/side-effect-title": "file:packages/side-effects/side-effect-title",
     "@curi/static": "file:packages/static",
     "@curi/svelte": "file:packages/svelte",
+    "@curi/types": "file:packages/types",
     "@curi/vue": "file:packages/vue"
   }
 }
