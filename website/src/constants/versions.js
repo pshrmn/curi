@@ -13,5 +13,6 @@ export default {
   "side-effect-title": "2.0.0-alpha.1",
   "static": "1.0.0-beta.3",
   "svelte": "1.0.0-beta.16",
+  "types": "2.0.0-alpha.0",
   "vue": "1.0.0-beta.29"
 };

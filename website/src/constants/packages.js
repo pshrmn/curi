@@ -270,6 +270,25 @@ const packages = [
           `../pages/Packages/helpers/v2/index.js`);
       }
     }
+  },
+  {
+    name: "types",
+    version: versions["types"],
+    globalName: "CuriTypes",
+    type: "other",
+    script: false,
+    latest: "v2",
+    versions: {
+      v2: versions["types"]
+    },
+    import: version => {
+      switch (version) {
+        case "v2":
+        default:
+          return import(/* webpackChunkName: 'package--types-v2' */
+          `../pages/Packages/types/v2/index.js`);
+      }
+    }
   }
 ];
 
