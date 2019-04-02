@@ -5,7 +5,6 @@ import { Simulate } from "react-dom/test-utils";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
-// @ts-ignore (resolved by jest)
 import {
   create_router_component,
   useNavigationHandler

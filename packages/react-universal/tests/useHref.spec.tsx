@@ -5,7 +5,6 @@ import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 import * as qs from "qs";
 
-// @ts-ignore (resolved by jest)
 import { create_router_component, useHref } from "@curi/react-universal";
 
 describe("useHref", () => {

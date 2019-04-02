@@ -1,7 +1,6 @@
 import "jest";
 import { Emitted } from "@curi/types";
 
-// resolved by jest
 import createScrollSideEffect from "@curi/side-effect-scroll";
 
 jest.useFakeTimers();

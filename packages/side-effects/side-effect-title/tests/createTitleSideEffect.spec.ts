@@ -1,7 +1,6 @@
 import "jest";
 import { Emitted } from "@curi/types";
 
-// resolved by jeste
 import createTitleSideEffect from "@curi/side-effect-title";
 
 describe("createTitleSideEffect", () => {

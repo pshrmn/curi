@@ -2,7 +2,6 @@ import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 import { Store } from "svelte/store";
 
-// resolved by jest
 import { curi_store } from "@curi/svelte";
 
 describe("curi_store", () => {
