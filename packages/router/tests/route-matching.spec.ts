@@ -562,7 +562,7 @@ describe("route matching/response generation", () => {
             });
           });
 
-          it("uses string for any params not in route.params", () => {
+          it("decodes param using decodeURIComponent if param has no function", () => {
             const routes = prepare_routes([
               {
                 name: "combo",
@@ -574,13 +574,13 @@ describe("route matching/response generation", () => {
             ]);
             const router = create_router(in_memory, routes, {
               history: {
-                locations: ["/123/456"]
+                locations: ["/123/test%20ing"]
               }
             });
             const { response } = router.current();
             expect(response.params).toEqual({
               first: 123,
-              second: "456"
+              second: "test ing"
             });
           });
 
