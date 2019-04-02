@@ -1,6 +1,6 @@
-import { Interaction, Match } from "@curi/types";
+import { Interaction, IntrinsicResponse } from "@curi/types";
 export interface PrefetchCallOptions {
-    match?: Match;
+    match?: IntrinsicResponse;
     external?: any;
 }
 export default function prefetch_route(): Interaction;

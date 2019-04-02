@@ -114,14 +114,12 @@ export default function create_router<HOpts = HistoryOptions>(
       finalize_response_and_emit(match, pending_nav, navigation, null);
     } else {
       announe_async_nav();
-      resolve_matched_route(match, external).then(
-        (resolved: ResolveResults) => {
-          if (pending_nav.cancelled) {
-            return;
-          }
-          finalize_response_and_emit(match, pending_nav, navigation, resolved);
+      resolve_matched_route(match, external).then(resolved => {
+        if (pending_nav.cancelled) {
+          return;
         }
-      );
+        finalize_response_and_emit(match, pending_nav, navigation, resolved);
+      });
     }
   }
 

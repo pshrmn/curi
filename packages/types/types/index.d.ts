@@ -50,13 +50,20 @@ export interface ResponseHandlerOptions {
 }
 export declare type Observer = (props?: Emitted) => void;
 export declare type RemoveObserver = () => void;
-export declare type Cancellable = (cancel?: CancelActiveNavigation) => void;
-export declare type CancelActiveNavigation = () => void;
-export declare type RemoveCancellable = () => void;
 export interface Emitted {
     response: Response;
     navigation: Navigation;
     router: CuriRouter;
+}
+export declare type Cancellable = (cancel?: CancelActiveNavigation) => void;
+export declare type CancelActiveNavigation = () => void;
+export declare type RemoveCancellable = () => void;
+export declare type Params = {
+    [key: string]: any;
+};
+export declare type ParamParser = (input: string) => any;
+export interface ParamParsers {
+    [key: string]: ParamParser;
 }
 export interface RouteLocation {
     name?: string;
@@ -65,10 +72,7 @@ export interface RouteLocation {
     query?: any;
     state?: any;
 }
-export declare type Params = {
-    [key: string]: any;
-};
-export interface Match {
+export interface IntrinsicResponse {
     location: SessionLocation;
     name: string;
     params: Params;
@@ -79,7 +83,7 @@ export interface RedirectLocation extends PartialLocation {
     params?: Params;
     url: string;
 }
-export interface Response extends Match {
+export interface Response extends IntrinsicResponse {
     status?: number;
     error?: any;
     body?: any;
@@ -101,22 +105,27 @@ export interface SyncRoute extends Route<undefined> {
 }
 export interface AsyncRoute extends Route<AsyncMatchFn> {
 }
-export declare type AsyncMatchFn = (matched?: Readonly<Match>, external?: any) => Promise<any>;
+export declare type AsyncMatchFn = (matched?: Readonly<IntrinsicResponse>, external?: any) => Promise<any>;
+export declare type PreparedRoutes = Array<PreparedRoute>;
 export interface PreparedRoute {
     public: Route;
     sync: boolean;
     children: Array<PreparedRoute>;
     response?: ResponseFn;
-    path_matching: PathMatching;
+    path_matching: {
+        exact: boolean;
+        re: RegExp;
+        keys: Array<Key>;
+    };
     param_parsers?: ParamParsers;
 }
-export interface PathMatching {
-    exact: boolean;
-    re: RegExp;
-    keys: Array<Key>;
-}
 export declare type ResponseFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
-export declare type PreparedRoutes = Array<PreparedRoute>;
+export interface ResponseBuilder {
+    resolved: any;
+    error: any;
+    match: IntrinsicResponse;
+    external: any;
+}
 export interface RedirectProps extends RouteLocation {
     name: string;
 }
@@ -128,22 +137,10 @@ export interface SettableResponseProperties {
     title?: string;
     redirect_to?: RedirectProps;
 }
-export declare type ParamParser = (input: string) => any;
-export interface ParamParsers {
-    [key: string]: ParamParser;
-}
-export interface ResponseBuilder {
-    resolved: any;
-    error: any;
-    match: Match;
-    external: any;
-}
 export interface ResolveResults {
     resolved: any;
     error: any;
 }
-export declare type RegisterInteraction = (route: Route, parent?: any) => any;
-export declare type GetInteraction = (name: string, ...rest: Array<any>) => any;
 export interface Interaction {
     name: string;
     register: RegisterInteraction;
@@ -153,3 +150,5 @@ export interface Interaction {
 export declare type Interactions = {
     [key: string]: GetInteraction;
 };
+export declare type RegisterInteraction = (route: Route, parent?: any) => any;
+export declare type GetInteraction = (name: string, ...rest: Array<any>) => any;

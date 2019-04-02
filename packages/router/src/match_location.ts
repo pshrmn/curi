@@ -1,7 +1,12 @@
 import { with_leading_slash } from "./utils/path";
 
 import { SessionLocation } from "@hickory/root";
-import { PreparedRoute, ParamParsers, Params, Match } from "@curi/types";
+import {
+  PreparedRoute,
+  ParamParsers,
+  Params,
+  IntrinsicResponse
+} from "@curi/types";
 
 interface MatchingRoute {
   route: PreparedRoute;
@@ -17,7 +22,7 @@ type RawParams = { [key: string]: string };
 
 export interface RealMatch {
   route: PreparedRoute;
-  match: Match;
+  match: IntrinsicResponse;
 }
 
 export type PossibleMatch = RealMatch | MissMatch;

@@ -77,15 +77,24 @@ export type Observer = (props?: Emitted) => void;
 // observers registered with router.observe can be removed
 export type RemoveObserver = () => void;
 
-// a function to
-export type Cancellable = (cancel?: CancelActiveNavigation) => void;
-export type CancelActiveNavigation = () => void;
-export type RemoveCancellable = () => void;
-
+// the object emitted to observers
 export interface Emitted {
   response: Response;
   navigation: Navigation;
   router: CuriRouter;
+}
+
+// a function to be called when there is an asynchronous navigation
+export type Cancellable = (cancel?: CancelActiveNavigation) => void;
+export type CancelActiveNavigation = () => void;
+export type RemoveCancellable = () => void;
+
+// a route's parsed parameters
+export type Params = { [key: string]: any };
+// a function to convert a parsed param from a string to something else
+export type ParamParser = (input: string) => any;
+export interface ParamParsers {
+  [key: string]: ParamParser;
 }
 
 // a description of a route to navigate to
@@ -97,24 +106,23 @@ export interface RouteLocation {
   state?: any;
 }
 
-// response
-
-export type Params = { [key: string]: any };
-
-export interface Match {
+// the intrinsic properties of a response based on matched route
+export interface IntrinsicResponse {
   location: SessionLocation;
   name: string;
   params: Params;
   partials: Array<string>;
 }
 
+// properties describing a location to redirect to
 export interface RedirectLocation extends PartialLocation {
   name: string;
   params?: Params;
   url: string;
 }
 
-export interface Response extends Match {
+// full interface of response properties
+export interface Response extends IntrinsicResponse {
   status?: number;
   error?: any;
   body?: any;
@@ -123,8 +131,7 @@ export interface Response extends Match {
   redirect_to?: RedirectLocation;
 }
 
-// route
-
+// the public prepared route interface
 export interface Route<R = unknown> {
   name: string;
   path: string;
@@ -139,32 +146,38 @@ export interface SyncRoute extends Route<undefined> {}
 export interface AsyncRoute extends Route<AsyncMatchFn> {}
 
 export type AsyncMatchFn = (
-  matched?: Readonly<Match>,
+  matched?: Readonly<IntrinsicResponse>,
   external?: any
 ) => Promise<any>;
 
-// prepared routes
-
+// the array returned by prepare_routes
+export type PreparedRoutes = Array<PreparedRoute>;
 export interface PreparedRoute {
   public: Route;
   sync: boolean;
   children: Array<PreparedRoute>;
   response?: ResponseFn;
-  path_matching: PathMatching;
+  path_matching: {
+    exact: boolean;
+    re: RegExp;
+    keys: Array<Key>;
+  };
   param_parsers?: ParamParsers;
 }
 
-export interface PathMatching {
-  exact: boolean;
-  re: RegExp;
-  keys: Array<Key>;
-}
-
+// a route's response function is used to return properties to add
+// to the intrinsic response properites
 export type ResponseFn = (
   props: Readonly<ResponseBuilder>
 ) => SettableResponseProperties;
 
-export type PreparedRoutes = Array<PreparedRoute>;
+// the properties that will be passed to a route's response function
+export interface ResponseBuilder {
+  resolved: any;
+  error: any;
+  match: IntrinsicResponse;
+  external: any;
+}
 
 export interface RedirectProps extends RouteLocation {
   name: string;
@@ -179,34 +192,19 @@ export interface SettableResponseProperties {
   redirect_to?: RedirectProps;
 }
 
-export type ParamParser = (input: string) => any;
-export interface ParamParsers {
-  [key: string]: ParamParser;
-}
-
-export interface ResponseBuilder {
-  resolved: any;
-  error: any;
-  match: Match;
-  external: any;
-}
-
-// should this exist?
 export interface ResolveResults {
   resolved: any;
   error: any;
 }
 
-// interaction
-
-export type RegisterInteraction = (route: Route, parent?: any) => any;
-export type GetInteraction = (name: string, ...rest: Array<any>) => any;
-
+// the interface of an object used to create a route interaction
 export interface Interaction {
   name: string;
   register: RegisterInteraction;
   get: GetInteraction;
   reset(): void;
 }
-
 export type Interactions = { [key: string]: GetInteraction };
+
+export type RegisterInteraction = (route: Route, parent?: any) => any;
+export type GetInteraction = (name: string, ...rest: Array<any>) => any;
