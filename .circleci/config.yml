@@ -24,12 +24,12 @@ jobs:
 
       - run:
           name: Run tests on source
-          command: npm run test:source
+          command: npm run test:source -- --concurrency=2
 
       - run:
           name: Run tests on CJS builds
-          command: npm run test:cjs
+          command: npm run test:cjs -- --concurrency=2
 
       - run:
           name: Run tests on UMD builds
-          command: npm run test:umd
+          command: npm run test:umd -- --concurrency=2

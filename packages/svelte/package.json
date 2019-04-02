@@ -15,8 +15,9 @@
     "prebuild": "rimraf dist && rimraf components",
     "build": "BABEL_ENV=build rollup -c && node ./scripts/copyHTML",
     "prepare": "npm run build",
-    "test:source": "jest",
-    "test:cjs": "TEST_ENV=cjs jest"
+    "test": "npm run test:source && npm run test:cjs",
+    "test:cjs": "TEST_ENV=cjs jest",
+    "test:source": "jest"
   },
   "repository": {
     "type": "git",
