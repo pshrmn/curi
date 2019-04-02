@@ -1,4 +1,4 @@
-import { CuriRouter, Response, Navigation } from "@curi/router";
+import { CuriRouter, Response, Navigation } from "@curi/types";
 
 export interface ReactiveResponse {
   response: Response;

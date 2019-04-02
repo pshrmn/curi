@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactNode } from "react";
-import { RouteLocation } from "@curi/router";
+import { RouteLocation } from "@curi/types";
 import { NavType } from "@hickory/root";
 export declare type NavigatingChildren = (navigating: boolean) => ReactNode;
 export interface NavigationHookProps<T> extends BaseNavigationHookProps<T> {

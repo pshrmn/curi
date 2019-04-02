@@ -1,6 +1,4 @@
 import { History } from "@hickory/root";
-import { Interactions } from "./types/interaction";
-import { Response } from "./types/response";
-import { ResolveResults } from "./types/route";
-import { Match } from "./types/match";
-export default function finish_response(route_match: Match, interactions: Interactions, resolved_results: ResolveResults | null, history: History, external: any): Response;
+import { Interactions, Response, ResolveResults } from "@curi/types";
+import { RealMatch } from "./match_location";
+export default function finish_response(route_match: RealMatch, interactions: Interactions, resolved_results: ResolveResults | null, history: History, external: any): Response;

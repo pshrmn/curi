@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "./Context";
 
-import { CuriRouter, Emitted } from "@curi/router";
+import { CuriRouter, Emitted } from "@curi/types";
 
 export interface RouterProps {
   children: React.ReactNode;

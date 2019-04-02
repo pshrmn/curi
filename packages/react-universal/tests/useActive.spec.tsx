@@ -59,7 +59,7 @@ describe("useActive", () => {
       }).toThrow(
         `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
 
-import curi from "@curi/router";
+import { create_router } from "@curi/router";
 import active from "@curi/route-active";
 
 const router = create_router(history, routes, {

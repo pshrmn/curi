@@ -1,5 +1,5 @@
 import React from "react";
-import { CuriRouter } from "@curi/router";
+import { CuriRouter } from "@curi/types";
 export interface RouterProps {
     children: React.ReactNode;
 }

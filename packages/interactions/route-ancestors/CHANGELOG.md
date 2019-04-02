@@ -1,3 +1,7 @@
+## Next
+
+* Import common Curi types from `@curi/types`.
+
 ## 1.1.0
 
 * No longer warns when adding duplicate route name (should be caught be `prepareRoutes`).

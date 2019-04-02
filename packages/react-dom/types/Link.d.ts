@@ -1,5 +1,5 @@
 import React from "react";
-import { RouteLocation } from "@curi/router";
+import { RouteLocation } from "@curi/types";
 import { NavigatingChildren } from "@curi/react-universal";
 export interface BaseLinkProps extends RouteLocation {
     onNav?: (e: React.MouseEvent<HTMLElement>) => void;

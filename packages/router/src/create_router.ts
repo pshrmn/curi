@@ -1,7 +1,7 @@
 import register_routes from "./utils/register_routes";
 import pathname_interaction from "./interactions/pathname";
 import finish_response from "./finish_response";
-import match_location from "./match_location";
+import { match_location, is_real_match } from "./match_location";
 import resolve_matched_route from "./resolve_matched_route";
 
 import {
@@ -10,13 +10,11 @@ import {
   PendingNavigation
 } from "@hickory/root";
 
-import { CompiledRouteArray, ResolveResults } from "./types/route";
-import { Response } from "./types/response";
-import { Interactions } from "./types/interaction";
-import { Match } from "./types/match";
 import {
+  PreparedRoutes,
+  Response,
+  Interactions,
   CuriRouter,
-  RouterOptions,
   Observer,
   Emitted,
   ResponseHandlerOptions,
@@ -27,12 +25,15 @@ import {
   Cancellable,
   CancelActiveNavigation,
   RemoveCancellable,
-  CancelNavigateCallbacks
-} from "./types/curi";
+  CancelNavigateCallbacks,
+  ResolveResults,
+  RouterOptions
+} from "@curi/types";
+import { RealMatch } from "./match_location";
 
 export default function create_router<HOpts = HistoryOptions>(
   history_constructor: HistoryConstructor<HOpts>,
-  route_array: CompiledRouteArray,
+  route_array: PreparedRoutes,
   options: RouterOptions<HOpts> = {}
 ): CuriRouter {
   const {
@@ -53,12 +54,10 @@ export default function create_router<HOpts = HistoryOptions>(
 
   /* routes & route interactions */
 
-  let routes: CompiledRouteArray;
+  let routes: PreparedRoutes;
   const route_interactions: Interactions = {};
 
-  function setup_routes_and_interactions(
-    user_routes?: CompiledRouteArray
-  ): void {
+  function setup_routes_and_interactions(user_routes?: PreparedRoutes): void {
     if (user_routes) {
       routes = user_routes;
       for (let key in route_interactions) {
@@ -92,7 +91,7 @@ export default function create_router<HOpts = HistoryOptions>(
 
     const match = match_location(pending_nav.location, routes);
     // if no routes match, do nothing
-    if (!match.route) {
+    if (!is_real_match(match)) {
       if (process.env.NODE_ENV !== "production") {
         console.warn(
           `The current location (${
@@ -108,27 +107,20 @@ export default function create_router<HOpts = HistoryOptions>(
     }
 
     if (match.route.sync) {
-      finalize_response_and_emit(match as Match, pending_nav, navigation, null);
+      finalize_response_and_emit(match, pending_nav, navigation, null);
     } else {
       announe_async_nav();
-      resolve_matched_route(match as Match, external).then(
-        (resolved: ResolveResults) => {
-          if (pending_nav.cancelled) {
-            return;
-          }
-          finalize_response_and_emit(
-            match as Match,
-            pending_nav,
-            navigation,
-            resolved
-          );
+      resolve_matched_route(match, external).then(resolved => {
+        if (pending_nav.cancelled) {
+          return;
         }
-      );
+        finalize_response_and_emit(match, pending_nav, navigation, resolved);
+      });
     }
   }
 
   function finalize_response_and_emit(
-    match: Match,
+    match: RealMatch,
     pending: PendingNavigation,
     navigation: Navigation,
     resolved: ResolveResults | null
@@ -305,7 +297,7 @@ export default function create_router<HOpts = HistoryOptions>(
   /* router.refresh */
 
   let refreshing = false;
-  function refresh(routes?: CompiledRouteArray) {
+  function refresh(routes?: PreparedRoutes) {
     setup_routes_and_interactions(routes);
     refreshing = true;
     history.current();

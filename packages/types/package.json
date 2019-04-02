@@ -1,0 +1,27 @@
+{
+  "name": "@curi/types",
+  "version": "2.0.0-alpha.0",
+  "description": "Common Curi TypeScript type definitions",
+  "types": "types/index.d.ts",
+  "files": [
+    "types",
+    "LICENSE",
+    "*.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "prebuild": "rimraf types",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshrmn/curi/tree/master/packages/types"
+  },
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "dependencies": {
+    "@hickory/root": "^2.0.0-beta.8",
+    "path-to-regexp": "^2.1.0"
+  }
+}

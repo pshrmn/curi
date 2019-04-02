@@ -2,7 +2,7 @@ import React from "react";
 import useCuri from "./useCuri";
 
 import { ReactNode } from "react";
-import { RouteLocation } from "@curi/router";
+import { RouteLocation } from "@curi/types";
 import { NavType } from "@hickory/root";
 
 export type NavigatingChildren = (navigating: boolean) => ReactNode;

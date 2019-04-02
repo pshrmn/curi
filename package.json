@@ -2,10 +2,13 @@
   "name": "curi-monorepo",
   "private": true,
   "scripts": {
-    "postinstall": "lerna run prepare",
+    "postinstall": "lerna run prepare --concurrency=2",
     "precommit": "pretty-quick --staged",
     "build": "lerna run build --scope=@curi/*",
     "test": "lerna run test",
+    "test:cjs": "lerna run test:cjs",
+    "test:source": "lerna run test:source",
+    "test:umd": "lerna run test:umd",
     "coverage": "lerna run coverage",
     "versions": "lerna version --no-git-tag-version --no-push",
     "postversions": "node ./website/scripts/updatePackageVersions",
@@ -130,6 +133,7 @@
     "@curi/side-effect-title": "file:packages/side-effects/side-effect-title",
     "@curi/static": "file:packages/static",
     "@curi/svelte": "file:packages/svelte",
+    "@curi/types": "file:packages/types",
     "@curi/vue": "file:packages/vue"
   }
 }

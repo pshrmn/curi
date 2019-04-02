@@ -1,4 +1,4 @@
-import { Observer, Emitted } from "@curi/router";
+import { Observer, Emitted } from "@curi/types";
 
 export type AriaLiveValue = "assertive" | "polite" | "off";
 

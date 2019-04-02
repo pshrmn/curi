@@ -1,3 +1,7 @@
+## Next
+
+* Import common Curi types from `@curi/types`.
+
 ## 1.0.1
 
 * Add `sideEffects: false` hint for Webpack.

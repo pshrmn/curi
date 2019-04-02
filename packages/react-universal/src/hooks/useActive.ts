@@ -1,7 +1,7 @@
 import useCuri from "./useCuri";
 
 import { SessionLocation } from "@hickory/root";
-import { Params } from "@curi/router";
+import { Params } from "@curi/types";
 
 export type LocationCheck = (l: SessionLocation) => boolean;
 
@@ -19,7 +19,7 @@ export default function useActive(props: ActiveHookProps) {
       throw new Error(
         `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
 
-import curi from "@curi/router";
+import { create_router } from "@curi/router";
 import active from "@curi/route-active";
 
 const router = create_router(history, routes, {

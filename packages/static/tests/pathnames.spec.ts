@@ -1,7 +1,6 @@
 import "jest";
 import { prepare_routes } from "@curi/router";
 
-// @ts-ignore (resolved by jest)
 import { pathnames } from "@curi/static";
 
 describe("pathnames()", () => {

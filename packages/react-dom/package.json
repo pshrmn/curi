@@ -18,7 +18,10 @@
     "build": "rollup -c",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
-    "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
+    "test": "npm run test:source && npm run test:cjs && npm run test:umd",
+    "test:cjs": "TEST_ENV=cjs jest",
+    "test:source": "jest",
+    "test:umd": "TEST_ENV=umd jest"
   },
   "repository": {
     "type": "git",
@@ -38,7 +41,7 @@
   },
   "dependencies": {
     "@curi/react-universal": "file:../react-universal",
-    "@curi/router": "file:../router",
+    "@curi/types": "file:../types",
     "@types/react": "^16.7.18"
   }
 }

@@ -1,8 +1,7 @@
-import { CompiledRoute } from "../types/route";
-import { Interaction } from "../types/interaction";
+import { PreparedRoute, Interaction } from "@curi/types";
 
 export default function register_routes(
-  routes: Array<CompiledRoute>,
+  routes: Array<PreparedRoute>,
   interaction: Interaction,
   parent_data?: any
 ) {

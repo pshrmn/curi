@@ -1,4 +1,4 @@
-import { Route, Response, Interaction, Params } from "@curi/router";
+import { Route, Response, Interaction, Params } from "@curi/types";
 import { SessionLocation } from "@hickory/root";
 
 function acceptable_route_name(

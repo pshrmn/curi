@@ -1,7 +1,6 @@
 import "jest";
-import { Emitted } from "@curi/router";
+import { Emitted } from "@curi/types";
 
-// resolved by jest
 import createAriaLiveSideEffect from "@curi/side-effect-aria-live";
 
 describe("createAriaLiveSideEffect", () => {

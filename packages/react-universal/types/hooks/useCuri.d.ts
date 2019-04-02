@@ -1,2 +1,2 @@
-import { Emitted } from "@curi/router";
+import { Emitted } from "@curi/types";
 export default function useCuri(): Emitted;

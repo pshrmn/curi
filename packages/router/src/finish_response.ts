@@ -1,12 +1,13 @@
 import { History } from "@hickory/root";
-import { Interactions } from "./types/interaction";
 import {
+  Interactions,
   Response,
   RedirectLocation,
-  SettableResponseProperties
-} from "./types/response";
-import { ResolveResults } from "./types/route";
-import { Match } from "./types/match";
+  SettableResponseProperties,
+  ResolveResults
+} from "@curi/types";
+
+import { RealMatch } from "./match_location";
 
 function create_redirect(
   redirect_to: any,
@@ -27,7 +28,7 @@ function create_redirect(
 }
 
 export default function finish_response(
-  route_match: Match,
+  route_match: RealMatch,
   interactions: Interactions,
   resolved_results: ResolveResults | null,
   history: History,

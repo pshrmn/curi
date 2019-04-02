@@ -6,7 +6,7 @@ import {
 } from "@curi/react-universal";
 import { can_navigate } from "./utils";
 
-import { RouteLocation } from "@curi/router";
+import { RouteLocation } from "@curi/types";
 import { NavigatingChildren } from "@curi/react-universal";
 
 export interface BaseLinkProps extends RouteLocation {

@@ -1,7 +1,7 @@
 import React from "react";
 import useCuri from "./useCuri";
 
-import { CancelActiveNavigation } from "@curi/router";
+import { CancelActiveNavigation } from "@curi/types";
 
 export default function useNavigating() {
   const { router } = useCuri();

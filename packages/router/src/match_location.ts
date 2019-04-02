@@ -1,13 +1,34 @@
 import { with_leading_slash } from "./utils/path";
-import parse_params from "./utils/parse_params";
 
 import { SessionLocation } from "@hickory/root";
-import { CompiledRoute } from "./types/route";
-import { PossibleMatch, Match, MatchingRoute } from "./types/match";
-import { Params, RawParams } from "./types/response";
+import {
+  PreparedRoute,
+  ParamParsers,
+  Params,
+  IntrinsicResponse
+} from "@curi/types";
+
+interface MatchingRoute {
+  route: PreparedRoute;
+  params: Params;
+}
+
+interface MissMatch {
+  route: undefined;
+  match: undefined;
+}
+
+type RawParams = { [key: string]: string };
+
+export interface RealMatch {
+  route: PreparedRoute;
+  match: IntrinsicResponse;
+}
+
+type PossibleMatch = RealMatch | MissMatch;
 
 function match_route(
-  route: CompiledRoute,
+  route: PreparedRoute,
   pathname: string
 ): Array<MatchingRoute> {
   const test_path: string = pathname;
@@ -59,7 +80,7 @@ function match_route(
 function create_match(
   route_matches: Array<MatchingRoute>,
   location: SessionLocation
-): Match {
+): RealMatch {
   let partials: Array<string> = [];
   let params: Params = {};
 
@@ -89,9 +110,32 @@ function create_match(
   };
 }
 
-export default function match_location(
+function parse_params(params: RawParams, fns?: ParamParsers): Params {
+  if (!fns) {
+    return params;
+  }
+  const output: Params = {};
+  // For each param, attempt to parse it. However, if that
+  // fails, fall back to the string value.
+  for (let key in params) {
+    let value = params[key];
+    let fn = fns[key];
+    if (fn) {
+      try {
+        value = fn(value);
+      } catch (e) {
+        console.error(e);
+        value = params[key];
+      }
+    }
+    output[key] = value;
+  }
+  return output;
+}
+
+export function match_location(
   location: SessionLocation,
-  routes: Array<CompiledRoute>
+  routes: Array<PreparedRoute>
 ): PossibleMatch {
   // determine which route(s) match, then use the exact match
   // as the matched route and the rest as partial routes
@@ -108,4 +152,8 @@ export default function match_location(
     route: undefined,
     match: undefined
   };
+}
+
+export function is_real_match(match: PossibleMatch): match is RealMatch {
+  return match.route !== undefined;
 }

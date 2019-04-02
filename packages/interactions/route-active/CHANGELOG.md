@@ -1,3 +1,7 @@
+## Next
+
+* Import common Curi types from `@curi/types`.
+
 ## 2.0.0-beta.0
 
 * Rename `locationCheck` option to `location_check`

@@ -1,5 +1,5 @@
 import React from "react";
-import { Emitted } from "@curi/router";
+import { Emitted } from "@curi/types";
 
 const key: Emitted = {
   router: null,

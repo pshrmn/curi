@@ -1,6 +1,5 @@
 import "jest";
 
-// @ts-ignore (resolved by jest)
 import { once } from "@curi/helpers";
 
 describe("once()", () => {

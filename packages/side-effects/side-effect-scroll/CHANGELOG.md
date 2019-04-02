@@ -1,3 +1,7 @@
+## Next
+
+* Import common Curi types from `@curi/types`.
+
 ## 2.0.0-alpha.0
 
 * Use `pop` (Hickory v2), not `POP`.
