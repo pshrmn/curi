@@ -35,6 +35,10 @@ describe("public route properties", () => {
         {
           name: "Test",
           path: "test"
+        },
+        {
+          name: "Not Found",
+          path: "(.*)"
         }
       ]);
       const router = create_router(in_memory, routes, {
@@ -54,6 +58,10 @@ describe("public route properties", () => {
         {
           name: "Test",
           path: "test"
+        },
+        {
+          name: "Not Found",
+          path: "(.*)"
         }
       ]);
       const router = create_router(in_memory, routes, {
@@ -71,6 +79,10 @@ describe("public route properties", () => {
         {
           name: "Test",
           path: ":one/:two/:three"
+        },
+        {
+          name: "Not Found",
+          path: "(.*)"
         }
       ]);
       const router = create_router(in_memory, routes, {
@@ -88,6 +100,10 @@ describe("public route properties", () => {
         {
           name: "Test",
           path: "one/two/three"
+        },
+        {
+          name: "Not Found",
+          path: "(.*)"
         }
       ]);
       const router = create_router(in_memory, routes, {
@@ -135,6 +151,10 @@ describe("public route properties", () => {
         {
           name: "Test",
           path: "test"
+        },
+        {
+          name: "Not Found",
+          path: "(.*)"
         }
       ]);
       const router = create_router(in_memory, routes, {
@@ -160,6 +180,10 @@ describe("public route properties", () => {
           name: "Test",
           path: "test",
           extra
+        },
+        {
+          name: "Not Found",
+          path: "(.*)"
         }
       ]);
       const router = create_router(in_memory, routes, {

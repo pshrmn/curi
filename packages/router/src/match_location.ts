@@ -119,14 +119,12 @@ function parse_params(params: RawParams, fns?: ParamParsers): Params {
   // fails, fall back to the string value.
   for (let key in params) {
     let value = params[key];
-    let fn = fns[key];
-    if (fn) {
-      try {
-        value = fn(value);
-      } catch (e) {
-        console.error(e);
-        value = params[key];
-      }
+    let fn = fns[key] || decodeURIComponent;
+    try {
+      value = fn(value);
+    } catch (e) {
+      console.error(e);
+      value = params[key];
     }
     output[key] = value;
   }
