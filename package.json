@@ -5,7 +5,6 @@
     "postinstall": "lerna run prepare --concurrency=2",
     "precommit": "pretty-quick --staged",
     "build": "lerna run build --scope=@curi/*",
-    "test": "lerna run test",
     "test:source": "lerna run test:source --concurrency=2",
     "test:cjs": "lerna run test:cjs --concurrency=2",
     "test:umd": "lerna run test:umd --concurrency=2",
