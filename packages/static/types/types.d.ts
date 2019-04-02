@@ -1,5 +1,4 @@
-import { PreparedRoutes, Params, Emitted } from "@curi/types";
-import { RouterOptions } from "@curi/router";
+import { PreparedRoutes, Params, Emitted, RouterOptions } from "@curi/types";
 import { HistoryOptions } from "@hickory/in-memory";
 export interface PageDescriptor {
     name: string;
