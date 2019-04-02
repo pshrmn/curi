@@ -1,6 +1,5 @@
 import "jest";
 
-// @ts-ignore (resolved by jest)
 import { prepare_routes } from "@curi/router";
 
 describe("prepare_routes()", () => {

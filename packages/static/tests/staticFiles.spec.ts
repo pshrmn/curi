@@ -6,7 +6,7 @@ import * as qs from "qs";
 
 import { static_files } from "@curi/static";
 
-import { Emitted } from "@curi/router";
+import { Emitted } from "@curi/types";
 
 const FIXTURES_ROOT = join(__dirname, "fixtures");
 
