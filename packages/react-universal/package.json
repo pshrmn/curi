@@ -18,7 +18,7 @@
     "build": "rollup -c",
     "coverage": "jest --coverage",
     "prepare": "npm run build",
-    "test": "jest && TEST_ENV=cjs jest && TEST_ENV=umd jest"
+    "test": "jest -w=2 && TEST_ENV=cjs jest -w=2 && TEST_ENV=umd jest -w=2"
   },
   "repository": {
     "type": "git",

@@ -14,7 +14,7 @@
     "prebuild": "rimraf dist && rimraf types",
     "build": "rollup -c",
     "prepare": "npm run build",
-    "test": "jest && TEST_ENV=cjs jest"
+    "test": "jest -w=2 && TEST_ENV=cjs jest -w=2"
   },
   "repository": {
     "type": "git",
