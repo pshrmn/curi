@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.30
 
 * Import common Curi types from `@curi/types`.
 

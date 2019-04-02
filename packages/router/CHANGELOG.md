@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.5
 
 * A route param is parsed using `decodeURIComponent` if no `param` function exists for it.
 * Move common types from `@curi/router` to `@curi/types`.
