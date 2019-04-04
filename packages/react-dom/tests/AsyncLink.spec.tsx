@@ -1,11 +1,15 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Simulate } from "react-dom/test-utils";
+import { act, Simulate } from "react-dom/test-utils";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
 import { create_router_component, AsyncLink } from "@curi/react-dom";
+
+function sleep(period) {
+  return new Promise(resolve => setTimeout(resolve, period));
+}
 
 describe("<AsyncLink>", () => {
   let node;
@@ -363,14 +367,18 @@ describe("<AsyncLink>", () => {
         expect(slowLink.textContent).toBe("Slow false");
       });
 
-      it("children(false) when navigation is finished", done => {
+      it("children(false) when navigation is finished", async () => {
         const routes = prepare_routes([
           { name: "Test", path: "test" },
           {
             name: "Loader",
             path: "load",
             resolve() {
-              return Promise.resolve("done");
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("done");
+                }, 25);
+              });
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -401,16 +409,23 @@ describe("<AsyncLink>", () => {
           shiftKey: null,
           button: 0
         };
-        Simulate.click(a, left_click_event);
+
+        await act(async () => {
+          Simulate.click(a, left_click_event);
+        });
+
+        // text is changed to true after clicking the link
         expect(a.textContent).toBe("true");
-        router.once(
-          ({ response }) => {
-            expect(response.name).toBe("Loader");
-            expect(a.textContent).toBe("false");
-            done();
-          },
-          { initial: false }
-        );
+
+        // wait for the navigation to finish
+        await act(async () => {
+          await sleep(50);
+        });
+
+        const { response } = router.current();
+        expect(response.name).toBe("Loader");
+        // text has reverted to false
+        expect(a.textContent).toBe("false");
       });
 
       it("does not try to update state if component has unmounted", done => {

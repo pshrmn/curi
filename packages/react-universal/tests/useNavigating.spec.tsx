@@ -7,6 +7,10 @@ import { create_router, prepare_routes } from "@curi/router";
 
 import { create_router_component, useNavigating } from "@curi/react-universal";
 
+function sleep(period) {
+  return new Promise(resolve => setTimeout(resolve, period));
+}
+
 describe("useNavigating", () => {
   let node;
   const routes = prepare_routes([
@@ -126,7 +130,7 @@ describe("useNavigating", () => {
         expect(typeof children.mock.calls[1][0]).toBe("function");
       });
 
-      it("is undefined once navigation finishes", async done => {
+      it("is undefined once navigation finishes", async () => {
         const router = create_router(in_memory, routes);
         const Router = create_router_component(router);
         const children = jest.fn((arg: any) => null);
@@ -135,7 +139,7 @@ describe("useNavigating", () => {
           return children(result);
         }
 
-        act(() => {
+        await act(async () => {
           ReactDOM.render(
             <Router>
               <Nav />
@@ -147,24 +151,20 @@ describe("useNavigating", () => {
         const { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
 
-        act(() => {
+        await act(async () => {
           router.navigate({ name: "Fast" });
+          await sleep(100);
         });
 
-        router.once(
-          ({ response }) => {
-            expect(response.name).toBe("Fast");
-            expect(children.mock.calls[2][0]).toBeUndefined();
-            done();
-          },
-          { initial: false }
-        );
+        const { response: afterResponse } = router.current();
+        expect(afterResponse.name).toBe("Fast");
+        expect(children.mock.calls[2][0]).toBeUndefined();
       });
     });
   });
 
   describe("calling the cancel function", () => {
-    it("cancels the navigation", async done => {
+    it("cancels the navigation, which triggers a call of the children function", async () => {
       const router = create_router(in_memory, routes);
       const Router = create_router_component(router);
       let cancelFn;
@@ -200,14 +200,14 @@ describe("useNavigating", () => {
 
       expect(children.mock.calls[1][0]).toBeDefined();
 
-      cancelFn();
-      setTimeout(() => {
-        expect(children.mock.calls[2][0]).toBeUndefined();
-        done();
-      }, 25);
+      await act(async () => {
+        cancelFn();
+      });
+
+      expect(children.mock.calls[2][0]).toBeUndefined();
     });
 
-    it("does nothing if calling function after navigation finishes", async done => {
+    it("does nothing if calling function after navigation finishes", async () => {
       const router = create_router(in_memory, routes);
       const Router = create_router_component(router);
       let cancelFn;
@@ -235,25 +235,23 @@ describe("useNavigating", () => {
       const { response: beforeResponse } = router.current();
       expect(beforeResponse.name).toBe("Home");
 
-      act(() => {
+      await act(async () => {
         router.navigate({ name: "Fast" });
+        // sleep while we wait for the Fast route to render
+        await sleep(100);
       });
 
-      router.once(
-        ({ response }) => {
-          expect(response.name).toBe("Fast");
-          const childrenCalls = children.mock.calls.length;
+      const { response: afterResponse } = router.current();
 
-          cancelFn();
+      expect(afterResponse.name).toBe("Fast");
+      const childrenCalls = children.mock.calls.length;
 
-          setTimeout(() => {
-            // children is not called against after cancelling
-            expect(children.mock.calls.length).toBe(childrenCalls);
-            done();
-          }, 25);
-        },
-        { initial: false }
-      );
+      await act(async () => {
+        cancelFn();
+      });
+
+      // children is not called against after cancelling
+      expect(children.mock.calls.length).toBe(childrenCalls);
     });
   });
 });
