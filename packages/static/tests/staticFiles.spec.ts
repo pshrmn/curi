@@ -280,8 +280,8 @@ describe("static_files()", () => {
     });
   });
 
-  describe("get_router_options()", () => {
-    it("calls get_router_options function to get options for a router", async () => {
+  describe("router.options()", () => {
+    it("calls options function to get options for a router", async () => {
       const fixtures = join(FIXTURES_ROOT, "routerOptions");
       await remove(fixtures);
       await ensureDir(fixtures);
@@ -296,12 +296,12 @@ describe("static_files()", () => {
         }
       ]);
       const pages = [{ name: "Home" }];
-      const get_router_options = jest.fn();
+      const options = jest.fn();
       await static_files({
         pages,
         router: {
           routes,
-          get_router_options
+          options
         },
         output: {
           render: DEFAULT_RENDER,
@@ -310,7 +310,7 @@ describe("static_files()", () => {
         }
       });
       // once to static pathnames and again for the Home markup
-      expect(get_router_options.mock.calls.length).toBe(2);
+      expect(options.mock.calls.length).toBe(2);
     });
   });
 
@@ -378,12 +378,12 @@ describe("static_files()", () => {
           }
         ]);
         const pages = [{ name: "Home" }];
-        const get_router_options = jest.fn();
+        const options = jest.fn();
         const results = await static_files({
           pages,
           router: {
             routes,
-            get_router_options
+            options
           },
           output: {
             render: () => {

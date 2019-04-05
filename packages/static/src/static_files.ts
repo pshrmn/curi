@@ -9,7 +9,7 @@ import { LocationOptions } from "@hickory/in-memory";
 import { Emitted, RouterOptions } from "@curi/types";
 import { StaticConfiguration, Result } from "./types";
 
-function default_get_router_options(): RouterOptions {
+function default_router_options(): RouterOptions {
   return {};
 }
 
@@ -18,7 +18,7 @@ export default async function static_files(
 ): Promise<Array<Result>> {
   const {
     pages,
-    router: { routes, get_router_options = default_get_router_options },
+    router: { routes, options: router_options = default_router_options },
     output: { render, insert, dir, redirects = false },
     history: history_options
   } = config;
@@ -28,7 +28,7 @@ export default async function static_files(
   const input_output = pathnames({
     routes,
     pages,
-    router_options: get_router_options()
+    options: router_options()
   }).map(pathname => {
     return {
       pathname,
@@ -46,7 +46,7 @@ export default async function static_files(
     });
   }
 
-  const ServerHistory = create_server_history(history_options);
+  const history = create_server_history(history_options);
 
   return Promise.all<Result>(
     input_output.map(({ pathname, output_path }) => {
@@ -55,8 +55,8 @@ export default async function static_files(
           // create a new router for each so we don't run into any issues
           // with overlapping requests
 
-          const router = create_router<LocationOptions>(ServerHistory, routes, {
-            ...get_router_options(),
+          const router = create_router<LocationOptions>(history, routes, {
+            ...router_options(),
             // need to emit redirects or will get stuck waiting forever
             emit_redirects: true,
             history: {

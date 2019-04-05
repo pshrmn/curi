@@ -17,7 +17,7 @@ export interface StaticOutput {
 }
 export interface StaticRouter {
     routes: PreparedRoutes;
-    get_router_options?: GetRouterOptions;
+    options?: GetRouterOptions;
 }
 export interface StaticConfiguration {
     pages: Array<PageDescriptor>;
@@ -34,5 +34,5 @@ export interface Result {
 export interface PathnamesConfiguration {
     routes: PreparedRoutes;
     pages: Array<PageDescriptor>;
-    router_options?: RouterOptions;
+    options?: RouterOptions;
 }

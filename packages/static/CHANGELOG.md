@@ -1,3 +1,7 @@
+## Next
+
+* Rename `get_router_options` to `options`.
+
 ## 1.0.0-beta.4
 
 * Import common Curi types from `@curi/types`.
