@@ -42,13 +42,6 @@ describe("route matching/response generation", () => {
     });
 
     describe("no matching routes", () => {
-      const realWarn = console.warn;
-      const fakeWarn = (console.warn = jest.fn());
-
-      afterAll(() => {
-        console.error = realWarn;
-      });
-
       it("no response is emitted", () => {
         const routes = prepare_routes([]);
         const router = create_router(in_memory, routes, {
@@ -63,6 +56,9 @@ describe("route matching/response generation", () => {
       });
 
       it("warns that no route matched", () => {
+        const realWarn = console.warn;
+        const fakeWarn = (console.warn = jest.fn());
+
         const routes = prepare_routes([]);
         const router = create_router(in_memory, routes, {
           history: {
@@ -75,6 +71,7 @@ describe("route matching/response generation", () => {
         expect(fakeWarn.mock.calls[0][0]).toBe(
           `The current location (/test) has no matching route, so a response could not be emitted. A catch-all route ({ path: "(.*)" }) can be used to match locations with no other matching route.`
         );
+        console.warn = realWarn;
       });
     });
 
@@ -584,34 +581,20 @@ describe("route matching/response generation", () => {
             });
           });
 
-          it("falls back to string value if param parser throws", () => {
-            const originalError = console.error;
-            const errorMock = jest.fn();
-            console.error = errorMock;
-
+          it("throws if param parser throws", () => {
             const routes = prepare_routes([
               {
                 name: "number",
-                path: ":num",
-                params: {
-                  num: n => {
-                    throw new Error("This will fail.");
-                  }
-                }
+                path: "(.*)"
               }
             ]);
-            const router = create_router(in_memory, routes, {
-              history: {
-                locations: ["/123"]
-              }
-            });
-            const { response } = router.current();
-            expect(response.params).toEqual({
-              num: "123"
-            });
-            expect(errorMock.mock.calls.length).toBe(1);
-            expect(errorMock.mock.calls[0][0].message).toBe("This will fail.");
-            console.error = originalError;
+            expect(() => {
+              const router = create_router(in_memory, routes, {
+                history: {
+                  locations: ["/%"]
+                }
+              });
+            }).toThrow();
           });
         });
       });
@@ -650,7 +633,7 @@ describe("route matching/response generation", () => {
         });
       });
 
-      describe("redirect_to", () => {
+      describe("redirect", () => {
         it("contains the expected properties", () => {
           const routes = prepare_routes([
             {
@@ -658,7 +641,7 @@ describe("route matching/response generation", () => {
               path: "",
               response: () => {
                 return {
-                  redirect_to: {
+                  redirect: {
                     name: "B Route",
                     params: { id: "bee" },
                     hash: "bay",
@@ -677,7 +660,7 @@ describe("route matching/response generation", () => {
           let firstCall = true;
           const logger = ({ response }) => {
             if (firstCall) {
-              expect(response.redirect_to).toMatchObject({
+              expect(response.redirect).toMatchObject({
                 pathname: "/b/bee",
                 hash: "bay",
                 query: "type=honey",
@@ -695,6 +678,37 @@ describe("route matching/response generation", () => {
               locations: ["/"]
             }
           });
+        });
+      });
+
+      describe("[invalid properties]", () => {
+        it("warns when returned object has an invalid property", () => {
+          const realWarn = console.warn;
+          const fakeWarn = (console.warn = jest.fn());
+          const routes = prepare_routes([
+            {
+              name: "Contact",
+              path: "contact",
+              // @ts-ignore
+              response() {
+                return {
+                  bad: "property"
+                };
+              }
+            }
+          ]);
+          expect(fakeWarn.mock.calls.length).toBe(0);
+          const router = create_router(in_memory, routes, {
+            history: {
+              locations: ["/contact"]
+            }
+          });
+          const { response } = router.current();
+          expect(fakeWarn.mock.calls.length).toBe(1);
+          // @ts-ignore
+          expect(response.bad).toBeUndefined();
+
+          console.warn = realWarn;
         });
       });
     });

@@ -1,3 +1,9 @@
+## Next
+
+* Throw if param parsing fails.
+* Warn if `route.response` includes an invalid property.
+* Rename `redirect_to` property returned by a `response` function to `redirect`.
+
 ## 2.0.0-beta.5
 
 * A route param is parsed using `decodeURIComponent` if no `param` function exists for it.

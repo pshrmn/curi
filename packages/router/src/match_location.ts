@@ -31,21 +31,20 @@ function match_route(
   route: PreparedRoute,
   pathname: string
 ): Array<MatchingRoute> {
-  const test_path: string = pathname;
-  const reg_exp_match: RegExpMatchArray | null = route.path_matching.re.exec(
-    test_path
-  );
+  const reg_exp_match = route.path_matching.re.exec(pathname);
 
   if (!reg_exp_match) {
     return [];
   }
 
-  const matched_segment = reg_exp_match[0];
-  const parsed = reg_exp_match.slice(1);
-  const params: RawParams = {};
-  route.path_matching.keys.forEach((key, index) => {
-    params[key.name] = parsed[index];
-  });
+  const [matched_segment, ...parsed] = reg_exp_match;
+  const params = route.path_matching.keys.reduce(
+    (acc, key, index) => {
+      acc[key.name] = parsed[index];
+      return acc;
+    },
+    {} as RawParams
+  );
 
   let matches: Array<MatchingRoute> = [{ route, params }];
 
@@ -55,13 +54,12 @@ function match_route(
   }
 
   // children only need to match against unmatched segments
-  const remaining_segments = test_path.slice(matched_segment.length);
+  const remaining_segments = pathname.slice(matched_segment.length);
   if (remaining_segments !== "") {
-    const children_length = route.children.length;
     // a parent that ends with a slash will have stripped the leading
     // slash from remaining segments, so re-add it
     const full_segments = with_leading_slash(remaining_segments);
-    for (let i = 0; i < children_length; i++) {
+    for (let i = 0, length = route.children.length; i < length; i++) {
       const matched = match_route(route.children[i], full_segments);
       if (matched.length) {
         matches = matches.concat(matched);
@@ -110,23 +108,11 @@ function create_match(
   };
 }
 
-function parse_params(params: RawParams, fns?: ParamParsers): Params {
-  if (!fns) {
-    return params;
-  }
+function parse_params(params: RawParams, fns: ParamParsers = {}): Params {
   const output: Params = {};
-  // For each param, attempt to parse it. However, if that
-  // fails, fall back to the string value.
   for (let key in params) {
-    let value = params[key];
     let fn = fns[key] || decodeURIComponent;
-    try {
-      value = fn(value);
-    } catch (e) {
-      console.error(e);
-      value = params[key];
-    }
-    output[key] = value;
+    output[key] = fn(params[key]);
   }
   return output;
 }

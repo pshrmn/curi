@@ -1,3 +1,3 @@
-import { ResolveResults } from "@curi/types";
-import { RealMatch } from "./match_location";
-export default function resolve_route(match: RealMatch, global: any): Promise<ResolveResults>;
+import { Route, ResolveResults, AsyncRoute, IntrinsicResponse } from "@curi/types";
+export declare function resolve_route(route: AsyncRoute, match: IntrinsicResponse, global: any): Promise<ResolveResults>;
+export declare function is_async_route(route: Route): route is AsyncRoute;

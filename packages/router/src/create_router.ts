@@ -2,7 +2,7 @@ import register_routes from "./utils/register_routes";
 import pathname_interaction from "./interactions/pathname";
 import finish_response from "./finish_response";
 import { match_location, is_real_match } from "./match_location";
-import resolve_matched_route from "./resolve_matched_route";
+import { resolve_route, is_async_route } from "./resolve_matched_route";
 
 import {
   HistoryConstructor,
@@ -27,9 +27,10 @@ import {
   RemoveCancellable,
   CancelNavigateCallbacks,
   ResolveResults,
-  RouterOptions
+  RouterOptions,
+  PreparedRoute,
+  IntrinsicResponse
 } from "@curi/types";
-import { RealMatch } from "./match_location";
 
 export default function create_router<HOpts = HistoryOptions>(
   history_constructor: HistoryConstructor<HOpts>,
@@ -44,7 +45,54 @@ export default function create_router<HOpts = HistoryOptions>(
     history: history_options = <HOpts>{}
   } = options;
 
-  const history = history_constructor(navigation_handler, history_options);
+  const history = history_constructor((pending_nav: PendingNavigation) => {
+    let previous: Response | null = refreshing
+      ? most_recent.navigation
+        ? most_recent.navigation.previous
+        : null
+      : most_recent.response;
+    refreshing = false;
+    const navigation: Navigation = {
+      action: pending_nav.action,
+      previous
+    };
+
+    const matched = match_location(pending_nav.location, routes);
+    // if no routes match, do nothing
+    if (!is_real_match(matched)) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          `The current location (${
+            pending_nav.location.pathname
+          }) has no matching route, ` +
+            'so a response could not be emitted. A catch-all route ({ path: "(.*)" }) ' +
+            "can be used to match locations with no other matching route."
+        );
+      }
+      pending_nav.finish();
+      finish_and_reset_nav_callbacks();
+      return;
+    }
+    const { route, match } = matched;
+    const public_route = route.public;
+    if (!is_async_route(public_route)) {
+      finalize_response_and_emit(route, match, pending_nav, navigation, null);
+    } else {
+      announe_async_nav();
+      resolve_route(public_route, match, external).then(resolved => {
+        if (pending_nav.cancelled) {
+          return;
+        }
+        finalize_response_and_emit(
+          route,
+          match,
+          pending_nav,
+          navigation,
+          resolved
+        );
+      });
+    }
+  }, history_options);
 
   // the last finished response & navigation
   const most_recent: CurrentResponse = {
@@ -75,71 +123,31 @@ export default function create_router<HOpts = HistoryOptions>(
     }
   }
 
-  /* history observer */
-
-  function navigation_handler(pending_nav: PendingNavigation): void {
-    let previous: Response | null = refreshing
-      ? most_recent.navigation
-        ? most_recent.navigation.previous
-        : null
-      : most_recent.response;
-    refreshing = false;
-    const navigation: Navigation = {
-      action: pending_nav.action,
-      previous
-    };
-
-    const match = match_location(pending_nav.location, routes);
-    // if no routes match, do nothing
-    if (!is_real_match(match)) {
-      if (process.env.NODE_ENV !== "production") {
-        console.warn(
-          `The current location (${
-            pending_nav.location.pathname
-          }) has no matching route, ` +
-            'so a response could not be emitted. A catch-all route ({ path: "(.*)" }) ' +
-            "can be used to match locations with no other matching route."
-        );
-      }
-      pending_nav.finish();
-      finish_and_reset_nav_callbacks();
-      return;
-    }
-
-    if (match.route.sync) {
-      finalize_response_and_emit(match, pending_nav, navigation, null);
-    } else {
-      announe_async_nav();
-      resolve_matched_route(match, external).then(resolved => {
-        if (pending_nav.cancelled) {
-          return;
-        }
-        finalize_response_and_emit(match, pending_nav, navigation, resolved);
-      });
-    }
-  }
-
   function finalize_response_and_emit(
-    match: RealMatch,
+    route: PreparedRoute,
+    match: IntrinsicResponse,
     pending: PendingNavigation,
     navigation: Navigation,
     resolved: ResolveResults | null
   ) {
     async_nav_complete();
     pending.finish();
-    const response = finish_response(
-      match,
-      route_interactions,
-      resolved,
-      history,
-      external
-    );
+    const response = route.response
+      ? finish_response(
+          route.response,
+          match,
+          route_interactions,
+          resolved,
+          history,
+          external
+        )
+      : match;
     finish_and_reset_nav_callbacks();
     emit_immediate(response, navigation);
   }
 
   function emit_immediate(response: Response, navigation: Navigation) {
-    if (!response.redirect_to || emit_redirects) {
+    if (!response.redirect || emit_redirects) {
       most_recent.response = response;
       most_recent.navigation = navigation;
 
@@ -147,8 +155,8 @@ export default function create_router<HOpts = HistoryOptions>(
       call_one_timers_and_side_effects({ response, navigation, router });
     }
 
-    if (response.redirect_to !== undefined) {
-      history.navigate(response.redirect_to, "replace");
+    if (response.redirect !== undefined) {
+      history.navigate(response.redirect, "replace");
     }
   }
 

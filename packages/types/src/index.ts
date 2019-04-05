@@ -128,7 +128,7 @@ export interface Response extends IntrinsicResponse {
   body?: any;
   data?: any;
   title?: string;
-  redirect_to?: RedirectLocation;
+  redirect?: RedirectLocation;
 }
 
 // the public prepared route interface
@@ -189,7 +189,7 @@ export interface SettableResponseProperties {
   body?: any;
   data?: any;
   title?: string;
-  redirect_to?: RedirectProps;
+  redirect?: RedirectProps;
 }
 
 export interface ResolveResults {

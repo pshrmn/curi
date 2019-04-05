@@ -60,8 +60,6 @@ const create_route = (
   // for optional initial params
   const re = PathToRegexp(with_leading_slash(path), keys, path_options);
 
-  const pathname = PathToRegexp.compile(full_path);
-
   return {
     public: {
       name: options.name,
@@ -69,7 +67,7 @@ const create_route = (
       keys: keys.map(key => key.name),
       resolve: options.resolve,
       extra: options.extra,
-      pathname
+      pathname: PathToRegexp.compile(full_path)
     },
     path_matching: {
       re,

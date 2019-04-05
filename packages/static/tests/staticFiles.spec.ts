@@ -127,7 +127,7 @@ describe("static_files()", () => {
           name: "Home",
           path: "",
           response() {
-            return { redirect_to: { name: "About" } };
+            return { redirect: { name: "About" } };
           }
         },
         {
@@ -172,7 +172,7 @@ describe("static_files()", () => {
           response() {
             return {
               body: "Home",
-              redirect_to: { name: "About" }
+              redirect: { name: "About" }
             };
           }
         },

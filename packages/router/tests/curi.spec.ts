@@ -209,7 +209,7 @@ describe("curi", () => {
               path: "",
               response: () => {
                 return {
-                  redirect_to: {
+                  redirect: {
                     name: "Other"
                   }
                 };
@@ -239,7 +239,7 @@ describe("curi", () => {
               path: "",
               response: () => {
                 return {
-                  redirect_to: {
+                  redirect: {
                     name: "Other"
                   }
                 };
@@ -1647,7 +1647,7 @@ describe("curi", () => {
     });
   });
 
-  describe("response.redirect_to", () => {
+  describe("response.redirect", () => {
     it("triggers a replace navigation AFTER emitting initial response", done => {
       const routes = prepare_routes([
         {
@@ -1656,7 +1656,7 @@ describe("curi", () => {
           response: () => {
             return {
               status: 301,
-              redirect_to: {
+              redirect: {
                 name: "B Route"
               }
             };

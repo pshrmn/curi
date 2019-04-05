@@ -68,7 +68,7 @@ export default async function static_files(
             (emitted: Emitted) => {
               try {
                 const { response } = emitted;
-                if (response.redirect_to && !redirects) {
+                if (response.redirect && !redirects) {
                   resolve({
                     pathname,
                     success: false,
