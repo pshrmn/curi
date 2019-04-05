@@ -7,7 +7,7 @@ export interface RouterProps {
   children: React.ReactNode;
 }
 
-export default function curi_provider(
+export default function create_router_component(
   router: CuriRouter
 ): React.FunctionComponent<RouterProps> {
   function initial_state() {

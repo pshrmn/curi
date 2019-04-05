@@ -6,17 +6,17 @@ import { CancelActiveNavigation } from "@curi/types";
 export default function useNavigating() {
   const { router } = useCuri();
   const [cancel, set_cancel] = React.useState(undefined);
-  const [removed, set_removed] = React.useState(false);
+  const removed = React.useRef(false);
 
   React.useEffect(() => {
     return () => {
-      set_removed(true);
+      removed.current = true;
     };
   }, []);
 
   React.useEffect(() => {
     return router.cancel((callback: CancelActiveNavigation) => {
-      if (!removed) {
+      if (!removed.current) {
         set_cancel(() => callback);
       }
     });
