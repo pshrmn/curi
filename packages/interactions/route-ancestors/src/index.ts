@@ -1,6 +1,6 @@
 import { Route, Interaction } from "@curi/types";
 
-export default function get_route_ancestors(): Interaction {
+export default function ancestors(): Interaction {
   let route_ancestors: { [key: string]: Array<string> } = {};
 
   function get(name: string, level: number): string;

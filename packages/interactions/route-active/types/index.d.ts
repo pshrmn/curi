@@ -6,4 +6,4 @@ export interface ActiveCheckOptions {
     partial?: boolean;
     components?: ValidateComponents;
 }
-export default function check_if_active(): Interaction;
+export default function active(): Interaction;

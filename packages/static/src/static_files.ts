@@ -6,19 +6,15 @@ import { create_server_history } from "@hickory/in-memory";
 import pathnames from "./pathnames";
 
 import { LocationOptions } from "@hickory/in-memory";
-import { Emitted, RouterOptions } from "@curi/types";
+import { Emitted } from "@curi/types";
 import { StaticConfiguration, Result } from "./types";
-
-function default_router_options(): RouterOptions {
-  return {};
-}
 
 export default async function static_files(
   config: StaticConfiguration
 ): Promise<Array<Result>> {
   const {
     pages,
-    router: { routes, options: router_options = default_router_options },
+    router: { routes, options: router_options = () => ({}) },
     output: { render, insert, dir, redirects = false },
     history: history_options
   } = config;
