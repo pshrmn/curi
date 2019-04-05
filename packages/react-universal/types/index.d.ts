@@ -1,5 +1,5 @@
 export { RouterProps } from "./create_router_component";
-export { ActiveHookProps, LocationCheck } from "./hooks/useActive";
+export { ActiveHookProps, ValidateComponents } from "./hooks/useActive";
 export { NavigatingChildren } from "./hooks/useNavigationHandler";
 import create_router_component from "./create_router_component";
 import { Curious } from "./Context";

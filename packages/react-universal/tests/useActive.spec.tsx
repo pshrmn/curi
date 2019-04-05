@@ -135,7 +135,7 @@ const router = create_router(history, routes, {
     });
   });
 
-  describe("locationCheck", () => {
+  describe("components", () => {
     it("is called with location if route is active", () => {
       const router = create_router(in_memory, routes, {
         route: [activeInteraction()],
@@ -143,13 +143,13 @@ const router = create_router(history, routes, {
           locations: ["/contact"]
         }
       });
-      const locCheck = jest.fn();
+      const components = jest.fn();
       let theLocation;
       const Router = create_router_component(router);
       function App() {
         const { response } = useCuri();
         theLocation = response.location;
-        const active = useActive({ name: "Contact", locationCheck: locCheck });
+        const active = useActive({ name: "Contact", components });
         return null;
       }
       ReactDOM.render(
@@ -158,8 +158,8 @@ const router = create_router(history, routes, {
         </Router>,
         node
       );
-      expect(locCheck.mock.calls.length).toBe(1);
-      expect(locCheck.mock.calls[0][0]).toBe(theLocation);
+      expect(components.mock.calls.length).toBe(1);
+      expect(components.mock.calls[0][0]).toBe(theLocation);
     });
 
     it("is not called if route is not active", () => {
@@ -169,13 +169,13 @@ const router = create_router(history, routes, {
           locations: ["/"]
         }
       });
-      const locCheck = jest.fn();
+      const components = jest.fn();
       let theResponse;
       const Router = create_router_component(router);
       function App() {
         const { response } = useCuri();
         theResponse = response;
-        const active = useActive({ name: "Contact", locationCheck: locCheck });
+        const active = useActive({ name: "Contact", components });
         return null;
       }
       ReactDOM.render(
@@ -184,7 +184,7 @@ const router = create_router(history, routes, {
         </Router>,
         node
       );
-      expect(locCheck.mock.calls.length).toBe(0);
+      expect(components.mock.calls.length).toBe(0);
     });
 
     it("returns true if route matches and response check returns true", () => {
@@ -199,7 +199,7 @@ const router = create_router(history, routes, {
         const active = useActive({
           name: "Contact",
           partial: true,
-          locationCheck: () => true
+          components: () => true
         });
         expect(active).toBe(true);
         return null;
@@ -224,7 +224,7 @@ const router = create_router(history, routes, {
         const active = useActive({
           name: "Contact",
           partial: true,
-          locationCheck: () => false
+          components: () => false
         });
         expect(active).toBe(false);
         return null;

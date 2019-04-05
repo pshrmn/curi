@@ -3,13 +3,13 @@ import useCuri from "./useCuri";
 import { SessionLocation } from "@hickory/root";
 import { Params } from "@curi/types";
 
-export type LocationCheck = (l: SessionLocation) => boolean;
+export type ValidateComponents = (l: SessionLocation) => boolean;
 
 export interface ActiveHookProps {
   name: string;
   params?: Params;
   partial?: boolean;
-  locationCheck?: LocationCheck;
+  components?: ValidateComponents;
 }
 
 export default function useActive(props: ActiveHookProps) {
@@ -31,6 +31,6 @@ const router = create_router(history, routes, {
   return router.route.active(props.name, response, {
     params: props.params,
     partial: props.partial,
-    location_check: props.locationCheck
+    components: props.components
   });
 }

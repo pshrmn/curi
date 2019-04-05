@@ -1,7 +1,7 @@
 import { Route, Response, Interaction, Params } from "@curi/types";
 import { SessionLocation } from "@hickory/root";
 
-function acceptable_route_name(
+function possible_name(
   name: string,
   response: Response,
   partial?: boolean
@@ -12,15 +12,15 @@ function acceptable_route_name(
   );
 }
 
-export type LocationCheck = (l: SessionLocation) => boolean;
+export type ValidateComponents = (l: SessionLocation) => boolean;
 
 export interface ActiveCheckOptions {
   params?: Params;
   partial?: boolean;
-  location_check?: LocationCheck;
+  components?: ValidateComponents;
 }
 
-export default function check_if_active(): Interaction {
+export default function active(): Interaction {
   let route_params: { [key: string]: Array<string> } = {};
 
   return {
@@ -43,20 +43,20 @@ export default function check_if_active(): Interaction {
     ): boolean => {
       if (
         route_params[name] == null ||
-        !acceptable_route_name(name, response, options.partial)
+        !possible_name(name, response, options.partial)
       ) {
         return false;
       }
-      const route_keys_to_check = route_params[name];
-      for (let r = 0, length = route_keys_to_check.length; r < length; r++) {
-        const key = route_keys_to_check[r];
+      const keys = route_params[name];
+      for (let r = 0, length = keys.length; r < length; r++) {
+        const key = keys[r];
         const param = options.params[key];
         if (!param || param !== response.params[key]) {
           return false;
         }
       }
-      if (options.location_check) {
-        return options.location_check(response.location);
+      if (options.components) {
+        return options.components(response.location);
       }
       return true;
     },

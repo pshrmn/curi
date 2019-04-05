@@ -215,8 +215,8 @@ describe("active route interaction", () => {
         });
       });
 
-      describe("location_check", () => {
-        it("returns true when route matches and location_check returns true", () => {
+      describe("components", () => {
+        it("returns true when route matches and components returns true", () => {
           const routes = prepare_routes([
             {
               name: "Home",
@@ -233,12 +233,12 @@ describe("active route interaction", () => {
 
           const { response } = router.current();
           const is_active = router.route.active("Home", response, {
-            location_check: location => location.hash === "test"
+            components: location => location.hash === "test"
           });
           expect(is_active).toBe(true);
         });
 
-        it("returns false when route matches but location_check returns false", () => {
+        it("returns false when route matches but components returns false", () => {
           const routes = prepare_routes([
             {
               name: "Home",
@@ -255,12 +255,12 @@ describe("active route interaction", () => {
 
           const { response } = router.current();
           const is_active = router.route.active("Home", response, {
-            location_check: location => false
+            components: location => false
           });
           expect(is_active).toBe(false);
         });
 
-        it("doesn't call location_check if route doesn't match", () => {
+        it("doesn't call components function if route doesn't match", () => {
           const routes = prepare_routes([
             {
               name: "Home",
@@ -274,13 +274,13 @@ describe("active route interaction", () => {
               locations: ["/not-a#test"]
             }
           });
-          const location_check = jest.fn(() => true);
+          const components = jest.fn(() => true);
           const { response } = router.current();
           const is_active = router.route.active("Home", response, {
-            location_check
+            components
           });
           expect(is_active).toBe(false);
-          expect(location_check.mock.calls.length).toBe(0);
+          expect(components.mock.calls.length).toBe(0);
         });
       });
     });

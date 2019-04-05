@@ -70,7 +70,7 @@ const isActive = router.route.active(
   {
     params: { id: 1 },
     partial: false,
-    locationCheck: location => location.hash === "comments"
+    components: location => location.hash === "comments"
   }
 );`}
           </CodeBlock>
@@ -86,22 +86,20 @@ const isActive = router.route.active(
           </HashSection>
 
           <HashSection
-            meta={{ title: "locationCheck", hash: "locationCheck" }}
+            meta={{ title: "components", hash: "components" }}
             tag="h5"
           >
             <p>
               A function that receives a location object and returns a boolean.
+              The default active check only compares the <IJS>pathname</IJS>{" "}
+              component of the location. This can be useful for checking the
+              other components (<IJS>hash</IJS> and <IJS>query</IJS>).
             </p>
 
             <p>
-              Route matching determines if the <IJS>pathname</IJS> for the
-              current response's location matches the provided route. If you
-              want to compare other location parts (<IJS>hash</IJS> or{" "}
-              <IJS>query</IJS>
-              ), you can use the <IJS>locationCheck</IJS> argument.
+              This function will only be called when the provided{" "}
+              <IJS>name</IJS> and <IJS>params</IJS> match.
             </p>
-
-            <p>This function will only be called when the route matches.</p>
           </HashSection>
         </HashSection>
       </HashSection>
