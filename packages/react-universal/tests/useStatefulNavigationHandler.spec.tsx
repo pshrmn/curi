@@ -1,11 +1,11 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Simulate } from "react-dom/test-utils";
+import { act, Simulate } from "react-dom/test-utils";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
-import wait from "./utils/wait";
+import { sleep } from "../../../utils/tests";
 
 import {
   create_router_component,
@@ -290,7 +290,9 @@ describe("useStatefulNavigationHandler", () => {
 
       expect(a.textContent).toBe("true");
 
-      await wait(100);
+      await act(async () => {
+        await sleep(100);
+      });
 
       expect(a.textContent).toBe("false");
     });

@@ -1,6 +1,7 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
+import { act } from "react-dom/test-utils";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
@@ -9,8 +10,6 @@ import {
   useNavigationFocus,
   useCuri
 } from "@curi/react-dom";
-
-jest.useFakeTimers();
 
 describe("useNavigationFocus", () => {
   let node;
@@ -40,14 +39,15 @@ describe("useNavigationFocus", () => {
         return <div id="test" tabIndex={-1} ref={ref} />;
       }
 
-      ReactDOM.render(
-        <Router>
-          <Focuser />
-        </Router>,
-        node
-      );
+      act(() => {
+        ReactDOM.render(
+          <Router>
+            <Focuser />
+          </Router>,
+          node
+        );
+      });
 
-      jest.runAllTimers();
       const wrapper = document.querySelector("#test");
       const focused = document.activeElement;
       expect(focused).toBe(wrapper);
@@ -73,14 +73,14 @@ describe("useNavigationFocus", () => {
         return <div id="test" tabIndex={-1} />;
       }
 
-      ReactDOM.render(
-        <Router>
-          <Focuser />
-        </Router>,
-        node
-      );
-
-      jest.runAllTimers();
+      act(() => {
+        ReactDOM.render(
+          <Router>
+            <Focuser />
+          </Router>,
+          node
+        );
+      });
 
       expect(document.activeElement).toBe(document.body);
       expect(fakeWarn.mock.calls[0][0]).toBe(
@@ -102,16 +102,16 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(
-        <Router>
-          <Focuser>
-            <input type="text" />
-          </Focuser>
-        </Router>,
-        node
-      );
-
-      jest.runAllTimers();
+      act(() => {
+        ReactDOM.render(
+          <Router>
+            <Focuser>
+              <input type="text" />
+            </Focuser>
+          </Router>,
+          node
+        );
+      });
 
       const wrapper = document.querySelector("#test");
       const initialFocus = document.activeElement;
@@ -123,16 +123,16 @@ describe("useNavigationFocus", () => {
       const stolenFocus = document.activeElement;
       expect(stolenFocus).toBe(input);
 
-      ReactDOM.render(
-        <Router>
-          <Focuser>
-            <input type="number" />
-          </Focuser>
-        </Router>,
-        node
-      );
-
-      jest.runAllTimers();
+      act(() => {
+        ReactDOM.render(
+          <Router>
+            <Focuser>
+              <input type="number" />
+            </Focuser>
+          </Router>,
+          node
+        );
+      });
 
       expect(stolenFocus).toBe(input);
     });
@@ -149,14 +149,14 @@ describe("useNavigationFocus", () => {
           );
         }
 
-        ReactDOM.render(
-          <Router>
-            <Focuser />
-          </Router>,
-          node
-        );
-
-        jest.runAllTimers();
+        act(() => {
+          ReactDOM.render(
+            <Router>
+              <Focuser />
+            </Router>,
+            node
+          );
+        });
 
         const input = document.querySelector("input");
         const wrapper = input.parentElement;
@@ -169,10 +169,10 @@ describe("useNavigationFocus", () => {
         const stolenFocus = document.activeElement;
         expect(input).toBe(stolenFocus);
 
-        // navigate and verify wrapper is re-focused
-        router.navigate({ name: "About" });
-
-        jest.runAllTimers();
+        act(() => {
+          // navigate and verify wrapper is re-focused
+          router.navigate({ name: "About" });
+        });
 
         const postNavFocus = document.activeElement;
 
@@ -218,20 +218,21 @@ describe("useNavigationFocus", () => {
           return <Body ref={ref} />;
         }
 
-        ReactDOM.render(
-          <Router>
-            <Focuser />
-          </Router>,
-          node
-        );
-        jest.runAllTimers();
+        act(() => {
+          ReactDOM.render(
+            <Router>
+              <Focuser />
+            </Router>,
+            node
+          );
+        });
 
         const homeDiv = node.querySelector("#home");
         expect(document.activeElement).toBe(homeDiv);
 
-        router.navigate({ name: "About" });
-
-        jest.runAllTimers();
+        act(() => {
+          router.navigate({ name: "About" });
+        });
 
         const aboutDiv = node.querySelector("#about");
         expect(document.activeElement).toBe(aboutDiv);
@@ -281,22 +282,22 @@ describe("useNavigationFocus", () => {
           return <Body innerRef={ref} />;
         }
 
-        ReactDOM.render(
-          <Router>
-            <Focuser />
-          </Router>,
-          node
-        );
-
-        jest.runAllTimers();
+        act(() => {
+          ReactDOM.render(
+            <Router>
+              <Focuser />
+            </Router>,
+            node
+          );
+        });
 
         const homeDiv = node.querySelector("#home");
         expect(document.activeElement).toBe(homeDiv);
         expect(fakeWarn.mock.calls.length).toBe(0);
 
-        router.navigate({ name: "About" });
-
-        jest.runAllTimers();
+        act(() => {
+          router.navigate({ name: "About" });
+        });
 
         expect(document.activeElement).toBe(document.body);
         expect(fakeWarn.mock.calls[0][0]).toBe(
@@ -320,14 +321,14 @@ describe("useNavigationFocus", () => {
           );
         }
 
-        ReactDOM.render(
-          <Router>
-            <Focuser />
-          </Router>,
-          node
-        );
-
-        jest.runAllTimers();
+        act(() => {
+          ReactDOM.render(
+            <Router>
+              <Focuser />
+            </Router>,
+            node
+          );
+        });
 
         const input = document.querySelector("input");
         const wrapper = input.parentElement;
@@ -340,10 +341,10 @@ describe("useNavigationFocus", () => {
         const stolenFocus = document.activeElement;
         expect(input).toBe(stolenFocus);
 
-        // navigate and verify wrapper is re-focused
-        router.navigate({ name: "About" });
-
-        jest.runAllTimers();
+        act(() => {
+          // navigate and verify wrapper is re-focused
+          router.navigate({ name: "About" });
+        });
 
         const postNavFocus = document.activeElement;
 
@@ -363,14 +364,14 @@ describe("useNavigationFocus", () => {
           );
         }
 
-        ReactDOM.render(
-          <Router>
-            <Focuser />
-          </Router>,
-          node
-        );
-
-        jest.runAllTimers();
+        act(() => {
+          ReactDOM.render(
+            <Router>
+              <Focuser />
+            </Router>,
+            node
+          );
+        });
 
         const input = document.querySelector("input");
         const wrapper = input.parentElement;
@@ -383,10 +384,10 @@ describe("useNavigationFocus", () => {
         const stolenFocus = document.activeElement;
         expect(input).toBe(stolenFocus);
 
-        // navigate and verify wrapper is re-focused
-        router.navigate({ name: "About" });
-
-        jest.runAllTimers();
+        act(() => {
+          // navigate and verify wrapper is re-focused
+          router.navigate({ name: "About" });
+        });
 
         const postNavFocus = document.activeElement;
 
@@ -419,14 +420,14 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(
-        <Router>
-          <Focuser />
-        </Router>,
-        node
-      );
-
-      jest.runAllTimers();
+      act(() => {
+        ReactDOM.render(
+          <Router>
+            <Focuser />
+          </Router>,
+          node
+        );
+      });
 
       expect(fakeFocus.mock.calls[0][0]).toMatchObject({
         preventScroll: false
@@ -444,14 +445,14 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(
-        <Router>
-          <Focuser />
-        </Router>,
-        node
-      );
-
-      jest.runAllTimers();
+      act(() => {
+        ReactDOM.render(
+          <Router>
+            <Focuser />
+          </Router>,
+          node
+        );
+      });
 
       expect(fakeFocus.mock.calls[0][0]).toMatchObject({ preventScroll: true });
     });
@@ -467,14 +468,14 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(
-        <Router>
-          <Focuser />
-        </Router>,
-        node
-      );
-
-      jest.runAllTimers();
+      act(() => {
+        ReactDOM.render(
+          <Router>
+            <Focuser />
+          </Router>,
+          node
+        );
+      });
 
       expect(fakeFocus.mock.calls[0][0]).toMatchObject({
         preventScroll: false
@@ -497,17 +498,17 @@ describe("useNavigationFocus", () => {
         );
       }
 
-      ReactDOM.render(
-        <Router>
-          <Focuser />
-        </Router>,
-        node
-      );
+      act(() => {
+        ReactDOM.render(
+          <Router>
+            <Focuser />
+          </Router>,
+          node
+        );
+      });
 
-      setTimeout(() => {
-        expect(fakeWarn.mock.calls.length).toBe(1);
-        console.warn = realWarn;
-      }, 15);
+      expect(fakeWarn.mock.calls.length).toBe(1);
+      console.warn = realWarn;
     });
 
     it("does not warn when ref element does not have a tabIndex attribute, but ele is already focusable", () => {

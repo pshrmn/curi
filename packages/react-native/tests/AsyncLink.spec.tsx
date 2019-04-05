@@ -6,7 +6,11 @@ import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 import { TouchableHighlight, Text } from "react-native";
 
+import { sleep } from "../../../utils/tests";
+
 import { create_router_component, AsyncLink } from "@curi/react-native";
+
+const { act } = renderer;
 
 // play nice
 function fakeEvent(props = {}) {
@@ -65,7 +69,7 @@ describe("<AsyncLink>", () => {
 
   describe("navigation location", () => {
     describe("name", () => {
-      it("uses the pathname from current response's location if 'name' is not provided", () => {
+      it("uses the pathname from current response's location if 'name' is not provided", async () => {
         const mockNavigate = jest.fn();
         const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
         const router = create_router(in_memory, routes, {
@@ -84,7 +88,9 @@ describe("<AsyncLink>", () => {
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
         expect(mockNavigate.mock.calls[0][0].pathname).toBe(
           "/the-initial-location"
         );
@@ -97,7 +103,7 @@ describe("<AsyncLink>", () => {
         { name: "Catch All", path: "(.*)" }
       ]);
 
-      it("uses params to generate the location to navigate to", () => {
+      it("uses params to generate the location to navigate to", async () => {
         const mockNavigate = jest.fn();
         const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
@@ -112,11 +118,13 @@ describe("<AsyncLink>", () => {
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
         expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
       });
 
-      it("updates location to navigate to when props change", () => {
+      it("updates location to navigate to when props change", async () => {
         const mockNavigate = jest.fn();
         const router = create_router(in_memory, routes);
         router.history.navigate = mockNavigate;
@@ -131,18 +139,26 @@ describe("<AsyncLink>", () => {
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
         expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
 
         const newParams = { name: "Yellowstone" };
-        tree.update(
-          <Router>
-            <AsyncLink name="Park" params={newParams}>
-              {navigating => <Text>{navigating}</Text>}
-            </AsyncLink>
-          </Router>
-        );
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          tree.update(
+            <Router>
+              <AsyncLink name="Park" params={newParams}>
+                {navigating => <Text>{navigating}</Text>}
+              </AsyncLink>
+            </Router>
+          );
+        });
+
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
+
         expect(mockNavigate.mock.calls[1][0].pathname).toBe(
           "/park/Yellowstone"
         );
@@ -150,7 +166,7 @@ describe("<AsyncLink>", () => {
     });
 
     describe("hash & query", () => {
-      it("merges hash & query props with the pathname when creating href", () => {
+      it("merges hash & query props with the pathname when creating href", async () => {
         const mockNavigate = jest.fn();
         const routes = prepare_routes([
           { name: "Test", path: "test" },
@@ -169,7 +185,11 @@ describe("<AsyncLink>", () => {
         );
 
         const anchor = tree.root.findByType(TouchableHighlight);
-        anchor.props.onPress(fakeEvent());
+
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
+
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
           pathname: "/test",
           query: "one=two",
@@ -259,7 +279,7 @@ describe("<AsyncLink>", () => {
 
   describe("pressing a link", () => {
     describe("navigation method", () => {
-      it('method="anchor"', () => {
+      it('method="anchor"', async () => {
         const mockNavigate = jest.fn();
         const routes = prepare_routes([
           { name: "Test", path: "" },
@@ -277,11 +297,13 @@ describe("<AsyncLink>", () => {
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
         expect(mockNavigate.mock.calls[0][1]).toBe("anchor");
       });
 
-      it('method="push"', () => {
+      it('method="push"', async () => {
         const mockNavigate = jest.fn();
         const routes = prepare_routes([
           { name: "Test", path: "" },
@@ -299,11 +321,13 @@ describe("<AsyncLink>", () => {
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
         expect(mockNavigate.mock.calls[0][1]).toBe("push");
       });
 
-      it('method="replace"', () => {
+      it('method="replace"', async () => {
         const mockNavigate = jest.fn();
         const routes = prepare_routes([
           { name: "Test", path: "" },
@@ -321,13 +345,15 @@ describe("<AsyncLink>", () => {
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
         expect(mockNavigate.mock.calls[0][1]).toBe("replace");
       });
     });
 
     describe("children(navigating)", () => {
-      it("children(true) after clicking", () => {
+      it("children(true) after clicking", async () => {
         // if a link has no on methods, finished will be called almost
         // immediately (although this style should only be used for routes
         // with resolve methods)
@@ -339,7 +365,7 @@ describe("<AsyncLink>", () => {
               return new Promise(resolve => {
                 setTimeout(() => {
                   resolve("done");
-                }, 100);
+                }, 25);
               });
             }
           },
@@ -361,12 +387,14 @@ describe("<AsyncLink>", () => {
         const text = anchor.findByType(Text);
         expect(text.instance.props.children).toBe("false");
 
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
 
         expect(text.instance.props.children).toBe("true");
       });
 
-      it("children(false) when navigation is cancelled", () => {
+      it("children(false) when navigation is cancelled", async () => {
         const routes = prepare_routes([
           { name: "Test", path: "test" },
           {
@@ -414,21 +442,29 @@ describe("<AsyncLink>", () => {
 
         expect(text.instance.props.children).toBe("Slow false");
 
-        slowLink.props.onPress(fakeEvent());
+        await act(async () => {
+          slowLink.props.onPress(fakeEvent());
+        });
         expect(text.instance.props.children).toBe("Slow true");
 
-        fastLink.props.onPress(fakeEvent());
+        await act(async () => {
+          fastLink.props.onPress(fakeEvent());
+        });
         expect(text.instance.props.children).toBe("Slow false");
       });
 
-      it("children(false) when navigation is finished", done => {
+      it("children(false) when navigation is finished", async () => {
         const routes = prepare_routes([
           { name: "Test", path: "test" },
           {
             name: "Loader",
             path: "load",
             resolve() {
-              return Promise.resolve("done");
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("done");
+                }, 25);
+              });
             }
           },
           { name: "Catch All", path: "(.*)" }
@@ -449,21 +485,22 @@ describe("<AsyncLink>", () => {
         const text = anchor.findByType(Text);
         expect(text.instance.props.children).toBe("false");
 
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
         expect(text.instance.props.children).toBe("true");
 
-        router.once(
-          ({ response }) => {
-            expect(response.name).toBe("Loader");
-            expect(text.instance.props.children).toBe("false");
-            done();
-          },
-          { initial: false }
-        );
+        await act(async () => {
+          await sleep(50);
+        });
+
+        const { response } = router.current();
+        expect(response.name).toBe("Loader");
+        expect(text.instance.props.children).toBe("false");
       });
 
       // TODO: run this once act() fix is out (act causes error calls);
-      it.skip("does not call setState if component has unmounted", done => {
+      it("does not call setState if component has unmounted", async done => {
         const realError = console.error;
         const mockError = jest.fn();
         console.error = mockError;
@@ -503,14 +540,16 @@ describe("<AsyncLink>", () => {
         );
         const anchor = tree.root.findByType(TouchableHighlight);
 
-        anchor.props.onPress(fakeEvent());
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
 
         tree.unmount();
       });
     });
 
     describe("onNav", () => {
-      it("calls onNav prop func if provided", () => {
+      it("calls onNav prop func if provided", async () => {
         const mockNavigate = jest.fn();
         const onNav = jest.fn();
         const routes = prepare_routes([
@@ -529,7 +568,11 @@ describe("<AsyncLink>", () => {
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
-        anchor.props.onPress(fakeEvent());
+
+        await act(async () => {
+          anchor.props.onPress(fakeEvent());
+        });
+
         expect(mockNavigate.mock.calls.length).toBe(1);
         expect(onNav.mock.calls.length).toBe(1);
         expect(mockNavigate.mock.calls.length).toBe(1);
