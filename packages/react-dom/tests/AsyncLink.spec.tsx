@@ -5,11 +5,9 @@ import { act, Simulate } from "react-dom/test-utils";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
-import { create_router_component, AsyncLink } from "@curi/react-dom";
+import { sleep } from "../../../utils/tests";
 
-function sleep(period) {
-  return new Promise(resolve => setTimeout(resolve, period));
-}
+import { create_router_component, AsyncLink } from "@curi/react-dom";
 
 describe("<AsyncLink>", () => {
   let node;

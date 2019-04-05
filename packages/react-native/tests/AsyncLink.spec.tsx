@@ -6,13 +6,11 @@ import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 import { TouchableHighlight, Text } from "react-native";
 
+import { sleep } from "../../../utils/tests";
+
 import { create_router_component, AsyncLink } from "@curi/react-native";
 
 const { act } = renderer;
-
-function sleep(period) {
-  return new Promise(resolve => setTimeout(resolve, period));
-}
 
 // play nice
 function fakeEvent(props = {}) {

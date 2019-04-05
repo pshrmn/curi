@@ -5,9 +5,7 @@ import { act, Simulate } from "react-dom/test-utils";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
-function sleep(period) {
-  return new Promise(resolve => setTimeout(resolve, period));
-}
+import { sleep } from "../../../utils/tests";
 
 import {
   create_router_component,
