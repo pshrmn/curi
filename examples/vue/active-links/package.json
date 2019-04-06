@@ -16,9 +16,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/route-active": "file:../../../packages/interactions/route-active",
-    "@curi/router": "file:../../../packages/router",
-    "@curi/vue": "file:../../../packages/vue",
+    "@curi/route-active": "2.0.0-beta.4",
+    "@curi/router": "2.0.0-beta.6",
+    "@curi/vue": "1.0.0-beta.31",
     "@hickory/browser": "^2.0.0-beta.8",
     "vue": "^2.5.22"
   }
