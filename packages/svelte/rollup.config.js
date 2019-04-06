@@ -1,7 +1,7 @@
 const sveltePlugin = require("rollup-plugin-svelte");
 const babelPlugin = require("rollup-plugin-babel");
 
-const plugins = require("../../scripts/rollup/plugins");
+const plugins = require("../../utils/rollup-plugins");
 
 const pkg = require("./package.json");
 const deps = Object.keys(pkg.dependencies).map(key => key);

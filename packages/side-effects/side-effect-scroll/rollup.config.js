@@ -1,4 +1,4 @@
-const plugins = require("../../../scripts/rollup/plugins");
+const plugins = require("../../../utils/rollup-plugins");
 
 // don't bundle dependencies for es/cjs builds
 const pkg = require("./package.json");

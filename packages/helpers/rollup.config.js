@@ -1,4 +1,4 @@
-const plugins = require("../../scripts/rollup/plugins");
+const plugins = require("../../utils/rollup-plugins");
 
 const input = "src/index.ts";
 const sourcemap = false;

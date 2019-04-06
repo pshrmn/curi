@@ -1,4 +1,4 @@
-const plugins = require("../../scripts/rollup/plugins");
+const plugins = require("../../utils/rollup-plugins");
 
 const pkg = require("./package.json");
 const deps = Object.keys(pkg.dependencies).map(key => key);
