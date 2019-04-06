@@ -1,6 +1,6 @@
 {
   "name": "@curi/router",
-  "version": "2.0.0-beta.5",
+  "version": "2.0.0-beta.6",
   "description": "A JavaScript router that doesn't care how you render",
   "main": "dist/curi-router.js",
   "module": "dist/curi-router.es.js",

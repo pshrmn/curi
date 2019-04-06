@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.6
 
 * Throw if param parsing fails.
 * Warn if `route.response` includes an invalid property.

@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.5
 
 * Rename `get_router_options` to `options`.
 

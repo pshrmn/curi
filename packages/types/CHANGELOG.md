@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-alpha.1
 
 * `redirect`, not `redirect_to`.
 
