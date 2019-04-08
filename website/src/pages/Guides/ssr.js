@@ -299,7 +299,7 @@ app.get("*", renderHandler)`}
 
         <CodeBlock>
           {`const index = path.join(__dirname, "public", "index.html");
-          
+
 function renderHandler(req, res) {
   res.sendFile(index);
 }`}
@@ -331,12 +331,12 @@ function renderHandler(req, res) {
         <CodeBlock>
           {`// renderer.js
 import { create_router } from "@curi/router";
-import { create_server_history } from "@hickory/in-memory";
+import { reusable_server_history } from "@hickory/in-memory";
 
-const ServerHistory = create_server_history();
+const server_history = reusable_server_history();
 
 function handler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -363,14 +363,14 @@ function handler(req, res) {
           </p>
 
           <p>
-            The <IJS>create_server_history</IJS> function exported by{" "}
+            The <IJS>reusable_server_history</IJS> function exported by{" "}
             <IJS>@hickory/in-memory</IJS> is made specifically for this job.
             This function takes history options and returns a history
             constructor function.
           </p>
 
           <p>
-            <IJS>create_server_history</IJS> creates internal functions for
+            <IJS>reusable_server_history</IJS> creates internal functions for
             location parsing/stringifying ahead of time so that they don't need
             to be recreated for every request.
           </p>
@@ -378,9 +378,9 @@ function handler(req, res) {
           <CodeBlock>
             {`// handler.js
 import { create_router } from "@curi/router";
-import { create_server_history } from "@hickory/in-memory";
+import { reusable_server_history } from "@hickory/in-memory";
 
-const ServerHistory = create_server_history();`}
+const server_history = reusable_server_history();`}
           </CodeBlock>
 
           <p>
@@ -390,7 +390,7 @@ const ServerHistory = create_server_history();`}
 
           <CodeBlock>
             {`function handler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   // ...
@@ -463,7 +463,7 @@ export default prepare_routes([
 
         <CodeBlock data-line="5-7">
           {`function renderHandler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -496,9 +496,9 @@ export default prepare_routes([
         <CodeBlock data-line="1-2,9-14">
           {`import { renderToString } from "react-dom/server";
 import { create_router_component } from "@curi/react-dom";
-         
+
 function renderHandler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -563,7 +563,7 @@ function insertMarkup(markup, title) {
 }
 
 function renderHandler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -601,7 +601,7 @@ function renderHandler(req, res) {
 import { create_router_component } from "@curi/react-dom";
 
 function renderHandler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {

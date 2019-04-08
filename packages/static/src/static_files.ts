@@ -1,7 +1,7 @@
 import * as fs from "fs-extra";
 import { join } from "path";
 import { create_router } from "@curi/router";
-import { create_server_history } from "@hickory/in-memory";
+import { reusable_server_history } from "@hickory/in-memory";
 
 import pathnames from "./pathnames";
 
@@ -42,7 +42,7 @@ export default async function static_files(
     });
   }
 
-  const history = create_server_history(history_options);
+  const history = reusable_server_history(history_options);
 
   return Promise.all<Result>(
     input_output.map(({ pathname, output_path }) => {

@@ -1,12 +1,12 @@
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { create_server_history } from "@hickory/in-memory";
+import { reusable_server_history } from "@hickory/in-memory";
 import { create_router } from "@curi/router";
 import { create_router_component } from "@curi/react-dom";
 import routes from "./src/routes";
 import App from "./src/components/App";
 
-const ServerHistory = create_server_history();
+const ServerHistory = reusable_server_history();
 
 export default function(req, res) {
   const router = create_router(ServerHistory, routes, {
@@ -32,7 +32,7 @@ function renderFullPage(html) {
     <!doctype html>
     <html>
       <head>
-        <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+        <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
         <title>Curi Server Rendering</title>
       </head>
       <body>
