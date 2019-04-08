@@ -13,7 +13,7 @@
   "dependencies": {
     "@curi/react-dom": "2.0.0-beta.4",
     "@curi/router": "2.0.0-beta.6",
-    "@hickory/browser": "^2.0.0-beta.8",
+    "@hickory/browser": "^2.0.0-beta.10",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-transition-group": "^2.2.1"

@@ -33,15 +33,15 @@ function ServerRenderingExample() {
 
         <CodeBlock lang="javascript">
           {`// express
-import { create_server_history } from "@curi/in-memory";
+import { reusable_server_history } from "@curi/in-memory";
 
 // 1. Create a history constructor
-const ServerHistory = create_server_history();
+const server_history = reusable_server_history();
 
 function catchAll(req, res) {
   // 2. Create a router using the current location
   //    and the root React routing component
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   const Router = create_router_component(router);

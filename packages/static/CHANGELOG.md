@@ -1,3 +1,7 @@
+## Next
+
+* Use `reusable_server_history` from `@hickory/in-memory`.
+
 ## 1.0.0-beta.5
 
 * Rename `get_router_options` to `options`.

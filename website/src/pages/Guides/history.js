@@ -142,11 +142,11 @@ const router = create_router(Hash, routes);`}
 
         <HashSection meta={inMemoryMeta} tag="h3">
           <CodeBlock>
-            {`import { in_memory, create_server_history } from "@hickory/in-memory";
+            {`import { in_memory, reusable_server_history } from "@hickory/in-memory";
 
 const router = create_router(in_memory, routes);
 // or
-const server_history = create_server_history();
+const server_history = reusable_server_history();
 const router = create_router(server_history, routes);`}
           </CodeBlock>
 
@@ -162,7 +162,7 @@ const router = create_router(server_history, routes);`}
           </p>
 
           <p>
-            The <IJS>create_server_history</IJS> function returns lightweight
+            The <IJS>reusable_server_history</IJS> function returns lightweight
             history function for server-side rendering. The returned history
             cannot navigate, which is fine for server rendering.
           </p>
