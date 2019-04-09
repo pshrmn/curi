@@ -63,8 +63,8 @@ import router from "./router";
 render(router);
 
 if (module.hot) {
-  module.hot.accept("./routes.js", function() {
-    const nextRouter = require("./routes").default;
+  module.hot.accept("./router.js", function() {
+    const nextRouter = require("./router").default;
     render(nextRouter);
   });
 }`}
@@ -74,7 +74,7 @@ if (module.hot) {
           The exact implementation will vary based on how you are rendering the
           application. It may require a little bit of duplication, but this is
           all code that will be removed in your production build. For example,
-          this documentation website uses the following code to hot reload with
+          this documentation website uses the following code to hot replace with
           React.
         </p>
 

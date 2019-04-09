@@ -23,12 +23,14 @@ if (process.env.NODE_ENV !== "production") {
     module.hot.accept("./router", () => {
       const nextRouter = require("./router").default;
       const Router = create_router_component(nextRouter);
-      render(
-        <Router>
-          <App />
-        </Router>,
-        document.getElementById("root")
-      );
+      nextRouter.once(() => {
+        render(
+          <Router>
+            <App />
+          </Router>,
+          document.getElementById("root")
+        );
+      });
     });
   }
 }
