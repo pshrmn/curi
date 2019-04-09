@@ -40,9 +40,6 @@ export default function prefetch_route(): Interaction {
         resolved => ({ resolved, error: null }),
         error => ({ error, resolved: null })
       );
-    },
-    reset() {
-      loaders = {};
     }
   };
 }

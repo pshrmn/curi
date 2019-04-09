@@ -43,11 +43,6 @@ function generate_pathname(options?: PathFunctionOptions): Interaction {
       const output = compile(params, options);
       already_compiled[hash] = output;
       return output;
-    },
-    reset: () => {
-      known_paths = {};
-      cache = {};
-      already_compiled = {};
     }
   };
 }

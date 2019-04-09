@@ -65,37 +65,4 @@ describe("ancestors route interaction", () => {
       expect(router.route.ancestors("Houdini")).toBeUndefined();
     });
   });
-
-  it("resets when routes are refreshed", () => {
-    const routes = prepare_routes([
-      {
-        name: "League",
-        path: "league/:lID",
-        children: [
-          {
-            name: "Team",
-            path: "team/:tID",
-            children: [
-              {
-                name: "Player",
-                path: "player/:pID"
-              }
-            ]
-          }
-        ]
-      },
-      { name: "Catch All", path: "(.*)" }
-    ]);
-    const router = create_router(in_memory, routes, {
-      route: [create_ancestors()]
-    });
-    const empty_routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-
-    expect(router.route.ancestors("Player")).toEqual(["Team", "League"]);
-    expect(router.route.ancestors("Player", null)).toEqual(["Team", "League"]);
-
-    router.refresh(empty_routes);
-
-    expect(router.route.ancestors("Player")).toBeUndefined();
-  });
 });

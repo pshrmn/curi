@@ -59,9 +59,6 @@ export default function active(): Interaction {
         return options.components(response.location);
       }
       return true;
-    },
-    reset() {
-      route_params = {};
     }
   };
 }

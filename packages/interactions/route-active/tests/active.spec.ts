@@ -285,46 +285,4 @@ describe("active route interaction", () => {
       });
     });
   });
-
-  describe("reset", () => {
-    it("resetting removes the registered routes", () => {
-      const routes = prepare_routes([
-        {
-          name: "Player",
-          path: "player/:id"
-        },
-        { name: "Catch All", path: "(.*)" }
-      ]);
-      const empty_routes = prepare_routes([
-        { name: "Catch All", path: "(.*)" }
-      ]);
-
-      const router = create_router<InMemoryOptions>(in_memory, routes, {
-        route: [create_active()],
-        history: {
-          locations: ["/player/7"]
-        }
-      });
-
-      const player_is_active = router.route.active(
-        "Player",
-        router.current().response,
-        {
-          params: { id: "7" }
-        }
-      );
-      expect(player_is_active).toBe(true);
-
-      router.refresh(empty_routes);
-
-      const player_is_active_after_refresh = router.route.active(
-        "Player",
-        router.current().response,
-        {
-          params: { id: "7" }
-        }
-      );
-      expect(player_is_active_after_refresh).toBe(false);
-    });
-  });
 });

@@ -21,7 +21,6 @@ export interface RouterOptions<O = HistoryOptions> {
     history?: O;
 }
 export interface CuriRouter {
-    refresh: (routes?: PreparedRoutes) => void;
     observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
     once: (fn: Observer, options?: ResponseHandlerOptions) => void;
     cancel: (fn: Cancellable) => RemoveCancellable;
@@ -145,7 +144,6 @@ export interface Interaction {
     name: string;
     register: RegisterInteraction;
     get: GetInteraction;
-    reset(): void;
 }
 export declare type Interactions = {
     [key: string]: GetInteraction;
