@@ -175,15 +175,15 @@ const guides = [
       import(/* webpackChunkName: 'guide--apollo' */
       `../pages/Guides/apollo.js`)
   },
-  {
+  /* {
     name: "Development Tips",
     slug: "dev-tips",
     description: "Tips on developing using Curi",
     type: "advanced",
     import: () =>
-      import(/* webpackChunkName: 'guide--dev-tips' */
+      import(/* webpackChunkName: 'guide--dev-tips'
       `../pages/Guides/dev-tips.js`)
-  },
+  }, */
   {
     name: "React Router v2/3",
     slug: "migrate-rrv3",
