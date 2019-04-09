@@ -12,7 +12,7 @@ const routes = require("../src/routes").default;
 
 const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
 
-function get_router_options() {
+function options() {
   return {
     route: [active()]
   };
@@ -60,7 +60,7 @@ static_files({
   },
   router: {
     routes,
-    get_router_options
+    options
   },
   output: {
     dir: OUTPUT_DIR,
