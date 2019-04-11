@@ -1,3 +1,7 @@
+## Next
+
+* Revert snake case. `create_router_component` is now `createRouterComponent`.
+
 ## 2.0.0-beta.5
 
 * Add `useRouter` hook. Other hooks that access the `router` but not the `response`/`navigation` have been switched to `useRouter` to prevent unnecessary re-renders.

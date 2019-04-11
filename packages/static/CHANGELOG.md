@@ -1,3 +1,7 @@
+## Next
+
+* Revert snake case. `static_files` is now `staticFiles`.
+
 ## 1.0.0-beta.6
 
 * Use `reusable_server_history` from `@hickory/in-memory`.

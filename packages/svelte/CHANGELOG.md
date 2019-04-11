@@ -1,3 +1,7 @@
+## Next
+
+* Revert snake case. `curi_store` is now `curiStore`.
+
 ## 1.0.0-beta.16
 
 * `<Link>` uses `history.href`.

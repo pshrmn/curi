@@ -1,3 +1,7 @@
+## Next
+
+* Revert snake case. `create_router_component` is now `createRouterComponent`.
+
 ## 2.0.0-beta.5
 
 * Add a `RouterProvider` to make the `router` accessible through the application.
