@@ -20,14 +20,14 @@ export default function create_router_component(
   }
 
   return function Router(props: RouterProps) {
-    const [state, set_state] = React.useState<Emitted>(initial_state);
+    const [response, set_response] = React.useState<Emitted>(initial_state);
 
     React.useEffect(() => {
       let removed = false;
       const stop = router.observe(
         (emitted: Emitted) => {
           if (!removed) {
-            set_state(emitted);
+            set_response(emitted);
           }
         },
         { initial: false }
@@ -40,7 +40,7 @@ export default function create_router_component(
 
     return (
       <RouterProvider value={router}>
-        <ResponseProvider value={state}>{props.children}</ResponseProvider>
+        <ResponseProvider value={response}>{props.children}</ResponseProvider>
       </RouterProvider>
     );
   };

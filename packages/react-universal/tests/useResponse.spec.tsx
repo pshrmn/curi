@@ -5,12 +5,9 @@ import { act } from "react-dom/test-utils";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
-import {
-  create_router_component,
-  ResponseConsumer
-} from "@curi/react-universal";
+import { create_router_component, useResponse } from "@curi/react-universal";
 
-describe("ResponseConsumer", () => {
+describe("useResponse", () => {
   let node;
   const routes = prepare_routes([
     { name: "Home", path: "" },
@@ -31,16 +28,11 @@ describe("ResponseConsumer", () => {
     const Router = create_router_component(router);
     const { response, navigation } = router.current();
     function App() {
-      return (
-        <ResponseConsumer>
-          {result => {
-            expect(result.router).toBe(router);
-            expect(result.response).toBe(response);
-            expect(result.navigation).toBe(navigation);
-            return null;
-          }}
-        </ResponseConsumer>
-      );
+      const result = useResponse();
+      expect(result.router).toBe(router);
+      expect(result.response).toBe(response);
+      expect(result.navigation).toBe(navigation);
+      return null;
     }
     act(() => {
       ReactDOM.render(
@@ -57,14 +49,8 @@ describe("ResponseConsumer", () => {
     const Router = create_router_component(router);
     let from_context;
     function App() {
-      return (
-        <ResponseConsumer>
-          {result => {
-            from_context = result;
-            return <div>{from_context.response.name}</div>;
-          }}
-        </ResponseConsumer>
-      );
+      from_context = useResponse();
+      return <div>{from_context.response.name}</div>;
     }
 
     act(() => {
