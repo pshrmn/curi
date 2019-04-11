@@ -39,7 +39,7 @@
 
     // import the User component using the import() API
     const body = import(&quot;./components/User&quot;);
-    
+
     // get specific data using the route&#x27;s params
     const data = UserAPI.get(params.id);
     return Promise.all([ authorized, body, data ]);
@@ -113,15 +113,17 @@ const routes = prepare_routes([
     name: &#x27;Not Found&#x27;,
     path: &#x27;(.*)&#x27;
   }
-]);</code></pre></div><p>If the pathname is <code class="inline-code css-jo5c25 eutm4hs0">&#x27;/a/Coloring+Book/All+Night&#x27;</code>, the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Album</code> route will partially match the pathname (<code class="inline-code css-jo5c25 eutm4hs0">&quot;/a/Coloring+Book&quot;</code>). That route has children routes, so the unmatched segments (<code class="inline-code css-jo5c25 eutm4hs0">&quot;/All+Night&quot;</code>) will be checked against those routes. The <code class="inline-code css-jo5c25 eutm4hs0">Song</code> route matches the remaining segments, so the router matches the <code class="inline-code css-jo5c25 eutm4hs0">Song</code> route to the location.</p></div><div class="section css-1kr8jn0" id="options"><h3><a href="#options" class="header-link">Path Matching Options</a></h3><p>You can control whether a route does exact or partial matching with<!-- --> <a href="#pathOptions"><code class="inline-code css-jo5c25 eutm4hs0">pathOptions</code></a> <!-- -->property. If you set <code class="inline-code css-jo5c25 eutm4hs0">{ end: false }</code>, a route that partially matches will consider itself matched.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// when the pathname is
+]);</code></pre></div><p>If the pathname is <code class="inline-code css-jo5c25 eutm4hs0">&#x27;/a/Coloring+Book/All+Night&#x27;</code>, the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Album</code> route will partially match the pathname (<code class="inline-code css-jo5c25 eutm4hs0">&quot;/a/Coloring+Book&quot;</code>). That route has children routes, so the unmatched segments (<code class="inline-code css-jo5c25 eutm4hs0">&quot;/All+Night&quot;</code>) will be checked against those routes. The <code class="inline-code css-jo5c25 eutm4hs0">Song</code> route matches the remaining segments, so the router matches the <code class="inline-code css-jo5c25 eutm4hs0">Song</code> route to the location.</p></div><div class="section css-1kr8jn0" id="options"><h3><a href="#options" class="header-link">Path Matching Options</a></h3><p>You can control whether a route does exact or partial matching with<!-- --> <a href="#path_options"><code class="inline-code css-jo5c25 eutm4hs0">path_options</code></a> <!-- -->property. If you set <code class="inline-code css-jo5c25 eutm4hs0">{ end: false }</code>, a route that partially matches will consider itself matched.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// when the pathname is
 // &#x27;/a/Good+Kid,+M.A.A.D+City/Poetic+Justice&#x27;,
 // the Album route will partially match, but because
 // it sets &quot;end&quot; to false, the partial match will still be used.
 {
   name: &#x27;Album&#x27;,
   path: &#x27;a/:albumID&#x27;,
-  pathOptions: {
-    end: false
+  path_options: {
+    parse: {
+      end: false
+    }
   }
 }</code></pre></div></div></div><div class="section css-1kr8jn0" id="prepare_routes"><h2><a href="#prepare_routes" class="header-link">Preparing Routes</a></h2><p>The routes array should be wrapped in a <code class="inline-code css-jo5c25 eutm4hs0">prepare_routes()</code> <!-- -->call. This will pre-build the routes for the router, which is especially useful for server rendering, where a new router is created for every request.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { prepare_routes } from &quot;@curi/router&quot;;
 

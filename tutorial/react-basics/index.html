@@ -117,9 +117,9 @@ ReactDOM.render((
     &lt;App /&gt;
   &lt;/Router&gt;
 ), document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div><p>The existing content from <code class="inline-code css-jo5c25 eutm4hs0">src/App.js</code> can be removed and we will start from scratch.</p><p>We will import the<!-- --> <a href="/packages/@curi/react-dom/v2/#useCuri"><code class="inline-code css-jo5c25 eutm4hs0">useCuri</code> hook</a> <!-- -->from <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code>. This hook lets us read the context data that was set by the <code class="inline-code css-jo5c25 eutm4hs0">Router</code>. <code class="inline-code css-jo5c25 eutm4hs0">useCuri</code> returns three objects: <code class="inline-code css-jo5c25 eutm4hs0">router</code>, <code class="inline-code css-jo5c25 eutm4hs0">response</code>, and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">navigation</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// src/App.js
+registerServiceWorker();</code></pre></div><p>The existing content from <code class="inline-code css-jo5c25 eutm4hs0">src/App.js</code> can be removed and we will start from scratch.</p><p>We will import the<!-- --> <a href="/packages/@curi/react-dom/v2/#useResponse"><code class="inline-code css-jo5c25 eutm4hs0">useResponse</code> hook</a> <!-- -->from <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code>. This hook lets us read the context data that was set by the <code class="inline-code css-jo5c25 eutm4hs0">Router</code>. <code class="inline-code css-jo5c25 eutm4hs0">useResponse</code> <!-- -->returns three objects: <code class="inline-code css-jo5c25 eutm4hs0">router</code>, <code class="inline-code css-jo5c25 eutm4hs0">response</code>, and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">navigation</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// src/App.js
 import React from &quot;react&quot;;
-import { useCuri } from &quot;@curi/react-dom&quot;;
+import { useResponse } from &quot;@curi/react-dom&quot;;
 
 export default function App() {
 
@@ -153,12 +153,12 @@ export default function App() {
       * }
       */
   }
-}</code></pre></div></div><p>We can update the <code class="inline-code css-jo5c25 eutm4hs0">App</code> to get the response using<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">useCuri</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// src/App.js
+}</code></pre></div></div><p>We can update the <code class="inline-code css-jo5c25 eutm4hs0">App</code> to get the response using<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">useResponse</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// src/App.js
 import React from &quot;react&quot;;
-import { useCuri } from &quot;@curi/react-dom&quot;;
+import { useResponse } from &quot;@curi/react-dom&quot;;
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
 }</code></pre></div><p>If a response&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> is a React component, we can render it! We haven&#x27;t actually defined components for our routes yet, so we should throw together some placeholders.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">mkdir -p src/components
 touch src/components/Home.js src/components/Book.js \
   src/components/Checkout.js src/components/NotFound.js</code></pre></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// src/components/Home.js
@@ -228,10 +228,10 @@ export default prepare_routes([
   }
 ]);</code></pre></div><p>Now that the responses have <code class="inline-code css-jo5c25 eutm4hs0">body</code> properties that are React components, we can update the <code class="inline-code css-jo5c25 eutm4hs0">App</code> to render them.</p><p>We will also pass the <code class="inline-code css-jo5c25 eutm4hs0">response</code> as a prop to the rendered component, which means that each of the route components will have access to the <code class="inline-code css-jo5c25 eutm4hs0">response</code> when they are rendered. This isn&#x27;t strictly necessary, but can come in handy.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="7-8"><code class="language-jsx">// src/App.js
 import React from &quot;react&quot;;
-import { useCuri } from &quot;@curi/react-dom&quot;;
+import { useResponse } from &quot;@curi/react-dom&quot;;
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
   return &lt;Body response={response} /&gt;
 }</code></pre></div><p>At this point in time our app is rendering, but is isn&#x27;t very interesting because we cannot navigate between locations.</p></div><div class="section css-1kr8jn0" id="navigating"><h2><a href="#navigating" class="header-link">Navigating between locations</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> package provides a <code class="inline-code css-jo5c25 eutm4hs0">Link</code> <!-- -->component that we can use to navigate between locations within our application.</p><div class="aside css-1kr8jn0" id="link-component"><h3><a href="#link-component" class="header-link">The &lt;Link&gt; Component</a></h3><p>Navigation isn&#x27;t done by manually typing the pathname of the location the link should navigate to. Instead, we specify the name of the route using the <code class="inline-code css-jo5c25 eutm4hs0">name</code> prop.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// { name: &quot;Home&quot;, path: &quot;&quot; }
@@ -263,12 +263,12 @@ export default function NavMenu() {
   );
 }</code></pre></div><p>The menu can be rendered by the <code class="inline-code css-jo5c25 eutm4hs0">App</code> component. We can also add structure to the site by rendering <code class="inline-code css-jo5c25 eutm4hs0">&lt;<!-- -->header<!-- -->&gt;</code> and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">&lt;<!-- -->main<!-- -->&gt;</code> elements around their respective content.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5,10-19"><code class="language-jsx">// src/App.js
 import React from &quot;react&quot;;
-import { useCuri } from &quot;@curi/react-dom&quot;;
+import { useResponse } from &quot;@curi/react-dom&quot;;
 
 import NavMenu from &#x27;./components/NavMenu&#x27;;
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
   return (
     &lt;React.Fragment&gt;
@@ -378,12 +378,12 @@ export default {
   }
 };</code></pre></div><p>Before we edit the <code class="inline-code css-jo5c25 eutm4hs0">Book</code> component, we should quickly revisit the <code class="inline-code css-jo5c25 eutm4hs0">App</code> component. In addition to passing the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> to the <code class="inline-code css-jo5c25 eutm4hs0">Body</code>, we should also pass it our<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">router</code>, which will allow us to do programmatic navigation.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="8,16"><code class="language-jsx">// src/App.js
 import React from &quot;react&quot;;
-import { useCuri } from &quot;@curi/react-dom&quot;;
+import { useResponse } from &quot;@curi/react-dom&quot;;
 
 import NavMenu from &#x27;./components/NavMenu&#x27;;
 
 export default function App() {
-  const { response, router } = useCuri();
+  const { response, router } = useResponse();
   const { body:Body } = response;
   return (
     &lt;React.Fragment&gt;

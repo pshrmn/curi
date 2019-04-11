@@ -34,10 +34,10 @@ const routes = prepare_routes([
       };
     }
   }
-]);</code></pre></div><p>Any location data that a query needs can be taken from the response object. The best way to access this is to read the current<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> from the context. This can either be done in the component or the response can be passed down from the root app.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useCuri } from &quot;@curi/react-dom&quot;;
-          
+]);</code></pre></div><p>Any location data that a query needs can be taken from the response object. The best way to access this is to read the current<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> from the context. This can either be done in the component or the response can be passed down from the root app.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useResponse } from &quot;@curi/react-dom&quot;;
+
 function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
   return &lt;Body response={response} /&gt;;
 }</code></pre></div><p>Because we pass the <code class="inline-code css-jo5c25 eutm4hs0">response</code> to the route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> <!-- -->component, we can pass a <code class="inline-code css-jo5c25 eutm4hs0">Query</code> the response&#x27;s location params using <code class="inline-code css-jo5c25 eutm4hs0">props.response.params</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// pages/Nouns.js
@@ -75,7 +75,7 @@ const Noun = ({ response }) =&gt; (
     }}
   &lt;/Query&gt;
 );</code></pre></div></div><div class="section css-1kr8jn0" id="tight-pairing"><h2><a href="#tight-pairing" class="header-link">Tight Pairing</a></h2><p>You can use your Apollo client instance to call queries in a route&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function. <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> is expected to return a Promise, which is exactly what <code class="inline-code css-jo5c25 eutm4hs0">client.query()</code> returns. Tightly pairing Curi and Apollo is mostly center around using<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> to return a <code class="inline-code css-jo5c25 eutm4hs0">client.query()</code> call. This will delay navigation until after a route&#x27;s GraphQL data has been loaded by Apollo.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">external</code> option can be used when creating the router to make the Apollo client accessible from routes.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import client from &quot;./apollo&quot;;
-          
+
 const router = create_router(browser, routes, {
   external: { client }
 });</code></pre></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { EXAMPLE_QUERY } from &quot;./queries&quot;;

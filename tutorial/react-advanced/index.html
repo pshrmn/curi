@@ -56,7 +56,7 @@ router.once(() =&gt; {
 });
 </code></pre></div><p>Alternatively, you can update the root <code class="inline-code css-jo5c25 eutm4hs0">App</code> component to detect when the <code class="inline-code css-jo5c25 eutm4hs0">response</code> is <code class="inline-code css-jo5c25 eutm4hs0">null</code> and render a loading message.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// render fallback when response is null
 function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   if (response == null) {
     return &lt;div&gt;Loading...&lt;/div&gt;;
   }

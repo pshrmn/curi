@@ -34,28 +34,28 @@ function renderHandler(req, res) {
 const renderHandler = require(&quot;./renderer&quot;);
 
 app.get(&quot;*&quot;, renderHandler)</code></pre></div><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>If you are setting up a server without server-side rendering, the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">renderHandler</code> function could use<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">res.sendFile()</code> to return a universal HTML file for every route.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">const index = path.join(__dirname, &quot;public&quot;, &quot;index.html&quot;);
-          
+
 function renderHandler(req, res) {
   res.sendFile(index);
 }</code></pre></div></div><div class="section css-1kr8jn0" id="router"><h2><a href="#router" class="header-link">Router</a></h2><p>A router instance will be created for every single request. The router will match the requested location to its routes and generate a response, which can be used to render the HTML.</p><p>Curi has two optimizations to make this more efficient:</p><ol><li>By wrapping the routes array in a <code class="inline-code css-jo5c25 eutm4hs0">prepare_routes</code> call, all of an application&#x27;s routes are pre-compiled. Without<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">prepare_routes</code>, the route pathes would need to be re-compiled for every request!</li><li>We will use a lightweight history type created specifically for server-side rendering.</li></ol><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// renderer.js
 import { create_router } from &quot;@curi/router&quot;;
-import { create_server_history } from &quot;@hickory/in-memory&quot;;
+import { reusable_server_history } from &quot;@hickory/in-memory&quot;;
 
-const ServerHistory = create_server_history();
+const server_history = reusable_server_history();
 
 function handler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) =&gt; {
     // render the response
   })
-}</code></pre></div><div class="section css-1kr8jn0" id="history"><h3><a href="#history" class="header-link">History</a></h3><p>On the client-side, a single-page application uses<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> to create a history instance. However, that uses browser only APIs. On the server, the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/in-memory</code> package is used to create a history instance that only exists in memory.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">npm install @hickory/in-memory</code></pre></div><p>The server doesn&#x27;t need a fully functional history object. Instead, the server only needs a history object that knows its location and how to generate URLs.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">create_server_history</code> function exported by<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/in-memory</code> is made specifically for this job. This function takes history options and returns a history constructor function.</p><p><code class="inline-code css-jo5c25 eutm4hs0">create_server_history</code> creates internal functions for location parsing/stringifying ahead of time so that they don&#x27;t need to be recreated for every request.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// handler.js
+}</code></pre></div><div class="section css-1kr8jn0" id="history"><h3><a href="#history" class="header-link">History</a></h3><p>On the client-side, a single-page application uses<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> to create a history instance. However, that uses browser only APIs. On the server, the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/in-memory</code> package is used to create a history instance that only exists in memory.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">npm install @hickory/in-memory</code></pre></div><p>The server doesn&#x27;t need a fully functional history object. Instead, the server only needs a history object that knows its location and how to generate URLs.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">reusable_server_history</code> function exported by<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/in-memory</code> is made specifically for this job. This function takes history options and returns a history constructor function.</p><p><code class="inline-code css-jo5c25 eutm4hs0">reusable_server_history</code> creates internal functions for location parsing/stringifying ahead of time so that they don&#x27;t need to be recreated for every request.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// handler.js
 import { create_router } from &quot;@curi/router&quot;;
-import { create_server_history } from &quot;@hickory/in-memory&quot;;
+import { reusable_server_history } from &quot;@hickory/in-memory&quot;;
 
-const ServerHistory = create_server_history();</code></pre></div><p>When creating the router, we must pass a <code class="inline-code css-jo5c25 eutm4hs0">history</code> option with the location of the request.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">function handler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+const server_history = reusable_server_history();</code></pre></div><p>When creating the router, we must pass a <code class="inline-code css-jo5c25 eutm4hs0">history</code> option with the location of the request.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">function handler(req, res) {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   // ...
@@ -73,7 +73,7 @@ export default prepare_routes([
     }
   }
 ]);</code></pre></div></div></div><div class="section css-1kr8jn0" id="handling-response"><h2><a href="#handling-response" class="header-link">Handling the Response</a></h2><p>When the router is created, it will start generating a response by matching its <code class="inline-code css-jo5c25 eutm4hs0">history</code> object&#x27;s current location. If the application has any asynchronous routes, the <code class="inline-code css-jo5c25 eutm4hs0">response</code> may not be ready immediately. The safest approach is to use<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> to wait for the <code class="inline-code css-jo5c25 eutm4hs0">response</code>.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5-7"><code class="language-javascript">function renderHandler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) =&gt; {
@@ -81,9 +81,9 @@ export default prepare_routes([
   });
 }</code></pre></div><p>Once the response is generated, we are ready to render. This step will generate the HTML string for the application. How exactly you do this depends on what UI renderer you are using, but the process is approximately the same for most renderering libraries.</p><p>Here, we will assume that you are using React. The<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">react-dom/server</code> module provides a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">renderToString</code> method, which will render an application as a string.</p><p>Rendering with React on the server is essentially the same as rendering on the client. We create a <code class="inline-code css-jo5c25 eutm4hs0">Router</code> and use<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">renderToString</code> (instead of <code class="inline-code css-jo5c25 eutm4hs0">ReactDOM.render</code>) to render the component.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="1-2,9-14"><code class="language-javascript">import { renderToString } from &quot;react-dom/server&quot;;
 import { create_router_component } from &quot;@curi/react-dom&quot;;
-         
+
 function renderHandler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) =&gt; {
@@ -111,7 +111,7 @@ function insertMarkup(markup, title) {
 }
 
 function renderHandler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) =&gt; {
@@ -128,7 +128,7 @@ function renderHandler(req, res) {
 import { create_router_component } from &quot;@curi/react-dom&quot;;
 
 function renderHandler(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = create_router(server_history, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) =&gt; {
