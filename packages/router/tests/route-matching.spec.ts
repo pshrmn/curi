@@ -125,12 +125,12 @@ describe("route matching/response generation", () => {
         expect(response.name).toBe("City");
       });
 
-      it("does non-end parent matching when there are child routes, even if path_options.end=true", () => {
+      it("does non-end parent matching when there are child routes, even if path_options.match.end=true", () => {
         const routes = prepare_routes([
           {
             name: "State",
             path: ":state",
-            path_options: { end: true },
+            path_options: { match: { end: true } },
             children: [
               {
                 name: "City",
@@ -177,12 +177,12 @@ describe("route matching/response generation", () => {
       });
     });
 
-    it("matches partial routes if route.path_options.end=false", () => {
+    it("matches partial routes if route.path_options.match.end=false", () => {
       const routes = prepare_routes([
         {
           name: "State",
           path: ":state",
-          path_options: { end: false }
+          path_options: { match: { end: false } }
         },
         {
           name: "Not Found",
@@ -204,7 +204,7 @@ describe("route matching/response generation", () => {
           {
             name: "State",
             path: ":state?/about",
-            path_options: { end: false }
+            path_options: { match: { end: false } }
           },
           {
             name: "Not Found",
@@ -225,7 +225,7 @@ describe("route matching/response generation", () => {
           {
             name: "State",
             path: ":state?/about",
-            path_options: { end: false }
+            path_options: { match: { end: false } }
           },
           {
             name: "Not Found",

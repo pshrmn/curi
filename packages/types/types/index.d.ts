@@ -3,7 +3,7 @@ import { History, HistoryOptions, SessionLocation, PartialLocation, Action, NavT
 export interface RouteDescriptor {
     name: string;
     path: string;
-    path_options?: RegExpOptions;
+    path_options?: PathOptions;
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
     response?: ResponseFn;
@@ -12,10 +12,13 @@ export interface RouteDescriptor {
         [key: string]: any;
     };
 }
+export interface PathOptions {
+    match?: RegExpOptions;
+    compile?: PathFunctionOptions;
+}
 export interface RouterOptions<O = HistoryOptions> {
     route?: Array<Interaction>;
     side_effects?: Array<Observer>;
-    pathname_options?: PathFunctionOptions;
     emit_redirects?: boolean;
     external?: any;
     history?: O;

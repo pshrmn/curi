@@ -40,7 +40,7 @@ export default function create_router<O = HistoryOptions>(
   const route_interactions: Interactions = {};
   (options.route || [])
     // add the pathname interaction to the provided interactions
-    .concat(pathname_interaction(options.pathname_options))
+    .concat(pathname_interaction())
     .forEach(interaction => {
       route_interactions[interaction.name] = interaction.get;
       register_routes(routes, interaction);
