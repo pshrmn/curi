@@ -26,7 +26,7 @@ describe("useResponse", () => {
 
   it("passes router, response, and navigation to children function", () => {
     const { response, navigation } = router.current();
-    function Curious() {
+    function App() {
       const result = useResponse();
       expect(result.router).toBe(router);
       expect(result.response).toBe(response);
@@ -35,7 +35,7 @@ describe("useResponse", () => {
     }
     ReactDOM.render(
       <Router>
-        <Curious />
+        <App />
       </Router>,
       node
     );

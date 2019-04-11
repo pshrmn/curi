@@ -21,7 +21,7 @@ export function UseResponseAPI() {
       </p>
 
       <CodeBlock lang="jsx">
-        {`import { useResponse } from '@curi/react-dom';
+        {`import { useResponse } from '@curi/react-native';
 
 function App() {
   const {

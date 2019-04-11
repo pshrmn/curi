@@ -12,7 +12,7 @@ import { UseNavigationFocusAPI } from "./api/useNavigationFocus";
 import { UseNavigatingAPI } from "./api/useNavigating";
 import { UseLocationAPI } from "./api/useLocation";
 import { UseHrefAPI } from "./api/useHref";
-import { CuriousAPI } from "./api/curious";
+import { ResponseConsumerAPI } from "./api/responseconsumer";
 
 function ReactDOMPkg() {
   return (
@@ -42,7 +42,7 @@ function ReactDOMPkg() {
         <UseNavigatingAPI />
         <UseLocationAPI />
         <UseHrefAPI />
-        <CuriousAPI />
+        <ResponseConsumerAPI />
       </APIBlock>
     </React.Fragment>
   );

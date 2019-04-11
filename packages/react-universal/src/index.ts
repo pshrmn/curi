@@ -3,7 +3,7 @@ export { ActiveHookProps, ValidateComponents } from "./hooks/useActive";
 export { NavigatingChildren } from "./hooks/useNavigationHandler";
 
 import create_router_component from "./create_router_component";
-import { Curious } from "./Context";
+import { ResponseConsumer, RouterConsumer } from "./Context";
 
 import useRouter from "./hooks/useRouter";
 import useResponse from "./hooks/useResponse";
@@ -18,7 +18,8 @@ import {
 
 export {
   create_router_component,
-  Curious,
+  ResponseConsumer,
+  RouterConsumer,
   useRouter,
   useResponse,
   useActive,

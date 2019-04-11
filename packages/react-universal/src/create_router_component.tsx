@@ -1,5 +1,5 @@
 import React from "react";
-import { RouterProvider, EmittedProvider } from "./Context";
+import { RouterProvider, ResponseProvider } from "./Context";
 
 import { CuriRouter, Emitted } from "@curi/types";
 
@@ -40,7 +40,7 @@ export default function create_router_component(
 
     return (
       <RouterProvider value={router}>
-        <EmittedProvider value={state}>{props.children}</EmittedProvider>
+        <ResponseProvider value={state}>{props.children}</ResponseProvider>
       </RouterProvider>
     );
   };

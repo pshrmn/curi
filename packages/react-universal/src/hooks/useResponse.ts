@@ -1,8 +1,8 @@
 import React from "react";
-import { emitted_context } from "../Context";
+import { response_context } from "../Context";
 
 import { Emitted } from "@curi/types";
 
 export default function useResponse() {
-  return React.useContext<Emitted>(emitted_context);
+  return React.useContext<Emitted>(response_context);
 }

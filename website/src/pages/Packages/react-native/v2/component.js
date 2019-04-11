@@ -11,7 +11,7 @@ import { UseActiveAPI } from "./api/useActive";
 import { UseNavigatingAPI } from "./api/useNavigating";
 import { UseLocationAPI } from "./api/useLocation";
 import { UseHrefAPI } from "./api/useHref";
-import { CuriousAPI } from "./api/curious";
+import { ResponseConsumerAPI } from "./api/responseconsumer";
 
 function ReactNativePkg() {
   return (
@@ -40,7 +40,7 @@ function ReactNativePkg() {
         <UseNavigatingAPI />
         <UseLocationAPI />
         <UseHrefAPI />
-        <CuriousAPI />
+        <ResponseConsumerAPI />
       </APIBlock>
     </React.Fragment>
   );

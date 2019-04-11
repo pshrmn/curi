@@ -7,7 +7,7 @@ import { meta as useActiveMeta } from "./api/useActive";
 import { meta as useNavigatingMeta } from "./api/useNavigating";
 import { meta as useLocationMeta } from "./api/useLocation";
 import { meta as useHrefMeta } from "./api/useHref";
-import { meta as CuriousMeta } from "./api/curious";
+import { meta as ResponseConsumerMeta } from "./api/responseconsumer";
 
 export default [
   {
@@ -31,7 +31,7 @@ export default [
       useNavigatingMeta,
       useLocationMeta,
       useHrefMeta,
-      CuriousMeta
+      ResponseConsumerMeta
     ]
   }
 ];

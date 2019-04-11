@@ -621,8 +621,8 @@ const className = active ? "active" : "";
           that will inject router props into the wrapped component.
         </p>
         <p>
-          Curi provides similar functionality with the <IJS>Curious</IJS>{" "}
-          component.
+          Curi provides similar functionality with the{" "}
+          <IJS>ResponseConsumer</IJS> component.
         </p>
 
         <p>

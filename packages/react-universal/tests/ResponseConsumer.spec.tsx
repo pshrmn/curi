@@ -4,9 +4,12 @@ import ReactDOM from "react-dom";
 import { in_memory } from "@hickory/in-memory";
 import { create_router, prepare_routes } from "@curi/router";
 
-import { create_router_component, Curious } from "@curi/react-universal";
+import {
+  create_router_component,
+  ResponseConsumer
+} from "@curi/react-universal";
 
-describe("<Curious>", () => {
+describe("<ResponseConsumer>", () => {
   let node;
   let history, router, Router;
   const routes = prepare_routes([
@@ -28,14 +31,14 @@ describe("<Curious>", () => {
     const { response, navigation } = router.current();
     ReactDOM.render(
       <Router>
-        <Curious>
+        <ResponseConsumer>
           {value => {
             expect(value.router).toBe(router);
             expect(value.response).toBe(response);
             expect(value.navigation).toBe(navigation);
             return null;
           }}
-        </Curious>
+        </ResponseConsumer>
       </Router>,
       node
     );

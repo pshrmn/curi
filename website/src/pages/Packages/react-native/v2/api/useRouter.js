@@ -20,7 +20,7 @@ export function UseRouterAPI() {
       </p>
 
       <CodeBlock lang="jsx">
-        {`import { useRouter } from '@curi/react-dom';
+        {`import { useRouter } from '@curi/react-native';
 
 function App() {
   const router = useRouter();
