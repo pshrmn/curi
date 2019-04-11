@@ -1,5 +1,5 @@
 import React from "react";
-import { Provider } from "./Context";
+import { RouterProvider, EmittedProvider } from "./Context";
 
 import { CuriRouter, Emitted } from "@curi/types";
 
@@ -38,6 +38,10 @@ export default function create_router_component(
       };
     }, []);
 
-    return <Provider value={state}>{props.children}</Provider>;
+    return (
+      <RouterProvider value={router}>
+        <EmittedProvider value={state}>{props.children}</EmittedProvider>
+      </RouterProvider>
+    );
   };
 }

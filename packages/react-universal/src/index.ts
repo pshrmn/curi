@@ -5,7 +5,8 @@ export { NavigatingChildren } from "./hooks/useNavigationHandler";
 import create_router_component from "./create_router_component";
 import { Curious } from "./Context";
 
-import useCuri from "./hooks/useCuri";
+import useRouter from "./hooks/useRouter";
+import useResponse from "./hooks/useResponse";
 import useActive from "./hooks/useActive";
 import useLocation from "./hooks/useLocation";
 import useHref from "./hooks/useHref";
@@ -18,7 +19,8 @@ import {
 export {
   create_router_component,
   Curious,
-  useCuri,
+  useRouter,
+  useResponse,
   useActive,
   useLocation,
   useHref,

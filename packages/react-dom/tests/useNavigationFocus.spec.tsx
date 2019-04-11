@@ -8,7 +8,7 @@ import { create_router, prepare_routes } from "@curi/router";
 import {
   create_router_component,
   useNavigationFocus,
-  useCuri
+  useResponse
 } from "@curi/react-dom";
 
 describe("useNavigationFocus", () => {
@@ -211,7 +211,7 @@ describe("useNavigationFocus", () => {
         const Router = create_router_component(router);
 
         function Focuser() {
-          const { response } = useCuri();
+          const { response } = useResponse();
           const { body: Body } = response;
           const ref = React.useRef(null);
           useNavigationFocus(ref);
@@ -275,7 +275,7 @@ describe("useNavigationFocus", () => {
         const Router = create_router_component(router);
 
         function Focuser() {
-          const { response } = useCuri();
+          const { response } = useResponse();
           const { body: Body } = response;
           const ref = React.useRef(null);
           useNavigationFocus(ref);

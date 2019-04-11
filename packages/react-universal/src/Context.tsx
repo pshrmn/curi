@@ -1,5 +1,5 @@
 import React from "react";
-import { Emitted } from "@curi/types";
+import { CuriRouter, Emitted } from "@curi/types";
 
 const key: Emitted = {
   router: null,
@@ -7,7 +7,17 @@ const key: Emitted = {
   navigation: null
 };
 
-const context = React.createContext<Emitted>(key);
-const { Provider, Consumer: Curious } = context;
+const emitted_context = React.createContext<Emitted>(key);
+const { Provider: EmittedProvider, Consumer: Curious } = emitted_context;
 
-export { Provider, Curious, context };
+const router_context = React.createContext<CuriRouter>(null);
+const { Provider: RouterProvider, Consumer: RouterConsumer } = router_context;
+
+export {
+  EmittedProvider,
+  Curious,
+  emitted_context,
+  RouterProvider,
+  RouterConsumer,
+  router_context
+};

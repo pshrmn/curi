@@ -1,4 +1,4 @@
-import useCuri from "./useCuri";
+import useResponse from "./useResponse";
 
 import { SessionLocation } from "@hickory/root";
 import { Params } from "@curi/types";
@@ -13,7 +13,7 @@ export interface ActiveHookProps {
 }
 
 export default function useActive(props: ActiveHookProps) {
-  const { router, response } = useCuri();
+  const { router, response } = useResponse();
   if (process.env.NODE_ENV !== "production") {
     if (!router.route.active) {
       throw new Error(

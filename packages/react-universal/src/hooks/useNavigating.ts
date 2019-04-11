@@ -1,10 +1,10 @@
 import React from "react";
-import useCuri from "./useCuri";
+import useRouter from "./useRouter";
 
 import { CancelActiveNavigation } from "@curi/types";
 
 export default function useNavigating() {
-  const { router } = useCuri();
+  const router = useRouter();
   const [cancel, set_cancel] = React.useState(undefined);
   const removed = React.useRef(false);
 
