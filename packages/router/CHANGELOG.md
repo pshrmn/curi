@@ -1,3 +1,8 @@
+## 2.0.0-beta.7
+
+* `route.path_options` is an object with `match` (for matching location) and `compile` (for generating pathnames) properties.
+* Remove `pathname_options` option.
+
 ## 2.0.0-beta.6
 
 * Throw if param parsing fails.

@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.6
 
 * Use `reusable_server_history` from `@hickory/in-memory`.
 
