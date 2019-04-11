@@ -1,8 +1,8 @@
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useRouter } from "@curi/react-dom";
 
 export default function usePrefetch(routes, active) {
-  const { router } = useCuri();
+  const router = useRouter();
   const hasPrefetched = React.useRef(false);
   React.useEffect(() => {
     if (active && !hasPrefetched.current) {

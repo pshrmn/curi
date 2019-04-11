@@ -5,12 +5,13 @@ import { About, APIBlock, IJS } from "../../../../components/package/common";
 import { CreateRouterComponentAPI } from "./api/create_router_component";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
-import { UseCuriAPI } from "./api/useCuri";
+import { UseResponseAPI } from "./api/useResponse";
+import { UseRouterAPI } from "./api/useRouter";
 import { UseActiveAPI } from "./api/useActive";
 import { UseNavigatingAPI } from "./api/useNavigating";
 import { UseLocationAPI } from "./api/useLocation";
 import { UseHrefAPI } from "./api/useHref";
-import { CuriousAPI } from "./api/curious";
+import { ResponseConsumerAPI } from "./api/responseconsumer";
 
 function ReactNativePkg() {
   return (
@@ -33,12 +34,13 @@ function ReactNativePkg() {
         <CreateRouterComponentAPI />
         <LinkAPI />
         <AsyncLinkAPI />
-        <UseCuriAPI />
+        <UseResponseAPI />
+        <UseRouterAPI />
         <UseActiveAPI />
         <UseNavigatingAPI />
         <UseLocationAPI />
         <UseHrefAPI />
-        <CuriousAPI />
+        <ResponseConsumerAPI />
       </APIBlock>
     </React.Fragment>
   );

@@ -8,7 +8,7 @@ import activeInteraction from "@curi/route-active";
 import {
   create_router_component,
   useActive,
-  useCuri
+  useResponse
 } from "@curi/react-universal";
 
 describe("useActive", () => {
@@ -147,7 +147,7 @@ const router = create_router(history, routes, {
       let theLocation;
       const Router = create_router_component(router);
       function App() {
-        const { response } = useCuri();
+        const { response } = useResponse();
         theLocation = response.location;
         const active = useActive({ name: "Contact", components });
         return null;
@@ -173,7 +173,7 @@ const router = create_router(history, routes, {
       let theResponse;
       const Router = create_router_component(router);
       function App() {
-        const { response } = useCuri();
+        const { response } = useResponse();
         theResponse = response;
         const active = useActive({ name: "Contact", components });
         return null;

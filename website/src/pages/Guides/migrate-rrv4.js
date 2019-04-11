@@ -90,12 +90,12 @@ function MigrateReactRouterv4Guide() {
 
           <CodeBlock lang="jsx">
             {`import { Route, Switch } from "react-router-dom";
-            
+
 const App = () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/inbox" component={Inbox} />
-  </Switch>                 
+  </Switch>
 );
 
 // the <Inbox> matches nested routes (and includes
@@ -167,7 +167,7 @@ const Inbox = ({ match }) => (
 
           <CodeBlock>
             {`import { prepare_routes } from "@curi/router";
-            
+
 import Home from './pages/Home';
 import Inbox from './pages/Inbox';
 import Mesage from './pages/Message';
@@ -343,7 +343,7 @@ const App = () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/inbox" component={Inbox} />
-  </Switch>                 
+  </Switch>
 );
 
 const Inbox = ({ match }) => (
@@ -426,13 +426,13 @@ const Inbox = ({ match }) => (
           </p>
 
           <CodeBlock lang="jsx">
-            {`import { create_router_component, useCuri } from "@curi/react-dom";
+            {`import { create_router_component, useResponse } from "@curi/react-dom";
 
-const router = create_router(browser, routes);            
+const router = create_router(browser, routes);
 const Router = create_router_component(router);
 
 function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
   return <Body response={response} />;
 }
@@ -621,8 +621,8 @@ const className = active ? "active" : "";
           that will inject router props into the wrapped component.
         </p>
         <p>
-          Curi provides similar functionality with the <IJS>Curious</IJS>{" "}
-          component.
+          Curi provides similar functionality with the{" "}
+          <IJS>ResponseConsumer</IJS> component.
         </p>
 
         <p>
@@ -630,9 +630,9 @@ const className = active ? "active" : "";
           <Link
             name="Package"
             params={{ package: "react-dom", version: "v2" }}
-            hash="useCuri"
+            hash="useResponse"
           >
-            <IJS>useCuri</IJS> hook
+            <IJS>useResponse</IJS> hook
           </Link>
           .
         </p>
@@ -643,7 +643,7 @@ export default withRouter(SomeComponent);
 
 // Curi
 function SomeComponent() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   return ...
 }`}
         </CodeBlock>

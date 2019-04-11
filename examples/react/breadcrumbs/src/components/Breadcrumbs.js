@@ -1,8 +1,8 @@
 import React from "react";
-import { useCuri, Link } from "@curi/react-dom";
+import { useRouter, Link } from "@curi/react-dom";
 
 const Breadcrumbs = ({ name, params }) => {
-  const { router } = useCuri();
+  const router = useRouter();
   return (
     <ul className="breadcrumbs">
       {router.route

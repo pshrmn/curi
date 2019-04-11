@@ -1,3 +1,10 @@
+## Next
+
+* Add `useRouter` hook. Other hooks that access the `router` but not the `response`/`navigation` have been switched to `useRouter` to prevent unnecessary re-renders.
+* Rename `useCuri` to `useResponse`.
+* Rename `Curious` to `ResponseConsumer`.
+* Export `RouterConsumer` context consumer component.
+
 ## 2.0.0-beta.3
 
 * Import common Curi types from `@curi/types`.

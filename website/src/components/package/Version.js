@@ -1,5 +1,5 @@
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useRouter } from "@curi/react-dom";
 import styled from "@emotion/styled";
 
 import { font } from "../../constants/styles";
@@ -11,7 +11,7 @@ const StyledSelect = styled("select")`
 `;
 
 export default function Version({ versions, major, params }) {
-  const { router } = useCuri();
+  const router = useRouter();
 
   // only render dropdown for packages with multiple versions
   if (Object.keys(versions).length > 1) {

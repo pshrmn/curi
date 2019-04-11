@@ -537,20 +537,20 @@ registerServiceWorker();`}
           <Link
             name="Package"
             params={{ package: "react-dom", version: "v2" }}
-            hash="useCuri"
+            hash="useResponse"
           >
-            <IJS>useCuri</IJS> hook
+            <IJS>useResponse</IJS> hook
           </Link>{" "}
           from <IJS>@curi/react-dom</IJS>. This hook lets us read the context
-          data that was set by the <IJS>Router</IJS>. <IJS>useCuri</IJS> returns
-          three objects: <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
+          data that was set by the <IJS>Router</IJS>. <IJS>useResponse</IJS>{" "}
+          returns three objects: <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
           <IJS>navigation</IJS>.
         </p>
 
         <CodeBlock lang="jsx">
           {`// src/App.js
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 
 export default function App() {
 
@@ -657,16 +657,16 @@ export default function App() {
 
         <p>
           We can update the <IJS>App</IJS> to get the response using{" "}
-          <IJS>useCuri</IJS>.
+          <IJS>useResponse</IJS>.
         </p>
 
         <CodeBlock lang="jsx">
           {`// src/App.js
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
 }`}
         </CodeBlock>
 
@@ -788,10 +788,10 @@ export default prepare_routes([
         <CodeBlock lang="jsx" data-line="7-8">
           {`// src/App.js
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
   return <Body response={response} />
 }`}
@@ -902,12 +902,12 @@ export default function NavMenu() {
           <CodeBlock lang="jsx" data-line="5,10-19">
             {`// src/App.js
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 
 import NavMenu from './components/NavMenu';
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
   return (
     <React.Fragment>
@@ -1106,12 +1106,12 @@ export default {
         <CodeBlock lang="jsx" data-line="8,16">
           {`// src/App.js
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 
 import NavMenu from './components/NavMenu';
 
 export default function App() {
-  const { response, router } = useCuri();
+  const { response, router } = useResponse();
   const { body:Body } = response;
   return (
     <React.Fragment>

@@ -1,5 +1,5 @@
 import React from "react";
-import useCuri from "./useCuri";
+import useRouter from "./useRouter";
 
 import { ReactNode } from "react";
 import { RouteLocation } from "@curi/types";
@@ -32,7 +32,7 @@ export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
   props: NavigationHookProps<T>,
   can_navigate: CanNavigate<T> = default_can_navigate
 ) {
-  const { router } = useCuri();
+  const router = useRouter();
 
   function event_handler(event: T) {
     if (props.onNav) {
@@ -63,7 +63,7 @@ export function useStatefulNavigationHandler<
   props: StatefulNavigationHookProps<T>,
   can_navigate: CanNavigate<T> = default_can_navigate
 ) {
-  const { router } = useCuri();
+  const router = useRouter();
   const cancel = React.useRef(undefined);
   const [navigating, set_navigating] = React.useState(false);
 

@@ -5,7 +5,7 @@ import { act } from "react-dom/test-utils";
 import { create_router, prepare_routes } from "@curi/router";
 import { in_memory } from "@hickory/in-memory";
 
-import { create_router_component, useCuri } from "@curi/react-universal";
+import { create_router_component, useResponse } from "@curi/react-universal";
 
 describe("create_router_component()", () => {
   let node;
@@ -71,7 +71,7 @@ describe("create_router_component()", () => {
       let currentResponse;
 
       const App = jest.fn(() => {
-        const { response } = useCuri();
+        const { response } = useResponse();
         currentResponse = response;
         return null;
       });
@@ -106,7 +106,7 @@ describe("create_router_component()", () => {
           router: ctxRouter,
           response: ctxResponse,
           navigation: ctxNavigation
-        } = useCuri();
+        } = useResponse();
         expect(ctxResponse).toBe(emittedResponse);
         expect(ctxRouter).toBe(router);
         expect(ctxNavigation).toBe(emittedNavigation);

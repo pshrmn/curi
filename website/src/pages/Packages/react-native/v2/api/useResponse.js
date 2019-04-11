@@ -3,33 +3,32 @@ import React from "react";
 import {
   HashSection,
   CodeBlock,
-  IJS,
-  Cmp
+  IJS
 } from "../../../../../components/package/common";
 
 export const meta = {
-  title: "useCuri()",
-  hash: "useCuri"
+  title: "useResponse()",
+  hash: "useResponse"
 };
 
-export function UseCuriAPI() {
+export function UseResponseAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>useCuri</IJS> hook reads the current <IJS>response</IJS>,{" "}
+        The <IJS>useResponse</IJS> hook reads the current <IJS>response</IJS>,{" "}
         <IJS>navigation</IJS>, and <IJS>router</IJS> values from React's
         context.
       </p>
 
       <CodeBlock lang="jsx">
-        {`import { useCuri } from '@curi/react-dom';
+        {`import { useResponse } from '@curi/react-native';
 
 function App() {
   const {
     response,
     navigation,
     router
-  } = useCuri();
+  } = useResponse();
   return (
     <ThingThatNeedsResponse
       response={response}

@@ -90,7 +90,7 @@ function ReactNativeGuide() {
             name="Package"
             params={{ package: "react-native", version: "v2" }}
           >
-            <IJS>useCuri</IJS> hook
+            <IJS>useResponse</IJS> hook
           </Link>
           .
         </p>
@@ -138,9 +138,9 @@ function MyReactNativeApp = () => (
 
           <CodeBlock lang="jsx">
             {`function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
-  return <Body response={response} />              
+  return <Body response={response} />
 }
 
 function MyReactNativeApp() {
@@ -186,7 +186,7 @@ function MyReactNativeApp() {
 ]);
 
 function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { Main, Menu } = response.body;
   return (
     <React.Fragment>
@@ -219,7 +219,7 @@ function App() {
 
         <CodeBlock lang="jsx">
           {`import { Link } from "@curi/react-native";
-          
+
 const NavLinks = () => (
   <View>
     <Link name="Home">

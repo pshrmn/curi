@@ -1,5 +1,5 @@
 import React from "react";
-import { Provider } from "./Context";
+import { RouterProvider, ResponseProvider } from "./Context";
 
 import { CuriRouter, Emitted } from "@curi/types";
 
@@ -20,14 +20,14 @@ export default function create_router_component(
   }
 
   return function Router(props: RouterProps) {
-    const [state, set_state] = React.useState<Emitted>(initial_state);
+    const [response, set_response] = React.useState<Emitted>(initial_state);
 
     React.useEffect(() => {
       let removed = false;
       const stop = router.observe(
         (emitted: Emitted) => {
           if (!removed) {
-            set_state(emitted);
+            set_response(emitted);
           }
         },
         { initial: false }
@@ -38,6 +38,10 @@ export default function create_router_component(
       };
     }, []);
 
-    return <Provider value={state}>{props.children}</Provider>;
+    return (
+      <RouterProvider value={router}>
+        <ResponseProvider value={response}>{props.children}</ResponseProvider>
+      </RouterProvider>
+    );
   };
 }

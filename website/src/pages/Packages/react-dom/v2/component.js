@@ -5,13 +5,14 @@ import { About, APIBlock, IJS } from "../../../../components/package/common";
 import { CreateRouterComponentAPI } from "./api/create_router_component";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
-import { UseCuriAPI } from "./api/useCuri";
+import { UseResponseAPI } from "./api/useResponse";
+import { UseRouterAPI } from "./api/useRouter";
 import { UseActiveAPI } from "./api/useActive";
 import { UseNavigationFocusAPI } from "./api/useNavigationFocus";
 import { UseNavigatingAPI } from "./api/useNavigating";
 import { UseLocationAPI } from "./api/useLocation";
 import { UseHrefAPI } from "./api/useHref";
-import { CuriousAPI } from "./api/curious";
+import { ResponseConsumerAPI } from "./api/responseconsumer";
 
 function ReactDOMPkg() {
   return (
@@ -34,13 +35,14 @@ function ReactDOMPkg() {
         <CreateRouterComponentAPI />
         <LinkAPI />
         <AsyncLinkAPI />
-        <UseCuriAPI />
+        <UseResponseAPI />
+        <UseRouterAPI />
         <UseActiveAPI />
         <UseNavigationFocusAPI />
         <UseNavigatingAPI />
         <UseLocationAPI />
         <UseHrefAPI />
-        <CuriousAPI />
+        <ResponseConsumerAPI />
       </APIBlock>
     </React.Fragment>
   );

@@ -260,7 +260,7 @@ router.once(() => {
           <CodeBlock>
             {`// render fallback when response is null
 function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   if (response == null) {
     return <div>Loading...</div>;
   }

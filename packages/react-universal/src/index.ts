@@ -3,9 +3,10 @@ export { ActiveHookProps, ValidateComponents } from "./hooks/useActive";
 export { NavigatingChildren } from "./hooks/useNavigationHandler";
 
 import create_router_component from "./create_router_component";
-import { Curious } from "./Context";
+import { ResponseConsumer, RouterConsumer } from "./Context";
 
-import useCuri from "./hooks/useCuri";
+import useRouter from "./hooks/useRouter";
+import useResponse from "./hooks/useResponse";
 import useActive from "./hooks/useActive";
 import useLocation from "./hooks/useLocation";
 import useHref from "./hooks/useHref";
@@ -17,8 +18,10 @@ import {
 
 export {
   create_router_component,
-  Curious,
-  useCuri,
+  ResponseConsumer,
+  RouterConsumer,
+  useRouter,
+  useResponse,
   useActive,
   useLocation,
   useHref,

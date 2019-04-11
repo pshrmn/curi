@@ -1,5 +1,5 @@
 import React from "react";
-import { useCuri } from "@curi/react-universal";
+import { useResponse } from "@curi/react-universal";
 
 export interface FocusHookProps {
   preventScroll?: boolean;
@@ -15,7 +15,7 @@ export default function useNavigationFocus(
   // values are used, but not used in the comparison array because
   // changing these values would steal the app's focus even though
   // the location hasn't changed.
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { preserve, preventScroll = false } = props;
   React.useEffect(() => {
     const ele = ref.current;

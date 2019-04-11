@@ -1,10 +1,10 @@
 import React from "react";
-import useCuri from "./useCuri";
+import useRouter from "./useRouter";
 
 import { RouteLocation } from "@curi/types";
 
 export default function useLocation(props: RouteLocation) {
-  const { router } = useCuri();
+  const router = useRouter();
   const pathname = React.useMemo(() => {
     return props.name ? router.route.pathname(props.name, props.params) : "";
   }, [

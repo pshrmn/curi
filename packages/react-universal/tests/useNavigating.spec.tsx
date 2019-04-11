@@ -92,7 +92,7 @@ describe("useNavigating", () => {
           router.navigate({ name: "Sync" });
         });
 
-        expect(children.mock.calls.length).toBe(2);
+        expect(children.mock.calls.length).toBe(1);
         const { response: afterResponse } = router.current();
         expect(afterResponse.name).toBe("Sync");
       });
