@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.6
 
 * Revert snake case. `create_router_component` is now `createRouterComponent`.
 

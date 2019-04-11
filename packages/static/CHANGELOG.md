@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.7
 
 * Revert snake case. `static_files` is now `staticFiles`.
 

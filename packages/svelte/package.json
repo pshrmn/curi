@@ -1,6 +1,6 @@
 {
   "name": "@curi/svelte",
-  "version": "1.0.0-beta.19",
+  "version": "1.0.0-beta.20",
   "description": "Curi integration with Svelte",
   "main": "dist/curi-svelte.js",
   "module": "dist/curi-svelte.es.js",

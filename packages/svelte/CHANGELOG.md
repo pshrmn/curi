@@ -1,4 +1,4 @@
-## Next
+## 1.0.0-beta.20
 
 * Revert snake case. `curi_store` is now `curiStore`.
 

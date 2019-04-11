@@ -1,6 +1,6 @@
 {
   "name": "@curi/side-effect-aria-live",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "Curi side effect to announce location changes using aria-live",
   "main": "dist/curi-side-effect-aria-live.js",
   "module": "dist/curi-side-effect-aria-live.es.js",

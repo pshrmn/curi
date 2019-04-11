@@ -1,6 +1,6 @@
 {
   "name": "@curi/route-ancestors",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "description": "Get a Curi route's ancestor routes",
   "main": "dist/curi-route-ancestors.js",
   "module": "dist/curi-route-ancestors.es.js",
