@@ -3,7 +3,7 @@ import { in_memory } from "@hickory/in-memory";
 
 import { create_router, prepare_routes } from "@curi/router";
 
-describe("route.path_options matching", () => {
+describe("route.path_options.match", () => {
   describe("default options", () => {
     it("sensitive = false", () => {
       const routes = prepare_routes([
@@ -72,7 +72,7 @@ describe("route.path_options matching", () => {
         {
           name: "Test",
           path: "here",
-          path_options: { sensitive: true }
+          path_options: { match: { sensitive: true } }
         },
         {
           name: "Not Found",
@@ -93,7 +93,7 @@ describe("route.path_options matching", () => {
         {
           name: "Test",
           path: "here",
-          path_options: { strict: true }
+          path_options: { match: { strict: true } }
         },
         {
           name: "Not Found",
@@ -114,7 +114,7 @@ describe("route.path_options matching", () => {
         {
           name: "Test",
           path: "here",
-          path_options: { end: false }
+          path_options: { match: { end: false } }
         },
         {
           name: "Not Found",

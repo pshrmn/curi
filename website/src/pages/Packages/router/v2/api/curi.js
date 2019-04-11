@@ -274,36 +274,6 @@ const router = create_router(browser, routes, {
 // to "/new/2" without emitting a response`}
             </CodeBlock>
           </HashSection>
-
-          <HashSection
-            tag="h6"
-            meta={{
-              title: <IJS>pathnameOptions</IJS>,
-              hash: "options-pathnameOptions"
-            }}
-          >
-            <p>
-              Curi uses{" "}
-              <a href="https://github.com/pillarjs/path-to-regexp">
-                <IJS>path-to-regexp</IJS>
-              </a>{" "}
-              to handle route matching and pathname generation.{" "}
-              <IJS>path-to-regexp</IJS> can take a custom{" "}
-              <a href="https://github.com/pillarjs/path-to-regexp#compile-reverse-path-to-regexp">
-                <IJS>encode</IJS>
-              </a>{" "}
-              function for creating pathnames, which you can specify with this
-              options.
-            </p>
-
-            <CodeBlock>
-              {`const router = create_router(browser, routes, {
-  pathOptions: {
-    encode: (value, token) => { /* ... */ }
-  }
-});`}
-            </CodeBlock>
-          </HashSection>
         </HashSection>
       </HashSection>
 

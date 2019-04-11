@@ -451,24 +451,58 @@ const user = {
       </HashSection>
 
       <HashSection
-        meta={{ title: "pathOptions", hash: "pathOptions" }}
+        meta={{ title: "path_options", hash: "path_options" }}
         tag="h3"
       >
         <p>
-          If you need to provide different path options than{" "}
-          <a href="https://github.com/pillarjs/path-to-regexp#usage">
-            the defaults
+          Curi uses{" "}
+          <a href="https://github.com/pillarjs/path-to-regexp">
+            <IJS>path-to-regexp</IJS>
           </a>{" "}
-          used by <IJS>path-to-regexp</IJS>, you can provide them with a{" "}
-          <IJS>pathOptions</IJS> object.
+          to handle route matching and pathname generation. Each route can
+          configure both its route matching and pathname generation through its{" "}
+          <IJS>path_options</IJS> property.
         </p>
+
         <Note>
           <p>
             If a route has a children array property, it will{" "}
-            <strong>always</strong> have the <IJS>end</IJS> path option set to
-            false.
+            <strong>always</strong> have the <IJS>end</IJS> path option set to{" "}
+            <IJS>false</IJS>.
           </p>
         </Note>
+
+        <p>
+          For route matching, the options are passed through a <IJS>match</IJS>{" "}
+          object. You can see the options and their default values in the{" "}
+          <a href="https://github.com/pillarjs/path-to-regexp#usage">
+            <IJS>path-to-regexp</IJS> documentation
+          </a>
+          .
+        </p>
+
+        <p>
+          For pathname generation, the options are passed through a{" "}
+          <IJS>compile</IJS> object. There is only one possible option, which is
+          an <IJS>encode</IJS> function for encoding params. The default{" "}
+          <IJS>encode</IJS> function encodes params using{" "}
+          <IJS>encodeURIComponent</IJS>.
+        </p>
+
+        <CodeBlock>
+          {`{
+  name: "My Route",
+  path: "my/:item",
+  path_options: {
+    match: {
+      sensitive: false
+    },
+    compile: {
+      encode: (value, token) => value
+    }
+  }
+}`}
+        </CodeBlock>
       </HashSection>
 
       <HashSection meta={{ title: "extra", hash: "extra" }} tag="h3">

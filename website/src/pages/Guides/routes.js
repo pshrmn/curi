@@ -176,7 +176,7 @@ function RoutesGuide() {
 
     // import the User component using the import() API
     const body = import("./components/User");
-    
+
     // get specific data using the route's params
     const data = UserAPI.get(params.id);
     return Promise.all([ authorized, body, data ]);
@@ -392,8 +392,8 @@ const routes = prepare_routes([
         <HashSection meta={optionsMeta} tag="h3">
           <p>
             You can control whether a route does exact or partial matching with{" "}
-            <Link hash="pathOptions">
-              <IJS>pathOptions</IJS>
+            <Link hash="path_options">
+              <IJS>path_options</IJS>
             </Link>{" "}
             property. If you set <IJS>{`{ end: false }`}</IJS>, a route that
             partially matches will consider itself matched.
@@ -407,8 +407,10 @@ const routes = prepare_routes([
 {
   name: 'Album',
   path: 'a/:albumID',
-  pathOptions: {
-    end: false
+  path_options: {
+    parse: {
+      end: false
+    }
   }
 }`}
           </CodeBlock>
