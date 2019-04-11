@@ -172,32 +172,4 @@ describe("prefetch route interaction", () => {
       });
     });
   });
-
-  it("resets the registered routes when routes are refreshed", () => {
-    const routes = prepare_routes([
-      {
-        name: "Player",
-        path: "player/:id",
-        resolve() {
-          return Promise.resolve();
-        }
-      },
-      { name: "Catch All", path: "(.*)" }
-    ]);
-    const router = create_router(in_memory, routes, {
-      route: [create_prefetch()]
-    });
-
-    expect(router.route.prefetch("Player").then).toBeDefined();
-
-    const empty_routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-    router.refresh(empty_routes);
-
-    expect.assertions(2);
-    return router.route.prefetch("Player").then(resolved => {
-      expect(resolved.error).toBe(
-        `Could not prefetch data for Player because it is not registered.`
-      );
-    });
-  });
 });

@@ -37,7 +37,6 @@ export interface RouterOptions<O = HistoryOptions> {
 
 // object returned by create_router
 export interface CuriRouter {
-  refresh: (routes?: PreparedRoutes) => void;
   observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
   once: (fn: Observer, options?: ResponseHandlerOptions) => void;
   cancel: (fn: Cancellable) => RemoveCancellable;
@@ -202,7 +201,6 @@ export interface Interaction {
   name: string;
   register: RegisterInteraction;
   get: GetInteraction;
-  reset(): void;
 }
 export type Interactions = { [key: string]: GetInteraction };
 

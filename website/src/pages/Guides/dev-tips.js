@@ -44,43 +44,54 @@ function DevTipsGuide() {
         <p>
           The next step is identifying what file(s) you want to watch. A watched
           file will be notified when it, any of its dependencies, or any
-          dependencies depndencies (and so on down the line) are updated. The
-          best way to do this with a Curi application is to watch the file where
-          your routes are defined.
-        </p>
-
-        <p>
-          The <IJS>router</IJS> has a <IJS>refresh()</IJS> method that is used
-          for providing new routes to the router. When it is called, it will
-          also generate and emit a new response.
+          dependencies depndencies (and so on down the line) are updated.
+          Ideally, a file close to the root (<IJS>index.js</IJS>) is watched. If
+          you define the router in its own module, you can watch the file.
         </p>
 
         <p>
           <IJS>module.hot.accept()</IJS> is used for watching a file and calling
           a callback when that files or any files in its dependency chain are
-          updated. In the callback, we can re-import the routes and pass them to
-          the router's <IJS>refresh()</IJS> method. This will in turn emit a new
-          response, which will automatically be rendered.
+          updated. In the callback, we can re-import the router and use that to
+          re-render the application.
         </p>
 
-        <p>
-          With that, your application should be setup to support hot module
-          replacement.
-        </p>
-
-        <CodeBlock data-line="9-14">
+        <CodeBlock>
           {`// index.js
-import { create_router } from "@curi/router";
-import { browser } from "@hickory/browser";
-import routes from "./routes";
+import router from "./router";
 
-const router = create_router(browser, routes);
+render(router);
 
 if (module.hot) {
-  module.hot.accept("./routes.js", function() {
-    const nextRoutes = require("./routes").default;
-    router.refresh(nextRoutes);
+  module.hot.accept("./router.js", function() {
+    const nextRouter = require("./router").default;
+    render(nextRouter);
   });
+}`}
+        </CodeBlock>
+
+        <p>
+          The exact implementation will vary based on how you are rendering the
+          application. It may require a little bit of duplication, but this is
+          all code that will be removed in your production build. For example,
+          this documentation website uses the following code to hot replace with
+          React.
+        </p>
+
+        <CodeBlock lang="jsx">
+          {`if (process.env.NODE_ENV !== "production") {
+  if (module.hot) {
+    module.hot.accept("./router", () => {
+      const nextRouter = require("./router").default;
+      const Router = create_router_component(nextRouter);
+      render(
+        <Router>
+          <App />
+        </Router>,
+        document.getElementById("root")
+      );
+    });
+  }
 }`}
         </CodeBlock>
       </HashSection>

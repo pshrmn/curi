@@ -21,13 +21,4 @@ const router = create_router(browser, routes, {
   emit_redirects: false
 });
 
-if (process.env.NODE_ENV !== "production") {
-  if (module.hot) {
-    module.hot.accept("./routes", () => {
-      const nextRoutes = require("./routes").default;
-      router.refresh(nextRoutes);
-    });
-  }
-}
-
 export default router;

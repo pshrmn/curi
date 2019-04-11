@@ -29,9 +29,6 @@ export default function ancestors(): Interaction {
       route_ancestors[name] = parent_routes;
       return [name, ...parent_routes];
     },
-    get,
-    reset() {
-      route_ancestors = {};
-    }
+    get
   };
 }

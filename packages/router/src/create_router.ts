@@ -32,29 +32,24 @@ import {
   IntrinsicResponse
 } from "@curi/types";
 
-export default function create_router<HOpts = HistoryOptions>(
-  history_constructor: HistoryConstructor<HOpts>,
-  route_array: PreparedRoutes,
-  options: RouterOptions<HOpts> = {}
+export default function create_router<O = HistoryOptions>(
+  history_constructor: HistoryConstructor<O>,
+  routes: PreparedRoutes,
+  options: RouterOptions<O> = {}
 ): CuriRouter {
-  const {
-    route: user_interactions = [],
-    side_effects = [],
-    emit_redirects = true,
-    external,
-    history: history_options = <HOpts>{}
-  } = options;
+  const route_interactions: Interactions = {};
+  (options.route || [])
+    // add the pathname interaction to the provided interactions
+    .concat(pathname_interaction(options.pathname_options))
+    .forEach(interaction => {
+      route_interactions[interaction.name] = interaction.get;
+      register_routes(routes, interaction);
+    });
 
   const history = history_constructor((pending_nav: PendingNavigation) => {
-    let previous: Response | null = refreshing
-      ? most_recent.navigation
-        ? most_recent.navigation.previous
-        : null
-      : most_recent.response;
-    refreshing = false;
     const navigation: Navigation = {
       action: pending_nav.action,
-      previous
+      previous: most_recent.response
     };
 
     const matched = match_location(pending_nav.location, routes);
@@ -79,7 +74,7 @@ export default function create_router<HOpts = HistoryOptions>(
       finalize_response_and_emit(route, match, pending_nav, navigation, null);
     } else {
       announe_async_nav();
-      resolve_route(public_route, match, external).then(resolved => {
+      resolve_route(public_route, match, options.external).then(resolved => {
         if (pending_nav.cancelled) {
           return;
         }
@@ -92,36 +87,13 @@ export default function create_router<HOpts = HistoryOptions>(
         );
       });
     }
-  }, history_options);
+  }, options.history || <O>{});
 
   // the last finished response & navigation
   const most_recent: CurrentResponse = {
     response: null,
     navigation: null
   };
-
-  /* routes & route interactions */
-
-  let routes: PreparedRoutes;
-  const route_interactions: Interactions = {};
-
-  function setup_routes_and_interactions(user_routes?: PreparedRoutes): void {
-    if (user_routes) {
-      routes = user_routes;
-      for (let key in route_interactions) {
-        delete route_interactions[key];
-      }
-
-      // add the pathname interaction to the provided interactions
-      user_interactions
-        .concat(pathname_interaction(options.pathname_options))
-        .forEach(interaction => {
-          interaction.reset();
-          route_interactions[interaction.name] = interaction.get;
-          register_routes(routes, interaction);
-        });
-    }
-  }
 
   function finalize_response_and_emit(
     route: PreparedRoute,
@@ -139,12 +111,14 @@ export default function create_router<HOpts = HistoryOptions>(
           route_interactions,
           resolved,
           history,
-          external
+          options.external
         )
       : match;
     finish_and_reset_nav_callbacks();
     emit_immediate(response, navigation);
   }
+
+  const { emit_redirects = true } = options;
 
   function emit_immediate(response: Response, navigation: Navigation) {
     if (!response.redirect || emit_redirects) {
@@ -210,9 +184,11 @@ export default function create_router<HOpts = HistoryOptions>(
     one_timers.splice(0).forEach(fn => {
       fn(emitted);
     });
-    side_effects.forEach(fn => {
-      fn(emitted);
-    });
+    if (options.side_effects) {
+      options.side_effects.forEach(fn => {
+        fn(emitted);
+      });
+    }
   }
 
   /* router.navigate */
@@ -302,31 +278,19 @@ export default function create_router<HOpts = HistoryOptions>(
     }
   }
 
-  /* router.refresh */
-
-  let refreshing = false;
-  function refresh(routes?: PreparedRoutes) {
-    setup_routes_and_interactions(routes);
-    refreshing = true;
-    history.current();
-  }
-
   const router: CuriRouter = {
     route: route_interactions,
     history,
-    external,
+    external: options.external,
     observe,
     once,
     cancel,
     navigate,
-    refresh,
     current() {
       return most_recent;
     }
   };
 
-  // now that everything is defined, actually do the setup
-  setup_routes_and_interactions(route_array);
   history.current();
   return router;
 }

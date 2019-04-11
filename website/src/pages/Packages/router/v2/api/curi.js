@@ -24,7 +24,6 @@ const observeMeta = { title: "observe(fn, options)", hash: "observe" };
 const cancelMeta = { title: "cancel(fn)", hash: "cancel-property" };
 const currentMeta = { title: "current()", hash: "current-property" };
 const routeMeta = { title: "route", hash: "router-route" };
-const refreshMeta = { title: "refresh()", hash: "refresh-property" };
 const historyMeta = { title: "history", hash: "history-property" };
 const externalMeta = { title: "external", hash: "router-external" };
 const propertiesMeta = {
@@ -37,7 +36,6 @@ const propertiesMeta = {
     cancelMeta,
     currentMeta,
     routeMeta,
-    refreshMeta,
     historyMeta,
     externalMeta
   ]
@@ -270,7 +268,7 @@ const router = create_router(browser, routes, {
 ]);
 
 const router = create_router(browser, routes, {
-  emitRedirects: false                 
+  emitRedirects: false
 });
 // navigating to "/old/2" will automatically redirect
 // to "/new/2" without emitting a response`}
@@ -671,29 +669,6 @@ const userPathname = router.route.pathname(
 // userPathname === '/user/12345'`}
             </CodeBlock>
           </HashSection>
-        </HashSection>
-
-        <HashSection tag="h5" meta={refreshMeta}>
-          <p>
-            The <IJS>refresh()</IJS> function takes an array of new routes,
-            which will replace the existing routes. The router will emit a new
-            response based on the current location.
-          </p>
-          <p>
-            The function can be called without any arguments and it will emit a
-            response using the existing routes.
-          </p>
-
-          <CodeBlock>
-            {`const oldRoutes = prepare_routes([...]);
-const newRoutes = prepare_routes([...]);
-
-const router = create_router(browser, oldRoutes);
-// generates responses using old routes
-
-router.refresh(newRoutes);
-// generates responses using new routes`}
-          </CodeBlock>
         </HashSection>
 
         <HashSection tag="h5" meta={historyMeta}>

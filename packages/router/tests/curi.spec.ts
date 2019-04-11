@@ -450,7 +450,7 @@ describe("curi", () => {
     });
   });
 
-  describe("refresh", () => {
+  describe.skip("refresh", () => {
     const err = console.error;
 
     beforeEach(() => {
