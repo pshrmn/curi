@@ -124,10 +124,10 @@ const routes = prepare_routes([
         </p>
 
         <CodeBlock lang="jsx">
-          {`import { useCuri } from "@curi/react-dom";
-          
+          {`import { useResponse } from "@curi/react-dom";
+
 function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
   return <Body response={response} />;
 }`}
@@ -196,7 +196,7 @@ const Noun = ({ response }) => (
 
         <CodeBlock>
           {`import client from "./apollo";
-          
+
 const router = create_router(browser, routes, {
   external: { client }
 });`}

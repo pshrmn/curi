@@ -85,7 +85,7 @@ function AccessibilityGuide() {
 
         <CodeBlock>
           {`import ariaLive from "@curi/side-effect-aria-live";
-  
+
 const announcer = ariaLive(
   ({ response }) => \`Navigated to \${response.title}\`
 );
@@ -182,10 +182,10 @@ const router = create_router(browser, routes, {
           </p>
 
           <CodeBlock lang="jsx">
-            {`import { useCuri, useNavigationFocus } from "@curi/react-dom";
+            {`import { useResponse, useNavigationFocus } from "@curi/react-dom";
 
 function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const ref = React.createRef(null);
   useNavigationFocus(ref);
 

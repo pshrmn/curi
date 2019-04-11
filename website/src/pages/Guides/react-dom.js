@@ -82,13 +82,13 @@ function ReactDOMGuide() {
           <IJS>response</IJS>, <IJS>router</IJS>, and <IJS>navigation</IJS>—can
           be read using the{" "}
           <Link name="Package" params={{ package: "react-dom", version: "v2" }}>
-            <IJS>useCuri</IJS> hook
+            <IJS>useResponse</IJS> hook
           </Link>
           .
         </p>
 
         <CodeBlock lang="jsx">
-          {`import { create_router_component, useCuri } from '@curi/react-dom';
+          {`import { create_router_component, useResponse } from '@curi/react-dom';
 
 import router from "./router";
 const Router = create_router_component(router);
@@ -98,7 +98,7 @@ function App() {
     response,
     navigation,
     router
-  } = useCuri();
+  } = useResponse();
   const { body:Body } = response;
   return <Body />
 }
@@ -144,9 +144,9 @@ router.once(() => {
 
           <CodeBlock lang="jsx">
             {`function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
-  return <Body response={response} />              
+  return <Body response={response} />
 }
 
 ReactDOM.render((
@@ -194,7 +194,7 @@ ReactDOM.render((
 ]);
 
 function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { Main, Menu } = response.body;
   return (
     <React.Fragment>
@@ -233,10 +233,10 @@ function App() {
           </p>
 
           <CodeBlock lang="jsx" data-line="5-6,14">
-            {`import { useCuri, useNavigationFocus } from "@curi/react-dom";
-            
+            {`import { useResponse, useNavigationFocus } from "@curi/react-dom";
+
 function App()
-  const { response } = useCuri();
+  const { response } = useResponse();
   const ref = React.createRef(null);
   useNavigationFocus(ref);
 
@@ -275,7 +275,7 @@ function App()
 
         <CodeBlock lang="jsx">
           {`import { Link } from "@curi/react-dom";
-          
+
 const NavLinks = () => (
   <nav>
     <ul>

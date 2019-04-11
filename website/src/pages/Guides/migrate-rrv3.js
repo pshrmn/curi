@@ -228,7 +228,7 @@ function MigrateReactRouterv3Guide() {
 
           <CodeBlock>
             {`import { prepare_routes } from "@curi/router";
-            
+
 import Home from './pages/Home';
 import Inbox from './pages/Inbox';
 import Mesage from './pages/Message';
@@ -476,13 +476,13 @@ const router = create_router(browser, routes);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`import { create_router_component, useCuri } from "@curi/react-dom";
+            {`import { create_router_component, useResponse } from "@curi/react-dom";
 
-const router = create_router(browser, routes);            
+const router = create_router(browser, routes);
 const Router = create_router_component(router);
 
 function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body:Body } = response;
   return <Body response={response} />;
 }
@@ -676,9 +676,9 @@ const className = active ? "active" : "";
           <Link
             name="Package"
             params={{ package: "react-dom", version: "v2" }}
-            hash="useCuri"
+            hash="useResponse"
           >
-            <IJS>useCuri</IJS> hook
+            <IJS>useResponse</IJS> hook
           </Link>
           .
         </p>
@@ -689,7 +689,7 @@ export default withRouter(SomeComponent);
 
 // Curi
 function SomeComponent() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   return ...
 }`}
         </CodeBlock>

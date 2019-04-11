@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 
 import MainContents from "./MainContents";
 import PageMenu from "../../layout/PageMenu";
@@ -92,7 +92,7 @@ function MenuControls(props) {
 export default function MobileMenu(props) {
   const [visible, setVisible] = React.useState(false);
   const [which, setWhich] = React.useState("main");
-  const { response } = useCuri();
+  const { response } = useResponse();
 
   React.useEffect(() => {
     // reset to main when switching pages

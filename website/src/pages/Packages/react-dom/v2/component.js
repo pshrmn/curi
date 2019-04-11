@@ -5,7 +5,8 @@ import { About, APIBlock, IJS } from "../../../../components/package/common";
 import { CreateRouterComponentAPI } from "./api/create_router_component";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
-import { UseCuriAPI } from "./api/useCuri";
+import { UseRouterAPI } from "./api/useRouter";
+import { UseResponseAPI } from "./api/useResponse";
 import { UseActiveAPI } from "./api/useActive";
 import { UseNavigationFocusAPI } from "./api/useNavigationFocus";
 import { UseNavigatingAPI } from "./api/useNavigating";
@@ -34,7 +35,8 @@ function ReactDOMPkg() {
         <CreateRouterComponentAPI />
         <LinkAPI />
         <AsyncLinkAPI />
-        <UseCuriAPI />
+        <UseRouterAPI />
+        <UseResponseAPI />
         <UseActiveAPI />
         <UseNavigationFocusAPI />
         <UseNavigatingAPI />

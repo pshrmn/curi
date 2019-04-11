@@ -1,12 +1,12 @@
 import React from "react";
-import { useCuri, useNavigationFocus } from "@curi/react-dom";
+import { useResponse, useNavigationFocus } from "@curi/react-dom";
 
 import GlobalCSS from "./layout/GlobalCSS";
 import Main from "./blocks/Main";
 import Menu from "./menu/Menu";
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
   const { body: Body } = response;
 
   const ref = React.createRef();
