@@ -1,5 +1,5 @@
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 
 import Modal from "./Modal";
 
@@ -8,8 +8,8 @@ import Modal from "./Modal";
  * should be rendered as a modal. If it should, it will use navigation.previous
  * to render the background.
  */
-const Display = ({ render }) => {
-  const { response, navigation } = useCuri();
+const Display = () => {
+  const { response, navigation } = useResponse();
   const { body: Body, location } = response;
 
   // check if location.state.modal is set

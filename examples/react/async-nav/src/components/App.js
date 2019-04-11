@@ -1,12 +1,12 @@
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 
 import Cancel from "./Cancel";
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
 
-  const { body: Body, data } = response;
+  const { body: Body } = response;
 
   return (
     <React.Fragment>

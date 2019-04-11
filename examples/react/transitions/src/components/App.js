@@ -1,11 +1,11 @@
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import NavLinks from "./NavLinks";
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
 
   const { location, body: Body } = response;
   return (

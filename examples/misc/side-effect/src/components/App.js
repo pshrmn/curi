@@ -1,10 +1,10 @@
 import React from "react";
-import { useCuri } from "@curi/react-dom";
+import { useResponse } from "@curi/react-dom";
 
 import NavLinks from "./NavLinks";
 
 export default function App() {
-  const { response } = useCuri();
+  const { response } = useResponse();
 
   const { body: Body } = response;
   return (
