@@ -7,20 +7,20 @@ const key: Emitted = {
   navigation: null
 };
 
-const response_context = React.createContext<Emitted>(key);
+const responseContext = React.createContext<Emitted>(key);
 const {
   Provider: ResponseProvider,
   Consumer: ResponseConsumer
-} = response_context;
+} = responseContext;
 
-const router_context = React.createContext<CuriRouter>(null);
-const { Provider: RouterProvider, Consumer: RouterConsumer } = router_context;
+const routerContext = React.createContext<CuriRouter>(null);
+const { Provider: RouterProvider, Consumer: RouterConsumer } = routerContext;
 
 export {
   ResponseProvider,
   ResponseConsumer,
-  response_context,
+  responseContext,
   RouterProvider,
   RouterConsumer,
-  router_context
+  routerContext
 };

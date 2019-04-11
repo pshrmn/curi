@@ -1,4 +1,4 @@
-import { meta as createRouterComponentMeta } from "./api/create_router_component";
+import { meta as createRouterComponentMeta } from "./api/createRouterComponent";
 import { meta as LinkMeta } from "./api/link";
 import { meta as AsyncLinkMeta } from "./api/asynclink";
 import { meta as useResponseMeta } from "./api/useResponse";

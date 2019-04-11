@@ -3,4 +3,4 @@ export interface PrefetchCallOptions {
     match?: IntrinsicResponse;
     external?: any;
 }
-export default function prefetch_route(): Interaction;
+export default function prefetchRoute(): Interaction;

@@ -22,7 +22,7 @@ export interface BaseNavigationHookProps<T> extends RouteLocation {
   method?: NavType;
 }
 
-function default_can_navigate() {
+function defaultCanNavigate() {
   return true;
 }
 
@@ -30,16 +30,16 @@ export type CanNavigate<T> = (e: T, forward?: object) => boolean;
 
 export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
   props: NavigationHookProps<T>,
-  can_navigate: CanNavigate<T> = default_can_navigate
+  canNavigate: CanNavigate<T> = defaultCanNavigate
 ) {
   const router = useRouter();
 
-  function event_handler(event: T) {
+  function eventHandler(event: T) {
     if (props.onNav) {
       props.onNav(event);
     }
 
-    if (can_navigate(event, props.forward)) {
+    if (canNavigate(event, props.forward)) {
       event.preventDefault();
 
       router.navigate({
@@ -53,7 +53,7 @@ export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
     }
   }
   return {
-    event_handler
+    eventHandler
   };
 }
 
@@ -61,11 +61,11 @@ export function useStatefulNavigationHandler<
   T extends React.BaseSyntheticEvent
 >(
   props: StatefulNavigationHookProps<T>,
-  can_navigate: CanNavigate<T> = default_can_navigate
+  canNavigate: CanNavigate<T> = defaultCanNavigate
 ) {
   const router = useRouter();
   const cancel = React.useRef(undefined);
-  const [navigating, set_navigating] = React.useState(false);
+  const [navigating, setNavigating] = React.useState(false);
 
   React.useEffect(() => {
     return () => {
@@ -75,20 +75,20 @@ export function useStatefulNavigationHandler<
     };
   }, []);
 
-  function event_handler(event: T) {
+  function eventHandler(event: T) {
     if (props.onNav) {
       props.onNav(event);
     }
 
-    if (can_navigate(event, props.forward)) {
+    if (canNavigate(event, props.forward)) {
       event.preventDefault();
 
       // only trigger re-renders when children uses state
       const done = () => {
         cancel.current = undefined;
-        set_navigating(false);
+        setNavigating(false);
       };
-      set_navigating(true);
+      setNavigating(true);
 
       cancel.current = router.navigate({
         method: props.method,
@@ -104,7 +104,7 @@ export function useStatefulNavigationHandler<
   }
 
   return {
-    event_handler,
+    eventHandler,
     navigating
   };
 }

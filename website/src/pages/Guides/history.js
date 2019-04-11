@@ -74,7 +74,7 @@ function HistoryGuide() {
         </p>
 
         <CodeBlock>{`import { browser } from "@hickory/browser";
-const router = create_router(browser, routes);`}</CodeBlock>
+const router = createRouter(browser, routes);`}</CodeBlock>
 
         <p>
           You most likely will not need to interact directly with the
@@ -92,7 +92,7 @@ const router = create_router(browser, routes);`}</CodeBlock>
         <HashSection meta={browserMeta} tag="h3">
           <CodeBlock>
             {`import { browser } from "@hickory/browser";
-const router = create_router(browser, routes);`}
+const router = createRouter(browser, routes);`}
           </CodeBlock>
 
           <p>
@@ -123,7 +123,7 @@ const router = create_router(browser, routes);`}
         <HashSection meta={hashMeta} tag="h3">
           <CodeBlock>
             {`import { hash } from "@hickory/hash";
-const router = create_router(Hash, routes);`}
+const router = createRouter(Hash, routes);`}
           </CodeBlock>
 
           <p>
@@ -142,12 +142,12 @@ const router = create_router(Hash, routes);`}
 
         <HashSection meta={inMemoryMeta} tag="h3">
           <CodeBlock>
-            {`import { in_memory, reusable_server_history } from "@hickory/in-memory";
+            {`import { inMemory, createReusable } from "@hickory/in-memory";
 
-const router = create_router(in_memory, routes);
+const router = createRouter(inMemory, routes);
 // or
-const server_history = reusable_server_history();
-const router = create_router(server_history, routes);`}
+const reusable = createReusable();
+const router = createRouter(reusable, routes);`}
           </CodeBlock>
 
           <p>
@@ -157,14 +157,14 @@ const router = create_router(server_history, routes);`}
           </p>
 
           <p>
-            The <IJS>in_memory</IJS> function is a full history object, capable
+            The <IJS>inMemory</IJS> function is a full history object, capable
             of in-app navigation.
           </p>
 
           <p>
-            The <IJS>reusable_server_history</IJS> function returns lightweight
-            history function for server-side rendering. The returned history
-            cannot navigate, which is fine for server rendering.
+            The <IJS>createReusable</IJS> function returns lightweight history
+            function for server-side rendering. The returned history cannot
+            navigate, which is fine for server rendering.
           </p>
         </HashSection>
 
@@ -230,7 +230,7 @@ location = {
             {`import { parse, stringify } from "qs";
 import { browser } from "@hickory/browser";
 
-const router = create_router(browser, routes, {
+const router = createRouter(browser, routes, {
   history: {
     query: { parse, stringify }
   }

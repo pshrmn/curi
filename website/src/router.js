@@ -1,5 +1,5 @@
 import { browser } from "@hickory/browser";
-import { create_router } from "@curi/router";
+import { createRouter } from "@curi/router";
 import titleSideEffect from "@curi/side-effect-title";
 import scrollSideEffect from "@curi/side-effect-scroll";
 import ariaLiveSideEffect from "@curi/side-effect-aria-live";
@@ -15,10 +15,10 @@ const announce = ariaLiveSideEffect(
   ({ response }) => `Navigated to ${response.title}`
 );
 
-const router = create_router(browser, routes, {
+const router = createRouter(browser, routes, {
   route: [active(), prefetch()],
-  side_effects: [setTitle, scrollTo, announce],
-  emit_redirects: false
+  sideEffects: [setTitle, scrollTo, announce],
+  emitRedirects: false
 });
 
 export default router;

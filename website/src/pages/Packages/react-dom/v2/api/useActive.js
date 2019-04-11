@@ -67,7 +67,7 @@ function ActiveLink({
         <CodeBlock>
           {`import active from '@curi/route-active';
 
-const router = create_router(browser, routes, {
+const router = createRouter(browser, routes, {
   route: [active()]
 });`}
         </CodeBlock>

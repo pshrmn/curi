@@ -1,7 +1,7 @@
 require("@babel/register");
 const start = new Date();
 const path = require("path");
-const { static_files } = require("@curi/static");
+const { staticFiles } = require("@curi/static");
 const active = require("@curi/route-active");
 
 const render = require("./render");
@@ -52,7 +52,7 @@ Build time: ${end - start}ms`
   );
 }
 
-static_files({
+staticFiles({
   pages,
   fallback: {
     filename: "404.html",

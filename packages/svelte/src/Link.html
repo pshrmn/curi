@@ -1,4 +1,4 @@
-<a href="{href}" on:click="handle_click(event)" {...forward}>
+<a href="{href}" on:click="handleClick(event)" {...forward}>
   {#if wrapper}
   <svelte:component this="{wrapper}" navigating="{navigating}">
     <slot></slot>
@@ -9,7 +9,7 @@
 </a>
 
 <script>
-  const can_navigate = event => {
+  const canNavigate = event => {
     return (
       !event.defaultPrevented &&
       event.button === 0 &&
@@ -42,8 +42,8 @@
       }
     },
     methods: {
-      handle_click(event) {
-        if (can_navigate(event)) {
+      handleClick(event) {
+        if (canNavigate(event)) {
           const {
             $router,
             name,
@@ -57,12 +57,12 @@
           let cancelled, finished;
           if (wrapper) {
             cancelled = finished = () => {
-              this.cancel_callbacks = undefined;
+              this.cancelCallbacks = undefined;
               this.set({ navigating: false });
             };
             this.set({ navigating: true });
           }
-          this.cancel_callbacks = $router.navigate({
+          this.cancelCallbacks = $router.navigate({
             name,
             params,
             hash,
@@ -75,8 +75,8 @@
       }
     },
     ondestroy() {
-      if (this.cancel_callbacks) {
-        this.cancel_callbacks();
+      if (this.cancelCallbacks) {
+        this.cancelCallbacks();
       }
     }
   };

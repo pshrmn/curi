@@ -5,7 +5,7 @@ import {
   IntrinsicResponse
 } from "@curi/types";
 
-export function resolve_route(
+export function resolveRoute(
   route: AsyncRoute,
   match: IntrinsicResponse,
   global: any
@@ -18,6 +18,6 @@ export function resolve_route(
     );
 }
 
-export function is_async_route(route: Route): route is AsyncRoute {
+export function isAsyncRoute(route: Route): route is AsyncRoute {
   return typeof route.resolve !== "undefined";
 }

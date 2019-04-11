@@ -1,7 +1,7 @@
 import * as fs from "fs-extra";
 import { join } from "path";
-import { create_router } from "@curi/router";
-import { reusable_server_history } from "@hickory/in-memory";
+import { createRouter } from "@curi/router";
+import { createReusable } from "@hickory/in-memory";
 
 import pathnames from "./pathnames";
 
@@ -9,26 +9,26 @@ import { LocationOptions } from "@hickory/in-memory";
 import { Emitted } from "@curi/types";
 import { StaticConfiguration, Result } from "./types";
 
-export default async function static_files(
+export default async function staticFiles(
   config: StaticConfiguration
 ): Promise<Array<Result>> {
   const {
     pages,
-    router: { routes, options: router_options = () => ({}) },
+    router: { routes, options: routerOptions = () => ({}) },
     output: { render, insert, dir, redirects = false },
-    history: history_options
+    history: historyOptions
   } = config;
 
   // generate input pathname/output filename pairs
   // for the provided pages
-  const input_output = pathnames({
+  const io = pathnames({
     routes,
     pages,
-    options: router_options()
+    options: routerOptions()
   }).map(pathname => {
     return {
       pathname,
-      output_path: join(dir, pathname, "index.html")
+      outputPath: join(dir, pathname, "index.html")
     };
   });
 
@@ -36,25 +36,25 @@ export default async function static_files(
   // add it to the input/output array
   if (config.fallback) {
     const { pathname, filename } = config.fallback;
-    input_output.push({
+    io.push({
       pathname,
-      output_path: join(dir, filename)
+      outputPath: join(dir, filename)
     });
   }
 
-  const history = reusable_server_history(history_options);
+  const reusable = createReusable(historyOptions);
 
   return Promise.all<Result>(
-    input_output.map(({ pathname, output_path }) => {
+    io.map(({ pathname, outputPath }) => {
       return new Promise(resolve => {
         try {
           // create a new router for each so we don't run into any issues
           // with overlapping requests
 
-          const router = create_router<LocationOptions>(history, routes, {
-            ...router_options(),
+          const router = createRouter<LocationOptions>(reusable, routes, {
+            ...routerOptions(),
             // need to emit redirects or will get stuck waiting forever
-            emit_redirects: true,
+            emitRedirects: true,
             history: {
               location: pathname
             }
@@ -74,7 +74,7 @@ export default async function static_files(
                 }
                 const markup = render(emitted);
                 const html = insert(markup);
-                fs.outputFile(output_path, html).then(() => {
+                fs.outputFile(outputPath, html).then(() => {
                   resolve({ pathname, success: true });
                 });
               } catch (e) {

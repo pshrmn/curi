@@ -33,10 +33,10 @@ export function AncestorsAPI() {
       </p>
 
       <CodeBlock>
-        {`import { create_router } from "@curi/router";
+        {`import { createRouter } from "@curi/router";
 import ancestors from '@curi/route-ancestors';
 
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
     name: 'Grandparent', path: 'g',
     children: [
@@ -50,7 +50,7 @@ const routes = prepare_routes([
   }
 ]);
 
-const router = create_router(history,routes, {
+const router = createRouter(history,routes, {
   route: [ancestors()]
 });`}
       </CodeBlock>

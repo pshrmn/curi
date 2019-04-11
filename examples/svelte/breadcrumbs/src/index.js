@@ -1,6 +1,6 @@
 import { browser } from "@hickory/browser";
-import { create_router } from "@curi/router";
-import { curi_store } from "@curi/svelte";
+import { createRouter } from "@curi/router";
+import { curiStore } from "@curi/svelte";
 import ancestors from "@curi/route-ancestors";
 
 import routes from "./routes";
@@ -32,11 +32,11 @@ function titleText() {
   };
 }
 
-const router = create_router(browser, routes, {
+const router = createRouter(browser, routes, {
   route: [ancestors(), titleText()]
 });
 
-const store = curi_store(router);
+const store = curiStore(router);
 
 const target = document.getElementById("root");
 const view = new app({ target, store });

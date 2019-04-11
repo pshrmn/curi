@@ -2,14 +2,14 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 
-import { create_router_component, useResponse } from "@curi/react-universal";
+import { createRouterComponent, useResponse } from "@curi/react-universal";
 
 describe("useResponse", () => {
   let node;
-  const routes = prepare_routes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Catch All", path: "(.*)" }
@@ -24,8 +24,8 @@ describe("useResponse", () => {
   });
 
   it("returns router, response, and navigation objects", () => {
-    const router = create_router(in_memory, routes);
-    const Router = create_router_component(router);
+    const router = createRouter(inMemory, routes);
+    const Router = createRouterComponent(router);
     const { response, navigation } = router.current();
     function App() {
       const result = useResponse();
@@ -45,12 +45,12 @@ describe("useResponse", () => {
   });
 
   it("is called when there is a new response", () => {
-    const router = create_router(in_memory, routes);
-    const Router = create_router_component(router);
-    let from_context;
+    const router = createRouter(inMemory, routes);
+    const Router = createRouterComponent(router);
+    let fromContext;
     function App() {
-      from_context = useResponse();
-      return <div>{from_context.response.name}</div>;
+      fromContext = useResponse();
+      return <div>{fromContext.response.name}</div>;
     }
 
     act(() => {
@@ -62,16 +62,16 @@ describe("useResponse", () => {
       );
     });
 
-    const first_current = router.current();
-    expect(from_context.response).toBe(first_current.response);
-    expect(from_context.navigation).toBe(first_current.navigation);
+    const first = router.current();
+    expect(fromContext.response).toBe(first.response);
+    expect(fromContext.navigation).toBe(first.navigation);
 
     act(() => {
       router.navigate({ name: "About" });
     });
 
-    const second_current = router.current();
-    expect(from_context.response).toBe(second_current.response);
-    expect(from_context.navigation).toBe(second_current.navigation);
+    const second = router.current();
+    expect(fromContext.response).toBe(second.response);
+    expect(fromContext.navigation).toBe(second.navigation);
   });
 });

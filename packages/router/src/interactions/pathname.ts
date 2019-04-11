@@ -1,8 +1,8 @@
 import { Interaction, Route, Params } from "@curi/types";
 
-function generate_pathname(): Interaction {
+export default function generatePathname(): Interaction {
   let known: { [key: string]: (params?: Params) => string } = {};
-  let already_compiled: { [key: string]: string } = {};
+  let generated: { [key: string]: string } = {};
   return {
     name: "pathname",
     register: (route: Route) => {
@@ -18,15 +18,13 @@ function generate_pathname(): Interaction {
         return;
       }
       const hash = `${name}${JSON.stringify(params)}`;
-      if (already_compiled[hash]) {
-        return already_compiled[hash];
+      if (generated[hash]) {
+        return generated[hash];
       }
 
       const output = known[name](params);
-      already_compiled[hash] = output;
+      generated[hash] = output;
       return output;
     }
   };
 }
-
-export default generate_pathname;

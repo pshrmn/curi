@@ -5,21 +5,20 @@ import {
   HashSection,
   CodeBlock,
   IJS,
-  Cmp,
   Note
 } from "../../../../../components/package/common";
 
 const argumentsMeta = {
   title: "Arguments",
-  hash: "create_router_component-arguments"
+  hash: "createRouterComponent-arguments"
 };
 const propsMeta = {
   title: "Router",
-  hash: "create_router_component-Router"
+  hash: "createRouterComponent-Router"
 };
 export const meta = {
-  title: "create_router_component",
-  hash: "create_router_component",
+  title: "createRouterComponent",
+  hash: "createRouterComponent",
   children: [argumentsMeta, propsMeta]
 };
 
@@ -31,10 +30,10 @@ export function CreateRouterComponentAPI() {
       </p>
 
       <CodeBlock lang="jsx">
-        {`import { create_router_component } from '@curi/react-native';
+        {`import { createRouterComponent } from '@curi/react-dom';
 
-const router = create_router(browser, routes);
-const Router = create_router_component(router);
+const router = createRouter(browser, routes);
+const Router = createRouterComponent(router);
 
 ReactDOM.render((
   <Router>
@@ -55,7 +54,7 @@ ReactDOM.render((
       <HashSection tag="h3" meta={argumentsMeta}>
         <HashSection
           tag="h4"
-          meta={{ title: "router", hash: "create_router_component-router" }}
+          meta={{ title: "router", hash: "createRouterComponent-router" }}
         >
           <p>
             A Curi{" "}
@@ -73,7 +72,7 @@ ReactDOM.render((
 
       <HashSection
         tag="h3"
-        meta={{ title: "Router", hash: "create_router_component-Router" }}
+        meta={{ title: "Router", hash: "createRouterComponent-Router" }}
       >
         <p>
           The <IJS>Router</IJS> sets routing context data. Any component that
@@ -82,7 +81,7 @@ ReactDOM.render((
 
         <HashSection
           tag="h4"
-          meta={{ title: "children", hash: "create_router_component-render" }}
+          meta={{ title: "children", hash: "createRouterComponent-render" }}
         >
           <p>
             The <IJS>Router</IJS> takes any valid React node (elements, strings,

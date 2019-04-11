@@ -1,12 +1,12 @@
 import "jest";
 
-import { prepare_routes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
-describe("prepare_routes()", () => {
+describe("prepareRoutes()", () => {
   describe("paths beginning with forward slash", () => {
     it("throws", () => {
       expect(() => {
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Home", path: "/" },
           { name: "Catch All", path: "(.*)" }
         ]);
@@ -24,7 +24,7 @@ describe("prepare_routes()", () => {
         { name: "Catch All", path: "(.*)" }
       ];
       expect(() => {
-        prepare_routes(routes);
+        prepareRoutes(routes);
       }).toThrow(
         `Multiple routes have the name "Home". Route names must be unique.`
       );
@@ -45,7 +45,7 @@ describe("prepare_routes()", () => {
         { name: "Catch All", path: "(.*)" }
       ];
       expect(() => {
-        prepare_routes(routes);
+        prepareRoutes(routes);
       }).toThrow(
         `Multiple routes have the name "Child". Route names must be unique.`
       );

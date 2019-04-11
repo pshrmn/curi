@@ -42,7 +42,7 @@ const propertiesMeta = {
 };
 
 export const meta = {
-  title: "create_router()",
+  title: "createRouter()",
   hash: "curi",
   children: [argumentsMeta, propertiesMeta]
 };
@@ -51,16 +51,16 @@ export function CuriAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>create_router</IJS> function is used to create a router. It has
+        The <IJS>createRouter</IJS> function is used to create a router. It has
         two required arguments: a <IJS>history</IJS> object and a{" "}
         <IJS>routes</IJS> array, and an optional third argument: an{" "}
         <IJS>options</IJS> object.
       </p>
 
       <CodeBlock>
-        {`import { create_router } from "@curi/router";
+        {`import { createRouter } from "@curi/router";
 
-const router = create_router(browser, routes, options);`}
+const router = createRouter(browser, routes, options);`}
       </CodeBlock>
 
       <HashSection tag="h4" meta={argumentsMeta}>
@@ -78,7 +78,7 @@ const router = create_router(browser, routes, options);`}
           <CodeBlock lang="jsx">
             {`import { browser } from "@hickory/browser";
 
-const router = create_router(browser, routes);`}
+const router = createRouter(browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -92,12 +92,12 @@ const router = create_router(browser, routes);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`const routes = prepare_routes([
+            {`const routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "About", path: "about" }
 ]);
 
-const router = create_router(browser, routes);`}
+const router = createRouter(browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -128,9 +128,9 @@ const router = create_router(browser, routes);`}
               {`import active from "@curi/route-active";
 import ancestors from "@curi/route-ancestors";
 
-const routes = prepare_routes([{ name: "Home", path: "" }]);
+const routes = prepareRoutes([{ name: "Home", path: "" }]);
 
-const router = create_router(browser, routes, {
+const router = createRouter(browser, routes, {
   route: [active(), ancestors()]
 });`}
             </CodeBlock>
@@ -152,8 +152,8 @@ router.route.pathname("Home");
           <HashSection
             tag="h6"
             meta={{
-              title: <IJS>side_effects</IJS>,
-              hash: "options-side_effects"
+              title: <IJS>sideEffects</IJS>,
+              hash: "options-sideEffects"
             }}
           >
             <p>
@@ -191,8 +191,8 @@ router.route.pathname("Home");
             <CodeBlock>
               {`import scroll from "@curi/side-effect-scroll";
 
-const router = create_router(browser, routes, {
-  side_effects: [scroll()]
+const router = createRouter(browser, routes, {
+  sideEffects: [scroll()]
 });`}
             </CodeBlock>
           </HashSection>
@@ -213,12 +213,12 @@ const router = create_router(browser, routes, {
 
             <CodeBlock>
               {`const client = new ApolloClient();
-const router = create_router(browser, routes, {
+const router = createRouter(browser, routes, {
   external: { client, greeting: "Hi!" }
 });`}
             </CodeBlock>
             <CodeBlock>
-              {`const routes = prepare_routes([
+              {`const routes = prepareRoutes([
   {
     name: "User",
     path: "user/:id",
@@ -247,7 +247,7 @@ const router = create_router(browser, routes, {
             </p>
 
             <CodeBlock>
-              {`const routes = prepare_routes([
+              {`const routes = prepareRoutes([
   {
     name: "Old",
     path: "old/:id",
@@ -267,7 +267,7 @@ const router = create_router(browser, routes, {
   }
 ]);
 
-const router = create_router(browser, routes, {
+const router = createRouter(browser, routes, {
   emitRedirects: false
 });
 // navigating to "/old/2" will automatically redirect
@@ -348,7 +348,7 @@ const router = create_router(browser, routes, {
           </ScrollableTable>
 
           <CodeBlock>
-            {`const routes = prepare_routes([
+            {`const routes = prepareRoutes([
   {
     name: "Album",
     path: "photos/:albumID",
@@ -358,7 +358,7 @@ const router = create_router(browser, routes, {
   },
   // ...
 ]);
-const router = create_router(browser, routes);
+const router = createRouter(browser, routes);
 
 router.navigate({
   name: "Photo",
@@ -594,7 +594,7 @@ stopObserving();
           </Note>
 
           <CodeBlock>
-            {`const router = create_router(browser, routes);
+            {`const router = createRouter(browser, routes);
 const tooSoon = router.current();
 // tooSoon.response === null
 // tooSoon.navigation === null
@@ -628,10 +628,10 @@ router.once(({ response, navigation }) => {
             </p>
 
             <CodeBlock>
-              {`const routes = prepare_routes([
+              {`const routes = prepareRoutes([
   { name: 'User', path: 'user/:id' }
 ]);
-const router = create_router(browser, routes);
+const router = createRouter(browser, routes);
 const userPathname = router.route.pathname(
   'User',
   { id: '12345' }
@@ -652,7 +652,7 @@ const userPathname = router.route.pathname(
           <p>
             The <IJS>external</IJS> value that was passed through{" "}
             <Link hash="options-external">
-              <IJS>create_router</IJS>'s options
+              <IJS>createRouter</IJS>'s options
             </Link>
             .
           </p>

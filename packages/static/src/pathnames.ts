@@ -1,5 +1,5 @@
-import { create_router } from "@curi/router";
-import { in_memory } from "@hickory/in-memory";
+import { createRouter } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
 
 import { PathnamesConfiguration } from "./types";
 
@@ -8,7 +8,7 @@ export default function pathnames(
 ): Array<string> {
   const { routes, pages, options } = config;
 
-  const router = create_router(in_memory, routes, options);
+  const router = createRouter(inMemory, routes, options);
 
   return pages.map(page => {
     const pathname = router.route.pathname(page.name, page.params);

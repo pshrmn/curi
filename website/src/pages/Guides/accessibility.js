@@ -90,7 +90,7 @@ const announcer = ariaLive(
   ({ response }) => \`Navigated to \${response.title}\`
 );
 
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -102,8 +102,8 @@ const routes = prepare_routes([
   }
 ]);
 
-const router = create_router(browser, routes, {
-  side_effects: [announcer]
+const router = createRouter(browser, routes, {
+  sideEffects: [announcer]
 });
 
 // when the user navigates to "/", the screen reader

@@ -1,15 +1,15 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 
-import { create_router_component, useLocation } from "@curi/react-universal";
+import { createRouterComponent, useLocation } from "@curi/react-universal";
 
 describe("useLocation", () => {
   let node;
   let router, Router;
-  const routes = prepare_routes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "User", path: "u/:id" },
     { name: "Catch All", path: "(.*)" }
@@ -17,8 +17,8 @@ describe("useLocation", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = create_router(in_memory, routes);
-    Router = create_router_component(router);
+    router = createRouter(inMemory, routes);
+    Router = createRouterComponent(router);
   });
 
   afterEach(() => {

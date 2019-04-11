@@ -1,18 +1,18 @@
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { reusable_server_history } from "@hickory/in-memory";
-import { create_router } from "@curi/router";
-import { create_router_component } from "@curi/react-dom";
+import { createReusable } from "@hickory/in-memory";
+import { createRouter } from "@curi/router";
+import { createRouterComponent } from "@curi/react-dom";
 import routes from "./src/routes";
 import App from "./src/components/App";
 
-const ServerHistory = reusable_server_history();
+const ServerHistory = createReusable();
 
 export default function(req, res) {
-  const router = create_router(ServerHistory, routes, {
+  const router = createRouter(ServerHistory, routes, {
     history: { location: req.url }
   });
-  const Router = create_router_component(router);
+  const Router = createRouterComponent(router);
   router.once(({ response }) => {
     if (response.redirect !== undefined) {
       res.redirect(302, response.redirect.pathname);

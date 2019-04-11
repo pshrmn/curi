@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { CreateRouterComponentAPI } from "./api/create_router_component";
+import { CreateRouterComponentAPI } from "./api/createRouterComponent";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
 import { UseResponseAPI } from "./api/useResponse";

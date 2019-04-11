@@ -165,7 +165,7 @@ export function RoutePropertiesAPI() {
 
             <CodeBlock>
               {`import Home from "./components/Home";
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -434,7 +434,7 @@ const user = {
         </p>
 
         <CodeBlock>
-          {`const routes = prepare_routes([
+          {`const routes = prepareRoutes([
   {
     name: 'Number',
     path: 'number/:num',
@@ -451,7 +451,7 @@ const user = {
       </HashSection>
 
       <HashSection
-        meta={{ title: "path_options", hash: "path_options" }}
+        meta={{ title: "pathOptions", hash: "pathOptions" }}
         tag="h3"
       >
         <p>
@@ -461,7 +461,7 @@ const user = {
           </a>{" "}
           to handle route matching and pathname generation. Each route can
           configure both its route matching and pathname generation through its{" "}
-          <IJS>path_options</IJS> property.
+          <IJS>pathOptions</IJS> property.
         </p>
 
         <Note>
@@ -493,7 +493,7 @@ const user = {
           {`{
   name: "My Route",
   path: "my/:item",
-  path_options: {
+  pathOptions: {
     match: {
       sensitive: false
     },
@@ -513,7 +513,7 @@ const user = {
         </p>
 
         <CodeBlock>
-          {`const routes = prepare_routes([
+          {`const routes = prepareRoutes([
   {
     name: 'A Route',
     path: 'a-route',

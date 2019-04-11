@@ -1,12 +1,12 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 import activeInteraction from "@curi/route-active";
 
 import {
-  create_router_component,
+  createRouterComponent,
   useActive,
   useResponse
 } from "@curi/react-universal";
@@ -14,7 +14,7 @@ import {
 describe("useActive", () => {
   let node;
   let router, Router;
-  const routes = prepare_routes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     {
       name: "Contact",
@@ -25,10 +25,10 @@ describe("useActive", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = create_router(in_memory, routes, {
+    router = createRouter(inMemory, routes, {
       route: [activeInteraction()]
     });
-    Router = create_router_component(router);
+    Router = createRouterComponent(router);
   });
 
   afterEach(() => {
@@ -37,12 +37,12 @@ describe("useActive", () => {
 
   describe("no route.active()", () => {
     it('throws if attempting to use in a Curi router without the "active" route interaction', () => {
-      const router = create_router(in_memory, routes);
+      const router = createRouter(inMemory, routes);
 
       const realError = console.error;
       console.error = jest.fn();
 
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
 
       function App() {
         const active = useActive({ name: "Home" });
@@ -59,10 +59,10 @@ describe("useActive", () => {
       }).toThrow(
         `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
 
-import { create_router } from "@curi/router";
+import { createRouter } from "@curi/router";
 import active from "@curi/route-active";
 
-const router = create_router(history, routes, {
+const router = createRouter(history, routes, {
   route: [active()]
 });`
       );
@@ -88,13 +88,13 @@ const router = create_router(history, routes, {
 
   describe("params", () => {
     it('uses the "params" to determine if it is active', () => {
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
         }
       });
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
       function App() {
         const active = useActive({
           name: "Method",
@@ -114,13 +114,13 @@ const router = create_router(history, routes, {
 
   describe("partial", () => {
     it("returns true for partial matches when partial=true", () => {
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
         }
       });
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
       function App() {
         const active = useActive({ name: "Contact", partial: true });
         expect(active).toBe(true);
@@ -137,7 +137,7 @@ const router = create_router(history, routes, {
 
   describe("components", () => {
     it("is called with location if route is active", () => {
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact"]
@@ -145,7 +145,7 @@ const router = create_router(history, routes, {
       });
       const components = jest.fn();
       let theLocation;
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
       function App() {
         const { response } = useResponse();
         theLocation = response.location;
@@ -163,7 +163,7 @@ const router = create_router(history, routes, {
     });
 
     it("is not called if route is not active", () => {
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/"]
@@ -171,7 +171,7 @@ const router = create_router(history, routes, {
       });
       const components = jest.fn();
       let theResponse;
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
       function App() {
         const { response } = useResponse();
         theResponse = response;
@@ -188,13 +188,13 @@ const router = create_router(history, routes, {
     });
 
     it("returns true if route matches and response check returns true", () => {
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
         }
       });
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
       function App() {
         const active = useActive({
           name: "Contact",
@@ -213,13 +213,13 @@ const router = create_router(history, routes, {
     });
 
     it("returns false if route matches, but location check returns false", () => {
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
         }
       });
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
       function App() {
         const active = useActive({
           name: "Contact",

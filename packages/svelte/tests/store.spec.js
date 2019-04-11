@@ -1,25 +1,25 @@
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 import { Store } from "svelte/store";
 
-import { curi_store } from "@curi/svelte";
+import { curiStore } from "@curi/svelte";
 
-describe("curi_store", () => {
+describe("curiStore", () => {
   let router;
-  const routes = prepare_routes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Not Found", path: "(.*)" }
   ]);
 
   beforeEach(() => {
-    router = create_router(in_memory, routes);
+    router = createRouter(inMemory, routes);
   });
 
   describe("existing store", () => {
     it("adds Curi properties to store", () => {
       const store = new Store({ foo: "oof" });
-      curi_store(router, store);
+      curiStore(router, store);
 
       expect(store.get().router).toBe(router);
       expect(store.get().curi).toHaveProperty("response");
@@ -29,7 +29,7 @@ describe("curi_store", () => {
     it("initializes with current response/navigation", () => {
       const { response, navigation } = router.current();
       const store = new Store({ foo: "oof" });
-      curi_store(router, store);
+      curiStore(router, store);
       const $curi = store.get().curi;
       expect($curi.response).toBe(response);
       expect($curi.navigation).toBe(navigation);
@@ -38,13 +38,13 @@ describe("curi_store", () => {
 
   describe("new store", () => {
     it("can create a new store", () => {
-      const store = curi_store(router);
+      const store = curiStore(router);
       expect(store.get().router).toBe(router);
     });
 
     it("initializes with current response/navigation", () => {
       const { response, navigation } = router.current();
-      const store = curi_store(router, store);
+      const store = curiStore(router, store);
       const $curi = store.get().curi;
       expect($curi.response).toBe(response);
       expect($curi.navigation).toBe(navigation);
@@ -53,7 +53,7 @@ describe("curi_store", () => {
 
   it("updates store when new response/navigation are emitted", () => {
     let firstCall = true;
-    const store = curi_store(router);
+    const store = curiStore(router);
     const {
       response: initialResponse,
       navigation: initialNavigation

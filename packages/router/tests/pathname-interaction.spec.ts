@@ -1,13 +1,13 @@
 import "jest";
-import { in_memory } from "@hickory/in-memory";
+import { inMemory } from "@hickory/in-memory";
 
-import { prepare_routes, create_router } from "@curi/router";
+import { prepareRoutes, createRouter } from "@curi/router";
 
 describe("pathname route interaction", () => {
   describe("calling", () => {
     it("it is accessed through route.name()", () => {
-      const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-      const router = create_router(in_memory, routes);
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const router = createRouter(inMemory, routes);
       expect(router.route.pathname).toBeDefined();
     });
   });
@@ -15,21 +15,21 @@ describe("pathname route interaction", () => {
   describe("generating pathnames", () => {
     it("works when paths contain no params", () => {
       // duh?
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Static", path: "this/has/no/params" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
+      const router = createRouter(inMemory, routes);
       const output = router.route.pathname("Static");
       expect(output).toBe("/this/has/no/params");
     });
 
     it("returns a pathname using params", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Player", path: "player/:id" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
+      const router = createRouter(inMemory, routes);
       const output = router.route.pathname("Player", { id: 17 });
       expect(output).toBe("/player/17");
     });
@@ -39,11 +39,11 @@ describe("pathname route interaction", () => {
       const mockError = jest.fn();
       console.error = mockError;
 
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Player", path: "player/:id" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
+      const router = createRouter(inMemory, routes);
       const output = router.route.pathname("Anonymous", { id: 123 });
 
       expect(output).toBe(undefined);

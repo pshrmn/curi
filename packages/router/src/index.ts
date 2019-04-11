@@ -1,4 +1,4 @@
-import create_router from "./create_router";
-import prepare_routes from "./prepare_routes";
+import createRouter from "./createRouter";
+import prepareRoutes from "./prepareRoutes";
 
-export { create_router, prepare_routes };
+export { createRouter, prepareRoutes };

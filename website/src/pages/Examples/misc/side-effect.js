@@ -40,15 +40,15 @@ function SideEffectExample() {
 
         <p>
           Side effect functions are registered when creating a router using the{" "}
-          <IJS>side_effects</IJS> property of the options object.
+          <IJS>sideEffects</IJS> property of the options object.
         </p>
 
         <CodeBlock lang="javascript">
-          {`import { create_router } from "@curi/router";
+          {`import { createRouter } from "@curi/router";
 import mySideEffect from './mySideEffect';
 
-const router = create_router(browser, routes, {
-  side_effects: [mySideEffect]
+const router = createRouter(browser, routes, {
+  sideEffects: [mySideEffect]
 });`}
         </CodeBlock>
       </HashSection>

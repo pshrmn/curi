@@ -4,7 +4,7 @@ import {
   useNavigationHandler,
   useStatefulNavigationHandler
 } from "@curi/react-universal";
-import { can_navigate } from "./utils";
+import { canNavigate } from "./utils";
 
 import { RouteLocation } from "@curi/types";
 import { NavigatingChildren } from "@curi/react-universal";
@@ -27,14 +27,14 @@ export const Link = React.forwardRef(
   (props: LinkProps, ref: React.Ref<any>) => {
     const href = useHref(props);
 
-    const { event_handler } = useNavigationHandler<
+    const { eventHandler } = useNavigationHandler<
       React.MouseEvent<HTMLElement>
-    >(props, can_navigate);
+    >(props, canNavigate);
 
     const { anchor: Anchor = "a", forward, children } = props;
 
     return (
-      <Anchor onClick={event_handler} href={href} ref={ref} {...forward}>
+      <Anchor onClick={eventHandler} href={href} ref={ref} {...forward}>
         {children}
       </Anchor>
     );
@@ -45,14 +45,14 @@ export const AsyncLink = React.forwardRef(
   (props: AsyncLinkProps, ref: React.Ref<any>) => {
     const href = useHref(props);
 
-    const { event_handler, navigating } = useStatefulNavigationHandler<
+    const { eventHandler, navigating } = useStatefulNavigationHandler<
       React.MouseEvent<HTMLElement>
-    >(props, can_navigate);
+    >(props, canNavigate);
 
     const { anchor: Anchor = "a", forward, children } = props;
 
     return (
-      <Anchor onClick={event_handler} href={href} ref={ref} {...forward}>
+      <Anchor onClick={eventHandler} href={href} ref={ref} {...forward}>
         {children(navigating)}
       </Anchor>
     );

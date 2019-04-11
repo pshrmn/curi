@@ -49,7 +49,7 @@ function LoadingGuide() {
         </p>
 
         <CodeBlock>
-          {`const routes = prepare_routes([
+          {`const routes = prepareRoutes([
   {
     name: 'Recipe',
     path: 'recipe/:id'

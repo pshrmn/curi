@@ -182,7 +182,7 @@ function ResponsesGuide() {
         <CodeBlock>
           {`// do NOT do this
 // mixing body shapes complicates rendering
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
     response() {
       return { body: One }
@@ -232,7 +232,7 @@ const routes = prepare_routes([
         </p>
 
         <CodeBlock>
-          {`const router = create_router(browser, routes, {
+          {`const router = createRouter(browser, routes, {
   emitRedirects: false
 });`}
         </CodeBlock>

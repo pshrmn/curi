@@ -1,21 +1,21 @@
-<svelte:component this="{component}" cancel="{cancel_callback}" />
+<svelte:component this="{component}" cancel="{cancelCallback}" />
 
 <script>
   export default {
     data() {
       return {
-        cancel_callback: undefined
+        cancelCallback: undefined
       };
     },
     computed: {
-      navigating({ cancel_callback }) {
-        return cancel_callback !== undefined;
+      navigating({ cancelCallback }) {
+        return cancelCallback !== undefined;
       }
     },
     oncreate() {
-      this.stop = this.store.get().router.cancel(cancel_callback => {
+      this.stop = this.store.get().router.cancel(cancelCallback => {
         if (!this.removed) {
-          this.set({ cancel_callback });
+          this.set({ cancelCallback });
         }
       });
     },

@@ -1,13 +1,13 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 
 import { CuriPlugin } from "@curi/vue";
 
 describe("CuriPlugin", () => {
-  const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-  const router = create_router(in_memory, routes);
+  const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+  const router = createRouter(inMemory, routes);
 
   describe("$router", () => {
     it("Adds the router to global Vue vars as $router", () => {
@@ -57,13 +57,13 @@ describe("CuriPlugin", () => {
       }
 
       let history, router;
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Contact", path: "contact" },
         { name: "Catch All", path: "(.*)" }
       ]);
 
       beforeEach(() => {
-        router = create_router(in_memory, routes);
+        router = createRouter(inMemory, routes);
       });
 
       it("re-renders when updating curi object", done => {

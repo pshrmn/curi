@@ -59,13 +59,13 @@ function UsingSideEffectsGuide() {
       <HashSection meta={addingMeta}>
         <p>
           Side effects are provided to your router with the{" "}
-          <IJS>side_effects</IJS> property of the options object. This is an
+          <IJS>sideEffects</IJS> property of the options object. This is an
           array of observer functions.
         </p>
 
         <CodeBlock>
-          {`const router = create_router(browser, routes, {
-  side_effects: [logResponse, updateTitle]
+          {`const router = createRouter(browser, routes, {
+  sideEffects: [logResponse, updateTitle]
 });`}
         </CodeBlock>
 
@@ -78,8 +78,8 @@ function UsingSideEffectsGuide() {
         </p>
 
         <CodeBlock>
-          {`const router = create_router(browser, routes, {
-  side_effects: [logResponse]
+          {`const router = createRouter(browser, routes, {
+  sideEffects: [logResponse]
 });
 
 const render = () => {
@@ -117,7 +117,7 @@ router.observe(render);
             {`import titleEffect from "@curi/side-effect-title";
 import scrollEffect from "@curi/side-effect-scroll";
 
-const router = create_router(browser, routes, {
+const router = createRouter(browser, routes, {
   sideEffect: [titleEffect(), scrollEffect()]
 });`}
           </CodeBlock>
@@ -136,8 +136,8 @@ const router = create_router(browser, routes, {
   console.log('Navigation action:', navigation.action);
 }
 
-const router = create_router(browser, routes, {
-  side_effects: [mySideEffect]
+const router = createRouter(browser, routes, {
+  sideEffects: [mySideEffect]
 });`}
         </CodeBlock>
 

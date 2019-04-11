@@ -19,10 +19,10 @@ export default function useActive(props: ActiveHookProps) {
       throw new Error(
         `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
 
-import { create_router } from "@curi/router";
+import { createRouter } from "@curi/router";
 import active from "@curi/route-active";
 
-const router = create_router(history, routes, {
+const router = createRouter(history, routes, {
   route: [active()]
 });`
       );

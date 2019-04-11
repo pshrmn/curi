@@ -17,7 +17,7 @@ import {
 export interface RouteDescriptor {
   name: string;
   path: string;
-  path_options?: PathOptions;
+  pathOptions?: PathOptions;
   params?: ParamParsers;
   children?: Array<RouteDescriptor>;
   response?: ResponseFn;
@@ -30,16 +30,16 @@ export interface PathOptions {
   compile?: PathFunctionOptions;
 }
 
-// third argument to create_router
+// third argument to createRouter
 export interface RouterOptions<O = HistoryOptions> {
   route?: Array<Interaction>;
-  side_effects?: Array<Observer>;
-  emit_redirects?: boolean;
+  sideEffects?: Array<Observer>;
+  emitRedirects?: boolean;
   external?: any;
   history?: O;
 }
 
-// object returned by create_router
+// object returned by createRouter
 export interface CuriRouter {
   observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
   once: (fn: Observer, options?: ResponseHandlerOptions) => void;
@@ -153,19 +153,19 @@ export type AsyncMatchFn = (
   external?: any
 ) => Promise<any>;
 
-// the array returned by prepare_routes
+// the array returned by prepareRoutes
 export type PreparedRoutes = Array<PreparedRoute>;
 export interface PreparedRoute {
   public: Route;
   sync: boolean;
   children: Array<PreparedRoute>;
   response?: ResponseFn;
-  path_matching: {
+  pathMatching: {
     exact: boolean;
     re: RegExp;
     keys: Array<Key>;
   };
-  param_parsers?: ParamParsers;
+  paramParsers?: ParamParsers;
 }
 
 // a route's response function is used to return properties to add

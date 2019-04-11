@@ -1,8 +1,8 @@
-import { prepare_routes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
 import { movies as MOVIES, movie as MOVIE } from "./api";
 
-export default prepare_routes([
+export default prepareRoutes([
   {
     name: "Home",
     path: "",

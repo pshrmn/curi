@@ -40,7 +40,7 @@ export function OnceAPI() {
 
 const cachedGetItems = once(() => api.getItems);
 
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
   name: "Menu",
   path: "menu",

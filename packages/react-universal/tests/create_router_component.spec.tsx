@@ -2,14 +2,14 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import { create_router, prepare_routes } from "@curi/router";
-import { in_memory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
 
-import { create_router_component, useResponse } from "@curi/react-universal";
+import { createRouterComponent, useResponse } from "@curi/react-universal";
 
-describe("create_router_component()", () => {
+describe("createRouterComponent()", () => {
   let node;
-  const routes = prepare_routes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Catch All", path: "(.*)" }
@@ -27,13 +27,13 @@ describe("create_router_component()", () => {
 
   describe("children prop", () => {
     it("renders children", () => {
-      const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-      const router = create_router(in_memory, routes);
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const router = createRouter(inMemory, routes);
 
       const App = jest.fn(() => {
         return null;
       });
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
       ReactDOM.render(
         <Router>
           <App />
@@ -44,8 +44,8 @@ describe("create_router_component()", () => {
     });
 
     it("works with multiple children", () => {
-      const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-      const router = create_router(in_memory, routes);
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      const router = createRouter(inMemory, routes);
 
       const One = jest.fn(() => {
         return null;
@@ -53,7 +53,7 @@ describe("create_router_component()", () => {
       const Two = jest.fn(() => {
         return null;
       });
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
       ReactDOM.render(
         <Router>
           <One />
@@ -66,7 +66,7 @@ describe("create_router_component()", () => {
     });
 
     it("re-renders when the location changes", async () => {
-      const router = create_router(in_memory, routes);
+      const router = createRouter(inMemory, routes);
 
       let currentResponse;
 
@@ -76,7 +76,7 @@ describe("create_router_component()", () => {
         return null;
       });
 
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
 
       act(() => {
         ReactDOM.render(
@@ -99,7 +99,7 @@ describe("create_router_component()", () => {
 
   describe("context", () => {
     it("makes response, navigation, and router available on content", () => {
-      const router = create_router(in_memory, routes);
+      const router = createRouter(inMemory, routes);
 
       const ContextLogger: React.ComponentType = () => {
         const {
@@ -113,7 +113,7 @@ describe("create_router_component()", () => {
         return null;
       };
 
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
 
       const {
         response: emittedResponse,

@@ -8,23 +8,23 @@ import {
 } from "../../../../../components/package/common";
 
 export const meta = {
-  title: "prepare_routes()",
-  hash: "prepare_routes"
+  title: "prepareRoutes()",
+  hash: "prepareRoutes"
 };
 
 export function PrepareRoutesAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>prepare_routes()</IJS> export is used to build the routes for
+        The <IJS>prepareRoutes()</IJS> export is used to build the routes for
         Curi. This will pre-compile paths for location matching and pathname
         building, which is particularly useful for server rendering.
       </p>
 
       <CodeBlock>
-        {`import { prepare_routes } from '@curi/router';
+        {`import { prepareRoutes } from '@curi/router';
 
-const routes = prepare_routes([
+const routes = prepareRoutes([
   { name: "Home", path: "" },
   // ...
   { name: "Not Found", path: "(.*)" }

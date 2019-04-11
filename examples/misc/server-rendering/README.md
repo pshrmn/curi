@@ -3,16 +3,16 @@
 Server rendering with `curi` is fairly straightforward. You should have a catch all route handler that will respond to all (non-static file) requests.
 
 ```js
-const history = reusable_server_history();
+const history = createReusable();
 
 function catchAll(req, res) {
   // 1. Create a router and the root Curi provider component
-  const router = create_router(history, routes, {
+  const router = createRouter(history, routes, {
     history: {
       location: req.url
     }
   });
-  const Router = create_router_component(router);
+  const Router = createRouterComponent(router);
 
   // 2. Wait for the initial location's response to finish
   router.response((response, navigation) => {

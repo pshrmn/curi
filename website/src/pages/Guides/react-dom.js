@@ -44,10 +44,10 @@ function ReactDOMGuide() {
 
       <HashSection meta={renderingMeta}>
         <p>
-          The <IJS>create_router_component()</IJS> function is used to create
-          the component at the root of a Curi + React application. You can call
-          this component anything that you want, but here it will be referred to
-          as the <IJS>Router</IJS>.
+          The <IJS>createRouterComponent()</IJS> function is used to create the
+          component at the root of a Curi + React application. You can call this
+          component anything that you want, but here it will be referred to as
+          the <IJS>Router</IJS>.
         </p>
 
         <Note>
@@ -62,7 +62,7 @@ function ReactDOMGuide() {
         </Note>
 
         <p>
-          <IJS>create_router_component()</IJS> is passed the application's Curi
+          <IJS>createRouterComponent()</IJS> is passed the application's Curi
           router to create a <IJS>Router</IJS> component. The <IJS>Router</IJS>{" "}
           will automatically add an{" "}
           <Link
@@ -88,10 +88,10 @@ function ReactDOMGuide() {
         </p>
 
         <CodeBlock lang="jsx">
-          {`import { create_router_component, useResponse } from '@curi/react-dom';
+          {`import { createRouterComponent, useResponse } from '@curi/react-dom';
 
 import router from "./router";
-const Router = create_router_component(router);
+const Router = createRouterComponent(router);
 
 function App() {
   const {
@@ -177,7 +177,7 @@ ReactDOM.render((
           </Note>
 
           <CodeBlock lang="jsx" data-line="20,24,27">
-            {`const routes = prepare_routes([
+            {`const routes = prepareRoutes([
   {
     name: "Home",
     path: "",

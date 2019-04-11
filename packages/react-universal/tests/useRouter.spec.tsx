@@ -2,11 +2,11 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 
 import {
-  create_router_component,
+  createRouterComponent,
   useRouter,
   useResponse
 } from "@curi/react-universal";
@@ -14,7 +14,7 @@ import {
 describe("useRouter", () => {
   let node;
   let router, Router;
-  const routes = prepare_routes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Catch All", path: "(.*)" }
@@ -22,8 +22,8 @@ describe("useRouter", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = create_router(in_memory, routes);
-    Router = create_router_component(router);
+    router = createRouter(inMemory, routes);
+    Router = createRouterComponent(router);
   });
 
   afterEach(() => {
@@ -32,8 +32,8 @@ describe("useRouter", () => {
 
   it("provides access to the router object", () => {
     function App() {
-      const context_router = useRouter();
-      expect(context_router).toBe(router);
+      const contextRouter = useRouter();
+      expect(contextRouter).toBe(router);
       return null;
     }
 
@@ -49,7 +49,7 @@ describe("useRouter", () => {
 
   it("does not need to re-render when there is a new response", () => {
     const Test = jest.fn(() => {
-      const context_router = useRouter();
+      const contextRouter = useRouter();
       return null;
     });
 

@@ -1,19 +1,19 @@
 import { browser } from "@hickory/browser";
-import { create_router } from "@curi/router";
-import { curi_store } from "@curi/svelte";
+import { createRouter } from "@curi/router";
+import { curiStore } from "@curi/svelte";
 import { Store } from "svelte/store";
 import { parse, stringify } from "qs";
 
 import routes from "./routes";
 import app from "./components/App.html";
 
-const router = create_router(browser, routes, {
-  emit_redirects: false,
+const router = createRouter(browser, routes, {
+  emitRedirects: false,
   history: {
-    query: { parse, stringify }  
+    query: { parse, stringify }
   }
 });
-const store = curi_store(router);
+const store = curiStore(router);
 
 const target = document.getElementById("root");
 const view = new app({ target, store });

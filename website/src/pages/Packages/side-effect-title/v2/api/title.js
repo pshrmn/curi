@@ -37,7 +37,7 @@ const setTitle = titleEffect(({ response }) => {
 });
 
 const router = curi(history, routes, {
-  side_effects: [setTitle]
+  sideEffects: [setTitle]
 });`}
       </CodeBlock>
 
@@ -56,7 +56,7 @@ const router = curi(history, routes, {
       body: Home,
       title: "About"
     }
-  }              
+  }
 }
 // when the About route matches, document.title = "About | My Site"`}
       </CodeBlock>

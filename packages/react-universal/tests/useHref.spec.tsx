@@ -1,16 +1,16 @@
 import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 import * as qs from "qs";
 
-import { create_router_component, useHref } from "@curi/react-universal";
+import { createRouterComponent, useHref } from "@curi/react-universal";
 
 describe("useHref", () => {
   let node;
   let router, Router;
-  const routes = prepare_routes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "User", path: "u/:id" },
     { name: "Catch All", path: "(.*)" }
@@ -18,8 +18,8 @@ describe("useHref", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = create_router(in_memory, routes);
-    Router = create_router_component(router);
+    router = createRouter(inMemory, routes);
+    Router = createRouterComponent(router);
   });
 
   afterEach(() => {
@@ -86,7 +86,7 @@ describe("useHref", () => {
     });
 
     it("works with custom history parse/stringifiers", () => {
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           query: {
             parse: qs.parse,
@@ -94,7 +94,7 @@ describe("useHref", () => {
           }
         }
       });
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
 
       function App() {
         const result = useHref({ name: "Home", query: { hi: "yo" } });
