@@ -11,8 +11,8 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/router": "2.0.0-beta.6",
-    "@curi/svelte": "1.0.0-beta.18",
+    "@curi/router": "2.0.0-beta.7",
+    "@curi/svelte": "1.0.0-beta.19",
     "@hickory/browser": "^2.0.0-beta.10"
   },
   "devDependencies": {
